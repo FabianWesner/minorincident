@@ -1,8 +1,11 @@
 // Adapted from Bruno Simon folio-2025 Confetti.js, Leaves.js, Trails.js and Noises.js (MIT, 41046b5).
-import { Color, DoubleSide, DynamicDrawUsage, InstancedBufferAttribute, InstancedMesh, Matrix4, MeshBasicNodeMaterial, PlaneGeometry, type Node, DepthTexture, ViewportDepthTextureNode, TextureLoader, SRGBColorSpace, type Texture } from 'three/webgpu';
+import { Color, CustomBlending, OneFactor, OneMinusSrcAlphaFactor, DoubleSide, DynamicDrawUsage, InstancedBufferAttribute, InstancedMesh, Matrix4, MeshBasicNodeMaterial, PlaneGeometry, type Node, DepthTexture, ViewportDepthTextureNode, TextureLoader, SRGBColorSpace, type Texture } from 'three/webgpu';
 import manifest from '../../assets/manifest.json';
 import type { AssetDef } from '../../assets/types';
 import { texture, attribute, cameraWorldMatrix, cos, float, Fn, mix, positionGeometry, sin, uniform, uv, vec3, vec4, linearDepth } from 'three/tsl';
+
+/** Half a 60 Hz interval: a fresh shot remains in view on its first advancing frame at closest zoom. */
+export const tracerLaunchS = 1 / 120;
 
 /** Track every canvas/render-target depth copy, including compiler-created node clones. */
 class OwnedDepth extends ViewportDepthTextureNode {
@@ -55,12 +58,26 @@ export class FxPool {
     // in the fragment shader creates holes when interpolated birth time rounds above now.
     const alive = age.lessThan(life).and(motion.w.greaterThan(0)).select(1, 0);
     const material = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false, side: DoubleSide });
+    // Premultiplied output: ordinary particles occlude normally; tracer RGB adds with
+    // zero alpha in the SAME instanced draw (no separate material/mesh or depth copy).
+    if (mode === 'particle') {
+      material.blending = CustomBlending; material.blendSrc = OneFactor; material.blendDst = OneMinusSrcAlphaFactor;
+    }
     material.positionNode = Fn(() => {
       const size = style.x.mul(alive);
       if (mode === 'particle') {
         const billboard = cameraWorldMatrix.mul(vec4(positionGeometry.xy.mul(size), 0, 0)).xyz;
         const offset = motion.xyz.mul(age.max(0));
-        return origin.xyz.add(offset).add(vec3(0, age.max(0).pow(2).mul(style.z).mul(-0.5), 0)).add(billboard);
+        const ordinary = origin.xyz.add(offset).add(vec3(0, age.max(0).pow(2).mul(style.z).mul(-0.5), 0)).add(billboard);
+        // Shape 11: one camera-facing ribbon along the 3D bullet ray. style.z is
+        // the hit distance, style.w the width. Clip both ends to muzzle/hit.
+        const speed = motion.xyz.length().max(.001), direction = motion.xyz.div(speed);
+        const head = age.sub(tracerLaunchS).max(0).mul(speed).min(style.z), length = style.x.min(head);
+        const forward = cameraWorldMatrix.mul(vec4(0, 0, 1, 0)).xyz;
+        const side = direction.cross(forward), across = side.div(side.length().max(.001));
+        const streak = origin.xyz.add(direction.mul(head.sub(length.mul(.5)).add(positionGeometry.x.mul(length))))
+          .add(across.mul(positionGeometry.y.mul(style.w))).mul(alive).add(origin.xyz.mul(float(1).sub(alive)));
+        return style.y.greaterThan(10.5).select(streak, ordinary);
       }
       const growth = style.z.greaterThan(0).select(progress.mul(2).min(1), 1);
       const x = positionGeometry.x.mul(size).mul(growth), z = positionGeometry.y.mul(size).mul(style.w).mul(growth);
@@ -98,6 +115,14 @@ export class FxPool {
       }
       const fade = float(1).sub(progress).min(1).mul(alive);
       const lit = lightSample ?? vec3(1);
+      if (mode === 'particle') {
+        const tracer = style.y.greaterThan(10.5);
+        const ribbon = float(1).sub(p.y.abs()).max(0).pow(.7).mul(uv().x.mul(.7).add(.3));
+        const flight = age.sub(tracerLaunchS).max(0).div(life.sub(tracerLaunchS).max(.001)).clamp(0, 1);
+        const endFade = float(1).sub(flight).mul(5).clamp(0, 1);
+        const opacity = tracer.select(ribbon.mul(endFade).mul(alive), mask.mul(fade));
+        return vec4(color.mul(lit).mul(opacity), tracer.select(0, opacity));
+      }
       return vec4(color.mul(lit), mask.mul(fade));
     })();
     // Empty particle draws still copy viewport depth; omit them until an effect spawns.
