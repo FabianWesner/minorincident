@@ -1,21 +1,83 @@
 {
   "name": "l9-crash-crawl",
-  "note": "L9 crash site (L9-A2) crawl-away: the courier starts at the crawl-start anchor on the far lip, beside the wrecked APC in the gully, and moves to the crawl-end anchor (safe L10 start, city in sight). Walk stands in for the crawl pose (Scene Lab has no crawl action). Look for: the anchors on free, walkable ground, wreck visible beside the player, wreck and smoke origin readable from the game camera, nothing floating, city skyline at the end.",
+  "note": "L9 crash site (L9-A2) crawl-away: the courier starts at the crawl-start anchor on the far lip, beside the wrecked APC in the gully, and moves to the crawl-end anchor (safe L10 start, city in sight). Running stands in for the crawl pose (Scene Lab has no crawl action). Look for: the anchors on free, walkable ground, wreck visible beside the player, wreck and smoke origin readable from the game camera, nothing floating, city skyline at the end.",
   "seed": 31,
   "ground": "district",
   "time": "L9-crossing",
   "dof": false,
-  "layout": { "district": "D-CROSSING", "bbox": [[480, -70], [585, 70]] },
+  "layout": {
+    "district": "D-CROSSING",
+    "bbox": [
+      [
+        480,
+        -70
+      ],
+      [
+        585,
+        70
+      ]
+    ]
+  },
   "props": [
-    { "id": "apc-wreck", "asset": "veh.military-apc", "decay": "wrecked", "at": [517.7, -5.5, 0.0], "yaw": 90 }
+    {
+      "id": "apc-wreck",
+      "asset": "veh.military-apc",
+      "decay": "wrecked",
+      "at": [
+        517.7,
+        -5.5,
+        0.0
+      ],
+      "yaw": 90
+    }
   ],
   "actors": [
-    { "id": "courier", "kind": "courier", "at": [527.5, 2.6], "state": { "walk": [[527.5, 2.6], [534, 1], [547, 0]] } }
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        527.5,
+        2.6
+      ],
+      "state": {
+        "run": [
+          [
+            527.5,
+            2.6
+          ],
+          [
+            534,
+            1
+          ],
+          [
+            547,
+            0
+          ]
+        ]
+      }
+    }
   ],
-  "camera": { "mode": "game", "target": "courier", "zoom": 1 },
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
   "frames": 300,
-  "shots": [0, 100, 200, 300],
+  "shots": [
+    0,
+    100,
+    200,
+    300
+  ],
   "sheet": 50,
-  "clipping": { "ignoreFoliage": true },
-  "expect": { "consoleErrors": 0, "clippingMax": 0, "undrawnFramesMax": 0, "drawCallsMax": 300, "trianglesMax": 500000 }
+  "clipping": {
+    "ignoreFoliage": true
+  },
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
 }

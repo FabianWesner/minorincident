@@ -210,16 +210,19 @@ def gully():
 gully()
 # Collapsed deck, broken lips, pier stubs, rebar, rails and rubble: one visual-only kit (no collider, sim ground unchanged).
 l.place('kit.crossing-crash',[GULLY_X,0,0],allowed=True)
-# Wrecks on the approach. In-lane blockers are the shared `veh.wreck` (the only vehicle the road validator allows on a lane)
-# at x >= 486 with >= 4.7 m of the 12 m lane free either side of the route line; cars overshoot the (450, 0) corner by up to
-# +-4 m, so nothing sits in the lane before x=486 and the large wrecks flank the verge (outside the lane, x >= 472).
-def wreck(asset,x,z,yaw,decay='wrecked',road=False):
-    l.place(asset,[x,0,z],yaw,allowed=road)
+# Wrecks on the approach, all on the verge (outside the 12 m lane, validator `road lane overlap`). The E09 route test cars
+# overshoot the (450, 0) corner and keep oscillating +-3 m for 50+ m, and they must reach (538+, 0) through the gap, so the
+# lane itself stays open: the wrecks and barricades narrow the view and the shoulder, they do not block the routes.
+def wreck(asset,x,z,yaw,decay='wrecked'):
+    l.place(asset,[x,0,z],yaw)
     if asset!='veh.wreck': l.data['placements'][-1]['decay']=decay
-for x,z,yaw in [(488,-6.7,.5),(493,6.8,-.6)]: wreck('veh.wreck',x,z,yaw,road=True)
+for x,z,yaw in [(486,-8.4,.5),(482,8.6,-.6)]: wreck('veh.wreck',x,z,yaw)
 for asset,x,z,yaw in [('veh.military-truck',478,-8.9,.35),('veh.school-bus',490,9.7,-.42),('veh.sedan-red',494,-9.3,.9),('veh.police-sedan',476,8.8,2.6),('veh.pickup-red',465,-8.9,-.5)]:
     wreck(asset,x,z,yaw)
-for x,z,yaw in [(461,-7.4,.2),(462,7.4,-.15),(483,7.4,1.1),(505,-7.7,.3)]: l.place('prop.barricade',[x,0,z],yaw)
+for x,z,yaw in [(461,-7.4,.2),(462,7.4,-.15),(505,-7.7,.3)]: l.place('prop.barricade',[x,0,z],yaw)
+# Two cars that went over earlier lie on the gully floor, clear of the kit (z beyond +-7.5) and of every lane.
+for x,z,yaw in [(515,-11,1.5),(518,9.5,1.7)]:
+    l.place('veh.wreck',[x,-GULLY_DEPTH,z],yaw)
 # Crash sequence anchors (game space). S6 owns the trigger/camera; these are validated safe positions.
 l.anchor('crash-approach',[470,0,0])          # take driving input here, before the first wreck
 l.anchor('crash-impact',[GULLY_X-GULLY_HALF,0,0])  # near lip: the APC leaves the road here
