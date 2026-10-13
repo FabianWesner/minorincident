@@ -89,6 +89,11 @@ export class SceneLab {
   private readonly gunBodyHits = new Map<string, Hit>();
   private heldPropSamples = 0;
   private heldPropClips = new Map<string, StaticClip & { actor: string; frame: number }>();
+  /** Small hand props (mug, phone) per actor: lowest drawn prop centre between hip (0) and shoulders (1), and the straightest
+   * right arm (shoulder-wrist distance over arm length), per LOD band. PO 10-13 "Coffee cup still wrong" (seated, low tier). */
+  /** Frames the solid-occluder courier hole was open, its largest radius and low props drawn with a cut material. */
+  private seeThroughOpen = { frames: 0, solidRadiusMax: 0, cutLowProps: [] as string[] };
+  private holds = new Map<string, { prop: string; samples: number; heightMin: number; heightFrame: number; straightMax: number; straightFrame: number; lods: Record<string, number> }>();
   private companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 };
   /** Hand-over choreographies in progress (actor id -> route, start frame, pause). */
   private handovers = new Map<string, { route: { x: number; z: number }[]; length: number; start: number; pause: number; face?: number }>();
@@ -137,7 +142,7 @@ export class SceneLab {
     }
     this.propSinkMaxCm = 0; this.propGroundSamples = 0; this.propPenetration.clear(); this.propPenetrationSamples = 0; this.propPenetrationTick = -1;
     this.vehicleMotion.clear(); this.pursuit.clear(); this.attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1 };
-    this.spec = structuredClone(spec); this.companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 }; this.frame = 0; this.heldPropSamples = 0; this.heldPropClips.clear(); this.gunBodyHits.clear(); this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.metroClosed = 0; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0;
+    this.spec = structuredClone(spec); this.companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 }; this.frame = 0; this.heldPropSamples = 0; this.heldPropClips.clear(); this.holds.clear(); this.seeThroughOpen = { frames: 0, solidRadiusMax: 0, cutLowProps: [] }; this.gunBodyHits.clear(); this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.metroClosed = 0; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0;
     const built = this.built = buildScene(spec, assets, source);
     if (spec.armyBoom && !spec.armyBoom.closed) for (const p of built.layout.placements) if (p.assetId === 'kit.army-checkpoint') p.boomOpen = true;
     for (const p of built.placements) { const way = buildingDoors[p.assetId]?.leaves.length ? doorwayOf(p) : null; if (way) this.doors.set(p.id, { way, closedFrames: 0, firstClosedFrame: null, inDoorwayFrames: 0, maxOpen: 0 }); }
@@ -515,6 +520,7 @@ export class SceneLab {
       const h = Math.SQRT1_2;
       world.props!.place(item, { p: [item.pose.p[0] + fx.by[0], item.pose.p[1] + (fx.tip ? .3 : 0), item.pose.p[2] + fx.by[1]], q: fx.tip ? [h, 0, 0, h] : [...item.pose.q] });
     }
+    else if ('pickup' in fx) world.pickups!.spawn(fx.pickup, toPoint(fx.at));
     else if ('weaponPickup' in fx) { const id = world.combat!.pickups.spawn(fx.weaponPickup, toPoint(fx.at), false, { surfaceY: fx.surfaceY, retain: true, interactTicks: 36 }); world.entities.get(id)!.transform.yaw = (fx.yaw ?? 0) * Math.PI / 180; }
     else if ('barricadeHit' in fx) { const target = world.entities.values().find(e => e.barricade?.slot.id === fx.barricadeHit); if (!target) throw new Error(`Unknown barricade: ${fx.barricadeHit}`); world.hazards!.hit(target.id, fx.amount, 'bullet'); }
     else if ('lightning' in fx) world.weather?.strike({ ...toPoint(fx.lightning), y: 0 }, fx.consequence);
@@ -751,6 +757,11 @@ export class SceneLab {
   private sample(): void {
     this.recordPropPenetration();
     const probes = this.game.view.labProbes(), figures = new Map(this.game.view.crowdFigures().map(f => [f.id, f]));
+    const audit = probes.districts?.seeThroughAudit();
+    if (audit) {
+      if (audit.strength > .5) { this.seeThroughOpen.frames++; this.seeThroughOpen.solidRadiusMax = Math.max(this.seeThroughOpen.solidRadiusMax, +audit.solidRadius.toFixed(3)); }
+      this.seeThroughOpen.cutLowProps = [...new Set([...this.seeThroughOpen.cutLowProps, ...audit.cutLowProps])];
+    }
     const sim: Record<string, number> = {}, drawn: Record<string, number> = {};
     const clip = this.frame % 3 === 0 && this.staticSets;
     const torsos: { id: string; bones: Bone[] }[] = [];
@@ -766,6 +777,18 @@ export class SceneLab {
       const hand: TriangleSet = { id: `${actor.id}/handR`, assetId: 'handR', tris: contact.hand, box: boxOf(contact.hand) };
       const prop: TriangleSet = { id: `${actor.id}/${contact.prop}`, assetId: contact.prop, tris, box: boxOf(tris) };
       for (const hit of staticClipping([hand, prop])) this.heldPropClips.set(actor.id, { ...hit, actor: actor.id, frame: this.frame });
+      const j = figures.get(contact.entity)?.joints, drawnFigure = figures.get(contact.entity);
+      if ((contact.prop === 'coffee' || contact.prop === 'phone') && drawnFigure?.drawn && j?.hip && j.armL && j.armR && j.foreArmR && j.handR) {
+        const shoulderY = (j.armL[1] + j.armR[1]) / 2, centreY = (prop.box.min[1] + prop.box.max[1]) / 2;
+        const height = (centreY - j.hip[1]) / Math.max(.05, shoulderY - j.hip[1]);
+        const d = (a: number[], b: number[]) => Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
+        const straight = d(j.armR, j.handR) / Math.max(1e-3, d(j.armR, j.foreArmR) + d(j.foreArmR, j.handR));
+        let h = this.holds.get(actor.id);
+        if (!h) this.holds.set(actor.id, h = { prop: contact.prop, samples: 0, heightMin: Infinity, heightFrame: -1, straightMax: 0, straightFrame: -1, lods: {} });
+        h.samples++; const lod = drawnFigure.lod ?? 'lod1'; h.lods[lod] = (h.lods[lod] ?? 0) + 1;
+        if (height < h.heightMin) { h.heightMin = +height.toFixed(3); h.heightFrame = this.frame; }
+        if (straight > h.straightMax) { h.straightMax = +straight.toFixed(3); h.straightFrame = this.frame; }
+      }
     }
     for (const actor of this.actors.values()) {
       const e = this.world.entities.get(actor.entity);
@@ -1058,10 +1081,19 @@ export class SceneLab {
       perf: { drawCalls: band(p => p.drawCalls), triangles: band(p => p.triangles), shadowDrawCalls: band(p => p.shadowDrawCalls), shadowTriangles: band(p => p.shadowTriangles), stepMs: band(p => p.stepMs),
         lastFrame: this.perf.at(-1) ?? null, note: 'view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time' },
       vehicles: Object.fromEntries([...this.vehicles].map(([id, entity]) => { const e = this.world.entities.get(entity); return [id, e ? { entity, position: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)], yawDeg: +(e.transform.yaw * 180 / Math.PI).toFixed(1), yawRateMaxDegS: this.vehicleMotion.get(id)?.yawRateMaxDegS ?? 0, bodyOverlaps: this.vehicleMotion.get(id)?.overlaps ?? 0, rideRemainingM: this.vehicleMotion.get(id)?.ride ? l2TruckPath.at(-1)!.s - this.vehicleMotion.get(id)!.ride!.rideS : null, health: Math.round(e.health.current), decay: e.vehicle?.decay ?? null, speed: +(e.vehicle?.speed ?? e.traffic?.speed ?? 0).toFixed(2) } : null]; })),
+      grounding: this.grounding(),
       pursuit: { actors: Object.fromEntries([...this.pursuit].map(([id, p]) => [id, { stuckRunMax: p.stuckRunMax, stuckFrame: p.stuckFrame, lostNearFrames: p.lostNearFrames, overshootMaxM: +p.overshootMaxM.toFixed(2) }])), courierSwings: this.attacks.swings, courierAttacks: this.attacks.courier, firstAttackFrame: this.attacks.firstFrame, bites: this.attacks.bites, firstBiteFrame: this.attacks.firstBiteFrame },
-      heldProps: { samples: this.heldPropSamples, intersections: this.heldPropClips.size }, companion: { ...this.companion }, bike: { ...this.bike }, variety, actors, clicks: this.clickReport(), visibility: this.visible, lods: this.lods(), clipping: clipping?.summary ?? null,
+      heldProps: { samples: this.heldPropSamples, intersections: this.heldPropClips.size, holds: Object.fromEntries(this.holds) }, seeThrough: { ...this.seeThroughOpen }, companion: { ...this.companion }, bike: { ...this.bike }, variety, actors, clicks: this.clickReport(), visibility: this.visible, lods: this.lods(), clipping: clipping?.summary ?? null,
       emergence: this.emergence ? { building: this.emergence.house, door: { x: +this.emergence.x.toFixed(3), z: +this.emergence.z.toFixed(3), nx: this.emergence.nx, nz: this.emergence.nz }, release: [+this.emergence.ox.toFixed(3), +this.emergence.oz.toFixed(3)], residents: this.emergence.ids.length, doorOpenedFrame: this.emergence.openFrame } : null,
       doors: Object.fromEntries([...this.doors].map(([id, d]) => [id, { closedFrames: d.closedFrames, firstClosedFrame: d.firstClosedFrame, inDoorwayFrames: d.inDoorwayFrames, maxOpen: +d.maxOpen.toFixed(2) }])), log: [...this.log] };
+  }
+  /** Drawn frozen corpses and ground pickups against the exact support at their drawn xz (cm; one walkable layer per column in these scenes). */
+  private grounding() {
+    const d = this.world.districts, probes = this.game.view.labProbes(); if (!d) return null;
+    const off = (b: { x: number; y: number; z: number }) => Math.abs(b.y - d.pavingHeight(b.x, b.z)) * 100;
+    const corpses = probes.drawnCorpses(), pickups = probes.drawnPickups();
+    const round = (b: { id: number; x: number; y: number; z: number }) => ({ id: b.id, at: [+b.x.toFixed(2), +b.y.toFixed(2), +b.z.toFixed(2)], support: +d.pavingHeight(b.x, b.z).toFixed(2), offCm: +off(b).toFixed(1) });
+    return { corpses: corpses.length, corpseOffMaxCm: +Math.max(0, ...corpses.map(off)).toFixed(1), pickups: pickups.length, pickupOffMaxCm: +Math.max(0, ...pickups.map(off)).toFixed(1), worst: [...corpses, ...pickups].map(round).sort((a, b) => b.offCm - a.offCm).slice(0, 5) };
   }
   describe() {
     return { name: this.spec?.name ?? null, frame: this.frame, placements: this.built?.placements.map(p => ({ id: p.id, asset: p.assetId, at: [p.position[0], p.position[2]], yawDeg: Math.round(p.yaw * 1800 / Math.PI) / 10 })) ?? [],

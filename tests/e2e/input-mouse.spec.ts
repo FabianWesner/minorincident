@@ -203,8 +203,9 @@ test('@E03-AC05 @E03-AC17 M1-05 numbers and HUD clicks select either rack; Shift
   expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons!.LEFT.index)).toBe(2);
   await page.keyboard.press('Shift+2');const frame=await tick(page,20);expect(frame.right.down).toBe(false);
   expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons!.RIGHT.index)).toBe(1);
-  await page.getByTestId('slot-LEFT').click();await tick(page,20);
-  expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons!.LEFT.index)).toBe(0);
-  await page.getByTestId('slot-RIGHT').click();await tick(page,20);
+  await page.getByTestId('weapon-active').click();await tick(page,20);
   expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons!.RIGHT.index)).toBe(2);
+  await page.keyboard.press('3');await tick(page,20);
+  await page.getByTestId('weapon-active').click();await tick(page,20);
+  expect(await page.evaluate(()=>window.__SS__!.getState().player!.weapons!.LEFT.index)).toBe(0);
 });

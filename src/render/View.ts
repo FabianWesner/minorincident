@@ -2,9 +2,9 @@
 import { PerspectiveCamera, Quaternion, Vector3 } from 'three';
 import { cameraFraming } from '../data/cameraFraming';
 
-/** Zoom range as a fraction of the default radius (PO, E19 I1 review): in until the hero is ~1/3.5 of the
- * viewport height (courier 1.4 m at 25° FOV ≈ 0.5), out to about twice the visible ground area (√2 ≈ 1.45). */
-export const zoomLimits = [.5, 1.45] as const;
+/** Player zoom range as a fraction of the default radius: in until the hero is ~1/3.5 of the viewport height. */
+// PO 2026-10-13: "End of L3, I can zoom out whihc I shouldn't"
+export const zoomLimits = [.5, 1] as const;
 /** Body-centre height of the courier above the feet (spawn and locomotion keep the player at ground + .72). */
 export const feetOffset = .72;
 export interface CameraPose { position: [number, number, number]; target: [number, number, number] }
@@ -28,7 +28,7 @@ export class View {
   private targetZoom = 1;
   /** Wheel down zooms out; pinch spread zooms in. Default framing is unchanged. */
   zoom(delta: number): void {
-    if (Number.isFinite(delta) && !this.blendTarget) this.targetZoom = Math.max(zoomLimits[0], Math.min(zoomLimits[1], this.targetZoom * Math.exp(delta)));
+    if (Number.isFinite(delta) && !this.blendTarget && !this.scripted) this.targetZoom = Math.max(zoomLimits[0], Math.min(zoomLimits[1], this.targetZoom * Math.exp(delta)));
   }
   inspectionPose: CameraPose | null = null;
   inspectionGameLod = false;
@@ -100,18 +100,38 @@ export class View {
     if (!Number.isFinite(strength)) throw new RangeError('Roll strength must be finite');
     if (this.cameraShake) this.rollSpeed += Math.max(-1.5, Math.min(1.5, strength)) * .55;
   }
+  /** Scripted pull-backs own the framing: while one is active the player's zoom is neutral (it returns when the beat ends) and wheel/pinch cannot widen it. */
+  private get scripted(): boolean { return this.encounterScale > 1.02 || this.pullWeight > 0; }
+  private scriptedAdjusted(zoom: number): number { return this.scripted ? 1 : zoom; }
+  private readonly safeProbe = new Vector3();
+  private pullAt(weight: number, out: Vector3): Vector3 {
+    return out.set(this.focus.x + (this.pullX - this.focus.x) * weight, this.focus.y + ((this.pullY ?? this.focus.y) - this.focus.y) * weight, this.focus.z + (this.pullZ - this.focus.z) * weight);
+  }
+  /** The player always stays inside the central safe area (|NDC| <= .55, clear of the HUD panels): a story pull is capped to the largest weight that keeps them there. */
+  private safePullWeight(weight: number): number {
+    const inside = (w: number): boolean => {
+      this.pullAt(w, this.safeProbe); this.camera.position.copy(this.safeProbe).add(this.offset); this.camera.lookAt(this.safeProbe);
+      this.camera.updateMatrixWorld(); this.camera.matrixWorldInverse.copy(this.camera.matrixWorld).invert();
+      this.safeProbe.set(this.focus.x, this.focus.y + 1, this.focus.z).project(this.camera);
+      return Math.abs(this.safeProbe.x) <= .55 && Math.abs(this.safeProbe.y) <= .55;
+    };
+    if (inside(weight)) return weight;
+    let lo = 0, hi = weight; for (let i = 0; i < 6; i++) { const mid = (lo + hi) / 2; if (inside(mid)) lo = mid; else hi = mid; }
+    return lo;
+  }
   /** Advances the rig by `seconds` (one fixed sim tick in play) and leaves the camera at the new tick pose.
    * `seconds === 0` re-poses without motion (reset, resize, presets) and snaps the interpolation history. */
   update(player: { x: number; z: number; y?: number }, seconds: number): void {
     this.previousPosition.copy(this.tickPosition); this.previousQuaternion.copy(this.tickQuaternion);
     this.zoomRatio += (this.targetZoom - this.zoomRatio) * (1 - Math.exp(-12 * seconds));
-    this.radius = this.defaultRadius * this.zoomRatio * this.encounterScale;
+    this.radius = this.defaultRadius * this.scriptedAdjusted(this.zoomRatio) * this.encounterScale;
     this.focus.x += (player.x - this.focus.x) * (1 - Math.exp(-10 * seconds));
     this.focus.z += (player.z - this.focus.z) * (1 - Math.exp(-10 * seconds));
     // Elevated decks/ramps: follow the feet height (transform.y is the body centre, .72 m above the feet), damped so stairs do not jitter.
     this.focus.y += (Math.max(0, (player.y ?? feetOffset) - feetOffset) - this.focus.y) * (1 - Math.exp(-6 * seconds));
     this.offset.setFromSphericalCoords(this.radius * (this.driving ? 1.15 : 1), this.polar, this.azimuth);
-    const pulled = this.pullWeight > 0 ? this.cameraTarget.set(this.focus.x + (this.pullX - this.focus.x) * this.pullWeight, this.focus.y + ((this.pullY ?? this.focus.y) - this.focus.y) * this.pullWeight, this.focus.z + (this.pullZ - this.focus.z) * this.pullWeight) : this.cameraTarget.copy(this.focus);
+    const weight = this.pullWeight > 0 ? this.safePullWeight(this.pullWeight) : 0;
+    const pulled = weight > 0 ? this.cameraTarget.set(this.focus.x + (this.pullX - this.focus.x) * weight, this.focus.y + ((this.pullY ?? this.focus.y) - this.focus.y) * weight, this.focus.z + (this.pullZ - this.focus.z) * weight) : this.cameraTarget.copy(this.focus);
     this.camera.position.copy(pulled).add(this.offset); this.camera.lookAt(pulled);
     this.blend += Math.sign(this.blendTarget - this.blend) * Math.min(Math.abs(this.blendTarget - this.blend), seconds);
     if (this.blend > 0) {

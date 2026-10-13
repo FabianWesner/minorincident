@@ -535,8 +535,8 @@ export class GameView implements Lifecycle {
       this.l5StationView = showStation;
       const rescue = this.world.scenario === 'L3' && !!this.world.missions?.state.l3?.finaleAt && !this.world.missions.state.l3.barrierClosedAt && player.transform.x >= 195;
       // Brief l3-polish: the station attack pulls back (eased) so the streams at the gates are on screen while the courier holds the yard.
-      this.l3AttackScale += ((l3AttackView(this.world) ? l3.attack.viewScale : 1) - this.l3AttackScale) * (1 - Math.exp(-4 * seconds));
-      this.view.encounterScale = rescue ? 3.3 : this.world.scenario === 'L3' ? this.l3AttackScale : 1;
+      this.l3AttackScale += ((rescue ? 3.3 : l3AttackView(this.world) ? l3.attack.viewScale : 1) - this.l3AttackScale) * (1 - Math.exp(-4 * seconds));
+      this.view.encounterScale = this.world.scenario === 'L3' ? this.l3AttackScale : 1;
       // Brief l3-polish (the phone finale cropped the group at the right edge): a portrait screen pulls less toward the line, so
       // the courier and her group stay in frame next to the surge.
       if (this.world.scenario === 'L3') this.view.pull(202, 0, rescue ? (this.view.camera.aspect < 1 ? .45 : .8) : 0, rescue ? 1.6 : undefined);
@@ -567,7 +567,7 @@ export class GameView implements Lifecycle {
       this.view.preset(name, { position: [p.x + 15, 18, p.z + 15], target: [p.x, .4, p.z] }); this.update(1); return;
     }
     if (this.world.vehicles && name === 'vehicle') { this.view.preset(name, { position: [-9, 6, 21], target: [0, .8, 12] }); this.update(1); return; }
-    // E27 labs: the game camera geometry (radius 19, max zoom-out 1.45×) centred on the blast origin.
+    // E27 labs: the game camera geometry (radius 19, default player zoom) centred on the blast origin.
     if ((this.world.scenario?.startsWith('blast') || this.world.scenario === 'smoke-lab') && (name === 'blast' || name === 'blast-wide' || name === 'blast-car')) { const k = name === 'blast-wide' ? 1.45 : 1, [x, z] = name === 'blast-car' ? [7, -3] : [0, 0]; this.view.preset(name, { position: [x + 10.9 * k, 11.2 * k, z + 10.9 * k], target: [x, 0, z] }); this.update(1); return; }
     if (this.world.combat && name === 'aim') { this.view.preset(name, combatPhotoSpots.aim); this.update(1); return; }
     if (this.world.scenario?.startsWith('vfx') || this.world.scenario === 'blood-probe' || this.world.scenario === 'gore-probe') {
@@ -621,7 +621,7 @@ export class GameView implements Lifecycle {
   /** Scene Lab probes (src/debug/scenelab): the presentation objects it measures. Test/debug use only. */
   /** Drawn ground of the current district view (roads 5 cm above the sim plane, paving, road paint) for tyre contacts. */
   private readonly drawnGround = (x: number, z: number) => this.districts?.groundAt(x, z) ?? null;
-  labProbes() { return { gunMeshes: [...(this.actions?.gunMeshes() ?? []), ...(this.npcs?.gunMeshes() ?? [])], heldProps: this.npcs?.heldProps() ?? [], districts: this.districts, character: this.character, npcs: this.npcs, bicycle: this.bicycle, vehicles: this.vehicles }; }
+  labProbes() { return { gunMeshes: [...(this.actions?.gunMeshes() ?? []), ...(this.npcs?.gunMeshes() ?? [])], heldProps: this.npcs?.heldProps() ?? [], districts: this.districts, character: this.character, npcs: this.npcs, bicycle: this.bicycle, vehicles: this.vehicles, drawnCorpses: () => [...(this.crowd?.drawnCorpses() ?? []), ...(this.npcs?.drawnCorpses() ?? [])], drawnPickups: () => this.interactions?.drawnPickups() ?? [] }; }
   renderDiagnostics() { return { renderer: this.renderer.diagnostics(), postFx: this.postFx?.diagnostics() ?? null, retiredPostFx: this.retiredPostFx, generation: this.generation }; }
   renderProbe() {
     const c = this.camera, finite = (m: { elements: number[] }) => m.elements.every(Number.isFinite);

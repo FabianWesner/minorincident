@@ -161,7 +161,7 @@ export class CrowdGunAim {
     const length = (this.armIK.middle.position.length() + this.armIK.end.position.length()) * upper.getWorldScale(this.goal).y;
     torso.getWorldQuaternion(this.frameQ);
     upper.getWorldPosition(this.shoulder);
-    const chest = new Vector3(.62 * length, -.42 * length, -.14 * length - socket[2] * .6);
+    const chest = new Vector3(.55 * length, -.12 * length, -.14 * length - socket[2] * .6);
     const mouth = head.getWorldPosition(new Vector3()).add(new Vector3(.12, -.05, 0).applyQuaternion(this.frameQ)).sub(new Vector3(socket[0] + .04, socket[1] + .02, socket[2]).applyQuaternion(this.frameQ));
     this.goal.copy(chest).applyQuaternion(this.frameQ).add(this.shoulder).lerp(mouth, sip);
     // Short arms (the elderly) cannot reach the mouth straight: stop at a bent elbow.

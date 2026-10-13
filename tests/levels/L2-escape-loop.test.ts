@@ -40,13 +40,13 @@ describe('L2 escape death loop', () => {
     expect(m.state.checkpoint).toBe('escape');
   }, 600_000);
 
-  test('a courier who dies twice at the same checkpoint respawns with fewer infected within 10 m', async () => {
+  test('a courier who dies twice at the same checkpoint respawns with fewer infected within 25 m (the shared respawn already pushes them out of 9 m)', async () => {
     const { w, m } = await atRadio();
     const n = scrum(w, 12); expect(n).toBeGreaterThanOrEqual(8);
     m.state.l2!.cpWait = []; m.requestCheckpoint('escape'); w.update(); w.update();
     expect(m.state.checkpoint).toBe('escape');
     const counts: number[] = [];
-    for (let death = 1; death <= 4; death++) { die(w, m, 'escape'); counts.push(near(w, 10)); }
+    for (let death = 1; death <= 4; death++) { die(w, m, 'escape'); counts.push(near(w, 25)); }
     // Death 1 respawns into the full scrum; from the 2nd respawn on it thins, step by step.
     expect(counts[0]).toBeGreaterThanOrEqual(n - 2);
     expect(counts[1]).toBeLessThan(counts[0]);

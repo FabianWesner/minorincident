@@ -18,6 +18,8 @@ import { placementColliders } from "../../levels/districts/staticCollision";
 import { bakeNav } from "./NavGrid";
 import { pushableProps } from "../../data/pushableProps";
 /** Sim-side level assembly. Render consumes the same immutable loaded layouts/placements. */
+/** Horizontal reach of a walkable support past its collider edge (m): closes authoring seams between tiled slabs. */
+export const supportSeam = .03;
 export class DistrictWorld {
   readonly districts;
   readonly nav;
@@ -71,7 +73,10 @@ export class DistrictWorld {
       };
     });
     for (const d of this.districts) for (const c of d.decay.colliders) if (c.walkable) {
-      const a: Aabb = { min: [c.aabb.min[0] + d.origin[0], c.aabb.min[1], c.aabb.min[2] + d.origin[1]], max: [c.aabb.max[0] + d.origin[0], c.aabb.max[1], c.aabb.max[2] + d.origin[1]] };
+      // PO 2026-10-13 "Corgi sunken": tiled walkable tops (the fire station apron: 0.75 x 1.5 m slabs) leave 3-4 cm seams; a
+      // point sample in a seam dropped the corgi (and any pedestrian) 10 cm into the drawn slab while the courier's capsule spanned it.
+      // Each support reaches `supportSeam` past its edge, so seams narrower than twice that are closed for every caller.
+      const a: Aabb = { min: [c.aabb.min[0] + d.origin[0] - supportSeam, c.aabb.min[1], c.aabb.min[2] + d.origin[1] - supportSeam], max: [c.aabb.max[0] + d.origin[0] + supportSeam, c.aabb.max[1], c.aabb.max[2] + d.origin[1] + supportSeam] };
       for (let z = Math.floor(a.min[2] / 4); z <= Math.floor(a.max[2] / 4); z++) for (let x = Math.floor(a.min[0] / 4); x <= Math.floor(a.max[0] / 4); x++) {
         const key = DistrictWorld.groundKey(x, z), bucket = this.supports.get(key) ?? []; bucket.push(a); this.supports.set(key, bucket);
       }
@@ -152,6 +157,19 @@ export class DistrictWorld {
     for (const s of this.slabs.get(key) ?? []) {
       if (s.height > height && x >= s.min[0] && x <= s.max[0] && z >= s.min[1] && z <= s.max[1] && inside([x, z], s.polygon)) height = s.height;
     }
+    return height;
+  }
+  /**
+   * The walkable support a body at (x, z) whose feet are at `feet` stands on: the highest support or paving top that is at most
+   * `rise` (a step) above the feet. Unlike `pavingHeight` (the highest top anywhere in the column) a body on the street below the
+   * highway deck stays on the street, and one that left the deck edge drops to what is under it.
+   */
+  supportBelow(x: number, z: number, feet: number, rise = .6): number {
+    const limit = feet + rise, key = DistrictWorld.groundKey(Math.floor(x / 4), Math.floor(z / 4));
+    let height = 0;
+    for (const a of this.supports.get(key) ?? []) if (a.max[1] <= limit && a.max[1] > height && x >= a.min[0] && x <= a.max[0] && z >= a.min[2] && z <= a.max[2]) height = a.max[1];
+    for (const s of this.slabs.get(key) ?? []) if (s.height <= limit && s.height > height && x >= s.min[0] && x <= s.max[0] && z >= s.min[1] && z <= s.max[1] && inside([x, z], s.polygon)) height = s.height;
+    for (const s of this.paving.get(key) ?? []) if (s.height <= limit && s.height > height && inside([x - s.origin[0], z - s.origin[1]], s.polygon)) height = s.height;
     return height;
   }
   /** Visible paving is baked into the layout GLB rather than the solid-prop collider set. */
