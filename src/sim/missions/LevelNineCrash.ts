@@ -3,11 +3,14 @@ import { stopEngine } from '../vehicles/ConvoySound';
 import { survivor } from '../../data/survivor';
 import type { Transform } from '../world/types';
 import type { Mission } from './Mission';
+import { emptyEncounters, updateEncounters, type L9EncounterState } from './LevelNineEncounters';
 
 export interface L9CrashState {
   phase: 'driving' | 'approach' | 'fall' | 'impact' | 'crawl' | 'done';
   carId: number; startedAt: number; preCrashDurability: number;
   from: Transform; crawlAnchor: string; finished: boolean; ended: boolean;
+  /** L9-E1 route groups (spawned once, stable ids). Optional so pre-E1 saves still load. */
+  encounters?: L9EncounterState;
 }
 const APPROACH = 180, FALL = 120, IMPACT = 180, CRAWL = 360;
 const lerp = (a: number, b: number, t: number) => a + (b - a) * Math.min(1, Math.max(0, t));
@@ -15,7 +18,7 @@ const lerp = (a: number, b: number, t: number) => a + (b - a) * Math.min(1, Math
 /** E31 L9-S6: fixed-tick, one-shot crash. Campaign equipment reset belongs to S7. */
 export class LevelNineCrash {
   state: L9CrashState = { phase: 'driving', carId: 0, startedAt: 0, preCrashDurability: 0,
-    from: { x: 0, y: 0, z: 0, yaw: 0 }, crawlAnchor: 'crawl-start', finished: false, ended: false };
+    from: { x: 0, y: 0, z: 0, yaw: 0 }, crawlAnchor: 'crawl-start', finished: false, ended: false, encounters: emptyEncounters() };
   constructor(private readonly mission: Mission) {}
   private get w() { return this.mission.world; }
   private anchor(name: string): Transform {
@@ -61,6 +64,7 @@ export class LevelNineCrash {
     const s = this.state, w = this.w, car = w.entities.get(s.carId);
     if (!car || s.finished || w.entities.get(1)!.health.current <= 0) return;
     if (s.phase === 'driving') {
+      updateEncounters(w, s.encounters ??= emptyEncounters());
       const a = this.anchor('crash-approach');
       // The complete outskirts strip catches road/off-road bypasses before the x=550 trigger.
       if (car.transform.x < a.x - 2) return;

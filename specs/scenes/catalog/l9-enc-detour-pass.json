@@ -1,0 +1,19 @@
+{
+ "name": "l9-enc-detour-pass",
+ "note": "L9-E1: the authored road detour passes the road group at (-50,-330) 25 m away (z=-305), the camera watches the group. Seen in the sheet: the runners notice the passing APC after about 4 s and trail it but never touch it (full-route sim: 0 contacts, durability stays 1000).",
+ "seed": 31,
+ "ground": "district",
+ "time": "L9-crossing",
+ "dof": false,
+ "layout": { "district": "D-CROSSING", "bbox": [[-140, -390], [40, -270]] },
+ "actors": [
+  { "id": "group", "kind": "infected", "archetype": "infected.runner", "count": 6, "at": [-50, -330], "spread": 2.2, "yaw": 270 }
+ ],
+ "vehicles": [
+  { "id": "apc", "asset": "vehicle.military-apc", "at": [-95, -305], "yaw": 0, "health": 1000, "path": [[5, -305]] }
+ ],
+ "camera": { "mode": "game", "target": "group-1", "zoom": 1 },
+ "frames": 420,
+ "sheet": 30,
+ "expect": { "consoleErrors": 0, "clippingMax": 0, "drawCallsMax": 300, "trianglesMax": 500000 }
+}

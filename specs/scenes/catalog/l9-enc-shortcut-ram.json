@@ -1,0 +1,66 @@
+{
+ "name": "l9-enc-shortcut-ram",
+ "note": "L9-E1: healthy APC drives straight through the dry-shortcut group at (-150,-30) (8 runners, game camera). Look for: runners are thrown/downed by the hull, the APC keeps its line and wheels stay grounded, no infected stuck in the hull.",
+ "seed": 31,
+ "ground": "district",
+ "time": "L9-crossing",
+ "dof": false,
+ "layout": {
+  "district": "D-CROSSING",
+  "bbox": [
+   [
+    -240,
+    -90
+   ],
+   [
+    -60,
+    30
+   ]
+  ]
+ },
+ "actors": [
+  {
+   "id": "group",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "count": 8,
+   "at": [
+    -150,
+    -30
+   ],
+   "spread": 2.2,
+   "yaw": 270
+  }
+ ],
+ "vehicles": [
+  {
+   "id": "apc",
+   "asset": "vehicle.military-apc",
+   "at": [
+    -190,
+    -30
+   ],
+   "yaw": 0,
+   "health": 1000,
+   "path": [
+    [
+     -100,
+     -30
+    ]
+   ]
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": "apc",
+  "zoom": 1
+ },
+ "frames": 420,
+ "sheet": 30,
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000
+ }
+}
