@@ -41,6 +41,20 @@ function validTransport(raw: unknown): boolean {
   return ids.size === raw.occupants.length && ids.has(1) && !ids.has(vehicle.id) && vehicle.vehicle.passengers.length === ids.size - 1
     && vehicle.vehicle.passengers.every(p => record(p) && p.phase === 'seated' && p.id !== 1 && ids.has(p.id)) && new Set(vehicle.vehicle.passengers.map(p => p.id)).size === vehicle.vehicle.passengers.length;
 }
+/** Validate the fixed crash resume record before any physics bodies are rebuilt. */
+function validCrash(raw: unknown): boolean {
+  if (!record(raw) || !record(raw.state) || !record(raw.player) || !record(raw.vehicle)) return false;
+  const s = raw.state, p = raw.player, car = raw.vehicle;
+  const pose = (v: unknown): boolean => record(v) && ['x', 'y', 'z', 'yaw'].every(k => Number.isFinite(v[k]));
+  const health = (v: unknown, alive: boolean): boolean => record(v) && Number.isFinite(v.current) && Number.isFinite(v.max) && Number(v.max) > 0 && Number(v.current) >= (alive ? 1 : 0) && Number(v.current) <= Number(v.max);
+  return Number.isSafeInteger(raw.tick) && Number(raw.tick) >= 0 && Number.isSafeInteger(s.startedAt) && Number(s.startedAt) <= Number(raw.tick)
+    && ['driving', 'approach', 'fall', 'impact', 'crawl', 'done'].includes(String(s.phase)) && Number.isSafeInteger(s.carId) && Number(s.carId) > 1
+    && Number.isFinite(s.preCrashDurability) && Number(s.preCrashDurability) >= 0 && pose(s.from)
+    && ['crawl-start', 'crawl-fallback'].includes(String(s.crawlAnchor)) && typeof s.finished === 'boolean' && s.finished === (s.phase === 'done') && typeof s.ended === 'boolean' && (!s.ended || s.finished)
+    && p.id === 1 && pose(p.transform) && health(p.health, true) && record(p.survivor)
+    && car.id === s.carId && car.archetype === 'vehicle.military-apc' && pose(car.transform) && health(car.health, false) && record(car.vehicle)
+    && (['impact', 'crawl', 'done'].includes(String(s.phase)) ? car.vehicle.damage === 'exploded' && car.vehicle.driver === null : car.vehicle.driver === 1);
+}
 /** v0 renamed level; v2 persists completion before navigation. Existing v1 aftermath is retained; absent records keep level defaults. */
 export function migrate(raw:unknown):unknown {
   if(record(raw)&&raw.version===0){const {level,...rest}=raw;raw={...rest,version:1,unlockedLevel:level};}
@@ -61,6 +75,7 @@ export function validateSave(raw:unknown):raw is CampaignSave {
     if(Object.hasOwn(enums,key)?!enums[key].includes(String(value)):!['cameraShake','flashReduction','muted','captions','noiseRings','mono','haptics','tinnitus','bloom','cheapDof','vfx','colorblind','slowMotion'].includes(key)||typeof value!=='boolean')return false;
   }
   if(Object.entries(save.usage).some(([id,n])=>!Object.hasOwn(catalog,id)||!Number.isSafeInteger(n)||n<0))return false;
+  if(save.l9Crash!==undefined&&!validCrash(save.l9Crash))return false;
   if(save.transport!==undefined&&!validTransport(save.transport))return false;
   if(save.world!==undefined&&(!record(save.world)||Object.keys(save.world).some(k=>k!=='L1')||save.world.L1!==undefined&&!validAftermath(save.world.L1)))return false;
   if(save.stationOccupants!==undefined&&(!Array.isArray(save.stationOccupants)||save.stationOccupants.length<20||save.stationOccupants.length>30||!save.stationOccupants.every(validCivilian)||new Set(save.stationOccupants.map(e=>e.id)).size!==save.stationOccupants.length))return false;
