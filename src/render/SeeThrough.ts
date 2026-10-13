@@ -18,6 +18,11 @@ export const seeThrough = {
   cover: uniform(0),
 };
 
+/** Placements lower than this never count as occluders (DistrictView's camera-to-courier tests) and are never cut.
+ * PO 2026-10-13 "Bank isn't fully rendered": at zoom 0.66 the group-sized solid hole spans most of the frame, and a
+ * bench nearer the camera than the courier lost everything above 0.3 m (planks, back) while a building occluded her. */
+export const occluderMinHeight = 1.1;
+
 /** Soft circular mask around the courier: 0 at the centre, 1 outside the radius and behind the courier. */
 export const seeThroughHole = (scale = 1, radius: Node<'float'> = seeThrough.radius, inner = .55) => positionView.z.greaterThan(seeThrough.depth).select(
   smoothstep(radius.mul(inner * scale), radius.mul(scale), screenUV.sub(seeThrough.center).mul(vec2(screenSize.x.div(screenSize.y), 1)).length()), 1);

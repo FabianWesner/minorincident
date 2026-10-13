@@ -138,6 +138,8 @@ export type Action =
 export type ScriptStep = { frame: number } & ({ actor: string; do: Action } | { spawnActor: ActorSpec } | { effect: EffectSpec } | { camera: CameraSpec } | { time: TimeOfDay } | { weather: import('../../data/weather').WeatherKind });
 export type EffectSpec =
   | { metroShutter: number }
+  /** A ground pickup (medkit, soda, ...) at [x, z]: its drawn height is checked by `metrics.grounding`. */
+  | { pickup: 'medkit' | 'soda' | 'energy-drink'; at: Point }
   | { weaponPickup: string; at: Point; surfaceY?: number; yaw?: number }
   | { lightning: Point; consequence?: 'fire' | 'blackout' }
   | { blast: string; at: Point }
@@ -168,6 +170,14 @@ export interface Expectations {
   /** Native hand triangles vs the drawn held prop, sampled every third frame. */
   heldPropIntersectionsMax?: number;
   heldPropSamplesMin?: number;
+  /** Mug/phone: lowest drawn prop centre between hip (0) and shoulders (1) over all frames and LOD bands (`metrics.heldProps.holds`). */
+  heldPropHoldMin?: number;
+  /** Mug/phone: straightest right arm, shoulder-wrist distance over arm length (1 = a hanging straight arm). */
+  heldPropArmStraightMax?: number;
+  /** Placements lower than an occluder (1.1 m) drawn with the courier-hole cut material (`metrics.seeThrough.cutLowProps`); use 0. */
+  seeThroughLowPropsMax?: number;
+  /** Minimum frames the solid-occluder hole was open, so a cutaway fixture cannot pass without exercising it. */
+  seeThroughOpenFramesMin?: number;
   /** Placement pairs whose LOD0 meshes cut through each other (`clipping.static` only; bone hits not counted). */
   staticOverlapMax?: number;
   footSlideMaxCm?: number;
@@ -183,6 +193,10 @@ export interface Expectations {
   corgiRunLagMaxM?: number;
   /** Most frames any living actor was inside the camera frustum but not drawn (invisible-but-active). */
   undrawnFramesMax?: number;
+  /** Drawn frozen corpses / ground pickups further than this from the support at their xz (cm, `metrics.grounding`); a gate on zero drawn bodies fails (min counts below). */
+  groundingMaxCm?: number;
+  groundingCorpsesMin?: number;
+  groundingPickupsMin?: number;
   yawDriftMaxDeg?: number;
   torsoPitchMaxDeg?: number;
   /** Clicks on a drawn body that did not start (or queue) an attack on that actor within 100 ms (`metrics.clicks`). */
@@ -270,7 +284,7 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
   }
   // Recentering moves the crop (and its bbox) so its centre lands on the origin.
   const shift: Point = spec.layout?.recenter && bbox ? [-(bbox[0][0] + bbox[1][0]) / 2, -(bbox[0][1] + bbox[1][1]) / 2] : [0, 0];
-  for (const p of kept) { p.position[0] += shift[0]; p.position[2] += shift[1]; for (const k of ['min', 'max'] as const) { p.visualAabb[k][0] += shift[0]; p.visualAabb[k][2] += shift[1]; } p.lightGroup = labLightGroup; }
+  for (const p of kept) { p.position[0] += shift[0]; p.position[2] += shift[1]; for (const k of ['min', 'max'] as const) { p.visualAabb[k][0] += shift[0]; p.visualAabb[k][2] += shift[1]; } if (!(p.assetId === 'kit.highway-onramp' && p.lightGroup === 'l3-highway')) p.lightGroup = labLightGroup; }
   spec.props?.forEach((prop, i) => kept.push(placementFor(prop, i, assets)));
   const center: Point = bbox && !spec.layout?.recenter ? [(bbox[0][0] + bbox[1][0]) / 2, (bbox[0][1] + bbox[1][1]) / 2] : [0, 0];
   const halfX = bbox ? Math.abs(bbox[1][0] - bbox[0][0]) / 2 + 8 : (spec.size ?? 40) / 2, halfZ = bbox ? Math.abs(bbox[1][1] - bbox[0][1]) / 2 + 8 : (spec.size ?? 40) / 2;
@@ -286,7 +300,7 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
     roads: { nodes: [], edges: [] }, placements: kept, anchors: {}, zones: {}, buildings: [],
     colliders: solid.map(p => ({ id: p.id, aabb: structuredClone(p.visualAabb), minTier: p.minTier, maxTier: p.maxTier })),
     walkable: { cellSize: 1, excluded: [] }, lawns: spec.ground === 'district' && source ? source.lawns : spec.ground === undefined || spec.ground === 'grass' ? [{ min: [x0, z0], max: [x1, z1] }] : [],
-    decorations: [], lightGroups: [{ id: labLightGroup, offAt: 6 }, ...[...new Set(spec.props?.map(p => p.powerGroup).filter((group): group is string => !!group) ?? [])].map(id => ({ id, offAt: spec.props?.some(p => p.powerGroup === id && p.powered === false) ? 0 as Tier : 6 as Tier }))], acousticZones: [],
+    decorations: [], lightGroups: [{ id: labLightGroup, offAt: 6 }, ...(kept.some(p => p.lightGroup === 'l3-highway') ? [{ id: 'l3-highway', offAt: 6 as const }] : []), ...[...new Set(spec.props?.map(p => p.powerGroup).filter((group): group is string => !!group) ?? [])].map(id => ({ id, offAt: spec.props?.some(p => p.powerGroup === id && p.powered === false) ? 0 as Tier : 6 as Tier }))], acousticZones: [],
     surfaces: spec.ground === 'district' && source ? source.surfaces : [{ surface: spec.ground === 'asphalt' ? 'asphalt' : spec.ground === 'sidewalk' ? 'tile' : 'grass', polygon: bounds }], layers: [{ tier: 0, remove: [], disableLights: spec.props?.filter(p => p.powerGroup && p.powered === false).map(p => p.powerGroup!) ?? [] }],
   };
   if (spec.ground === 'district' && source?.layers.some(l => l.tier === 6)) layout.layers.push({ tier: 6, remove: [], disableLights: [] });

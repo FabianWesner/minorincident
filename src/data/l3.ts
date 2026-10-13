@@ -111,9 +111,6 @@ export const l3 = {
    * `stepFrac` per death (max `maxFrac`). Hordes and density stay for anyone who plays it through; only a death loop eases.
    */
   mercy: { fromDeaths: 1, stepFrac: .3, maxFrac: .75, aheadM: [12, 90] as P, behindM: 20 },
-  /** Brief l3-polish: every respawn clears `clearM` around the courier (infected step back to its edge), pursuers within `pursueM`
-   * lose her for `delayS`, and she has `graceS` of invulnerability. The restored outbreak layer keeps its members. */
-  respawn: { clearM: 9, pursueM: 30, delayS: 4, graceS: 2 },
   checkpoints: ['armory', 'fallback', 'segment-2', 'segment-2b', 'segment-3', 'segment-3b'] as const,
   /** Corridor checkpoints by progress X (taken at the first calm moment after the courier passes the line, see LevelThreeCollapse.calmCheckpoint). */
   checkpointAt: { 'segment-2': -40, 'segment-2b': 8, 'segment-3': 50, 'segment-3b': 92 } as Record<string, number>,

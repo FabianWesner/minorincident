@@ -149,6 +149,12 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   add('consoleErrors', errors.length, e.consoleErrors ?? 0);
   add('clipping', clipping.static.length + clipping.actors.length + clipping.heldProps.length + (clipping.gunBodies?.length ?? 0), e.clippingMax);
   add('heldPropIntersections', clipping.heldProps.length, e.heldPropIntersectionsMax);
+  const holds = Object.values(metrics.heldProps.holds ?? {}) as { heightMin: number; straightMax: number; samples: number }[];
+  // A gate on an empty set fails: the mug or phone must actually be drawn in a hand.
+  if (e.heldPropHoldMin !== undefined) { const value = holds.length ? Math.min(...holds.map(h => h.heightMin)) : -1; checks.push({ name: 'heldPropHold', pass: value >= e.heldPropHoldMin, value, limit: e.heldPropHoldMin }); }
+  if (e.heldPropArmStraightMax !== undefined) { const value = holds.length ? Math.max(...holds.map(h => h.straightMax)) : Infinity; checks.push({ name: 'heldPropArmStraight', pass: value <= e.heldPropArmStraightMax, value, limit: e.heldPropArmStraightMax }); }
+  add('seeThroughLowProps', metrics.seeThrough?.cutLowProps.length ?? 0, e.seeThroughLowPropsMax);
+  if (e.seeThroughOpenFramesMin !== undefined) checks.push({ name: 'seeThroughOpenFrames', pass: (metrics.seeThrough?.frames ?? 0) >= e.seeThroughOpenFramesMin, value: metrics.seeThrough?.frames ?? 0, limit: e.seeThroughOpenFramesMin });
   if (e.heldPropSamplesMin !== undefined) checks.push({ name: 'heldPropSamples', pass: metrics.heldProps.samples >= e.heldPropSamplesMin, value: metrics.heldProps.samples, limit: e.heldPropSamplesMin });
   add('staticOverlap', clipping.static.length, e.staticOverlapMax);
   const motion = Object.values(metrics.actors).map(a => a.motion);
@@ -159,6 +165,9 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   add('corgiCourierOverlapMaxCm', metrics.companion?.samples ? metrics.companion.overlapMaxCm : Infinity, e.corgiCourierOverlapMaxCm);
   add('corgiRunLagMaxM', metrics.companion?.runningSamples ? metrics.companion.runLagMaxM : Infinity, e.corgiRunLagMaxM);
   add('undrawnFramesMax', Math.max(0, ...Object.values(metrics.actors).map(a => a.missedInViewFrames)), e.undrawnFramesMax);
+  if (e.groundingMaxCm !== undefined) add('groundingMaxCm', Math.max(metrics.grounding?.corpseOffMaxCm ?? Infinity, metrics.grounding?.pickupOffMaxCm ?? Infinity), e.groundingMaxCm);
+  if (e.groundingCorpsesMin !== undefined) checks.push({ name: 'groundingCorpsesMin', pass: (metrics.grounding?.corpses ?? 0) >= e.groundingCorpsesMin, value: metrics.grounding?.corpses ?? 0, limit: e.groundingCorpsesMin });
+  if (e.groundingPickupsMin !== undefined) checks.push({ name: 'groundingPickupsMin', pass: (metrics.grounding?.pickups ?? 0) >= e.groundingPickupsMin, value: metrics.grounding?.pickups ?? 0, limit: e.groundingPickupsMin });
   add('yawDriftMaxDeg', Math.max(0, ...motion.map(m => m.yawDriftMaxDeg)), e.yawDriftMaxDeg);
   add('torsoPitchMaxDeg', Math.max(0, ...motion.map(m => Math.max(Math.abs(m.torsoPitchMaxDeg ?? 0), Math.abs(m.torsoPitchMinDeg ?? 0)))), e.torsoPitchMaxDeg);
   add('clickMissMax', metrics.clicks.misses, e.clickMissMax);

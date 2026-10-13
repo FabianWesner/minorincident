@@ -18,17 +18,16 @@ test('T-E14-01 @E14 @E14-AC01 all HUD nodes have IDs; HP, ammo, charges and side
   expect(result.ratio).toBeCloseTo(result.hp.current / result.hp.max, 2);
   await page.evaluate(async () => { window.__SS__!.input.set({ right: { down: true, held: false, up: true } }); await window.__SS__!.step(1); window.__SS__!.input.clear(); });
   const weapons = (await page.evaluate(() => window.__SS__!.getState())).player!.weapons!;
-  await expect(page.getByTestId('stats-LEFT')).toHaveAttribute('data-ammo', String(weapons.LEFT.rack[0].magazine));
-  await expect(page.getByTestId('stats-RIGHT')).toHaveAttribute('data-charges', String(weapons.RIGHT.rack[0].charges));
-  await expect(page.getByTestId('slot-RIGHT')).toHaveClass(/is-selected/);
-  await expect(page.getByTestId('slot-LEFT')).not.toHaveClass(/is-selected/);
+  // PO 10-13: one active-weapon icon in the vitals panel replaces the two bottom cards.
+  await expect(page.getByTestId('weapon-active')).toHaveAttribute('data-weapon', weapons.RIGHT.rack[weapons.RIGHT.index].id);
+  await expect(page.getByTestId('weapon-active')).toHaveAttribute('data-charges', String(weapons.RIGHT.rack[weapons.RIGHT.index].charges));
 });
-test('T-E14-02 @E14 @E14-AC02 selected card switches with physical J/K and is visually highlighted', async ({ page }) => {
+test('T-E14-02 @E14 @E14-AC02 active weapon icon follows physical J/K', async ({ page }) => {
   await hudStart(page);
   for (const [key, side] of [['KeyJ', 'LEFT'], ['KeyK', 'RIGHT']] as const) {
     await page.keyboard.press(key); await page.evaluate(() => window.__SS__!.step(1));
-    await expect(page.getByTestId(`slot-${side}`)).toHaveClass(/is-selected/);
-    await expect(page.getByTestId(`slot-${side}`)).toHaveCSS('border-top-color', 'rgb(255, 205, 121)');
+    const w = (await page.evaluate(() => window.__SS__!.getState())).player!.weapons!;
+    await expect(page.getByTestId('weapon-active')).toHaveAttribute('data-weapon', w[side].rack[w[side].index].id);
     await photo(page, `selected-${side.toLowerCase()}`);
   }
 });
@@ -39,7 +38,7 @@ test('T-E14-06 @E14 @E14-AC06 hud-golden desktop/mobile evidence for checklist F
   const perf = await page.evaluate(() => window.__SS__!.perf()); writeFileSync(`${dir}/perf.json`, JSON.stringify(perf, null, 2));
   await page.setViewportSize({ width: 390, height: 844 }); await photo(page, 'hud-mobile');
   await expect(page.getByTestId('vitals')).toBeVisible(); await expect(page.getByTestId('minimap')).toBeVisible();
-  await expect(page.getByTestId('slot-LEFT')).toBeVisible();
+  await expect(page.getByTestId('weapon-active')).toBeVisible();
 });
 test('T-E14-07 @E14 @E14-AC07 text scales 1/1.25/1.5 without DOM overflow at all reference viewports', async ({ page }) => {
   await hudStart(page);

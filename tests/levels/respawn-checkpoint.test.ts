@@ -3,7 +3,7 @@ import type { SimWorld } from '../../src/sim/world/SimWorld';
 import { loadL1, runL1 } from '../../tools/sim-runner/l1Bots';
 import { loadL2, runL2 } from '../../tools/sim-runner/l2Bots';
 
-/** PO 2026-10-12: a death respawns at the last checkpoint the courier actually reached (bat pickup), never somewhere unvisited. */
+/** PO 2026-10-12/13: a death respawns exactly on the last checkpoint the courier actually reached (bat pickup), never somewhere unvisited. */
 let world: SimWorld | undefined;
 afterEach(() => { world?.dispose(); world = undefined; });
 const dist = (a: { x: number; z: number }, b: { x: number; z: number }) => Math.hypot(a.x - b.x, a.z - b.z);
@@ -25,7 +25,9 @@ describe('respawn at the last reached checkpoint', () => {
     // The courier wanders 40 m off (the PO died elsewhere); the respawn must still use the bat checkpoint, not the death spot.
     Object.assign(p.transform, { x: spot.x - 40, z: spot.z }); w.physics.playerBody!.setTranslation(p.transform, true);
     dieAndRespawn(w);
-    expect(dist(p.transform, spot), 'near the pickup, not near the death spot').toBeLessThanOrEqual(14);
+    expect(dist(p.transform, spot), 'exactly on the pickup checkpoint, not near the death spot').toBeLessThanOrEqual(1.5);
+    // The PO's bat-house case: infected right at the house door do not push her to another street; they are pushed away instead.
+    expect(w.infected!.active.filter(e => e.health.current > 0 && dist(e.transform, p.transform) < 8.5).map(e => e.id)).toEqual([]);
     expect(w.events.events().some(e => e.type === 'checkpoint.restored')).toBe(false);
     expect(p.weapons!.LEFT.rack[0].id).toBe('weapon.bat'); expect(mission.state.items).toContain('bat');
     expect(mission.state.checkpoint).toBe('bat');
@@ -44,7 +46,7 @@ describe('respawn at the last reached checkpoint', () => {
     expect(m.state.checkpoint).toBe('axe');
     const p = w.entities.get(1)!, at = { x: p.transform.x, z: p.transform.z };
     dieAndRespawn(w);
-    expect(dist(p.transform, at)).toBeLessThan(3);
+    expect(dist(p.transform, at)).toBeLessThanOrEqual(1.5);
     expect(p.weapons!.LEFT.rack.map(r => r.id).join()).toContain('axe');
     expect(m.state.items).toContain('axe');
   }, 600_000);

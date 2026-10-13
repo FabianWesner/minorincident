@@ -7,7 +7,7 @@ import { menuStart } from '../ui-helpers';
 const output = 'test-results/epics/E19/l1v2';
 const layout = JSON.parse(readFileSync('public/assets/layouts/D-GROVE.layout.json', 'utf8')) as { anchors: Record<string, { position: number[] }>; colliders: { aabb: { min: number[]; max: number[] } }[]; placements: { assetId: string; position: number[] }[] };
 const at = (name: string) => ({ x: layout.anchors[name].position[0], z: layout.anchors[name].position[2] });
-/** Game follow camera offset at zoom 1 (View: radius 19, polar 0.3 pi, azimuth pi/4); the player may zoom 0.5 to 1.45. */
+/** Game follow camera offset at zoom 1 (View: radius 19, polar 0.3 pi, azimuth pi/4); the player may zoom 0.5 to 1. */
 const gameOffset = [10.87, 11.17, 10.87];
 const screens = layout.placements.filter(q => /fence|hedge|bush|tree|lamp|sign/.test(q.assetId));
 /** Only things between the body and the game camera (which looks from +x +z) can screen it. */

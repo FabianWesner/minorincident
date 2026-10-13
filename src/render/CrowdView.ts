@@ -222,7 +222,7 @@ export class CrowdView extends Group {
   }
   async ready(): Promise<void> { await Promise.all(this.pending.values()); }
   update(view?: View, alpha = 1): void {
-    this.staticCorpses.begin(id => this.world.entities.get(id));
+    this.deadFeet.clear(); this.staticCorpses.begin(id => this.world.entities.get(id));
     for (const [id, pose] of this.corpses) if (!this.world.entities.get(id)?.infected || this.world.entities.get(id)!.health.current > 0 || this.world.tick - pose.deadAt > this.corpseTicks) this.corpses.delete(id);
     for (const batch of this.batches.values()) { batch.count = 0; batch.probe.begin(); }
     this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60);
@@ -333,7 +333,8 @@ export class CrowdView extends Group {
         }
         for (let bird = 0; bird < 20; bird++) if (b.birdAlive[bird]) { this.transform.makeTranslation(b.birdPositions[bird * 3], b.birdPositions[bird * 3 + 1], b.birdPositions[bird * 3 + 2]); batch.mesh.setMatrixAt(batch.count, this.transform); writeCrowdAppearance(batch.tint, batch.count, e.id, tint, blend[0] * 2 + blend[1], batch.lod === 'lod2' ? 0 : this.accessories?.slot(e), this.accessories?.hidesHair(e, batch.lod)); batch.state.setXYZW(batch.count++, frame, 0, 0, feedback?.strength ?? 0); }
       } else {
-        this.transform.makeRotationY(presented.yaw + (e.civilian?.zooAnimal && e.infection ? Math.sin(renderTick * .5 + e.id) * .018 * e.infection.progress : 0)); this.transform.setPosition(x, Math.max(presented.y - 0.7, this.world.districts?.pavingHeight(x, z) ?? 0) + (reaction?.heavy && age < .48 ? Math.max(0, .16 * (1 - Math.abs(age / .24 - 1))) : 0), z);
+        this.transform.makeRotationY(presented.yaw + (e.civilian?.zooAnimal && e.infection ? Math.sin(renderTick * .5 + e.id) * .018 * e.infection.progress : 0)); this.transform.setPosition(x, (b.state === 'dead' ? this.world.districts?.supportBelow(x, z, e.transform.y - .7) ?? 0 : Math.max(presented.y - 0.7, this.world.districts?.pavingHeight(x, z) ?? 0)) + (reaction?.heavy && age < .48 ? Math.max(0, .16 * (1 - Math.abs(age / .24 - 1))) : 0), z);
+        if (b.state === 'dead') this.deadFeet.set(e.id, { id: e.id, x, y: this.transform.elements[13], z });
         if (e.corpse) {
           const mask = (feedback?.mask ?? 0) | (b.detached && this.goreEnabled ? 4 : 0);
           const hiddenParts = [['armL', 'foreArmL', 'handL'], ['armR', 'foreArmR', 'handR'], ['legL', 'shinL', 'footL'], ['legR', 'shinR', 'footR'], ['head']].flatMap((parts, bit) => mask & 1 << bit ? parts : []);
@@ -399,6 +400,9 @@ export class CrowdView extends Group {
     if (this.caps.count) this.caps.instanceMatrix.needsUpdate = true;
     if (this.shadows.count) this.shadows.instanceMatrix.needsUpdate = true;
   }
+  /** Scene Lab probe: frozen corpses as drawn (feet position). */
+  private readonly deadFeet = new Map<number, { id: number; x: number; y: number; z: number }>();
+  drawnCorpses(): { id: number; x: number; y: number; z: number }[] { const frozen = this.staticCorpses.drawn(), ids = new Set(frozen.map(c => c.id)); return [...frozen, ...[...this.deadFeet.values()].filter(c => !ids.has(c.id) && (this.world.entities.get(c.id)?.health.current ?? 1) <= 0)]; }
   /** Keep settled bodies on clear ground, giving each a readable footprint.
    * This is presentation only; damage and revive continue to use sim transforms. */
   private corpsePosition(e: EntitySnapshot, deadAtTick: number) {
@@ -409,7 +413,9 @@ export class CrowdView extends Group {
     // The body lies ~0.9 m behind its hips (death poses fall backwards): that strip must be clear too, so a
     // corpse never lies through a fence or wall (PO #14).
     const bx = -Math.cos(e.transform.yaw), bz = Math.sin(e.transform.yaw), nav = this.world.infected?.nav;
-    const clear = (x: number, z: number) => !!nav?.clear(x, z, .6) && nav.clear(x + bx * .5, z + bz * .5, .3) && nav.clear(x + bx * .95, z + bz * .95, .25) && [...this.corpses].every(([id, p]) => id === e.id || Math.hypot(x - p.x, z - p.z) >= 1.25);
+    // A body never lies half off the deck/ramp it died on: head and hips stay on the support the sim settled it on.
+    const feet = e.transform.y - .7, districts = this.world.districts, level = (x: number, z: number) => !districts || Math.abs(districts.supportBelow(x, z, feet) - feet) <= .3;
+    const clear = (x: number, z: number) => level(x, z) && level(x + bx * .95, z + bz * .95) && !!nav?.clear(x, z, .6) && nav.clear(x + bx * .5, z + bz * .5, .3) && nav.clear(x + bx * .95, z + bz * .95, .25) && [...this.corpses].every(([id, p]) => id === e.id || Math.hypot(x - p.x, z - p.z) >= 1.25);
     if (!clear(pose.x, pose.z)) search: for (const radius of [.7, 1.4, 2.1]) for (let i = 0; i < 8; i++) {
       const angle = e.transform.yaw + Math.PI / 2 + i * Math.PI / 4;
       const x = e.transform.x + Math.cos(angle) * radius, z = e.transform.z + Math.sin(angle) * radius;

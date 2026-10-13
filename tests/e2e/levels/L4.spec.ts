@@ -132,7 +132,7 @@ test.describe('L4 The Safe City Falls in the browser', () => {
     for (let i = 0; i < 10 && !(await mission()).l4!.gunAt; i++) { await interact(); await step(10); }
     expect((await mission()).l4!.gunAt).toBeGreaterThan(0);
     expect((await player()).weapons!.RIGHT.rack[0].id).toBe('weapon.army-mg'); expect((await player()).weapons!.selectedSide).toBe('RIGHT');
-    await expect(page.getByTestId('stats-RIGHT')).toHaveText('Ready');
+    await expect(page.getByTestId('weapon-active')).toHaveAttribute('aria-label', /, Ready/);
     // The turn: wait in the plaza (the soldiers hold, the people queue); the first evacuees collapse.
     await go({ x: -21.5, z: 3 }, 1.4);
     let turnShot = false;
@@ -151,7 +151,7 @@ test.describe('L4 The Safe City Falls in the browser', () => {
     expect((await mission()).l4!.lineBreakAt).toBeGreaterThan(0);
     if (!line) await snap('l4-war-line'); if (!tank) await snap('l4-tank');
     await step(150); await snap('l4-collapse');
-    await expect(page.getByTestId('stats-RIGHT')).not.toHaveText(/\d+\s*\/\s*\d+|↻/);
+    await expect(page.getByTestId('weapon-active')).not.toHaveAttribute('aria-label', /\d+\s*\/\s*\d+/);
     // The collapse: the escape street (l4-collapse-2: at "Fall back!" the horde leaves a gap on it; pursuers still chase): out of the ring's
     // east side, down to Lakeshore Avenue and east to Kessler's cellar door, through whatever comes.
     const inCellar = async () => (await mission()).l4!.phase === 'cellar';

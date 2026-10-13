@@ -71,6 +71,8 @@ supplied export violates the size or density contract. Compound corpse rigs
 keep prefixed joints and stump caps; distant generated caps use six sides.
 Animal dimensions use their own metre scales, outside the standing-adult height check.
 
+`assets:validate` and `assets:build` also run the z-fighting check (`tools/assets/zfight.ts`, vehicles and buildings): two same-facing triangles in one plane within 1 mm that overlap (>= 5 cm2 for different materials, >= 40 cm2 for the same material with different baked AO) and are exposed make the file fail. `tools/assets/zfight-known.json` holds the per-file counts that existed when the check was added (a file may not get worse); `npx tsx tools/assets/zfight.ts [--prefix=veh.] [--json]` lists every offender. Keep trim at least 8 mm off the surface it decorates and avoid two bodies sharing an outer plane (the old evac bus rear flickered because the coach and `rearCabin` boxes both ended at x = -4.60).
+
 Palette tokens live in `src/assets/palette.json`. AO is the active `COLOR_0`
 attribute. PNG atlases require `toktx` on PATH or `TOKTX_BIN`; color maps use
 ETC1S, detail maps use UASTC. Texture-free builds need no encoder. The bundled

@@ -7,6 +7,7 @@ import type { L1State } from './types';
 import type { EntitySnapshot } from '../world/types';
 import { L1Story } from './L1Story';
 import { doorExit, doorId, emergeResident, layoutHouseDoors, walkResidents } from '../outbreak/HouseEmergence';
+import { respawnAtCheckpoint } from './Respawn';
 import { doorRoute, findDoorway, routeAt, routeLength } from './doorRoute';
 
 const TICKS = 60;
@@ -108,63 +109,18 @@ export class LevelOneOutbreak {
     if (l1.house?.next) l1.house.next += delta;
     for (const w of [...l1.house?.walking ?? [], ...l1.labExit?.walking ?? []]) w.until += delta;
     for (const run of l1.runs) run.until += delta;
-    if (l1.exitIds.length) this.safePoint();
+    if (l1.exitIds.length) respawnAtCheckpoint(this.mission.world, this.mission.world.entities.get(1)!.transform);
   }
 
-  /** Where the courier last died (the respawn looks for a safe spot around it; the sim moves the body to the checkpoint first). */
-  private deathAt: { x: number; z: number } | null = null;
-  noteDeath(): void { const p = this.mission.world.entities.get(1)?.transform; if (p) this.deathAt = { x: p.x, z: p.z }; }
-
   /**
-   * PO rule 2026-10-07 "respawn keeps the world": a death restores nothing. Corpses, infected (positions and state), pedestrians,
-   * props, dropped items, objectives and loadout stay as they are; only the courier is placed at a safe point near where it fell
-   * (out of infected reach and sight, with a route to the current objective) with ~2 s of invulnerability.
+   * PO rule 2026-10-07 "respawn keeps the world": a death restores nothing. Corpses, infected, pedestrians, props, dropped items,
+   * objectives and loadout stay as they are. Only the courier's vitals are reset here; Mission then places her exactly on the last
+   * reached checkpoint through the shared path (Respawn.ts, PO 2026-10-13), never at a searched "safe" spot.
    */
   respawn(): void {
     const { world } = this.mission;
     world.controls.reset();
     world.player!.restoreVitals(world.tick);
-    // PO 2026-10-12: back at the last checkpoint the courier actually reached (bat pickup, accident, start), never at a far "safe" spot.
-    const cp = world.entities.get(1)?.survivor?.checkpoint;
-    this.safePoint(cp ? { x: cp.x, z: cp.z } : this.deathAt ?? undefined, true);
-    this.deathAt = null;
-  }
-
-  /**
-   * The safest nearby street point (QA2b-01: the accident checkpoint sits at the door in the middle of the mob): far from live
-   * infected and out of their sight, close to `center` (default: where the courier stands), on a route to the active objective.
-   * Moves only the player.
-   */
-  private safePoint(center?: { x: number; z: number }, nearCheckpoint = false): void {
-    const { world, state } = this.mission, ai = world.infected, nav = ai?.nav, player = world.entities.get(1)!, tick = world.tick;
-    if (player.survivor) player.survivor.invulnerableUntil = tick + 2 * TICKS;
-    if (!ai || !nav) return;
-    const live = ai.active.filter(e => e.health.current > 0 && !e.hidden), from = center ?? { x: player.transform.x, z: player.transform.z };
-    const near = (x: number, z: number) => live.reduce((m, e) => Math.min(m, Math.hypot(e.transform.x - x, e.transform.z - z)), 99);
-    const seen = (c: { x: number; z: number }) => live.some(e => Math.hypot(e.transform.x - c.x, e.transform.z - c.z) <= l1v2.infected.visionRangeM && nav.visible(e.transform, c, .3));
-    const candidates: { x: number; z: number }[] = [{ x: from.x, z: from.z }, { x: player.transform.x, z: player.transform.z }];
-    if (this.l1.exitIds.length && state.checkpoint === 'accident') candidates.push(this.anchor('lab-gate'), this.anchor('lab-bike-rack'));
-    for (const r of [3, 6, 10, 14, 20, 28, 36]) for (let k = 0; k < 16; k++) candidates.push({ x: from.x + Math.cos(k * Math.PI / 8) * r, z: from.z + Math.sin(k * Math.PI / 8) * r });
-    const clear = candidates.filter(c => c && nav.clear(c.x, c.z, .6));
-    // Checkpoint respawn: the checkpoint itself, else the closest spot within 14 m with no infected within 8 m and out of their sight
-    // (a route to the objective is checked below); only when none exists does the wider search (up to 36 m) run.
-    const closeFirst = nearCheckpoint ? clear.filter(c => Math.hypot(c.x - from.x, c.z - from.z) <= 14 && near(c.x, c.z) >= 8 && !seen(c))
-      .sort((a, b) => Math.hypot(a.x - from.x, a.z - from.z) - Math.hypot(b.x - from.x, b.z - from.z)) : [];
-    // Crowded checkpoint: still stay within 14 m, trading a little safety for distance, before the wide search.
-    const crowded = nearCheckpoint ? clear.filter(c => Math.hypot(c.x - from.x, c.z - from.z) <= 14)
-      .map(c => ({ c, score: Math.min(near(c.x, c.z), 8) - .4 * Math.hypot(c.x - from.x, c.z - from.z) - (seen(c) ? 3 : 0) })).sort((a, b) => b.score - a.score) : [];
-    const scored = closeFirst.map(c => ({ c, score: 0 })).concat(crowded).concat(clear
-      .map(c => ({ c, score: Math.min(near(c.x, c.z), 24) - .08 * Math.hypot(c.x - from.x, c.z - from.z) - (seen(c) ? 8 : 0) }))
-      .sort((a, b) => b.score - a.score));
-    // Never a fenced pocket: the spot must have a walking route to the active objective. A flood from the objective answers it for
-    // every candidate at once. A budgeted A* can return false while still pending, especially after the station move;
-    // restarting it for each candidate then falls back to a safe-looking fenced yard and traps the courier.
-    const goal = state.marker ? this.mission.def.anchors[state.marker] : null, goalCell = goal ? nav.nearestCell(goal.x, goal.z) : -1;
-    const reach = goalCell >= 0 ? nav.reachableFrom(goalCell) : null;
-    const routed = (c: { x: number; z: number }) => { const cell = nav.cell(c.x, c.z); return cell >= 0 && !nav.blocked[cell] && (!reach || reach[cell] === 1); };
-    const best = scored.find(({ c }) => routed(c))?.c ?? scored[0]?.c ?? from;
-    player.transform.x = best.x; player.transform.z = best.z;
-    world.physics.playerBody!.setTranslation(player.transform, true); world.previousPlayer = { ...player.transform }; world.spatial.set(1, best.x, best.z);
   }
 
   private face(e: EntitySnapshot, at: { x: number; z: number }): void { e.transform.yaw = -Math.atan2(at.z - e.transform.z, at.x - e.transform.x); }
