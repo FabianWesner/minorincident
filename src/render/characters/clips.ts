@@ -12,7 +12,7 @@ export const skinClips: typeof authoredClips = new Map(skinLibrary.map(clip => [
 export const strides: Record<string, number> = { walk: .9, run: 1.17, shamble: .9, 'infected-run': 1.17, 'npc-walk': .9, 'npc-walk-relaxed': .9, 'npc-carry': .9, 'npc-cane': .9, 'corgi-walk': .55, 'corgi-trot': .8,
   // E19 §5.4 tiers read from cadence: frail chops short quick steps, the lurch is
   // medium, the athletic sprint covers ground in long low strides.
-  'infected-frail': .95, 'infected-lurch': 1.25, 'infected-sprint': 1.75, 'civ-flee': 1.25, 'corgi-gallop': 1.1, ride: 3.2 };
+  'infected-frail': .95, 'infected-lurch': 1.25, 'infected-sprint': 1.75, 'civ-flee': 1.25, 'corgi-gallop': 1.1, 'dog-gallop': 1.1, ride: 3.2 };
 /** Skin pilot gait: longer strides at a calmer cadence (the library run cycles ~5×/s at 4.5 m/s on
  * chibi legs and reads as scurrying/vibration); raw strides before the rig's leg proportion. */
 export const skinGait: Record<string, { stride: number; stance: number; lift: number }> = { walk: { stride: .9, stance: .52, lift: .05 }, run: { stride: 1.45, stance: .27, lift: .095 } };

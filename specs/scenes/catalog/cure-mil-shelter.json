@@ -1,0 +1,22 @@
+{
+ "name": "cure-mil-shelter",
+ "note": "L10 R4 vehicle shelter (bld.cure-motor-shelter) with a reused military truck parked in one bay and two fence panels (prop.cure-mil-fence) at the real game camera. Run with --matrix. Look for: roof with yellow fascia, posts on the ground, back wall, wheel stops, the truck fitting under the roof, fence mesh with razor coil, sunk or floating parts, flicker, missing parts at the low tier (LOD2).",
+ "seed": 10,
+ "ground": "asphalt",
+ "time": "L1",
+ "size": 70,
+ "dof": false,
+ "props": [
+  { "id": "shelter", "asset": "bld.cure-motor-shelter", "at": [0, 0], "yaw": 0 },
+  { "id": "truck", "asset": "veh.military-truck", "at": [-0.2, 2.75], "yaw": 0 },
+  { "id": "fence1", "asset": "prop.cure-mil-fence", "at": [8, -3], "yaw": 1.5708 },
+  { "id": "fence2", "asset": "prop.cure-mil-fence", "at": [8, 0.2], "yaw": 1.5708 }
+ ],
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [7, 6], "yaw": 3.14, "state": "idle" }
+ ],
+ "camera": { "mode": "game", "target": [4, 3], "zoom": 1 },
+ "frames": 60,
+ "shots": [0, 60],
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}

@@ -1,0 +1,23 @@
+{
+ "name": "cure-mil-post-lane",
+ "note": "L10 R4 guard post (bld.cure-guard-post) at the real game camera with reused T-walls (prop.jersey-barrier), a military truck and the motor shelter. Run with --matrix. Look for: sandbag rows and the open door lane, gun slits, camo net on poles, mast, shelter roof with yellow fascia, truck parked under it, sunk or floating parts, flicker, missing parts at the low tier (LOD2).",
+ "seed": 10,
+ "ground": "asphalt",
+ "time": "L1",
+ "size": 70,
+ "dof": false,
+ "props": [
+  { "id": "post", "asset": "bld.cure-guard-post", "at": [0, 0], "yaw": 0 },
+  { "id": "shelter", "asset": "bld.cure-motor-shelter", "at": [8, 22], "yaw": 3.1416 },
+  { "id": "truck", "asset": "veh.military-truck", "at": [8, 22], "yaw": 3.1416 },
+  { "id": "barrier1", "asset": "prop.jersey-barrier", "at": [10, -6], "yaw": 1.5708 },
+  { "id": "barrier2", "asset": "prop.jersey-barrier", "at": [10, 6], "yaw": 1.5708 }
+ ],
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [7, 0], "yaw": 3.14, "state": "idle" }
+ ],
+ "camera": { "mode": "game", "target": [3, 0], "zoom": 1 },
+ "frames": 60,
+ "shots": [0, 60],
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}

@@ -8,7 +8,7 @@ The orchestrator runs this on `main` before every PROD deploy (PO rules 10-07 / 
    - `tests/unit/levels/decoration-surface.test.ts`: drawn decorations only on soil, every district and tier.
    - `tests/sim/world/support-seams.test.ts`: no seam in raised walkable supports, every district.
 3. `npm run build`, `npm run test:smoke`
-4. Scene Lab for the touched areas, **both quality tiers and both zooms**: `npm run scene:matrix` (props, seats, hand props, peds, corgi, Grove areas) plus `npm run scene:catalog -- --matrix --filter '<area>*'` for other touched areas. Open the sheets of both tiers.
+4. Scene Lab for the touched areas, **both quality tiers and both zooms**: `npm run scene:matrix` (props, seats, hand props, peds, corgi, Grove areas) plus `npm run scene:catalog -- --matrix --filter '<area>*'` for other touched areas (L9 crash site: `--filter 'l9-crash-*'`, on both `--backend webgl2` and `webgpu`). Open the sheets of both tiers.
 5. L1/L2 browser e2e; for vehicle/ride changes `tests/e2e/levels/l4-bus-ride-smooth.spec.ts` (all 17 configs: both tiers, both backends, 60/120 Hz, uneven 120 Hz, 30 Hz, uneven phone cadence).
 
 Details and the reasoning behind each guard: `docs/tools/scene-lab.md`, section "Quality x zoom matrix".
