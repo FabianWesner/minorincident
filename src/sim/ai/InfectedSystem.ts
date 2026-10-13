@@ -1,5 +1,5 @@
 import { balancedCrowdModel, regularInfectedModels } from '../../data/crowdAppearance';
-import { storyProtected } from '../npc/storyProtection';
+import { isCorgi, isCorgiModel, storyProtected } from '../npc/storyProtection';
 import { installAgentMotion, moveAgent } from '../locomotion/AgentMotion';
 import { motionResponse, resetResponse } from '../locomotion/MotionResponse';
 import { infectedContactDistance, installCharacterSeparation } from './CharacterSeparation';
@@ -119,6 +119,8 @@ export class InfectedSystem {
     const l3Human = this.world.scenario === 'L3' && (id === 'infected.runner' || id === 'infected.sprinter');
     // Count successful emergences, including turned officers and civilians. Clothes do not determine chase speed.
     if (l3Human) id = (this.l3HumanSpawns + 1) % l3.infected.sprinterEvery === 0 ? 'infected.sprinter' : 'infected.runner';
+    // E32-AC08: no spawn may stand in for, or be drawn as, the player's corgi.
+    if (isCorgiModel(id) || isCorgiModel(opts.variant)) throw new RangeError('The corgi is never an infected spawn');
     const def = infectedDef(id);
     const perch = this.perchFor(id, position, opts.perched);
     if (perch) position = perch;
@@ -417,7 +419,8 @@ export class InfectedSystem {
       && this.world.combat!.query.visible(e.transform, player.transform) && !this.world.combat!.effects.smokeBlocks(e.transform, player.transform);
   }
   private victim(e: EntitySnapshot): EntitySnapshot {
-    return this.world.entities.get(e.infected!.heardTargetId || 1) ?? this.world.entities.get(1)!;
+    const target = this.world.entities.get(e.infected!.heardTargetId || 1);
+    return target && !isCorgi(target) ? target : this.world.entities.get(1)!;
   }
   private windup(e: EntitySnapshot): void {
     const b = e.infected!, def = infectedDef(e.archetype); b.state = 'attack'; b.attackId = this.nextAttackId();
@@ -809,7 +812,7 @@ export class InfectedSystem {
     const tick = this.world.tick, victimId = brain.biteTargetId, victim = this.victimPosition(victimId);
     b.grabUntil = 0; e.combat!.attacking = false; brain.biteTargetId = 0;
     const target = this.world.entities.get(victimId);
-    if (bitten && victim && (!target || !storyProtected(this.world, target))) {
+    if (bitten && victim && (!target || !isCorgi(target) && !storyProtected(this.world, target))) {
       while (this.recentTurns.length && tick - this.recentTurns[0] > l1Ticks(l1v2.civilians.transformS + l1v2.civilians.transformJitterS)) this.recentTurns.shift();
       // At the cap a bite kills instead of turning (L1 section 5.9): L1/L2 60 high / 30 low; a strict level cap (L3: 80 / 40).
       const cap = this.director.strict || target?.civilian?.zooAnimal ? this.director.cap : this.director.tier === 'low' ? l1v2.director.capLow : l1v2.director.capHigh, turns = this.director.count + this.recentTurns.length < cap - this.director.reserved;

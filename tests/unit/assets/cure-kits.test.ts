@@ -17,6 +17,15 @@ const kits: [string, [number, number, number], number, number][] = [
   ['bld.cure-service-building', [16000, 6000, 2000], 1200, 12],
   ['prop.cure-container-stack', [3000, 1000, 300], 400, 6],
   ['prop.cure-drum-stack', [3000, 1000, 300], 400, 3],
+  // L10-A5: military zone + research campus
+  ['bld.cure-guard-post', [8000, 3000, 1000], 1000, 12],
+  ['bld.cure-motor-shelter', [8000, 3000, 1000], 1000, 12],
+  ['prop.cure-mil-fence', [1000, 400, 150], 300, 4],
+  ['bld.cure-lab-main', [16000, 6000, 2000], 1200, 12],
+  ['bld.cure-lab-annex', [16000, 6000, 2000], 1200, 12],
+  ['prop.cure-iso-tent', [4000, 1500, 500], 500, 6],
+  ['prop.cure-generator', [3000, 1000, 300], 400, 4],
+  ['prop.cure-quarantine-fence', [1000, 400, 150], 300, 4],
 ];
 const find = (id: string) => manifest.find(a => a.id === id) as AssetDef;
 const lodPath = (def: AssetDef, lod: number) => lod === 0 ? def.glb : def.lods![lod === 1 ? 'lod1' : 'lod2']!;

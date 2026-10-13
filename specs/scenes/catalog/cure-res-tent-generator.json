@@ -1,0 +1,22 @@
+{
+ "name": "cure-res-tent-generator",
+ "note": "L10 R5 isolation tent (prop.cure-iso-tent) with the emergency generator (prop.cure-generator), a reused light tower trailer and a reused evac tent (prop.tent) at the real game camera. Run with --matrix. Look for: tent airlock door, yellow eave band, clear panels, guy ropes and stakes, generator louvres, panel and exhaust, feet on the ground, sunk or floating parts, flicker, missing parts at the low tier (LOD2).",
+ "seed": 10,
+ "ground": "asphalt",
+ "time": "L1",
+ "size": 70,
+ "dof": false,
+ "props": [
+  { "id": "iso", "asset": "prop.cure-iso-tent", "at": [0, 0], "yaw": 0 },
+  { "id": "gen", "asset": "prop.cure-generator", "at": [6, -5], "yaw": 0.4 },
+  { "id": "light", "asset": "prop.light-tower-trailer", "at": [-8, -6], "yaw": 0 },
+  { "id": "tent", "asset": "prop.tent", "at": [-10, 8], "yaw": 0 }
+ ],
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [6, 1], "yaw": 3.14, "state": "idle" }
+ ],
+ "camera": { "mode": "game", "target": [3, -1], "zoom": 1 },
+ "frames": 60,
+ "shots": [0, 60],
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}

@@ -1,0 +1,23 @@
+{
+ "name": "cure-mil-lineup",
+ "note": "L10 R4 military zone kit (kit.cure-military) turntable: guard post, vehicle shelter, three fence panels, one full turn in 6 s. Look for: low broad massing (no tower), sandbag enclosure with the door lane open, camouflage net on four poles, radio mast, shelter roof/posts/back wall with wheel stops, fence mesh with razor coil, feet on the ground, no flat panels, no flicker, LOD silhouettes that match LOD0.",
+ "seed": 10,
+ "ground": "asphalt",
+ "time": "L1",
+ "size": 120,
+ "dof": false,
+ "props": [
+  { "id": "post", "asset": "bld.cure-guard-post", "at": [-18, 0], "yaw": 0 },
+  { "id": "shelter", "asset": "bld.cure-motor-shelter", "at": [8, -10], "yaw": 0 },
+  { "id": "fence1", "asset": "prop.cure-mil-fence", "at": [6, 12], "yaw": 0 },
+  { "id": "fence2", "asset": "prop.cure-mil-fence", "at": [9.2, 12], "yaw": 0 },
+  { "id": "fence3", "asset": "prop.cure-mil-fence", "at": [12.4, 12], "yaw": 0 }
+ ],
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [0, 4], "yaw": 0, "state": "idle" }
+ ],
+ "camera": { "mode": "orbit", "target": [-4, 0, 0], "radius": 60, "azimuth": 45, "polar": 54, "spin": 60 },
+ "frames": 360,
+ "sheet": 30,
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}

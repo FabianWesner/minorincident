@@ -8005,5 +8005,141 @@ export default {
     ],
     "source": "public/assets/models/prop.cure-drum-stack.glb",
     "hash": "07f9a2a1ae9f5772b46a6da4db04c1442f4f6054c1d2576c936099fdc901a993"
+  },
+  "prop.cure-mil-fence": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      1.251749038696289,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -1.6,
+          0,
+          -0.175
+        ],
+        "max": [
+          1.6,
+          2.5,
+          0.175
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.cure-mil-fence.glb",
+    "hash": "db0e23f2f0d1d872fba3e35ebde305f4e7aff413f87c519db4f5863fbfcd9a6c"
+  },
+  "prop.cure-iso-tent": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0.20000004768371582,
+      1.5499999523162842,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          1.8500000476837157,
+          0,
+          -1.5
+        ],
+        "max": [
+          4.0500000476837155,
+          2,
+          1.5
+        ]
+      },
+      {
+        "min": [
+          -2.3,
+          2.3841857821338408e-8,
+          -3.7
+        ],
+        "max": [
+          2.3,
+          3.200000023841858,
+          3.7
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.cure-iso-tent.glb",
+    "hash": "81b2b940c63d90cb9a6dde4ae9d8906c6e50e567bf163ac49ca84a773b9da7a3"
+  },
+  "prop.cure-generator": {
+    "class": "heavy",
+    "mass": 600,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0.32363754510879517,
+      1.230000033043325,
+      -0.2874999940395355
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -1.45,
+          2.384185793236071e-8,
+          -0.6
+        ],
+        "max": [
+          1.45,
+          1.700000023841858,
+          0.6
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.cure-generator.glb",
+    "hash": "8f52cb94f7b253fc2a2720aad9e89a70e8c49f3d958715730e6632b2f3cd65b3"
+  },
+  "prop.cure-quarantine-fence": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.75,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      1.0499999523162842,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.metal-heavy",
+    "boxes": [
+      {
+        "min": [
+          -1.6,
+          2.3841857821338408e-8,
+          -0.45
+        ],
+        "max": [
+          1.6,
+          2.200000023841858,
+          0.45
+        ]
+      }
+    ],
+    "source": "public/assets/models/prop.cure-quarantine-fence.glb",
+    "hash": "86f3af20893991e57cf76a3a17c9243c34ddc4472264cb35b39e832fcadfa405"
   }
 };
