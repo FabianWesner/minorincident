@@ -2,6 +2,7 @@ import { SimPhase } from '../../core/EventBus';
 import { megaAlpha } from '../../data/megaAlpha';
 import { Status } from '../combat/Status';
 import { moveAgent } from '../locomotion/AgentMotion';
+import type { NavGrid } from './NavGrid';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 
@@ -66,6 +67,9 @@ export class MegaPursuit {
   private readonly local = { x: 0, z: 0 };
   private readonly stops: (() => void)[] = [];
   private reservation = false;
+  /** Nav baked at the Mega's own clearance (falls back to the shared crowd grid on very large grids). */
+  readonly grid: NavGrid;
+  readonly radius: number;
   constructor(readonly world: SimWorld, readonly options: PursuitOptions = {}) {
     for (const node of options.route?.nodes ?? []) { if (this.nodes.has(node.id)) throw new Error(`Duplicate pursuit node ${node.id}`); this.nodes.set(node.id, node); this.adjacency.set(node.id, []); }
     for (const [a, b] of options.route?.links ?? []) {
@@ -73,6 +77,9 @@ export class MegaPursuit {
       this.adjacency.get(a)!.push(b); this.adjacency.get(b)!.push(a);
     }
     const ai = world.infected!;
+    const own = ai.nav.width * ai.nav.depth <= megaAlpha.ownGridMaxCells;
+    this.grid = own ? ai.nav.withClearance(megaAlpha.radius) : ai.nav; this.radius = own ? megaAlpha.radius : ai.nav.clearance;
+    if (own) this.stops.push(world.events.on('world.blocker.changed', ev => { if (ev.type === 'world.blocker.changed') this.grid.setBlocker(ev.id, ev.wall, ev.blocked); }));
     this.resident = options.resident ?? ((x, z) => ai.nav.cell(x, z) >= 0 && (!ai.nav.mask || ai.nav.mask(x, z)));
     const player = world.entities.get(1)!.transform;
     this.state = {
@@ -109,7 +116,7 @@ export class MegaPursuit {
     const place = resident ? this.clearNear(spot) ?? spot : spot;
     const id = ai.spawn(megaAlpha.archetype, place, { state: 'chase', variant: megaAlpha.asset, offNav: !resident });
     const e = this.world.entities.get(id)!, b = e.infected!;
-    b.pursuit = true; b.speed = megaAlpha.cruiseMs; e.combat!.radius = megaAlpha.radius;
+    b.pursuit = true; b.speed = megaAlpha.cruiseMs; e.combat!.radius = this.radius;
     e.health.current = e.health.max = megaAlpha.hp;
     const player = this.world.entities.get(1)!.transform;
     e.transform.yaw = -Math.atan2(player.z - place.z, player.x - place.x);
@@ -134,7 +141,7 @@ export class MegaPursuit {
    * chase brain runs the entity this tick (close range, its special scheduler, or the breach level of the stuck recovery).
    */
   drive(e: EntitySnapshot): boolean {
-    const s = this.state, b = e.infected!, tick = this.world.tick, ai = this.world.infected!;
+    const s = this.state, b = e.infected!, tick = this.world.tick;
     const player = this.world.entities.get(1)!;
     // Never lured, never investigating a noise, never a civilian's pursuer: the player is the only target.
     delete e.noiseTarget; delete b.investigate; b.heardTargetId = 0; b.speed = megaAlpha.cruiseMs;
@@ -230,7 +237,7 @@ export class MegaPursuit {
     while (budget > 1e-6) {
       if (this.legBlocked(t)) break;
       const next = s.route.length ? this.nodes.get(s.route[0])! : s.target;
-      const d = dist(t, next), stop = s.route.length ? 0 : megaAlpha.radius + 1;
+      const d = dist(t, next), stop = s.route.length ? 0 : this.radius + 1;
       if (d - stop <= budget) {
         const k = d > 1e-9 ? Math.max(0, d - stop) / d : 0; t.x += (next.x - t.x) * k; t.z += (next.z - t.z) * k; budget -= Math.max(0, d - stop);
         if (!s.route.length) break;
@@ -246,8 +253,7 @@ export class MegaPursuit {
   }
   /** Detailed steering on the shared nav grid at cruise speed. */
   private steer(e: EntitySnapshot, d: number): void {
-    const s = this.state, ai = this.world.infected!, t = e.transform, r = megaAlpha.radius;
-    const nav = ai.navigation.grid(t);
+    const s = this.state, t = e.transform, r = this.radius, nav = this.grid;
     // A body left inside a solid (a coarse handoff onto a freshly loaded block, a closing gate) first walks out at cruise.
     if (!nav.clear(t.x, t.z, r - .001)) { const out = this.clearNear(t, 12); if (out) this.walkTo(e, out, true); return; }
     while (s.route.length > 1 && dist(t, this.nodes.get(s.route[0])!) <= megaAlpha.nodeReachM) this.pass();
@@ -255,7 +261,7 @@ export class MegaPursuit {
     const node = s.route.length ? this.nodes.get(s.route[0])! : null;
     const goal = s.stuck.goal ?? (node && (d > megaAlpha.directM || s.stuck.level === 2) ? node : s.target);
     if (s.stuck.goal && dist(t, s.stuck.goal) < .6) s.stuck.goal = null;
-    const local = ai.navigation.target(t, goal); this.local.x = local.x; this.local.z = local.z;
+    this.local.x = goal.x; this.local.z = goal.z;
     if (!nav.steer(t, this.local, this.path, r, this.waypoint, 20000)) { s.stuck.noPath++; return; }
     s.stuck.noPath = 0;
     this.walkTo(e, this.waypoint, false);
@@ -265,7 +271,7 @@ export class MegaPursuit {
     if (d < .02) return;
     const speed = Math.min(megaAlpha.cruiseMs, d * 60);
     if (direct) { const step = Math.min(d, speed / 60); t.x += dx / d * step; t.z += dz / d * step; }
-    else moveAgent(e, dx / d * speed, dz / d * speed, this.world.infected!.nav, this.world.tick, megaAlpha.radius);
+    else moveAgent(e, dx / d * speed, dz / d * speed, this.grid, this.world.tick, this.radius);
     t.y = .7 + (this.world.districts?.groundHeight(t.x, t.z) ?? 0);
   }
   /**
@@ -282,12 +288,12 @@ export class MegaPursuit {
     s.sampleAt = tick; s.x = t.x; s.z = t.z; s.noPath = 0;
   }
   private escalate(e: EntitySnapshot): void {
-    const st = this.state, s = st.stuck, ai = this.world.infected!, t = e.transform;
+    const st = this.state, s = st.stuck, t = e.transform, nav = this.grid;
     s.level = s.level >= 3 ? 1 : s.level + 1; s.since = this.world.tick; s.goal = null;
     this.path.path.length = 0; this.path.goal = -1;
     if (s.level === 1) {
       // Walk out of a pocket narrower than the baked clearance (fence gap, porch alley), else simply re-plan.
-      const nav = ai.navigation.grid(t), cell = nav.escapeCell(t, megaAlpha.radius, 6, false, 1.5);
+      const cell = nav.escapeCell(t, this.radius, 6, false, 1.5);
       if (cell >= 0) s.goal = { x: nav.x(cell), z: nav.z(cell) };
     } else if (s.level === 2) {
       // Authored alternate: avoid the link it is on for a while and take the next-best route.
@@ -295,7 +301,7 @@ export class MegaPursuit {
       else if (st.route.length === 1) { const prev = this.nearestOther(st.route[0]); if (prev) st.blocked[key(prev, st.route[0])] = this.world.tick + Math.round(megaAlpha.blockedLinkS * 60); }
       st.routeAt = -Infinity; this.refresh();
       if (!this.nodes.size) {
-        const nav = ai.navigation.grid(t), cell = nav.escapeCell(t, megaAlpha.radius, 8, true, 3);
+        const cell = nav.escapeCell(t, this.radius, 8, true, 3);
         if (cell >= 0) s.goal = { x: nav.x(cell), z: nav.z(cell) };
       }
     }
@@ -307,7 +313,7 @@ export class MegaPursuit {
   }
   /** Nearest nav-clear spot within `range` (rings, no line test: the body may stand inside a solid). */
   private clearNear(p: { x: number; z: number }, range = 6): { x: number; z: number } | null {
-    const nav = this.world.infected!.nav, r = megaAlpha.radius;
+    const nav = this.grid, r = this.radius;
     if (nav.clear(p.x, p.z, r)) return { x: p.x, z: p.z };
     for (let d = .5; d <= range; d += .5) for (let k = 0; k < 24; k++) {
       const a = k * Math.PI / 12, x = p.x + Math.cos(a) * d, z = p.z + Math.sin(a) * d;
@@ -335,7 +341,7 @@ export class MegaPursuit {
     let spot: { x: number; z: number } | null = null;
     if (this.nodes.size) {
       let best = Infinity;
-      for (const node of this.nodes.values()) if (dist(node, player) >= gap && dist(node, e.transform) < best && (!this.resident(node.x, node.z) || this.world.infected!.nav.clear(node.x, node.z, megaAlpha.radius))) { best = dist(node, e.transform); spot = node; }
+      for (const node of this.nodes.values()) if (dist(node, player) >= gap && dist(node, e.transform) < best && (!this.resident(node.x, node.z) || this.grid.clear(node.x, node.z, this.radius))) { best = dist(node, e.transform); spot = node; }
     }
     if (!spot) {
       const d = dist(e.transform, player), dx = d > .1 ? (e.transform.x - player.x) / d : Math.cos(e.id), dz = d > .1 ? (e.transform.z - player.z) / d : Math.sin(e.id);

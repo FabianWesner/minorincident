@@ -16,8 +16,10 @@ export const megaAlpha = {
   get cruiseMs(): number { return survivor.speed * this.cruiseFactor; },
   /** Placeholder mission HP until L10-S4 applies the rocket/conventional floors through the Damage resolver. */
   hp: 3000,
-  /** Body/nav footprint = the shared nav clearance, so every baked route it plans is one it fits through. */
-  radius: 0.65,
+  /** Body, hit and nav footprint (≈ 2 × the Alpha's 0.55 m). Its own nav grid is baked at this clearance, so it plans only routes its
+   * legs and shoulders fit through; on a grid larger than `ownGridMaxCells` it shares the 0.65 m crowd grid instead. */
+  radius: 1.1,
+  ownGridMaxCells: 2_000_000,
   /** Coarse route refresh: the "approximate" player position and the off-region advance run at 2 Hz. */
   routeTicks: 30,
   /** Inside this the shared Alpha chase brain (contact, barricade breach, special scheduler) takes the ticks. */
