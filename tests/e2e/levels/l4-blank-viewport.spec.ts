@@ -39,11 +39,17 @@ for (const walk of walks) for (const renderer of ['webgl', 'webgpu'] as const) t
     const a = window.__SS__!; a.pause(); a.cheats.god(true);
     for (const id of ['ride', 'quartermaster']) { a.cheats.completeObjective(id); await a.step(30); }
     // The war runs its course (the line breaks on its own); skipping 'hold' by cheat leaves the courier unable to move.
+    // The collapse director (PO 2026-10-12 design, approved "ok let's try that!") breaks the third line about 190 s after the turn (sim: turn 46 s, "Fall back!" 236 s after the gun): 350 s budget.
     a.teleport(1, { x: -21.5, z: 3 });
-    for (let i = 0; i < 400 && !a.missions.state()!.l4!.lineBreakAt; i++) await a.step(30);
+    for (let i = 0; i < 700 && !a.missions.state()!.l4!.lineBreakAt; i++) await a.step(30);
     // West of the store, on the strip the courier takes to the cellar door (the lane variant: north of the store, where the PO stood).
     a.teleport(1, start); a.camera.follow(); await a.step(5);
   }, start);
+  // Face the walk direction first: after the war the courier faces wherever she last turned, and her turning arc from a standstill
+  // carried her ~1 m north into the store's facade corner (gate 10-13: stuck at x 60.8, z 40.1). A few paused steps with the walk keys, then back to the start.
+  await page.keyboard.down('d'); await page.keyboard.down('s'); await page.evaluate(() => window.__SS__!.step(20));
+  await page.keyboard.up('d'); await page.keyboard.up('s');
+  await page.evaluate(async start => { const a = window.__SS__!; await a.step(20); a.teleport(1, start); await a.step(5); }, start);
   expect(await page.evaluate(() => window.__SS__!.missions.state()!.steps.hide.status)).toBe('active');
   await page.evaluate(() => document.body.classList.add('ui-hidden'));
   const frames: { x: number; z: number; dominant: number; sd: number; cover: number; hits: string[] }[] = [];

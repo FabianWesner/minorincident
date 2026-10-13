@@ -45,8 +45,9 @@ test.describe('Kessler cellar position', () => {
     await page.evaluate(async () => {
       const a = window.__SS__!; a.pause(); a.cheats.god(true);
       for (const id of ['ride', 'quartermaster']) { a.cheats.completeObjective(id); await a.step(30); }
+      // The collapse director (PO 2026-10-12 design, approved "ok let's try that!") breaks the third line about 190 s after the turn (sim: turn 46 s, "Fall back!" 236 s after the gun): 350 s budget.
       a.teleport(1, { x: -21.5, z: 3 });
-      for (let i = 0; i < 400 && !a.missions.state()!.l4!.lineBreakAt; i++) await a.step(30);
+      for (let i = 0; i < 700 && !a.missions.state()!.l4!.lineBreakAt; i++) await a.step(30);
       a.teleport(1, { x: 54, z: 41.2 }); a.camera.follow(); await a.step(5);
     });
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.steps.hide.status)).toBe('active');
