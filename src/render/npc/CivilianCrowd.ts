@@ -178,7 +178,7 @@ class CivilianBatch extends Group {
     this.add(this.mesh); if (placeholder) disposeCharacter(model); this.update();
   }
   update(alpha = 1, low = false, shotId?: number, figures?: readonly EntitySnapshot[]): void {
-    this.probe.begin(); this.corpses.begin(id => this.world.entities.get(id));
+    this.probe.begin(); this.deadFeet.clear(); this.corpses.begin(id => this.world.entities.get(id));
     if (!this.mesh) return; let index = 0, shadowPixels = 0;
     const renderTick = Math.max(0, this.world.tick + alpha - 1);
     const shot = shotId === undefined ? undefined : this.world.entities.get(shotId);
@@ -286,6 +286,12 @@ class CivilianBatch extends Group {
     const figure = this.probe.figures.at(-1);
     if (figure?.id === e.id) figure.appearance = renderedCrowdLook(e.id, this.model, this.mesh.geometry, this.shirt, this.accessories?.drawnSlot(e, this.lod) ?? null);
   }
+  private readonly deadFeet = new Map<number, { id: number; x: number; y: number; z: number }>();
+  /** Scene Lab probe: dead pedestrian-look infected as drawn (feet position), frozen corpses included. */
+  drawnCorpses(): { id: number; x: number; y: number; z: number }[] {
+    const frozen = this.corpses.drawn(), ids = new Set(frozen.map(c => c.id));
+    return [...frozen, ...[...this.deadFeet.values()].filter(c => !ids.has(c.id) && (this.world.entities.get(c.id)?.health.current ?? 1) <= 0)];
+  }
   /** A pedestrian who rose infected: same model and tint, full overlay, infected locomotion and fight clips. */
   private place(e: EntitySnapshot, index: number, alpha: number): boolean {
     const b = e.infected!, tick = this.world.tick;
@@ -317,6 +323,7 @@ class CivilianBatch extends Group {
       else this.transform.multiply(this.lean).multiply(this.sway.makeRotationX(roll)).multiply(this.sway.makeRotationZ(contact ? 0 : -.14 - Math.abs(Math.sin(t * 2.3)) * .1));
     }
     this.transform.setPosition(presented.x, presented.y - .7, presented.z);
+    if (b.state === 'dead') this.deadFeet.set(e.id, { id: e.id, x: presented.x, y: presented.y - .7, z: presented.z });
     let frame = civilianClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
     const sourceFrame = frame;
     const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
@@ -466,5 +473,6 @@ export class CivilianCrowd extends Group {
   muzzle(id: number): Vector3 | null { return this.props.muzzles.get(id)?.clone() ?? null; }
   gunMeshes() { return this.props.guns.filter(g => (this.props.aiming.get(g.entity)?.until ?? -1) >= this.world.tick); }
   heldProps() { return this.props.contacts; }
+  drawnCorpses() { return this.batches.flatMap(b => b.drawnCorpses()); }
   dispose(): void { this.disposed = true; this.props.dispose(); this.batches.forEach(b=>b.dispose());this.clear(); }
 }

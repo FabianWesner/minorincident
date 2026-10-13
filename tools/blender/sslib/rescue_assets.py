@@ -382,7 +382,8 @@ def finish(s, path):
             colliders.cuboid('body',tuple(high[k]-low[k] for k in range(3)),tuple((high[k]+low[k])/2 for k in range(3)),s.root)
     ao.bake_all(s.root.children_recursive,16)
     # Interior AO is a contact cue; bounded contrast keeps the golden-hour palette readable.
-    if s.asset=='int.fire-station-bay':
+    # veh.evac-bus: the seated interior sits under the roof shadow, so bounded AO keeps seats readable through the glass.
+    if s.asset in ('int.fire-station-bay','veh.evac-bus'):
         for obj in s.root.children_recursive:
             if obj.type=='MESH':
                 for value in obj.data.color_attributes['ao'].data:
