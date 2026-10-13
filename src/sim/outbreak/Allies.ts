@@ -139,7 +139,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
         if (a.baton) {
           // Police shove/baton at arm's length: heavy stagger and knockback, little damage.
           a.baton = false;
-          if (d <= pt.batonReachM * 1.15) world.combat.damage.apply({ attackId: 0, actionId: 'weapon.fists', sourceId: e.id, targetId: victim.id, origin: { x: e.transform.x, z: e.transform.z }, direction: { x: dx / (d || 1), z: dz / (d || 1) }, base: pt.batonDamage, multiplier: 1, type: 'melee', knockback: .6, stagger: .5 });
+          if (d <= pt.batonReachM * 1.15) world.combat.damage.apply({ attackId: 0, actionId: 'weapon.fists', sourceId: e.id, targetId: victim.id, origin: { x: e.transform.x, z: e.transform.z }, direction: { x: dx / (d || 1), z: dz / (d || 1) }, base: pt.batonDamage, multiplier: 1, type: 'melee', knockback: victim.archetype === 'infected.alpha' ? 0 : .6, stagger: victim.archetype === 'infected.alpha' ? 0 : .5 });
           world.events.emit({ type: 'ally.attack', tick, sourceId: e.id, targetId: victim.id, role: a.role });
         } else if (gun) {
           // v2 shot: one target, a seeded roll per shooter and shot, no pierce and no ammunition.
