@@ -70,6 +70,7 @@ export interface MissionDef {
   l5?: boolean;
   l6?: boolean;
   l8?: boolean;
+  l9?: boolean;
   /** Global gameplay deadline; checkpoints capture the remaining ticks. */
   deadline?: { seconds: number; retryGraceSeconds: number };
   id: string; briefing: string; anchors: Record<string, Anchor>; actors: Record<string, ActorDef>;

@@ -1,3 +1,4 @@
+import { levelNineMission } from '../../levels/L9/mission';
 import { crowdVariety } from '../../render/characters/CrowdAppearance';
 import { propFootprint } from '../../sim/interact/PropSystem';
 import { Box3, Matrix4, Mesh, Object3D, Raycaster, Vector3, type BufferAttribute, type InstancedMesh, type InterleavedBufferAttribute } from 'three';
@@ -210,6 +211,17 @@ export class SceneLab {
       if (!v.l2Ride) this.vehicleMotion.set(id, { yaw: world.entities.get(entity)!.transform.yaw, yawRateMaxDegS: 0, overlaps: 0 });
     }
     spec.actors?.forEach((a, i) => this.spawn(a, i));
+    if (spec.crossingCrash) {
+      const def = levelNineMission((_district, name) => {
+        const a = world.districts!.districts[0].layout.anchors[name];
+        if (!a) throw new Error(`Crash fixture missing anchor ${name}`);
+        return { x: a.position[0], y: a.position[1], z: a.position[2], radius: 2 };
+      });
+      def.anchors['crossing-start'] = { ...def.anchors['crash-approach'] };
+      const mission = world.loadMission(def); mission.begin();
+      const id = mission.l9!.state.carId;
+      world.vehicles!.damage(id, 1000 - spec.crossingCrash.health); this.vehicles.set('apc', id);
+    }
     if (spec.megaAlpha) {
       const m = spec.megaAlpha, box = m.resident;
       const pursuit = installMegaPursuit(world, { introduceTick: null, route: m.route, ...(box ? { resident: (x: number, z: number) => x >= Math.min(box[0][0], box[1][0]) && x <= Math.max(box[0][0], box[1][0]) && z >= Math.min(box[0][1], box[1][1]) && z <= Math.max(box[0][1], box[1][1]) } : {}) });
