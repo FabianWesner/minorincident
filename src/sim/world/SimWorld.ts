@@ -1,5 +1,5 @@
 import { ChunkResidency } from './ChunkResidency';
-import { crossing, crossingChunks } from '../../levels/L9/district';
+import { layoutTerrainChunks } from './TerrainChunks';
 import { TrapRescue } from './TrapRescue';
 import { LevelSevenEncounters } from '../missions/LevelSevenEncounters';
 import { LevelSevenDeparture } from '../missions/LevelSevenDeparture';
@@ -264,10 +264,9 @@ export class SimWorld implements Lifecycle {
     const {min,max}=districts.nav;
     this.physics.load({name:composition.id,survivor:true,ground:{width:max[0]-min[0],depth:max[1]-min[1],center:{x:(min[0]+max[0])/2,z:(min[1]+max[1])/2}},player:{x:districts.playerStart[0],y:survivor.height/2+.005,z:districts.playerStart[1]}});
     Object.assign(this.entities.get(1)!.transform,{x:districts.playerStart[0],y:survivor.height/2+.005,z:districts.playerStart[1]});this.previousPlayer={...this.entities.get(1)!.transform};this.player!.setCheckpoint(this.entities.get(1)!.transform);this.spatial.set(1,districts.playerStart[0],districts.playerStart[1]);
-    const crossingDistrict = districts.districts.find(d => d.id === 'D-CROSSING');
-    if (crossingDistrict) {
-      const chunks = crossingChunks.map(c => ({ id: c.id, origin: [c.origin[0] + crossingDistrict.origin[0], c.origin[1] + crossingDistrict.origin[1]] as [number, number], max: [c.max[0] + crossingDistrict.origin[0], c.max[1] + crossingDistrict.origin[1]] as [number, number] }));
-      this.chunks = new ChunkResidency(this, chunks, crossing.chunkSize); this.chunks.update();
+    const streamed = districts.districts.find(d => d.layout.terrainChunks?.length);
+    if (streamed) {
+      this.chunks = new ChunkResidency(this, layoutTerrainChunks(streamed.layout, streamed.origin), streamed.layout.terrainChunks![0].size); this.chunks.update();
       this.events.on('sim.tick', () => this.chunks?.update(), SimPhase.input - .5);
     } else {
       for(const d of districts.districts)for(const aabb of d.decay.colliders.map((c)=>c.aabb).concat(d.blockers))this.physics.addStatic(aabb,d.origin);

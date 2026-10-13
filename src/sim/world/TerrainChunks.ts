@@ -1,4 +1,4 @@
-import type { Point } from '../../levels/districts/types';
+import type { DistrictLayout, Point } from '../../levels/districts/types';
 import type { QualityTier } from '../../core/Quality';
 
 /** Global anchors stay stable while each region's geometry uses a cell-local origin.
@@ -19,4 +19,9 @@ export function selectTerrainChunks(chunks: readonly TerrainChunk[], size: numbe
   const x = Math.floor((focus[0] + velocity[0] * lead - minX) / size), z = Math.floor((focus[1] + velocity[1] * lead - minZ) / size);
   return chunks.filter(c => Math.abs(Math.round((c.origin[0] - minX) / size) - x) <= radius && Math.abs(Math.round((c.origin[1] - minZ) / size) - z) <= radius)
     .sort((a, b) => Math.hypot(a.origin[0] + size / 2 - focus[0], a.origin[1] + size / 2 - focus[1]) - Math.hypot(b.origin[0] + size / 2 - focus[0], b.origin[1] + size / 2 - focus[1]));
+}
+
+/** Consume the Blender ownership table for both Crossing and Cure, with the composition origin applied once. */
+export function layoutTerrainChunks(layout: DistrictLayout, origin: Point = [0, 0]): TerrainChunk[] {
+  return (layout.terrainChunks ?? []).map(c => ({ id: c.id, origin: [c.origin[0] + origin[0], c.origin[1] + origin[1]], max: [c.origin[0] + origin[0] + c.size, c.origin[1] + origin[1] + c.size] }));
 }

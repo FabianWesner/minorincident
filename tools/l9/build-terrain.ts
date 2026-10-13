@@ -5,16 +5,21 @@ import { NodeIO } from '@gltf-transform/core';
 import { ALL_EXTENSIONS } from '@gltf-transform/extensions';
 import { cloneDocument, join, prune } from '@gltf-transform/functions';
 import { MeshoptDecoder } from 'meshoptimizer';
-import { crossingChunks } from '../../src/levels/L9/district';
+import { layoutTerrainChunks } from '../../src/sim/world/TerrainChunks';
+import type { DistrictLayout } from '../../src/levels/districts/types';
+const district = process.argv[2] ?? 'D-CROSSING';
+if (!['D-CROSSING', 'D-CURE'].includes(district)) throw Error(`Unsupported streamed district ${district}`);
+const layout = JSON.parse(readFileSync(`public/assets/layouts/${district}.layout.json`, 'utf8')) as DistrictLayout;
+const chunks = layoutTerrainChunks(layout);
 
 await MeshoptDecoder.ready;
 const io = new NodeIO().registerExtensions(ALL_EXTENSIONS).registerDependencies({ 'meshopt.decoder': MeshoptDecoder });
-const source = await io.read('public/assets/layouts/D-CROSSING.base.glb');
+const source = await io.read(`public/assets/layouts/${district}.base.glb`);
 for (const extension of source.getRoot().listExtensionsUsed()) extension.dispose();
-const out = 'public/assets/layouts/D-CROSSING.chunks';
+const out = `public/assets/layouts/${district}.chunks`;
 mkdirSync(out, { recursive: true });
 const counts: Record<string, number> = {};
-for (const cell of crossingChunks) {
+for (const cell of chunks) {
   const doc = cloneDocument(source);
   for (const node of doc.getRoot().listNodes()) {
     if (node.getExtras().terrainChunk !== cell.id) node.dispose();
@@ -40,6 +45,6 @@ for (const node of horizon.getRoot().listNodes()) {
 await horizon.transform(join(), prune());
 const horizonTriangles = horizon.getRoot().listMeshes().reduce((sum, mesh) => sum + mesh.listPrimitives().reduce((n, p) => n + (p.getIndices()?.getCount() ?? p.getAttribute('POSITION')!.getCount()) / 3, 0), 0);
 if (horizonTriangles > 10_000) throw Error(`Horizon: ${horizonTriangles} exceeds 10,000`);
-await io.write('public/assets/layouts/D-CROSSING.horizon.glb', horizon);
-writeFileSync(`${out}/manifest.json`, JSON.stringify({ sourceHash: JSON.parse(readFileSync('public/assets/layouts/D-CROSSING.layout.json', 'utf8')).geometryHash, horizonTriangles, triangles: counts }, null, 2) + '\n');
-console.log(`${crossingChunks.length} local cells (max ${Math.max(...Object.values(counts))} triangles), horizon ${horizonTriangles} triangles`);
+await io.write(`public/assets/layouts/${district}.horizon.glb`, horizon);
+writeFileSync(`${out}/manifest.json`, JSON.stringify({ sourceHash: layout.geometryHash, horizonTriangles, triangles: counts }, null, 2) + '\n');
+console.log(`${chunks.length} local cells (max ${Math.max(...Object.values(counts))} triangles), horizon ${horizonTriangles} triangles`);

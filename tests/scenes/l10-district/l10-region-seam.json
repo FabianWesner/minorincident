@@ -1,0 +1,66 @@
+{
+  "name": "l10-region-seam",
+  "note": "L10-D1 production route: normal movement crosses the R1/R2 waypoint at x=747 and the shared 100 m terrain-cell seam at x=800. Game camera; no teleports or visual-load shortcuts.",
+  "seed": 32,
+  "ground": "district",
+  "time": "L9-crossing",
+  "dof": false,
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        700,
+        -20
+      ],
+      [
+        825,
+        70
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        737,
+        25
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "frames": 1200,
+  "sheet": 240,
+  "clipping": {
+    "ignoreFoliage": true
+  },
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "script": [
+    {
+      "frame": 0,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            817,
+            25
+          ]
+        ]
+      }
+    }
+  ]
+}
