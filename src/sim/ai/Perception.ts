@@ -2,6 +2,7 @@ import { l1v2 } from '../../data/l1v2';
 import type { HumanTarget, HumanTargetQuery, LosBlocker, LosBlockerRegistry, Vec2 } from '../outbreak/types';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
+import { isCorgi } from '../npc/storyProtection';
 
 /** Segment a-b against an axis-aligned box (slab test on t in [0, 1]). */
 function segmentHitsAabb(a: Vec2, b: Vec2, min: Vec2, max: Vec2): boolean {
@@ -76,7 +77,7 @@ export class WorldHumans implements HumanTargetQuery {
     for (const e of this.world.entities.iterate()) if (e.id === 1 || e.civilian || e.kind === 'npc' || e.kind === 'escort') this.candidates.push(e.id);
   }
   private human(e: EntitySnapshot | undefined): HumanTarget | undefined {
-    if (!e || e.health.current <= 0 || e.hidden || this.world.missions?.state.l3?.waitingIds?.includes(e.id) || e.id === 1 && this.world.inspectionGhost) return undefined;
+    if (!e || isCorgi(e) || e.health.current <= 0 || e.hidden || this.world.missions?.state.l3?.waitingIds?.includes(e.id) || e.id === 1 && this.world.inspectionGhost) return undefined;
     if (e.id !== 1 && !(e.civilian?.adult && (!e.civilian.pet || !!e.civilian.zooAnimal) && !e.infection && huntable.has(e.civilian.state) && !this.bitten.has(e.id))) return undefined;
     let target = this.cache.get(e.id);
     if (!target) { target = { id: e.id, kind: e.id === 1 ? 'player' : e.civilian?.zooAnimal ? 'animal' : 'civilian', position: { x: 0, z: 0, y: 0 } as Vec2, facing: 0 }; this.cache.set(e.id, target); }

@@ -35,3 +35,20 @@ export function storyProtected(world: SimWorld, entity: EntitySnapshot): boolean
   }
   return false;
 }
+
+/**
+ * E32-AC08 (PO 10-13): "The player's own corgi remains completely safe and is never infected." One predicate for every path that
+ * could turn, target, substitute or cure-damage an actor: the companion entity (`char.corgi`). Domestic pets walking with owners
+ * are other dogs and keep their ordinary outbreak rules.
+ */
+export function isCorgi(entity: { companion?: unknown; archetype?: string } | undefined): boolean {
+  return !!entity && (!!entity.companion || entity.archetype === 'char.corgi');
+}
+/** Asset/variant spellings that would draw the corgi as an enemy (spawn substitution guard). */
+export function isCorgiModel(model: string | undefined): boolean {
+  return !!model && /corgi/i.test(model);
+}
+/** The cure front and every other infected-only effect: only living entities flagged infected, never the corgi. */
+export function cureCanKill(entity: { companion?: unknown; archetype?: string; infected?: unknown }): boolean {
+  return !!entity.infected && !isCorgi(entity);
+}

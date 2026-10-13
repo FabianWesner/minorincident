@@ -10,8 +10,8 @@ type BakedCrowd = { geometry: import('three').BufferGeometry; clip: CrowdClip; s
 const bakedCrowds = new Map<string, BakedCrowd>();
 const bakedCrowdLimit = 64;
 export const infectedClips = ['idle', 'run', 'swing', 'hurt', 'die', 'crawl', 'windup', 'walk', 'shamble', 'infected-run', 'npc-walk', 'npc-walk-relaxed', 'stagger-left', 'stagger-right', 'knockdown', 'get-up', 'flung', 'death-back', 'death-side', 'death-crumple', 'infection-stagger', 'infection-collapse', 'infection-rise',
-  'infected-frail', 'infected-lurch', 'infected-sprint', 'infected-idle', 'infected-search', 'civ-startle', 'civ-flee', 'civ-grabbed', 'zebra-rear-kick', 'zebra-stampede'] as const;
-export const civilianClips = [...infectedClips.filter(clip => !clip.startsWith('zebra-')), 'npc-sit', 'npc-sit-down', 'npc-stand-up', 'npc-gesture', 'npc-look-around', 'npc-water', 'npc-carry', 'npc-cane',
+  'infected-frail', 'infected-lurch', 'infected-sprint', 'infected-idle', 'infected-search', 'civ-startle', 'civ-flee', 'civ-grabbed', 'zebra-rear-kick', 'zebra-stampede', 'dog-gallop', 'dog-lunge-bite'] as const;
+export const civilianClips = [...infectedClips.filter(clip => !clip.startsWith('zebra-') && !clip.startsWith('dog-')), 'npc-sit', 'npc-sit-down', 'npc-stand-up', 'npc-gesture', 'npc-look-around', 'npc-water', 'npc-carry', 'npc-cane',
   'npc-give', 'npc-wave', 'npc-glance', 'npc-sign', 'npc-wave-in', 'npc-bang', 'npc-plead', 'npc-press', 'npc-cower', 'npc-hug', 'ff-pry', 'npc-stand-back', 'shoot'] as const;
 export const framesPerClip = 24;
 /** Clips whose feet legitimately leave the floor plane (seated, knocked down, rising, dying): Scene Lab's rule. */
@@ -80,7 +80,7 @@ export function bakeInfected(root: Group, animatedNodes: readonly string[] = [],
     const embedded = root.animations.find(animation => animation.name === clip);
     const action = embedded ? mixer.clipAction(embedded).setLoop(LoopOnce, 1) : undefined;
     if (action) { action.clampWhenFinished = true; action.reset().play(); }
-    const name = animalRig ? /^(die|death-|flung|knockdown)/.test(clip) ? 'animal-death' : /^(idle|infected-idle|infected-search|civ-startle|civ-grabbed)$/.test(clip) ? 'corgi-idle' : /^(windup|swing|zebra-rear-kick|zebra-stampede)$/.test(clip) ? 'corgi-idle' : flying ? 'infected-flight' : 'corgi-trot' : clip.startsWith('zebra-') ? 'idle' : crawlingRestPose && clip === 'crawl' ? 'infected-run' : clip;
+    const name = animalRig ? /^(die|death-|flung|knockdown)/.test(clip) ? 'animal-death' : /^(idle|infected-idle|infected-search|civ-startle|civ-grabbed)$/.test(clip) ? 'corgi-idle' : /^(windup|swing|zebra-rear-kick|zebra-stampede)$/.test(clip) ? 'corgi-idle' : flying ? 'infected-flight' : 'corgi-trot' : clip.startsWith('zebra-') || clip.startsWith('dog-') ? 'idle' : crawlingRestPose && clip === 'crawl' ? 'infected-run' : clip;
     const duration = embedded?.duration ?? authoredClips.get(name)!.duration, planted = (!animalRig || root.getObjectByName('root')?.userData.groundedAnimal === true) && soleHeight > 0 && !unplantedClips.test(clip);
     for (let frame = 0; frame < framesPerClip; frame++) {
       for (let i = 0; i < parts.length; i++) { parts[i].position.copy(rest[i].position); parts[i].rotation.copy(rest[i].rotation); }
