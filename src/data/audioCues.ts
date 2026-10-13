@@ -259,7 +259,7 @@ export const eventCues = {
     'prop.ignited': 'explosion.crackle',
     'vehicle.durability-hit': 'vehicle.crash',
     'vehicle.attack-windup': 'vehicle.grab',
-    'vehicle.damage-stage': 'vehicle.crash',
+    'vehicle.damage-stage': 'vehicle.sputter',
     'vehicle.burning': 'explosion.crackle',
     'vehicle.entered': 'ui.click',
     'vehicle.exited': 'ui.click',

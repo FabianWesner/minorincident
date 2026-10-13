@@ -9,6 +9,10 @@ export class Status {
   constructor(private readonly world: SimWorld) {}
   apply(target: EntitySnapshot, def: StatusDef, sourceId: number, actionId: string, attackId = 0): void {
     if (!target.combat || target.health.current <= 0 || (target.infected?.special === 'fire-immune' && def.kind === 'burning') || (target.archetype === 'infected.hazmat' && def.kind === 'toxic')) return;
+    if (target.infected?.pursuit && def.kind === 'stunned') {
+      this.world.combat!.damage.apply({ sourceId, targetId: target.id, attackId, actionId, origin: target.transform, direction: { x: 0, z: 0 }, base: 1, multiplier: 1, type: 'status', knockback: 0, stagger: def.duration });
+      return;
+    }
     const statuses = target.combat.statuses, existing = statuses.find((status) => status.kind === def.kind);
     if (existing) { existing.stacks = Math.min(def.maxStacks, existing.stacks + 1); existing.expires = this.world.tick + ticks(def.duration); }
     else statuses.push({ attackId, kind: def.kind, stacks: 1, expires: this.world.tick + ticks(def.duration), nextDot: this.world.tick + 60, def, sourceId, actionId });

@@ -1,3 +1,4 @@
+import { apcEngineStages, apcDamageCaptions } from './apcEngine';
 import { action } from '../data/actions/catalog';
 import type { Lifecycle } from '../core/Lifecycle';
 import type { SimWorld } from '../sim/world/SimWorld';
@@ -422,6 +423,7 @@ export class AudioService implements Lifecycle {
             voice.baseGain = audioCues[id].gain * (options.gain ?? 1);
             voice.rate = options.rate ?? 1;
             if (!voice.position) { voice.gain.gain.setValueAtTime(voice.baseGain, this.context.currentTime); voice.source.playbackRate.setValueAtTime(voice.rate, this.context.currentTime); }
+            if (options.lowpass !== undefined) voice.cutoff = options.lowpass;
             this.graph.updateEmitter(voice);
         }
         return voice ?? null;
@@ -605,6 +607,7 @@ export class AudioService implements Lifecycle {
             const special = 'special' in event ? event.special : event.kind;
             const id = telegraphCues[special] ?? telegraphCues[entity?.archetype ?? ''] ?? telegraphCues[`infected.${special}`] ?? eventCues.telegraph;
             if ('duration' in event && (special === 'alpha.charge' || special === 'alpha.ground-slam')) this.caption(special === 'alpha.charge' ? 'Alpha charging — clear the marked path' : 'Alpha ground slam — leave the marked circle', position, event.duration);
+            if ('duration' in event && entity?.infected?.pursuit && special === 'alpha.grab-throw') this.caption('Mega Alpha grabbing — leave the marked circle', position, event.duration);
             this.play(id, { position, offscreen: position ? this.host.offscreen(position) : false }, source);
             return;
         }
@@ -686,6 +689,11 @@ export class AudioService implements Lifecycle {
             }
             return;
         }
+        if (event.type === 'vehicle.damage-stage') {
+            this.play('vehicle.sputter', { position, loop: false, gain: .35, rate: apcEngineStages[event.stage]?.roughRate ?? 1 }, source);
+            this.caption(apcDamageCaptions[event.stage as 1 | 2 | 3 | 4] ?? 'Vehicle damaged', position, 3);
+            return;
+        }
         if (event.type === 'vehicle.sound') {
             if (event.phase === 'stop') {
                 this.vehicleSpeed = 0;
@@ -698,14 +706,18 @@ export class AudioService implements Lifecycle {
                 this.vehicleSpeed = event.speed;
                 const rpm = Math.max(0, Math.min(1, event.rpm / 7000));
                 // The player's own cab: a muffled, quieter engine and road noise (also see the in-bus radio).
-                const cab = event.inCar ? { lowpass: 700, gain: 0.55 } : { gain: 1, lowpass: undefined };
-                this.loop(`vehicle:${source}:low`, 'vehicle.engine-low', { position, velocity: event.velocity, rate: 0.6 + rpm, gain: (1 - rpm) * cab.gain, lowpass: cab.lowpass }, source);
-                this.loop(`vehicle:${source}:high`, 'vehicle.engine-high', { position, velocity: event.velocity, rate: 0.6 + rpm, gain: rpm * cab.gain, lowpass: cab.lowpass }, source);
-                if (event.health < 0.4)
-                    this.loop(`vehicle:${source}:sputter`, 'vehicle.sputter', { position }, source);
+                const cab = event.inCar ? { lowpass: 700, gain: 0.55 } : { gain: 1, lowpass: 20000 };
+                const floor = entity?.vehicle?.floor;
+                const stage = floor ? Math.max(0, Math.min(4, entity.vehicle!.stage ?? 0)) : 0;
+                const engine = apcEngineStages[stage];
+                const lowpass = Math.min(cab.lowpass, engine.lowpass);
+                this.loop(`vehicle:${source}:low`, 'vehicle.engine-low', { position, velocity: event.velocity, rate: (0.6 + rpm) * engine.rate, gain: (1 - rpm) * cab.gain, lowpass }, source);
+                this.loop(`vehicle:${source}:high`, 'vehicle.engine-high', { position, velocity: event.velocity, rate: (0.6 + rpm) * engine.rate, gain: rpm * cab.gain, lowpass }, source);
+                if (floor ? stage > 0 : event.health < 0.4)
+                    this.loop(`vehicle:${source}:sputter`, 'vehicle.sputter', { position, gain: floor ? engine.roughness * cab.gain : 1, rate: floor ? engine.roughRate : 1, lowpass: floor ? lowpass : 20000 }, source);
                 else
                     this.stopLoop(`vehicle:${source}:sputter`);
-                if (event.health < 0.15)
+                if (!floor && event.health < 0.15)
                     this.loop(`vehicle:${source}:fire`, 'vehicle.fire', { position }, source);
                 else
                     this.stopLoop(`vehicle:${source}:fire`);

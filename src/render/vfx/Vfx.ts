@@ -279,8 +279,8 @@ export class Vfx extends Group {
       if (event.sourceId !== undefined) for (const [id,tell] of this.tells) if(tell.sourceId===event.sourceId){this.telegraphs.remove(tell.slot);this.tells.delete(id);}
 
       const source = event.sourceId !== undefined ? this.world.entities.get(event.sourceId) : undefined;
-      const kind: TelegraphKind = 'kind' in event ? event.kind : event.special === 'explode' ? 'bloated' : event.special === 'charge' || event.special === 'pin' || event.special === 'alpha.grab-throw' || event.special === 'gorilla.grab-throw' || event.special === 'elephant.charge' || event.special === 'zebra.stampede' ? 'charge' : event.special === 'aura' || event.special === 'alpha.roar' || event.special === 'gorilla.roar' || event.special === 'gorilla.pound' || event.special === 'flamingo.dive' ? 'splash' : 'lunge';
-      const throwing = 'move' in event && (event.move === 'alpha.grab-throw' || event.move === 'gorilla.grab-throw') && event.area && event.target;
+      const kind: TelegraphKind = source?.infected?.pursuit && 'move' in event && event.move === 'alpha.grab-throw' ? 'splash' : 'kind' in event ? event.kind : event.special === 'explode' ? 'bloated' : event.special === 'charge' || event.special === 'pin' || event.special === 'alpha.grab-throw' || event.special === 'gorilla.grab-throw' || event.special === 'elephant.charge' || event.special === 'zebra.stampede' ? 'charge' : event.special === 'aura' || event.special === 'alpha.roar' || event.special === 'gorilla.roar' || event.special === 'gorilla.pound' || event.special === 'flamingo.dive' ? 'splash' : 'lunge';
+      const throwing = !source?.infected?.pursuit && 'move' in event && (event.move === 'alpha.grab-throw' || event.move === 'gorilla.grab-throw') && event.area && event.target;
       const length = throwing ? Math.min(15, Math.hypot(event.target!.x - event.area!.x, event.target!.z - event.area!.z)) : 0;
       const position = throwing ? { x: event.area!.x + event.area!.dx * length / 2, z: event.area!.z + event.area!.dz * length / 2 } : 'position' in event ? event.position : event.area ?? source?.transform;
       if (!position) return;
@@ -294,7 +294,11 @@ export class Vfx extends Group {
     } else if (event.type === 'attack.resolved') {
       const tell = this.tells.get(event.attackId); if (tell) { this.telegraphs.remove(tell.slot); this.tells.delete(event.attackId); }
     } else if (event.type === 'hazard.exploded') this.explosionOnce(event.tick, event.position.x, event.position.z, event.radius);
-    else if (event.type === 'vehicle.exploded') { const p = this.world.entities.get(event.sourceId)?.transform; if (p) this.explosionOnce(event.tick, p.x, p.z, 6); }
+    else if (event.type === 'vehicle.exploded') {
+      const car = this.world.vehicles?.cars.get(event.sourceId), p = this.world.entities.get(event.sourceId)?.transform, def = car?.physics.def;
+      const height = car?.entity.vehicle?.scripted && def && p ? p.y - (def.suspension + def.wheelRadius + .15) + .7 : undefined;
+      if (p) this.explosionOnce(event.tick, p.x, p.z, 6, height);
+    }
     else if (event.type === 'noise' && event.kind === 'scream') this.effect('screamer', event.position.x, event.position.z, event.radius);
     else if (event.type === 'hazard.electrified' || event.type === 'prop.ignited') { const p = this.world.entities.get(event.id)?.transform; if (p) this.effect(event.type === 'hazard.electrified' ? 'electric' : 'fire', p.x, p.z, 1); }
     // E19 section 5.7: the turning reads at the game camera - sickly wisps when the eyes ignite, a puff as the person rises.
@@ -310,24 +314,25 @@ export class Vfx extends Group {
     this.receive({ tick: this.world.tick, type: 'vehicle.feedback', id, position: { x: e.transform.x, z: e.transform.z }, yaw: e.transform.yaw, healthFraction: e.health.current / e.health.max, blood, ...(e.vehicle.floor ? { floor: true } : {}) });
   }
   /** One E15 base burst per blast: legacy hazard/combat/vehicle events and the E27 explosion event arrive together. */
-  private explosionOnce(tick: number, x: number, z: number, radius: number): void {
+  private explosionOnce(tick: number, x: number, z: number, radius: number, height = .7): void {
     const last = this.e15Blast;
     if (last.tick === tick && Math.hypot(last.x - x, last.z - z) < .75) return;
-    last.tick = tick; last.x = x; last.z = z; this.effect('explosion', x, z, radius);
+    last.tick = tick; last.x = x; last.z = z; this.effect('explosion', x, z, radius, height);
   }
   /** Radius is in metres. Shockwave max diameter is exactly 2 × splash radius. */
   effect(kind: EffectKind, x: number, z: number, radius = 2, height = .7): void {
     if (!this.enabled) return;
     if (kind === 'explosion') {
+      const ground = height < 0 ? height - .7 : 0;
       // The white-out belongs to a blast near the player (as in Blasts.play): a distant fuel chain or tank round flashed the whole
       // screen white for 0.1 s at any distance (gate 10-13: the L4 line break washed out the walk on Kessler Lane, 60 m away).
       const focus = this.targets.focus?.() ?? this.world.entities.get(1)?.transform, near = focus ? Math.max(0, Math.min(1, 1.4 - Math.hypot(focus.x - x, focus.z - z) / 18)) : 1;
       this.lastExplosionRadius = radius; if (near > 0) { this.flashUntil = this.time + 0.1; this.flashNear = near; }
-      this.waves.spawn(this.time, 0.8, x, 0.035, z, 0, 0, 0, radius * 2, 1, 0xffe19a, 1);
-      this.burst(x, 1, z, 0xff8c32, 64, radius * 0.3, 0.65, 2);
-      this.burst(x, 0.8, z, 0x685866, 32, radius * 0.4, 2, -0.5);
-      this.burst(x, 0.3, z, 0xb09b85, 16, 0.13, 1.6);
-      if (this.gore !== 'Off') this.decals.spawn(this.time, 120, x, 0.012, z, 0, 0, 0, radius, 0, 0x37323c);
+      this.waves.spawn(this.time, 0.8, x, ground + 0.035, z, 0, 0, 0, radius * 2, 1, 0xffe19a, 1);
+      this.burst(x, ground + 1, z, 0xff8c32, 64, radius * 0.3, 0.65, 2);
+      this.burst(x, ground + 0.8, z, 0x685866, 32, radius * 0.4, 2, -0.5);
+      this.burst(x, ground + 0.3, z, 0xb09b85, 16, 0.13, 1.6);
+      if (this.gore !== 'Off') this.decals.spawn(this.time, 120, x, ground + 0.012, z, 0, 0, 0, radius, 0, 0x37323c);
       this.targets.shake(this.flashReduction ? 0.08 : Math.min(0.35, radius * 0.05));
     } else if (kind === 'screamer') this.waves.spawn(this.time, 1, x, 0.03, z, 0, 0, 0, radius * 2, 1, 0xef92ff, 1);
     else if (kind === 'electric') {
@@ -400,6 +405,7 @@ export class Vfx extends Group {
     }
     if (Math.floor(this.time * 4) !== Math.floor((this.time - seconds) * 4) && this.enabled) {
       for (const vehicle of this.vehicles.values()) {
+        if (this.world.entities.get(vehicle.id)?.vehicle?.scripted) continue;
         // L9 floor vehicle: heavy smoke from the 25% stage on, never fire (it stays driveable until the scripted crash).
         if (vehicle.healthFraction < (vehicle.floor ? 0.2501 : 0.4)) this.effect('vehicle-smoke', vehicle.position.x, vehicle.position.z, 0.7);
         if (vehicle.healthFraction < 0.15 && !vehicle.floor) this.effect('vehicle-fire', vehicle.position.x, vehicle.position.z, 0.6);

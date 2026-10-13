@@ -1,0 +1,118 @@
+{
+  "unit": {
+    "numPassedTests": 1269,
+    "numFailedTests": 0,
+    "numPendingTests": 7,
+    "success": true
+  },
+  "focused": {
+    "numPassedTests": 13,
+    "numFailedTests": 0,
+    "numPendingTests": 0,
+    "success": true
+  },
+  "sim": {
+    "numPassedTests": 24,
+    "numFailedTests": 0,
+    "numPendingTests": 1070,
+    "success": true
+  },
+  "verify": {
+    "numPassedTests": 34,
+    "numFailedTests": 0,
+    "numPendingTests": 2336,
+    "success": true
+  },
+  "verifyCommands": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/remote/run.sh",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l9-damage-art",
+        "--pull",
+        "test-results/epics/E31/vitest.json",
+        "--",
+        "npx",
+        "vitest",
+        "run",
+        "-t",
+        "@(?:E31)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--maxWorkers=1",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/epics/E31/vitest.json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "npx",
+        "playwright",
+        "test",
+        "--grep",
+        "@(?:E31)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--grep-invert",
+        "@perf",
+        "--workers=1"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "quietRide": {
+    "pass": 17,
+    "failed": 0,
+    "workers": 1
+  },
+  "l1L2AndAudio": {
+    "pass": 5,
+    "failed": 0
+  },
+  "matrix": {
+    "webgl2": {
+      "pass": 36,
+      "total": 36,
+      "actualBackends": [
+        "webgl"
+      ],
+      "maxDraws": 21,
+      "maxTriangles": 99086,
+      "consoleErrors": 0
+    },
+    "webgpu": {
+      "pass": 36,
+      "total": 36,
+      "actualBackends": [
+        "webgpu"
+      ],
+      "maxDraws": 21,
+      "maxTriangles": 99086,
+      "consoleErrors": 0
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { BoxGeometry, BufferAttribute, Color, Group, Matrix4, Mesh, MeshLambertNodeMaterial, PlaneGeometry, type Object3D } from 'three/webgpu';
+import { BoxGeometry, DoubleSide, BufferAttribute, Color, Group, Matrix4, Mesh, MeshLambertNodeMaterial, PlaneGeometry, type Object3D } from 'three/webgpu';
 import { attribute, uniform, vec4, positionGeometry } from 'three/tsl';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import type { VehicleDef } from '../data/vehicles';
@@ -32,9 +32,14 @@ export function openTransportCab(model: Object3D, def: VehicleDef): void {
       material.opacityNode = uniform(material.opacity).mul(cab.or(doorway).select(0, 1)); material.alphaTest = .5;
     }
   });
-  const glass = new MeshLambertNodeMaterial({ color: '#568e8d', transparent: true, opacity: .22, depthWrite: false }); glass.forceSinglePass = true;
-  const roof = new Mesh(new PlaneGeometry(1.15, 1.96), glass); roof.rotation.x = -Math.PI / 2; roof.position.set(.725, 2.25, 0); roof.userData.transportCabPart = true; model.add(roof);
-  const doorMaterial = new MeshLambertNodeMaterial({ vertexColors: true, transparent: true, depthWrite: false, opacityNode: attribute('cabOpacity', 'float') }); doorMaterial.forceSinglePass = true;
+  // Roof and door glazing share one vertex-opacity material (four APC materials including its lamps).
+  const doorMaterial = Object.assign(new MeshLambertNodeMaterial({ vertexColors: true, side: DoubleSide, transparent: true, depthWrite: false, opacityNode: attribute('cabOpacity', 'float') }), { emissiveNode: attribute('cabCrack', 'float').mul(.16) }); doorMaterial.forceSinglePass = true;
+  const roofGeometry = new PlaneGeometry(1.15, 1.96).rotateX(-Math.PI / 2).translate(.725, 2.25, 0);
+  const roofColor = new Color('#568e8d').toArray(), count = roofGeometry.getAttribute('position').count;
+  roofGeometry.setAttribute('color', new BufferAttribute(new Float32Array(Array.from({ length: count }, () => roofColor).flat()), 3));
+  roofGeometry.setAttribute('cabCrack', new BufferAttribute(new Float32Array(count), 1));
+  roofGeometry.setAttribute('cabOpacity', new BufferAttribute(new Float32Array(count).fill(.22), 1));
+  const roof = new Mesh(roofGeometry, doorMaterial); roof.name = 'transportRoof'; roof.userData.transportCabPart = true; model.add(roof);
   for (const [side, name] of [[1, 'doorL'], [-1, 'doorR']] as const) {
     const door = new Group(); door.name = name; door.position.set(def.doorX + .48, .55, side * 1.245); model.add(door);
     const panel = new BoxGeometry(.96, 1.1, .045).translate(-.48, .55, 0);

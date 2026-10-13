@@ -1,3 +1,4 @@
+import { megaAlpha } from '../data/megaAlpha';
 import { regularInfectedModels } from '../data/crowdAppearance';
 import { crowdAppearanceColor, crowdShirt, markCrowdAppearance, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout, crowdHeadwearVisibility } from './characters/CrowdAppearance';
 import type { CrowdAccessories } from './characters/CrowdAccessories';
@@ -295,7 +296,7 @@ export class CrowdView extends Group {
       if (!batch) continue;
       const b = e.infected ?? { state: e.health.current <= 0 || e.civilian?.state === 'finished' ? 'dead' : e.combat.attacking ? 'attack' : 'idle', until: 0, deadAt: e.civilian?.entered ?? 0, legLost: false, special: '', detached: false, variant: '', birdAlive: [], birdPositions: [], dx: 0, dz: 0 };
       const specialAttack = e.infected?.specialAttack;
-      const physical = specialAttack && ['alpha.charge', 'alpha.ground-slam', 'lion.pounce', 'lion.flank', 'gorilla.pound', 'gorilla.roar', 'elephant.charge', 'elephant.swipe', 'zebra.stampede'].includes(specialAttack.move) ? specialAttack : undefined;
+      const physical = specialAttack && (e.infected?.pursuit && specialAttack.move === 'alpha.grab-throw' || ['alpha.charge', 'alpha.ground-slam', 'lion.pounce', 'lion.flank', 'gorilla.pound', 'gorilla.roar', 'elephant.charge', 'elephant.swipe', 'zebra.stampede'].includes(specialAttack.move)) ? specialAttack : undefined;
       const feedback = this.feedback.get(e.id);
       const renderTick = Math.max(0, this.world.tick + alpha - 1);
       const tick = distance > 35 ? Math.floor(this.world.tick / 2) * 2 : this.world.tick;
@@ -366,7 +367,7 @@ export class CrowdView extends Group {
       if (e.archetype !== 'infected.crow') { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); }
       if (physical && physical.stage !== 'recovery' && physical.move !== 'elephant.swipe') {
         const area = physical.area, ground = (this.world.districts?.groundHeight(area.x, area.z) ?? 0) + .065;
-        if (physical.move === 'alpha.ground-slam' || physical.move === 'gorilla.pound' || physical.move === 'gorilla.roar') {
+        if (physical.move === 'alpha.grab-throw' || physical.move === 'alpha.ground-slam' || physical.move === 'gorilla.pound' || physical.move === 'gorilla.roar') {
           this.transform.makeScale(area.radius / .8, 1, area.radius / .8); this.transform.setPosition(area.x, ground, area.z);
           this.telegraphs[0].setMatrixAt(this.telegraphs[0].count++, this.transform);
           if (physical.move === 'gorilla.roar') {
@@ -375,11 +376,12 @@ export class CrowdView extends Group {
           }
         } else {
           // A sequence of fixed, two-metre-wide arrows shows the entire locked twelve-metre corridor.
-          const length = physical.move === 'lion.pounce' ? Math.min(8, Math.hypot(physical.target.x - area.x, physical.target.z - area.z)) : physical.destination ? Math.hypot(physical.destination.x - area.x, physical.destination.z - area.z) : physical.move === 'elephant.charge' ? 16 : physical.move === 'zebra.stampede' ? 15 : 12;
+          const length = e.infected?.pursuit ? Math.min(megaAlpha.moves['alpha.charge'].range, megaAlpha.moves['alpha.charge'].speed) : physical.move === 'lion.pounce' ? Math.min(8, Math.hypot(physical.target.x - area.x, physical.target.z - area.z)) : physical.destination ? Math.hypot(physical.destination.x - area.x, physical.destination.z - area.z) : physical.move === 'elephant.charge' ? 16 : physical.move === 'zebra.stampede' ? 15 : 12;
           for (let i = 0; i < Math.ceil(length / 3); i++) {
             this.transform.makeRotationY(-Math.atan2(area.dz, area.dx)); this.transform.multiply(this.physicalArrowScale);
-            if (physical.move === 'elephant.charge' || physical.move === 'zebra.stampede') {
-              if (physical.move === 'elephant.charge') this.transform.multiply(this.elephantArrowScale);
+            if (e.infected?.pursuit || physical.move === 'elephant.charge' || physical.move === 'zebra.stampede') {
+              if (e.infected?.pursuit) this.transform.multiply(this.physicalArrowTail.makeScale(1, 1, 3 / (1.1 * 1.8)));
+              else if (physical.move === 'elephant.charge') this.transform.multiply(this.elephantArrowScale);
               else this.transform.multiply(this.physicalArrowTail.makeScale(1, 1, 1.5 / (1.1 * 1.8)));
               this.physicalArrowTail.makeScale(Math.min(3, length - i * 3) / 3, 1, 1); this.transform.multiply(this.physicalArrowTail);
             }

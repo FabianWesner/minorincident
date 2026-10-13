@@ -1,0 +1,65 @@
+[
+  {
+    "tier": "high",
+    "frameP95": 4.5,
+    "hitch": 17.600000000000364,
+    "simP95": 0.39999961853027344,
+    "draws": 107,
+    "triangles": 241359,
+    "particles": 244,
+    "puffs": 77,
+    "parts": 3,
+    "lights": 0,
+    "finished": true,
+    "worst": [],
+    "heapMB": 140.37540817260742,
+    "limits": {
+      "frameP95": 16.7,
+      "simP95": 4,
+      "draws": 600,
+      "triangles": 1500000,
+      "heapMB": 400,
+      "particles": 6000,
+      "puffs": 400,
+      "parts": 120,
+      "lights": 8,
+      "hitch": 50
+    },
+    "pass": true,
+    "errors": []
+  },
+  {
+    "tier": "low",
+    "frameP95": 8,
+    "hitch": 34.5,
+    "simP95": 1.1999998092651367,
+    "draws": 86,
+    "triangles": 160676,
+    "particles": 67,
+    "puffs": 40,
+    "parts": 3,
+    "lights": 0,
+    "finished": true,
+    "worst": [
+      {
+        "ms": 34.5,
+        "tick": 3,
+        "phase": "approach"
+      }
+    ],
+    "heapMB": 107.91090393066406,
+    "limits": {
+      "frameP95": 33.3,
+      "simP95": 6,
+      "draws": 300,
+      "triangles": 500000,
+      "heapMB": 250,
+      "particles": 2000,
+      "puffs": 120,
+      "parts": 40,
+      "lights": 3
+    },
+    "pass": true,
+    "errors": []
+  }
+]

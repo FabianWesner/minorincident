@@ -245,9 +245,10 @@ export class GameView implements Lifecycle {
       const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2', 'L3', 'L4', 'L5', 'L6'].includes(this.world.districts.composition.id) || this.world.districts.composition.scene?.courier ? 'courier' : 'survivor', useSkinnedCourier(this.params));
       // Actor models download and bake while the district loads (they do not depend on it).
       actors = this.startActors(character); actors.catch(() => {}); // a district failure must not leave it unhandled
-      const initialFocus = grove ? this.view.cameraTarget : undefined;
+      const initialFocus = grove || this.world.districts.districts.some(d => d.id === 'D-CROSSING') ? this.view.cameraTarget : undefined;
       const heroAtSpawn = this.quality === 'high' && this.renderer.selectedBackend === 'webgl';
       await Promise.all([this.districts.load(1, initialFocus, heroAtSpawn), character, ...variants.map(variant => variant.load(1, initialFocus, heroAtSpawn))]);
+      if (this.districts.terrainState()) { this.districts.warmHero = batch => this.warmHidden(batch); this.districts.swapSlot = () => this.swapSlot(); }
       loadMeasure('view:districts+character',t);
       if (grove) {
         this.preparedDistrictViews.set(this.world.districts, this.districts);
@@ -363,6 +364,7 @@ export class GameView implements Lifecycle {
     // bound. The first update below warms those programs in their render context.
     this.districts?.updateLods(this.view); this.crowd?.update(this.view); await Promise.all([this.crowd?.ready(), this.npcs?.ready(), this.districts?.ready()]);
     const restoreOccupants = await this.vehicles?.prewarmOccupants();
+    const restoreCrash = await this.vehicles?.prewarmCrash();
     const restoreGates = this.world.scenario === 'L6' ? await this.interactions?.prewarmServiceGates() : undefined;
     if (this.world.scenario === 'L6') this.districts?.metroPower(true, false);
     t = loadMeasure('view:lod-ready', t);
@@ -385,7 +387,7 @@ export class GameView implements Lifecycle {
           } finally { pulse.remove(); this.lighting.applyLook(); }
         } else await prepare();
       }
-      finally { restore?.(); unwarm?.(); restoreGates?.(); restoreOccupants?.(); }
+      finally { restore?.(); unwarm?.(); restoreGates?.(); restoreOccupants?.(); restoreCrash?.(); }
       if (this.healthBars) await preRender(this.renderer, this.barScene, this.camera, () => this.renderBars());
     };
     const finish = (): void => {
@@ -395,7 +397,7 @@ export class GameView implements Lifecycle {
       this.startPreparation();
     };
     // E20/E21: L2 and L3 run the same crowd and outbreak look, so they use the same full shader warm-up.
-    const groveTown = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6' || this.world.scenario === 'L7';
+    const groveTown = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6' || this.world.scenario === 'L7' || !!this.world.missions?.l9;
     if (groveTown && this.background) {
       const generation = this.generation;
       this.warming = warm().then(() => {
@@ -406,7 +408,12 @@ export class GameView implements Lifecycle {
     }
     if (groveTown) await warm();
     else if (!this.vfx || this.renderer.selectedBackend === 'webgl') await this.renderer.compileAsync(this.scene, this.camera);
-    restoreOccupants?.(); finish();
+    // The horizon's rocks enter the view well after departure. Warm every coarse
+    // material in the gameplay HDR context before control, rather than linking
+    // a cold WebGL sidewalk shader synchronously at the first crossing seam.
+    const horizon = this.districts?.horizonForWarmup();
+    if (horizon) await this.warmHidden(horizon);
+    restoreOccupants?.(); restoreCrash?.(); finish();
   }
   /** Actor views are independent of each other and of the districts: create them and start their
    * loads concurrently (one network wave, not six); load() adds them in the established scene order. */
@@ -514,7 +521,7 @@ export class GameView implements Lifecycle {
       // E19 story beats: ease the game camera onto the beat (between courier and the other actor, a little closer),
       // then back to the follow camera; no cut, same isometric angle.
       // L7-E2: the departure shot takes the camera (it follows the bus), then hands it back.
-      const shot = this.world.l7Departure?.cameraPose();
+      const shot = this.world.missions?.l9?.cameraPose() ?? this.world.l7Departure?.cameraPose();
       if (shot) { this.view.cinematic(shot); this.departureShot = true; } else if (this.departureShot) { this.departureShot = false; this.view.follow(); }
       const beat = this.world.missions?.state.l1?.beat;
       if (beat && this.world.storyLock && !this.view.spot) {
@@ -753,7 +760,9 @@ export class GameView implements Lifecycle {
     if ((this.world.weather?.powerRevision ?? 0) !== this.weatherPowerRevision) { this.weatherPowerRevision = this.world.weather!.powerRevision; if (this.world.districts) this.lighting?.field.setStatic(layoutLights(this.world.districts)); const metro = this.world.missions?.state.l6; if (metro) this.districts?.metroPower(metro.mainPower, metro.emergency); else this.districts?.blackout(); }
     this.lighting?.update(this.view); this.updateLights();
     if (!this.weather && this.lighting && this.world.weather) { this.weather = new WeatherView(this.world, this.lighting); this.scene.add(this.weather); }
-    this.weather?.update(this.view, this.quality, this.vfxSettings.flashReduction ?? false); this.districts?.updateLods(this.view);
+    this.weather?.update(this.view, this.quality, this.vfxSettings.flashReduction ?? false);
+    const drivenCar = this.world.vehicles?.cars.get(this.world.vehicles.active ?? -1);
+    this.districts?.updateLods(this.view, drivenCar?.physics.body.linvel());
     this.districts?.cull(this.view, this.quality);
     const locked = this.world.controls.snapshot()?.attack;
     const lockedEntity = locked ? this.world.entities.get(locked.id) : undefined;
@@ -837,6 +846,7 @@ export class GameView implements Lifecycle {
   }
   /** Compact E18 effect counters without actor/pose snapshots. */
   effectPerf() { return this.vfx?.snapshot() ?? null; }
+  terrainPerf() { return this.districts?.terrainState() ?? null; }
   /** E25 lighting-pass counters for perf(): light-field CPU ms and pools, shadow maps, the promoted hero shadow light. */
   lightingPerf() {
     const field = this.lighting?.field.snapshot();
