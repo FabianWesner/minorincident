@@ -1,0 +1,153 @@
+{
+ "name": "asset-l10-dispersal-arena-hold",
+ "note": "L10 finale hold zone at game camera: courier at the console operator spot between the platform stair and the bullet tank. Look for: console and stair grounded, tank A and the platform not occluding the courier for long, gun silhouette on the deck, lane to the south open.",
+ "ground": "sidewalk",
+ "size": 150,
+ "props": [
+  {
+   "id": "console",
+   "asset": "kit.dispersal-console",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "platform",
+   "asset": "kit.dispersal-platform",
+   "at": [
+    -8,
+    -6
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "tank-a",
+   "asset": "kit.dispersal-tank-bullet",
+   "at": [
+    14,
+    -12
+   ],
+   "yaw": 180
+  },
+  {
+   "id": "tank-b",
+   "asset": "kit.dispersal-tank-bullet",
+   "at": [
+    -14,
+    14
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "sphere",
+   "asset": "kit.dispersal-tank-sphere",
+   "at": [
+    22,
+    16
+   ],
+   "yaw": 180
+  },
+  {
+   "id": "tower-e",
+   "asset": "kit.dispersal-filtration-tower",
+   "at": [
+    31,
+    -4
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "tower-nw",
+   "asset": "kit.dispersal-filtration-tower",
+   "at": [
+    -30,
+    26
+   ],
+   "yaw": 180
+  },
+  {
+   "id": "fan-w",
+   "asset": "kit.dispersal-fan-housing",
+   "at": [
+    -38,
+    -16
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "hall-s",
+   "asset": "kit.dispersal-turbine-hall",
+   "at": [
+    0,
+    -32
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "pipe-straight",
+   "asset": "kit.dispersal-pipe-straight",
+   "at": [
+    -8,
+    32
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "pipe-tee",
+   "asset": "kit.dispersal-pipe-tee",
+   "at": [
+    0,
+    32
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "pipe-elbow",
+   "asset": "kit.dispersal-pipe-elbow",
+   "at": [
+    8,
+    32
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "gun",
+   "asset": "wpn.minigun-mounted",
+   "at": [
+    -10,
+    3,
+    -6
+   ],
+   "yaw": 0
+  }
+ ],
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    1,
+    0
+   ],
+   "yaw": 0
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   1,
+   0
+  ],
+  "zoom": 1
+ },
+ "frames": 60,
+ "sheet": 20
+}

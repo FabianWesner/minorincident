@@ -465,9 +465,9 @@ def kit_dispersal_turbine_hall(s):
     for x in (-5.0, -3.2, -2.2, 0.2, 1.6, 3.2):
         s.cyl('casing flange', (x, -3.9, 2.6), 1.88, .22, DARK, 'body', axis='X', seg=pick(s, 20, 12, 8))
     s.box('steam chest', (-1.0, -3.9, 4.15), (2.4, 3.0, .3), STRUCT, 'body', bevel=.03)
-    s.cyl('rotor shaft', (-1.0, -3.9, 2.6), .38, 2.6, DARK, 'turbineRotor', axis='X', seg=pick(s, 12, 8, 6))
+    s.cyl('rotor shaft', (-1.0, -3.9, 2.6), .38, 2.6, 'brass', 'turbineRotor', axis='X', seg=pick(s, 12, 8, 6))
     for k, x in enumerate(((-1.7, -1.0, -0.3), (-1.4, -0.6), (-1.0,))[s.lod]):
-        s.cyl('rotor disc', (x, -3.9, 2.6), .9, .14, DARK, 'turbineRotor', axis='X', seg=pick(s, 20, 12, 8))
+        s.cyl('rotor disc', (x, -3.9, 2.6), .9, .14, 'brass', 'turbineRotor', axis='X', seg=pick(s, 20, 12, 8))
         nb = pick(s, 16, 12, 8)
         for b in range(nb):
             a = b * math.tau / nb + k * .2

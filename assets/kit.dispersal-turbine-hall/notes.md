@@ -10,3 +10,5 @@ Triangles LOD0 / LOD1 / LOD2: 1692 / 996 / 740 (budget rows proposed in `specs/0
 Rebuild/publish: `npm run assets:build -- kit.dispersal-turbine-hall`. Registry status: integrated; independent asset QA and level placement pending.
 
 L10-A6: `turbineRotor` node (two bladed stages turning in an open gap of the casing under a steam chest, pivot on the shaft axis at (-1, 2.6, 3.9), spins about X). Triangles LOD0 / LOD1 / LOD2: 2512 / 1512 / 964. Runtime spin: `src/data/spinNodes.ts`.
+
+L10-A7: rotor shaft and discs use the shared `brass` palette token instead of `uiDark`, so the spinning stages read as bright metal against the silver casings instead of a dark gap at game zoom (no new material; blades unchanged). Triangles LOD0 / LOD1 / LOD2: 2780 / 1512 / 964 (budget 4000 / 1800 / 1200).
