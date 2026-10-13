@@ -149,11 +149,12 @@ export class LevelFiveAftermath {
     let left = this.low ? l5.infected.start.low : l5.infected.start.high;
     for (const g of l5Wanderers) for (let k = 0; k < g.n && left > 0; k++) {
       if (ai.director.count >= ai.director.cap || !ai.pool.length) return;
-      const alpha = g.n === 1 && (g.at[0] === 49 || g.at[0] === -52);
+      const alpha = !!g.alpha;
       const at = this.snap({ x: g.at[0] + k * 1.3, z: g.at[1] + k * .7 }, alpha ? .8 : .45);
       const id = alpha ? ai.spawn('infected.alpha', at) : o.spawnPedestrian(at), e = this.entity(id)!;
       if (!alpha) o.turnNow(e);
       if (!e.infected) continue;
+      if (alpha) e.infected.territory = { x: at.x, z: at.z, radius: l5.infected.leashM };
       const brain = e.infected.l1; if (brain) { brain.homeX = g.at[0]; brain.homeZ = g.at[1]; brain.leashM = l5.infected.leashM; }
       if (e.combat) e.combat.damageMultiplier = l5.infected.damage;
       s.infectedIds.push(id); left--;
@@ -294,15 +295,30 @@ export class LevelFiveAftermath {
     const { world } = this.mission, s = this.s, tick = world.tick;
     if (s.shutterAt) return;
     s.shutterAt = tick; s.phase = 'shelter';
+    this.sealEntrance();
     for (const { r } of this.following()) r.status = 'sheltered';
     s.deadAtMetro = s.survivors.filter(r => r.status === 'dead' || r.status === 'turned').length;
     this.mission.radio('L5.shutter');
     world.events.emit({ type: 'l5.shutter', tick });
   }
+  /** The descending shutter already blocks infected; sweep any intruder back onto the street. */
+  private sealEntrance(): void {
+    const door = this.anchor('l5-metro-shutter');
+    for (const e of this.world.infected!.active) {
+      const radius = e.combat?.radius ?? .4;
+      if (Math.abs(e.transform.x - door.x) > door.radius + radius || e.transform.z < door.z - 5 || e.transform.z > door.z + .2 + radius) continue;
+      this.world.infected!.cancelSpecial(e.id);
+      e.transform.z = door.z + .2 + radius + .05;
+      e.infected!.path.length = 0; e.infected!.goal = -1; e.combat!.attacking = false;
+      if (e.locomotion) { e.locomotion.vx = e.locomotion.vz = e.locomotion.ax = e.locomotion.az = 0; }
+      this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+    }
+    this.shutterNavigation(true);
+  }
   /** Cheat/test completion of the last step: everybody who still follows is carried in, the shutter closes now. */
   private forceShelter(): void {
     const s = this.s; if (s.doneAt) return;
-    if (!s.shutterAt) { s.shutterAt = this.world.tick; s.phase = 'shelter'; for (const { r } of this.following()) r.status = 'sheltered'; s.deadAtMetro = s.survivors.filter(r => r.status === 'dead' || r.status === 'turned').length; this.mission.radio('L5.shutter'); this.world.events.emit({ type: 'l5.shutter', tick: this.world.tick }); }
+    if (!s.shutterAt) { this.sealEntrance(); s.shutterAt = this.world.tick; s.phase = 'shelter'; for (const { r } of this.following()) r.status = 'sheltered'; s.deadAtMetro = s.survivors.filter(r => r.status === 'dead' || r.status === 'turned').length; this.mission.radio('L5.shutter'); this.world.events.emit({ type: 'l5.shutter', tick: this.world.tick }); }
     this.done();
   }
   private done(): void {
@@ -360,7 +376,7 @@ export class LevelFiveAftermath {
   /** Checkpoint restore: shift the timeline. Entities (survivors, infected, corpses, pickups) come back from the snapshot. */
   restore(delta: number): void {
     const s = this.mission.state.l5; if (!s) return;
-    this.shutterNavigation(!this.mission.state.gates['l5-metro-shutter']);
+    this.shutterNavigation(!!s.shutterAt || !this.mission.state.gates['l5-metro-shutter']);
     for (const key of ['startAt', 'emergedAt', 'searchAt', 'accountedAt', 'metroAt', 'shutterAt', 'doneAt', 'waitedAt'] as const) if (s[key]) s[key] += delta;
     for (const r of s.survivors) for (const key of ['foundAt', 'cueAt', 'lostAt'] as const) if (r[key]) r[key] += delta;
     if (s.cue) s.cue.until += delta;

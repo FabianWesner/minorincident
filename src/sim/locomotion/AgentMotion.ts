@@ -15,6 +15,11 @@ export function moveAgent(e: EntitySnapshot, vx: number, vz: number, nav: NavGri
   state.updatedAt = tick;
   const x = e.transform.x, z = e.transform.z;
   if (state.vx !== 0 || state.vz !== 0) nav.move(e.transform, state.vx * FIXED_DT, state.vz * FIXED_DT, radius);
+  const territory = e.infected?.territory;
+  if (territory && Math.hypot(e.transform.x - territory.x, e.transform.z - territory.z) > territory.radius &&
+      Math.hypot(e.transform.x - territory.x, e.transform.z - territory.z) > Math.hypot(x - territory.x, z - territory.z)) {
+    e.transform.x = x; e.transform.z = z;
+  }
   const actualX = (e.transform.x - x) / FIXED_DT, actualZ = (e.transform.z - z) / FIXED_DT;
   // Do not accumulate velocity into a wall. Collision/forced displacement takes
   // priority over the response bound; animation consumes the resolved movement.

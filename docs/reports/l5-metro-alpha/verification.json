@@ -1,0 +1,177 @@
+{
+  "command": "MI_VERIFY_REMOTE_SIM=1 E2E_PORT=3396 npm run verify -- E23",
+  "exitCode": 1,
+  "unitTestsPassed": 971,
+  "selectedSimTestsPassed": 51,
+  "browserStats": {
+    "startTime": "2026-10-13T00:22:46.978Z",
+    "duration": 833844.28,
+    "expected": 38,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "failedBrowserTests": [
+    {
+      "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+      "project": "chromium",
+      "status": "unexpected",
+      "runs": [
+        {
+          "status": "failed",
+          "durationMs": 10607
+        }
+      ],
+      "errors": [
+        "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"\u001b[7mLEF\u001b[27mT\"\u001b[39m\nReceived: \u001b[31m\"\u001b[7mRIGH\u001b[27mT\"\u001b[39m\n\n  85 |   const state=await page.evaluate(()=>window.__SS__!.getState());expect(state.scenario).toBe('L5');expect(state.player!.survivor!.variant).toBe('male');expect(state.player!.weapons!.LEFT.rack.map(s=>s.id)).toEqual(save.racks.LEFT);expect(state.player!.weapons!.RIGHT.rack.map(s=>s.id)).toEqual(save.racks.RIGHT);\n  86 |   expect(state.combat!.aimAssist).toBe('High');await photo(page,'continue-L5');\n> 87 |   expect(state.player!.weapons!.selectedSide).toBe('LEFT');\n     |                                               ^\n  88 | });\n  89 | test('T-E13-06-browser @E13 @E13-AC06 corrupted and future saves show recoverable dialog without crashing',async({page})=>{\n  90 |   await page.goto(testUrl);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/l5-metro-alpha/tests/e2e/save.spec.ts:87:47"
+      ]
+    }
+  ],
+  "e23BrowserTests": [
+    {
+      "title": "T-E23-14a @E23 @E23-AC14 no music cue in the first 60 s of L5 and no battle-layer cue at any time, while shooting the machine gun and meeting infected",
+      "project": "chromium",
+      "status": "expected",
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 6363
+        }
+      ]
+    },
+    {
+      "title": "T-E23-14b @E23 @E23-AC14 the first 60 s of L5 measure at least 18 LU below the battle mix of L4's war phase (offline render of the production graph)",
+      "project": "chromium",
+      "status": "expected",
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 414635
+        }
+      ]
+    },
+    {
+      "title": "T-E23-cellar-pos @E23 L5 start: the courier stands in the cellar yard under the game camera, the brace is reachable by keyboard and unbarring steps out on Kessler Lane",
+      "project": "chromium",
+      "status": "expected",
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 13492
+        }
+      ]
+    },
+    {
+      "title": "T-E23-12e @E23 @E23-AC12 shelf pickup is drawn, highlighted and collectible from the clear aisle",
+      "project": "chromium",
+      "status": "expected",
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 15064
+        }
+      ]
+    },
+    {
+      "title": "T-E23-E1 @E23 @E23-AC15 visible physical ingress, closure and 24 persistent occupants, high",
+      "project": "chromium",
+      "status": "expected",
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 14502
+        }
+      ]
+    },
+    {
+      "title": "T-E23-E1 @E23 @E23-AC15 visible physical ingress, closure and 24 persistent occupants, low",
+      "project": "chromium",
+      "status": "expected",
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 14506
+        }
+      ]
+    },
+    {
+      "title": "T-E23-12-browser @E23 @E23-AC12 basement pickup and no ammunition HUD",
+      "project": "chromium",
+      "status": "expected",
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 12521
+        }
+      ]
+    },
+    {
+      "title": "T-E23-17 @E23 @E23-AC17 @E23-AC18 real-input playthrough: unbar the door, find the five by their signs of life, lead them to the Metro; photo spots; 0 console errors",
+      "project": "chromium",
+      "status": "expected",
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 124141
+        }
+      ]
+    },
+    {
+      "title": "T-E23-18 @E23 @E23-AC18 recognition: the four pair cameras in L4 (W0, intact) and L5 (W5, fallen) from the real game, side by side",
+      "project": "chromium",
+      "status": "expected",
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 23847
+        }
+      ]
+    },
+    {
+      "title": "T-E23-15b @E23 @E23-AC15 handover: the barred L4 cellar door loads L5 (L4 end loadout, no reward screen); the Metro shutter loads L6 with the rescued survivors in the campaign",
+      "project": "chromium",
+      "status": "expected",
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 14992
+        }
+      ]
+    },
+    {
+      "title": "T-E23-19b @E23 @E23-AC19 survivors and infected are drawn on screen in L5 (webgl), not only their props",
+      "project": "chromium",
+      "status": "expected",
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 12792
+        }
+      ]
+    },
+    {
+      "title": "T-E23-19b @E23 @E23-AC19 survivors and infected are drawn on screen in L5 (webgpu), not only their props",
+      "project": "chromium",
+      "status": "expected",
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 12639
+        }
+      ]
+    },
+    {
+      "title": "T-E23-15v @E23 @E23-AC15 authored metro leaf visibly descends through halfway to closed on both tiers",
+      "project": "chromium",
+      "status": "expected",
+      "runs": [
+        {
+          "status": "passed",
+          "durationMs": 7885
+        }
+      ]
+    }
+  ],
+  "performanceStep": "not reached after existing smoke failure",
+  "baselineFailureCommit": "6ea3defe6"
+}
