@@ -8,6 +8,6 @@ Built by `tools/blender/sslib/evac_bus.py` (called from `build.py`; `npm run ass
 - Glass: `pal_backpackTeal` with alpha .18 (BLEND), six panes per side, wrap-around windshield, rear window, door glass; 24 navy/cream seats, driver chair, dash and steering wheel behind it.
 - Details: EVAC destination sign (emissive letters under `signEvac`, flagged `decorativeEmissive`), EVAC side lettering, bumpers, grille, headlights, tail lights, rear louvres, plates, mirrors, roof AC pod and vents, wheel arch lips.
 - Contract: `root`, `body`, `wheelFL/FR/RL/RR` (pivots at the axles, tyre + rim), `doorR` (hinge at the front edge of the entry, two folding leaves), `lightsFront` / `lightsBrake` with `light:*` anchors, sockets `driverSeat`, `steeringWheel`, `exitL`, `exitR`, `seat_1..seat_12`, `front`, collider `col:body`.
-- Triangles LOD0/1/2: 11,316 / 4,494 / 1,904 (caps 15,000 / 6,000 / 2,000), 10 materials, 22 draw calls.
+- Triangles LOD0/1/2: 11,292 / 4,470 / 1,904 (caps 15,000 / 6,000 / 2,000), 10 materials, 22 draw calls.
 - Variants: `wrecked` (crumpled front, shattered glass shards, opened door) and `burned` (charred shell, removed glazing, sagging roof) are derived from the LOD1/LOD2 meshes by `traffic_wrecks.py` / `burned_vehicles.py`; the manifest lists `decayNodes` without the door animation.
 - Interior AO is lifted (`rescue_assets.finish`) so seats read through the glass at dusk.
