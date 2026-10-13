@@ -73,11 +73,20 @@ test('T-E31-04-ground @E31-AC04 locally authored chunks have continuous road/off
   scene.traverse(n => { if (n instanceof Mesh) ground.push(n); if(n.userData.terrainChunk) chunks.push(n.userData.terrainChunk); });
   expect(chunks.sort()).toEqual(crossingChunks.map(c=>c.id).sort());
   const ray = new Raycaster(new Vector3(),new Vector3(0,-1,0),0,5);
+  // L9-A2: every route ends at the mandatory collapsed section (a 16 m gully, x 508..524). Outside it the support rule is unchanged.
+  const inGully = (x: number) => x > 508 && x < 524;
   for (const route of crossing.routes) for (const [x,z] of samples(route.points,5).concat(samples(route.detour,5))) {
+    if (inGully(x)) continue;
     ray.ray.origin.set(x,2,z); const hit=ray.intersectObjects(ground,false)[0];
     expect(hit,`${route.id} support at ${x},${z}`).toBeDefined();
     expect(Math.abs(hit.point.y)).toBeLessThanOrEqual(.01);
   }
+  // The collapsed section is real geometry: the floor is >= 5 m down at its centre, and the lips are intact ground at +-8.5 m.
+  for (const [x, y] of [[516, -5.5], [507.9, 0], [524.1, 0]]) {
+    ray.ray.origin.set(x, 2, 0); ray.far = 9; const hit = ray.intersectObjects(ground, false)[0];
+    expect(hit, `crash gully at ${x}`).toBeDefined(); expect(Math.abs(hit.point.y - y)).toBeLessThanOrEqual(.05);
+  }
+  ray.far = 5;
   for(const c of crossingChunks) for(const [x,z] of [[c.origin[0]+.01,c.origin[1]+50],[c.max[0]-.01,c.origin[1]+50]]) {
     ray.ray.origin.set(x,2,z); const hit=ray.intersectObjects(ground,false)[0]; expect(hit).toBeDefined(); expect(Math.abs(hit.point.y)).toBeLessThanOrEqual(.01);
   }
