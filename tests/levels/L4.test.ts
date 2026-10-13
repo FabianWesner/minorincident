@@ -179,8 +179,10 @@ describe('L4 The Safe City Falls', () => {
     const civilianShooters = s.armed.filter(a => sources.has(a.id)).length, soldierShooters = s.soldierIds.filter(id => sources.has(id)).length;
     record('ally-sources', { civilianShooters, soldierShooters, armed: s.armed.length });
     expect(soldierShooters).toBeGreaterThanOrEqual(3); expect(civilianShooters + s.kills.armedCivilians).toBeGreaterThanOrEqual(1);
+    // At the infected cap a bite kills instead of turning (section 5.9); make room first so the test checks the turn itself.
+    w.infected!.director.levelCap += 400;
     // A soldier bitten turns: same entity id, same model and tint, the rifle lies on the ground.
-    const soldier = w.entities.get(s.soldierIds[2])!, before = { asset: soldier.appearance!.asset, tint: soldier.appearance!.tint, id: soldier.id };
+    const soldier = s.soldierIds.map(id => w.entities.get(id)!).filter(e => e.health.current > 0 && e.civilian && e.civilian.state !== 'finished' && !e.infected)[2], before = { asset: soldier.appearance!.asset, tint: soldier.appearance!.tint, id: soldier.id };
     w.npcs!.civilians.outbreak!.infect(soldier, 0);
     for (let i = 0; i < 6 * 60 && !soldier.infected; i++) w.update();
     expect(soldier.infected).toBeDefined(); expect(soldier.id).toBe(before.id); expect(soldier.appearance!.asset).toBe(before.asset); expect(soldier.appearance!.tint).toBe(before.tint);
@@ -196,13 +198,15 @@ describe('L4 The Safe City Falls', () => {
     step(w, 3 * 60); l.mission.completeObjective('quartermaster');
     const first: { tick: number; at: { x: number; z: number }; seen: boolean }[] = [];
     const known = new Set<number>(); const offscreenAudit: boolean[] = [];
+    // The first war stream leaves the nearby authored buildings inside the perimeter ("Do not leave a 28 s empty alarm"; PO 10-12 "When the alarm rings, actually nothing happens"); later waves use the street edges.
+    const doors = (l.mission.l4 as unknown as { doors(): { x: number; z: number }[] }).doors();
     while (s.phase !== 'war') w.update();
     for (let t = 0; t < 90 * 60; t++) {
       w.update();
-      for (const id of s.emergedIds) if (!known.has(id)) { known.add(id); const e = w.entities.get(id)!; first.push({ tick: w.tick, at: { x: e.transform.x, z: e.transform.z }, seen: false }); offscreenAudit.push(l4Edges.some(ed => dist({ x: ed.at[0], z: ed.at[1] }, e.transform) < 6)); }
+      for (const id of s.emergedIds) if (!known.has(id)) { known.add(id); const e = w.entities.get(id)!; first.push({ tick: w.tick, at: { x: e.transform.x, z: e.transform.z }, seen: false }); offscreenAudit.push(l4Edges.some(ed => dist({ x: ed.at[0], z: ed.at[1] }, e.transform) < 6) || doors.some(d => dist(d, e.transform) < 6)); }
     }
     expect(first.length).toBeGreaterThan(10);
-    // Every wave infected first appears within 6 m of an emergence point.
+    // Every wave infected first appears within 6 m of an emergence point (street edge or perimeter building door).
     expect(offscreenAudit.filter(Boolean).length / offscreenAudit.length).toBeGreaterThan(.9);
     const used = new Set(first.map(f => l4Edges.findIndex(e => dist({ x: e.at[0], z: e.at[1] }, f.at) < 6))); used.delete(-1);
     expect(used.size).toBeGreaterThanOrEqual(3);

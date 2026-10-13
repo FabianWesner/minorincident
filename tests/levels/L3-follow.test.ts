@@ -35,6 +35,7 @@ describe('L3 squad and checkpoint', () => {
       s.pending = []; s.waves = []; s.populated = [true, true, true];
       for (const e of w.infected!.active) { e.health.current = 0; e.infected!.recoverAt = -1; }
       for (const q of s.squad) api.teleport(q.id, { x: 144 + l3ArmyOffset, z: 3 });
+      for (const e of w.entities.iterate()) if (e.companion) api.teleport(e.id, { x: 145 + l3ArmyOffset, z: 2 });
       const officer = w.entities.get(s.squad[0].id)!;
       if (condition === 'stalled officer') {
         api.teleport(officer.id, { x: 135 + l3ArmyOffset, z: 3 });
@@ -50,11 +51,20 @@ describe('L3 squad and checkpoint', () => {
         guard.civilian!.ally!.hold = true;
       }
       api.teleport('player', { x: m.def.anchors['l3-zone'].x, z: 0 });
-      for (let i = 0; i < 90 && m.state.phase === 'playing'; i++) w.update();
+      // PO 2026-10-12 ("army rescues us", superseding the player-only transition): the rescue fight lasts minFightS (60 s) and the
+      // rendezvous completes after the safe boom closure. Missing, dead, turning or stalled officers are not waited for, and a
+      // bystander in the arm's path is stepped aside.
+      if (condition === 'stalled officer') {
+        // A living group member outside keeps the boom open (spec: it waits or reopens); once she is inside it closes.
+        for (let i = 0; i < 80 * 60; i++) w.update();
+        expect(s.crossedAt).toBe(0); expect(s.barrierClosedAt ?? 0).toBe(0);
+        api.teleport(officer.id, { x: 144 + l3ArmyOffset, z: 3 });
+      }
+      for (let i = 0; i < 90 * 60 && m.state.phase === 'playing'; i++) w.update();
       expect(s.crossedAt).toBeGreaterThan(0);
       expect(m.state.phase).toBe('progression');
       expect(m.state.marker).toBeNull();
-      if (condition === 'occupied boom') expect(s.barrierClosedAt ?? 0).toBe(0);
+      expect(s.barrierClosedAt ?? 0).toBeGreaterThan(0);
       expect(w.events.events().filter(e => e.type === 'level.completed')).toHaveLength(1);
     } finally { w.dispose(); }
   }, 120_000);

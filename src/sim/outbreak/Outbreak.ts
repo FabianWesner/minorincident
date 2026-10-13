@@ -41,6 +41,11 @@ export interface PedestrianOptions {
   walkSpeed?: number;
 }
 
+/** HP multiplier of the infected archetype a turned armed ally becomes, by ally role.
+ * PO 2026-10-13: "When a solidier becomes a Zombie, then this Zombie has 50% more health";
+ * "When a police officer becomes a Zombie, then this Zombie has 25% more health". Other roles are unchanged. */
+export const TURNED_ALLY_HP: Readonly<Record<string, number>> = { soldier: 1.5, officer: 1.25 };
+
 /**
  * L1 v2 pedestrians and systemic outbreak (specs/epic-19 sections 5.1, 5.7, 5.9). Replaces the E08 civilian lifecycle
  * when installed (`world.npcs.civilians.outbreak`): routines, notice (sight cone + hearing), startle, flight to
@@ -173,7 +178,7 @@ export class Outbreak {
       if (world.missions?.state.l3?.waitingIds?.includes(e.id)) { this.routine(e); continue; }
       if (c.zooAnimal) { this.animalRoutine(e); continue; }
       // E20 §5.2: allied fighters engage visible infected instead of fleeing (still biteable humans).
-      if (world.missions?.l6 && c.survivor && updateSurvivor(world,e)) continue;
+      if ((world.missions?.l6 || world.missions?.l8) && c.survivor && updateSurvivor(world,e)) continue;
       if (c.ally && updateAlly(world, e, (a, b, id) => this.sees(a, b, id))) continue;
       // E23: a found survivor follows the courier (unarmed, biteable, no flight).
       if (c.survivor && updateSurvivor(world, e)) continue;
@@ -473,6 +478,8 @@ export class Outbreak {
     ai.active[ai.active.indexOf(pooled)] = e;
     e.kind = 'infected'; e.faction = 'infected'; e.archetype = pooled.archetype;
     e.infected = pooled.infected; e.combat = pooled.combat; e.health = pooled.health;
+    const hp = TURNED_ALLY_HP[c.ally?.role ?? ''];
+    if (hp) { e.health.max *= hp; e.health.current = e.health.max; }
     Object.assign(e.transform, at);
     // Lane C's L1 brain already gave it the tier run speed; without it (tests, old levels) use the tier base +/- jitter.
     if (!c.zooAnimal && !e.infected!.l1) e.infected!.speed = l1v2.speedTiers[inf.tier].baseMs * (1 + (this.rng.next() * 2 - 1) * l1v2.speedTiers.jitter);

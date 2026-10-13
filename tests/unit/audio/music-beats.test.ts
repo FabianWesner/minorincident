@@ -19,3 +19,11 @@ test('@E16 L3 active objective floors take the highest parallel escalation', () 
     expect(storyMusic('L3', state).minimum).toBe(0.25);
     expect(storyMusic('L3', { ...state, phase: 'result' }).minimum).toBe(0);
 });
+
+test('@E30 @E30-AC16 L8 stays calm until its saved breach state, then uses tension below local combat pressure', () => {
+    const state = { id: 'L8', phase: 'playing', states: { breached: false }, steps: {} } as unknown as MissionState;
+    expect(storyMusic('L8', state)).toEqual({ beat: 'sanctuary', minimum: 0 });
+    state.states.breached = true;
+    expect(storyMusic('L8', structuredClone(state))).toEqual({ beat: 'breach', minimum: .25 });
+    expect(storyMusic('L8', { ...state, phase: 'progression' }).minimum).toBe(0);
+});
