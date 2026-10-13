@@ -131,7 +131,9 @@ describe('telemetry mode', () => {
     expect(await mode('', 'minor-incident.com', true)).toBeNull();
     expect(await mode('test=1', 'minor-incident.com')).toBeNull();
     expect(await mode('scenelab=1', 'minor-incident.com')).toBeNull();
-    expect(await mode('debug=true', 'minor-incident.com')).toBeNull();
+    // The PO plays PROD with ?debug=true (pause-menu build/tick panel): those sessions must count (telemetry-gap 10-13).
+    expect(await mode('debug=true', 'minor-incident.com')).toBe('live');
+    expect(await mode('debug=true', 'minor-incident.com', true)).toBeNull();
     expect(await mode('', 'localhost')).toBeNull(); expect(await mode('', '127.0.0.1')).toBeNull();
     expect(await mode('test=1&telemetry=record', '127.0.0.1', true)).toBe('record');
     expect(await mode('telemetry=live', '127.0.0.1', true)).toBe('live');
