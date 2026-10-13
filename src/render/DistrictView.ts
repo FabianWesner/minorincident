@@ -43,7 +43,8 @@ import { AmbientLife } from './AmbientLife';
 import { Foliage } from './Foliage';
 import { GroundField } from './GroundField';
 import { pickLod, propLod, initialDistrictLods, lodPolicy, type Lod } from './lodPolicy';
-import { seeThrough } from './SeeThrough';
+import { occluderMinHeight, seeThrough } from './SeeThrough';
+import { stripStrayDecorations } from './decorationFilter';
 import type { PaletteToken } from '../data/palette';
 
 const crownTokens = new Map<string, [PaletteToken, PaletteToken]>(Object.values(worldAssets).flatMap(asset => asset.foliage ? [[asset.foliage.colors.join(':'), asset.foliage.tokens ?? ['foliageDark', 'foliageLight']]] : []));
@@ -197,6 +198,8 @@ export class DistrictView extends Group {
           clone.traverse((o) => {
             if (d.decay.removed.includes(o.name)) o.visible = false;
           });
+          // PO 10-13 "Flowers growing on stone": baked daisies on paths/paving are dropped (shared soil rule with the sim).
+          stripStrayDecorations(clone, d.layout);
           this.stripLayoutMarkers(clone);
           root.add(clone);
         }
@@ -469,7 +472,7 @@ export class DistrictView extends Group {
   private huggedOccluder(view: View): boolean {
     const camera = view.camera, o = camera.position, near: { x: number; z: number; half: number; y0: number; y1: number }[] = [];
     for (const entry of this.lodBatches) {
-      if (entry.height < 1.1 || worldAssets[entry.id].foliage) continue;
+      if (entry.height < occluderMinHeight || worldAssets[entry.id].foliage) continue;
       for (const ref of entry.refs) {
         const x = ref.position.x + entry.origin[0], z = ref.position.z + entry.origin[1], half = entry.half * Math.max(ref.scale.x, ref.scale.z);
         if (Math.abs(x - o.x) < half + DistrictView.hugDistance && Math.abs(z - o.z) < half + DistrictView.hugDistance) near.push({ x, z, half, y0: ref.position.y, y1: ref.position.y + entry.height * ref.scale.y });
@@ -495,7 +498,7 @@ export class DistrictView extends Group {
   private occluded(view: View, player: { x: number; y: number; z: number }): boolean {
     const o = view.camera.position, dx = player.x - o.x, dy = player.y + .2 - o.y, dz = player.z - o.z;
     for (const entry of this.lodBatches) {
-      if (entry.height < 1.1 || worldAssets[entry.id].foliage) continue;
+      if (entry.height < occluderMinHeight || worldAssets[entry.id].foliage) continue;
       for (const ref of entry.refs) {
         const x = ref.position.x + entry.origin[0], z = ref.position.z + entry.origin[1];
         if (Math.abs(x - player.x) > 24 || Math.abs(z - player.z) > 24) continue;
@@ -523,7 +526,7 @@ export class DistrictView extends Group {
     this.barRay.far = camera.position.distanceTo(target) - .01;
     this.barChecked.clear();
     for (const entry of this.lodBatches) {
-      if (entry.height < 1.1 || worldAssets[entry.id].foliage || !worldAssets[entry.id].world.solid) continue;
+      if (entry.height < occluderMinHeight || worldAssets[entry.id].foliage || !worldAssets[entry.id].world.solid) continue;
       for (let i = 0; i < entry.refs.length; i++) {
         const ref = entry.refs[i], band = entry.bands[i];
         if (band === undefined || ref.userData.propEnabled === false) continue;
@@ -901,6 +904,18 @@ export class DistrictView extends Group {
     }
   }
   /** Scene Lab probe: current detail band of every static instance (`culled` outside the frustum), district-local positions. */
+  /** Scene Lab: the courier hole's live state, and placements lower than an occluder whose drawn batch would still be cut
+   * by it (must stay empty: PO 10-13 bench without planks at zoom 0.66). */
+  seeThroughAudit(): { strength: number; cover: number; solidRadius: number; cutLowProps: string[] } {
+    const cut = new Set<string>();
+    for (const entry of this.lodBatches) {
+      if (entry.height >= occluderMinHeight || worldAssets[entry.id].foliage) continue;
+      for (const batch of [entry.hero, entry.near, entry.far]) batch.traverse(node => {
+        if (node instanceof Mesh && (Array.isArray(node.material) ? node.material : [node.material]).some(m => m.userData.seeThrough)) cut.add(entry.id);
+      });
+    }
+    return { strength: seeThrough.strength.value, cover: seeThrough.cover.value, solidRadius: seeThrough.solidRadius.value, cutLowProps: [...cut].sort() };
+  }
   lodState(): { assetId: string; origin: [number, number]; position: [number, number, number]; lod: Lod | 'culled' }[] {
     return this.lodBatches.flatMap(entry => entry.refs.map(ref => ({ assetId: entry.id, origin: entry.origin, position: ref.position.toArray() as [number, number, number],
       lod: entry.hero.references.includes(ref) ? 'lod0' as const : entry.near.references.includes(ref) ? 'lod1' as const : entry.far.references.includes(ref) ? 'lod2' as const : 'culled' as const })));
