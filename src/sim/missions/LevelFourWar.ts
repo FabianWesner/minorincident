@@ -8,6 +8,7 @@ import { populateGrove } from '../outbreak/Population';
 import { allyState } from '../outbreak/Allies';
 import { emitEngine, stopEngine } from '../vehicles/ConvoySound';
 import { L4Spectacle, spawnSetPiece } from './L4Spectacle';
+import { respawnRule } from './Respawn';
 import { L4Collapse, freshDirector, postLine } from './L4Collapse';
 import type { Mission } from './Mission';
 import type { L4State } from './types';
@@ -349,9 +350,10 @@ export class LevelFourWar {
 
   // ---------------------------------------------------------------------------------------------------------- the perimeter (PO 10-13)
   private fence: number[] = [];
-  /** Courier-only walls around the camp (physics colliders, no navigation blocker: soldiers, people and infected cross freely). */
+  /** Courier-only camp perimeter: physics and player routes agree; NPC routes cross freely. */
   private perimeter(on: boolean): void {
     const physics = this.world.physics;
+    this.world.infected!.nav.setPlayerBounds(on ? l4.perimeter : null);
     if (!on) { for (const h of this.fence) physics.removeBlocker(h); this.fence = []; return; }
     if (this.fence.length || !physics.playerBody) return;
     const p = l4.perimeter, cx = (p.x0 + p.x1) / 2, cz = (p.z0 + p.z1) / 2, hx = (p.x1 - p.x0) / 2 + .2, hz = (p.z1 - p.z0) / 2 + .2;
@@ -674,12 +676,20 @@ export class LevelFourWar {
   }
   private breakRadioAt = 0;
   private gateOpenAt = 0;
-  /** Record the closest camp post behind the surviving line without moving the courier. */
+  /** Record the nearest safe camp post behind the surviving line without moving the courier. */
   campCheckpoint(id: string, line: number): void {
     const player = this.world.entities.get(1)!.transform;
-    const posts = l4.director.checkpoints[Math.min(line, 2)].map(([x, z]) => this.snap({ x, z }, .35));
-    posts.sort((a, b) => dist(a, player) - dist(b, player));
-    this.mission.requestCheckpoint(id, posts[0]);
+    const threats = this.world.infected!.active.filter(e => !e.corpse && (e.health.current > 0 || e.infected!.recoverAt >= 0));
+    const posts = l4.director.checkpoints[Math.min(line, 2)].map(([x, z]) => {
+      const at = this.snap({ x, z }, .35);
+      return { at, clearance: Math.min(...threats.map(e => dist(e.transform, at))) };
+    });
+    // A geometrically clear post may already be overrun. Reach the nearest safe post behind the surviving line;
+    // if every post is threatened, use the one with the most room instead of anchoring in the nearest crowd.
+    const safe = posts.filter(p => p.clearance >= respawnRule.clearM);
+    if (safe.length) safe.sort((a, b) => dist(a.at, player) - dist(b.at, player));
+    else posts.sort((a, b) => b.clearance - a.clearance || dist(a.at, player) - dist(b.at, player));
+    this.mission.requestCheckpoint(id, (safe[0] ?? posts[0]).at);
   }
   /** Alone after "Fall back!": the infected beyond `nearM` are busy with the army for a few seconds, so a way out opens (also after a respawn in the collapse). */
   private escapeWindow(p: Point = this.world.entities.get(1)!.transform): void {
