@@ -189,6 +189,13 @@ export interface L4State {
   /** The war: waves emerged, the next wave tick, infected brought from the street edges, and the collapse waves. */
   alphaIds: number[]; alphaAnchors: string[];
   wave: number; waveAt: number; pend: number[]; carIds: number[]; emergedIds: number[]; collapseWaveAt: number; collapseIds: number[]; collapseWaves: number;
+  /**
+   * PO 10-13 spread arrivals: per street edge the tick of its next small group and its next emergence point (cursor into its `l4Emergence`
+   * points); the next group from inside the perimeter (tick, cursor into `l4Inside`); `origin` the emergence point index per emerged id.
+   */
+  edgeNext: number[]; edgeCursor: number[]; insideAt: number; insideCursor: number; origin: Record<number, number>;
+  /** PO 10-13 perimeter: the jersey barriers that close the convoy gate (entity ids) and the next "stay inside" call. */
+  gateIds: number[]; barkAt: number;
   /** Collapse: infected planned at doors along both routes (emerge out of view) and the soldier pockets still to be placed. */
   pendingDoor: { id: number; door: string; home: { x: number; z: number } }[]; pockets: number[];
   /** Spectacle: tank (route progress, next shot, shots fired), helicopter, HMG bursts, fuel truck and the live damage. */
@@ -209,7 +216,7 @@ export interface L4Line {
 }
 export interface L4Director {
   lines: L4Line[];
-  alphaJobs: { alphaId: number; job: 'north' | 'south' | 'armor'; stage: 'walk' | 'charge' | 'slam' | 'done'; startedAt: number }[];
+  alphaJobs: { alphaId: number; job: 'line' | 'west' | 'north' | 'south' | 'armor'; stage: 'walk' | 'charge' | 'slam' | 'done'; startedAt: number }[];
   /** Alpha hits that knocked a soldier down, E26 slots broken, people who turned inside a line, infected spawned by the director, the soldiers cut off. */
   knockdowns: number; barricades: number; turnedInside: number; spawned: number; cutOff: number[];
   swarmedAt: number; fallBackAt: number; settled: number;
