@@ -3,6 +3,9 @@ import { worldTiers } from '../levels/districts/types';
 import {
   BoxGeometry,
   PlaneGeometry,
+  Path,
+  Shape,
+  ShapeGeometry,
   Sprite,
   SpriteMaterial,
   Box3,
@@ -15,6 +18,7 @@ import {
   Raycaster,
   type Intersection,
   type PerspectiveCamera,
+  Vector2,
   Vector3,
   InstancedMesh,
   Mesh,
@@ -120,7 +124,16 @@ export class DistrictView extends Group {
     this.phase.value = 0;
     if (this.world.composition.id === 'L1') { this.ambient = new AmbientLife(this.materials); this.add(this.ambient); }
     // Backdrop reaches beyond the camera far plane; it is scenery outside the bounded town.
-    const terrain = new PlaneGeometry(2400, 2400);
+    // D-CROSSING (L9-A2): the collapsed-road gully (x 508..524, z -90..90, floor 5.5 m down) must not be covered by it.
+    const gully = this.world.composition.districts.find(d => d.id === 'D-CROSSING');
+    let terrain: BufferGeometry = new PlaneGeometry(2400, 2400);
+    if (gully) {
+      const outer = new Shape([new Vector2(-1200, -1200), new Vector2(1200, -1200), new Vector2(1200, 1200), new Vector2(-1200, 1200)]);
+      const [x0, x1, z0, z1] = [508 + gully.origin[0], 524 + gully.origin[0], -90 + gully.origin[1], 90 + gully.origin[1]];
+      // The mesh is rotated -90 degrees about X, which maps shape y to world -z.
+      outer.holes.push(new Path([new Vector2(x0, -z1), new Vector2(x0, -z0), new Vector2(x1, -z0), new Vector2(x1, -z1)]));
+      terrain = new ShapeGeometry(outer);
+    }
     this.ownedGeometry.push(terrain);
     const backdrop = new Mesh(terrain, this.materials.get('grass'));
     backdrop.rotation.x = -Math.PI / 2; backdrop.position.y = -.12; backdrop.receiveShadow = true;

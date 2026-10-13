@@ -46,6 +46,7 @@ export function layoutSourceHash(id: string): string {
   if (id === "D-CROSSING") {
     hash.update(readFileSync("layouts/D-CROSSING/routes.json"));
     hash.update(readFileSync("assets/kit.river-terrain/model.glb"));
+    hash.update(readFileSync("assets/kit.crossing-crash/model.glb"));
     hash.update(readFileSync("tools/layouts/compress.ts"));
   }
   // Literal placement references in this district and the shared authoring library.
