@@ -93,7 +93,7 @@ export class MountedGun {
   }
   /** `rocket`: the quick dismount hands the player the rocket launcher, ready. */
   private leave(rocket: boolean): void {
-    const w = this.world, p = w.entities.get(1)!;
+    const w = this.world;
     if (!this.mounted) return;
     this.mounted = false; this.trigger = false;
     this.place(this.from.x, this.from.y, this.from.z);
@@ -114,7 +114,7 @@ export class MountedGun {
     const w = this.world, p = w.entities.get(1)!, body = w.physics.playerBody!;
     p.transform.x = x; p.transform.z = z; p.transform.y = y;
     body.setTranslation({ x, y, z }, true); body.setNextKinematicTranslation({ x, y, z });
-    w.spatial.set(1, x, z); if (w.previousPlayer) w.previousPlayer.x = x, w.previousPlayer.y = y, w.previousPlayer.z = z;
+    w.spatial.set(1, x, z); if (w.previousPlayer) Object.assign(w.previousPlayer, { x, y, z });
   }
   /** Holds the gunner on the seat, facing along the aim. */
   private pose(): void {
