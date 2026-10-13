@@ -1,0 +1,42 @@
+{
+  "name": "l10-d2-industrial-service",
+  "note": "D-CURE shipped R3/R4 crop. Review both tiers and zooms: continuous ground, clear checkpoint and detour lanes, low industrial/military silhouettes, no floating or vanished geometry.",
+  "seed": 32,
+  "ground": "district",
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        1510,
+        -85
+      ],
+      [
+        1590,
+        -15
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        1547,
+        -55
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      1547,
+      -55
+    ],
+    "zoom": 1
+  },
+  "frames": 1,
+  "expect": {
+    "consoleErrors": 0
+  },
+  "time": "L9-crossing"
+}
