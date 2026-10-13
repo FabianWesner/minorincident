@@ -8,6 +8,7 @@ import { applyCampaign } from '../../src/sim/progression/apply';
 import { completeCampaignLevel } from '../../src/sim/progression/carryover';
 import { decodeSave, validateSave } from '../../src/sim/progression/Save';
 import type { DistrictLayout } from '../../src/levels/districts/types';
+const cureLayout = JSON.parse(readFileSync('public/assets/layouts/D-CURE.layout.json', 'utf8')) as DistrictLayout;
 const layout = JSON.parse(readFileSync('public/assets/layouts/D-CROSSING.layout.json', 'utf8')) as DistrictLayout;
 for (const hp of [1000, 0]) test(`T-E31-15-handover @E31-AC14 @E31-AC15 ${hp} HP crash commits axe-only L10, save and retry`, async () => {
   const w = new SimWorld(), next = new SimWorld(); await w.init(); await next.init();
@@ -42,7 +43,7 @@ for (const hp of [1000, 0]) test(`T-E31-15-handover @E31-AC14 @E31-AC15 ${hp} HP
     const legacy = decodeSave(JSON.stringify({ ...preset('L8-default'), completedLevels: 9, unlockedLevel: 9, l9Crash: m.l9!.save() }));
     expect(legacy.status).toBe('ok'); if (legacy.status === 'ok') { expect(legacy.save.unlockedLevel).toBe(10); expect(legacy.save.racks.RIGHT).toEqual(['weapon.fire-axe']); }
     const evidence = structuredClone(save.crossingHandover); completeCampaignLevel(save, 9, m.state.result!, w); expect(save.crossingHandover).toEqual(evidence);
-    next.loadComposition(compositions.L10, [layout], 31); applyCampaign(next, reloaded.save);
+    next.loadComposition(compositions.L10, [cureLayout], 31); applyCampaign(next, reloaded.save);
     const opening = next.loadMission(resolveCampaignMission('L10', next.districts!)); opening.begin(); next.update();
     expect(opening.state.checkpoint).toBe('cure-crash'); expect(next.vehicles!.active).toBeNull(); expect(next.vehicles!.cars.size).toBe(0);
     expect(next.entities.get(1)!.health.current).toBe(next.entities.get(1)!.health.max);

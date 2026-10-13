@@ -7,6 +7,7 @@ import {
   fairDistrictId,
   subwayDistrictId,
   crossingDistrictId,
+  cureDistrictId,
   districtIds,
   groveDistrictId,
   type DistrictLayout,
@@ -19,7 +20,7 @@ import { bakeNav } from "../../src/sim/world/NavGrid";
 import { placementColliders } from "../../src/levels/districts/staticCollision";
 import { pushableProps } from "../../src/data/pushableProps";
 const layouts = Object.fromEntries(
-  [...districtIds, groveDistrictId, corridorDistrictId, fairDistrictId, subwayDistrictId, crossingDistrictId].map((id) => [
+  [...districtIds, groveDistrictId, corridorDistrictId, fairDistrictId, subwayDistrictId, crossingDistrictId, cureDistrictId].map((id) => [
     id,
     JSON.parse(
       readFileSync(`public/assets/layouts/${id}.layout.json`, "utf8"),
@@ -27,6 +28,9 @@ const layouts = Object.fromEntries(
   ]),
 );
 test("T-E10-02 @E10 @E10-AC02 deterministic nav connects every composition objective from player start at every tier", () => {
+  // Aliased compositions and tiers with unchanged collision share exactly the same pure bake inputs.
+  // Keep all composition/tier/seed reachability checks and replay checks, without rebuilding identical grids.
+  const bakes = new Map<string, ReturnType<typeof bakeNav>>();
   for (const level of Object.values(compositions))
     for (const tier of [0, 1, 2, 3, 4, 5] as const) {
       const inputs = level.districts.map((d) => {
@@ -41,8 +45,13 @@ test("T-E10-02 @E10 @E10-AC02 deterministic nav connects every composition objec
         };
       });
       for (const seed of [1, 42, 2026]) {
-        const nav = bakeNav(inputs, seed, .5);
-        expect(bakeNav(inputs, seed, .5).hash).toBe(nav.hash);
+        const key = JSON.stringify({ inputs, seed });
+        let nav = bakes.get(key);
+        if (!nav) {
+          nav = bakeNav(inputs, seed, .5);
+          expect(bakeNav(inputs, seed, .5).hash).toBe(nav.hash);
+          bakes.set(key, nav);
+        }
         const first = level.districts[0],
           start = resolvePosition(
             districtGameplay[first.id].playerStart,
@@ -63,7 +72,7 @@ test("T-E10-02 @E10 @E10-AC02 deterministic nav connects every composition objec
       }
     }
 // Six decay tiers and three seeds at the production 0.5 m resolution, including replay hashes.
-// With D-CROSSING (L9) the bakes take ~115 s alone on a runner, so the budget is 240 s.
+// Keep the existing 240 s ceiling; identical inputs are shared above, while every case is still checked.
 }, 240_000);
 
 test("T-E10-runtime @E10 gameplay blockers have Rapier colliders, fires damage only in range, and unload releases resources", async () => {

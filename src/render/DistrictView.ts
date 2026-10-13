@@ -51,7 +51,7 @@ import { pickLod, propLod, initialDistrictLods, lodPolicy, type Lod } from './lo
 import { occluderMinHeight, seeThrough } from './SeeThrough';
 import { stripStrayDecorations } from './decorationFilter';
 import type { PaletteToken } from '../data/palette';
-import { crossing, crossingChunks } from '../levels/L9/district';
+import { layoutTerrainChunks } from '../sim/world/TerrainChunks';
 import { TerrainView } from './TerrainView';
 
 const crownTokens = new Map<string, [PaletteToken, PaletteToken]>(Object.values(worldAssets).flatMap(asset => asset.foliage ? [[asset.foliage.colors.join(':'), asset.foliage.tokens ?? ['foliageDark', 'foliageLight']]] : []));
@@ -202,7 +202,7 @@ export class DistrictView extends Group {
           // Preserve legacy W0–W5 loading; W6 geometry is opt-in by an authored layer.
           worldTiers.filter(tier => tier <= this.world.composition.tier && tier <= Math.max(5, ...d.layout.layers.map(layer => layer.tier))).map(tier =>
             this.registry.glb(
-              `/assets/layouts/${d.id}.${tier === 0 ? d.id === 'D-CROSSING' ? 'horizon' : 'base' : `w${tier}`}.glb`,
+              `/assets/layouts/${d.id}.${tier === 0 ? d.layout.terrainChunks?.length ? 'horizon' : 'base' : `w${tier}`}.glb`,
             ),
           ),
         );
@@ -223,7 +223,7 @@ export class DistrictView extends Group {
           stripStrayDecorations(clone, d.layout);
           this.stripLayoutMarkers(clone);
           root.add(clone);
-          if (d.id === 'D-CROSSING') this.terrainHorizon = clone;
+          if (d.layout.terrainChunks?.length) this.terrainHorizon = clone;
         }
         // Base paving (tier 0): roads top out at 5 cm, road paint and kerbs above them; decay-removed nodes are not ground.
         root.updateMatrixWorld(true);
@@ -236,11 +236,10 @@ export class DistrictView extends Group {
           });
           this.freezeLayout(groundLayer);
         }
-        if (d.id === 'D-CROSSING' && scenes.length) {
-          const chunks = crossingChunks.map(c => ({ id: c.id, origin: [c.origin[0] + d.origin[0], c.origin[1] + d.origin[1]] as [number, number], max: [c.max[0] + d.origin[0], c.max[1] + d.origin[1]] as [number, number] }));
-          this.terrain = new TerrainView(chunks, crossing.chunkSize, id => `/assets/layouts/D-CROSSING.chunks/${id}.glb`, this.registry, this.low ? 'low' : 'high');
+        if (d.layout.terrainChunks?.length && scenes.length) {
+          this.terrain = new TerrainView(layoutTerrainChunks(d.layout, d.origin), d.layout.terrainChunks[0].size, id => `/assets/layouts/${d.id}.chunks/${id}.glb`, this.registry, this.low ? 'low' : 'high');
           this.add(this.terrain);
-          this.terrain.update(focus ? [focus.x, focus.z] : [crossing.start[0] + d.origin[0], crossing.start[1] + d.origin[1]]);
+          this.terrain.update(focus ? [focus.x, focus.z] : this.world.playerStart);
           await this.terrain.ready();
         }
         const references = new Map<string, Object3D[]>();
@@ -274,10 +273,10 @@ export class DistrictView extends Group {
         });
         // L2/L3 author their dressing (and L3 its per-placement decay variants) in the loaded layout copy. Their
         // references must use those placements, rather than the unchanged baked GLB empties.
-        if (d.id === 'D-CROSSING' || this.world.composition.id === 'L7' || this.world.composition.id === 'L6' || this.world.composition.id === 'L5' || this.world.composition.id === 'L4' || this.world.composition.id === 'L3' || this.world.composition.id === 'L2' || lab) {
+        if (d.layout.terrainChunks?.length || this.world.composition.id === 'L7' || this.world.composition.id === 'L6' || this.world.composition.id === 'L5' || this.world.composition.id === 'L4' || this.world.composition.id === 'L3' || this.world.composition.id === 'L2' || lab) {
           references.clear();
           // Scene Lab and L2: crowns follow kept placements, including station canopy clearance.
-          if (d.id === 'D-CROSSING' || lab || this.world.composition.id === 'L2') {
+          if (d.layout.terrainChunks?.length || lab || this.world.composition.id === 'L2') {
             crowns.clear();
             for (const p of d.decay.placements) for (const crown of worldAssets[p.assetId]?.foliage?.crowns ?? []) {
               const key = worldAssets[p.assetId].foliage!.colors.join(':'), ref = new Object3D();

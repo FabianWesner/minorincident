@@ -313,6 +313,9 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
     decorations: [], lightGroups: [{ id: labLightGroup, offAt: 6 }, ...(kept.some(p => p.lightGroup === 'l3-highway') ? [{ id: 'l3-highway', offAt: 6 as const }] : []), ...[...new Set(spec.props?.map(p => p.powerGroup).filter((group): group is string => !!group) ?? [])].map(id => ({ id, offAt: spec.props?.some(p => p.powerGroup === id && p.powered === false) ? 0 as Tier : 6 as Tier }))], acousticZones: [],
     surfaces: spec.ground === 'district' && source ? source.surfaces : [{ surface: spec.ground === 'asphalt' ? 'asphalt' : spec.ground === 'sidewalk' ? 'tile' : 'grass', polygon: bounds }], layers: [{ tier: 0, remove: [], disableLights: spec.props?.filter(p => p.powerGroup && p.powered === false).map(p => p.powerGroup!) ?? [] }],
   };
+  if (spec.ground === 'district' && source?.terrainChunks) layout.terrainChunks = source.terrainChunks
+    .filter(c => c.origin[0] + c.size > x0 - shift[0] && c.origin[0] < x1 - shift[0] && c.origin[1] + c.size > z0 - shift[1] && c.origin[1] < z1 - shift[1])
+    .map(c => ({ ...c, origin: [c.origin[0] + shift[0], c.origin[1] + shift[1]] }));
   if (spec.ground === 'district' && source?.layers.some(l => l.tier === 6)) layout.layers.push({ tier: 6, remove: [], disableLights: [] });
   // Metro assemblies contain traversable rooms: their authored supports and walls
   // must survive a crop rather than becoming one solid manifest footprint.

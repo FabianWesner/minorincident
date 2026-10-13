@@ -1,0 +1,5452 @@
+{
+  "acousticZones": [
+    {
+      "id": "outdoor",
+      "polygon": [
+        [
+          500,
+          -200
+        ],
+        [
+          1300,
+          -200
+        ],
+        [
+          1300,
+          200
+        ],
+        [
+          500,
+          200
+        ],
+        [
+          500,
+          -200
+        ]
+      ],
+      "preset": "suburb-open"
+    }
+  ],
+  "anchors": {
+    "cure-crash": {
+      "position": [
+        547,
+        0,
+        0
+      ],
+      "yaw": 0
+    },
+    "cure-residential": {
+      "position": [
+        767,
+        0,
+        25
+      ],
+      "yaw": 0
+    },
+    "exit": {
+      "position": [
+        1237,
+        0,
+        25
+      ],
+      "yaw": 0
+    },
+    "mega-introduction": {
+      "position": [
+        647,
+        0,
+        0
+      ],
+      "yaw": 0
+    },
+    "player-start": {
+      "position": [
+        547,
+        0,
+        0
+      ],
+      "yaw": 0
+    },
+    "police-medkit": {
+      "position": [
+        763,
+        0,
+        28
+      ],
+      "yaw": 0
+    },
+    "police-pickup": {
+      "position": [
+        769,
+        0,
+        25
+      ],
+      "yaw": 0
+    },
+    "r1-r2-seam": {
+      "position": [
+        747,
+        0,
+        25
+      ],
+      "yaw": 0
+    },
+    "r2-r3-seam": {
+      "position": [
+        1237,
+        0,
+        25
+      ],
+      "yaw": 0
+    },
+    "residential-blocked-street": {
+      "position": [
+        937,
+        0,
+        25
+      ],
+      "yaw": 0
+    },
+    "residential-detour": {
+      "position": [
+        937,
+        0,
+        80
+      ],
+      "yaw": 0
+    }
+  },
+  "bounds": [
+    [
+      500,
+      -200
+    ],
+    [
+      1300,
+      -200
+    ],
+    [
+      1300,
+      200
+    ],
+    [
+      500,
+      200
+    ],
+    [
+      500,
+      -200
+    ]
+  ],
+  "buildings": [
+    {
+      "aabb": {
+        "max": [
+          771.95705,
+          4.875,
+          20.1
+        ],
+        "min": [
+          762.04295,
+          0,
+          11.9
+        ]
+      },
+      "assetId": "bld.cure-security-post",
+      "id": "bld.cure-security-post:6",
+      "label": "Security"
+    },
+    {
+      "aabb": {
+        "max": [
+          840.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          825.92,
+          0,
+          84.5
+        ]
+      },
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:7",
+      "label": "Residential fringe"
+    },
+    {
+      "aabb": {
+        "max": [
+          860.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          845.92,
+          0,
+          84.5
+        ]
+      },
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:8",
+      "label": "Residential fringe"
+    },
+    {
+      "aabb": {
+        "max": [
+          880.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          865.92,
+          0,
+          84.5
+        ]
+      },
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:9",
+      "label": "Residential fringe"
+    },
+    {
+      "aabb": {
+        "max": [
+          900.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          885.92,
+          0,
+          84.5
+        ]
+      },
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:10",
+      "label": "Residential fringe"
+    },
+    {
+      "aabb": {
+        "max": [
+          920.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          905.92,
+          0,
+          84.5
+        ]
+      },
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:11",
+      "label": "Residential fringe"
+    },
+    {
+      "aabb": {
+        "max": [
+          940.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          925.92,
+          0,
+          84.5
+        ]
+      },
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:12",
+      "label": "Residential fringe"
+    },
+    {
+      "aabb": {
+        "max": [
+          960.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          945.92,
+          0,
+          84.5
+        ]
+      },
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:13",
+      "label": "Residential fringe"
+    },
+    {
+      "aabb": {
+        "max": [
+          980.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          965.92,
+          0,
+          84.5
+        ]
+      },
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:14",
+      "label": "Residential fringe"
+    },
+    {
+      "aabb": {
+        "max": [
+          1000.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          985.92,
+          0,
+          84.5
+        ]
+      },
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:15",
+      "label": "Residential fringe"
+    },
+    {
+      "aabb": {
+        "max": [
+          1020.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          1005.92,
+          0,
+          84.5
+        ]
+      },
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:16",
+      "label": "Residential fringe"
+    },
+    {
+      "aabb": {
+        "max": [
+          1085.0,
+          9.03,
+          17.08
+        ],
+        "min": [
+          1075.0,
+          0,
+          2.92
+        ]
+      },
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:17",
+      "label": "Residential fringe"
+    },
+    {
+      "aabb": {
+        "max": [
+          1125.0,
+          9.03,
+          17.08
+        ],
+        "min": [
+          1115.0,
+          0,
+          2.92
+        ]
+      },
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:18",
+      "label": "Residential fringe"
+    },
+    {
+      "aabb": {
+        "max": [
+          1165.0,
+          9.03,
+          17.08
+        ],
+        "min": [
+          1155.0,
+          0,
+          2.92
+        ]
+      },
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:19",
+      "label": "Residential fringe"
+    },
+    {
+      "aabb": {
+        "max": [
+          1205.0,
+          9.03,
+          17.08
+        ],
+        "min": [
+          1195.0,
+          0,
+          2.92
+        ]
+      },
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:20",
+      "label": "Residential fringe"
+    },
+    {
+      "aabb": {
+        "max": [
+          852.0,
+          9.03,
+          17.08
+        ],
+        "min": [
+          842.0,
+          0,
+          2.92
+        ]
+      },
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:21",
+      "label": "Residential fringe"
+    },
+    {
+      "aabb": {
+        "max": [
+          892.0,
+          9.03,
+          17.08
+        ],
+        "min": [
+          882.0,
+          0,
+          2.92
+        ]
+      },
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:22",
+      "label": "Residential fringe"
+    },
+    {
+      "aabb": {
+        "max": [
+          1002.0,
+          9.03,
+          17.08
+        ],
+        "min": [
+          992.0,
+          0,
+          2.92
+        ]
+      },
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:23",
+      "label": "Residential fringe"
+    }
+  ],
+  "colliders": [
+    {
+      "aabb": {
+        "max": [
+          541.6725524439856,
+          3.27,
+          -2.057789390651603
+        ],
+        "min": [
+          538.3274475560144,
+          0,
+          -7.942210609348397
+        ]
+      },
+      "id": "veh.military-apc:0",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          579.6396000385284,
+          1.5,
+          -19.158984005451202
+        ],
+        "min": [
+          576.3603999614716,
+          0,
+          -20.841015994548798
+        ]
+      },
+      "id": "decay.makeshift-barricade:4",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          719.6396000385284,
+          1.5,
+          43.8410159945488
+        ],
+        "min": [
+          716.3603999614716,
+          0,
+          42.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:5",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          771.95705,
+          4.875,
+          20.1
+        ],
+        "min": [
+          762.04295,
+          0,
+          11.9
+        ]
+      },
+      "id": "bld.cure-security-post:6",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          840.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          825.92,
+          0,
+          84.5
+        ]
+      },
+      "id": "bld.cure-duplex:7",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          860.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          845.92,
+          0,
+          84.5
+        ]
+      },
+      "id": "bld.cure-duplex:8",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          880.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          865.92,
+          0,
+          84.5
+        ]
+      },
+      "id": "bld.cure-duplex:9",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          900.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          885.92,
+          0,
+          84.5
+        ]
+      },
+      "id": "bld.cure-duplex:10",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          920.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          905.92,
+          0,
+          84.5
+        ]
+      },
+      "id": "bld.cure-duplex:11",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          940.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          925.92,
+          0,
+          84.5
+        ]
+      },
+      "id": "bld.cure-duplex:12",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          960.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          945.92,
+          0,
+          84.5
+        ]
+      },
+      "id": "bld.cure-duplex:13",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          980.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          965.92,
+          0,
+          84.5
+        ]
+      },
+      "id": "bld.cure-duplex:14",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          1000.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          985.92,
+          0,
+          84.5
+        ]
+      },
+      "id": "bld.cure-duplex:15",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          1020.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          1005.92,
+          0,
+          84.5
+        ]
+      },
+      "id": "bld.cure-duplex:16",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          1085.0,
+          9.03,
+          17.08
+        ],
+        "min": [
+          1075.0,
+          0,
+          2.92
+        ]
+      },
+      "id": "bld.cure-duplex:17",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          1125.0,
+          9.03,
+          17.08
+        ],
+        "min": [
+          1115.0,
+          0,
+          2.92
+        ]
+      },
+      "id": "bld.cure-duplex:18",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          1165.0,
+          9.03,
+          17.08
+        ],
+        "min": [
+          1155.0,
+          0,
+          2.92
+        ]
+      },
+      "id": "bld.cure-duplex:19",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          1205.0,
+          9.03,
+          17.08
+        ],
+        "min": [
+          1195.0,
+          0,
+          2.92
+        ]
+      },
+      "id": "bld.cure-duplex:20",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          852.0,
+          9.03,
+          17.08
+        ],
+        "min": [
+          842.0,
+          0,
+          2.92
+        ]
+      },
+      "id": "bld.cure-duplex:21",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          892.0,
+          9.03,
+          17.08
+        ],
+        "min": [
+          882.0,
+          0,
+          2.92
+        ]
+      },
+      "id": "bld.cure-duplex:22",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          1002.0,
+          9.03,
+          17.08
+        ],
+        "min": [
+          992.0,
+          0,
+          2.92
+        ]
+      },
+      "id": "bld.cure-duplex:23",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          781.7185000181198,
+          1.9294999986886978,
+          34.160000056028366
+        ],
+        "min": [
+          776.2814999818802,
+          0,
+          31.839999943971634
+        ]
+      },
+      "id": "veh.police-sedan:24",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          844.77,
+          1.93,
+          87.27
+        ],
+        "min": [
+          841.23,
+          0,
+          86.73
+        ]
+      },
+      "id": "prop.cure-garden-wall:29",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          844.264023065567,
+          1.563220500946045,
+          88.44054245948792
+        ],
+        "min": [
+          841.735976934433,
+          0,
+          87.55945754051208
+        ]
+      },
+      "id": "prop.hedge:30",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          884.77,
+          1.93,
+          87.27
+        ],
+        "min": [
+          881.23,
+          0,
+          86.73
+        ]
+      },
+      "id": "prop.cure-garden-wall:31",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          884.264023065567,
+          1.563220500946045,
+          88.44054245948792
+        ],
+        "min": [
+          881.735976934433,
+          0,
+          87.55945754051208
+        ]
+      },
+      "id": "prop.hedge:32",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          924.77,
+          1.93,
+          87.27
+        ],
+        "min": [
+          921.23,
+          0,
+          86.73
+        ]
+      },
+      "id": "prop.cure-garden-wall:33",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          924.264023065567,
+          1.563220500946045,
+          88.44054245948792
+        ],
+        "min": [
+          921.735976934433,
+          0,
+          87.55945754051208
+        ]
+      },
+      "id": "prop.hedge:34",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          964.77,
+          1.93,
+          87.27
+        ],
+        "min": [
+          961.23,
+          0,
+          86.73
+        ]
+      },
+      "id": "prop.cure-garden-wall:35",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          964.264023065567,
+          1.563220500946045,
+          88.44054245948792
+        ],
+        "min": [
+          961.735976934433,
+          0,
+          87.55945754051208
+        ]
+      },
+      "id": "prop.hedge:36",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          1004.77,
+          1.93,
+          87.27
+        ],
+        "min": [
+          1001.23,
+          0,
+          86.73
+        ]
+      },
+      "id": "prop.cure-garden-wall:37",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          1004.264023065567,
+          1.563220500946045,
+          88.44054245948792
+        ],
+        "min": [
+          1001.735976934433,
+          0,
+          87.55945754051208
+        ]
+      },
+      "id": "prop.hedge:38",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          -9.158984005451202
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          -10.841015994548798
+        ]
+      },
+      "id": "decay.makeshift-barricade:39",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          -7.658984005451202
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          -9.341015994548798
+        ]
+      },
+      "id": "decay.makeshift-barricade:40",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          -6.158984005451202
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          -7.841015994548798
+        ]
+      },
+      "id": "decay.makeshift-barricade:41",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          -4.658984005451202
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          -6.341015994548798
+        ]
+      },
+      "id": "decay.makeshift-barricade:42",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          -3.1589840054512024
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          -4.841015994548798
+        ]
+      },
+      "id": "decay.makeshift-barricade:43",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          -1.6589840054512024
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          -3.3410159945487976
+        ]
+      },
+      "id": "decay.makeshift-barricade:44",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          -0.1589840054512024
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          -1.8410159945487976
+        ]
+      },
+      "id": "decay.makeshift-barricade:45",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          1.3410159945487976
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          -0.3410159945487976
+        ]
+      },
+      "id": "decay.makeshift-barricade:46",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          2.8410159945487976
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          1.1589840054512024
+        ]
+      },
+      "id": "decay.makeshift-barricade:47",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          4.341015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          2.6589840054512024
+        ]
+      },
+      "id": "decay.makeshift-barricade:48",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          5.841015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          4.158984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:49",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          7.341015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          5.658984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:50",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          8.841015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          7.158984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:51",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          10.341015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          8.658984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:52",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          11.841015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          10.158984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:53",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          13.341015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          11.658984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:54",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          14.841015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          13.158984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:55",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          16.341015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          14.658984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:56",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          17.841015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          16.158984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:57",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          19.341015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          17.658984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:58",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          20.841015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          19.158984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:59",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          22.341015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          20.658984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:60",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          23.841015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          22.158984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:61",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          25.341015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          23.658984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:62",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          26.841015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          25.158984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:63",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          28.341015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          26.658984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:64",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          29.841015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          28.158984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:65",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          31.341015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          29.658984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:66",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          32.8410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          31.158984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:67",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          34.3410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          32.6589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:68",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          35.8410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          34.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:69",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          37.3410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          35.6589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:70",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          38.8410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          37.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:71",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          40.3410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          38.6589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:72",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          41.8410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          40.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:73",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          43.3410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          41.6589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:74",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          44.8410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          43.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:75",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          46.3410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          44.6589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:76",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          47.8410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          46.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:77",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          49.3410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          47.6589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:78",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          50.8410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          49.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:79",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          52.3410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          50.6589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:80",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          53.8410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          52.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:81",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          55.3410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          53.6589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:82",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          56.8410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          55.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:83",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          58.3410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          56.6589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:84",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          59.8410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          58.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:85",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          61.3410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          59.6589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:86",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          932.2000000476837,
+          1.8999999463558197,
+          25.899999976158142
+        ],
+        "min": [
+          927.7999999523163,
+          0,
+          24.100000023841858
+        ]
+      },
+      "id": "veh.wreck:87",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          946.2000000476837,
+          1.8999999463558197,
+          32.89999997615814
+        ],
+        "min": [
+          941.7999999523163,
+          0,
+          31.100000023841858
+        ]
+      },
+      "id": "veh.wreck:88",
+      "maxTier": 6,
+      "minTier": 0
+    }
+  ],
+  "district": "D-CURE",
+  "geometryHash": "26aff4837c9bc4b4513065ac000e100a2a1e45f1734fea1aafa50046813006d5",
+  "lawns": [],
+  "layers": [
+    {
+      "disableLights": [],
+      "remove": [],
+      "tier": 1
+    },
+    {
+      "disableLights": [],
+      "remove": [],
+      "tier": 2
+    },
+    {
+      "disableLights": [],
+      "remove": [],
+      "tier": 3
+    },
+    {
+      "disableLights": [],
+      "remove": [],
+      "tier": 4
+    },
+    {
+      "disableLights": [],
+      "remove": [],
+      "tier": 5
+    }
+  ],
+  "lightGroups": [
+    {
+      "id": "block-0",
+      "offAt": 6
+    },
+    {
+      "id": "block-1",
+      "offAt": 6
+    },
+    {
+      "id": "block-2",
+      "offAt": 6
+    },
+    {
+      "id": "block-3",
+      "offAt": 6
+    }
+  ],
+  "placements": [
+    {
+      "allowRoad": false,
+      "assetId": "veh.military-apc",
+      "decay": "wrecked",
+      "id": "veh.military-apc:0",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        540,
+        0,
+        -5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          541.6725524439856,
+          3.27,
+          -2.057789390651603
+        ],
+        "min": [
+          538.3274475560144,
+          0,
+          -7.942210609348397
+        ]
+      },
+      "yaw": 1.5
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:1",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        557,
+        0,
+        30
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          560.1,
+          5.8,
+          33.1
+        ],
+        "min": [
+          553.9,
+          0,
+          26.9
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:2",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        600,
+        0,
+        -35
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          603.1,
+          5.8,
+          -31.9
+        ],
+        "min": [
+          596.9,
+          0,
+          -38.1
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.tree",
+      "id": "prop.tree:3",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        697,
+        0,
+        -35
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          700.1,
+          5.8,
+          -31.9
+        ],
+        "min": [
+          693.9,
+          0,
+          -38.1
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:4",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        578,
+        0,
+        -20
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          579.6396000385284,
+          1.5,
+          -19.158984005451202
+        ],
+        "min": [
+          576.3603999614716,
+          0,
+          -20.841015994548798
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:5",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        718,
+        0,
+        43
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          719.6396000385284,
+          1.5,
+          43.8410159945488
+        ],
+        "min": [
+          716.3603999614716,
+          0,
+          42.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.cure-security-post",
+      "id": "bld.cure-security-post:6",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        767,
+        0,
+        16
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          771.95705,
+          4.875,
+          20.1
+        ],
+        "min": [
+          762.04295,
+          0,
+          11.9
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:7",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        833,
+        0,
+        89.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          840.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          825.92,
+          0,
+          84.5
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:8",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        853,
+        0,
+        89.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          860.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          845.92,
+          0,
+          84.5
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:9",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        873,
+        0,
+        89.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          880.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          865.92,
+          0,
+          84.5
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:10",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        893,
+        0,
+        89.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          900.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          885.92,
+          0,
+          84.5
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:11",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        913,
+        0,
+        89.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          920.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          905.92,
+          0,
+          84.5
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:12",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        933,
+        0,
+        89.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          940.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          925.92,
+          0,
+          84.5
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:13",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        953,
+        0,
+        89.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          960.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          945.92,
+          0,
+          84.5
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:14",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        973,
+        0,
+        89.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          980.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          965.92,
+          0,
+          84.5
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:15",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        993,
+        0,
+        89.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          1000.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          985.92,
+          0,
+          84.5
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:16",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        1013,
+        0,
+        89.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          1020.08,
+          9.03,
+          94.5
+        ],
+        "min": [
+          1005.92,
+          0,
+          84.5
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:17",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        1080,
+        0,
+        10
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          1085.0,
+          9.03,
+          17.08
+        ],
+        "min": [
+          1075.0,
+          0,
+          2.92
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:18",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        1120,
+        0,
+        10
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          1125.0,
+          9.03,
+          17.08
+        ],
+        "min": [
+          1115.0,
+          0,
+          2.92
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:19",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        1160,
+        0,
+        10
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          1165.0,
+          9.03,
+          17.08
+        ],
+        "min": [
+          1155.0,
+          0,
+          2.92
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:20",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        1200,
+        0,
+        10
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          1205.0,
+          9.03,
+          17.08
+        ],
+        "min": [
+          1195.0,
+          0,
+          2.92
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:21",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        847,
+        0,
+        10
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          852.0,
+          9.03,
+          17.08
+        ],
+        "min": [
+          842.0,
+          0,
+          2.92
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:22",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        887,
+        0,
+        10
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          892.0,
+          9.03,
+          17.08
+        ],
+        "min": [
+          882.0,
+          0,
+          2.92
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.cure-duplex",
+      "id": "bld.cure-duplex:23",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        997,
+        0,
+        10
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          1002.0,
+          9.03,
+          17.08
+        ],
+        "min": [
+          992.0,
+          0,
+          2.92
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "veh.police-sedan",
+      "decay": "wrecked",
+      "id": "veh.police-sedan:24",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        779,
+        0,
+        33
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          781.7185000181198,
+          1.9294999986886978,
+          34.160000056028366
+        ],
+        "min": [
+          776.2814999818802,
+          0,
+          31.839999943971634
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-lamp",
+      "id": "prop.street-lamp:25",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        758,
+        0,
+        19
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          758.3199999928474,
+          3.865000009536743,
+          19.319999992847443
+        ],
+        "min": [
+          757.6800000071526,
+          0,
+          18.680000007152557
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.street-lamp",
+      "id": "prop.street-lamp:26",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        943,
+        0,
+        86
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          943.3199999928474,
+          3.865000009536743,
+          86.31999999284744
+        ],
+        "min": [
+          942.6800000071526,
+          0,
+          85.68000000715256
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.traffic-cone",
+      "id": "prop.traffic-cone:27",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        759,
+        0,
+        19
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          759.2399999946356,
+          0.6460000276565552,
+          19.239999994635582
+        ],
+        "min": [
+          758.7600000053644,
+          0,
+          18.760000005364418
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.traffic-cone",
+      "id": "prop.traffic-cone:28",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        773,
+        0,
+        19
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          773.2399999946356,
+          0.6460000276565552,
+          19.239999994635582
+        ],
+        "min": [
+          772.7600000053644,
+          0,
+          18.760000005364418
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-garden-wall",
+      "id": "prop.cure-garden-wall:29",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        843,
+        0,
+        87
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          844.77,
+          1.93,
+          87.27
+        ],
+        "min": [
+          841.23,
+          0,
+          86.73
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.hedge",
+      "id": "prop.hedge:30",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        843,
+        0,
+        88
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          844.264023065567,
+          1.563220500946045,
+          88.44054245948792
+        ],
+        "min": [
+          841.735976934433,
+          0,
+          87.55945754051208
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-garden-wall",
+      "id": "prop.cure-garden-wall:31",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        883,
+        0,
+        87
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          884.77,
+          1.93,
+          87.27
+        ],
+        "min": [
+          881.23,
+          0,
+          86.73
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.hedge",
+      "id": "prop.hedge:32",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        883,
+        0,
+        88
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          884.264023065567,
+          1.563220500946045,
+          88.44054245948792
+        ],
+        "min": [
+          881.735976934433,
+          0,
+          87.55945754051208
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-garden-wall",
+      "id": "prop.cure-garden-wall:33",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        923,
+        0,
+        87
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          924.77,
+          1.93,
+          87.27
+        ],
+        "min": [
+          921.23,
+          0,
+          86.73
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.hedge",
+      "id": "prop.hedge:34",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        923,
+        0,
+        88
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          924.264023065567,
+          1.563220500946045,
+          88.44054245948792
+        ],
+        "min": [
+          921.735976934433,
+          0,
+          87.55945754051208
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-garden-wall",
+      "id": "prop.cure-garden-wall:35",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        963,
+        0,
+        87
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          964.77,
+          1.93,
+          87.27
+        ],
+        "min": [
+          961.23,
+          0,
+          86.73
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.hedge",
+      "id": "prop.hedge:36",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        963,
+        0,
+        88
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          964.264023065567,
+          1.563220500946045,
+          88.44054245948792
+        ],
+        "min": [
+          961.735976934433,
+          0,
+          87.55945754051208
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-garden-wall",
+      "id": "prop.cure-garden-wall:37",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        1003,
+        0,
+        87
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          1004.77,
+          1.93,
+          87.27
+        ],
+        "min": [
+          1001.23,
+          0,
+          86.73
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.hedge",
+      "id": "prop.hedge:38",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        1003,
+        0,
+        88
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          1004.264023065567,
+          1.563220500946045,
+          88.44054245948792
+        ],
+        "min": [
+          1001.735976934433,
+          0,
+          87.55945754051208
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:39",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        -10.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          -9.158984005451202
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          -10.841015994548798
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:40",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        -8.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          -7.658984005451202
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          -9.341015994548798
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:41",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        -7.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          -6.158984005451202
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          -7.841015994548798
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:42",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        -5.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          -4.658984005451202
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          -6.341015994548798
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:43",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        -4.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          -3.1589840054512024
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          -4.841015994548798
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:44",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        -2.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          -1.6589840054512024
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          -3.3410159945487976
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:45",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        -1.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          -0.1589840054512024
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          -1.8410159945487976
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:46",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        0.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          1.3410159945487976
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          -0.3410159945487976
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:47",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        2.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          2.8410159945487976
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          1.1589840054512024
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:48",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        3.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          4.341015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          2.6589840054512024
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:49",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        5.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          5.841015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          4.158984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:50",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        6.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          7.341015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          5.658984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:51",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        8.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          8.841015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          7.158984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:52",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        9.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          10.341015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          8.658984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:53",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        11.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          11.841015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          10.158984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:54",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        12.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          13.341015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          11.658984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:55",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        14.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          14.841015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          13.158984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:56",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        15.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          16.341015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          14.658984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:57",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        17.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          17.841015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          16.158984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:58",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        18.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          19.341015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          17.658984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:59",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        20.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          20.841015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          19.158984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:60",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        21.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          22.341015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          20.658984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:61",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        23.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          23.841015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          22.158984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:62",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        24.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          25.341015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          23.658984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:63",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        26.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          26.841015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          25.158984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:64",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        27.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          28.341015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          26.658984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:65",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        29.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          29.841015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          28.158984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:66",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        30.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          31.341015994548798
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          29.658984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:67",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        32.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          32.8410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          31.158984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:68",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        33.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          34.3410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          32.6589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:69",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        35.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          35.8410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          34.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:70",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        36.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          37.3410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          35.6589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:71",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        38.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          38.8410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          37.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:72",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        39.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          40.3410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          38.6589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:73",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        41.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          41.8410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          40.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:74",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        42.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          43.3410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          41.6589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:75",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        44.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          44.8410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          43.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:76",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        45.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          46.3410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          44.6589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:77",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        47.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          47.8410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          46.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:78",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        48.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          49.3410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          47.6589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:79",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        50.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          50.8410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          49.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:80",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        51.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          52.3410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          50.6589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:81",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        53.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          53.8410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          52.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:82",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        54.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          55.3410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          53.6589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:83",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        56.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          56.8410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          55.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:84",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        57.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          58.3410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          56.6589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:85",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        59.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          59.8410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          58.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:86",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        937,
+        0,
+        60.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          938.6396000385284,
+          1.5,
+          61.3410159945488
+        ],
+        "min": [
+          935.3603999614716,
+          0,
+          59.6589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "veh.wreck",
+      "id": "veh.wreck:87",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        930,
+        0,
+        25
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          932.2000000476837,
+          1.8999999463558197,
+          25.899999976158142
+        ],
+        "min": [
+          927.7999999523163,
+          0,
+          24.100000023841858
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "veh.wreck",
+      "id": "veh.wreck:88",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        944,
+        0,
+        32
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          946.2000000476837,
+          1.8999999463558197,
+          32.89999997615814
+        ],
+        "min": [
+          941.7999999523163,
+          0,
+          31.100000023841858
+        ]
+      },
+      "yaw": 0
+    }
+  ],
+  "roads": {
+    "edges": [
+      {
+        "end": "route-1",
+        "id": "route-0",
+        "laneWidth": 8,
+        "points": [
+          [
+            547,
+            0
+          ],
+          [
+            622,
+            0
+          ]
+        ],
+        "start": "route-0"
+      },
+      {
+        "end": "route-2",
+        "id": "route-1",
+        "laneWidth": 8,
+        "points": [
+          [
+            622,
+            0
+          ],
+          [
+            622,
+            -12.5
+          ]
+        ],
+        "start": "route-1"
+      },
+      {
+        "end": "route-3",
+        "id": "route-2",
+        "laneWidth": 8,
+        "points": [
+          [
+            622,
+            -12.5
+          ],
+          [
+            647,
+            -12.5
+          ]
+        ],
+        "start": "route-2"
+      },
+      {
+        "end": "route-4",
+        "id": "route-3",
+        "laneWidth": 8,
+        "points": [
+          [
+            647,
+            -12.5
+          ],
+          [
+            647,
+            25
+          ]
+        ],
+        "start": "route-3"
+      },
+      {
+        "end": "route-5",
+        "id": "route-4",
+        "laneWidth": 8,
+        "points": [
+          [
+            647,
+            25
+          ],
+          [
+            747,
+            25
+          ]
+        ],
+        "start": "route-4"
+      },
+      {
+        "end": "route-6",
+        "id": "route-5",
+        "laneWidth": 8,
+        "points": [
+          [
+            747,
+            25
+          ],
+          [
+            807,
+            25
+          ]
+        ],
+        "start": "route-5"
+      },
+      {
+        "end": "route-7",
+        "id": "route-6",
+        "laneWidth": 8,
+        "points": [
+          [
+            807,
+            25
+          ],
+          [
+            807,
+            80
+          ]
+        ],
+        "start": "route-6"
+      },
+      {
+        "end": "route-8",
+        "id": "route-7",
+        "laneWidth": 8,
+        "points": [
+          [
+            807,
+            80
+          ],
+          [
+            1057,
+            80
+          ]
+        ],
+        "start": "route-7"
+      },
+      {
+        "end": "route-9",
+        "id": "route-8",
+        "laneWidth": 8,
+        "points": [
+          [
+            1057,
+            80
+          ],
+          [
+            1057,
+            25
+          ]
+        ],
+        "start": "route-8"
+      },
+      {
+        "end": "route-10",
+        "id": "route-9",
+        "laneWidth": 8,
+        "points": [
+          [
+            1057,
+            25
+          ],
+          [
+            1237,
+            25
+          ]
+        ],
+        "start": "route-9"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "route-0",
+        "point": [
+          547,
+          0
+        ]
+      },
+      {
+        "id": "route-1",
+        "point": [
+          622,
+          0
+        ]
+      },
+      {
+        "id": "route-2",
+        "point": [
+          622,
+          -12.5
+        ]
+      },
+      {
+        "id": "route-3",
+        "point": [
+          647,
+          -12.5
+        ]
+      },
+      {
+        "id": "route-4",
+        "point": [
+          647,
+          25
+        ]
+      },
+      {
+        "id": "route-5",
+        "point": [
+          747,
+          25
+        ]
+      },
+      {
+        "id": "route-6",
+        "point": [
+          807,
+          25
+        ]
+      },
+      {
+        "id": "route-7",
+        "point": [
+          807,
+          80
+        ]
+      },
+      {
+        "id": "route-8",
+        "point": [
+          1057,
+          80
+        ]
+      },
+      {
+        "id": "route-9",
+        "point": [
+          1057,
+          25
+        ]
+      },
+      {
+        "id": "route-10",
+        "point": [
+          1237,
+          25
+        ]
+      }
+    ]
+  },
+  "surfaces": [
+    {
+      "height": 0,
+      "polygon": [
+        [
+          500,
+          -200
+        ],
+        [
+          1300,
+          -200
+        ],
+        [
+          1300,
+          200
+        ],
+        [
+          500,
+          200
+        ],
+        [
+          500,
+          -200
+        ]
+      ],
+      "surface": "grass"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          547.0,
+          4.0
+        ],
+        [
+          547.0,
+          -4.0
+        ],
+        [
+          622.0,
+          -4.0
+        ],
+        [
+          622.0,
+          4.0
+        ],
+        [
+          547.0,
+          4.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          626.0,
+          0.0
+        ],
+        [
+          618.0,
+          0.0
+        ],
+        [
+          618.0,
+          -12.5
+        ],
+        [
+          626.0,
+          -12.5
+        ],
+        [
+          626.0,
+          0.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          622.0,
+          -8.5
+        ],
+        [
+          622.0,
+          -16.5
+        ],
+        [
+          647.0,
+          -16.5
+        ],
+        [
+          647.0,
+          -8.5
+        ],
+        [
+          622.0,
+          -8.5
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          643.0,
+          -12.5
+        ],
+        [
+          651.0,
+          -12.5
+        ],
+        [
+          651.0,
+          25.0
+        ],
+        [
+          643.0,
+          25.0
+        ],
+        [
+          643.0,
+          -12.5
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          647.0,
+          29.0
+        ],
+        [
+          647.0,
+          21.0
+        ],
+        [
+          747.0,
+          21.0
+        ],
+        [
+          747.0,
+          29.0
+        ],
+        [
+          647.0,
+          29.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          747.0,
+          29.0
+        ],
+        [
+          747.0,
+          21.0
+        ],
+        [
+          807.0,
+          21.0
+        ],
+        [
+          807.0,
+          29.0
+        ],
+        [
+          747.0,
+          29.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          803.0,
+          25.0
+        ],
+        [
+          811.0,
+          25.0
+        ],
+        [
+          811.0,
+          80.0
+        ],
+        [
+          803.0,
+          80.0
+        ],
+        [
+          803.0,
+          25.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          807.0,
+          84.0
+        ],
+        [
+          807.0,
+          76.0
+        ],
+        [
+          1057.0,
+          76.0
+        ],
+        [
+          1057.0,
+          84.0
+        ],
+        [
+          807.0,
+          84.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          1061.0,
+          80.0
+        ],
+        [
+          1053.0,
+          80.0
+        ],
+        [
+          1053.0,
+          25.0
+        ],
+        [
+          1061.0,
+          25.0
+        ],
+        [
+          1061.0,
+          80.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          1057.0,
+          29.0
+        ],
+        [
+          1057.0,
+          21.0
+        ],
+        [
+          1237.0,
+          21.0
+        ],
+        [
+          1237.0,
+          29.0
+        ],
+        [
+          1057.0,
+          29.0
+        ]
+      ],
+      "surface": "asphalt"
+    }
+  ],
+  "terrainChunks": [
+    {
+      "id": "cure-0-0",
+      "origin": [
+        500,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-1-0",
+      "origin": [
+        600,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-2-0",
+      "origin": [
+        700,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-3-0",
+      "origin": [
+        800,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-4-0",
+      "origin": [
+        900,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-5-0",
+      "origin": [
+        1000,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-6-0",
+      "origin": [
+        1100,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-7-0",
+      "origin": [
+        1200,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-0-1",
+      "origin": [
+        500,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-1-1",
+      "origin": [
+        600,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-2-1",
+      "origin": [
+        700,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-3-1",
+      "origin": [
+        800,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-4-1",
+      "origin": [
+        900,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-5-1",
+      "origin": [
+        1000,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-6-1",
+      "origin": [
+        1100,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-7-1",
+      "origin": [
+        1200,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-0-2",
+      "origin": [
+        500,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-1-2",
+      "origin": [
+        600,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-2-2",
+      "origin": [
+        700,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-3-2",
+      "origin": [
+        800,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-4-2",
+      "origin": [
+        900,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-5-2",
+      "origin": [
+        1000,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-6-2",
+      "origin": [
+        1100,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-7-2",
+      "origin": [
+        1200,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-0-3",
+      "origin": [
+        500,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-1-3",
+      "origin": [
+        600,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-2-3",
+      "origin": [
+        700,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-3-3",
+      "origin": [
+        800,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-4-3",
+      "origin": [
+        900,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-5-3",
+      "origin": [
+        1000,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-6-3",
+      "origin": [
+        1100,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-7-3",
+      "origin": [
+        1200,
+        100
+      ],
+      "size": 100
+    }
+  ],
+  "title": "The Cure \u2014 crash outskirts and residential fringe",
+  "version": 1,
+  "walkable": {
+    "cellSize": 1,
+    "excluded": []
+  }
+}

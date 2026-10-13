@@ -1,0 +1,60 @@
+{
+  "name": "l10-crash-axe",
+  "note": "L10-D1 production district opening; game camera, streamed ground and existing residential kit. Weapon visual fixture only; E1 owns the pickup transaction.",
+  "seed": 32,
+  "ground": "district",
+  "time": "L9-crossing",
+  "dof": false,
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        500,
+        -60
+      ],
+      [
+        620,
+        60
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        547,
+        0
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ]
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        547,
+        2
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "frames": 60,
+  "sheet": 30,
+  "clipping": {
+    "ignoreFoliage": true
+  },
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}
