@@ -1,0 +1,24 @@
+{
+ "name": "cure-research-lineup",
+ "note": "L10 R5 research campus kit (kit.cure-research) turntable: main laboratory, annex, isolation tent, generator and quarantine fence panels, one full turn in 6 s. Look for: low flat-roofed labs (no tower), glazed entry with canopy, ribbon windows, roof plant standing on the roof plane, annex airlock with hazard chevrons and sign, scrubber tank, tent with yellow eave band and guy ropes, generator louvres, fence sheeting and sign, feet on the ground, no flicker, LOD silhouettes that match LOD0.",
+ "seed": 10,
+ "ground": "asphalt",
+ "time": "L1",
+ "size": 140,
+ "dof": false,
+ "props": [
+  { "id": "lab", "asset": "bld.cure-lab-main", "at": [-26, 0], "yaw": 0 },
+  { "id": "annex", "asset": "bld.cure-lab-annex", "at": [8, -18], "yaw": 0 },
+  { "id": "tent", "asset": "prop.cure-iso-tent", "at": [10, 8], "yaw": 0 },
+  { "id": "gen", "asset": "prop.cure-generator", "at": [10, 18], "yaw": 0 },
+  { "id": "qf1", "asset": "prop.cure-quarantine-fence", "at": [-2, 22], "yaw": 0 },
+  { "id": "qf2", "asset": "prop.cure-quarantine-fence", "at": [1.2, 22], "yaw": 0 }
+ ],
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [0, 4], "yaw": 0, "state": "idle" }
+ ],
+ "camera": { "mode": "orbit", "target": [-6, 0, 0], "radius": 80, "azimuth": 45, "polar": 54, "spin": 60 },
+ "frames": 360,
+ "sheet": 30,
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}

@@ -23165,5 +23165,357 @@
       "token": "survivorRed",
       "solid": true
     }
+  },
+  {
+    "id": "bld.cure-guard-post",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/bld.cure-guard-post/build.py",
+    "glb": "public/assets/models/bld.cure-guard-post.glb",
+    "sourceGlb": "assets/bld.cure-guard-post/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/bld.cure-guard-post.lod1.glb",
+      "lod2": "public/assets/models/bld.cure-guard-post.lod2.glb"
+    },
+    "dimensions": {
+      "x": 9.0,
+      "y": 7.2,
+      "z": 9.35,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 8000,
+      "materials": 4,
+      "fileKB": 1000,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 3000,
+      "lod2": 1000
+    },
+    "world": {
+      "token": "olive",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.cure-motor-shelter",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/bld.cure-motor-shelter/build.py",
+    "glb": "public/assets/models/bld.cure-motor-shelter.glb",
+    "sourceGlb": "assets/bld.cure-motor-shelter/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/bld.cure-motor-shelter.lod1.glb",
+      "lod2": "public/assets/models/bld.cure-motor-shelter.lod2.glb"
+    },
+    "dimensions": {
+      "x": 8.74,
+      "y": 4.55,
+      "z": 11.9,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 8000,
+      "materials": 4,
+      "fileKB": 1000,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 3000,
+      "lod2": 1000
+    },
+    "world": {
+      "token": "olive",
+      "solid": true
+    }
+  },
+  {
+    "id": "prop.cure-mil-fence",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.cure-mil-fence/build.py",
+    "glb": "public/assets/models/prop.cure-mil-fence.glb",
+    "sourceGlb": "assets/prop.cure-mil-fence/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.cure-mil-fence.lod1.glb",
+      "lod2": "public/assets/models/prop.cure-mil-fence.lod2.glb"
+    },
+    "dimensions": {
+      "x": 3.34,
+      "y": 2.4797,
+      "z": 0.42,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 1000,
+      "materials": 4,
+      "fileKB": 300,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 400,
+      "lod2": 150
+    },
+    "world": {
+      "token": "olive",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.cure-lab-main",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/bld.cure-lab-main/build.py",
+    "glb": "public/assets/models/bld.cure-lab-main.glb",
+    "sourceGlb": "assets/bld.cure-lab-main/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/bld.cure-lab-main.lod1.glb",
+      "lod2": "public/assets/models/bld.cure-lab-main.lod2.glb"
+    },
+    "dimensions": {
+      "x": 26.55,
+      "y": 7.4519,
+      "z": 14.7,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 16000,
+      "materials": 4,
+      "fileKB": 1200,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "world": {
+      "token": "picketWhite",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.cure-lab-annex",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/bld.cure-lab-annex/build.py",
+    "glb": "public/assets/models/bld.cure-lab-annex.glb",
+    "sourceGlb": "assets/bld.cure-lab-annex/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/bld.cure-lab-annex.lod1.glb",
+      "lod2": "public/assets/models/bld.cure-lab-annex.lod2.glb"
+    },
+    "dimensions": {
+      "x": 12.8,
+      "y": 7.15,
+      "z": 12.2,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 16000,
+      "materials": 4,
+      "fileKB": 1200,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "world": {
+      "token": "picketWhite",
+      "solid": true
+    }
+  },
+  {
+    "id": "prop.cure-iso-tent",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.cure-iso-tent/build.py",
+    "glb": "public/assets/models/prop.cure-iso-tent.glb",
+    "sourceGlb": "assets/prop.cure-iso-tent/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.cure-iso-tent.lod1.glb",
+      "lod2": "public/assets/models/prop.cure-iso-tent.lod2.glb"
+    },
+    "dimensions": {
+      "x": 6.3,
+      "y": 3.1,
+      "z": 7.56,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 4000,
+      "materials": 4,
+      "fileKB": 500,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 1500,
+      "lod2": 500
+    },
+    "world": {
+      "token": "picketWhite",
+      "solid": true
+    }
+  },
+  {
+    "id": "prop.cure-generator",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.cure-generator/build.py",
+    "glb": "public/assets/models/prop.cure-generator.glb",
+    "sourceGlb": "assets/prop.cure-generator/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.cure-generator.lod1.glb",
+      "lod2": "public/assets/models/prop.cure-generator.lod2.glb"
+    },
+    "dimensions": {
+      "x": 2.8,
+      "y": 2.38,
+      "z": 1.17,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 3000,
+      "materials": 4,
+      "fileKB": 400,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 1000,
+      "lod2": 300
+    },
+    "world": {
+      "token": "orange",
+      "solid": true
+    }
+  },
+  {
+    "id": "prop.cure-quarantine-fence",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.cure-quarantine-fence/build.py",
+    "glb": "public/assets/models/prop.cure-quarantine-fence.glb",
+    "sourceGlb": "assets/prop.cure-quarantine-fence/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.cure-quarantine-fence.lod1.glb",
+      "lod2": "public/assets/models/prop.cure-quarantine-fence.lod2.glb"
+    },
+    "dimensions": {
+      "x": 3.18,
+      "y": 2.1,
+      "z": 0.9,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 1000,
+      "materials": 4,
+      "fileKB": 300,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 400,
+      "lod2": 150
+    },
+    "world": {
+      "token": "picketWhite",
+      "solid": true
+    }
   }
 ]

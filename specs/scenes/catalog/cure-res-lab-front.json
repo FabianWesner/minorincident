@@ -1,0 +1,24 @@
+{
+ "name": "cure-res-lab-front",
+ "note": "L10 R5 main laboratory (bld.cure-lab-main) entry side at the real game camera with a reused ambulance, a reused tent, the new generator and quarantine fence. Run with --matrix. Look for: glazed vestibule with canopy and posts on the ground, ribbon windows, roof plant on the roof, step, fence panels in a row, generator beside the entrance, sunk or floating parts, flicker, missing parts at the low tier (LOD2).",
+ "seed": 10,
+ "ground": "asphalt",
+ "time": "L1",
+ "size": 80,
+ "dof": false,
+ "props": [
+  { "id": "lab", "asset": "bld.cure-lab-main", "at": [0, 0], "yaw": 0 },
+  { "id": "gen", "asset": "prop.cure-generator", "at": [14, 10], "yaw": 1.5708 },
+  { "id": "qf1", "asset": "prop.cure-quarantine-fence", "at": [22, -8], "yaw": 1.5708 },
+  { "id": "qf2", "asset": "prop.cure-quarantine-fence", "at": [22, -4.8], "yaw": 1.5708 },
+  { "id": "ambulance", "asset": "veh.ambulance", "at": [24, 8], "yaw": 3.1416 },
+  { "id": "tent", "asset": "prop.tent", "at": [22, 24], "yaw": 0 }
+ ],
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [18, 0], "yaw": 3.14, "state": "idle" }
+ ],
+ "camera": { "mode": "game", "target": [14, 0], "zoom": 1 },
+ "frames": 60,
+ "shots": [0, 60],
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}
