@@ -83,7 +83,7 @@ export class Vfx extends Group {
   kills = 0;
   lastExplosionRadius = 0;
   readonly shots: { sourceId: number; tick: number; muzzle: number[]; tracerStart: number[]; end: number[] }[] = [];
-  private gunshot(sourceId: number, direction: { x: number; z: number }, range: number, fallback: { x: number; z: number }, targetId?: number): void {
+  private gunshot(sourceId: number, direction: { x: number; z: number }, range: number, fallback: { x: number; z: number }, targetId?: number, dust?: 'hit' | 'miss'): void {
     const source = this.world.entities.get(sourceId), target = targetId === undefined ? undefined : this.world.entities.get(targetId);
     const muzzle = this.targets.muzzle?.(sourceId, { ...direction, y: target && source ? (target.transform.y - source.transform.y) / range : 0 }) ?? { x: fallback.x, y: (source?.transform.y ?? .7) + .45, z: fallback.z };
     // Descend from the actual rifle tip to the victim's torso, using the same 3D cover slabs as damage.
@@ -103,6 +103,10 @@ export class Vfx extends Group {
     const spacing = this.quality === 'high' ? .3 : .6;
     // The first tracer particle is at the muzzle, then follows the visual hit ray.
     for (let i = 0; i <= Math.min(80, Math.floor(distance / spacing)); i++) this.particles.spawn(this.time, .2 - i * .001, muzzle.x + direction.x * i * spacing, muzzle.y + slope * i * spacing, muzzle.z + direction.z * i * spacing, 0, 0, 0, .28, 0, 0xfff6c8);
+    if (!dust) return;
+    // ally-combat-feel: an ejected brass glint beside the shooter, and a dust puff where a miss (or cover) stops the round.
+    this.particles.spawn(this.time, .35, muzzle.x - direction.z * .25, muzzle.y - .1, muzzle.z + direction.x * .25, -direction.z * 1.2, 1.4, direction.x * 1.2, .07, 0, 0xd8b45a, 9.81);
+    if (dust === 'miss' || distance < range - .3) this.burst(muzzle.x + direction.x * distance, Math.max(.08, muzzle.y + slope * distance - .5), muzzle.z + direction.z * distance, 0xb9ab8e, 6, .22, .55, 1.5);
   }
   constructor(private readonly world: SimWorld, private readonly targets: VfxTargets, geometries?: { limb: BufferGeometry; head: BufferGeometry }) {
     super();
@@ -256,7 +260,7 @@ export class Vfx extends Group {
       }
     } else if (event.type === 'ally.attack' && event.from && event.to) {
       const dx = event.to.x - event.from.x, dz = event.to.z - event.from.z, distance = Math.hypot(dx, dz) || 1;
-      this.gunshot(event.sourceId, { x: dx / distance, z: dz / distance }, distance, event.from, event.targetId);
+      this.gunshot(event.sourceId, { x: dx / distance, z: dz / distance }, distance, event.from, event.targetId, event.role === 'tank' || event.role === 'heli' ? undefined : event.hit === false ? 'miss' : 'hit');
     } else if (event.type === 'combat.exploded') {
       if (event.radius > 0) this.explosionOnce(event.tick, event.position.x, event.position.z, event.radius);
     } else if (event.type === 'explosion') {

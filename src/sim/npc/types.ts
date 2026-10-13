@@ -42,7 +42,7 @@ export interface Civilian {
   survivor?: SurvivorState;
   l1?: { walkSpeed: number; fleeSpeed: number; startleTicks: number; refuge: string | null; target: Point | null; repickAt: number; noticed: number; faces?: (Point | null)[]; graceUntil?: number; progressAt?: number; progressFrom?: Point; doorAt?: number;
     /** E20 rescued people: flee along a street route to a safe spot (the bridge checkpoint) instead of a refuge; never removed. */
-    haven?: { route: Point[]; leg: number; x: number; z: number; sx?: number; sz?: number; since?: number } };
+    haven?: { route: Point[]; leg: number; x: number; z: number; sx?: number; sz?: number; since?: number; cower?: { x: number; z: number } } };
 }
 /** Serializable E23 survivor state. `leader` = entity id it follows in single file (the player or the follower ahead); ticks are sim ticks. */
 export interface SurvivorState { key: string; mode: 'hidden' | 'follow'; slot: number; leader: number; cover: boolean; waitAt: number; foundAt: number }
@@ -76,6 +76,9 @@ export interface AllyState {
   step?: { x: number; z: number; until: number }; stepAfter?: number; repoHits?: number; baton?: boolean;
   /** Door forcing beat until this tick (halligan pry clip, or `forceClip`: the crew member directing the people inside). */
   forceUntil: number; forceClip?: string;
+  /** ally-combat-feel: shots since the last reload and in the current burst, the reload and hit-flinch ends, health last tick,
+   * where and since when the fighter stands on one spot, and its last call-out. */
+  mag?: number; burstN?: number; reloadUntil?: number; flinchUntil?: number; lastHp?: number; still?: { x: number; z: number; tick: number }; calloutAt?: number; blockedAt?: number;
 }
 export interface Companion { following?: boolean; velocity?: Point; state: 'follow' | 'fetch' | 'hide'; courage: number; until: number; barkAt: number; hurtAt: number; pickup: number | null; path: number[]; goal: number; pathIndex: number;
   /** L1 v2 warning state (spec 5.8): highest stage reached for the current threat, and the nervous-idle end tick. */
