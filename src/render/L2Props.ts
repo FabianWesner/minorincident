@@ -1,4 +1,4 @@
-import { AdditiveBlending, BoxGeometry, CircleGeometry, CylinderGeometry, DoubleSide, Group, InstancedMesh, Matrix4, Mesh, MeshBasicNodeMaterial, OctahedronGeometry, Quaternion, SphereGeometry, TorusGeometry, Vector3 } from 'three/webgpu';
+import { AdditiveBlending, BoxGeometry, CircleGeometry, CylinderGeometry, DoubleSide, Group, InstancedMesh, Matrix4, Mesh, MeshBasicNodeMaterial, Quaternion, SphereGeometry, TorusGeometry, Vector3 } from 'three/webgpu';
 import { axeStandX, l2, l2Anchors, l2Beacons, l2Station } from '../data/l2';
 import { l2Dressing } from '../levels/L2/layout';
 import type { SimWorld } from '../sim/world/SimWorld';
@@ -37,11 +37,10 @@ export class L2Props extends Group {
   private readonly marketDoors: Mesh[] = [];
   private readonly brickMat = new MeshBasicNodeMaterial({ color: '#d9a17f' });
   private readonly shopGlass = new MeshBasicNodeMaterial({ color: '#a9d4e6', transparent: true, opacity: .22, depthWrite: false });
-  /** Marker for the required axe: a bobbing gem over the rack and a ring where the courier stands. */
+  /** PO 10-13: the required axe gets one marker on the item itself, a pulsing warm backplate; the objective arrow and the single stand ring come from ObjectiveMarker. */
   private readonly glint = new Group();
-  private readonly gem = new OctahedronGeometry(.28);
-  private readonly ring = new TorusGeometry(1.5, .08, 6, 36);
-  private readonly gold = new MeshBasicNodeMaterial({ color: '#ffe02b' });
+  private readonly gold = new MeshBasicNodeMaterial({ color: '#ffe02b', transparent: true, opacity: .55, depthWrite: false });
+  private readonly board = new MeshBasicNodeMaterial({ color: '#aebbd0' });
   private readonly frame = new MeshBasicNodeMaterial({ color: '#e9dfc4' });
   private readonly haft = new MeshBasicNodeMaterial({ color: '#c98a4b' });
   private readonly rescue: L2RescueProps;
@@ -75,12 +74,10 @@ export class L2Props extends Group {
     for (const g of [this.axe, this.glint]) { g.position.set(rx, 0, rz); g.rotation.y = l2Station.yaw; }
     const part = (material: ReturnType<Materials['get']> | MeshBasicNodeMaterial, size: [number, number, number], at: [number, number, number]) => { const m = new Mesh(this.box, material); m.scale.set(...size); m.position.set(...at); this.axe.add(m); };
     part(this.frame, [.08, 1.5, 1.7], [wx, 1.55, 0]);
-    part(materials.get('uiDark'), [.12, 1.3, 1.5], [wx + .05, 1.55, 0]);
-    part(this.haft, [.1, 1.15, .1], [wx + .16, 1.5, -.55]);
-    part(this.red, [.12, .42, .55], [wx + .17, 2.0, -.35]);
-    this.glint.add(new Mesh(this.gem, this.gold), new Mesh(this.ring, this.gold));
-    this.glint.children[0].position.set(wx + .5, 2.9, 0);
-    this.glint.children[1].rotation.x = Math.PI / 2; this.glint.children[1].position.set(0, .48, 0);
+    part(this.board, [.12, 1.3, 1.5], [wx + .05, 1.55, 0]);
+    part(this.haft, [.14, 1.3, .14], [wx + .16, 1.5, -.55]);
+    part(this.red, [.14, .55, .75], [wx + .17, 2.05, -.35]);
+    const glow = new Mesh(this.box, this.gold); glow.scale.set(.05, 1.75, 1.95); glow.position.set(wx - .02, 1.55, 0); this.glint.add(glow);
     this.add(this.glint);
     this.add(this.axe);
     // Grove Market outer walls on the two sides the model leaves open: brick bulkhead, glass above, lintel, a doorway with glass doors.
@@ -152,11 +149,11 @@ export class L2Props extends Group {
     this.axe.children[2].visible = this.axe.children[3].visible = !s.axe;
     const hint = this.world.missions?.state.steps.axe?.status === 'active' && !s.axe;
     this.glint.visible = hint;
-    if (hint) { const bob = Math.sin(tick * .08); this.glint.children[0].position.y = 2.95 + bob * .12; this.glint.children[0].rotation.y = tick * .06; this.glint.children[1].scale.setScalar(1 + .08 * bob); }
+    if (hint) { const pulse = Math.sin(tick * .1); this.glint.children[0].scale.set(.05, 1.75 + .1 * pulse, 1.95 + .1 * pulse); }
     const doorsClosed = s.doorsOpenAt === 0;
     for (const m of this.marketDoors) m.visible = doorsClosed;
     const closing = s.crossedAt > 0 ? Math.min(1, (tick - s.crossedAt) / 36) : 0;
     for (const { mesh, boxes } of this.stripes) this.place(mesh, boxes, b => { const g = this.gates[b.gate!]; return [g.open[0] + (g.closed[0] - g.open[0]) * closing, g.open[1] + (g.closed[1] - g.open[1]) * closing]; });
   }
-  dispose(): void { this.rescue.dispose(); for (const g of Object.values(this.beaconGeo)) g.dispose(); for (const m of Object.values(this.beaconMat)) m.dispose(); this.gem.dispose(); this.ring.dispose(); this.gold.dispose(); this.frame.dispose(); this.brickMat.dispose(); this.shopGlass.dispose(); this.haft.dispose(); this.box.dispose(); this.red.dispose(); this.blue.dispose(); this.glass.dispose(); }
+  dispose(): void { this.rescue.dispose(); for (const g of Object.values(this.beaconGeo)) g.dispose(); for (const m of Object.values(this.beaconMat)) m.dispose(); this.gold.dispose(); this.board.dispose(); this.frame.dispose(); this.brickMat.dispose(); this.shopGlass.dispose(); this.haft.dispose(); this.box.dispose(); this.red.dispose(); this.blue.dispose(); this.glass.dispose(); }
 }

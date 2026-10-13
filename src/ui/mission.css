@@ -25,3 +25,6 @@
 .mission-tracker{max-width:min(340px,calc(100vw - 165px));padding:6px 10px;font-size:14px;line-height:1.3;background:#18233370;border-width:1px;border-left-width:3px;border-radius:8px;box-shadow:none;text-shadow:0 1px 3px #101824}
 .mission-toast{top:158px;bottom:auto;left:24px;transform:none;max-width:340px;padding:6px 10px;background:#18233399;border-radius:8px;font-size:13px;box-shadow:none}
 @media(max-width:600px){.mission-tracker{top:106px;left:12px;max-width:calc(100vw - 132px);padding:5px 8px;font-size:12px}.mission-toast{top:186px;left:12px;width:auto;max-width:calc(100vw - 24px);font-size:12px}.mission-minimap{top:16px;right:12px;width:76px;height:76px}}
+
+/* PO 10-13: on screen, the 3D arrow over the objective is the one icon; the DOM marker only shows when the objective is off screen. */
+.mission-marker[data-offscreen=false]{opacity:0}
