@@ -21853,5 +21853,306 @@
         }
       }
     }
+  },
+  {
+    "id": "inf.mega-alpha",
+    "category": "infected",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/inf.mega-alpha/build.py",
+    "glb": "public/assets/models/inf.mega-alpha.glb",
+    "sourceGlb": "assets/inf.mega-alpha/model.glb",
+    "dimensions": {
+      "x": 5.7701,
+      "y": 5.0348,
+      "z": 8.149,
+      "tolerance": 0.25
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 16000,
+      "materials": 6,
+      "fileKB": 1600,
+      "drawCalls": 40
+    },
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.mega-alpha.lod1.glb",
+      "lod2": "public/assets/models/inf.mega-alpha.lod2.glb"
+    },
+    "sourceScale": 1.08101627,
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    }
+  },
+  {
+    "id": "amb.dog",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/amb.dog.glb",
+    "dimensions": {
+      "x": 1.6297,
+      "y": 1.0085,
+      "z": 0.4519,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "body",
+      "neck",
+      "head",
+      "jaw",
+      "tail",
+      "armL",
+      "armR",
+      "legFL",
+      "legFR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "pawFL",
+      "pawFR",
+      "legL",
+      "legR",
+      "legBL",
+      "legBR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "pawBL",
+      "pawBR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR",
+      "front",
+      "packSocket",
+      "backpackSocket"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "body",
+      "neck",
+      "head",
+      "jaw",
+      "tail",
+      "armL",
+      "armR",
+      "legFL",
+      "legFR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "pawFL",
+      "pawFR",
+      "legL",
+      "legR",
+      "legBL",
+      "legBR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "pawBL",
+      "pawBR"
+    ],
+    "sockets": [
+      "packSocket",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 4000,
+      "materials": 4,
+      "fileKB": 500,
+      "drawCalls": 40
+    },
+    "decayVariants": [
+      "black",
+      "cream"
+    ],
+    "script": "assets/amb.dog/build.py",
+    "sourceGlb": "assets/amb.dog/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/amb.dog.lod1.glb",
+      "lod2": "public/assets/models/amb.dog.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 1500,
+      "lod2": 700
+    }
+  },
+  {
+    "id": "inf.dog",
+    "category": "infected",
+    "status": "integrated",
+    "tier": "hero",
+    "glb": "public/assets/models/inf.dog.glb",
+    "dimensions": {
+      "x": 1.6482,
+      "y": 0.755,
+      "z": 0.4517,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "body",
+      "neck",
+      "head",
+      "jaw",
+      "tail",
+      "armL",
+      "armR",
+      "legFL",
+      "legFR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "pawFL",
+      "pawFR",
+      "legL",
+      "legR",
+      "legBL",
+      "legBR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "pawBL",
+      "pawBR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR",
+      "front",
+      "packSocket",
+      "backpackSocket"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "body",
+      "neck",
+      "head",
+      "jaw",
+      "tail",
+      "armL",
+      "armR",
+      "legFL",
+      "legFR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "pawFL",
+      "pawFR",
+      "legL",
+      "legR",
+      "legBL",
+      "legBR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "pawBL",
+      "pawBR"
+    ],
+    "sockets": [
+      "packSocket",
+      "backpackSocket"
+    ],
+    "budget": {
+      "triangles": 5000,
+      "materials": 6,
+      "fileKB": 500,
+      "drawCalls": 40
+    },
+    "decayVariants": [
+      "black",
+      "cream"
+    ],
+    "script": "assets/inf.dog/build.py",
+    "sourceGlb": "assets/inf.dog/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.dog.lod1.glb",
+      "lod2": "public/assets/models/inf.dog.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 2000,
+      "lod2": 1000
+    }
   }
 ]

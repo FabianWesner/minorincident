@@ -1,0 +1,25 @@
+{
+ "name": "inf-dog-lineup",
+ "note": "L10 dogs: the healthy generic dog (amb.dog, three palette coats) in the back row and the infected dog (inf.dog, the same three coats) in the front row, static rest pose, with the courier and the shipped corgi for scale, at the game camera. Look for: medium dog size (clearly larger than the corgi), infected dogs visibly lower with patchy fur, exposed ribs, red eyes and bared fangs, three distinct coats, paws on the ground, no missing parts or flat panels. Run with --matrix to see the high and low tier at zoom 1 and 0.5.",
+ "seed": 10,
+ "ground": "asphalt",
+ "time": "L4",
+ "size": 60,
+ "dof": false,
+ "props": [
+  { "id": "dog-base", "asset": "amb.dog", "at": [-2, -1.6], "yaw": 0 },
+  { "id": "dog-black", "asset": "amb.dog", "decay": "black", "at": [0, -1.6], "yaw": 0 },
+  { "id": "dog-cream", "asset": "amb.dog", "decay": "cream", "at": [2, -1.6], "yaw": 0 },
+  { "id": "inf-dog-base", "asset": "inf.dog", "at": [-2, 1.6], "yaw": 0 },
+  { "id": "inf-dog-black", "asset": "inf.dog", "decay": "black", "at": [0, 1.6], "yaw": 0 },
+  { "id": "inf-dog-cream", "asset": "inf.dog", "decay": "cream", "at": [2, 1.6], "yaw": 0 }
+ ],
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [-4.6, 0], "yaw": 0, "state": "idle" },
+  { "id": "corgi", "kind": "corgi", "at": [4.4, 0], "yaw": 180, "state": "idle" }
+ ],
+ "camera": { "mode": "game", "target": [0, 0.6, 0], "zoom": 0.8 },
+ "frames": 60,
+ "shots": [0, 60],
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}
