@@ -181,6 +181,7 @@ export class BicycleView extends Group {
   private readonly prompt = document.createElement('div');
   private readonly projection = new Vector3();
   private readonly presented = { x: 0, y: 0, z: 0, yaw: 0 };
+  private parkedPose: { x: number; y: number; z: number; yaw: number; steer: number; pedal: number; speed: number; ground: SimWorld['districts']; sampler: BicycleView['ground'] } | null = null;
   update(camera?: Camera, alpha = 1): void {
     const bike = this.world.vehicles?.bicycle.entity;
     if (!bike?.bicycle) return;
@@ -192,51 +193,57 @@ export class BicycleView extends Group {
     const rig = this.rig, b = bike.bicycle, rider = this.world.entities.get(1)?.transform, from = b.mounted && rider ? this.world.previousPlayer : null, to = bike.transform;
     const t = from && rider ? Object.assign(this.presented, { x: lerp(from.x, rider.x, alpha), y: to.y, z: lerp(from.z, rider.z, alpha), yaw: from.yaw + Math.atan2(Math.sin(to.yaw - from.yaw), Math.cos(to.yaw - from.yaw)) * alpha }) : to;
     const ride = this.presentRide(b, alpha);
-    rig.model.position.x = b.mounted ? rig.offset : 0;
-    // Each wheel rests on the paving under its own contact point (kerbs, crosswalk slabs): the frame pitches between them.
-    const districts = this.world.districts, fx = Math.cos(t.yaw), fz = -Math.sin(t.yaw);
-    const xR = rig.model.position.x + bicycleGeometry.rearWheel, xF = rig.model.position.x + bicycleGeometry.frontWheel;
-    // Heights are the drawn ground (asphalt tops out 5 cm above the layout's paving 0), not the sim plane.
-    const drawn = !!districts || !!this.ground, rR = WHEEL_R.R * SCALE, rF = WHEEL_R.F * SCALE;
-    const steering = ride.steer * bicycleHandling.maxSteering / (1 + ride.speed / l1v2.bicycle.speedMs), sx = Math.cos(t.yaw - steering), sz = -Math.sin(t.yaw - steering);
-    const lean = b.mounted ? ride.lean : 0, [halfR, halfF] = rig.halfWidths;
-    // Pitching the frame swings each hub along the heading by R * sin(pitch) (1.7 cm on a kerb): sample under the pitched hubs.
-    // Hubs at ground + radius: (xF - xR) sin(p) + (rF - rR) cos(p) = gF - gR + rF - rR.
-    const k = Math.hypot(xF - xR, rF - rR), solve = (rear: number, front: number) => Math.asin(Math.max(-1, Math.min(1, (front - rear + rF - rR) / k))) - Math.atan2(rF - rR, xF - xR);
-    let gR = Math.max(0, t.y), gF = gR, pitch = 0;
-    if (drawn) for (let pass = 0; pass < 2; pass++) {
-      const c = Math.cos(pitch), s = Math.sin(pitch), hR = xR * c - rR * s, hF = xF * c - rF * s;
-      gR = this.contact(t.x + fx * hR, t.z + fz * hR, fx, fz, rR, halfR, lean); gF = this.contact(t.x + fx * hF, t.z + fz * hF, sx, sz, rF, halfF, lean);
-      pitch = solve(gR, gF);
-    }
-    rig.root.visible = true; rig.root.position.set(t.x, gR + rR - xR * Math.sin(pitch) - rR * Math.cos(pitch), t.z); rig.root.rotation.y = t.yaw;
-    if (rig.last) { const d = Math.hypot(t.x - rig.last.x, t.z - rig.last.z); rig.wheelAngle += d; }
-    rig.last = { x: t.x, z: t.z };
-    if (rig.wheelF) { rig.wheelF.rotation.z = -rig.wheelAngle / (WHEEL_R.F * SCALE); rig.wheelF.rotation.y = -steering; }
-    if (rig.wheelR) rig.wheelR.rotation.z = -rig.wheelAngle / (WHEEL_R.R * SCALE);
-    if (rig.handlebar) rig.handlebar.rotation.y = -steering;
-    if (rig.crank) { rig.crank.rotation.z = -ride.pedal; for (const p of rig.pedals) p.rotation.z = ride.pedal; }
-    // Toy feel: lean into the turn while riding.
-    const riding = b.mounted;
-    // Kickstand folds up while riding and is down when parked (`kickstand` node of the rebuilt model; absent on the old one).
-    // Knocked over by an infected (sim `fallen`): the frame tips onto its side over ~0.35 s and lies there, kickstand up.
-    const fallen = riding ? undefined : b.fallen, fall = fallen ? Math.min(1, Math.max(0, (this.world.tick + alpha - fallen.at) / FALL_TICKS)) : 0;
-    rig.kick = riding || fallen ? lerp(rig.kick, 1, .2) : 0; if (rig.kickstand) rig.kickstand.rotation.z = rig.kick * Math.PI / 2;
-    rig.leanAngle = riding ? ride.lean : fallen ? fallen.side * FALL_ANGLE * fall * fall : 0;
-    // Rolled about the tyre contact line, the wide tyre's shoulder dips below the road: lift the frame by that dip
-    // (no pedal bob: the wheels stay on the ground and the rider's own ride clip carries the stroke).
-    const lift = Math.max(hubAbove(rig.profiles[0], rR, rig.leanAngle) - rR * Math.cos(rig.leanAngle), hubAbove(rig.profiles[1], rF, rig.leanAngle) - rF * Math.cos(rig.leanAngle));
-    rig.lean.rotation.x = rig.leanAngle; rig.lean.rotation.z = pitch; rig.lean.position.y = lift;
-    if (fallen) this.lieOnGround(rig, t, fallen, fall);
-    else rig.fallKey = '';
-    // Settle on what is drawn: the posed tyres (steer, lean and pitch together) against the drawn ground under them
-    // (a second pass absorbs the shift of the contacts that the re-pitch causes).
-    if (drawn && !fallen) for (let pass = 0; pass < 2; pass++) {
-      rig.root.updateMatrixWorld(true);
-      const cR = this.clearance(rig.wheelR, rig.rings[0]), cF = this.clearance(rig.wheelF, rig.rings[1]);
-      if (cR === null || cF === null || Math.max(Math.abs(cR), Math.abs(cF)) < 5e-4) break;
-      gR -= cR; gF -= cF; pitch = solve(gR, gF);
-      rig.root.position.y = gR + rR - xR * Math.sin(pitch) - rR * Math.cos(pitch); rig.lean.rotation.z = pitch;
+    const riding = b.mounted, cached = this.parkedPose;
+    const settled = !riding && !b.fallen && cached && cached.x === t.x && cached.y === t.y && cached.z === t.z && cached.yaw === t.yaw && cached.steer === ride.steer && cached.pedal === ride.pedal && cached.speed === ride.speed && cached.ground === this.world.districts && cached.sampler === this.ground;
+    // Parked wheels have the same ground/tyre contacts until their pose changes.
+    // Keep the glint and camera-facing prompt live below the cached geometry solve.
+    if (!settled) {
+      rig.model.position.x = b.mounted ? rig.offset : 0;
+      // Each wheel rests on the paving under its own contact point (kerbs, crosswalk slabs): the frame pitches between them.
+      const districts = this.world.districts, fx = Math.cos(t.yaw), fz = -Math.sin(t.yaw);
+      const xR = rig.model.position.x + bicycleGeometry.rearWheel, xF = rig.model.position.x + bicycleGeometry.frontWheel;
+      // Heights are the drawn ground (asphalt tops out 5 cm above the layout's paving 0), not the sim plane.
+      const drawn = !!districts || !!this.ground, rR = WHEEL_R.R * SCALE, rF = WHEEL_R.F * SCALE;
+      const steering = ride.steer * bicycleHandling.maxSteering / (1 + ride.speed / l1v2.bicycle.speedMs), sx = Math.cos(t.yaw - steering), sz = -Math.sin(t.yaw - steering);
+      const lean = b.mounted ? ride.lean : 0, [halfR, halfF] = rig.halfWidths;
+      // Pitching the frame swings each hub along the heading by R * sin(pitch) (1.7 cm on a kerb): sample under the pitched hubs.
+      // Hubs at ground + radius: (xF - xR) sin(p) + (rF - rR) cos(p) = gF - gR + rF - rR.
+      const k = Math.hypot(xF - xR, rF - rR), solve = (rear: number, front: number) => Math.asin(Math.max(-1, Math.min(1, (front - rear + rF - rR) / k))) - Math.atan2(rF - rR, xF - xR);
+      let gR = Math.max(0, t.y), gF = gR, pitch = 0;
+      if (drawn) for (let pass = 0; pass < 2; pass++) {
+        const c = Math.cos(pitch), s = Math.sin(pitch), hR = xR * c - rR * s, hF = xF * c - rF * s;
+        gR = this.contact(t.x + fx * hR, t.z + fz * hR, fx, fz, rR, halfR, lean); gF = this.contact(t.x + fx * hF, t.z + fz * hF, sx, sz, rF, halfF, lean);
+        pitch = solve(gR, gF);
+      }
+      rig.root.visible = true; rig.root.position.set(t.x, gR + rR - xR * Math.sin(pitch) - rR * Math.cos(pitch), t.z); rig.root.rotation.y = t.yaw;
+      if (rig.last) { const d = Math.hypot(t.x - rig.last.x, t.z - rig.last.z); rig.wheelAngle += d; }
+      rig.last = { x: t.x, z: t.z };
+      if (rig.wheelF) { rig.wheelF.rotation.z = -rig.wheelAngle / (WHEEL_R.F * SCALE); rig.wheelF.rotation.y = -steering; }
+      if (rig.wheelR) rig.wheelR.rotation.z = -rig.wheelAngle / (WHEEL_R.R * SCALE);
+      if (rig.handlebar) rig.handlebar.rotation.y = -steering;
+      if (rig.crank) { rig.crank.rotation.z = -ride.pedal; for (const p of rig.pedals) p.rotation.z = ride.pedal; }
+      // Toy feel: lean into the turn while riding.
+      // Kickstand folds up while riding and is down when parked (`kickstand` node of the rebuilt model; absent on the old one).
+      // Knocked over by an infected (sim `fallen`): the frame tips onto its side over ~0.35 s and lies there, kickstand up.
+      const fallen = riding ? undefined : b.fallen, fall = fallen ? Math.min(1, Math.max(0, (this.world.tick + alpha - fallen.at) / FALL_TICKS)) : 0;
+      rig.kick = riding || fallen ? lerp(rig.kick, 1, .2) : 0; if (rig.kickstand) rig.kickstand.rotation.z = rig.kick * Math.PI / 2;
+      rig.leanAngle = riding ? ride.lean : fallen ? fallen.side * FALL_ANGLE * fall * fall : 0;
+      // Rolled about the tyre contact line, the wide tyre's shoulder dips below the road: lift the frame by that dip
+      // (no pedal bob: the wheels stay on the ground and the rider's own ride clip carries the stroke).
+      const lift = Math.max(hubAbove(rig.profiles[0], rR, rig.leanAngle) - rR * Math.cos(rig.leanAngle), hubAbove(rig.profiles[1], rF, rig.leanAngle) - rF * Math.cos(rig.leanAngle));
+      rig.lean.rotation.x = rig.leanAngle; rig.lean.rotation.z = pitch; rig.lean.position.y = lift;
+      if (fallen) this.lieOnGround(rig, t, fallen, fall);
+      else rig.fallKey = '';
+      // Settle on what is drawn: the posed tyres (steer, lean and pitch together) against the drawn ground under them
+      // (a second pass absorbs the shift of the contacts that the re-pitch causes).
+      if (drawn && !fallen) for (let pass = 0; pass < 2; pass++) {
+        rig.root.updateMatrixWorld(true);
+        const cR = this.clearance(rig.wheelR, rig.rings[0]), cF = this.clearance(rig.wheelF, rig.rings[1]);
+        if (cR === null || cF === null || Math.max(Math.abs(cR), Math.abs(cF)) < 5e-4) break;
+        gR -= cR; gF -= cF; pitch = solve(gR, gF);
+        rig.root.position.y = gR + rR - xR * Math.sin(pitch) - rR * Math.cos(pitch); rig.lean.rotation.z = pitch;
+      }
+      this.parkedPose = !riding && !fallen ? { x: t.x, y: t.y, z: t.z, yaw: t.yaw, steer: ride.steer, pedal: ride.pedal, speed: ride.speed, ground: this.world.districts, sampler: this.ground } : null;
     }
     // Parcel in the cargo box: she carries it (sim `survivor.carrying`) and is riding; it drops in over ~0.35 s.
     const carrying = !!this.world.entities.get(1)?.survivor?.carrying;
@@ -246,7 +253,7 @@ export class BicycleView extends Group {
     // Parked bike: floating teal glint (readable from the start) and a ride prompt when close.
     const player = this.world.entities.get(1)?.transform, dist = player ? Math.hypot(player.x - t.x, player.z - t.z) : Infinity;
     rig.glint.visible = !riding && dist < 30; rig.glint.position.set(0, 1.5 + Math.sin(this.world.tick / 20) * .08, 0); rig.glint.rotation.y = this.world.tick / 25;
-    const near = !riding && dist <= 1.6 && !!camera; this.prompt.hidden = !near;
+    const near = !riding && dist <= 1.6 && !!camera; if (this.prompt.hidden === near) this.prompt.hidden = !near;
     if (near && camera) { this.projection.set(t.x, 1.9, t.z).project(camera); this.prompt.style.left = `${(this.projection.x + 1) * innerWidth / 2}px`; this.prompt.style.top = `${(1 - this.projection.y) * innerHeight / 2}px`; }
   }
   private readonly fallBox = new Box3();

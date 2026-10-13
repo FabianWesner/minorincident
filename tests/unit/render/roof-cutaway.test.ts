@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
 import { BoxGeometry, Group, InstancedMesh, Matrix4, Mesh, MeshBasicMaterial, Object3D, Vector3 } from 'three/webgpu';
 import { InstancedGroup } from '../../../src/render/InstancedGroup';
 import { DistrictView } from '../../../src/render/DistrictView';
@@ -37,4 +37,66 @@ test('@E21 rotated rectangular footprints use courier position, scale and distri
   update({x:106,y:0,z:50});expect(f.refs[0].userData.roofHidden).toBe(false);
   update({x:100,y:20,z:50});expect(f.refs[0].userData.roofHidden).toBe(false);
  }finally{f.dispose();}
+});
+
+test('@E18 static batch matrices retain district origin while roofs and placements change', () => {
+ const f = fixture();
+ try {
+  const district = new Group(); district.position.set(100, 0, 50); district.add(f.hero);
+  const freeze = (DistrictView.prototype as unknown as { freezeBatch(batch: InstancedGroup): void }).freezeBatch;
+  freeze.call(district, f.hero);
+  const roof = f.hero.getObjectByName('roof') as InstancedMesh;
+  const worldMatrix = roof.matrixWorld.clone();
+  expect(new Vector3().setFromMatrixPosition(worldMatrix).toArray()).toEqual([100, 0, 50]);
+  const walk = vi.spyOn(roof, 'updateMatrixWorld');
+  district.updateMatrixWorld(true);
+  expect(walk).not.toHaveBeenCalled();
+  expect(roof.matrixWorld.equals(worldMatrix)).toBe(true);
+  f.hero.roofVisible(false, f.refs[0]);
+  expect(f.scale(f.hero, 'roof', 0)).toEqual([0, 0, 0]);
+  f.hero.roofVisible(true, f.refs[0]);
+  f.refs[0].position.x = 3; f.hero.update([0]);
+  const instance = new Matrix4(); roof.getMatrixAt(0, instance);
+  expect(new Vector3().setFromMatrixPosition(instance).toArray()).toEqual([3, 0, 0]);
+  expect(roof.matrixWorld.equals(worldMatrix)).toBe(true);
+  f.near.references.length = 0; district.add(f.near); freeze.call(district, f.near);
+  expect(f.near.visible).toBe(false);
+ } finally { f.dispose(); }
+});
+
+test('@E18 cloned layout drops empty placement markers and retains drawn children', () => {
+ const layout = new Group(), placement = new Object3D(), crown = new Object3D(), anchor = new Object3D();
+ placement.userData.assetId = 'bld.courier-depot'; crown.userData.foliageColors = ['foliageDark', 'foliageLight'];
+ const building = new Group(); building.userData.assetId = 'bld.courier-depot';
+ const mesh = new Mesh(new BoxGeometry(), new MeshBasicMaterial()); mesh.userData.assetId = 'prop.crates'; building.add(mesh);
+ layout.add(placement, crown, anchor, building);
+ const clone = layout.clone(true);
+ const strip = (DistrictView.prototype as unknown as { stripLayoutMarkers(root: Object3D): void }).stripLayoutMarkers;
+ try {
+  strip.call({}, clone);
+  expect(clone.children).toHaveLength(2); expect(clone.children[0].type).toBe('Object3D');
+  expect(clone.children[1].children[0]).toBeInstanceOf(Mesh);
+  expect(layout.children).toHaveLength(4); // Original metadata still feeds instancing and crowns.
+  const district = new Group(); district.position.set(100, 0, 50); district.add(clone);
+  const freeze = (DistrictView.prototype as unknown as { freezeLayout(root: Object3D): void }).freezeLayout;
+  freeze.call({}, clone);
+  const drawn = clone.children[1].children[0];
+  const matrix = drawn.matrixWorld.clone(), walk = vi.spyOn(drawn, 'updateMatrixWorld');
+  district.updateMatrixWorld(true);
+  expect(walk).not.toHaveBeenCalled(); expect(drawn.matrixWorld.equals(matrix)).toBe(true);
+  expect(new Vector3().setFromMatrixPosition(matrix).toArray()).toEqual([100, 0, 50]);
+ } finally { mesh.geometry.dispose(); (mesh.material as MeshBasicMaterial).dispose(); }
+});
+
+
+test('@E18 static doorway geometry is reused while opening and closing remain live', () => {
+ const ref = new Object3D(), group = { pose: vi.fn() };
+ const entry = { id: 'bld.clinic-annex', origin: [100, 50], refs: [ref], hero: group, near: group, far: group };
+ const context = { frameSeconds: .4, lodBatches: [entry], doorOpen: new Map() };
+ const update = (DistrictView.prototype as unknown as { updateDoors(bodies: Iterable<{x: number; z: number}>): void }).updateDoors;
+ update.call(context, [{ x: 102.53, z: 49.82 }]);
+ const state = context.doorOpen.get(ref), way = state.way;
+ expect(state.k).toBe(1); expect(group.pose).toHaveBeenCalled();
+ update.call(context, []);
+ expect(state.k).toBe(0); expect(context.doorOpen.get(ref).way).toBe(way);
 });

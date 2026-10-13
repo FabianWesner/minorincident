@@ -14,6 +14,7 @@ import { MotionPresentation } from '../characters/MotionPresentation';
 import { MotionPhase } from '../characters/MotionPhase';
 import { NpcAnimator } from '../characters/NpcAnimator';
 import { civilianHeight, fitCivilianHeight } from './figureHeight';
+import { attribute, style, text } from '../../ui/dom';
 interface Hero { model: string; humanAnimator?: NpcAnimator; animator: QuadrupedAnimator | null; root: Group; legs: Object3D[]; head: Object3D | undefined; tail: Object3D | undefined; badge: HTMLElement | null; source: string; moving: boolean; tick: number; x: number; z: number }
 /** NPC presentation owns its resources and HUD; sim state is consumed but never modified. */
 export class NpcView extends Group {
@@ -123,14 +124,14 @@ export class NpcView extends Group {
       else hero.humanAnimator!.update(time, motion.speed, distance, down);
       if (hero.badge && e.escort) {
         this.point.set(e.transform.x, hero.root.position.y + civilianHeight(hero.model) + .15, e.transform.z).project(camera);
-        hero.badge.style.left = `${(this.point.x + 1) / 2 * innerWidth}px`; hero.badge.style.top = `${(1 - this.point.y) / 2 * innerHeight}px`; hero.badge.style.display = Math.abs(this.point.x) <= 1 && Math.abs(this.point.y) <= 1 ? '' : 'none';
-        hero.badge.dataset.order = e.escort.order; hero.badge.dataset.state = e.escort.state; hero.badge.setAttribute('aria-label', `Escort ${e.escort.state}`); hero.badge.textContent = e.escort.state === 'downed' ? '+' : e.escort.state === 'cover' ? '◆' : e.escort.order === 'wait' ? 'Ⅱ' : '↑';
+        style(hero.badge, 'left', `${(this.point.x + 1) / 2 * innerWidth}px`); style(hero.badge, 'top', `${(1 - this.point.y) / 2 * innerHeight}px`); style(hero.badge, 'display', Math.abs(this.point.x) <= 1 && Math.abs(this.point.y) <= 1 ? '' : 'none');
+        attribute(hero.badge, 'data-order', e.escort.order); attribute(hero.badge, 'data-state', e.escort.state); attribute(hero.badge, 'aria-label', `Escort ${e.escort.state}`); text(hero.badge, e.escort.state === 'downed' ? '+' : e.escort.state === 'cover' ? '◆' : e.escort.order === 'wait' ? 'Ⅱ' : '↑');
       }
     }
     this.cars.count = cars; if (cars) this.cars.instanceMatrix.needsUpdate = true;
     const threat = this.world.entities.get(this.threatId);
-    this.bark.style.display = this.world.tick < this.barkUntil && threat ? '' : 'none';
-    if (threat) { this.point.set(threat.transform.x, .7, threat.transform.z).project(camera); const length = Math.hypot(this.point.x, this.point.y) || 1; this.bark.style.left = `${(this.point.x / length * .4 + .5) * innerWidth}px`; this.bark.style.top = `${(.5 - this.point.y / length * .4) * innerHeight}px`; this.bark.textContent = `🐾 ${Math.abs(this.point.x) > Math.abs(this.point.y) ? this.point.x > 0 ? '→' : '←' : this.point.y > 0 ? '↑' : '↓'}`; }
+    style(this.bark, 'display', this.world.tick < this.barkUntil && threat ? '' : 'none');
+    if (threat) { this.point.set(threat.transform.x, .7, threat.transform.z).project(camera); const length = Math.hypot(this.point.x, this.point.y) || 1; style(this.bark, 'left', `${(this.point.x / length * .4 + .5) * innerWidth}px`); style(this.bark, 'top', `${(.5 - this.point.y / length * .4) * innerHeight}px`); text(this.bark, `🐾 ${Math.abs(this.point.x) > Math.abs(this.point.y) ? this.point.x > 0 ? '→' : '←' : this.point.y > 0 ? '↑' : '↓'}`); }
   }
   /** Scene Lab probe: the presented corgi/escort figure of an entity. */
   heroRoot(id: number): Group | undefined { return this.heroes.get(id)?.root; }
