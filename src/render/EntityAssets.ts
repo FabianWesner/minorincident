@@ -68,7 +68,8 @@ export class EntityAssets extends Group {
       if (this.records.get(entity.id)?.lod === lod) continue;
       const load = this.actorModel(id, lod).then(model => {
         if (!this.disposed && this.world.entities.get(entity.id)) {
-          this.records.get(entity.id)?.model.removeFromParent(); this.records.set(entity.id, { model, lod });
+          // An LOD swap keeps the interpolation history (a fresh record restarted at the tick pose: a one-frame snap per swap).
+          const previous = this.records.get(entity.id); previous?.model.removeFromParent(); this.records.set(entity.id, { model, lod, pose: previous?.pose });
           model.position.set(entity.transform.x, entity.kind === 'obstacle' ? 0 : Math.max(0, entity.transform.y - .7), entity.transform.z);
           model.rotation.y = entity.transform.yaw;
           // Phone tier: flat scripted dressing (glass shards, craters) never casts a shadow.
@@ -92,7 +93,12 @@ export class EntityAssets extends Group {
       else if (pose.tick !== this.world.tick) {
         // A jump (checkpoint restore, teleport) must not smear across the map.
         const jump = this.world.tick < pose.tick || Math.hypot(t.x - pose.x, t.z - pose.z) > 6;
-        Object.assign(pose, { tick: this.world.tick, px: jump ? t.x : pose.x, py: jump ? t.y : pose.y, pz: jump ? t.z : pose.z, pyaw: jump ? t.yaw : pose.yaw, x: t.x, y: t.y, z: t.z, yaw: t.yaw });
+        // PO 10-13 (low tier, phone cadence): with k > 1 ticks since the last drawn frame the start pose is the tick before
+        // the current one (k-1 of k steps along the last drawn pose's path), not the stale drawn tick, or the bus lags 1-2 ticks
+        // against the camera alternately and vibrates.
+        const k = Math.max(1, this.world.tick - pose.tick), back = (from: number, to: number) => to - (to - from) / k;
+        const dyaw = Math.atan2(Math.sin(t.yaw - pose.yaw), Math.cos(t.yaw - pose.yaw));
+        Object.assign(pose, { tick: this.world.tick, px: jump ? t.x : back(pose.x, t.x), py: jump ? t.y : back(pose.y, t.y), pz: jump ? t.z : back(pose.z, t.z), pyaw: jump ? t.yaw : t.yaw - dyaw / k, x: t.x, y: t.y, z: t.z, yaw: t.yaw });
       }
       const a = Math.max(0, Math.min(1, alpha));
       const y = pose.py + (pose.y - pose.py) * a;
