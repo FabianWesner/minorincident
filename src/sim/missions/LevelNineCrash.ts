@@ -39,7 +39,9 @@ export class LevelNineCrash {
       if (this.state.carId !== saved.state.carId) w.entities.delete(this.state.carId);
       Object.assign(w.entities.get(1)!, structuredClone(saved.player));
       w.entities.replace(structuredClone(saved.vehicle));
-      this.restore(saved); w.vehicles!.rebuild(); this.rebuild();
+      this.restore(saved);
+      if (saved.chunks) w.chunks?.load(saved.chunks);
+      w.vehicles!.rebuild(); this.rebuild();
       const p = w.entities.get(1)!;
       w.physics.playerBody!.setTranslation(p.transform, true); w.physics.playerBody!.setNextKinematicTranslation(p.transform);
       w.previousPlayer = { ...p.transform }; w.spatial.set(1, p.transform.x, p.transform.z);
@@ -122,7 +124,7 @@ export class LevelNineCrash {
     return { position: [p.x + 20, 22, p.z + 20], target: [p.x, p.y, p.z] };
   }
   end(): void { if (this.state.finished) this.state.ended = true; }
-  save() { return { ...this.snapshot(), player: this.w.getEntity(1)!, vehicle: this.w.getEntity(this.state.carId)! }; }
+  save() { return { ...this.snapshot(), ...(this.w.chunks ? { chunks: this.w.chunks.save() } : {}), player: this.w.getEntity(1)!, vehicle: this.w.getEntity(this.state.carId)! }; }
   snapshot() { return { state: structuredClone(this.state), tick: this.w.tick }; }
   restore(saved: unknown): void {
     const data = saved as ReturnType<LevelNineCrash['snapshot']>;

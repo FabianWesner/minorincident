@@ -1,0 +1,209 @@
+{
+  "profile": "high",
+  "route": "dry-shortcut",
+  "completed": true,
+  "crash": {
+    "state": {
+      "phase": "done",
+      "carId": 5,
+      "startedAt": 3592,
+      "preCrashDurability": 1000,
+      "from": {
+        "x": 468.1424865722656,
+        "z": 0.6997500061988831,
+        "y": 0.9954344630241394,
+        "yaw": -0.008517578331133745
+      },
+      "crawlAnchor": "crawl-start",
+      "finished": true,
+      "ended": true
+    },
+    "tick": 4432
+  },
+  "seconds": 36.963699999809265,
+  "distance": 1072.245440931088,
+  "frameP95": 15.8,
+  "simP95": 1,
+  "hitch": 54.1,
+  "draws": 118,
+  "triangles": 1083104,
+  "resident": 25,
+  "loading": 2,
+  "geometries": 385,
+  "heapPeakMB": 1252.579096,
+  "hp": 0,
+  "hitches": [
+    {
+      "elapsed": 54.1,
+      "position": {
+        "x": 510.02083333333337,
+        "z": 0,
+        "y": 0.811284722222222,
+        "yaw": 0.3272492347489368
+      },
+      "terrain": {
+        "resident": 15,
+        "queued": 0,
+        "loading": 0,
+        "unloaded": 62,
+        "limit": 25,
+        "prefetchSeconds": 2,
+        "chunks": [
+          "crossing-9-3",
+          "crossing-9-4",
+          "crossing-9-2",
+          "crossing-9-5",
+          "crossing-10-4",
+          "crossing-10-3",
+          "crossing-10-2",
+          "crossing-10-5",
+          "crossing-11-3",
+          "crossing-11-4",
+          "crossing-11-2",
+          "crossing-11-5",
+          "crossing-10-6",
+          "crossing-9-6",
+          "crossing-11-6"
+        ],
+        "origins": [
+          {
+            "id": "crossing-11-3",
+            "origin": [
+              500,
+              -100
+            ]
+          },
+          {
+            "id": "crossing-11-4",
+            "origin": [
+              500,
+              0
+            ]
+          },
+          {
+            "id": "crossing-10-3",
+            "origin": [
+              400,
+              -100
+            ]
+          },
+          {
+            "id": "crossing-10-4",
+            "origin": [
+              400,
+              0
+            ]
+          },
+          {
+            "id": "crossing-11-2",
+            "origin": [
+              500,
+              -200
+            ]
+          },
+          {
+            "id": "crossing-11-5",
+            "origin": [
+              500,
+              100
+            ]
+          },
+          {
+            "id": "crossing-10-2",
+            "origin": [
+              400,
+              -200
+            ]
+          },
+          {
+            "id": "crossing-10-5",
+            "origin": [
+              400,
+              100
+            ]
+          },
+          {
+            "id": "crossing-9-3",
+            "origin": [
+              300,
+              -100
+            ]
+          },
+          {
+            "id": "crossing-9-4",
+            "origin": [
+              300,
+              0
+            ]
+          },
+          {
+            "id": "crossing-9-2",
+            "origin": [
+              300,
+              -200
+            ]
+          },
+          {
+            "id": "crossing-9-5",
+            "origin": [
+              300,
+              100
+            ]
+          },
+          {
+            "id": "crossing-11-6",
+            "origin": [
+              500,
+              200
+            ]
+          },
+          {
+            "id": "crossing-10-6",
+            "origin": [
+              400,
+              200
+            ]
+          },
+          {
+            "id": "crossing-9-6",
+            "origin": [
+              300,
+              200
+            ]
+          }
+        ]
+      },
+      "updateCpuMs": 14,
+      "renderCpuMs": 1.5,
+      "nodeBuilds": 303
+    }
+  ],
+  "coldPipelines": [],
+  "shadowTriangles": 946556,
+  "submittedTriangles": 2029660,
+  "heroLights": 0,
+  "awakeProps": 2,
+  "particles": 244,
+  "puffs": 42,
+  "parts": 3,
+  "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+  "backend": "webgl",
+  "infected": 200,
+  "nodeBuilds": 303,
+  "heapMB": 159.265956,
+  "limits": {
+    "frameP95": 16.7,
+    "simP95": 4,
+    "draws": 600,
+    "triangles": 1500000,
+    "resident": 25,
+    "heapMB": 400,
+    "heroLights": 8,
+    "awakeProps": 150,
+    "particles": 6000,
+    "puffs": 400,
+    "parts": 120
+  },
+  "pass": false,
+  "errors": []
+}
