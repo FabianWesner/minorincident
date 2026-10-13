@@ -28,8 +28,8 @@ interface FightMetrics {
   still2: number;
   /** Ally shots (soldiers, officers, armed civilians, HMG crews, the helicopter) at a target outside the player's view and farther than
    * `allyOffscreenDefenceM` from the shooter, and all shots. PO 2026-10-13: "Also seems like visibility range of soldiers is so high, that
-   * they kill all Zombies before i see them myself"; orchestrator decision (option 3): only on-screen shooters (in the frame or within 22 m
-   * of the courier) are counted, and they may still shoot an infected within 6 m of themselves. */
+   * they kill all Zombies before i see them myself"; orchestrator decision (option 3): only on-screen shooters (in the frame, at most 22 m
+   * from the courier) are counted, and they may still shoot an infected within 6 m of themselves. */
   offscreenShots: number; shots: number;
   /** Most unarmed civilians still standing in the registration queue (calm) 3 s or more into the fight. */
   queued: number;
