@@ -1,0 +1,11 @@
+{
+ "name": "area-grove-garden-path",
+ "note": "PO 10-13 'Flowers growing on stone' (D-GROVE refuge-door-9 front yard). Look for: daisies only on the lawn and in beds, none on the stone path slabs (tests/unit/levels/decoration-surface.test.ts guards every district and tier).",
+ "seed": 1,
+ "ground": "district",
+ "layout": { "district": "D-GROVE", "bbox": [[-58, -36], [-36, -14]] },
+ "actors": [{ "id": "courier", "kind": "courier", "at": [-47.15, -27.68] }],
+ "camera": { "mode": "game", "target": [-47.15, -26], "zoom": 0.63 },
+ "frames": 30,
+ "expect": { "consoleErrors": 0 }
+}
