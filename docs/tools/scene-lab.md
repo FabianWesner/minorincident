@@ -170,6 +170,7 @@ Actions work as an actor's initial `state`, as a `script` step (`{ "frame": 60, 
 `"vehicles": [{ "id": "sedan", "asset": "vehicle.sedan", "at": [0, 0], "yaw": 0, "path": [[16, 8]] }]`
 
 - **Vehicle ids:** `vehicle.sedan`, `pickup`, `suv`, `police`, `ambulance`, `school-bus` and `fire-engine`.
+- **L9 floor vehicle (E31):** a `vehicles` entry accepts `"floor": true` (the mission zero-HP policy: staged damage, 60% speed cap at zero, never destroyed or exited) and `"health": <hp>` (durability set through the real damage path). Catalog: `veh-apc-floor-stages`, `veh-apc-floor-drive`.
 - **Static vehicle damage:** `veh.*` props accept `decay: "wrecked"` or `"burned"`. Vehicles without authored variants retain their shell with darkened surfaces and extinguished lamps; the manifest still lists only authored variants.
 - **L2 passenger ride:** `"l2Ride": { "distanceM": 80, "speedMs": 7.6 }` runs the actual mission driver from that fixture distance. Use `layout.level: "L2"` for its dressing; camera targets may name a vehicle.
 - **Driving:** with a `path`, the real vehicle physics drives the car through a small autopilot (`Vehicles.autopilot`).
