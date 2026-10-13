@@ -82,7 +82,7 @@ export class Game {
   private speculative: { id: string; seed: number } | null = null;
   private speculativeRunning = false;
   /** How the current mission level was started (restart replays it; campaign is the state at level start). */
-  private levelStart: { id: string; seed?: number; tier?: Tier; campaign: CampaignSave | null } | null = null;
+  private levelStart: { id: string; seed?: number; tier?: Tier; campaign: CampaignSave | null; setup?: (world: SimWorld) => void } | null = null;
   /** A level pick may arrive before the menu preload finishes its layout/audio awaits. */
   private preloadForeground = false;
   /** Boot-time sound bank load that runs after the title is shown; awaited before the next audio reset. */
@@ -189,7 +189,7 @@ export class Game {
   }
   /** E10 composition plus E12 mission briefing; checkpoints restore reached state or reconstruct an authored graph prefix. */
   /** `source`/`setup` (Scene Lab): a prebuilt composition instead of the layout files, and a sim hook after assembly, before the view loads. */
-  loadLevel(id:string,opts?:{seed?:number;tier?:Tier;checkpoint?:string;progression?:ProgressionPreset;source?:{composition:LevelComposition;layouts:DistrictLayout[]};setup?:(world:SimWorld)=>void}, performanceScenario?: string, speculative = false):Promise<void>{
+  loadLevel(id:string,opts?:{seed?:number;tier?:Tier;checkpoint?:string;progression?:ProgressionPreset;source?:{composition:LevelComposition;layouts:DistrictLayout[]};setup?:(world:SimWorld)=>void;record?:boolean}, performanceScenario?: string, speculative = false):Promise<void>{
     // The player picked a level while one loads behind the menus: finish it at full speed.
     if (!speculative) {
       this.transition.begin(id);
@@ -271,8 +271,9 @@ export class Game {
     this.completedAt = null; this.transition.finish();
     this.telemetry?.levelLoaded(this.levelStart ? { id: this.levelStart.id, seed: this.levelStart.seed, tier: this.levelStart.tier, campaign: this.levelStart.campaign } : null);
   }
-  private noteLevelStart(id: string, opts?: { seed?: number; tier?: Tier; source?: unknown; setup?: unknown }, perf = false): void {
-    this.levelStart = !perf && !opts?.source && !opts?.setup && missionIds.includes(id as MissionId) ? { id, seed: opts?.seed, tier: opts?.tier, campaign: this.campaign ? structuredClone(this.campaign) : null } : null;
+  private noteLevelStart(id: string, opts?: { seed?: number; tier?: Tier; source?: unknown; setup?: (world: SimWorld) => void; record?: boolean }, perf = false): void {
+    // Scene Lab / test setups are not player runs; the campaign handover's own setup (`record`) is, and a restart repeats it.
+    this.levelStart = !perf && !opts?.source && (!opts?.setup || opts.record) && missionIds.includes(id as MissionId) ? { id, seed: opts?.seed, tier: opts?.tier, campaign: this.campaign ? structuredClone(this.campaign) : null, setup: opts?.record ? opts.setup : undefined } : null;
   }
   get canRestartLevel(): boolean { return this.levelStart !== null && !this.loading; }
   /** Restart the current level from its very beginning: same level, campaign state and options as at level start (a seedless level draws a new run seed). */
@@ -280,7 +281,7 @@ export class Game {
     const start = this.levelStart; if (!start) return Promise.reject(new Error('No level to restart'));
     this.telemetry?.restarting();
     if (start.campaign) this.campaign = structuredClone(start.campaign);
-    return this.loadLevel(start.id, { seed: start.seed, tier: start.tier });
+    return this.loadLevel(start.id, { seed: start.seed, tier: start.tier, setup: start.setup, record: !!start.setup });
   }
   async startCampaign(character:SurvivorVariant):Promise<void> {
     this.campaign=newCampaign(character,Number(this.params.get('seed')??1));this.campaign.settings={...this.audio.settings};this.saveCampaign();await this.loadLevel('L1');
@@ -302,7 +303,7 @@ export class Game {
     await this.loadLevel(`L${level??save.unlockedLevel}`, fromL4 ? { setup: world => {
       // A fresh handover equips the carried firearm; menu Continue keeps its loadout selection.
       if (world.scenario === 'L5' && world.combat) world.combat.runner.loadout.state.selectedSide = 'RIGHT';
-    } } : undefined);
+    }, record: true } : undefined);
     this.view.settings(settings);
   }
   applyCampaign():void {if(this.campaign&&this.world.player){applyCampaign(this.world,this.campaign);this.view.update(1);}}

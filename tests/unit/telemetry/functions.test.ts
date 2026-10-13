@@ -119,6 +119,21 @@ describe('read endpoints', () => {
     return { env, days };
   }
 
+  it('flags ?debug sessions: public stats leave them out, debug_sessions counts them, include=debug adds them back', async () => {
+    const { env } = await seeded();
+    const dbgSession = '99999999-9999-4999-8999-999999999999', dbgPlayer = '88888888-8888-4888-8888-888888888888';
+    const res = await postEvents(post({ p: dbgPlayer, s: dbgSession, c: { ...context, dbg: true }, e: [event('session_start'), event('level_start', { l: 'L3', k: 0, d: { attempt } }), event('perf', { d: { p50: 99, p95: 99, sim: 1, dc: 1, n: 1 } })] }), env, NOW);
+    expect(res.status).toBe(200);
+    expect(env.sqlite.prepare('SELECT debug FROM events WHERE session_id = ? AND type = ?').get(dbgSession, 'level_start')).toEqual({ debug: 1 });
+    expect((await postEvents(post({ c: { ...context, dbg: false } }), env, NOW)).status).toBe(400);
+    const pub = await stats(env);
+    expect(pub.totals).toMatchObject({ players: 4, sessions: 6 }); expect(pub.level_funnel.map((f: { level: string }) => f.level)).toEqual(['L1']);
+    expect(pub.perf.every((r: { frame_p50_ms: number }) => r.frame_p50_ms < 99)).toBe(true);
+    expect(pub.debug_sessions).toEqual({ sessions: 1, players: 1 }); expect(pub.include_debug).toBe(false);
+    const all = await stats(env, 'include=debug');
+    expect(all.totals).toMatchObject({ players: 5, sessions: 7 }); expect(all.level_funnel.map((f: { level: string }) => f.level)).toEqual(['L1', 'L3']);
+  });
+
   it('requires the token', async () => {
     const env = localEnv();
     expect((await getStats(get('stats', 'wrong-token-0123456789abcdef'), env, NOW)).status).toBe(401);
