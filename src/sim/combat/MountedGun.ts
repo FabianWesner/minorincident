@@ -22,6 +22,8 @@ export class MountedGun {
   /** Unit aim direction on the ground plane (sim axes: x forward, z; yaw = -atan2(z, x)). */
   readonly aim: Vec2;
   private trigger = false;
+  /** Where the gunner stood when she mounted: the dismount steps back there (a spot she reached on foot, so it is free). */
+  private readonly from = { x: 0, y: 0, z: 0 };
   private interactHeld = false;
   private attackId = 1_000_000;
   private readonly rng: Rng;
@@ -37,11 +39,11 @@ export class MountedGun {
   get locked(): boolean { return this.gun.locked; }
   /** Planar distance from the player to the gun. */
   distance(): number { const p = this.world.entities.get(1)!.transform; return Math.hypot(p.x - this.placement.x, p.z - this.placement.z); }
-  /** The player stands close enough, on the gun's deck, free to act. */
+  /** The player stands close enough (planar), alive, on foot and free to act. The level owns how she reaches a deck (stair support heights). */
   canMount(): boolean {
     const w = this.world, p = w.entities.get(1);
     if (!p || p.health.current <= 0 || w.vehicles?.active != null || w.vehicles?.bicycle.riding || w.storyLock || Status.stunned(p, w.tick)) return false;
-    return this.distance() <= minigun.mountRadiusM && Math.abs(p.transform.y - this.seatY) < 1.6;
+    return this.distance() <= minigun.mountRadiusM;
   }
   /** Gunner position for a given aim: behind the pivot, on the deck. */
   private seat(): { x: number; z: number } {
@@ -84,7 +86,8 @@ export class MountedGun {
     return !!raw.selectedSlot || raw.selectedActiveSlot !== undefined || raw.selector !== 0 || !!raw.selectorActive;
   }
   private mount(): void {
-    const w = this.world;
+    const w = this.world, t = w.entities.get(1)!.transform;
+    this.from.x = t.x; this.from.y = t.y; this.from.z = t.z;
     this.mounted = true; w.controls.reset();
     w.events.emit({ type: 'mounted-gun.mounted', tick: w.tick, sourceId: 1, heat: this.gun.heat });
   }
@@ -93,8 +96,7 @@ export class MountedGun {
     const w = this.world, p = w.entities.get(1)!;
     if (!this.mounted) return;
     this.mounted = false; this.trigger = false;
-    const back = { x: this.placement.x - this.aim.x * minigun.dismountBackM, z: this.placement.z - this.aim.z * minigun.dismountBackM };
-    this.place(back.x, p.transform.y, back.z);
+    this.place(this.from.x, this.from.y, this.from.z);
     w.player?.locomotion.reset();
     if (rocket) this.equipRocket();
     w.events.emit({ type: 'mounted-gun.dismounted', tick: w.tick, sourceId: 1, heat: this.gun.heat, rocket });

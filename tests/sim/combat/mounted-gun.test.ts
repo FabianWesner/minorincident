@@ -40,11 +40,12 @@ test('T-E32-18f interact next to the gun mounts, interact again leaves in one ti
   expect(p.transform.x).toBeLessThan(-2.2);
 });
 
-test('T-E32-18g too far, or on the ground below a deck, cannot mount', async () => {
+test('T-E32-18g too far cannot mount; a deck gun lifts the gunner to the deck and a dismount stays on it', async () => {
   const { w, gun } = await manned();
   teleport(w, -6, 4); press(w); expect(gun.mounted).toBe(false);
-  const deck = await manned(3); teleport(deck.w, -1.2, 4, .705); press(deck.w); expect(deck.gun.mounted).toBe(false);
-  teleport(deck.w, -1.2, 4, 3.705); press(deck.w); expect(deck.gun.mounted).toBe(true);
+  const deck = await manned(3); press(deck.w); expect(deck.gun.mounted).toBe(true);
+  step(deck.w, 3); expect(deck.w.entities.get(1)!.transform.y).toBeCloseTo(3.7, 2);
+  press(deck.w); expect(deck.gun.mounted).toBe(false);
 });
 
 test('T-E32-18h spin-up first, then an ordinary infected (40 HP) falls within 0.25 s of landed fire; no carried weapon fires', async () => {

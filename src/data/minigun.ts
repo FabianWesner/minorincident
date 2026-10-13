@@ -21,8 +21,8 @@ export const minigun = {
   mountRadiusM: 2.6,
   /** Acceptance: dismount within 0.5 s of the input. The implementation needs one tick. */
   dismountMaxTicks: 30,
-  /** Gunner stands behind the pivot (gunnerSocket in the GLB: x -0.78 in the gun frame), the dismount spot is farther back. */
-  seatBackM: 0.78, dismountBackM: 1.6,
+  /** Gunner stands behind the pivot (gunnerSocket in the GLB: x -0.78 in the gun frame); a dismount returns to where she mounted. */
+  seatBackM: 0.78,
   /** Muzzle in the gun frame (GLB: pivot y 0.95 + elevation 0.43, muzzle x 1.46 + barrels 0.3). */
   pivotHeightM: 0.95, muzzleHeightM: 1.38, muzzleForwardM: 1.46,
 } as const;
