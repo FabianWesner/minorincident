@@ -91,3 +91,13 @@ test('T-E31-04-ground @E31-AC04 locally authored chunks have continuous road/off
     ray.ray.origin.set(x,2,z); const hit=ray.intersectObjects(ground,false)[0]; expect(hit).toBeDefined(); expect(Math.abs(hit.point.y)).toBeLessThanOrEqual(.01);
   }
 });
+
+test('T-E31-04-dress @E31-AC04 route landmarks reuse countryside stock and leave detours open', () => {
+  expect(layout.title).toContain('dry moonlit countryside');
+  for (const label of ['Farm outbuilding', 'Farm workshop', 'Abandoned highway stop', 'Roadside workshop'])
+    expect(layout.buildings.some(b => b.label === label), label).toBe(true);
+  expect(layout.placements.filter(p => p.assetId === 'prop.tree').length).toBeGreaterThanOrEqual(50);
+  expect(layout.placements.filter(p => p.assetId === 'veh.wreck' && p.position[0] < 450 && p.position[2] > -80 && p.position[2] < -40).length).toBeGreaterThanOrEqual(4);
+  // The existing AC05 footprint/flood test checks every road, detour and sightline against these colliders.
+  expect(layout.placements.every(p => worldAssets[p.assetId])).toBe(true);
+});

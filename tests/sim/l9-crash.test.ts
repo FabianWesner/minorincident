@@ -38,7 +38,7 @@ for (const hp of [1000, 0]) test(`T-E31-15-crash @E31-AC01 @E31-AC10 @E31-AC15 o
     advance(w, 120); expect(events.filter(e => e === 'vehicle.exploded')).toHaveLength(1);
   } finally { w.dispose(); }
 });
-for (const [x, z] of [[470, 100], [550, 0], [550, -100]]) test(`T-E31-10-bypass @E31-AC10 outskirts bypass ${x},${z} still crashes`, async () => {
+for (const [x, z] of [[470, 100], [550, 0], [550, -100], [470, -390], [470, 390]]) test(`T-E31-10-bypass @E31-AC10 outskirts bypass ${x},${z} still crashes`, async () => {
   const w = await load(1000, z, x);
   try { advance(w, 1); expect(w.missions!.l9!.state.phase).toBe('approach'); expect(w.missions!.state.steps['reach-outskirts'].status).not.toBe('completed'); advance(w, 841); expect(w.missions!.l9!.state.finished).toBe(true); }
   finally { w.dispose(); }
@@ -77,4 +77,16 @@ for (const tick of [60, 240, 330, 600, 841]) test(`T-E31-14-load @E31-AC14 seria
     advance(restored, 900); expect(m.l9!.state.finished).toBe(true); expect(blasts).toBe(tick < 301 ? 1 : 0); expect(completions).toBe(tick < 841 ? 1 : 0);
     expect(restored.vehicles!.cars.size).toBe(1); expect(restored.entities.get(1)!.health.current).toBeGreaterThanOrEqual(1);
   } finally { w.dispose(); restored.dispose(); }
+});
+
+test('T-E31-16-dress @E31-AC16 L9 uses dry light wind with clear moonlit sightlines', async () => {
+  const w = await load(1000, 0, -550);
+  try {
+    advance(w, 300);
+    expect(w.weather!.kind).toBe('wind'); expect(w.weather!.windStrength).toBe(.2);
+    expect(w.weather!.rain).toBe(0); expect(w.weather!.flakes).toBe(0);
+    expect(w.weather!.wetness).toBe(0); expect(w.weather!.fog).toBe(0);
+    expect(w.weather!.modifiers.vehicleGrip).toBe(1);
+    expect(compositions.L9.timeOfDay).toBe('L9-crossing');
+  } finally { w.dispose(); }
 });

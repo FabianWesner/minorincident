@@ -20,6 +20,8 @@ export const weatherTimelines: Record<string, readonly WeatherKey[]> = {
   L1: [{ tick: 0, kind: 'clear' }, { tick: 45 * 60, kind: 'clouds', blend: 40 }], L2: [{ tick: 0, kind: 'clear' }],
   L3: [{ tick: 0, kind: 'haze' }, { tick: 90 * 60, kind: 'ash', blend: 45, preset: { fog: .4, wind: .4, clouds: .3 } }], L4: [{ tick: 0, kind: 'clear' }],
   L5: [{ tick: 0, kind: 'ash' }, { tick: 60 * 60, kind: 'fog', blend: 60, preset: { flakes: .35, wind: .04, clouds: .2 } }], L6: [{ tick: 0, kind: 'none' }], L7: [{ tick: 0, kind: 'ash' }],
+  // E31 dry night: light wind/dust without rain, dawn or sightline-obscuring fog.
+  L9: [{ tick: 0, kind: 'wind', preset: { wind: .2, clouds: .15 } }],
   'weather-lab': weatherKinds.filter(k => k !== 'none').map((kind, i) => ({ tick: i * 600, kind })),
   'storm-street': [{ tick: 0, kind: 'thunderstorm' }],
 };

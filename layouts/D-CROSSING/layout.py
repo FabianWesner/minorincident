@@ -1,4 +1,4 @@
-"""L9-D1: flat open crossing greybox. Route metrics precede dressing.
+"""L9-D2: open crossing dressed with existing countryside stock.
 100 m terrain roots retain local vertices for the S3/S4 streamer. No residency here.
 """
 import json
@@ -8,7 +8,7 @@ from mathutils import Vector
 from mathutils.geometry import tessellate_polygon
 from sslib.layout import Layout, material
 
-l = Layout('D-CROSSING', 'The Crossing — open-country greybox', size=(1200, 800))
+l = Layout('D-CROSSING', 'The Crossing — dry moonlit countryside', size=(1200, 800))
 l.yaw_matches_collision = True
 source = json.loads((l.root / 'layouts/D-CROSSING/routes.json').read_text())
 # Discard the flat authoring helper's default road/ground; keep empty W1-W5 markers.
@@ -153,11 +153,38 @@ for route in source['routes']:
 
 for name,p in [('crossing-start',source['start']),('player-start',source['start']),('outskirts',source['outskirts']),('exit',source['outskirts']),('road-fork',[-450,0]),('countryside',[0,240]),('dry-shortcut',[0,-30]),('chunk-seam',[0,-330])]: l.anchor(name,[p[0],0,p[1]])
 for v in source['viewpoints']: l.anchor(v['id'],[v['from'][0],0,v['from'][1]])
-# Reuse existing countryside stock; widely separated, clear of all route/detour footprints.
-for x,z in [(-250,320),(-225,320),(160,330),(185,330)]:
-    pid=l.place('bld.house-a',[x,0,z]); p=l.data['placements'][-1]
-    l.data['buildings'].append(dict(id=pid,assetId=p['assetId'],aabb=p['visualAabb'],label='Countryside'))
-for x,z in [(-420,100),(-380,310),(-150,310),(80,320),(360,300),(340,-220),(-200,-220),(100,-230)]: l.place('prop.tree',[x,0,z])
+# Scattered farmsteads and an abandoned highway stop give each route a distinct silhouette.
+# Keep 12 m around roads/detours, both 200 m sightlines and cross-country connections open.
+def building(asset, x, z, label, yaw=0):
+    pid=l.place(asset,[x,0,z],yaw); p=l.data['placements'][-1]
+    l.data['buildings'].append(dict(id=pid,assetId=p['assetId'],aabb=p['visualAabb'],label=label))
+    # Only hollow, closed stock needs an exclusion; houses already have solid footprint colliders.
+    # Avoid redundant polygons in the full-district nav bake (L9 has no interior objective).
+    if asset in ['bld.shed','bld.garage-detached','bld.gas-station']:
+        lo,hi=p['visualAabb']['min'],p['visualAabb']['max']
+        l.data['walkable']['excluded'].append([[lo[0],lo[2]],[hi[0],lo[2]],[hi[0],hi[2]],[lo[0],hi[2]],[lo[0],lo[2]]])
+
+for x,z in [(-250,320),(-225,320),(160,330),(185,330),(-12,222),(32,216)]:
+    building('bld.house-a',x,z,'Countryside')
+for x,z in [(-15,285),(44,215),(-238,337),(175,346)]:
+    building('bld.shed',x,z,'Farm outbuilding')
+building('bld.garage-detached',10,221,'Farm workshop')
+l.place('veh.pickup-red',[20,0,219],math.pi)
+for x,z in [(-45,252),(-42,254),(57,218),(60,220),(-28,223),(15,216)]:
+    l.place('prop.garden-bush',[x,0,z])
+building('bld.gas-station',12,-351,'Abandoned highway stop',math.pi/2)
+building('bld.garage-detached',32,-350,'Roadside workshop',math.pi/2)
+l.place('veh.pickup-red',[19,0,-342],math.pi)
+l.place('veh.wreck',[-18,0,-349],.2)
+# Sparse irregular groves rather than continuous hedges: the player can leave/rejoin any road.
+for cx,cz in [(-420,100),(-380,310),(-150,310),(80,320),(360,300),(340,-220),(-200,-220),(100,-230),
+              (-480,-30),(-480,30),(-65,287),(70,216),(-25,-351),(55,-354),(-260,-55),(280,-65),(470,-25),(470,25)]:
+    for dx,dz in [(0,0),(8,5),(-6,9)]: l.place('prop.tree',[cx+dx,0,cz+dz])
+# Dry route: abandoned transport and exposed rock clusters, no water or new art.
+for x,z,yaw in [(-20,-52,.25),(40,-56,-.4),(-210,-62,.7),(205,-58,-.2)]:
+    l.place('veh.wreck',[x,0,z],yaw)
+for x,z in [(-462,-12),(-462,12),(429,-16),(429,16)]:
+    l.place('prop.street-sign',[x,0,z],0)
 for x,z in [(565,-65),(580,-85),(545,-105),(575,-130)]:
     pid=l.place('bld.apartment-block-a',[x,0,z]); p=l.data['placements'][-1]
     l.data['buildings'].append(dict(id=pid,assetId=p['assetId'],aabb=p['visualAabb'],label='Next city'))
@@ -171,7 +198,7 @@ bpy.context.view_layer.update()
 verts=[o.matrix_world @ v.co for o in rocks for v in o.data.vertices]
 lo=Vector(tuple(min(v[i] for v in verts) for i in range(3))); hi=Vector(tuple(max(v[i] for v in verts) for i in range(3)))
 center=(lo+hi)/2
-for x,z in [(-310,-110),(-100,-120),(100,-120),(310,-110)]:
+for x,z in [(-310,-110),(-100,-120),(100,-120),(310,-110),(-45,-62),(65,-65),(-26,-52),(-24,-58),(-12,-58)]:
     for rock in rocks:
         ob=bpy.data.objects.new('dry-rocks',rock.data.copy()); bpy.context.collection.objects.link(ob)
         for i,m in enumerate(ob.data.materials): ob.data.materials[i]=material(m.name.removeprefix('pal_').split('.')[0])
@@ -184,6 +211,10 @@ for obj in imported: bpy.data.objects.remove(obj,do_unlink=True)
 # Visible fork direction arrows: three traces branch towards the skyline, no route rails.
 for z in [-16,0,16]:
     surface('outskirts-arrow',[[-445,z-2],[-438,z-2],[-438,z-4],[-432,z],[-438,z+4],[-438,z+2],[-445,z+2]],'picketWhite',.01)
+# All three routes merge at x=450; painted chevrons and verge stock point into the authored crash.
+# The existing full-width mission trigger owns off-road bypasses as well as the road approach.
+for x in [450,458]:
+    surface('crash-direction',[[x,-2],[x+4,-2],[x+4,-4],[x+10,0],[x+4,4],[x+4,2],[x,2]],'picketWhite',.01)
 # ---- L9-A2 crash site: gully terrain, collapsed road/bridge kit, wrecks, anchors --------------------
 def gully():
     """Banks and floor of the gully as terrain-chunk meshes (z<0 belongs to chunk row 3, z>=0 to row 4)."""

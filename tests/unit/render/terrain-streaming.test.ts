@@ -109,3 +109,22 @@ test('T-E31-13-seams-S3 @E31-AC13 independently loaded local cells and coarse te
     }
   }
 });
+
+test('T-E31-19-height-S3 @E31-AC13 @E31-AC19 grounding skips unrelated cells while retaining seam support', async () => {
+  const view = new TerrainView(crossingChunks, 100, id => id, { leaseGlb() {
+    const root = new Group(), mesh = new Mesh(new BoxGeometry(100.002, .01, 100.002), new MeshBasicNodeMaterial());
+    mesh.position.set(50, -.005, 50); root.add(mesh);
+    return { ready: Promise.resolve(root), release() { mesh.geometry.dispose(); mesh.material.dispose(); } };
+  } }, 'high');
+  const height = vi.spyOn(GroundField.prototype, 'height');
+  try {
+    view.update([0, 0]); await view.ready();
+    height.mockClear(); expect(view.height(30, 30)).toBeCloseTo(0, 5);
+    expect(height).toHaveBeenCalledTimes(1);
+    for (const x of [-.01, -.0005, 0, .0005, .01]) {
+      height.mockClear(); expect(view.height(x, 30)).toBeCloseTo(0, 5);
+      expect(height.mock.calls.length).toBeLessThanOrEqual(2);
+    }
+    height.mockClear(); expect(view.height(590, 390)).toBeNull(); expect(height).not.toHaveBeenCalled();
+  } finally { height.mockRestore(); view.dispose(); }
+});
