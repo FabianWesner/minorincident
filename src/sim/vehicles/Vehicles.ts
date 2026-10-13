@@ -32,6 +32,7 @@ export interface VehicleState {
   apcContacts?: { sequence: number; infected: Record<number, APCContact>; obstacles?: Record<number, APCObstacleContact> };
   /** L9 mission policy: durability clamps to 0 but the vehicle stays driveable at a capped speed, cannot be exited and is never destroyed by E09. Persisted with the entity. */
   floor?: boolean;
+  scripted?: boolean;
   /** Cumulative damage stage (0 none, 1 <=75%, 2 <=50%, 3 <=25%, 4 = 0%); persisted so a reload restores it without replaying cues. */
   stage?: number;
   passengers?: VehiclePassenger[];
@@ -71,7 +72,7 @@ export class Vehicles {
     this.cars.set(entity.id, { entity, physics, doorTicks: 0, noEnterUntil: 0, hits: new Map(), crashAt: -60 }); this.world.spatial.set(entity.id, pos.x, pos.z); return entity.id;
   }
   /** A car can be driven while it has durability, or at the L9 floor. */
-  private operable(car: Car): boolean { return car.entity.health.current > 0 || !!car.entity.vehicle!.floor; }
+  private operable(car: Car): boolean { return car.entity.vehicle!.damage !== 'exploded' && (car.entity.health.current > 0 || !!car.entity.vehicle!.floor); }
   /** L9 mission vehicle: 0 HP is a capped-speed floor, not a breakdown. Re-applying after a checkpoint restore replays no cue. */
   setFloorPolicy(id: number, on = true): void {
     const car = this.cars.get(id); if (!car) throw new Error(`Unknown vehicle ${id}`);
@@ -107,7 +108,7 @@ export class Vehicles {
     // Cleanup/respawn runs on foot; a dead driver must leave even when both doors are blocked.
     if (player.health.current <= 0 && this.active !== null) this.eject(this.cars.get(this.active)!);
     for (const car of this.cars.values()) {
-      if (car.entity.vehicle!.braced) continue;
+      if (car.entity.vehicle!.braced || car.entity.vehicle!.scripted) continue;
       const state = car.entity.vehicle!, drive = car.physics.intent;
       car.physics.boostScale = this.progressionBoost;
       car.physics.gripScale = this.world.weather?.modifiers.vehicleGrip ?? 1;
@@ -148,6 +149,35 @@ export class Vehicles {
       state.steer = car.physics.steeringAngle; state.braking = car.physics.braking;
     }
   }
+  /** Mission-owned fall: suppress ordinary controls/contact destruction and retain the existing vehicle view. */
+  scriptPose(id: number, pose: EntitySnapshot['transform']): void {
+    const car = this.cars.get(id)!; car.entity.vehicle!.scripted = true;
+    const b = car.physics;
+    b.body.setBodyType(RAPIER.RigidBodyType.KinematicPositionBased, true);
+    b.collider.setEnabled(false);
+    Object.assign(b.previous, b.transform); Object.assign(b.previousRotation, b.rotation);
+    Object.assign(b.transform, pose);
+    Object.assign(b.rotation, { x: 0, y: Math.sin(pose.yaw / 2), z: 0, w: Math.cos(pose.yaw / 2) });
+    b.body.setTranslation(pose, true); b.body.setNextKinematicTranslation(pose);
+    b.body.setRotation(b.rotation, true); b.body.setNextKinematicRotation(b.rotation);
+    b.speed = b.forwardSpeed = 0; car.entity.vehicle!.speed = car.entity.vehicle!.forwardSpeed = 0;
+    this.world.spatial.set(id, pose.x, pose.z);
+    if (this.active === id) {
+      const player = this.world.entities.get(1)!; Object.assign(player.transform, pose);
+      this.world.physics.playerBody!.setTranslation(pose, true); this.world.physics.playerBody!.setNextKinematicTranslation(pose);
+    }
+  }
+  /** Authored finale only: safe placement was validated by the mission before detaching the driver. */
+  destroyScripted(id: number, safe: EntitySnapshot['transform']): void {
+    const car = this.cars.get(id)!, state = car.entity.vehicle!;
+    if (state.damage === 'exploded') return;
+    Object.assign(this.position, safe); this.transition = null;
+    if (this.active === id) this.leave(car);
+    state.floor = false; state.damage = 'exploded'; state.decay = 'wrecked'; state.explodeAt = null;
+    car.entity.health.current = 0;
+    this.world.events.emit({ type: 'vehicle.exploded', tick: this.world.tick, sourceId: id });
+    this.world.explosions?.blast(vehicleExplosion, car.entity.transform, { sourceId: id, damage: false, fires: false, height: car.entity.transform.y - (car.physics.def.suspension + car.physics.def.wheelRadius + .15) + .7 });
+  }
   private localPoint(car: Car, x: number, z: number): void {
     const p = car.entity.transform, c = Math.cos(p.yaw), s = Math.sin(p.yaw);
     this.position.x = p.x + c * x + s * z; this.position.z = p.z - s * x + c * z;
@@ -162,7 +192,7 @@ export class Vehicles {
   }
   /** Checks a full survivor capsule against current Rapier geometry, trying both sides. */
   exit(car = this.cars.get(this.active!)!): boolean {
-    if (!car || this.active !== car.entity.id) return false;
+    if (!car || this.active !== car.entity.id || car.entity.vehicle!.floor && this.world.entities.get(1)!.health.current > 0) return false;
     const out = car.physics.def.width / 2 + .55, along = Math.sqrt(2.5 ** 2 - out ** 2) - .01;
     for (const side of [1, -1]) for (const offset of [0, -.8, .7]) {
       // The long cab anchor still needs an exit inside E09's 2.5 m placement radius.
@@ -428,6 +458,7 @@ export class Vehicles {
   postPhysics(): void {
     this.bicycle.postPhysics();
     for (const car of this.cars.values()) {
+      if (car.entity.vehicle!.scripted) continue;
       const beforeSpeed = car.physics.speed;
       car.physics.postPhysics();
       if (beforeSpeed >= 3 && this.world.tick - car.crashAt >= 60) {

@@ -62,6 +62,7 @@ export interface SceneSpec {
    * residents come out of `house`'s front door (a placement id in the scene), `staggerS` apart (default [1.5, 4]), and
    * chase the courier. Residents are actors `<id>-0` .. (default id `resident`). */
   /** Exercise the shipped checkpoint closure rule with the scene's courier and live officer followers. */
+  crossingCrash?: { health: number };
   armyBoom?: { x: number; z?: number; closed?: boolean };
   emerge?: { house: string; count?: number; staggerS?: number | [number, number]; frame?: number; id?: string; /** Walk-out pace m/s (default the 1.25 m/s house stumble; the L1 lab staff run out at 5.3). */ speedMs?: number };
 }
