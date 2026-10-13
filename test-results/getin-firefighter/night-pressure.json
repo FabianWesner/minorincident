@@ -4,10 +4,10 @@
     "archetype": "npc.firefighter",
     "faction": "civilian",
     "transform": {
-      "x": 38.92999999999999,
-      "z": -38.849999999999994,
+      "x": -74.80000000000001,
+      "z": 40.17,
       "y": 1.1,
-      "yaw": -1.2212399342411093
+      "yaw": -1.6014504318143148
     },
     "health": {
       "current": 70,
@@ -26,8 +26,8 @@
           "activity": "walk",
           "anchor": "l1/walk",
           "target": {
-            "x": 39.25,
-            "z": -38.75
+            "x": -74.75,
+            "z": 40.25
           },
           "ticks": 1
         }
@@ -35,25 +35,25 @@
       "scheduleStep": 0,
       "activityUntil": 0,
       "activityStarted": 0,
-      "lastTravelProgress": 7,
+      "lastTravelProgress": 895,
       "routine": "staff",
       "waypoints": [
         {
-          "x": 39.25,
-          "z": -38.75
+          "x": -74.75,
+          "z": 40.25
         }
       ],
       "waypoint": 0,
       "pauseUntil": 9007199254740991,
-      "entered": 7,
+      "entered": 895,
       "until": 0,
       "downTicks": 0,
       "eyesGlow": false,
       "veins": 0,
       "attacker": 0,
       "threat": {
-        "x": 39.25,
-        "z": -38.75
+        "x": -74.75,
+        "z": 40.25
       },
       "path": [],
       "goal": -1,
@@ -61,9 +61,9 @@
       "gore": false,
       "knockedUntil": 0,
       "l1": {
-        "walkSpeed": 1.3497232516296207,
-        "fleeSpeed": 3.256661046482623,
-        "startleTicks": 39,
+        "walkSpeed": 1.4381678150268271,
+        "fleeSpeed": 3.328323540650308,
+        "startleTicks": 19,
         "refuge": null,
         "target": null,
         "repickAt": 0,
@@ -75,22 +75,18 @@
         "run": null,
         "runSpeed": 3.8,
         "post": {
-          "x": 38.92999999999999,
-          "z": -38.849999999999994
+          "x": -74.80000000000001,
+          "z": 40.17
         },
         "hold": true,
-        "targetId": 256,
-        "nextAttack": 3755,
-        "hits": 33,
+        "targetId": 178,
+        "nextAttack": 4585,
+        "hits": 83,
         "forceUntil": 0,
-        "strikeAt": 3701,
-        "strikeTarget": 256
+        "strikeAt": 0,
+        "strikeTarget": 173
       },
-      "story": {
-        "clip": "swing",
-        "start": 3677,
-        "prop": "crowbar"
-      }
+      "story": null
     },
     "combat": {
       "radius": 0.35,
@@ -101,9 +97,9 @@
       "damageMultiplier": 1,
       "statuses": []
     },
-    "id": 169,
+    "id": 168,
     "appearance": {
-      "entityId": 169,
+      "entityId": 168,
       "asset": "npc.firefighter-alive",
       "tint": "#b5332b",
       "accessories": [],
@@ -117,16 +113,16 @@
       },
       "speed": 0,
       "moving": false,
-      "distance": 23.153000000000002
+      "distance": 23.016000000000002
     }
   },
   "player": {
     "kind": "player",
     "archetype": "player.survivor",
     "transform": {
-      "x": 37.529998779296875,
-      "y": 1.1200000047683716,
-      "z": -36.95000076293945,
+      "x": -77.9000015258789,
+      "y": 1.25,
+      "z": 43.77000045776367,
       "yaw": 0.3205919885488634
     },
     "health": {
@@ -216,6 +212,5847 @@
     }
   },
   "lighting": {
+    "promotionBlend": 1,
+    "heroLight": null,
+    "lamps": [
+      {
+        "id": "D-GROVE@0,0/bld.house-b:21/light:back_window",
+        "position": [
+          -52.3825,
+          2.05,
+          -18.651
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:21/light:front_double",
+        "position": [
+          -52.6325,
+          2.03,
+          -24.831
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:21/light:front_right",
+        "position": [
+          -54.9525,
+          2.12,
+          -24.831
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:21/light:porch_window",
+        "position": [
+          -50.7125,
+          1.92,
+          -20.241
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:21/light:right_window",
+        "position": [
+          -55.8525,
+          2.18,
+          -20.941
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:21/light:garage",
+        "position": [
+          -58.7725,
+          2.45,
+          -24.441
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:21/light:porch",
+        "position": [
+          -50.4825,
+          2.45,
+          -21.181
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:21/light:dormer_window",
+        "position": [
+          -50.1025,
+          4.47,
+          -21.141
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:29/light:door_front",
+        "position": [
+          -38.796625000000006,
+          2.0145,
+          -23.461275
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:29/light:lamp_porch",
+        "position": [
+          -39.493625,
+          1.9975,
+          -23.647425
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:29/light:window_front",
+        "position": [
+          -40.335125000000005,
+          1.6915,
+          -23.423875
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:29/light:window_rear_1.35",
+        "position": [
+          -40.836625000000005,
+          1.6744999999999999,
+          -18.787975
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:29/light:window_rear_-1.3",
+        "position": [
+          -38.584125,
+          1.6744999999999999,
+          -18.787975
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:29/light:window_side_1",
+        "position": [
+          -42.228075000000004,
+          1.6744999999999999,
+          -20.659675
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:29/light:window_side_-1",
+        "position": [
+          -37.150175000000004,
+          1.6744999999999999,
+          -20.659675
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:59/light:door_front",
+        "position": [
+          -50.812960000000004,
+          1.832,
+          -7.5912
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:59/light:lamp_left",
+        "position": [
+          -50.14096,
+          1.7440000000000002,
+          -7.42
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:59/light:lamp_right",
+        "position": [
+          -51.48496,
+          1.7440000000000002,
+          -7.42
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:59/light:window_front_1.875_1.75",
+        "position": [
+          -49.41296,
+          1.5,
+          -7.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:59/light:window_front_1.875_-1.75",
+        "position": [
+          -52.21296,
+          1.5,
+          -7.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:59/light:window_front_4.395_1.75",
+        "position": [
+          -49.41296,
+          3.516,
+          -7.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:59/light:window_front_4.395_-1.75",
+        "position": [
+          -52.21296,
+          3.516,
+          -7.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:59/light:window_rear_1.875_1.45",
+        "position": [
+          -49.65296,
+          1.5,
+          -11.8576
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:59/light:window_rear_1.875_-1.45",
+        "position": [
+          -51.97296,
+          1.5,
+          -11.8576
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:59/light:window_rear_4.395_1.45",
+        "position": [
+          -49.65296,
+          3.516,
+          -11.8576
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:59/light:window_rear_4.395_-1.45",
+        "position": [
+          -51.97296,
+          3.516,
+          -11.8576
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:59/light:window_side1_1.875_1.1",
+        "position": [
+          -48.25536,
+          1.5,
+          -8.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:59/light:window_side1_1.875_-1.35",
+        "position": [
+          -48.25536,
+          1.5,
+          -10.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:59/light:window_side1_4.395_1.1",
+        "position": [
+          -48.25536,
+          3.516,
+          -8.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:59/light:window_side1_4.395_-1.35",
+        "position": [
+          -48.25536,
+          3.516,
+          -10.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:59/light:window_side-1_1.875_1.1",
+        "position": [
+          -53.370560000000005,
+          1.5,
+          -8.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:59/light:window_side-1_1.875_-1.35",
+        "position": [
+          -53.370560000000005,
+          1.5,
+          -10.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:59/light:window_side-1_4.395_1.1",
+        "position": [
+          -53.370560000000005,
+          3.516,
+          -8.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:59/light:window_side-1_4.395_-1.35",
+        "position": [
+          -53.370560000000005,
+          3.516,
+          -10.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-c:67/light:festoon",
+        "position": [
+          -41.48480000000001,
+          2,
+          -7.66128
+        ],
+        "group": "block:residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-c:67/light:windows",
+        "position": [
+          -43.08480000000001,
+          1.8399999999999999,
+          -8.90128
+        ],
+        "group": "block:residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:101/light:door_front",
+        "position": [
+          -18.612203333333333,
+          2.0145,
+          -23.461275
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:101/light:lamp_porch",
+        "position": [
+          -19.309203333333333,
+          1.9975,
+          -23.647425
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:101/light:window_front",
+        "position": [
+          -20.150703333333333,
+          1.6915,
+          -23.423875
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:101/light:window_rear_1.35",
+        "position": [
+          -20.652203333333333,
+          1.6744999999999999,
+          -18.787975
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:101/light:window_rear_-1.3",
+        "position": [
+          -18.399703333333335,
+          1.6744999999999999,
+          -18.787975
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:101/light:window_side_1",
+        "position": [
+          -22.043653333333335,
+          1.6744999999999999,
+          -20.659675
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:101/light:window_side_-1",
+        "position": [
+          -16.965753333333335,
+          1.6744999999999999,
+          -20.659675
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-c:112/light:festoon",
+        "position": [
+          -11.297746666666669,
+          2,
+          -23.338720000000002
+        ],
+        "group": "block:residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-c:112/light:windows",
+        "position": [
+          -9.697746666666669,
+          1.8399999999999999,
+          -22.09872
+        ],
+        "group": "block:residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:118/light:door_front",
+        "position": [
+          5.577599999999998,
+          1.832,
+          -23.4088
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:118/light:lamp_left",
+        "position": [
+          4.905599999999998,
+          1.7440000000000002,
+          -23.58
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:118/light:lamp_right",
+        "position": [
+          6.249599999999997,
+          1.7440000000000002,
+          -23.58
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:118/light:window_front_1.875_1.75",
+        "position": [
+          4.177599999999998,
+          1.5,
+          -23.377599999999997
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:118/light:window_front_1.875_-1.75",
+        "position": [
+          6.977599999999998,
+          1.5,
+          -23.377599999999997
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:118/light:window_front_4.395_1.75",
+        "position": [
+          4.177599999999998,
+          3.516,
+          -23.377599999999997
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:118/light:window_front_4.395_-1.75",
+        "position": [
+          6.977599999999998,
+          3.516,
+          -23.377599999999997
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:118/light:window_rear_1.875_1.45",
+        "position": [
+          4.4175999999999975,
+          1.5,
+          -19.1424
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:118/light:window_rear_1.875_-1.45",
+        "position": [
+          6.737599999999998,
+          1.5,
+          -19.1424
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:118/light:window_rear_4.395_1.45",
+        "position": [
+          4.4175999999999975,
+          3.516,
+          -19.1424
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:118/light:window_rear_4.395_-1.45",
+        "position": [
+          6.737599999999998,
+          3.516,
+          -19.1424
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:118/light:window_side1_1.875_1.1",
+        "position": [
+          3.019999999999998,
+          1.5,
+          -22.139999999999997
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:118/light:window_side1_1.875_-1.35",
+        "position": [
+          3.019999999999998,
+          1.5,
+          -20.18
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:118/light:window_side1_4.395_1.1",
+        "position": [
+          3.019999999999998,
+          3.516,
+          -22.139999999999997
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:118/light:window_side1_4.395_-1.35",
+        "position": [
+          3.019999999999998,
+          3.516,
+          -20.18
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:118/light:window_side-1_1.875_1.1",
+        "position": [
+          8.135199999999998,
+          1.5,
+          -22.139999999999997
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:118/light:window_side-1_1.875_-1.35",
+        "position": [
+          8.135199999999998,
+          1.5,
+          -20.18
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:118/light:window_side-1_4.395_1.1",
+        "position": [
+          8.135199999999998,
+          3.516,
+          -22.139999999999997
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:118/light:window_side-1_4.395_-1.35",
+        "position": [
+          8.135199999999998,
+          3.516,
+          -20.18
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-c:154/light:festoon",
+        "position": [
+          -20.079839999999997,
+          2,
+          -7.66128
+        ],
+        "group": "block:residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-c:154/light:windows",
+        "position": [
+          -21.67984,
+          1.8399999999999999,
+          -8.90128
+        ],
+        "group": "block:residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:159/light:back_window",
+        "position": [
+          -8.064726666666665,
+          2.05,
+          -12.349
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:159/light:front_double",
+        "position": [
+          -7.814726666666666,
+          2.03,
+          -6.1690000000000005
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:159/light:front_right",
+        "position": [
+          -5.494726666666666,
+          2.12,
+          -6.1690000000000005
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:159/light:porch_window",
+        "position": [
+          -9.734726666666665,
+          1.92,
+          -10.759
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:159/light:right_window",
+        "position": [
+          -4.594726666666666,
+          2.18,
+          -10.059000000000001
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:159/light:garage",
+        "position": [
+          -1.6747266666666656,
+          2.45,
+          -6.559
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:159/light:porch",
+        "position": [
+          -9.964726666666666,
+          2.45,
+          -9.819
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:159/light:dormer_window",
+        "position": [
+          -10.344726666666666,
+          4.47,
+          -9.859
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:167/light:door_front",
+        "position": [
+          4.4990000000000006,
+          2.0145,
+          -7.538725000000001
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:167/light:lamp_porch",
+        "position": [
+          5.196000000000001,
+          1.9975,
+          -7.352575000000001
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:167/light:window_front",
+        "position": [
+          6.0375000000000005,
+          1.6915,
+          -7.576125000000001
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:167/light:window_rear_1.35",
+        "position": [
+          6.539000000000001,
+          1.6744999999999999,
+          -12.212025
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:167/light:window_rear_-1.3",
+        "position": [
+          4.2865,
+          1.6744999999999999,
+          -12.212025
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:167/light:window_side_1",
+        "position": [
+          7.93045,
+          1.6744999999999999,
+          -10.340325
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:167/light:window_side_-1",
+        "position": [
+          2.8525500000000004,
+          1.6744999999999999,
+          -10.340325
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:194/light:door_front",
+        "position": [
+          22.407999999999998,
+          1.832,
+          -23.4088
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:194/light:lamp_left",
+        "position": [
+          21.735999999999997,
+          1.7440000000000002,
+          -23.58
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:194/light:lamp_right",
+        "position": [
+          23.08,
+          1.7440000000000002,
+          -23.58
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:194/light:window_front_1.875_1.75",
+        "position": [
+          21.008,
+          1.5,
+          -23.377599999999997
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:194/light:window_front_1.875_-1.75",
+        "position": [
+          23.808,
+          1.5,
+          -23.377599999999997
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:194/light:window_front_4.395_1.75",
+        "position": [
+          21.008,
+          3.516,
+          -23.377599999999997
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:194/light:window_front_4.395_-1.75",
+        "position": [
+          23.808,
+          3.516,
+          -23.377599999999997
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:194/light:window_rear_1.875_1.45",
+        "position": [
+          21.247999999999998,
+          1.5,
+          -19.1424
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:194/light:window_rear_1.875_-1.45",
+        "position": [
+          23.567999999999998,
+          1.5,
+          -19.1424
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:194/light:window_rear_4.395_1.45",
+        "position": [
+          21.247999999999998,
+          3.516,
+          -19.1424
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:194/light:window_rear_4.395_-1.45",
+        "position": [
+          23.567999999999998,
+          3.516,
+          -19.1424
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:194/light:window_side1_1.875_1.1",
+        "position": [
+          19.8504,
+          1.5,
+          -22.139999999999997
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:194/light:window_side1_1.875_-1.35",
+        "position": [
+          19.8504,
+          1.5,
+          -20.18
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:194/light:window_side1_4.395_1.1",
+        "position": [
+          19.8504,
+          3.516,
+          -22.139999999999997
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:194/light:window_side1_4.395_-1.35",
+        "position": [
+          19.8504,
+          3.516,
+          -20.18
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:194/light:window_side-1_1.875_1.1",
+        "position": [
+          24.9656,
+          1.5,
+          -22.139999999999997
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:194/light:window_side-1_1.875_-1.35",
+        "position": [
+          24.9656,
+          1.5,
+          -20.18
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:194/light:window_side-1_4.395_1.1",
+        "position": [
+          24.9656,
+          3.516,
+          -22.139999999999997
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:194/light:window_side-1_4.395_-1.35",
+        "position": [
+          24.9656,
+          3.516,
+          -20.18
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:203/light:back_window",
+        "position": [
+          36.8152,
+          2.05,
+          -18.651
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:203/light:front_double",
+        "position": [
+          36.5652,
+          2.03,
+          -24.831
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:203/light:front_right",
+        "position": [
+          34.2452,
+          2.12,
+          -24.831
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:203/light:porch_window",
+        "position": [
+          38.4852,
+          1.92,
+          -20.241
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:203/light:right_window",
+        "position": [
+          33.3452,
+          2.18,
+          -20.941
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:203/light:garage",
+        "position": [
+          30.425199999999997,
+          2.45,
+          -24.441
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:203/light:porch",
+        "position": [
+          38.715199999999996,
+          2.45,
+          -21.181
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:203/light:dormer_window",
+        "position": [
+          39.0952,
+          4.47,
+          -21.141
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-c:232/light:festoon",
+        "position": [
+          29.49575,
+          2,
+          -7.66128
+        ],
+        "group": "block:residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-c:232/light:windows",
+        "position": [
+          27.89575,
+          1.8399999999999999,
+          -8.90128
+        ],
+        "group": "block:residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:240/light:door_front",
+        "position": [
+          34.923410000000004,
+          2.0145,
+          -7.538725000000001
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:240/light:lamp_porch",
+        "position": [
+          35.62041,
+          1.9975,
+          -7.352575000000001
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:240/light:window_front",
+        "position": [
+          36.46191,
+          1.6915,
+          -7.576125000000001
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:240/light:window_rear_1.35",
+        "position": [
+          36.96341,
+          1.6744999999999999,
+          -12.212025
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:240/light:window_rear_-1.3",
+        "position": [
+          34.71091,
+          1.6744999999999999,
+          -12.212025
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:240/light:window_side_1",
+        "position": [
+          38.35486,
+          1.6744999999999999,
+          -10.340325
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:240/light:window_side_-1",
+        "position": [
+          33.27696,
+          1.6744999999999999,
+          -10.340325
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:267/light:door_front",
+        "position": [
+          -51.292199999999994,
+          1.832,
+          7.5912
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:267/light:lamp_left",
+        "position": [
+          -51.9642,
+          1.7440000000000002,
+          7.42
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:267/light:lamp_right",
+        "position": [
+          -50.6202,
+          1.7440000000000002,
+          7.42
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:267/light:window_front_1.875_1.75",
+        "position": [
+          -52.6922,
+          1.5,
+          7.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:267/light:window_front_1.875_-1.75",
+        "position": [
+          -49.892199999999995,
+          1.5,
+          7.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:267/light:window_front_4.395_1.75",
+        "position": [
+          -52.6922,
+          3.516,
+          7.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:267/light:window_front_4.395_-1.75",
+        "position": [
+          -49.892199999999995,
+          3.516,
+          7.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:267/light:window_rear_1.875_1.45",
+        "position": [
+          -52.4522,
+          1.5,
+          11.8576
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:267/light:window_rear_1.875_-1.45",
+        "position": [
+          -50.1322,
+          1.5,
+          11.8576
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:267/light:window_rear_4.395_1.45",
+        "position": [
+          -52.4522,
+          3.516,
+          11.8576
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:267/light:window_rear_4.395_-1.45",
+        "position": [
+          -50.1322,
+          3.516,
+          11.8576
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:267/light:window_side1_1.875_1.1",
+        "position": [
+          -53.849799999999995,
+          1.5,
+          8.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:267/light:window_side1_1.875_-1.35",
+        "position": [
+          -53.849799999999995,
+          1.5,
+          10.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:267/light:window_side1_4.395_1.1",
+        "position": [
+          -53.849799999999995,
+          3.516,
+          8.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:267/light:window_side1_4.395_-1.35",
+        "position": [
+          -53.849799999999995,
+          3.516,
+          10.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:267/light:window_side-1_1.875_1.1",
+        "position": [
+          -48.73459999999999,
+          1.5,
+          8.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:267/light:window_side-1_1.875_-1.35",
+        "position": [
+          -48.73459999999999,
+          1.5,
+          10.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:267/light:window_side-1_4.395_1.1",
+        "position": [
+          -48.73459999999999,
+          3.516,
+          8.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:267/light:window_side-1_4.395_-1.35",
+        "position": [
+          -48.73459999999999,
+          3.516,
+          10.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:275/light:door_front",
+        "position": [
+          -44.8748,
+          1.77,
+          7.652249999999999
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:275/light:lamp_porch",
+        "position": [
+          -45.4748,
+          2.08,
+          7.452249999999999
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:275/light:window_front",
+        "position": [
+          -41.9348,
+          1.85,
+          7.687249999999999
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:275/light:window_left",
+        "position": [
+          -39.8198,
+          1.85,
+          9.97725
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:275/light:window_rearL",
+        "position": [
+          -44.659800000000004,
+          1.85,
+          12.31725
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:275/light:window_rearR",
+        "position": [
+          -41.7598,
+          1.85,
+          12.31725
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:275/light:window_right",
+        "position": [
+          -46.3498,
+          1.85,
+          9.71725
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:306/light:door_front",
+        "position": [
+          -52.42625,
+          1.77,
+          22.34775
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:306/light:lamp_porch",
+        "position": [
+          -51.82625,
+          2.08,
+          22.54775
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:306/light:window_front",
+        "position": [
+          -55.36625,
+          1.85,
+          22.31275
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:306/light:window_left",
+        "position": [
+          -57.48125,
+          1.85,
+          20.022750000000002
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:306/light:window_rearL",
+        "position": [
+          -52.64125,
+          1.85,
+          17.682750000000002
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:306/light:window_rearR",
+        "position": [
+          -55.541250000000005,
+          1.85,
+          17.682750000000002
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:306/light:window_right",
+        "position": [
+          -50.95125,
+          1.85,
+          20.28275
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:316/light:back_window",
+        "position": [
+          -41.61749999999999,
+          2.05,
+          17.651
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:316/light:front_double",
+        "position": [
+          -41.36749999999999,
+          2.03,
+          23.831
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:316/light:front_right",
+        "position": [
+          -39.04749999999999,
+          2.12,
+          23.831
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:316/light:porch_window",
+        "position": [
+          -43.287499999999994,
+          1.92,
+          19.241
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:316/light:right_window",
+        "position": [
+          -38.147499999999994,
+          2.18,
+          19.941
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:316/light:garage",
+        "position": [
+          -35.22749999999999,
+          2.45,
+          23.441
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:316/light:porch",
+        "position": [
+          -43.51749999999999,
+          2.45,
+          20.181
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:316/light:dormer_window",
+        "position": [
+          -43.897499999999994,
+          4.47,
+          20.141
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:348/light:door_front",
+        "position": [
+          -21.592,
+          1.832,
+          7.5912
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:348/light:lamp_left",
+        "position": [
+          -22.264,
+          1.7440000000000002,
+          7.42
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:348/light:lamp_right",
+        "position": [
+          -20.919999999999998,
+          1.7440000000000002,
+          7.42
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:348/light:window_front_1.875_1.75",
+        "position": [
+          -22.991999999999997,
+          1.5,
+          7.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:348/light:window_front_1.875_-1.75",
+        "position": [
+          -20.191999999999997,
+          1.5,
+          7.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:348/light:window_front_4.395_1.75",
+        "position": [
+          -22.991999999999997,
+          3.516,
+          7.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:348/light:window_front_4.395_-1.75",
+        "position": [
+          -20.191999999999997,
+          3.516,
+          7.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:348/light:window_rear_1.875_1.45",
+        "position": [
+          -22.752,
+          1.5,
+          11.8576
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:348/light:window_rear_1.875_-1.45",
+        "position": [
+          -20.432,
+          1.5,
+          11.8576
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:348/light:window_rear_4.395_1.45",
+        "position": [
+          -22.752,
+          3.516,
+          11.8576
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:348/light:window_rear_4.395_-1.45",
+        "position": [
+          -20.432,
+          3.516,
+          11.8576
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:348/light:window_side1_1.875_1.1",
+        "position": [
+          -24.1496,
+          1.5,
+          8.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:348/light:window_side1_1.875_-1.35",
+        "position": [
+          -24.1496,
+          1.5,
+          10.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:348/light:window_side1_4.395_1.1",
+        "position": [
+          -24.1496,
+          3.516,
+          8.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:348/light:window_side1_4.395_-1.35",
+        "position": [
+          -24.1496,
+          3.516,
+          10.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:348/light:window_side-1_1.875_1.1",
+        "position": [
+          -19.034399999999998,
+          1.5,
+          8.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:348/light:window_side-1_1.875_-1.35",
+        "position": [
+          -19.034399999999998,
+          1.5,
+          10.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:348/light:window_side-1_4.395_1.1",
+        "position": [
+          -19.034399999999998,
+          3.516,
+          8.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:348/light:window_side-1_4.395_-1.35",
+        "position": [
+          -19.034399999999998,
+          3.516,
+          10.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-c:356/light:festoon",
+        "position": [
+          -10.719919999999998,
+          2,
+          7.66128
+        ],
+        "group": "block:residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-c:356/light:windows",
+        "position": [
+          -9.119919999999999,
+          1.8399999999999999,
+          8.90128
+        ],
+        "group": "block:residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:360/light:back_window",
+        "position": [
+          1.8177400000000006,
+          2.05,
+          12.349
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:360/light:front_double",
+        "position": [
+          1.567740000000001,
+          2.03,
+          6.1690000000000005
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:360/light:front_right",
+        "position": [
+          -0.7522599999999988,
+          2.12,
+          6.1690000000000005
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:360/light:porch_window",
+        "position": [
+          3.4877400000000005,
+          1.92,
+          10.759
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:360/light:right_window",
+        "position": [
+          -1.652259999999999,
+          2.18,
+          10.059000000000001
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:360/light:garage",
+        "position": [
+          -4.572259999999999,
+          2.45,
+          6.559
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:360/light:porch",
+        "position": [
+          3.717740000000001,
+          2.45,
+          9.819
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:360/light:dormer_window",
+        "position": [
+          4.097740000000001,
+          4.47,
+          9.859
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-c:392/light:festoon",
+        "position": [
+          -16.55278,
+          2,
+          22.338720000000002
+        ],
+        "group": "block:residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-c:392/light:windows",
+        "position": [
+          -18.15278,
+          1.8399999999999999,
+          21.09872
+        ],
+        "group": "block:residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:398/light:door_front",
+        "position": [
+          -11.125119999999999,
+          2.0145,
+          22.461275
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:398/light:lamp_porch",
+        "position": [
+          -10.428119999999998,
+          1.9975,
+          22.647425
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:398/light:window_front",
+        "position": [
+          -9.586619999999998,
+          1.6915,
+          22.423875
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:398/light:window_rear_1.35",
+        "position": [
+          -9.085119999999998,
+          1.6744999999999999,
+          17.787975
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:398/light:window_rear_-1.3",
+        "position": [
+          -11.337619999999998,
+          1.6744999999999999,
+          17.787975
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:398/light:window_side_1",
+        "position": [
+          -7.693669999999998,
+          1.6744999999999999,
+          19.659675
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:398/light:window_side_-1",
+        "position": [
+          -12.771569999999999,
+          1.6744999999999999,
+          19.659675
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:405/light:door_front",
+        "position": [
+          5.2414700000000005,
+          1.77,
+          22.34775
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:405/light:lamp_porch",
+        "position": [
+          5.841470000000001,
+          2.08,
+          22.54775
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:405/light:window_front",
+        "position": [
+          2.3014700000000006,
+          1.85,
+          22.31275
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:405/light:window_left",
+        "position": [
+          0.18647000000000036,
+          1.85,
+          20.022750000000002
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:405/light:window_rearL",
+        "position": [
+          5.026470000000001,
+          1.85,
+          17.682750000000002
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:405/light:window_rearR",
+        "position": [
+          2.1264700000000003,
+          1.85,
+          17.682750000000002
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:405/light:window_right",
+        "position": [
+          6.716470000000001,
+          1.85,
+          20.28275
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:433/light:door_front",
+        "position": [
+          26.056375,
+          2.0145,
+          7.538725000000001
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:433/light:lamp_porch",
+        "position": [
+          25.359375,
+          1.9975,
+          7.352575000000001
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:433/light:window_front",
+        "position": [
+          24.517875,
+          1.6915,
+          7.576125000000001
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:433/light:window_rear_1.35",
+        "position": [
+          24.016375,
+          1.6744999999999999,
+          12.212025
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:433/light:window_rear_-1.3",
+        "position": [
+          26.268874999999998,
+          1.6744999999999999,
+          12.212025
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:433/light:window_side_1",
+        "position": [
+          22.624924999999998,
+          1.6744999999999999,
+          10.340325
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:433/light:window_side_-1",
+        "position": [
+          27.702824999999997,
+          1.6744999999999999,
+          10.340325
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:443/light:door_front",
+        "position": [
+          34.314249999999994,
+          1.77,
+          7.652249999999999
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:443/light:lamp_porch",
+        "position": [
+          33.71424999999999,
+          2.08,
+          7.452249999999999
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:443/light:window_front",
+        "position": [
+          37.25424999999999,
+          1.85,
+          7.687249999999999
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:443/light:window_left",
+        "position": [
+          39.369249999999994,
+          1.85,
+          9.97725
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:443/light:window_rearL",
+        "position": [
+          34.52924999999999,
+          1.85,
+          12.31725
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:443/light:window_rearR",
+        "position": [
+          37.429249999999996,
+          1.85,
+          12.31725
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:443/light:window_right",
+        "position": [
+          32.83924999999999,
+          1.85,
+          9.71725
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:474/light:back_window",
+        "position": [
+          27.27984,
+          2.05,
+          17.651
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:474/light:front_double",
+        "position": [
+          27.52984,
+          2.03,
+          23.831
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:474/light:front_right",
+        "position": [
+          29.84984,
+          2.12,
+          23.831
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:474/light:porch_window",
+        "position": [
+          25.60984,
+          1.92,
+          19.241
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:474/light:right_window",
+        "position": [
+          30.74984,
+          2.18,
+          19.941
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:474/light:garage",
+        "position": [
+          33.66984,
+          2.45,
+          23.441
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:474/light:porch",
+        "position": [
+          25.379839999999998,
+          2.45,
+          20.181
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:474/light:dormer_window",
+        "position": [
+          24.99984,
+          4.47,
+          20.141
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-c:481/light:festoon",
+        "position": [
+          39.8175,
+          2,
+          22.338720000000002
+        ],
+        "group": "block:residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-c:481/light:windows",
+        "position": [
+          38.2175,
+          1.8399999999999999,
+          21.09872
+        ],
+        "group": "block:residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:505/light:door_front",
+        "position": [
+          58.408,
+          1.832,
+          7.5912
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:505/light:lamp_left",
+        "position": [
+          57.736,
+          1.7440000000000002,
+          7.42
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:505/light:lamp_right",
+        "position": [
+          59.08,
+          1.7440000000000002,
+          7.42
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:505/light:window_front_1.875_1.75",
+        "position": [
+          57.007999999999996,
+          1.5,
+          7.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:505/light:window_front_1.875_-1.75",
+        "position": [
+          59.808,
+          1.5,
+          7.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:505/light:window_front_4.395_1.75",
+        "position": [
+          57.007999999999996,
+          3.516,
+          7.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:505/light:window_front_4.395_-1.75",
+        "position": [
+          59.808,
+          3.516,
+          7.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:505/light:window_rear_1.875_1.45",
+        "position": [
+          57.248,
+          1.5,
+          11.8576
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:505/light:window_rear_1.875_-1.45",
+        "position": [
+          59.568,
+          1.5,
+          11.8576
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:505/light:window_rear_4.395_1.45",
+        "position": [
+          57.248,
+          3.516,
+          11.8576
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:505/light:window_rear_4.395_-1.45",
+        "position": [
+          59.568,
+          3.516,
+          11.8576
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:505/light:window_side1_1.875_1.1",
+        "position": [
+          55.8504,
+          1.5,
+          8.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:505/light:window_side1_1.875_-1.35",
+        "position": [
+          55.8504,
+          1.5,
+          10.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:505/light:window_side1_4.395_1.1",
+        "position": [
+          55.8504,
+          3.516,
+          8.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:505/light:window_side1_4.395_-1.35",
+        "position": [
+          55.8504,
+          3.516,
+          10.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:505/light:window_side-1_1.875_1.1",
+        "position": [
+          60.9656,
+          1.5,
+          8.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:505/light:window_side-1_1.875_-1.35",
+        "position": [
+          60.9656,
+          1.5,
+          10.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:505/light:window_side-1_4.395_1.1",
+        "position": [
+          60.9656,
+          3.516,
+          8.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:505/light:window_side-1_4.395_-1.35",
+        "position": [
+          60.9656,
+          3.516,
+          10.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:513/light:back_window",
+        "position": [
+          72.0652,
+          2.05,
+          12.349
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:513/light:front_double",
+        "position": [
+          71.8152,
+          2.03,
+          6.1690000000000005
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:513/light:front_right",
+        "position": [
+          69.4952,
+          2.12,
+          6.1690000000000005
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:513/light:porch_window",
+        "position": [
+          73.73519999999999,
+          1.92,
+          10.759
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:513/light:right_window",
+        "position": [
+          68.5952,
+          2.18,
+          10.059000000000001
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:513/light:garage",
+        "position": [
+          65.6752,
+          2.45,
+          6.559
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:513/light:porch",
+        "position": [
+          73.9652,
+          2.45,
+          9.819
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:513/light:dormer_window",
+        "position": [
+          74.3452,
+          4.47,
+          9.859
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-c:542/light:festoon",
+        "position": [
+          60.22362333333333,
+          2,
+          22.338720000000002
+        ],
+        "group": "block:residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-c:542/light:windows",
+        "position": [
+          58.62362333333333,
+          1.8399999999999999,
+          21.09872
+        ],
+        "group": "block:residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:546/light:door_front",
+        "position": [
+          66.25821,
+          2.0145,
+          22.461275
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:546/light:lamp_porch",
+        "position": [
+          66.95521000000001,
+          1.9975,
+          22.647425
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:546/light:window_front",
+        "position": [
+          67.79671,
+          1.6915,
+          22.423875
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:546/light:window_rear_1.35",
+        "position": [
+          68.29821,
+          1.6744999999999999,
+          17.787975
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:546/light:window_rear_-1.3",
+        "position": [
+          66.04571,
+          1.6744999999999999,
+          17.787975
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:546/light:window_side_1",
+        "position": [
+          69.68966,
+          1.6744999999999999,
+          19.659675
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:546/light:window_side_-1",
+        "position": [
+          64.61176,
+          1.6744999999999999,
+          19.659675
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:550/light:door_front",
+        "position": [
+          75.78853666666667,
+          1.832,
+          22.4088
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:550/light:lamp_left",
+        "position": [
+          76.46053666666667,
+          1.7440000000000002,
+          22.58
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:550/light:lamp_right",
+        "position": [
+          75.11653666666668,
+          1.7440000000000002,
+          22.58
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:550/light:window_front_1.875_1.75",
+        "position": [
+          77.18853666666668,
+          1.5,
+          22.377599999999997
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:550/light:window_front_1.875_-1.75",
+        "position": [
+          74.38853666666668,
+          1.5,
+          22.377599999999997
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:550/light:window_front_4.395_1.75",
+        "position": [
+          77.18853666666668,
+          3.516,
+          22.377599999999997
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:550/light:window_front_4.395_-1.75",
+        "position": [
+          74.38853666666668,
+          3.516,
+          22.377599999999997
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:550/light:window_rear_1.875_1.45",
+        "position": [
+          76.94853666666667,
+          1.5,
+          18.1424
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:550/light:window_rear_1.875_-1.45",
+        "position": [
+          74.62853666666668,
+          1.5,
+          18.1424
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:550/light:window_rear_4.395_1.45",
+        "position": [
+          76.94853666666667,
+          3.516,
+          18.1424
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:550/light:window_rear_4.395_-1.45",
+        "position": [
+          74.62853666666668,
+          3.516,
+          18.1424
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:550/light:window_side1_1.875_1.1",
+        "position": [
+          78.34613666666668,
+          1.5,
+          21.139999999999997
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:550/light:window_side1_1.875_-1.35",
+        "position": [
+          78.34613666666668,
+          1.5,
+          19.18
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:550/light:window_side1_4.395_1.1",
+        "position": [
+          78.34613666666668,
+          3.516,
+          21.139999999999997
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:550/light:window_side1_4.395_-1.35",
+        "position": [
+          78.34613666666668,
+          3.516,
+          19.18
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:550/light:window_side-1_1.875_1.1",
+        "position": [
+          73.23093666666668,
+          1.5,
+          21.139999999999997
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:550/light:window_side-1_1.875_-1.35",
+        "position": [
+          73.23093666666668,
+          1.5,
+          19.18
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:550/light:window_side-1_4.395_1.1",
+        "position": [
+          73.23093666666668,
+          3.516,
+          21.139999999999997
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:550/light:window_side-1_4.395_-1.35",
+        "position": [
+          73.23093666666668,
+          3.516,
+          19.18
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:587/light:door_front",
+        "position": [
+          -19.425,
+          1.77,
+          -38.65225
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:587/light:lamp_porch",
+        "position": [
+          -18.825,
+          2.08,
+          -38.45225
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:587/light:window_front",
+        "position": [
+          -22.365,
+          1.85,
+          -38.68725
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:587/light:window_left",
+        "position": [
+          -24.48,
+          1.85,
+          -40.97725
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:587/light:window_rearL",
+        "position": [
+          -19.64,
+          1.85,
+          -43.31725
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:587/light:window_rearR",
+        "position": [
+          -22.54,
+          1.85,
+          -43.31725
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:587/light:window_right",
+        "position": [
+          -17.95,
+          1.85,
+          -40.71725
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:598/light:door_front",
+        "position": [
+          -6.080199999999997,
+          1.832,
+          -38.5912
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:598/light:lamp_left",
+        "position": [
+          -5.408199999999997,
+          1.7440000000000002,
+          -38.42
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:598/light:lamp_right",
+        "position": [
+          -6.752199999999997,
+          1.7440000000000002,
+          -38.42
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:598/light:window_front_1.875_1.75",
+        "position": [
+          -4.6801999999999975,
+          1.5,
+          -38.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:598/light:window_front_1.875_-1.75",
+        "position": [
+          -7.480199999999997,
+          1.5,
+          -38.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:598/light:window_front_4.395_1.75",
+        "position": [
+          -4.6801999999999975,
+          3.516,
+          -38.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:598/light:window_front_4.395_-1.75",
+        "position": [
+          -7.480199999999997,
+          3.516,
+          -38.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:598/light:window_rear_1.875_1.45",
+        "position": [
+          -4.920199999999997,
+          1.5,
+          -42.857600000000005
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:598/light:window_rear_1.875_-1.45",
+        "position": [
+          -7.240199999999997,
+          1.5,
+          -42.857600000000005
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:598/light:window_rear_4.395_1.45",
+        "position": [
+          -4.920199999999997,
+          3.516,
+          -42.857600000000005
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:598/light:window_rear_4.395_-1.45",
+        "position": [
+          -7.240199999999997,
+          3.516,
+          -42.857600000000005
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:598/light:window_side1_1.875_1.1",
+        "position": [
+          -3.522599999999997,
+          1.5,
+          -39.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:598/light:window_side1_1.875_-1.35",
+        "position": [
+          -3.522599999999997,
+          1.5,
+          -41.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:598/light:window_side1_4.395_1.1",
+        "position": [
+          -3.522599999999997,
+          3.516,
+          -39.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:598/light:window_side1_4.395_-1.35",
+        "position": [
+          -3.522599999999997,
+          3.516,
+          -41.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:598/light:window_side-1_1.875_1.1",
+        "position": [
+          -8.637799999999997,
+          1.5,
+          -39.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:598/light:window_side-1_1.875_-1.35",
+        "position": [
+          -8.637799999999997,
+          1.5,
+          -41.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:598/light:window_side-1_4.395_1.1",
+        "position": [
+          -8.637799999999997,
+          3.516,
+          -39.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:598/light:window_side-1_4.395_-1.35",
+        "position": [
+          -8.637799999999997,
+          3.516,
+          -41.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:607/light:door_front",
+        "position": [
+          2.767150000000004,
+          2.0145,
+          -38.538725
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:607/light:lamp_porch",
+        "position": [
+          3.464150000000004,
+          1.9975,
+          -38.352574999999995
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:607/light:window_front",
+        "position": [
+          4.3056500000000035,
+          1.6915,
+          -38.576125
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:607/light:window_rear_1.35",
+        "position": [
+          4.807150000000004,
+          1.6744999999999999,
+          -43.212025
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:607/light:window_rear_-1.3",
+        "position": [
+          2.554650000000004,
+          1.6744999999999999,
+          -43.212025
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:607/light:window_side_1",
+        "position": [
+          6.198600000000004,
+          1.6744999999999999,
+          -41.340325
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:607/light:window_side_-1",
+        "position": [
+          1.1207000000000038,
+          1.6744999999999999,
+          -41.340325
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:639/light:back_window",
+        "position": [
+          26.815000000000005,
+          2.05,
+          -43.349000000000004
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:639/light:front_double",
+        "position": [
+          27.065000000000005,
+          2.03,
+          -37.169
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:639/light:front_right",
+        "position": [
+          29.385000000000005,
+          2.12,
+          -37.169
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:639/light:porch_window",
+        "position": [
+          25.145000000000003,
+          1.92,
+          -41.759
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:639/light:right_window",
+        "position": [
+          30.285000000000004,
+          2.18,
+          -41.059
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:639/light:garage",
+        "position": [
+          33.205000000000005,
+          2.45,
+          -37.559
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:639/light:porch",
+        "position": [
+          24.915000000000003,
+          2.45,
+          -40.819
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-b:639/light:dormer_window",
+        "position": [
+          24.535000000000004,
+          4.47,
+          -40.859
+        ],
+        "group": "sunset-grove-residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:647/light:door_front",
+        "position": [
+          40.0075,
+          1.77,
+          -38.65225
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:647/light:lamp_porch",
+        "position": [
+          40.6075,
+          2.08,
+          -38.45225
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:647/light:window_front",
+        "position": [
+          37.0675,
+          1.85,
+          -38.68725
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:647/light:window_left",
+        "position": [
+          34.9525,
+          1.85,
+          -40.97725
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:647/light:window_rearL",
+        "position": [
+          39.792500000000004,
+          1.85,
+          -43.31725
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:647/light:window_rearR",
+        "position": [
+          36.8925,
+          1.85,
+          -43.31725
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:647/light:window_right",
+        "position": [
+          41.4825,
+          1.85,
+          -40.71725
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:685/light:door_front",
+        "position": [
+          -18.612203333333333,
+          2.0145,
+          37.538725
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:685/light:lamp_porch",
+        "position": [
+          -19.309203333333333,
+          1.9975,
+          37.352574999999995
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:685/light:window_front",
+        "position": [
+          -20.150703333333333,
+          1.6915,
+          37.576125
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:685/light:window_rear_1.35",
+        "position": [
+          -20.652203333333333,
+          1.6744999999999999,
+          42.212025
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:685/light:window_rear_-1.3",
+        "position": [
+          -18.399703333333335,
+          1.6744999999999999,
+          42.212025
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:685/light:window_side_1",
+        "position": [
+          -22.043653333333335,
+          1.6744999999999999,
+          40.340325
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-e:685/light:window_side_-1",
+        "position": [
+          -16.965753333333335,
+          1.6744999999999999,
+          40.340325
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-c:695/light:festoon",
+        "position": [
+          -11.297746666666669,
+          2,
+          37.66128
+        ],
+        "group": "block:residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-c:695/light:windows",
+        "position": [
+          -9.697746666666669,
+          1.8399999999999999,
+          38.90128
+        ],
+        "group": "block:residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:702/light:door_front",
+        "position": [
+          5.577599999999998,
+          1.832,
+          37.5912
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:702/light:lamp_left",
+        "position": [
+          4.905599999999998,
+          1.7440000000000002,
+          37.42
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:702/light:lamp_right",
+        "position": [
+          6.249599999999997,
+          1.7440000000000002,
+          37.42
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:702/light:window_front_1.875_1.75",
+        "position": [
+          4.177599999999998,
+          1.5,
+          37.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:702/light:window_front_1.875_-1.75",
+        "position": [
+          6.977599999999998,
+          1.5,
+          37.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:702/light:window_front_4.395_1.75",
+        "position": [
+          4.177599999999998,
+          3.516,
+          37.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:702/light:window_front_4.395_-1.75",
+        "position": [
+          6.977599999999998,
+          3.516,
+          37.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:702/light:window_rear_1.875_1.45",
+        "position": [
+          4.4175999999999975,
+          1.5,
+          41.857600000000005
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:702/light:window_rear_1.875_-1.45",
+        "position": [
+          6.737599999999998,
+          1.5,
+          41.857600000000005
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:702/light:window_rear_4.395_1.45",
+        "position": [
+          4.4175999999999975,
+          3.516,
+          41.857600000000005
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:702/light:window_rear_4.395_-1.45",
+        "position": [
+          6.737599999999998,
+          3.516,
+          41.857600000000005
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:702/light:window_side1_1.875_1.1",
+        "position": [
+          3.019999999999998,
+          1.5,
+          38.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:702/light:window_side1_1.875_-1.35",
+        "position": [
+          3.019999999999998,
+          1.5,
+          40.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:702/light:window_side1_4.395_1.1",
+        "position": [
+          3.019999999999998,
+          3.516,
+          38.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:702/light:window_side1_4.395_-1.35",
+        "position": [
+          3.019999999999998,
+          3.516,
+          40.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:702/light:window_side-1_1.875_1.1",
+        "position": [
+          8.135199999999998,
+          1.5,
+          38.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:702/light:window_side-1_1.875_-1.35",
+        "position": [
+          8.135199999999998,
+          1.5,
+          40.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:702/light:window_side-1_4.395_1.1",
+        "position": [
+          8.135199999999998,
+          3.516,
+          38.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:702/light:window_side-1_4.395_-1.35",
+        "position": [
+          8.135199999999998,
+          3.516,
+          40.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-c:736/light:festoon",
+        "position": [
+          56.96337333333333,
+          2,
+          37.66128
+        ],
+        "group": "block:residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-c:736/light:windows",
+        "position": [
+          58.56337333333333,
+          1.8399999999999999,
+          38.90128
+        ],
+        "group": "block:residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:741/light:door_front",
+        "position": [
+          66.77796,
+          1.832,
+          37.5912
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:741/light:lamp_left",
+        "position": [
+          66.10596,
+          1.7440000000000002,
+          37.42
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:741/light:lamp_right",
+        "position": [
+          67.44995999999999,
+          1.7440000000000002,
+          37.42
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:741/light:window_front_1.875_1.75",
+        "position": [
+          65.37795999999999,
+          1.5,
+          37.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:741/light:window_front_1.875_-1.75",
+        "position": [
+          68.17795999999998,
+          1.5,
+          37.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:741/light:window_front_4.395_1.75",
+        "position": [
+          65.37795999999999,
+          3.516,
+          37.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:741/light:window_front_4.395_-1.75",
+        "position": [
+          68.17795999999998,
+          3.516,
+          37.6224
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:741/light:window_rear_1.875_1.45",
+        "position": [
+          65.61796,
+          1.5,
+          41.857600000000005
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:741/light:window_rear_1.875_-1.45",
+        "position": [
+          67.93795999999999,
+          1.5,
+          41.857600000000005
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:741/light:window_rear_4.395_1.45",
+        "position": [
+          65.61796,
+          3.516,
+          41.857600000000005
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:741/light:window_rear_4.395_-1.45",
+        "position": [
+          67.93795999999999,
+          3.516,
+          41.857600000000005
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:741/light:window_side1_1.875_1.1",
+        "position": [
+          64.22035999999999,
+          1.5,
+          38.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:741/light:window_side1_1.875_-1.35",
+        "position": [
+          64.22035999999999,
+          1.5,
+          40.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:741/light:window_side1_4.395_1.1",
+        "position": [
+          64.22035999999999,
+          3.516,
+          38.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:741/light:window_side1_4.395_-1.35",
+        "position": [
+          64.22035999999999,
+          3.516,
+          40.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:741/light:window_side-1_1.875_1.1",
+        "position": [
+          69.33555999999999,
+          1.5,
+          38.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:741/light:window_side-1_1.875_-1.35",
+        "position": [
+          69.33555999999999,
+          1.5,
+          40.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:741/light:window_side-1_4.395_1.1",
+        "position": [
+          69.33555999999999,
+          3.516,
+          38.86
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:741/light:window_side-1_4.395_-1.35",
+        "position": [
+          69.33555999999999,
+          3.516,
+          40.82
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:749/light:door_front",
+        "position": [
+          73.68178666666667,
+          1.77,
+          37.65225
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:749/light:lamp_porch",
+        "position": [
+          73.08178666666667,
+          2.08,
+          37.45225
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:749/light:window_front",
+        "position": [
+          76.62178666666668,
+          1.85,
+          37.68725
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:749/light:window_left",
+        "position": [
+          78.73678666666667,
+          1.85,
+          39.97725
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:749/light:window_rearL",
+        "position": [
+          73.89678666666667,
+          1.85,
+          42.31725
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:749/light:window_rearR",
+        "position": [
+          76.79678666666668,
+          1.85,
+          42.31725
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-a:749/light:window_right",
+        "position": [
+          72.20678666666667,
+          1.85,
+          39.71725
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.cafe-corner:759/light:lanterns",
+        "position": [
+          -71.548,
+          3.22,
+          15.76
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.cafe-corner:759/light:sign",
+        "position": [
+          -70.828,
+          3.95,
+          15.76
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.cafe-corner:759/light:windows",
+        "position": [
+          -70.998,
+          1.9,
+          15.76
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.mainstreet-brick:779/light:bakery_display",
+        "position": [
+          -79.08875,
+          1.85,
+          -39.03404999999999
+        ],
+        "group": "sunset-grove-mainstreet",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.mainstreet-brick:779/light:bakery_upper_-1.15",
+        "position": [
+          -77.79875000000001,
+          5.35,
+          -39.19405
+        ],
+        "group": "sunset-grove-mainstreet",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.mainstreet-brick:779/light:bakery_upper_-2.95",
+        "position": [
+          -79.59875000000001,
+          5.35,
+          -39.19405
+        ],
+        "group": "sunset-grove-mainstreet",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.mainstreet-brick:779/light:pharmacy_sign",
+        "position": [
+          -72.35875,
+          6.2,
+          -38.19405
+        ],
+        "group": "sunset-grove-mainstreet",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.mainstreet-brick:779/light:side_-1.55_1.95",
+        "position": [
+          -80.88875,
+          1.95,
+          -43.744049999999994
+        ],
+        "group": "sunset-grove-mainstreet",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.mainstreet-brick:779/light:side_-1.55_5.35",
+        "position": [
+          -80.88875,
+          5.35,
+          -43.744049999999994
+        ],
+        "group": "sunset-grove-mainstreet",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.mainstreet-brick:779/light:door_bakery",
+        "position": [
+          -77.20875000000001,
+          2.1,
+          -39.01405
+        ],
+        "group": "sunset-grove-mainstreet",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.mainstreet-brick:780/light:bakery_display",
+        "position": [
+          -68.58625,
+          1.85,
+          -39.03404999999999
+        ],
+        "group": "sunset-grove-mainstreet",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.mainstreet-brick:780/light:bakery_upper_-1.15",
+        "position": [
+          -67.29625000000001,
+          5.35,
+          -39.19405
+        ],
+        "group": "sunset-grove-mainstreet",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.mainstreet-brick:780/light:bakery_upper_-2.95",
+        "position": [
+          -69.09625000000001,
+          5.35,
+          -39.19405
+        ],
+        "group": "sunset-grove-mainstreet",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.mainstreet-brick:780/light:pharmacy_sign",
+        "position": [
+          -61.85625000000001,
+          6.2,
+          -38.19405
+        ],
+        "group": "sunset-grove-mainstreet",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.mainstreet-brick:780/light:side_-1.55_1.95",
+        "position": [
+          -70.38625,
+          1.95,
+          -43.744049999999994
+        ],
+        "group": "sunset-grove-mainstreet",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.mainstreet-brick:780/light:side_-1.55_5.35",
+        "position": [
+          -70.38625,
+          5.35,
+          -43.744049999999994
+        ],
+        "group": "sunset-grove-mainstreet",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.mainstreet-brick:780/light:door_bakery",
+        "position": [
+          -66.70625000000001,
+          2.1,
+          -39.01405
+        ],
+        "group": "sunset-grove-mainstreet",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.mainstreet-brick:781/light:bakery_display",
+        "position": [
+          -58.08375,
+          1.85,
+          -39.03404999999999
+        ],
+        "group": "sunset-grove-mainstreet",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.mainstreet-brick:781/light:bakery_upper_-1.15",
+        "position": [
+          -56.79375,
+          5.35,
+          -39.19405
+        ],
+        "group": "sunset-grove-mainstreet",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.mainstreet-brick:781/light:bakery_upper_-2.95",
+        "position": [
+          -58.59375000000001,
+          5.35,
+          -39.19405
+        ],
+        "group": "sunset-grove-mainstreet",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.mainstreet-brick:781/light:pharmacy_sign",
+        "position": [
+          -51.353750000000005,
+          6.2,
+          -38.19405
+        ],
+        "group": "sunset-grove-mainstreet",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.mainstreet-brick:781/light:side_-1.55_1.95",
+        "position": [
+          -59.883750000000006,
+          1.95,
+          -43.744049999999994
+        ],
+        "group": "sunset-grove-mainstreet",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.mainstreet-brick:781/light:side_-1.55_5.35",
+        "position": [
+          -59.883750000000006,
+          5.35,
+          -43.744049999999994
+        ],
+        "group": "sunset-grove-mainstreet",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.mainstreet-brick:781/light:door_bakery",
+        "position": [
+          -56.20375000000001,
+          2.1,
+          -39.01405
+        ],
+        "group": "sunset-grove-mainstreet",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.courier-depot:782/light:entry",
+        "position": [
+          -35.959999999999994,
+          2.22,
+          -39.045
+        ],
+        "group": "courier_depot",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.courier-depot:782/light:shop",
+        "position": [
+          -37.3,
+          2.25,
+          -40.225
+        ],
+        "group": "courier_depot",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.courier-depot:782/light:sign",
+        "position": [
+          -37.8,
+          3.48,
+          -38.905
+        ],
+        "group": "courier_depot",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.clinic-annex:791/light:cross",
+        "position": [
+          63.79,
+          3.31,
+          -14.5435
+        ],
+        "group": "clinic-annex",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.clinic-annex:791/light:entry_L",
+        "position": [
+          65.73,
+          1.42,
+          -14.7535
+        ],
+        "group": "clinic-annex",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.clinic-annex:791/light:entry_R",
+        "position": [
+          66.63,
+          1.42,
+          -14.7535
+        ],
+        "group": "clinic-annex",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.clinic-annex:791/light:front",
+        "position": [
+          64.62,
+          1.7,
+          -14.7635
+        ],
+        "group": "clinic-annex",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.clinic-annex:791/light:lantern",
+        "position": [
+          67.66,
+          2.53,
+          -14.6435
+        ],
+        "group": "clinic-annex",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.clinic-annex:791/light:rear",
+        "position": [
+          65.75,
+          2,
+          -20.0935
+        ],
+        "group": "clinic-annex",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.clinic-annex:791/light:side",
+        "position": [
+          69.35,
+          3.31,
+          -18.6435
+        ],
+        "group": "clinic-annex",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.garage-detached:817/light:entrance",
+        "position": [
+          22.932000000000002,
+          2.925,
+          37.745
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.garage-detached:817/light:side",
+        "position": [
+          20.622,
+          1.95,
+          39.625
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.garage-detached:817/light:workshop",
+        "position": [
+          23.132,
+          2.36,
+          40.525
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:818/light:door_front",
+        "position": [
+          33.491,
+          2.29,
+          38.114
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:818/light:lamp_left",
+        "position": [
+          32.651,
+          2.18,
+          37.9
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:818/light:lamp_right",
+        "position": [
+          34.331,
+          2.18,
+          37.9
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:818/light:window_front_1.875_1.75",
+        "position": [
+          31.741,
+          1.875,
+          38.153
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:818/light:window_front_1.875_-1.75",
+        "position": [
+          35.241,
+          1.875,
+          38.153
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:818/light:window_front_4.395_1.75",
+        "position": [
+          31.741,
+          4.395,
+          38.153
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:818/light:window_front_4.395_-1.75",
+        "position": [
+          35.241,
+          4.395,
+          38.153
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:818/light:window_rear_1.875_1.45",
+        "position": [
+          32.041,
+          1.875,
+          43.447
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:818/light:window_rear_1.875_-1.45",
+        "position": [
+          34.941,
+          1.875,
+          43.447
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:818/light:window_rear_4.395_1.45",
+        "position": [
+          32.041,
+          4.395,
+          43.447
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:818/light:window_rear_4.395_-1.45",
+        "position": [
+          34.941,
+          4.395,
+          43.447
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:818/light:window_side1_1.875_1.1",
+        "position": [
+          30.294,
+          1.875,
+          39.7
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:818/light:window_side1_1.875_-1.35",
+        "position": [
+          30.294,
+          1.875,
+          42.15
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:818/light:window_side1_4.395_1.1",
+        "position": [
+          30.294,
+          4.395,
+          39.7
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:818/light:window_side1_4.395_-1.35",
+        "position": [
+          30.294,
+          4.395,
+          42.15
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:818/light:window_side-1_1.875_1.1",
+        "position": [
+          36.688,
+          1.875,
+          39.7
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:818/light:window_side-1_1.875_-1.35",
+        "position": [
+          36.688,
+          1.875,
+          42.15
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:818/light:window_side-1_4.395_1.1",
+        "position": [
+          36.688,
+          4.395,
+          39.7
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.house-d:818/light:window_side-1_4.395_-1.35",
+        "position": [
+          36.688,
+          4.395,
+          42.15
+        ],
+        "group": "residential",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.gas-station:847/light:canopy",
+        "position": [
+          -39.305,
+          3.76,
+          38.49
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.gas-station:847/light:lamp_shop_-1.8",
+        "position": [
+          -35.695,
+          2.86,
+          41.690000000000005
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.gas-station:847/light:lamp_shop_-3.85",
+        "position": [
+          -35.695,
+          2.86,
+          43.74
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.gas-station:847/light:open",
+        "position": [
+          -37.055,
+          2.85,
+          40.64000000000001
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.gas-station:847/light:prices",
+        "position": [
+          -44.025,
+          4.8,
+          35.25000000000001
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.gas-station:847/light:shop",
+        "position": [
+          -39.305,
+          2.2,
+          40.74
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.fire-station:853/light:entry_0",
+        "position": [
+          -74.86,
+          3.25,
+          45.5
+        ],
+        "group": "fire_station",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.fire-station:853/light:entry_1",
+        "position": [
+          -74.86,
+          3.25,
+          41.34
+        ],
+        "group": "fire_station",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.fire-station:853/light:entry_2",
+        "position": [
+          -74.86,
+          2.68,
+          43.32
+        ],
+        "group": "fire_station",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.fire-station:853/light:entry_3",
+        "position": [
+          -74.86,
+          2.4,
+          47.51
+        ],
+        "group": "fire_station",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.fire-station:853/light:entry_4",
+        "position": [
+          -74.86,
+          5.17,
+          38.08
+        ],
+        "group": "fire_station",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/bld.fire-station:853/light:side_window",
+        "position": [
+          -76.81,
+          2.1,
+          47.93
+        ],
+        "group": "fire_station",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1170/light:lantern",
+        "position": [
+          -79,
+          3.18,
+          -3
+        ],
+        "group": "block-2",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1171/light:lantern",
+        "position": [
+          -74,
+          3.18,
+          3
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1172/light:lantern",
+        "position": [
+          -51,
+          3.18,
+          -3
+        ],
+        "group": "block-0",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1173/light:lantern",
+        "position": [
+          -46,
+          3.18,
+          3
+        ],
+        "group": "block-1",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1174/light:lantern",
+        "position": [
+          -37,
+          3.18,
+          -3
+        ],
+        "group": "block-2",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1175/light:lantern",
+        "position": [
+          -23,
+          3.18,
+          -3
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1176/light:lantern",
+        "position": [
+          -18,
+          3.18,
+          3
+        ],
+        "group": "block-0",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1177/light:lantern",
+        "position": [
+          -9,
+          3.18,
+          -3
+        ],
+        "group": "block-1",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1178/light:lantern",
+        "position": [
+          -4,
+          3.18,
+          3
+        ],
+        "group": "block-2",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1179/light:lantern",
+        "position": [
+          5,
+          3.18,
+          -3
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1180/light:lantern",
+        "position": [
+          24,
+          3.18,
+          3
+        ],
+        "group": "block-0",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1181/light:lantern",
+        "position": [
+          33,
+          3.18,
+          -3
+        ],
+        "group": "block-1",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1182/light:lantern",
+        "position": [
+          38,
+          3.18,
+          3
+        ],
+        "group": "block-2",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1183/light:lantern",
+        "position": [
+          61,
+          3.18,
+          -3
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1184/light:lantern",
+        "position": [
+          66,
+          3.18,
+          3
+        ],
+        "group": "block-0",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1185/light:lantern",
+        "position": [
+          75,
+          3.18,
+          -3
+        ],
+        "group": "block-1",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1186/light:lantern",
+        "position": [
+          79.88,
+          3.18,
+          3
+        ],
+        "group": "block-2",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1187/light:lantern",
+        "position": [
+          -79,
+          3.18,
+          -34
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1188/light:lantern",
+        "position": [
+          -74,
+          3.18,
+          -28
+        ],
+        "group": "block-0",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1189/light:lantern",
+        "position": [
+          -51,
+          3.18,
+          -34
+        ],
+        "group": "block-1",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1190/light:lantern",
+        "position": [
+          -46,
+          3.18,
+          -28
+        ],
+        "group": "block-2",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1191/light:lantern",
+        "position": [
+          -37,
+          3.18,
+          -34
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1192/light:lantern",
+        "position": [
+          -23,
+          3.18,
+          -34
+        ],
+        "group": "block-0",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1193/light:lantern",
+        "position": [
+          -18,
+          3.18,
+          -28
+        ],
+        "group": "block-1",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1194/light:lantern",
+        "position": [
+          -9,
+          3.18,
+          -34
+        ],
+        "group": "block-2",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1195/light:lantern",
+        "position": [
+          -4,
+          3.18,
+          -28
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1196/light:lantern",
+        "position": [
+          5,
+          3.18,
+          -34
+        ],
+        "group": "block-0",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1197/light:lantern",
+        "position": [
+          24,
+          3.18,
+          -28
+        ],
+        "group": "block-1",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1198/light:lantern",
+        "position": [
+          33,
+          3.18,
+          -34
+        ],
+        "group": "block-2",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1199/light:lantern",
+        "position": [
+          38,
+          3.18,
+          -28
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1200/light:lantern",
+        "position": [
+          -79,
+          3.18,
+          27
+        ],
+        "group": "block-0",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1201/light:lantern",
+        "position": [
+          -74,
+          3.18,
+          33
+        ],
+        "group": "block-1",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1202/light:lantern",
+        "position": [
+          -51,
+          3.18,
+          27
+        ],
+        "group": "block-2",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1203/light:lantern",
+        "position": [
+          -46,
+          3.18,
+          33
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1204/light:lantern",
+        "position": [
+          -37,
+          3.18,
+          27
+        ],
+        "group": "block-0",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1205/light:lantern",
+        "position": [
+          -23,
+          3.18,
+          27
+        ],
+        "group": "block-1",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1206/light:lantern",
+        "position": [
+          -18,
+          3.18,
+          33
+        ],
+        "group": "block-2",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1207/light:lantern",
+        "position": [
+          -9,
+          3.18,
+          27
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1208/light:lantern",
+        "position": [
+          -4,
+          3.18,
+          33
+        ],
+        "group": "block-0",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1209/light:lantern",
+        "position": [
+          5,
+          3.18,
+          27
+        ],
+        "group": "block-1",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1210/light:lantern",
+        "position": [
+          24,
+          3.18,
+          33
+        ],
+        "group": "block-2",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1211/light:lantern",
+        "position": [
+          33,
+          3.18,
+          27
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1212/light:lantern",
+        "position": [
+          38,
+          3.18,
+          33
+        ],
+        "group": "block-0",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1213/light:lantern",
+        "position": [
+          61,
+          3.18,
+          27
+        ],
+        "group": "block-1",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1214/light:lantern",
+        "position": [
+          66,
+          3.18,
+          33
+        ],
+        "group": "block-2",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1215/light:lantern",
+        "position": [
+          75,
+          3.18,
+          27
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1216/light:lantern",
+        "position": [
+          79.88,
+          3.18,
+          33
+        ],
+        "group": "block-0",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1217/light:lantern",
+        "position": [
+          -61,
+          3.18,
+          -20
+        ],
+        "group": "block-1",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1218/light:lantern",
+        "position": [
+          -67,
+          3.18,
+          -11
+        ],
+        "group": "block-2",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1219/light:lantern",
+        "position": [
+          -67,
+          3.18,
+          17
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1220/light:lantern",
+        "position": [
+          -61,
+          3.18,
+          22
+        ],
+        "group": "block-0",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1221/light:lantern",
+        "position": [
+          -33,
+          3.18,
+          -47
+        ],
+        "group": "block-1",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1222/light:lantern",
+        "position": [
+          -27,
+          3.18,
+          -42
+        ],
+        "group": "block-2",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1223/light:lantern",
+        "position": [
+          -33,
+          3.18,
+          -19
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1224/light:lantern",
+        "position": [
+          -27,
+          3.18,
+          -14
+        ],
+        "group": "block-0",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1225/light:lantern",
+        "position": [
+          -33,
+          3.18,
+          9
+        ],
+        "group": "block-1",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1226/light:lantern",
+        "position": [
+          -27,
+          3.18,
+          14
+        ],
+        "group": "block-2",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1227/light:lantern",
+        "position": [
+          -33,
+          3.18,
+          23
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1228/light:lantern",
+        "position": [
+          -33,
+          3.18,
+          37
+        ],
+        "group": "block-0",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1229/light:lantern",
+        "position": [
+          -27,
+          3.18,
+          42
+        ],
+        "group": "block-1",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1230/light:lantern",
+        "position": [
+          11,
+          3.18,
+          -47
+        ],
+        "group": "block-2",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1231/light:lantern",
+        "position": [
+          17,
+          3.18,
+          -42
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1232/light:lantern",
+        "position": [
+          11,
+          3.18,
+          -19
+        ],
+        "group": "block-0",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1233/light:lantern",
+        "position": [
+          17,
+          3.18,
+          -14
+        ],
+        "group": "block-1",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1234/light:lantern",
+        "position": [
+          11,
+          3.18,
+          9
+        ],
+        "group": "block-2",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1235/light:lantern",
+        "position": [
+          17,
+          3.18,
+          14
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1236/light:lantern",
+        "position": [
+          11,
+          3.18,
+          23
+        ],
+        "group": "block-0",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1237/light:lantern",
+        "position": [
+          11,
+          3.18,
+          37
+        ],
+        "group": "block-1",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1238/light:lantern",
+        "position": [
+          17,
+          3.18,
+          42
+        ],
+        "group": "block-2",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1239/light:lantern",
+        "position": [
+          53,
+          3.18,
+          -20
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1240/light:lantern",
+        "position": [
+          47,
+          3.18,
+          -11
+        ],
+        "group": "block-0",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1241/light:lantern",
+        "position": [
+          53,
+          3.18,
+          8
+        ],
+        "group": "block-1",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1242/light:lantern",
+        "position": [
+          47,
+          3.18,
+          17
+        ],
+        "group": "block-2",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1243/light:lantern",
+        "position": [
+          53,
+          3.18,
+          22
+        ],
+        "group": "block-3",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.street-lamp:1244/light:lantern",
+        "position": [
+          47,
+          3.18,
+          45
+        ],
+        "group": "block-0",
+        "broken": false,
+        "emissive": 1
+      },
+      {
+        "id": "D-GROVE@0,0/prop.vending-machine:1313/light:front",
+        "position": [
+          -34.4,
+          1.0530000000000002,
+          39.90175
+        ],
+        "group": "block-1",
+        "broken": false,
+        "emissive": 1
+      }
+    ],
+    "heroLights": 0,
+    "heroShadowMaps": 0,
+    "promotionChanges": 0,
+    "practicalEffects": {
+      "beams": 0,
+      "reflections": 24
+    },
     "shadowSize": 2048,
     "preset": "night",
     "sunDirection": [
@@ -225,72 +6062,72 @@
     ],
     "sunColor": "#8fa6ff",
     "sky": "#141c33",
-    "fog": "#26304d",
+    "fog": "#353e56",
     "fogNear": 42,
     "fogFar": 115,
-    "intensity": 0.2,
+    "intensity": 0.17186929092129632,
     "shadowColor": "2f2d55",
     "coreShadowEdges": [
       1,
       -0.25
     ],
-    "shadowRadius": 2,
+    "shadowRadius": 3.054901590451389,
     "normalBias": 0.08,
-    "shadowArea": 16.5,
+    "shadowArea": 17.75,
     "fogColors": [
-      "#141c33",
-      "#26304d"
+      "#363d4b",
+      "#353e56"
     ],
     "rim": 0.45,
-    "fieldShadow": 1,
+    "fieldShadow": 0,
     "shadowDirection": [
-      -0.7463326114251737,
-      0.4547193287090494,
-      0.486022597439329
+      0.4351453279888774,
+      0.7648421872844885,
+      -0.475042074009589
     ],
     "lightField": {
       "strength": 1,
       "resolution": 1024,
       "size": 80,
-      "statics": 555,
-      "litStatics": 555,
-      "candidates": 135,
-      "drawn": 135,
+      "statics": 530,
+      "litStatics": 530,
+      "candidates": 73,
+      "drawn": 73,
       "transients": 0,
       "capacity": 512,
-      "ms": 0.10000038146972656,
+      "ms": 0.19999980926513672,
       "center": [
-        35.9375,
-        -36.25
+        -77.734375,
+        43.203125
       ]
     }
   },
   "infectedNearby": [
     {
-      "id": 172,
+      "id": 176,
       "kind": "infected",
       "archetype": "infected.runner",
       "faction": "infected",
       "health": {
-        "current": 40,
-        "max": 40
+        "current": 32,
+        "max": 60
       },
       "transform": {
-        "x": 33.931066935112206,
-        "y": 0.7,
-        "z": -33.42569388645038,
-        "yaw": -1.8840091133270833
+        "x": -75.7815500903614,
+        "y": 1.23,
+        "z": 39.978794821954196,
+        "yaw": -0.19238983146243344
       },
       "infected": {
-        "state": "wander",
+        "state": "bite",
         "pathGrid": -1,
         "grabNextTick": 0,
         "combo": 0,
         "targetId": 0,
         "activeUntil": 0,
-        "speed": 4.5474737795173805,
+        "speed": 5.441494834072841,
         "until": 0,
-        "cooldown": 3367,
+        "cooldown": 4272,
         "attackId": 0,
         "special": "lunge",
         "hidden": false,
@@ -305,66 +6142,66 @@
         "packIndex": 0,
         "birds": 0,
         "birdPositions": [
-          41.22999999999999,
+          -69.8,
           3,
-          -36.349999999999994,
-          37.75526255420234,
+          41.3,
+          -73.27473744579764,
           3,
-          -34.99901907268747,
-          39.40485053403776,
+          42.650980927312524,
+          -71.62514946596222,
           3,
-          -38.34234216206622,
-          40.44687881583442,
+          39.307657837933775,
+          -70.58312118416558,
           3,
-          -34.76279933607202,
-          37.26057270925328,
+          42.88720066392797,
+          -73.7694272907467,
           3,
-          -36.69836209102325,
-          40.91750935660554,
+          40.95163790897674,
+          -70.11249064339444,
           3,
-          -37.42345804359961,
-          38.71079405242658,
+          40.22654195640038,
+          -72.31920594757341,
           3,
-          -34.4185691355877,
-          38.30818309636179,
+          43.23143086441229,
+          -72.7218169036382,
           3,
-          -38.12489537611851,
-          41.10864385353789,
+          39.52510462388148,
+          -69.92135614646209,
           3,
-          -35.663926190877206,
-          37.38131046550825,
+          41.986073809122786,
+          -73.64868953449174,
           3,
-          -35.586883360775886,
-          40.077687828631284,
+          42.063116639224106,
+          -70.9523121713687,
           3,
-          -38.161470492497834,
-          39.82857255126226,
+          39.48852950750216,
+          -71.20142744873772,
           3,
-          -34.44167327198004,
-          37.499574815995594,
+          43.208326728019955,
+          -73.5304251840044,
           3,
-          -37.352810392129705,
-          41.1833502647403,
+          40.29718960787029,
+          -69.84664973525969,
           3,
-          -36.77944469171125,
-          38.079746403833106,
+          40.87055530828874,
+          -72.95025359616687,
           3,
-          -34.71387144010467,
-          38.97297178569039,
+          42.93612855989532,
+          -72.0570282143096,
           3,
-          -38.333415361705356,
-          40.75930272843574,
+          39.316584638294636,
+          -70.27069727156425,
           3,
-          -35.06111165541813,
-          37.231708214724875,
+          42.58888834458186,
+          -73.79829178527511,
           3,
-          -36.26735654350165,
-          40.647652994939286,
+          41.38264345649834,
+          -70.3823470050607,
           3,
-          -37.76076574453012,
-          39.13762582849094,
+          39.88923425546987,
+          -71.89237417150905,
           3,
-          -34.35213438579117
+          43.297865614208824
         ],
         "birdAlive": [
           0,
@@ -389,189 +6226,155 @@
           0
         ],
         "scatterUntil": 0,
-        "variant": "infected.runner",
-        "path": [
-          13838,
-          14178,
-          14518,
-          14858,
-          15198,
-          15197,
-          15196,
-          15195,
-          15194,
-          15193,
-          15192,
-          15191,
-          15190,
-          15189,
-          15188,
-          15187,
-          15186,
-          15185,
-          15184,
-          15183,
-          15182,
-          15181,
-          15180,
-          15179,
-          15178,
-          15177,
-          15176,
-          15175,
-          15174,
-          15173,
-          15172,
-          15171,
-          14831,
-          14491,
-          14151,
-          13811,
-          13471
-        ],
-        "pathIndex": 7,
-        "goal": 13471,
+        "variant": "inf.delivery-driver",
+        "path": [],
+        "pathIndex": 5,
+        "goal": -1,
         "dx": 0,
         "dz": 0,
-        "grabHits": 1,
-        "grabUntil": 0,
+        "grabHits": 0,
+        "grabUntil": 4634,
         "grabX": 0,
         "grabZ": 0,
         "perched": false,
+        "heardTargetId": 0,
         "l1": {
-          "mode": "wander",
+          "mode": "bite",
           "tier": "average",
-          "runSpeed": 4.5474737795173805,
-          "wanderSpeed": 1.258836599998176,
-          "targetId": 0,
-          "seenX": 38.92999999999999,
-          "seenZ": -38.849999999999994,
-          "seenTick": 2168,
+          "runSpeed": 5.441494834072841,
+          "wanderSpeed": 1.075634839758277,
+          "targetId": 168,
+          "seenX": -74.80000000000001,
+          "seenZ": 40.17,
+          "seenTick": 4564,
           "headingX": 0,
           "headingZ": 0,
           "looking": false,
-          "lookYaw": -1.6996284026418473,
-          "pauseUntil": 3367,
-          "goalX": 20.75,
-          "goalZ": -35.25,
-          "hasGoal": true,
+          "lookYaw": -0.19238983146243344,
+          "pauseUntil": 4574,
+          "goalX": -66.25,
+          "goalZ": 24.75,
+          "hasGoal": false,
           "search": {
-            "startTick": 609,
+            "startTick": 2866,
             "until": 0,
-            "originX": 39.36755730728632,
-            "originZ": -29.83068295031459,
+            "originX": -84.89071470054621,
+            "originZ": 33.30019469582018,
             "probes": [
-              24.67596902030501,
-              -37.85563854636779,
-              23.68023927148417,
-              -33.23870920696876,
-              23.66654682693791,
-              -38.74325729355141,
-              23.45997657131423,
-              -32.05909726106712
+              -70.51657745295667,
+              34.939909266612304,
+              -75.47133901099372,
+              35.76932795388917,
+              -74.78320248942995,
+              32.70193349009115,
+              -69.18560757617571,
+              35.59670455047629,
+              -68.51625039091736,
+              32.39350466936614
             ],
-            "doubleBackAt": 3,
+            "doubleBackAt": -1,
             "next": 0,
             "visited": 0,
             "doubledBack": false,
-            "legTicks": 325
+            "legTicks": 7
           },
           "episodes": 1,
           "distractionId": 0,
-          "biteTargetId": 0,
-          "direct": false,
-          "directTick": 3686,
-          "directX": 20.75,
-          "directZ": -35.25,
-          "homeX": 39.096977715421836,
-          "homeZ": -40.138909419064404,
+          "biteTargetId": 168,
+          "direct": true,
+          "directTick": -1,
+          "directX": -74.80000000000001,
+          "directZ": 40.17,
+          "homeX": -76.08278849011948,
+          "homeZ": 39.94075407772408,
           "cueUntil": 0,
-          "cueYaw": -2.885684471798431,
-          "cueSource": 174,
-          "stuckX": 34.01534898847998,
-          "stuckZ": -33.69230675108299,
-          "stuckTick": 3682,
+          "cueYaw": 2.3762508506035207,
+          "cueSource": 171,
+          "stuckX": -76.07579699522753,
+          "stuckZ": 39.921475758580016,
+          "stuckTick": 4480,
           "stuckCount": 0,
-          "ignoreId": 0,
-          "ignoreUntil": 0,
+          "ignoreId": 168,
+          "ignoreUntil": 3226,
+          "hearingUntil": 0,
           "leashM": 0,
-          "reaction": 14,
+          "reaction": 0,
           "routeAt": 0,
           "escapeUntil": 0,
-          "escapeX": 39.25,
-          "escapeZ": -40.25
+          "escapeX": -76.75,
+          "escapeZ": 41.25
         }
       },
       "combat": {
         "radius": 0.35,
         "armor": 0,
         "shield": false,
-        "staggerUntil": 3367,
-        "attacking": false,
+        "staggerUntil": 4473,
+        "attacking": true,
         "damageMultiplier": 1,
         "statuses": [],
         "reaction": {
-          "index": 1,
-          "started": 3247,
-          "until": 3367,
+          "index": 2,
+          "started": 4467,
+          "until": 4473,
           "direction": {
-            "x": 0,
-            "z": 0
+            "x": -0.9815500903613981,
+            "z": -0.19120517804581338
           },
           "from": {
-            "x": 39.096977715421836,
-            "z": -40.138909419064404
+            "x": -75.7815500903614,
+            "z": 39.97879482195419
           },
           "to": {
-            "x": 39.096977715421836,
-            "z": -40.138909419064404
+            "x": -76.07601511746984,
+            "z": 39.92143326854045
           },
-          "heavy": true
+          "heavy": false
         }
       },
       "locomotion": {
-        "vx": -0.6688580470984847,
-        "vz": 1.6978556872927832,
-        "ax": -2.2640814652480694,
-        "az": -1.6995332957542932,
-        "omega": -0.7447319624196225,
-        "updatedAt": 3691
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": -1
       },
       "appearance": {
-        "entityId": 172,
-        "asset": "npc.civilian-man-b",
-        "tint": "#f2efe4",
+        "entityId": 176,
+        "asset": "npc.civilian-man-a",
+        "tint": "#59627e",
         "accessories": [],
         "handProp": null,
         "tier": "average"
       },
       "motion": {
         "velocity": {
-          "x": -0.6688580470985528,
-          "z": 1.6978556872928152
+          "x": 0,
+          "z": 0
         },
-        "speed": 1.8248520548365141,
-        "moving": true,
-        "distance": 60.14907102678952
+        "speed": 0,
+        "moving": false,
+        "distance": 52.79722540125705
       }
     },
     {
-      "id": 176,
+      "id": 178,
       "kind": "infected",
       "archetype": "infected.runner",
       "faction": "infected",
       "health": {
-        "current": 26,
-        "max": 40
+        "current": 32,
+        "max": 60
       },
       "transform": {
-        "x": 37.85947183169514,
-        "y": 1.23,
-        "z": -44.60592524398097,
-        "yaw": -5.586881467438307
+        "x": -74.83071402535991,
+        "y": 1,
+        "z": 41.17164086819003,
+        "yaw": 1.5401422217754785
       },
       "infected": {
-        "state": "search",
+        "state": "bite",
         "pathGrid": -1,
         "grabNextTick": 0,
         "combo": 0,
@@ -579,13 +6382,13 @@
         "activeUntil": 0,
         "speed": 5.229796819720764,
         "until": 0,
-        "cooldown": 3194,
+        "cooldown": 3904,
         "attackId": 0,
         "special": "lunge",
         "hidden": false,
         "deadAt": -1,
         "recoverAt": -1,
-        "downs": 2,
+        "downs": 1,
         "revived": false,
         "reviveUsed": false,
         "legLost": false,
@@ -594,66 +6397,66 @@
         "packIndex": 0,
         "birds": 0,
         "birdPositions": [
-          41.22999999999999,
+          -69.8,
           3,
-          -36.349999999999994,
-          37.75526255420234,
+          41.3,
+          -73.27473744579764,
           3,
-          -34.99901907268747,
-          39.40485053403776,
+          42.650980927312524,
+          -71.62514946596222,
           3,
-          -38.34234216206622,
-          40.44687881583442,
+          39.307657837933775,
+          -70.58312118416558,
           3,
-          -34.76279933607202,
-          37.26057270925328,
+          42.88720066392797,
+          -73.7694272907467,
           3,
-          -36.69836209102325,
-          40.91750935660554,
+          40.95163790897674,
+          -70.11249064339444,
           3,
-          -37.42345804359961,
-          38.71079405242658,
+          40.22654195640038,
+          -72.31920594757341,
           3,
-          -34.4185691355877,
-          38.30818309636179,
+          43.23143086441229,
+          -72.7218169036382,
           3,
-          -38.12489537611851,
-          41.10864385353789,
+          39.52510462388148,
+          -69.92135614646209,
           3,
-          -35.663926190877206,
-          37.38131046550825,
+          41.986073809122786,
+          -73.64868953449174,
           3,
-          -35.586883360775886,
-          40.077687828631284,
+          42.063116639224106,
+          -70.9523121713687,
           3,
-          -38.161470492497834,
-          39.82857255126226,
+          39.48852950750216,
+          -71.20142744873772,
           3,
-          -34.44167327198004,
-          37.499574815995594,
+          43.208326728019955,
+          -73.5304251840044,
           3,
-          -37.352810392129705,
-          41.1833502647403,
+          40.29718960787029,
+          -69.84664973525969,
           3,
-          -36.77944469171125,
-          38.079746403833106,
+          40.87055530828874,
+          -72.95025359616687,
           3,
-          -34.71387144010467,
-          38.97297178569039,
+          42.93612855989532,
+          -72.0570282143096,
           3,
-          -38.333415361705356,
-          40.75930272843574,
+          39.316584638294636,
+          -70.27069727156425,
           3,
-          -35.06111165541813,
-          37.231708214724875,
+          42.58888834458186,
+          -73.79829178527511,
           3,
-          -36.26735654350165,
-          40.647652994939286,
+          41.38264345649834,
+          -70.3823470050607,
           3,
-          -37.76076574453012,
-          39.13762582849094,
+          39.88923425546987,
+          -71.89237417150905,
           3,
-          -34.35213438579117
+          43.297865614208824
         ],
         "birdAlive": [
           0,
@@ -678,153 +6481,619 @@
           0
         ],
         "scatterUntil": 0,
-        "variant": "infected.runner",
+        "variant": "inf.cashier",
         "path": [],
-        "pathIndex": 10,
+        "pathIndex": 8,
         "goal": -1,
         "dx": 0,
         "dz": 0,
-        "grabHits": 3,
-        "grabUntil": 0,
+        "grabHits": 0,
+        "grabUntil": 4616,
         "grabX": 0,
         "grabZ": 0,
         "perched": false,
+        "heardTargetId": 0,
         "l1": {
-          "mode": "search",
+          "mode": "bite",
           "tier": "average",
           "runSpeed": 5.229796819720764,
-          "wanderSpeed": 1.2774017456918954,
-          "targetId": 0,
-          "seenX": 38.92999999999999,
-          "seenZ": -38.849999999999994,
-          "seenTick": 3229,
+          "wanderSpeed": 1.2988302073441444,
+          "targetId": 168,
+          "seenX": -74.80000000000001,
+          "seenZ": 40.17,
+          "seenTick": 4547,
           "headingX": 0,
           "headingZ": 0,
           "looking": false,
-          "lookYaw": -4.6253032974427235,
-          "pauseUntil": 3661,
-          "goalX": 22.75,
-          "goalZ": -34.75,
-          "hasGoal": true,
+          "lookYaw": 1.7286296777683925,
+          "pauseUntil": 4528,
+          "goalX": -64.75,
+          "goalZ": 26.25,
+          "hasGoal": false,
           "search": {
-            "startTick": 3239,
-            "until": 3924,
-            "originX": 39.9664389479865,
-            "originZ": -39.78873751308331,
-            "probes": [
-              35.37157138136499,
-              -38.67916862596076,
-              34.87594109743733,
-              -41.49620753481726,
-              38.26118411906279,
-              -44.46110699723818,
-              35.31526559606478,
-              -44.69591941065486,
-              40.593490679362446,
-              -44.17975031888658
-            ],
+            "startTick": 0,
+            "until": 0,
+            "originX": 0,
+            "originZ": 0,
+            "probes": [],
             "doubleBackAt": -1,
-            "next": 3,
-            "visited": 3,
+            "next": -1,
+            "visited": 0,
             "doubledBack": false,
-            "legTicks": 31
+            "legTicks": 13
           },
-          "episodes": 2,
+          "episodes": 0,
           "distractionId": 0,
-          "biteTargetId": 0,
+          "biteTargetId": 168,
           "direct": true,
-          "directTick": 3688,
-          "directX": 35.31526559606478,
-          "directZ": -44.69591941065486,
-          "homeX": 40.10750888228206,
-          "homeZ": -39.90517562236412,
+          "directTick": 4550,
+          "directX": -74.80000000000001,
+          "directZ": 40.17,
+          "homeX": -74.45561105425016,
+          "homeZ": 41.423553450813046,
           "cueUntil": 0,
           "cueYaw": 0,
           "cueSource": 0,
-          "stuckX": 38.00421629443242,
-          "stuckZ": -44.236924057509476,
-          "stuckTick": 3661,
+          "stuckX": -74.73254086920667,
+          "stuckZ": 41.55634445316922,
+          "stuckTick": 4528,
           "stuckCount": 0,
-          "ignoreId": 169,
-          "ignoreUntil": 3599,
+          "ignoreId": 0,
+          "ignoreUntil": 0,
+          "hearingUntil": 0,
           "leashM": 0,
           "reaction": 18,
           "routeAt": 0,
-          "escapeUntil": 3359,
-          "escapeX": 38.75,
-          "escapeZ": -40.75
+          "escapeUntil": 0
         }
       },
       "combat": {
         "radius": 0.35,
         "armor": 0,
         "shield": false,
-        "staggerUntil": 3282,
-        "attacking": false,
+        "staggerUntil": 4503,
+        "attacking": true,
         "damageMultiplier": 1,
         "statuses": [],
         "reaction": {
-          "index": 3,
-          "started": 3276,
-          "until": 3282,
+          "index": 2,
+          "started": 4497,
+          "until": 4503,
           "direction": {
-            "x": 0.7358017706264921,
-            "z": -0.6771969834124478
+            "x": 0.16927296084389645,
+            "z": 0.9855692084917936
           },
           "from": {
-            "x": 39.66336585418181,
-            "z": -39.52495508167473
+            "x": -74.63091342801017,
+            "z": 41.154483984280844
           },
           "to": {
-            "x": 39.884106385369755,
-            "z": -39.72811417669847
+            "x": -74.580131539757,
+            "z": 41.45015474682839
           },
           "heavy": false
         }
       },
       "locomotion": {
-        "vx": -1.722152179144452,
-        "vz": -0.520552509010158,
-        "ax": -5.909277775955596,
-        "az": 1.0394403141100945,
-        "omega": 2.1953982969638197,
-        "updatedAt": 3691
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": -1
       },
       "appearance": {
-        "entityId": 176,
+        "entityId": 178,
         "asset": "npc.civilian-woman-b",
-        "tint": "#ac7a91",
+        "tint": "#e5d9b9",
         "accessories": [],
         "handProp": null,
         "tier": "average"
       },
       "motion": {
         "velocity": {
-          "x": -1.722152179144416,
-          "z": -0.5205525090100593
+          "x": 0,
+          "z": 0
         },
-        "speed": 1.7991061788478544,
-        "moving": true,
-        "distance": 55.09864219114309
+        "speed": 0,
+        "moving": false,
+        "distance": 45.92639883500706
       }
     },
     {
-      "id": 256,
+      "id": 180,
       "kind": "infected",
       "archetype": "infected.runner",
       "faction": "infected",
       "health": {
-        "current": 40,
-        "max": 40
+        "current": 18,
+        "max": 60
       },
       "transform": {
-        "x": 39.45497269301506,
+        "x": -73.8143619739783,
         "y": 1.1,
-        "z": -37.40984787158614,
-        "yaw": 1.9161098447455682
+        "z": 40.0011282094013,
+        "yaw": -2.971907745792298
+      },
+      "infected": {
+        "state": "bite",
+        "pathGrid": -1,
+        "grabNextTick": 0,
+        "combo": 0,
+        "targetId": 0,
+        "activeUntil": 0,
+        "speed": 4.9533634034711,
+        "until": 0,
+        "cooldown": 3610,
+        "attackId": 0,
+        "special": "lunge",
+        "hidden": false,
+        "deadAt": -1,
+        "recoverAt": -1,
+        "downs": 1,
+        "revived": false,
+        "reviveUsed": false,
+        "legLost": false,
+        "detached": false,
+        "pack": 0,
+        "packIndex": 0,
+        "birds": 0,
+        "birdPositions": [
+          -69.8,
+          3,
+          41.3,
+          -73.27473744579764,
+          3,
+          42.650980927312524,
+          -71.62514946596222,
+          3,
+          39.307657837933775,
+          -70.58312118416558,
+          3,
+          42.88720066392797,
+          -73.7694272907467,
+          3,
+          40.95163790897674,
+          -70.11249064339444,
+          3,
+          40.22654195640038,
+          -72.31920594757341,
+          3,
+          43.23143086441229,
+          -72.7218169036382,
+          3,
+          39.52510462388148,
+          -69.92135614646209,
+          3,
+          41.986073809122786,
+          -73.64868953449174,
+          3,
+          42.063116639224106,
+          -70.9523121713687,
+          3,
+          39.48852950750216,
+          -71.20142744873772,
+          3,
+          43.208326728019955,
+          -73.5304251840044,
+          3,
+          40.29718960787029,
+          -69.84664973525969,
+          3,
+          40.87055530828874,
+          -72.95025359616687,
+          3,
+          42.93612855989532,
+          -72.0570282143096,
+          3,
+          39.316584638294636,
+          -70.27069727156425,
+          3,
+          42.58888834458186,
+          -73.79829178527511,
+          3,
+          41.38264345649834,
+          -70.3823470050607,
+          3,
+          39.88923425546987,
+          -71.89237417150905,
+          3,
+          43.297865614208824
+        ],
+        "birdAlive": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scatterUntil": 0,
+        "variant": "inf.bathrobe-neighbor",
+        "path": [],
+        "pathIndex": 4,
+        "goal": -1,
+        "dx": 0,
+        "dz": 0,
+        "grabHits": 0,
+        "grabUntil": 4635,
+        "grabX": 0,
+        "grabZ": 0,
+        "perched": false,
+        "heardTargetId": 0,
+        "l1": {
+          "mode": "bite",
+          "tier": "average",
+          "runSpeed": 4.9533634034711,
+          "wanderSpeed": 1.3387455988675354,
+          "targetId": 168,
+          "seenX": -74.80000000000001,
+          "seenZ": 40.17,
+          "seenTick": 4575,
+          "headingX": 0,
+          "headingZ": 0,
+          "looking": false,
+          "lookYaw": -3.001992201711306,
+          "pauseUntil": 4551,
+          "goalX": -65.25,
+          "goalZ": 24.25,
+          "hasGoal": false,
+          "search": {
+            "startTick": 4155,
+            "until": 4836,
+            "originX": -74.80000000000001,
+            "originZ": 40.17,
+            "probes": [
+              -70.43740264673747,
+              37.603073115697526,
+              -74.7415980212826,
+              32.82595678547943,
+              -73.30336931000635,
+              35.70405210486423,
+              -75.7936604442036,
+              33.403160959301474
+            ],
+            "doubleBackAt": 3,
+            "next": -1,
+            "visited": 0,
+            "doubledBack": false,
+            "legTicks": 60
+          },
+          "episodes": 2,
+          "distractionId": 0,
+          "biteTargetId": 168,
+          "direct": true,
+          "directTick": 4572,
+          "directX": -74.80000000000001,
+          "directZ": 40.17,
+          "homeX": -73.52193135240235,
+          "homeZ": 40.407782530956155,
+          "cueUntil": 0,
+          "cueYaw": 0,
+          "cueSource": 0,
+          "stuckX": -73.47836426800916,
+          "stuckZ": 39.97534828468899,
+          "stuckTick": 4551,
+          "stuckCount": 0,
+          "ignoreId": 168,
+          "ignoreUntil": 4015,
+          "hearingUntil": 0,
+          "leashM": 0,
+          "reaction": 11,
+          "routeAt": 0,
+          "escapeUntil": 0,
+          "escapeX": -74.25,
+          "escapeZ": 41.75
+        }
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 4545,
+        "attacking": true,
+        "damageMultiplier": 1,
+        "statuses": [],
+        "reaction": {
+          "index": 2,
+          "started": 4539,
+          "until": 4545,
+          "direction": {
+            "x": 0.9893274845389973,
+            "z": -0.14570905371918397
+          },
+          "from": {
+            "x": -73.77494266281873,
+            "z": 40.019028621015025
+          },
+          "to": {
+            "x": -73.47814441745705,
+            "z": 39.975315904899276
+          },
+          "heavy": false
+        }
+      },
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": -1
+      },
+      "appearance": {
+        "entityId": 180,
+        "asset": "npc.civilian-elderly",
+        "tint": "#b95862",
+        "accessories": [],
+        "handProp": null,
+        "tier": "average"
+      },
+      "motion": {
+        "velocity": {
+          "x": 0,
+          "z": 0
+        },
+        "speed": 0,
+        "moving": false,
+        "distance": 71.45191064206044
+      }
+    },
+    {
+      "id": 252,
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "faction": "infected",
+      "health": {
+        "current": 60,
+        "max": 60
+      },
+      "transform": {
+        "x": -71.8432207020441,
+        "y": 1.1,
+        "z": 42.3834869161873,
+        "yaw": 3.1681771177077658
       },
       "infected": {
         "state": "chase",
+        "pathGrid": -1,
+        "grabNextTick": 0,
+        "combo": 0,
+        "targetId": 0,
+        "activeUntil": 0,
+        "speed": 5.504558779698728,
+        "until": 0,
+        "cooldown": 0,
+        "attackId": 0,
+        "special": "lunge",
+        "hidden": false,
+        "deadAt": -1,
+        "recoverAt": -1,
+        "downs": 0,
+        "revived": false,
+        "reviveUsed": false,
+        "legLost": false,
+        "detached": false,
+        "pack": 0,
+        "packIndex": 0,
+        "birds": 0,
+        "birdPositions": [
+          -69.8,
+          3,
+          41.3,
+          -73.27473744579764,
+          3,
+          42.650980927312524,
+          -71.62514946596222,
+          3,
+          39.307657837933775,
+          -70.58312118416558,
+          3,
+          42.88720066392797,
+          -73.7694272907467,
+          3,
+          40.95163790897674,
+          -70.11249064339444,
+          3,
+          40.22654195640038,
+          -72.31920594757341,
+          3,
+          43.23143086441229,
+          -72.7218169036382,
+          3,
+          39.52510462388148,
+          -69.92135614646209,
+          3,
+          41.986073809122786,
+          -73.64868953449174,
+          3,
+          42.063116639224106,
+          -70.9523121713687,
+          3,
+          39.48852950750216,
+          -71.20142744873772,
+          3,
+          43.208326728019955,
+          -73.5304251840044,
+          3,
+          40.29718960787029,
+          -69.84664973525969,
+          3,
+          40.87055530828874,
+          -72.95025359616687,
+          3,
+          42.93612855989532,
+          -72.0570282143096,
+          3,
+          39.316584638294636,
+          -70.27069727156425,
+          3,
+          42.58888834458186,
+          -73.79829178527511,
+          3,
+          41.38264345649834,
+          -70.3823470050607,
+          3,
+          39.88923425546987,
+          -71.89237417150905,
+          3,
+          43.297865614208824
+        ],
+        "birdAlive": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "scatterUntil": 0,
+        "variant": "inf.common-worker",
+        "path": [],
+        "pathIndex": 0,
+        "goal": -1,
+        "dx": 0,
+        "dz": 0,
+        "grabHits": 0,
+        "grabUntil": 0,
+        "grabX": 0,
+        "grabZ": 0,
+        "perched": false,
+        "heardTargetId": 0,
+        "l1": {
+          "mode": "chase",
+          "tier": "average",
+          "runSpeed": 5.504558779698728,
+          "wanderSpeed": 1.0406721444800495,
+          "targetId": 168,
+          "seenX": -74.80000000000001,
+          "seenZ": 40.17,
+          "seenTick": 4578,
+          "headingX": 0,
+          "headingZ": 0,
+          "looking": true,
+          "lookYaw": 2.499732782189028,
+          "pauseUntil": 4595,
+          "goalX": -82.30623226724785,
+          "goalZ": 43.47141270438476,
+          "hasGoal": true,
+          "search": {
+            "startTick": 0,
+            "until": 4715,
+            "originX": -80.88866970960468,
+            "originZ": 43.715981370118115,
+            "probes": [],
+            "doubleBackAt": -1,
+            "next": -1,
+            "visited": 0,
+            "doubledBack": false,
+            "legTicks": 3
+          },
+          "episodes": 0,
+          "distractionId": 0,
+          "biteTargetId": 0,
+          "direct": false,
+          "directTick": 4575,
+          "directX": -82.30623226724785,
+          "directZ": 43.47141270438476,
+          "homeX": -71.8,
+          "homeZ": 41.3,
+          "cueUntil": 0,
+          "cueYaw": -2.995363016106157,
+          "cueSource": 180,
+          "stuckX": 0,
+          "stuckZ": 0,
+          "stuckTick": 4559,
+          "stuckCount": 0,
+          "ignoreId": 0,
+          "ignoreUntil": 0,
+          "hearingUntil": 0,
+          "leashM": 0,
+          "reaction": 5,
+          "routeAt": 0,
+          "escapeUntil": 0
+        }
+      },
+      "combat": {
+        "radius": 0.35,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      },
+      "locomotion": {
+        "vx": -0.13432383238391804,
+        "vz": 0.013966759026241329,
+        "ax": -1.4232071950824938,
+        "az": 0.14798261474044921,
+        "omega": 0.007096532686718837,
+        "updatedAt": 4579
+      },
+      "appearance": {
+        "entityId": 252,
+        "asset": "npc.civilian-man-a",
+        "tint": "#e5d9b9",
+        "accessories": [],
+        "handProp": null,
+        "tier": "average"
+      },
+      "motion": {
+        "velocity": {
+          "x": -0.13432383238381362,
+          "z": 0.013966759026118325
+        },
+        "speed": 0.13504799999988343,
+        "moving": true,
+        "distance": 35.61378850233697
+      }
+    },
+    {
+      "id": 253,
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "faction": "infected",
+      "health": {
+        "current": 60,
+        "max": 60
+      },
+      "transform": {
+        "x": -71.77427062080753,
+        "y": 1.1,
+        "z": 40.54554788573834,
+        "yaw": 0.5574629934615641
+      },
+      "infected": {
+        "state": "wander",
         "pathGrid": -1,
         "grabNextTick": 0,
         "combo": 0,
@@ -847,66 +7116,66 @@
         "packIndex": 0,
         "birds": 0,
         "birdPositions": [
-          41.22999999999999,
+          -69.8,
           3,
-          -36.349999999999994,
-          37.75526255420234,
+          41.3,
+          -73.27473744579764,
           3,
-          -34.99901907268747,
-          39.40485053403776,
+          42.650980927312524,
+          -71.62514946596222,
           3,
-          -38.34234216206622,
-          40.44687881583442,
+          39.307657837933775,
+          -70.58312118416558,
           3,
-          -34.76279933607202,
-          37.26057270925328,
+          42.88720066392797,
+          -73.7694272907467,
           3,
-          -36.69836209102325,
-          40.91750935660554,
+          40.95163790897674,
+          -70.11249064339444,
           3,
-          -37.42345804359961,
-          38.71079405242658,
+          40.22654195640038,
+          -72.31920594757341,
           3,
-          -34.4185691355877,
-          38.30818309636179,
+          43.23143086441229,
+          -72.7218169036382,
           3,
-          -38.12489537611851,
-          41.10864385353789,
+          39.52510462388148,
+          -69.92135614646209,
           3,
-          -35.663926190877206,
-          37.38131046550825,
+          41.986073809122786,
+          -73.64868953449174,
           3,
-          -35.586883360775886,
-          40.077687828631284,
+          42.063116639224106,
+          -70.9523121713687,
           3,
-          -38.161470492497834,
-          39.82857255126226,
+          39.48852950750216,
+          -71.20142744873772,
           3,
-          -34.44167327198004,
-          37.499574815995594,
+          43.208326728019955,
+          -73.5304251840044,
           3,
-          -37.352810392129705,
-          41.1833502647403,
+          40.29718960787029,
+          -69.84664973525969,
           3,
-          -36.77944469171125,
-          38.079746403833106,
+          40.87055530828874,
+          -72.95025359616687,
           3,
-          -34.71387144010467,
-          38.97297178569039,
+          42.93612855989532,
+          -72.0570282143096,
           3,
-          -38.333415361705356,
-          40.75930272843574,
+          39.316584638294636,
+          -70.27069727156425,
           3,
-          -35.06111165541813,
-          37.231708214724875,
+          42.58888834458186,
+          -73.79829178527511,
           3,
-          -36.26735654350165,
-          40.647652994939286,
+          41.38264345649834,
+          -70.3823470050607,
           3,
-          -37.76076574453012,
-          39.13762582849094,
+          39.88923425546987,
+          -71.89237417150905,
           3,
-          -34.35213438579117
+          43.297865614208824
         ],
         "birdAlive": [
           0,
@@ -931,7 +7200,7 @@
           0
         ],
         "scatterUntil": 0,
-        "variant": "infected.runner",
+        "variant": "inf.jogger",
         "path": [],
         "pathIndex": 0,
         "goal": -1,
@@ -942,20 +7211,21 @@
         "grabX": 0,
         "grabZ": 0,
         "perched": false,
+        "heardTargetId": 0,
         "l1": {
-          "mode": "chase",
+          "mode": "wander",
           "tier": "average",
           "runSpeed": 4.908827650180595,
-          "wanderSpeed": 1.332943172007799,
-          "targetId": 169,
-          "seenX": 38.92999999999999,
-          "seenZ": -38.849999999999994,
-          "seenTick": 3689,
+          "wanderSpeed": 1.3038746344856917,
+          "targetId": 0,
+          "seenX": 0,
+          "seenZ": 0,
+          "seenTick": 0,
           "headingX": 0,
           "headingZ": 0,
           "looking": true,
-          "lookYaw": 1.9161098447455682,
-          "pauseUntil": 3703,
+          "lookYaw": 0.008059576563772097,
+          "pauseUntil": 4580,
           "goalX": 0,
           "goalZ": 0,
           "hasGoal": false,
@@ -978,17 +7248,18 @@
           "directTick": -1,
           "directX": 0,
           "directZ": 0,
-          "homeX": 39.22999999999999,
-          "homeZ": -36.349999999999994,
+          "homeX": -71.8,
+          "homeZ": 41.3,
           "cueUntil": 0,
           "cueYaw": 0,
           "cueSource": 0,
           "stuckX": 0,
           "stuckZ": 0,
-          "stuckTick": 3671,
+          "stuckTick": 4559,
           "stuckCount": 0,
           "ignoreId": 0,
           "ignoreUntil": 0,
+          "hearingUntil": 0,
           "leashM": 0,
           "reaction": 17,
           "routeAt": 0,
@@ -1010,12 +7281,12 @@
         "ax": 0,
         "az": 0,
         "omega": 0,
-        "updatedAt": 3691
+        "updatedAt": 4579
       },
       "appearance": {
-        "entityId": 256,
-        "asset": "npc.civilian-woman-a",
-        "tint": "#ac7a91",
+        "entityId": 253,
+        "asset": "npc.civilian-elderly",
+        "tint": "#6b517c",
         "accessories": [],
         "handProp": null,
         "tier": "average"
@@ -1027,26 +7298,26 @@
         },
         "speed": 0,
         "moving": false,
-        "distance": 36.15546214678139
+        "distance": 35.415890716373916
       }
     },
     {
-      "id": 257,
+      "id": 254,
       "kind": "infected",
       "archetype": "infected.runner",
       "faction": "infected",
       "health": {
-        "current": 40,
-        "max": 40
+        "current": 60,
+        "max": 60
       },
       "transform": {
-        "x": 39.07325267117157,
-        "y": 1,
-        "z": -35.611562278473876,
-        "yaw": 2.44983543583721
+        "x": -71.8055994454768,
+        "y": 1.1,
+        "z": 41.46419026075423,
+        "yaw": 0.5574629934615641
       },
       "infected": {
-        "state": "chase",
+        "state": "wander",
         "pathGrid": -1,
         "grabNextTick": 0,
         "combo": 0,
@@ -1069,66 +7340,66 @@
         "packIndex": 0,
         "birds": 0,
         "birdPositions": [
-          41.22999999999999,
+          -69.8,
           3,
-          -36.349999999999994,
-          37.75526255420234,
+          41.3,
+          -73.27473744579764,
           3,
-          -34.99901907268747,
-          39.40485053403776,
+          42.650980927312524,
+          -71.62514946596222,
           3,
-          -38.34234216206622,
-          40.44687881583442,
+          39.307657837933775,
+          -70.58312118416558,
           3,
-          -34.76279933607202,
-          37.26057270925328,
+          42.88720066392797,
+          -73.7694272907467,
           3,
-          -36.69836209102325,
-          40.91750935660554,
+          40.95163790897674,
+          -70.11249064339444,
           3,
-          -37.42345804359961,
-          38.71079405242658,
+          40.22654195640038,
+          -72.31920594757341,
           3,
-          -34.4185691355877,
-          38.30818309636179,
+          43.23143086441229,
+          -72.7218169036382,
           3,
-          -38.12489537611851,
-          41.10864385353789,
+          39.52510462388148,
+          -69.92135614646209,
           3,
-          -35.663926190877206,
-          37.38131046550825,
+          41.986073809122786,
+          -73.64868953449174,
           3,
-          -35.586883360775886,
-          40.077687828631284,
+          42.063116639224106,
+          -70.9523121713687,
           3,
-          -38.161470492497834,
-          39.82857255126226,
+          39.48852950750216,
+          -71.20142744873772,
           3,
-          -34.44167327198004,
-          37.499574815995594,
+          43.208326728019955,
+          -73.5304251840044,
           3,
-          -37.352810392129705,
-          41.1833502647403,
+          40.29718960787029,
+          -69.84664973525969,
           3,
-          -36.77944469171125,
-          38.079746403833106,
+          40.87055530828874,
+          -72.95025359616687,
           3,
-          -34.71387144010467,
-          38.97297178569039,
+          42.93612855989532,
+          -72.0570282143096,
           3,
-          -38.333415361705356,
-          40.75930272843574,
+          39.316584638294636,
+          -70.27069727156425,
           3,
-          -35.06111165541813,
-          37.231708214724875,
+          42.58888834458186,
+          -73.79829178527511,
           3,
-          -36.26735654350165,
-          40.647652994939286,
+          41.38264345649834,
+          -70.3823470050607,
           3,
-          -37.76076574453012,
-          39.13762582849094,
+          39.88923425546987,
+          -71.89237417150905,
           3,
-          -34.35213438579117
+          43.297865614208824
         ],
         "birdAlive": [
           0,
@@ -1153,7 +7424,7 @@
           0
         ],
         "scatterUntil": 0,
-        "variant": "infected.runner",
+        "variant": "inf.bathrobe-neighbor",
         "path": [],
         "pathIndex": 0,
         "goal": -1,
@@ -1164,20 +7435,21 @@
         "grabX": 0,
         "grabZ": 0,
         "perched": false,
+        "heardTargetId": 0,
         "l1": {
-          "mode": "chase",
+          "mode": "wander",
           "tier": "average",
           "runSpeed": 5.339632355789763,
-          "wanderSpeed": 1.1077775048092007,
-          "targetId": 1,
-          "seenX": 37.529998779296875,
-          "seenZ": -36.95000076293945,
-          "seenTick": 3688,
+          "wanderSpeed": 1.0747278936207294,
+          "targetId": 0,
+          "seenX": 0,
+          "seenZ": 0,
+          "seenTick": 0,
           "headingX": 0,
           "headingZ": 0,
           "looking": true,
-          "lookYaw": 2.44983543583721,
-          "pauseUntil": 3707,
+          "lookYaw": 0.4841197577912846,
+          "pauseUntil": 4613,
           "goalX": 0,
           "goalZ": 0,
           "hasGoal": false,
@@ -1200,17 +7472,18 @@
           "directTick": -1,
           "directX": 0,
           "directZ": 0,
-          "homeX": 39.22999999999999,
-          "homeZ": -36.349999999999994,
+          "homeX": -71.8,
+          "homeZ": 41.3,
           "cueUntil": 0,
           "cueYaw": 0,
           "cueSource": 0,
           "stuckX": 0,
           "stuckZ": 0,
-          "stuckTick": 3671,
+          "stuckTick": 4559,
           "stuckCount": 0,
           "ignoreId": 0,
           "ignoreUntil": 0,
+          "hearingUntil": 0,
           "leashM": 0,
           "reaction": 22,
           "routeAt": 0,
@@ -1232,12 +7505,12 @@
         "ax": 0,
         "az": 0,
         "omega": 0,
-        "updatedAt": 3691
+        "updatedAt": 4579
       },
       "appearance": {
-        "entityId": 257,
-        "asset": "npc.civilian-man-a",
-        "tint": "#d4ad32",
+        "entityId": 254,
+        "asset": "npc.civilian-woman-a",
+        "tint": "#486e69",
         "accessories": [],
         "handProp": null,
         "tier": "average"
@@ -1249,236 +7522,14 @@
         },
         "speed": 0,
         "moving": false,
-        "distance": 35.96389071637392
-      }
-    },
-    {
-      "id": 258,
-      "kind": "infected",
-      "archetype": "infected.runner",
-      "faction": "infected",
-      "health": {
-        "current": 40,
-        "max": 40
-      },
-      "transform": {
-        "x": 39.26411268164852,
-        "y": 1.1,
-        "z": -36.510705072934655,
-        "yaw": 2.637462993461561
-      },
-      "infected": {
-        "state": "chase",
-        "pathGrid": -1,
-        "grabNextTick": 0,
-        "combo": 0,
-        "targetId": 0,
-        "activeUntil": 0,
-        "speed": 4.579141434325286,
-        "until": 0,
-        "cooldown": 0,
-        "attackId": 0,
-        "special": "lunge",
-        "hidden": false,
-        "deadAt": -1,
-        "recoverAt": -1,
-        "downs": 0,
-        "revived": false,
-        "reviveUsed": false,
-        "legLost": false,
-        "detached": false,
-        "pack": 0,
-        "packIndex": 0,
-        "birds": 0,
-        "birdPositions": [
-          41.22999999999999,
-          3,
-          -36.349999999999994,
-          37.75526255420234,
-          3,
-          -34.99901907268747,
-          39.40485053403776,
-          3,
-          -38.34234216206622,
-          40.44687881583442,
-          3,
-          -34.76279933607202,
-          37.26057270925328,
-          3,
-          -36.69836209102325,
-          40.91750935660554,
-          3,
-          -37.42345804359961,
-          38.71079405242658,
-          3,
-          -34.4185691355877,
-          38.30818309636179,
-          3,
-          -38.12489537611851,
-          41.10864385353789,
-          3,
-          -35.663926190877206,
-          37.38131046550825,
-          3,
-          -35.586883360775886,
-          40.077687828631284,
-          3,
-          -38.161470492497834,
-          39.82857255126226,
-          3,
-          -34.44167327198004,
-          37.499574815995594,
-          3,
-          -37.352810392129705,
-          41.1833502647403,
-          3,
-          -36.77944469171125,
-          38.079746403833106,
-          3,
-          -34.71387144010467,
-          38.97297178569039,
-          3,
-          -38.333415361705356,
-          40.75930272843574,
-          3,
-          -35.06111165541813,
-          37.231708214724875,
-          3,
-          -36.26735654350165,
-          40.647652994939286,
-          3,
-          -37.76076574453012,
-          39.13762582849094,
-          3,
-          -34.35213438579117
-        ],
-        "birdAlive": [
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "scatterUntil": 0,
-        "variant": "infected.runner",
-        "path": [],
-        "pathIndex": 0,
-        "goal": -1,
-        "dx": 0,
-        "dz": 0,
-        "grabHits": 0,
-        "grabUntil": 0,
-        "grabX": 0,
-        "grabZ": 0,
-        "perched": false,
-        "l1": {
-          "mode": "chase",
-          "tier": "average",
-          "runSpeed": 4.579141434325286,
-          "wanderSpeed": 1.2450078049674629,
-          "targetId": 1,
-          "seenX": 37.529998779296875,
-          "seenZ": -36.95000076293945,
-          "seenTick": 3687,
-          "headingX": 0,
-          "headingZ": 0,
-          "looking": true,
-          "lookYaw": 2.8022998654204345,
-          "pauseUntil": 3695,
-          "goalX": 0,
-          "goalZ": 0,
-          "hasGoal": false,
-          "search": {
-            "startTick": 0,
-            "until": 0,
-            "originX": 0,
-            "originZ": 0,
-            "probes": [],
-            "doubleBackAt": -1,
-            "next": -1,
-            "visited": 0,
-            "doubledBack": false,
-            "legTicks": 0
-          },
-          "episodes": 0,
-          "distractionId": 0,
-          "biteTargetId": 0,
-          "direct": false,
-          "directTick": -1,
-          "directX": 0,
-          "directZ": 0,
-          "homeX": 39.22999999999999,
-          "homeZ": -36.349999999999994,
-          "cueUntil": 0,
-          "cueYaw": 0,
-          "cueSource": 0,
-          "stuckX": 0,
-          "stuckZ": 0,
-          "stuckTick": 3671,
-          "stuckCount": 0,
-          "ignoreId": 0,
-          "ignoreUntil": 0,
-          "leashM": 0,
-          "reaction": 11,
-          "routeAt": 0,
-          "escapeUntil": 0
-        }
-      },
-      "combat": {
-        "radius": 0.35,
-        "armor": 0,
-        "shield": false,
-        "staggerUntil": 0,
-        "attacking": false,
-        "damageMultiplier": 1,
-        "statuses": []
-      },
-      "locomotion": {
-        "vx": 0,
-        "vz": 0,
-        "ax": 0,
-        "az": 0,
-        "omega": 0,
-        "updatedAt": 3691
-      },
-      "appearance": {
-        "entityId": 258,
-        "asset": "npc.civilian-woman-b",
-        "tint": "#e07fa0",
-        "accessories": [],
-        "handProp": null,
-        "tier": "average"
-      },
-      "motion": {
-        "velocity": {
-          "x": 0,
-          "z": 0
-        },
-        "speed": 0,
-        "moving": false,
-        "distance": 35.5102857130617
+        "distance": 34.9622857130617
       }
     }
   ],
   "invitation": {
-    "id": 169,
+    "id": 168,
     "text": "Get in!",
-    "at": 3667,
-    "until": 3817
+    "at": 4555,
+    "until": 4705
   }
 }
