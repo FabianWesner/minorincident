@@ -12,7 +12,7 @@ export class AlphaSupportMoves {
   constructor(private readonly ai: InfectedSystem) {}
   private regular(e: EntitySnapshot): boolean { return !!e.infected && this.regularTypes.has(e.archetype); }
   tryStart(e: EntitySnapshot, target: EntitySnapshot): boolean {
-    if (e.archetype !== 'infected.alpha') return false;
+    if (e.archetype !== 'infected.alpha' || e.infected?.pursuit) return false;
     const b = e.infected!, tick = this.ai.world.tick;
     if (tick < b.cooldown || tick < (b.specialRecoveryUntil ?? 0)) return false;
     const grabReady = tick + infectedSpecialMoves['alpha.grab-throw'].windup >= (b.specialCooldowns?.['alpha.grab-throw'] ?? 0);
