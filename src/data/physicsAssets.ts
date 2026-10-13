@@ -7622,7 +7622,7 @@ export default {
       }
     ],
     "source": "public/assets/models/kit.dispersal-pipe-tee.glb",
-    "hash": "768de5d56135ca00261bef4bf8a66f0520c7d1442961c5717e3c03a3736ebcc7"
+    "hash": "96e2cf1704acac63eb64a7c9e3d73dd25c94d761950edee15c613f44417715e9"
   },
   "kit.dispersal-fan-housing": {
     "class": "fixed",
@@ -7708,7 +7708,7 @@ export default {
       }
     ],
     "source": "public/assets/models/kit.dispersal-turbine-hall.glb",
-    "hash": "898f0df8457edfa337ddd666e15df179eaeff583a95f92e1771cf0f0ff83a1db"
+    "hash": "07bbb8b8db850cb6a4c784dca0a0ce2d62df67552899b086dbcdbec5f81b4ce5"
   },
   "kit.dispersal-tank-sphere": {
     "class": "fixed",
