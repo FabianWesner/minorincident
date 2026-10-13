@@ -70,7 +70,7 @@ for (const { renderer, quality } of configs) for (const [pace, steps] of Object.
       requestAnimationFrame(record);
     }));
     if (name === '60hz') await page.screenshot({ path: 'test-results/epics/E22/ride-bus.png' });
-    const t = samples.map(s => s.t), window = steps.reduce((a, b) => a + b, 0) / steps.length > 20 ? 250 : 100, jit = (pick: (s: typeof samples[number]) => number[]) => Math.hypot(rms(t, samples.map(s => pick(s)[0]), window), rms(t, samples.map(s => pick(s)[1]), window));
+    const t = samples.map(s => s.t), fit = steps.reduce((a, b) => a + b, 0) / steps.length > 20 ? 250 : 100, jit = (pick: (s: typeof samples[number]) => number[]) => Math.hypot(rms(t, samples.map(s => pick(s)[0]), fit), rms(t, samples.map(s => pick(s)[1]), fit));
     // The lead vehicle only counts while it is on screen (behind the lens its projection is meaningless).
     const half = page.viewportSize() ?? { width: 1600, height: 900 }, onScreen = samples.every(s => Math.abs(s.apc[0]) < half.width / 2 && Math.abs(s.apc[1]) < half.height / 2);
     const result = { frames: samples.length, busJitterPx: jit(s => s.bus), apcJitterPx: onScreen ? jit(s => s.apc) : null, roadJitterPx: jit(s => s.prop) };
