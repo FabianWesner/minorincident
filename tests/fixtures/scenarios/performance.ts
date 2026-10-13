@@ -13,6 +13,7 @@ export const performanceLevels: Record<string, { level: string; spot: string }> 
   'perf-l6-mainstreet': { level: 'L6', spot: 'D-MAIN/W5/overview' },
   /** E23: the devastated Fairhaven (W5) at the pair-plaza camera with the worst-cap crowd (the retired L5 convoy bridge was the old stress scene). */
   'perf-l5-aftermath': { level: 'L5', spot: 'D-FAIR/W5/pair-plaza' },
+  'perf-l8-mixed-outbreak': { level: 'L8', spot: '' },
   /** E25 night budget: L1's town at night, 41 street lamps (plus windows/signs) in the high light-field window, 60 runners. */
   'perf-night-street': { level: 'night-street', spot: '' },
 };
@@ -27,6 +28,7 @@ export function populateHorde(world: SimWorld, count: number): void {
 /** The perf level includes real campaign geometry/colliders and a worst-cap crowd at its photo spot.
  * Only the debug scenario installs this load; campaign ownership remains with its level epic. */
 export function installPerformanceLevel(world: SimWorld, tier: QualityTier, name: string): void {
+  if (name === 'perf-l8-mixed-outbreak') { installZooOutbreak(world, tier); return; }
   if (name === 'perf-night-street') { installNightStreet(world); return; }
   const district = world.districts!.districts.find(d => d.id === (name === 'perf-l1-foliage-200' || name === 'perf-l6-mainstreet' ? 'D-MAIN' : name === 'perf-l5-aftermath' ? 'D-FAIR' : 'D-EDGE'))!;
   const { min, max } = world.districts!.nav;
@@ -87,4 +89,26 @@ function installNightStreet(world: SimWorld): void {
     if (Math.hypot(x, z) > 3 && nav.clear(p.x, p.z, .4)) world.infected.spawn('infected.runner', p, { state: 'idle' });
   }
   if (world.infected.director.count !== 60) throw new Error('Night street lacks crowd positions');
+}
+
+/** E30 worst-cap zoo load: same-id healthy animal conversion, four Alphas, regular humans and the intact safe crowd. */
+function installZooOutbreak(world: SimWorld, tier: QualityTier): void {
+  const m = world.missions!, zoo = m.l8!;
+  m.begin(); world.npcs!.setQuality(tier); world.combat!.damage.god = true;
+  world.missions!.setState('breached', true); zoo.state.breachedAt = Math.max(1, world.tick); zoo.state.nextWave = Number.MAX_SAFE_INTEGER;
+  const ai = world.infected!, at = { x: -60, z: -12 }, player = world.entities.get(1)!;
+  Object.assign(player.transform, at); world.previousPlayer = { ...player.transform }; world.spatial.set(1, at.x, at.z); world.physics.playerBody!.setTranslation(player.transform, true);
+  for (const id of zoo.state.animals) world.npcs!.civilians.outbreak!.turnNow(world.entities.get(id)!);
+  const species = ['infected.lion', 'infected.gorilla', 'infected.elephant', 'infected.zebra', 'infected.flamingo'];
+  const points = [];
+  for (let z = -48; z < 15; z += 1.4) for (let x = -80; x < -35; x += 1.4) points.push({ x, z });
+  points.sort((a, b) => Math.hypot(a.x - at.x, a.z - at.z) - Math.hypot(b.x - at.x, b.z - at.z));
+  let placed = 0;
+  for (const { x, z } of points) {
+    if (ai.director.count >= ai.director.cap) break;
+    const archetype = placed < 4 ? 'infected.alpha' : placed < 9 ? species[placed - 4] : 'infected.runner';
+    if (!ai.nav.clear(x, z, archetype === 'infected.elephant' ? 1.3 : .9)) continue;
+    ai.spawn(archetype, { x, z }, { state: 'idle' }); placed++;
+  }
+  if (ai.director.count !== ai.director.cap) throw new Error('Zoo stress fixture lacks mixed crowd positions');
 }

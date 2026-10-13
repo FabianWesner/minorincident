@@ -174,7 +174,7 @@ export class AudioService implements Lifecycle {
         this.reset();
         if (!this.world.scenario)
             return;
-        this.level = /^L[1-6]$/.test(this.world.scenario) ? this.world.scenario : 'L1';
+        this.level = /^L[1-68]$/.test(this.world.scenario) ? this.world.scenario : 'L1';
         this.score.level = this.level;
         this.tier = this.world.districts?.composition.tier ?? 0;
         this.graph.map = fromDistricts(this.world.districts);
@@ -210,7 +210,7 @@ export class AudioService implements Lifecycle {
         for (const bed of ambienceTiers[tier].beds)
             this.loop(`bed:${bed}`, `bed.${bed}`, { gain: tier === 5 ? dbGain(-16) : 1 });
     }
-    private get hasScore(): boolean { return /^L[1-6]$/.test(this.world.scenario ?? ''); }
+    private get hasScore(): boolean { return /^L[1-68]$/.test(this.world.scenario ?? ''); }
     private mount(): void {
         this.captionElement.dataset.audioCaptions = '';
         this.captionElement.setAttribute('role', 'status');

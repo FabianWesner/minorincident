@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs';
-import { afterEach, describe, expect, test } from 'vitest';
+import { afterEach, describe, expect, test, vi } from 'vitest';
 import { compositions } from '../../src/levels/compositions';
 import type { DistrictLayout } from '../../src/levels/districts/types';
 import { SimWorld } from '../../src/sim/world/SimWorld';
@@ -44,6 +44,16 @@ async function push(assetId = 'prop.trash-bin') {
 }
 
 describe('E26 authored pushable props', () => {
+  test('far infected cull prop WASM reads; entering contact refreshes the bound immediately', async () => {
+    const world = await grove(), prop = world.props!.items.find(p => !p.fixed && p.metadata.class !== 'heavy')!;
+    const [x, , z] = prop.pose.p;
+    const e = world.entities.create({ kind: 'infected', archetype: 'infected.walker', transform: { x: x + prop.radius + 10, y: .7, z, yaw: 0 }, health: { current: 10, max: 10 }, faction: 'infected' });
+    e.infected = {} as never; world.spatial.set(e.id, e.transform.x, z);
+    vi.spyOn(prop.body, 'isEnabled').mockImplementation(() => { throw new Error('contact reached WASM'); });
+    expect(() => world.props!.prePhysics()).not.toThrow();
+    e.transform.x = x + prop.radius + .2; world.spatial.set(e.id, e.transform.x, z);
+    expect(() => world.props!.prePhysics()).toThrow('contact reached WASM');
+  });
   test('a fallen knocked prop with the spawn flag resets to spawn and keeps its ID and health', async () => {
     const world = await grove(), prop = world.props!.items.find(p => !p.fixed)!;
     const hp = world.entities.get(prop.entityId)!.health.current, x = prop.home.p[0] + 3, z = prop.home.p[2] + 3;

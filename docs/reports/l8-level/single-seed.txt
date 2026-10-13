@@ -1,0 +1,25 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level -> 94.130.181.173:/srv/mi/ws/l8-level-d20722
+[remote] sync 12s, 8391 files; job /srv/mi/jobs/l8-level-d20722-41046-1791844322; queueing for a slot
+[runner] slot 1 acquired; load 1.13 1.15 1.92
+
+ RUN  v5.0.3 /srv/mi/jobs/l8-level-d20722-41046-1791844322
+
+stdout | tests/levels/L8.test.ts > T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 12 survivors and exact APC transfer
+{"seed":1,"time":89.78333333333333,"breach":60,"outlets":4,"animalTurns":[10396,10394,10395],"alphas":4,"rescued":12}
+
+ ✓  functional  tests/levels/L8.test.ts (8 tests) 65204ms
+   ✓ T-E30-04 T-E30-05 T-E30-07 @E30-AC04 @E30-AC05 @E30-AC07 high active-time calm and simultaneous inside emergence 4134ms
+   ✓ T-E30-04 T-E30-05 T-E30-07 @E30-AC04 @E30-AC05 @E30-AC07 low active-time calm and simultaneous inside emergence 3701ms
+   ✓ T-E30-08 T-E30-09 T-E30-11 @E30-AC08 @E30-AC09 @E30-AC11 seed 1 systemic zoo outbreak converts animals and humans 20662ms
+   ✓ T-E30-17 @E30-AC17 sanctuary and breach restore preserve remaining time, tunnel walks and animal identities 5805ms
+   ✓ T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 0 survivors and exact APC transfer 7043ms
+   ✓ T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 12 survivors and exact APC transfer 8947ms
+   ✓ T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 35 survivors and exact APC transfer 10373ms
+   ✓ T-E30-13-losses @E30-AC13 finished civilians and released former survivors cannot block an all-lost escape 4533ms
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  22:32:15
+   Duration  68.50s (tests 95%, transform 4%, import 1%)
+
+[remote] done exit=0 (runner 94.130.181.173, sync 12s, remote total 72s)

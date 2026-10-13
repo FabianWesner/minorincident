@@ -69,6 +69,7 @@ export interface MissionDef {
   /** L5 "Aftermath" controller (emerge, five hidden survivors, the escort group, the metro shelter); see LevelFiveAftermath. */
   l5?: boolean;
   l6?: boolean;
+  l8?: boolean;
   /** Global gameplay deadline; checkpoints capture the remaining ticks. */
   deadline?: { seconds: number; retryGraceSeconds: number };
   id: string; briefing: string; anchors: Record<string, Anchor>; actors: Record<string, ActorDef>;
