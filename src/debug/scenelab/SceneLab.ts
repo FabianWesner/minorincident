@@ -548,8 +548,12 @@ export class SceneLab {
     // Match View.resize's portrait framing as well as the desktop game camera.
     const aspect = view.camera.aspect, { radiusM, portraitWidthM, fovDeg } = cameraFraming;
     const radius = aspect >= 1 ? radiusM : Math.max(radiusM, portraitWidthM / (2 * Math.tan(fovDeg * Math.PI / 360) * aspect));
-    if (c.mode === 'game') spherical(this.target(c.target, 0), radius * (c.zoom ?? 1), view.polar, view.azimuth);
-    else if (c.mode === 'follow') spherical(this.target(c.actor, 0), radius * (c.zoom ?? 1), view.polar, view.azimuth);
+    // Vehicle-focused fixtures mirror View's 15% driving pull-back. Otherwise
+    // the APC's bumper clips at the actual closest player zoom (0.5).
+    const vehicleTarget = c.mode === 'game' ? typeof c.target === 'string' && this.vehicles.has(c.target) : c.mode === 'follow' && this.vehicles.has(c.actor);
+    const gameRadius = radius * (vehicleTarget ? 1.15 : 1);
+    if (c.mode === 'game') spherical(this.target(c.target, 0), gameRadius * (c.zoom ?? 1), view.polar, view.azimuth);
+    else if (c.mode === 'follow') spherical(this.target(c.actor, 0), gameRadius * (c.zoom ?? 1), view.polar, view.azimuth);
     else if (c.mode === 'close') spherical(this.target(c.target), c.radius ?? 5, view.polar, c.azimuth === undefined ? view.azimuth : rad(c.azimuth));
     else if (c.mode === 'orbit') spherical(this.target(c.target), c.radius ?? 10, rad(c.polar ?? 54), rad((c.azimuth ?? 45) + (c.spin ?? 0) * this.frame / 60));
     else view.preset('scene-lab', { position: c.position, target: c.target });
