@@ -139,6 +139,7 @@ export class NpcView extends Group {
   heroClip(id: number): string | undefined { return this.heroes.get(id)?.animator?.clip; }
   gunMeshes() { return this.civilians.gunMeshes(); }
   heldProps() { return this.civilians.heldProps(); }
+  drawnCorpses() { return this.civilians.drawnCorpses(); }
   shotMuzzle(id: number, direction: { x: number; y?: number; z: number }) { return this.civilians.shotMuzzle(id,direction); }
   muzzle(id: number) { return this.civilians.muzzle(id); }
   snapshot() { return { civilians: this.civilians.snapshot(), heroes: [...this.heroes].map(([id, h]) => ({ id, source: h.source, clip: h.animator?.clip ?? h.humanAnimator?.currentClip, model: h.model, position: h.root.position.toArray(), head: h.head?.getWorldPosition(this.point.clone()).toArray() ?? null, nodes: ['root', 'body', 'head', 'tail', 'legFL', 'legFR', 'legBL', 'legBR', 'packSocket'].filter(name => !!h.root.getObjectByName(name)), facing: this.facing(h) })), cars: this.cars.count }; }

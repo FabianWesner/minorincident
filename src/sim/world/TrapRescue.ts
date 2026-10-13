@@ -44,6 +44,15 @@ export class TrapRescue {
     const d = this.world.districts; if (!d || !this.can.length) return true;
     const i = d.nav.index(x, z); return i >= 0 && !!d.nav.cells[i] && !!this.can[i];
   }
+  /** The nearest open nav cell centre (within `radius`, 0.5 m steps) from which the objective is reachable; `at` itself when none is. Pickups use it so none lies on a pocket the route never visits. */
+  nearestReachable(at: { x: number; z: number }, radius = 8, clearance = .3): { x: number; z: number } {
+    const d = this.world.districts; if (!d || !this.can.length) return at;
+    for (let r = 0; r <= radius; r += .5) for (let k = 0; k < (r ? 16 : 1); k++) {
+      const x = at.x + Math.cos(k * Math.PI / 8) * r, z = at.z + Math.sin(k * Math.PI / 8) * r;
+      if (this.world.infected!.nav.clear(x, z, clearance) && this.reachable(x, z)) return { x, z };
+    }
+    return at;
+  }
   update(): void {
     const world = this.world, d = world.districts, player = world.entities.get(1);
     if (!d || !player || !this.can.length || world.vehicles?.active != null || player.health.current <= 0) { this.stuck = 0; return; }

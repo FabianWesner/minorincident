@@ -180,7 +180,7 @@ export class LevelFourWar {
   }
   private spawnMedkits(): void {
     for (const [x, z] of l4.medkits.positions) {
-      const p = this.snap({ x, z }, .3), id = this.world.pickups!.spawn('medkit', p);
+      const snapped = this.snap({ x, z }, .3), p = this.world.trapRescue?.nearestReachable(snapped) ?? snapped, id = this.world.pickups!.spawn('medkit', p);
       const e = this.world.entities.get(id)!; if (e.pickup && 'kind' in e.pickup) e.pickup.amount = l4.medkits.heal;
       this.s.medkitIds.push(id);
     }
