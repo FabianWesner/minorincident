@@ -61,6 +61,9 @@ export interface SceneSpec {
   /** L1 beat 9 house emergence (HouseEmergence, the game's own code): from `frame` (default 30) `count` (default 3)
    * residents come out of `house`'s front door (a placement id in the scene), `staggerS` apart (default [1.5, 4]), and
    * chase the courier. Residents are actors `<id>-0` .. (default id `resident`). */
+  /** E32 L10 Mega Alpha: the shipped MegaPursuit with its one Mega (actor `id`, default `mega`) introduced at `at`. Optional authored
+   * `route` (nodes/links) and a `resident` box: outside it the pursuit runs coarse (off-region, the L9-S4 seam). `metrics.megaAlpha`. */
+  megaAlpha?: { id?: string; at: Point; route?: import('../../sim/ai/MegaPursuit').PursuitRoute; resident?: [Point, Point] };
   /** Exercise the shipped checkpoint closure rule with the scene's courier and live officer followers. */
   crossingCrash?: { health: number };
   armyBoom?: { x: number; z?: number; closed?: boolean };
@@ -194,6 +197,10 @@ export interface Expectations {
   corgiRunLagMaxM?: number;
   /** Most frames any living actor was inside the camera frustum but not drawn (invisible-but-active). */
   undrawnFramesMax?: number;
+  /** E32-AC10: |median detailed-mode speed / cruise − 1| of the Mega Alpha (`metrics.megaAlpha.cruiseError`). Use 0.02. */
+  megaCruiseErrorMax?: number;
+  /** E32-AC10 no teleport: largest single-tick displacement of the Mega Alpha while resident (`metrics.megaAlpha.stepMaxM`). */
+  megaStepMaxM?: number;
   /** Drawn frozen corpses / ground pickups further than this from the support at their xz (cm, `metrics.grounding`); a gate on zero drawn bodies fails (min counts below). */
   groundingMaxCm?: number;
   groundingCorpsesMin?: number;

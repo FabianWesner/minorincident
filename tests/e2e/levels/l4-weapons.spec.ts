@@ -25,7 +25,8 @@ test('T-E22-20 @E22 L4 starts with melee and the handgun, no SMG or machine gun;
   for (const id of [...carried.left, ...carried.right]) expect(['weapon.smg', 'weapon.hunting-rifle', 'weapon.army-mg']).not.toContain(id);
   // HUD before: the handgun by name, with its own icon.
   await page.keyboard.press('Shift+1'); await step(10);
-  const hud = () => page.evaluate(() => ({ name: document.querySelector('[data-testid="action-RIGHT"]')?.textContent ?? '', icon: (document.querySelector('[data-testid="icon-RIGHT"]') as HTMLImageElement | null)?.src ?? '' }));
+  // PO 10-13 (hud-cleanup): one active-weapon icon in the vitals panel replaces the two bottom cards; the right hand is the selected side here.
+  const hud = () => page.evaluate(() => ({ name: document.querySelector('[data-testid="weapon-hint"]')?.textContent ?? '', icon: (document.querySelector('[data-testid="weapon-icon"]') as HTMLImageElement | null)?.src ?? '' }));
   const before = await hud();
   expect(before.name).toBe('Handgun');
   await page.screenshot({ path: `${output}/l4-weapons-before.png` });

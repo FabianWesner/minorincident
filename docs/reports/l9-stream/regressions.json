@@ -1,0 +1,50 @@
+{
+  "unit": {
+    "note": "full unit, four remote workers; production validator timed out",
+    "counts": [
+      "\n\n Test Files  1 failed | 196 passed | 1 skipped (198)",
+      "      Tests  1 failed | 1227 passed | 7 skipped (1235)"
+    ],
+    "failures": [
+      "functional  tests/unit/assets/validate.test.ts > T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts"
+    ]
+  },
+  "unit_validator_retry": {
+    "note": "production validator isolated, unchanged 300 s timeout",
+    "counts": [
+      "\n Test Files  1 passed (1)",
+      "      Tests  17 passed (17)"
+    ],
+    "failures": []
+  },
+  "sim": {
+    "note": "full sim, one remote worker; previous four-worker timing failures rerun serially",
+    "counts": [
+      "\n\n Test Files  2 failed | 103 passed (105)",
+      "      Tests  2 failed | 840 passed (842)"
+    ],
+    "failures": [
+      "functional  tests/sim/weather.test.ts > T-E28-08 @E28 @E28-AC08 every override preserves all six mission graph walks",
+      "functional  tests/sim/missions/l2-axe-objective.test.ts > @E20 after the alarm every playing tick has objective text and destinations have markers, including the doors checkpoint"
+    ]
+  },
+  "levels": {
+    "note": "full tests/levels, four remote workers",
+    "counts": [
+      "\n\n Test Files  8 failed | 25 passed | 2 skipped (35)",
+      "      Tests  9 failed | 228 passed | 2 skipped (239)"
+    ],
+    "failures": [
+      "functional  tests/levels/L1.test.ts > L1 v2 mission > T-E19-house @E19 @E19-AC25 beat 9: ten residents come out of ONE house front door near the garage, one by one, 1.5-4 s apart",
+      "functional  tests/levels/L2.test.ts > L2 The Failed Rescue > T-E20-13 @E20 @E20-AC13 cluster of 12-16 on the approach; complete passes killing <= 50 %; side path and car alarm each suffice",
+      "functional  tests/levels/L3-follow.test.ts > L3 squad and checkpoint > living officers regroup on blvd instead of being marked separated",
+      "functional  tests/levels/L3-route.test.ts > @E21 @E21-route L3 wreck lines close both sidewalks for player and NPCs; the connected detour crosses Oak, Boulevard and the elevated highway",
+      "functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2",
+      "functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-12 @E21 @E21-AC12 escalation: pre-populated 250/625/1000 (+-20 %), live infected near the courier rise S1 -> S3, caps never exceeded",
+      "functional  tests/levels/L5.test.ts > L5 Aftermath > T-E23-09 @E23 @E23-AC09 the group grows and follows: stand-to-interact 1.0 s, the counter steps 0 to 5, followers within 8 m, no jump above 1 m per tick, slower than the courier's run",
+      "functional  tests/levels/L6.test.ts > T-E24-02 @E24 @E24-AC02 @E24-AC10 single-seed complete bot (PO: no batteries) protects and rejoins the community",
+      "functional  tests/levels/continuity.test.ts > L1 -> L2 world-state continuity > T-CONT-01S @continuity after the L1 lab blast the L2 town has the burned annex, the debris cells blocked, the outbreak house aftermath and this run's carryover"
+    ]
+  },
+  "scope": "L9-S3 visual terrain lifecycle; collider/nav residency and serialized chunk state belong to S4; zero/crash gameplay and manual device checks are later lanes."
+}

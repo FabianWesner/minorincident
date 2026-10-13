@@ -57,6 +57,7 @@ export class Blasts extends Group {
   private readonly sourcePoint = new Vector3();
   private readonly columns: Column[] = [];
   private readonly fireColumns = new Map<number, Column>();
+  private readonly vehicleColumns = new Map<number, Column>();
   private readonly cloudColumns = new Map<number, Column>();
   private readonly glowList: Glow[] = [];
   private readonly partMatrix = new Matrix4(); private readonly quat = new Quaternion(); private readonly pos = new Vector3(); private readonly scl = new Vector3();
@@ -292,6 +293,12 @@ export class Blasts extends Group {
     }
     for (const c of this.fireColumns.values()) this.emit(c, seconds);
     for (const c of this.cloudColumns.values()) this.emit(c, seconds);
+    for (const [id, c] of this.vehicleColumns) {
+      const e = this.world.entities.get(id); if (!e) continue;
+      // Exhaust at the rear: keep the cab and forward route clear, track movement each frame.
+      c.x = e.transform.x - Math.cos(e.transform.yaw) * 2; c.z = e.transform.z + Math.sin(e.transform.yaw) * 2; c.ground = e.transform.y + .1;
+      this.emit(c, seconds);
+    }
     this.writeFlamesAndGlows(now);
     this.syncParts();
     let fb = false, pf = false;
@@ -318,10 +325,17 @@ export class Blasts extends Group {
   }
   /** Fires, burning props/cars and smoke-grenade zones drive persistent emitters. */
   private syncSources(now: number): void {
+    const vehicles = new Set<number>();
     const seen = new Set<number>(), clouds = new Set<number>(), low = this.quality === 'low';
     const player = this.world.entities.get(1);
     if (player) this.playerNode.value.set(player.transform.x, player.transform.y + .3, player.transform.z);
     for (const e of this.world.entities.iterate()) {
+      if (e.vehicle?.floor && (e.vehicle.stage ?? 0) >= 3) {
+        vehicles.add(e.id);
+        let c = this.vehicleColumns.get(e.id);
+        if (!c) { c = { born: now, x: e.transform.x, z: e.transform.z, until: Infinity, rate: 0, size: 0, heat: 0, acc: 1, shade: .3, cloud: 0 }; this.vehicleColumns.set(e.id, c); }
+        const heavy = e.vehicle.stage === 4; c.rate = (heavy ? 5 : 2) * (low ? .5 : 1); c.size = heavy ? 1.25 : .65; c.shade = heavy ? .22 : .5;
+      }
       const burningFire = e.hazard?.kind === 'fire' && this.world.tick < e.hazard.activeUntil;
       const burningProp = !!e.destructible && !e.destructible.broken && e.destructible.burningUntil > this.world.tick;
       const car = e.vehicle && (e.vehicle.damage === 'burning' || e.vehicle.damage === 'exploded');
@@ -339,6 +353,7 @@ export class Blasts extends Group {
       // existing particle pool at 4 Hz (2 Hz on low), under its unchanged cap.
       if (this.sourceVisible(c.x, c.z, c.size + 4) && (!low || Math.floor(now * 4) % 2 === 0)) this.host.particles.spawn(now, 1.2, c.x + (this.rng.next() - .5) * .6, .7, c.z + (this.rng.next() - .5) * .6, this.windNode.value.x * .5, 1.7 + this.rng.next(), this.windNode.value.z * .5, .06, 0, 0xffb04a, .3);
     }
+    for (const id of this.vehicleColumns.keys()) if (!vehicles.has(id)) this.vehicleColumns.delete(id);
     for (const [id, c] of this.fireColumns) if (!seen.has(id)) { c.light?.remove(); this.fireColumns.delete(id); }
     for (const zone of this.world.combat?.effects.zones ?? []) {
       if (zone.kind !== 'smoke' || zone.expires <= this.world.tick) continue;
@@ -432,7 +447,7 @@ export class Blasts extends Group {
   }
   reset(): void {
     for (const c of this.fireColumns.values()) c.light?.remove();
-    this.fbExpiry.fill(0); this.puffExpiry.fill(0); this.columns.length = 0; this.fireColumns.clear(); this.cloudColumns.clear(); this.glowList.length = 0;
+    this.fbExpiry.fill(0); this.puffExpiry.fill(0); this.columns.length = 0; this.fireColumns.clear(); this.cloudColumns.clear(); this.vehicleColumns.clear(); this.glowList.length = 0;
     for (const attr of [this.fb.fbParams, this.pf.pMotion]) { attr.array.fill(0); attr.needsUpdate = true; }
     this.scorch.reset(this.time); this.fireballs.visible = this.puffs.visible = this.flames.visible = this.glows.visible = false; this.parts.count = 0;
     this.columnShadows.count = 0;
@@ -443,7 +458,7 @@ export class Blasts extends Group {
     for (let i = 0; i < this.puffs.count; i++) if (this.puffExpiry[i] > this.time) puffs++;
     for (let i = 0; i < FIREBALLS; i++) if (this.fbExpiry[i] > this.time) fireballs++;
     return { wind: { x: this.windNode.value.x, z: this.windNode.value.z }, blasts: this.blasts, puffs, puffCap: this.puffs.count, fireballs, fireballCap: FIREBALLS, flames: this.flames.visible ? this.flames.count : 0, glows: this.glows.visible ? this.glows.count : 0,
-      columns: this.columns.length + this.fireColumns.size, transientColumns: this.columns.length, fireColumns: this.fireColumns.size, columnShadows: this.columnShadows.count, clouds: this.cloudColumns.size, scorch: this.scorch.count, parts: this.parts.count, flash: this.flash, bulletTime: { ...this.bullet }, slowMotion: this.slowMotion };
+      vehicleSmokeColumns: this.vehicleColumns.size, columns: this.columns.length + this.fireColumns.size + this.vehicleColumns.size, transientColumns: this.columns.length, fireColumns: this.fireColumns.size, columnShadows: this.columnShadows.count, clouds: this.cloudColumns.size, scorch: this.scorch.count, parts: this.parts.count, flash: this.flash, bulletTime: { ...this.bullet }, slowMotion: this.slowMotion };
   }
   dispose(): void {
     this.reset(); this.scorch.dispose();
