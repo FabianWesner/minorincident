@@ -19,6 +19,8 @@ export interface InfectedState {
   investigate?: { x: number; z: number };
   /** Story-director walk (L4 collapse Alphas): path to this point (grid A*, not the courier flow field) and ignore targets until cleared. */
   scripted?: { x: number; z: number };
+  /** E32 Mega Alpha: movement owned by MegaPursuit (no sight, hearing or lure); survives checkpoints with the entity. */
+  pursuit?: true;
   /** Authored encounter boundary for heavy infected; preserved through checkpoints. */
   territory?: { x: number; z: number; radius: number };
   activeUntil: number;

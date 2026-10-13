@@ -46,7 +46,8 @@ function clearThreat(world: SimWorld, at: Spot): void {
   if (!ai) return;
   for (const e of ai.active) {
     const d = dist(e.transform, at);
-    if (e.health.current <= 0 || e.corpse || !e.infected || d > r.pursueM) continue;
+    // E32 Mega Alpha: never pushed or blinded here; its pursuit seam already restored it ≥ respawnGapM away.
+    if (e.health.current <= 0 || e.corpse || !e.infected || e.infected.pursuit || d > r.pursueM) continue;
     if (d < r.clearM) {
       const k = d > .1 ? 1 / d : 0, dx = k ? (e.transform.x - at.x) * k : Math.cos(e.id), dz = k ? (e.transform.z - at.z) * k : Math.sin(e.id);
       for (let m = r.clearM; m <= r.clearM + 6; m += 1) {
