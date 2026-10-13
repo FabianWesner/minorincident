@@ -15,7 +15,7 @@ export interface BlastOptions {
   /** False when the caller already resolved damage (E05 throwables/projectiles keep their own resolver). */
   damage?: boolean;
   /** Player projectile attribution; environmental blasts keep their definition id. */
-  attackId?: number; actionId?: string; multiplier?: number;
+  attackId?: number; actionId?: string; multiplier?: number; directTargetId?: number;
 }
 /** Detached car body panels (E27-AC05): cosmetic physics bodies that tumble and settle; 30 s lifetime. */
 export interface CarPart { body: RAPIER.RigidBody; kind: 'door' | 'hood'; sourceId: number; until: number; half: [number, number, number] }
@@ -78,7 +78,7 @@ export class Explosions {
       // Unbreakable movable props (cones, carts, benches) are launched by the impulse instead of vanishing at 0 HP.
       if (target.kind === 'physics-prop' && !world.props?.items.find(i => i.entityId === id)?.metadata.breakable) continue;
       if (!apply || !damage || amount <= 0) continue;
-      damage.apply({ attackId: opts.attackId ?? 0, actionId: opts.actionId ?? d.id, sourceId: world.entities.get(sourceId) ? sourceId : 1, targetId: id, origin: at, direction: { x: distance ? dx / distance : 1, z: distance ? dz / distance : 0 }, base: amount, multiplier: opts.multiplier ?? 1, type: 'explosive', radius: r, knockback: d.knockback * scale, stagger: d.stagger });
+      damage.apply({ attackId: opts.attackId ?? 0, actionId: opts.actionId ?? d.id, sourceId: world.entities.get(sourceId) ? sourceId : 1, targetId: id, origin: at, direction: { x: distance ? dx / distance : 1, z: distance ? dz / distance : 0 }, base: amount, direct: id === opts.directTargetId, multiplier: opts.multiplier ?? 1, type: 'explosive', radius: r, knockback: d.knockback * scale, stagger: d.stagger });
     }
     // Barricade rails are not in the spatial hash: distance to the rail segment (spec 07 §5 barricade damage).
     if (!damage || d.barricade <= 0) return;

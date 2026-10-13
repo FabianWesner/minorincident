@@ -278,8 +278,8 @@ export class Vfx extends Group {
       if (event.sourceId !== undefined) for (const [id,tell] of this.tells) if(tell.sourceId===event.sourceId){this.telegraphs.remove(tell.slot);this.tells.delete(id);}
 
       const source = event.sourceId !== undefined ? this.world.entities.get(event.sourceId) : undefined;
-      const kind: TelegraphKind = 'kind' in event ? event.kind : event.special === 'explode' ? 'bloated' : event.special === 'charge' || event.special === 'pin' || event.special === 'alpha.grab-throw' || event.special === 'gorilla.grab-throw' || event.special === 'elephant.charge' || event.special === 'zebra.stampede' ? 'charge' : event.special === 'aura' || event.special === 'alpha.roar' || event.special === 'gorilla.roar' || event.special === 'gorilla.pound' || event.special === 'flamingo.dive' ? 'splash' : 'lunge';
-      const throwing = 'move' in event && (event.move === 'alpha.grab-throw' || event.move === 'gorilla.grab-throw') && event.area && event.target;
+      const kind: TelegraphKind = source?.infected?.pursuit && 'move' in event && event.move === 'alpha.grab-throw' ? 'splash' : 'kind' in event ? event.kind : event.special === 'explode' ? 'bloated' : event.special === 'charge' || event.special === 'pin' || event.special === 'alpha.grab-throw' || event.special === 'gorilla.grab-throw' || event.special === 'elephant.charge' || event.special === 'zebra.stampede' ? 'charge' : event.special === 'aura' || event.special === 'alpha.roar' || event.special === 'gorilla.roar' || event.special === 'gorilla.pound' || event.special === 'flamingo.dive' ? 'splash' : 'lunge';
+      const throwing = !source?.infected?.pursuit && 'move' in event && (event.move === 'alpha.grab-throw' || event.move === 'gorilla.grab-throw') && event.area && event.target;
       const length = throwing ? Math.min(15, Math.hypot(event.target!.x - event.area!.x, event.target!.z - event.area!.z)) : 0;
       const position = throwing ? { x: event.area!.x + event.area!.dx * length / 2, z: event.area!.z + event.area!.dz * length / 2 } : 'position' in event ? event.position : event.area ?? source?.transform;
       if (!position) return;

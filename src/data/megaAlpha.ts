@@ -14,8 +14,21 @@ export const megaAlpha = {
   /** Cruise = 0.7 × the nominal uninjured run (survivor.speed), never a momentary walk/slow speed. */
   cruiseFactor: 0.7,
   get cruiseMs(): number { return survivor.speed * this.cruiseFactor; },
-  /** Placeholder mission HP until L10-S4 applies the rocket/conventional floors through the Damage resolver. */
+  /** E32-AC12: ten direct rockets, independent of stock Alpha resistance/upgrades. */
   hp: 3000,
+  conventionalFloor: .9,
+  directRocketFraction: .1,
+  splashRocketFraction: .025,
+  staggerTicks: 30,
+  staggerCooldownTicks: 120,
+  recoveryTicks: 72,
+  /** Conservative animated arm envelope; specials never begin or travel inside solid cover. */
+  specialClearance: 3.4,
+  moves: {
+    'alpha.charge': { windup: 48, cooldown: 360, damage: 25, radius: 1.5, range: 10, speed: survivor.speed * 1.6, activeTicks: 60 },
+    'alpha.ground-slam': { windup: 60, cooldown: 480, damage: 35, radius: 4 },
+    'alpha.grab-throw': { windup: 48, cooldown: 600, damage: 30, radius: 2, holdTicks: 60 },
+  },
   /** Body, hit and nav footprint (≈ 2 × the Alpha's 0.55 m). Its own nav grid is baked at this clearance, so it plans only routes its
    * legs and shoulders fit through; on a grid larger than `ownGridMaxCells` it shares the 0.65 m crowd grid instead. */
   radius: 1.1,
