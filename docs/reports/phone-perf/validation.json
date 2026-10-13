@@ -1,0 +1,570 @@
+{
+  "fullUnitHetzner": {
+    "numPassedTests": 978,
+    "numFailedTests": 0,
+    "numTotalTests": 978,
+    "rawSha256": "30d0220574154180057403cb60df0426b57f08a71c73db09c08fcabbf0b4959a",
+    "sourceStatus": "source before the final empty-batch visibility change"
+  },
+  "npcSimHetzner": {
+    "numPassedTests": 12,
+    "numFailedTests": 0,
+    "numTotalTests": 12,
+    "rawSha256": "d7ab2ad47c24a13781c20144609b35d8cd641484d725026a8349ac722680fa1b"
+  },
+  "additionalInteractionSimHetzner": {
+    "numPassedTests": 6,
+    "numFailedTests": 0,
+    "numTotalTests": 6
+  },
+  "browserRegressions": {
+    "stats": {
+      "startTime": "2026-10-12T23:01:03.259Z",
+      "duration": 239407.544,
+      "expected": 36,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "rawSha256": "68b995437cc589cb1027bbe3440a85c8febdb0e9372df11dfd065d5d04d1c388",
+    "failures": []
+  },
+  "earlierBroaderBrowserRegressions": {
+    "stats": {
+      "startTime": "2026-10-12T22:03:26.986Z",
+      "duration": 210259.224,
+      "expected": 31,
+      "skipped": 0,
+      "unexpected": 1,
+      "flaky": 0
+    },
+    "failures": [
+      {
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD live 915x412",
+        "status": "failed",
+        "errors": [
+          "Error: expect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 0.27\nReceived:    0.2726152425609449\n\n  46 |     await page.screenshot({ path: `${dir}/${info.project.name}-${scene}-${viewport.width}.png` });\n  47 |     // PO UAT: phone text is larger (objective >= 16 px), so the budget was raised from .25/.20.\n> 48 |     expect(layout.coverage).toBeLessThanOrEqual(viewport.width < viewport.height ? .30 : .27);\n     |                             ^\n  49 |     expect(layout.pause).toBe(1);\n  50 |     for (const [i, a] of layout.controls.entries()) {\n  51 |       expect(a.width, a.id).toBeGreaterThanOrEqual(44); expect(a.height, a.id).toBeGreaterThanOrEqual(44);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/phone-perf/tests/e2e/mobile-hud-layout.spec.ts:48:29"
+        ]
+      }
+    ]
+  },
+  "originalSourceComparison": {
+    "stats": {
+      "startTime": "2026-10-12T22:52:49.378Z",
+      "duration": 33086.543999999994,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 7,
+      "flaky": 0
+    },
+    "failures": [
+      {
+        "title": "@E14 @E14-AC05 @E03-AC18 @mobile mobile HUD live 915x412",
+        "status": "failed",
+        "errors": [
+          "Error: expect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 0.27\nReceived:    0.2726152425609449\n\n  46 |     await page.screenshot({ path: `${dir}/${info.project.name}-${scene}-${viewport.width}.png` });\n  47 |     // PO UAT: phone text is larger (objective >= 16 px), so the budget was raised from .25/.20.\n> 48 |     expect(layout.coverage).toBeLessThanOrEqual(viewport.width < viewport.height ? .30 : .27);\n     |                             ^\n  49 |     expect(layout.pause).toBe(1);\n  50 |     for (const [i, a] of layout.controls.entries()) {\n  51 |       expect(a.width, a.id).toBeGreaterThanOrEqual(44); expect(a.height, a.id).toBeGreaterThanOrEqual(44);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/phone-perf/tests/e2e/mobile-hud-layout.spec.ts:48:29"
+        ]
+      },
+      {
+        "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+        "status": "failed",
+        "errors": [
+          "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: \"LEFT\"\nReceived: \"RIGHT\"\n\n  85 |   const state=await page.evaluate(()=>window.__SS__!.getState());expect(state.scenario).toBe('L5');expect(state.player!.survivor!.variant).toBe('male');expect(state.player!.weapons!.LEFT.rack.map(s=>s.id)).toEqual(save.racks.LEFT);expect(state.player!.weapons!.RIGHT.rack.map(s=>s.id)).toEqual(save.racks.RIGHT);\n  86 |   expect(state.combat!.aimAssist).toBe('High');await photo(page,'continue-L5');\n> 87 |   expect(state.player!.weapons!.selectedSide).toBe('LEFT');\n     |                                               ^\n  88 | });\n  89 | test('T-E13-06-browser @E13 @E13-AC06 corrupted and future saves show recoverable dialog without crashing',async({page})=>{\n  90 |   await page.goto(testUrl);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/phone-perf/tests/e2e/save.spec.ts:87:47"
+        ]
+      },
+      {
+        "title": "T-E18-01-high-perf-l6-mainstreet @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets",
+        "status": "failed",
+        "errors": [
+          "Error: page.evaluate: TypeError: Cannot read properties of undefined (reading 'origin')\n    at bf (http://127.0.0.1:3379/build/index-DuPxYNH-.js:3:15199)\n    at http://127.0.0.1:3379/build/index-DuPxYNH-.js:12:42991\n    at bf (http://127.0.0.1:3379/build/index-DuPxYNH-.js:3:15199)\n    at http://127.0.0.1:3379/build/index-DuPxYNH-.js:12:42991\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/phone-perf/tests/perf/e18-counters.spec.ts:9:30",
+          "Error: Uncaught errors, console errors and failed requests\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 5\n\n- Array []\n+ Array [\n+   \"console.error: Level load failed TypeError: Cannot read properties of undefined (reading 'origin')\n+     at bf (http://127.0.0.1:3379/build/index-DuPxYNH-.js:3:15199)\n+     at http://127.0.0.1:3379/build/index-DuPxYNH-.js:12:42991\",\n+ ]\n\n   at e2e/fixtures.ts:39\n\n  37 |     const guard = attachErrorGuard(page);\n  38 |     await use(); guard.dispose();\n> 39 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);\n     |                                                                                 ^\n  40 |   }, { auto: true }],\n  41 | });\n  42 | export { expect };\n    at Object.base.extend.errorGuard.auto (/Users/wesner/Workspace/minorincident/.claude/worktrees/phone-perf/tests/e2e/fixtures.ts:39:81)"
+        ]
+      },
+      {
+        "title": "T-E18-01-high-perf-l5-aftermath @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets",
+        "status": "failed",
+        "errors": [
+          "Error: page.evaluate: Error: Infected concurrency cap reached\n    at Is.spawn (http://127.0.0.1:3379/build/install-CzK2BuZL.js:1:221957)\n    at bf (http://127.0.0.1:3379/build/index-DuPxYNH-.js:3:16430)\n    at http://127.0.0.1:3379/build/index-DuPxYNH-.js:12:42991\n    at Is.spawn (http://127.0.0.1:3379/build/install-CzK2BuZL.js:1:221957)\n    at bf (http://127.0.0.1:3379/build/index-DuPxYNH-.js:3:16430)\n    at http://127.0.0.1:3379/build/index-DuPxYNH-.js:12:42991\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/phone-perf/tests/perf/e18-counters.spec.ts:9:30",
+          "Error: Uncaught errors, console errors and failed requests\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 6\n\n- Array []\n+ Array [\n+   \"console.error: Level load failed Error: Infected concurrency cap reached\n+     at Is.spawn (http://127.0.0.1:3379/build/install-CzK2BuZL.js:1:221957)\n+     at bf (http://127.0.0.1:3379/build/index-DuPxYNH-.js:3:16430)\n+     at http://127.0.0.1:3379/build/index-DuPxYNH-.js:12:42991\",\n+ ]\n\n   at e2e/fixtures.ts:39\n\n  37 |     const guard = attachErrorGuard(page);\n  38 |     await use(); guard.dispose();\n> 39 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);\n     |                                                                                 ^\n  40 |   }, { auto: true }],\n  41 | });\n  42 | export { expect };\n    at Object.base.extend.errorGuard.auto (/Users/wesner/Workspace/minorincident/.claude/worktrees/phone-perf/tests/e2e/fixtures.ts:39:81)"
+        ]
+      },
+      {
+        "title": "T-E18-01-low-perf-l6-mainstreet @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets",
+        "status": "failed",
+        "errors": [
+          "Error: page.evaluate: TypeError: Cannot read properties of undefined (reading 'origin')\n    at bf (http://127.0.0.1:3379/build/index-DuPxYNH-.js:3:15199)\n    at http://127.0.0.1:3379/build/index-DuPxYNH-.js:12:42991\n    at bf (http://127.0.0.1:3379/build/index-DuPxYNH-.js:3:15199)\n    at http://127.0.0.1:3379/build/index-DuPxYNH-.js:12:42991\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/phone-perf/tests/perf/e18-counters.spec.ts:9:30",
+          "Error: Uncaught errors, console errors and failed requests\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 5\n\n- Array []\n+ Array [\n+   \"console.error: Level load failed TypeError: Cannot read properties of undefined (reading 'origin')\n+     at bf (http://127.0.0.1:3379/build/index-DuPxYNH-.js:3:15199)\n+     at http://127.0.0.1:3379/build/index-DuPxYNH-.js:12:42991\",\n+ ]\n\n   at e2e/fixtures.ts:39\n\n  37 |     const guard = attachErrorGuard(page);\n  38 |     await use(); guard.dispose();\n> 39 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);\n     |                                                                                 ^\n  40 |   }, { auto: true }],\n  41 | });\n  42 | export { expect };\n    at Object.base.extend.errorGuard.auto (/Users/wesner/Workspace/minorincident/.claude/worktrees/phone-perf/tests/e2e/fixtures.ts:39:81)"
+        ]
+      },
+      {
+        "title": "T-E18-01-low-perf-l5-aftermath @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets",
+        "status": "failed",
+        "errors": [
+          "Error: page.evaluate: Error: Infected concurrency cap reached\n    at Is.spawn (http://127.0.0.1:3379/build/install-CzK2BuZL.js:1:221957)\n    at bf (http://127.0.0.1:3379/build/index-DuPxYNH-.js:3:16430)\n    at http://127.0.0.1:3379/build/index-DuPxYNH-.js:12:42991\n    at Is.spawn (http://127.0.0.1:3379/build/install-CzK2BuZL.js:1:221957)\n    at bf (http://127.0.0.1:3379/build/index-DuPxYNH-.js:3:16430)\n    at http://127.0.0.1:3379/build/index-DuPxYNH-.js:12:42991\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/phone-perf/tests/perf/e18-counters.spec.ts:9:30",
+          "Error: Uncaught errors, console errors and failed requests\n\nexpect(received).toEqual(expected) // deep equality\n\n- Expected  - 1\n+ Received  + 6\n\n- Array []\n+ Array [\n+   \"console.error: Level load failed Error: Infected concurrency cap reached\n+     at Is.spawn (http://127.0.0.1:3379/build/install-CzK2BuZL.js:1:221957)\n+     at bf (http://127.0.0.1:3379/build/index-DuPxYNH-.js:3:16430)\n+     at http://127.0.0.1:3379/build/index-DuPxYNH-.js:12:42991\",\n+ ]\n\n   at e2e/fixtures.ts:39\n\n  37 |     const guard = attachErrorGuard(page);\n  38 |     await use(); guard.dispose();\n> 39 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);\n     |                                                                                 ^\n  40 |   }, { auto: true }],\n  41 | });\n  42 | export { expect };\n    at Object.base.extend.errorGuard.auto (/Users/wesner/Workspace/minorincident/.claude/worktrees/phone-perf/tests/e2e/fixtures.ts:39:81)"
+        ]
+      },
+      {
+        "title": "T-E18-03 @E18-AC03 @perf production initial network payload <=15MB gzip through level.started",
+        "status": "failed",
+        "errors": [
+          "Error: expect(received).toBeLessThanOrEqual(expected)\n\nExpected: <= 15000000\nReceived:    33627622\n\n  15 |   const files = await Promise.all(requests), gzipBytes = files.reduce((n, f) => n + f.gzipBytes, 0);\n  16 |   expect(files.some(f => f.url.endsWith('.glb'))).toBe(true); expect(files.some(f => /rapier-.*\\.js$/.test(f.url))).toBe(true);\n> 17 |   expect(files.some(f => f.url.includes('/src/'))).toBe(false); expect(gzipBytes).toBeLessThanOrEqual(15_000_000);\n     |                                                                                   ^\n  18 |   mkdirSync('test-results/epics/E18', { recursive: true }); writeFileSync('test-results/epics/E18/download.json', JSON.stringify({ frontier: event, measurement: 'gzip of production response bodies observed through Playwright requestfinished; preview serves uncompressed bodies', gzipBytes, rawBytes: files.reduce((n, f) => n + f.rawBytes, 0), files }, null, 2));\n  19 | });\n  20 |\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/phone-perf/tests/perf/e18-download.spec.ts:17:83"
+        ]
+      }
+    ]
+  },
+  "E18VerifierChecks": {
+    "target": "E18",
+    "epics": [
+      "E18"
+    ],
+    "pattern": "@(?:E18)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/sim-lock.sh",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "^(?=.*(?:@(?:E18)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)))(?=.*(?:@E18-AC02|@perf))",
+          "--maxWorkers=1",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E18/vitest-timing.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/remote/run.sh",
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/phone-perf",
+          "--pull",
+          "test-results/epics/E18/vitest.json",
+          "--",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "^(?!.*(?:@E18-AC02|@perf)).*(?:@(?:E18)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$))",
+          "--maxWorkers=1",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E18/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/remote/run.sh",
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/phone-perf",
+          "--pull",
+          "test-results/epics/E18/playwright-remote.json",
+          "--env",
+          "E2E_PORT=3378",
+          "--",
+          "sh",
+          "-c",
+          "npm run build && npx playwright test --grep '@(?:E18)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)' --grep-invert '@perf|@E18-AC01|crowd-drawn|crowd variety|crowd-close-lod|T-E18-04-browser|T-E13-05|S-01|S-02|@E18-AC08|@E18-AC09|WebGPU low tier parity' --project=chromium --workers=1; status=$?; cp test-results/playwright/results.json test-results/epics/E18/playwright-remote.json; exit $status"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "^(?=.*(?:@(?:E18)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)))(?=.*(?:@perf|@E18-AC01|crowd-drawn|crowd variety|crowd-close-lod|T-E18-04-browser|T-E13-05|S-01|S-02))",
+          "--grep-invert",
+          "@E18-AC08|@E18-AC09|WebGPU low tier parity|@phone-base",
+          "--workers=2"
+        ],
+        "exitCode": 1
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "tests/perf/e18-desktop.spec.ts",
+          "tests/perf/e18-devices.spec.ts",
+          "tests/perf/horde-budget.spec.ts",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": 1
+      },
+      {
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "npx",
+          "playwright",
+          "test",
+          "tests/perf/phone-base.spec.ts",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": 1
+      }
+    ]
+  },
+  "E18RemoteBrowser": {
+    "stats": {
+      "startTime": "2026-10-12T21:59:38.777Z",
+      "duration": 386721.957,
+      "expected": 11,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "failures": []
+  },
+  "pairedComparison": {
+    "base": "fe38f893",
+    "checks": [
+      {
+        "label": "refreshed original build",
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "label": "before",
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "tests/perf/phone-base.spec.ts",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": 0
+      },
+      {
+        "label": "restored final build",
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "label": "after-final-1",
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "tests/perf/phone-base.spec.ts",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": 1
+      }
+    ],
+    "sourceRestored": true,
+    "source": {
+      "src/debug/testApi.ts": "d83ad237e983b2f876a59b932d9002804f3de2e302594cea04908bae03e8c333",
+      "src/input/devices/Touch.ts": "b7e5817fe55f473a642b13e54f97c442998b0a6c07e9efec1442989a94be27e1",
+      "src/render/BicycleView.ts": "aa78edaa748906e7d25963cdb3e84b26f2306f0fdb9d77a7116d4e200bb4fe2a",
+      "src/render/DistrictView.ts": "1cc849850c3fcc723819cddfb291e8abea87f61a8acc7737e25f4086ea7213dd",
+      "src/render/GameView.ts": "b2407405968fe614606e59c21ec40e7d6648501cfd11bd8d85d3e046b6af5640",
+      "src/render/characters/NpcAnimator.ts": "999a2ba11c1bc7f4039a7ed5ad039b41728d3daa5655c98cc17db54e6c305338",
+      "src/render/npc/NpcView.ts": "71c5d7c339e8ecd21750ac10631d35f82e572b1d139d9e5261fca159d0ae0ae8",
+      "src/sim/ai/NavGrid.ts": "26c7afe1180dcaf207c28015d50bd62268bbb351bd7e5671e9fad3f39442a07d",
+      "src/ui/GameUI.ts": "1a23d1e5323e9100d3aa410ebaaf3884baa6d0715b0a5c4a96a3258d6e0ce77b",
+      "src/ui/Hud.ts": "218d45aaa34c7dd45a795b98a7b23c5042c987c43d438572867be45a0b5195ce",
+      "src/ui/MissionUI.ts": "9c311563ba6b5bd5fed37c9bbd0f9a452f378c7111aa55b49567e633aee1a5d1",
+      "src/ui/Onboarding.ts": "e903ae9d62aa6e719225346cbe7ad472e8590c49d9a7e7601726cfb33a2545c9",
+      "src/ui/dom.ts": "990e48d2b7c3549e8ed9ce2d5088f589a9eec3a37f1a18b89229c1ec0b44562a"
+    }
+  },
+  "finalPhoneChecks": {
+    "base": "fe38f893",
+    "checks": [
+      {
+        "label": "final footwork build",
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "label": "after-final-door-1",
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "tests/perf/phone-base.spec.ts",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": 0
+      },
+      {
+        "label": "after-repeat-door-1",
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "tests/perf/phone-base.spec.ts",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": 1
+      },
+      {
+        "label": "corrected final build",
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "label": "after-final-door-2",
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "tests/perf/phone-base.spec.ts",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": 0
+      },
+      {
+        "label": "after-repeat-door-2",
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "tests/perf/phone-base.spec.ts",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": 1
+      }
+    ],
+    "sourceRestored": true,
+    "source": {
+      "src/debug/testApi.ts": "d83ad237e983b2f876a59b932d9002804f3de2e302594cea04908bae03e8c333",
+      "src/input/devices/Touch.ts": "b7e5817fe55f473a642b13e54f97c442998b0a6c07e9efec1442989a94be27e1",
+      "src/render/BicycleView.ts": "aa78edaa748906e7d25963cdb3e84b26f2306f0fdb9d77a7116d4e200bb4fe2a",
+      "src/render/DistrictView.ts": "361777a27c49f5bef606aa6fd418eb21138e09e8b48ba14f9117996a6f499a2c",
+      "src/render/GameView.ts": "b2407405968fe614606e59c21ec40e7d6648501cfd11bd8d85d3e046b6af5640",
+      "src/render/InstancedGroup.ts": "cfdb68a93ec134ee291a64be8848e7ca0bf899936098e67bf12e62b025bafc7e",
+      "src/render/npc/CivilianCrowd.ts": "d08365944415c6be08da5e14000503c07e8dde90f92dbd67aa17728bb05adf8b",
+      "src/render/npc/NpcView.ts": "91926da4584538f667165fa430b1e5d776178001a91c34c456ed5a572e86510d",
+      "src/sim/ai/NavGrid.ts": "26c7afe1180dcaf207c28015d50bd62268bbb351bd7e5671e9fad3f39442a07d",
+      "src/ui/GameUI.ts": "1a23d1e5323e9100d3aa410ebaaf3884baa6d0715b0a5c4a96a3258d6e0ce77b",
+      "src/ui/Hud.ts": "218d45aaa34c7dd45a795b98a7b23c5042c987c43d438572867be45a0b5195ce",
+      "src/ui/MissionUI.ts": "9c311563ba6b5bd5fed37c9bbd0f9a452f378c7111aa55b49567e633aee1a5d1",
+      "src/ui/Onboarding.ts": "e903ae9d62aa6e719225346cbe7ad472e8590c49d9a7e7601726cfb33a2545c9",
+      "src/ui/dom.ts": "990e48d2b7c3549e8ed9ce2d5088f589a9eec3a37f1a18b89229c1ec0b44562a"
+    }
+  },
+  "priorPhoneAttempts": {
+    "base": "fe38f893",
+    "checks": [
+      {
+        "label": "final footwork build",
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "label": "after-final-footwork-1",
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "tests/perf/phone-base.spec.ts",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": 1
+      },
+      {
+        "label": "corrected final build",
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "label": "after-final-footwork-2",
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "tests/perf/phone-base.spec.ts",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": 0
+      },
+      {
+        "label": "after-repeat-footwork-2",
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "tests/perf/phone-base.spec.ts",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": 1
+      },
+      {
+        "label": "corrected final build",
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "label": "after-final-footwork-3",
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "tests/perf/phone-base.spec.ts",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": 0
+      },
+      {
+        "label": "after-repeat-footwork-3",
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "tests/perf/phone-base.spec.ts",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": 1
+      }
+    ],
+    "sourceRestored": true,
+    "source": {
+      "src/debug/testApi.ts": "d83ad237e983b2f876a59b932d9002804f3de2e302594cea04908bae03e8c333",
+      "src/input/devices/Touch.ts": "b7e5817fe55f473a642b13e54f97c442998b0a6c07e9efec1442989a94be27e1",
+      "src/render/BicycleView.ts": "aa78edaa748906e7d25963cdb3e84b26f2306f0fdb9d77a7116d4e200bb4fe2a",
+      "src/render/DistrictView.ts": "600d4e6333af2ef490dfb7aaefe5eec51643ff8f5761a5190cdf45cf85af2e45",
+      "src/render/GameView.ts": "b2407405968fe614606e59c21ec40e7d6648501cfd11bd8d85d3e046b6af5640",
+      "src/render/InstancedGroup.ts": "cfdb68a93ec134ee291a64be8848e7ca0bf899936098e67bf12e62b025bafc7e",
+      "src/render/npc/CivilianCrowd.ts": "d08365944415c6be08da5e14000503c07e8dde90f92dbd67aa17728bb05adf8b",
+      "src/render/npc/NpcView.ts": "91926da4584538f667165fa430b1e5d776178001a91c34c456ed5a572e86510d",
+      "src/sim/ai/NavGrid.ts": "26c7afe1180dcaf207c28015d50bd62268bbb351bd7e5671e9fad3f39442a07d",
+      "src/ui/GameUI.ts": "1a23d1e5323e9100d3aa410ebaaf3884baa6d0715b0a5c4a96a3258d6e0ce77b",
+      "src/ui/Hud.ts": "218d45aaa34c7dd45a795b98a7b23c5042c987c43d438572867be45a0b5195ce",
+      "src/ui/MissionUI.ts": "9c311563ba6b5bd5fed37c9bbd0f9a452f378c7111aa55b49567e633aee1a5d1",
+      "src/ui/Onboarding.ts": "e903ae9d62aa6e719225346cbe7ad472e8590c49d9a7e7601726cfb33a2545c9",
+      "src/ui/dom.ts": "990e48d2b7c3549e8ed9ce2d5088f589a9eec3a37f1a18b89229c1ec0b44562a"
+    }
+  },
+  "finalReruns": {
+    "fullUnit": "running; test-results/perf/phone-base/final-empty-unit.log",
+    "browser": "not completed on final source; earlier 36/36 passed"
+  },
+  "commands": {
+    "finalHetzner": "sh tools/remote/run.sh \"$PWD\" --pull test-results/perf/phone-base/final-door-unit.json --pull test-results/perf/phone-base/final-door-npc-sim.json -- sh -c \"npm run typecheck && npm run lint && npm run build && npx vitest run tests/unit --maxWorkers=4 --reporter=json --outputFile=test-results/perf/phone-base/final-door-unit.json && npx vitest run tests/sim/npc/integration.test.ts tests/sim/npc/l1-civilians.test.ts tests/sim/npc/permanence.test.ts --maxWorkers=4 --reporter=json --outputFile=test-results/perf/phone-base/final-door-npc-sim.json\"",
+    "nativeFinal": "E2E_PORT=3382 sh tools/perf/quiet-run.sh sh tools/e2e-lock.sh python3 test-results/perf/phone-base/finish-door.py",
+    "epic": "PHONE_PERF_PHASE=verify MI_VERIFY_REMOTE_SIM=1 MI_VERIFY_REMOTE_BROWSER=1 E2E_PORT=3378 sh tools/perf/quiet-run.sh npm run verify -- E18"
+  }
+}

@@ -4,6 +4,9 @@ type Wall = NonNullable<ScenarioDefinition['walls']>[number];
 const lookAhead = [40, 30, 22, 15, 10, 6, 3, 1, 0];
 /** Radius cuts (m) `move` tries, smallest first, for a body that already stands inside the baked wall margin. */
 const marginSteps = [0.002, 0.005, 0.01, 0.02, 0.04, 0.06, 0.08, 0.1];
+// L1's morning population has more than sixteen simultaneous route targets.
+// Retain those exact answers between ticks instead of evicting an entire round.
+const nearestMemoCapacity = 64;
 /** 0.5 m collider-baked district grid. Fixed workspaces serve budgeted A* and shared reverse flow fields. */
 export class NavGrid {
   readonly cellSize = 0.5;
@@ -57,8 +60,8 @@ export class NavGrid {
     for (const m of this.nearestMemo) if (m.x === x && m.z === z && m.r === r) return m.cell;
     const cell = this.nearestCellUncached(x, z, radius);
     const slot = { x, z, r, cell };
-    if (this.nearestMemo.length < 16) this.nearestMemo.push(slot); else this.nearestMemo[this.nearestNext] = slot;
-    this.nearestNext = (this.nearestNext + 1) % 16;
+    if (this.nearestMemo.length < nearestMemoCapacity) this.nearestMemo.push(slot); else this.nearestMemo[this.nearestNext] = slot;
+    this.nearestNext = (this.nearestNext + 1) % nearestMemoCapacity;
     return cell;
   }
   private nearestCellUncached(x: number, z: number, radius?: number): number {
@@ -66,8 +69,9 @@ export class NavGrid {
     const cell=this.cell(x,z);if(cell<0||!this.blocked[cell] && reachable(cell))return cell;
     let nearest=-1,distance=Infinity;
     for(let dz=-6;dz<=6;dz++)for(let dx=-6;dx<=6;dx++){
-      const candidate=this.cell(x+dx*this.cellSize,z+dz*this.cellSize);if(candidate<0||this.blocked[candidate]||!reachable(candidate))continue;
-      const d=(this.x(candidate)-x)**2+(this.z(candidate)-z)**2;if(d<distance){nearest=candidate;distance=d;}
+      const candidate=this.cell(x+dx*this.cellSize,z+dz*this.cellSize);if(candidate<0||this.blocked[candidate])continue;
+      // A farther cell cannot replace the current answer; avoid its segment test.
+      const d=(this.x(candidate)-x)**2+(this.z(candidate)-z)**2;if(d<distance&&reachable(candidate)){nearest=candidate;distance=d;}
     }
     return nearest;
   }
