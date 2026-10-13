@@ -138,3 +138,12 @@ The active beat and floor are exposed in `audio.snapshot().music.story`.
 ## Convoy engines and the bus radio (PO 2026-10-12)
 
 Scripted vehicles (L4 convoy; reusable for the L3 -> L4 handover buses and the L7 bus departure) emit `vehicle.sound` events through `src/sim/vehicles/ConvoySound.ts` (`emitEngine` / `stopEngine`, idle -> cruise by speed, `inCar` for the vehicle the player sits in). `AudioService` turns them into positional engine and tyre loops with the usual mixer, doppler and voice limiter. `BusRadio` plays the already licensed `score-calm-L1` recording (Kevin MacLeod "Jazz Brunch", CC-BY 4.0, listed in `public/assets/audio/LICENSES.md`) through a band-pass radio filter on the `vehicles` bus from the L4 ride until the outbreak alarm (`l4.firstTurn`), trimming the adaptive score meanwhile. Tuning: `l4.radio` in `src/data/l4.ts`.
+
+L9 floor APCs read `vehicle.stage` from the current entity snapshot on every engine
+sound event. `apcEngine.ts` defines four progressively slower/filtered mixes of
+`vehicle.engine-low`, `vehicle.engine-high` and `vehicle.sputter`; stable voice keys
+retain at most three engine layers, and the floor policy never plays `vehicle.fire`.
+The existing vehicles bank and its LICENSES.md segment records cover these runtime
+EQ/rate variants; no new recording or sample is added. `vehicle.damage-stage` alone
+plays the short transition and caption. Restore/rebuild reads the stage directly
+and does not replay thresholds. Existing E16 pause/focus and 32/16 voice limits apply.
