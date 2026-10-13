@@ -1,6 +1,7 @@
 import { expect, test } from 'vitest';
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { Matrix4 } from 'three';
+import { Matrix4, Vector3 } from 'three';
+import { View } from '../../../src/render/View';
 import { performance } from 'node:perf_hooks';
 import { arena, spawn, step } from './helpers';
 import { missionControls } from '../../../src/sim/missions/controls';
@@ -78,5 +79,25 @@ test('T-E19-street-reservation @E19 ordinary waves leave slots for scripted hous
     expect(d.cap).toBe(6); expect(d.count).toBe(4); expect(d.queue).toHaveLength(2);
     d.reserved = 1; step(w, 1); expect(d.count).toBe(5); expect(d.queue).toHaveLength(1);
     d.reserved = 0; step(w, 1); expect(d.count).toBe(6); expect(d.queue).toHaveLength(0);
+  } finally { w.dispose(); }
+});
+
+
+test('T-E07-max-zoom @E07-AC07 @E18-AC01 max zoom defers a spawn newly revealed by the wider simulation camera', async () => {
+  const w = await arena(), director = w.infected!.director, view = new View();
+  try {
+    view.resize(1600, 900); view.reset({ x: 0, z: 0 });
+    const projection = new Matrix4();
+    const sync = () => director.setFrustum(projection.multiplyMatrices(view.simCamera.projectionMatrix, view.simCamera.matrixWorldInverse).elements, view.simCamera.position);
+    const at = { x: -19, z: 0 };
+    sync(); expect(director.offscreen(at)).toBe(true);
+    view.zoom(100); view.update({ x: 0, z: 0 }, 2); sync();
+    const screen = new Vector3(at.x, .7, at.z).project(view.simCamera);
+    expect(Math.abs(screen.x)).toBeLessThan(1); expect(Math.abs(screen.y)).toBeLessThan(1);
+    expect(director.offscreen(at)).toBe(false); expect(director.safe('infected.runner', at)).toBe(false);
+    director.request('infected.runner', at); step(w, 1);
+    expect(director.queue).toHaveLength(1); expect(w.infected!.active).toHaveLength(0);
+    view.zoom(-100); view.update({ x: 0, z: 0 }, 2); sync(); step(w, 1);
+    expect(director.queue).toHaveLength(0); expect(w.infected!.active).toHaveLength(1);
   } finally { w.dispose(); }
 });

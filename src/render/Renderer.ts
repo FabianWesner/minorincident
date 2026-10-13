@@ -1,5 +1,5 @@
 // Adapted from folio-2025 Rendering.js / Viewport.js by Bruno Simon (MIT), commit 41046b5.
-import { NodeBuilder, AgXToneMapping, ACESFilmicToneMapping, WebGPURenderer, type Object3D, type Camera } from 'three/webgpu';
+import { NodeBuilder, AgXToneMapping, ACESFilmicToneMapping, WebGPURenderer, type Object3D, type Camera, type Scene } from 'three/webgpu';
 
 import { worldAssets } from '../assets/worldDefinitions';
 import { installTextureRanges } from './TextureRanges';
@@ -48,6 +48,14 @@ export function installPaletteVariantCache(objects: RenderObjects): void {
 
 /** Automatic WebGPU → WebGL2 fallback; backend is read after renderer.init(), not inferred from navigator. */
 export class Renderer extends WebGPURenderer {
+  private overlayPass = false;
+  override get currentSamples(): number { return this.overlayPass ? 0 : super.currentSamples; }
+  /** Postprocessing writes a single-sample canvas. Resolving a separate MSAA
+   * attachment for an overlay would replace that image with stale contents. */
+  renderOverlay(scene: Scene, camera: Camera): void {
+    this.overlayPass = true;
+    try { this.render(scene, camera); } finally { this.overlayPass = false; }
+  }
   private levelCacheReleases = 0;
   /** Read-only reload diagnostics; does not consume GL errors or change GPU state. */
   diagnostics() {
