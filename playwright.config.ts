@@ -34,8 +34,8 @@ export default defineConfig({
   },
   projects: [
     { name: 'chromium', testIgnore: '**/webgpu.spec.ts', use: { browserName: 'chromium' } },
-    { name: 'pixel-7', testMatch: ['**/smoke.spec.ts', '**/input-touch.spec.ts', '**/hud-touch.spec.ts', '**/mobile-hud-layout.spec.ts', '**/home-button.spec.ts'], use: { ...devices['Pixel 7'], browserName: 'chromium', viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 } },
-    { name: 'pixel-7-landscape', testMatch: ['**/smoke.spec.ts', '**/input-touch.spec.ts', '**/hud-touch.spec.ts', '**/mobile-hud-layout.spec.ts', '**/home-button.spec.ts'], use: { ...devices['Pixel 7 landscape'], browserName: 'chromium', viewport: { width: 844, height: 390 }, deviceScaleFactor: 1 } },
+    { name: 'pixel-7', testMatch: ['**/smoke.spec.ts', '**/input-touch.spec.ts', '**/hud-touch.spec.ts', '**/mobile-hud-layout.spec.ts', '**/home-button.spec.ts', '**/apc-floor.spec.ts'], use: { ...devices['Pixel 7'], browserName: 'chromium', viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 } },
+    { name: 'pixel-7-landscape', testMatch: ['**/smoke.spec.ts', '**/input-touch.spec.ts', '**/hud-touch.spec.ts', '**/mobile-hud-layout.spec.ts', '**/home-button.spec.ts', '**/apc-floor.spec.ts'], use: { ...devices['Pixel 7 landscape'], browserName: 'chromium', viewport: { width: 844, height: 390 }, deviceScaleFactor: 1 } },
     { name: 'iphone-14', testMatch: ['**/smoke.spec.ts', '**/input-touch.spec.ts', '**/hud-touch.spec.ts', '**/mobile-hud-layout.spec.ts'], use: { ...devices['iPhone 14'], browserName: 'chromium', viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 } },
     { name: 'iphone-14-landscape', testMatch: ['**/smoke.spec.ts', '**/input-touch.spec.ts', '**/hud-touch.spec.ts', '**/mobile-hud-layout.spec.ts'], use: { ...devices['iPhone 14 landscape'], browserName: 'chromium', viewport: { width: 844, height: 390 }, deviceScaleFactor: 1 } },
     ...(process.env.E2E_WEBGPU === '1' ? [{ name: 'webgpu', testMatch: '**/webgpu.spec.ts', use: { browserName: 'chromium' as const, headless: true, launchOptions: { args: ['--enable-unsafe-webgpu', '--ignore-gpu-blocklist', '--use-angle=metal'] } } }] : []),
