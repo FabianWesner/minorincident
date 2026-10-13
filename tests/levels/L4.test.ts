@@ -251,6 +251,9 @@ describe('L4 The Safe City Falls', () => {
     expect(l.mission.state.states['line-broken']).toBe(true);
     // Losing half a line's soldiers breaks it from its earliest beat on (not before): line 1 falls at 50 s instead of 62 s.
     const f = await loadL4(3); const fs = f.mission.state.l4!;
+    // The idle courier is protected, as in T-E22-11: this part measures the director's overrun beat, not her survival (ally-combat-feel:
+    // a retry at the turn checkpoint after her death resets the line and hides the beat).
+    f.world.combat!.damage.god = true;
     while (fs.phase === 'convoy') f.world.update();
     step(f.world, 3 * 60); f.mission.completeObjective('quartermaster'); while (fs.phase !== 'war') f.world.update();
     for (const id of fs.director.lines[0].soldierIds.slice(0, 6)) f.world.entities.get(id)!.health.current = 0;
