@@ -1,0 +1,129 @@
+{
+ "name": "asset-l10-dispersal-overview",
+ "note": "L10 dispersal kit assembled (hall, fan, tower, tanks, pipes, platform, console) seen from an orbiting camera far enough to take in whole pieces, one full turn. Look for: floating or sunk pieces, silhouettes that merge into a blob, LOD swaps while orbiting.",
+ "ground": "sidewalk",
+ "size": 110,
+ "props": [
+  {
+   "id": "p0",
+   "asset": "kit.dispersal-turbine-hall",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "p1",
+   "asset": "kit.dispersal-fan-housing",
+   "at": [
+    -26,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "p2",
+   "asset": "kit.dispersal-filtration-tower",
+   "at": [
+    26,
+    -4
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "p3",
+   "asset": "kit.dispersal-tank-sphere",
+   "at": [
+    30,
+    26
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "p4",
+   "asset": "kit.dispersal-tank-bullet",
+   "at": [
+    0,
+    30
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "p5",
+   "asset": "kit.dispersal-pipe-straight",
+   "at": [
+    -8,
+    16
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "p6",
+   "asset": "kit.dispersal-pipe-tee",
+   "at": [
+    0,
+    16
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "p7",
+   "asset": "kit.dispersal-pipe-elbow",
+   "at": [
+    8,
+    16
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "p8",
+   "asset": "kit.dispersal-platform",
+   "at": [
+    -24,
+    28
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "p9",
+   "asset": "kit.dispersal-console",
+   "at": [
+    -34,
+    18
+   ],
+   "yaw": 0
+  }
+ ],
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    10,
+    -12
+   ],
+   "yaw": 0
+  }
+ ],
+ "camera": {
+  "mode": "orbit",
+  "target": [
+   0,
+   4,
+   12
+  ],
+  "radius": 90,
+  "azimuth": 45,
+  "polar": 58,
+  "spin": 60
+ },
+ "frames": 360,
+ "sheet": 30,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0
+ }
+}
