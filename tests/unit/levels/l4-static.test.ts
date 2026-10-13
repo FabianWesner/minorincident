@@ -20,9 +20,11 @@ const box = (x0: number, z0: number, x1: number, z1: number): Aabb => ({ min: [x
 const reach = (nav: ReturnType<typeof navWith>, from: Point, to: Point) => { const f = nav.flood(from); const i = nav.index(to[0], to[1]); return i >= 0 && f[i] === 1; };
 
 describe('L4 static', () => {
-  test('T-E22-12-district @E22 @E22-AC10 @E22-AC12 Alpha approach anchors are on three separated, reachable streets outside the defensive ring', () => {
+  test('T-E22-12-district @E22 @E22-AC10 @E22-AC12 Alpha approach anchors (PO 10-13: six to eight, from different directions) are on separated, reachable streets outside the defensive ring', () => {
     const nav = navWith(), angles: number[] = [];
-    expect(l4AlphaEmergence).toHaveLength(3);
+    expect(l4AlphaEmergence).toHaveLength(l4.alphas.count.high); expect(l4AlphaEmergence.filter(e => !e.high)).toHaveLength(l4.alphas.count.low);
+    // Staggered: in spawn order, never two at the same second.
+    for (let i = 1; i < l4AlphaEmergence.length; i++) expect(l4AlphaEmergence[i].afterTurnS).toBeGreaterThan(l4AlphaEmergence[i - 1].afterTurnS);
     for (const entry of l4AlphaEmergence) {
       const p = at(entry.anchor);
       expect(nav.walkable(p), entry.anchor).toBe(true);
@@ -32,8 +34,10 @@ describe('L4 static', () => {
       const a = layout.anchors[entry.anchor];
       expect(Math.cos(a.yaw) * (l4.map.centre.x - p[0]) - Math.sin(a.yaw) * (l4.map.centre.z - p[1])).toBeGreaterThan(0);
     }
-    for (let i = 0; i < angles.length; i++) for (let j = i + 1; j < angles.length; j++)
-      expect(Math.abs(Math.atan2(Math.sin(angles[i] - angles[j]), Math.cos(angles[i] - angles[j])))).toBeGreaterThanOrEqual(Math.PI / 3);
+    // From different directions: at least six of the eight 45-degree sectors around the plaza, and no two consecutive Alphas from one sector.
+    const sector = (a: number) => Math.floor((a + Math.PI) / (Math.PI / 4)) % 8;
+    expect(new Set(angles.map(sector)).size).toBeGreaterThanOrEqual(6);
+    for (let i = 1; i < angles.length; i++) expect(sector(angles[i]), l4AlphaEmergence[i].anchor).not.toBe(sector(angles[i - 1]));
   });
 
   test('T-E22-13-district @E22 @E22-AC12 @E22-AC13 breakable-line anchors match existing sandbags; each pallet can open a clear crossing without moving other dressing', () => {

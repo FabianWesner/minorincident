@@ -1,6 +1,6 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { afterEach, describe, expect, test } from 'vitest';
-import { l4, l4Anchors, l4Edges, l4Route, l4ConvoyStations } from '../../src/data/l4';
+import { l4, l4Anchors, l4Edges, l4Emergence, l4Inside, l4Route, l4ConvoyStations } from '../../src/data/l4';
 import { l4AlphaEmergence, l4BreakableLine } from '../../src/levels/L4/layout';
 import { completeCampaignLevel } from '../../src/sim/progression/carryover';
 import { preset } from '../../src/sim/progression/Campaign';
@@ -51,8 +51,8 @@ describe('L4 The Safe City Falls', () => {
     expect(l4.convoy.vehicles.map(v => v.asset).sort()).toEqual(['veh.evac-bus', 'veh.evac-bus', 'veh.military-apc', 'veh.military-truck', 'veh.military-truck']);
     expect(s.convoyIds).toHaveLength(5); expect(w.entities.get(1)!.hidden).toBe(true);
     const events: string[] = []; w.events.on('vehicle.entered', e => { if (e.type === 'vehicle.entered') events.push(`entered:${e.role}`); }); w.events.on('vehicle.exited', e => { if (e.type === 'vehicle.exited') events.push(`exited:${e.role}`); });
-    // The player's bus is last in line (passes the army gate first) and every vehicle ends parked in the plaza on the route's end.
-    expect(l4.convoy.vehicles.at(-1)!.player).toBe(true);
+    // The courier rides in the first bus of the column (PO 10-13: "Let the user exit the 1st bus which is ON the military area"); every vehicle ends parked on the route's end.
+    expect(l4.convoy.vehicles.findIndex(v => v.player)).toBe(l4.convoy.vehicles.findIndex(v => v.asset === 'veh.evac-bus'));
     let t = 0; while (s.phase === 'convoy' && t < 60 * 60) { w.update(); t++; }
     expect(s.phase).toBe('plaza'); expect(t / 60).toBeGreaterThanOrEqual(20); expect(t / 60).toBeLessThanOrEqual(35);
     expect(w.entities.get(1)!.hidden).toBe(false); expect(w.storyLock).toBeNull();
@@ -203,15 +203,17 @@ describe('L4 The Safe City Falls', () => {
     const doors = (l.mission.l4 as unknown as { doors(): { x: number; z: number }[] }).doors();
     while (s.phase !== 'war') w.update();
     const refugeDoors = Object.entries(l.mission.def.anchors).filter(([n]) => n.startsWith('refuge-door-')).map(([, a]) => a);
+    const points = [...l4Emergence.map(e => ({ x: e.at[0], z: e.at[1] })), ...l4Inside.map(p => ({ x: p[0], z: p[1] }))];
     for (let t = 0; t < 90 * 60; t++) {
       w.update();
-      for (const id of s.emergedIds) if (!known.has(id)) { known.add(id); const e = w.entities.get(id)!; first.push({ tick: w.tick, at: { x: e.transform.x, z: e.transform.z }, seen: false }); offscreenAudit.push(l4Edges.some(ed => dist({ x: ed.at[0], z: ed.at[1] }, e.transform) < 6) || doors.some(d => dist(d, e.transform) < 6) || refugeDoors.some(d => dist(d, e.transform) < 6)); }
+      for (const id of s.emergedIds) if (!known.has(id)) { known.add(id); const e = w.entities.get(id)!; first.push({ tick: w.tick, at: { x: e.transform.x, z: e.transform.z }, seen: false }); offscreenAudit.push(points.some(q => dist(q, e.transform) < 6) || doors.some(d => dist(d, e.transform) < 6) || refugeDoors.some(d => dist(d, e.transform) < 6)); }
     }
     expect(first.length).toBeGreaterThan(10);
-    // Every wave infected first appears within 6 m of an emergence point (a street mouth, or a building door for the first stream: PO 2026-10-12 "L4 alarm is there, but no Zombies anywhere").
+    // Every wave infected first appears within 6 m of an authored emergence point (street mouths, side streets, building doors and, PO 10-13, the camp's tents and crates).
     expect(offscreenAudit.filter(Boolean).length / offscreenAudit.length).toBeGreaterThan(.9);
-    const used = new Set(first.map(f => l4Edges.findIndex(e => dist({ x: e.at[0], z: e.at[1] }, f.at) < 6))); used.delete(-1);
-    expect(used.size).toBeGreaterThanOrEqual(3);
+    // PO 10-13 "from all directios": the first 90 s already bring infected from at least five of the six street edges (one may be too close to the courier).
+    const used = new Set(first.map(f => { const k = points.findIndex(q => dist(q, f.at) < 6); return k >= 0 && k < l4Emergence.length ? l4Emergence[k].edge : -1; })); used.delete(-1);
+    expect(used.size).toBeGreaterThanOrEqual(5);
   }, HEAVY);
 
   test('T-E22-11 @E22 @E22-AC11 military spectacle: two HMG positions fire, trucks and an armoured vehicle stand in the plaza, the tank fires every 8-12 s away from the player and allies, the helicopter orbits and withdraws without landing', async () => {
@@ -373,7 +375,8 @@ describe('L4 The Safe City Falls', () => {
         known.add(id); const e = w.entities.get(id)!;
         expect(e.archetype).toBe('infected.alpha');
         expect(w.tick).toBeGreaterThan(s.turnAt);
-        expect(dist(e.transform, m.def.anchors[s.alphaAnchors[index]])).toBeLessThanOrEqual(3);
+        // At its street mouth, or (that one in the camera) another authored street emergence point (PO 10-13: Alphas from all directions, never in view).
+        expect(Math.min(dist(e.transform, m.def.anchors[s.alphaAnchors[index]]), ...l4Emergence.map(q => dist(e.transform, { x: q.at[0], z: q.at[1] })))).toBeLessThanOrEqual(3);
       }
       expect(s.soldierIds).toHaveLength(l4.calm.soldiers[tier]);
     }

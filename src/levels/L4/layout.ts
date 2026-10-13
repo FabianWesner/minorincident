@@ -36,13 +36,25 @@ export const l4Dressing: readonly L4Dressing[] = [
     [51.8, -22, 'veh.sedan-white', H], [51.8, 5, 'veh.sedan-blue', -H]] as const).map(([x, z, assetId, yaw]) => d('parked', assetId, x, z, { yaw })),
 ];
 
-/** Street mouths for the encounter lane's first Alphas. No actor is spawned by the layout. */
-export const l4AlphaEmergence = [
-  { edgeId: 'north', anchor: 'l4-alpha-north' },
-  // Spawn order (l4-collapse): the two gun-nest Alphas (north, south-east) first, the armour-beat Alpha (west, high tier) last.
-  { edgeId: 'south-east', anchor: 'l4-alpha-south' },
-  { edgeId: 'west', anchor: 'l4-alpha-west' },
-] as const;
+/**
+ * The Alphas (PO 10-13: "add more alphas. The current one has zero chance."), in spawn order: when (seconds after the turn), from which
+ * street mouth or door (`at`, or an `l4Edges` id), and their job (src/sim/missions/L4Collapse.ts): `line` goes for the standing soldiers of
+ * the line that holds now, `west` / `north` / `south` charge through that authored E26 slot first (the north and south ones wait for the
+ * gun-nest beat), `armor` waits for the armour beat. `high`: high tier only (the low tier has six). No actor is spawned by the layout.
+ */
+export const l4AlphaEmergence: readonly { anchor: string; edgeId?: string; at?: readonly [number, number]; job: 'line' | 'west' | 'north' | 'south' | 'armor'; afterTurnS: number; high?: boolean }[] = [
+  // Line 1: one Alpha through the west slot; the next (high tier) goes for the line that holds after the first break.
+  { anchor: 'l4-alpha-west-slot', at: [-46, 21], job: 'west', afterTurnS: 32 },
+  { anchor: 'l4-alpha-nw', edgeId: 'nw-alley', job: 'line', afterTurnS: 56, high: true },
+  // The two gun-nest Alphas (south-east, north), staggered, then two more at the nests line (the first of them high tier only).
+  { anchor: 'l4-alpha-south', edgeId: 'south-east', job: 'south', afterTurnS: 84 },
+  { anchor: 'l4-alpha-north', edgeId: 'north', job: 'north', afterTurnS: 92 },
+  { anchor: 'l4-alpha-east', edgeId: 'east', job: 'line', afterTurnS: 100, high: true },
+  { anchor: 'l4-alpha-sw', edgeId: 'south-west', job: 'line', afterTurnS: 120 },
+  // The armour beat: from the west and out of the shop door north-east of the plaza.
+  { anchor: 'l4-alpha-west', edgeId: 'west', job: 'armor', afterTurnS: 138 },
+  { anchor: 'l4-alpha-ne', at: [.9, -23.3], job: 'armor', afterTurnS: 148 },
+];
 
 /**
  * Three existing pallets with clear ground on both sides. Systems resolve the named endpoints into E26 slots and own HP,
@@ -67,8 +79,7 @@ export function levelFourLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     const door = layout.anchors['kessler-cellar-door'], inner = layout.anchors['cellar-interior'];
     for (const [name, [x, z]] of Object.entries(l4Anchors)) layout.anchors[name] = { position: [x, 0, z], yaw: 0 };
     for (const entry of l4AlphaEmergence) {
-      const edge = l4Edges.find(e => e.id === entry.edgeId)!;
-      const [x, z] = edge.at;
+      const [x, z] = entry.at ?? l4Edges.find(e => e.id === entry.edgeId)!.at;
       layout.anchors[entry.anchor] = { position: [x, 0, z], yaw: -Math.atan2(l4.map.centre.z - z, l4.map.centre.x - x) };
     }
     for (const line of l4BreakableLine) {

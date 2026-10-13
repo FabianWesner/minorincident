@@ -252,7 +252,9 @@ class CivilianBatch extends Group {
         const aiming = c.story?.clip === 'shoot' || !!firing && firing.until >= this.world.tick;
         const age = firing ? this.world.tick - (firing.until - 24) : Infinity;
         const recoil = hold && age > 0 && age < 8 ? Math.sin(Math.PI * age / 8) * .025 : 0;
-        frame = this.poses.correct(e.id, frame, ...blend, pose => this.gunAim.apply(pose,this.gunDirection, aiming ? Math.atan2(this.gunDirection.y, Math.hypot(this.gunDirection.x, this.gunDirection.z)) : hold ? -.18 : -.75, hold || aiming ? .995 - recoil : .8, hold)); blend[0] = frame; blend[1] = 1;
+        // L4 off duty (PO 10-13 "before the alarm let solidiers be relaxed"): a soldier who is not engaged carries the rifle muzzle down.
+        const relaxed = !aiming && c.ally?.role === 'soldier' && !c.ally.engaged && !c.ally.targetId && !!this.world.missions?.def.l4;
+        frame = this.poses.correct(e.id, frame, ...blend, pose => this.gunAim.apply(pose,this.gunDirection, aiming ? Math.atan2(this.gunDirection.y, Math.hypot(this.gunDirection.x, this.gunDirection.z)) : relaxed ? -.62 : hold ? -.18 : -.75, hold || aiming ? .995 - recoil : .8, hold)); blend[0] = frame; blend[1] = 1;
       }
       this.accessories?.place(e, this.lod, this.poses, frame, blend, this.transform);
       this.probe.add(e.id, clip, phase, this.transform, this.poses, frame, ...blend, this.mesh.geometry);

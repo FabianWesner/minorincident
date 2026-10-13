@@ -19,19 +19,28 @@ export const l4 = {
   /** Beat 1: the five-vehicle convoy (head first), kinematic along the Lakeshore - Church Road - Harbor - Plaza Way route. */
   convoy: {
     speedMs: 13.5, accelMs2: 3.6, brakeMs2: 4.5, lateralMs2: 13, gapM: 3, leftRadiusM: 7, rightRadiusM: 3.6, laneM: 1.75, laneNsM: 1.25,
-    /** `len` is the hull length (manifest), `player` the bus the courier rides in (last in line, so she passes the gate first). */
+    /**
+     * `len` is the hull length (manifest), `player` the bus the courier rides in: the first bus of the column (PO 10-13: "Let the user exit
+     * the 1st bus which is ON the military area"), which parks along the perimeter beside the quartermaster; the second parks beyond the south line.
+     */
     vehicles: [
       { id: 'apc', asset: 'veh.military-apc', len: 5.69, wid: 2.95 },
       { id: 'truck-1', asset: 'veh.military-truck', len: 6.93, wid: 2.9 },
-      { id: 'bus-2', asset: 'veh.evac-bus', len: 9.36, wid: 2.96 },
+      { id: 'bus-2', asset: 'veh.evac-bus', len: 9.36, wid: 2.96, player: true },
       { id: 'truck-2', asset: 'veh.military-truck', len: 6.93, wid: 2.9 },
-      { id: 'bus-1', asset: 'veh.evac-bus', len: 9.36, wid: 2.96, player: true },
+      { id: 'bus-1', asset: 'veh.evac-bus', len: 9.36, wid: 2.96 },
     ] as readonly { id: string; asset: string; len: number; wid: number; player?: boolean }[],
     /** The ride must take 20-35 s for the courier's bus (E22-AC04). */
     rideS: [20, 35] as P,
     /** Control returns this long after the bus stops (<= 0.5 s, AC04). */
     controlS: .3,
   },
+  /**
+   * PO 10-13: the courier gets off inside the military area and cannot walk away before the story lets her. Until the line breaks she is
+   * kept inside this box (courier-only walls just outside the soldiers' posts; the parked convoy is the east side, its gaps closed by jersey
+   * barriers when it stops: "the gate closes behind the convoy"). A soldier calls her back when she leans on it (every `barkEveryS` at most).
+   */
+  perimeter: { x0: -35.6, x1: -9.2, z0: -17.4, z1: 22.5, barkM: 1.2, barkEveryS: 12, barrier: 'prop.jersey-barrier' },
   /** Beat 2: free walk, the quartermaster issues the machine gun. */
   calm: {
     /** Civilians already in the city before the convoy arrives, and the evacuees who step off the buses. */
@@ -41,6 +50,18 @@ export const l4 = {
     /** Where the evacuees beyond the eight queue slots wait: two rows between the armory table and the tents, facing the registration. */
     waiting: [5.8, 10].flatMap(z => [-31, -29.5, -28, -24.5, -23, -21.5, -18.5, -17, -15.5].map(x => [x, z] as P)) as readonly P[],
     soldiers: { high: 20, low: 10 },
+    /**
+     * PO 10-13: "before the alarm let solidiers be relaxed. The take their position when the alarm is running." Off duty until the turn,
+     * rifles lowered: chatting pairs, coffee (the cup hold), short patrols; the quartermaster, the HMG crews and the gate guards stay at
+     * their posts, relaxed. Post names from `l4Posts`; points are world metres (snapped to clear ground).
+     */
+    offDuty: {
+      chat: [['n1', 'n2', [-24.5, -12.2]], ['s1', 's2', [-24.5, 15.6]], ['e1', 'e3', [-13.6, -8.5]], ['w2', 'w3', [-30.6, 7]]] as readonly (readonly [string, string, P])[],
+      coffee: [['n3', [-17.2, -12.4], [-20, -4]], ['t1', [-14, 12.8], [-20, 8]], ['hmg-1', [-31.2, -12.6], [-24, -6]]] as readonly (readonly [string, P, P])[],
+      patrol: [['w1', [-31.4, -11.8], [-31.4, -5.5]], ['s3', [-19.5, 16.2], [-13.8, 16.2]], ['t2', [-14, -16.4], [-24, -16.6]], ['e2', [-13.8, 9.5], [-13.8, 2.5]]] as readonly (readonly [string, P, P])[],
+      /** Seconds a patrol stops at each end, looking out. */
+      patrolLookS: 5,
+    },
     /** Radio line (loudspeaker) once the convoy has stopped, and the quartermaster's interact time. */
     welcomeAtS: 1.5, issueS: .6,
   },
@@ -62,6 +83,13 @@ export const l4 = {
     /** Seconds the streets keep emerging after the line break (collapse). */
     collapseWaveEveryS: 9, collapseWaveSize: 3, collapseCapInfected: 80,
     caps: { infected: { high: 120, low: 60 }, characters: { high: 190, low: 95 } },
+    /**
+     * PO 10-13: "Let them come from all directios, not in bulk." Each wave adds to every street edge; an edge releases a small group
+     * (`group`, seeded) from one of its emergence points (`l4Emergence`, in turn) every `groupEveryS` (seeded), so the infected arrive spread
+     * and staggered. `inside`: during the war groups of 1-2 also come out of the buildings inside the perimeter (tents, containers,
+     * registration; `l4Inside`) every `insideEveryS`, when the spot is out of view or hidden behind a building.
+     */
+    group: [2, 5] as P, groupEveryS: [2, 4] as P, inside: { everyS: 12, group: [1, 2] as P, minM: 9 },
     /** Infected hit like L3's (the PO found earlier levels too hard: a sensible player finishes with few deaths). */
     infectedDamage: 1.5,
     emergeLeashM: 26,
@@ -74,9 +102,12 @@ export const l4 = {
   /** The in-bus radio (PO 2026-10-12): low, muffled, from the bus until the alarm; `scoreTrim` lowers the adaptive score while it plays. */
   radio: { gain: .2, cabHz: 3000, openHz: 1600, rangeM: 30, fadeS: 2.5, scoreTrim: .3 },
   alarm: { holdS: 24, fadeS: 8, periodS: 6, lowHz: 420, highHz: 640, speakerGain: 1.1, bedGain: .22, speakers: [[-31.2, 15.4], [-16.6, -12.2], [-26, -8.8]] as readonly P[] },
-  /** First Alphas use the district street mouths on both quality tiers, inside the ordinary caps. */
-  /** The Alphas enter for the gun-nest beat (two) and the armour beat (the third, high tier only). */
-  alphas: { count: { high: 3, low: 2 }, afterTurnS: [84, 84, 150] as readonly number[], lineHp: 300 },
+  /**
+   * The Alphas (PO 10-13: "add more alphas. The current one has zero chance."): staggered, from different street mouths (`l4AlphaEmergence`
+   * holds when and what each one does), inside the ordinary caps. `allyResist` scales the damage they take from anyone but the courier
+   * (soldiers, HMG nests, tank, helicopter, armed civilians); the courier's damage is unchanged.
+   */
+  alphas: { count: { high: 8, low: 6 }, allyResist: .5, lineHp: 300 },
   /** Section 5.6 (changed by the l4-collapse design): the final "Fall back!" comes `fallBackS` after the third line broke, at the latest `defenseS` after the turn. */
   lineBreak: { defenseS: 200, fallBackS: 8, mockupLatestS: 120 },
   /**
@@ -237,6 +268,22 @@ export const l4Edges: readonly { id: string; at: P }[] = [
   { id: 'west', at: [-56.6, 6] }, { id: 'nw-alley', at: [-39.2, -35] }, { id: 'north', at: [-18, -38.4] }, { id: 'east', at: [13.4, -3] },
   { id: 'south-east', at: [-5.5, 42.6] }, { id: 'south-west', at: [-23, 42.6] }, { id: 'metro', at: [50.5, -37.4] },
 ];
+/**
+ * PO 10-13 ("Let them come from all directios, not in bulk"): the emergence points of each street edge (index into `l4Edges`): its street
+ * mouth plus side streets and the doors of the shops and houses around the plaza (`door`: a building door, used from 12 m off the courier;
+ * a street point from 24 m). An edge releases its small groups from these in turn, always out of view.
+ */
+export const l4Emergence: readonly { edge: number; at: P; door?: boolean }[] = [
+  { edge: 0, at: [-56.6, 6] }, { edge: 0, at: [-57, -14] }, { edge: 0, at: [-46, 21] }, { edge: 0, at: [-42.3, 10.2], door: true },
+  { edge: 1, at: [-39.2, -35] }, { edge: 1, at: [-40, -26] }, { edge: 1, at: [-46.9, -23], door: true }, { edge: 1, at: [-42, -15.5], door: true },
+  { edge: 2, at: [-18, -38.4] }, { edge: 2, at: [-30, -38] }, { edge: 2, at: [-30, -21.2], door: true }, { edge: 2, at: [-13.7, -23.2], door: true },
+  { edge: 3, at: [13.4, -3] }, { edge: 3, at: [13, -20] }, { edge: 3, at: [13, 14] }, { edge: 3, at: [2, -9], door: true }, { edge: 3, at: [-.1, -17.5], door: true },
+  { edge: 4, at: [-5.5, 42.6] }, { edge: 4, at: [-14, 40] }, { edge: 4, at: [.9, 18.8], door: true }, { edge: 4, at: [-.1, 33.5], door: true },
+  { edge: 5, at: [-23, 42.6] }, { edge: 5, at: [-36, 40] }, { edge: 5, at: [-44.9, 27.1], door: true },
+  { edge: 6, at: [50.5, -37.4] },
+];
+/** Inside the perimeter (PO 10-13: "ALso from within buildings inside the army area"): behind the tents, the supply crates and the registration kit. */
+export const l4Inside: readonly P[] = [[-30.6, 10.4], [-26.8, 10.4], [-22.8, 10.4], [-31.8, 4], [-20.8, 2.2], [-26, -10.6], [-30.5, -10.6]];
 /** Fairhaven's own parked cars that are real vehicles (E09): the war sets some of them alight (never drivable: the courier is on foot in L4). */
 export const l4Cars: readonly { at: P; yaw: number; def: string }[] = [
   { at: [-30, 43.3], yaw: 0, def: 'vehicle.sedan' }, { at: [-6, 43.3], yaw: 0, def: 'vehicle.suv' }, { at: [-38, -42.6], yaw: Math.PI, def: 'vehicle.pickup' },
