@@ -1,3 +1,4 @@
+import { SimPhase } from '../../core/EventBus';
 import { Rng } from '../../core/Rng';
 import { l4, l4Anchors, l4Cars, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4Inside, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, type L4Weapon } from '../../data/l4';
 import { l4AlphaEmergence } from '../../levels/L4/layout';
@@ -102,6 +103,8 @@ export class LevelFourWar {
     // Every knockdown or kill counts as a "kill" for the war balance (the infected recover: PO rule), credited to who dealt it.
     world.events.on('combat.kill', e => { if (e.type === 'combat.kill') this.killed(e.sourceId, e.targetId); });
     this.director.listen();
+    // Body clearing runs after every system of the tick (a blast or a burst can down several in one tick, after the mission update).
+    world.events.on('sim.tick', () => { const s = this.mission.state.l4; if (s && s.phase !== 'convoy' && s.phase !== 'plaza' && world.tick % 30 === 0) this.clearBodies(); }, SimPhase.cleanup);
   }
   private spawnConvoy(): void {
     const { world } = this.mission, s = this.s;
@@ -484,16 +487,17 @@ export class LevelFourWar {
       o.panic(e, { x: at.x, z: at.z });
     }
   }
-  private spawnRoom(): boolean {
+  /** Room under the characters cap; `keep` slots stay free (the Alphas still to come, l4-po-round). */
+  private spawnRoom(keep = 0): boolean {
     const cap = l4.war.caps.characters[this.low ? 'low' : 'high'];
-    return [...this.world.entities.iterate()].filter(e => !e.hidden && e.health.current > 0 && (e.infected || e.civilian)).length < cap;
+    return [...this.world.entities.iterate()].filter(e => !e.hidden && e.health.current > 0 && (e.infected || e.civilian)).length < cap - keep;
   }
   /** One infected out of view at `at`; `push` (the collapse director's pressure) may use the whole cap, waves only the stage's share. */
   private emerge(at: Point, push = false): number {
     const { world } = this.mission, ai = world.infected!, o = this.outbreak();
     const limit = Math.floor(ai.director.cap * (push ? 1 : this.director.aliveShare())) - ai.director.reserved - l4.war.headroom;
     if (ai.director.count >= limit) this.settleDowned(1);
-    if (!this.spawnRoom() || ai.director.count >= limit || !ai.pool.length || this.inGap(at)) return 0;
+    if (!this.spawnRoom(ai.director.reserved) || ai.director.count >= limit || !ai.pool.length || this.inGap(at)) return 0;
     const out = this.snap(at, .45), id = o.spawnPedestrian(out), e = world.entities.get(id)!;
     o.turnNow(e);
     if (!e.infected) return 0;
@@ -509,10 +513,16 @@ export class LevelFourWar {
     for (const entry of l4AlphaEmergence) {
       if (s.alphaAnchors.includes(entry.anchor) || (entry.high && this.low)) continue;
       if (s.alphaIds.length >= count) return;
-      if (world.tick < s.turnAt + ticks(entry.afterTurnS) || ai.director.count >= ai.director.cap || !ai.pool.length || !this.spawnRoom()) return;
+      if (world.tick < s.turnAt + ticks(entry.afterTurnS)) return;
+      // Its slot is reserved: a full cap (bites turn people past it) settles a downed body to make room rather than holding the Alpha back.
+      if (ai.director.count >= ai.director.cap) this.settleDowned(1);
+      if (ai.director.count >= ai.director.cap || !ai.pool.length || !this.spawnRoom()) return;
       const anchor = this.anchor(entry.anchor), radius = infectedDef('infected.alpha').radius;
-      if (!ai.director.offscreen(anchor)) continue;
-      const at = this.snap(anchor, radius);
+      // Its own street mouth, or (that one in view) the nearest street emergence point out of view and 24 m from the courier.
+      const courier = world.entities.get(1)!.transform, ok = (p: Point) => ai.director.offscreen(p) && dist(p, courier) >= 24;
+      const spot = ok(anchor) ? anchor : l4Emergence.filter(q => !q.door).map(q => ({ x: q.at[0], z: q.at[1] })).filter(ok).sort((a, b) => dist(a, anchor) - dist(b, anchor))[0];
+      if (!spot) continue;
+      const at = this.snap(spot, radius);
       if (!ai.nav.clear(at.x, at.z, radius)) continue;
       const id = ai.spawn('infected.alpha', at, { state: 'idle', yaw: -Math.atan2(l4.map.centre.z - at.z, l4.map.centre.x - at.x) });
       const e = world.entities.get(id); if (e?.combat) e.combat.allyResist = l4.alphas.allyResist;
@@ -546,9 +556,10 @@ export class LevelFourWar {
       const points = l4Emergence.map((e, k) => ({ e, k })).filter(x => x.e.edge === i);
       for (let tries = 0; tries < points.length; tries++) {
         const { e, k } = points[(s.edgeCursor[i] + tries) % points.length], at = this.snap({ x: e.at[0], z: e.at[1] }, .45);
-        if (!ai.director.offscreen(at) || dist(at, p) < (e.door ? 12 : 24) || this.inGap(at)) continue;
+        if (!ai.director.offscreen(at) || dist(at, p) < 30 || this.inGap(at)) continue;
         const rng = new Rng(world.seed, `l4-group:${i}:${s.edgeCursor[i]}:${s.wave}`), size = Math.min(s.pend[i], w.group[0] + Math.floor(rng.next() * (w.group[1] - w.group[0] + 1)));
-        const to = { x: centre.x + (at.x - centre.x) * .25, z: centre.z + (at.z - centre.z) * .25 };
+        // They go for the soldiers in the camp on their side (the nearest one inside the ring), not for the plaza centre where the courier is.
+        const soldier = this.liveSoldiers().filter(x => this.insideRing(x.transform)).sort((a, b) => dist(a.transform, at) - dist(b.transform, at))[0]?.transform, to = soldier ? { x: soldier.x, z: soldier.z } : { x: centre.x + (at.x - centre.x) * .25, z: centre.z + (at.z - centre.z) * .25 };
         for (let g = 0; g < size; g++) {
           const id = this.emerge({ x: at.x + (g % 3 - 1) * .9, z: at.z + Math.floor(g / 3) * .9 }); if (!id) break;
           s.pend[i]--; s.emergedIds.push(id); s.origin[id] = k;
@@ -809,7 +820,7 @@ export class LevelFourWar {
       if (tick >= s.turnDueAt) this.turn();
     }
     if (s.phase === 'war' || s.phase === 'collapse' || s.phase === 'cellar' || s.phase === 'done') {
-      this.alphas(); this.waves(); this.replenish(); if (tick % 30 === 0) this.clearBodies();
+      this.alphas(); this.waves(); this.replenish();
       if (s.phase === 'war') {
         if (s.infectedAtT30 < 0 && tick >= s.warAt + ticks(30)) s.infectedAtT30 = world.infected!.active.filter(e => e.health.current > 0).length;
         if (s.tankPhase === 'off' && tick >= s.warAt + ticks(l4.tank.enterAfterS)) this.spectacle.startTank();

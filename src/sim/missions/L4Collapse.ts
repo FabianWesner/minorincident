@@ -232,6 +232,9 @@ export class L4Collapse {
     for (const job of d.alphaJobs) {
       const e = world.entities.get(job.alphaId), b = e?.infected;
       if (!e || !b || e.health.current <= 0 || job.stage === 'done' || b.specialAttack) continue;
+      // Its line broken (charge and slam landed): the Alpha moves on to bury the armour (l4-po-round: Alphas that kept slamming
+      // every soldier wiped the army before the nests beat; the bitten soldiers turned inside the ring and swamped the courier).
+      if (job.stage === 'tank') { if (!this.toTank(job.alphaId, b)) { job.stage = 'done'; delete b.scripted; } continue; }
       let nest = job.job === 'north' || job.job === 'south', k = job.job === 'armor' ? 2 : nest ? 1 : this.current();
       // A finished or orphaned job moves on to the line that holds now: while the army stands an Alpha works the lines (l4-po-round:
       // a free Alpha hunts the nearest target, mostly the courier, and its grab-throws killed the courier bot five times).
@@ -239,8 +242,7 @@ export class L4Collapse {
         const c = this.current();
         if (c < 0 || !crewsOf(c).length) {
           // No soldier stands: the Alphas go for the armour (they bury the tank) rather than all hunting the courier at once.
-          const tank = world.entities.get(s.tankId);
-          if (tank && s.tankPhase !== 'gone') { b.scripted = this.h.snap({ x: tank.transform.x + (job.alphaId % 3 - 1) * 2.5, z: tank.transform.z + 3 }, .55); continue; }
+          if (this.toTank(job.alphaId, b)) { job.stage = 'tank'; continue; }
           job.stage = 'done'; delete b.scripted; continue;
         }
         job.job = 'line'; nest = false; k = c; if (job.stage === 'walk' || job.stage === 'slam') job.stage = 'charge';
@@ -270,9 +272,15 @@ export class L4Collapse {
       const cx = nearest.transform.x - e.transform.x, cz = nearest.transform.z - e.transform.z, cl = Math.hypot(cx, cz) || 1;
       if (cl > 3.5) { b.scripted = { x: nearest.transform.x, z: nearest.transform.z }; continue; }
       delete b.scripted;
-      if (ai.startSpecial(e.id, 'alpha.ground-slam', { id: nearest.id, x: nearest.transform.x, z: nearest.transform.z }, { x: e.transform.x, z: e.transform.z, radius: 4, dx: cx / cl, dz: cz / cl })) job.stage = 'charge';
+      if (ai.startSpecial(e.id, 'alpha.ground-slam', { id: nearest.id, x: nearest.transform.x, z: nearest.transform.z }, { x: e.transform.x, z: e.transform.z, radius: 4, dx: cx / cl, dz: cz / cl })) job.stage = job.job === 'armor' ? 'charge' : 'tank';
       else press(nearest.transform);
     }
+  }
+  /** Send an Alpha to the tank (around its rear deck); false when there is no tank (any more). */
+  private toTank(id: number, b: NonNullable<EntitySnapshot['infected']>): boolean {
+    const s = this.s, tank = this.world.entities.get(s.tankId);
+    if (!tank || s.tankPhase === 'off' || s.tankPhase === 'gone') return false;
+    b.scripted = this.h.snap({ x: tank.transform.x + (id % 3 - 1) * 2.5, z: tank.transform.z + 3 }, .55); return true;
   }
   /** The charge stage outside a slot: authored for the nest slots, else 8 m straight out of the slot. */
   private slotStage(side: 'north' | 'south' | 'west'): Point {
