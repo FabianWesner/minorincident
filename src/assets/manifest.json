@@ -22154,5 +22154,313 @@
       "lod1": 2000,
       "lod2": 1000
     }
+  },
+  {
+    "id": "bld.cure-duplex",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/bld.cure-duplex/build.py",
+    "glb": "public/assets/models/bld.cure-duplex.glb",
+    "sourceGlb": "assets/bld.cure-duplex/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/bld.cure-duplex.lod1.glb",
+      "lod2": "public/assets/models/bld.cure-duplex.lod2.glb"
+    },
+    "dimensions": {
+      "x": 10.0,
+      "y": 9.03,
+      "z": 14.16,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 4,
+      "fileKB": 1000,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 4000,
+      "lod2": 1500
+    },
+    "world": {
+      "token": "brick",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.cure-security-post",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/bld.cure-security-post/build.py",
+    "glb": "public/assets/models/bld.cure-security-post.glb",
+    "sourceGlb": "assets/bld.cure-security-post/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/bld.cure-security-post.lod1.glb",
+      "lod2": "public/assets/models/bld.cure-security-post.lod2.glb"
+    },
+    "dimensions": {
+      "x": 9.9141,
+      "y": 4.875,
+      "z": 8.2,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 12000,
+      "materials": 4,
+      "fileKB": 1000,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 4000,
+      "lod2": 1500
+    },
+    "world": {
+      "token": "picketWhite",
+      "solid": true
+    }
+  },
+  {
+    "id": "prop.cure-garden-wall",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.cure-garden-wall/build.py",
+    "glb": "public/assets/models/prop.cure-garden-wall.glb",
+    "sourceGlb": "assets/prop.cure-garden-wall/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.cure-garden-wall.lod1.glb",
+      "lod2": "public/assets/models/prop.cure-garden-wall.lod2.glb"
+    },
+    "dimensions": {
+      "x": 3.54,
+      "y": 1.93,
+      "z": 0.54,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 1000,
+      "materials": 4,
+      "fileKB": 300,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 400,
+      "lod2": 150
+    },
+    "world": {
+      "token": "brick",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.cure-warehouse",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/bld.cure-warehouse/build.py",
+    "glb": "public/assets/models/bld.cure-warehouse.glb",
+    "sourceGlb": "assets/bld.cure-warehouse/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/bld.cure-warehouse.lod1.glb",
+      "lod2": "public/assets/models/bld.cure-warehouse.lod2.glb"
+    },
+    "dimensions": {
+      "x": 23.1736,
+      "y": 9.98,
+      "z": 32.0,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 16000,
+      "materials": 4,
+      "fileKB": 1200,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "world": {
+      "token": "sidewalk",
+      "solid": true
+    }
+  },
+  {
+    "id": "bld.cure-service-building",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/bld.cure-service-building/build.py",
+    "glb": "public/assets/models/bld.cure-service-building.glb",
+    "sourceGlb": "assets/bld.cure-service-building/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/bld.cure-service-building.lod1.glb",
+      "lod2": "public/assets/models/bld.cure-service-building.lod2.glb"
+    },
+    "dimensions": {
+      "x": 11.2473,
+      "y": 7.0,
+      "z": 8.2,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 16000,
+      "materials": 4,
+      "fileKB": 1200,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    },
+    "world": {
+      "token": "sidewalk",
+      "solid": true
+    }
+  },
+  {
+    "id": "prop.cure-container-stack",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.cure-container-stack/build.py",
+    "glb": "public/assets/models/prop.cure-container-stack.glb",
+    "sourceGlb": "assets/prop.cure-container-stack/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.cure-container-stack.lod1.glb",
+      "lod2": "public/assets/models/prop.cure-container-stack.lod2.glb"
+    },
+    "dimensions": {
+      "x": 6.11,
+      "y": 4.99,
+      "z": 6.11,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 3000,
+      "materials": 4,
+      "fileKB": 400,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 1000,
+      "lod2": 300
+    },
+    "world": {
+      "token": "survivorRed",
+      "solid": true
+    }
+  },
+  {
+    "id": "prop.cure-drum-stack",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/prop.cure-drum-stack/build.py",
+    "glb": "public/assets/models/prop.cure-drum-stack.glb",
+    "sourceGlb": "assets/prop.cure-drum-stack/model.glb",
+    "lods": {
+      "lod1": "public/assets/models/prop.cure-drum-stack.lod1.glb",
+      "lod2": "public/assets/models/prop.cure-drum-stack.lod2.glb"
+    },
+    "dimensions": {
+      "x": 1.28,
+      "y": 2.12,
+      "z": 1.07,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "body"
+    ],
+    "animatedNodes": [],
+    "sockets": [],
+    "budget": {
+      "triangles": 3000,
+      "materials": 4,
+      "fileKB": 400,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "authoredLodTriangles": {
+      "lod1": 1000,
+      "lod2": 300
+    },
+    "world": {
+      "token": "survivorRed",
+      "solid": true
+    }
   }
 ]
