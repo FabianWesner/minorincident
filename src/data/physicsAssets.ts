@@ -3901,7 +3901,7 @@ export default {
     "friction": 0.75,
     "restitution": 0.05,
     "centerOfMass": [
-      0.01750016212463379,
+      0.014999866485595703,
       1.527500033378601,
       0
     ],
@@ -3924,7 +3924,7 @@ export default {
       }
     ],
     "source": "public/assets/models/veh.evac-bus.glb",
-    "hash": "eaf604fa9b357242c0e65aadc9e91a040f48e8cbf9bca98c53814df3b76ff160"
+    "hash": "880bc7cca2e01dc8a28f64976b3232da51b909b21fadd85eed61376b6125c884"
   },
   "kit.army-checkpoint": {
     "class": "fixed",
@@ -7377,5 +7377,5 @@ export default {
     ],
     "source": "public/assets/models/kit.zoo-tunnel-mouth.glb",
     "hash": "41c7cc058032d0ba21fea2dec43351ae209e3f00b4c7617b039886a0c7cb8e06"
-  },
+  }
 };

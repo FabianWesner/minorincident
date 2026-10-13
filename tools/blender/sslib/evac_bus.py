@@ -159,7 +159,7 @@ class Bus:
         rings = []
         for inset, z in layers:
             rings.append([(x, y, z) for x, y in rrect(X_REAR + inset, X_FRONT - inset, HW - inset, max(.3 - inset, .08), max(.45 - inset, .08), seg)])
-        obj = self.add('lowerBody', loft_bm(rings), 'picketWhite', mat=[self.mat('picketWhite'), self.mat('sidewalk'), self.mat('asphalt')])
+        obj = self.add('lowerBody', loft_bm(rings), 'picketWhite', mat=[self.mat('picketWhite'), self.mat('picketWhite'), self.mat('sidewalk')])
         cut = []
         # interior pocket (floor at FLOOR) and the stair well of the entry door
         cut.append(self._cutter('pocket', (-4.42, 3.95), (-1.10, 1.10), (FLOOR, SILL + .2)))
@@ -471,18 +471,18 @@ class Bus:
         L = self.L
         if L == 2:
             return
-        navy = 'blueTrim'
+        navy = 'policeBlue'
         rows = [(PILLARS[i] + PILLARS[i + 1]) / 2 for i in range(6)]
         for x in rows:
             for y in (-.94, -.48, .48, .94):
                 self.box('seatCushion', (x, y, FLOOR + .26), (.46, .44, .26), navy, r=.025 if L == 0 else 0)
-                self.box('seatBack', (x - .2, y, FLOOR + .66), (.09, .43, .64), navy, r=.025 if L == 0 else 0)
+                self.box('seatBack', (x - .2, y, FLOOR + .66), (.09, .43, .64), 'picketWhite', r=.025 if L == 0 else 0)
                 if L == 0:
                     self.box('seatBase', (x + .03, y, FLOOR + .095), (.36, .30, .19), 'asphalt')
                     self.box('headrest', (x - .2, y, FLOOR + 1.04), (.10, .30, .12), 'silver', r=.02)
         # driver cab: seat, dash with steering wheel
         self.box('driverCushion', (3.50, -.62, FLOOR + .26), (.50, .50, .26), navy, r=.025 if L == 0 else 0)
-        self.box('driverBack', (3.28, -.62, FLOOR + .70), (.10, .48, .72), navy, r=.025 if L == 0 else 0)
+        self.box('driverBack', (3.28, -.62, FLOOR + .70), (.10, .48, .72), 'picketWhite', r=.025 if L == 0 else 0)
         self.box('dash', (4.22, 0, SILL + .06), (.30, 2.02, .12), 'asphalt', r=.02 if L == 0 else 0)
         if L == 0:
             self.box('dashPod', (4.1, -.62, SILL + .17), (.22, .56, .12), 'uiDark', r=.02)
