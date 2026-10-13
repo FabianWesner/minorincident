@@ -333,10 +333,17 @@ export class LevelFourWar {
   private turn(): void {
     const { world } = this.mission, s = this.s, tick = world.tick, o = this.outbreak();
     // The evacuees from the L3 buses collapse in the queue and turn (the visible 3 s transformation, same entity, same look).
-    let ids = s.turnerIds.filter(id => this.human(world.entities.get(id)));
+    // Collapse design: the evacuees who turn stand inside the perimeter (a seeded one may still be walking in from the bus), topped up from the queue.
+    const ring = l4.map.ring, inside = (id: number) => { const t = world.entities.get(id)!.transform; return t.x > ring.x0 && t.x < ring.x1 && t.z > ring.z0 && t.z < ring.z1; };
+    const want = this.turners(), centre = { x: -25, z: -9 };
+    let ids = s.turnerIds.filter(id => this.human(world.entities.get(id)) && inside(id));
+    if (ids.length < want) {
+      const rest = s.evacueeIds.filter(id => !ids.includes(id) && this.human(world.entities.get(id)) && inside(id));
+      ids = [...ids, ...rest.sort((a, b) => dist(world.entities.get(a)!.transform, centre) - dist(world.entities.get(b)!.transform, centre))].slice(0, want);
+    }
     if (!ids.length) {
       const queue = [...s.evacueeIds, ...s.residentIds].filter(id => this.human(world.entities.get(id)));
-      ids = queue.sort((a, b) => dist(world.entities.get(a)!.transform, { x: -25, z: -9 }) - dist(world.entities.get(b)!.transform, { x: -25, z: -9 })).slice(0, this.turners());
+      ids = queue.sort((a, b) => dist(world.entities.get(a)!.transform, centre) - dist(world.entities.get(b)!.transform, centre)).slice(0, want);
     }
     const first = world.entities.get(ids[0])?.transform ?? { x: -25, z: -9 };
     const near = [...world.entities.iterate()].filter(e => this.human(e) && dist(e.transform, first) <= 10).length;
