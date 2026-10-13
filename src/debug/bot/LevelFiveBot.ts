@@ -126,7 +126,8 @@ export class LevelFiveBot {
     if (this.detour) { go(this.detour, .8, `detour-${this.detour.until}`); return frame; }
     // The group lags: wait for it (the complete bot) rather than walking off.
     const far = friends.filter(f => dist(f.transform, p) > 6);
-    if (fights && far.length && this.lag < (newbie ? 240 : 300) && s.phase !== 'metro') { this.lag++; return frame; }
+    // Regroup on the metro approach; after entry the station's ingress guides the followers.
+    if (fights && far.length && this.lag < (newbie ? 240 : 300) && (s.phase !== 'metro' || !m.l5?.insideStation(p))) { this.lag++; return frame; }
     if (!far.length) this.lag = 0; else if (++this.lag > 700) this.lag = 0;
     // ---------------------------------------------------------------- the search: the cheapest tour of the five rings
     if (s.phase === 'search') {
