@@ -1,0 +1,54 @@
+[
+  {
+    "file": "perf-webgl-high.json",
+    "rows": 15,
+    "maxima": {
+      "frameP95": 5.599999999991269,
+      "simP95": 1.1000003814697266,
+      "draws": 65,
+      "triangles": 239946,
+      "heapMB": 157.960868,
+      "infected": 200,
+      "resident": 25
+    }
+  },
+  {
+    "file": "perf-webgl-low.json",
+    "rows": 15,
+    "maxima": {
+      "frameP95": 8.80000000000291,
+      "simP95": 2.6000003814697266,
+      "draws": 56,
+      "triangles": 53016,
+      "heapMB": 114.337772,
+      "infected": 100,
+      "resident": 9
+    }
+  },
+  {
+    "file": "perf-webgpu-high.json",
+    "rows": 15,
+    "maxima": {
+      "frameP95": 3.7999999999992724,
+      "simP95": 1.0999994277954102,
+      "draws": 65,
+      "triangles": 239946,
+      "heapMB": 153.932484,
+      "infected": 200,
+      "resident": 25
+    }
+  },
+  {
+    "file": "perf-webgpu-low.json",
+    "rows": 15,
+    "maxima": {
+      "frameP95": 10.299999999995634,
+      "simP95": 2.5,
+      "draws": 56,
+      "triangles": 53016,
+      "heapMB": 110.989868,
+      "infected": 100,
+      "resident": 9
+    }
+  }
+]
