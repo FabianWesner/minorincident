@@ -32,7 +32,7 @@ def upper_window(s, sx, x0, y, z, lit, wide=1.0, along='y'):
     for dz in (-.86, .86):
         s.box('winBarH', P(.15, 0, dz * .94), size(.08, wide + .30, .14), TAN, d=1)
     for dy in (-wide / 2 - .07, wide / 2 + .07):
-        s.box('winBarV', P(.15, dy, 0), size(.08, .12, 1.76), TAN, d=1)
+        s.box('winBarV', P(.16, dy, 0), size(.10, .12, 1.76), TAN, d=1)  # 1 cm proud of winBarH: no shared outer plane
     s.box('winMullion', P(.145, 0, 0), size(.05, .06, 1.55), TAN, d=1)
     s.box('winTransom', P(.145, 0, .22), size(.05, wide, .06), TAN, d=1)
     s.box('winSill', P(.17, 0, -1.0), size(.30, wide + .55, .14), TAN, d=1)
@@ -110,7 +110,7 @@ def blade_signs(s):
 
 
 def roof_equipment(s):
-    top = 7.62
+    top = 7.64
     for k, (x, y) in enumerate([(-2.3, -4.1), (1.2, 3.3), (-1.0, -0.9), (2.6, -6.0)]):
         s.box('acUnit', (x, y, top + .35), (1.2, 1.0, .7), TAN)
         s.tube('acFan', (x, y, top + .72), .36, .05, 'asphalt', sides=(16, 10, 8))
@@ -162,12 +162,12 @@ def shopfront(s, bay):
         s.box('shopShelf', (4.14, yw, z), (.05, 2.2, .045), 'asphalt', d=1)
     for k in range(7):
         c = [bay['sign'], 'mustard', TAN, bay['awn']][k % 4]
-        s.box('shopGoods', (4.155, yw - .95 + k * .32, 1.30 + .0 if k % 2 == 0 else 1.84), (.05, .18 + .04 * (k % 3), .22 + .04 * (k % 2)), c, d=0)
+        s.box('shopGoods', (4.146, yw - .95 + k * .32, 1.30 + .0 if k % 2 == 0 else 1.84), (.05, .18 + .04 * (k % 3), .22 + .04 * (k % 2)), c, d=0)
     s.box('shopCounter', (4.14, yw + .45, .98), (.07, .9, .35), 'asphalt', d=0)
     for dz in (-.93, .93):
         s.box('shopBarH', (4.14, yw, 1.78 + dz), (.09, 2.65, .14), TAN)
     for dy in (-1.26, 1.26):
-        s.box('shopBarV', (4.14, yw + dy, 1.78), (.09, .14, 2.0), TAN)
+        s.box('shopBarV', (4.15, yw + dy, 1.78), (.10, .14, 2.0), TAN)  # outer face 1.5 cm proud of shopBarH
     s.box('shopMullion', (4.15, yw - .1, 1.78), (.06, .07, 1.72), TAN, d=1)
     s.box('shopTransom', (4.15, yw, 2.28), (.05, 2.35, .06), TAN, d=1)
     s.box('shopSill', (4.2, yw, .86), (.30, 2.85, .14), TAN, d=1)
@@ -223,7 +223,7 @@ def facade_upper(s, bay, idx):
     s.box('cornice', (3.95, yc, 7.5), (.80, 5.2, .30), TAN)
     s.box('corniceLip', (4.30, yc, 7.34), (.14, 5.0, .12), TAN, d=1)
     for k in range(16):
-        s.box('dentil', (4.31, yc - 2.4 + k * .32, 7.22), (.12, .16, .18), TAN, d=0)
+        s.box('dentil', (4.29, yc - 2.4 + k * .32, 7.22), (.10, .16, .18), TAN, d=0)
     s.box('parapetFront', (4.0, yc, 7.88), (.42, 5.2, .46), TAN)
     s.box('parapetPanel', (4.215, yc, 7.88), (.03, 4.5, .26), TAN, d=0)
 
@@ -236,7 +236,7 @@ def rear_bay(s, bay, idx):
     s.box('rearCornice', (-3.95, yc, 7.5), (.80, 5.2, .30), TAN)
     s.box('rearParapet', (-4.0, yc, 7.88), (.42, 5.2, .46), TAN)
     for k in range(16):
-        s.box('rearDentil', (-4.31, yc - 2.4 + k * .32, 7.22), (.12, .16, .18), TAN, d=0)
+        s.box('rearDentil', (-4.29, yc - 2.4 + k * .32, 7.22), (.10, .16, .18), TAN, d=0)
     # back door, step and lamp
     yd = yc + (-.4 if idx == 1 else .4)
     s.box('rearDoorFrame', (-4.05, yd, 1.42), (.12, 1.34, 2.44), TAN)
@@ -255,14 +255,15 @@ def rear_bay(s, bay, idx):
 
 def recipe(s):
     roof = None  # no separate roof owner: it would add per-material draws beyond the 8-draw cap
-    s.box('plinth', (.35, 0, .1), (10.1, 16.2, .2), 'sidewalk', bevel=.03)
-    s.box('curb', (5.25, 0, .15), (.3, 16.2, .30), 'sidewalk', bevel=.03)
+    s.box('plinth', (.2, 0, .1), (9.8, 16.2, .2), 'sidewalk', bevel=.03)  # ends at the curb's inner face (x = 5.1)
+    s.box('curb', (5.25, 0, .15), (.3, 16.24, .30), 'sidewalk', bevel=.03)  # 2 cm longer than the plinth: no shared end plane
     for r in range(2):
         for c in range(16):
             s.box('paver', (4.55 + r * .42, -7.5 + c * 1.0, .2), (.38, .94, .02), 'sidewalk', d=0, bevel=.008)
     for i, bay in enumerate(BAYS):
         yc = bay['yc']
-        s.box('mass', (0, yc, 3.85), (8.0, 5.2, 7.3), bay['wall'], bevel=0)
+        # The outer bays end 2 cm inside the cornice/parapet end plane (they would share y = +-7.8).
+        s.box('mass', (0, yc - .01 * (i - 1), 3.85), (8.0, 5.18 if i != 1 else 5.2, 7.3), bay['wall'], bevel=0)
         shopfront(s, bay)
         facade_upper(s, bay, i)
         rear_bay(s, bay, i)
@@ -280,9 +281,9 @@ def recipe(s):
     blade_signs(s)
     roof_equipment(s)
     # roof deck, parapets (roof owner), chimney stack, AC unit
-    s.box('roofDeck', (0, 0, 7.55), (7.7, 15.5, .14), 'asphalt', roof)
+    s.box('roofDeck', (0, 0, 7.57), (7.7, 15.5, .14), 'asphalt', roof)  # sits on the wall masses (top 7.5) instead of overlapping them by 2 cm
     for sy in (-7.65, 7.65):
-        s.box('parapetSide', (0, sy, 7.88), (8.4, .30, .46), TAN, roof)
+        s.box('parapetSide', (0, sy + .01 * (1 if sy > 0 else -1), 7.88), (8.4, .32, .46), TAN, roof)
     s.box('parapetRearCap', (-4.0, 0, 8.14), (.5, 15.6, .07), TAN, roof, d=1)
     s.box('parapetFrontCap', (4.0, 0, 8.14), (.5, 15.6, .07), TAN, roof, d=1)
     for y in (-7.8, -2.6, 2.6, 7.8):
