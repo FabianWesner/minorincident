@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { expect, test } from 'vitest';
+import { moveAgent } from '../../src/sim/locomotion/AgentMotion';
 import { l5 } from '../../src/data/l5';
 import { compositions } from '../../src/levels/compositions';
 import { resolveCampaignMission } from '../../src/levels/missions';
@@ -108,5 +109,70 @@ test('@E23 @E23-AC07 Alphas investigate nearby gunfire and acquire visible civil
     w.physics.playerBody!.setTranslation({ x: 3, y: player.transform.y, z: shot.z }, true);
     w.update();
     expect(watcher.infected!.heardTargetId).toBe(civilian.id);
+  } finally { w.dispose(); }
+}, 120_000);
+
+for (const tier of ['high', 'low'] as const) test(`@E23 @E23-AC04 Alphas stay in town away from the Metro and final escort leg, ${tier}`, async () => {
+  const { world, mission } = await loadL5(1, tier);
+  try {
+    const door = mission.def.anchors['l5-metro-shutter'];
+    const alphas = world.infected!.active.filter(e => e.archetype === 'infected.alpha');
+    expect(alphas).toHaveLength(2);
+    for (const e of alphas) {
+      const home = e.infected!.territory!;
+      expect(home).toBeDefined();
+      expect(Math.hypot(home.x - door.x, home.z - door.z) - home.radius - e.combat!.radius).toBeGreaterThan(25);
+      // The last leg follows Metro Road (z=-37.6) east from the plaza, then enters the stairs.
+      const legX = Math.max(-20, Math.min(door.x, home.x));
+      expect(Math.hypot(home.x - legX, home.z + 37.6) - home.radius).toBeGreaterThan(8);
+      // Even a charge impulse cannot leave its town encounter; retreat remains possible.
+      Object.assign(e.transform, { x: home.x, z: home.z - home.radius + .05 });
+      moveAgent(e, 0, -18, world.infected!.nav, world.tick, e.combat!.radius, true);
+      expect(Math.hypot(e.transform.x - home.x, e.transform.z - home.z)).toBeLessThanOrEqual(home.radius);
+      world.tick++;
+      moveAgent(e, 0, 3, world.infected!.nav, world.tick, e.combat!.radius, true);
+      expect(e.transform.z).toBeGreaterThan(home.z - home.radius + .05);
+    }
+    mission.checkpoint('outside');
+    const territories = alphas.map(e => structuredClone(e.infected!.territory));
+    delete alphas[0].infected!.territory;
+    mission.restore();
+    expect(alphas.map(e => world.entities.get(e.id)!.infected!.territory)).toEqual(territories);
+  } finally { world.dispose(); }
+}, 120_000);
+
+test('@E23 @E23-AC15 nearby infected do not stall ingress; the descending shutter sweeps intruders out and blocks return', async () => {
+  const { world: w, mission: m } = await loadL5(1);
+  try {
+    for (const e of [...w.infected!.active]) w.infected!.release(e);
+    m.completeObjective('emerge'); m.completeObjective('look');
+    const door = m.def.anchors['l5-metro-shutter'];
+    const player = w.entities.get(1)!;
+    Object.assign(player.transform, { x: door.x, z: door.z - 2 });
+    w.physics.playerBody!.setTranslation(player.transform, true);
+    w.physics.playerBody!.setNextKinematicTranslation(player.transform);
+    w.spatial.set(1, player.transform.x, player.transform.z);
+    const followers = m.state.l5!.survivors.map(r => w.entities.get(r.id)!);
+    followers.forEach((e, i) => {
+      Object.assign(e.transform, { x: door.x + (i % 2 ? .4 : -.4), z: door.z + .7 + i * .5 });
+      w.spatial.set(e.id, e.transform.x, e.transform.z);
+    });
+    const enemy = w.entities.get(w.infected!.spawn('infected.alpha', { x: door.x, z: door.z - 1 }))!;
+    // Keep the intruder stationary to isolate shelter entry from combat damage.
+    enemy.combat!.staggerUntil = w.tick + 900;
+    for (let i = 0; i < 600 && !m.state.l5!.shutterAt; i++) w.update();
+    expect(m.state.l5!.shutterAt).toBeGreaterThan(0);
+    expect(followers.every(e => m.l5!.insideStation(e.transform))).toBe(true);
+    expect(enemy.transform.z).toBeGreaterThan(door.z + enemy.combat!.radius);
+    expect(w.infected!.nav.clear(door.x, door.z, .35)).toBe(false);
+    const before = enemy.transform.z;
+    for (let i = 0; i < 20; i++) {
+      moveAgent(enemy, 0, -18, w.infected!.nav, ++w.tick, enemy.combat!.radius, true);
+    }
+    expect(enemy.transform.z).toBeGreaterThanOrEqual(before - .051);
+    for (let i = 0; i < 180; i++) w.update();
+    expect(m.state.gates['l5-metro-shutter']).toBe(false);
+    expect(m.state.phase).toBe('progression');
+    expect(m.state.result!.survivors).toHaveLength(5);
   } finally { w.dispose(); }
 }, 120_000);

@@ -83,9 +83,9 @@ export const l5PhotoSpots: readonly (readonly [string, readonly [number, number,
 ];
 
 /** Wandering infected at the start, in ones and twos (no group above 3), spread over the streets; the first `low` are kept on the phone tier. */
-export const l5Wanderers: readonly { at: P; n: number }[] = [
-  { at: [-20, -37.6], n: 2 }, { at: [-56, 22], n: 1 }, { at: [14, 28], n: 2 }, { at: [-22, 10], n: 1 }, { at: [49, -22], n: 1 }, { at: [22, -37.4], n: 1 },
-  { at: [-26, 40], n: 2 }, { at: [-52, -12], n: 1 }, { at: [2, 43.6], n: 1 }, { at: [14, -2], n: 1 }, { at: [-12, 18], n: 1 }, { at: [44, -36.4], n: 2 },
+export const l5Wanderers: readonly { at: P; n: number; alpha?: boolean }[] = [
+  { at: [-20, -37.6], n: 2 }, { at: [-56, 22], n: 1 }, { at: [14, 28], n: 2 }, { at: [-22, 10], n: 1 }, { at: [49, 14], n: 1, alpha: true }, { at: [22, -37.4], n: 1 },
+  { at: [-26, 40], n: 2 }, { at: [-52, -12], n: 1, alpha: true }, { at: [2, 43.6], n: 1 }, { at: [14, -2], n: 1 }, { at: [-12, 18], n: 1 }, { at: [44, -36.4], n: 2 },
   { at: [-6, -37.4], n: 1 }, { at: [-58, -34], n: 1 }, { at: [10, 13], n: 1 },
 ];
 
