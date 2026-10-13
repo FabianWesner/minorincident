@@ -47,7 +47,8 @@ function clearThreat(world: SimWorld, at: Spot): void {
   for (const e of ai.active) {
     const d = dist(e.transform, at);
     if (e.health.current <= 0 || e.corpse || !e.infected || d > r.pursueM) continue;
-    if (d < r.clearM) {
+    const pushed = d < r.clearM;
+    if (pushed) {
       const k = d > .1 ? 1 / d : 0, dx = k ? (e.transform.x - at.x) * k : Math.cos(e.id), dz = k ? (e.transform.z - at.z) * k : Math.sin(e.id);
       for (let m = r.clearM; m <= r.clearM + 6; m += 1) {
         const to = { x: at.x + dx * m, z: at.z + dz * m };
@@ -62,6 +63,14 @@ function clearThreat(world: SimWorld, at: Spot): void {
     if (brain) {
       if (brain.mode === 'chase' && brain.targetId === 1) { brain.mode = 'wander'; brain.targetId = 0; e.infected.state = 'wander'; }
       brain.ignoreId = 1; brain.ignoreUntil = tick + ticks(r.delayS);
+      // A pushed body (or one whose goal is the respawn spot) forgets its walk goal: it kept walking to the old goal straight back across
+      // the anchor (gate 10-13: four infected within 2-7 m of the bat pickup 3 s after the respawn). Free wanderers take the anchor as
+      // home, so their next goals lead away from it; leashed street groups keep their block.
+      if (pushed || (brain.hasGoal && Math.hypot(brain.goalX - at.x, brain.goalZ - at.z) < r.clearM)) {
+        brain.hasGoal = false;
+        if (brain.mode === 'attracted' || brain.mode === 'search') { brain.mode = 'wander'; e.infected.state = 'wander'; }
+        if (!brain.leashM) { brain.homeX = at.x; brain.homeZ = at.z; }
+      }
     } else {
       // Levels without the L1 brain: drop the target and path, and hold attacks for the same delay.
       if (e.infected.targetId === 1 || e.infected.heardTargetId === 1) { e.infected.targetId = 0; e.infected.heardTargetId = 0; e.infected.state = 'idle'; }
