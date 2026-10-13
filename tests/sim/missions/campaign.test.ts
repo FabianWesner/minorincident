@@ -4,6 +4,8 @@ import { SimWorld } from '../../../src/sim/world/SimWorld';
 import { missionControls } from '../../../src/sim/missions/controls';
 import { missionIds, resolveCampaignMission } from '../../../src/levels/missions';
 import { compositions } from '../../../src/levels/compositions';
+import { applyCampaign } from '../../../src/sim/progression/apply';
+import { preset } from '../../../src/sim/progression/Campaign';
 import { stateHash } from '../../../src/sim/world/stateHash';
 import { emptyInput } from '../../../src/input/InputFrame';
 import { missionSandbox } from '../../fixtures/scenarios/mission-sandbox';
@@ -12,6 +14,7 @@ afterEach(() => world?.dispose());
 for (const id of missionIds) test(`T-E12-07-${id} @E12 @E12-AC07 every cheat advances exactly one ${id} step to level.completed`, async () => {
   world = new SimWorld(); await world.init(); const composition = compositions[id];
   world.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`,'utf8'))),1);
+  if (id === 'L10') applyCampaign(world, preset('L10-default'));
   world.loadMission(resolveCampaignMission(id,world.districts!)); const api = missionControls(world); api.begin();
   let calls=0;
   while(api.state()!.phase === 'playing') {

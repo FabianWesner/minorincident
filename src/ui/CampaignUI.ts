@@ -1,6 +1,6 @@
 import type { Game } from '../Game';
 import { compositions } from '../levels/compositions';
-import { revealCards,pickUpgrades,finishRewards,rackSize,nextLevelAfter,lastLevel,powerScore,type CampaignSave,type Level } from '../sim/progression/Campaign';
+import { preset,revealCards,pickUpgrades,finishRewards,rackSize,nextLevelAfter,lastLevel,powerScore,type CampaignSave,type Level } from '../sim/progression/Campaign';
 import { SAVE_ERROR,type SaveResult } from '../sim/progression/Save';
 import { upgrades } from '../data/upgrades';
 import './campaign.css';
@@ -39,6 +39,7 @@ export class CampaignUI {
     this.screen('Level select');const save=this.menuSave??this.game.campaign;if(!save)return;
     const hint=document.createElement('p');hint.className='lock-hint';hint.setAttribute('role','status');hint.hidden=true;
     for(let level=1;compositions[`L${level}`];level++){const b:HTMLButtonElement=this.button(`Level ${level}`,async()=>{if(b.getAttribute('aria-disabled')==='true'){hint.textContent=`Complete Level ${level-1} first`;hint.hidden=false;return;}await this.game.continueCampaign(save,level as Level); this.game.view.update(1);});const locked=level>save.unlockedLevel;if(locked)b.setAttribute('aria-disabled','true');b.classList.toggle('is-locked',locked);if(locked){b.textContent=`🔒 Level ${level}`;b.title=`Complete Level ${level-1} first`;b.setAttribute('aria-label',`Level ${level}, locked. Complete Level ${level-1} first`);}}
+    this.button('Level 10 · The Cure (axe start)', async () => { const standalone = preset('L10-default'); standalone.character = save.character; standalone.settings = { ...save.settings }; await this.game.continueCampaign(standalone, 10); });
     this.content.append(hint);this.button('Back',()=>this.showMenu({status:'ok',save}));this.focus();
   }
   /** A paused result screen can still hand off to progression; no sim polling/allocation when idle. */

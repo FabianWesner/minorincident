@@ -1,3 +1,4 @@
+import { levelTenMission } from './L10/mission';
 import { levelNineMission } from './L9/mission';
 import { levelEightMission } from './L8/mission';
 import { levelSixMission } from './L6/mission';
@@ -15,10 +16,7 @@ export type MissionId = typeof missionIds[number];
 /** Campaign graph authoring, distinct from encounter tuning and bots owned by E19–E24.
  * Coordinates come from loaded district GLB anchors; no duplicate placement coordinates. */
 export function campaignMission(id: MissionId, resolve: (district: DistrictId, anchor: string) => Anchor): MissionDef {
-  if (id === 'L10') {
-    const at = resolve('D-CROSSING', 'crawl-end');
-    return { id, briefing: 'The arsenal is lost. Reach the city with your axe.', anchors: { 'cure-crash': at }, actors: {}, groups: {}, gates: {}, items: [], states: ['opening-complete'], counters: [], checkpoints: ['cure-crash'], cinematics: {}, steps: [{ id: 'cure-opening', type: 'custom', text: 'Find a way into the city', anchor: 'cure-crash', start: { kind: 'start' }, complete: { kind: 'state', key: 'opening-complete', equals: true }, fail: [] }], finish: ['cure-opening'], onStart: [{ kind: 'checkpoint', id: 'cure-crash' }], onComplete: [] };
-  }
+  if (id === 'L10') return levelTenMission(name => name === 'cure-crash' ? resolve('D-CROSSING', 'crawl-end') : undefined);
   if (id === 'L9') return levelNineMission(resolve);
   if (id === 'L8') return levelEightMission(resolve);
   if (id === 'L6') return levelSixMission(resolve);
@@ -74,6 +72,12 @@ export function campaignMission(id: MissionId, resolve: (district: DistrictId, a
 }
 /** Missing loaded anchors are authoring errors, never silently replaced with coordinates. */
 export function resolveCampaignMission(id: MissionId, world: DistrictWorld): MissionDef {
+  if (id === 'L10') return levelTenMission(name => {
+    const cure = world.districts.find(d => String(d.id) === 'D-CURE');
+    const district = cure ?? (name === 'cure-crash' ? world.districts.find(d => d.id === 'D-CROSSING') : undefined);
+    const at = district?.layout.anchors[cure ? name : 'crawl-end'];
+    return district && at ? { x: at.position[0] + district.origin[0], z: at.position[2] + district.origin[1], y: at.position[1], radius: 2 } : undefined;
+  });
   return campaignMission(id, (district, name) => {
     const d = world.districts.find(d => d.id === district), a = d?.layout.anchors[name];
     if (!d || !a) throw new Error(`Missing mission anchor: ${district}/${name}`);

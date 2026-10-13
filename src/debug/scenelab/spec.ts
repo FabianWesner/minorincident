@@ -10,6 +10,8 @@ import type { AssetDef } from '../../assets/types';
  * the same convention as layout placements (a yaw-0 prop faces its authored forward, an actor at yaw 0 faces +X).
  */
 export interface SceneSpec {
+  /** Production L10 graph/preset at a region checkpoint; fixture anchors stay on its existing slab. */
+  cureProgression?: { checkpoint?: string };
   /** Use the production L7 formation for authored survivor actors, without starting the mission population. */
   l7Group?: boolean;
   /** With `l7Group`: the production L7 bus (set piece, blocker), boarding of the authored survivors and the departure shot. */
