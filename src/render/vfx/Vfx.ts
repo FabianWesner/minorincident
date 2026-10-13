@@ -206,7 +206,7 @@ export class Vfx extends Group {
     if (event.type === 'vehicle.feedback') {
       let vehicle = this.vehicles.get(event.id);
       if (!vehicle) { vehicle = { ...event, position: { ...event.position } }; this.vehicles.set(event.id, vehicle); }
-      else { vehicle.healthFraction = event.healthFraction; vehicle.blood = event.blood; vehicle.position.x = event.position.x; vehicle.position.z = event.position.z; vehicle.yaw = event.yaw; }
+      else { vehicle.floor = event.floor; vehicle.healthFraction = event.healthFraction; vehicle.blood = event.blood; vehicle.position.x = event.position.x; vehicle.position.z = event.position.z; vehicle.yaw = event.yaw; }
       this.targets.vehicle?.(vehicle, this.enabled && this.gore !== 'Off');
     }
     if (event.type === 'explosion.slowmo') { this.blasts.slowmo(event); return; }
@@ -302,7 +302,7 @@ export class Vfx extends Group {
   };
   private updateVehicle(id: number, blood = this.vehicles.get(id)?.blood ?? 0): void {
     const e = this.world.entities.get(id); if (!e?.vehicle) return;
-    this.receive({ tick: this.world.tick, type: 'vehicle.feedback', id, position: { x: e.transform.x, z: e.transform.z }, yaw: e.transform.yaw, healthFraction: e.health.current / e.health.max, blood });
+    this.receive({ tick: this.world.tick, type: 'vehicle.feedback', id, position: { x: e.transform.x, z: e.transform.z }, yaw: e.transform.yaw, healthFraction: e.health.current / e.health.max, blood, ...(e.vehicle.floor ? { floor: true } : {}) });
   }
   /** One E15 base burst per blast: legacy hazard/combat/vehicle events and the E27 explosion event arrive together. */
   private explosionOnce(tick: number, x: number, z: number, radius: number): void {
@@ -392,8 +392,9 @@ export class Vfx extends Group {
     }
     if (Math.floor(this.time * 4) !== Math.floor((this.time - seconds) * 4) && this.enabled) {
       for (const vehicle of this.vehicles.values()) {
-        if (vehicle.healthFraction < 0.4) this.effect('vehicle-smoke', vehicle.position.x, vehicle.position.z, 0.7);
-        if (vehicle.healthFraction < 0.15) this.effect('vehicle-fire', vehicle.position.x, vehicle.position.z, 0.6);
+        // L9 floor vehicle: heavy smoke from the 25% stage on, never fire (it stays driveable until the scripted crash).
+        if (vehicle.healthFraction < (vehicle.floor ? 0.2501 : 0.4)) this.effect('vehicle-smoke', vehicle.position.x, vehicle.position.z, 0.7);
+        if (vehicle.healthFraction < 0.15 && !vehicle.floor) this.effect('vehicle-fire', vehicle.position.x, vehicle.position.z, 0.6);
       }
       for (const e of this.world.entities.iterate()) { const h = e.hazard; if (h && this.world.tick < h.activeUntil && ['fire', 'toxic', 'live-wire'].includes(h.kind) && this.blasts.sourceVisible(e.transform.x, e.transform.z, h.radius + 5)) this.effect(h.kind === 'live-wire' ? 'electric' : h.kind as 'fire' | 'toxic', e.transform.x, e.transform.z, h.radius); }
       // Smoke-grenade clouds are E27 puff volumes (Blasts); fire zones keep the E15 ember bursts.

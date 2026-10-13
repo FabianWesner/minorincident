@@ -196,6 +196,8 @@ export class SceneLab {
       const id = v.id ?? v.asset, pose = v.l2Ride ? truckPoseAt(v.l2Ride.distanceM ?? 0) : null;
       const entity = this.addVehicle(id, v.asset, pose ? [pose.x, pose.z] : v.at, pose ? pose.yaw * 180 / Math.PI : v.yaw ?? 0, v.path, v.panic);
       if (v.decay) world.entities.get(entity)!.vehicle!.decay = v.decay;
+      if (v.floor) world.vehicles!.setFloorPolicy(entity, true);
+      if (v.health !== undefined) { const car = world.entities.get(entity)!; world.vehicles!.damage(entity, Math.max(0, car.health.current - v.health)); }
       if (v.l2Ride) {
         const state = { truckId: entity, rideS: v.l2Ride.distanceM ?? 0, rideV: v.l2Ride.speedMs ?? 0 }, driver = new L2TruckDrive(world, state);
         driver.prepare();
