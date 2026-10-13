@@ -1,0 +1,26 @@
+
+Running 21 tests using 2 workers
+
+  ✓   1 [chromium] › tests/e2e/levels/cellar-position.spec.ts:71:3 › Kessler cellar position › T-E23-cellar-pos @E23 L5 start: the courier stands in the cellar yard under the game camera, the brace is reachable by keyboard and unbarring steps out on Kessler Lane (13.8s)
+  ✓   2 [chromium] › tests/e2e/levels/cellar-position.spec.ts:39:3 › Kessler cellar position › T-E22-cellar-pos @E22 L4 end: Lakeshore pavement, door, descent, brace; L5 start in the same yard (game camera captures) (25.6s)
+  ✓   3 [chromium] › tests/e2e/levels/l4-po-round.spec.ts:93:5 › l4-po-round captures › webgl high zoom 1 (18.4s)
+  ✓   4 [chromium] › tests/e2e/levels/l4-po-round.spec.ts:93:5 › l4-po-round captures › webgl high zoom 0.5 (18.6s)
+  ✓   5 [chromium] › tests/e2e/levels/l4-po-round.spec.ts:93:5 › l4-po-round captures › webgl high zoom 1.5 (18.9s)
+  ✓   6 [chromium] › tests/e2e/levels/l4-po-round.spec.ts:93:5 › l4-po-round captures › webgl low zoom 1 (9.0s)
+  ✓   7 [chromium] › tests/e2e/levels/l4-po-round.spec.ts:93:5 › l4-po-round captures › webgl low zoom 0.5 (9.4s)
+  ✓   8 [chromium] › tests/e2e/levels/l4-po-round.spec.ts:93:5 › l4-po-round captures › webgl low zoom 1.5 (9.2s)
+  ✓   9 [chromium] › tests/e2e/levels/l4-po-round.spec.ts:93:5 › l4-po-round captures › webgpu high zoom 1 (18.3s)
+  ✓  10 [chromium] › tests/e2e/levels/l4-po-round.spec.ts:93:5 › l4-po-round captures › webgpu high zoom 1.5 (18.6s)
+  ✓  11 [chromium] › tests/e2e/levels/l4-po-round.spec.ts:93:5 › l4-po-round captures › webgpu low zoom 1 (8.8s)
+  ✓  12 [chromium] › tests/e2e/levels/l4-po-round.spec.ts:93:5 › l4-po-round captures › webgpu low zoom 1.5 (8.9s)
+  ✓  13 [chromium] › tests/e2e/levels/L4.spec.ts:91:3 › L4 The Safe City Falls in the browser › T-E22-alarm @E22 @E22-AC07 real-input alarm has living visible infected within 10 seconds (12.8s)
+  ✓  15 [chromium] › tests/e2e/levels/L4.spec.ts:186:3 › L4 The Safe City Falls in the browser › T-E22-15b @E22 @E22-AC15 campaign: the barred cellar door loads L5 with the carried loadout and no reward screen (7.0s)
+  ✓  16 [chromium] › tests/e2e/levels/L4.spec.ts:206:56 › L4 The Safe City Falls in the browser › T-E22-19 @E22 @E22-AC20 pedestrians, soldiers and infected are drawn on screen in L4 (webgl), not only their props (12.6s)
+  ✓  17 [chromium] › tests/e2e/levels/L4.spec.ts:206:56 › L4 The Safe City Falls in the browser › T-E22-19 @E22 @E22-AC20 pedestrians, soldiers and infected are drawn on screen in L4 (webgpu), not only their props (13.0s)
+  ✓  18 [chromium] › tests/e2e/levels/l4-blank-viewport.spec.ts:24:80 › T-E22-blank @E22 L4 the walk east along Lakeshore Avenue to Kessler's cellar door never leaves the viewport one flat colour (webgl) (18.5s)
+  ✓  14 [chromium] › tests/e2e/levels/L4.spec.ts:116:3 › L4 The Safe City Falls in the browser › T-E22-18 @E22 @E22-AC18 @E22-AC19 real-input playthrough: convoy, quartermaster, the turn, the war, the line break, Kessler Lane, the barred cellar door; photo spots and pair cameras (1.2m)
+  ✓  19 [chromium] › tests/e2e/levels/l4-blank-viewport.spec.ts:24:80 › T-E22-blank @E22 L4 the walk east along Lakeshore Avenue to Kessler's cellar door never leaves the viewport one flat colour (webgpu) (18.7s)
+  ✓  20 [chromium] › tests/e2e/levels/l4-blank-viewport.spec.ts:24:80 › T-E22-blank @E22 L4 the walk east along Kessler Lane north of the store never leaves the viewport one flat colour (webgl) (18.1s)
+  ✓  21 [chromium] › tests/e2e/levels/l4-blank-viewport.spec.ts:24:80 › T-E22-blank @E22 L4 the walk east along Kessler Lane north of the store never leaves the viewport one flat colour (webgpu) (18.0s)
+
+  21 passed (3.2m)
