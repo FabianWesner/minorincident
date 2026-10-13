@@ -167,6 +167,7 @@ export class L4Collapse {
   private breakLine(i: number, cause: 'overrun' | 'forced'): void {
     const { world } = this, d = this.d, line = d.lines[i], tick = world.tick;
     line.brokeAt = tick; line.cause = cause;
+    this.h.mission.l4!.campCheckpoint(line.id, i + 1);
     const inside = world.infected!.active.filter(e => e.health.current > 0 && !e.hidden && this.h.insideRing(e.transform)).length;
     const survivors = line.soldierIds.filter(id => this.soldier(id));
     world.events.emit({ type: 'l4.beat', tick, beat: line.id, cause, soldiers: survivors.length, inside });
