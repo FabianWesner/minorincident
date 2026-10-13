@@ -105,3 +105,6 @@ compositions["D-CROSSING"] = { id: "D-CROSSING", tier: 0, timeOfDay: "L9-crossin
 compositions.L8 = { id: 'L8', tier: 0, timeOfDay: 'L8-zoo', districts: [{ id: 'D-ZOO', origin: [0, 0] }] };
 /** The zoo's transport arrives before any crossing population is installed. */
 compositions.L9 = { ...compositions['D-CROSSING'], id: 'L9' };
+
+/** S7 handover opening reuses the authored safe crash ground; E32 region lanes extend this composition. */
+compositions.L10 = { ...compositions['D-CROSSING'], id: 'L10', districts: [{ id: 'D-CROSSING', origin: [0, 0], overrides: { playerStart: { anchor: 'crawl-end' }, spawns: [{ anchor: 'crawl-end' }] } }] };

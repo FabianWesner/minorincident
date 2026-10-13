@@ -3,8 +3,8 @@ import { catalog } from '../../data/actions/catalog';
 import { upgrades, type Modifiers, type UpgradeDef } from '../../data/upgrades';
 import type { GearTier, SurvivorVariant } from '../../data/survivor';
 import type { L1Aftermath } from '../../levels/continuity';
-/** L7 the ruined city, L8 the zoo and L9 the crossing continue the campaign after L6 (specs/po-levels-4-9-2026-10-11.md). */
-export type Level = 1|2|3|4|5|6|7|8|9;
+/** Campaign through L10 The Cure (specs/po-levels-9-10-2026-10-13.md). */
+export type Level = 1|2|3|4|5|6|7|8|9|10;
 export type ProgressionPreset = `L${2|3|4|5|6|8}-default`;
 export interface CampaignSettings { cameraShake?:boolean; flashReduction?:boolean; gore?:'Off'|'Reduced'|'Full'; quality?:'high'|'low'|'auto'; muted?:boolean; captions?:boolean; noiseRings?:boolean; mono?:boolean; haptics?:boolean; tinnitus?:boolean; bloom?:boolean; cheapDof?:boolean; vfx?:boolean; aimAssist?:'Off'|'Low'|'Default'|'High'; textSize?:1|1.25|1.5; colorblind?:boolean; slowMotion?:boolean }
 export interface CampaignSave {
@@ -16,6 +16,8 @@ export interface CampaignSave {
   /** L8/E31: the same unarmed APC and its complete living roster, retained across handover/save. */
   /** L9 authored crash resume payload; the S7 handover clears this after committing L10. */
   l9Crash?: ReturnType<import('../missions/LevelNineCrash').LevelNineCrash['save']>;
+  /** Committed crash transaction: history only; never usable equipment or L10 followers. */
+  crossingHandover?: { applied: true; checkpoint: 'cure-crash'; anchor: import('../world/types').Transform; corgi?: import('../world/types').EntitySnapshot; preCrashDurability: number; lostWeapons: string[]; shelteredPassengers: import('../world/types').EntitySnapshot[] };
   transport?:import('../vehicles/Vehicles').VehicleTransfer;
   stationOccupants?:import('../world/types').EntitySnapshot[];
   rescuedSurvivors?:import('../world/types').EntitySnapshot[];
@@ -28,10 +30,10 @@ export const fixedUnlocks: Readonly<Record<Level,readonly string[]>> = {
   // L1 v2 (spec section 10): the baseball bat found in the garage is the permanent unlock, not a choice.
   // E21: the handgun from the L3 armory is carried on (L4 starts with it). L2's fire axe is a pickup, not an unlock.
   1:['weapon.bat'],2:['weapon.molotov'],3:['weapon.handgun'],
-  4:['weapon.army-mg','weapon.rocket-launcher','weapon.pipe-bomb'],5:[],6:[],7:[],8:[],9:[],
+  4:['weapon.army-mg','weapon.rocket-launcher','weapon.pipe-bomb'],5:[],6:[],7:[],8:[],9:[],10:[],
 };
-/** Finishing level N always continues with N+1 (replays included), never with the furthest unlocked level; null after the last level (L9 ends in the credits until an L10 exists). */
-export const lastLevel:Level=9;
+/** Finishing level N always continues with N+1 (replays included), never with the furthest unlocked level; null after L10. */
+export const lastLevel:Level=10;
 export function nextLevelAfter(finished:number):Level|null {return finished>=1&&finished<lastLevel?(finished+1) as Level:null;}
 export const meleeChoices=['weapon.bat','weapon.crowbar','weapon.machete'] as const;
 /** PO 2026-10-12: the only L3 firearm is the armory handgun; no weapon choice after any level (the L4 machine gun is the army's pickup). */
