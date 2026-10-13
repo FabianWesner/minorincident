@@ -1,5 +1,5 @@
 import { l4, l4Edges } from '../../data/l4';
-import { l4BreakableLine } from '../../levels/L4/layout';
+import { l4AlphaEmergence, l4BreakableLine } from '../../levels/L4/layout';
 import type { Mission } from './Mission';
 import type { L4Director, L4Line, L4State } from './types';
 import type { EntitySnapshot } from '../world/types';
@@ -214,49 +214,82 @@ export class L4Collapse {
 
   // ------------------------------------------------------------------------------------------------ the Alphas
   /**
-   * Gun-nest beat: the first two Alphas walk to their stage outside the line (north-west corner, south slot) and charge the nearest
-   * standing soldier inside (the south charge runs through the authored E26 slot and breaks it), then ground-slam the crew. The third
-   * (high tier) charges the convoy line at the armour beat. Plain sim moves: telegraphs, cooldowns and soldier fire apply.
+   * The Alphas' jobs (`l4AlphaEmergence`; PO 10-13 "add more alphas. The current one has zero chance."). `north` / `south`: the gun-nest
+   * beat: wait at the stage outside the line (out of the plaza sight lines) until the beat, charge through the authored E26 slot (breaking
+   * it) and ground-slam the crew behind. `west`: the same through the west slot at once (line 1). `line`: go for the nearest standing soldier
+   * of the line that holds now, charge, slam, again. `armor`: the same at the armour beat, against the convoy line. Plain sim moves:
+   * telegraphs, cooldowns and soldier fire apply.
    */
   private alphaJobs(): void {
     const { world } = this, s = this.s, d = this.d, ai = world.infected!, tick = world.tick;
     for (const [n, id] of s.alphaIds.entries()) if (!d.alphaJobs.some(j => j.alphaId === id)) {
-      const anchor = s.alphaAnchors[n];
-      d.alphaJobs.push({ alphaId: id, job: anchor === 'l4-alpha-north' ? 'north' : anchor === 'l4-alpha-south' ? 'south' : 'armor', stage: 'walk', startedAt: tick });
+      const entry = l4AlphaEmergence.find(e => e.anchor === s.alphaAnchors[n]);
+      d.alphaJobs.push({ alphaId: id, job: entry?.job ?? 'line', stage: 'walk', startedAt: tick });
     }
+    const live = (ids: number[]) => ids.map(sid => this.soldier(sid)).filter((x): x is EntitySnapshot => !!x);
+    // A line whose own crews are all down: the Alpha goes for whichever soldiers still stand (the army's survivors).
+    const crewsOf = (k: number) => { const own = live([...(k === 1 ? s.hmgIds : []), ...d.lines[k].soldierIds]); return own.length ? own : live(s.soldierIds); };
     for (const job of d.alphaJobs) {
       const e = world.entities.get(job.alphaId), b = e?.infected;
       if (!e || !b || e.health.current <= 0 || job.stage === 'done' || b.specialAttack) continue;
-      const armor = job.job === 'armor', line = armor ? d.lines[2] : d.lines[1];
-      const crews = [...(armor ? [] : s.hmgIds), ...line.soldierIds].map(sid => this.soldier(sid)).filter((x): x is EntitySnapshot => !!x);
-      if (!crews.length || (armor ? line.brokeAt : d.lines[1].brokeAt)) { job.stage = 'done'; delete b.scripted; continue; }
-      const nearest = crews.sort((p, q) => dist(p.transform, e.transform) - dist(q.transform, e.transform))[0];
-      const ready = this.t >= D.lines[armor ? 2 : 1].pushS && d.lines[armor ? 1 : 0].brokeAt > 0;
+      // Its line broken (charge and slam landed): the Alpha moves on to bury the armour (l4-po-round: Alphas that kept slamming
+      // every soldier wiped the army before the nests beat; the bitten soldiers turned inside the ring and swamped the courier).
+      if (job.stage === 'tank') { if (!this.toTank(job.alphaId, b)) { job.stage = 'done'; delete b.scripted; } continue; }
+      let nest = job.job === 'north' || job.job === 'south', k = job.job === 'armor' ? 2 : nest ? 1 : this.current();
+      // A finished or orphaned job moves on to the line that holds now: while the army stands an Alpha works the lines (l4-po-round:
+      // a free Alpha hunts the nearest target, mostly the courier, and its grab-throws killed the courier bot five times).
+      if (k < 0 || d.lines[k].brokeAt || !crewsOf(k).length) {
+        const c = this.current();
+        if (c < 0 || !crewsOf(c).length) {
+          // No soldier stands: the Alphas go for the armour (they bury the tank) rather than all hunting the courier at once.
+          if (this.toTank(job.alphaId, b)) { job.stage = 'tank'; continue; }
+          job.stage = 'done'; delete b.scripted; continue;
+        }
+        job.job = 'line'; nest = false; k = c; if (job.stage === 'walk' || job.stage === 'slam') job.stage = 'charge';
+      }
+      const crews = crewsOf(k), nearest = crews.sort((p, q) => dist(p.transform, e.transform) - dist(q.transform, e.transform))[0];
+      const ready = nest ? this.t >= D.lines[1].pushS && d.lines[0].brokeAt > 0 : job.job === 'armor' ? this.t >= D.lines[2].pushS && d.lines[1].brokeAt > 0 : true;
       if (job.stage === 'walk') {
-        // Held at its stage outside the line (ignores targets beyond it) until the beat; the armour Alpha just waits for its beat.
-        if (!armor && !ready) { b.scripted = this.h.snap(pt(D.alphaHold[job.job as 'north' | 'south']), .55); continue; }
-        if (!ready) continue;
+        // Held at its stage outside the line (ignores targets beyond it) until the beat; the armour Alpha waits where it came out (out of view).
+        if (!ready) { b.scripted = nest ? this.h.snap(pt(D.alphaHold[job.job as 'north' | 'south']), .55) : (job.hold ??= { x: e.transform.x, z: e.transform.z }); continue; }
         delete b.scripted; job.stage = 'charge';
       }
+      // On a move cooldown it keeps closing in; at arm's length its own brain swipes at the crew in reach.
+      const press = (to: Point) => { if (dist(e.transform, nearest.transform) > 2.5) b.scripted = this.h.snap(to, .55); else delete b.scripted; };
       if (job.stage === 'charge') {
-        // The nest Alphas charge through their authored E26 slot (breaking it) while it stands; otherwise at the nearest crew member.
-        const slot = armor ? null : this.slotInside(job.job as 'north' | 'south'), to = slot ?? nearest.transform;
+        // The slot Alphas charge through their authored E26 slot (breaking it) while it stands; otherwise at the nearest crew member.
+        const side = nest || job.job === 'west' ? job.job as 'north' | 'south' | 'west' : null, slot = side ? this.slotInside(side) : null, to = slot ?? nearest.transform;
         const dx = to.x - e.transform.x, dz = to.z - e.transform.z, length = Math.hypot(dx, dz) || 1;
         // Through the slot the sandbags block the sight line by design; the stage is straight outside it.
-        const stage = slot ? this.h.snap(pt(D.alphaStage[job.job as 'north' | 'south']), .55) : null;
+        const stage = slot && side ? this.h.snap(this.slotStage(side), .55) : null;
         if (stage ? dist(e.transform, stage) > 1.2 : length > 11 || !world.combat!.query.visible(e.transform, to)) { b.scripted = stage ?? this.h.snap(to, .55); continue; }
         delete b.scripted;
         if (ai.startSpecial(e.id, 'alpha.charge', { id: nearest.id, x: to.x, z: to.z }, { x: e.transform.x, z: e.transform.z, radius: 1, dx: dx / length, dz: dz / length })) job.stage = 'slam';
+        else if (slot) b.scripted = stage!; else press(to);
         continue;
       }
-      // Slam: close on the nearest crew member, then ground-slam within 3.5 m (knocks everyone in 4 m down).
+      // Slam: close on the nearest crew member, then ground-slam within 3.5 m (knocks everyone in 4 m down); then the next charge.
       const cx = nearest.transform.x - e.transform.x, cz = nearest.transform.z - e.transform.z, cl = Math.hypot(cx, cz) || 1;
       if (cl > 3.5) { b.scripted = { x: nearest.transform.x, z: nearest.transform.z }; continue; }
       delete b.scripted;
-      if (ai.startSpecial(e.id, 'alpha.ground-slam', { id: nearest.id, x: nearest.transform.x, z: nearest.transform.z }, { x: e.transform.x, z: e.transform.z, radius: 4, dx: cx / cl, dz: cz / cl })) job.stage = armor ? 'charge' : 'done';
+      if (ai.startSpecial(e.id, 'alpha.ground-slam', { id: nearest.id, x: nearest.transform.x, z: nearest.transform.z }, { x: e.transform.x, z: e.transform.z, radius: 4, dx: cx / cl, dz: cz / cl })) job.stage = job.job === 'armor' ? 'charge' : 'tank';
+      else press(nearest.transform);
     }
   }
-  private slotInside(side: 'north' | 'south' | 'south'): Point | null {
+  /** Send an Alpha to the tank (around its rear deck); false when there is no tank (any more). */
+  private toTank(id: number, b: NonNullable<EntitySnapshot['infected']>): boolean {
+    const s = this.s, tank = this.world.entities.get(s.tankId);
+    if (!tank || s.tankPhase === 'off' || s.tankPhase === 'gone') return false;
+    b.scripted = this.h.snap({ x: tank.transform.x + (id % 3 - 1) * 2.5, z: tank.transform.z + 3 }, .55); return true;
+  }
+  /** The charge stage outside a slot: authored for the nest slots, else 8 m straight out of the slot. */
+  private slotStage(side: 'north' | 'south' | 'west'): Point {
+    if (side !== 'west') return pt(D.alphaStage[side]);
+    const slot = l4BreakableLine.find(l => l.id === `l4-line-${side}`)!, a = this.h.mission.def.anchors;
+    const c = a[slot.anchors.center], o = a[slot.anchors.outside], dx = o.x - c.x, dz = o.z - c.z, n = Math.hypot(dx, dz) || 1;
+    return { x: c.x + dx / n * 8, z: c.z + dz / n * 8 };
+  }
+  private slotInside(side: 'north' | 'south' | 'west'): Point | null {
     const slot = l4BreakableLine.find(l => l.id === `l4-line-${side}`)!;
     if (!this.world.barricades?.barricadeIntact(slot.id)) return null;
     const a = this.h.mission.def.anchors[slot.anchors.inside]; return a ? { x: a.x, z: a.z } : null;

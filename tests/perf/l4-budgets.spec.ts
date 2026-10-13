@@ -37,7 +37,7 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     await step(`${l4}.phase === 'plaza'`, 800); await step(`${l4}.turnDueAt > 0 && ${l4}.turnDueAt - window.__SS__.getState().tick < 120`, 900);
     const turn = await record(`${l4}.turnAt > 0`, 2_000);
     // The war: from the tank's entry; the peak: HMG and rifles firing, the tank in place, the helicopter orbiting, the waves arriving.
-    await step(`${l4}.tankPhase === 'hold' && ${l4}.heliPhase === 'orbit' && ${l4}.alphaIds.length >= 2`, 900);
+    await step(`${l4}.tankPhase === 'hold' && ${l4}.heliPhase === 'orbit' && ${l4}.alphaIds.length >= 3`, 900);
     // Populate the acceptance peak through the ordinary spawn APIs. The natural route often
     // kills the early waves before tank entry, so it cannot prove the specified 80/40 stress case.
     await page.evaluate(tier => {
@@ -86,8 +86,8 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
       simP95: percentile(warCpu.filter(c => c.ticks > 0).map(c => c.sim), .95), simFrameP95: percentile(warCpu.map(c => c.simFrame), .95), updateP95: percentile(warCpu.map(c => c.update), .95), renderP95: percentile(warCpu.map(c => c.render), .95), lineBroke: await page.evaluate(() => window.__SS__!.missions.state()!.l4!.lineBreakAt > 0) };
     writeFileSync(`${dir}/l4-${tier}.json`, JSON.stringify({ ...proof, warProfile: warStatic.profile, collapseProfile: collapseStatic.profile, collapseAssets: collapseStatic.profileAssets, war, turn, tank, breakFrames, collapse }, null, 2));
     console.log(JSON.stringify(proof));
-    // The approved collapse: the first two Alphas are in (84 s), soldiers have died but the survivors still fight (at least half firing within the 8 s window; fallen-back posts can be out of range).
-    expect(counts.turnS).toBeGreaterThanOrEqual(84); expect(counts.alphasArrived).toBeGreaterThanOrEqual(2);
+    // The approved collapse: the first nest Alpha is in (84 s; l4-po-round: three Alphas in, from 84 s high, 92 s low), soldiers have died but the survivors still fight (at least half firing within the 8 s window; fallen-back posts can be out of range).
+    expect(counts.turnS).toBeGreaterThanOrEqual(84); expect(counts.alphasArrived).toBeGreaterThanOrEqual(3);
     expect(counts.soldiers).toBeLessThan(counts.soldiersAtTurn); expect(counts.soldiers).toBeGreaterThanOrEqual(tier === 'high' ? 6 : 3);
     expect(counts.civilians).toBeGreaterThanOrEqual(tier === 'high' ? 40 : 20); expect(counts.infected).toBeGreaterThanOrEqual(tier === 'high' ? 80 : 40);
     expect(firingSoldiers).toBeGreaterThanOrEqual(Math.ceil(counts.soldiers * .5));
