@@ -72,12 +72,16 @@ test('@E19 @E19-AC22 fire-station invitation repeats without moving or protectin
     expect(Math.hypot(chaser.transform.x - before.x, chaser.transform.z - before.z)).toBeGreaterThan(1);
     expect(mission.state.gates['fire-shutter']).toBe(true);
     // Normal held movement crosses the actual open aperture; no setTranslation on the entry path.
-    for (let i = 0; i < 150 && mission.state.phase === 'playing'; i++) {
-      world.setInput({ move: { x: ix, z: iz } }); world.update();
+    let atEntry: { x: number; z: number } | null = null;
+    // 150 ticks to the bay, plus the 5 s run-out (PO 2026-10-13) because the chaser is still engaged.
+    for (let i = 0; i < 500 && mission.state.phase === 'playing'; i++) {
+      world.setInput(mission.state.runOutUntil === undefined ? { move: { x: ix, z: iz } } : {}); world.update();
+      if (mission.state.runOutUntil !== undefined && !atEntry) atEntry = { x: p.transform.x, z: p.transform.z };
     }
     expect(mission.state.phase).toBe('result'); expect(world.storyLock).toBeNull();
     expect((p.transform.x - door.x) * ix + (p.transform.z - door.z) * iz).toBeGreaterThan(0);
-    expect(Math.hypot(p.transform.x - inside.x, p.transform.z - inside.z)).toBeLessThanOrEqual(inside.radius);
+    // Position where the completion fired (the engaged chaser may shove her during the 5 s run-out).
+    expect(Math.hypot((atEntry ?? p.transform).x - inside.x, (atEntry ?? p.transform).z - inside.z)).toBeLessThanOrEqual(inside.radius);
     expect(mission.state.gates['fire-shutter']).toBe(false);
   } finally { world.dispose(); }
 }, 120_000);

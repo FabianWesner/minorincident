@@ -8,6 +8,7 @@ import { LevelThreeCollapse } from './LevelThreeCollapse';
 import { LevelFourWar } from './LevelFourWar';
 import { LevelFiveAftermath } from './LevelFiveAftermath';
 import { captureSeams, restoreSeams } from './l1Seams';
+import { respawnAtCheckpoint, runOutRule } from './Respawn';
 import { dialogue } from '../../data/dialogue';
 import { SimPhase } from '../../core/EventBus';
 import type { InputFrame } from '../../input/InputFrame';
@@ -32,6 +33,8 @@ export class Mission {
   private pendingMarker: string | null = null;
   private readonly pendingCheckpoints: string[] = [];
   private finishApplied = false;
+  /** Last tick with a swing, shot or explosion (run-out rule). */
+  private lastActionTick = -Infinity;
   private prepared = false;
   private readonly l1: LevelOneOutbreak | null;
   /** E20 set-piece controller (def.l2). */
@@ -74,6 +77,7 @@ export class Mission {
       else if (event.type === 'outbreak.bite' && event.turns) this.l1?.noteTurned(event.targetId);
       else if (event.type === 'outbreak.civilian-escaped') this.l1?.noteEscaped(event.id);
     }, SimPhase.missions));
+    for (const type of ['combat.attack', 'combat.exploded', 'explosion'] as const) this.stops.push(world.events.on(type, () => { this.lastActionTick = world.tick; }, SimPhase.missions));
     for (const type of ['combat.kill', 'player.damaged', 'player.died', 'player.respawned', 'mission.signal', 'mission.failed', 'pickup.collected', 'vehicle.entered', 'vehicle.exited', 'interact.completed', 'prop.broken', 'barricade.built', 'barricade.broken', 'barricade.repaired'] as const) this.stops.push(world.events.on(type, event => this.event(event), SimPhase.missions));
     this.emit({ type: 'mission.briefing', id: def.id, text: def.briefing });
   }
@@ -206,8 +210,26 @@ export class Mission {
   }
   private finish(): void {
     if (this.finishApplied || this.state.phase !== 'playing' || !this.def.finish.every(id => this.state.steps[id].status === 'completed')) return;
+    if (this.runOut()) return;
     this.finishApplied = true; this.run(this.def.onComplete);
     if (!this.state.cinematic) this.result();
+  }
+  /**
+   * PO 2026-10-13: "After I reached the final checkpoint, if there is still action, then let it go for another 5s, so it doesn't feel cutted."
+   * One path for every level: after the last objective, engaged infected within 25 m or a swing, shot or explosion in the last 2 s keep the world
+   * running for 5 s (player invulnerable, input live) before the result, cinematic or level transition. No action: no delay.
+   */
+  private runOut(): boolean {
+    const { world, state } = this, tick = world.tick;
+    if (state.runOutUntil === undefined) {
+      const p = world.entities.get(1)!.transform, ai = world.infected;
+      const engaged = !!ai && ai.active.some(e => e.health.current > 0 && !e.corpse && !e.hidden && e.infected && (['chase', 'attack', 'bite'] as string[]).includes(e.infected.l1?.mode === 'chase' ? 'chase' : e.infected.state) && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) <= runOutRule.engagedM);
+      if (!engaged && tick - this.lastActionTick > runOutRule.actionS * 60) return false;
+      state.runOutUntil = tick + runOutRule.seconds * 60;
+    }
+    if (tick >= state.runOutUntil) return false;
+    const survivor = world.entities.get(1)?.survivor; if (survivor) survivor.invulnerableUntil = Math.max(survivor.invulnerableUntil, state.runOutUntil);
+    return true;
   }
   private result(): void {
     this.state.phase = 'result'; this.state.stats.time = (this.world.tick - this.startTick) / 60;
@@ -223,15 +245,20 @@ export class Mission {
   }
   private event(event: GameEvent): void {
     if (event.type === 'player.respawned') {
-      // L1 (PO rule 2026-10-07): respawn keeps the world; only the courier is placed safely. Other levels restore the checkpoint.
-      if (this.state.phase === 'playing') { if (this.l1) this.l1.respawn(); else this.restore(this.state.checkpoint ?? 'start'); }
+      // One path for every level (PO 2026-10-13): L1 keeps the world (PO 2026-10-07), the other levels restore the checkpoint snapshot;
+      // then the courier stands exactly on the last reached checkpoint (the Player already put her there), made safe by Respawn.ts.
+      if (this.state.phase === 'playing') {
+        const cp = this.world.entities.get(1)!.survivor!.checkpoint, anchor = { x: cp.x, z: cp.z };
+        if (this.l1) this.l1.respawn(); else this.restore(this.state.checkpoint ?? 'start');
+        respawnAtCheckpoint(this.world, anchor, !!this.l1);
+      }
       return;
     }
     if (this.state.phase !== 'playing') return;
     if (event.type === 'mission.failed') { this.state.failure = event.reason; this.state.phase = 'retry'; return; }
     if (event.type === 'pickup.collected' && 'kind' in event && event.kind === 'item' && event.item && this.def.items.includes(event.item)) this.collect(event.item);
     if (event.type === 'player.damaged') this.state.stats.damage += event.amount;
-    if (event.type === 'player.died') { this.state.stats.deaths++; this.l1?.noteDeath(); }
+    if (event.type === 'player.died') { this.state.stats.deaths++; }
     if (event.type === 'combat.kill') {
       const entity = this.world.entities.get(event.targetId);
       // PO "Infected recover": a knockdown is not a kill; only explosives and fire kill for good.
