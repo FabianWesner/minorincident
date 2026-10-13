@@ -250,7 +250,7 @@ export class Mission {
       if (this.state.phase === 'playing') {
         const cp = this.world.entities.get(1)!.survivor!.checkpoint, anchor = { x: cp.x, z: cp.z };
         if (this.l1) this.l1.respawn(); else this.restore(this.state.checkpoint ?? 'start');
-        respawnAtCheckpoint(this.world, anchor);
+        respawnAtCheckpoint(this.world, anchor, !!this.l1);
       }
       return;
     }

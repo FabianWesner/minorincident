@@ -25,8 +25,9 @@ function snap(world: SimWorld, anchor: Spot): Spot {
 }
 
 /** Companion and escorts come back beside the courier (the companion has its own settle logic; escorts stand up and follow). */
-function gatherAllies(world: SimWorld, at: Spot): void {
+function gatherAllies(world: SimWorld, at: Spot, escorts: boolean): void {
   world.npcs?.companion.respawnNear();
+  if (!escorts) return;
   const nav = world.infected?.nav;
   let n = 0;
   for (const e of world.entities.iterate()) {
@@ -70,14 +71,15 @@ function clearThreat(world: SimWorld, at: Spot): void {
 }
 
 /** Put the courier on the checkpoint anchor and make it safe. `anchor` is read before any level-specific restore touched the world. */
-export function respawnAtCheckpoint(world: SimWorld, anchor: Spot): void {
+/** `worldKept`: the level keeps its world on death (L1), so escorts are brought back; elsewhere the checkpoint snapshot restored them in formation. */
+export function respawnAtCheckpoint(world: SimWorld, anchor: Spot, worldKept = true): void {
   const player = world.entities.get(1)!, at = snap(world, anchor);
   player.transform.x = at.x; player.transform.z = at.z;
   world.physics.playerBody!.setTranslation(player.transform, true);
   world.previousPlayer = { ...player.transform }; world.spatial.set(1, at.x, at.z);
   if (player.survivor) player.survivor.invulnerableUntil = world.tick + ticks(respawnRule.graceS);
   clearThreat(world, at);
-  gatherAllies(world, at);
+  gatherAllies(world, at, worldKept);
 }
 
 /** PO 2026-10-13 run-out after the final objective when action is still going on (see Mission.runOut). */
