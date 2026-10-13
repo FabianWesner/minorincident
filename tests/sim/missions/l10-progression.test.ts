@@ -99,7 +99,9 @@ test('T-E32-27b @E32 @E32-AC27 live progress reload retains the prior retry snap
 for (const quality of ['high','low'] as const) test(`T-E32-27-chunks-${quality} @E32 @E32-AC27 @E32-AC28 region retry and fresh reload restore inactive chunks and the same Mega`, () => {
   world.reset();
   const layout = JSON.parse(readFileSync('public/assets/layouts/D-CROSSING.layout.json', 'utf8'));
-  world.loadComposition(compositions.L10, [layout], 31);
+  // This shared-streamer fixture deliberately uses Crossing geometry, under the L10 mission.
+  const composition = { ...compositions.L10, districts: compositions['D-CROSSING'].districts };
+  world.loadComposition(composition, [layout], 31);
   applyCampaign(world, preset('L10-default'));
   world.chunks!.setQuality(quality);
   const focus = (x: number, z: number) => { Object.assign(world.entities.get(1)!.transform, { x, z }); world.physics.playerBody!.setTranslation(world.entities.get(1)!.transform, true); world.chunks!.update([x,z]); };
@@ -117,7 +119,7 @@ for (const quality of ['high','low'] as const) test(`T-E32-27-chunks-${quality} 
   expect(save.cureResume.checkpoint.seams!.chunks).toBeDefined();
   const decoded = decodeSave(JSON.stringify(save)); expect(decoded.status).toBe('ok');
   if (decoded.status !== 'ok') return;
-  world.reset(); world.loadComposition(compositions.L10, [layout], 31);
+  world.reset(); world.loadComposition(composition, [layout], 31);
   applyCampaign(world, decoded.save); world.chunks!.setQuality(quality);
   installMegaPursuit(world, { introduceTick: null });
   const restored = mission(); restored.begin(); restored.loadResume(decoded.save.cureResume!);

@@ -1,4 +1,4 @@
-"""L10-D1: R1/R2 on the shared 100 m streamer. R2's blocked street has an open northern detour."""
+"""L10-D1/D2: R1–R4 on the shared 100 m streamer. R2's blocked street has an open northern detour."""
 import json
 import math
 import bpy
@@ -6,7 +6,7 @@ from mathutils import Vector
 from mathutils.geometry import tessellate_polygon
 from sslib.layout import Layout, material
 
-l = Layout('D-CURE', 'The Cure — crash outskirts and residential fringe', size=(800,400))
+l = Layout('D-CURE', 'The Cure — crash, residential, industrial and military', size=(2000,600))
 l.yaw_matches_collision = True
 source = json.loads((l.root / 'layouts/D-CURE/routes.json').read_text())
 for obj in l.layers[0]: bpy.data.objects.remove(obj, do_unlink=True)
@@ -29,8 +29,8 @@ def clip(poly, axis, value, greater):
     return out
 
 chunks = []
-for z in range(4):
-    for x in range(8):
+for z in range(-1,5):
+    for x in range(20):
         chunks.append(dict(id=f'cure-{x}-{z}', origin=[500+x*100,-200+z*100], size=100))
 l.data['terrainChunks'] = chunks
 
@@ -115,7 +115,7 @@ surface('soil',source['bounds'][:-1],'grass',-.006)
 surface('crash-dry',[[500,-125],[740,-125],[740,125],[500,125]],'khaki',-.004)
 l.data['surfaces'].append(dict(surface='grass',height=0,polygon=source['bounds']))
 # Graph shares the exact boundary vertex; no duplicate slab or invisible region gate.
-route = source['regions'][0]['route'] + source['regions'][1]['route'][1:]
+route = [p for i,r in enumerate(source['regions']) for p in (r['route'] if i == 0 else r['route'][1:])]
 for i,p in enumerate(route): l.data['roads']['nodes'].append(dict(id=f'route-{i}',point=p))
 for i,(a,b) in enumerate(zip(route,route[1:])):
     width=8; d=math.dist(a,b); nx=-(b[1]-a[1])/d*width/2; nz=(b[0]-a[0])/d*width/2
@@ -127,11 +127,25 @@ for i,(a,b) in enumerate(zip(route,route[1:])):
         cx=a[0]+(b[0]-a[0])*s/d; cz=a[1]+(b[1]-a[1])*s/d
         tx=(b[0]-a[0])/d*1.5; tz=(b[1]-a[1])/d*1.5
         surface('mark',[[cx-tx+nx*.025,cz-tz+nz*.025],[cx-tx-nx*.025,cz-tz-nz*.025],[cx+tx-nx*.025,cz+tz-nz*.025],[cx+tx+nx*.025,cz+tz+nz*.025]],'picketWhite',.008)
+# Both optional routes rejoin the same nav/road graph, with no invisible gates.
+for detour in source['detours']:
+    points=detour['route']; ids=[]
+    for j,p in enumerate(points):
+        existing=next((n['id'] for n in l.data['roads']['nodes'] if n['point']==p),None)
+        node=existing or f"{detour['id']}-{j}"
+        if not existing: l.data['roads']['nodes'].append(dict(id=node,point=p))
+        ids.append(node)
+    for j,(a,b) in enumerate(zip(points,points[1:])):
+        width=6; d=math.dist(a,b); nx=-(b[1]-a[1])/d*width/2; nz=(b[0]-a[0])/d*width/2
+        poly=[[a[0]+nx,a[1]+nz],[a[0]-nx,a[1]-nz],[b[0]-nx,b[1]-nz],[b[0]+nx,b[1]+nz]]
+        l.data['roads']['edges'].append(dict(id=f"{detour['id']}-{j}",start=ids[j],end=ids[j+1],points=[a,b],laneWidth=width))
+        surface('service-road',poly,'asphalt',.002)
+        l.data['surfaces'].append(dict(surface='asphalt',height=.002,polygon=poly+[poly[0]]))
 # The old through street ends at a visible rubble barrier. The route goes north around it.
 a,b=[807,25],[1057,25]
 surface('blocked-road',[[807,21],[1057,21],[1057,29],[807,29]],'asphalt',.002)
 for name,p in source['anchors'].items(): l.anchor(name,[p[0],0,p[1]])
-l.anchor('player-start',[547,0,0]); l.anchor('exit',[1237,0,25])
+l.anchor('player-start',[547,0,0]); l.anchor('exit',[2467,0,-5])
 # Crash continuity: same safe position as L9 crawl-end, spent wreck behind the courier.
 l.place('veh.military-apc',[540,0,-5],yaw=1.5); l.data['placements'][-1]['decay']='wrecked'
 for x,z in [(557,30),(600,-35),(697,-35)]: l.place('prop.tree',[x,0,z])
@@ -150,6 +164,29 @@ for x in [843,883,923,963,1003]:
 # A line of rubble spans the blocked street and its verge; the northern lane at z=80 stays open.
 for z in [i*1.5-10 for i in range(48)]: l.place('decay.makeshift-barricade',[937,0,z])
 for x,z in [(930,25),(944,32)]: l.place('veh.wreck',[x,0,z])
+# R3 survivor depot forecourt: the shotgun checkpoint precedes both yard alternatives.
+l.place('bld.cure-service-building',[1257,0,10])
+for x,z in [(1249,19),(1265,19)]: l.place('decay.makeshift-barricade',[x,0,z])
+for x,z in [(1397,78),(1597,78),(1787,-20)]:
+    pid=l.place('bld.cure-warehouse',[x,0,z])
+    l.data['buildings'].append(dict(id=pid,assetId='bld.cure-warehouse',aabb=l.data['placements'][-1]['visualAabb'],label='Depot warehouse'))
+for x in [1367,1457,1547,1637,1727]:
+    l.place('prop.cure-container-stack',[x,0,45])
+    l.place('prop.cure-drum-stack',[x,0,-65])
+# Block the direct yard; northern loading yard and southern service lane stay open.
+surface('yard-road',[[1297,21],[1747,21],[1747,29],[1297,29]],'asphalt',.002)
+for z in range(-25,66,3): l.place('decay.makeshift-barricade',[1517,0,z])
+# R4 destroyed entrance post, breached defensive line and low motor-pool shelters.
+l.place('bld.cure-guard-post',[1857,0,10])
+l.place('veh.military-truck',[1877,0,42]); l.data['placements'][-1]['decay']='wrecked'
+for x,z in [(1997,-95),(2197,-95),(2327,130)]:
+    pid=l.place('bld.cure-motor-shelter',[x,0,z])
+    l.data['buildings'].append(dict(id=pid,assetId='bld.cure-motor-shelter',aabb=l.data['placements'][-1]['visualAabb'],label='Motor pool'))
+for x in [1997,2197,2327]: l.place('veh.military-truck',[x,0,130 if x==2327 else -95])
+surface('checkpoint-road',[[1897,21],[2397,21],[2397,29],[1897,29]],'asphalt',.002)
+for z in range(-45,87,3): l.place('prop.cure-mil-fence',[2137,0,z],yaw=math.pi/2)
+for x,z in [(2137,-87),(2137,-63)]: l.place('prop.jersey-barrier',[x,0,z])
+for x,z in [(1850,19),(1864,19),(2127,-68),(2147,-68)]: l.place('prop.traffic-cone',[x,0,z])
 for p in l.data['placements']: p['maxTier']=6
 for c in l.data['colliders']: c['maxTier']=6
 # Semantic pavement shares the renderer's level top, no raised seam at the region/chunk boundary.

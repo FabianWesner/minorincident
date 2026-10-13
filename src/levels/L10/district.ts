@@ -1,11 +1,12 @@
 import authored from '../../../layouts/D-CURE/routes.json' with { type: 'json' };
 import type { Point } from '../districts/types';
 
-/** D1 owns the opening regions. D2–D4 append to the same authored route/cell contract. */
+/** D1/D2 own R1–R4. D3/D4 append to the same authored route/cell contract. */
 export const cure = authored as unknown as {
   chunkSize: number; bounds: Point[]; start: Point;
   regions: { id: string; envelope: [Point, Point]; checkpoint: string; weapon?: string; minutes: number; route: Point[] }[];
   anchors: Record<string, Point>;
+  detours: { id: string; region: string; route: Point[] }[];
 };
 export const cureRouteLength = (points: readonly Point[]): number => points.slice(1).reduce((sum, b, i) => sum + Math.hypot(b[0] - points[i][0], b[1] - points[i][1]), 0);
 /** Global coarse pursuit follows the same reachable turn anchors as the detailed route. */

@@ -1,0 +1,96 @@
+{
+  "numTotalTests": 16,
+  "numPassedTests": 16,
+  "numFailedTests": 0,
+  "success": true,
+  "files": [
+    {
+      "name": "sim/levels/l10-district-detours.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "name": "T-E32-03-D2-detours-high @E32-AC03 @E32-AC28 service road and motor pool alternatives retain collision/nav support",
+          "status": "passed"
+        },
+        {
+          "name": "T-E32-03-D2-detours-low @E32-AC03 @E32-AC28 service road and motor pool alternatives retain collision/nav support",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "sim/levels/l10-district.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "name": "T-E32-03-D1-D2-high @E32-AC02 @E32-AC05 @E32-AC03 @E32-AC27 @E32-AC28 route through R1\u2013R4 acquires the ordered arsenal and retains ground/nav/checkpoint support",
+          "status": "passed"
+        },
+        {
+          "name": "T-E32-03-D1-D2-low @E32-AC02 @E32-AC05 @E32-AC03 @E32-AC27 @E32-AC28 route through R1\u2013R4 acquires the ordered arsenal and retains ground/nav/checkpoint support",
+          "status": "passed"
+        },
+        {
+          "name": "T-E32-28-D1 @E32-AC10 @E32-AC28 authored pursuit crosses the R1/R2 seam using shared residency",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "sim/missions/l10-progression.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "name": "T-E32-01 @E32 @E32-AC01 ordered graph prevents skipping arsenal, cure and release prerequisites",
+          "status": "passed"
+        },
+        {
+          "name": "T-E32-27 @E32 @E32-AC27 every region retries with its arsenal, mission items, chunk and Mega seam",
+          "status": "passed"
+        },
+        {
+          "name": "T-E32-05 @E32 @E32-AC05 arsenal additions/removals and retry checkpoint survive JSON SaveStore round trip",
+          "status": "passed"
+        },
+        {
+          "name": "T-E32-27b @E32 @E32-AC27 live progress reload retains the prior retry snapshot",
+          "status": "passed"
+        },
+        {
+          "name": "T-E32-27-chunks-high @E32 @E32-AC27 @E32-AC28 region retry and fresh reload restore inactive chunks and the same Mega",
+          "status": "passed"
+        },
+        {
+          "name": "T-E32-27-chunks-low @E32 @E32-AC27 @E32-AC28 region retry and fresh reload restore inactive chunks and the same Mega",
+          "status": "passed"
+        },
+        {
+          "name": "T-E32-27-death @E32 @E32-AC27 death returns to the reached industrial checkpoint with both acquired guns",
+          "status": "passed"
+        },
+        {
+          "name": "T-E32-27-death-save @E32 @E32-AC27 saving during death resumes at the retry checkpoint",
+          "status": "passed"
+        },
+        {
+          "name": "T-E32-27-attack-ids @E32 @E32-AC27 fresh reload preserves attack IDs for the Mega rocket ledger",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "unit/levels/l10-district.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "name": "T-E32-03-D1-D2 @E32-AC03 @E32-AC28 R1\u2013R4 geometry, route lengths and pickup anchors agree",
+          "status": "passed"
+        },
+        {
+          "name": "T-E32-28-D1-ground @E32-AC28 exported cells retain shared 100 m edges within 2 cm",
+          "status": "passed"
+        }
+      ]
+    }
+  ]
+}
