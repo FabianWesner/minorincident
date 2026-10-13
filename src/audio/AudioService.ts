@@ -3,7 +3,7 @@ import type { Lifecycle } from '../core/Lifecycle';
 import type { SimWorld } from '../sim/world/SimWorld';
 import type { GameEvent } from '../sim/world/types';
 import type { SoundPosition } from '../data/audioEvents';
-import { audioCues, noiseCues, eventCues, telegraphCues, ambienceTiers, musicLayers } from '../data/audioCues';
+import { audioCues, noiseCues, eventCues, telegraphCues, ambienceTiers, musicLayers, pickupFanfare } from '../data/audioCues';
 import { AudioGraph, type GraphVoice, type PlayOptions } from './AudioGraph';
 import { AudioRegistry } from './AudioRegistry';
 import { fromDistricts, surfaceAt, zoneAt, dbGain } from './acoustics';
@@ -554,6 +554,12 @@ export class AudioService implements Lifecycle {
         else
             this.play(kind === 'extraction' && level === 'L1' ? 'l1.outro.sting' : kind === 'extraction' && level === 'L6' ? 'stinger.dawn' : `stinger.${kind === 'extraction' ? 'complete' : kind}`);
     }
+    /** PO 10-13: a short per-weapon fanfare (data table pickupFanfareByAction), the score ducked under it. One shared key, so quick double pickups do not pile up. */
+    private pickupFanfare(actionId: string): void {
+        if (this.level === 'L5' && !this.l5Music) { this.play('ui.pickup'); return; }
+        const id = `pickup.fanfare.${pickupFanfare(actionId)}`, voice = this.play(id, {}, 0);
+        if (voice) this.graph.duckMusic(this.context.currentTime, Math.max(0.4, audioCues[id].duration - 0.6));
+    }
     /** Event → cue adapter. Real producer events and lab tests go through this identical path. */
     event(event: GameEvent): void {
         if (event.type === 'weather.lightning') return; // Thunder follows the sim distance delay.
@@ -845,13 +851,16 @@ export class AudioService implements Lifecycle {
             this.musicIntensity({ alerted: event.id === 'store-fight' ? 10 : 0 });
             if (event.id === 'escape') this.stinger('elite', this.level);
         }
+        if (event.type === 'pickup.collected' && 'actionId' in event) {
+            // A weapon or ability: its own fanfare replaces the generic pickup tick and the old L1 score stinger (they never stack). The silent L5 city keeps the quiet tick.
+            this.pickupFanfare(event.actionId);
+            return;
+        }
         const id = eventCues[event.type];
         if (this.level === 'L5' && id.startsWith('stinger.') && !this.l5Music)
             return;
         if (id !== 'ui.tick')
             this.play(id, { position }, source);
-        if (event.type === 'pickup.collected')
-            this.stinger('weapon', this.level);
         // l4-collapse: each lost line escalates the score (the elite stinger over the combat bed).
         if (event.type === 'l4.beat')
             this.stinger('elite', this.level);
