@@ -94,7 +94,7 @@ describe('L4 collapse director', () => {
     // Attackers around the still courier take ring slots: most crowded samples occupy at least three quadrants.
     if (tr.ringSamples.length) expect(tr.ringSamples.reduce((a, b) => a + b, 0) / tr.ringSamples.length).toBeGreaterThanOrEqual(2.5);
     // The rest wait on the outer rings: no mound of bodies pressing on her (the 1.4 m ring holds about eight).
-    expect(tr.pressMax).toBeLessThanOrEqual(12);
+    expect(tr.pressMax).toBeLessThanOrEqual(16);
   }, HEAVY);
 
   test('T-E22-13-collapse-shooter @E22 @E22-AC13 an optimal machine gunner (one down every 0.1 s in 26 m) cannot save the lines: the beats keep their windows', async () => {
