@@ -1,3 +1,4 @@
+import { transactArsenal } from '../progression/arsenal';
 import { LevelNineCrash } from './LevelNineCrash';
 import { LevelEightZoo } from './LevelEightZoo';
 import { LevelSixSubway } from './LevelSixSubway';
@@ -50,7 +51,7 @@ export class Mission {
   /** E30 sanctuary, internal outbreak and armored escape. */
   readonly l8: LevelEightZoo | null;
   readonly l9: LevelNineCrash | null;
-  private readonly startTick: number;
+  private startTick: number;
   constructor(readonly world: SimWorld, readonly def: MissionDef) {
     const errors = validateMission(def); if (errors.length) throw new Error(errors.join('\n'));
     this.l9 = def.l9 ? new LevelNineCrash(this) : null;
@@ -326,6 +327,7 @@ export class Mission {
       case 'radio': this.state.subtitle = { id: action.id, text: dialogue[action.id], until: this.world.tick + (this.def.id === 'L1' ? 240 : 300) }; this.emit({ type: 'dialogue.line', id: action.id, text: dialogue[action.id] }); break;
       case 'cinematic': if (this.state.cinematic) throw new Error('Overlapping cinematics'); this.state.cinematic = { id: action.id, elapsed: 0, resume:this.state.phase==='retry'?'retry':'playing' }; this.state.phase = 'cinematic'; this.emit({ type: 'cinematic.started', id: action.id }); break;
       case 'timeOfDay': this.state.timeOfDay = action.value; break;
+      case 'arsenal': transactArsenal(this.world, action.add, action.remove); break;
       case 'grant': this.collect(action.item); break;
       case 'checkpoint': this.requestCheckpoint(action.id); break;
       case 'marker': this.pendingMarker = action.anchor; break;
@@ -356,7 +358,26 @@ export class Mission {
     });
   }
   checkpoint(id: string, anchor: { x: number; z: number } = this.world.entities.get(1)!.transform): void { if (!this.def.checkpoints.includes(id)) throw new Error(`Unknown checkpoint: ${id}`); this.state.checkpoint = id; this.world.player!.setCheckpoint({ ...this.world.entities.get(1)!.transform, ...anchor }); this.checkpoints.set(id, this.capture()); this.emit({ type: 'checkpoint.set', id }); }
-  private capture(): MissionCheckpoint { return { tick: this.world.tick, state: structuredClone(this.state), entities: this.world.query({}), seams: captureSeams(this.world) }; }
+  private capture(): MissionCheckpoint { return { tick: this.world.tick, state: structuredClone(this.state), entities: this.world.query({}), ...(this.def.id === 'L10' && this.world.progression?.campaign ? { arsenal: structuredClone({ ownedActions: this.world.progression.campaign.ownedActions, racks: this.world.progression.campaign.racks }) } : {}), seams: captureSeams(this.world) }; }
+  /** Serializable live progress plus the last reached retry checkpoint, for the existing SaveStore. */
+  saveResume(): { current: MissionCheckpoint; checkpoint: MissionCheckpoint } {
+    const checkpoint = this.checkpoints.get(this.state.checkpoint ?? 'start');
+    if (!checkpoint) throw new Error('Mission has no reached checkpoint');
+    return { current: this.capture(), checkpoint: structuredClone(checkpoint) };
+  }
+  /** Called after region/AI services are installed; restores their normal snapshot seams. */
+  loadResume(saved: { current: MissionCheckpoint; checkpoint: MissionCheckpoint }): void {
+    this.checkpoints.set(saved.checkpoint.state.checkpoint ?? 'start', structuredClone(saved.checkpoint));
+    this.checkpoints.set('resume', structuredClone(saved.current));
+    this.state.stats = structuredClone(saved.current.state.stats);
+    this.startTick = this.world.tick - Math.round(saved.current.state.stats.time * 60);
+    this.state.killedBosses = [...saved.current.state.killedBosses];
+    this.restore('resume', true);
+    this.state.phase = saved.current.state.phase;
+    this.state.result = structuredClone(saved.current.state.result);
+    this.finishApplied = this.state.phase === 'result' || this.state.phase === 'progression';
+    this.checkpoints.delete('resume');
+  }
   private flushCheckpoint(): void { for(const { id, anchor } of this.pendingCheckpoints)this.checkpoint(id, anchor);this.pendingCheckpoints.length=0; }
   /** Test loading can reconstruct an authored checkpoint by walking its graph prefix.
    * Existing reached snapshots are always preferred; this is not a gameplay playthrough. */
@@ -375,7 +396,7 @@ export class Mission {
     this.restore(id);
   }
   /** Restore mission/actors/racks, retain run totals and permanently killed scripted bosses. */
-  restore(id = this.state.checkpoint ?? 'start'): void {
+  restore(id = this.state.checkpoint ?? 'start', resume = false): void {
     this.world.controls.reset();
     const checkpoint = this.checkpoints.get(id); if (!checkpoint) throw new Error(`Unknown checkpoint: ${id}`);
     const timeout = this.state.failure === 'timeout';
@@ -384,6 +405,7 @@ export class Mission {
     if (timeout && this.state.deadlineTicks !== null) this.state.deadlineTicks += Math.ceil((this.def.deadline?.retryGraceSeconds ?? 0) * 60);
     this.finishApplied = false; this.pendingCheckpoints.length=0; this.markerObjective=this.def.steps.find(s=>this.state.steps[s.id].status==='active')?.id??null; this.pendingMarker=null;
     for (const step of Object.values(this.state.steps)) if (step.status === 'active') step.started += delta;
+    if (checkpoint.arsenal && this.world.progression?.campaign) Object.assign(this.world.progression.campaign, structuredClone(checkpoint.arsenal));
     const entities = structuredClone(checkpoint.entities);
     // Consumed health pickups stay consumed (00 §6.2: a respawn keeps the level's pickups; PO 2026-10-07 med packs never respawn).
     const consumed = new Set<number>(this.world.chunks?.consumedPickups());
@@ -425,7 +447,10 @@ export class Mission {
     for(const [gate,handle]of this.gateHandles)this.world.physics.world!.getCollider(handle).setEnabled(!this.state.gates[gate]);
     this.zones.forEach(zone => { zone.inside=this.state.volumes[zone.index];zone.entered=zone.exited=false; });
     this.l2?.restore(delta); this.l3?.restore(delta); this.l4?.restore(delta); this.l5?.restore(delta); this.l6?.restore(delta); this.l9?.rebuild();
-    this.emit({ type: 'checkpoint.restored', id });
+    if (resume) {
+      player.health.current = checkpoint.entities.find(e => e.id === 1)!.health.current;
+      this.state.failure = checkpoint.state.failure;
+    } else this.emit({ type: 'checkpoint.restored', id });
   }
   dispose(): void { this.stops.forEach(stop => stop()); for(const handle of this.gateHandles.values()) {const collider=this.world.physics.world?.getCollider(handle);if(collider)this.world.physics.world!.removeCollider(collider,true);} this.gateHandles.clear(); }
 }

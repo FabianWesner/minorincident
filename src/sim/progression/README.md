@@ -18,7 +18,7 @@ truncate equipped racks to that level's capacity without deleting the saved setu
 `SaveStore` receives a storage adapter; the browser supplies localStorage under
 `minor-incident.campaign`. Version 2 stores character, seed, unlocked/completed levels,
 owned actions, upgrades, racks, settings, usage, and an optional reward transaction.
-Outside L9's crash resume record, no physics, health, combat timers or mid-level position is persisted. Continue restarts
+L9's crash and L10's mission resume records persist their checkpoint state. Other levels do not persist physics, health, combat timers or mid-level position. Continue restarts
 an unlocked level at its briefing or resumes pending upgrade choices. Corrupt, invalid,
 unknown-version, and inaccessible saves return an error result; CampaignUI displays
 Start new. Version 0 compatibility renames `level` to `unlockedLevel`; version 1 migrates
@@ -56,3 +56,25 @@ that opening without changing the campaign transaction.
 
 Scene catalog for S7: `npm run scene:catalog -- --filter 'l9-crash-handover,l9-crash-axe-start' --matrix --backend webgl2` (repeat with `webgpu`). These scenes live in `tests/` to keep the
 source-of-truth specs unchanged.
+
+L10-S1: `preset('L10-default')` is the axe-only standalone entry on Level select.
+Historical weapon prerequisites remain in `crossingHandover.lostWeapons`; selecting
+old unlocks never equips them at R1. `levelTenMission(resolveAnchor)` exports the
+seven-region ordered graph, checkpoint IDs and D1–D4 anchor contract in
+`src/levels/L10/mission.ts`. Missing later anchors leave spatial goals pending and
+hide their waypoint. Region builders provide anchors; encounters never spawn in
+response to arsenal grants.
+
+`arsenal` script actions add/remove entitlements and racks before tick-end checkpoint
+capture. Checkpoints include the arsenal alongside entity loadout timers and existing
+`chunks` / `megaPursuit` seams. `saveResume()` provides current live state plus the
+last reached retry snapshot in `CampaignSave.cureResume`; `loadResume()` restores
+live state after services are installed, while death restores the retry snapshot.
+Game saves at checkpoint boundaries and menu/save actions using the existing
+SaveStore/version 2 optional-record validation. Later finale lanes use mission items,
+states and counters for cure/charge/heat/epilogue data; the snapshot preserves them.
+Terminal, pickup, install, charge, boss-dead, release, epilogue and credits controllers
+set the named `cureStates`; `charge-ready` must mean 3,600 eligible ticks and explicit
+release is owned by S7. S1 supplies ordering and persistence, not those controllers.
+Scene Lab `cureProgression` exercises the preset/graph at an optional reached
+checkpoint on an existing slab; catalog names are `l10-progression-*`.

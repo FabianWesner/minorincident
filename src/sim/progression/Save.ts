@@ -1,3 +1,4 @@
+import { validCureCheckpoint } from './cureSave';
 import { catalog } from '../../data/actions/catalog';
 import { upgrades } from '../../data/upgrades';
 import { eligible, lastLevel, meetsPrerequisite, validRacks, type CampaignSave } from './Campaign';
@@ -107,6 +108,10 @@ export function validateSave(raw:unknown):raw is CampaignSave {
     if(Object.hasOwn(enums,key)?!enums[key].includes(String(value)):!['cameraShake','flashReduction','muted','captions','noiseRings','mono','haptics','tinnitus','bloom','cheapDof','vfx','colorblind','slowMotion'].includes(key)||typeof value!=='boolean')return false;
   }
   if(Object.entries(save.usage).some(([id,n])=>!Object.hasOwn(catalog,id)||!Number.isSafeInteger(n)||n<0))return false;
+  if (save.cureResume !== undefined) {
+    const resume = save.cureResume;
+    if (!record(resume) || save.unlockedLevel !== 10 || !save.crossingHandover || !validCureCheckpoint(resume.current) || !validCureCheckpoint(resume.checkpoint) || resume.current.state.checkpoint !== resume.checkpoint.state.checkpoint || JSON.stringify(resume.current.arsenal) !== JSON.stringify({ ownedActions: save.ownedActions, racks: save.racks })) return false;
+  }
   if(save.l9Crash!==undefined&&!validCrash(save.l9Crash))return false;
   if(save.transport!==undefined&&!validTransport(save.transport))return false;
   if(save.world!==undefined&&(!record(save.world)||Object.keys(save.world).some(k=>k!=='L1')||save.world.L1!==undefined&&!validAftermath(save.world.L1)))return false;
