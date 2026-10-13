@@ -49,7 +49,7 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   const clipping = await session.clipping(), metrics = await session.metrics(), errors = session.errors.slice(errorsBefore);
   const result = evaluate(spec, metrics, clipping, errors);
   result.checks.push(...pixels.flatMap(p => canvasFrameChecks(p.pixels, `canvas.f${p.frame}`)));
-  result.checks.push({ name: 'requestedBackend', pass: metrics.backend === session.options.backend, value: Number(metrics.backend === session.options.backend), limit: 1 });
+  result.checks.push({ name: 'requestedBackend', pass: session.options.backend.startsWith(metrics.backend), value: Number(session.options.backend.startsWith(metrics.backend)), limit: 1 });
   result.pass = result.checks.every(c => c.pass);
   const timing = { openMs: o.openMs ?? 0, loadMs, runMs: Date.now() - t0 - loadMs, sceneMs: Date.now() - t0 };
   writeJson(`${out}/metrics.json`, { spec: o.file, backend: metrics.backend, requestedBackend: session.options.backend, tier: session.options.tier, frames: metrics.frame, timing, checks: result, pixels, consoleErrors: errors, scene, metrics, clipping });

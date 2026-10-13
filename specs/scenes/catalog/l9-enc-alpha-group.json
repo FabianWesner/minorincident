@@ -1,0 +1,76 @@
+{
+ "name": "l9-enc-alpha-group",
+ "note": "L9-E1: group with an Alpha rammed by a healthy APC. Look for: the Alpha stands out, hull contact does not stop the APC.",
+ "seed": 31,
+ "ground": "district",
+ "time": "L9-crossing",
+ "dof": false,
+ "layout": {
+  "district": "D-CROSSING",
+  "bbox": [
+   [
+    -150,
+    -90
+   ],
+   [
+    30,
+    30
+   ]
+  ]
+ },
+ "actors": [
+  {
+   "id": "group",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "count": 8,
+   "at": [
+    -60,
+    -30
+   ],
+   "spread": 2.2,
+   "yaw": 270
+  },
+  {
+   "id": "alpha",
+   "kind": "infected",
+   "archetype": "infected.alpha",
+   "at": [
+    -60,
+    -33.5
+   ],
+   "yaw": 270
+  }
+ ],
+ "vehicles": [
+  {
+   "id": "apc",
+   "asset": "vehicle.military-apc",
+   "at": [
+    -100,
+    -30
+   ],
+   "yaw": 0,
+   "health": 1000,
+   "path": [
+    [
+     -20,
+     -30
+    ]
+   ]
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": "apc",
+  "zoom": 1
+ },
+ "frames": 420,
+ "sheet": 30,
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000
+ }
+}
