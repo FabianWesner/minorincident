@@ -168,6 +168,14 @@ export interface Expectations {
   /** Native hand triangles vs the drawn held prop, sampled every third frame. */
   heldPropIntersectionsMax?: number;
   heldPropSamplesMin?: number;
+  /** Mug/phone: lowest drawn prop centre between hip (0) and shoulders (1) over all frames and LOD bands (`metrics.heldProps.holds`). */
+  heldPropHoldMin?: number;
+  /** Mug/phone: straightest right arm, shoulder-wrist distance over arm length (1 = a hanging straight arm). */
+  heldPropArmStraightMax?: number;
+  /** Placements lower than an occluder (1.1 m) drawn with the courier-hole cut material (`metrics.seeThrough.cutLowProps`); use 0. */
+  seeThroughLowPropsMax?: number;
+  /** Minimum frames the solid-occluder hole was open, so a cutaway fixture cannot pass without exercising it. */
+  seeThroughOpenFramesMin?: number;
   /** Placement pairs whose LOD0 meshes cut through each other (`clipping.static` only; bone hits not counted). */
   staticOverlapMax?: number;
   footSlideMaxCm?: number;

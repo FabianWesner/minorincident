@@ -3,7 +3,7 @@ import { overlapsRoad, inside } from '../districts/validate';
 import { pushableProps } from '../../data/pushableProps';
 import { truckWallOverlap } from '../../sim/vehicles/L2TruckDrive';
 import { l2Anchors, l2Station, l2TruckPath, stationPoint } from '../../data/l2';
-import { FootprintIndex, findClearSpot, moveOffSolids, firstOverlap, footprints, obstaclesOf, type Footprint } from '../placementClearance';
+import { FootprintIndex, findClearSpot, moveOffSolids, freestanding, firstOverlap, footprints, obstaclesOf, type Footprint } from '../placementClearance';
 import type { DistrictLayout, Placement, Tier } from '../districts/types';
 
 /** The L2 composition tier (static test asserts it): placements outside it are not part of the town the player sees. */
@@ -196,7 +196,7 @@ export function levelTwoLayouts(layouts: DistrictLayout[], aftermath: L1Aftermat
     }
     layout.placements.push({ id: 'l2-alarm-car-5', assetId: 'veh.sedan-white', position: [48.6, 0, 12.4], yaw: H, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: true, lightGroup: 'l2', visualAabb: { min: [47.6, 0, 10.2], max: [49.6, 1.6, 14.6] } });
     layout.lightGroups.push({ id: 'l2', offAt: 5 });
-    moveOffSolids(layout, p => p.assetId.startsWith('veh.'));
+    moveOffSolids(layout, freestanding);
     return applyL1Aftermath(layout, aftermath);
   });
 }

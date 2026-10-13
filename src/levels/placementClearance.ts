@@ -94,6 +94,10 @@ export function solidOverlaps(layout: DistrictLayout, tier: Tier, pick: (p: Plac
   return out;
 }
 
+/** Placements nudged off solids by every level layout: vehicles and free-standing equipment that is never part of an authored
+ * composition (PO 10-13 L4 "collision": a light tower through a privacy fence corner). */
+export const freestanding = (p: Placement): boolean => p.assetId.startsWith('veh.') || /^prop\.(light-tower|generator|porta-potty|vending-machine)/.test(p.assetId);
+
 /**
  * Moves every placement chosen by `pick` that cuts into a solid (see `solidOverlaps`, every tier) or another placement to the
  * nearest clear spot (vehicles slide along their own axis first). Returns the ids it moved.

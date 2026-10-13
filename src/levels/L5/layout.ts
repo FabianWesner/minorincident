@@ -1,7 +1,7 @@
 import { l4, l4Anchors, l4Cars, l4ConvoyStations, l4Line, l4Route, l4RoutePose } from '../../data/l4';
 import subwayLayout from '../../../public/assets/layouts/D-SUBWAY.layout.json' with { type: 'json' };
 import { l5, l5Anchors, l5Survivors } from '../../data/l5';
-import { findClearSpot, footprints, moveOffSolids, obstaclesOf } from '../placementClearance';
+import { findClearSpot, footprints, moveOffSolids, freestanding, obstaclesOf } from '../placementClearance';
 import type { DistrictLayout, Placement } from '../districts/types';
 import { l4Dressing } from '../L4/layout';
 
@@ -166,7 +166,7 @@ export function levelFiveLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     for (const c of subwayLayout.colliders.filter(c => c.id.startsWith('l6-0/'))) {
       layout.colliders.push({ ...c, minTier: 0, maxTier: 5, id: c.id.replace('l6-0/', 'l5-station/'), aabb: { min: [c.aabb.min[0] + station.position[0], c.aabb.min[1] - .45, c.aabb.min[2] + station.position[2]], max: [c.aabb.max[0] + station.position[0], c.aabb.max[1] - .45, c.aabb.max[2] + station.position[2]] } });
     }
-    moveOffSolids(layout, p => p.assetId.startsWith('veh.'));
+    moveOffSolids(layout, freestanding);
     return layout;
   });
 }
