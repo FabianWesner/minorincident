@@ -1,0 +1,169 @@
+{
+  "scope": "L10-D1 R1/R2",
+  "focused": {
+    "tests": 8,
+    "pass": true
+  },
+  "native": {
+    "high": {
+      "quality": "high",
+      "frameP95": 4.8,
+      "simP95": 0.6999998092651367,
+      "draws": 159,
+      "triangles": 94565,
+      "peak": 0,
+      "resident": 20,
+      "heapMB": 125.909404
+    },
+    "low": {
+      "quality": "low",
+      "frameP95": 4,
+      "simP95": 0.5,
+      "draws": 152,
+      "triangles": 39041,
+      "peak": 0,
+      "resident": 9,
+      "heapMB": 91.4518
+    }
+  },
+  "matrix": {
+    "webgl2": {
+      "rows": 24,
+      "passed": 24,
+      "errors": 0,
+      "seconds": 84.587
+    },
+    "webgpu": {
+      "rows": 24,
+      "passed": 24,
+      "errors": 0,
+      "seconds": 67.651
+    }
+  },
+  "broad": {
+    "unit": {
+      "failures": [
+        "FAIL   functional  tests/unit/assets/validate.test.ts > T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts",
+        "FAIL   functional  tests/unit/audio/assets.test.ts > T-E16-20 @E16 @E16-AC20 every audio file has an allowed license/hash and no Bruno SFX match"
+      ],
+      "summary": [
+        "Test Files  2 failed | 202 passed | 1 skipped (205)",
+        "Tests  2 failed | 1328 passed | 7 skipped (1337)",
+        "Duration  427.00s (tests 93%, import 6%, transform 2%)"
+      ]
+    },
+    "simLevels": {
+      "failures": [
+        "FAIL   functional  tests/levels/L1.test.ts > L1 v2 mission > T-E19-house @E19 @E19-AC25 beat 9: ten residents come out of ONE house front door near the garage, one by one, 1.5-4 s apart",
+        "FAIL   functional  tests/levels/L1.test.ts > L1 v2 mission > T-E19-respawn-world @E19 PO rule: a death after the bat keeps the world (corpses, infected, pedestrians, props, objectives, bat)",
+        "FAIL   functional  tests/levels/L2.test.ts > L2 The Failed Rescue > T-E20-13 @E20 @E20-AC13 cluster of 12-16 on the approach; complete passes killing <= 50 %; side path and car alarm each suffice",
+        "FAIL   functional  tests/levels/L3-route.test.ts > @E21 @E21-route L3 wreck lines close both sidewalks for player and NPCs; the connected detour crosses Oak, Boulevard and the elevated highway",
+        "FAIL   functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-02 @E21 @E21-AC02 complete bot finishes single seed from L3-default (bat + axe), median time in band",
+        "FAIL   functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2",
+        "FAIL   functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-09 @E21 @E21-AC09 squad feels strong first: officers >= 60 % of S1 knockdowns, S1 damage below one life (PO 10-12 police -50 %), near the courier, never teleports",
+        "FAIL   functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-12 @E21 @E21-AC12 escalation: pre-populated 250/625/1000 (+-20 %), live infected near the courier rise S1 -> S3, caps never exceeded",
+        "FAIL   functional  tests/levels/L5.test.ts > L5 Aftermath > T-E23-09 @E23 @E23-AC09 the group grows and follows: stand-to-interact 1.0 s, the counter steps 0 to 5, followers within 8 m, no jump above 1 m per tick, slower than the courier's run",
+        "FAIL   functional  tests/levels/L6.test.ts > T-E24-02 @E24 @E24-AC02 @E24-AC10 single-seed complete bot (PO: no batteries) protects and rejoins the community",
+        "FAIL   functional  tests/levels/continuity.test.ts > L1 -> L2 world-state continuity > T-CONT-01S @continuity after the L1 lab blast the L2 town has the burned annex, the debris cells blocked, the outbreak house aftermath and this run's carryover",
+        "FAIL   functional  tests/sim/districts.test.ts > T-E10-02 @E10 @E10-AC02 deterministic nav connects every composition objective from player start at every tier",
+        "FAIL   functional  tests/sim/levels/l10-district.test.ts > T-E32-28-D1 @E32-AC10 @E32-AC28 authored pursuit crosses the R1/R2 seam using shared residency",
+        "FAIL   functional  tests/sim/missions/l2-axe-objective.test.ts > @E20 after the alarm every playing tick has objective text and destinations have markers, including the doors checkpoint",
+        "FAIL   functional  tests/sim/performance/alpha-physical.test.ts > T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms",
+        "FAIL   functional  tests/sim/performance/alpha-support.test.ts > T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms",
+        "FAIL   functional  tests/sim/performance/alpha.test.ts > T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms",
+        "FAIL   functional  tests/sim/performance/zoo-s1.test.ts > T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
+        "FAIL   functional  tests/sim/performance/zoo-s2.test.ts > T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+        "FAIL   functional  tests/sim/performance/zoo-s3.test.ts > T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms"
+      ],
+      "summary": [
+        "Test Files  16 failed | 133 passed | 2 skipped (151)",
+        "Tests  20 failed | 1153 passed | 2 skipped (1175)",
+        "Duration  2304.84s (tests 98%, import 1%, transform 1%)"
+      ]
+    },
+    "verifyE32": {
+      "failures": [
+        "FAIL   timing  tests/sim/performance/mega-moves.test.ts > T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18"
+      ],
+      "summary": [
+        "Test Files  1 failed | 11 passed | 344 skipped (356)",
+        "Tests  1 failed | 45 passed | 2466 skipped (2512)",
+        "Duration  262.54s (import 58%, transform 23%, tests 17%, worker 2%)"
+      ]
+    },
+    "isolated": {
+      "failures": [
+        "FAIL   timing  tests/sim/performance/mega-moves.test.ts > T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18"
+      ],
+      "summary": [
+        "Test Files  1 failed | 1 passed (2)",
+        "Tests  1 failed | 5 passed (6)",
+        "Duration  13.07s (tests 57%, transform 37%, import 6%)"
+      ]
+    },
+    "assetValidatorIsolated": {
+      "pass": true,
+      "seconds": 225.36,
+      "limitSeconds": 300
+    },
+    "audioIsolated": {
+      "pass": true,
+      "cleanup": "Removed only private runner rsync temporary file .score-tension-L6.m4a.K34sXm (absent from worktree)."
+    }
+  },
+  "routes": {
+    "high": {
+      "tier": "high",
+      "regions": [
+        {
+          "id": "crash-outskirts",
+          "ticks": 3341
+        },
+        {
+          "id": "residential-fringe",
+          "ticks": 8009
+        }
+      ],
+      "p95": 0.22822000000087428,
+      "chunks": {
+        "resident": 12,
+        "queued": 0,
+        "unloaded": 20,
+        "inactive": 0,
+        "colliders": 31,
+        "navCells": 480000
+      },
+      "lastCheckpoint": "cure-crash"
+    },
+    "low": {
+      "tier": "low",
+      "regions": [
+        {
+          "id": "crash-outskirts",
+          "ticks": 3341
+        },
+        {
+          "id": "residential-fringe",
+          "ticks": 8009
+        }
+      ],
+      "p95": 0.15576299999884213,
+      "chunks": {
+        "resident": 6,
+        "queued": 0,
+        "unloaded": 26,
+        "inactive": 1,
+        "colliders": 11,
+        "navCells": 240000
+      },
+      "lastCheckpoint": "cure-crash"
+    }
+  },
+  "genericNav": {
+    "tests": 2,
+    "pass": true,
+    "navSeconds": 32.707,
+    "limitSeconds": 240,
+    "coverage": "Every composition, six tiers, three seeds; identical pure bake inputs shared; no timeout or criterion relaxed."
+  }
+}

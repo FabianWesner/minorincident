@@ -17,7 +17,8 @@ export const corridorDistrictId = "D-CORRIDOR" as const;
 export const fairDistrictId = "D-FAIR" as const;
 export const subwayDistrictId = "D-SUBWAY" as const;
 export const crossingDistrictId = "D-CROSSING" as const;
-export type DistrictId = (typeof districtIds)[number] | typeof groveDistrictId | typeof corridorDistrictId | typeof fairDistrictId | typeof subwayDistrictId | typeof crossingDistrictId;
+export const cureDistrictId = "D-CURE" as const;
+export type DistrictId = (typeof districtIds)[number] | typeof groveDistrictId | typeof corridorDistrictId | typeof fairDistrictId | typeof subwayDistrictId | typeof crossingDistrictId | typeof cureDistrictId;
 /** Districts that run the L1 v2 outbreak rules (sight-only infected brain, pedestrian outbreak layer, corgi). */
 export const outbreakDistrictIds: readonly DistrictId[] = [groveDistrictId, corridorDistrictId, fairDistrictId, subwayDistrictId];
 export const isOutbreakDistrict = (id: string): boolean => (outbreakDistrictIds as readonly string[]).includes(id);
@@ -81,6 +82,8 @@ export interface DistrictLayout {
       laneWidth: number;
     }[];
   };
+  /** Shared L9/E32 stream cells; positions and IDs are stable across region handoffs. */
+  terrainChunks?: { id: string; origin: Point; size: number }[];
   placements: Placement[];
   anchors: Record<string, PlacementTransform>;
   /** Named gameplay polygons (no-bicycle zones, car-wash bay); L1 v2 only. */

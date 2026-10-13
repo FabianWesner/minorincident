@@ -1,0 +1,152 @@
+{
+  "chunkSize": 100,
+  "bounds": [
+    [
+      500,
+      -200
+    ],
+    [
+      1300,
+      -200
+    ],
+    [
+      1300,
+      200
+    ],
+    [
+      500,
+      200
+    ],
+    [
+      500,
+      -200
+    ]
+  ],
+  "start": [
+    547,
+    0
+  ],
+  "regions": [
+    {
+      "id": "crash-outskirts",
+      "envelope": [
+        [
+          500,
+          -125
+        ],
+        [
+          800,
+          125
+        ]
+      ],
+      "checkpoint": "cure-crash",
+      "minutes": 3,
+      "route": [
+        [
+          547,
+          0
+        ],
+        [
+          622,
+          0
+        ],
+        [
+          622,
+          -12.5
+        ],
+        [
+          647,
+          -12.5
+        ],
+        [
+          647,
+          25
+        ],
+        [
+          747,
+          25
+        ]
+      ]
+    },
+    {
+      "id": "residential-fringe",
+      "envelope": [
+        [
+          740,
+          -200
+        ],
+        [
+          1240,
+          200
+        ]
+      ],
+      "checkpoint": "cure-residential",
+      "weapon": "weapon.pistol",
+      "minutes": 6,
+      "route": [
+        [
+          747,
+          25
+        ],
+        [
+          807,
+          25
+        ],
+        [
+          807,
+          80
+        ],
+        [
+          1057,
+          80
+        ],
+        [
+          1057,
+          25
+        ],
+        [
+          1237,
+          25
+        ]
+      ]
+    }
+  ],
+  "anchors": {
+    "cure-crash": [
+      547,
+      0
+    ],
+    "cure-residential": [
+      767,
+      25
+    ],
+    "police-pickup": [
+      769,
+      25
+    ],
+    "police-medkit": [
+      763,
+      28
+    ],
+    "r1-r2-seam": [
+      747,
+      25
+    ],
+    "mega-introduction": [
+      647,
+      0
+    ],
+    "residential-detour": [
+      937,
+      80
+    ],
+    "residential-blocked-street": [
+      937,
+      25
+    ],
+    "r2-r3-seam": [
+      1237,
+      25
+    ]
+  }
+}
