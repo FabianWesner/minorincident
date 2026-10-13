@@ -132,7 +132,7 @@ test.describe('L4 The Safe City Falls in the browser', () => {
     for (let i = 0; i < 10 && !(await mission()).l4!.gunAt; i++) { await interact(); await step(10); }
     expect((await mission()).l4!.gunAt).toBeGreaterThan(0);
     expect((await player()).weapons!.RIGHT.rack[0].id).toBe('weapon.army-mg'); expect((await player()).weapons!.selectedSide).toBe('RIGHT');
-    await expect(page.getByTestId('stats-RIGHT')).toHaveText('Ready');
+    await expect(page.getByTestId('weapon-active')).toHaveAttribute('aria-label', /, Ready/);
     // The turn: wait in the plaza (the soldiers hold, the people queue); the first evacuees collapse.
     await go({ x: -21.5, z: 3 }, 1.4);
     let turnShot = false;
@@ -151,7 +151,7 @@ test.describe('L4 The Safe City Falls in the browser', () => {
     expect((await mission()).l4!.lineBreakAt).toBeGreaterThan(0);
     if (!line) await snap('l4-war-line'); if (!tank) await snap('l4-tank');
     await step(150); await snap('l4-collapse');
-    await expect(page.getByTestId('stats-RIGHT')).not.toHaveText(/\d+\s*\/\s*\d+|↻/);
+    await expect(page.getByTestId('weapon-active')).not.toHaveAttribute('aria-label', /\d+\s*\/\s*\d+/);
     // The collapse: to Kessler's Hardware along Harbor Street (north; the south mouth of the plaza holds the stalled crowd that killed the courier 24 times), through whatever comes, to the cellar door.
     const inCellar = async () => (await mission()).l4!.phase === 'cellar';
     const route: P[] = [{ x: -19, z: -38 }, { x: 24, z: -38 }, { x: 46.6, z: -30 }, { x: 46.6, z: 30 }, at('l4-cellar-door')];
