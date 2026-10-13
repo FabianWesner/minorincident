@@ -261,6 +261,25 @@ def prop_cure_canister_pedestal(s):
 PIPE_Z, PIPE_R = 2.4, 1.0
 
 
+def valve_wheel(s, x, y, z, r=.6):
+    """Spoked hand wheel about +Z as its own owner `valveWheel` (pivot at the hub), so it can turn."""
+    s.owner('valveWheel', (x, y, z))
+    n = pick(s, 16, 10, 8)
+    outer, inner = [], []
+    for rr, ring in ((r, outer), (r - .09, inner)):
+        for zz in (-.05, .05):
+            ring.append([(x + rr * math.cos(i * math.tau / n), y + rr * math.sin(i * math.tau / n), z + zz) for i in range(n)])
+    rings = [outer[0], outer[1], inner[1], inner[0]]
+    verts = [v for ring in rings for v in ring]
+    faces = [(j * n + i, j * n + (i + 1) % n, ((j + 1) % 4) * n + (i + 1) % n, ((j + 1) % 4) * n + i) for j in range(4) for i in range(n)]
+    if s.lod < 2:
+        s.add('wheel rim', verts, faces, 'survivorRed', 'valveWheel')
+        s.cyl('wheel hub', (x, y, z), .16, .22, DARK, 'valveWheel', seg=pick(s, 10, 8, 6))
+    for k in range(pick(s, 4, 2, 2)):
+        a = k * math.pi / pick(s, 4, 2, 2)
+        s.box('wheel spoke', (x, y, z), (2 * r - .1, .09, .09), 'survivorRed' if s.lod == 2 else 'brass', 'valveWheel', rot=(0, 0, a), bevel=0)
+
+
 def _flange(s, x, y, z, axis, r=1.22, depth=.2, bolts=True):
     s.cyl('flange', (x, y, z), r, depth, DARK, 'body', axis=axis, seg=pick(s, 20, 12, 8))
     if bolts and s.lod == 0:
@@ -335,13 +354,14 @@ def kit_dispersal_pipe_tee(s):
         s.cyl('junction collar', (0, 0, PIPE_Z), PIPE_R + .12, .6, STRUCT, 'body', axis='X', seg=pick(s, 20, 12, 8))
         s.cyl('valve body', (0, 2.2, PIPE_Z), .95, .5, STRUCT, 'body', axis='Y', seg=pick(s, 16, 10, 8))
     s.cyl('valve stem', (0, 2.2, PIPE_Z + 1.2), .12, 1.4, DARK, 'body', seg=8)
-    s.cyl('valve wheel', (0, 2.2, PIPE_Z + 1.95), .6, .12, 'survivorRed', 'body', seg=pick(s, 14, 10, 8))
+    valve_wheel(s, 0, 2.2, PIPE_Z + 1.95)
     fixed_physics(s)
     s.collider('run', (8, 2.4, 2.4), (0, 0, PIPE_Z))
     s.collider('branch', (2.0, 4, 2.4), (0, 2, PIPE_Z))
     s.socket('portA', (-4, 0, PIPE_Z))
     s.socket('portB', (4, 0, PIPE_Z))
     s.socket('portC', (0, 4, PIPE_Z))
+    s.socket('valveAxis', (0, 2.2, PIPE_Z + 1.95), 'valveWheel')
     s.socket('front', (4.2, 0, PIPE_Z))
 
 
@@ -436,11 +456,28 @@ def kit_dispersal_turbine_hall(s):
     for sx in (-4.5, -1.5, 1.5, 4.5):
         s.box('slit window', (sx, 5.02, 4.4), (1.8, .06, .9), 'windowGlow', 'body', bevel=0, emissive=True)
     # exposed turbine train along the south wall
-    for x0 in (-5.5, -1.0, 3.2):
+    for x0 in (-5.2, -2.9, 0.9, 3.2):
         s.box('cradle block', (x0, -3.9, .9), (1.6, 3.0, 1.0), CONCRETE, 'body', bevel=.03)
-    s.cyl('turbine casing', (-1.0, -3.9, 2.6), 1.7, 10.0, STEEL, 'body', axis='X', seg=pick(s, 20, 12, 8))
-    for x in (-5.0, -3.0, -1.0, 1.0, 3.0):
+    # casing is open mid-train: two bladed stages on the shaft turn in the gap (`turbineRotor`)
+    s.owner('turbineRotor', (-1.0, -3.9, 2.6))
+    s.cyl('turbine casing in', (-4.1, -3.9, 2.6), 1.7, 3.8, STEEL, 'body', axis='X', seg=pick(s, 20, 12, 8))
+    s.cyl('turbine casing out', (2.1, -3.9, 2.6), 1.7, 3.8, STEEL, 'body', axis='X', seg=pick(s, 20, 12, 8))
+    for x in (-5.0, -3.2, -2.2, 0.2, 1.6, 3.2):
         s.cyl('casing flange', (x, -3.9, 2.6), 1.88, .22, DARK, 'body', axis='X', seg=pick(s, 20, 12, 8))
+    s.box('steam chest', (-1.0, -3.9, 4.15), (2.4, 3.0, .3), STRUCT, 'body', bevel=.03)
+    s.cyl('rotor shaft', (-1.0, -3.9, 2.6), .38, 2.6, DARK, 'turbineRotor', axis='X', seg=pick(s, 12, 8, 6))
+    for k, x in enumerate(((-1.7, -1.0, -0.3), (-1.4, -0.6), (-1.0,))[s.lod]):
+        s.cyl('rotor disc', (x, -3.9, 2.6), .9, .14, DARK, 'turbineRotor', axis='X', seg=pick(s, 20, 12, 8))
+        nb = pick(s, 16, 12, 8)
+        for b in range(nb):
+            a = b * math.tau / nb + k * .2
+            r = Vector((0, math.cos(a), math.sin(a)))
+            tt = Vector((0, -math.sin(a), math.cos(a)))
+            xx = Vector((1, 0, 0))
+            pitch = math.radians(25)
+            chord = tt * math.cos(pitch) + xx * math.sin(pitch)
+            thick = -tt * math.sin(pitch) + xx * math.cos(pitch)
+            obox(s, 'rotor blade', (x, -3.9 + 1.05 * r.y, 2.6 + 1.05 * r.z), (chord, r, thick), (.16, .28, .035), 'orange' if b % 2 == 0 else 'brass', 'turbineRotor')
     s.cyl('generator', (6.0, -3.9, 2.6), 2.05, 3.2, 'oliveLight', 'body', axis='X', seg=pick(s, 20, 12, 8))
     s.cyl('generator band', (6.0, -3.9, 2.6), 2.1, .3, SAFETY, 'body', axis='X', seg=pick(s, 20, 12, 8))
     s.frustum('exhaust nozzle', (-6.0, -3.9, 2.6), (-7.0, -3.9, 2.6), 1.7, 1.2, STRUCT, 'body', seg=pick(s, 16, 10, 8))
@@ -456,6 +493,7 @@ def kit_dispersal_turbine_hall(s):
     s.collider('turbine', (16.0, 4.2, 4.8), (0, -3.9, 2.6))
     s.socket('door', (8.4, 1.5, 0))
     s.socket('steamPort', (-7.0, -3.9, 2.6))
+    s.socket('rotorAxis', (-1.0, -3.9, 2.6), 'turbineRotor')
     s.socket('front', (9.0, 1.5, 1.0))
 
 

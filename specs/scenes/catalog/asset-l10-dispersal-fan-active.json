@@ -1,0 +1,47 @@
+{
+ "name": "asset-l10-dispersal-fan-active",
+ "note": "Dispersal running: the rotor turns at full rate (sheet frames show different blade phases). Look for: blades inside the duct ring without cutting it, rotor stays centred on the axis while turning, no flicker or z-fight at the ring.",
+ "ground": "sidewalk",
+ "size": 40,
+ "props": [
+  {
+   "id": "p0",
+   "asset": "kit.dispersal-fan-housing",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0
+  }
+ ],
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    6,
+    6
+   ],
+   "yaw": 0
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   3,
+   4
+  ],
+  "zoom": 1
+ },
+ "frames": 60,
+ "sheet": 20,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0
+ },
+ "dispersal": {
+  "active": true
+ }
+}

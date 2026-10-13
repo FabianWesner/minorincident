@@ -8,3 +8,5 @@ Source: `build.py` and `tools/blender/sslib/minigun_cure.py` (shared palette, no
 Triangles LOD0 / LOD1 / LOD2: 1292 / 500 / 300 (budget rows proposed in `specs/05-asset-inventory.md` section 7.2: 1700 / 700 / 300).
 
 Rebuild/publish: `npm run assets:build -- kit.dispersal-pipe-tee`. Registry status: integrated; independent asset QA and level placement pending.
+
+L10-A6: spoked hand wheel is its own `valveWheel` node (pivot on the stem axis, spins about Y). Triangles LOD0 / LOD1 / LOD2: 1452 / 596 / 296. Runtime spin: `src/data/spinNodes.ts`.

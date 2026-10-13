@@ -67,6 +67,8 @@ export interface SceneSpec {
   /** Exercise the shipped checkpoint closure rule with the scene's courier and live officer followers. */
   crossingCrash?: { health: number; /** Keep the departure anchor and adopt the authored APC for full-route probes. */ driveFromStart?: boolean; handover?: boolean };
   armyBoom?: { x: number; z?: number; closed?: boolean };
+  /** L10 dispersal kit rotors/wheels: idle (default) or running at full rate. */
+  dispersal?: { active?: boolean };
   emerge?: { house: string; count?: number; staggerS?: number | [number, number]; frame?: number; id?: string; /** Walk-out pace m/s (default the 1.25 m/s house stumble; the L1 lab staff run out at 5.3). */ speedMs?: number };
 }
 export interface PropSpec { decay?: string; powerGroup?: string; powered?: boolean; id?: string; asset: string; at: [number, number] | [number, number, number]; yaw?: number; /** Initial quaternion for a displaced pushable fixture. */ rotation?: [number, number, number, number]; scale?: number | [number, number, number]; tint?: string }

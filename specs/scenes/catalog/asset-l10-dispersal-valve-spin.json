@@ -1,0 +1,56 @@
+{
+ "name": "asset-l10-dispersal-valve-spin",
+ "note": "Tee valve hand wheel close-up while the dispersal runs. Look for: wheel spokes at different angles per frame, centred on the stem.",
+ "ground": "sidewalk",
+ "size": 40,
+ "props": [
+  {
+   "id": "p0",
+   "asset": "kit.dispersal-pipe-straight",
+   "at": [
+    -8,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "p1",
+   "asset": "kit.dispersal-pipe-tee",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0
+  }
+ ],
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    3,
+    -7
+   ],
+   "yaw": 0
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   0,
+   -2.2
+  ],
+  "zoom": 1.5
+ },
+ "frames": 40,
+ "sheet": 8,
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0
+ },
+ "dispersal": {
+  "active": true
+ }
+}
