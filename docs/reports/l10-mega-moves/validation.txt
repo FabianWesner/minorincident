@@ -1,0 +1,113 @@
+Typecheck, lint, production build: PASS
+
+Requested command:
+sh tools/remote/run.sh "$PWD" -- npx vitest run tests/unit tests/sim/ai --maxWorkers=4
+
+ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/unit/physics-metadata.test.ts > @E26 authored GLB records are reproduced at layout build with masses, collision shapes and break rules
+AssertionError: expected { 'thr.molotov': { …(11) }, …(153) } to deeply equal { 'thr.molotov': { …(11) }, …(153) }
+
+- Expected
++ Received
+
+@@ -5332,18 +5332,18 @@
+            -0.6,
+          ],
+        },
+      ],
+      "centerOfMass": [
+-       0.32363754510879517,
+-       1.230000033043325,
+-       -0.2874999940395355,
++       0,
++       1.2200000425800681,
++       0,
+      ],
+      "class": "heavy",
+      "flammable": false,
+      "friction": 0.75,
+-     "hash": "8f52cb94f7b253fc2a2720aad9e89a70e8c49f3d958715730e6632b2f3cd65b3",
++     "hash": "6412b3635bcd3f94ecfce26fcdc503f53eb6d00019c5ba9852daff3e1322570c",
+      "kickable": false,
+      "mass": 600,
+      "pushable": false,
+      "restitution": 0.05,
+      "sounds": "prop.metal-heavy",
+@@ -5375,18 +5375,18 @@
+            -3.7,
+          ],
+        },
+      ],
+      "centerOfMass": [
+-       0.20000004768371582,
++       0.9000000953674316,
+        1.5499999523162842,
+        0,
+      ],
+      "class": "fixed",
+      "flammable": false,
+      "friction": 0.75,
+-     "hash": "81b2b940c63d90cb9a6dde4ae9d8906c6e50e567bf163ac49ca84a773b9da7a3",
++     "hash": "b8f64dccba6437858a98aacf223fb2dae4f9678b184971454ae74978e4b0db8a",
+      "kickable": false,
+      "mass": 0,
+      "pushable": false,
+      "restitution": 0.05,
+      "sounds": "prop.metal-heavy",
+@@ -5407,17 +5407,17 @@
+          ],
+        },
+      ],
+      "centerOfMass": [
+        0,
+-       1.251749038696289,
++       1.239861011505127,
+        0,
+      ],
+      "class": "fixed",
+      "flammable": false,
+      "friction": 0.75,
+-     "hash": "db0e23f2f0d1d872fba3e35ebde305f4e7aff413f87c519db4f5863fbfcd9a6c",
++     "hash": "653acbeb73c28cb7933fa8d64b73c5bf35d7ddf89ec3ab8d5fb8b95559049d7a",
+      "kickable": false,
+      "mass": 0,
+      "pushable": false,
+      "restitution": 0.05,
+      "sounds": "prop.metal-heavy",
+
+ ❯ tests/unit/physics-metadata.test.ts:6:29
+      4|
+      5| test('@E26 authored GLB records are reproduced at layout build with ma…
+      6|   expect(physicsMetadata()).toEqual(physicsAssets);
+       |                             ^
+      7|   expect(Object.keys(physicsAssets).length).toBeGreaterThanOrEqual(80);
+      8|   expect(pushableProps['prop.shopping-cart'].mass).toBe(35);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 217 passed | 1 skipped (219)
+      Tests  1 failed | 1600 passed | 7 skipped (1608)
+   Start at  14:45:14
+   Duration  283.39s (tests 92%, import 6%, transform 2%)
+
+[remote] done exit=1 (runner 91.98.11.241, sync 10s, remote total 288s)
+
+
+Corrected serial Mega performance command:
+sh tools/remote/run.sh "$PWD" --pull test-results/epics/E32 -- npx vitest run tests/sim/performance/mega-moves.test.ts --project=timing --maxWorkers=4
+
+ RUN  v5.0.3 /srv/mi/jobs/l10-mega-moves-8833a4-15635-1791902660
+
+ ✓  timing  tests/sim/performance/mega-moves.test.ts (2 tests) 3422ms
+   ✓ T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18 2442ms
+   ✓ T-E32-11-perf-100 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18 979ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  14:44:31
+   Duration  5.62s (tests 62%, transform 32%, import 6%)
+
+[remote] pulled test-results/epics/E32
+[remote] done exit=0 (runner 91.98.11.241, sync 11s, remote total 9s)

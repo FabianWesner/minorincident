@@ -21,6 +21,9 @@ export interface InfectedState {
   scripted?: { x: number; z: number };
   /** E32 Mega Alpha: movement owned by MegaPursuit (no sight, hearing or lure); survives checkpoints with the entity. */
   pursuit?: true;
+  /** Mega hit bookkeeping is bounded, serializable and shared by every weapon/status. */
+  megaStaggerReady?: number;
+  megaRocketIds?: number[];
   /** Authored encounter boundary for heavy infected; preserved through checkpoints. */
   territory?: { x: number; z: number; radius: number };
   activeUntil: number;
@@ -50,6 +53,7 @@ export interface InfectedSpecialAttack {
   hitIds: number[];
   /** Existing herd/flock participants; followers keep their own cooldown and attack id. */
   members?: number[]; leaderId?: number; impactTick?: number; obstructionUntil?: number;
+  grabbedId?: number; grabReleaseTick?: number;
   destination?: { x: number; z: number };
   projectile?: { objectId: number; corpse: boolean; started: number; x: number; z: number; dx: number; dz: number; distance: number; range: number };
 }
