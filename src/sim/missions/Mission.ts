@@ -309,6 +309,8 @@ export class Mission {
   }
   /** Story-triggered checkpoint: captured at the end of the current tick, after all of its spawns. */
   requestCheckpoint(id: string): void { this.pendingCheckpoints.push(id); }
+  /** Story-controller camera beat (a defined cinematic): only while playing and when no other cinematic runs; returns whether it started. */
+  cinematic(id: string): boolean { if (this.state.phase !== 'playing' || this.state.cinematic || !this.def.cinematics[id]) return false; this.run([{ kind: 'cinematic', id }]); return true; }
   /** Dispatcher/toast line through the same path as scripted radio actions. */
   radio(id: string): void { this.run([{ kind: 'radio', id }]); }
   /** Read-only locations of captured checkpoints, including checkpoints created by story controllers. */

@@ -134,7 +134,7 @@ describe('L4 The Safe City Falls', () => {
     expect(shots).toBeGreaterThanOrEqual(2000); expect(reloads).toBe(0);
   }, HEAVY);
 
-  test('T-E22-07 @E22 @E22-AC07 the turn: 40-50 s after the gun (or arrival + 100 s), 1-3 evacuees tagged L3-bus turn with >= 10 humans within 10 m', async () => {
+  test('T-E22-07 @E22 @E22-AC07 the turn: 40-50 s after the gun (or arrival + 100 s), 15-25 evacuees tagged L3-bus turn at once inside the perimeter with >= 10 humans within 10 m', async () => {
     for (const seed of [1, 2, 3]) {
       const l = await loadL4(seed); const w = l.world, s = l.mission.state.l4!;
       while (s.phase === 'convoy') w.update();
@@ -143,7 +143,8 @@ describe('L4 The Safe City Falls', () => {
       step(w, 60 * 60);
       expect(turns, `seed ${seed}`).toHaveLength(1);
       const after = (turns[0].tick - s.gunAt) / 60; expect(after).toBeGreaterThanOrEqual(40); expect(after).toBeLessThanOrEqual(50);
-      expect(turns[0].ids.length).toBeGreaterThanOrEqual(1); expect(turns[0].ids.length).toBeLessThanOrEqual(3); expect(turns[0].near).toBeGreaterThanOrEqual(10);
+      expect(turns[0].ids.length).toBeGreaterThanOrEqual(15); expect(turns[0].ids.length).toBeLessThanOrEqual(25); expect(turns[0].near).toBeGreaterThanOrEqual(10);
+      for (const id of turns[0].ids) { const e = w.entities.get(id)!.transform, r = l4.map.ring; expect(e.x > r.x0 - 1 && e.x < r.x1 + 1 && e.z > r.z0 - 1 && e.z < r.z1 + 1, `turner ${id} inside the perimeter`).toBe(true); }
       for (const id of turns[0].ids) expect(w.entities.get(id)!.appearance!.origin).toBe('L3-bus');
       w.dispose();
     }
@@ -154,11 +155,11 @@ describe('L4 The Safe City Falls', () => {
     expect(s.turnAt).toBeGreaterThan(0); expect((s.turnAt - arrived) / 60).toBeCloseTo(100, 0);
   }, HEAVY);
 
-  test('T-E22-08 @E22 @E22-AC08 scale: 18-22 soldiers and 45-55 civilians, >= 40 % armed with pistols, hunting rifles and melee (>= 3 each); the low tier halves; caps hold', async () => {
+  test('T-E22-08 @E22 @E22-AC08 scale: 18-22 soldiers and 60-70 civilians (24 evacuees from the buses), >= 40 % armed with pistols, hunting rifles and melee (>= 3 each); the low tier halves; caps hold', async () => {
     const l = await loadL4(1); world = l.world; const w = l.world, s = l.mission.state.l4!;
     const soldiers = s.soldierIds.length, civilians = humans(w).filter(e => !e.civilian!.ally).length + 0;
     expect(soldiers).toBeGreaterThanOrEqual(18); expect(soldiers).toBeLessThanOrEqual(22);
-    const people = s.residentIds.length + s.evacueeIds.length; expect(people).toBeGreaterThanOrEqual(45); expect(people).toBeLessThanOrEqual(55);
+    const people = s.residentIds.length + s.evacueeIds.length; expect(people).toBeGreaterThanOrEqual(60); expect(people).toBeLessThanOrEqual(70);
     expect(civilians).toBeGreaterThanOrEqual(40);
     const by = (k: string) => s.armed.filter(a => (k === 'melee' ? ['pipe', 'bat', 'crowbar'] : [k]).includes(a.weapon)).length;
     expect(s.armed.length / people).toBeGreaterThanOrEqual(.4); expect(by('pistol')).toBeGreaterThanOrEqual(3); expect(by('hunting-rifle')).toBeGreaterThanOrEqual(3); expect(by('melee')).toBeGreaterThanOrEqual(3);
@@ -201,12 +202,13 @@ describe('L4 The Safe City Falls', () => {
     // The first war stream leaves the nearby authored buildings inside the perimeter ("Do not leave a 28 s empty alarm"; PO 10-12 "When the alarm rings, actually nothing happens"); later waves use the street edges.
     const doors = (l.mission.l4 as unknown as { doors(): { x: number; z: number }[] }).doors();
     while (s.phase !== 'war') w.update();
+    const refugeDoors = Object.entries(l.mission.def.anchors).filter(([n]) => n.startsWith('refuge-door-')).map(([, a]) => a);
     for (let t = 0; t < 90 * 60; t++) {
       w.update();
-      for (const id of s.emergedIds) if (!known.has(id)) { known.add(id); const e = w.entities.get(id)!; first.push({ tick: w.tick, at: { x: e.transform.x, z: e.transform.z }, seen: false }); offscreenAudit.push(l4Edges.some(ed => dist({ x: ed.at[0], z: ed.at[1] }, e.transform) < 6) || doors.some(d => dist(d, e.transform) < 6)); }
+      for (const id of s.emergedIds) if (!known.has(id)) { known.add(id); const e = w.entities.get(id)!; first.push({ tick: w.tick, at: { x: e.transform.x, z: e.transform.z }, seen: false }); offscreenAudit.push(l4Edges.some(ed => dist({ x: ed.at[0], z: ed.at[1] }, e.transform) < 6) || doors.some(d => dist(d, e.transform) < 6) || refugeDoors.some(d => dist(d, e.transform) < 6)); }
     }
     expect(first.length).toBeGreaterThan(10);
-    // Every wave infected first appears within 6 m of an emergence point (street edge or perimeter building door).
+    // Every wave infected first appears within 6 m of an emergence point (a street mouth, or a building door for the first stream: PO 2026-10-12 "L4 alarm is there, but no Zombies anywhere").
     expect(offscreenAudit.filter(Boolean).length / offscreenAudit.length).toBeGreaterThan(.9);
     const used = new Set(first.map(f => l4Edges.findIndex(e => dist({ x: e.at[0], z: e.at[1] }, f.at) < 6))); used.delete(-1);
     expect(used.size).toBeGreaterThanOrEqual(3);
@@ -217,6 +219,9 @@ describe('L4 The Safe City Falls', () => {
     const bursts = new Set<number>(); w.events.on('hmg.burst', e => { if (e.type === 'hmg.burst') bursts.add(e.sourceId); });
     const tank: { tick: number; to: { x: number; z: number }; player: { x: number; z: number }; closestAlly: number }[] = [];
     w.events.on('l4.tankFire', e => { if (e.type === 'l4.tankFire' && (s.phase === 'war' || (s.phase === 'collapse' && e.tick > s.lineBreakAt))) { const p = w.entities.get(1)!.transform; tank.push({ tick: e.tick, to: e.to, player: { x: p.x, z: p.z }, closestAlly: Math.min(...[...s.soldierIds, ...s.armed.map(a => a.id)].map(id => w.entities.get(id)).filter(a => a && a.civilian && a.health.current > 0).map(a => dist(a!.transform, e.to))) }); } });
+    // The courier stands idle for the whole war (l4-collapse-2: the war comes inside the ring and kills an idle courier; a retry would
+    // restart the timeline this test measures), so she is protected; the spectacle itself is unchanged.
+    w.combat!.damage.god = true;
     let heliAlt = 0, heliGrounded = false; let heliPasses = 0; w.events.on('l4.heliPass', () => { heliPasses++; });
     while (s.phase === 'convoy') w.update();
     step(w, 3 * 60); l.mission.completeObjective('quartermaster');
@@ -234,21 +239,23 @@ describe('L4 The Safe City Falls', () => {
     record('spectacle', { bursts: bursts.size, tank, heliPasses, heliAlt });
   }, HEAVY);
 
-  test('T-E22-13 @E22 @E22-AC13 the line breaks by its first-of rule (also with the idle bot): fuel-truck mega chain, objective "Find somewhere to hide", the helicopter withdraws', async () => {
+  test('T-E22-13 @E22 @E22-AC13 the line breaks after the third lost line ("Fall back!", also with the idle bot): fuel-truck mega chain, objective "Find somewhere to hide", the helicopter withdraws', async () => {
     const l = await loadL4(2); world = l.world; const w = l.world, s = l.mission.state.l4!;
-    const r = runL4(w, l.mission, 'idle', { seed: 2, god: true, maxSeconds: 200, stopWhen: m => m.state.l4!.lineBreakAt > 0 && m.world.tick - m.state.l4!.lineBreakAt > 12 * 60 });
-    expect(s.lineCause).toBe('time'); expect(r.breakAfterS).toBeGreaterThanOrEqual(l4.lineBreak.defenseS - .2); expect(r.breakAfterS).toBeLessThanOrEqual(l4.lineBreak.defenseS + 1);
+    const r = runL4(w, l.mission, 'idle', { seed: 2, god: true, maxSeconds: 400, stopWhen: m => m.state.l4!.lineBreakAt > 0 && m.world.tick - m.state.l4!.lineBreakAt > 12 * 60 });
+    const armor = l4.director.lines[2];
+    expect(s.lineCause).toBe('beats'); expect(r.breakAfterS).toBeGreaterThanOrEqual(armor.earliestS + l4.lineBreak.fallBackS - .2); expect(r.breakAfterS).toBeLessThanOrEqual(armor.dueS + l4.lineBreak.fallBackS + 1);
     const explosions = w.events.events().filter(e => e.type === 'explosion' && e.tick >= s.lineBreakAt).map(e => (e as { defId: string }).defId);
     expect(explosions).toEqual(expect.arrayContaining(['explosion.gas-pump', 'explosion.gas-canopy', 'explosion.gas-tanks']));
     expect(l.mission.def.steps.find(x => x.id === 'hide')!.text).toBe('Find somewhere to hide');
     expect(l.mission.state.steps.hide.status).toBe('active'); expect(s.heliPhase).toBe('gone');
     expect(l.mission.state.states['line-broken']).toBe(true);
-    // Forced causes: half the soldiers gone, or 15 infected inside the line.
+    // Losing half a line's soldiers breaks it from its earliest beat on (not before): line 1 falls at 50 s instead of 62 s.
     const f = await loadL4(3); const fs = f.mission.state.l4!;
     while (fs.phase === 'convoy') f.world.update();
     step(f.world, 3 * 60); f.mission.completeObjective('quartermaster'); while (fs.phase !== 'war') f.world.update();
-    for (const id of fs.soldierIds.slice(0, 11)) f.world.entities.get(id)!.health.current = 0;
-    step(f.world, 30); expect(fs.lineCause).toBe('soldiers'); f.world.dispose();
+    for (const id of fs.director.lines[0].soldierIds.slice(0, 6)) f.world.entities.get(id)!.health.current = 0;
+    step(f.world, 40 * 60); expect(fs.director.lines[0].brokeAt).toBe(0);
+    step(f.world, 11 * 60); expect(fs.director.lines[0].cause).toBe('overrun'); expect((fs.director.lines[0].brokeAt - fs.turnAt) / 60).toBeCloseTo(l4.director.lines[0].earliestS, 0); f.world.dispose();
   }, HEAVY);
 
   test('T-E22-14 @E22 @E22-AC14 live damage at the cellar: >= 4 fires, >= 2 burning vehicles, >= 10 broken windows, >= 6 blast scorches, all traceable to explosion/fire events of the run', async () => {
@@ -355,7 +362,7 @@ describe('L4 The Safe City Falls', () => {
     m.completeObjective('quartermaster');
     while (s.phase !== 'war') w.update();
     const known = new Set<number>();
-    for (let i = 0; i < 100 * 60; i++) {
+    for (let i = 0; i < 160 * 60; i++) {
       w.update();
       expect(w.infected!.director.count).toBeLessThanOrEqual(l4.war.caps.infected[tier]);
       expect([...w.entities.iterate()].filter(e => !e.hidden && e.health.current > 0 && (e.civilian || e.infected)).length).toBeLessThanOrEqual(l4.war.caps.characters[tier]);

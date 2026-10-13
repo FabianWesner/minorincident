@@ -176,7 +176,7 @@ export interface L3State {
 /** Serializable L4 controller state. Ticks are sim ticks, 0 = not yet. */
 export interface L4State {
   phase: 'convoy' | 'plaza' | 'war' | 'collapse' | 'cellar' | 'done';
-  rideAt: number; arrivedAt: number; gunAt: number; turnDueAt: number; turnAt: number; warAt: number; lineBreakAt: number; lineCause: '' | 'time' | 'soldiers' | 'inside' | 'forced';
+  rideAt: number; arrivedAt: number; gunAt: number; turnDueAt: number; turnAt: number; warAt: number; lineBreakAt: number; lineCause: '' | 'time' | 'beats' | 'forced';
   descendAt: number; barredAt: number; doneAt: number; markerAt: number;
   /** Convoy: entity ids head first, arc length of each, the common speed, and whether the courier is seated in the player bus. */
   convoyIds: number[]; convoyS: number[]; convoyV: number; seated: boolean;
@@ -192,12 +192,33 @@ export interface L4State {
   /** Collapse: infected planned at doors along both routes (emerge out of view) and the soldier pockets still to be placed. */
   pendingDoor: { id: number; door: string; home: { x: number; z: number } }[]; pockets: number[];
   /** Spectacle: tank (route progress, next shot, shots fired), helicopter, HMG bursts, fuel truck and the live damage. */
-  tankId: number; tankS: number; tankFireAt: number; tankShots: number; tankPhase: 'off' | 'enter' | 'hold' | 'gone';
+  tankId: number; tankS: number; tankFireAt: number; tankShots: number; tankPhase: 'off' | 'enter' | 'hold' | 'silent' | 'gone';
+  /** The collapse director (l4-collapse): the three lines, their soldiers and break ticks, the Alpha jobs and the counters the report reads. */
+  director: L4Director;
   heliId: number; heliAngle: number; heliPhase: 'off' | 'arrive' | 'orbit' | 'withdraw' | 'gone'; heliAt: number; heliBurstAt: number; heliBurst: number; heliShots: number; heliTarget: { x: number; z: number } | null;
   hmgBursts: number; hmgLastAt: Record<number, number>;
   fuelId: number; craterId: number; burning: number[]; fires: number; glass: number[]; scorch: number; lastShot: Record<number, number>;
   /** Kills by the player and by allies (soldiers, armed civilians) since the turn; the kill share check reads these. */
   kills: { player: number; soldiers: number; armedCivilians: number; unarmedCivilians: number; heli: number; tank: number; other: number };
+}
+export interface L4Line {
+  id: 'line-1' | 'nests' | 'armor';
+  /** Soldiers holding this line (survivors of the previous line join it when they fall back). */
+  soldierIds: number[]; size: number;
+  brokeAt: number; cause: '' | 'overrun' | 'forced'; pushAt: number; pushes: number;
+}
+export interface L4Director {
+  lines: L4Line[];
+  alphaJobs: { alphaId: number; job: 'north' | 'south' | 'armor'; stage: 'walk' | 'charge' | 'slam' | 'done'; startedAt: number }[];
+  /** Alpha hits that knocked a soldier down, E26 slots broken, people who turned inside a line, infected spawned by the director, the soldiers cut off. */
+  knockdowns: number; barricades: number; turnedInside: number; spawned: number; cutOff: number[];
+  swarmedAt: number; fallBackAt: number; settled: number;
+  /** Tick the next street car catches fire after the line break (staggered so the blasts do not land in one frame); 0 = none pending. */
+  burnAt: number;
+  /** The gap on the escape street stays open until this tick (from "Fall back!" and after a collapse respawn); 0 = closed. */
+  gapUntil?: number;
+  /** Bitten refugees the director sends in through the line (they run behind a soldier and turn there at `turnAt` or on arrival). */
+  refugees?: { id: number; turnAt: number }[];
 }
 /** Serializable L5 controller state. Ticks are sim ticks, 0 = not yet. */
 export interface L5State {

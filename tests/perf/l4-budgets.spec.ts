@@ -4,7 +4,10 @@ import { test, expect } from '../e2e/fixtures';
 
 /** E22-AC20: the L4 war (soldiers firing, the HMG nests, the tank, the helicopter, 40+ civilians, the infected waves) and the collapse
  * within the E18 budgets (desktop high, phone low), and no frame > 50 ms at the first turn, a tank shot, the fuel-truck chain or the line
- * break. One worker, native GPU, under e2e-lock. Setup steps the paused sim (the L4 bot, ordinary inputs); measurements run the real clock. */
+ * break. One worker, native GPU, under e2e-lock. Setup steps the paused sim (the L4 bot, ordinary inputs); measurements run the real clock.
+ * Preconditions follow the l4-collapse design the PO approved ("ok let's try that!", 2026-10-12): the war peak is measured once the first
+ * Alphas have arrived (84 s after the turn; the third at 150 s), and the army loses men on the beats (line 1 falls at about 60 s), so the
+ * peak holds the surviving soldiers, not the 15+ of the old static line. Frame, hitch, sim, draw and triangle budgets are unchanged. */
 const dir = 'test-results/epics/E22/perf';
 test.use({ channel: 'chrome', headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--disable-frame-rate-limit', '--disable-gpu-vsync'] } });
 for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
@@ -34,7 +37,7 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     await step(`${l4}.phase === 'plaza'`, 800); await step(`${l4}.turnDueAt > 0 && ${l4}.turnDueAt - window.__SS__.getState().tick < 120`, 900);
     const turn = await record(`${l4}.turnAt > 0`, 2_000);
     // The war: from the tank's entry; the peak: HMG and rifles firing, the tank in place, the helicopter orbiting, the waves arriving.
-    await step(`${l4}.tankPhase === 'hold' && ${l4}.heliPhase === 'orbit'`, 900);
+    await step(`${l4}.tankPhase === 'hold' && ${l4}.heliPhase === 'orbit' && ${l4}.alphaIds.length >= 2`, 900);
     // Populate the acceptance peak through the ordinary spawn APIs. The natural route often
     // kills the early waves before tank entry, so it cannot prove the specified 80/40 stress case.
     await page.evaluate(tier => {
@@ -48,20 +51,17 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
       // not their authored anchors, to put targets on open approaches to every gun.
       const posts = a.query({}).filter(e => e.civilian?.ally?.role === 'soldier' && e.health.current > 0 && e.kind !== 'infected').map(e => ({ at: e.transform, yaw: e.transform.yaw }));
       let infected = a.getState().ai!.count;
-      let alphas = a.query({}).filter(e => e.archetype === 'infected.alpha' && e.health.current > 0).length;
-      const targetAlphas = tier === 'high' ? 3 : 2;
+      // The Alphas are the level's own (they arrive on the design's schedule); the stress fill adds runners only.
       for (let i = 0; infected < targetInfected && i < 800; i++) {
         const post = posts[i % posts.length];
         const angle = -post.yaw + Math.floor(i / posts.length) * Math.PI / 8;
         const radius = 3 + Math.floor(i / (posts.length * 16)) % 4;
         try {
-          const archetype = alphas < targetAlphas ? 'infected.alpha' : 'infected.runner';
-          a.spawn(archetype, { x: post.at.x + Math.cos(angle) * radius, z: post.at.z + Math.sin(angle) * radius }, { state: 'chase' }); infected++;
-          if (archetype === 'infected.alpha') alphas++;
+          a.spawn('infected.runner', { x: post.at.x + Math.cos(angle) * radius, z: post.at.z + Math.sin(angle) * radius }, { state: 'chase' }); infected++;
         } catch { /* try the next open approach around a soldier post */ }
       }
     }, tier);
-    const counts = await page.evaluate(() => { const a = window.__SS__!, all = a.query({}); return { infected: a.getState().ai!.count, alphas: all.filter(e => e.archetype === 'infected.alpha' && e.health.current > 0).length, soldiers: all.filter(e => e.civilian?.ally?.role === 'soldier' && e.health.current > 0 && e.kind !== 'infected').length, civilians: all.filter(e => e.civilian && !e.civilian.ally && e.health.current > 0 && !e.hidden && e.kind !== 'infected').length }; });
+    const counts = await page.evaluate(() => { const a = window.__SS__!, all = a.query({}); return { infected: a.getState().ai!.count, alphas: all.filter(e => e.archetype === 'infected.alpha' && e.health.current > 0).length, alphasArrived: a.missions.state()!.l4!.alphaIds.length, turnS: (a.tick() - a.missions.state()!.l4!.turnAt) / 60, soldiersAtTurn: a.missions.state()!.l4!.soldiersAtTurn, soldiers: all.filter(e => e.civilian?.ally?.role === 'soldier' && e.health.current > 0 && e.kind !== 'infected').length, civilians: all.filter(e => e.civilian && !e.civilian.ally && e.health.current > 0 && !e.hidden && e.kind !== 'infected').length }; });
     await page.evaluate(async () => { const a = window.__SS__!; a.camera.preset('D-FAIR/W0/l4-war-line'); await a.screenshotReady(); });
     const warStatic = await page.evaluate(() => window.__SS__!.perf());
     await page.locator('canvas').screenshot({ path: `${dir}/l4-war-line-${tier}.png`, scale: 'css' });
@@ -86,9 +86,11 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
       simP95: percentile(warCpu.filter(c => c.ticks > 0).map(c => c.sim), .95), simFrameP95: percentile(warCpu.map(c => c.simFrame), .95), updateP95: percentile(warCpu.map(c => c.update), .95), renderP95: percentile(warCpu.map(c => c.render), .95), lineBroke: await page.evaluate(() => window.__SS__!.missions.state()!.l4!.lineBreakAt > 0) };
     writeFileSync(`${dir}/l4-${tier}.json`, JSON.stringify({ ...proof, warProfile: warStatic.profile, collapseProfile: collapseStatic.profile, collapseAssets: collapseStatic.profileAssets, war, turn, tank, breakFrames, collapse }, null, 2));
     console.log(JSON.stringify(proof));
-    expect(counts.soldiers).toBeGreaterThanOrEqual(tier === 'high' ? 15 : 8); expect(counts.civilians).toBeGreaterThanOrEqual(tier === 'high' ? 40 : 20); expect(counts.infected).toBeGreaterThanOrEqual(tier === 'high' ? 80 : 40);
-    expect(counts.alphas).toBe(tier === 'high' ? 3 : 2);
-    expect(firingSoldiers).toBeGreaterThanOrEqual(tier === 'high' ? 15 : 8);
+    // The approved collapse: the first two Alphas are in (84 s), soldiers have died but the survivors still fight (at least half firing within the 8 s window; fallen-back posts can be out of range).
+    expect(counts.turnS).toBeGreaterThanOrEqual(84); expect(counts.alphasArrived).toBeGreaterThanOrEqual(2);
+    expect(counts.soldiers).toBeLessThan(counts.soldiersAtTurn); expect(counts.soldiers).toBeGreaterThanOrEqual(tier === 'high' ? 6 : 3);
+    expect(counts.civilians).toBeGreaterThanOrEqual(tier === 'high' ? 40 : 20); expect(counts.infected).toBeGreaterThanOrEqual(tier === 'high' ? 80 : 40);
+    expect(firingSoldiers).toBeGreaterThanOrEqual(Math.ceil(counts.soldiers * .5));
     expect(proof.lineBroke).toBe(true);
     // E18's sim budget measures one fixed step; low rAFs can advance several ticks.
     // Retain the total per-frame CPU cost separately, while frame/hitch bounds stay unchanged.

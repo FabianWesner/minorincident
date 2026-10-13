@@ -39,8 +39,9 @@ export const l4Dressing: readonly L4Dressing[] = [
 /** Street mouths for the encounter lane's first Alphas. No actor is spawned by the layout. */
 export const l4AlphaEmergence = [
   { edgeId: 'north', anchor: 'l4-alpha-north' },
-  { edgeId: 'west', anchor: 'l4-alpha-west' },
+  // Spawn order (l4-collapse): the two gun-nest Alphas (north, south-east) first, the armour-beat Alpha (west, high tier) last.
   { edgeId: 'south-east', anchor: 'l4-alpha-south' },
+  { edgeId: 'west', anchor: 'l4-alpha-west' },
 ] as const;
 
 /**

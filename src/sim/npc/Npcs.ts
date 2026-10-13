@@ -19,6 +19,9 @@ export class Npcs {
   private readonly waypoint = { x: 0, z: 0 };
   /** Last walk-out search per follower: repeated only after the body moved or half a second passed (E18 sim budget). */
   private readonly escapes = new Map<number, { x: number; z: number; tick: number; cell: number }>();
+  /** A failed route search is retried after a second, not every tick (l4-collapse-2: a soldier sent to a post behind a closed
+   * barricade ran a 1600-expansion A* per tick, 3 ms of every L4 war tick). */
+  private readonly unreachable = new Map<number, { x: number; z: number; until: number }>();
   constructor(readonly world: SimWorld) {
     this.civilians = new Civilians(world); this.companion = new Companion(world); this.escorts = new Escorts(world); this.traffic = new Traffic(world); }
   /** False only when the target is unreachable (no route within the steering budget). */
@@ -41,7 +44,12 @@ export class Npcs {
       // Reuse the shared reverse field rather than starving a long per-officer A* search.
       const next = nav.flowNext(cell); if (next === cell || next < 0) return false;
       this.waypoint.x = nav.x(next); this.waypoint.z = nav.z(next);
-    } else if (!nav.steer(e.transform, target, path, e.civilian?.zooAnimal ? e.combat!.radius : .35, this.waypoint, budget)) return false;
+    } else {
+      const failed = this.unreachable.get(e.id), tick = this.world.tick;
+      if (failed && tick < failed.until && Math.abs(failed.x - target.x) + Math.abs(failed.z - target.z) < .25) return false;
+      if (!nav.steer(e.transform, target, path, e.civilian?.zooAnimal ? e.combat!.radius : .35, this.waypoint, budget)) { this.unreachable.set(e.id, { x: target.x, z: target.z, until: tick + 60 }); return false; }
+      if (failed) this.unreachable.delete(e.id);
+    }
     dx = this.waypoint.x - e.transform.x; dz = this.waypoint.z - e.transform.z;
     const routed = Math.hypot(dx, dz); if (routed < .01) return true;
     const vx = dx / routed * Math.min(speed, Math.max(0, distance - stop) * 4), vz = dz / routed * Math.min(speed, Math.max(0, distance - stop) * 4);

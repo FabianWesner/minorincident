@@ -7,7 +7,7 @@ import type { DistrictId } from '../districts/types';
 /**
  * L4 "The Safe City Falls" objective graph (E22 section 4): ride -> quartermaster (machine gun) -> hold the plaza -> find somewhere to
  * hide -> bar the cellar door. Beats are driven by `LevelFourWar` (def.l4) through mission states; the line breaks by its first-of
- * rule (75 s / half the soldiers gone / 15 infected inside the line), never by clearing the plaza. No fail timer, no reward screen:
+ * collapse director (three lines lost at fixed beats, then "Fall back!"), never by clearing the plaza. No fail timer, no reward screen:
  * the barred cellar door completes the level (after the battle has gone on above for a while) and the campaign continues into L5.
  */
 export function levelFourMission(resolve: (district: DistrictId, name: string) => Anchor): MissionDef {
@@ -16,6 +16,10 @@ export function levelFourMission(resolve: (district: DistrictId, name: string) =
     states: ['arrived', 'gun', 'turned', 'line-broken', 'descended', 'barred', 'done'], counters: [], checkpoints: [...l4.checkpoints],
     cinematics: {}, steps: [], finish: ['wait'], onStart: [{ kind: 'radio', id: 'L4.briefing' }], onComplete: [],
   };
+  // l4-collapse camera beats (<= 2 s, the sim pauses; skippable after 0.5 s): the overrun line 1 and the swarmed tank.
+  const beat = (x: number, z: number, caption: string) => ({ seconds: l4.director.cameraS, caption, position: [x + 15, 19, z + 15] as [number, number, number], target: [x, 0, z] as [number, number, number], actions: [] });
+  def.cinematics['l4-line-1'] = beat(-29, -4, dialogue['L4.line1']);
+  def.cinematics['l4-armor'] = beat(-19, 20, dialogue['L4.armor']);
   for (const name of [...l4AlphaEmergence.map(e => e.anchor), ...l4BreakableLine.flatMap(line => Object.values(line.anchors))]) def.anchors[name] = resolve('D-FAIR', name);
   for (const name of Object.keys(l4Anchors)) def.anchors[name] = resolve('D-FAIR', name);
   for (const name of ['kessler-cellar-door', 'metro-entrance', 'town-hall-steps']) def.anchors[name] = resolve('D-FAIR', name);
