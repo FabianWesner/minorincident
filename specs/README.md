@@ -7,7 +7,8 @@ This folder holds the specification for **Minor Incident**, a colorful isometric
 | File | Purpose |
 | --- | --- |
 | [00-game-concept.md](00-game-concept.md) | Full game concept: pillars, core loop, controls, combat, progression, vehicles, enemies, campaign |
-| [po-levels-4-9-2026-10-11.md](po-levels-4-9-2026-10-11.md) | Highest-priority PO campaign source for L4–L9 and later Alpha/zoo health-bar/special-move and L10 updates; wins over older specs |
+| [po-levels-9-10-2026-10-13.md](po-levels-9-10-2026-10-13.md) | Highest-priority L9/L10 PO source: zero-HP vehicle floor/forced crash and 45–50 min The Cure finale, with orchestrator decisions |
+| [po-levels-4-9-2026-10-11.md](po-levels-4-9-2026-10-11.md) | PO L4–L8 and shared Alpha/zoo bars/specials; older L9/pending-L10 wording superseded by the 10-13 source |
 | [po-levels-2-6-2026-10-07.md](po-levels-2-6-2026-10-07.md) | Earlier verbatim L2–L6 design; still authoritative for L2–L3 and compatible L4–L6 content |
 | [01-art-direction.md](01-art-direction.md) | Visual language taken from `initial-drafts/`: palette, lighting, world-decay tiers, gore policy |
 | [02-technical-architecture.md](02-technical-architecture.md) | Runtime architecture, conventions, the sim/render split, the test API contract |
@@ -34,10 +35,10 @@ This folder holds the specification for **Minor Incident**, a colorful isometric
 
 ## ID conventions
 
-- Epics: `E01` … `E31`
+- Epics: `E01` … `E32`
 - Acceptance criteria: `E05-AC03`
 - Tests: `T-E05-03` (normally 1:1 with an acceptance criterion; extra tests get a suffix such as `T-E05-03b`)
-- Levels: `L1` … `L9` designed; L10 grand finale storyline pending. Districts: `D-GROVE` (L1), `D-RES`, `D-MAIN`, `D-SCHOOL`, `D-SHOP`, `D-CIVIC`, `D-PARK`, `D-ZOO`, `D-EDGE`, `D-CORRIDOR` (L3), `D-FAIR` (L4/L5/L7, Fairhaven), `D-SUBWAY` (L6), `D-CROSSING` (L9); existing `D-ZOO` becomes the L8 zoo campaign district
+- Levels: `L1` … `L10` designed. Districts: `D-GROVE` (L1), `D-RES`, `D-MAIN`, `D-SCHOOL`, `D-SHOP`, `D-CIVIC`, `D-PARK`, `D-ZOO`, `D-EDGE`, `D-CORRIDOR` (L3), `D-FAIR` (L4/L5/L7, Fairhaven), `D-SUBWAY` (L6), `D-CROSSING` (L9), `D-CURE` (L10, seven region keys); existing `D-ZOO` becomes the L8 zoo campaign district
 - World-state tiers: `W0` (normal) … `W5` (destroyed) → new `W6` (completely destroyed Fairhaven, L7)
 
 ## Language rule for criteria
@@ -56,7 +57,9 @@ Each acceptance criterion is written as an **observable, machine-checkable state
 | L6 | [E24 · The Subway](epic-24-level-6-the-subway.md) — night exit hands over to L7 |
 | L7 | [E29 · The Ruined City](epic-29-level-7-the-ruined-city.md) — W6 Fairhaven, unlimited rocket launcher, evacuation bus |
 | L8 | [E30 · The Zoo](epic-30-level-8-the-zoo.md) — false sanctuary, infected animals with bars/specials, armored escape |
-| L9 | [E31 · The Crossing](epic-31-level-9-the-crossing.md) — open routes, temporary vehicle durability, on-foot continuation |
-| L10 | Grand finale — storyline from the PO pending; no epic yet |
+| L9 | [E31 · The Crossing](epic-31-level-9-the-crossing.md) — open routes, 0-HP driveable floor, staged damage, forced crash and axe-only handover; S1/D1 retained, old S2 cancelled |
+| L10 | [E32 · The Cure](epic-32-level-10-the-cure.md) — seven streamed regions, weapon checkpoints, dogs/Mega Alpha pursuit, cure delivery/dispersal and playable ending (45–50 min) |
 
 Shared [E07](epic-07-infected-ai-and-hordes.md) defines Alpha resistance/health bar/four moves and all five zoo species' bars/ten moves, including derived infected elephant/zebra. New/changed acceptance criteria are explicitly marked; implementation plans list lanes ≤ 3 h and reuse existing systems/assets. New T-ids and planned move scenes are indexed in [91-test-plan.md](91-test-plan.md).
+
+The 2026-10-13 L9/L10 epics reuse existing AI/animals, mounted-gun/device interactions, mission/checkpoint framework and music director; **L9-S3/S4** supply region streaming within E18. All levels respawn at the **last checkpoint**. E31 is re-planned `todo` for its remaining scope (L9-S1 durability/L9-D1 greybox are on main); E32 is `todo`. Planned tests/asset rows and lanes ≤ 3 h are indexed in the epic tables, inventory §8 and test plan §5.2; no implementation is claimed by these specs.
