@@ -469,7 +469,11 @@ export class LevelThreeCollapse {
   /** Section 5.6 forward pressure: a player lingering 20 s behind the furthest progress line gets company from behind. */
   private pressure(): void {
     const { world } = this.mission, s = this.s, tick = world.tick, p = world.entities.get(1)!.transform, ai = world.infected!;
-    if (p.x > s.furthest + .5) { s.furthest = p.x; s.furthestAt = tick; s.pressureAt = 0; }
+    if (p.x > s.furthest + .5) {
+      s.furthest = p.x; s.furthestAt = tick; s.pressureAt = 0;
+      // Advancing stops the pressure: packs still queued behind the courier are dropped (they were only for an idle courier).
+      for (let i = s.pending.length - 1; i >= 0; i--) if (s.pending[i].kind === 'pressure' && s.pending[i].id === 0) s.pending.splice(i, 1);
+    }
     if (tick - s.furthestAt < ticks(l3.density.pressure.idleS)) return;
     if (s.pressureAt && tick - s.pressureAt < ticks(l3.density.pressure.everyS)) return;
     s.pressureAt = tick;

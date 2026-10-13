@@ -179,6 +179,8 @@ describe('L4 The Safe City Falls', () => {
     const civilianShooters = s.armed.filter(a => sources.has(a.id)).length, soldierShooters = s.soldierIds.filter(id => sources.has(id)).length;
     record('ally-sources', { civilianShooters, soldierShooters, armed: s.armed.length });
     expect(soldierShooters).toBeGreaterThanOrEqual(3); expect(civilianShooters + s.kills.armedCivilians).toBeGreaterThanOrEqual(1);
+    // At the infected cap a bite kills instead of turning (section 5.9); make room first so the test checks the turn itself.
+    w.infected!.director.levelCap += 400;
     // A soldier bitten turns: same entity id, same model and tint, the rifle lies on the ground.
     const soldier = s.soldierIds.map(id => w.entities.get(id)!).filter(e => e.health.current > 0 && e.civilian && e.civilian.state !== 'finished' && !e.infected)[2], before = { asset: soldier.appearance!.asset, tint: soldier.appearance!.tint, id: soldier.id };
     w.npcs!.civilians.outbreak!.infect(soldier, 0);

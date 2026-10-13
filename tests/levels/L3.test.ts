@@ -245,6 +245,9 @@ describe('L3 The Police Collapse', () => {
     runL3(w, m, 'complete', { stopWhen: mm => (mm.state.l3!.segment ?? -1) >= 1 && w.entities.get(1)!.transform.x > -30 });
     w.combat!.damage.god = true;
     const s = m.state.l3!, before = s.pressureIds.length, furthest = s.furthest, startTick = w.tick;
+    // The 5x population keeps the infected cap (200) saturated near the start, which would starve any emergence; clear the live ones
+    // so the test measures the pressure rule itself (queued entries and their order stay as they are).
+    for (const e of w.infected!.active) { e.health.current = 0; e.infected!.recoverAt = -1; }
     const emergences: { tick: number; x: number; seen: boolean }[] = [];
     w.events.on('entity.spawned', () => {});
     for (let t = 0; t < 45 * 60; t++) {
