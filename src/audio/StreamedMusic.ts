@@ -7,6 +7,8 @@ interface Deck { media: HTMLAudioElement; source: MediaElementAudioSourceNode; g
  * in every level, as do aftermath; each level L1-L9 has its own calm and tension recording. L1 calm is the coffee-shop jazz. */
 export const levelStreams: Record<string, Partial<Record<MusicState, string>>> = Object.fromEntries(
     Array.from({ length: 9 }, (_, i) => `L${i + 1}`).map(level => [level, { calm: `calm-${level}`, tension: `tension-${level}` }]));
+/** Finale reuses the licensed research/subway instrumental palette. */
+levelStreams.L10 = { calm: 'calm-L6', tension: 'tension-L6' };
 /** Score file stem (without `score-` and extension) a level plays in a state. */
 export const scoreFile = (level: string, state: MusicState): string => levelStreams[level]?.[state] ?? state;
 /** Long recordings stay in the browser's streaming media cache, never decodeAudioData at boot.
