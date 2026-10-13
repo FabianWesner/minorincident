@@ -319,7 +319,8 @@ function tactics(world: SimWorld, e: EntitySnapshot, a: AllyState, target: Entit
       }
       if (od < pt.spreadM && go(here.x + ox / od * pt.stepM, here.z + oz / od * pt.stepM)) return false;
     }
-    if (press >= 3) { const pd = Math.hypot(px, pz) || 1; if (go(here.x + px / pd * pt.stepM * 1.8, here.z + pz / pd * pt.stepM * 1.8, 1.6)) return false; }
+    // Police keep the PO 10-12 balance (they hold and get overwhelmed); soldiers and civilians back off from a crowd.
+    if (press >= 3 && a.role !== 'officer') { const pd = Math.hypot(px, pz) || 1; if (go(here.x + px / pd * pt.stepM * 1.8, here.z + pz / pd * pt.stepM * 1.8, 1.6)) return false; }
   }
   // Reposition after a few shots: a short lateral step, alternating sides.
   if (a.hits > 0 && a.hits % pt.repositionShots === 0 && a.repoHits !== a.hits) {
