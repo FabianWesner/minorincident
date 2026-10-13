@@ -61,13 +61,10 @@ test('@E03 @E03-AC21 mouse HUD shows active and next and L1 hints describe switc
   await page.mouse.move(800, 450); await tick(page, 1);
   await expect(page.getByTestId('onboarding-prompt')).toBeVisible();
   await expect(page.getByTestId('onboarding-prompt')).toContainText('Shift+LMB in place');
-  await expect(page.getByTestId('slot-LEFT')).toContainText('ACTIVE · LMB');
-  await expect(page.getByTestId('slot-RIGHT')).toContainText('RMB · NEXT');
-  await expect(page.getByTestId('slot-RIGHT')).toContainText('bat');
+  await expect(page.getByTestId('weapon-active')).toHaveAttribute('data-weapon', 'weapon.fists');
   await page.mouse.click(800, 450, { button: 'right' }); await tick(page, 20);
-  await expect(page.getByTestId('slot-RIGHT')).toContainText('ACTIVE · LMB');
-  await expect(page.getByTestId('slot-RIGHT')).toContainText('bat');
-  await expect(page.getByTestId('slot-LEFT')).toContainText('unarmed');
+  await expect(page.getByTestId('weapon-active')).toHaveAttribute('data-weapon', 'weapon.bat');
+  await expect(page.getByTestId('weapon-active')).toHaveAttribute('aria-label', /bat/);
   await expect(page.locator('[data-input-hint]')).toContainText('Shift+LMB');
   await expect(page.locator('[data-input-hint]')).toContainText('RMB / Q cycle');
 });

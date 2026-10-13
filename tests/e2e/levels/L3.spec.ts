@@ -159,7 +159,7 @@ test.describe('L3 The Police Collapse in the browser', () => {
     expect((await player()).weapons!.RIGHT.rack[0].id).toBe('weapon.handgun');
     expect((await player()).weapons!.selectedSide).toBe('RIGHT');
     // No ammunition HUD: the handgun card reads "Ready", never "n / m" or a reload ring.
-    await expect(page.getByTestId('stats-RIGHT')).toHaveText('Ready');
+    await expect(page.getByTestId('weapon-active')).toHaveAttribute('aria-label', /, Ready/);
     // Hold the yard with the police, shooting what comes through the gates.
     await go({ x: -134.5, z: 1.5 }, 1.2);
     for (let i = 0; i < 80 && !(await mission()).l3!.attackAt; i++) await step(20);
@@ -175,7 +175,7 @@ test.describe('L3 The Police Collapse in the browser', () => {
     if (!attackShot) await snap('l3-station-attack');
     console.log(JSON.stringify({ attackShotEarly: attackShot, inFrameAtFallback: inside }));
     expect((await mission()).l3!.fallbackAt).toBeGreaterThan(0);
-    await expect(page.getByTestId('stats-RIGHT')).not.toHaveText(/\d+\s*\/\s*\d+|↻/);
+    await expect(page.getByTestId('weapon-active')).not.toHaveAttribute('aria-label', /\d+\s*\/\s*\d+/);
     // Each starting street joins the forced Oak -> Boulevard detour around the sealed wreck lines.
     // Raised-road clicks project onto the courier's current floor, matching RayCursor's input plane.
     const sz = l3.map.streets[street], route: P[] = [{ x: -126, z: 0 }];

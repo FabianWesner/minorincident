@@ -10,7 +10,7 @@ test('T-E29-05-browser @E29-AC05 rocket HUD stays Ready and firing has no ammuni
   expect(result.events).toHaveLength(4);
   expect(result.events.slice(1).every((e, i) => e.tick - result.events[i].tick === 75)).toBe(true);
   expect(result.slot).toMatchObject({ magazine: 0, charges: 0, reloadUntil: 0 });
-  await expect(page.getByTestId('stats-LEFT')).toContainText('Ready');
+  await expect(page.getByTestId('weapon-active')).toHaveAttribute('data-state', 'ready');
 });
 
 test('T-E29-04-browser @E29-AC04 real E collects the rocket beside the wreck and retains the arsenal', async ({ page }) => {
