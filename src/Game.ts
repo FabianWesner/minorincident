@@ -316,7 +316,7 @@ export class Game {
     const save=this.campaign!;
     this.world.events.on('level.completed',event=>{
       if(event.type!=='level.completed'||!/^L[1-9]$/.test(event.id))return;
-      if (event.id === 'L8' && this.world.missions?.l8) save.transport = this.world.vehicles!.transfer(this.world.missions.l8.state.carId);
+      if (event.id === 'L8' && this.world.missions?.l8) { const transport = this.world.missions.l8.transferOrNull(); if (transport) save.transport = transport; }
       completeCampaignLevel(save,Number(event.id.slice(1)) as Level,event.result,this.world);
       this.saveCampaign();
       const next = Number(event.id.slice(1)) + 1;

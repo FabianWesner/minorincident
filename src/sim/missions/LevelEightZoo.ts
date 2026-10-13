@@ -128,6 +128,12 @@ export class LevelEightZoo {
     if (!s.escapeCheckpoint && distance(player.transform, this.door()) < 12) { s.escapeCheckpoint = true; this.mission.checkpoint('escape-route'); }
     if (w.vehicles!.groupBoarded(s.carId, this.roster())) this.mission.setState('aboard', true);
   }
+  /** Cheat/test path (`completeObjective` before the breach): call the tunnel breach now so the escape objective becomes active. */
+  advance(): boolean {
+    if (this.mission.state.states.breached) return false;
+    this.state.startedAt = this.w.tick - 3600; this.update();
+    return !!this.mission.state.states.breached;
+  }
   /** Newly rescued zoo residents also belong to the complete living group. */
   roster(): number[] {
     const ids = [...new Set([...this.state.roster, ...[...this.w.entities.iterate()].filter(e => e.civilian?.survivor?.mode === 'follow' && !e.civilian.zooAnimal).map(e => e.id)])];
@@ -147,8 +153,12 @@ export class LevelEightZoo {
     else if (distance(e.transform, target) > (boarding ? .3 : 1)) w.npcs!.move(e, target, (c.l1?.walkSpeed ?? 2.2) <= 1.4 ? 1.4 : 3.8, c, boarding ? .2 : .8, 2400);
     return true;
   }
+  /** The seated group as a transfer payload; null when nobody is seated (only the debug objective cheat completes the escape unboarded). */
+  transferOrNull() { try { return this.w.vehicles!.transfer(this.state.carId); } catch { return this.mission.state.states.aboard ? this.w.vehicles!.transfer(this.state.carId) : null; } }
   result() {
-    const transport = this.w.vehicles!.transfer(this.state.carId), escaped = transport.occupants.filter(e => e.id !== 1);
+    const transport = this.transferOrNull();
+    if (!transport) return { rescued: 0, survivors: [], escapedSurvivors: [] };
+    const escaped = transport.occupants.filter(e => e.id !== 1);
     if (this.w.progression?.campaign) this.w.progression.campaign.transport = transport;
     return { rescued: escaped.length, survivors: escaped.map(e => e.civilian?.survivor?.key ?? `survivor-${e.id}`), escapedSurvivors: escaped };
   }

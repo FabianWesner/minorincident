@@ -478,7 +478,8 @@ export class LevelThreeCollapse {
     const [n0, n1] = l3.density.pressure.count, n = Math.round((n0 + 5 * Math.floor(rng.next() * ((n1 - n0) / 5 + 1))) * (1 - this.mercyFraction()));
     for (let i = 0; i < n && doors.length; i++) {
       const door = doors[Math.floor(rng.next() * doors.length)];
-      s.pending.push({ id: 0, door: door.name, home: { x: s.furthest, z: l3.map.streets[l3Street(door.z)] }, segment: Math.min(2, Math.max(0, l3Segment(s.furthest))), at: tick, kind: 'pressure' });
+      // Front of the queue: with the 5x population hundreds of planned entries wait ahead, and the pressure must land while the courier idles.
+      s.pending.unshift({ id: 0, door: door.name, home: { x: s.furthest, z: l3.map.streets[l3Street(door.z)] }, segment: Math.min(2, Math.max(0, l3Segment(s.furthest))), at: tick, kind: 'pressure' });
     }
   }
   /** Infected far behind the furthest line and out of view leave the books when the cap is tight (never a visible removal). */
