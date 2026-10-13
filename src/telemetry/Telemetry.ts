@@ -53,12 +53,13 @@ export class Telemetry implements TelemetrySink {
     const context = (): TelemetryContext => ({
       d: classifyDevice({ userAgent: navigator.userAgent, touchPoints: navigator.maxTouchPoints, coarse: matchMedia('(pointer: coarse)').matches, shortSide: Math.min(screen.width, screen.height) }),
       q: game.quality.tier, b: game.view.renderer.selectedBackend, v: build, vp: viewportBucket(innerWidth, innerHeight),
+      ...(game.params.has('debug') ? { dbg: true as const } : {}),
     });
     const transport: Transport & ChunkTransport = options.mode === 'live' ? options.transport : { send: async () => 'ok', post: async () => 'ok' };
     this.client = new EventClient({ playerId: this.playerId, sessionId: this.sessionId, context, transport, now: options.now });
     this.recorder = new ReplayRecorder({ playerId: this.playerId, sessionId: this.sessionId, build }, transport, gzip, { keep: options.mode === 'record', chunkBytes: options.chunkBytes });
     game.input.tap = this.sample;
-    this.client.push('session_start');
+    this.client.push('session_start', game.params.has('debug') ? { d: { debug: true } } : {});
     this.listen(window, 'pagehide', this.pageHide);
     this.listen(window, 'resize', this.resize);
     this.listen(document, 'visibilitychange', this.visibility);

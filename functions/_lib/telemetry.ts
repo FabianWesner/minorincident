@@ -70,9 +70,11 @@ export async function postEvents(request: Request, env: Env, now = Date.now()): 
   const { p, s, c } = body;
   if (typeof p !== 'string' || !uuid.test(p) || typeof s !== 'string' || !uuid.test(s)) return bad('bad ids');
   if (!isObject(c)) return bad('bad context');
-  for (const k of Object.keys(c)) if (!['d', 'q', 'b', 'v', 'vp'].includes(k)) return bad('unknown context field');
+  for (const k of Object.keys(c)) if (!['d', 'q', 'b', 'v', 'vp', 'dbg'].includes(k)) return bad('unknown context field');
   if (!devices.includes(c.d as string) || !tiers.includes(c.q as string) || !backends.includes(c.b as string)) return bad('bad context');
   if (typeof c.v !== 'string' || !build.test(c.v) || typeof c.vp !== 'string' || !/^[0-9]{3,4}x[0-9]{3,4}$/.test(c.vp)) return bad('bad context');
+  if (c.dbg !== undefined && c.dbg !== true) return bad('bad context');
+  const debug = c.dbg === true ? 1 : 0;
   const dur = num(body.dur, 0, 7 * 86400), act = num(body.act, 0, 7 * 86400);
   if (dur === null || act === null) return bad('bad durations');
   const events = cleanEvents(body.e, now);
@@ -84,8 +86,8 @@ export async function postEvents(request: Request, env: Env, now = Date.now()): 
   if (!known) {
     const count = await env.DB.prepare('SELECT COUNT(*) AS n FROM sessions WHERE player_id = ? AND day = ?').bind(p, today).first<{ n: number }>();
     if ((count?.n ?? 0) >= limits.sessionsPerPlayerDay) return bad('too many sessions', 429);
-    await env.DB.prepare('INSERT OR IGNORE INTO sessions (session_id, player_id, day, started_at, last_seen, device, quality, backend, build, viewport) VALUES (?,?,?,?,?,?,?,?,?,?)')
-      .bind(s, p, today, now, now, c.d, c.q, c.b, c.v, c.vp).run();
+    await env.DB.prepare('INSERT OR IGNORE INTO sessions (session_id, player_id, day, started_at, last_seen, device, quality, backend, build, viewport, debug) VALUES (?,?,?,?,?,?,?,?,?,?,?)')
+      .bind(s, p, today, now, now, c.d, c.q, c.b, c.v, c.vp, debug).run();
   }
   // Per-session caps are enforced in the UPDATE itself, so concurrent requests cannot overshoot them.
   const ended = events.some(e => e.type === 'session_end') ? 1 : 0;
@@ -94,8 +96,8 @@ export async function postEvents(request: Request, env: Env, now = Date.now()): 
     .bind(now, Math.round(dur), Math.round(act), c.q, c.b, c.v, events.length, text.length, ended, s, p, events.length, limits.eventsPerSession, text.length, limits.bytesPerSession, limits.requestsPerSession).run();
   if (!update.meta?.changes) return bad('session quota exceeded', 429);
   if (events.length) {
-    const insert = 'INSERT INTO events (session_id, player_id, day, ts, type, level, tick, x, z, data) VALUES (?,?,?,?,?,?,?,?,?,?)';
-    await env.DB.batch(events.map(e => env.DB.prepare(insert).bind(s, p, day(e.ts), e.ts, e.type, e.level, e.tick, e.x, e.z, e.data)));
+    const insert = 'INSERT INTO events (session_id, player_id, day, ts, type, level, tick, x, z, data, debug) VALUES (?,?,?,?,?,?,?,?,?,?,?)';
+    await env.DB.batch(events.map(e => env.DB.prepare(insert).bind(s, p, day(e.ts), e.ts, e.type, e.level, e.tick, e.x, e.z, e.data, debug)));
   }
   return json({ ok: true, n: events.length });
 }
@@ -154,35 +156,39 @@ export async function getStats(request: Request, env: Env, now = Date.now()): Pr
   if (!authorized(request, env)) return bad('unauthorized', 401);
   if (!env.DB) return bad('telemetry not configured', 503);
   const url = new URL(request.url);
+  // Sessions started with ?debug (the team's own testing) are left out unless ?include=debug.
+  const withDebug = url.searchParams.get('include') === 'debug', S = withDebug ? '' : ' AND debug = 0', SE = withDebug ? '' : ' AND e.debug = 0';
   const days = Math.max(1, Math.min(90, Number(url.searchParams.get('days') ?? 14) || 14));
   const since = day(now - (days - 1) * 86400_000);
   const all = async <T>(sql: string, ...args: unknown[]): Promise<T[]> => (await env.DB.prepare(sql).bind(...args).all<T>()).results;
-  const perDay = await all<{ day: string; players: number; sessions: number; avg_min: number }>('SELECT day, COUNT(DISTINCT player_id) AS players, COUNT(*) AS sessions, ROUND(AVG(dur_s) / 60.0, 1) AS avg_min FROM sessions WHERE day >= ? GROUP BY day ORDER BY day', since);
-  const totals = await env.DB.prepare('SELECT COUNT(DISTINCT player_id) AS players, COUNT(*) AS sessions, ROUND(AVG(dur_s) / 60.0, 1) AS avg_min, ROUND(AVG(active_s) / 60.0, 1) AS avg_active_min FROM sessions WHERE day >= ?').bind(since).first<Record<string, number>>();
-  const returning = await env.DB.prepare('SELECT COUNT(*) AS n FROM (SELECT player_id FROM sessions WHERE day >= ? GROUP BY player_id HAVING COUNT(DISTINCT day) > 1)').bind(since).first<{ n: number }>();
-  const durations = (await all<{ dur_s: number }>('SELECT dur_s FROM sessions WHERE day >= ? ORDER BY dur_s LIMIT 20000', since)).map(r => r.dur_s);
+  const perDay = await all<{ day: string; players: number; sessions: number; avg_min: number }>('SELECT day, COUNT(DISTINCT player_id) AS players, COUNT(*) AS sessions, ROUND(AVG(dur_s) / 60.0, 1) AS avg_min FROM sessions WHERE day >= ?' + S + ' GROUP BY day ORDER BY day', since);
+  const totals = await env.DB.prepare('SELECT COUNT(DISTINCT player_id) AS players, COUNT(*) AS sessions, ROUND(AVG(dur_s) / 60.0, 1) AS avg_min, ROUND(AVG(active_s) / 60.0, 1) AS avg_active_min FROM sessions WHERE day >= ?' + S).bind(since).first<Record<string, number>>();
+  const debugSessions = await env.DB.prepare('SELECT COUNT(*) AS sessions, COUNT(DISTINCT player_id) AS players FROM sessions WHERE day >= ? AND debug = 1').bind(since).first<{ sessions: number; players: number }>();
+  const returning = await env.DB.prepare('SELECT COUNT(*) AS n FROM (SELECT player_id FROM sessions WHERE day >= ?' + S + ' GROUP BY player_id HAVING COUNT(DISTINCT day) > 1)').bind(since).first<{ n: number }>();
+  const durations = (await all<{ dur_s: number }>('SELECT dur_s FROM sessions WHERE day >= ?' + S + ' ORDER BY dur_s LIMIT 20000', since)).map(r => r.dur_s);
   const bucket = (lo: number, hi: number): number => durations.filter(d => d >= lo * 60 && d < hi * 60).length;
-  const funnelRows = await all<{ level: string; type: string; n: number }>('SELECT level, type, COUNT(*) AS n FROM events WHERE day >= ? AND level IS NOT NULL AND type IN (\'level_start\',\'level_complete\',\'level_restart\',\'quit\') GROUP BY level, type', since);
-  const clearTimes = await all<{ level: string; secs: number }>('SELECT level, json_extract(data, \'$.secs\') AS secs FROM events WHERE day >= ? AND type = \'level_complete\' AND json_extract(data, \'$.secs\') IS NOT NULL', since);
+  const funnelRows = await all<{ level: string; type: string; n: number }>('SELECT level, type, COUNT(*) AS n FROM events WHERE day >= ?' + S + ' AND level IS NOT NULL AND type IN (\'level_start\',\'level_complete\',\'level_restart\',\'quit\') GROUP BY level, type', since);
+  const clearTimes = await all<{ level: string; secs: number }>('SELECT level, json_extract(data, \'$.secs\') AS secs FROM events WHERE day >= ?' + S + ' AND type = \'level_complete\' AND json_extract(data, \'$.secs\') IS NOT NULL', since);
   const funnel = [...new Set(funnelRows.map(r => r.level))].sort().map(lv => {
     const n = (type: string): number => funnelRows.find(r => r.level === lv && r.type === type)?.n ?? 0;
     const times = clearTimes.filter(r => r.level === lv).map(r => r.secs).sort((a, b) => a - b);
     return { level: lv, starts: n('level_start'), completes: n('level_complete'), restarts: n('level_restart'), quits: n('quit'), completion_rate: n('level_start') ? round(n('level_complete') / n('level_start'), 3) : 0, median_clear_s: round(percentile(times, .5), 0) };
   });
-  const spots = async (type: string) => all<{ level: string; gx: number; gz: number; n: number; avg_tick: number }>('SELECT level, CAST(ROUND(x / 5.0) * 5 AS INTEGER) AS gx, CAST(ROUND(z / 5.0) * 5 AS INTEGER) AS gz, COUNT(*) AS n, CAST(AVG(tick) AS INTEGER) AS avg_tick FROM events WHERE day >= ? AND type = ? AND level IS NOT NULL AND x IS NOT NULL GROUP BY level, gx, gz ORDER BY n DESC LIMIT 150', since, type);
-  const deathCauses = await all<{ level: string; cause: string; n: number }>('SELECT level, COALESCE(json_extract(data, \'$.cause\'), \'unknown\') AS cause, COUNT(*) AS n FROM events WHERE day >= ? AND type = \'death\' AND level IS NOT NULL GROUP BY level, cause ORDER BY n DESC', since);
-  const deathTotals = await all<{ level: string; n: number }>('SELECT level, COUNT(*) AS n FROM events WHERE day >= ? AND type = \'death\' AND level IS NOT NULL GROUP BY level', since);
+  const spots = async (type: string) => all<{ level: string; gx: number; gz: number; n: number; avg_tick: number }>('SELECT level, CAST(ROUND(x / 5.0) * 5 AS INTEGER) AS gx, CAST(ROUND(z / 5.0) * 5 AS INTEGER) AS gz, COUNT(*) AS n, CAST(AVG(tick) AS INTEGER) AS avg_tick FROM events WHERE day >= ?' + S + ' AND type = ? AND level IS NOT NULL AND x IS NOT NULL GROUP BY level, gx, gz ORDER BY n DESC LIMIT 150', since, type);
+  const deathCauses = await all<{ level: string; cause: string; n: number }>('SELECT level, COALESCE(json_extract(data, \'$.cause\'), \'unknown\') AS cause, COUNT(*) AS n FROM events WHERE day >= ?' + S + ' AND type = \'death\' AND level IS NOT NULL GROUP BY level, cause ORDER BY n DESC', since);
+  const deathTotals = await all<{ level: string; n: number }>('SELECT level, COUNT(*) AS n FROM events WHERE day >= ?' + S + ' AND type = \'death\' AND level IS NOT NULL GROUP BY level', since);
   const deathSpots = await spots('death'), quitSpots = await spots('quit');
   const group = <T extends { level: string }>(rows: T[], lv: string): T[] => rows.filter(r => r.level === lv);
   const deaths = deathTotals.map(r => ({ level: r.level, deaths: r.n, by_cause: Object.fromEntries(group(deathCauses, r.level).map(c => [c.cause, c.n])), hot_spots: group(deathSpots, r.level).slice(0, 12).map(({ gx, gz, n, avg_tick }) => ({ x: gx, z: gz, n, avg_tick })) }));
   const quitLevels = [...new Set(quitSpots.map(r => r.level))];
   const quits = quitLevels.map(lv => ({ level: lv, hot_spots: group(quitSpots, lv).slice(0, 12).map(({ gx, gz, n, avg_tick }) => ({ x: gx, z: gz, n, avg_tick })) }));
-  const perf = await all<Record<string, unknown>>('SELECT s.device AS device, s.backend AS backend, s.quality AS quality, COUNT(*) AS samples, ROUND(AVG(json_extract(e.data, \'$.p50\')), 2) AS frame_p50_ms, ROUND(AVG(json_extract(e.data, \'$.p95\')), 2) AS frame_p95_ms, ROUND(AVG(json_extract(e.data, \'$.sim\')), 2) AS sim_ms, ROUND(AVG(json_extract(e.data, \'$.dc\')), 0) AS draw_calls FROM events e JOIN sessions s ON s.session_id = e.session_id WHERE e.day >= ? AND e.type = \'perf\' GROUP BY s.device, s.backend, s.quality ORDER BY samples DESC', since);
-  const devices = await all<{ device: string; backend: string; sessions: number }>('SELECT device, backend, COUNT(*) AS sessions FROM sessions WHERE day >= ? GROUP BY device, backend ORDER BY sessions DESC', since);
-  const builds = await all<{ build: string; sessions: number }>('SELECT build, COUNT(*) AS sessions FROM sessions WHERE day >= ? GROUP BY build ORDER BY sessions DESC LIMIT 10', since);
+  const perf = await all<Record<string, unknown>>('SELECT s.device AS device, s.backend AS backend, s.quality AS quality, COUNT(*) AS samples, ROUND(AVG(json_extract(e.data, \'$.p50\')), 2) AS frame_p50_ms, ROUND(AVG(json_extract(e.data, \'$.p95\')), 2) AS frame_p95_ms, ROUND(AVG(json_extract(e.data, \'$.sim\')), 2) AS sim_ms, ROUND(AVG(json_extract(e.data, \'$.dc\')), 0) AS draw_calls FROM events e JOIN sessions s ON s.session_id = e.session_id WHERE e.day >= ?' + SE + ' AND e.type = \'perf\' GROUP BY s.device, s.backend, s.quality ORDER BY samples DESC', since);
+  const devices = await all<{ device: string; backend: string; sessions: number }>('SELECT device, backend, COUNT(*) AS sessions FROM sessions WHERE day >= ?' + S + ' GROUP BY device, backend ORDER BY sessions DESC', since);
+  const builds = await all<{ build: string; sessions: number }>('SELECT build, COUNT(*) AS sessions FROM sessions WHERE day >= ?' + S + ' GROUP BY build ORDER BY sessions DESC LIMIT 10', since);
   const replays = await env.DB.prepare('SELECT COUNT(*) AS n, COALESCE(SUM(bytes), 0) AS bytes FROM replays WHERE day >= ?').bind(since).first<{ n: number; bytes: number }>();
   return json({
-    generated_at: new Date(now).toISOString(), days, since,
+    generated_at: new Date(now).toISOString(), days, since, include_debug: withDebug,
+    debug_sessions: { sessions: debugSessions?.sessions ?? 0, players: debugSessions?.players ?? 0 },
     totals: { players: totals?.players ?? 0, sessions: totals?.sessions ?? 0, returning_players: returning?.n ?? 0, avg_session_min: totals?.avg_min ?? 0, avg_active_min: totals?.avg_active_min ?? 0 },
     players_per_day: perDay,
     session_length: { median_s: percentile(durations, .5), p90_s: percentile(durations, .9), buckets: { 'under_1m': bucket(0, 1), '1_5m': bucket(1, 5), '5_15m': bucket(5, 15), '15_30m': bucket(15, 30), '30_60m': bucket(30, 60), 'over_60m': bucket(60, 1e9) } },
