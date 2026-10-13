@@ -1,6 +1,6 @@
 # 99 · Decision Log
 
-Historical decisions below were answered by the product owner on **2026-10-05**. **The 2026-10-11 campaign source and subsequent updates supersede conflicting historical rows** (notably Q5/Q6/Q7/A1/W1); the current decision/pending section is at the end. To change one, edit the referenced files and add a new row here (keep the history).
+Historical decisions below were answered by the product owner on **2026-10-05**. **The 2026-10-11 campaign source and the 2026-10-13 L9/L10 source supersede conflicting historical rows** (notably Q5/Q6/Q7/A1/W1); the current decision/pending section is at the end. To change one, edit the referenced files and add a new row here (keep the history).
 
 | # | Question | Decision | Reflected in |
 | --- | --- | --- | --- |
@@ -38,7 +38,7 @@ Historical decisions below were answered by the product owner on **2026-10-05**.
 | S1 | Sound | All sound improvements adopted: audio telegraphs, shared noise system, acoustics, adaptive layered music + diegetic sources, tier ambience, system sounds, mix and loudness targets, captions, haptics, offline-render testing | 09, E16 (rewritten) |
 | M1 | Background music | MIT-compatible music (CC0 / CC-BY only) researched per level and slot, with a starter set. Pixabay, Mixkit, Zapsplat, and the YouTube Audio Library are excluded; Scott Buckley and Clement Panchout have extra conditions. Bruno's CC0 tracks are reusable, his SFX are not. **Open:** a human listening pass for style coherence; stems need to be made by us | 10-music-sources.md, 09 §5 |
 
-At the original 2026-10-05 snapshot no design questions remained. The current pending PO input is listed below.
+At the original 2026-10-05 snapshot no design questions remained. The historical pending input and its 2026-10-13 resolution are listed below.
 
 ## Campaign decisions and actual pending PO input (2026-10-11)
 
@@ -49,7 +49,29 @@ Source of truth: [`po-levels-4-9-2026-10-11.md`](po-levels-4-9-2026-10-11.md), i
 | Campaign | L4 internal evacuee outbreak/first Alphas → L5 shotgun/five-survivor rescue/populated metro closure → L6 subway/night handover → L7 unlimited rocket/W6 bus escape → L8 zoo failure → L9 temporary armored crossing | overview, E22–E24, E29–E31 |
 | Alpha | PO verbatim: "Alpha should have a health bar and special moves". Source defaults specify Charge, Ground slam, Grab and throw, Roar; shared world-space bar, ≥ 0.6 s telegraphs and cooldowns. Earlier no-bar/no-special wording superseded. | E07, E22, E29, E30, inventory |
 | Zoo animals | PO verbatim: "Same for Zoo animals". All five infected zoo species have bars/specials; elephant/zebra derive from normal bases. Normal animals have no bars. | E07, E30, inventory, test plan |
-| Level 10 | PO verbatim: "Level 10 will be the grande finale then, I will provide story line tomorrow". Use **Grand finale — storyline from the PO pending**; no epic yet. | overview, README, E31 continuation |
+| Level 10 (historical; resolved 2026-10-13 below) | PO verbatim: "Level 10 will be the grande finale then, I will provide story line tomorrow". Use **Grand finale — storyline from the PO pending**; no epic yet. | overview, README, E31 continuation |
 | Defaults, not questions | E07 resistance/HP/move tuning, W6 dressing counts, night/dry L8/L9 presets, L9 collision damage/chunk residency and provisional timing are explicitly orchestrator defaults. Implement/measure before seeking changes; these do not block specs. | affected epic implementation plans |
 
-**Only pending story input:** the PO's L10 grand-finale storyline (promised for the next day). Once provided, specify the finale/next-city content and an epic; do not invent it now. No additional L4–L9 design questions are left open by this rewrite. Music selection/listening in historical M1 is a production review task, not a new unanswered campaign story question.
+**Historical pending story input is resolved:** the promised finale arrived in the 2026-10-13 source below. Music selection/listening in historical M1 is a production review task, not an unanswered campaign story question.
+
+## L9/L10 decisions (2026-10-13; no pending design questions)
+
+Source: [`po-levels-9-10-2026-10-13.md`](po-levels-9-10-2026-10-13.md), PO verbatim plus orchestrator decisions. It wins over old breakdown/on-foot, pending-finale, helicopter and short campaign timing notes. Defaults are written into E31/E32 for implementation/measurement, not requests for approval.
+
+| Decision | Current requirement / implementation default | Reflected in |
+| --- | --- | --- |
+| L9 durability | Damage bar and per-hit losses persist, no repair; at 0 HP APC remains driveable at about 60% speed until finale. No early breakdown/foot fallback. 75/50/25/0% cumulative dents/glass/smoke/dead lights/engine stages. Ordinary E09 destruction unaffected outside L9. | E31 AC06–10/21/22, inventory §8 |
+| L9 work already built | Keep L9-S1 durability and L9-D1 greybox on main. Cancel original L9-S2; replace with S5 floor, S6 crash, S7 handover. S3/S4 supply shared streaming. | E31 plan, status, overview |
+| Crash and loadout | Mandatory collapsed bridge/road at outskirts, cinematic impact then 5–8 s crawl default; destroyed APC, axe-only combat loadout. Abilities/perks/corgi persist, player gets ordinary L10 spawn health. Living passengers shelter at wreck by default, recorded in campaign history; no L10 follower obligation. | E31 AC14/15, E32 AC02/27 |
+| Scale/regions | Seven low-rise regions in ≈3,300×900 m envelope, ≈4,300 m route; 47 min default (45–50 target) including 2–3 min playable epilogue. L9-S3/S4 streaming, all E18 budgets unchanged per region/seam/finale. | E32 §4/5.1, AC03/04/28/31 |
+| Checkpoints/ammo | All levels respawn at last checkpoint. At least one per region, weapons and snapshot atomic. Handgun→shotgun→army MG→rocket reacquisition; campaign ammo remains bottomless/no reload management per E06. | E32 AC05/27, test plan |
+| Dogs | inf.dog derives from generic retriever/K9, never corgi; fast low-profile animal brain. Companion excluded from every infection/enemy/cure path. | E32 AC07/08, inventory |
+| Mega Alpha | Single ≈2× Alpha, always-knows pursuit/no LOS at 0.7× nominal run; close charge/slam/grab, unique distance roar/steps, player-centered pulsing distance ring, no exact dot/bearing. Persistent off-region position/HP, no teleports. | E32 AC10–14, inventory |
+| Boss damage / early kill | About ten direct rockets; default pristine tenth kills/ninth survives. Conventional/minigun damage floor at 90% max HP; shared stagger cooldown prevents pinning. Legitimate R6 rocket kill counts, never resurrect; boss-dead flag is mandatory to release. | E32 AC12/21/22 |
+| Campus/carry | Low labs/tents/generators/research vehicles/quarantine fences, recorded message + terminal, no new voice actor. Unique backpack canister, no slot/speed cost; checkpoint restores terminal/carried/installed state. | E32 AC15/16 |
+| Rotary minigun | Existing mounted-gun interaction, unlimited ammo/no reload, crowd/regular-Alpha clearance, overheat bar and persistent heat across remount. Gun/dodge lanes within console hold zone. | E32 AC17–19, inventory |
+| Charge / release | 60 s sim-time progresses only within ≤25 m while alive, pauses outside and resumes with retained progress. Death restores pre-charge ready snapshot. Release needs installed cure AND 60 s AND Mega dead, then explicit console interaction. | E32 AC20–22 |
+| Cure / epilogue | Airborne agent kills every touched infected within one tick, never cures/reverts them; harmless to healthy humans/animals/corgi. Unloaded/campaign zoo outcome persists. Combat ends; playable 120–180 s, survivors emerge, final 30–45 s camera pull-out → Minor Incident → credits. | E32 AC23–26 |
+| Production order | Specs→L9 changes→L10 assets→regions→encounters/weapons→finale→epilogue; all executable lanes ≤3 h using current owners. New tests/scenes are planned, no code in this spec lane. | E31/E32 plans, 91 §5.2 |
+
+**No pending PO storyline/design questions.** Timing, density, footprint, move/heat/mist/audio tuning and passenger shelter are explicit orchestrator defaults; calibrate with first green single-seed route and report measured deviations. Human music/device/WebGPU checks remain production evidence, not a story blocker.
