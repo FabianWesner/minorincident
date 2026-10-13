@@ -57,6 +57,7 @@ export class Vfx extends Group {
   private readonly rng: Rng;
   private readonly goreRng: Rng;
   private flashUntil = 0;
+  private flashNear = 1;
   /** One reusable edge feather veil: no stacking, central player and HUD stay clear. */
   private readonly featherVeil = typeof document === 'undefined' ? null : document.createElement('div');
   private obstruction = { remainingTicks: 0, opacity: 0 };
@@ -318,7 +319,10 @@ export class Vfx extends Group {
   effect(kind: EffectKind, x: number, z: number, radius = 2, height = .7): void {
     if (!this.enabled) return;
     if (kind === 'explosion') {
-      this.lastExplosionRadius = radius; this.flashUntil = this.time + 0.1;
+      // The white-out belongs to a blast near the player (as in Blasts.play): a distant fuel chain or tank round flashed the whole
+      // screen white for 0.1 s at any distance (gate 10-13: the L4 line break washed out the walk on Kessler Lane, 60 m away).
+      const focus = this.targets.focus?.() ?? this.world.entities.get(1)?.transform, near = focus ? Math.max(0, Math.min(1, 1.4 - Math.hypot(focus.x - x, focus.z - z) / 18)) : 1;
+      this.lastExplosionRadius = radius; if (near > 0) { this.flashUntil = this.time + 0.1; this.flashNear = near; }
       this.waves.spawn(this.time, 0.8, x, 0.035, z, 0, 0, 0, radius * 2, 1, 0xffe19a, 1);
       this.burst(x, 1, z, 0xff8c32, 64, radius * 0.3, 0.65, 2);
       this.burst(x, 0.8, z, 0x685866, 32, radius * 0.4, 2, -0.5);
@@ -410,7 +414,7 @@ export class Vfx extends Group {
       for (const e of this.world.entities.iterate()) if (e.faction === 'infected' && e.health.current > 0 && e.health.current < e.health.max * 0.5 && emitted++ < 32) this.decals.spawn(this.time, 120, e.transform.x, (this.world.districts?.supportBelow(e.transform.x, e.transform.z, e.transform.y - .7) ?? 0) + 0.016, e.transform.z, 0, 0, 0, 0.25, 7, 0xb3121f);
     }
   }
-  get flash(): number { return this.enabled ? Math.max(Math.max(0, (this.flashUntil - this.time) / 0.1) * (this.flashReduction ? 0.12 : 0.6), this.blasts.flash) : 0; }
+  get flash(): number { return this.enabled ? Math.max(Math.max(0, (this.flashUntil - this.time) / 0.1) * (this.flashReduction ? 0.12 : 0.6) * this.flashNear, this.blasts.flash) : 0; }
   snapshot() {
     return { obstruction: { ...this.obstruction }, shots: this.shots, enabled: this.enabled, colorblind: this.colorblind, gore: this.gore, quality: this.quality, flashReduction: this.flashReduction, time: this.time,
       lastSpray: this.lastSpray, surfaceSplats: this.surfaceSplats.count, pendingSplats: this.landings.filter(l => l.at < Infinity).length, particles: this.particles.count, particleCap: this.particles.budget, decals: this.decals.count, decalCap: this.decals.cap, gibs: this.gibs.count, gibCap: this.gibs.budget,
