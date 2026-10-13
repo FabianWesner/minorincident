@@ -1,0 +1,22 @@
+{
+ "name": "cure-industrial-lineup",
+ "note": "L10 R3 industrial area kit (kit.cure-industrial) turntable: warehouse (dock side facing +x), service building, container stack and drum stack, one full turn in 6 s. Look for: low broad massing (no tower), five dock doors with canopy and bollards, clerestory band, roof vents and condensers sitting on the roof plane, container corrugation and the rotated top box, drums on pallets, feet on the ground, no flat panels, no flicker, LOD silhouettes that match LOD0.",
+ "seed": 10,
+ "ground": "asphalt",
+ "time": "L1",
+ "size": 120,
+ "dof": false,
+ "props": [
+  { "id": "warehouse", "asset": "bld.cure-warehouse", "at": [-22, 0], "yaw": 0 },
+  { "id": "service", "asset": "bld.cure-service-building", "at": [10, -16], "yaw": 0 },
+  { "id": "containers", "asset": "prop.cure-container-stack", "at": [10, 6], "yaw": 0 },
+  { "id": "drums", "asset": "prop.cure-drum-stack", "at": [10, 14], "yaw": 0 }
+ ],
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [0, 4], "yaw": 0, "state": "idle" }
+ ],
+ "camera": { "mode": "orbit", "target": [-6, 3, 0], "radius": 70, "azimuth": 45, "polar": 54, "spin": 60 },
+ "frames": 360,
+ "sheet": 30,
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}
