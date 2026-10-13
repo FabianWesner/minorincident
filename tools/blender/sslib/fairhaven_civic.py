@@ -110,7 +110,7 @@ class Civic(Scene):
             if self.lod<2:
                 for sign in (-1,1):self.box('balconyReturn',(x-.1,y+sign*w/2,z+.7),(.72,.075,.5),'backpackTeal')
             return
-        self.box('balconyFloor',(x-.15,y,z),(.9,w+.22,.18))
+        self.box('balconyFloor',(x-.15,y,z-.01),(.9,w+.22,.18))  # top 1 cm under the window sill plane
         self.box('balconyTop',(x+.23,y,z+.85),(.07,w,.08),'backpackTeal')
         self.box('balconyLower',(x+.23,y,z+.18),(.07,w,.07),'backpackTeal')
         for i in range([7,5,2][self.lod]):
@@ -137,10 +137,12 @@ class Civic(Scene):
         if self.lod<2:
             for y in (.25,.85):self.box('doorRaisedPanel',(.075,y,1.05),(.04,.43,1.6),token,self.door)
         self.door['hingeAxis']='Y';self.door['openAngle']=105
-    def shell(self, depth, width, height, token, entry=1.5):
-        self.box('rearWall',(-depth/2+.16,0,height/2),(.32,width,height),token)
+    def shell(self, depth, width, height, token, entry=1.5, trim=False):
+        # `trim`: rear/front walls stop at the side walls' inner faces, so the three wall tops share no corner patch (z-fight).
+        t=.32 if trim else 0
+        self.box('rearWall',(-depth/2+.16,0,height/2),(.32,width-2*t,height),token)
         for y in (-width/2+.16,width/2-.16):self.box('sideWall',(0,y,height/2),(depth,.32,height),token)
-        for sign in (-1,1):self.box('frontWall',(depth/2-.16,sign*(width+entry)/4,height/2),(.32,(width-entry)/2,height),token)
+        for sign in (-1,1):self.box('frontWall',(depth/2-.16,sign*((width+entry)/4-t/2),height/2),(.32,(width-entry)/2-t,height),token)
         self.box('doorLintel',(depth/2-.16,0,(height+2.6)/2),(.32,entry,height-2.6),token)
         self.box('floor',(0,0,.10),(depth,width,.2),'picketWhite',self.interior)
         for name,pos,size in [('rear',(-depth/2+.16,0,height/2),(.32,width,height)),('sideL',(0,-width/2+.16,height/2),(depth,.32,height)),('sideR',(0,width/2-.16,height/2),(depth,.32,height)),('frontL',(depth/2-.16,-(width+entry)/4,height/2),(.32,(width-entry)/2,height)),('frontR',(depth/2-.16,(width+entry)/4,height/2),(.32,(width-entry)/2,height))]:colliders.cuboid(name,size,pos,self.root)
@@ -149,7 +151,7 @@ class Civic(Scene):
 def apartments(s):
     b=s.asset.endswith('-b'); floors=5 if b else 4; top=15.3 if b else 12.5
     token='picketWhite' if b else 'brick'
-    s.shell(8.8,12,top,token)
+    s.shell(8.8,12,top,token,trim=True)
     # Recesses on B are actual empty balcony volumes in front of the back wall.
     for z in ([.3,3.1,6.15,9.2,12.25,15.35] if b else [.3,3.15,12.55]):
         s.box('frontCornice',(4.49,0,z),(.30,12.35,.20))
@@ -171,14 +173,14 @@ def apartments(s):
         for y in (-4.25,-1.45,1.45,4.25):s.window(-4.46,y,z,.95,1.7,far=b)
     for y in (-3.6,3.6):
         s.window(4.46,y,1.55,3.8,2.22,glow=b)
-        s.box('shopBase',(4.54,y,.38),(.2,4,.35),'backpackTeal')
+        s.box('shopBase',(4.56,y,.38),(.22,4,.35),'backpackTeal')  # front 3 cm proud of the frontCornice plane (x = 4.64)
         if b:
             # Striped teal/cream awning over a lit storefront.
             n=6 if s.lod<2 else 4
             for i in range(n):
                 st=s.box('shopAwning',(4.80,y-2.0+(i+.5)*4.0/n,2.95),(.76,4.0/n,.14),'backpackTeal' if i%2==0 else 'picketWhite')
                 st.rotation_euler.y=.5
-            s.box('shopAwning',(5.12,y,2.72),(.04,4.0,.24),'backpackTeal')
+            s.box('shopAwning',(5.12,y,2.72),(.04,4.04,.24),'backpackTeal')
             canopy=None
         else:
             canopy=s.box('shopAwning',(4.81,y,2.94),(.7,4.1,.32),'backpackTeal')
@@ -188,10 +190,11 @@ def apartments(s):
     for y in (-.85,.85):s.box('entryPier',(4.54,y,1.55),(.34,.32,2.8))
     s.box('entryHead',(4.59,0,2.83),(.44,2,.3))
     s.doorpanel();s.lantern(4.57,0,3.35)
-    s.box('roofDeck',(0,0,top-.13),(8.8,12,.22),'asphalt',s.roof)
+    # polish-backlog-1 (z-fight): deck 2 cm inside the wall faces, y-parapets end inside the x-parapets, so no outer plane or top is shared.
+    s.box('roofDeck',(0,0,top-.13),(8.76,11.96,.22),'asphalt',s.roof)
     # Parapet remains structural body geometry, so hiding roof exposes the shell.
     for x in (-4.4,4.4):s.box('parapet',(x,0,top+.17),(.22,12.2,.36),'backpackTeal' if b else token)
-    for y in (-6,6):s.box('parapet',(0,y,top+.17),(8.8,.22,.36),'backpackTeal' if b else token)
+    for y in (-6,6):s.box('parapet',(0,y,top+.17),(8.6,.22,.36),'backpackTeal' if b else token)
     if b:
         s.box('HVAC',(-2,2,top+.36),(1.1,1.1,.58),'asphalt',s.roof)
         for hx,hy,hw in ((-2,2,1.1),(1.4,3.2,1.3),(-2.9,-.3,1.0)):s.box('HVACFan',(hx,hy,top+.69),(hw-.1,hw-.1 if hw!=1.3 else .9,.1),'woodWarm',s.roof)

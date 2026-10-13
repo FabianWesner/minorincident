@@ -126,7 +126,7 @@ def cut_collapse(s):
     # Negative-Y is the game camera side. The cutter rises through the roof;
     # its bottom is a broad stair-stepped diagonal fracture, not a clean box.
     if row:
-        ys, zs, x0 = [-8.5, -7.0, -5.9, -4.9, -3.7, -3.0], [4.8, 5.15, 4.6, 5.55, 6.4, 7.1], -.25
+        ys, zs, x0 = [-8.5, -7.0, -5.9, -4.9, -3.7, -3.05], [4.8, 5.15, 4.6, 5.55, 6.4, 7.1], -.25
     elif metro:
         ys, zs, x0 = [-2.5, -1.7, -.9, -.2], [3.1, 3.6, 4.6, 5.35], -3.3
     else:

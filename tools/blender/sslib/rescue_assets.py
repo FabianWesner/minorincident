@@ -65,9 +65,10 @@ def recipe(s):
     a,L=s.asset,s.lod
     if a=='int.fire-station-bay':
         # Open +X truck aperture, open near wall for cutaway view; clear 8.5 x 4.2 parking aisle.
-        s.box('floor',(0,0,.08),(12,10,.16),'sidewalk')
-        s.box('rearWall',(-5.9,0,2.15),(.2,10,4.3),'picketWhite')
-        s.box('backWall',(0,4.9,2.15),(12,.2,4.3),'picketWhite')
+        # Z-fight (polish-backlog-1): the floor ends 2 cm inside the wall faces and the walls/jambs end inside each other, so no two outer faces share a plane.
+        s.box('floor',(0,0,.08),(11.96,9.96,.16),'sidewalk')
+        s.box('rearWall',(-5.9,-.1,2.15),(.2,9.8,4.3),'picketWhite')
+        s.box('backWall',(-.15,4.9,2.15),(11.7,.2,4.3),'picketWhite')
         for y in (-4,4):s.box('bayJamb',(5.85,y,2.15),(.3,2,4.3),'survivorRed')
         s.box('bayLintel',(5.85,0,4.05),(.3,6,.5),'survivorRed')
         for y in (-2.2,2.2):s.box('parkingStripe',(0,y,.164),(9,.08,.008),'schoolBusYellow')
