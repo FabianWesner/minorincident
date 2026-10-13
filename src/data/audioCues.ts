@@ -210,6 +210,7 @@ export const l1AccidentCues = ['l1.flicker.buzz', 'l1.blast', 'l1.glass.rattle',
 export const l1ChaosCues = ['l1.chaos.panic', 'l1.chaos.infected', 'l1.chaos.run', 'l1.chaos.car-alarm', 'l1.chaos.fall', 'l1.chaos.distant'] as const;
 /** Explicit coverage includes silent control events; these still resolve to a decodable cue. */
 export const eventCues = {
+    'mega.cue': 'telegraph.brute', // AudioService applies the processed recipe by cue kind.
     'power.on': 'lamp.power-on', 'power.off': 'lamp.power-off', 'light.broken': 'lamp.break',
     'weather.gust': 'weather.gust', 'weather.lightning': 'weather.thunder', 'weather.thunder': 'weather.thunder',
     'level.started': 'ui.tick', 'sim.tick': 'ui.tick', 'scenario.loaded': 'ui.tick', 'scenario.unloaded': 'ui.tick',
@@ -296,3 +297,21 @@ export const noiseCues = {
     explosionSmall: 'explosion.boom', explosionMedium: 'explosion.boom', explosionLarge: 'explosion.boom', explosionMega: 'explosion.boom',
     horn: 'vehicle.horn', alarm: 'ambient.alarm', siren: 'vehicle.siren', firecracker: 'action.weapon.firecracker-lure', glass: 'lamp.break', barricade: 'prop.creak',
 } satisfies Record<NoiseKind, string>;
+
+export const megaCueRates: Record<string, number> = {};
+export const megaAudioCues: Record<string, AudioCue> = {};
+export const resolvedAudioCue = (id: string): AudioCue | undefined => megaAudioCues[id] ?? audioCues[id];
+/** Process the existing licensed stock in the live graph; share its exact sprite slices. No bank offsets change. */
+for (const [id, stock, caption, rate, priority] of [
+  ['mega.roar', 'telegraph.brute', 'Mega Alpha roaring', .48, 110],
+  ['mega.impact', 'telegraph.gorilla', 'Mega Alpha distant impact', .55, 100],
+  ['mega.step', 'telegraph.gorilla', 'Mega Alpha heavy footstep', .65, 100],
+  ['mega.charge', 'telegraph.brute', 'Mega Alpha charging — clear the marked path', .5, 150],
+  ['mega.slam', 'telegraph.gorilla', 'Mega Alpha slam — leave the marked circle', .55, 150],
+  ['mega.grab', 'telegraph.alpha.grab-throw', 'Mega Alpha grabbing — escape its reach', .5, 150],
+  ['cure.recording', 'music.L6.base', undefined, 1, 120],
+] as const) {
+  megaAudioCues[id] = { ...audioCues[stock], id, caption, priority, bus: id === 'cure.recording' ? 'dialogue' : audioCues[stock].bus, rateSpread: 0, loop: false, initial: false, gain: .6 };
+  // The per-cue playback rate belongs to the presentation recipe, not to sprite duration/offset.
+  megaCueRates[id] = rate;
+}

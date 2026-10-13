@@ -1,5 +1,5 @@
 // Registry, anti-spam, distance fade and rate variation adapted from Bruno Simon Audio.js (MIT, 41046b5).
-import { audioCues, audioFile, audioVariationPools, type AudioCue } from '../data/audioCues';
+import { audioCues, resolvedAudioCue, audioFile, audioVariationPools, type AudioCue } from '../data/audioCues';
 import { Rng } from '../core/Rng';
 import { assetUrl } from '../assets/assetUrl';
 /** Plain Web Audio loader (09 §9 escape hatch): Howler's private node graph would conflict with
@@ -40,7 +40,7 @@ export class AudioRegistry {
         gain: number;
         variant: string;
     } | null {
-        const cue = audioCues[id];
+        const cue = resolvedAudioCue(id);
         if (!cue) {
             this.errors.push(`Missing cue: ${id}`);
             return null;

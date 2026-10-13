@@ -132,6 +132,10 @@ export class SceneLab {
   /** Build and load a scene; returns the resolved placements/actors so a caller can address them by id. */
   private readonly barOverrides = new Map<InfectedDef, boolean | undefined>();
   async load(spec: SceneSpec) {
+    if (!spec.megaHud) {
+      delete this.game.ui.hud.root.dataset.sceneHud;
+      if (this.spec?.megaHud && !this.game.ui.enabled) this.game.ui.hud.root.remove();
+    }
     const errors = validateSpec(spec, assets);
     if (errors.length) throw new Error(`Invalid scene spec:\n${errors.join('\n')}`);
     let source: DistrictLayout | undefined;
@@ -168,6 +172,12 @@ export class SceneLab {
     if (this.boom) this.game.view.labProbes().districts?.updateArmyBoom(spec.armyBoom?.closed ? 0 : 1);
     // Prop triangles for the per-frame bone checks (LOD0 GLBs, cached by the registry across loads).
     await Promise.all([this.game.screenshotReady(), this.prepareClipping()]);
+    if (spec.megaHud) {
+      document.body.dataset.uiScreen = 'game';
+      this.game.ui.hud.root.dataset.sceneHud = '';
+      document.querySelector('#game')!.append(this.game.ui.hud.root);
+      this.game.ui.hud.loaded(); this.game.ui.hud.update();
+    }
     this.calibrateSole();
     return this.describe();
   }
@@ -629,6 +639,7 @@ export class SceneLab {
       const stepMs = performance.now() - start, info = this.game.view.renderer.info.render, profile = Object.entries(this.game.view.renderer.profile ?? {});
       const view = profile.filter(([k]) => k !== 'shadows'), shadow = profile.find(([k]) => k === 'shadows')?.[1];
       this.perf.push(profile.length ? { drawCalls: view.reduce((n, [, v]) => n + v.drawCalls, 0), triangles: view.reduce((n, [, v]) => n + v.triangles, 0), shadowDrawCalls: shadow?.drawCalls ?? 0, shadowTriangles: shadow?.triangles ?? 0, stepMs, categories: Object.fromEntries(profile.map(([k, v]) => [k, v.drawCalls])) } : { drawCalls: info.drawCalls, triangles: info.triangles, shadowDrawCalls: 0, shadowTriangles: 0, stepMs, categories: {} });
+      if (this.spec?.megaHud) this.game.ui.hud.update();
       this.frame++;
       this.sample();
       const gaps = this.game.view.labProbes().districts?.propGroundGaps() ?? [];
