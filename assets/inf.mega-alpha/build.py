@@ -46,7 +46,7 @@ hunch = about(shaped_hip, Matrix.Rotation(LEAN, 4, 'Y'))
 shoulder = hunch @ (shape @ base_pos['armR'])
 armgrow = about(shoulder, Matrix.Scale(ARM_SCALE, 4))
 
-HEAD_DROP = Vector((.30, 0, -.45))   # the head sits low and forward of the shoulder mass
+HEAD_DROP = Vector((.30, 0, -.15))   # the head sits low and forward of the shoulder mass
 
 def tf(owner):
     m = shape
@@ -60,7 +60,7 @@ def tf(owner):
 
 positions = {n: tf(n) @ base_pos[n] for n in parts}
 # The head is shrunk locally (a small head on the mass reads brutish).
-HEAD_SHRINK = Matrix.Diagonal(Vector((.78, .78, .84, 1)))
+HEAD_SHRINK = Matrix.Diagonal(Vector((.9, .9, .92, 1)))
 head_pivot = base_pos['head']
 bodies = {}   # owner -> list of mesh objects (world-space data, identity matrix)
 caps = []
@@ -94,11 +94,14 @@ for obj in caps:
     obj.matrix_parent_inverse = obj.parent.matrix_world.inverted()
     obj.matrix_basis = Matrix.Identity(4)
 
-PAL = {'mass': ns['mat']('leatherShadow', '77482e', .74), 'skin': M['infectedSkin'], 'cloth': M['asphalt'], 'blood': M['blood'], 'eye': M['eye'], 'bone': M['picketWhite']}
+# Second pass (PO review): high-contrast dusk palette. Dark brown skin, near-black rags, red muscle mass, white bone, bright blood.
+PAL = {'mass': ns['mat']('redDark', '9e2938', .6), 'skin': ns['mat']('leatherShadow', '77482e', .74), 'cloth': M['uiDark'], 'blood': M['blood'], 'eye': M['eye'], 'bone': M['picketWhite']}
 for owner, group in bodies.items():
     for obj in group:
         for i, material in enumerate(list(obj.data.materials)):
-            if material.name not in ('pal_infectedSkin', 'pal_blood', 'emi_infectedEye'):
+            if material.name == 'pal_infectedSkin':
+                obj.data.materials[i] = PAL['skin']
+            elif material.name not in ('pal_blood', 'emi_infectedEye'):
                 obj.data.materials[i] = PAL['cloth']
 
 def tris(obj):
@@ -144,17 +147,22 @@ eye_centres = {-1: [], 1: []}
 bm = bmesh.new()
 bm.from_mesh(head.data)
 doomed = []
+hair_slots = [i for i, m in enumerate(head.data.materials) if m == PAL['cloth']]
 for f in bm.faces:
     if f.material_index in eye_slots:
         c = f.calc_center_median()
         eye_centres[1 if c.y > 0 else -1].append(c)
         doomed.append(f)
+    elif f.material_index in hair_slots:
+        doomed.append(f)   # the hair mass hides the face from the game camera: bald skull instead
 bmesh.ops.delete(bm, geom=doomed, context='FACES')
 bm.to_mesh(head.data)
 bm.free()
 eye_pos = {s: sum(v, Vector()) / len(v) for s, v in eye_centres.items() if v}
 torso_lo, torso_hi = bbox(bodies['torso'])
 head_lo, head_hi = bbox(head)
+hand_lo, hand_hi = bbox(bodies['handR'])
+print('HANDR', hand_lo, hand_hi, 'HEADBOX', head_lo, head_hi)
 print('TORSO', torso_lo, torso_hi, 'HEAD', head_lo, head_hi, 'EYES', eye_pos)
 
 # ---- authored features --------------------------------------------------------------------------------------------
@@ -207,36 +215,44 @@ def features(detail):
     td = torso_hi.x - torso_lo.x
     th = torso_hi.z - torso_lo.z
     cx = (torso_hi.x + torso_lo.x) / 2
-    # Hunched back mass: a heavy hump behind and above the shoulders, leaning into the neck.
-    hump_c = Vector((torso_lo.x + .42 * td, 0, torso_hi.z - .12 * th))
-    put('torso', ellipsoid('hump', hump_c, (.52 * td, .50 * tw, .38 * th), PAL['mass'], seg + 2, rings + 1))
-    # Exposed spine ridge: bone-white spikes riding the hump surface from the lower back up and over to the neck.
-    rx, rz = .52 * td, .38 * th
+    # Hunch as muscle: a wide trapezius ramp from the back of the neck over both shoulders, with a heavy shoulder mass on
+    # each side (the right one bigger, matching the oversized arm), so the silhouette reads as hulking shoulders.
+    hump_c = Vector((torso_lo.x + .48 * td, 0, torso_hi.z - .30 * th))
+    rx, ry, rz = .50 * td, .56 * tw, .30 * th
+    put('torso', ellipsoid('hump', hump_c, (rx, ry, rz), PAL['mass'], seg + 2, rings + 1))
+    for name, side, grow in (('shoulderL', 'armL', 1.0), ('shoulderR', 'armR', 1.25)):
+        sp = positions[side] + Vector((-.10, 0, .02 * grow))
+        put('torso', ellipsoid(name, sp, (.66 * grow, .62 * grow, .52 * grow), PAL['mass'], seg + 2, rings + 1))
+    # Exposed spine ridge: bone-white spikes riding the trapezius from the lower back up and over to the neck.
     count = 8
     for i in range(count):
-        ang = math.radians(215 - i * (215 - 62) / (count - 1))
+        ang = math.radians(205 - i * (205 - 70) / (count - 1))
         c = hump_c + Vector((rx * math.cos(ang), 0, rz * math.sin(ang)))
         nrm = Vector((math.cos(ang) / rx, 0, math.sin(ang) / rz)).normalized()
-        size = (.34 + .16 * math.sin(math.pi * i / (count - 1))) * td * .35
-        put('torso', spike('ridge%d' % i, c - nrm * .10, nrm, .10 * td * .7, size, PAL['bone'], sides))
+        size = (.40 + .20 * math.sin(math.pi * i / (count - 1))) * td * .35
+        put('torso', spike('ridge%d' % i, c - nrm * .10, nrm, .10 * td * .75, size, PAL['bone'], sides))
     # Scars: diagonal slashes on the chest and a ragged band over the hump (blood palette, wounds read at distance).
     chest_x = torso_hi.x - .03 * td
     for i, (dy, dz, ang) in enumerate([(-.18, .66, .55), (-.05, .60, .55), (.10, .54, .55), (.24, .48, .55)]):
         d = Vector((0, math.cos(ang), -math.sin(ang)))
         put('torso', slash('chestScar%d' % i, Vector((chest_x - .02, dy * tw, torso_lo.z + dz * th)), d, .5 * th, .08 * th, .04 * td, (1, 0, 0), PAL['blood'], sides))
     # Back scars: short diagonal slashes pressed into the hump surface (centres follow the ellipsoid, sunk 4 cm).
-    rx, ry, rz = .52 * td, .50 * tw, .38 * th
     for i, (u, v, ang) in enumerate([(-.50, .10, .9), (-.15, .42, -.9), (.30, .05, .9), (.55, .40, -.8), (.0, -.35, .8)]):
         y, z = u * ry, v * rz
         x = -rx * math.sqrt(max(.04, 1 - (y / ry) ** 2 - (z / rz) ** 2))
         normal = Vector((x / rx ** 2, y / ry ** 2, z / rz ** 2)).normalized()
         d = Vector((0, math.sin(ang), math.cos(ang)))
         d = (d - normal * d.dot(normal)).normalized()
-        put('torso', slash('backScar%d' % i, hump_c + Vector((x, y, z)) + normal * .0, d, .30 * th, .06 * th, .05 * td, normal, PAL['blood'], sides))
-    # Glowing eyes (emissive palette), large enough to read from the high camera, with brow wounds beside them.
-    for s, c in eye_pos.items():
-        put('head', ellipsoid('eye%d' % s, c + Vector((.012, 0, 0)), (.080, .12, .09), PAL['eye'], seg, max(3, rings - 1)))
-        put('head', slash('browScar%d' % s, c + Vector((-.03, s * .10, .18)), (.25, s * .9, -.4), .24, .035, .015, (1, 0, .2), PAL['blood'], sides))
+        put('torso', slash('backScar%d' % i, hump_c + Vector((x, y, z)) + normal * .0, d, .34 * th, .07 * th, .05 * td, normal, PAL['cloth'], sides))
+    # Heavy brow over glowing eyes: the brow overhangs but the eyes peek out in front of it so they read from above.
+    if eye_pos:
+        ex = max(c.x for c in eye_pos.values())
+        ez = sum(c.z for c in eye_pos.values()) / len(eye_pos)
+        ew = max(abs(c.y) for c in eye_pos.values())
+        put('head', ellipsoid('brow', Vector((ex - .10, 0, ez + .20)), (.20, ew + .30, .11), PAL['cloth'], seg + 2, rings))
+        put('head', ellipsoid('cheekbones', Vector((ex - .12, 0, ez - .22)), (.14, ew + .22, .08), PAL['bone'], seg + 2, rings))
+    for s_, c in eye_pos.items():
+        put('head', ellipsoid('eye%d' % s_, c + Vector((.07, 0, -.01)), (.11, .17, .12), PAL['eye'], seg, max(3, rings - 1)))
     return out
 
 def bodies_for_lod(level):
@@ -296,6 +312,28 @@ def nonmanifold(obj):
     n = sum(1 for e in bm_.edges if not e.is_manifold)
     bm_.free()
     return n
+
+def make_fist():
+    """The oversized right hand becomes a clenched fist (palm block, four knuckles, thumb) instead of splayed fingers."""
+    body = bodies['handR']
+    bm_ = bmesh.new()
+    bm_.from_mesh(body.data)
+    bmesh.ops.delete(bm_, geom=list(bm_.faces), context='FACES')
+    bm_.to_mesh(body.data)
+    bm_.free()
+    c = (hand_lo + hand_hi) / 2
+    dx, dy, dz = hand_hi.x - hand_lo.x, hand_hi.y - hand_lo.y, hand_hi.z - hand_lo.z
+    top = hand_hi.z - .30 * dz
+    parts_ = [ellipsoid('fistBlock', Vector((c.x, c.y, top - .05 * dz)), (.40 * dx, .38 * dy, .34 * dz), PAL['skin'], 12, 7)]
+    for k in range(4):
+        y = c.y + (k - 1.5) * .21 * dy
+        parts_.append(ellipsoid('knuckle%d' % k, Vector((hand_hi.x - .22 * dx, y, top - .30 * dz)), (.20 * dx, .115 * dy, .13 * dz), PAL['skin'], 8, 5))
+        parts_.append(ellipsoid('knuckleGore%d' % k, Vector((hand_hi.x - .08 * dx, y, top - .34 * dz)), (.09 * dx, .075 * dy, .07 * dz), PAL['blood'], 6, 4))
+    parts_.append(ellipsoid('thumb', Vector((hand_hi.x - .30 * dx, hand_hi.y - .12 * dy, top - .10 * dz)), (.20 * dx, .10 * dy, .12 * dz), PAL['skin'], 8, 5))
+    bodies['handR'] = join([body] + parts_, 'handR__body')
+    compact(bodies['handR'])
+
+make_fist()
 
 cap_sources = {c: c.data.copy() for c in caps}
 
