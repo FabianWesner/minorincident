@@ -33,6 +33,7 @@ export async function loadLevel(level: MissionId, seed: number, campaign?: Campa
     await world.init(); const composition = compositions[level];
     world.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), seed, null, level === 'L8' ? campaign?.results?.L7?.escapedSurvivors : undefined);
     if(campaign)applyCampaign(world,campaign);
+    if (!campaign && level === 'L10') applyCampaign(world, preset('L10-default'));
     if (!campaign && level === 'L8') applyCampaign(world, preset('L8-default'));
     if (!campaign && level === 'L6') applyCampaign(world, preset('L6-default'));
     if (!campaign && level === 'L5') applyCampaign(world, preset('L5-default'));

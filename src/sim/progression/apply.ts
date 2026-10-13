@@ -1,3 +1,4 @@
+import { enforceCureArsenal } from './arsenal';
 import { action, catalog } from '../../data/actions/catalog';
 import type { ActionDef } from '../../data/actions/schema';
 import type { SimWorld } from '../world/SimWorld';
@@ -7,7 +8,7 @@ export function modifiedActions(save:CampaignSave):Record<string,ActionDef> {
   const m=modifiers(save),defs:Record<string,ActionDef>={};
   for(const original of Object.values(catalog)){
     const d=structuredClone(original);
-    if(d.id==='weapon.shotgun'){d.magazine=0;d.reloadTime=0;d.upgradeHooks=d.upgradeHooks.filter(h=>h!=='magazine'&&h!=='reloadTime');}
+    if(d.id==='weapon.shotgun'||save.unlockedLevel===10&&d.category==='ranged'){d.magazine=0;d.reloadTime=0;d.upgradeHooks=d.upgradeHooks.filter(h=>h!=='magazine'&&h!=='reloadTime');}
     if(d.category==='melee')d.damage*=1+m.melee;
     // A magazine upgrade never gives a weapon without ammunition (the E21 handgun: 00 §6.1) a magazine and reload.
     if(d.category==='ranged'&&d.magazine>0){d.magazine+=m.magazine;d.reloadTime*=Math.max(.5,1-m.reload);}
@@ -23,6 +24,7 @@ export function modifiedActions(save:CampaignSave):Record<string,ActionDef> {
   }return defs;
 }
 export function applyCampaign(world:SimWorld,save:CampaignSave):void {
+  if (world.scenario === 'L10') enforceCureArsenal(save);
   if(!world.player)throw new Error('Progression needs a survivor');
   if (world.scenario === 'L10' && save.crossingHandover?.corgi && world.npcs) {
     for (const e of [...world.entities.iterate()]) if (e.companion) { world.entities.remove(e.id); world.spatial.delete(e.id); }

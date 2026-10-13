@@ -1,3 +1,4 @@
+import { catalog } from '../../data/actions/catalog';
 import { isWorldTier } from '../../levels/districts/types';
 import { dialogue } from '../../data/dialogue';
 import { objectiveTypes, type MissionDef, type ScriptAction, type Trigger } from './types';
@@ -37,6 +38,7 @@ export function validateMission(def: MissionDef): string[] {
     }
   };
   const actions = (list: ScriptAction[]): void => { for (const a of list) switch (a.kind) {
+    case 'arsenal': if ([...a.add, ...a.remove].some(id => !catalog[id]) || a.add.some(id => a.remove.includes(id))) errors.push('Invalid arsenal transaction'); break;
     case 'spawn': ref(a.group, def.groups, 'group'); break;
     case 'migration': ref(a.group, def.groups, 'group'); ref(a.to, def.anchors, 'anchor'); break;
     case 'gate': ref(a.id, def.gates, 'gate'); break;
