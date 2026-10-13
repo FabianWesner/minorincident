@@ -51,6 +51,44 @@ npm run scene -- specs/scenes/courier-turns.json --query skin=0   # extra game U
 - **Exit code.** It exits 1 when an `expect` gate fails or the scene throws. stdout gets a short JSON summary.
 - **Speed.** A scene usually takes 5–8 s once the browser is open, and about 17 s with a video.
 
+### Parallel lanes and capacity probes
+
+The Mac's shared lock budgets **three live browsers**, rather than three commands. One Scene Lab CLI/MCP
+session costs one unit. A Playwright command reserves its worker count (one or two; the default is two).
+Keep several related specs in a single CLI invocation so they reuse the existing browser/page.
+Every lane must set a unique `SCENE_PORT`; a running server on another lane's port can serve different sources.
+Use `E2E_UNITS=2 sh tools/e2e-lock.sh ...` for an opaque wrapper that will launch two browsers.
+A nested wrapper can reuse its parent's reservation but cannot enlarge it.
+
+Native timing/perf probes run through `tools/perf/quiet-run.sh` directly, with one Playwright worker.
+It reserves at least four slot files to cover the legacy range and explicit four-unit runs, checks host load,
+and prevents another browser lane entering midway through measurement. `E2E_SLOTS=1` on an ordinary
+lock wrapper only serializes that caller; it does not make the machine quiet. Coordinate capacity defaults
+across worktrees. The normal default is three; four is an explicit throughput override, not an extra worker per lane.
+
+Measured on the M4/16 GiB Mac: actual CLI lanes delivered 14.4/25.4/33.1/38.0 scenes per minute at N=1/2/3/4.
+Three kept 87% of four's throughput, with 6,630 versus 7,551 MiB peak summed RSS. A shared warm browser
+and a shared immutable preview did not produce a material gain. See the [report and sources](../reports/render-test-parallel.md)
+for workload limits, memory accounting and all results. This is a capacity estimate for the measured fixtures;
+timing gates still need exclusive runs.
+
+Reproduce the probes after `npm run build`; keep the benchmark's ports 3471–3476 free:
+
+```sh
+SCENE_PORT=3471 SCENE_SERVER=preview sh tools/perf/quiet-run.sh npx tsx tools/scenelab/parallel-benchmark.ts --mode isolated --parallel 3 --rounds 2
+SCENE_PORT=3471 SCENE_SERVER=preview sh tools/perf/quiet-run.sh npx tsx tools/scenelab/parallel-benchmark.ts --mode warm --parallel 3 --rounds 2
+sh tools/perf/quiet-run.sh npx tsx tools/scenelab/process-benchmark.ts --mode lanes --parallel 3
+sh tools/perf/quiet-run.sh npx tsx tools/scenelab/process-benchmark.ts --mode lanes --parallel 3 --shared-preview
+sh tools/perf/quiet-run.sh npx tsx tools/scenelab/process-benchmark.ts --mode playwright --parallel 2
+node tools/scenelab/summarize-benchmark.mjs
+```
+
+The shared-preview prototype copies `dist/`, identifies it by commit plus served-content digest, and owns
+one Vite preview process for the benchmark. It is not a persistent service for other lanes. The browser probe
+also accepts `--channel chromium` (unified headless) and `--cdp` with `--mode warm` (attach to its own browser).
+`SceneSession.open(browser)` can borrow a headless browser; each session gets an isolated context, and
+`close()` closes that context while leaving the owner's browser alive.
+
 ## Health-bar fixtures
 
 `barArchetypes: ["infected.runner"]` temporarily enables the shared bar for named definitions while the view initializes; the production definitions are restored immediately. Use this to exercise Alpha's bar contract before its archetype is available. Shipped infected zoo definitions already enable bars.

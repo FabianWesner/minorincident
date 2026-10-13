@@ -2,7 +2,7 @@ import { spawn, execFileSync, type ChildProcess } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { dirname, resolve } from 'node:path';
-import { chromium, type Browser, type Page } from '@playwright/test';
+import { chromium, type Browser, type BrowserContext, type Page } from '@playwright/test';
 import { PNG } from 'pngjs';
 import { attachErrorGuard } from '../../tests/e2e/fixtures';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
@@ -40,6 +40,8 @@ export function readSpec(path: string): SceneSpec {
 export class SceneSession {
   page!: Page;
   private browser!: Browser;
+  private context?: BrowserContext;
+  private ownsBrowser = false;
   private sceneUrl = '';
   private guard!: ReturnType<typeof attachErrorGuard>;
   readonly options: Required<Omit<SessionOptions, 'log'>> & { log: (line: string) => void };
@@ -47,15 +49,18 @@ export class SceneSession {
     this.options = { backend: options.backend ?? 'webgl2', tier: options.tier ?? 'high', viewport: options.viewport ?? { width: 1280, height: 720 }, seed: options.seed ?? 1, query: options.query ?? {}, nativeFrameTiming: options.nativeFrameTiming ?? false, log: options.log ?? (line => console.error(`[scene] ${line}`)) };
   }
   get errors(): string[] { return this.guard?.errors ?? []; }
-  async open(): Promise<void> {
+  /** A supplied browser is borrowed: close() releases only this session's isolated context. */
+  async open(browser?: Browser): Promise<void> {
     await ensureServer(this.options.log);
     const webgpu = this.options.backend === 'webgpu';
     // macOS: ANGLE/Metal gives real-GPU WebGL2 headless. WebGPU needs the unsafe flag and may still fall back.
     const args = webgpu ? ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] : process.platform === 'darwin' ? ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
     // Native frame-budget probes measure uncapped cadence, as the E18 browser specs do.
     if (process.env.SCENE_UNCAPPED === '1' || this.options.nativeFrameTiming) args.push('--disable-frame-rate-limit', '--disable-gpu-vsync');
-    this.browser = await chromium.launch({ headless: true, args, ...(this.options.nativeFrameTiming ? { channel: 'chrome' } : {}) });
+    this.ownsBrowser = !browser;
+    this.browser = browser ?? await chromium.launch({ headless: true, args, ...(this.options.nativeFrameTiming ? { channel: 'chrome' } : {}) });
     const context = await this.browser.newContext({ viewport: this.options.viewport, deviceScaleFactor: 1 });
+    this.context = context;
     this.page = await context.newPage();
     this.guard = attachErrorGuard(this.page);
     const query = new URLSearchParams({ test: '1', scenelab: '1', profile: '1', dpr: '1', quality: this.options.tier, audio: 'muted', seed: String(this.options.seed) });
@@ -120,7 +125,12 @@ export class SceneSession {
       return { path, cells: cells.length, kb: Math.round(buffer.length / 1024) };
     } finally { await scratch.close(); }
   }
-  async close(): Promise<void> { this.guard?.dispose(); await this.browser?.close(); }
+  async close(): Promise<void> {
+    this.guard?.dispose();
+    if (this.ownsBrowser) await this.browser?.close();
+    else await this.context?.close();
+    this.context = undefined;
+  }
 }
 
 /** Box-filtered thumbnail (PNG), for inline MCP images. */
