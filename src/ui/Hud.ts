@@ -136,11 +136,12 @@ export class Hud {
     this.loadedScenario = this.game.world.scenario;
     if (!this.loadedScenario) return;
     this.onboarding.reset();
-    for (const type of ['combat.hit', 'corgi.sound', 'civilian.bark'] as const) this.stops.push(this.game.world.events.on(type, this.event, 20));
+    for (const type of ['combat.hit', 'corgi.sound', 'civilian.bark', 'ally.callout'] as const) this.stops.push(this.game.world.events.on(type, this.event, 20));
   }
   private readonly event = (event: GameEvent): void => {
-    if (event.type === 'civilian.bark') {
+    if (event.type === 'civilian.bark' || event.type === 'ally.callout') {
       if (this.game.world.missions?.state.l1?.say?.id === event.id) return; // The story bubble already captions this bark.
+      if (this.civilianBark.textContent !== event.text) this.civilianBark.textContent = event.text;
       const p = this.game.view.project(event.position.x, 1.8, event.position.z);
       this.civilianBark.style.left = `${(p[0] + 1) * 50}%`; this.civilianBark.style.top = `${(1 - p[1]) * 50}%`;
       this.civilianBarkUntil = this.game.world.tick + 72;
