@@ -126,7 +126,7 @@ export class InfectedSystem {
     entity.locomotion = motionResponse(); delete entity.motion;
     delete entity.infected!.investigate; delete entity.infected!.model; delete entity.infected!.birdDeadMask; delete entity.infectionRise; delete entity.appearance; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden; delete entity.corpse;
     delete entity.infected!.roar; delete entity.corpseThrown;
-    delete entity.infected!.vault; delete entity.infected!.specialAttack; delete entity.infected!.specialCooldowns; delete entity.infected!.specialRecoveryUntil;
+    delete entity.infected!.territory; delete entity.infected!.vault; delete entity.infected!.specialAttack; delete entity.infected!.specialCooldowns; delete entity.infected!.specialRecoveryUntil;
     entity.archetype = id; entity.health.current = entity.health.max = def.hp * INFECTED_TOUGHNESS;
     Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? .7 + (this.world.districts?.pavingHeight(position.x, position.z) ?? 0); entity.transform.yaw = opts.yaw ?? 0;
     Object.assign(entity.combat!, { radius: def.radius, armor: 0, shield: def.special === 'shield', staggerUntil: 0, attacking: false, damageMultiplier: 1 }); entity.combat!.statuses.length = 0; delete entity.combat!.reaction;
@@ -199,6 +199,15 @@ export class InfectedSystem {
             this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
           }
           delete b.investigate; b.state = 'idle';
+        }
+      }
+      const territory = b.territory;
+      if (territory) {
+        const target = b.specialAttack?.target ?? b.investigate ?? (b.heardTargetId ? this.world.entities.get(b.heardTargetId)?.transform : undefined);
+        if (target && Math.hypot(target.x - territory.x, target.z - territory.z) > territory.radius) {
+          this.cancelSpecial(e.id); delete b.investigate; b.heardTargetId = 0; b.state = 'idle'; e.combat!.attacking = false;
+          if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - territory.x, e.transform.z - territory.z) > 1) this.seek(e, territory);
+          this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
         }
       }
       if (this.updateSpecial(e)) continue;
