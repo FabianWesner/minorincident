@@ -13,7 +13,7 @@
  "actors": [
   { "id": "courier", "kind": "courier", "at": [1, 4], "yaw": 3.14, "state": "idle" }
  ],
- "camera": { "mode": "follow", "actor": "courier", "zoom": 1 },
+ "camera": { "mode": "game", "target": [0, 1], "zoom": 1 },
  "frames": 60,
  "shots": [0, 60],
  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
