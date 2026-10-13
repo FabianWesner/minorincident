@@ -5716,6 +5716,54 @@
     }
   },
   {
+    "id": "kit.crossing-crash",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "glb": "public/assets/models/kit.crossing-crash.glb",
+    "dimensions": {
+      "x": 36.2,
+      "y": 7.1,
+      "z": 15.01,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "debrisOrigin",
+      "smokeSocket",
+      "explosionSocket"
+    ],
+    "budget": {
+      "triangles": 16000,
+      "materials": 12,
+      "fileKB": 1200,
+      "drawCalls": 12
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "asphalt",
+      "solid": false
+    },
+    "script": "assets/kit.crossing-crash/build.py",
+    "sourceGlb": "assets/kit.crossing-crash/model.glb",
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/kit.crossing-crash.lod1.glb",
+      "lod2": "public/assets/models/kit.crossing-crash.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 5500,
+      "lod2": 2000
+    }
+  },
+  {
     "id": "kit.campground",
     "category": "prop",
     "status": "integrated",

@@ -44,6 +44,54 @@
       ],
       "yaw": 0
     },
+    "crash-approach": {
+      "position": [
+        470,
+        0,
+        0
+      ],
+      "yaw": 0
+    },
+    "crash-impact": {
+      "position": [
+        508.0,
+        0,
+        0
+      ],
+      "yaw": 0
+    },
+    "crash-wreck": {
+      "position": [
+        517.7,
+        -5.5,
+        0.0
+      ],
+      "yaw": 0
+    },
+    "crawl-end": {
+      "position": [
+        547,
+        0,
+        0
+      ],
+      "yaw": 0
+    },
+    "crawl-fallback": {
+      "position": [
+        527.5,
+        0,
+        -3.2
+      ],
+      "yaw": 0
+    },
+    "crawl-start": {
+      "position": [
+        527.5,
+        0,
+        2.6
+      ],
+      "yaw": 0
+    },
     "crossing-start": {
       "position": [
         -550,
@@ -561,10 +609,112 @@
       "id": "rocks-310",
       "maxTier": 6,
       "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          490.3621646513186,
+          1.8999999463558197,
+          -4.855439507431826
+        ],
+        "min": [
+          485.6378353486814,
+          0,
+          -8.544560492568175
+        ]
+      },
+      "id": "veh.wreck:17",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          495.32391660474974,
+          1.8999999463558197,
+          8.785015502134504
+        ],
+        "min": [
+          490.67608339525026,
+          0,
+          4.8149844978654945
+        ]
+      },
+      "id": "veh.wreck:18",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          481.7505286012248,
+          3.64641,
+          -6.350354624038234
+        ],
+        "min": [
+          474.2494713987752,
+          0,
+          -11.449645375961767
+        ]
+      },
+      "id": "veh.military-truck:19",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          494.3401351674186,
+          3.4178,
+          12.844325835183765
+        ],
+        "min": [
+          485.6598648325814,
+          0,
+          6.555674164816233
+        ]
+      },
+      "id": "veh.school-bus:20",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          496.33639634249397,
+          1.6075001260067228,
+          -6.773909688841648
+        ],
+        "min": [
+          491.66360365750603,
+          0,
+          -11.826090311158353
+        ]
+      },
+      "id": "veh.sedan-red:21",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          478.9274337117557,
+          1.9294999986886978,
+          11.195381490555494
+        ],
+        "min": [
+          473.0725662882443,
+          0,
+          6.404618509444507
+        ]
+      },
+      "id": "veh.police-sedan:22",
+      "maxTier": 6,
+      "minTier": 0
     }
   ],
   "district": "D-CROSSING",
-  "geometryHash": "6499d139473053be90f453387529c16fec473619cac8c7057a4efdddd1d089d5",
+  "geometryHash": "c15c6b113219179c8658396abc54dcfae830c20f7c00107c58f87a198dd5d8e0",
   "lawns": [],
   "layers": [
     {
@@ -1090,6 +1240,383 @@
         ]
       },
       "yaw": 0
+    },
+    {
+      "allowRoad": true,
+      "assetId": "kit.crossing-crash",
+      "id": "kit.crossing-crash:16",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        516.0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          534.1,
+          7.1,
+          7.505
+        ],
+        "min": [
+          497.9,
+          0,
+          -7.505
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": true,
+      "assetId": "veh.wreck",
+      "id": "veh.wreck:17",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        488,
+        0,
+        -6.7
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          490.3621646513186,
+          1.8999999463558197,
+          -4.855439507431826
+        ],
+        "min": [
+          485.6378353486814,
+          0,
+          -8.544560492568175
+        ]
+      },
+      "yaw": 0.5
+    },
+    {
+      "allowRoad": true,
+      "assetId": "veh.wreck",
+      "id": "veh.wreck:18",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        493,
+        0,
+        6.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          495.32391660474974,
+          1.8999999463558197,
+          8.785015502134504
+        ],
+        "min": [
+          490.67608339525026,
+          0,
+          4.8149844978654945
+        ]
+      },
+      "yaw": -0.6
+    },
+    {
+      "allowRoad": false,
+      "assetId": "veh.military-truck",
+      "decay": "wrecked",
+      "id": "veh.military-truck:19",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        478,
+        0,
+        -8.9
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          481.7505286012248,
+          3.64641,
+          -6.350354624038234
+        ],
+        "min": [
+          474.2494713987752,
+          0,
+          -11.449645375961767
+        ]
+      },
+      "yaw": 0.35
+    },
+    {
+      "allowRoad": false,
+      "assetId": "veh.school-bus",
+      "decay": "wrecked",
+      "id": "veh.school-bus:20",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        490,
+        0,
+        9.7
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          494.3401351674186,
+          3.4178,
+          12.844325835183765
+        ],
+        "min": [
+          485.6598648325814,
+          0,
+          6.555674164816233
+        ]
+      },
+      "yaw": -0.42
+    },
+    {
+      "allowRoad": false,
+      "assetId": "veh.sedan-red",
+      "decay": "wrecked",
+      "id": "veh.sedan-red:21",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        494,
+        0,
+        -9.3
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          496.33639634249397,
+          1.6075001260067228,
+          -6.773909688841648
+        ],
+        "min": [
+          491.66360365750603,
+          0,
+          -11.826090311158353
+        ]
+      },
+      "yaw": 0.9
+    },
+    {
+      "allowRoad": false,
+      "assetId": "veh.police-sedan",
+      "decay": "wrecked",
+      "id": "veh.police-sedan:22",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        476,
+        0,
+        8.8
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          478.9274337117557,
+          1.9294999986886978,
+          11.195381490555494
+        ],
+        "min": [
+          473.0725662882443,
+          0,
+          6.404618509444507
+        ]
+      },
+      "yaw": 2.6
+    },
+    {
+      "allowRoad": false,
+      "assetId": "veh.pickup-red",
+      "decay": "wrecked",
+      "id": "veh.pickup-red:23",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        465,
+        0,
+        -8.9
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          467.8583175133753,
+          2.2342242002487183,
+          -6.553513264876041
+        ],
+        "min": [
+          462.1416824866247,
+          0,
+          -11.246486735123959
+        ]
+      },
+      "yaw": -0.5
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.barricade",
+      "id": "prop.barricade:24",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        461,
+        0,
+        -7.4
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          461.79245124534145,
+          1.8040308952331543,
+          -6.182093468301781
+        ],
+        "min": [
+          460.20754875465855,
+          0,
+          -8.61790653169822
+        ]
+      },
+      "yaw": 0.2
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.barricade",
+      "id": "prop.barricade:25",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        462,
+        0,
+        7.4
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          462.74211927753174,
+          1.8040308952331543,
+          8.599119401361556
+        ],
+        "min": [
+          461.25788072246826,
+          0,
+          6.200880598638445
+        ]
+      },
+      "yaw": -0.15
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.barricade",
+      "id": "prop.barricade:26",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        483,
+        0,
+        7.4
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          484.2659299950309,
+          1.8040308952331543,
+          8.42765936437463
+        ],
+        "min": [
+          481.7340700049691,
+          0,
+          6.3723406356253705
+        ]
+      },
+      "yaw": 1.1
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.barricade",
+      "id": "prop.barricade:27",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        505,
+        0,
+        -7.7
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          505.88705218177256,
+          1.8040308952331543,
+          -6.453690953092716
+        ],
+        "min": [
+          504.11294781822744,
+          0,
+          -8.946309046907285
+        ]
+      },
+      "yaw": 0.3
     }
   ],
   "roads": {
