@@ -1,3 +1,6 @@
+import { preset } from '../../sim/progression/Campaign';
+import { applyCampaign } from '../../sim/progression/apply';
+import { completeCampaignLevel } from '../../sim/progression/carryover';
 import { levelNineMission } from '../../levels/L9/mission';
 import { crowdVariety } from '../../render/characters/CrowdAppearance';
 import { propFootprint } from '../../sim/interact/PropSystem';
@@ -224,6 +227,11 @@ export class SceneLab {
         const id = this.vehicles.get('apc'); if (id === undefined) throw new Error('Full crossing needs an authored APC');
         world.vehicles!.active = id; world.entities.get(id)!.vehicle!.driver = 1; world.vehicles!.rebuild();
       } else def.anchors['crossing-start'] = { ...def.anchors['crash-approach'] };
+      if (spec.crossingCrash.handover) {
+        const save = preset('L8-default'); save.completedLevels = 8; save.unlockedLevel = 9;
+        applyCampaign(world, save);
+        world.events.on('level.completed', e => { if (e.type === 'level.completed') completeCampaignLevel(save, 9, e.result, world); });
+      }
       const mission = world.loadMission(def);
       if (spec.crossingCrash.driveFromStart) {
         const frame = emptyInput(), drive = { throttle: 0, steer: 0, brake: true, boost: false };

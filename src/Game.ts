@@ -257,7 +257,7 @@ export class Game {
         if (!speculative) { this.transition.update(.2, 'Loading assets…'); this.transition.watchAssets(); }
         const sim=loadMeasure('level:sim',data);await this.view.load();this.renderedDistricts=this.world.districts;this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:loadMeasure('level:view',sim)-sim};if (speculative) { this.speculative = { id, seed: opts?.seed ?? 1 }; this.clock.pause(); } else { this.transition.update(.95, 'Preparing sound…'); const audio=performance.now();await this.audio.load();loadMeasure('level:audio',audio); this.ui.loaded(); const hud=performance.now(); await this.ui.prepareHud(); loadMeasure('level:hud',hud); }
         if (performanceScenario && performanceLevels[performanceScenario].spot) this.view.preset(performanceLevels[performanceScenario].spot);
-        if (id === 'L9') this.world.missions?.begin();
+        if (id === 'L9' || id === 'L10') this.world.missions?.begin();
         if (!speculative) { this.view.unfreeze(); this.view.update(1); await this.view.renderer.finishWarmUp(); await transitionPaint(); loadMeasure(`transition:${id}:first-frame`, start); this.firstLevelFrame(id); }
       }catch(error){ console.error("Level load failed", error); if (!speculative) this.transition.fail(); this.view.unfreeze(); this.view.missionHidden = false; throw error; }
       finally{this.loading=false;this.ticker.reset();}
@@ -283,7 +283,7 @@ export class Game {
   async startCampaign(character:SurvivorVariant):Promise<void> {
     this.campaign=newCampaign(character,Number(this.params.get('seed')??1));this.campaign.settings={...this.audio.settings};this.saveCampaign();await this.loadLevel('L1');
   }
-  /** Levels without a mission screen (L7 onwards) hand over directly: the next level when it exists, else the credits (L9 until an L10 exists). */
+  /** Levels without a mission screen (L7 onwards) hand over directly: the next level when it exists, else the credits. */
   private async handOver(finished: number): Promise<void> {
     const save = this.campaign, next = nextLevelAfter(finished);
     if (!save) return;
@@ -306,7 +306,7 @@ export class Game {
   applyCampaign():void {if(this.campaign&&this.world.player){applyCampaign(this.world,this.campaign);this.view.update(1);}}
   saveCampaign():boolean {
     if(!this.campaign)return false;
-    if (this.world.scenario === 'L9' && this.world.missions?.l9) this.campaign.l9Crash = this.world.missions.l9.save();
+    if (this.world.scenario === 'L9' && this.world.missions?.l9 && !this.campaign.crossingHandover) this.campaign.l9Crash = this.world.missions.l9.save();
     if(this.world.progression?.campaign){this.world.progression.campaign=structuredClone(this.campaign);}
     return this.saves.write(this.campaign);
   }
@@ -314,7 +314,7 @@ export class Game {
   private watchCampaign():void {
     const save=this.campaign!;
     this.world.events.on('level.completed',event=>{
-      if(event.type!=='level.completed'||!/^L[1-9]$/.test(event.id))return;
+      if(event.type!=='level.completed'||!/^L(?:[1-9]|10)$/.test(event.id))return;
       if (event.id === 'L8' && this.world.missions?.l8) { const transport = this.world.missions.l8.transferOrNull(); if (transport) save.transport = transport; }
       completeCampaignLevel(save,Number(event.id.slice(1)) as Level,event.result,this.world);
       this.saveCampaign();

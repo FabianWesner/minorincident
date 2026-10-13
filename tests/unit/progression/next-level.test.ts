@@ -18,9 +18,9 @@ describe('next level selection', () => {
     expect(nextLevelAfter(1)).toBe(2);
   });
   it.each([[6, 7], [7, 8], [8, 9]])('L%i continues with L%i (L6 -> L7 -> L8 -> L9 in order)', (finished, next) => { expect(nextLevelAfter(finished)).toBe(next); });
-  it('L9 is the last level (credits until an L10 exists); nothing precedes L1', () => {
-    expect(nextLevelAfter(9)).toBeNull(); expect(nextLevelAfter(10)).toBeNull(); expect(nextLevelAfter(0 as Level)).toBeNull();
-    expect(lastLevel).toBe(9);
+  it('L9 continues to L10; L10 is the last level; nothing precedes L1', () => {
+    expect(nextLevelAfter(9)).toBe(10); expect(nextLevelAfter(10)).toBeNull(); expect(nextLevelAfter(0 as Level)).toBeNull();
+    expect(lastLevel).toBe(10);
   });
   it('finishing L6 or L7 unlocks the next level so the direct handover is never locked', async () => {
     const { completeCampaignLevel } = await import('../../../src/sim/progression/carryover');

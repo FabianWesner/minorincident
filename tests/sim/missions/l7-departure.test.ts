@@ -101,14 +101,14 @@ test('T-E29-13-bus-blocks @E29-AC13 the waiting bus blocks the player and naviga
   expect(d.cameraPose()).not.toBeNull(); expect(l7Departure.seconds).toBeGreaterThanOrEqual(6); expect(l7Departure.seconds).toBeLessThanOrEqual(10);
 });
 
-test('T-E29-13-handover @E29-AC13 L7 completion unlocks L8 and carries the arsenal; L9 ends the campaign', () => {
+test('T-E29-13-handover @E29-AC13 L7 completion unlocks L8 and carries the arsenal; L9 continues to L10', () => {
   const save = preset('L6-default'); save.completedLevels = 6; save.unlockedLevel = 7;
   const world = { entities: { get: () => ({ weapons: { LEFT: { rack: [{ id: 'weapon.bat' }] }, RIGHT: { rack: [{ id: 'weapon.handgun' }, { id: 'weapon.rocket-launcher' }] } } }) } } as never;
   completeCampaignLevel(save, 7, { time: 1, kills: 0, knockdowns: 0, damage: 0, deaths: 0, rescued: 2, optionalObjectives: [], survivors: ['a', 'b'] }, world);
   expect(save.completedLevels).toBe(7); expect(save.unlockedLevel).toBe(8); expect(save.racks.RIGHT).toEqual(['weapon.handgun', 'weapon.rocket-launcher']);
   expect(save.results!.L7.survivors).toEqual(['a', 'b']);
   expect(validateSave(save)).toBe(true);
-  expect(nextLevelAfter(7)).toBe(8); expect(nextLevelAfter(9)).toBeNull();
+  expect(nextLevelAfter(7)).toBe(8); expect(nextLevelAfter(9)).toBe(10);
 });
 
 test('T-E29-13-35 @E29-AC13 a full 35-person roster boards and every figure is accounted for', async () => {
