@@ -28,7 +28,7 @@ test('T-E14-05 @E14 @E14-AC05 portrait/landscape touch targets are 56px and clea
 
 test('T-E14-touch-slots @E14 @E14-AC01 @E14-AC02 touch actions show equipped icons, cooldown and selected rack', async ({ page }) => {
   await hudStart(page);
-  await expect(page.getByTestId('slot-cards')).toBeHidden();
+  await expect(page.getByTestId('weapon-active')).toBeHidden();
   await expect(page.getByTestId('touch-left')).toHaveClass(/is-selected/);
   const icon = await page.getByTestId('icon-RIGHT').getAttribute('src');
   await expect(page.getByTestId('touch-icon-right')).toHaveAttribute('src', icon!);
