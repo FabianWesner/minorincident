@@ -25,7 +25,7 @@ for (const id of missionIds) test(`T-E12-07-${id} @E12 @E12-AC07 every cheat adv
   // E23: and L5, which ends at the Metro shutter and continues into L6.
   // L8 (zoo): the APC escape continues straight into L9 like L2-L5.
   // E19: L1 now goes directly to its result screen, without the old cinematic.
-  if (id === 'L1') { expect(api.state()!.phase).toBe('result'); expect(world.events.events().some(e => e.type === 'level.completed')).toBe(true); return; }
+  if (id === 'L1' || id === 'L10') { expect(api.state()!.phase).toBe('result'); expect(world.events.events().some(e => e.type === 'level.completed')).toBe(true); return; }
   if (id === 'L2' || id === 'L3' || id === 'L4' || id === 'L5' || id === 'L8' || id === 'L9') { expect(api.state()!.phase).toBe('progression'); expect(world.events.events().some(e => e.type === 'level.completed')).toBe(true); return; }
   expect(api.state()!.phase).toBe('cinematic'); world.setInput({ interact: true }); for(let i=0;i<30;i++)world.update();
   expect(api.state()!.phase).toBe('result'); expect(world.events.events().some(e => e.type === 'level.completed')).toBe(true);

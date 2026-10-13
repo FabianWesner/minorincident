@@ -146,7 +146,16 @@ test('T-E03-15-held @E03 @E03-AC15 held LMB target repeats and target death stop
   const count = await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack').length);
   await tick(page, 90); expect(await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack').length)).toBe(count);
   await page.evaluate(id => window.__SS__!.teleport(id, { x: 8, z: 0 }), id);
-  const far = await point(page, 8); await page.mouse.click(far.x, far.y); await tick(page, 5);
+  // Refresh the displayed picking body after the paused teleport, then click its torso rather than the ground.
+  await page.evaluate(() => window.__SS__!.screenshotReady());
+  const far = await page.evaluate(id => {
+    const t = window.__SS__!.getEntity(id)!.transform, p = window.__SS__!.camera.project(t.x, t.y + .3, t.z);
+    const rect = document.querySelector('canvas')!.getBoundingClientRect();
+    return { x: rect.left + (p[0] + 1) * rect.width / 2, y: rect.top + (1 - p[1]) * rect.height / 2 };
+  }, id);
+  await page.mouse.click(far.x, far.y);
+  const picked = await tick(page); expect(picked.attackTarget?.id).toBe(id);
+  await tick(page, 4);
   await page.evaluate(id => window.__SS__!.interact.hit(id, 10000, 'bullet'), id);
   expect(await page.evaluate(id => window.__SS__!.getEntity(id)!.health.current, id)).toBe(0); await tick(page, 20);
   const stopped = await position(page); await tick(page, 90);

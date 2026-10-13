@@ -33,7 +33,7 @@ function validTransport(raw: unknown): boolean {
   const actor = (e: unknown): e is EntitySnapshot => {
     if (!record(e) || !record(e.transform) || !record(e.health)) return false;
     const transform = e.transform, health = e.health;
-    return Number.isSafeInteger(e.id) && Number(e.id) > 0 && ['x', 'y', 'z', 'yaw'].every(k => Number.isFinite(transform[k])) && Number.isFinite(health.current) && Number.isFinite(health.max) && Number(health.current) > 0 && Number(health.current) <= Number(health.max);
+    return Number.isSafeInteger(e.id) && Number(e.id) > 0 && ['x', 'y', 'z', 'yaw'].every(k => Number.isFinite(transform[k])) && Number.isFinite(health.current) && Number.isFinite(health.max) && Number(health.max) > 0 && (Number(health.current) > 0 || e.archetype === 'vehicle.military-apc' && record(e.vehicle) && e.vehicle.floor === true && Number(health.current) === 0) && Number(health.current) <= Number(health.max);
   };
   const vehicle = raw.vehicle;
   if (!actor(vehicle) || vehicle.archetype !== 'vehicle.military-apc' || !record(vehicle.vehicle) || vehicle.vehicle.driver !== 1 || !Array.isArray(vehicle.vehicle.passengers) || !raw.occupants.every(actor)) return false;
@@ -55,16 +55,48 @@ function validCrash(raw: unknown): boolean {
     && car.id === s.carId && car.archetype === 'vehicle.military-apc' && pose(car.transform) && health(car.health, false) && record(car.vehicle)
     && (['impact', 'crawl', 'done'].includes(String(s.phase)) ? car.vehicle.damage === 'exploded' && car.vehicle.driver === null : car.vehicle.driver === 1);
 }
+/** Companion identity is carried independently of the sheltered human roster. */
+function validCorgi(raw: unknown): boolean {
+  if (!record(raw) || !record(raw.companion) || !record(raw.health) || !record(raw.transform)) return false;
+  const pose = raw.transform, companion = raw.companion;
+  return Number.isSafeInteger(raw.id) && Number(raw.id) > 1 && raw.archetype === 'char.corgi' && raw.kind === 'companion'
+    && ['x','y','z','yaw'].every(k => Number.isFinite(pose[k])) && Number(raw.health.current) > 0 && Number(raw.health.current) <= Number(raw.health.max)
+    && Array.isArray(companion.path) && ['courage','until','barkAt','hurtAt'].every(k => Number.isFinite(companion[k]));
+}
 /** v0 renamed level; v2 persists completion before navigation. Existing v1 aftermath is retained; absent records keep level defaults. */
 export function migrate(raw:unknown):unknown {
   if(record(raw)&&raw.version===0){const {level,...rest}=raw;raw={...rest,version:1,unlockedLevel:level};}
   if(record(raw)&&raw.version===1)raw={...raw,version:2};
-  return dropLegacyL3Weapons(raw);
+  raw = dropLegacyL3Weapons(raw);
+  // Retired pre-finale breakdown saves retain their position, roster and zero durability.
+  if (record(raw) && raw.unlockedLevel === 9 && record(raw.l9Crash) && record(raw.l9Crash.state) && raw.l9Crash.state.phase === 'driving' && record(raw.l9Crash.vehicle) && record(raw.l9Crash.vehicle.health) && raw.l9Crash.vehicle.health.current === 0 && record(raw.l9Crash.vehicle.vehicle)) {
+    const copy = structuredClone(raw.l9Crash);
+    const car = copy.vehicle as Record<string, unknown>;
+    car.vehicle = { ...(car.vehicle as Record<string, unknown>), floor: true, damage: 'normal', explodeAt: null, driver: 1 };
+    raw = { ...raw, l9Crash: copy };
+  }
+  // S6 saves written after the crawl had no L10 transaction yet. Commit the same reset on load.
+  if (record(raw) && raw.completedLevels === 9 && raw.unlockedLevel === 9 && validCrash(raw.l9Crash) && strings(raw.ownedActions)) {
+    const crash = raw.l9Crash as NonNullable<CampaignSave['l9Crash']>;
+    if (crash.state.finished) {
+      const transport = validTransport(raw.transport) ? raw.transport as NonNullable<CampaignSave['transport']> : null;
+      const out = { ...raw, unlockedLevel: 10, ownedActions: ['weapon.fire-axe', ...raw.ownedActions.filter(id => catalog[id]?.category === 'ability')], racks: { LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.fire-axe'] }, crossingHandover: { applied: true, checkpoint: 'cure-crash', anchor: { ...crash.player.transform }, preCrashDurability: crash.state.preCrashDurability, lostWeapons: raw.ownedActions.filter(id => catalog[id]?.category !== 'ability' && id !== 'weapon.fire-axe'), shelteredPassengers: transport?.occupants.filter(e => e.id !== 1 && !e.companion) ?? [] } } as Record<string, unknown>;
+      delete out.l9Crash; delete out.transport; delete out.pending; raw = out;
+    }
+  }
+  return raw;
 }
 export function validateSave(raw:unknown):raw is CampaignSave {
   if(!record(raw)||raw.version!==2||!Number.isSafeInteger(raw.seed)||!['female','male'].includes(String(raw.character))||!Number.isInteger(raw.unlockedLevel)||Number(raw.unlockedLevel)<1||Number(raw.unlockedLevel)>lastLevel||!Number.isInteger(raw.completedLevels)||Number(raw.completedLevels)<0||Number(raw.completedLevels)>lastLevel||(Number(raw.completedLevels)>=Number(raw.unlockedLevel)&&!(Number(raw.completedLevels)>=6&&Number(raw.unlockedLevel)>=Number(raw.completedLevels))))return false;
-  if(!strings(raw.ownedActions)||!raw.ownedActions.includes('weapon.fists')||!raw.ownedActions.includes('weapon.kick')||raw.ownedActions.some(id=>!Object.hasOwn(catalog,id))||!strings(raw.upgrades)||raw.upgrades.some(id=>!Object.hasOwn(upgrades,id))||!record(raw.racks)||!strings(raw.racks.LEFT)||!strings(raw.racks.RIGHT)||!record(raw.settings)||!record(raw.usage))return false;
+  if(!strings(raw.ownedActions)||(raw.crossingHandover === undefined && (!raw.ownedActions.includes('weapon.fists')||!raw.ownedActions.includes('weapon.kick')))||raw.ownedActions.some(id=>!Object.hasOwn(catalog,id))||!strings(raw.upgrades)||raw.upgrades.some(id=>!Object.hasOwn(upgrades,id))||!record(raw.racks)||!strings(raw.racks.LEFT)||!strings(raw.racks.RIGHT)||!record(raw.settings)||!record(raw.usage))return false;
   const save=raw as unknown as CampaignSave;
+  if (save.completedLevels >= 9 && !save.crossingHandover) return false;
+  if (raw.crossingHandover !== undefined) {
+    const h = raw.crossingHandover;
+    if (record(h) && h.corgi !== undefined && !validCorgi(h.corgi)) return false;
+    if (!record(h) || h.applied !== true || h.checkpoint !== 'cure-crash' || !record(h.anchor) || !['x','y','z','yaw'].every(k => Number.isFinite((h.anchor as Record<string, unknown>)[k])) || !Number.isFinite(h.preCrashDurability) || Number(h.preCrashDurability) < 0 || !strings(h.lostWeapons) || h.lostWeapons.some(id => !Object.hasOwn(catalog,id) || catalog[id].category === 'ability' || id === 'weapon.fire-axe') || !Array.isArray(h.shelteredPassengers) || !h.shelteredPassengers.every(e => record(e) && Number.isSafeInteger(e.id) && Number(e.id) > 1 && ['civilian','escort'].includes(String(e.kind)) && record(e.health) && Number(e.health.current) > 0 && Number(e.health.current) <= Number(e.health.max) && record(e.transform) && ['x','y','z','yaw'].every(k => Number.isFinite((e.transform as Record<string, unknown>)[k]))) || new Set(h.shelteredPassengers.map(e => e.id)).size !== h.shelteredPassengers.length || save.completedLevels < 9 || save.unlockedLevel !== 10 || save.l9Crash || save.transport || save.pending || !save.ownedActions.includes('weapon.fire-axe')) return false;
+  }
+
   if(!validRacks(save,save.racks)||save.upgrades.length!==Math.min(5,save.completedLevels)*2)return false;
   const expectedLevel=save.completedLevels+((save.pending?.phase==='unlock'||save.pending?.phase==='cards')?2:1);
   // A finished L6 save written before L7 existed keeps unlockedLevel 6; every later completion unlocks the next level.
@@ -86,9 +118,10 @@ export function validateSave(raw:unknown):raw is CampaignSave {
     const people=[...save.stationOccupants??[],...save.rescuedSurvivors];
     if(new Set(people.map(e=>e.id)).size!==people.length)return false;
   }
-  if(save.results!==undefined&&(!record(save.results)||Object.entries(save.results).some(([id,result])=>!/^L[1-9]$/.test(id)||!record(result)||!['time','kills','knockdowns','damage','deaths','rescued'].every(k=>typeof result[k]==='number'&&Number.isFinite(result[k])&&Number(result[k])>=0)||!strings(result.optionalObjectives)||result.survivors!==undefined&&!strings(result.survivors))))return false;
-  const prefix={...save,upgrades:[] as string[]};
-  for(const id of save.upgrades){if(!upgrades[id].prerequisites.every(p=>meetsPrerequisite(prefix,p))||(upgrades[id].weapon&&!save.ownedActions.includes(upgrades[id].weapon!))||(upgrades[id].grant&&!save.ownedActions.includes(upgrades[id].grant!)))return false;prefix.upgrades.push(id);}
+  if(save.results!==undefined&&(!record(save.results)||Object.entries(save.results).some(([id,result])=>!/^L(?:[1-9]|10)$/.test(id)||!record(result)||!['time','kills','knockdowns','damage','deaths','rescued'].every(k=>typeof result[k]==='number'&&Number.isFinite(result[k])&&Number(result[k])>=0)||!strings(result.optionalObjectives)||result.survivors!==undefined&&!strings(result.survivors))))return false;
+  const history = [...save.ownedActions, ...save.crossingHandover?.lostWeapons ?? []];
+  const prefix={...save,ownedActions:history,upgrades:[] as string[]};
+  for(const id of save.upgrades){if(!upgrades[id].prerequisites.every(p=>meetsPrerequisite(prefix,p))||(upgrades[id].weapon&&!history.includes(upgrades[id].weapon!))||(upgrades[id].grant&&!history.includes(upgrades[id].grant!)))return false;prefix.upgrades.push(id);}
   if(save.completedLevels>=6&&save.pending)return false;
   if(save.pending){const p=save.pending;
     if(!record(p)||!Number.isInteger(p.level)||p.level<1||p.level>5||!['unlock','cards','racks'].includes(p.phase)||!strings(p.cards)||p.cards.some(id=>!Object.hasOwn(upgrades,id))||save.unlockedLevel!==p.level+1)return false;

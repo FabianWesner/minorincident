@@ -102,7 +102,7 @@ test('T-E28-07 @E28 @E28-AC07 moving player/infected record tracks and snow/ash 
   expect(weatherKinds).toContain('snow');
 });
 
-test('T-E28-08 @E28 @E28-AC08 every override preserves all six mission graph walks', async () => {
+test('T-E28-08 @E28 @E28-AC08 every override preserves all registered mission graph walks', async () => {
   const { readFileSync } = await import('node:fs');
   const { compositions } = await import('../../src/levels/compositions');
   const { missionIds, resolveCampaignMission } = await import('../../src/levels/missions');
@@ -114,7 +114,11 @@ test('T-E28-08 @E28 @E28-AC08 every override preserves all six mission graph wal
     if(id==='L6'&&kind!==weatherKinds[0]){w.reset();w.loadComposition(c,layouts,28);}
     const m = w.loadMission(resolveCampaignMission(id, w.districts!)); w.weather!.setOverride(kind); m.begin();
     let guard = 0;
-    while (m.state.phase === 'playing' && guard++ < 100) m.completeObjective();
+    while (m.state.phase === 'playing' && guard < 100) {
+      // Shared run-out advances sim time after the final objective, rather than completing another objective.
+      if (m.state.runOutUntil !== undefined) { w.update(); continue; }
+      guard++; m.completeObjective();
+    }
     expect(guard).toBeLessThan(100); expect(['cinematic', 'result', 'progression']).toContain(m.state.phase);
     rows.push({ id, kind, steps: [...m.state.completedObjectives], phase: m.state.phase });
     }

@@ -67,7 +67,7 @@ export class MissionUI {
     setHidden(this.subtitle,!cinematic&&(!state.subtitle||!playing));
     this.text(this.subtitle,cinematic?.caption??state.subtitle?.text??'');
     attribute(this.subtitle,'data-line-id',state.subtitle?.id??'');
-    setHidden(this.panel,playing||!!cinematic);
+    setHidden(this.panel,playing||!!cinematic||!!mission.def.l9&&state.phase==='progression');
     if (this.panel.hidden && this.panel.contains(document.activeElement)) (document.activeElement as HTMLElement)?.blur();
     setHidden(this.tracker,!playing);setHidden(this.map,!playing);
     setHidden(this.result,state.phase!=='result');

@@ -1,4 +1,4 @@
-/** S3 full-route real-physics APC probe (no mission/crash, supplied by S5/S6).
+/** S3/S4 full-route real-physics APC probe, including the on-main S6 forced crash.
  * Run SCENE_SERVER=preview under tools/perf/quiet-run.sh after npm run build.
  * All three profiles use headless native Metal, one browser at a time. */
 import { crossing } from '../../src/levels/L9/district';
@@ -8,7 +8,7 @@ import { execFileSync } from 'node:child_process';
 import type { Game } from '../../src/Game';
 import { writeFileSync } from 'node:fs';
 
-const output = 'test-results/epics/E31/l9-stream';
+const output = process.env.L9_OUTPUT ?? 'test-results/epics/E31/l9-stream';
 // The quiet gate can queue behind other jobs: build the current sources after admission.
 execFileSync('npm', ['run', 'build'], { stdio: 'inherit' });
 const results: unknown[] = [];
@@ -22,9 +22,10 @@ try {
       if (profile === 'phone') await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
       for (const route of crossing.routes.filter(r => !process.env.L9_ROUTE || r.id === process.env.L9_ROUTE)) {
         const spec: SceneSpec = { name: `l9-stream-${route.id}`, ground: 'district', time: 'L9-crossing', dof: false,
-          layout: { district: 'D-CROSSING', bbox: [[-600, -400], [600, 400]] }, infectedCap: 200,
+          layout: { district: 'D-CROSSING', bbox: [[-600, -400], [600, 400]], anchors: ['crossing-start', 'outskirts', 'crash-approach', 'crash-impact', 'crash-wreck', 'crawl-start', 'crawl-fallback', 'crawl-end'] }, infectedCap: 200,
+          crossingCrash: { health: process.env.L9_FLOOR === '1' ? 0 : 1000, driveFromStart: true },
           actors: [{ id: 'crowd', kind: 'infected', count: cap, spread: 20, at: [-550, 40], state: 'idle' }],
-          vehicles: [{ id: 'apc', asset: 'vehicle.military-apc', at: crossing.start, yaw: 0, path: route.points }],
+          vehicles: [{ id: 'apc', asset: 'vehicle.military-apc', at: crossing.start, yaw: 0, path: route.points, ...(process.env.L9_FLOOR === '1' ? { floor: true, health: 0 } : {}) }],
           camera: { mode: 'game', target: 'apc', zoom: 1 } };
         await session.load(spec); await session.ready();
         // As in the existing E18 probes: exclude transient level-load garbage
@@ -33,7 +34,7 @@ try {
         const cpuProfile = process.env.L9_CPU_PROFILE === `${profile}/${route.id}`;
         if (cpuProfile) { await cdp.send('Profiler.enable'); await cdp.send('Profiler.start'); }
         await session.page.evaluate('globalThis.__name = (fn) => fn');
-        const measurement = await session.page.evaluate(async ({ cap, destination, diagnose }) => {
+        const measurement = await session.page.evaluate(async ({ cap, diagnose }) => {
           const api = window.__SS__!;
           const game = (window.__SCENE__ as unknown as { game: Game }).game, world = game.world;
           const gl = (game.view.renderer as unknown as { backend: { gl: WebGL2RenderingContext } }).backend.gl;
@@ -105,15 +106,15 @@ try {
               });
               samples.push({ distance, position: e.transform, ...p.terrain, geometries: p.geometries }); relocated = now;
             }
-            if (Math.hypot(e.transform.x - destination[0], e.transform.z - destination[1]) < 8) break;
+            if (world.missions?.l9?.state.finished) break;
           }
           api.pause(); api.setTimeScale(1); await api.screenshotReady();
           if (diagnose) backend.createRenderPipeline = createPipeline;
           const final = api.getEntity(car.id)!, p95 = (v: number[]) => v.sort((a, b) => a - b)[Math.ceil(v.length * .95) - 1];
-          return { completed: Math.hypot(final.transform.x - destination[0], final.transform.z - destination[1]) < 8,
+          return { completed: !!world.missions?.l9?.state.finished, crash: world.missions?.l9?.snapshot(),
             seconds: (performance.now() - start) / 1000, distance, frameP95: p95(frames), simP95: p95(sims), hitch, draws, triangles, resident, loading, geometries, heapPeakMB,
             final: final.transform, hp: final.health.current, samples, hitches, coldPipelines, shadowTriangles, submittedTriangles, heroLights, awakeProps, particles, puffs, parts, gpu, terrain: api.perf().terrain, backend: api.perf().backend, infected: api.perf().infected?.count, nodeBuilds: api.perf().nodeBuilds };
-        }, { cap, destination: crossing.outskirts, diagnose: cpuProfile });
+        }, { cap, diagnose: cpuProfile });
         if (cpuProfile) writeFileSync('/tmp/l9-stream-cpu.json', JSON.stringify((await cdp.send('Profiler.stop')).profile));
         await cdp.send('HeapProfiler.collectGarbage');
         const heap = await cdp.send('Runtime.getHeapUsage');
@@ -134,10 +135,14 @@ try {
         // that is not a driving round trip or a useful cold-shader regression.
         const outward = Array.from({ length: 10 }, (_, i) => -450 + i * 100);
         for (const x of [...outward, ...outward.slice(0, -1).reverse()]) {
-          await session.page.evaluate(x => window.__SCENE__!.setCamera({ mode: 'game', target: [x, 0], zoom: 1 }), x); await session.ready();
+          await session.page.evaluate(x => {
+            const game = (window.__SCENE__ as unknown as { game: Game }).game;
+            game.world.chunks?.update([x, 0]);
+            window.__SCENE__!.setCamera({ mode: 'game', target: [x, 0], zoom: 1 });
+          }, x); await session.ready();
         }
         await cdp.send('HeapProfiler.collectGarbage');
-        rounds.push({ heap: (await cdp.send('Runtime.getHeapUsage')).usedSize, perf: await session.page.evaluate(() => window.__SS__!.perf()) });
+        rounds.push({ heap: (await cdp.send('Runtime.getHeapUsage')).usedSize, perf: await session.page.evaluate(() => window.__SS__!.perf()), residency: await session.page.evaluate(() => window.__SS__!.getState().chunkResidency) });
       }
       const first = rounds[0], last = rounds[5];
       const pass = last.heap <= first.heap * 1.1 && last.perf.geometries <= first.perf.geometries * 1.1 && last.perf.textures <= first.perf.textures * 1.1 && last.perf.nodeBuilds === first.perf.nodeBuilds;
