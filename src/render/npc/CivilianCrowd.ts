@@ -92,6 +92,8 @@ class CivilianBatch extends Group {
   private bakedClip!: CrowdClip;
   private readonly hand = new Matrix4();
   private readonly gunDirection = new Vector3();
+  private readonly tilt = new Matrix4();
+  private readonly spoutPoint = new Vector3();
   private gripTriangles: Float32Array = new Float32Array();
   private gripReach = .07;
   private texture!: DataTexture;
@@ -262,6 +264,10 @@ class CivilianBatch extends Group {
       if (holding) {
         const part = this.bakedClip.parts.indexOf('handR');
         this.poses.part(frame, ...blend, part, this.hand).premultiply(this.transform);
+        // Gardener: while the pour runs the can tips its spout down towards the flowers (eased in over 0.33 s); the spout feeds the water stream.
+        const pour = handProp === 'watering-can' && c.state === 'calm' && activity?.activity === 'water' && !!activity.facing && !!c.activityUntil ? Math.min(1, Math.max(0, (this.world.tick - (c.activityStarted ?? 0) - 20) / 20)) : 0;
+        if (pour > 0) { this.hand.multiply(this.tilt.makeRotationZ(-.75 * pour)); this.props!.spouts.set(e.id, this.spoutPoint.set(.36, -.13, 0).applyMatrix4(this.hand).clone()); }
+        else this.props!.spouts.delete(e.id);
         this.props!.held(handProp!, this.hand, e.id, weaponProps.has(handProp!) ? undefined : this.gripTriangles, this.gripReach);
       }
       this.tintOf(e, index, blend[0] * 2 + blend[1]);
@@ -471,6 +477,8 @@ export class CivilianCrowd extends Group {
     return this.muzzle(id);
   }
   muzzle(id: number): Vector3 | null { return this.props.muzzles.get(id)?.clone() ?? null; }
+  /** Spout of the watering can a gardener is pouring from, as drawn this frame. */
+  spout(id: number): Vector3 | null { return this.props.spouts.get(id)?.clone() ?? null; }
   gunMeshes() { return this.props.guns.filter(g => (this.props.aiming.get(g.entity)?.until ?? -1) >= this.world.tick); }
   heldProps() { return this.props.contacts; }
   drawnCorpses() { return this.batches.flatMap(b => b.drawnCorpses()); }

@@ -17,6 +17,8 @@ export interface VfxTargets {
   camera?(): import('three').Camera;
   /** Resolve and pose the rendered gun synchronously at the shot tick. */
   muzzle?(id: number, direction: { x: number; y?: number; z: number }): { x: number; y: number; z: number } | null;
+  /** Drawn spout of a pouring watering can (gardener routine), null when none. */
+  spout?(id: number): { x: number; y: number; z: number } | null;
   flash(id: number, strength: number): void;
   detach(id: number, limb: number): { x: number; y: number; z: number } | void;
   blood(coverage: number): void;
@@ -59,7 +61,7 @@ export class Vfx extends Group {
   private readonly featherVeil = typeof document === 'undefined' ? null : document.createElement('div');
   private obstruction = { remainingTicks: 0, opacity: 0 };
   private readonly pools = [this.particles, this.decals, this.surfaceSplats, this.telegraphs, this.waves];
-  private readonly landings = Array.from({ length: 384 }, () => ({ at: Infinity, x: 0, z: 0, size: 0, color: 0 }));
+  private readonly landings = Array.from({ length: 384 }, () => ({ at: Infinity, x: 0, y: 0, z: 0, size: 0, color: 0 }));
   private landingCursor = 0;
   private lastSpray = { actionId: '', direction: { x: 1, z: 0 }, droplets: 0, chunks: 0, gravity: 9.81 };
   private readonly stops: (() => void)[] = [];
@@ -176,26 +178,28 @@ export class Vfx extends Group {
     const count = kill ? 48 : event.actionId === 'weapon.fists' ? 12 : heavy ? 40 : event.actionId === 'weapon.bat' ? 32 : event.actionId === 'weapon.crowbar' ? 28 : 24;
     const n = this.gore === 'Off' ? 6 : Math.ceil(count / (this.quality === 'low' ? 4 : this.gore === 'Reduced' ? 2 : 1));
     const color = this.gore === 'Off' ? 0x776c75 : this.colorblind ? 0xffba48 : 0xe3293c;
+    // Blood leaves the body where it stands: on the L3 ramp or deck that is the support height, not the street (y 0).
+    const victim = this.world.entities.get(event.targetId), base = this.world.districts?.supportBelow(x, z, (victim?.transform.y ?? .7) - .7) ?? 0;
     let chunks = 0;
     for (let i = 0; i < n; i++) {
       const chunk = this.gore === 'Full' && (heavy || kill) && i < (kill ? 4 : 2); if (chunk) chunks++;
       const spread = (this.rng.next() - .5) * (heavy ? 3 : 2), speed = (heavy ? 4.5 : 3) + this.rng.next() * 3;
       const vx = direction.x * speed - direction.z * spread, vz = direction.z * speed + direction.x * spread;
-      const vy = 2.3 + this.rng.next() * (heavy ? 2.3 : 1.7), y = 1.1 + this.rng.next() * .25;
+      const vy = 2.3 + this.rng.next() * (heavy ? 2.3 : 1.7), y = 1.1 + this.rng.next() * .25; // height above the support
       const landingTime = (vy + Math.sqrt(vy * vy + 2 * 9.81 * y)) / 9.81;
       const dropletSize = event.actionId === 'weapon.fists' ? .055 : heavy ? .13 : event.actionId === 'weapon.machete' ? .085 : .11;
       const size = chunk ? .17 + this.rng.next() * .08 : dropletSize + this.rng.next() * .055;
-      this.particles.spawn(this.time, landingTime, x, y, z, vx, vy, vz, size, 0, color, 9.81);
+      this.particles.spawn(this.time, landingTime, x, base + y, z, vx, vy, vz, size, 0, color, 9.81);
       if (this.gore !== 'Off' && i % (this.quality === 'low' ? 2 : 5) === 0) {
         const landing = this.landings[this.landingCursor++ % this.landings.length];
-        landing.at = this.time + landingTime; landing.x = x + vx * landingTime; landing.z = z + vz * landingTime; landing.size = chunk ? .5 : .18 + this.rng.next() * .15; landing.color = color;
+        landing.at = this.time + landingTime; landing.x = x + vx * landingTime; landing.z = z + vz * landingTime; landing.y = this.world.districts?.supportBelow(landing.x, landing.z, base) ?? 0; landing.size = chunk ? .5 : .18 + this.rng.next() * .15; landing.color = color;
       }
     }
     this.lastSpray = { actionId: event.actionId, direction, droplets: n - chunks, chunks, gravity: 9.81 };
     if (this.gore !== 'Off') {
-      this.decals.spawn(this.time, 18, x, .016, z, this.rng.next() * Math.PI, 0, 0, kill ? 1.1 : .35, this.colorblind ? 0 : kill ? 6 : 5, color);
+      this.decals.spawn(this.time, 18, x, base + .016, z, this.rng.next() * Math.PI, 0, 0, kill ? 1.1 : .35, this.colorblind ? 0 : kill ? 6 : 5, color);
       const distance = this.world.combat?.query.clearDistance({ x, z }, direction, 1.8) ?? 1.8;
-      if (distance < 1.75) this.surfaceSplats.spawn(this.time, 12, x + direction.x * Math.max(0, distance - .025), .8, z + direction.z * Math.max(0, distance - .025), Math.atan2(direction.z, direction.x) + Math.PI / 2, 0, 0, heavy ? .8 : .45, this.colorblind ? 0 : 5, color);
+      if (distance < 1.75) this.surfaceSplats.spawn(this.time, 12, x + direction.x * Math.max(0, distance - .025), base + .8, z + direction.z * Math.max(0, distance - .025), Math.atan2(direction.z, direction.x) + Math.PI / 2, 0, 0, heavy ? .8 : .45, this.colorblind ? 0 : 5, color);
     }
   }
   readonly receive = (event: GameEvent): void => {
@@ -347,8 +351,15 @@ export class Vfx extends Group {
     for (const e of this.world.entities.iterate()) {
       const c = e.civilian; if (!c?.activityUntil || c.state !== 'calm' || e.hidden) continue;
       const a = c.schedule?.[c.scheduleStep ?? 0]; if (a?.activity !== 'water' || !a.facing || this.world.tick - (c.activityStarted ?? 0) < 40) continue;
-      const dx = a.facing.x - e.transform.x, dz = a.facing.z - e.transform.z, d = Math.max(.2, Math.hypot(dx, dz)), t = .4, ox = dx / d * .4 - dz / d * .12, oz = dz / d * .4 + dx / d * .12;
-      for (let i = 0; i < (this.quality === 'low' ? 2 : 4); i++) this.particles.spawn(this.time, t + .05, e.transform.x + ox, .6,e.transform.z + oz,
+      const spout = this.targets.spout?.(e.id), t = .4, base = this.world.districts?.supportBelow(e.transform.x, e.transform.z, e.transform.y - .7) ?? 0;
+      if (spout) {
+        // The stream leaves the tilted spout and arcs onto the flowers (target a little above the soil).
+        const vx = (a.facing.x - spout.x) / t, vz = (a.facing.z - spout.z) / t, vy = (base + .3 - spout.y + 4.905 * t * t) / t;
+        for (let i = 0; i < (this.quality === 'low' ? 4 : 6); i++) this.particles.spawn(this.time, t + .05, spout.x, spout.y, spout.z, vx + (this.rng.next() - .5) * .2, vy + (this.rng.next() - .5) * .2, vz + (this.rng.next() - .5) * .2, .26, 0, 0x7cc4ff, 9.81);
+        continue;
+      }
+      const dx = a.facing.x - e.transform.x, dz = a.facing.z - e.transform.z, d = Math.max(.2, Math.hypot(dx, dz)), ox = dx / d * .4 - dz / d * .12, oz = dz / d * .4 + dx / d * .12;
+      for (let i = 0; i < (this.quality === 'low' ? 2 : 4); i++) this.particles.spawn(this.time, t + .05, e.transform.x + ox, base + .6, e.transform.z + oz,
         (dx - ox) / t + (this.rng.next() - .5) * .3, .6 + this.rng.next() * .3, (dz - oz) / t + (this.rng.next() - .5) * .3, .16, 0, 0xe6f6ff, 9.81);
     }
   }
@@ -357,7 +368,7 @@ export class Vfx extends Group {
     this.time += seconds;
     this.updateObstruction();
     for (const landing of this.landings) if (landing.at <= this.time) {
-      if (this.enabled && this.gore !== 'Off') this.decals.spawn(this.time, 12, landing.x, .019, landing.z, 0, 0, 0, landing.size, this.colorblind ? 0 : 5, landing.color);
+      if (this.enabled && this.gore !== 'Off') this.decals.spawn(this.time, 12, landing.x, landing.y + .019, landing.z, 0, 0, 0, landing.size, this.colorblind ? 0 : 5, landing.color);
       landing.at = Infinity;
     }
     for (const [attackId, tell] of this.tells) if (tell.sourceId !== undefined) {
@@ -391,7 +402,7 @@ export class Vfx extends Group {
     // Wounded-infected droplets are based on visual time, never extra sim events or damage.
     if (Math.floor(this.time * 2) !== Math.floor((this.time - seconds) * 2) && this.enabled && this.gore !== 'Off') {
       let emitted = 0;
-      for (const e of this.world.entities.iterate()) if (e.faction === 'infected' && e.health.current > 0 && e.health.current < e.health.max * 0.5 && emitted++ < 32) this.decals.spawn(this.time, 120, e.transform.x, 0.016, e.transform.z, 0, 0, 0, 0.25, 7, 0xb3121f);
+      for (const e of this.world.entities.iterate()) if (e.faction === 'infected' && e.health.current > 0 && e.health.current < e.health.max * 0.5 && emitted++ < 32) this.decals.spawn(this.time, 120, e.transform.x, (this.world.districts?.supportBelow(e.transform.x, e.transform.z, e.transform.y - .7) ?? 0) + 0.016, e.transform.z, 0, 0, 0, 0.25, 7, 0xb3121f);
     }
   }
   get flash(): number { return this.enabled ? Math.max(Math.max(0, (this.flashUntil - this.time) / 0.1) * (this.flashReduction ? 0.12 : 0.6), this.blasts.flash) : 0; }
