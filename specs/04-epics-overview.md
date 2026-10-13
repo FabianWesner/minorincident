@@ -34,7 +34,8 @@
 | [E28](epic-28-weather.md) | Weather (sun, clouds, rain, storm, fog, wind, snow, ash) | M2 → M3 | E02, E16, E25, E27 |
 | [E29](epic-29-level-7-the-ruined-city.md) | Level 7: The Ruined City | M3 | E24, E06, E07, E08–E10, E18, E25–E28 |
 | [E30](epic-30-level-8-the-zoo.md) | Level 8: The Zoo | M3 | E29, E07–E10, E17, E18, E25–E28 |
-| [E31](epic-31-level-9-the-crossing.md) | Level 9: The Crossing | M3 | E30, E09, E10, E12–E14, E18 |
+| [E31](epic-31-level-9-the-crossing.md) | Level 9: The Crossing (re-planned 2026-10-13) | M3 | E30, E09, E10, E12–E14, E18 |
+| [E32](epic-32-level-10-the-cure.md) | Level 10: The Cure | M3 | E31 (L9-S3/S4), E04–E08, E10–E18, E25, E27, E28 |
 
 ## 2. Milestones
 
@@ -43,7 +44,7 @@
 | **M0 Foundation** | Empty town plane with the camera, loop, input, test API, and asset registry | `npm run verify -- M0` green |
 | **M1 Vertical slice** | **L1 fully playable** from greybox to final P0 assets: unarmed evasion → melee → Patient Zero → twist | the bot completes L1 on 20 seeds; human-feel review passes |
 | **M2 Core campaign** | L2–L3: fire axe, handgun, allied fighters (firefighters, police squad), rides, medkits, save | bot completes L1→L3 as a campaign |
-| **M3 Designed campaign through L9** | L4–L9: first Alphas/war, shotgun/quiet rescue, subway, W6 rocket power fantasy, zoo outbreak/animal specials, temporary armored crossing | one-seed campaign L1→L9 (E31-AC20), segment L1→L6 (E24-AC08); per-level budgets, handovers and reviews pass; L10 storyline pending |
+| **M3 Complete campaign through L10** | L4–L10: Alphas/war, shotgun/metro/subway, W6 rockets, zoo, armored crossing/crash, 45–50 min cure finale and playable epilogue | one-seed L1→L10 (E32-AC32), L1→L9 crash handover (E31-AC20), L1→L6 regression (E24-AC08); region budgets/checkpoints/handovers/reviews and E32 timing pass |
 | **M4 Ship** | Performance, mobile, accessibility, polish, audio mix | release suite green on all platforms in the test matrix |
 
 Epics marked "M1 → M3" deliver in increments. Each increment's acceptance criteria are tagged with the milestone (e.g. `[M1]`).
@@ -96,7 +97,7 @@ From the remaining-scope gap audit. Nothing is cut; the order changes so that ev
 
 ## 7. Campaign update L4–L9 (PO 2026-10-11)
 
-[`po-levels-4-9-2026-10-11.md`](po-levels-4-9-2026-10-11.md), including later PO updates at the end, **wins over all older campaign/story/weapon/world notes**. Preserve built content where compatible. E22 reopens for Alpha/ending changes; E07 reopens for added Alpha/animal bars and specials; E29–E31 start `todo`. E23 stays in progress and E24 stays todo. New criteria are pending implementation, even if an old tagged test passes.
+[`po-levels-4-9-2026-10-11.md`](po-levels-4-9-2026-10-11.md), including later PO updates at the end, **wins over older campaign/story/weapon/world notes**. **For L9/L10, the 2026-10-13 source in §8 now wins.** Preserve built content where compatible. E22 reopens for Alpha/ending changes; E07 reopens for added Alpha/animal bars and specials; E29–E31 start `todo`. E23 stays in progress and E24 stays todo. New criteria are pending implementation, even if an old tagged test passes.
 
 | Level | Epic / title | New gameplay power | World / campaign progression | Ending / handover |
 | --- | --- | --- | --- | --- |
@@ -108,17 +109,27 @@ From the remaining-scope gap audit. Nothing is cut; the order changes so that ev
 | L6 | E24 · The Subway | none | underground · D-SUBWAY calm/breach/power failure/group retreat | night exit with surviving group → L7 |
 | L7 | E29 · The Ruined City | Rocket launcher, unlimited | completely destroyed · same D-FAIR W6 night, huge regular groups/multiple Alphas, no zoo animals | final horde/corridor, bus departure with burning skyline → L8 |
 | L8 | E30 · The Zoo | none | zoo sanctuary fails · D-ZOO, 60 s no-objective calm, ≥ 3 internal tunnel breaches, five infected zoo species | surviving group escapes in armored vehicle → L9 |
-| L9 | E31 · The Crossing | armored vehicle as temporary power | open-country escape · D-CROSSING, road/off-road choices, no gun/repair, collision/attack durability, zero→on foot | next-city outskirts; L10 continuation pending |
-| L10 | Grand finale — storyline from the PO pending | pending | pending | no epic file yet |
+| L9 | E31 · The Crossing | armored vehicle as temporary power | D-CROSSING, road/off-road, no gun/repair; damage stages, zero→60% speed floor | mandatory collapsed-road crash/crawl; weapons stripped to axe → L10 |
+| L10 | E32 · The Cure | axe → handgun → shotgun → machine gun → rockets → mounted rotary minigun | seven streamed low-rise regions; dogs/Alphas/persistent Mega Alpha; research cure → dispersal | 60 s nearby charge + boss dead, cure mist, 2–3 min playable epilogue, pull-out/title/credits |
 
-Weapon progression: **Bat → Axe → Handgun → Machine gun → Shotgun → none → Rocket launcher → none → armored vehicle**. Here `none` means no new weapon; acquired weapons stay selectable.
+Weapon progression: **Bat → Axe → Handgun → Machine gun → Shotgun → none → Rocket launcher → none → armored vehicle**. Here `none` means no new weapon; acquired weapons stay selectable **until the mandatory L9 crash**, which strips all combat weapons except the axe. L10 rebuilds the arsenal at region checkpoints.
 
 > PO, verbatim: "Bat → Axe → Handgun → Machine gun → Shotgun → no new weapon → Rocket launcher → no new weapon → armored vehicle as temporary gameplay power"
 >
 > "intact → wounded → collapsing → war zone → silent ruins → underground → completely destroyed → zoo sanctuary fails → open-country escape."
 >
-> Later PO, verbatim: "Alpha should have a health bar and special moves"; "Same for Zoo animals"; "Level 10 will be the grande finale then, I will provide story line tomorrow".
+> Historical 10-11 PO, verbatim (L10 pending wording superseded in §8): "Alpha should have a health bar and special moves"; "Same for Zoo animals"; "Level 10 will be the grande finale then, I will provide story line tomorrow".
 
 Use E07's world-space bar and four Alpha/ten zoo move tables, telegraphs ≥ 0.6 s and per-move Scene Lab scenes. Infected elephant/zebra derive from normal `amb.elephant`/`amb.zebra` bases; healthy animals have no bars. W6 is a new **decay tier**, not a quality tier. E31 streaming/LOD must hold E18 budgets on desktop and phone.
 
-**Implementation order:** specs → E07 Alpha systems/assets → L4 Alphas/solitary ending + L5 shotgun/metro ending → L6 continuation → L7 → E07 zoo extensions + L8 → L9. Every affected epic's Implementation plan uses ordered lanes ≤ 3 h: systems first, district/assets, encounters, then Scene Lab and headless browser e2e. These are future implementation lanes; this update changes specs only. L10 is held for the PO storyline, without inventing an epic or ending.
+**Implementation order:** specs → E07 Alpha systems/assets → L4 Alphas/solitary ending + L5 shotgun/metro ending → L6 continuation → L7 → E07 zoo extensions + L8 → L9. Every affected epic's Implementation plan uses ordered lanes ≤ 3 h: systems first, district/assets, encounters, then Scene Lab and headless browser e2e. These were future implementation lanes; the 10-13 update below preserves completed work and supplies the L10 story/ending.
+
+## 8. L9 re-plan and L10 finale (PO 2026-10-13)
+
+[`po-levels-9-10-2026-10-13.md`](po-levels-9-10-2026-10-13.md) supplies the promised finale and supersedes old L9 breakdown/on-foot and pending-L10 wording. E31 remains **todo for the revised remainder**; L9-S1 durability and L9-D1 greybox are **done on main**. The old **L9-S2 is cancelled**, replaced by L9-S5 zero floor, S6 forced crash and S7 axe-only handover; retain S3/S4 shared streaming and re-plan art/encounters/evidence. E32 is **todo**, with all criteria/tests/assets planned, not implemented.
+
+**Decisions:** L9 never breaks down before the scripted outskirts crash, even at 0 HP (60% top speed, staged 75/50/25/0% dents/glass/smoke/lights/engine). Crash destroys APC and strips weapons to `weapon.fire-axe`; abilities/nonweapon progression/corgi persist. L10 targets **45–50 min**, seven regions and depth-authored enemies with region weapon/respawn checkpoints. One Mega Alpha follows without sight checks at 0.7× run, close bursts, distance audio/ring, about ten rockets to kill. Cure backpack has no slot/speed cost. Existing mounted-gun interaction gains rotary heat, unlimited ammo; 60 s charge advances only within 25 m and release also requires boss dead. Mist kills infected humans/animals, healthy/corgi safe; playable 2–3 min ending precedes pull-out/title/credits.
+
+**All-levels checkpoint rule:** player death respawns at the last checkpoint; region checkpoints are authoritative, and save/load cannot resurrect lost weapons/boss/cure state. E12/E13 checkpoint services are reused. Campaign firearms stay bottomless per E06; only the final minigun overheats.
+
+**Work order:** specs → L9 remaining changes/streaming → L10 assets (Mega, dog, gun, cure, region kits) → seven regions → encounters/weapons → finale → epilogue. Both epic tables budget every executable lane ≤ 3 h: systems, district/assets, encounters, Scene Lab and headless e2e/perf. E18 budgets apply everywhere via **L9-S3/S4** region streaming, including boss/cure state off-region and wide ending camera. M3 now closes the ten-level campaign; E32-AC04 replaces generic short-level pacing and E32-AC32 replaces the obsolete 30–60 min full-campaign time gate. No source implementation is part of this spec update.
