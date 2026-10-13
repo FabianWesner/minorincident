@@ -18,6 +18,10 @@ export class VehicleBody {
   readonly previousWheels = Array.from({ length: 4 }, () => ({ rotation: 0, steer: 0, suspension: 0, contact: false }));
   readonly intent: DriveIntent = { throttle: 0, steer: 0, brake: true, boost: false };
   boostScale = 1;
+  /** Share of the healthy top speed (L9 floor policy sets 0.6 at zero durability). */
+  speedCap = 1;
+  /** Per-tick horizontal speed damping applied while above the capped top speed. */
+  overspeedDamp = 0;
   gripScale = 1;
   speed = 0; forwardSpeed = 0; roll = 0; stuck = false;
   steeringAngle = 0; braking = true; upsideDown = false;
@@ -48,7 +52,7 @@ export class VehicleBody {
     for (let i = 0; i < 4; i++) Object.assign(this.previousWheels[i], this.wheels[i]);
     const { throttle, brake, steer, boost, handbrake } = this.intent, h = this.def.handling;
     const reversing = throttle * this.forwardSpeed < -.5;
-    const limit = throttle < 0 ? h.reverseSpeed : this.def.topSpeed * (boost ? 1.25 * this.boostScale : 1);
+    const limit = throttle < 0 ? h.reverseSpeed : this.def.topSpeed * this.speedCap * (boost ? 1.25 * this.boostScale : 1);
     const taper = Math.max(0, Math.min(1, (1 - Math.abs(this.forwardSpeed) / limit) / (1 - h.engineTaperStart)));
     const force = brake || reversing ? 0 : throttle * this.def.engineForce * (boost ? 1.5 * this.boostScale : 1) * taper;
     const lock = this.def.steering + (h.highSpeedSteering - this.def.steering) * Math.min(1, this.speed / this.def.topSpeed);
@@ -61,6 +65,11 @@ export class VehicleBody {
       this.controller.setWheelBrake(i, this.def.mass * (brake || reversing ? h.brake : rearDrift ? h.handbrake : Math.abs(throttle) < .05 ? h.idleBrake : 0));
       this.controller.setWheelFrictionSlip(i, (rearDrift ? h.driftGrip : h.grip) * this.gripScale);
       this.controller.setWheelSideFrictionStiffness(i, rearDrift ? h.driftGrip / h.grip : 1);
+    }
+    if (this.speedCap < 1) {
+      // Momentum carried in from above the cap bleeds off smoothly; no second damage-speed penalty stacks on top.
+      const v = this.body.linvel(), horizontal = Math.hypot(v.x, v.z), cap = this.def.topSpeed * this.speedCap;
+      if (horizontal > cap * 1.02) { const k = Math.max(cap / horizontal, 1 - this.overspeedDamp); this.body.setLinvel({ x: v.x * k, y: v.y, z: v.z * k }, true); }
     }
     this.controller.updateVehicle(FIXED_DT, RAPIER.QueryFilterFlags.EXCLUDE_SENSORS);
   }

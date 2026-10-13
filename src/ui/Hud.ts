@@ -19,6 +19,8 @@ export class Hud {
   readonly onboarding: Onboarding;
   private readonly portrait = node('div', 'survivor-portrait');
   private readonly health = this.bar('health');
+  private readonly durability = this.bar('durability');
+  private readonly durabilityPanel = node('div', 'vehicle-durability');
   private readonly companion = node('span', 'corgi-state');
   private readonly corgiBadge = node('span', 'corgi-badge', '🐕');
   private readonly detail = node('dialog', 'objective-detail');
@@ -57,6 +59,9 @@ export class Hud {
     this.civilianBark.className = 'hud-panel'; this.civilianBark.style.cssText = 'position:absolute;pointer-events:none'; this.civilianBark.hidden = true; this.root.append(this.civilianBark);
     // PO: story bubbles read comfortably: larger outlined text, fade in/out, kept inside the frame above the speaker.
     this.storyBubble.className = 'hud-panel story-bubble'; this.storyBubble.style.cssText = 'position:absolute;pointer-events:none;transform:translate(-50%,-100%);max-width:min(340px,80vw);padding:8px 14px;border-radius:12px;font:700 19px/1.3 system-ui,sans-serif;color:#fff;text-shadow:0 0 3px #0b0f18,0 0 3px #0b0f18,1px 1px 0 #0b0f18,-1px -1px 0 #0b0f18,1px -1px 0 #0b0f18,-1px 1px 0 #0b0f18;white-space:normal;text-align:center;opacity:0'; this.storyBubble.hidden = true; this.root.append(this.storyBubble);
+    // E31 vehicle durability: only while seated in the APC; no repair affordance exists.
+    this.durabilityPanel.className = 'hud-durability-panel hud-panel'; this.durabilityPanel.hidden = true; this.durabilityPanel.setAttribute('aria-label', 'Vehicle durability');
+    this.durabilityPanel.append(this.durability.root); this.root.append(this.durabilityPanel);
     this.root.className = 'hud'; this.root.hidden = true;
     const vitals = node('div', 'vitals'); vitals.className = 'hud-vitals hud-panel';
     this.portrait.className = 'hud-portrait'; this.portrait.setAttribute('aria-label', 'Survivor portrait');
@@ -182,6 +187,16 @@ export class Hud {
     const hp = healthFraction(player.health.current, player.health.max);
     style(this.health.fill, 'width', `${hp * 100}%`); text(this.health.label, `${Math.ceil(player.health.current)} / ${player.health.max}`);
     attribute(this.health.root, 'aria-valuenow', String(hp * 100));
+    const driven = world.vehicles?.active != null ? world.vehicles.cars.get(world.vehicles.active)?.entity : undefined;
+    const apc = driven?.archetype === 'vehicle.military-apc' ? driven : null;
+    setHidden(this.durabilityPanel, !apc);
+    if (apc) {
+      const fraction = clamp(apc.health.current / apc.health.max), floor = !!apc.vehicle?.floor && apc.health.current <= 0;
+      style(this.durability.fill, 'width', `${fraction * 100}%`);
+      text(this.durability.label, floor ? 'Barely functional' : `Armor ${Math.ceil(apc.health.current)} / ${apc.health.max}`);
+      attribute(this.durability.root, 'aria-valuenow', String(fraction * 100)); attribute(this.durability.root, 'aria-valuetext', floor ? 'Barely functional' : `${Math.ceil(apc.health.current)} of ${apc.health.max}`);
+      attribute(this.durabilityPanel, 'data-stage', String(apc.vehicle?.stage ?? 0)); attribute(this.durabilityPanel, 'data-floor', String(floor));
+    }
     attribute(this.portrait, 'data-variant', player.survivor?.variant ?? 'female');
     const portrait = `url("/assets/ui/portrait-survivor-${player.survivor?.variant === 'male' ? 'm' : 'f'}.png")`;
     style(this.portrait, 'background-image', portrait);
