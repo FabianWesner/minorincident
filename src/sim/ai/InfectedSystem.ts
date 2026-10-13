@@ -1350,9 +1350,10 @@ export class InfectedSystem {
     if (b.pathGrid !== grid) { b.pathGrid = grid; b.goal = -1; b.path.length = 0; }
     const nav = this.navigation.grid(e.transform); target = this.navigation.target(e.transform, target);
     let x = target.x, z = target.z;
-    const from = nav.nearestCell(e.transform.x, e.transform.z), to = nav.nearestCell(x, z);
     const useFlow = this.active.length > 20 && !b.roar && !b.specialAttack && !b.scripted; // Roar and scripted paths must never follow the live-player flow field.
     if (!nav.visible(e.transform, target, e.combat!.radius)) {
+      // Clear paths steer directly; cell searches are needed only around cover.
+      const from = nav.nearestCell(e.transform.x, e.transform.z), to = nav.nearestCell(x, z);
       let next = from;
       if (useFlow) next = nav.flowNext(from);
       else {
