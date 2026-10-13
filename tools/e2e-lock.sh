@@ -1,24 +1,66 @@
 #!/bin/sh
-# Limit browser test runs machine-wide: several lanes share one Mac and parallel Playwright runs
-# saturate it. E2E_SLOTS (default 1) runs may proceed at once; the rest wait for a free slot.
-# Only wrap browser runs, never plain builds. Without lockf (e.g. Linux CI) just run.
-# Queue briefly so polling lanes also get a turn among lockf's waiting lanes.
+# Machine-wide browser capacity. One unit = one live browser / Scene Lab session.
+# Three units retain most measured throughput while leaving room for the user's desktop.
+# Playwright commands charge their worker count (default 2); other commands default to 1.
+# For an opaque wrapper, declare E2E_UNITS=1 or 2 explicitly. All lanes must agree on E2E_SLOTS.
 command -v lockf >/dev/null 2>&1 || exec "$@"
-# Re-entrant: a command already running under this lock (e.g. verify inside an outer wrapper) must not take a second slot.
-[ -n "${MI_E2E_LOCK_HELD:-}" ] && exec "$@"
-export MI_E2E_LOCK_HELD=1
-base="${E2E_LOCK:-/tmp/minor-incident-e2e.lock}"
-slots="${E2E_SLOTS:-4}"  # 10-11: 4 parallel browsers (QA round; 10-09 was 2 (Mac load ~3.5 with 7 lanes); perf measurements should pass E2E_SLOTS=1 and check `uptime`
-# Join the kernel queue for the default shared slot; polling can starve queued lanes.
-if [ "$slots" -eq 1 ]; then
-  exec lockf -k "$base.0" "$@"
+slots="${E2E_SLOTS:-3}"
+case "$slots" in ''|*[!0-9]*|0) printf '%s\n' 'E2E_SLOTS must be a positive integer' >&2; exit 2;; esac
+workers=''; playwright=0; next_workers=0
+for arg in "$@"; do
+  if [ "$next_workers" -eq 1 ]; then workers="$arg"; next_workers=0; fi
+  case "$arg" in
+    playwright|*/playwright|*/playwright/cli.js|*/@playwright/test/cli.js) playwright=1;;
+    --workers) next_workers=1;;
+    --workers=*) workers="${arg#--workers=}";;
+  esac
+done
+[ "$next_workers" -eq 0 ] || { printf '%s\n' 'Missing --workers value' >&2; exit 2; }
+if [ "$playwright" -eq 1 ]; then
+  workers="${workers:-2}"
+  case "$workers" in 1|2) ;; *) printf '%s\n' 'Playwright is limited to 1 or 2 workers on this machine' >&2; exit 2;; esac
 fi
+units="${E2E_UNITS:-${workers:-1}}"
+case "$units" in 1|2) ;; *) printf '%s\n' 'E2E_UNITS must be 1 or 2 (use quiet-run for an exclusive run)' >&2; exit 2;; esac
+[ "$units" -le "$slots" ] || { printf '%s\n' 'Requested browsers exceed E2E_SLOTS' >&2; exit 2; }
+if [ "$playwright" -eq 1 ] && [ "$units" -lt "$workers" ]; then
+  printf '%s\n' 'E2E_UNITS must cover every Playwright worker' >&2; exit 2
+fi
+# Re-entrant wrappers cannot expand a reservation acquired by their parent.
+if [ -n "${MI_E2E_LOCK_HELD:-}" ]; then
+  if [ -n "${MI_E2E_UNITS_HELD:-}" ] && [ "$units" -gt "$MI_E2E_UNITS_HELD" ]; then
+    printf '%s\n' 'Outer browser reservation is too small; request its full capacity at the outer wrapper' >&2; exit 2
+  fi
+  exec "$@"
+fi
+export MI_E2E_LOCK_HELD=1 MI_E2E_UNITS_HELD="$units"
+base="${E2E_LOCK:-/tmp/minor-incident-e2e.lock}"
+if [ "$slots" -eq 1 ]; then exec lockf -k "$base.0" "$@"; fi
+# The command may itself return 75. Record admission so that it is never mistaken for
+# lockf's busy status and executed again. Keep command stderr; -s silences only lockf.
+started=$(mktemp "${TMPDIR:-/tmp}/minor-incident-e2e-start.XXXXXX") || exit 1
+trap 'rm -f "$started"' EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
+attempt() {
+  : > "$started"
+  "$@"; rc=$?
+  if [ -s "$started" ] || [ "$rc" -ne 75 ]; then exit "$rc"; fi
+}
 while :; do
   i=0
   while [ "$i" -lt "$slots" ]; do
-    # Keep the inode: unlinking a lock file splits queued and newly arriving users.
-    lockf -k -t 0 "$base.$i" "$@" 2>/dev/null; rc=$?
-    [ "$rc" -ne 75 ] && exit "$rc"   # 75 = slot busy (EX_TEMPFAIL); anything else is the command's result
+    if [ "$units" -eq 1 ]; then
+      attempt lockf -s -k -t 0 "$base.$i" sh -c 'printf x > "$1"; shift; exec "$@"' sh "$started" "$@"
+    else
+      j=$((i + 1))
+      while [ "$j" -lt "$slots" ]; do
+        # Both acquisitions are nonblocking and ordered; a partial reservation releases
+        # immediately. Consider every pair, including nonadjacent free slots.
+        attempt lockf -s -k -t 0 "$base.$i" lockf -s -k -t 0 "$base.$j" sh -c 'printf x > "$1"; shift; exec "$@"' sh "$started" "$@"
+        j=$((j + 1))
+      done
+    fi
     i=$((i + 1))
   done
   sleep 2
