@@ -469,7 +469,11 @@ export class LevelThreeCollapse {
   /** Section 5.6 forward pressure: a player lingering 20 s behind the furthest progress line gets company from behind. */
   private pressure(): void {
     const { world } = this.mission, s = this.s, tick = world.tick, p = world.entities.get(1)!.transform, ai = world.infected!;
-    if (p.x > s.furthest + .5) { s.furthest = p.x; s.furthestAt = tick; s.pressureAt = 0; }
+    if (p.x > s.furthest + .5) {
+      s.furthest = p.x; s.furthestAt = tick; s.pressureAt = 0;
+      // Advancing stops the pressure: packs still queued behind the courier are dropped (they were only for an idle courier).
+      for (let i = s.pending.length - 1; i >= 0; i--) if (s.pending[i].kind === 'pressure' && s.pending[i].id === 0) s.pending.splice(i, 1);
+    }
     if (tick - s.furthestAt < ticks(l3.density.pressure.idleS)) return;
     if (s.pressureAt && tick - s.pressureAt < ticks(l3.density.pressure.everyS)) return;
     s.pressureAt = tick;
@@ -478,7 +482,8 @@ export class LevelThreeCollapse {
     const [n0, n1] = l3.density.pressure.count, n = Math.round((n0 + 5 * Math.floor(rng.next() * ((n1 - n0) / 5 + 1))) * (1 - this.mercyFraction()));
     for (let i = 0; i < n && doors.length; i++) {
       const door = doors[Math.floor(rng.next() * doors.length)];
-      s.pending.push({ id: 0, door: door.name, home: { x: s.furthest, z: l3.map.streets[l3Street(door.z)] }, segment: Math.min(2, Math.max(0, l3Segment(s.furthest))), at: tick, kind: 'pressure' });
+      // Front of the queue: with the 5x population hundreds of planned entries wait ahead, and the pressure must land while the courier idles.
+      s.pending.unshift({ id: 0, door: door.name, home: { x: s.furthest, z: l3.map.streets[l3Street(door.z)] }, segment: Math.min(2, Math.max(0, l3Segment(s.furthest))), at: tick, kind: 'pressure' });
     }
   }
   /** Infected far behind the furthest line and out of view leave the books when the cap is tight (never a visible removal). */
@@ -595,7 +600,7 @@ export class LevelThreeCollapse {
     if (s.barrierClosedAt && !inside) { s.barrierClosedAt = 0; this.barrier(false); w.events.emit({ type: 'gate.changed', tick: w.tick, id: 'l3-army-boom', open: true }); }
     // The rescue fight lasts until every pack arrived or minFightS passed (60-90 s); the weaker army (PO 10-12) cannot hold an open boom longer.
     const arrived = w.tick - s.finaleAt! >= ticks(f.minFightS) || f.packs.every(([, count], i) => (s.finalePacks![i] ?? 0) >= Math.ceil(count * (1 - this.mercyFraction())));
-    if (!s.barrierClosedAt && inside && arrived && this.boom.ready(group)) {
+    if (!s.barrierClosedAt && inside && arrived && (this.boom.ready(group) || (this.boom.clearBystanders(group), this.boom.ready(group)))) {
       s.barrierClosedAt = w.tick; this.barrier(true);
       w.events.emit({ type: 'gate.changed', tick: w.tick, id: 'l3-army-boom', open: false });
     }

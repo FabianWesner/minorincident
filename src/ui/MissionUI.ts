@@ -7,6 +7,7 @@ import type { Mission } from '../sim/missions/Mission';
 import type { MissionResult } from '../sim/missions/types';
 import './mission.css';
 import { attribute, setHidden, style } from './dom';
+import { nextLevelAfter } from '../sim/progression/Campaign';
 
 /** Mission-only UI; progression choices and the full combat HUD remain E13/E14 consumers. */
 export class MissionUI {
@@ -72,7 +73,7 @@ export class MissionUI {
     setHidden(this.result,state.phase!=='result');
     if(this.phase!==state.phase){
       this.phase=state.phase;
-      const labels={briefing:['Mission briefing',mission.def.briefing,'Begin mission'],retry:['Mission failed',`${state.failure}. Retry from ${state.checkpoint??'level start'}.`,'Retry'],result:mission.def.l6?['Night. Still alive.',this.campaignSummary(),'Credits']:mission.def.l1?['Delivery complete. Outbreak: not contained.','The fire station shutter holds, for now.','Continue']:['Level complete','Mission results','Continue'],progression:['Progression','Next: upgrades and loadout setup.',''],playing:['','',''],cinematic:['','','']};
+      const labels={briefing:['Mission briefing',mission.def.briefing,'Begin mission'],retry:['Mission failed',`${state.failure}. Retry from ${state.checkpoint??'level start'}.`,'Retry'],result:mission.def.l6?['Night. Still alive.',this.campaignSummary(),nextLevelAfter(6)?'Continue':'Credits']:mission.def.l1?['Delivery complete. Outbreak: not contained.','The fire station shutter holds, for now.','Continue']:['Level complete','Mission results','Continue'],progression:['Progression','Next: upgrades and loadout setup.',''],playing:['','',''],cinematic:['','','']};
       const [title,detail,button]=labels[state.phase];this.text(this.heading,title);this.text(this.detail,detail);this.text(this.button,button);this.button.hidden=!button;
       if(!this.panel.hidden&&!this.button.hidden)this.button.focus({preventScroll:true});
     }
@@ -82,6 +83,7 @@ export class MissionUI {
       this.text(element,value===undefined?'':Array.isArray(value)?value.join(', ')||'None':typeof value==='boolean'?value?'✓':'—':String(Math.round(value*100)/100));
     }
     const objective=mission.def.steps.find(s=>state.steps[s.id].status==='active');
+    if (mission.def.l8 && playing && !objective) this.tracker.hidden = this.map.hidden = true;
     const anchor=state.marker?mission.def.anchors[state.marker]:undefined,player=this.world.entities.get(1);
     setHidden(this.marker,!playing||!anchor||!player);
     if(player&&objective&&playing){

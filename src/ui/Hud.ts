@@ -201,6 +201,8 @@ export class Hud {
     }
     for (let i = pinCount; i < this.threatCount; i++) setHidden(this.threats[i], true);
     this.threatCount = pinCount;
+    const absentCompanion = !corgi && (world.scenario === 'L8' || world.scenario === 'L9');
+    setHidden(this.companion.parentElement!, absentCompanion); setHidden(this.corgiBadge, absentCompanion);
     const corgiStatus = corgi ? corgi.hidden ? 'Corgi · hiding' : 'Corgi · following' : 'Corgi · awaiting rescue';
     text(this.companion, corgiStatus); attribute(this.corgiBadge, 'title', corgiStatus); attribute(this.corgiBadge, 'aria-label', corgiStatus);
     attribute(this.corgiBadge, 'data-state', corgi ? corgi.hidden ? 'hiding' : 'following' : 'awaiting-rescue');
@@ -209,7 +211,7 @@ export class Hud {
     setHidden(this.objectivePin, !anchor);
     if (anchor) this.place(this.objectivePin, anchor.x, anchor.z, px, pz, true);
     const home = mission?.def.anchors.home ?? player.survivor?.checkpoint;
-    setHidden(this.homePin, !home); if (home) this.place(this.homePin, home.x, home.z, px, pz, true);
+    setHidden(this.homePin, !home || !!mission?.def.l8); if (home) this.place(this.homePin, home.x, home.z, px, pz, true);
     const objective = mission?.def.steps.find(step => mission.state.steps[step.id].status === 'active');
     // L1 v2 beat 5: after the hand-over the panel shows the completed tick and no new objective.
     const done = !objective && mission?.def.l1 ? [...mission.def.steps].reverse().find(step => mission.state.steps[step.id].status === 'completed') : undefined;

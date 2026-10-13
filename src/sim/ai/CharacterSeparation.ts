@@ -1,68 +1,104 @@
 import { storyProtected } from '../npc/storyProtection';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
+import type { ContactCells } from '../spatial/SpatialHash';
 import { SimPhase } from '../../core/EventBus';
 
 /** Human-sized infected contact spacing; larger bodies reserve their extra radius as well. */
 export const meleeRing = 1.08;
 export const infectedContactDistance = (radius: number): number => meleeRing + Math.max(0, radius - .35);
 function radius(e: EntitySnapshot): number {
+  if (!e.survivor && !e.companion && !e.escort && !e.civilian && !e.infected) return 0;
   if (e.infectionRise || e.hidden || e.emerging || e.health.current <= 0 || e.attachedTo !== undefined || (e.infected && (e.infected.hidden || e.transform.y > 2)) || e.companion?.state === 'hide' || e.civilian?.state === 'down' || e.civilian?.state === 'rising') return 0;
   if (e.companion) return .9;
   if (e.civilian?.pet) return .5;
   return e.survivor || e.companion || e.escort || (e.civilian && e.civilian.state !== 'infected' && e.civilian.state !== 'finished') || e.infected ? e.combat?.radius ?? .35 : 0;
 }
+type Body = { entity: EntitySnapshot; radius: number; extra: number; contact: number; category: number; infected: boolean; courier: boolean; crowd: boolean; l1: boolean; fixed: boolean; charge: boolean; passiveCompanion: boolean };
 /** Resolve body circles against the same static geometry as steering, after physics.
  * The survivor stays authoritative in Rapier; AI yields to it, including during
  * attack windups. Stable ID order resolves exact coincidence deterministically. */
 export function installCharacterSeparation(world: SimWorld): void {
-  const neighbors: number[] = [], query = { x: 0, z: 0, r: 2 }, radii = new Map<number, number>();
-  const bodies: { entity: EntitySnapshot; radius: number }[] = [];
+  const neighbors: number[] = [], query = { x: 0, z: 0, r: 2 }, radii: (Body | undefined)[] = [], radiusIds: number[] = [];
+  const records = new WeakMap<EntitySnapshot, Body>();
+  const bodies: Body[] = [], categories: Body[] = [], reaches: number[][] = [];
+  let active: typeof bodies[number] | undefined;
+  const contacts: ContactCells = { epoch: 0, radius: id => radii[id]?.radius ?? 0, intersects: (maximum, x, z) => {
+    if (!active || !maximum) return false;
+    const p = active.entity.transform, r = active.radius;
+    const dx = Math.max(x - p.x, 0, p.x - x - 4), dz = Math.max(z - p.z, 0, p.z - z - 4);
+    const reach = Math.max(r + maximum + .3, meleeRing) + Math.max(0, r - .35, maximum - .35);
+    return dx * dx + dz * dz < reach * reach;
+  } };
   const ground = new WeakMap<EntitySnapshot, { district: NonNullable<SimWorld['districts']>; x: number; z: number; y: number }>();
   world.events.on('sim.tick', () => {
     const nav = world.infected?.nav; if (!nav) return;
-    radii.clear(); let bodyCount = 0, maximumRadius = 0;
+    // Reuse the numeric-ID lookup without clearing sparse carried-survivor ID ranges.
+    for (const id of radiusIds) radii[id] = undefined; radiusIds.length = 0;
+    let bodyCount = 0, maximumRadius = 0;
     for (const e of world.entities.iterate()) {
       const r = radius(e); if (!r) continue;
-      radii.set(e.id, r); maximumRadius = Math.max(maximumRadius, r);
+      let body = records.get(e);
+      if (!body) { body = { entity: e, radius: r, extra: 0, contact: 0, category: 0, infected: false, courier: false, crowd: false, l1: false, fixed: false, charge: false, passiveCompanion: false }; records.set(e, body); }
+      else body.radius = r;
+      body.extra = Math.max(0, r - .35); body.contact = infectedContactDistance(r);
+      // These contact flags cannot change during the separation phase; cache them once per body.
+      body.infected = !!e.infected; body.courier = !!e.survivor; body.l1 = !!e.infected?.l1;
+      body.crowd = !!e.infected && (!!e.combat?.attacking || e.infected.state === 'chase');
+      body.passiveCompanion = !!e.companion && !e.companion.following && e.companion.state === 'follow';
+      body.fixed = body.courier || !!(e.civilian?.ally?.hold && storyProtected(world, e)) || e.civilian?.state === 'grabbed' || body.passiveCompanion;
+      const attack = e.infected?.specialAttack;
+      body.charge = !!attack && attack.stage === 'active' && (attack.move === 'alpha.charge' || attack.move === 'elephant.charge' || attack.move === 'zebra.stampede');
+      radii[e.id] = body; radiusIds.push(e.id); maximumRadius = Math.max(maximumRadius, r);
       if ((e.infected?.specialAttack && e.infected.specialAttack.stage !== 'recovery' && e.infected.specialAttack.move !== 'lion.flank') || e.survivor || e.civilian?.state === 'grabbed' || (e.civilian?.ally?.hold && storyProtected(world, e))) continue;
-      const body = bodies[bodyCount++];
-      if (body) { body.entity = e; body.radius = r; }
-      else bodies.push({ entity: e, radius: r });
+      bodies[bodyCount++] = body;
     }
-    bodies.length = bodyCount;
-    for (let pass = 0; pass < 3; pass++) for (const { entity: e, radius: r } of bodies) {
-      query.x = e.transform.x; query.z = e.transform.z; query.r = r + maximumRadius + Math.max(.45, .22 + maximumRadius - .35); // covers the largest gap below
-      world.spatial.query(query, neighbors, false);
-      for (const id of neighbors) {
-        const otherRadius = radii.get(id); if (!otherRadius) continue;
-        const other = world.entities.get(id); if (!other || other === e) continue;
-        // The swept charge owns contact; passive spacing must not push a human out before it hits.
-        if (other.infected?.specialAttack && (other.infected.specialAttack.move === 'alpha.charge' || other.infected.specialAttack.move === 'elephant.charge' || other.infected.specialAttack.move === 'zebra.stampede') && other.infected.specialAttack.stage === 'active') continue;
-        if (e.companion && !e.companion.following && e.companion.state === 'follow' && !other.survivor) continue;
-        // Combat crowds reserve the attack pose's upper-body extent, including catalog/elite brains.
-        // Scripted migration streams retain their authored density and spline timing.
-        // Larger attackers keep the same surface clearance around the courier as ordinary humans.
-        const infected = (e.infected ? 1 : 0) + (other.infected ? 1 : 0);
-        const courier = !!(e.survivor || other.survivor);
-        const contact = infected === 1 ? infectedContactDistance(e.infected ? r : otherRadius) : 0;
-        const combatCrowd = infected === 2 && ((e.infected!.l1 && other.infected!.l1) || e.combat!.attacking || other.combat!.attacking || e.infected!.state === 'chase' || other.infected!.state === 'chase');
-        const gap = infected === 1 ? Math.max(.015, courier ? contact - r - otherRadius : Math.min(.3, 1.05 - r - otherRadius)) : combatCrowd ? .22 + Math.max(0, r - .35, otherRadius - .35) : .015;
-        const dx = e.transform.x - other.transform.x, dz = e.transform.z - other.transform.z, reach = r + otherRadius + gap;
-        const squared = dx * dx + dz * dz;
-        if (squared >= reach * reach) continue;
-        const distance = Math.sqrt(squared), overlap = reach - distance;
-        if (overlap <= .001) continue;
-        // A protected story actor holding a post is authoritative like the courier;
-        // crowd overlap cannot push the invitation away from its interaction. Damage may still shove it.
-        const angle = e.id * 2.399963, scale = other.survivor || (other.civilian?.ally?.hold && storyProtected(world, other)) || other.civilian?.state === 'grabbed' || (other.companion && !other.companion.following && other.companion.state === 'follow') ? 1 : .5;
-        nav.move(e.transform, (distance ? dx / distance : Math.cos(angle)) * overlap * scale, (distance ? dz / distance : Math.sin(angle)) * overlap * scale, r);
+    bodies.length = bodyCount; contacts.epoch++;
+    // Contact geometry depends only on radius/brain flags, which are fixed for these three passes.
+    // Compute each distinct ordered pair once, retaining the exact original arithmetic.
+    categories.length = 0;
+    for (const id of radiusIds) {
+      const body = radii[id]!;
+      let category = categories.findIndex(c => c.radius === body.radius && c.infected === body.infected && c.courier === body.courier && c.crowd === body.crowd && c.l1 === body.l1);
+      if (category < 0) { category = categories.length; categories.push(body); }
+      body.category = category;
+    }
+    for (let i = 0; i < categories.length; i++) {
+      const body = categories[i], r = body.radius, row = reaches[i] ?? (reaches[i] = []);
+      for (let j = 0; j < categories.length; j++) {
+        const neighbor = categories[j], otherRadius = neighbor.radius;
+        const infected = (body.infected ? 1 : 0) + (neighbor.infected ? 1 : 0);
+        const courier = body.courier || neighbor.courier;
+        const contact = infected === 1 ? (body.infected ? body.contact : neighbor.contact) : 0;
+        const combatCrowd = infected === 2 && ((body.l1 && neighbor.l1) || body.crowd || neighbor.crowd);
+        const gap = infected === 1 ? Math.max(.015, courier ? contact - r - otherRadius : Math.min(.3, 1.05 - r - otherRadius)) : combatCrowd ? .22 + Math.max(body.extra, neighbor.extra) : .015;
+        row[j] = r + otherRadius + gap;
       }
+    }
+    const visit = (id: number): void => {
+      const body = active!, { entity: e, radius: r } = body;
+      const neighbor = radii[id]; if (!neighbor || neighbor.entity === e) return;
+      const other = neighbor.entity;
+      const dx = e.transform.x - other.transform.x, dz = e.transform.z - other.transform.z, squared = dx * dx + dz * dz;
+      const reach = reaches[body.category][neighbor.category];
+      if (squared >= reach * reach || neighbor.charge || (body.passiveCompanion && !neighbor.courier)) return;
+      const distance = Math.sqrt(squared), overlap = reach - distance;
+      if (overlap <= .001) return;
+      // A protected story actor holding a post is authoritative like the courier;
+      // crowd overlap cannot push the invitation away from its interaction. Damage may still shove it.
+      const angle = e.id * 2.399963, scale = neighbor.fixed ? 1 : .5;
+      nav.move(e.transform, (distance ? dx / distance : Math.cos(angle)) * overlap * scale, (distance ? dz / distance : Math.sin(angle)) * overlap * scale, r);
+    };
+    for (let pass = 0; pass < 3; pass++) for (const body of bodies) {
+      const { entity: e, radius: r } = body; active = body;
+      query.x = e.transform.x; query.z = e.transform.z; query.r = r + maximumRadius + Math.max(.45, .22 + maximumRadius - .35); // covers the largest gap below
+      // Consume the same unsorted bucket order directly; nav.move does not mutate the spatial index.
+      world.spatial.query(query, neighbors, false, visit, contacts);
       if (e.transform.x !== query.x || e.transform.z !== query.z) world.spatial.set(e.id, e.transform.x, e.transform.z);
     }
     // Separation changes only X/Z. Ground once at the final position, rather
     // than sampling every pass and leaving the last push's support stale.
-    if (world.districts) for (const e of world.entities.iterate()) if (e.infected && radii.get(e.id) && !(e.infected.specialAttack && e.infected.specialAttack.stage !== 'recovery' && e.infected.specialAttack.move !== 'lion.flank') && !e.infected.perched && e.infected.special !== 'cling' && e.archetype !== 'infected.crow') {
+    if (world.districts) for (const e of world.entities.iterate()) if (e.infected && radii[e.id] && !(e.infected.specialAttack && e.infected.specialAttack.stage !== 'recovery' && e.infected.specialAttack.move !== 'lion.flank') && !e.infected.perched && e.infected.special !== 'cling' && e.archetype !== 'infected.crow') {
       // Static district support cannot change beneath a stationary body. Reuse
       // its exact height until movement or a tier/checkpoint replaces the district.
       let support = ground.get(e);

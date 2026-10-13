@@ -1,0 +1,591 @@
+> verify
+> tsx tools/verify.ts E30
+
+
+Verifying E30: npm run typecheck
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+Verifying E30: npm run lint
+
+> lint
+> eslint src tests tools functions *.config.ts eslint.config.js
+
+
+Verifying E30: sh tools/e2e-lock.sh npm run build
+
+> build
+> NODE_ENV=production vite build --configLoader runner
+
+vite v6.4.3 building for production...
+transforming...
+✓ 462 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/preview/index.html                             1.65 kB │ gzip:     0.72 kB
+dist/index.html                                     2.56 kB │ gzip:     0.83 kB
+dist/build/civilianBakeData-C3tF2pym.js             3.68 kB
+dist/build/BufferGeometryUtils-E8HioxtM.js          6.88 kB
+dist/build/civilianBake.worker-C4wBqU_0.js          8.73 kB
+dist/build/basis_transcoder-o4Hde_L7.js            57.53 kB
+dist/build/three.module-B-nHBglW.js               206.11 kB
+dist/build/civilianSource-C9iAdJAj.js             383.52 kB
+dist/build/basis_transcoder-VXdx5NbI.wasm         527.33 kB │ gzip:   244.57 kB
+dist/build/prepareCivilianGeometry-CBJmGYil.js  2,020.11 kB
+dist/build/rapier-C6GCbKVJ.wasm                 3,082.10 kB │ gzip: 1,171.17 kB
+dist/build/index-D4ZLKoBM.css                      31.28 kB │ gzip:     6.99 kB
+dist/build/lookViewpoints-BX-OEann.js               0.23 kB │ gzip:     0.16 kB
+dist/build/survivor-ZLQ6dM57.js                     0.58 kB │ gzip:     0.37 kB
+dist/build/modulepreload-polyfill-B5Qt9EMX.js       0.71 kB │ gzip:     0.40 kB
+dist/build/preload-helper-BlTxHScW.js               1.11 kB │ gzip:     0.65 kB
+dist/build/crowdProbe-9Ua6gHYP.js                   1.35 kB │ gzip:     0.78 kB
+dist/build/controls-DGdjkqyP.js                     1.40 kB │ gzip:     0.74 kB
+dist/build/worldLook-DT8mxh_z.js                    1.64 kB │ gzip:     0.76 kB
+dist/build/crowd-CmJlh3kU.js                        2.22 kB │ gzip:     1.21 kB
+dist/build/lookPatch-BT7ef7_D.js                    5.26 kB │ gzip:     2.69 kB
+dist/build/navigation-Ba3hTrFy.js                   5.30 kB │ gzip:     2.47 kB
+dist/build/probe-6n5s2w4q.js                        7.43 kB │ gzip:     3.00 kB
+dist/build/l3-CU1CVjGd.js                           7.69 kB │ gzip:     3.45 kB
+dist/build/l4-DJ5EVQAk.js                           7.79 kB │ gzip:     3.44 kB
+dist/build/index-D0J_0bG5.js                       12.07 kB │ gzip:     4.38 kB
+dist/build/Inspection-C6CuJmrR.js                  12.83 kB │ gzip:     4.39 kB
+dist/build/meleeCombos-BF22Jmkm.js                 14.12 kB │ gzip:     4.54 kB
+dist/build/MotionLab-CVBbHiik.js                   20.06 kB │ gzip:     8.45 kB
+dist/build/LevelFiveBot-DBf9Tm6k.js                21.41 kB │ gzip:     5.71 kB
+dist/build/testApi-Dbjeoam2.js                     26.00 kB │ gzip:     9.85 kB
+dist/build/index-q_yQvfIZ.js                       27.23 kB │ gzip:     7.29 kB
+dist/build/Pickups-DUtdc_F1.js                     67.31 kB │ gzip:    22.09 kB
+dist/build/Physics-DxlVq1sT.js                     67.72 kB │ gzip:    23.25 kB
+dist/build/SceneLab-B_sTxGun.js                    68.35 kB │ gzip:    24.48 kB
+dist/build/light-anchors-D5appa6E.js               90.38 kB │ gzip:     6.79 kB
+dist/build/PropSystem-CCWTdZAN.js                 147.35 kB │ gzip:    43.87 kB
+dist/build/Debug-DoeeJH5i.js                      155.75 kB │ gzip:    32.99 kB
+dist/build/registry-CDVbKXql.js                   187.01 kB │ gzip:    64.15 kB
+dist/build/rapier-ykuY6d4E.js                     212.13 kB │ gzip:    36.15 kB
+dist/build/three.module-DZLhVvI5.js               287.62 kB │ gzip:    77.07 kB
+dist/build/install-CgVena-J.js                    590.02 kB │ gzip:   158.99 kB
+dist/build/index-5AVsBKNa.js                    1,002.75 kB │ gzip:   312.23 kB
+dist/build/WeatherView-B14uDNzh.js              1,022.04 kB │ gzip:   229.16 kB
+dist/build/character-clips-BgcRYFdn.js          1,939.70 kB │ gzip:   341.78 kB
+✓ built in 3.46s
+
+Verifying E30: sh tools/sim-lock.sh npx vitest run -t @(?:E30)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$) --maxWorkers=1 --reporter=default --reporter=json --outputFile=test-results/epics/E30/vitest.json
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level
+
+ ↓ |functional| tests/levels/L1.test.ts (19 tests | 19 skipped)
+stdout | tests/levels/L8.test.ts > T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 12 survivors and exact APC transfer
+{"seed":1,"time":89.78333333333333,"breach":60,"outlets":4,"animalTurns":[10396,10394,10395],"alphas":4,"rescued":12}
+
+ ✓ |functional| tests/levels/L8.test.ts (8 tests) 24843ms
+   ✓ T-E30-04 T-E30-05 T-E30-07 @E30-AC04 @E30-AC05 @E30-AC07 high active-time calm and simultaneous inside emergence 1726ms
+   ✓ T-E30-04 T-E30-05 T-E30-07 @E30-AC04 @E30-AC05 @E30-AC07 low active-time calm and simultaneous inside emergence 1735ms
+   ✓ T-E30-08 T-E30-09 T-E30-11 @E30-AC08 @E30-AC09 @E30-AC11 seed 1 systemic zoo outbreak converts animals and humans 7344ms
+   ✓ T-E30-17 @E30-AC17 sanctuary and breach restore preserve remaining time, tunnel walks and animal identities 2454ms
+   ✓ T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 0 survivors and exact APC transfer 3062ms
+   ✓ T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 12 survivors and exact APC transfer 3122ms
+   ✓ T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 35 survivors and exact APC transfer 3761ms
+   ✓ T-E30-13-losses @E30-AC13 finished civilians and released former survivors cannot block an all-lost escape 1638ms
+ ↓ |functional| tests/sim/performance/zoo-s2.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/sim/performance/zoo-s1.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/sim/performance/alpha-support.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/sim/performance/alpha-physical.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/sim/performance/zoo-s3.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/sim/performance/alpha.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/render/crowd-lod-geometry.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/levels/L2-boarding.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/levels/L2-escape-loop.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/levels/L2.test.ts (16 tests | 16 skipped)
+ ↓ |functional| tests/levels/L3-bridge.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/levels/L3-follow.test.ts (13 tests | 13 skipped)
+ ↓ |functional| tests/levels/L3-route.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/levels/L3.test.ts (20 tests | 20 skipped)
+ ↓ |functional| tests/levels/L4-convoy.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/levels/L4.test.ts (23 tests | 23 skipped)
+ ↓ |functional| tests/levels/L5-encounters.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/levels/L5.test.ts (15 tests | 15 skipped)
+ ↓ |functional| tests/levels/L6-campaign.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/levels/L6.test.ts (11 tests | 11 skipped)
+ ↓ |functional| tests/levels/continuity.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/levels/l1-firefighter.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/levels/l1-medkits.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/levels/l1-ride-input.test.ts (10 tests | 10 skipped)
+ ↓ |functional| tests/levels/l2-start.test.ts (7 tests | 7 skipped)
+ ↓ |functional| tests/levels/l5-district.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/levels/respawn-checkpoint.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/levels/ring-clearance.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/levels/story-bots.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/levels/story-protection.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/levels/trap-pockets.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/sim/arrival-stability.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/sim/barricades.test.ts (21 tests | 21 skipped)
+ ↓ |functional| tests/sim/bicycle-knockoff.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/sim/bicycle-pavement.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/sim/controls.test.ts (2 tests | 2 skipped)
+ ✓ |functional| tests/sim/determinism.test.ts (3 tests | 2 skipped) 114ms
+ ↓ |functional| tests/sim/districts.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/sim/explosion-extinguisher.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/sim/explosion-gas.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/sim/explosions.test.ts (9 tests | 9 skipped)
+ ↓ |functional| tests/sim/handover-door-route.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/sim/l1-toys.test.ts (19 tests | 19 skipped)
+ ↓ |functional| tests/sim/l1-walk.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/sim/l9-greybox.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/sim/light-power.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/sim/m1-world.test.ts (10 tests | 10 skipped)
+ ↓ |functional| tests/sim/progression.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/sim/props.test.ts (8 tests | 8 skipped)
+ ↓ |functional| tests/sim/recorder.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/sim/runner.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/sim/weather.test.ts (15 tests | 15 skipped)
+ ↓ |functional| tests/unit/e2e-error-guard.test.ts (3 tests | 3 skipped)
+ ✓ |functional| tests/unit/health-bars.test.ts (3 tests | 2 skipped) 2ms
+ ↓ |functional| tests/unit/import-graph.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/l5-shotgun.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/physics-metadata.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/physics-preparation.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/physics-prop-contract.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/setup.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/static.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/stride-scale.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/survivor.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/traceability.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/ui-settings.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/ui-telegraphs.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/vehicles.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/sim/ai/alpha-physical.test.ts (10 tests | 10 skipped)
+ ↓ |functional| tests/sim/ai/alpha-support.test.ts (8 tests | 8 skipped)
+ ↓ |functional| tests/sim/ai/alpha.test.ts (30 tests | 30 skipped)
+ ↓ |functional| tests/sim/ai/animals.test.ts (10 tests | 10 skipped)
+ ↓ |functional| tests/sim/ai/crowd-variety.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/sim/ai/infected-hearing.test.ts (95 tests | 95 skipped)
+ ↓ |functional| tests/sim/ai/infected-pursuit.test.ts (7 tests | 7 skipped)
+ ↓ |functional| tests/sim/ai/infected-recover.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/sim/ai/infected-stuck-l2.test.ts (1 test | 1 skipped)
+ ✓ |functional| tests/sim/ai/l8-animals.test.ts (11 tests) 200ms
+ ↓ |functional| tests/sim/ai/navigation.test.ts (14 tests | 14 skipped)
+ ↓ |functional| tests/sim/ai/specials.test.ts (12 tests | 12 skipped)
+ ↓ |functional| tests/sim/ai/turning.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/sim/ai/zoo-s1.test.ts (11 tests | 11 skipped)
+ ↓ |functional| tests/sim/ai/zoo-s2.test.ts (15 tests | 15 skipped)
+ ↓ |functional| tests/sim/ai/zoo-s3.test.ts (15 tests | 15 skipped)
+ ↓ |functional| tests/sim/combat/click-queue.test.ts (10 tests | 10 skipped)
+ ↓ |functional| tests/sim/combat/click-rate.test.ts (1 test | 1 skipped)
+ ✓ |functional| tests/sim/combat/combat.test.ts (19 tests | 18 skipped) 93ms
+ ↓ |functional| tests/sim/combat/encounter-balance.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/sim/combat/fast-clicks.test.ts (8 tests | 8 skipped)
+ ↓ |functional| tests/sim/combat/fire-axe.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/sim/combat/l1-crowd.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/sim/combat/l1-duel.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/sim/combat/l2-toughness.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/sim/combat/l5-shotgun.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/sim/combat/l7-rocket.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/sim/combat/m1-feel.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/sim/combat/roundhouse.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/sim/combat/shot-cover.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/sim/interact/devices.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/sim/interact/gate-lockin.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/sim/interact/hazards.test.ts (11 tests | 11 skipped)
+ ↓ |functional| tests/sim/interact/infected-integration.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/sim/interact/pickups.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/sim/missions/adapters.test.ts (13 tests | 13 skipped)
+ ↓ |functional| tests/sim/missions/campaign.test.ts (16 tests | 16 skipped)
+ ↓ |functional| tests/sim/missions/l2-axe-objective.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/sim/missions/l2-reporting.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/sim/missions/l2-ride-clearance.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/sim/missions/l2-ride-vehicles.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/sim/missions/l7-departure.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/sim/missions/l7-encounters.test.ts (13 tests | 13 skipped)
+ ↓ |functional| tests/sim/missions/objectives.test.ts (30 tests | 30 skipped)
+ ↓ |functional| tests/sim/missions/preparation.test.ts (7 tests | 7 skipped)
+ ↓ |functional| tests/sim/missions/small-figure.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/sim/missions/w6.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/sim/npc/activity-anchors.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/sim/npc/ally-defence.test.ts (7 tests | 7 skipped)
+ ↓ |functional| tests/sim/npc/civilians.test.ts (7 tests | 7 skipped)
+ ↓ |functional| tests/sim/npc/followers.test.ts (8 tests | 8 skipped)
+ ↓ |functional| tests/sim/npc/integration.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/sim/npc/l1-civilians.test.ts (7 tests | 7 skipped)
+ ↓ |functional| tests/sim/npc/l1-motion-clips.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/sim/npc/l4-systems.test.ts (12 tests | 12 skipped)
+ ↓ |functional| tests/sim/npc/medkit-fetch.test.ts (5 tests | 5 skipped)
+ ✓ |functional| tests/sim/npc/permanence.test.ts (4 tests | 3 skipped) 1421ms
+   ✓ 20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07 1420ms
+ ↓ |functional| tests/sim/npc/seat-follow.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/sim/npc/traffic.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/sim/vehicles/apc-durability.test.ts (11 tests | 11 skipped)
+ ✓ |functional| tests/sim/vehicles/apc.test.ts (12 tests) 230ms
+ ↓ |functional| tests/sim/vehicles/handling.test.ts (14 tests | 14 skipped)
+ ↓ |functional| tests/sim/vehicles/interact-integration.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/sim/vehicles/interaction.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/combat/events.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/combat/gun-raise.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/combat/loadout.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/assets/accessories.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/assets/alpha.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/assets/army-boom.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/assets/authored-lods.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/assets/build.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/assets/civilian-bake-build.test.ts (72 tests | 72 skipped)
+ ↓ |functional| tests/unit/assets/civilian-bake-worker.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/unit/assets/civilian-bake.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/unit/assets/commerce-pack.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/assets/courier-bike.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/assets/crowd.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/assets/delivery.test.ts (7 tests | 7 skipped)
+ ↓ |functional| tests/unit/assets/elephant.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/assets/gun-pose.test.ts (11 tests | 11 skipped)
+ ↓ |functional| tests/unit/assets/living-adults.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/assets/load-pipeline.test.ts (8 tests | 8 skipped)
+ ↓ |functional| tests/unit/assets/lod-fidelity.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/assets/long-gun-aim.test.ts (8 tests | 8 skipped)
+ ↓ |functional| tests/unit/assets/long-gun-hold.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/assets/optimize.test.ts (12 tests | 12 skipped)
+ ↓ |functional| tests/unit/assets/png-pixels.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/assets/production-gates.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/assets/references.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/assets/registry.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/assets/runtime-integration.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/unit/assets/static-bakes.test.ts (141 tests | 141 skipped)
+ ↓ |functional| tests/unit/assets/static-batch-equivalence.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/assets/static-collision.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/assets/validate.test.ts (17 tests | 17 skipped)
+ ↓ |functional| tests/unit/assets/window-glow-lod.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/assets/zebra.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/audio/acoustics.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/audio/ambience-guard.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/audio/assets.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/audio/base-alarm.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/audio/credits.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/audio/danger.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/audio/fight-music.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/audio/l1-arc.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/audio/levelSoundtracks.test.ts (2 tests | 2 skipped)
+ ✓ |functional| tests/unit/audio/music-beats.test.ts (3 tests | 2 skipped) 2ms
+ ↓ |functional| tests/unit/audio/noise.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/audio/policies.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/unit/audio/registry.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/audio/streaming.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/data/action-assets.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/data/actions.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/data/explosions.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/data/l2-glass.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/input/bindings.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/input/buttons.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/input/click-pick.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/input/rack-selection.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/input/raised-floor.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/input/walk.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/input/wheel.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/layouts/build.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/layouts/clipping.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/layouts/crossval.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/layouts/d-grove-scaffold.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/layouts/d-grove.test.ts (11 tests | 11 skipped)
+ ↓ |functional| tests/unit/layouts/districts.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/layouts/visual-bounds.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/layouts/w6.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/core/foundation.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/levels/building-shells.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/levels/campaign-nav-preparation.test.ts (7 tests | 7 skipped)
+ ↓ |functional| tests/unit/levels/continuity.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/levels/l2-roads.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/levels/l2-static.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/levels/l3-static.test.ts (7 tests | 7 skipped)
+ ↓ |functional| tests/unit/levels/l4-static.test.ts (11 tests | 11 skipped)
+ ↓ |functional| tests/unit/levels/l5-footprints.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/levels/l5-shutter.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/levels/l5-static.test.ts (9 tests | 9 skipped)
+ ↓ |functional| tests/unit/levels/l6-static.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/levels/l7-district.test.ts (6 tests | 6 skipped)
+ ✓ |functional| tests/unit/levels/l8-district.test.ts (6 tests) 442ms
+ ✓ |functional| tests/unit/levels/l8-variants.test.ts (4 tests) 96ms
+ ↓ |functional| tests/unit/levels/l9-district.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/levels/layout-overlap.test.ts (8 tests | 8 skipped)
+ ↓ |functional| tests/unit/levels/no-placeholder-assets.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/levels/placement-clearance-cache.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/motionlab/motion.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/motionlab/skin.test.ts (2 tests | 2 skipped)
+ ✓ |functional| tests/unit/motionlab/stage1.test.ts (4 tests | 2 skipped) 145ms
+ ↓ |functional| tests/unit/missions/dialogue.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/missions/house-emergence.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/missions/marker-anchor.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/missions/schema.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/progression/aftermath.test.ts (3 tests | 3 skipped)
+ ✓ |functional| tests/unit/progression/campaign.test.ts (14 tests | 13 skipped) 2ms
+ ↓ |functional| tests/unit/progression/next-level.test.ts (7 tests | 7 skipped)
+ ↓ |functional| tests/unit/sim/police-range.test.ts (18 tests | 18 skipped)
+ ↓ |functional| tests/unit/telemetry/client.test.ts (12 tests | 12 skipped)
+ ↓ |functional| tests/unit/telemetry/codec.test.ts (8 tests | 8 skipped)
+ ↓ |functional| tests/unit/telemetry/functions.test.ts (9 tests | 9 skipped)
+ ↓ |functional| tests/unit/performance/assets.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/performance/deviceEvidence.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/performance/event-bus-cache.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/performance/gibs.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/performance/human-query.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/performance/layouts.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/performance/nav-visibility.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/performance/quality.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/tooling/headless-only.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/tooling/prop-penetration.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/tooling/scenelab.test.ts (11 tests | 11 skipped)
+ ↓ |functional| tests/unit/vfx/events.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/vfx/integration.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/vfx/lab-accident.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/vfx/pools.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/vfx/zoo-s2.test.ts (9 tests | 9 skipped)
+ ↓ |functional| tests/unit/vfx/zoo-s3.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/render/authored-animation.test.ts (17 tests | 17 skipped)
+ ↓ |functional| tests/unit/render/camera-jitter.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/render/car-transition.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/catalog-motion.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/unit/render/civilian-grip.test.ts (8 tests | 8 skipped)
+ ↓ |functional| tests/unit/render/civilian-material.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/corgi-feet.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/render/corgi-scale.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/courier-rig-v2.test.ts (11 tests | 11 skipped)
+ ↓ |functional| tests/unit/render/crowd-appearance.test.ts (8 tests | 8 skipped)
+ ↓ |functional| tests/unit/render/crowd-feet.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/render/crowd-footwork.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/render/crowd-models.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/render/crowd-register.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/render/crowd-sink.test.ts (7 tests | 7 skipped)
+ ↓ |functional| tests/unit/render/crowd-topology.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/crowd-visibility.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/render/e25-hero.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/render/e25-lighting.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/unit/render/e25-visibility.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/render/e25-windows.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/render/e27-blasts.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/render/environment-lifetime.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/figure-height.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/unit/render/foliage.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/render/footprints.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/render/infected-bake.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/render/inspection-camera.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/render/interaction-marker.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/l1-grade.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/render/l1-infection-overlay.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/l1-look.test.ts (3 tests | 3 skipped)
+ ↓ |functional| tests/unit/render/l3-boom.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/l6-power.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/l7-memory.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/render/l7-perf.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/render/lod-policy.test.ts (7 tests | 7 skipped)
+ ↓ |functional| tests/unit/render/look-patch.test.ts (14 tests | 14 skipped)
+ ↓ |functional| tests/unit/render/material-variants.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/render/npc.test.ts (5 tests | 5 skipped)
+ ↓ |functional| tests/unit/render/palette.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/render/post-fx-streaming.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/render/pre-render.test.ts (17 tests | 17 skipped)
+ ↓ |functional| tests/unit/render/rocket-corpses.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/roof-cutaway.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/render/roundhouse-pose.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/sit-pose.test.ts (2 tests | 2 skipped)
+ ↓ |functional| tests/unit/render/skin-pilot.test.ts (18 tests | 18 skipped)
+ ↓ |functional| tests/unit/render/static-corpses.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/unit/render/static-instance-attributes.test.ts (1 test | 1 skipped)
+ ↓ |functional| tests/unit/render/texture-ranges.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/render/texture-upload.test.ts (4 tests | 4 skipped)
+ ✓ |functional| tests/unit/render/transport.test.ts (2 tests) 46ms
+ ↓ |functional| tests/unit/render/vehicle-glass.test.ts (6 tests | 6 skipped)
+ ↓ |functional| tests/unit/render/view.test.ts (4 tests | 4 skipped)
+ ↓ |functional| tests/unit/render/weather-materials.test.ts (3 tests | 3 skipped)
+ ↓ |timing| tests/sim/ai/l1-perception.test.ts (15 tests | 15 skipped)
+ ↓ |timing| tests/sim/performance/horde.test.ts (3 tests | 3 skipped)
+ ↓ |timing| tests/sim/player.test.ts (8 tests | 8 skipped)
+ ↓ |timing| tests/sim/weapons.test.ts (73 tests | 73 skipped)
+ ↓ |timing| tests/sim/ai/director.test.ts (10 tests | 10 skipped)
+ ✓ |timing| tests/sim/combat/balance.test.ts (3 tests | 2 skipped) 150ms
+ ↓ |timing| tests/sim/interact/integration.test.ts (6 tests | 6 skipped)
+ ↓ |timing| tests/sim/missions/perf.test.ts (1 test | 1 skipped)
+ ↓ |timing| tests/sim/npc/campaign.test.ts (5 tests | 5 skipped)
+ ↓ |timing| tests/sim/vehicles/consequences.test.ts (13 tests | 13 skipped)
+ ↓ |timing| tests/unit/progression/perf.test.ts (1 test | 1 skipped)
+
+ Test Files  14 passed | 303 skipped (317)
+      Tests  52 passed | 1936 skipped (1988)
+   Start at  00:28:19
+   Duration  68.17s (tests 50%, import 42%, transform 7%, worker 1%)
+
+JSON report written to /Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level/test-results/epics/E30/vitest.json
+
+Verifying E30: sh tools/e2e-lock.sh npx playwright test --grep @(?:E30)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$) --grep-invert @perf --workers=1
+
+Running 43 tests using 1 worker
+
+  ✓   1 [chromium] › tests/e2e/apc.spec.ts:3:1 › T-E30-14-browser T-E31-03-browser @E30-AC14 @E31-AC03 real APC enter, drive, both firing inputs and exit (4.1s)
+  ✓   2 [chromium] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (5.9s)
+  ✓   3 [chromium] › tests/e2e/controls-playtest.spec.ts:8:1 › S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB (20.1s)
+  ✓   4 [chromium] › tests/e2e/driving.spec.ts:22:1 › S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit (3.6s)
+  ✓   5 [chromium] › tests/e2e/health-bars.spec.ts:11:3 › T-E07-06-bars-1600 @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera high (21.5s)
+  ✓   6 [chromium] › tests/e2e/health-bars.spec.ts:11:3 › T-E07-06-bars-390 @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera low (10.4s)
+  ✓   7 [chromium] › tests/e2e/health-bars.spec.ts:11:3 › T-E07-06-bars-844 @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera low (10.5s)
+  ✓   8 [chromium] › tests/e2e/l8-animals.spec.ts:5:3 › T-E30-09-lion-high-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar (3.9s)
+  ✓   9 [chromium] › tests/e2e/l8-animals.spec.ts:5:3 › T-E30-09-gorilla-high-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar (5.6s)
+  ✓  10 [chromium] › tests/e2e/l8-animals.spec.ts:5:3 › T-E30-09-elephant-high-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar (3.9s)
+  ✓  11 [chromium] › tests/e2e/l8-animals.spec.ts:5:3 › T-E30-09-zebra-high-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar (3.9s)
+  ✓  12 [chromium] › tests/e2e/l8-animals.spec.ts:5:3 › T-E30-09-flamingo-high-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar (3.8s)
+  ✓  13 [chromium] › tests/e2e/l8-animals.spec.ts:5:3 › T-E30-09-lion-low-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar (2.7s)
+  ✓  14 [chromium] › tests/e2e/l8-animals.spec.ts:5:3 › T-E30-09-gorilla-low-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar (4.5s)
+  ✓  15 [chromium] › tests/e2e/l8-animals.spec.ts:5:3 › T-E30-09-elephant-low-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar (4.3s)
+  ✓  16 [chromium] › tests/e2e/l8-animals.spec.ts:5:3 › T-E30-09-zebra-low-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar (2.6s)
+  ✓  17 [chromium] › tests/e2e/l8-animals.spec.ts:5:3 › T-E30-09-flamingo-low-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar (2.6s)
+  ✓  18 [chromium] › tests/e2e/levels/l4-boot.spec.ts:5:1 › T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors (10.8s)
+  ✓  19 [chromium] › tests/e2e/levels/L8.spec.ts:12:1 › T-E30-18 @E30-AC18 real keyboard exploration, tunnel breach and complete APC escape into L9 (21.8s)
+  ✓  20 [chromium] › tests/e2e/levels/L8.spec.ts:66:1 › T-E30-19 @E30-AC19 game camera calm, internal breach and same-id animal turn captures (8.2s)
+  ✓  21 [chromium] › tests/e2e/levels/L8.spec.ts:92:3 › phone escape input › T-E30-18-mobile @E30-AC18 touch stick reaches the APC ACTION with no HUD overflow (17.7s)
+  ✓  22 [chromium] › tests/e2e/menus-mouse.spec.ts:3:1 › T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only (3.2s)
+  ✘  23 [chromium] › tests/e2e/save.spec.ts:76:1 › T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly (9.8s)
+  ✓  24 [chromium] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (618ms)
+  ✓  25 [chromium] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (596ms)
+  ✓  26 [chromium] › tests/e2e/crowd-drawn.spec.ts:15:3 › T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props (17.5s)
+  ✓  27 [chromium] › tests/e2e/crowd-drawn.spec.ts:15:3 › T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props (25.5s)
+  ✓  28 [chromium] › tests/e2e/crowd-feel.spec.ts:87:1 › 20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07 (3.6s)
+  ✓  29 [pixel-7] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.1s)
+  ✓  30 [pixel-7] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (442ms)
+  ✓  31 [pixel-7] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (578ms)
+  ✓  32 [pixel-7-landscape] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.1s)
+  ✓  33 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (442ms)
+  ✓  34 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (578ms)
+  ✓  35 [iphone-14] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.0s)
+  ✓  36 [iphone-14] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (443ms)
+  ✓  37 [iphone-14] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (578ms)
+  ✓  38 [iphone-14-landscape] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.0s)
+  ✓  39 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (442ms)
+  ✓  40 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (594ms)
+  ✓  41 [webkit] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (8.5s)
+  ✓  42 [webkit] › tests/e2e/smoke.spec.ts:3:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.5s)
+  ✓  43 [webkit] › tests/e2e/smoke.spec.ts:12:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.7s)
+
+
+  1) [chromium] › tests/e2e/save.spec.ts:76:1 › T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "LEFT"
+    Received: "RIGHT"
+
+      85 |   const state=await page.evaluate(()=>window.__SS__!.getState());expect(state.scenario).toBe('L5');expect(state.player!.survivor!.variant).toBe('male');expect(state.player!.weapons!.LEFT.rack.map(s=>s.id)).toEqual(save.racks.LEFT);expect(state.player!.weapons!.RIGHT.rack.map(s=>s.id)).toEqual(save.racks.RIGHT);
+      86 |   expect(state.combat!.aimAssist).toBe('High');await photo(page,'continue-L5');
+    > 87 |   expect(state.player!.weapons!.selectedSide).toBe('LEFT');
+         |                                               ^
+      88 | });
+      89 | test('T-E13-06-browser @E13 @E13-AC06 corrupted and future saves show recoverable dialog without crashing',async({page})=>{
+      90 |   await page.goto(testUrl);
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level/tests/e2e/save.spec.ts:87:47
+
+    Error Context: test-results/playwright/run-3425/e2e-save-T-E13-05-E13-E13--e4c86--racks-and-settings-exactly-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3425/e2e-save-T-E13-05-E13-E13--e4c86--racks-and-settings-exactly-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3425/e2e-save-T-E13-05-E13-E13--e4c86--racks-and-settings-exactly-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/e2e/save.spec.ts:76:1 › T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly
+  42 passed (4.7m)
+
+Verifying E30: sh tools/perf/quiet-run.sh npx playwright test tests/perf/l8-budgets.spec.ts --project=chromium --workers=1
+ 0:57  up 64 days, 23:50, 4 users, load averages: 2.91 3.35 3.43
+Quiet-run preflight: load < 3; no local Vitest; pgrep -fil chrome.*headless: no processes; all configured browser slots held.
+
+Running 3 tests using 1 worker
+
+
+> build
+> NODE_ENV=production vite build --configLoader runner
+
+vite v6.4.3 building for production...
+transforming...
+✓ 462 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/preview/index.html                             1.65 kB │ gzip:     0.72 kB
+dist/index.html                                     2.56 kB │ gzip:     0.83 kB
+dist/build/civilianBakeData-C3tF2pym.js             3.68 kB
+dist/build/BufferGeometryUtils-E8HioxtM.js          6.88 kB
+dist/build/civilianBake.worker-C4wBqU_0.js          8.73 kB
+dist/build/basis_transcoder-o4Hde_L7.js            57.53 kB
+dist/build/three.module-B-nHBglW.js               206.11 kB
+dist/build/civilianSource-C9iAdJAj.js             383.52 kB
+dist/build/basis_transcoder-VXdx5NbI.wasm         527.33 kB │ gzip:   244.57 kB
+dist/build/prepareCivilianGeometry-CBJmGYil.js  2,020.11 kB
+dist/build/rapier-C6GCbKVJ.wasm                 3,082.10 kB │ gzip: 1,171.17 kB
+dist/build/index-D4ZLKoBM.css                      31.28 kB │ gzip:     6.99 kB
+dist/build/lookViewpoints-BX-OEann.js               0.23 kB │ gzip:     0.16 kB
+dist/build/survivor-ZLQ6dM57.js                     0.58 kB │ gzip:     0.37 kB
+dist/build/modulepreload-polyfill-B5Qt9EMX.js       0.71 kB │ gzip:     0.40 kB
+dist/build/preload-helper-BlTxHScW.js               1.11 kB │ gzip:     0.65 kB
+dist/build/crowdProbe-9Ua6gHYP.js                   1.35 kB │ gzip:     0.78 kB
+dist/build/controls-DGdjkqyP.js                     1.40 kB │ gzip:     0.74 kB
+dist/build/worldLook-DT8mxh_z.js                    1.64 kB │ gzip:     0.76 kB
+dist/build/crowd-CmJlh3kU.js                        2.22 kB │ gzip:     1.21 kB
+dist/build/lookPatch-BT7ef7_D.js                    5.26 kB │ gzip:     2.69 kB
+dist/build/navigation-Ba3hTrFy.js                   5.30 kB │ gzip:     2.47 kB
+dist/build/probe-6n5s2w4q.js                        7.43 kB │ gzip:     3.00 kB
+dist/build/l3-CU1CVjGd.js                           7.69 kB │ gzip:     3.45 kB
+dist/build/l4-DJ5EVQAk.js                           7.79 kB │ gzip:     3.44 kB
+dist/build/index-D0J_0bG5.js                       12.07 kB │ gzip:     4.38 kB
+dist/build/Inspection-C6CuJmrR.js                  12.83 kB │ gzip:     4.39 kB
+dist/build/meleeCombos-BF22Jmkm.js                 14.12 kB │ gzip:     4.54 kB
+dist/build/MotionLab-CVBbHiik.js                   20.06 kB │ gzip:     8.45 kB
+dist/build/LevelFiveBot-DBf9Tm6k.js                21.41 kB │ gzip:     5.71 kB
+dist/build/testApi-Dbjeoam2.js                     26.00 kB │ gzip:     9.85 kB
+dist/build/index-q_yQvfIZ.js                       27.23 kB │ gzip:     7.29 kB
+dist/build/Pickups-DUtdc_F1.js                     67.31 kB │ gzip:    22.09 kB
+dist/build/Physics-DxlVq1sT.js                     67.72 kB │ gzip:    23.25 kB
+dist/build/SceneLab-B_sTxGun.js                    68.35 kB │ gzip:    24.48 kB
+dist/build/light-anchors-D5appa6E.js               90.38 kB │ gzip:     6.79 kB
+dist/build/PropSystem-CCWTdZAN.js                 147.35 kB │ gzip:    43.87 kB
+dist/build/Debug-DoeeJH5i.js                      155.75 kB │ gzip:    32.99 kB
+dist/build/registry-CDVbKXql.js                   187.01 kB │ gzip:    64.15 kB
+dist/build/rapier-ykuY6d4E.js                     212.13 kB │ gzip:    36.15 kB
+dist/build/three.module-DZLhVvI5.js               287.62 kB │ gzip:    77.07 kB
+dist/build/install-CgVena-J.js                    590.02 kB │ gzip:   158.99 kB
+dist/build/index-BUGAk9V7.js                    1,002.93 kB │ gzip:   312.30 kB
+dist/build/WeatherView-B14uDNzh.js              1,022.04 kB │ gzip:   229.16 kB
+dist/build/character-clips-BgcRYFdn.js          1,939.70 kB │ gzip:   341.78 kB
+✓ built in 3.40s
+{"tier":"high","frameP95":11.700000000000728,"simP95":3.6000003814697266,"simFrameP95":3.299999237060547,"draws":148,"triangles":845694,"lights":0,"peak":200,"heapMB":131.92952,"species":{"lion":2,"gorilla":2,"elephant":2,"zebra":3,"flamingo":4,"alpha":4,"runner":183},"heapAudit":{"usedSize":131929520,"totalSize":133791744,"embedderHeapUsedSize":1854232,"backingStorageSize":604543578}}
+  ✓  1 [chromium] › tests/perf/l8-budgets.spec.ts:7:58 › T-E30-budget @E30-AC15 @perf high mixed outbreak E18 budgets (16.6s)
+{"tier":"low","frameP95":8.400000000001455,"simP95":2.6000003814697266,"simFrameP95":2.299999237060547,"draws":135,"triangles":421605,"lights":0,"peak":100,"heapMB":91.117604,"species":{"lion":2,"gorilla":2,"elephant":2,"zebra":3,"flamingo":4,"alpha":4,"runner":83},"heapAudit":{"usedSize":91117604,"totalSize":92372992,"embedderHeapUsedSize":1889184,"backingStorageSize":344248755}}
+  ✓  2 [chromium] › tests/perf/l8-budgets.spec.ts:7:58 › T-E30-budget @E30-AC15 @perf low mixed outbreak E18 budgets (16.4s)
+{"tier":"low","frameP95":34.100000000000364,"simP95":7.699999809265137,"simFrameP95":13.899999618530273,"draws":126,"triangles":320171,"lights":0,"peak":100,"heapMB":90.32052,"species":{"lion":2,"gorilla":2,"elephant":2,"zebra":3,"flamingo":4,"alpha":4,"runner":83},"heapAudit":{"usedSize":90320520,"totalSize":91848704,"embedderHeapUsedSize":1869016,"backingStorageSize":344245558}}
+  ✘  3 [chromium] › tests/perf/l8-budgets.spec.ts:7:58 › T-E30-budget @E30-AC15 @perf phone mixed outbreak E18 budgets (24.7s)
+
+
+  1) [chromium] › tests/perf/l8-budgets.spec.ts:7:58 › T-E30-budget @E30-AC15 @perf phone mixed outbreak E18 budgets
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.3
+    Received:    34.100000000000364
+
+      41 |   mkdirSync('test-results/epics/E30', { recursive: true }); writeFileSync(`test-results/epics/E30/perf-${profile}.json`, JSON.stringify({ ...result, heapAudit }, null, 2)); console.log(JSON.stringify({ ...result, perf: undefined, heapAudit }));
+      42 |   expect(result.peak).toBe(low ? 100 : 200); for (const count of Object.values(result.species)) expect(count).toBeGreaterThan(0);
+    > 43 |   expect(result.frameP95).toBeLessThanOrEqual(low ? 33.3 : 16.7); expect(result.simP95).toBeLessThanOrEqual(low ? 6 : 4);
+         |                           ^
+      44 |   expect(result.draws).toBeLessThanOrEqual(low ? 300 : 600); expect(result.triangles).toBeLessThanOrEqual(low ? 500000 : 1500000); expect(result.heapMB).toBeLessThanOrEqual(low ? 250 : 400); expect(result.lights).toBeLessThanOrEqual(low ? 3 : 8);
+      45 | });
+      46 |
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level/tests/perf/l8-budgets.spec.ts:43:27
+
+    Error Context: test-results/playwright/run-3425/perf-l8-budgets-T-E30-budg-c0590--mixed-outbreak-E18-budgets-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3425/perf-l8-budgets-T-E30-budg-c0590--mixed-outbreak-E18-budgets-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3425/perf-l8-budgets-T-E30-budg-c0590--mixed-outbreak-E18-budgets-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/perf/l8-budgets.spec.ts:7:58 › T-E30-budget @E30-AC15 @perf phone mixed outbreak E18 budgets
+  2 passed (1.1m)

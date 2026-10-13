@@ -100,3 +100,8 @@ compositions.L7 = { id: 'L7', tier: 6, timeOfDay: 'L6', districts: [{ id: fairDi
 
 /** Isolated L9-D1 greybox; mission registration belongs to the systems/encounter lanes. */
 compositions["D-CROSSING"] = { id: "D-CROSSING", tier: 0, timeOfDay: "L9-crossing", districts: [{ id: "D-CROSSING", origin: [0, 0] }] };
+
+/** E30 sanctuary uses the intact zoo and its powered night lights. */
+compositions.L8 = { id: 'L8', tier: 0, timeOfDay: 'L8-zoo', districts: [{ id: 'D-ZOO', origin: [0, 0] }] };
+/** The zoo's transport arrives before any crossing population is installed. */
+compositions.L9 = { ...compositions['D-CROSSING'], id: 'L9' };

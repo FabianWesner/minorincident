@@ -1,0 +1,28 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/l8-level -> 2.28.24.66:/srv/mi/ws/l8-level-d20722
+[remote] sync 11s, 8407 files; job /srv/mi/jobs/l8-level-d20722-39232-1791847733; queueing for a slot
+[runner] slot 1 acquired; load 1.69 3.52 3.58
+
+ RUN  v5.0.3 /srv/mi/jobs/l8-level-d20722-39232-1791847733
+
+ ✓  functional  tests/unit/core/foundation.test.ts (6 tests) 161ms
+stdout | tests/levels/L8.test.ts > T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 12 survivors and exact APC transfer
+{"seed":1,"time":89.78333333333333,"breach":60,"outlets":4,"animalTurns":[10396,10394,10395],"alphas":4,"rescued":12}
+
+ ✓  functional  tests/levels/L8.test.ts (8 tests) 82401ms
+   ✓ T-E30-04 T-E30-05 T-E30-07 @E30-AC04 @E30-AC05 @E30-AC07 high active-time calm and simultaneous inside emergence 5647ms
+   ✓ T-E30-04 T-E30-05 T-E30-07 @E30-AC04 @E30-AC05 @E30-AC07 low active-time calm and simultaneous inside emergence 4812ms
+   ✓ T-E30-08 T-E30-09 T-E30-11 @E30-AC08 @E30-AC09 @E30-AC11 seed 1 systemic zoo outbreak converts animals and humans 25408ms
+   ✓ T-E30-17 @E30-AC17 sanctuary and breach restore preserve remaining time, tunnel walks and animal identities 7897ms
+   ✓ T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 0 survivors and exact APC transfer 8633ms
+   ✓ T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 12 survivors and exact APC transfer 11061ms
+   ✓ T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 35 survivors and exact APC transfer 12988ms
+   ✓ T-E30-13-losses @E30-AC13 finished civilians and released former survivors cannot block an all-lost escape 5948ms
+ ✓  timing  tests/sim/combat/balance.test.ts (3 tests) 7571ms
+   ✓ T-E05-14 T-E06-10 @E05 @E05-AC14 @E06 @E06-AC10 measure every reference weapon × archetype TTK in authored bands 7142ms
+
+ Test Files  3 passed (3)
+      Tests  17 passed (17)
+   Start at  23:29:05
+   Duration  94.31s (tests 96%, transform 4%, import 1%)
+
+[remote] done exit=0 (runner 2.28.24.66, sync 11s, remote total 97s)

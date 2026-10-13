@@ -18,6 +18,7 @@ export function installCampaignNpcs(world: SimWorld): void {
     installNpcSystems(world); if (/^L[1-6]$/.test(districts.composition.id)) world.npcs!.civilians.level = Number(districts.composition.id[1]);
     world.npcs!.companion.spawn(); return;
   }
+  if (districts.composition.id === 'L8' || districts.composition.id === 'L9') { installNpcSystems(world); return; }
   if (!/^L[1-6]$/.test(districts.composition.id)) return;
   installNpcSystems(world); const { min, max } = districts.nav;
   world.npcs!.configure(Number(districts.composition.id[1])); world.npcs!.companion.spawn();
