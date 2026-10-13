@@ -48,9 +48,9 @@ export class L4Spectacle {
   }
   private clearOfAllies(at: Point, metres: number): boolean {
     if (dist(at, this.player.transform) < metres) return false;
-    // A bitten ally remains human until the outbreak replaces its civilian component.
+    // Bitten allies and humans hiding inside refuges still require blast clearance.
     const registered = [...this.s().soldierIds, ...this.s().armed.map(a => a.id)]
-      .map(id => this.world.entities.get(id)).filter(a => a?.civilian && a.health.current > 0 && !a.hidden);
+      .map(id => this.world.entities.get(id)).filter(a => a?.civilian && a.health.current > 0);
     return [...this.allies(), ...registered].every(a => dist(at, a!.transform) >= metres);
   }
 

@@ -27,11 +27,11 @@ function helpers(page: Page) {
     await page.screenshot({ path: `${output}/${name}.png` }); shots.add(name);
     await page.evaluate(() => window.__SS__!.camera.follow()); await step(1);
   };
-  /** Shift + click the nearest infected within `range` (the machine gun shoots it, the axe swings at arm's length). */
+  /** Shift + click the nearest visible infected within `range` (the machine gun shoots it, the axe swings at arm's length). */
   const fightNearby = async (range = 2.6): Promise<boolean> => {
     const target = await page.evaluate(range => {
       const a = window.__SS__!, p = a.getState().player!.transform;
-      const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < range).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z))[0];
+      const near = a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && a.input.visible(e.transform) && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < range).sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z))[0];
       return near ? a.input.project(near.transform) : null;
     }, range);
     if (!target) return false;
@@ -41,14 +41,17 @@ function helpers(page: Page) {
   /** Click the actual destination (camera framed for the click only); re-click after fights and respawns. */
   const go = async (target: P, stop = 1.2, done?: () => Promise<boolean>, range = 2.6) => {
     const click = async () => {
-      const start = (await player()).transform;
+      const start = (await player()).transform, m = await mission();
+      // A collapse respawn rejoins the escape street before continuing the current leg.
+      const goal = m.l4?.phase === 'collapse' && start.x < -12 && target.z >= 28 ? { x: -4, z: 3 }
+        : m.l4?.phase === 'collapse' && start.z < 28 && target.z >= 43 && start.x < 14 ? { x: -4, z: 28 } : target;
       await page.evaluate(({ start, target }) => {
         const a = window.__SS__!, x = (start.x + target.x) / 2, z = (start.z + target.z) / 2, r = Math.max(22, Math.hypot(target.x - start.x, target.z - start.z) + 12);
         a.camera.cinematic({ position: [x + r, r * 1.2, z + r], target: [x, 0, z] }, true);
-      }, { start, target });
+      }, { start, target: goal });
       // Resolve the queued screen click with the same camera used to project it (as in the L5 harness).
       await step(1);
-      const point = await page.evaluate(q => window.__SS__!.input.project(q), target);
+      const point = await page.evaluate(q => window.__SS__!.input.project(q), goal);
       await page.mouse.click(point.x, point.y); await step(1);
       await page.evaluate(() => window.__SS__!.camera.follow());
     };
@@ -61,7 +64,8 @@ function helpers(page: Page) {
       if (Math.hypot(target.x - p.x, target.z - p.z) <= stop) return;
       const crowd = await page.evaluate(() => { const a = window.__SS__!, p = a.getState().player!.transform; return a.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < 10).length; });
       // Many ahead: back off for a moment (they string out), then push on.
-      if (crowd >= 5) {
+      if (crowd >= 5 && (await mission()).l4?.phase === 'collapse') { await click(); fights = 0; }
+      else if (crowd >= 5) {
         const p0 = (await player()).transform, back = { x: p0.x - Math.sign(target.x - p0.x) * 8, z: p0.z };
         const point = await page.evaluate(q => window.__SS__!.input.project(q), back); await page.mouse.click(point.x, point.y); await step(45); await click(); fights = 0;
       }
@@ -142,13 +146,22 @@ test.describe('L4 The Safe City Falls in the browser', () => {
     // The war: hold the plaza with the army, shooting what comes within range; photos of the line and the tank.
     let line = false, tank = false;
     for (let i = 0; i < 1200 && !(await mission()).l4!.lineBreakAt; i++) { // l4-collapse: the war lasts ~3 min (three lines, then "Fall back!")
-      if (!await fightNearby(16)) await step(15);
+      const kit = await page.evaluate(() => {
+        const a = window.__SS__!, p = a.getState().player!, s = a.missions.state()!.l4!;
+        if (p.health.current > p.health.max * .5) return null;
+        const near = s.medkitIds.map(id => a.getEntity(id)).filter(e => e?.pickup && 'kind' in e.pickup && !e.pickup.collected && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 14)
+          .sort((x, y) => Math.hypot(x!.transform.x - p.transform.x, x!.transform.z - p.transform.z) - Math.hypot(y!.transform.x - p.transform.x, y!.transform.z - p.transform.z))[0];
+        return near ? { x: near.transform.x, z: near.transform.z } : null;
+      });
+      if (kit) await go(kit, .6, async () => (await mission()).l4!.lineBreakAt > 0, 6);
+      else if (!await fightNearby(16)) await step(15);
       const m = await mission();
       const inFrame = await page.evaluate(() => window.__SS__!.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x + 22, e.transform.z - 3) < 24).length);
       if (!line && inFrame >= 8) { await snap('l4-war-line'); line = true; }
       if (!tank && m.l4!.tankShots >= 1) { await snap('l4-tank'); tank = true; }
     }
-    expect((await mission()).l4!.lineBreakAt).toBeGreaterThan(0);
+    const warEnd = await mission();
+    expect(warEnd.l4!.lineBreakAt, JSON.stringify({ phase: warEnd.phase, time: warEnd.stats.time, deaths: warEnd.stats.deaths, cinematic: warEnd.cinematic, turnAt: warEnd.l4!.turnAt, beats: warEnd.l4!.director.lines })).toBeGreaterThan(0);
     if (!line) await snap('l4-war-line'); if (!tank) await snap('l4-tank');
     await step(150); await snap('l4-collapse');
     await expect(page.getByTestId('weapon-active')).not.toHaveAttribute('aria-label', /\d+\s*\/\s*\d+/);

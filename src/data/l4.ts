@@ -45,8 +45,8 @@ export const l4 = {
   calm: {
     /** Civilians already in the city before the convoy arrives, and the evacuees who step off the buses. */
     residents: { high: 40, low: 20 }, evacuees: { high: 24, low: 12 },
-    /** The turn (l4-collapse, PO-approved design 2026-10-12): this many evacuees inside the perimeter turn at once, in the crowd behind the soldiers. */
-    turners: { high: 18, low: 9 },
+    /** PO 2026-10-13: new infected at the alarm, preserving the previous pressure count without converting evacuees. */
+    alarmInfected: { high: 18, low: 9 },
     /** Where the evacuees beyond the eight queue slots wait: two rows between the armory table and the tents, facing the registration. */
     waiting: [5.8, 10].flatMap(z => [-31, -29.5, -28, -24.5, -23, -21.5, -18.5, -17, -15.5].map(x => [x, z] as P)) as readonly P[],
     soldiers: { high: 20, low: 10 },

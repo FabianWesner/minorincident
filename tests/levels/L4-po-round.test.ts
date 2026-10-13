@@ -88,6 +88,38 @@ describe('L4 PO round 10-13', () => {
     expect(fled.length / peds.length, '>= 70 % of the unarmed people flee or hide within 10 s').toBeGreaterThanOrEqual(.7);
   }, HEAVY);
 
+  for (const tier of ['high', 'low'] as const) test(`T-E22-civilians-stay-${tier} @E22 @E22-AC07 pre-alarm camp civilians remain human and panic/hide; incoming infected are new entities`, async () => {
+    const l = await loadL4(2, tier); world = l.world; const w = l.world, m = l.mission, s = m.state.l4!;
+    w.combat!.damage.god = true;
+    while (s.phase === 'convoy') w.update();
+    step(w, 3 * 60); m.completeObjective('quartermaster');
+    while (w.tick + 1 < s.turnDueAt) w.update();
+    const cohort = [...s.evacueeIds, ...s.residentIds].filter(id => {
+      const e = w.entities.get(id); return human(e) && !e.hidden && !e.civilian!.pet && inRing(e.transform);
+    });
+    const before = new Set([...w.entities.iterate()].map(e => e.id));
+    const infections: number[] = [];
+    w.events.on('outbreak.infection', e => { if (e.type === 'outbreak.infection' && cohort.includes(e.entityId) && e.phase === 'stagger') infections.push(w.entities.get(e.entityId)!.infection!.biteSourceId); });
+    expect(cohort.length).toBeGreaterThanOrEqual(tier === 'high' ? 20 : 10);
+    w.update();
+    expect(s.turnAt).toBe(w.tick);
+    step(w, 5 * 60);
+    const humans = cohort.filter(id => human(w.entities.get(id)));
+    const panicking = humans.filter(id => ['flee', 'hide', 'alarmed'].includes(w.entities.get(id)!.civilian!.state));
+    const newInfected = s.emergedIds.filter(id => !before.has(id));
+    record(`civilians-stay-${tier}`, { cohort: cohort.length, humans: humans.length, panicking: panicking.length, newInfected: newInfected.length, infections });
+    expect(humans.length / cohort.length).toBeGreaterThanOrEqual(.9);
+    expect(panicking.length / cohort.length).toBeGreaterThanOrEqual(.9);
+    expect(newInfected.length).toBeGreaterThanOrEqual(tier === 'high' ? 15 : 8);
+    expect(s.emergedIds.every(id => !before.has(id))).toBe(true);
+    expect(infections.every(id => id > 0)).toBe(true);
+    // Throughout the later collapse pressure, infection must still have a real attacker.
+    runL4(w, m, 'idle', { seed: 2, god: true, maxSeconds: 480, stopWhen: mm => mm.state.l4!.lineBreakAt > 0 });
+    expect(infections.every(id => id > 0)).toBe(true);
+    expect(s.director.turnedInside).toBe(0);
+    expect(s.lineCause).toBe('beats');
+  }, HEAVY);
+
   test('T-E22-po-3 @E22 @E22-AC10 @E22-AC12 infected come spread from all sides (and from inside the camp); six to eight Alphas reach the lines and nests; the beats hold', async () => {
     const l = await loadL4(2); world = l.world; const w = l.world, m = l.mission, s = m.state.l4!;
     const points = [...l4Emergence.map(e => ({ x: e.at[0], z: e.at[1] })), ...l4Inside.map(p => ({ x: p[0], z: p[1] }))];

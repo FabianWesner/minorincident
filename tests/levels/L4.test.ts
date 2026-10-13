@@ -134,7 +134,7 @@ describe('L4 The Safe City Falls', () => {
     expect(shots).toBeGreaterThanOrEqual(2000); expect(reloads).toBe(0);
   }, HEAVY);
 
-  test('T-E22-07 @E22 @E22-AC07 the turn: 40-50 s after the gun (or arrival + 100 s), 15-25 evacuees tagged L3-bus turn at once inside the perimeter with >= 10 humans within 10 m', async () => {
+  test('T-E22-07 @E22 @E22-AC07 the alarm: 40-50 s after the gun (or arrival + 100 s), 15-25 new infected enter from camp buildings or street mouths with >= 10 humans near the alarm', async () => {
     for (const seed of [1, 2, 3]) {
       const l = await loadL4(seed); const w = l.world, s = l.mission.state.l4!;
       while (s.phase === 'convoy') w.update();
@@ -144,8 +144,13 @@ describe('L4 The Safe City Falls', () => {
       expect(turns, `seed ${seed}`).toHaveLength(1);
       const after = (turns[0].tick - s.gunAt) / 60; expect(after).toBeGreaterThanOrEqual(40); expect(after).toBeLessThanOrEqual(50);
       expect(turns[0].ids.length).toBeGreaterThanOrEqual(15); expect(turns[0].ids.length).toBeLessThanOrEqual(25); expect(turns[0].near).toBeGreaterThanOrEqual(10);
-      for (const id of turns[0].ids) { const e = at.get(id)!, r = l4.map.ring; expect(e.x > r.x0 - 1 && e.x < r.x1 + 1 && e.z > r.z0 - 1 && e.z < r.z1 + 1, `turner ${id} inside the perimeter`).toBe(true); }
-      expect([...origins]).toEqual(['L3-bus']);
+      const sources = [...l4Inside, ...l4Emergence.filter(p => p.edge < l4Edges.length - 1).map(p => p.at)];
+      for (const id of turns[0].ids) expect(sources.some(([x, z]) => dist(at.get(id)!, { x, z }) < 2), `new infected ${id} at an authored emergence point`).toBe(true);
+      expect([...origins]).not.toContain('L3-bus');
+      expect(turns[0].ids.every(id => !s.evacueeIds.includes(id) && !s.residentIds.includes(id))).toBe(true);
+      const groups = new Map<number, number>();
+      for (const id of turns[0].ids) groups.set(s.origin[id], (groups.get(s.origin[id]) ?? 0) + 1);
+      expect(Math.max(...groups.values()), 'alarm arrivals remain small groups per exit').toBeLessThanOrEqual(l4.war.group[1]);
       w.dispose();
     }
     // Without the gun the turn still comes at arrival + 100 s.
