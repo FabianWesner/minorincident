@@ -26,8 +26,8 @@ export const allyCadence = {
 
 /** Player-view rule for every ally gun (PO 2026-10-13): never beyond this from the courier, and only inside the inset camera frame. */
 export const allyViewM = 22;
-/** Off-screen self-defence radius: an ally outside the player's view may fire at an infected this close to itself (also off-screen);
- * everything farther must be inside the player's view. Orchestrator decision 2026-10-13 on the PO's "they kill all Zombies before i see
+/** Self-defence radius of an on-screen ally (in the frame or within allyViewM of the courier): it may fire at an off-screen infected
+ * this close to itself; everything farther must be inside the player's view. Allies away from the player are not bound (option 3). Orchestrator decision 2026-10-13 on the PO's "they kill all Zombies before i see
  * them myself": no long-range clearing before the player sees it, but nobody dies off screen without defending. 0 = the strict rule. */
 export const allyOffscreenDefenceM: number = 6;
 /** Call-outs: per speaker cooldown, and the quiet time between any two call-outs. */

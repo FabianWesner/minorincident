@@ -74,6 +74,13 @@ export class SpawnDirector {
     const cx = m[0] * x + m[4] * y + m[8] * z + m[12], cy = m[1] * x + m[5] * y + m[9] * z + m[13], w = m[3] * x + m[7] * y + m[11] * z + m[15];
     return w > 0 && Math.abs(cx) <= w * inset && Math.abs(cy) <= w * inset;
   }
+  /** True only with a camera volume and `position` inside its frame (no distance cap); headless worlds without a frustum: false. */
+  inFrame(position: { x: number; z: number; y?: number }, inset = 1): boolean {
+    if (!this.hasFrustum) return false;
+    const m = this.frustum, x = position.x, y = (position.y ?? .7) + .35, z = position.z;
+    const cx = m[0] * x + m[4] * y + m[8] * z + m[12], cy = m[1] * x + m[5] * y + m[9] * z + m[13], w = m[3] * x + m[7] * y + m[11] * z + m[15];
+    return w > 0 && Math.abs(cx) <= w * inset && Math.abs(cy) <= w * inset;
+  }
   /** Test the whole human silhouette against the expanded viewport. */
   offscreen(position: { x: number; z: number }, floorY = 0): boolean {
     return [-.5, .5].every(dx => [-.5, .5].every(dz => [.1, 1.9].every(y => !this.visible({ x: position.x + dx, z: position.z + dz, y: y + floorY }))));
