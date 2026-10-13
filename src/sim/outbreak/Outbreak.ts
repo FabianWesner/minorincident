@@ -63,6 +63,8 @@ export class Outbreak {
   blockers: LosBlockerRegistry | null = null;
   readonly refuges: Refuge[];
   private readonly heard: { x: number; z: number; tick: number }[] = [];
+  /** ally-combat-feel: allied gunshots of the last second (shooter and target); calm unarmed people within `gunfireM` stop what they do. */
+  private readonly gunfire: { x: number; z: number; tx: number; tz: number; tick: number }[] = [];
   private readonly rescue = new Set<number>();
   /** People convulsing on the ground this tick: witnesses notice them like an infected. */
   private readonly turning: EntitySnapshot[] = [];
@@ -78,6 +80,12 @@ export class Outbreak {
       const p = event.position ?? (event.anchor ? options.anchors?.[event.anchor] : undefined); if (p) this.hear(p);
     };
     this.offs.push(world.events.on('l1.blast', hear), world.events.on('l1.screams', hear));
+    this.offs.push(world.events.on('ally.attack', event => {
+      if (event.type !== 'ally.attack' || !event.from || !event.to || event.role === 'firefighter') return;
+      const last = this.gunfire[this.gunfire.length - 1];
+      if (last && last.tick === event.tick && Math.hypot(last.x - event.from.x, last.z - event.from.z) < 3) return;
+      this.gunfire.push({ x: event.from.x, z: event.from.z, tx: event.to.x, tz: event.to.z, tick: event.tick });
+    }));
     this.offs.push(world.events.on('sim.tick', () => this.dressInfected(), SimPhase.cleanup));
     this.offs.push(world.events.on('outbreak.bite', event => { if (event.type === 'outbreak.bite' && !this.emitting) this.externalBite(event); }));
     // Lane C's L1 brain grabs on contact and owns the 1.0 s hold and the rescue; the victim only mirrors it here.
@@ -167,6 +175,7 @@ export class Outbreak {
     if (this.started < 0 && ai.active.some(a => a.health.current > 0)) this.started = tick;
     this.dressInfected();
     while (this.heard.length && this.heard[0].tick < tick - 1) this.heard.shift();
+    while (this.gunfire.length && this.gunfire[0].tick < tick - 60) this.gunfire.shift();
     this.turning.length = 0; for (const e of world.entities.iterate()) if (e.infection && e.infection.phase !== 'stagger') this.turning.push(e);
     for (const e of world.entities.iterate()) {
       const c = e.civilian; if (!c || c.pet && !c.zooAnimal || !c.l1) continue;
@@ -184,6 +193,7 @@ export class Outbreak {
       if (c.survivor && updateSurvivor(world, e)) continue;
       if (c.schedule && (c.state === 'calm' || c.state === 'alarmed')) followSeat(this.world, e);
       if ((tick + e.id) % 6 === 0 || this.heard.length) this.perceive(e);
+      if (c.state === 'calm' && this.gunfire.length && (tick + e.id) % 6 === 3) this.hearGunfire(e);
       if (c.vehicleYield && c.vehicleYield.until > tick && ['calm', 'hide', 'alarmed'].includes(c.state)) {
         this.world.npcs!.move(e, c.vehicleYield.target, c.l1.walkSpeed * 1.5, c, .15);
         continue;
@@ -265,6 +275,19 @@ export class Outbreak {
       c.l1!.noticed = this.world.tick; this.dropProp(e);
       this.state(e, 'alarmed', c.l1!.startleTicks);
     }
+  }
+  /**
+   * PO 2026-10-13 ("queued civilians standing frozen in a line during the fight"): a gunfight within `gunfireM` startles a calm,
+   * unarmed person like a seen infected (they drop what they carry and flee from what is being shot at). Scripted people (story
+   * beats, the L2 haven waiters, survivors) keep their beats.
+   */
+  private hearGunfire(e: EntitySnapshot): void {
+    const c = e.civilian!; if (c.ally || c.story || c.survivor || c.l1?.haven || storyProtected(this.world, e)) return;
+    let best: number = civ.gunfireM, shot: (typeof this.gunfire)[number] | null = null;
+    for (const g of this.gunfire) { const d = Math.hypot(g.x - e.transform.x, g.z - e.transform.z); if (d < best) { best = d; shot = g; } }
+    if (!shot) return;
+    c.threat.x = shot.tx; c.threat.z = shot.tz; c.l1!.noticed = this.world.tick; this.dropProp(e);
+    this.state(e, 'alarmed', c.l1!.startleTicks);
   }
   private sees(a: Vec2, b: Vec2, ignoreId: number): boolean {
     // Gates, fences and the car-wash curtain (lane C/F registry) block pedestrian sight too.

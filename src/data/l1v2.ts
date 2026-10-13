@@ -9,6 +9,8 @@ export const l1v2 = {
   civilians: {
     countMin: 50, countMax: 60, groupSizeMax: 3, idleFacingNowhereMaxS: 3,
     noticeConeDeg: 140, noticeRangeM: 16, hearRadiusM: 12,
+    /** ally-combat-feel: allied gunfire within this radius startles calm, unarmed people (the queue breaks up when the war starts). */
+    gunfireM: 20,
     startleS: [0.3, 0.8], walkSpeed: [1.2, 1.5], fleeSpeed: [3.2, 4.0],
     grabS: 1.0, rescueWindowS: 1.0, transformS: 3.0, transformJitterS: 0.5,
     kidsMax: 2,
