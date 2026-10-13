@@ -1,0 +1,216 @@
+{
+ "name": "l10-minigun-heat",
+ "note": "L10 finale deck: the courier mans the minigun and holds fire for 10 s: the heat fills at 12.5 %/s, the gun locks out at 100 % (barrels wind down, orange heat sleeves show) while the trigger stays down; the quick dismount and a remount keep the heat. Look for: heat sleeves visible only when hot or locked, barrels stopping when locked, no rounds or tracers while locked.",
+ "ground": "sidewalk",
+ "size": 150,
+ "props": [
+  {
+   "id": "console",
+   "asset": "kit.dispersal-console",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "platform",
+   "asset": "kit.dispersal-platform",
+   "at": [
+    -8,
+    -6
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "tank-a",
+   "asset": "kit.dispersal-tank-bullet",
+   "at": [
+    14,
+    -12
+   ],
+   "yaw": 180
+  },
+  {
+   "id": "tank-b",
+   "asset": "kit.dispersal-tank-bullet",
+   "at": [
+    -14,
+    14
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "sphere",
+   "asset": "kit.dispersal-tank-sphere",
+   "at": [
+    22,
+    16
+   ],
+   "yaw": 180
+  },
+  {
+   "id": "tower-e",
+   "asset": "kit.dispersal-filtration-tower",
+   "at": [
+    31,
+    -4
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "tower-nw",
+   "asset": "kit.dispersal-filtration-tower",
+   "at": [
+    -30,
+    26
+   ],
+   "yaw": 180
+  },
+  {
+   "id": "fan-w",
+   "asset": "kit.dispersal-fan-housing",
+   "at": [
+    -38,
+    -16
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "hall-s",
+   "asset": "kit.dispersal-turbine-hall",
+   "at": [
+    0,
+    -32
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "pipe-straight",
+   "asset": "kit.dispersal-pipe-straight",
+   "at": [
+    -8,
+    32
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "pipe-tee",
+   "asset": "kit.dispersal-pipe-tee",
+   "at": [
+    0,
+    32
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "pipe-elbow",
+   "asset": "kit.dispersal-pipe-elbow",
+   "at": [
+    8,
+    32
+   ],
+   "yaw": 0
+  }
+ ],
+ "minigun": {
+  "at": [
+   -10,
+   3,
+   -6
+  ],
+  "yaw": 0
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    1.7,
+    -6
+   ],
+   "yaw": 180,
+   "loadout": [
+    "weapon.handgun",
+    "weapon.rocket-launcher"
+   ]
+  }
+ ],
+ "script": [
+  {
+   "frame": 20,
+   "actor": "courier",
+   "do": {
+    "moveTo": [
+     -8.3,
+     -6
+    ]
+   }
+  },
+  {
+   "frame": 260,
+   "actor": "courier",
+   "do": {
+    "mountGun": true
+   }
+  },
+  {
+   "frame": 275,
+   "actor": "courier",
+   "do": {
+    "fireGun": {
+     "at": [
+      20,
+      -5
+     ],
+     "seconds": 10.5
+    }
+   }
+  },
+  {
+   "frame": 940,
+   "actor": "courier",
+   "do": {
+    "dismountGun": true
+   }
+  },
+  {
+   "frame": 970,
+   "actor": "courier",
+   "do": {
+    "mountGun": true
+   }
+  }
+ ],
+ "camera": {
+  "mode": "follow",
+  "actor": "courier",
+  "zoom": 1
+ },
+ "frames": 1040,
+ "shots": [
+  0,
+  276,
+  330,
+  400,
+  520,
+  640,
+  760,
+  860,
+  930,
+  950,
+  1000
+ ],
+ "sheet": 24,
+ "expect": {
+  "consoleErrors": 0,
+  "minigunRoundsMin": 120,
+  "minigunHeatPeakMin": 0.99,
+  "minigunLockedFramesMin": 40,
+  "minigunMountedFramesMin": 600
+ },
+ "hud": true
+}

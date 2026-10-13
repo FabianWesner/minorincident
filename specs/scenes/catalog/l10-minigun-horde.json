@@ -1,0 +1,250 @@
+{
+ "name": "l10-minigun-horde",
+ "note": "L10 finale deck, wide view from the side: the gunner (on the deck) mows down a horde of runners running in from 55 m. Look for: tracers from the muzzle along the aim, hits and falling infected along the line, the gun yawing as the courier aims, no infected walking through the deck, the horde thinning before it reaches the stair.",
+ "ground": "sidewalk",
+ "size": 150,
+ "props": [
+  {
+   "id": "console",
+   "asset": "kit.dispersal-console",
+   "at": [
+    0,
+    0
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "platform",
+   "asset": "kit.dispersal-platform",
+   "at": [
+    -8,
+    -6
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "tank-a",
+   "asset": "kit.dispersal-tank-bullet",
+   "at": [
+    14,
+    -12
+   ],
+   "yaw": 180
+  },
+  {
+   "id": "tank-b",
+   "asset": "kit.dispersal-tank-bullet",
+   "at": [
+    -14,
+    14
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "sphere",
+   "asset": "kit.dispersal-tank-sphere",
+   "at": [
+    22,
+    16
+   ],
+   "yaw": 180
+  },
+  {
+   "id": "tower-e",
+   "asset": "kit.dispersal-filtration-tower",
+   "at": [
+    31,
+    -4
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "tower-nw",
+   "asset": "kit.dispersal-filtration-tower",
+   "at": [
+    -30,
+    26
+   ],
+   "yaw": 180
+  },
+  {
+   "id": "fan-w",
+   "asset": "kit.dispersal-fan-housing",
+   "at": [
+    -38,
+    -16
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "hall-s",
+   "asset": "kit.dispersal-turbine-hall",
+   "at": [
+    0,
+    -32
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "pipe-straight",
+   "asset": "kit.dispersal-pipe-straight",
+   "at": [
+    -8,
+    32
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "pipe-tee",
+   "asset": "kit.dispersal-pipe-tee",
+   "at": [
+    0,
+    32
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "pipe-elbow",
+   "asset": "kit.dispersal-pipe-elbow",
+   "at": [
+    8,
+    32
+   ],
+   "yaw": 0
+  }
+ ],
+ "minigun": {
+  "at": [
+   -10,
+   3,
+   -6
+  ],
+  "yaw": 0
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    1.7,
+    -6
+   ],
+   "yaw": 180,
+   "loadout": [
+    "weapon.handgun",
+    "weapon.rocket-launcher"
+   ]
+  },
+  {
+   "id": "horde",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    20,
+    -1
+   ],
+   "count": 8,
+   "spread": 2.5,
+   "yaw": 180,
+   "state": "idle"
+  }
+ ],
+ "script": [
+  {
+   "frame": 20,
+   "actor": "courier",
+   "do": {
+    "moveTo": [
+     -8.3,
+     -6
+    ]
+   }
+  },
+  {
+   "frame": 200,
+   "actor": "courier",
+   "do": {
+    "mountGun": true
+   }
+  },
+  {
+   "frame": 215,
+   "actor": "courier",
+   "do": {
+    "fireGun": {
+     "at": "horde-3",
+     "seconds": 1.4
+    }
+   }
+  },
+  {
+   "frame": 300,
+   "actor": "courier",
+   "do": {
+    "fireGun": {
+     "at": "horde-2",
+     "seconds": 1.4
+    }
+   }
+  },
+  {
+   "frame": 385,
+   "actor": "courier",
+   "do": {
+    "fireGun": {
+     "at": "horde-5",
+     "seconds": 1.4
+    }
+   }
+  },
+  {
+   "frame": 470,
+   "actor": "courier",
+   "do": {
+    "fireGun": {
+     "at": "horde-8",
+     "seconds": 1.4
+    }
+   }
+  },
+  {
+   "frame": 580,
+   "actor": "courier",
+   "do": {
+    "dismountGun": true
+   }
+  }
+ ],
+ "camera": {
+  "mode": "close",
+  "target": [
+   8,
+   1.5,
+   -2
+  ],
+  "radius": 38,
+  "azimuth": 8
+ },
+ "frames": 640,
+ "shots": [
+  0,
+  200,
+  245,
+  270,
+  330,
+  360,
+  420,
+  450,
+  510,
+  540,
+  620
+ ],
+ "sheet": 24,
+ "expect": {
+  "consoleErrors": 0,
+  "minigunRoundsMin": 60
+ }
+}
