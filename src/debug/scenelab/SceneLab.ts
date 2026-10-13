@@ -181,6 +181,9 @@ export class SceneLab {
     }
     if (spec.layout?.level === 'L7') world.scenario = 'L7';
     const outbreak = installL1Outbreak(world, { civilians: 0 });
+    // Simulation ownership follows the authored actor/vehicle, independently of the shot camera.
+    const focus = spec.actors?.find(a => a.kind === 'courier')?.at ?? spec.vehicles?.[0]?.at;
+    if (focus) world.chunks?.update(focus);
     if (spec.infectedCap !== undefined) world.infected!.director.levelCap = spec.infectedCap;
     // An L2 layout scene plays with the L2 infected toughness (the mission sets it in LevelTwoRescue; scenes have no mission).
     if (spec.layout?.level === 'L2') world.infectedMeleeHits = l2.infectedMeleeHits;
@@ -217,8 +220,22 @@ export class SceneLab {
         if (!a) throw new Error(`Crash fixture missing anchor ${name}`);
         return { x: a.position[0], y: a.position[1], z: a.position[2], radius: 2 };
       });
-      def.anchors['crossing-start'] = { ...def.anchors['crash-approach'] };
-      const mission = world.loadMission(def); mission.begin();
+      if (spec.crossingCrash.driveFromStart) {
+        const id = this.vehicles.get('apc'); if (id === undefined) throw new Error('Full crossing needs an authored APC');
+        world.vehicles!.active = id; world.entities.get(id)!.vehicle!.driver = 1; world.vehicles!.rebuild();
+      } else def.anchors['crossing-start'] = { ...def.anchors['crash-approach'] };
+      const mission = world.loadMission(def);
+      if (spec.crossingCrash.driveFromStart) {
+        const frame = emptyInput(), drive = { throttle: 0, steer: 0, brake: true, boost: false };
+        world.events.on('sim.tick', () => {
+          if (mission.l9!.state.phase !== 'driving') return;
+          const id = mission.l9!.state.carId, car = world.entities.get(id)!;
+          world.vehicles!.autopilot.get(id)?.(drive, car);
+          frame.drive = { throttle: drive.throttle, steer: drive.steer }; frame.brake = drive.brake;
+          world.applyInput(frame, 'keyboard');
+        }, SimPhase.input - .25);
+      }
+      mission.begin();
       const id = mission.l9!.state.carId;
       world.vehicles!.damage(id, 1000 - spec.crossingCrash.health); this.vehicles.set('apc', id);
     }

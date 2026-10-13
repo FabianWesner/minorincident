@@ -42,7 +42,27 @@ export class NavGrid {
     this.pathSeen = new Uint32Array(count);
     this.distance.fill(-1);
     this.indexWalls();
-    for (let cell = 0; cell < count; cell++) this.blocked[cell] = Number(!this.clear(this.x(cell), this.z(cell), clearance));
+    this.bake();
+  }
+  /** Rectangle windows can rasterize wall footprints directly. This is exactly clear(..., clearance)
+   * at cell centres, without a broad-phase lookup for every empty terrain cell on each stream seam. */
+  private bake(): void {
+    if (this.mask) { for (let cell = 0; cell < this.blocked.length; cell++) this.blocked[cell] = Number(!this.clear(this.x(cell), this.z(cell), this.clearance)); return; }
+    this.blocked.fill(0);
+    const r = this.clearance, step = this.cellSize;
+    for (let z = 0; z < this.depth; z++) {
+      const offset = z * this.width;
+      if (Math.abs(this.z(offset) - this.center.z) + r >= this.ground.depth / 2) { this.blocked.fill(1, offset, offset + this.width); continue; }
+      for (let x = 0; x < this.width && Math.abs(this.x(x) - this.center.x) + r >= this.ground.width / 2; x++) this.blocked[offset + x] = 1;
+      for (let x = this.width - 1; x >= 0 && Math.abs(this.x(x) - this.center.x) + r >= this.ground.width / 2; x--) this.blocked[offset + x] = 1;
+    }
+    const walls = this.walls.filter(w => w.navBlocker || w.y - w.halfY < 1.8 && w.y + w.halfY > .05);
+    for (const wall of [...walls, ...this.blockers.values()]) {
+      const cx = (wall.x - this.center.x + this.ground.width / 2) / step - .5, cz = (wall.z - this.center.z + this.ground.depth / 2) / step - .5;
+      const x0 = Math.max(0, Math.floor(cx - (wall.halfX + r) / step)), x1 = Math.min(this.width - 1, Math.ceil(cx + (wall.halfX + r) / step));
+      const z0 = Math.max(0, Math.floor(cz - (wall.halfZ + r) / step)), z1 = Math.min(this.depth - 1, Math.ceil(cz + (wall.halfZ + r) / step));
+      for (let z = z0; z <= z1; z++) for (let x = x0; x <= x1; x++) if (Math.abs(this.x(x) - wall.x) < wall.halfX + r && Math.abs(this.z(z * this.width) - wall.z) < wall.halfZ + r) this.blocked[z * this.width + x] = 1;
+    }
   }
   cell(x: number, z: number): number {
     const cx = Math.floor((x - this.center.x + this.ground.width / 2) / this.cellSize), cz = Math.floor((z - this.center.z + this.ground.depth / 2) / this.cellSize);
@@ -123,8 +143,14 @@ export class NavGrid {
     if (prepared) {
       this.blocked.set(prepared);
       for (const wall of this.blockers.values()) this.updateBlockerCells(wall);
-    } else for (let cell = 0; cell < this.blocked.length; cell++) this.blocked[cell] = Number(!this.clear(this.x(cell), this.z(cell), this.clearance));
+    } else this.bake();
     this.target = -1; this.searching = false; this.head = this.tail = 0; this.nearestMemo.length = 0;
+  }
+  /** Stream windows keep their bounded search buffers while their global origin changes. */
+  recenter(center: { x: number; z: number }): void {
+    this.center.x = center.x; this.center.z = center.z;
+    this.reach.active = false; this.reach.key = -1;
+    this.rebake();
   }
   /** E11 doors and broken props invalidate only their affected cells and cached searches. */
   setBlocker(id: number, wall: Wall, blocked: boolean): void {
@@ -181,18 +207,33 @@ export class NavGrid {
     if (Math.abs(from.x - this.center.x) + radius >= this.ground.width / 2 || Math.abs(from.z - this.center.z) + radius >= this.ground.depth / 2) return false;
     const divisor = Math.max(1, steps);
     const walls = new Set<Wall>();
-    let previousX = Infinity, previousZ = Infinity;
-    for (let i = 0; i <= steps; i++) {
-      const x = from.x + dx * i / divisor, z = from.z + dz * i / divisor;
-      if (this.mask && !this.mask(x, z)) return false;
-      // Consecutive 20 cm samples usually share a 4 m bucket. Collect its walls once.
-      const bucketX = Math.floor(x / 4), bucketZ = Math.floor(z / 4);
-      if (bucketX !== previousX || bucketZ !== previousZ) {
-        const bucket = this.buckets.get(bucketX)?.get(bucketZ);
-        if (bucket) for (const wall of bucket) walls.add(wall);
-        const blockers = this.blockerBuckets.get(bucketX)?.get(bucketZ);
-        if (blockers) for (const wall of blockers.values()) walls.add(wall);
-        previousX = bucketX; previousZ = bucketZ;
+    const collect = (x: number, z: number) => {
+      const bucket = this.buckets.get(x)?.get(z); if (bucket) for (const wall of bucket) walls.add(wall);
+      const blockers = this.blockerBuckets.get(x)?.get(z); if (blockers) for (const wall of blockers.values()) walls.add(wall);
+    };
+    if (!this.mask) {
+      // Empty streamed terrain needs only the crossed broad-phase cells. The exact slab sweep below
+      // still checks every collected wall; no fixed-distance samples can skip a narrow corner.
+      let x = Math.floor(from.x / 4), z = Math.floor(from.z / 4);
+      const endX = Math.floor(to.x / 4), endZ = Math.floor(to.z / 4), sx = Math.sign(dx), sz = Math.sign(dz);
+      let nextX = dx ? ((x + (sx > 0 ? 1 : 0)) * 4 - from.x) / dx : Infinity;
+      let nextZ = dz ? ((z + (sz > 0 ? 1 : 0)) * 4 - from.z) / dz : Infinity;
+      const deltaX = dx ? 4 / Math.abs(dx) : Infinity, deltaZ = dz ? 4 / Math.abs(dz) : Infinity;
+      for (;;) {
+        collect(x, z); if (x === endX && z === endZ) break;
+        // Rounding at an endpoint boundary must never advance an already completed axis.
+        if (x === endX) nextX = Infinity; if (z === endZ) nextZ = Infinity;
+        if (nextX < nextZ) { x += sx; nextX += deltaX; }
+        else if (nextZ < nextX) { z += sz; nextZ += deltaZ; }
+        else { x += sx; z += sz; nextX += deltaX; nextZ += deltaZ; }
+      }
+    } else {
+      let previousX = Infinity, previousZ = Infinity;
+      for (let i = 0; i <= steps; i++) {
+        const x = from.x + dx * i / divisor, z = from.z + dz * i / divisor;
+        if (!this.mask(x, z)) return false;
+        const bucketX = Math.floor(x / 4), bucketZ = Math.floor(z / 4);
+        if (bucketX !== previousX || bucketZ !== previousZ) { collect(bucketX, bucketZ); previousX = bucketX; previousZ = bucketZ; }
       }
     }
     // Sampled clearance alone can skip a corner between two samples. A pulled

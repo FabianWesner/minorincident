@@ -1,3 +1,5 @@
+import { ChunkResidency } from './ChunkResidency';
+import { crossing, crossingChunks } from '../../levels/L9/district';
 import { TrapRescue } from './TrapRescue';
 import { LevelSevenEncounters } from '../missions/LevelSevenEncounters';
 import { LevelSevenDeparture } from '../missions/LevelSevenDeparture';
@@ -55,6 +57,7 @@ export class SimWorld implements Lifecycle {
   readonly entities = new EntityStore();
   readonly spatial = new SpatialHash();
   districts: DistrictWorld | null = null;
+  chunks: ChunkResidency | null = null;
   /** L1 decay is baked during loading, before its first objective can fire. */
   readonly preparedDistricts = new Map<number, DistrictWorld>();
   readonly preparedNpcNavigation = new Map<number, Uint8Array>();
@@ -261,8 +264,15 @@ export class SimWorld implements Lifecycle {
     const {min,max}=districts.nav;
     this.physics.load({name:composition.id,survivor:true,ground:{width:max[0]-min[0],depth:max[1]-min[1],center:{x:(min[0]+max[0])/2,z:(min[1]+max[1])/2}},player:{x:districts.playerStart[0],y:survivor.height/2+.005,z:districts.playerStart[1]}});
     Object.assign(this.entities.get(1)!.transform,{x:districts.playerStart[0],y:survivor.height/2+.005,z:districts.playerStart[1]});this.previousPlayer={...this.entities.get(1)!.transform};this.player!.setCheckpoint(this.entities.get(1)!.transform);this.spatial.set(1,districts.playerStart[0],districts.playerStart[1]);
-    for(const d of districts.districts)for(const aabb of d.decay.colliders.map((c)=>c.aabb).concat(d.blockers))this.physics.addStatic(aabb,d.origin);
-    for (const boundary of districts.boundaries) this.physics.addStatic(boundary, [0, 0]);
+    const crossingDistrict = districts.districts.find(d => d.id === 'D-CROSSING');
+    if (crossingDistrict) {
+      const chunks = crossingChunks.map(c => ({ id: c.id, origin: [c.origin[0] + crossingDistrict.origin[0], c.origin[1] + crossingDistrict.origin[1]] as [number, number], max: [c.max[0] + crossingDistrict.origin[0], c.max[1] + crossingDistrict.origin[1]] as [number, number] }));
+      this.chunks = new ChunkResidency(this, chunks, crossing.chunkSize); this.chunks.update();
+      this.events.on('sim.tick', () => this.chunks?.update(), SimPhase.input - .5);
+    } else {
+      for(const d of districts.districts)for(const aabb of d.decay.colliders.map((c)=>c.aabb).concat(d.blockers))this.physics.addStatic(aabb,d.origin);
+      for (const boundary of districts.boundaries) this.physics.addStatic(boundary, [0, 0]);
+    }
     this.props = new PropSystem(this); this.props.install(districts, this.aftermath?.props.filter(p => districts.districts.some(d => d.pushables.some(q => `${d.id}/${q.id}` === p.id))));
     this.events.on('sim.tick', () => this.props?.prePhysics(), SimPhase.ai);
     this.events.on('sim.tick', () => this.props?.postPhysics(), SimPhase.physics);
@@ -293,12 +303,12 @@ export class SimWorld implements Lifecycle {
   enableInfected(): void {
     if (this.infected || !this.districts) return;
     const { min, max } = this.districts.nav;
-    const walls = this.districts.districts.flatMap(d => d.decay.colliders.filter(c => !c.walkable).map(c => c.aabb).concat(d.blockers).map(a => ({
+    const walls = this.chunks?.walls ?? this.districts.districts.flatMap(d => d.decay.colliders.filter(c => !c.walkable).map(c => c.aabb).concat(d.blockers).map(a => ({
       ...(a.navBlocker ? {navBlocker:true} : {}),
       y: (a.min[1]+a.max[1])/2, halfY: (a.max[1]-a.min[1])/2, x: (a.min[0]+a.max[0])/2+d.origin[0], z: (a.min[2]+a.max[2])/2+d.origin[1], halfX: (a.max[0]-a.min[0])/2, halfZ: (a.max[2]-a.min[2])/2,
     })));
     if (this.combat) { (this.combat.query.walls as import('../combat/HitQuery').CoverWall[]).push(...walls); this.combat.query.invalidate(); }
-    this.infected = new InfectedSystem(this, { name:'L1', infected:true, ground:{width:max[0]-min[0],depth:max[1]-min[1],center:{x:(min[0]+max[0])/2,z:(min[1]+max[1])/2}}, player:this.entities.get(1)!.transform, walls });
+    this.infected = new InfectedSystem(this, { name:'L1', infected:true, ground:this.chunks?.bounds() ?? {width:max[0]-min[0],depth:max[1]-min[1],center:{x:(min[0]+max[0])/2,z:(min[1]+max[1])/2}}, player:this.entities.get(1)!.transform, walls:this.chunks?.walls ?? walls }, this.chunks ? (x, z) => this.chunks!.resident(x, z) : null);
     this.infected.director.levelCap = 15;
     this.events.on('sim.tick', () => this.infected!.update(), SimPhase.ai);
   }
@@ -347,7 +357,7 @@ export class SimWorld implements Lifecycle {
   getState(): GameStateSnapshot {
     const entities = this.query({});
     const controls = this.controls.snapshot();
-    return { ...(this.missions?.l9 ? { l9: structuredClone(this.missions.l9.state) } : {}), ...(this.missions?.l8 ? { l8: structuredClone(this.missions.l8.state) } : {}), ...(this.l7Encounters ? { l7: structuredClone(this.l7Encounters.state) } : {}), ...(this.l7Departure ? { l7Departure: structuredClone(this.l7Departure.state) } : {}), ...(this.megaPursuit ? { megaPursuit: this.megaPursuit.snapshot() } : {}), weather: this.weather?.snapshot() ?? null, ...(controls ? { controls } : {}), ...(this.infected ? { ai: structuredClone(this.infected.snapshot()) } : {}), ...(entities.some(e => e.interactable || e.hazard || (e.pickup && 'kind' in e.pickup) || e.destructible) ? { interactions: { activeId: this.interactables?.activeId ?? null, debris: this.hazards?.debris.snapshot() ?? [], hazards: this.hazards?.snapshot() ?? null } } : {}), ...(this.combat ? { combat: structuredClone(this.combat.snapshot()) } : {}), ...(this.props?.items.length ? { props: this.props.snapshot() } : {}), tick: this.tick, input: { scheme: this.scheme, frame: structuredClone(this.input) }, seed: this.seed, scenario: this.scenario, player: this.getEntity(1), entities, mission: structuredClone(this.mission), progression: structuredClone(this.progression), rng: this.rng ? [this.rng.snapshot()] : [], perf: { entities: this.entities.size, bodies: this.physics.bodyCount, colliders: this.physics.colliderCount, listeners: this.events.listenerCount } };
+    return { ...(this.chunks ? { chunks: this.chunks.snapshot(), chunkResidency: this.chunks.stats() } : {}), ...(this.missions?.l9 ? { l9: structuredClone(this.missions.l9.state) } : {}), ...(this.missions?.l8 ? { l8: structuredClone(this.missions.l8.state) } : {}), ...(this.l7Encounters ? { l7: structuredClone(this.l7Encounters.state) } : {}), ...(this.l7Departure ? { l7Departure: structuredClone(this.l7Departure.state) } : {}), ...(this.megaPursuit ? { megaPursuit: this.megaPursuit.snapshot() } : {}), weather: this.weather?.snapshot() ?? null, ...(controls ? { controls } : {}), ...(this.infected ? { ai: structuredClone(this.infected.snapshot()) } : {}), ...(entities.some(e => e.interactable || e.hazard || (e.pickup && 'kind' in e.pickup) || e.destructible) ? { interactions: { activeId: this.interactables?.activeId ?? null, debris: this.hazards?.debris.snapshot() ?? [], hazards: this.hazards?.snapshot() ?? null } } : {}), ...(this.combat ? { combat: structuredClone(this.combat.snapshot()) } : {}), ...(this.props?.items.length ? { props: this.props.snapshot() } : {}), tick: this.tick, input: { scheme: this.scheme, frame: structuredClone(this.input) }, seed: this.seed, scenario: this.scenario, player: this.getEntity(1), entities, mission: structuredClone(this.mission), progression: structuredClone(this.progression), rng: this.rng ? [this.rng.snapshot()] : [], perf: { entities: this.entities.size, bodies: this.physics.bodyCount, colliders: this.physics.colliderCount, listeners: this.events.listenerCount } };
   }
   spawnDummy(archetype: string, pos: { x: number; z: number }, opts: { hp?: number; armor?: number; yaw?: number; shield?: boolean; faction?: string; radius?: number; reactive?: boolean; ramDamage?: number } = {}): number {
     if (!this.combat) throw new Error('Load combat-arena before spawning dummies');
@@ -371,6 +381,7 @@ export class SimWorld implements Lifecycle {
     if (entity.id === 1) this.physics.playerBody!.setTranslation(entity.transform, true);
   }
   reset(): void {
+    this.chunks?.dispose(); this.chunks = null;
     this.inspectionGhost = false; this.weather = null; this.lightPower = null;
     this.vehicles?.dispose(); this.vehicles = null;
     this.carriedSurvivors = undefined; this.l7Encounters = null; this.l7Departure = null; this.megaPursuit?.dispose(); this.megaPursuit = null; this.storyLock = null; this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.infectedMeleeHits = null; this.npcs = null; this.pickups = null; this.hazards = null; this.explosions = null; this.props = null; this.barricades = null; this.toys = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();

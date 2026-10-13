@@ -1,0 +1,9 @@
+# Residency game-camera review
+
+Inspected corpse, seam and native prop scenes at high/low quality, zoom 1.0/0.5, in actual WebGL and WebGPU: 24 final matrix entries pass. Also inspected the browser before/after revisit captures. The APC wheels stay on the road while crossing the cell boundary; road stripes and the grass/asphalt edge remain continuous. At close zoom the unarmed vehicle is legible, with bright headlights and the yellow selection ring against the cool night palette. High and low preserve the same silhouette and support height. Wheel sink is 0 cm and float about 0.1 cm in the seam metrics.
+
+The corpse keeps its red head, pale folded limbs, location on the asphalt and frozen pose across the two frames; it neither rises nor moves to the grass. Sim/browser assertions additionally prove retained ID, HP and pickup state after five unload/revisit cycles. Existing models are retained; this lane changes ownership and persistence.
+
+The final prop scene places the courier beside the authored grey barricade and red wreck. Its yellow rails, posts and feet stay intact between frame 0 and 60 at both qualities; the wreck remains beside it. Close zoom naturally crops the top of the tall barricade but retains the rails behind the courier, and normal zoom shows its full silhouette. WebGPU and WebGL preserve the same placement and night palette. Earlier fixed-target shots triggered the existing cutaway, and the first courier position framed the prop outside close view; both fixtures were replaced after inspection. No renderer or asset change was needed. The sim test separately proves the native prop body releases on unload and restores pose, HP and ID on revisit.
+
+The dark, faceted surroundings are the existing crossing greybox. This review establishes residency continuity, not final district dressing. Catalog gates pass without console errors. Physical iOS/Android and manual WebGPU device evidence remain outstanding.
