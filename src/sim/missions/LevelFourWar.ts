@@ -228,7 +228,10 @@ export class LevelFourWar {
    * in a vehicle's path (hull plus 0.6 m at the sides and 1.5 m ahead) steps out sideways to the nearer edge.
    */
   private clearLane(): void {
-    const { world } = this.mission, s = this.s, ids = [...s.residentIds, ...s.evacueeIds, ...s.soldierIds];
+    const { world } = this.mission, s = this.s;
+    // Every actor, not only the authored crowd: pets, the corgi, dog walkers, strays (PO 10-13 "Bus is going over a dog").
+    const ids: number[] = [];
+    for (const e of world.entities.iterate()) if (e.id !== 1 && !e.hidden && e.health.current > 0 && !e.corpse && (e.civilian || e.companion || e.infected) && !String(e.archetype).startsWith('veh.')) ids.push(e.id);
     for (const [i, vid] of s.convoyIds.entries()) {
       const v = world.entities.get(vid), spec = l4.convoy.vehicles[i]; if (!v) continue;
       const c = Math.cos(v.transform.yaw), si = Math.sin(v.transform.yaw);
