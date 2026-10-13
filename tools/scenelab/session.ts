@@ -149,6 +149,12 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   add('consoleErrors', errors.length, e.consoleErrors ?? 0);
   add('clipping', clipping.static.length + clipping.actors.length + clipping.heldProps.length + (clipping.gunBodies?.length ?? 0), e.clippingMax);
   add('heldPropIntersections', clipping.heldProps.length, e.heldPropIntersectionsMax);
+  const holds = Object.values(metrics.heldProps.holds ?? {}) as { heightMin: number; straightMax: number; samples: number }[];
+  // A gate on an empty set fails: the mug or phone must actually be drawn in a hand.
+  if (e.heldPropHoldMin !== undefined) { const value = holds.length ? Math.min(...holds.map(h => h.heightMin)) : -1; checks.push({ name: 'heldPropHold', pass: value >= e.heldPropHoldMin, value, limit: e.heldPropHoldMin }); }
+  if (e.heldPropArmStraightMax !== undefined) { const value = holds.length ? Math.max(...holds.map(h => h.straightMax)) : Infinity; checks.push({ name: 'heldPropArmStraight', pass: value <= e.heldPropArmStraightMax, value, limit: e.heldPropArmStraightMax }); }
+  add('seeThroughLowProps', metrics.seeThrough?.cutLowProps.length ?? 0, e.seeThroughLowPropsMax);
+  if (e.seeThroughOpenFramesMin !== undefined) checks.push({ name: 'seeThroughOpenFrames', pass: (metrics.seeThrough?.frames ?? 0) >= e.seeThroughOpenFramesMin, value: metrics.seeThrough?.frames ?? 0, limit: e.seeThroughOpenFramesMin });
   if (e.heldPropSamplesMin !== undefined) checks.push({ name: 'heldPropSamples', pass: metrics.heldProps.samples >= e.heldPropSamplesMin, value: metrics.heldProps.samples, limit: e.heldPropSamplesMin });
   add('staticOverlap', clipping.static.length, e.staticOverlapMax);
   const motion = Object.values(metrics.actors).map(a => a.motion);
