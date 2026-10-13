@@ -377,7 +377,7 @@ The PO redesigned L2–L6 ([`po-levels-2-6-2026-10-07.md`](po-levels-2-6-2026-10
 | `veh.fire-engine` | L2 crew transport | integrated (nodes `driverSeat`, `exitL`, `exitR`) | **change**: crew-cab seat nodes `seat_1…seat_7`, rear crew doors, light-bar `ss_light` anchors | P1 |
 | `veh.police-sedan`, `veh.police-suv` | L2 checkpoint, L3 station and abandoned cars | integrated | abandoned/doors-open pose variant | P1 |
 | `veh.*.wrecked`, `veh.*.burned` (sedans, SUV, pickup, police, ambulance, bus) | L2 crashed cars, L3 wrecks, L5 burned-out cars | **missing** (drafted S17); only the generic `veh.wreck` is integrated | build as `decayVariants` | P1–P2 |
-| `veh.evac-bus` (coach with seated-civilian silhouettes, EVAC placard) | L3 checkpoint, L4 convoy (player rides) | **missing**; fallback: `veh.school-bus` (integrated) livery variant | P1 |
+| `veh.evac-bus` (cream coach, blue belt stripe, EVAC destination sign, framed transparent glass over a seated interior, folding door) | L3 checkpoint, L4 convoy (player rides), L7 departure | **integrated, hero rebuild 2026-10-13** (`tools/blender/sslib/evac_bus.py`; 11,292 / 4,470 / 1,904 triangles for LOD0/1/2; `wrecked`/`burned` variants derived from the LOD meshes) | done |
 | `veh.military-truck` | L3 checkpoint, L4 convoy and plaza | integrated | P1 |
 | `veh.military-apc` (light armored vehicle, mounted HMG) | L3 checkpoint, L4 convoy/spectacle, L5 wreck | **missing** | P2 |
 | `veh.tank` (+ `.wrecked`) | L4 spectacle, L5 wreck | **missing** | P2 |

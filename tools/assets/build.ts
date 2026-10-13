@@ -13,7 +13,8 @@ import { normalizeForward, normalizeScale, generateStumpCaps, optimizeAsset } fr
 export async function buildAsset(def: AssetDef, options: { quality?: 'high' | 'low'; decay?: string } = {}): Promise<string> {
   if (!def.script) throw new Error(`No build script for ${def.id}`);
   if (options.decay && !def.decayVariants.includes(options.decay)) throw new Error(`Unknown decay variant ${options.decay}`);
-  if (options.decay) def = { ...def, budget: { ...def.budget, triangles: def.decayTriangleBudget ?? def.budget.triangles, ...def.decayBudget, ...def.decayBudgets?.[options.decay] }, dimensions: { ...def.dimensions, ...def.decayDimensions }, authoredLodTriangles: def.decayAuthoredLodTriangles ?? def.authoredLodTriangles };
+  if (options.decay) def = { ...def, ...def.decayNodes?.[options.decay], budget: { ...def.budget, triangles: def.decayTriangleBudget ?? def.budget.triangles, ...def.decayBudget, ...def.decayBudgets?.[options.decay] }, dimensions: { ...def.dimensions, ...def.decayDimensions }, authoredLodTriangles: def.decayAuthoredLodTriangles ?? def.authoredLodTriangles };
+  const label = (lod: number) => `${def.id}${options.decay ? '.' + options.decay : ''}:lod${lod}`;
   const raw = `.cache/assets/${def.id}.glb`;
   mkdirSync('.cache/assets', { recursive: true });
   const args = ['tools/blender/run.py', 'tools/blender/build.py', '--asset', def.id, '--output', raw, '--quality', options.quality ?? 'high', '--bake-ao'];
@@ -24,7 +25,7 @@ export async function buildAsset(def: AssetDef, options: { quality?: 'high' | 'l
   normalizeForward(document, def);
   normalizeScale(document, def);
   generateStumpCaps(document, def);
-  const meta = validateDocument(document, { ...def, sourceGlb: undefined, budget: { ...def.budget, fileKB: Infinity } }, readFileSync(raw).length);
+  const meta = validateDocument(document, { ...def, sourceGlb: undefined, budget: { ...def.budget, fileKB: Infinity } }, readFileSync(raw).length, 0, undefined, label(0));
   // Zero-area exporter faces are repaired below; every runtime tier still gets full validation.
   const rawErrors = meta.errors.filter(error => !error.includes('degenerate triangle'));
   if (rawErrors.length) throw new Error(`Raw export invalid: ${rawErrors.join('; ')}`);
@@ -33,7 +34,7 @@ export async function buildAsset(def: AssetDef, options: { quality?: 'high' | 'l
   try {
     const output = variantPath(def.glb,options.decay), staged = `${stage}/${basename(output)}`;
     await optimizeAsset(raw, staged, def);
-    const runtime = validateDocument(await io.read(staged), def, readFileSync(staged).length);
+    const runtime = validateDocument(await io.read(staged), def, readFileSync(staged).length, 0, undefined, label(0));
     if (runtime.errors.length) throw new Error(`Optimized export invalid: ${runtime.errors.join('; ')}`);
     outputs.push([staged,output]);
     if (requiredLods(def, triangleCount(document)).length) {
@@ -48,7 +49,7 @@ export async function buildAsset(def: AssetDef, options: { quality?: 'high' | 'l
         const useSupplied = !generated && generatedRatio === undefined && existsSync(supplied);
         if (def.authoredLodTriangles && !useSupplied) throw new Error(`${def.id}: missing authored ${lod} (${supplied})`);
         await optimizeAsset(useSupplied ? supplied : raw, staged, def, useSupplied ? 1 : generatedRatio ?? (lod === 'lod1' && def.category === 'infected' ? .10 : ratio));
-        const validation = validateDocument(await io.read(staged), def, readFileSync(staged).length, lod === 'lod1' ? 1 : 2);
+        const validation = validateDocument(await io.read(staged), def, readFileSync(staged).length, lod === 'lod1' ? 1 : 2, undefined, label(lod === 'lod1' ? 1 : 2));
         if (validation.errors.length) throw new Error(`${lod} invalid: ${validation.errors.join('; ')}`);
         outputs.push([staged,output]);
       }

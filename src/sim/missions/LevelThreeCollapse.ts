@@ -193,8 +193,8 @@ export class LevelThreeCollapse {
   }
   private spawnMedkits(): void {
     for (const [x, z] of l3.medkits.positions) {
-      const p = this.snap({ x, z }, .3), id = this.world.pickups!.spawn('medkit', p);
-      const e = this.world.entities.get(id)!; e.transform.y = .3 + (this.world.districts?.groundHeight(p.x,p.z) ?? 0); if (e.pickup && 'kind' in e.pickup) e.pickup.amount = l3.medkits.heal;
+      const snapped = this.snap({ x, z }, .3), p = this.world.trapRescue?.nearestReachable(snapped) ?? snapped, id = this.world.pickups!.spawn('medkit', p);
+      const e = this.world.entities.get(id)!; if (e.pickup && 'kind' in e.pickup) e.pickup.amount = l3.medkits.heal;
       this.s.medkitIds.push(id);
     }
   }
