@@ -5,7 +5,7 @@ const out='test-results/epics/E21';
 for(const level of ['L3','L4'] as const) test(`T-${level}-physical @${level==='L3'?'E21':'E22'} real keyboard and mouse ${level==='L3'?'completion and group rescue':'alarm visibility'}`,async({page})=>{
  test.setTimeout(900_000);mkdirSync(out,{recursive:true});await boot(page,`${testUrl}&ui=1`);await page.evaluate(async level=>{const a=window.__SS__!;await a.loadLevel(level,{seed:1,progression:level==='L3'?'L3-default':'L4-default'});a.pause();},level);
  await page.getByRole('button',{name:'Begin mission'}).click();await page.evaluate(()=>window.__SS__!.pause());await page.mouse.wheel(0,400);await page.evaluate(()=>window.__SS__!.step(60));
- let held=new Set<string>(),lastL3:any=null,lastPursuit=0,closedGroup:{id:number;x:number}[]|null=null,alarm=0,visibleAt=0;
+ let held=new Set<string>(),lastL3:{crossedAt?:number;barrierClosedAt?:number}|null=null,lastPursuit=0,closedGroup:{id:number;x:number}[]|null=null,alarm=0,visibleAt=0;
  for(let i=0;i<16000;i++){
   const s=await page.evaluate(()=>{const a=window.__SS__!,m=a.missions.state()!;return{phase:m.phase,scenario:a.getState().scenario,l3:m.l3,l4:m.l4,tick:a.tick(),player:a.getEntity(1)?.transform};});
   if(s.scenario==='L3'&&s.l3)lastL3=s.l3;
