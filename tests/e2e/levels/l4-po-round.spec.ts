@@ -82,6 +82,7 @@ async function run(page: Page, quality: 'high' | 'low', zoom: number, renderer: 
   await until(10); await shot('4-alarm-10s');
   await page.evaluate(() => document.body.classList.add('ui-hidden')); await shot('4-alarm-10s-clean');
   await page.evaluate(() => document.body.classList.remove('ui-hidden'));
+  await until(18); await shot('4-alarm-18s');
   await until(40); await shot('5-war-40s');
   await until(95); await shot('6-war-95s');
   writeFileSync(`${output}/${name}.json`, JSON.stringify(report, null, 1) + '\n');

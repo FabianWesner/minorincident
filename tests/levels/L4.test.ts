@@ -148,6 +148,9 @@ describe('L4 The Safe City Falls', () => {
       for (const id of turns[0].ids) expect(sources.some(([x, z]) => dist(at.get(id)!, { x, z }) < 2), `new infected ${id} at an authored emergence point`).toBe(true);
       expect([...origins]).not.toContain('L3-bus');
       expect(turns[0].ids.every(id => !s.evacueeIds.includes(id) && !s.residentIds.includes(id))).toBe(true);
+      const groups = new Map<number, number>();
+      for (const id of turns[0].ids) groups.set(s.origin[id], (groups.get(s.origin[id]) ?? 0) + 1);
+      expect(Math.max(...groups.values()), 'alarm arrivals remain small groups per exit').toBeLessThanOrEqual(l4.war.group[1]);
       w.dispose();
     }
     // Without the gun the turn still comes at arrival + 100 s.

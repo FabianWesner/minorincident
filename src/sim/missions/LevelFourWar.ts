@@ -446,13 +446,15 @@ export class LevelFourWar {
       .filter(({ at }) => dist(at, courier) >= l4.war.inside.minM && (ai.director.offscreen(at) || ai.director.occluded(at)));
     // A wide camera may see every camp door. Keep the alarm pressure by using the street mouths instead.
     if (entries.length * l4.war.group[1] < this.alarmInfected()) {
-      entries.push(...l4Emergence.map((entry, k) => ({ at: this.snap({ x: entry.at[0], z: entry.at[1] }, .45), origin: k, edge: entry.edge }))
-        .filter(({ at, edge }) => edge < l4Edges.length - 1 && dist(at, courier) >= 30 && ai.director.offscreen(at)));
+      entries.push(...l4Emergence.map((entry, k) => ({ at: this.snap({ x: entry.at[0], z: entry.at[1] }, .45), origin: k, edge: entry.edge, door: entry.door }))
+        .filter(({ at, edge, door }) => edge < l4Edges.length - 1 && dist(at, courier) >= (door ? l4.war.inside.minM : 30) && (ai.director.offscreen(at) || door && ai.director.occluded(at))));
     }
+    // Nearby concealed exits reach the camp first; distant street mouths must not consume the whole alarm allocation.
+    entries.sort((a, b) => dist(a.at, courier) - dist(b.at, courier));
     const count = Math.min(this.alarmInfected(), entries.length * l4.war.group[1]);
     for (let n = 0; n < count; n++) {
-      const { at, origin } = entries[n % entries.length];
-      const id = this.emerge({ x: at.x + (Math.floor(n / entries.length) % 3 - 1) * .8, z: at.z }, true);
+      const { at, origin } = entries[Math.floor(n / l4.war.group[1])];
+      const id = this.emerge({ x: at.x + (n % 3 - 1) * .8, z: at.z + Math.floor(n % l4.war.group[1] / 3) * .8 }, true);
       if (!id) break;
       ids.push(id); s.emergedIds.push(id); s.origin[id] = origin;
       const soldier = this.liveSoldiers().sort((a, b) => dist(a.transform, at) - dist(b.transform, at))[0];
@@ -563,7 +565,7 @@ export class LevelFourWar {
       const points = l4Emergence.map((e, k) => ({ e, k })).filter(x => x.e.edge === i);
       for (let tries = 0; tries < points.length; tries++) {
         const { e, k } = points[(s.edgeCursor[i] + tries) % points.length], at = this.snap({ x: e.at[0], z: e.at[1] }, .45);
-        if (!ai.director.offscreen(at) || dist(at, p) < 30 || this.inGap(at)) continue;
+        if (!(ai.director.offscreen(at) || e.door && ai.director.occluded(at)) || dist(at, p) < (e.door ? w.inside.minM : 30) || this.inGap(at)) continue;
         const rng = new Rng(world.seed, `l4-group:${i}:${s.edgeCursor[i]}:${s.wave}`), size = Math.min(s.pend[i], w.group[0] + Math.floor(rng.next() * (w.group[1] - w.group[0] + 1)));
         // They go for the soldiers in the camp on their side (the nearest one inside the ring), not for the plaza centre where the courier is.
         const soldier = this.liveSoldiers().filter(x => this.insideRing(x.transform)).sort((a, b) => dist(a.transform, at) - dist(b.transform, at))[0]?.transform, to = soldier ? { x: soldier.x, z: soldier.z } : { x: centre.x + (at.x - centre.x) * .25, z: centre.z + (at.z - centre.z) * .25 };
