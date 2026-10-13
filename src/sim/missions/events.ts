@@ -37,7 +37,8 @@ export type MissionEvent =
   | { tick: number; type: 'l5.wait'; id: number }
   | { tick: number; type: 'l4.convoyStarted' | 'l4.convoyArrived' | 'l4.gun' | 'l4.war' | 'l4.heliWithdrawn' | 'l4.descended' | 'l4.doorBarred' | 'l4.battle' }
   | { tick: number; type: 'l4.firstTurn'; ids: number[]; humansNear: number }
-  | { tick: number; type: 'l4.lineBreaks'; cause: 'time' | 'soldiers' | 'inside' | 'forced' }
+  | { tick: number; type: 'l4.lineBreaks'; cause: 'time' | 'beats' | 'forced' }
+  | { tick: number; type: 'l4.beat'; beat: 'line-1' | 'nests' | 'armor'; cause: 'overrun' | 'forced'; soldiers: number; inside: number }
   | { tick: number; type: 'l4.wave'; wave: number; count: number; edges: number[] }
   | { tick: number; type: 'l4.tankFire'; from: { x: number; z: number }; to: { x: number; z: number }; shot: number }
   | { tick: number; type: 'l4.heliPass'; from: { x: number; z: number }; to: { x: number; z: number } }

@@ -141,7 +141,7 @@ test.describe('L4 The Safe City Falls in the browser', () => {
     await snap('l4-first-turn'); turnShot = true; void turnShot;
     // The war: hold the plaza with the army, shooting what comes within range; photos of the line and the tank.
     let line = false, tank = false;
-    for (let i = 0; i < 400 && !(await mission()).l4!.lineBreakAt; i++) {
+    for (let i = 0; i < 1200 && !(await mission()).l4!.lineBreakAt; i++) { // l4-collapse: the war lasts ~3 min (three lines, then "Fall back!")
       if (!await fightNearby(16)) await step(15);
       const m = await mission();
       const inFrame = await page.evaluate(() => window.__SS__!.query({ kind: 'infected' }).filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x + 22, e.transform.z - 3) < 24).length);

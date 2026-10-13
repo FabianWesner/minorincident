@@ -74,7 +74,7 @@ export class L4Spectacle {
     return { x: a.x + (b.x - a.x) * f, z: a.z + (b.z - a.z) * f, yaw: -Math.atan2(b.z - a.z, b.x - a.x) };
   }
   updateTank(): void {
-    const s = this.s(), tank = this.world.entities.get(s.tankId); if (!tank || s.tankPhase === 'off' || s.tankPhase === 'gone') return;
+    const s = this.s(), tank = this.world.entities.get(s.tankId); if (!tank || s.tankPhase === 'off' || s.tankPhase === 'gone' || s.tankPhase === 'silent') return;
     const tick = this.world.tick;
     if (s.tankPhase === 'enter') {
       s.tankS += l4.tank.speedMs / 60;
