@@ -607,6 +607,7 @@ export class AudioService implements Lifecycle {
             const special = 'special' in event ? event.special : event.kind;
             const id = telegraphCues[special] ?? telegraphCues[entity?.archetype ?? ''] ?? telegraphCues[`infected.${special}`] ?? eventCues.telegraph;
             if ('duration' in event && (special === 'alpha.charge' || special === 'alpha.ground-slam')) this.caption(special === 'alpha.charge' ? 'Alpha charging — clear the marked path' : 'Alpha ground slam — leave the marked circle', position, event.duration);
+            if ('duration' in event && entity?.infected?.pursuit && special === 'alpha.grab-throw') this.caption('Mega Alpha grabbing — leave the marked circle', position, event.duration);
             this.play(id, { position, offscreen: position ? this.host.offscreen(position) : false }, source);
             return;
         }
