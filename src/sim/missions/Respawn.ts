@@ -69,14 +69,14 @@ function clearThreat(world: SimWorld, at: Spot): void {
     if (e.combat) e.combat.attacking = false;
     const brain = e.infected.l1;
     if (brain) {
-      if (brain.mode === 'chase' && brain.targetId === 1) { brain.mode = 'wander'; brain.targetId = 0; e.infected.state = 'wander'; }
+      if (brain.mode === 'chase' && brain.targetId === 1) { brain.mode = 'wander'; brain.targetId = 0; if (e.health.current > 0) e.infected.state = 'wander'; }
       brain.ignoreId = 1; brain.ignoreUntil = tick + ticks(r.delayS);
       // A pushed body (or one whose goal is the respawn spot) forgets its walk goal: it kept walking to the old goal straight back across
       // the anchor (gate 10-13: four infected within 2-7 m of the bat pickup 3 s after the respawn). Free wanderers take the anchor as
       // home, so their next goals lead away from it; leashed street groups keep their block.
       if (pushed || (brain.hasGoal && Math.hypot(brain.goalX - at.x, brain.goalZ - at.z) < r.clearM)) {
         brain.hasGoal = false;
-        if (brain.mode === 'attracted' || brain.mode === 'search') { brain.mode = 'wander'; e.infected.state = 'wander'; }
+        if (brain.mode === 'attracted' || brain.mode === 'search') { brain.mode = 'wander'; if (e.health.current > 0) e.infected.state = 'wander'; }
         if (!brain.leashM) { brain.homeX = at.x; brain.homeZ = at.z; }
       }
       // A pushed body stands and looks around while it has lost her: a leashed street-group member otherwise walked straight home through
@@ -84,7 +84,7 @@ function clearThreat(world: SimWorld, at: Spot): void {
       if (pushed) { brain.pauseUntil = Math.max(brain.pauseUntil, tick + ticks(r.delayS)); brain.looking = true; }
     } else {
       // Levels without the L1 brain: drop the target and path, and hold attacks for the same delay.
-      if (e.infected.targetId === 1 || e.infected.heardTargetId === 1) { e.infected.targetId = 0; e.infected.heardTargetId = 0; e.infected.state = 'idle'; }
+      if (e.infected.targetId === 1 || e.infected.heardTargetId === 1) { e.infected.targetId = 0; e.infected.heardTargetId = 0; if (e.health.current > 0) e.infected.state = 'idle'; }
       e.infected.path.length = 0; e.infected.goal = -1; e.infected.cooldown = Math.max(e.infected.cooldown, tick + ticks(r.delayS));
     }
   }

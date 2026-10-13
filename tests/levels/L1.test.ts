@@ -194,7 +194,7 @@ describe('L1 v2 mission', () => {
   }, HEAVY);
 
   test('T-E19-house @E19 @E19-AC25 beat 9: ten residents come out of ONE house front door near the garage, one by one, 1.5-4 s apart', async () => {
-    const { world: w, mission } = await load(2); w.combat!.damage.god = true;
+    const { world: w, mission } = await load(2);
     const doors: { id: string; tick: number }[] = [], appear = new Map<number, { tick: number; x: number; z: number }>(), path = new Map<number, number[]>();
     w.events.on('gate.changed', e => { if (e.type === 'gate.changed' && e.id.startsWith('door-')) doors.push({ id: e.id, tick: e.tick }); });
     const g = mission.def.anchors['garage-door'], near = () => w.infected!.active.filter(e => e.health.current > 0 && Math.hypot(e.transform.x - g.x, e.transform.z - g.z) <= l1v2.director.hordeRadiusM).length;
@@ -212,6 +212,7 @@ describe('L1 v2 mission', () => {
     });
     // ...until the house opens; then the (immortal) courier waits on the street so the level does not end first.
     runL1(w, mission, 'complete', { seed: 2, stopWhen: m => !!m.state.l1!.house });
+    w.combat!.damage.god = true;
     w.clearInput();
     for (let i = 0; i < 60 * 60 && mission.state.l1!.house!.ids.length < l1v2.house.count; i++) w.update();
     for (let i = 0; i < 120; i++) w.update(); // the last one is noted on the next tick and the crowd gathers

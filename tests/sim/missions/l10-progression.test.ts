@@ -11,7 +11,7 @@ import { installMegaPursuit } from '../../../src/sim/ai/MegaPursuit';
 let world: SimWorld;
 beforeEach(async () => { world = new SimWorld(); await world.init(); world.loadScenario('combat-arena'); applyCampaign(world, preset('L10-default')); });
 afterEach(() => world.dispose());
-const mission = () => world.loadMission(levelTenMission(() => ({ x: 0, z: 0, radius: 2 })));
+const mission = (position = { x: 0, z: 0 }) => world.loadMission(levelTenMission(() => ({ ...position, radius: 2 })));
 
 test('T-E32-01 @E32 @E32-AC01 ordered graph prevents skipping arsenal, cure and release prerequisites', () => {
   const m = mission(); m.begin();
@@ -101,19 +101,20 @@ for (const quality of ['high','low'] as const) test(`T-E32-27-chunks-${quality} 
   const layout = JSON.parse(readFileSync('public/assets/layouts/D-CROSSING.layout.json', 'utf8'));
   // This shared-streamer fixture deliberately uses Crossing geometry, under the L10 mission.
   const composition = { ...compositions.L10, districts: compositions['D-CROSSING'].districts };
+  const start = { x: 0, z: -330 }, end = { x: 450, z: 220 };
   world.loadComposition(composition, [layout], 31);
   applyCampaign(world, preset('L10-default'));
   world.chunks!.setQuality(quality);
   const focus = (x: number, z: number) => { Object.assign(world.entities.get(1)!.transform, { x, z }); world.physics.playerBody!.setTranslation(world.entities.get(1)!.transform, true); world.chunks!.update([x,z]); };
-  focus(0, -330);
-  const infected = world.infected!.spawn('infected.runner', { x: 8, z: -325 });
+  focus(start.x, start.z);
+  const infected = world.infected!.spawn('infected.runner', { x: start.x + 8, z: start.z + 5 });
   world.entities.get(infected)!.health.current = 37;
-  focus(450, 220); expect(world.entities.get(infected)).toBeUndefined();
+  focus(end.x, end.z); expect(world.entities.get(infected)).toBeUndefined();
   const mega = installMegaPursuit(world, { introduceTick: null });
-  const boss = mega.introduce({ x: 350, z: 220 });
-  const m = mission(); m.begin(); m.completeObjective(); m.completeObjective();
+  const boss = mega.introduce({ x: end.x - 100, z: end.z });
+  const m = mission(end); m.begin(); m.completeObjective(); m.completeObjective();
   // Live reload preserves a close boss position; only death/checkpoint retries apply the fairness gap.
-  world.entities.get(boss)!.transform.x = 465; mega.state.x = 465;
+  world.entities.get(boss)!.transform.x = end.x + 15; mega.state.x = end.x + 15;
   world.entities.get(boss)!.infected!.megaRocketIds = [21,22];
   const save = structuredClone(world.progression!.campaign!); save.cureResume = m.saveResume();
   expect(save.cureResume.checkpoint.seams!.chunks).toBeDefined();
@@ -122,15 +123,15 @@ for (const quality of ['high','low'] as const) test(`T-E32-27-chunks-${quality} 
   world.reset(); world.loadComposition(composition, [layout], 31);
   applyCampaign(world, decoded.save); world.chunks!.setQuality(quality);
   installMegaPursuit(world, { introduceTick: null });
-  const restored = mission(); restored.begin(); restored.loadResume(decoded.save.cureResume!);
+  const restored = mission(end); restored.begin(); restored.loadResume(decoded.save.cureResume!);
   expect(world.megaPursuit!.state.id).toBe(boss);
   expect(world.entities.get(boss)!.health.current).toBe(3000);
-  expect(world.entities.get(boss)!.transform.x).toBe(465);
-  expect(world.megaPursuit!.state.x).toBe(465);
+  expect(world.entities.get(boss)!.transform.x).toBe(end.x + 15);
+  expect(world.megaPursuit!.state.x).toBe(end.x + 15);
   expect(world.combat!.runner.lastAttackId).toBeGreaterThanOrEqual(22);
   expect(world.progression!.campaign!.ownedActions).toContain('weapon.pistol');
-  focus(0, -330); expect(world.entities.get(infected)!.health.current).toBe(37);
-  focus(450, 220); restored.restore();
+  focus(start.x, start.z); expect(world.entities.get(infected)!.health.current).toBe(37);
+  focus(end.x, end.z); restored.restore();
   expect(world.chunks!.stats().resident).toBeLessThanOrEqual(quality === 'high' ? 25 : 9);
   expect(world.megaPursuit!.state.id).toBe(boss);
 });
