@@ -38,6 +38,13 @@ export function captureSeams(world: SimWorld): Record<string, unknown> {
   for (const name of names) { const seam = resolve(world, name); if (seam) out[name] = structuredClone(seam.snapshot()); }
   return out;
 }
-export function restoreSeams(world: SimWorld, saved: Record<string, unknown> | undefined): void {
-  for (const name of names) { const seam = resolve(world, name); if (seam && saved && name in saved) seam.restore(structuredClone(saved[name])); }
+/** Live save resume retains the Mega position; checkpoint retries apply its respawn fairness gap. */
+export function restoreSeams(world: SimWorld, saved: Record<string, unknown> | undefined, respawn = true): void {
+  for (const name of names) {
+    const seam = resolve(world, name);
+    if (!seam || !saved || !(name in saved)) continue;
+    const snapshot = structuredClone(saved[name]);
+    if (name === 'megaPursuit') world.megaPursuit!.restore(snapshot, respawn);
+    else seam.restore(snapshot);
+  }
 }

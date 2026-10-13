@@ -220,6 +220,7 @@ export class Game {
       this.loading=true; this.restoredWhilePaused = false;
       try{
         if(opts?.progression)this.campaign=preset(opts.progression);
+        if (id === 'L10' && !this.campaign) this.campaign = preset('L10-default');
         if (!speculative && !(opts?.checkpoint && this.levelStart?.id === id)) this.noteLevelStart(id, opts, !!performanceScenario);
         if(opts?.checkpoint && this.world.missions?.def.id === id) { this.world.missions.loadCheckpoint(opts.checkpoint); this.view.update(1); await this.view.renderer.finishWarmUp(); await transitionPaint(); this.transition.finish(); return; }
         if (!speculative) this.campaignUI.reset();
@@ -284,6 +285,7 @@ export class Game {
     const start = this.levelStart; if (!start) return Promise.reject(new Error('No level to restart'));
     this.telemetry?.restarting();
     if (start.campaign) this.campaign = structuredClone(start.campaign);
+    if (start.id === 'L10' && this.campaign) delete this.campaign.cureResume;
     return this.loadLevel(start.id, { seed: start.seed, tier: start.tier, setup: start.setup, record: !!start.setup });
   }
   async startCampaign(character:SurvivorVariant):Promise<void> {
@@ -303,6 +305,9 @@ export class Game {
     if(level&&level>save.unlockedLevel)throw new Error('Level is locked');
     const settings = { ...save.settings, quality: save.settings.quality === 'auto' ? matchMedia('(pointer:coarse)').matches ? 'low' as const : 'high' as const : save.settings.quality };
     this.view.settings(settings);this.audio.set(save.settings);
+    // Settings can save the previous live world: clear its resume only after those updates.
+    // Level select is a whole-level replay; Continue alone resumes L10's saved phase.
+    if (level !== undefined) delete this.campaign.cureResume;
     await this.loadLevel(`L${level??save.unlockedLevel}`, fromL4 ? { setup: world => {
       // A fresh handover equips the carried firearm; menu Continue keeps its loadout selection.
       if (world.scenario === 'L5' && world.combat) world.combat.runner.loadout.state.selectedSide = 'RIGHT';
@@ -313,7 +318,7 @@ export class Game {
   saveCampaign():boolean {
     if(!this.campaign)return false;
     if (this.world.scenario === 'L9' && this.world.missions?.l9 && !this.campaign.crossingHandover) this.campaign.l9Crash = this.world.missions.l9.save();
-    if (this.world.scenario === 'L10' && this.world.missions?.state.checkpoint) {
+    if (this.world.scenario === 'L10' && this.campaign.unlockedLevel === 10 && this.campaign.crossingHandover && this.world.missions?.state.checkpoint) {
       const live = this.world.progression?.campaign;
       if (live) { this.campaign.ownedActions = [...live.ownedActions]; this.campaign.racks = structuredClone(live.racks); }
       this.campaign.cureResume = this.world.missions.saveResume();

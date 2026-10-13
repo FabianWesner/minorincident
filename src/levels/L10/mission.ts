@@ -3,11 +3,11 @@ import type { Anchor, MissionDef, ObjectiveDef, ScriptAction, Trigger } from '..
 /** D1–D4 supply these anchor names in D-CURE. No geometry or encounter spawning lives here. */
 export const cureRegions = [
   { id: 'crash-outskirts', checkpoint: 'cure-crash', minutes: 3, routeMetres: 250 },
-  { id: 'residential-fringe', checkpoint: 'cure-residential', weapon: 'weapon.pistol', minutes: 6, routeMetres: 600 },
-  { id: 'industrial-area', checkpoint: 'cure-industrial', weapon: 'weapon.shotgun', minutes: 7, routeMetres: 750 },
-  { id: 'military-zone', checkpoint: 'cure-military', weapon: 'weapon.army-mg', minutes: 7, routeMetres: 800 },
+  { id: 'residential-fringe', checkpoint: 'cure-residential', weapon: 'weapon.pistol', weaponLabel: 'handgun', minutes: 6, routeMetres: 600 },
+  { id: 'industrial-area', checkpoint: 'cure-industrial', weapon: 'weapon.shotgun', weaponLabel: 'shotgun', minutes: 7, routeMetres: 750 },
+  { id: 'military-zone', checkpoint: 'cure-military', weapon: 'weapon.army-mg', weaponLabel: 'machine gun', minutes: 7, routeMetres: 800 },
   { id: 'research-campus', checkpoint: 'cure-research-entry', minutes: 6, routeMetres: 550 },
-  { id: 'destroyed-corridor', checkpoint: 'cure-corridor', weapon: 'weapon.rocket-launcher', minutes: 8, routeMetres: 1000 },
+  { id: 'destroyed-corridor', checkpoint: 'cure-corridor', weapon: 'weapon.rocket-launcher', weaponLabel: 'rocket launcher', minutes: 8, routeMetres: 1000 },
   { id: 'dispersal-complex', checkpoint: 'cure-complex', minutes: 10, routeMetres: 350 },
 ] as const;
 export const cureCheckpoints = [...cureRegions.map(r => r.checkpoint), 'cure-research', 'cure-disperse-ready'];
@@ -32,7 +32,7 @@ export function levelTenMission(resolve: (name: string) => Anchor | undefined): 
   const flag = (key: string): Trigger => ({ kind: 'state', key, equals: true });
   // Arrival is explicit; grants and checkpoint capture share one tick-end transaction.
   step('crash', 'Leave the wreck on foot', 'cure-crash', spatial('cure-crash'));
-  for (const region of cureRegions.slice(1, 4)) if ('weapon' in region) step(region.id, `Recover the ${region.weapon.replace('weapon.', '')} at the checkpoint`, region.checkpoint, spatial(region.checkpoint, true), [{ kind: 'arsenal', add: [region.weapon], remove: [] }, { kind: 'checkpoint', id: region.checkpoint }], 'interact');
+  for (const region of cureRegions.slice(1, 4)) if ('weapon' in region) step(region.id, `Recover the ${region.weaponLabel} at the checkpoint`, region.checkpoint, spatial(region.checkpoint, true), [{ kind: 'arsenal', add: [region.weapon], remove: [] }, { kind: 'checkpoint', id: region.checkpoint }], 'interact');
   step('research-campus', 'Reach the research campus', 'cure-research-entry', spatial('cure-research-entry'), [{ kind: 'checkpoint', id: 'cure-research-entry' }], 'reach');
   step('research', 'Read the research terminal', 'cure-terminal', flag('terminal-read'));
   step('cure', 'Take the airborne cure', 'cure-canister', flag('cure-carried'), [{ kind: 'grant', item: 'cure-canister' }]);

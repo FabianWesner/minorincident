@@ -29,4 +29,16 @@ test('T-E32-02-select @E32 @E32-AC02 Level select starts The Cure standalone wit
   expect(await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint)).toBe('cure-industrial');
   const arsenal = await page.evaluate(() => window.__SS__!.getState().player!.weapons!.RIGHT.rack.map(slot => slot.id));
   expect(arsenal).toContain('weapon.pistol'); expect(arsenal).toContain('weapon.shotgun');
+  await page.evaluate(() => window.__SS__!.campaign.menu());
+  await page.getByRole('button', { name: 'Level select', exact: true }).click();
+  await page.getByRole('button', { name: 'Level 10', exact: true }).click();
+  await expect.poll(() => page.evaluate(() => window.__SS__!.missions.state()?.checkpoint), { timeout: 120_000 }).toBe('cure-crash');
+  await page.evaluate(async () => { await window.__SS__!.screenshotReady(); window.__SS__!.pause(); });
+  expect(await page.evaluate(() => window.__SS__!.campaign.state()!.ownedActions.filter(id => id.startsWith('weapon.')))).toEqual(['weapon.fire-axe']);
+  await page.evaluate(() => window.__SS__!.campaign.menu());
+  await page.getByRole('button', { name: 'Start new', exact: true }).click();
+  await page.getByRole('button', { name: 'Female survivor', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Mission briefing', exact: true })).toBeVisible({ timeout: 60_000 });
+  const fresh = await page.evaluate(() => window.__SS__!.campaign.state());
+  expect(fresh!.unlockedLevel).toBe(1); expect(fresh!.cureResume).toBeUndefined();
 });

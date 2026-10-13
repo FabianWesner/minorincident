@@ -7,6 +7,7 @@ const definition = levelTenMission(() => ({ x: 0, z: 0, radius: 2 }));
 /** Validate resume records before rebuilding entities, chunks and combat. Optional seams retain their owners' schemas. */
 export function validCureCheckpoint(v: unknown): v is MissionCheckpoint {
   if (!record(v) || !Number.isSafeInteger(v.tick) || Number(v.tick) < 0 || !record(v.state) || !record(v.arsenal) || !Array.isArray(v.entities) || !v.entities.length || !record(v.entities[0]) || v.entities[0].id !== 1 || v.entities.length > 2000) return false;
+  if (v.combatSequence !== undefined && (!Number.isSafeInteger(v.combatSequence) || Number(v.combatSequence) < 0)) return false;
   const s = v.state, a = v.arsenal;
   if (s.id !== 'L10' || !['playing','retry','result','progression'].includes(String(s.phase)) || !cureCheckpoints.includes(s.checkpoint as typeof cureCheckpoints[number]) || !record(s.steps) || !record(s.states) || !record(s.stats) || !record(s.actors) || !record(s.counters) || !record(s.gates) || !strings(s.items) || s.items.some(id => !definition.items.includes(id)) || !strings(s.killedBosses) || !strings(s.completedObjectives) || s.completedObjectives.some(id => !definition.steps.some(step => step.id === id)) || !Array.isArray(s.volumes) || s.volumes.some(x => typeof x !== 'boolean')) return false;
   if (!definition.states.every(key => typeof (s.states as Record<string, unknown>)[key] === 'boolean') || !['time','kills','knockdowns','damage','deaths','rescued'].every(key => Number.isFinite((s.stats as Record<string, unknown>)[key]))) return false;

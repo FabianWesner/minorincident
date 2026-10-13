@@ -358,7 +358,7 @@ export class Mission {
     });
   }
   checkpoint(id: string, anchor: { x: number; z: number } = this.world.entities.get(1)!.transform): void { if (!this.def.checkpoints.includes(id)) throw new Error(`Unknown checkpoint: ${id}`); this.state.checkpoint = id; this.world.player!.setCheckpoint({ ...this.world.entities.get(1)!.transform, ...anchor }); this.checkpoints.set(id, this.capture()); this.emit({ type: 'checkpoint.set', id }); }
-  private capture(): MissionCheckpoint { return { tick: this.world.tick, state: structuredClone(this.state), entities: this.world.query({}), ...(this.def.id === 'L10' && this.world.progression?.campaign ? { arsenal: structuredClone({ ownedActions: this.world.progression.campaign.ownedActions, racks: this.world.progression.campaign.racks }) } : {}), seams: captureSeams(this.world) }; }
+  private capture(): MissionCheckpoint { return { tick: this.world.tick, state: structuredClone(this.state), entities: this.world.query({}), ...(this.def.id === 'L10' && this.world.progression?.campaign ? { combatSequence: this.world.combat?.runner.lastAttackId ?? 0, arsenal: structuredClone({ ownedActions: this.world.progression.campaign.ownedActions, racks: this.world.progression.campaign.racks }) } : {}), seams: captureSeams(this.world) }; }
   /** Serializable live progress plus the last reached retry checkpoint, for the existing SaveStore. */
   saveResume(): { current: MissionCheckpoint; checkpoint: MissionCheckpoint } {
     const checkpoint = this.checkpoints.get(this.state.checkpoint ?? 'start');
@@ -373,8 +373,13 @@ export class Mission {
     this.startTick = this.world.tick - Math.round(saved.current.state.stats.time * 60);
     this.state.killedBosses = [...saved.current.state.killedBosses];
     this.restore('resume', true);
-    this.state.phase = saved.current.state.phase;
-    this.state.result = structuredClone(saved.current.state.result);
+    if (saved.current.entities.find(e => e.id === 1)!.health.current <= 0) {
+      this.restore(saved.checkpoint.state.checkpoint ?? 'start');
+      respawnAtCheckpoint(this.world, this.world.entities.get(1)!.survivor!.checkpoint);
+    } else {
+      this.state.phase = saved.current.state.phase;
+      this.state.result = structuredClone(saved.current.state.result);
+    }
     this.finishApplied = this.state.phase === 'result' || this.state.phase === 'progression';
     this.checkpoints.delete('resume');
   }
@@ -431,7 +436,9 @@ export class Mission {
     this.world.physics.playerBody!.setTranslation(player.transform, true); this.world.player!.restoreVitals(this.world.tick); this.world.previousPlayer = { ...player.transform };
     const live: EntitySnapshot = player;
     if (live.weapons && this.world.combat) {
-      const saved = live.weapons; this.world.combat.setLoadout(saved.LEFT.rack.map(s => s.id), saved.RIGHT.rack.map(s => s.id));
+      const saved = live.weapons;
+      const sequence = Math.max(checkpoint.combatSequence ?? 0, ...(entities.find(e => e.infected?.pursuit)?.infected?.megaRocketIds ?? []));
+      this.world.combat.setLoadout(saved.LEFT.rack.map(s => s.id), saved.RIGHT.rack.map(s => s.id), sequence);
       Object.assign(this.world.combat.runner.loadout.state, saved);
       for (const side of [saved.LEFT, saved.RIGHT]) { if (side.swapUntil) side.swapUntil += delta; for (const slot of side.rack) for (const key of ['nextCharge', 'reloadUntil', 'readyAt'] as const) if (slot[key]) slot[key] = slot[key] + delta; }
       this.world.combat.projectiles.length = 0; this.world.combat.effects.zones.length = 0;
@@ -439,7 +446,7 @@ export class Mission {
     if (!live.weapons) this.world.combat?.clearLoadout();
     this.world.npcs?.restore(delta);
     this.l1?.restore(delta);
-    restoreSeams(this.world, checkpoint.seams);
+    restoreSeams(this.world, checkpoint.seams, !resume);
     for (const [actor, entityId] of Object.entries(this.state.actors)) if (this.deadBosses.has(actor)) for (const step of Object.values(this.state.steps)) if (step.status === 'active' && !step.kills.includes(entityId)) step.kills.push(entityId);
     if (this.state.tier !== null) this.world.setTier(this.state.tier);
     this.world.vehicles?.rebuild(false, delta);
