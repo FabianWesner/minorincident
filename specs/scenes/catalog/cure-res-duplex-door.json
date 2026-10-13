@@ -1,0 +1,19 @@
+{
+ "name": "cure-res-duplex-door",
+ "note": "L10 R2 duplex (bld.cure-duplex) at the real game camera: the courier stands in front of the right-hand porch. Run with --matrix (high/low tier, zoom 1 and 0.5). Look for: porch canopy, posts, step and door at the courier's feet, framed windows above, roof overhang and brick gable, parts sunk into or floating off the wall, flicker at the roof edge or window frames, the whole front missing or flat at the low tier (LOD2).",
+ "seed": 10,
+ "ground": "asphalt",
+ "time": "L1",
+ "size": 40,
+ "dof": false,
+ "props": [
+  { "id": "duplex", "asset": "bld.cure-duplex", "at": [0, 0], "yaw": 0 }
+ ],
+ "actors": [
+  { "id": "courier", "kind": "courier", "at": [8, 4.7], "yaw": 3.14, "state": "idle" }
+ ],
+ "camera": { "mode": "game", "target": [3, 1], "zoom": 1 },
+ "frames": 60,
+ "shots": [0, 60],
+ "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}
