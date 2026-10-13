@@ -31,6 +31,15 @@ export class NavGrid {
   private readonly blockerBuckets = new Map<number, Map<number, Map<number, Wall>>>();
   /** Optional active-district footprint, supplied by campaign assembly without importing render data. */
   mask: ((x: number, z: number) => boolean) | null = null;
+  private playerBounds: { x0: number; x1: number; z0: number; z1: number } | null = null;
+  /** Story perimeters constrain player routes without closing the battle to infected or soldiers. */
+  setPlayerBounds(bounds: NavGrid['playerBounds']): void {
+    this.playerBounds = bounds; this.reach.active = false;
+  }
+  private insidePlayerBounds(x: number, z: number, radius: number): boolean {
+    const b = this.playerBounds;
+    return !b || (x >= b.x0 + radius && x <= b.x1 - radius && z >= b.z0 + radius && z <= b.z1 - radius);
+  }
   target = -1;
   expansions = 0;
   constructor(readonly ground: { width: number; depth: number }, readonly walls: readonly Wall[], readonly clearance = 0.65, readonly center = { x: 0, z: 0 }, mask: NavGrid['mask'] = null) {
@@ -285,6 +294,10 @@ export class NavGrid {
   /** Shared string-pulled route: skip all visible waypoints, so actors do not zig-zag on the grid. */
   /** `nearest`: when the target is unreachable (a click into a fenced yard), route to the reachable cell closest to it. */
   steer(position: { x: number; z: number }, target: { x: number; z: number }, route: { path: number[]; goal: number; pathIndex: number; hold?: number }, radius: number, waypoint: { x: number; z: number }, budget = 1600, nearest = false): boolean {
+    if (nearest && this.playerBounds) {
+      const b = this.playerBounds, margin = Math.max(radius, this.clearance);
+      target = { x: Math.max(b.x0 + margin, Math.min(b.x1 - margin, target.x)), z: Math.max(b.z0 + margin, Math.min(b.z1 - margin, target.z)) };
+    }
     // Budgeted NPC steering skips the direct sweep to far targets (a 100 m refuge line test per agent per tick); the
     // routed look-ahead below covers them.
     const far = Number.isFinite(budget) && Math.abs(target.x - position.x) + Math.abs(target.z - position.z) > 30;
@@ -372,7 +385,7 @@ export class NavGrid {
       if (d < r.bestD) { r.bestD = d; r.best = cell; }
       if (d < .5 && depth[cell] >= 4) { done = true; break; } // the click itself is reachable: no need to flood the district
       if (depth[cell] >= 8 && d < r.farD) { r.farD = d; r.far = cell; }
-      for (let k = 0; k < 4; k++) { const n = this.neighbor(cell, k); if (n >= 0 && !this.blocked[n] && seen[n] !== r.stamp) { seen[n] = r.stamp; parent[n] = cell; depth[n] = depth[cell] + 1; queue[r.tail++] = n; } }
+      for (let k = 0; k < 4; k++) { const n = this.neighbor(cell, k); if (n >= 0 && !this.blocked[n] && seen[n] !== r.stamp && this.insidePlayerBounds(this.x(n), this.z(n), this.clearance)) { seen[n] = r.stamp; parent[n] = cell; depth[n] = depth[cell] + 1; queue[r.tail++] = n; } }
     }
     void done;
     // Repeated clicks behind the same fence must still make progress: when the closest reachable spot is where

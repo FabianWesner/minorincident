@@ -157,11 +157,11 @@ export const l4 = {
        */
       route: [[-12, 4], [-4, 4], [-4, 28], [-2, 41], [8, 43], [40, 43], [62, 42]] as readonly P[], gapM: 7, gapS: 40,
     },
-    /** Camp checkpoints behind each remaining line; choose the nearest navigable post when the line falls. */
+    /** Camp checkpoints behind each remaining line; choose the nearest safe navigable post when the line falls. */
     checkpoints: [
       [[-25, -8], [-25, 4], [-25, 10]],
-      [[-11, 21.5]], // rear camp corner, clear of charges through the gun nests
-      [[-11, 21.5]], // behind the convoy crews and their ground-slam area
+      [[-16, -11]], // rear of the north reception line, beside the camp medical supplies
+      [[-13.5, -14], [-13.5, -6], [-13.5, 4]], // behind the convoy crews, away from the tank swarm at the south end
     ] as readonly (readonly P[])[],
   },
   /** Section 5.4: allied fighters v3. */

@@ -52,12 +52,18 @@ function clearThreat(world: SimWorld, at: Spot): void {
     const pushed = d < r.clearM;
     if (pushed) {
       const k = d > .1 ? 1 / d : 0, dx = k ? (e.transform.x - at.x) * k : Math.cos(e.id), dz = k ? (e.transform.z - at.z) * k : Math.sin(e.id);
-      for (let m = r.clearM; m <= r.clearM + 6; m += 1) {
-        const to = { x: at.x + dx * m, z: at.z + dz * m };
-        if (!ai.nav.clear(to.x, to.z, .45)) continue;
-        Object.assign(e.transform, to); world.spatial.set(e.id, to.x, to.z);
-        if (e.locomotion) e.locomotion.vx = e.locomotion.vz = 0;
-        break;
+      // Keep the outward direction when possible; beside walls or parked vehicles that entire ray can be blocked.
+      // Try neighboring bearings too so cover never leaves a live or recovering body inside the clear ring.
+      let moved = false;
+      for (let n = 0; n < 16 && !moved; n++) {
+        const angle = (n % 2 ? 1 : -1) * Math.ceil(n / 2) * Math.PI / 8, c = Math.cos(angle), s = Math.sin(angle);
+        for (let m = r.clearM; m <= r.clearM + 6; m += 1) {
+          const to = { x: at.x + (dx * c - dz * s) * m, z: at.z + (dx * s + dz * c) * m };
+          if (!ai.nav.clear(to.x, to.z, e.combat?.radius ?? .45)) continue;
+          Object.assign(e.transform, to); world.spatial.set(e.id, to.x, to.z);
+          if (e.locomotion) e.locomotion.vx = e.locomotion.vz = 0;
+          moved = true; break;
+        }
       }
     }
     if (e.combat) e.combat.attacking = false;
