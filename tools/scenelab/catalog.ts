@@ -28,7 +28,7 @@ const entries: Entry[] = readdirSync(dir).filter(f => f.endsWith('.json') && f !
 }).filter(e => globs.some(g => g.test(e.name))).flatMap(e => tiers.flatMap(tier => {
   if (!matrix) return [{ ...e, tier }];
   // The camera override keeps the authored target/actor; closer zoom is what the player sees at the scroll limit.
-  const zooms = zoomed(e.spec) ? [1, zoomLimits[0]] : [null];
+  const zooms = zoomed(e.spec) ? [zoomLimits[1], 1, zoomLimits[0]] : [null];
   return zooms.map(zoom => ({ ...e, tier, name: `${e.name}@${tier}${zoom === null ? '' : `-z${zoom}`}`, spec: zoom === null ? e.spec : { ...e.spec, camera: { ...e.spec.camera!, zoom } as SceneSpec['camera'] } }));
 }));
 if (!entries.length) { console.error(`no catalog scene matches ${flag('filter')}; names: ${readdirSync(dir).filter(f => f.endsWith('.json')).map(f => basename(f, '.json')).join(' ')}`); process.exit(2); }
