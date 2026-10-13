@@ -314,7 +314,7 @@ export class CrowdView extends Group {
       if (b.special === 'dive') clip = 'run';
       // E32 dog: authored gallop while it runs, authored gather / spring / snap during the pounce (telegraph = the gather).
       const dogPounce = e.archetype === 'infected.dog' && b.state === 'attack' && !heavy && !e.infectionRise;
-      if (e.archetype === 'infected.dog' && b.state !== 'dead' && !heavy && !e.infectionRise) { if (dogPounce) clip = 'dog-lunge-bite'; else if (motion.speed > 2) clip = 'dog-gallop'; }
+      if (e.archetype === 'infected.dog' && b.state !== 'dead' && !heavy && !e.infectionRise) { if (dogPounce) clip = 'dog-lunge-bite'; else if (motion.speed > 3) clip = 'dog-gallop'; }
       if (e.infected?.specialAttack?.stage === 'telegraph') clip = 'windup';
       if (specialAttack?.move === 'zebra.kick') clip = 'zebra-rear-kick';
       if (specialAttack?.move === 'zebra.stampede' && specialAttack.stage === 'active') clip = 'zebra-stampede';
