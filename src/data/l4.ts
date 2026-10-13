@@ -89,7 +89,7 @@ export const l4 = {
      * and staggered. `inside`: during the war groups of 1-2 also come out of the buildings inside the perimeter (tents, containers,
      * registration; `l4Inside`) every `insideEveryS`, when the spot is out of view or hidden behind a building.
      */
-    group: [2, 5] as P, groupEveryS: [1.2, 2.6] as P, inside: { everyS: 12, group: [1, 2] as P, minM: 9 },
+    group: [2, 5] as P, groupEveryS: [2, 4] as P, inside: { everyS: 12, group: [1, 2] as P, minM: 9 },
     /** Infected hit like L3's (the PO found earlier levels too hard: a sensible player finishes with few deaths). */
     infectedDamage: 1.5,
     emergeLeashM: 26,
@@ -276,7 +276,7 @@ export const l4Emergence: readonly { edge: number; at: P; door?: boolean }[] = [
   { edge: 1, at: [-39.2, -35] }, { edge: 1, at: [-40, -26] }, { edge: 1, at: [-46.9, -23], door: true }, { edge: 1, at: [-42, -15.5], door: true },
   { edge: 2, at: [-18, -38.4] }, { edge: 2, at: [-30, -38] }, { edge: 2, at: [-30, -21.2], door: true }, { edge: 2, at: [-13.7, -23.2], door: true },
   { edge: 3, at: [13.4, -3] }, { edge: 3, at: [13, -20] }, { edge: 3, at: [13, 14] }, { edge: 3, at: [2, -9], door: true }, { edge: 3, at: [-.1, -17.5], door: true },
-  { edge: 4, at: [-5.5, 42.6] }, { edge: 4, at: [6, 40] }, { edge: 4, at: [.9, 18.8], door: true }, { edge: 4, at: [-.1, 33.5], door: true },
+  { edge: 4, at: [-5.5, 42.6] }, { edge: 4, at: [-14, 40] }, { edge: 4, at: [.9, 18.8], door: true }, { edge: 4, at: [-.1, 33.5], door: true },
   { edge: 5, at: [-23, 42.6] }, { edge: 5, at: [-36, 40] }, { edge: 5, at: [-44.9, 27.1], door: true },
   { edge: 6, at: [50.5, -37.4] },
 ];
