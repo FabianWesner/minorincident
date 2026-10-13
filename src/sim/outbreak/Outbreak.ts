@@ -41,6 +41,9 @@ export interface PedestrianOptions {
   walkSpeed?: number;
 }
 
+/** Turned army soldiers get 1.5x the health of the infected archetype they become (PO 2026-10-13). */
+export const SOLDIER_ZOMBIE_HP = 1.5;
+
 /**
  * L1 v2 pedestrians and systemic outbreak (specs/epic-19 sections 5.1, 5.7, 5.9). Replaces the E08 civilian lifecycle
  * when installed (`world.npcs.civilians.outbreak`): routines, notice (sight cone + hearing), startle, flight to
@@ -473,6 +476,8 @@ export class Outbreak {
     ai.active[ai.active.indexOf(pooled)] = e;
     e.kind = 'infected'; e.faction = 'infected'; e.archetype = pooled.archetype;
     e.infected = pooled.infected; e.combat = pooled.combat; e.health = pooled.health;
+    // PO 2026-10-13: "When a solidier becomes a Zombie, then this Zombie has 50% more health". Police zombies are unchanged.
+    if (c.ally?.role === 'soldier') { e.health.max *= SOLDIER_ZOMBIE_HP; e.health.current = e.health.max; }
     Object.assign(e.transform, at);
     // Lane C's L1 brain already gave it the tier run speed; without it (tests, old levels) use the tier base +/- jitter.
     if (!c.zooAnimal && !e.infected!.l1) e.infected!.speed = l1v2.speedTiers[inf.tier].baseMs * (1 + (this.rng.next() * 2 - 1) * l1v2.speedTiers.jitter);
