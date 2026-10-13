@@ -32,6 +32,7 @@ import { attribute, luminance, uniform } from 'three/tsl';
 import type { DistrictWorld } from "../sim/world/DistrictWorld";
 import type { PushProp } from "../sim/interact/PropSystem";
 import { ROOFED, type DistrictAssets } from "../assets/DistrictAssets";
+import { spinNodes } from "../data/spinNodes";
 import { buildingDoors, doorwayOf, doorZone, doorSwingS } from "../data/buildingDoors";
 import type { Materials } from "./Materials";
 import { anchorsFor, placedLightId } from '../data/placedLights';
@@ -660,6 +661,28 @@ export class DistrictView extends Group {
   }
   advance(seconds: number): void {
     this.frameSeconds = seconds; this.phase.value += seconds; this.labelTime += seconds;
+    this.updateSpin(seconds);
+  }
+  private spinActive = false;
+  private spinLevel = 0;
+  private readonly spinAngles = new Map<string, number>();
+  /** Dispersal running (finale) or idle: fans, turbine rotors and valve wheels pick their rate from this. */
+  setDispersalActive(on: boolean): void { this.spinActive = on; }
+  /** One shared angle per rotation node, written only into that node's split batch (no extra draw calls per placement). */
+  private updateSpin(seconds: number): void {
+    this.spinLevel += (+this.spinActive - this.spinLevel) * (1 - Math.exp(-1.2 * seconds));
+    for (const entry of this.lodBatches) {
+      const nodes = spinNodes[entry.id];
+      if (!nodes || !entry.refs.length) continue;
+      for (const spin of nodes) {
+        const key = `${entry.id}/${spin.node}`;
+        const rate = spin.idle + (spin.active - spin.idle) * this.spinLevel;
+        if (rate < 1e-4 && this.spinAngles.has(key)) continue;
+        const angle = ((this.spinAngles.get(key) ?? 0) + rate * seconds) % (Math.PI * 2);
+        this.spinAngles.set(key, angle);
+        for (const group of [entry.hero, entry.near, entry.far]) group.pose(spin.node, angle, undefined, spin.axis);
+      }
+    }
   }
   /** Static matrices are repartitioned only when the camera moves; far props use LOD2. */
   updateLods(view: View, velocity: { x: number; z: number } = { x: 0, z: 0 }): void {

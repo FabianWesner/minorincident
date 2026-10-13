@@ -1,3 +1,4 @@
+import { spinNodes } from "../data/spinNodes";
 import { Group, Mesh, Object3D, Vector3, type BufferGeometry, type WebGPURenderer, type Material } from "three/webgpu";
 import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
 import { KTX2Loader } from "three/addons/loaders/KTX2Loader.js";
@@ -192,6 +193,7 @@ export class DistrictAssets {
       // Keep the Metro shutter independent of its static shell.
       if(id==='int.metro-exit')asset.userData.splitDoors=['exitGate'];
       if (id === 'bld.metro-entrance') asset.userData.splitDoors = ['shutter'];
+      if (spinNodes[id]) asset.userData.splitDoors = spinNodes[id].map(s => s.node);
       // Preserve the HMG's authored barrel frame and socket through static batching.
       const machineGun = id === 'prop.hmg-nest' ? asset.getObjectByName('gun') : undefined;
       const muzzle = machineGun && asset.getObjectByName('muzzle');
