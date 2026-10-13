@@ -36,8 +36,8 @@ body.full-ui:not([data-ui-screen=game]) [data-touch-controls],body.full-ui:not([
 .full-ui [data-touch-action]{width:64px;height:64px;font-size:14px;border-color:#f8bf70!important}
 .hud{position:fixed;inset:0;z-index:20;pointer-events:none;color:var(--ui-ink);font-size:calc(14px * var(--text-scale));font-weight:700}
 .hud-panel{background:#182333e8;border:2px solid #b7a38a;border-radius:16px;box-shadow:0 4px 0 #10182488}
-.hud-vitals{position:absolute;top:max(20px,env(safe-area-inset-top));left:max(20px,env(safe-area-inset-left));width:300px;display:grid;grid-template-columns:72px 1fr 52px;align-items:center;gap:8px;padding:8px}
-.hud-portrait{width:72px;height:72px;border-radius:50%;border:3px solid #fff3da;background-color:#f1cfa4;display:grid;place-items:center;font-size:32px;overflow:hidden}
+.hud-vitals{position:absolute;top:max(20px,env(safe-area-inset-top));left:max(20px,env(safe-area-inset-left));width:300px;display:grid;grid-template-columns:72px minmax(0,1fr) 52px;align-items:center;gap:8px;padding:8px}
+.hud-portrait{box-sizing:border-box;width:72px;height:72px;border-radius:50%;border:3px solid #fff3da;background-color:#f1cfa4;display:grid;place-items:center;font-size:32px;overflow:hidden}
 .hud-bars{display:grid;gap:5px;align-content:center;min-width:0}
 .hud-bar{height:24px;border:2px solid #101824;border-radius:8px;background:#3c3546;overflow:hidden;position:relative}
 .hud-bar-fill{height:100%;background:linear-gradient(#ef6670,#d9363e);width:100%;border-radius:4px}
@@ -67,7 +67,7 @@ body.full-ui:not([data-ui-screen=game]) [data-touch-controls],body.full-ui:not([
 .colorblind-ui .hud-pin-threat{background:#ff8352;border-radius:0;transform:translate(-50%,-50%) rotate(45deg)}
 @media(max-width:600px){
  .menu-panel{padding:20px}.menu-title{padding:32px 20px}.settings-fields{grid-template-columns:1fr}
- .hud-vitals{top:12px;left:12px;width:224px;grid-template-columns:48px 1fr 38px;padding:6px;gap:6px}.hud-vitals .hud-portrait{width:48px;height:48px;font-size:24px}.hud-weapon{width:38px;height:38px;padding:2px}.hud-bar{height:22px}.hud-bar-label{line-height:18px}
+ .hud-vitals{top:12px;left:12px;width:220px;grid-template-columns:46px minmax(0,1fr) 36px;padding:6px;gap:6px}.hud-vitals .hud-portrait{width:46px;height:46px;font-size:24px}.hud-vitals .hud-weapon{width:36px;height:36px;padding:2px}.hud-bar{height:22px}.hud-bar-label{line-height:18px}
  .hud-companion{top:92px;left:12px;padding:4px 8px;font-size:calc(11px * var(--text-scale))}.hud-companion .hud-portrait{width:28px;height:28px;font-size:19px}
  .hud-map{right:12px;top:12px;width:116px;height:116px}.hud-tracker{right:12px;top:142px;max-width:calc(100vw - 24px);font-size:calc(12px * var(--text-scale));padding:8px 12px}
  .full-ui[data-ui-screen] [data-testid=pause-button]{top:210px;left:12px;transform:none;font-size:14px;min-width:64px}
@@ -76,7 +76,7 @@ body.full-ui:not([data-ui-screen=game]) [data-touch-controls],body.full-ui:not([
  .full-ui .mission-panel{font-size:calc(15px * var(--text-scale))}
 }
 @media(max-height:500px) and (min-width:601px){
- .hud-vitals{top:12px;left:12px;width:224px;grid-template-columns:48px 1fr 38px;padding:6px}.hud-vitals .hud-portrait{width:48px;height:48px;font-size:24px}.hud-weapon{width:38px;height:38px;padding:2px}
+ .hud-vitals{top:12px;left:12px;width:220px;grid-template-columns:46px minmax(0,1fr) 36px;padding:6px}.hud-vitals .hud-portrait{width:46px;height:46px;font-size:24px}.hud-vitals .hud-weapon{width:36px;height:36px;padding:2px}
  .hud-companion{top:92px;left:12px;font-size:12px}.hud-companion .hud-portrait{width:28px;height:28px;font-size:19px}
  .hud-map{width:100px;height:100px;top:12px;right:12px}.hud-tracker{top:12px;right:128px;max-width:225px;font-size:calc(11px * var(--text-scale))}
  .full-ui[data-ui-screen] [data-testid=pause-button]{top:12px;left:50%;font-size:14px}.onboarding{top:95px;max-width:350px;font-size:calc(11px * var(--text-scale))}
@@ -153,7 +153,7 @@ body:not(.debug-ui) [data-input-hint]{display:none!important}
 .hud-vitals .hud-portrait,.hud-companion .hud-portrait{background-size:cover;background-position:center;background-repeat:no-repeat}
 .hud-vitals .hud-portrait{background-size:128%;background-position:50% 45%;background-color:#f6dcb8;filter:brightness(1.12) contrast(1.06) saturate(1.05);box-shadow:0 0 0 2px #182333,0 0 8px #ffd9a066}
 /* Active weapon: one small icon beside the health bar; the ring is the cooldown/reload progress. */
-.hud-weapon{position:relative;width:48px;height:48px;border-radius:50%;background:conic-gradient(#ffcd79 calc(var(--progress,1) * 360deg),#4a5568 0);padding:3px;pointer-events:auto;cursor:pointer;display:grid;place-items:center}
+.hud-weapon{box-sizing:border-box;position:relative;width:48px;height:48px;border-radius:50%;background:conic-gradient(#ffcd79 calc(var(--progress,1) * 360deg),#4a5568 0);padding:3px;pointer-events:auto;cursor:pointer;display:grid;place-items:center}
 .hud-weapon[data-state=ready]{background:#64dccc}.hud-weapon[data-state=empty]{background:#4a5568}
 .hud-weapon-icon{width:100%;height:100%;border-radius:50%;background:#232d40;padding:5px;box-sizing:border-box;object-fit:contain}
 .hud-weapon-hint{position:absolute;top:100%;right:0;margin-top:6px;padding:2px 8px;border-radius:8px;background:#182333;border:1px solid #b7a38a;font-size:calc(12px * var(--text-scale));white-space:nowrap;pointer-events:none;text-transform:capitalize}

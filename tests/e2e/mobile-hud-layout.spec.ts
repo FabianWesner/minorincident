@@ -27,7 +27,7 @@ for (const scene of ['hud', 'live'] as const) for (const viewport of sizes) {
       const elements = [...roots.flatMap(root => [...root.querySelectorAll<HTMLElement>('*')]), document.querySelector<HTMLElement>('[data-testid=pause-button]')!].filter(visible);
       // Include every rendered HUD node, even passive feedback; exclude only structural
       // containers and the transparent, zero-opacity full-screen damage overlay.
-      const boxes = elements.filter(e => !['weapon-active', 'vital-bars'].includes(e.dataset.testid ?? '') && !(e.dataset.testid === 'low-health-vignette' && Number(getComputedStyle(e).opacity) === 0)).map(rect);
+      const boxes = elements.filter(e => !['weapon-hint', 'vital-bars'].includes(e.dataset.testid ?? '') && !(e.dataset.testid === 'low-health-vignette' && Number(getComputedStyle(e).opacity) === 0)).map(rect);
       const xs = [...new Set(boxes.flatMap(b => [Math.max(0, b.x), Math.min(innerWidth, b.x + b.width)]))].sort((a,b) => a-b);
       let area = 0;
       for (let i = 1; i < xs.length; i++) {
