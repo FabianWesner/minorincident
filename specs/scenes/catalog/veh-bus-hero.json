@@ -1,0 +1,231 @@
+{
+ "name": "veh-bus-hero",
+ "note": "Both buses and their wrecked/burned variants in a 2x3 lineup, game camera at zoom 1.0 and 0.6 on each bus (top row evac bus, bottom row school bus). Look for: no flicker line under the windows or at the rear, transparent glass with seats visible, no holes, doors and wheels grounded, readable livery, damaged variants keep the silhouette.",
+ "seed": 3,
+ "ground": "asphalt",
+ "size": 60,
+ "time": "L4",
+ "props": [
+  {
+   "id": "evac-base",
+   "asset": "veh.evac-bus",
+   "at": [
+    -12,
+    -7
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "evac-wrecked",
+   "asset": "veh.evac-bus",
+   "at": [
+    0,
+    -7
+   ],
+   "yaw": 0,
+   "decay": "wrecked"
+  },
+  {
+   "id": "evac-burned",
+   "asset": "veh.evac-bus",
+   "at": [
+    12,
+    -7
+   ],
+   "yaw": 0,
+   "decay": "burned"
+  },
+  {
+   "id": "school-base",
+   "asset": "veh.school-bus",
+   "at": [
+    -12,
+    7
+   ],
+   "yaw": 0
+  },
+  {
+   "id": "school-wrecked",
+   "asset": "veh.school-bus",
+   "at": [
+    0,
+    7
+   ],
+   "yaw": 0,
+   "decay": "wrecked"
+  },
+  {
+   "id": "school-burned",
+   "asset": "veh.school-bus",
+   "at": [
+    12,
+    7
+   ],
+   "yaw": 0,
+   "decay": "burned"
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   -12,
+   -7
+  ],
+  "zoom": 1.0
+ },
+ "script": [
+  {
+   "frame": 4,
+   "camera": {
+    "mode": "game",
+    "target": [
+     -12,
+     -7
+    ],
+    "zoom": 1.0
+   }
+  },
+  {
+   "frame": 16,
+   "camera": {
+    "mode": "game",
+    "target": [
+     -12,
+     -7
+    ],
+    "zoom": 0.6
+   }
+  },
+  {
+   "frame": 28,
+   "camera": {
+    "mode": "game",
+    "target": [
+     0,
+     -7
+    ],
+    "zoom": 1.0
+   }
+  },
+  {
+   "frame": 40,
+   "camera": {
+    "mode": "game",
+    "target": [
+     0,
+     -7
+    ],
+    "zoom": 0.6
+   }
+  },
+  {
+   "frame": 52,
+   "camera": {
+    "mode": "game",
+    "target": [
+     12,
+     -7
+    ],
+    "zoom": 1.0
+   }
+  },
+  {
+   "frame": 64,
+   "camera": {
+    "mode": "game",
+    "target": [
+     12,
+     -7
+    ],
+    "zoom": 0.6
+   }
+  },
+  {
+   "frame": 76,
+   "camera": {
+    "mode": "game",
+    "target": [
+     -12,
+     7
+    ],
+    "zoom": 1.0
+   }
+  },
+  {
+   "frame": 88,
+   "camera": {
+    "mode": "game",
+    "target": [
+     -12,
+     7
+    ],
+    "zoom": 0.6
+   }
+  },
+  {
+   "frame": 100,
+   "camera": {
+    "mode": "game",
+    "target": [
+     0,
+     7
+    ],
+    "zoom": 1.0
+   }
+  },
+  {
+   "frame": 112,
+   "camera": {
+    "mode": "game",
+    "target": [
+     0,
+     7
+    ],
+    "zoom": 0.6
+   }
+  },
+  {
+   "frame": 124,
+   "camera": {
+    "mode": "game",
+    "target": [
+     12,
+     7
+    ],
+    "zoom": 1.0
+   }
+  },
+  {
+   "frame": 136,
+   "camera": {
+    "mode": "game",
+    "target": [
+     12,
+     7
+    ],
+    "zoom": 0.6
+   }
+  }
+ ],
+ "frames": 152,
+ "shots": [
+  10,
+  22,
+  34,
+  46,
+  58,
+  70,
+  82,
+  94,
+  106,
+  118,
+  130,
+  142
+ ],
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0
+ }
+}
