@@ -1,4 +1,5 @@
 import { afterEach, describe, expect, test } from 'vitest';
+import { l4 } from '../../src/data/l4';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
 import { loadL4 } from '../../tools/sim-runner/l4Bots';
 
@@ -54,7 +55,7 @@ describe('L4 convoy ride collisions', () => {
     w.events.on('vehicle.sound', e => { if (e.type === 'vehicle.sound') seen.push({ id: e.sourceId, phase: e.phase, rpm: e.rpm, speed: e.speed, inCar: e.inCar }); });
     let t = 0; while (s.phase === 'convoy' && t++ < 60 * 90) w.update();
     for (let i = 0; i < 60 * 8; i++) w.update();
-    const engine = seen.filter(e => e.phase === 'engine'), player = s.convoyIds[s.convoyIds.length - 1];
+    const engine = seen.filter(e => e.phase === 'engine'), player = s.convoyIds[l4.convoy.vehicles.findIndex(v => v.player)];
     expect(new Set(engine.map(e => e.id))).toEqual(new Set(s.convoyIds));
     expect(new Set(engine.filter(e => e.inCar).map(e => e.id))).toEqual(new Set([player]));
     const mine = engine.filter(e => e.id === player);
@@ -63,7 +64,7 @@ describe('L4 convoy ride collisions', () => {
   }, 600_000);
 
   test('T-E22-04d @E22 PO 10-12 "Bus is extremely vibrating": the player bus pose has no high-frequency jitter over the whole ride', async () => {
-    const l = await loadL4(3); world = l.world; const w = l.world, s = l.mission.state.l4!, bus = w.entities.get(s.convoyIds[s.convoyIds.length - 1])!;
+    const l = await loadL4(3); world = l.world; const w = l.world, s = l.mission.state.l4!, bus = w.entities.get(s.convoyIds[l4.convoy.vehicles.findIndex(v => v.player)])!;
     const xs: number[] = [], zs: number[] = [], yaws: number[] = [];
     let t = 0; while (s.phase === 'convoy' && t++ < 60 * 90) { w.update(); xs.push(bus.transform.x); zs.push(bus.transform.z); yaws.push(bus.transform.yaw); }
     expect(xs.length).toBeGreaterThan(60 * 15);

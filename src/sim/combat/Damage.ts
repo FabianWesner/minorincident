@@ -78,6 +78,7 @@ export class Damage {
     if (target.escort?.child) { target.health.current = Math.max(0, target.health.current - hit.base * hit.multiplier); if (!target.health.current) this.world.npcs?.escorts.down(target); return 0; }
     const wasAlive = target.health.current > 0;
     let amount = damageAmount(hit, target);
+    if (target.combat?.allyResist !== undefined && hit.sourceId !== 1) amount *= target.combat.allyResist;
     const cap = this.meleeCap(hit, target); if (cap !== undefined) amount = Math.min(amount, cap);
     if (amount > 0 && target.archetype === 'infected.crow' && this.world.infected) amount = this.world.infected.hitFlock(target, hit.origin, hit.direction, hit.radius ?? 30, hit.type === 'explosive' ? 360 : hit.spread ?? 0);
     if (target.id === 1 && this.world.combat?.effects.shielded(target.transform)) amount = 0;
