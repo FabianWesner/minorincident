@@ -216,7 +216,7 @@ export interface L4Line {
 }
 export interface L4Director {
   lines: L4Line[];
-  alphaJobs: { alphaId: number; job: 'line' | 'west' | 'north' | 'south' | 'armor'; stage: 'walk' | 'charge' | 'slam' | 'done'; startedAt: number }[];
+  alphaJobs: { alphaId: number; job: 'line' | 'west' | 'north' | 'south' | 'armor'; stage: 'walk' | 'charge' | 'slam' | 'done'; startedAt: number; hold?: { x: number; z: number } }[];
   /** Alpha hits that knocked a soldier down, E26 slots broken, people who turned inside a line, infected spawned by the director, the soldiers cut off. */
   knockdowns: number; barricades: number; turnedInside: number; spawned: number; cutOff: number[];
   swarmedAt: number; fallBackAt: number; settled: number;

@@ -226,21 +226,34 @@ export class L4Collapse {
       const entry = l4AlphaEmergence.find(e => e.anchor === s.alphaAnchors[n]);
       d.alphaJobs.push({ alphaId: id, job: entry?.job ?? 'line', stage: 'walk', startedAt: tick });
     }
+    const live = (ids: number[]) => ids.map(sid => this.soldier(sid)).filter((x): x is EntitySnapshot => !!x);
+    // A line whose own crews are all down: the Alpha goes for whichever soldiers still stand (the army's survivors).
+    const crewsOf = (k: number) => { const own = live([...(k === 1 ? s.hmgIds : []), ...d.lines[k].soldierIds]); return own.length ? own : live(s.soldierIds); };
     for (const job of d.alphaJobs) {
       const e = world.entities.get(job.alphaId), b = e?.infected;
       if (!e || !b || e.health.current <= 0 || job.stage === 'done' || b.specialAttack) continue;
-      const nest = job.job === 'north' || job.job === 'south', k = job.job === 'armor' ? 2 : nest ? 1 : this.current();
-      const line = k >= 0 ? d.lines[k] : undefined;
-      const crews = line ? [...(k === 1 ? s.hmgIds : []), ...line.soldierIds].map(sid => this.soldier(sid)).filter((x): x is EntitySnapshot => !!x) : [];
-      if (!line || !crews.length || line.brokeAt) { job.stage = 'done'; delete b.scripted; continue; }
-      const nearest = crews.sort((p, q) => dist(p.transform, e.transform) - dist(q.transform, e.transform))[0];
+      let nest = job.job === 'north' || job.job === 'south', k = job.job === 'armor' ? 2 : nest ? 1 : this.current();
+      // A finished or orphaned job moves on to the line that holds now: while the army stands an Alpha works the lines (l4-po-round:
+      // a free Alpha hunts the nearest target, mostly the courier, and its grab-throws killed the courier bot five times).
+      if (k < 0 || d.lines[k].brokeAt || !crewsOf(k).length) {
+        const c = this.current();
+        if (c < 0 || !crewsOf(c).length) {
+          // No soldier stands: the Alphas go for the armour (they bury the tank) rather than all hunting the courier at once.
+          const tank = world.entities.get(s.tankId);
+          if (tank && s.tankPhase !== 'gone') { b.scripted = this.h.snap({ x: tank.transform.x + (job.alphaId % 3 - 1) * 2.5, z: tank.transform.z + 3 }, .55); continue; }
+          job.stage = 'done'; delete b.scripted; continue;
+        }
+        job.job = 'line'; nest = false; k = c; if (job.stage === 'walk' || job.stage === 'slam') job.stage = 'charge';
+      }
+      const crews = crewsOf(k), nearest = crews.sort((p, q) => dist(p.transform, e.transform) - dist(q.transform, e.transform))[0];
       const ready = nest ? this.t >= D.lines[1].pushS && d.lines[0].brokeAt > 0 : job.job === 'armor' ? this.t >= D.lines[2].pushS && d.lines[1].brokeAt > 0 : true;
       if (job.stage === 'walk') {
-        // Held at its stage outside the line (ignores targets beyond it) until the beat; the armour Alpha just waits for its beat.
-        if (nest && !ready) { b.scripted = this.h.snap(pt(D.alphaHold[job.job as 'north' | 'south']), .55); continue; }
-        if (!ready) continue;
+        // Held at its stage outside the line (ignores targets beyond it) until the beat; the armour Alpha waits where it came out (out of view).
+        if (!ready) { b.scripted = nest ? this.h.snap(pt(D.alphaHold[job.job as 'north' | 'south']), .55) : (job.hold ??= { x: e.transform.x, z: e.transform.z }); continue; }
         delete b.scripted; job.stage = 'charge';
       }
+      // On a move cooldown it keeps closing in; at arm's length its own brain swipes at the crew in reach.
+      const press = (to: Point) => { if (dist(e.transform, nearest.transform) > 2.5) b.scripted = this.h.snap(to, .55); else delete b.scripted; };
       if (job.stage === 'charge') {
         // The slot Alphas charge through their authored E26 slot (breaking it) while it stands; otherwise at the nearest crew member.
         const side = nest || job.job === 'west' ? job.job as 'north' | 'south' | 'west' : null, slot = side ? this.slotInside(side) : null, to = slot ?? nearest.transform;
@@ -250,13 +263,15 @@ export class L4Collapse {
         if (stage ? dist(e.transform, stage) > 1.2 : length > 11 || !world.combat!.query.visible(e.transform, to)) { b.scripted = stage ?? this.h.snap(to, .55); continue; }
         delete b.scripted;
         if (ai.startSpecial(e.id, 'alpha.charge', { id: nearest.id, x: to.x, z: to.z }, { x: e.transform.x, z: e.transform.z, radius: 1, dx: dx / length, dz: dz / length })) job.stage = 'slam';
+        else if (slot) b.scripted = stage!; else press(to);
         continue;
       }
-      // Slam: close on the nearest crew member, then ground-slam within 3.5 m (knocks everyone in 4 m down).
+      // Slam: close on the nearest crew member, then ground-slam within 3.5 m (knocks everyone in 4 m down); then the next charge.
       const cx = nearest.transform.x - e.transform.x, cz = nearest.transform.z - e.transform.z, cl = Math.hypot(cx, cz) || 1;
       if (cl > 3.5) { b.scripted = { x: nearest.transform.x, z: nearest.transform.z }; continue; }
       delete b.scripted;
-      if (ai.startSpecial(e.id, 'alpha.ground-slam', { id: nearest.id, x: nearest.transform.x, z: nearest.transform.z }, { x: e.transform.x, z: e.transform.z, radius: 4, dx: cx / cl, dz: cz / cl })) job.stage = nest ? 'done' : 'charge';
+      if (ai.startSpecial(e.id, 'alpha.ground-slam', { id: nearest.id, x: nearest.transform.x, z: nearest.transform.z }, { x: e.transform.x, z: e.transform.z, radius: 4, dx: cx / cl, dz: cz / cl })) job.stage = 'charge';
+      else press(nearest.transform);
     }
   }
   /** The charge stage outside a slot: authored for the nest slots, else 8 m straight out of the slot. */

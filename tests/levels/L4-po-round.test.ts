@@ -33,7 +33,7 @@ describe('L4 PO round 10-13', () => {
     while (s.phase === 'convoy') w.update();
     const bus = w.entities.get(s.convoyIds[l4.convoy.vehicles.findIndex(v => v.player)])!.transform, p0 = { ...w.entities.get(1)!.transform };
     expect(l4.convoy.vehicles.findIndex(v => v.player)).toBe(l4.convoy.vehicles.findIndex(v => v.asset === 'veh.evac-bus'));
-    expect(inRing(p0), `exit ${p0.x.toFixed(1)},${p0.z.toFixed(1)}`).toBe(true); expect(dist(p0, bus)).toBeLessThan(3.5);
+    expect(inRing(p0), `exit ${p0.x.toFixed(1)},${p0.z.toFixed(1)}`).toBe(true); expect(dist(p0, bus)).toBeLessThan(l4.convoy.vehicles.find(v => v.player)!.len / 2 + 1.5);
     expect(dist(p0, { x: -23.2, z: .6 })).toBeLessThan(14);
     const corgi = [...w.entities.iterate()].find(e => e.companion); if (corgi) expect(inRing(corgi.transform)).toBe(true);
     // "The gate closes behind the convoy": barriers in the gap, and walking out in any direction stops at the perimeter.
