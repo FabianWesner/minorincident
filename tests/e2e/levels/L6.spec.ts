@@ -40,6 +40,10 @@ test('T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes 
     const lag=obs.friends.filter(r=>r.straggler&&!r.rejoined).sort((a,b)=>a.at.x-b.at.x)[0];
     if(lag&&!lag.collected)target=lag.at;else if(lag&&obs.p.x-lag.at.x>5){await step(12);continue;}
     const gate=obs.s.gates.find(g=>!g.closedAt&&obs.p.x<g.x+8&&obs.friends.every(r=>r.at.x>g.x+2));
+    // Stand at the next service gate until the whole group has passed it (a person would), then close it with E.
+    const waitGate=!gate&&obs.friends.length?obs.s.gates.find(g=>!g.closedAt&&obs.p.x>g.x-30&&obs.p.x<g.x+3):undefined;
+    if(waitGate&&!lag&&!['shelter','first','fails'].includes(obs.s.phase)){if(Math.hypot(waitGate.x+1.4-obs.p.x,15-obs.p.z)<1.2){await step(12);continue;}target={x:waitGate.x+1.4,z:15};}
+    if(i%10===0&&(gate||waitGate))console.log('GATE',i,gate?'ready':'wait',(gate||waitGate)!.x,JSON.stringify({p:obs.p,minF:Math.min(...obs.friends.map(r=>r.at.x)),lag:!!lag}));
     if(gate)target={x:gate.x+1.4,z:15};
     else if(obs.friends.length&&obs.p.x>Math.min(...obs.friends.map(r=>r.at.x))+6){await step(12);continue;}
     if(obs.p.x>=246){target={x:273,z:obs.p.x<258?14.1:15};if(obs.p.x<249.1)target={x:250,z:14.1};}
@@ -52,10 +56,12 @@ test('T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes 
     // Keep the isometric pose stable while physical WASD crosses the authored route.
     await page.evaluate(p=>window.__SS__!.camera.cinematic({position:[p.x+24,29,p.z+24],target:[p.x,0,p.z]},true),obs.p);await step(1);
     const keys=Math.abs(dx)>Math.abs(dz)?dx>0?['s','d']:['w','a']:dz>0?['s','a']:['w','d'];
-    for(const key of keys)await page.keyboard.down(key);await step(Math.min(12,Math.max(2,Math.floor(Math.max(Math.abs(dx),Math.abs(dz))*10))));for(const key of keys)await page.keyboard.up(key);
+    for(const key of keys)await page.keyboard.down(key);// The leader walks 2.2 m/s; short 12-tick key taps only reach ~2.3 m/s, so with nothing in sight a long way off keep the keys held longer.
+    const hold=Math.hypot(dx,dz)>14&&!obs.enemy&&!obs.close.length?40:12;await step(Math.min(hold,Math.max(2,Math.floor(Math.max(Math.abs(dx),Math.abs(dz))*10))));for(const key of keys)await page.keyboard.up(key);
 
   }
-  const m=await page.evaluate(()=>window.__SS__!.missions.state()!);expect(m.phase).toBe('result');expect(shots.size).toBe(7);expect(m.l6!.gates.some(g=>g.closedAt>0)).toBe(true);expect(m.result!.deaths).toBe(0);expect(m.result!.rescued/m.result!.survivorsIn!).toBeGreaterThanOrEqual(.6);expect(m.l6!.survivors.some(r=>r.straggler&&r.rejoined)).toBe(true);await expect(page.getByRole('heading',{name:'Night. Still alive.'})).toBeVisible();await expect(page.getByTestId('result-rescued')).toHaveText(String(m.result!.rescued));await expect(page.getByTestId('result-survivorsIn')).toHaveText(String(m.result!.survivorsIn));await expect(page.getByTestId('mission-detail')).toContainText(`Rescued ${m.result!.rescued}`);await page.screenshot({path:`${out}/real-result.png`});await page.getByRole('button',{name:'Credits',exact:true}).click();await expect(page.getByRole('heading',{name:'Credits',exact:true})).toBeVisible();await expect(page.locator('.credits-roll')).toContainText('A community still alive');await expect(page.locator('.credits-roll')).toHaveCSS('opacity','1',{timeout:8000});await page.evaluate(()=>window.__SS__!.vfx.stepRender(.3));await page.screenshot({path:`${out}/real-credits.png`});await expect(page.getByRole('heading',{name:'Minor Incident',exact:true})).toBeVisible({timeout:16000});
+  const m=await page.evaluate(()=>window.__SS__!.missions.state()!);expect(m.phase).toBe('result');expect(shots.size).toBe(7);expect(m.l6!.gates.some(g=>g.closedAt>0)).toBe(true);expect(m.result!.deaths).toBe(0);expect(m.result!.rescued/m.result!.survivorsIn!).toBeGreaterThanOrEqual(.6);expect(m.l6!.survivors.some(r=>r.straggler&&r.rejoined)).toBe(true);await expect(page.getByRole('heading',{name:'Night. Still alive.'})).toBeVisible();await expect(page.getByTestId('result-rescued')).toHaveText(String(m.result!.rescued));await expect(page.getByTestId('result-survivorsIn')).toHaveText(String(m.result!.survivorsIn));await expect(page.getByTestId('mission-detail')).toContainText(`Rescued ${m.result!.rescued}`);await page.screenshot({path:`${out}/real-result.png`});// L6 is no longer the last level (PO 10-11 levels 4-9): the result button continues into L7; credits follow the last level.
+  await page.getByRole('button',{name:'Continue',exact:true}).click();await page.waitForFunction(()=>window.__SS__!.getState().scenario==='L7',undefined,{timeout:60_000});await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});
 });
 
 const lum = (r: number, g: number, b: number) => { const c = (v: number) => { v /= 255; return v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }; return .2126 * c(r) + .7152 * c(g) + .0722 * c(b); };
