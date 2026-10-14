@@ -84,7 +84,7 @@ const commands: string[][] = [
         ? [
           ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', 'T-E21-21', '--workers=2'],
           // The station-attack and Boulevard frame budgets (desktop high, throttled phone low) run alone on the native GPU.
-          ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/l3-budgets.spec.ts', '--project=chromium', '--workers=1'],
+          ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/l3-budgets.spec.ts', '--project=chromium', '--workers=1'],
         ]
       : target === 'E22'
         ? [

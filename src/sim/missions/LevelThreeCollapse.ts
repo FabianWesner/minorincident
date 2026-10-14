@@ -244,21 +244,28 @@ export class LevelThreeCollapse {
   }
   private emergeWaves(): void {
     const { world } = this.mission, s = this.s, tick = world.tick, ai = world.infected!;
-    if (ai.director.count >= ai.director.cap || !ai.pool.length) return;
+    if (ai.director.count >= this.emergenceCap(true) || !ai.pool.length) return;
     for (const q of s.waves) if (!q.id && tick >= q.at) {
       const pts = this.sources(q.dir).filter(p => ai.director.offscreen(p));
       if (!pts.length) continue;
-      const p = pts[(q.at + q.wave) % pts.length], id = this.emerge(p, undefined, false, q.dir === 'station');
+      const p = pts[(q.at + q.wave) % pts.length], id = this.emerge(p, undefined, false, q.dir === 'station', true);
       if (!id) { if (ai.director.count >= ai.director.cap) break; continue; }
       q.id = id; s.waveIds.push(id); s.wavesSpawned = Math.max(s.wavesSpawned, q.wave + 1);
       ai.rush(id, RUSH[q.dir], tick + ticks(60));
       if (s.waves.filter(w => w.wave === q.wave && w.id).length === 1) world.events.emit({ type: 'l3.wave', tick, wave: q.wave, count: s.waves.filter(w => w.wave === q.wave).length });
     }
   }
+  /** Returning bodies hold S1 arrival slots too; later streets retain the E18 cap. */
+  private emergenceCap(s1 = false): number {
+    const ai = this.world.infected!, s = this.s;
+    const x = this.world.entities.get(1)!.transform.x;
+    const opening = (s.phase === 'fallback' || s.phase === 'corridor') && x >= l3.map.corridor[0] && (s1 || x < l3.map.segments[0][1]);
+    return opening ? Math.min(ai.director.cap, l3.density.s1LiveBudget / (ai.director.tier === 'low' ? 2 : 1)) : ai.director.cap;
+  }
   /** An infected comes out of a door: a pedestrian turned in place (same pipeline as L1/L2). Returns the id or 0 at the cap. */
-  private emerge(at: Point, home?: Point, running = false, police = false): number {
+  private emerge(at: Point, home?: Point, running = false, police = false, s1 = false): number {
     const { world } = this.mission, ai = world.infected!, o = this.outbreak();
-    if (ai.director.count >= ai.director.cap || !ai.pool.length) return 0;
+    if (ai.director.count >= this.emergenceCap(s1) || !ai.pool.length) return 0;
     const out = this.snap(at, .45);
     if (!ai.director.offscreen(out, world.districts?.groundHeight(out.x, out.z) ?? 0) || ai.active.some(e => e.health.current > 0 && dist(e.transform, out) < .85)) return 0;
     // Police zombies: an officer turned in place keeps the police look (the ordinary turned-pedestrian infected variant).
@@ -443,10 +450,11 @@ export class LevelThreeCollapse {
     // The yard retains its original cadence; the street rate remains at least as high (20/s vs 18/s).
     const yard = s.phase === 'attack' || p.x < l3.map.corridor[0];
     if (!all && world.tick % (yard ? 10 : 3) !== 0) return;
-    if (ai.director.count >= ai.director.cap || !ai.pool.length) return;
+    if (ai.director.count >= this.emergenceCap() || !ai.pool.length) return;
     // Preserve the original yard hold/cap headroom. The additional street residents emerge after the fallback.
-    if (yard && s.segmentIds[0].length >= (ai.director.tier === 'low' ? 5 : 10)) return;
-    const allowance = yard ? Math.min(3, (ai.director.tier === 'low' ? 5 : 10) - s.segmentIds[0].length) : all ? Infinity : 1;
+    const preload = l3.density.s1Preload / (ai.director.tier === 'low' ? 2 : 1);
+    if (yard && s.segmentIds[0].length >= preload) return;
+    const allowance = yard ? Math.min(3, preload - s.segmentIds[0].length) : all ? Infinity : 1;
     let spawned = 0;
     // E18: the 5x queues hold hundreds of entries on a few dozen doors; a door that is in view, too close or blocked stays
     // so for the rest of this call (one frustum test per door, not per queued infected).
@@ -455,7 +463,7 @@ export class LevelThreeCollapse {
       if (q.id !== 0 || (yard && q.streetExtra) || (q.horde && p.x < l3.finale.startX + 10) || closed.has(q.door)) continue;
       const a = this.anchor(q.door);
       if (!ai.director.offscreen(a) || Math.hypot(a.x - p.x, a.z - p.z) < 25) { closed.add(q.door); continue; }
-      const id = this.emerge(a, q.home, !!q.horde);
+      const id = this.emerge(a, q.home, !!q.horde, false, q.segment === 0 && !q.kind);
       if (!id) { if (ai.director.count >= ai.director.cap) break; closed.add(q.door); continue; }
       const e = world.entities.get(id)!; q.id = id; q.at = world.tick; q.x = e.transform.x; q.z = e.transform.z; q.seen = !ai.director.offscreen(e.transform); spawned++;
       if (q.horde) this.rushPursuer(id, q.home);

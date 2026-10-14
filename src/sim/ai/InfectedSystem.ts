@@ -531,7 +531,9 @@ export class InfectedSystem {
     if (b.specialAttack) this.cancelSpecial(e.id);
     if (b.special === 'pin') this.releasePin(e);
     if (permanent || !this.recovery || e.corpse || b.special === 'explode' || e.archetype === 'infected.crow') return b.recoverAt = -1;
-    const [low, high] = infectedRecovery.downS, u = new Rng(this.world.seed, `infected-recover:${e.id}:${b.downs++}`).next();
+    const l3Human = this.world.scenario === 'L3' && (e.archetype === 'infected.runner' || e.archetype === 'infected.sprinter');
+    const [low, high] = l3Human ? l3.infected.recoverS : infectedRecovery.downS;
+    const u = new Rng(this.world.seed, `infected-recover:${e.id}:${b.downs++}`).next();
     return b.recoverAt = this.world.tick + Math.round((low + (high - low) * u) * 60);
   }
   /** Downed infected stay active and groan once on the ground; at `recoverAt` they get up at full health and hunt by sight again. */

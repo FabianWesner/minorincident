@@ -1,0 +1,20 @@
+{
+  "numTotalTests": 278,
+  "numPassedTests": 273,
+  "numFailedTests": 3,
+  "numPendingTests": 2,
+  "failures": [
+    {
+      "test": "L3 The Police Collapse T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2",
+      "error": "AssertionError: expected 5 to be less than or equal to 2"
+    },
+    {
+      "test": "L3 The Police Collapse T-E21-07d @E21 @E21-AC07 PO 10-12 the police lose without the courier: 50 % police guns, spread streams, police zombies from the station",
+      "error": "AssertionError: expected 9 to be less than or equal to 5"
+    },
+    {
+      "test": "ally combat feel L3 station attack: the police move and fight in view of the idle courier",
+      "error": "AssertionError: expected 0.20795107033639143 to be less than 0.2"
+    }
+  ]
+}
