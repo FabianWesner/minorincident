@@ -63,7 +63,7 @@ const privacyFenceLodPolicy = { lod1From: 6, lod2From: 45, hysteresis: 2 };
  * even up close; the E20 rescue peak at the Grove Market otherwise spends ~100 k of the 500 k phone budget on one building. */
 const heavyOnLow = (id: string) => ((worldAssets[id] as { authoredLodTriangles?: { lod1?: number } }).authoredLodTriangles?.lod1 ?? 0) >= 50_000;
 
-interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; id: string; decay?: string; lit: boolean; loaded: boolean; nearLoaded: boolean; farLoaded: boolean; heroShown: Lod; bands: (Lod | undefined)[] }
+interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; /** Local footprint of LOD0 (centre offset and half extents): occluder tests use the real oriented box, not the longest side squared. */ foot: { cx: number; cz: number; hx: number; hz: number }; id: string; decay?: string; lit: boolean; loaded: boolean; nearLoaded: boolean; farLoaded: boolean; heroShown: Lod; bands: (Lod | undefined)[] }
 /** Shared static instances; detailed prototypes stream only into the close view. */
 export class DistrictView extends Group {
   readonly spots = new Map<string, CameraPose>();
@@ -127,6 +127,8 @@ export class DistrictView extends Group {
     private readonly instanceCapacity?: number,
   ) {
     super();
+    // The hole is module-global: a previous district (scene) must not leave it half open.
+    seeThrough.strength.value = 0; seeThrough.cover.value = 0;
     this.name = "sunset-grove"; this.matrixAutoUpdate = false;
     this.foliage = new Foliage(materials, phase); this.add(this.foliage); this.foliage.setQuality(low);
   }
@@ -346,8 +348,8 @@ export class DistrictView extends Group {
               batch.name = `inst:${id}`; this.batches.push(batch); root.add(batch); this.freezeBatch(batch);
               batch.traverse(o => { if (o instanceof Mesh && o.name === 'window-light') this.windows.push(o); });
             }
-            const dimensions = new Box3().setFromObject(prototypes[0]).getSize(new Vector3());
-            this.lodBatches.push({ hero, near, far, refs, id, decay, lit: power === 'true', loaded: false, nearLoaded, farLoaded, heroShown: nearLoaded ? 'lod1' : 'lod2', bands: [], origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55, half: Math.max(dimensions.x, dimensions.z) / 2 });
+            const footBox = new Box3().setFromObject(prototypes[0]), dimensions = footBox.getSize(new Vector3()), footCenter = footBox.getCenter(new Vector3());
+            this.lodBatches.push({ foot: { cx: footCenter.x, cz: footCenter.z, hx: dimensions.x / 2, hz: dimensions.z / 2 }, hero, near, far, refs, id, decay, lit: power === 'true', loaded: false, nearLoaded, farLoaded, heroShown: nearLoaded ? 'lod1' : 'lod2', bands: [], origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55, half: Math.max(dimensions.x, dimensions.z) / 2 });
           }),
         );
         // Dynamic nav-blockers use the same positions/extents as their Rapier colliders.
@@ -492,7 +494,9 @@ export class DistrictView extends Group {
       if (this.seeThroughReference) { seeThrough.solidRadius.value = 3; seeThrough.strength.value = 1; return; }
       if (view.driving && this.foliage.reveal) seeThrough.depth.value -= 3;
     }
+    if (this.seeThroughOff) { seeThrough.strength.value = 0; seeThrough.cover.value = 0; return; }
     const hugged = Boolean(player && this.foliage.reveal && this.huggedOccluder(view));
+    this.occluderId = hugged ? 'hugged' : '';
     const goal = player && this.foliage.reveal && (hugged || this.occluded(view, player)) ? 1 : 0;
     seeThrough.strength.value += (goal - seeThrough.strength.value) * (1 - Math.exp(-(hugged ? 40 : 10) * this.frameSeconds));
     if (Math.abs(goal - seeThrough.strength.value) < .002) seeThrough.strength.value = goal;
@@ -505,15 +509,25 @@ export class DistrictView extends Group {
   static readonly hugDistance = 8;
   private readonly lensRay = new Vector3();
   private readonly lensPoint = new Vector3();
+  /** Local frame of a placement's real footprint (yaw only): `[cos, sin, centre x, centre z]` on the district plane. */
+  private static footFrame(entry: LodBatch, ref: Object3D): [number, number, number, number] {
+    const yaw = 2 * Math.atan2(ref.quaternion.y, ref.quaternion.w), c = Math.cos(yaw), s = Math.sin(yaw), { cx, cz } = entry.foot;
+    return [c, s, ref.position.x + entry.origin[0] + cx * ref.scale.x * c + cz * ref.scale.z * s, ref.position.z + entry.origin[1] - cx * ref.scale.x * s + cz * ref.scale.z * c];
+  }
+  /** World point against the placement's oriented footprint (not the square of its longest side: a 20 m shop row is 9 m deep). */
+  private static insideFootprint(entry: LodBatch, ref: Object3D, px: number, pz: number): boolean {
+    const [c, s, x, z] = DistrictView.footFrame(entry, ref), dx = px - x, dz = pz - z;
+    return Math.abs((dx * c - dz * s) / ref.scale.x) < entry.foot.hx && Math.abs((dx * s + dz * c) / ref.scale.z) < entry.foot.hz;
+  }
   /** A tall solid placement sits right in front of the lens: points 1..hugDistance m along the centre and
    * the four quarter-screen rays (at least three of the five) fall inside its conservative upright box. */
   private huggedOccluder(view: View): boolean {
-    const camera = view.camera, o = camera.position, near: { x: number; z: number; half: number; y0: number; y1: number }[] = [];
+    const camera = view.camera, o = camera.position, near: { entry: LodBatch; ref: Object3D; y0: number; y1: number }[] = [];
     for (const entry of this.lodBatches) {
       if (entry.height < occluderMinHeight || worldAssets[entry.id].foliage) continue;
       for (const ref of entry.refs) {
         const x = ref.position.x + entry.origin[0], z = ref.position.z + entry.origin[1], half = entry.half * Math.max(ref.scale.x, ref.scale.z);
-        if (Math.abs(x - o.x) < half + DistrictView.hugDistance && Math.abs(z - o.z) < half + DistrictView.hugDistance) near.push({ x, z, half, y0: ref.position.y, y1: ref.position.y + entry.height * ref.scale.y });
+        if (Math.abs(x - o.x) < half + DistrictView.hugDistance && Math.abs(z - o.z) < half + DistrictView.hugDistance) near.push({ entry, ref, y0: ref.position.y, y1: ref.position.y + entry.height * ref.scale.y });
       }
     }
     if (!near.length) return false;
@@ -522,7 +536,7 @@ export class DistrictView extends Group {
       this.lensRay.set(sx, sy, .5).unproject(camera).sub(o).normalize();
       for (let d = 1; d <= DistrictView.hugDistance; d++) {
         const p = this.lensPoint.copy(o).addScaledVector(this.lensRay, d);
-        if (near.some(b => Math.abs(b.x - p.x) < b.half && Math.abs(b.z - p.z) < b.half && p.y > b.y0 + .3 && p.y < b.y1)) { blocked++; break; }
+        if (near.some(b => p.y > b.y0 + .3 && p.y < b.y1 && DistrictView.insideFootprint(b.entry, b.ref, p.x, p.z))) { blocked++; break; }
       }
     }
     // Most of the frame, not a wall at one edge: a street corner keeps its ordinary courier-sized hole.
@@ -530,7 +544,11 @@ export class DistrictView extends Group {
   }
   /** Debug/test: open the see-through hole across the whole screen (reference frame for visibility checks). */
   seeThroughReference = false;
+  /** Scene Lab: solid occluders never open (the uncut picture the cut-pixel gate diffs against). */
+  seeThroughOff = false;
   private frameSeconds = 0;
+  /** Scene Lab: the placement that currently opens the hole (`hugged` when one fills the lens). */
+  occluderId = '';
   private readonly holeTarget = new Vector3();
   /** Segment (camera to chest) against conservative upright boxes of the tall instanced placements nearby. */
   private occluded(view: View, player: { x: number; y: number; z: number }): boolean {
@@ -538,17 +556,19 @@ export class DistrictView extends Group {
     for (const entry of this.lodBatches) {
       if (entry.height < occluderMinHeight || worldAssets[entry.id].foliage) continue;
       for (const ref of entry.refs) {
-        const x = ref.position.x + entry.origin[0], z = ref.position.z + entry.origin[1];
+        const [c, sn, x, z] = DistrictView.footFrame(entry, ref);
         if (Math.abs(x - player.x) > 24 || Math.abs(z - player.z) > 24) continue;
-        const half = entry.half * Math.max(ref.scale.x, ref.scale.z);
+        // Slab test in the placement's local frame (oriented footprint, real height).
+        const ox = o.x - x, oz = o.z - z, sx = ref.scale.x, sz = ref.scale.z;
+        const lox = (ox * c - oz * sn) / sx, loz = (ox * sn + oz * c) / sz, ldx = (dx * c - dz * sn) / sx, ldz = (dx * sn + dz * c) / sz;
         let enter = 0, exit = 1;
-        for (const [origin, delta, min, max] of [[o.x, dx, x - half, x + half], [o.y, dy, ref.position.y, ref.position.y + entry.height * ref.scale.y], [o.z, dz, z - half, z + half]]) {
+        for (const [origin, delta, min, max] of [[lox, ldx, -entry.foot.hx, entry.foot.hx], [o.y, dy, ref.position.y, ref.position.y + entry.height * ref.scale.y], [loz, ldz, -entry.foot.hz, entry.foot.hz]]) {
           if (Math.abs(delta) < 1e-6) { if (origin < min || origin > max) { exit = -1; break; } continue; }
           const a = (min - origin) / delta, b = (max - origin) / delta;
           enter = Math.max(enter, Math.min(a, b)); exit = Math.min(exit, Math.max(a, b));
           if (enter > exit) break;
         }
-        if (enter <= exit && enter < .98) return true;
+        if (enter <= exit && enter < .98) { this.occluderId = `${entry.id}@${(x).toFixed(1)},${(z).toFixed(1)}`; return true; }
       }
     }
     return false;
@@ -986,7 +1006,7 @@ export class DistrictView extends Group {
   /** Scene Lab probe: current detail band of every static instance (`culled` outside the frustum), district-local positions. */
   /** Scene Lab: the courier hole's live state, and placements lower than an occluder whose drawn batch would still be cut
    * by it (must stay empty: PO 10-13 bench without planks at zoom 0.66). */
-  seeThroughAudit(): { strength: number; cover: number; solidRadius: number; cutLowProps: string[] } {
+  seeThroughAudit(): { strength: number; cover: number; solidRadius: number; center: [number, number]; occluder: string; cutLowProps: string[] } {
     const cut = new Set<string>();
     for (const entry of this.lodBatches) {
       if (entry.height >= occluderMinHeight || worldAssets[entry.id].foliage) continue;
@@ -994,7 +1014,7 @@ export class DistrictView extends Group {
         if (node instanceof Mesh && (Array.isArray(node.material) ? node.material : [node.material]).some(m => m.userData.seeThrough)) cut.add(entry.id);
       });
     }
-    return { strength: seeThrough.strength.value, cover: seeThrough.cover.value, solidRadius: seeThrough.solidRadius.value, cutLowProps: [...cut].sort() };
+    return { strength: seeThrough.strength.value, cover: seeThrough.cover.value, solidRadius: seeThrough.solidRadius.value, center: seeThrough.center.value.toArray() as [number, number], occluder: this.occluderId, cutLowProps: [...cut].sort() };
   }
   lodState(): { assetId: string; origin: [number, number]; position: [number, number, number]; lod: Lod | 'culled' }[] {
     return this.lodBatches.flatMap(entry => entry.refs.map(ref => ({ assetId: entry.id, origin: entry.origin, position: ref.position.toArray() as [number, number, number],

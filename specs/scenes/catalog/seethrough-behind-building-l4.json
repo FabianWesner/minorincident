@@ -1,0 +1,63 @@
+{
+ "name": "seethrough-behind-building-l4",
+ "note": "PO 10-14 counter-case: courier behind the Harbor Street building row (north of the Harbor Books block) (real occluder between camera and courier). The cut must open (strength > 0.5) and differ from the uncut frame inside the hole disc; nothing outside the disc may differ.",
+ "seed": 1,
+ "ground": "district",
+ "time": "night",
+ "layout": {
+  "level": "L4",
+  "district": "D-FAIR",
+  "bbox": [
+   [
+    -60,
+    -89
+   ],
+   [
+    40,
+    11
+   ]
+  ]
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -22,
+    -37
+   ],
+   "yaw": 0,
+   "state": "idle"
+  },
+  {
+   "id": "corgi",
+   "kind": "corgi",
+   "at": [
+    -22.9,
+    -37.8
+   ]
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   -22,
+   -37
+  ],
+  "zoom": 1.5
+ },
+ "frames": 60,
+ "expect": {
+  "consoleErrors": 0,
+  "seeThroughOpenFramesMin": 40,
+  "seeThroughCutInsideMin": 500,
+  "seeThroughCutPixelsMax": 0
+ },
+ "shots": [
+  59
+ ],
+ "sheet": 20
+}

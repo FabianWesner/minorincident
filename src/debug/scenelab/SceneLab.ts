@@ -105,7 +105,7 @@ export class SceneLab {
   /** Small hand props (mug, phone) per actor: lowest drawn prop centre between hip (0) and shoulders (1), and the straightest
    * right arm (shoulder-wrist distance over arm length), per LOD band. PO 10-13 "Coffee cup still wrong" (seated, low tier). */
   /** Frames the solid-occluder courier hole was open, its largest radius and low props drawn with a cut material. */
-  private seeThroughOpen = { frames: 0, solidRadiusMax: 0, cutLowProps: [] as string[] };
+  private seeThroughOpen = { frames: 0, solidRadiusMax: 0, occluders: [] as string[], cutLowProps: [] as string[] };
   private holds = new Map<string, { prop: string; samples: number; heightMin: number; heightFrame: number; straightMax: number; straightFrame: number; lods: Record<string, number> }>();
   private companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 };
   /** Hand-over choreographies in progress (actor id -> route, start frame, pause). */
@@ -167,7 +167,7 @@ export class SceneLab {
     }
     this.propSinkMaxCm = 0; this.propGroundSamples = 0; this.propPenetration.clear(); this.propPenetrationSamples = 0; this.propPenetrationTick = -1;
     this.vehicleMotion.clear(); this.pursuit.clear(); this.mega = null; this.gunStats = null; this.attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1, hull: 0, hullHits: 0 };
-    this.spec = structuredClone(spec); this.companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 }; this.frame = 0; this.heldPropSamples = 0; this.heldPropClips.clear(); this.holds.clear(); this.seeThroughOpen = { frames: 0, solidRadiusMax: 0, cutLowProps: [] }; this.gunBodyHits.clear(); this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.metroClosed = 0; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0; this.placeholders = { frames: 0, firstFrame: -1, assets: new Set() };
+    this.spec = structuredClone(spec); this.companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 }; this.frame = 0; this.heldPropSamples = 0; this.heldPropClips.clear(); this.holds.clear(); this.seeThroughOpen = { frames: 0, solidRadiusMax: 0, occluders: [], cutLowProps: [] }; this.gunBodyHits.clear(); this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.metroClosed = 0; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0; this.placeholders = { frames: 0, firstFrame: -1, assets: new Set() };
     const built = this.built = buildScene(spec, assets, source);
     this.game.view.labProbes().districts?.setDispersalActive(!!spec.dispersal?.active);
     if (spec.armyBoom && !spec.armyBoom.closed) for (const p of built.layout.placements) if (p.assetId === 'kit.army-checkpoint') p.boomOpen = true;
@@ -921,7 +921,7 @@ export class SceneLab {
     const probes = this.game.view.labProbes(), figures = new Map(this.game.view.crowdFigures().map(f => [f.id, f]));
     const audit = probes.districts?.seeThroughAudit();
     if (audit) {
-      if (audit.strength > .5) { this.seeThroughOpen.frames++; this.seeThroughOpen.solidRadiusMax = Math.max(this.seeThroughOpen.solidRadiusMax, +audit.solidRadius.toFixed(3)); }
+      if (audit.strength > .5) { this.seeThroughOpen.frames++; if (audit.occluder && !this.seeThroughOpen.occluders.includes(audit.occluder)) this.seeThroughOpen.occluders.push(audit.occluder); this.seeThroughOpen.solidRadiusMax = Math.max(this.seeThroughOpen.solidRadiusMax, +audit.solidRadius.toFixed(3)); }
       this.seeThroughOpen.cutLowProps = [...new Set([...this.seeThroughOpen.cutLowProps, ...audit.cutLowProps])];
     }
     const sim: Record<string, number> = {}, drawn: Record<string, number> = {};
@@ -1286,6 +1286,12 @@ export class SceneLab {
   renderDiagnostics() { return { scene: this.spec?.name ?? null, frame: this.frame, tick: this.world.tick, ...this.game.view.renderDiagnostics() }; }
   /** Screenshot readiness: streamed LOD0 and pending assets resolved, two presented frames. */
   ready(): Promise<void> { return this.game.screenshotReady(); }
+  /** Cut-pixel gate: force the solid-occluder cut off (or back on) and report the hole as last drawn (centre in screen UV, top-left origin). */
+  cutProbe(off: boolean): { center: [number, number]; solidRadius: number; strength: number; cover: number; occluder: string } | null {
+    const audit = this.game.view.labProbes().districts?.seeThroughAudit() ?? null;
+    this.game.view.settings({ seeThroughOff: off });
+    return audit && { center: audit.center, solidRadius: audit.solidRadius, strength: audit.strength, cover: audit.cover, occluder: audit.occluder };
+  }
   /** Point-in-scene to client pixels (for cropping close-ups from a screenshot). */
   project(p: [number, number, number]): { x: number; y: number } { const q = this.game.view.project(...p); return { x: (q[0] + 1) / 2 * innerWidth, y: (1 - q[1]) / 2 * innerHeight }; }
 }
