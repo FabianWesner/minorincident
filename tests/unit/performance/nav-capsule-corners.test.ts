@@ -8,11 +8,18 @@ test('@E22 capsule movement escapes a valid rounded collider corner in every qua
     expect(nav.clear(position.x, position.z, .35, true)).toBe(true);
     expect(nav.clear(position.x, position.z, .37)).toBe(false);
     const before = { ...position };
-    nav.move(position, sx * .01, sz * .01, .37);
+    nav.move(position, sx * .01, sz * .01, .37, true);
     expect(sx * (position.x - before.x)).toBeGreaterThan(0);
     expect(sz * (position.z - before.z)).toBeGreaterThan(0);
     // Rounded recovery must still refuse a step through the solid corner.
-    nav.move(position, -sx * .1, -sz * .1, .35);
+    nav.move(position, -sx * .1, -sz * .1, .35, true);
     expect(nav.clear(position.x, position.z, .35, true)).toBe(true);
   }
+});
+
+test('grid-only agents retain the conservative square corner margin', () => {
+  const nav = new NavGrid({ width: 20, depth: 20 }, [{ x: 0, y: 1, z: 0, halfX: 1, halfY: 1, halfZ: 1 }]);
+  const p = { x: -1.255, z: 1.255 };
+  nav.move(p, -.01, .01, .37);
+  expect(p).toEqual({ x: -1.255, z: 1.255 });
 });
