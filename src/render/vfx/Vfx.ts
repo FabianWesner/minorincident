@@ -238,6 +238,7 @@ export class Vfx extends Group {
       }
       return;
     }
+    if ((event.type === 'combat.hit' || event.type === 'combat.kill') && event.actionId === 'cure') return;
     if (event.type === 'combat.hit' || event.type === 'combat.kill') { const target = this.world.entities.get(event.targetId); if (target?.faction === 'environment' || target?.vehicle) return; }
     if (event.type === 'combat.hit' && event.amount > 0) {
       this.blood(event, false);

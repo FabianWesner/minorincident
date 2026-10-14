@@ -18,6 +18,7 @@ interface OwnedCollider { aabb: Aabb; walkable: boolean; chunks: string[]; handl
 export class ChunkResidency {
   private readonly loaded = new Set<string>();
   private readonly inactive = new Map<string, string>();
+  private readonly cureChecked = new Map<string, string>();
   private readonly inactiveCounts = new Map<string, number>();
   private readonly waiting = new Set<string>();
   private readonly colliders: OwnedCollider[] = [];
@@ -166,6 +167,18 @@ export class ChunkResidency {
   *inactiveEntities(): IterableIterator<EntitySnapshot> {
     for (const json of this.inactive.values()) for (const record of JSON.parse(json) as SleepingEntity[]) yield record.entity;
   }
+  /** Mutate compact sleeping snapshots without loading any region assets, physics or AI. */
+  applyCure(affect: (entity: EntitySnapshot) => boolean, reached?: (chunk: TerrainChunk) => boolean): void {
+    for (const [id, json] of this.inactive) {
+      if (this.cureChecked.get(id) === json || reached && !reached(this.lookup.get(id)!)) continue;
+      const records = JSON.parse(json) as SleepingEntity[];
+      let changed = false;
+      for (const record of records) if (affect(record.entity)) { record.tick = this.world.tick; changed = true; }
+      const updated = changed ? JSON.stringify(records) : json;
+      if (changed) { this.inactive.set(id, updated); this.waiting.delete(id); }
+      if (!records.some(r => r.entity.infected && !r.entity.corpse && (r.entity.health.current > 0 || r.entity.infected.recoverAt >= 0))) this.cureChecked.set(id, updated);
+    }
+  }
   consumedPickups(): number[] {
     const consumed: number[] = [];
     for (const json of this.inactive.values()) for (const { entity: e } of JSON.parse(json) as SleepingEntity[]) if (e.pickup && 'kind' in e.pickup && e.pickup.collected && e.pickup.kind !== 'item' && e.pickup.kind !== 'throwable') consumed.push(e.id);
@@ -189,7 +202,7 @@ export class ChunkResidency {
     const saved = structuredClone(value) as ChunkSnapshot;
     for (const p of [...this.world.props?.items ?? []]) if (!this.world.entities.get(p.entityId)) this.world.props!.unloadChunk(p.entityId);
     const consumed = new Set(this.consumedPickups());
-    this.inactive.clear(); this.inactiveCounts.clear(); this.waiting.clear();
+    this.inactive.clear(); this.cureChecked.clear(); this.inactiveCounts.clear(); this.waiting.clear();
     // Keep each record in its capture clock. Wake shifts once from that clock to the current tick;
     // pre-shifting on save reload can turn a future recovery into the -1/no-recovery sentinel range.
     for (const [id, json] of saved.inactive) {
@@ -208,5 +221,5 @@ export class ChunkResidency {
     this.sleepOutside(); this.wakeInside();
   }
   stats() { return { resident: this.loaded.size, queued: [...this.loaded].reduce((n, id) => n + (this.inactiveCounts.get(id) ?? 0), 0), unloaded: this.chunks.length - this.loaded.size, inactive: this.inactive.size, colliders: this.colliders.filter(c => c.handle !== undefined).length, navCells: this.world.infected?.nav.blocked.length ?? 0 }; }
-  dispose(): void { for (const c of this.colliders) if (c.handle !== undefined) this.world.physics.removeBlocker(c.handle); this.loaded.clear(); this.inactive.clear(); this.inactiveCounts.clear(); this.waiting.clear(); }
+  dispose(): void { for (const c of this.colliders) if (c.handle !== undefined) this.world.physics.removeBlocker(c.handle); this.loaded.clear(); this.inactive.clear(); this.cureChecked.clear(); this.inactiveCounts.clear(); this.waiting.clear(); }
 }

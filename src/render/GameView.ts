@@ -748,6 +748,7 @@ export class GameView implements Lifecycle {
       const cureCollected = this.world.missions?.state?.id === 'L10' && this.world.missions.state.items.includes('cure-canister');
       this.character.showCure(!!cureCollected && !!this.world.missions?.state?.states['cure-carried'] && !this.world.missions?.state?.states['cure-installed']);
       this.districts?.setCureCollected(!!cureCollected);
+      if (this.world.missions?.state.id === 'L10') this.districts?.setDispersalActive(!!this.world.missions.state.states['cure-released']);
       if (this.character.skinActive) this.character.glanceAt(this.threat(current));
       // Riding: the pelvis sits on the saddle, measured from the bike's `seat` node every frame (any heading, lean or turn).
       if (this.character.skinActive) this.character.applyRideContacts(riding !== undefined ? this.bicycle?.riderContacts() : undefined);

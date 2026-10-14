@@ -1,3 +1,4 @@
+import { CureFront } from './CureFront';
 import { finale } from '../../data/l10Finale';
 import type { Mission } from './Mission';
 
@@ -6,9 +7,11 @@ export const cureChargeRadius = finale.holdRadius;
 /** The existing mission flags/counter are the entire serialized device predicate.
  * Called in the mission phase, so pause/focus cannot advance a second clock. */
 export class LevelTenFinale {
-  constructor(private readonly mission: Mission) {}
+  readonly cure: CureFront;
+  constructor(private readonly mission: Mission) { this.cure = new CureFront(mission); }
   update(): void {
     const { world, state, def } = this.mission;
+    if (state.states['cure-released']) { this.cure.update(); return; }
     const player = world.entities.get(1)!, console = def.anchors['cure-console'];
     const pressed = world.inputFrame.interact && !state.states['console-held'];
     state.states['console-held'] = world.inputFrame.interact;
@@ -30,6 +33,7 @@ export class LevelTenFinale {
     if (state.steps.release.status === 'active' && pressed && distance <= console.radius && state.states['charge-active']
       && state.counters['charge-ticks'] === cureChargeTicks && state.states['mega-dead']) {
       state.states['cure-released'] = true;
+      this.cure.release();
       world.events.emit({ type: 'mission.signal', tick: world.tick, name: 'cure-released' });
     }
   }

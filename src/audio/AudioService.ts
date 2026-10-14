@@ -568,6 +568,7 @@ export class AudioService implements Lifecycle {
     }
     /** Event → cue adapter. Real producer events and lab tests go through this identical path. */
     event(event: GameEvent): void {
+        if ((event.type === 'combat.hit' || event.type === 'combat.kill') && event.actionId === 'cure') return;
         if (event.type === 'weather.lightning') return; // Thunder follows the sim distance delay.
         if (!this.available())
             return;
@@ -911,6 +912,9 @@ export class AudioService implements Lifecycle {
         if (!player)
             return;
         const t = this.context.currentTime;
+        const front = this.world.missions?.state.cureFront;
+        if (front) this.loop('cure:ventilation', 'generator.idle', { position: { ...front.fronts[0], y: 2 }, gain: .55, lowpass: 1800 });
+        else this.stopLoop('cure:ventilation');
         const weather = this.world.weather;
         if (weather) {
             this.graph.setWeather(weather.kind);
