@@ -20,8 +20,8 @@ test('T-E31-16b @E31 @E31-AC16 every D-CURE Scene Lab scene is lit by the L10 ni
 
 test('T-E31-16c @E31 @E31-AC16 the navigation contrast catalog covers R1-R6 and the L9 road with the 3:1 gates', () => {
   const night = specs.filter(s => s.f.startsWith('night-read-'));
-  expect(night.map(s => s.spec.name).sort()).toEqual(['night-read-l10-r1', 'night-read-l10-r2', 'night-read-l10-r3', 'night-read-l10-r4', 'night-read-l10-r5', 'night-read-l10-r6', 'night-read-l9-crawl', 'night-read-l9-road']);
-  for (const { spec } of night) { expect(spec.expect.navContrastMin).toBe(3); expect(spec.expect.playerContrastMin).toBe(3); expect(spec.contrast.district).toBeTruthy(); }
+  expect(night.map(s => s.spec.name).sort()).toEqual(['night-read-l10-r1', 'night-read-l10-r2', 'night-read-l10-r3', 'night-read-l10-r4', 'night-read-l10-r5', 'night-read-l10-r6', 'night-read-l9-apc', 'night-read-l9-crawl', 'night-read-l9-road']);
+  for (const { spec } of night) { expect(spec.expect.navContrastMin).toBe(3); expect(spec.expect.navContrastFloor).toBe(2.5); if (spec.name !== 'night-read-l9-apc') expect(spec.expect.playerContrastMin).toBe(3); expect(spec.contrast.district).toBeTruthy(); }
 });
 
 test('T-E31-16d @E31 @E31-AC16 route sampling follows the authored routes and respects the scene bounds', () => {

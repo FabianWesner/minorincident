@@ -84,6 +84,8 @@ export class Lighting {
   /** Night route read (preset `roadLift`): moon-pale sheen added to asphalt, independent of the moon's shadow term. */
   readonly roadLift = uniform(0);
   readonly roadLiftColor = uniform(new Color('#a9b6d6'));
+  /** Centre of the road lift: the camera focus (the survivor on foot, the vehicle when driving). */
+  readonly roadFocus = uniform(new Vector3());
   /** Weight of the sun/moon shadow map on light-field pools (hero shadows at night). */
   readonly fieldShadow = uniform(0);
   /** The preset shadow colour at full brightness: the hue light-field pools keep inside hero shadows. */
@@ -115,7 +117,7 @@ export class Lighting {
     this.fallbackEnvironment.needsUpdate = true;
     if (renderer) this.environment = sharedEnvironment ?? new Environment(renderer);
     // These values describe the entire view; they are identical for every world draw.
-    for (const node of [this.direction, this.color, this.intensity, this.worldPaletteEnabled, this.shadow, this.skyAmbient, this.groundAmbient, this.fogColor, this.fogColorA, this.fogCenter, this.fogNear, this.fogFar, this.hero, this.rim, this.rimColor, this.roadLift, this.roadLiftColor, this.heroFill, this.heroFillColor, this.fieldShadow, this.shadowHue]) node.setGroup(renderGroup);
+    for (const node of [this.direction, this.color, this.intensity, this.worldPaletteEnabled, this.shadow, this.skyAmbient, this.groundAmbient, this.fogColor, this.fogColorA, this.fogCenter, this.fogNear, this.fogFar, this.hero, this.rim, this.rimColor, this.roadLift, this.roadLiftColor, this.roadFocus, this.heroFill, this.heroFillColor, this.fieldShadow, this.shadowHue]) node.setGroup(renderGroup);
     this.bounce = look.nodes.bounce;
     this.coreShadowEdgeHigh = look.nodes.coreLightEdge; this.coreShadowEdgeLow = look.nodes.coreShadowEdge;
     this.fogRadialStart = look.nodes.fogRatioA; this.fogRadialEnd = look.nodes.fogRatioB;
@@ -177,6 +179,7 @@ export class Lighting {
     this.sun.shadow.needsUpdate = true; this.setWeatherMode(this.weatherFeatures);
   }
   update(view: View): void {
+    this.roadFocus.value.copy(view.focus);
     // Portrait framing pulls the camera back to retain the playable circle.
     // Fog must follow that offset so it still starts beyond the nearby action.
     const preset = timeOfDay[this.preset], p = { fogNear: (this.look.has('fogNear') || this.preset === 'L1') ? this.look.values.fogNear : preset.fogNear, fogFar: (this.look.has('fogFar') || this.preset === 'L1') ? this.look.values.fogFar : preset.fogFar };
