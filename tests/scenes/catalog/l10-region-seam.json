@@ -1,1 +1,97 @@
-{"extends": "../l10-district/l10-region-seam.json"}
+{
+  "name": "l10-region-seam",
+  "note": "L10-D1 production route: normal movement crosses the R1/R2 waypoint at x=747 and the shared 100 m terrain-cell seam at x=800. Game camera; no teleports or visual-load shortcuts. Reverses across x=800 without resetting the scene; residency/collision persistence stays in the existing L9-S4 sim tests.",
+  "seed": 32,
+  "ground": "district",
+  "time": "L10-night",
+  "dof": false,
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        700,
+        -20
+      ],
+      [
+        825,
+        70
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        737,
+        25
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "frames": 1800,
+  "sheet": 300,
+  "clipping": {
+    "ignoreFoliage": true
+  },
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "lodPlaceholderFramesMax": 0,
+    "actorHealth": {
+      "courier": [
+        100,
+        100
+      ]
+    },
+    "actorTravel": {
+      "courier": [
+        110,
+        125
+      ]
+    },
+    "actorMaxX": {
+      "courier": [
+        810,
+        818
+      ]
+    }
+  },
+  "script": [
+    {
+      "frame": 0,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            817,
+            25
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 1250,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            780,
+            25
+          ]
+        ]
+      }
+    }
+  ]
+}

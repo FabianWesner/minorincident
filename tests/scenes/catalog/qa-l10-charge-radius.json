@@ -1,0 +1,100 @@
+{
+  "seed": 32,
+  "ground": "asphalt",
+  "time": "L4",
+  "size": 100,
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        25,
+        0
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "hud": true,
+  "cureProgression": {
+    "checkpoint": "cure-disperse-ready",
+    "anchors": {
+      "cure-console": [
+        0,
+        0
+      ],
+      "cure-disperse-ready": [
+        0,
+        0
+      ]
+    },
+    "authored": true,
+    "chargeActive": true
+  },
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "lodPlaceholderFramesMax": 0,
+    "cure": {
+      "boundaryFrames": [
+        180,
+        200
+      ],
+      "outsideFrames": [
+        350,
+        500
+      ],
+      "outsideAdvance": [
+        0,
+        0
+      ],
+      "chargeTicks": [
+        800,
+        950
+      ],
+      "releaseCount": [
+        0,
+        0
+      ],
+      "insideMisses": [
+        0,
+        0
+      ]
+    }
+  },
+  "name": "qa-l10-charge-radius",
+  "note": "Restore the active hold with the courier exactly 25 m from the console for 180 ticks, then run outside to 30 m and return. The production predicate must advance at the exact boundary, pause outside and retain/resume progress. Explicit installation/activation remains covered by l10-cure-install-defend. Fixed 60 Hz probes accompany the game-camera sheet.",
+  "frames": 1300,
+  "sheet": 160,
+  "script": [
+    {
+      "frame": 180,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            30,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 600,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            0,
+            0
+          ]
+        ]
+      }
+    }
+  ]
+}
