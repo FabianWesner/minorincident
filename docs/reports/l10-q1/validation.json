@@ -1,0 +1,31 @@
+{
+  "build": "pass",
+  "typecheck": "pass",
+  "lint": "pass",
+  "diffCheck": "pass",
+  "focused": {
+    "files": 2,
+    "passed": 18,
+    "failed": 0
+  },
+  "fullSweep": {
+    "files": 386,
+    "passed": 2639,
+    "failed": 5,
+    "skipped": 9,
+    "seconds": 3271.13,
+    "workers": 4
+  },
+  "isolatedRerun": {
+    "passed": 5,
+    "failed": 0,
+    "skipped": 42,
+    "seconds": 189.74,
+    "workers": 1,
+    "runnerSlotsReserved": 2,
+    "thresholdsChanged": false
+  },
+  "browser": "unmeasured: shared slot queue exceeded 30 minutes",
+  "nativeE18": "unmeasured",
+  "verifyE32": "incomplete: stopped before locked build"
+}

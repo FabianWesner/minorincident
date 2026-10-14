@@ -1,0 +1,13 @@
+{
+  "extends": "../l10-mega-moves/l10-mega-grab.json",
+  "name": "l10-q1-mega-grab",
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "actorHitsMax": 0,
+    "specialActiveMin": 1,
+    "specialActiveMove": "alpha.grab-throw"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "extends": "l10-q1-audio-ring-20.json",
+  "name": "l10-q1-audio-ring-dead",
+  "note": "E32-AC14: the real persistent Mega dies at frame 0; the player-centered ring and band text must be hidden after confirmed death.",
+  "script": [
+    {
+      "frame": 0,
+      "actor": "mega",
+      "do": {
+        "corpse": true
+      }
+    }
+  ]
+}
