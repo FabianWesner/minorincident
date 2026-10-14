@@ -129,3 +129,39 @@ test('T-E31-09-scope @E31-AC09 other vehicles keep the ordinary zero rules', asy
     expect(s.car.entity.vehicle!.explodeAt).not.toBeNull();
   } finally { s.w.dispose(); }
 });
+
+test('T-E31-09-controls @E31-AC09 zero APC still brakes, reverses and steers with its original driver', async () => {
+  const s = await fixture();
+  try {
+    s.v.damage(s.id, 1000);
+    // Keep the drive/brake/reverse cycle on the 100 m arena ground.
+    throttle(s.w, 1); step(s.w, 240);
+    expect(s.car.physics.speed).toBeGreaterThan(5);
+    s.w.applyInput({ ...emptyInput(), brake: true, drive: { throttle: 0, steer: 0 } }, 'keyboard'); step(s.w, 180);
+    expect(s.car.physics.speed).toBeLessThan(.5);
+    const stoppedX = s.car.entity.transform.x;
+    throttle(s.w, -1); step(s.w, 360);
+    expect(s.car.entity.transform.x).toBeLessThan(stoppedX - 5);
+    expect(s.car.physics.forwardSpeed).toBeLessThan(-1);
+    s.w.applyInput({ ...emptyInput(), drive: { throttle: -1, steer: .5 } }, 'keyboard'); step(s.w, 120);
+    expect(Math.abs(s.car.entity.transform.yaw)).toBeGreaterThan(.1);
+    expect(s.v.active).toBe(s.id); expect(s.car.entity.vehicle!.driver).toBe(1);
+    expect(s.car.entity.health.current).toBe(0);
+    expect(s.w.events.events().filter(e => ['vehicle.exited', 'vehicle.exploded', 'vehicle.burning'].includes(e.type))).toHaveLength(0);
+  } finally { s.w.dispose(); }
+});
+
+for (const hp of [500, 0]) test(`T-E31-08-no-repair-${hp} @E31-AC08 medkit healing and elapsed time never repair ${hp}-HP APC durability`, async () => {
+  const s = await fixture();
+  try {
+    s.v.damage(s.id, 1000 - hp);
+    const player = s.w.entities.get(1)!; player.health.current = 1;
+    const item = s.w.pickups!.spawn('medkit', player.transform);
+    step(s.w, 1);
+    expect(player.health.current).toBeGreaterThan(1);
+    expect(s.w.entities.get(item)!.pickup).toMatchObject({ collected: true });
+    step(s.w, 600);
+    expect(s.car.entity.health.current).toBe(hp);
+    expect(s.v.active).toBe(s.id);
+  } finally { s.w.dispose(); }
+});

@@ -1,4 +1,5 @@
 // Adapted from Bruno Simon folio-2025 Objects.js (MIT): sleeping dynamic bodies, sync only while awake, reset when fallen.
+import { clearOfL2Script } from '../../levels/continuity';
 import { overlapsRoad } from '../../levels/districts/validate';
 import * as RAPIER from '@dimforge/rapier3d-compat';
 import { pushableProps } from '../../data/pushableProps';
@@ -54,6 +55,8 @@ export class PropSystem {
         const box = { min: [...placement.visualAabb.min] as [number, number, number], max: [...placement.visualAabb.max] as [number, number, number] };
         for (const k of ['min', 'max'] as const) { box[k][0] += dx; box[k][2] += dz; }
         if (overlapsRoad(d.layout, box)) poses.delete(id);
+        // Keep the existing road reset; crews also clear old belongings from the other rescue set pieces.
+        else if (!clearOfL2Script({ x: savedPose.p[0], z: savedPose.p[2] })) continue;
       }
       this.spawn(placement, d.origin, poses.get(id), id);
     }

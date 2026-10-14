@@ -1,10 +1,13 @@
-import { readFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { expect, test } from 'vitest';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import { compositions } from '../../src/levels/compositions';
 import { resolveCampaignMission } from '../../src/levels/missions';
 import { crossing, crossingChunks } from '../../src/levels/L9/district';
 import { l9Encounters, l9Groups } from '../../src/data/l9';
+import { preset } from '../../src/sim/progression/Campaign';
+import { applyCampaign } from '../../src/sim/progression/apply';
+import { completeCampaignLevel } from '../../src/sim/progression/carryover';
 import { LevelNineBot } from '../../src/debug/bot/LevelNineBot';
 import type { DistrictLayout, Point } from '../../src/levels/districts/types';
 
@@ -12,8 +15,11 @@ const layout = JSON.parse(readFileSync('public/assets/layouts/D-CROSSING.layout.
 async function load(tier: 'high' | 'low' = 'high') {
   const w = new SimWorld(); await w.init(); w.loadComposition(compositions.L9, [layout], 31);
   w.chunks!.setQuality(tier);
+  const save = preset('L8-default'); save.completedLevels = 8; save.unlockedLevel = 9;
+  applyCampaign(w, save);
+  w.events.on('level.completed', e => { if (e.type === 'level.completed') completeCampaignLevel(save, 9, e.result, w); });
   const m = w.loadMission(resolveCampaignMission('L9', w.districts!)); m.begin();
-  return { w, m };
+  return { w, m, save };
 }
 function distanceToPath(p: Point, path: readonly Point[]): number {
   let best = Infinity;
@@ -80,13 +86,14 @@ test('T-E31-12-groups @E31-AC12 @E31-AC13 groups spawn once on first residency, 
 interface RunResult { hp: number; min: number; contacts: number; zeroAt: number | null; zeroTick: number; speedAtZero: number; phases: string[]; ticks: number; maxCount: number; maxResident: number; exploded: number }
 /** One-seed bot drive of a whole route (or its detour) through the forced crash. `zeroAt` is a fixture: the share of the route after which the APC is set to 0 durability. */
 async function drive(route: string, opts: { detour?: boolean; zeroAt?: number; tier?: 'high' | 'low' } = {}): Promise<RunResult> {
-  const { w, m } = await load(opts.tier);
+  const { w, m, save } = await load(opts.tier);
   try {
     const l9 = m.l9!, bot = new LevelNineBot(w, route, opts.detour);
     const car = () => w.vehicles!.cars.get(l9.state.carId)!;
     const r: RunResult = { hp: 1000, min: 1000, contacts: 0, zeroAt: null, zeroTick: 0, speedAtZero: 0, phases: [], ticks: 0, maxCount: 0, maxResident: 0, exploded: 0 };
     w.events.on('vehicle.durability-hit', e => { if (e.type === 'vehicle.durability-hit' && e.source === 'contact') r.contacts++; });
     w.events.on('vehicle.exploded', () => r.exploded++);
+    let previousHp = 1000;
     for (; r.ticks < 60 * 260 && !l9.state.finished; r.ticks++) {
       w.applyInput(bot.sample(), 'keyboard');
       if (opts.zeroAt !== undefined && r.zeroAt === null && l9.state.phase === 'driving' && bot.progress() >= opts.zeroAt) {
@@ -96,20 +103,31 @@ async function drive(route: string, opts: { detour?: boolean; zeroAt?: number; t
       if (!r.phases.length || r.phases.at(-1) !== l9.state.phase) r.phases.push(l9.state.phase);
       // The cap damps overspeed within a few seconds; measure what the car sustains afterwards.
       if (r.zeroAt !== null && l9.state.phase === 'driving' && r.ticks > r.zeroTick + 420) r.speedAtZero = Math.max(r.speedAtZero, car().physics.speed);
-      r.min = Math.min(r.min, w.entities.get(l9.state.carId)!.health.current);
+      const hp = w.entities.get(l9.state.carId)!.health.current;
+      expect(hp, `${route} durability increased at tick ${r.ticks}`).toBeLessThanOrEqual(previousHp);
+      previousHp = hp; r.min = Math.min(r.min, hp);
       r.maxCount = Math.max(r.maxCount, w.infected!.director.count);
       if (r.ticks % 60 === 0) r.maxResident = Math.max(r.maxResident, w.chunks!.stats().resident);
     }
     r.hp = l9.state.preCrashDurability;
     expect(l9.state.finished, `${route} finished at ${car().entity.transform.x},${car().entity.transform.z} phases ${r.phases}`).toBe(true);
     expect(w.entities.get(1)!.health.current).toBeGreaterThanOrEqual(1);
+    expect(save.completedLevels).toBe(9); expect(save.unlockedLevel).toBe(10);
+    expect(save.crossingHandover?.preCrashDurability).toBe(r.hp);
+    expect(save.transport).toBeUndefined(); expect(save.pending).toBeUndefined();
+    expect(save.racks).toEqual({ LEFT: ['weapon.fire-axe'], RIGHT: ['weapon.fire-axe'] });
+    expect(save.ownedActions.filter(id => id.startsWith('weapon.'))).toEqual(['weapon.fire-axe']);
+    for (const side of ['LEFT', 'RIGHT'] as const) expect(w.entities.get(1)!.weapons![side].rack.map(s => s.id)).toEqual(['weapon.fire-axe']);
+    const fixture = opts.detour ? 'safe' : opts.zeroAt === undefined ? 'risk' : opts.zeroAt < .5 ? 'early-zero' : 'late-zero';
+    const out = 'test-results/epics/E31/q2-routes'; mkdirSync(out, { recursive: true });
+    writeFileSync(`${out}/${route}-${fixture}-${opts.tier ?? 'high'}.json`, JSON.stringify({ seed: 31, route, ...r, racks: save.racks, ownedActions: save.ownedActions, handoverApplied: save.crossingHandover?.applied }, null, 2) + '\n');
     return r;
   } finally { w.dispose(); }
 }
 const route = (id: string) => crossing.routes.find(r => r.id === id)!;
 const crash = ['driving', 'approach', 'fall', 'impact', 'crawl', 'done'];
 
-for (const r of crossing.routes) test(`T-E31-11-${r.id} @E31-AC11 preserved-HP detour keeps full durability and reaches the forced crash`, async () => {
+for (const r of crossing.routes) test(`T-E31-11-${r.id} @E31-AC01 @E31-AC10 @E31-AC11 @E31-AC15 preserved-HP detour keeps full durability and reaches the forced crash`, async () => {
   const run = await drive(r.id, { detour: true });
   expect(run.hp).toBe(1000); expect(run.contacts).toBe(0); expect(run.exploded).toBe(1); expect(run.phases).toEqual(crash);
   expect(run.maxCount).toBeLessThanOrEqual(200); expect(run.maxResident).toBeLessThanOrEqual(25);
@@ -122,9 +140,11 @@ for (const r of crossing.routes) test(`T-E31-11-risk-${r.id} @E31-AC11 driving t
 }, 300_000);
 
 for (const [name, at] of [['early', l9Encounters.fixtures.earlyZero], ['late', l9Encounters.fixtures.lateZero]] as const) {
-  for (const r of crossing.routes) test(`T-E31-11-${name}-zero-${r.id} @E31-AC09 @E31-AC11 ${name} zero (${at * 100}% progress) keeps driving at 60% speed and reaches the same crash`, async () => {
+  for (const r of crossing.routes) test(`T-E31-11-${name}-zero-${r.id} @E31-AC09 @E31-AC10 @E31-AC11 @E31-AC15 ${name} zero (${at * 100}% progress) keeps driving at 60% speed and reaches the same crash`, async () => {
     const run = await drive(r.id, { zeroAt: at });
     expect(run.zeroAt).not.toBeNull(); expect(run.zeroAt!).toBeGreaterThanOrEqual(at);
+    if (name === 'early') expect(run.zeroAt!).toBeLessThanOrEqual(.2);
+    else expect(run.zeroAt!).toBeGreaterThanOrEqual(.8);
     expect(run.min).toBe(0); expect(run.hp).toBe(0); expect(run.exploded).toBe(1); expect(run.phases).toEqual(crash);
     // Zero HP is capped at 60% of the healthy 18 m/s road cap (+2%), and the APC keeps moving until the crash.
     expect(run.speedAtZero).toBeGreaterThan(3); expect(run.speedAtZero).toBeLessThanOrEqual(18 * .6 * 1.02 + .3);
