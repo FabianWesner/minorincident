@@ -22,7 +22,10 @@ for (const phase of ['plaza', 'war', 'respawn']) test(`@E22 L4 ${phase} permits 
     w.player!.damage(1000, w.tick, true); step(w, 180);
     expect(w.entities.get(1)!.health.current).toBeGreaterThan(0); expect(m.state.checkpoint).toBe('turn');
   }
-  const center = { x: -17.5, z: 4 }, d = 6 / Math.SQRT2;
+  // Centre shifted 0.7 m west of the original (-17.5, 4): the parked convoy's nav margin (l4-bus-clear: hull + .85 m) now covers the
+  // old east goal tile (-13.26, -0.24). The test still walks the same 6 m diagonals in all four directions from one start; only the
+  // start moved so that every goal tile is genuinely open ground.
+  const center = { x: -18.2, z: 4 }, d = 6 / Math.SQRT2;
   for (const [dx, dz] of [[-d, d], [d, -d], [-d, -d], [d, d]]) for (const scheme of ['mouse-only', 'keyboard', 'touch'] as const) {
     const target = { x: center.x + dx, z: center.z + dz };
     expect(w.infected!.nav.clear(target.x, target.z, survivor.radius)).toBe(true);
