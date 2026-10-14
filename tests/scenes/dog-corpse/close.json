@@ -1,0 +1,117 @@
+{
+ "name": "qa-dog-corpse-close",
+ "note": "Dead/knocked-down dogs next to an alive dog and a downed infected: must read as a dog lying down (head, legs, ears attached).",
+ "seed": 22,
+ "ground": "asphalt",
+ "time": "L4",
+ "size": 60,
+ "dof": false,
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -3,
+    2.5
+   ],
+   "state": "idle"
+  },
+  {
+   "id": "dog-alive",
+   "kind": "infected",
+   "archetype": "infected.dog",
+   "at": [
+    -1.8,
+    0.8
+   ],
+   "state": "idle"
+  },
+  {
+   "id": "dog-corpse",
+   "kind": "infected",
+   "archetype": "infected.dog",
+   "at": [
+    0,
+    0.8
+   ],
+   "state": "idle"
+  },
+  {
+   "id": "dog-shot",
+   "kind": "infected",
+   "archetype": "infected.dog",
+   "at": [
+    1.8,
+    0.8
+   ],
+   "state": "idle"
+  },
+  {
+   "id": "woman",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "at": [
+    0.2,
+    -0.6
+   ],
+   "state": "idle"
+  },
+  {
+   "id": "pet",
+   "kind": "animal",
+   "pet": "dog",
+   "at": [
+    -1.8,
+    -0.8
+   ],
+   "state": "idle"
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   0,
+   0.2,
+   0.8
+  ],
+  "zoom": 0.5
+ },
+ "frames": 82,
+ "shots": [
+  80
+ ],
+ "sheet": 30,
+ "script": [
+  {
+   "frame": 5,
+   "actor": "dog-corpse",
+   "do": {
+    "corpse": true
+   }
+  },
+  {
+   "frame": 5,
+   "actor": "woman",
+   "do": {
+    "corpse": true
+   }
+  },
+  {
+   "frame": 10,
+   "actor": "dog-shot",
+   "do": {
+    "hit": {
+     "from": [
+      4,
+      0.8
+     ],
+     "heavy": true,
+     "amount": 1
+    }
+   }
+  }
+ ],
+ "expect": {
+  "consoleErrors": 0
+ }
+}
