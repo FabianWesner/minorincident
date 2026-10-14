@@ -7,6 +7,8 @@ export interface TimeOfDayPreset {
   practical?: number;
   /** E25 night readability: survivor/infected rim strength and the player's light-field aura (§6 2). */
   rim?: number; aura?: number;
+  /** Night route read (E31-AC16): moon-pale sheen added to asphalt (0 = none). */
+  roadLift?: number;
 }
 const golden: TimeOfDayPreset = { sun: '#ffdb9a', intensity: 1.15, polar: 1.15, azimuth: -1.0, shadow: '#66548d', sky: '#eeb888', fog: '#e5b39e', fogNear: 55, fogFar: 140, practical: .25 };
 const presets = {
@@ -21,8 +23,10 @@ const presets = {
   L5: { sun: '#ff7a38', intensity: 0.85, polar: 1.48, azimuth: -1.4, shadow: '#87465f', sky: '#7a4a8a', fog: '#c4443a', fogNear: 28, fogFar: 95, practical: .8, rim: .25, aura: .25 },
   "L6-subway": { sun: "#9fb4ff", intensity: 0, polar: 1.55, azimuth: 2.2, shadow: "#39365f", sky: "#111b29", fog: "#293141", fogNear: 30, fogFar: 85, practical: 1, rim: .25, aura: 1.3 },
   L6: { sun: '#9fb4ff', intensity: 0.38, polar: 1.55, azimuth: 2.2, shadow: '#39365f', sky: '#202c4b', fog: '#344161', fogNear: 45, fogFar: 120, practical: 1, rim: .4, aura: .45 },
-  /** Open crossing: retain the journey's moonlight, with air clear enough for 150 m sight lines. */
-  'L9-crossing': { sun: '#9fb4ff', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#39365f', sky: '#202c4b', fog: '#344161', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45 },
+  /** Open crossing: retain the journey's moonlight, with air clear enough for 150 m sight lines. `roadLift`: E31-AC16 night route read (the asphalt road is a pale moonlit band, 3:1 against the verge). */
+  'L9-crossing': { sun: '#9fb4ff', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#39365f', sky: '#202c4b', fog: '#344161', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, roadLift: 2.3 },
+  /** L10 night run (E32): the L9 moonlight with a darker shadow tint (dark verges), a brighter horizon haze for building silhouettes and the asphalt `roadLift`, so R1-R6 read at 3:1 (E31-AC16) while the night stays night. */
+  'L10-night': { sun: '#9fb4ff', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#2b2949', sky: '#2a3a63', fog: '#3d4c75', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, roadLift: 2.3 },
   /** E30 intact zoo at night: cool moonlight, powered warm practicals; no mandatory blackout. */
   "L8-zoo": { sun: '#9fb4ff', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#39365f', sky: '#202c4b', fog: '#344161', fogNear: 45, fogFar: 120, practical: 1, rim: .4, aura: .45 },
   /** Night segments without fires (L4 blackout blocks, scripted night beats): moonlight only, practicals carry the scene. */
