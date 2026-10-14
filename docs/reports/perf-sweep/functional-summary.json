@@ -1,0 +1,78 @@
+{
+  "stats": {
+    "startTime": "2026-10-14T01:06:47.973Z",
+    "duration": 1648520.076,
+    "expected": 25,
+    "skipped": 0,
+    "unexpected": 11,
+    "flaky": 0
+  },
+  "failures": [
+    {
+      "file": "e2e/controls-playtest.spec.ts",
+      "title": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+      "status": "timedOut",
+      "message": "\u001b[31mTest timeout of 180000ms exceeded.\u001b[39m"
+    },
+    {
+      "file": "e2e/crowd-close-lod.spec.ts",
+      "title": "P1 crowd-close-lod webgpu high @E18 civilian looks at game camera and close-up use the near detail tier",
+      "status": "failed",
+      "message": "Error: page.evaluate: RangeError: Failed to execute 'createBuffer' on 'GPUDevice': createBuffer failed, size (48) is too large for the implementation when mappedAtCreation == true\n    at jk.createAttribute (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:576:1545)\n    at iB.createAttribute (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:579:35882)\n    at xN.update (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:33:83234)\n    at _N.updateAttribute (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:33:85965)\n    at _N.updateAttributes (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:33:85443)\n    at _N.updateForRender (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:33:84650)\n    at zi.compileAsync (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:41:48387)\n    at async i0.load (http://127.0.0.1:3483/build/index-E0XV2XEI.js:9:578266)\n    at async http://127.0.0.1:3483/build/index-E0XV2XEI.js:12:41277"
+    },
+    {
+      "file": "e2e/crowd-close-lod.spec.ts",
+      "title": "P1 crowd-close-lod webgpu low @E18 civilian looks at game camera and close-up use the near detail tier",
+      "status": "failed",
+      "message": "Error: Uncaught errors, console errors and failed requests\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"pageerror: Instance dropped in popErrorScope\",\u001b[39m\n\u001b[31m+ ]\u001b[39m"
+    },
+    {
+      "file": "e2e/crowd-drawn.spec.ts",
+      "title": "T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props",
+      "status": "failed",
+      "message": "Error: page.evaluate: RangeError: Failed to execute 'createBuffer' on 'GPUDevice': createBuffer failed, size (48) is too large for the implementation when mappedAtCreation == true\n    at jk.createAttribute (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:576:1545)\n    at iB.createAttribute (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:579:35882)\n    at xN.update (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:33:83234)\n    at _N.updateAttribute (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:33:85965)\n    at _N.updateAttributes (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:33:85443)\n    at _N.updateForRender (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:33:84650)\n    at zi.compileAsync (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:41:48387)\n    at async i0.load (http://127.0.0.1:3483/build/index-E0XV2XEI.js:9:578266)\n    at async http://127.0.0.1:3483/build/index-E0XV2XEI.js:12:41277"
+    },
+    {
+      "file": "e2e/crowd-variety.spec.ts",
+      "title": "crowd variety and vertex layout on webgpu @E07 @E08 @E18-AC01",
+      "status": "failed",
+      "message": "Error: Uncaught errors, console errors and failed requests\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"pageerror: Instance dropped in popErrorScope\",\u001b[39m\n\u001b[31m+ ]\u001b[39m"
+    },
+    {
+      "file": "e2e/e18-quality.spec.ts",
+      "title": "T-E18-04-browser @E18-AC04 auto drops high to low within 6s and only upgrades at level start",
+      "status": "failed",
+      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"low\"\u001b[39m\nReceived: \u001b[31m\"high\"\u001b[39m\n\nCall Log:\n- Timeout 6000ms exceeded while waiting on the predicate"
+    },
+    {
+      "file": "e2e/webgpu-canvas.spec.ts",
+      "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU high mega health bars preserve the game frame at both zoom limits",
+      "status": "failed",
+      "message": "Error: page.evaluate: RangeError: Failed to execute 'createBuffer' on 'GPUDevice': createBuffer failed, size (48) is too large for the implementation when mappedAtCreation == true\n    at jk.createAttribute (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:576:1545)\n    at iB.createAttribute (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:579:35882)\n    at xN.update (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:33:83234)\n    at _N.updateAttribute (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:33:85965)\n    at _N.updateAttributes (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:33:85443)\n    at _N.updateForRender (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:33:84650)\n    at zi.compileAsync (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:41:48387)\n    at async i0.load (http://127.0.0.1:3483/build/index-E0XV2XEI.js:9:578266)\n    at async http://127.0.0.1:3483/build/index-E0XV2XEI.js:12:41277"
+    },
+    {
+      "file": "e2e/webgpu-canvas.spec.ts",
+      "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU high L1 L4 L8 game cameras render at both zoom limits",
+      "status": "failed",
+      "message": "Error: page.evaluate: RangeError: Failed to execute 'createBuffer' on 'GPUDevice': createBuffer failed, size (48) is too large for the implementation when mappedAtCreation == true\n    at jk.createAttribute (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:576:1545)\n    at iB.createAttribute (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:579:35882)\n    at xN.update (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:33:83234)\n    at _N.updateAttribute (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:33:85965)\n    at _N.updateAttributes (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:33:85443)\n    at _N.updateForRender (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:33:84650)\n    at zi.compileAsync (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:41:48387)\n    at async i0.load (http://127.0.0.1:3483/build/index-E0XV2XEI.js:9:578266)\n    at async http://127.0.0.1:3483/build/index-E0XV2XEI.js:12:41277"
+    },
+    {
+      "file": "e2e/webgpu-canvas.spec.ts",
+      "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU low mega health bars preserve the game frame at both zoom limits",
+      "status": "failed",
+      "message": "Error: page.evaluate: RangeError: Failed to execute 'createBuffer' on 'GPUDevice': createBuffer failed, size (48) is too large for the implementation when mappedAtCreation == true\n    at jk.createAttribute (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:576:1545)\n    at iB.createAttribute (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:579:35882)\n    at xN.update (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:33:83234)\n    at _N.updateAttribute (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:33:85965)\n    at _N.updateAttributes (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:33:85443)\n    at _N.updateForRender (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:33:84650)\n    at zi.compileAsync (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:41:48387)\n    at async i0.load (http://127.0.0.1:3483/build/index-E0XV2XEI.js:9:578266)\n    at async http://127.0.0.1:3483/build/index-E0XV2XEI.js:12:41277"
+    },
+    {
+      "file": "e2e/webgpu-canvas.spec.ts",
+      "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU low L1 L4 L8 game cameras render at both zoom limits",
+      "status": "failed",
+      "message": "Error: page.evaluate: RangeError: Failed to execute 'createBuffer' on 'GPUDevice': createBuffer failed, size (48) is too large for the implementation when mappedAtCreation == true\n    at jk.createAttribute (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:576:1545)\n    at iB.createAttribute (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:579:35882)\n    at xN.update (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:33:83234)\n    at _N.updateAttribute (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:33:85965)\n    at _N.updateAttributes (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:33:85443)\n    at _N.updateForRender (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:33:84650)\n    at zi.compileAsync (http://127.0.0.1:3483/build/WeatherView-hXlfoabU.js:41:48387)\n    at async i0.load (http://127.0.0.1:3483/build/index-E0XV2XEI.js:9:578266)\n    at async http://127.0.0.1:3483/build/index-E0XV2XEI.js:12:41277"
+    },
+    {
+      "file": "e2e/webgpu-level-transitions.spec.ts",
+      "title": "T-E02-webgpu-level-transitions @smoke @E02 title, L1, L2 and L3 in one WebGPU renderer log no GPU validation errors",
+      "status": "failed",
+      "message": "Error: Uncaught errors, console errors and failed requests\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 3\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"pageerror: Instance dropped in popErrorScope\",\u001b[39m\n\u001b[31m+ ]\u001b[39m"
+    }
+  ]
+}
