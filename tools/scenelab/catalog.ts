@@ -5,7 +5,7 @@ import { runSpec } from './run';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 import { zoomLimits } from '../../src/render/View';
 
-/** npm run scene:catalog [-- --filter <glob>] [--dir <scene directory>] [--jobs 2] [--backend webgl2|webgpu] [--tier high|low] [--matrix] [--size 960x540] [--out dir] [--list]
+/** npm run scene:catalog [-- --filter <glob>] [--dir <scene directory>] [--jobs 2] [--backend webgl2|webgpu] [--tier high|low] [--matrix] [--throttle 4] [--query key=value] [--size 960x540] [--out dir] [--list]
  * Runs the ready-made QA scenes in specs/scenes/catalog/ and tests/scenes/catalog/ (own specs, or `extends` of specs/scenes/*.json) headless with
  * at most `jobs` browsers (default 2, under tools/e2e-lock.sh), and writes <out>/index.md: one row per scene with the
  * gate results and the contact sheet (<out>/<scene>/sheet.jpg). The filter is a glob on the scene name, comma separated
@@ -15,6 +15,8 @@ import { zoomLimits } from '../../src/render/View';
 const args = process.argv.slice(2), flag = (name: string) => { const i = args.indexOf(`--${name}`); return i >= 0 ? args[i + 1] : undefined; };
 const dirs = (flag('dir') ? [resolve(flag('dir')!)] : [resolve('specs/scenes/catalog'), resolve('tests/scenes/catalog')]).filter(existsSync);
 const out = resolve(flag('out') ?? 'test-results/scene-catalog');
+const query = Object.fromEntries(args.flatMap((a, i) => a === '--query' ? [args[i + 1].split('=') as [string, string]] : []));
+const throttle = Number(flag('throttle') ?? 1); // CPU slow-down factor: reproduces load-dependent races (async LOD loads) on an idle machine
 const backend = (flag('backend') ?? 'webgl2') as Backend, matrix = args.includes('--matrix');
 const tiers = (matrix ? ['high', 'low'] : [flag('tier') ?? 'high']) as ('high' | 'low')[];
 const [width, height] = (flag('size') ?? '960x540').split('x').map(Number);
@@ -44,7 +46,7 @@ try {
   for (const tier of tiers) {
   queue = entries.filter(e => e.tier === tier);
   // Open the browsers one after the other so only the first one starts the Vite server.
-  for (let i = 0; i < Math.min(jobs, queue.length); i++) { const s = new SceneSession({ backend, tier, viewport: { width, height }, log: () => {} }); await s.open(); sessions.push(s); }
+  for (let i = 0; i < Math.min(jobs, queue.length); i++) { const s = new SceneSession({ backend, tier, viewport: { width, height }, query, log: () => {} }); await s.open(); if (throttle > 1) await (await s.page.context().newCDPSession(s.page)).send('Emulation.setCPUThrottlingRate', { rate: throttle }); sessions.push(s); }
   console.error(`[catalog] ${queue.length} scenes, ${sessions.length} browser(s), ${width}x${height}, ${backend}, ${tier}`);
   await Promise.all(sessions.map(async session => {
     for (let e = queue.shift(); e; e = queue.shift()) {
