@@ -1,0 +1,19 @@
+[runner] slot 0 acquired; load 2.95 3.58 2.93
+
+ RUN  v5.0.3 /srv/mi/jobs/l10-alpha-contract-validation-24132d-95763-1791936292
+
+ ✓  functional  tests/unit/health-bars.test.ts (4 tests) 13ms
+ ✓  functional  tests/unit/levels/l10-alpha-contracts.test.ts (2 tests) 26ms
+ ✓  functional  tests/unit/render/crowd-register.test.ts (5 tests) 10ms
+ ✓  functional  tests/sim/ai/l10-dogs.test.ts (5 tests) 594ms
+   ✓ T-E32-07b @E32 @E32-AC07 a dog telegraphs >= 0.6 s before each bite and waits >= 2 s between its own bites 457ms
+ ✓  functional  tests/sim/ai/l10-alpha-contracts.test.ts (8 tests) 6055ms
+   ✓ T-E32-09-stream-high @E32 @E32-AC09 serialized Alpha ownership and dog coat survive five revisits and save/load 2989ms
+   ✓ T-E32-09-stream-low @E32 @E32-AC09 serialized Alpha ownership and dog coat survive five revisits and save/load 2667ms
+
+ Test Files  5 passed (5)
+      Tests  24 passed (24)
+   Start at  00:04:57
+   Duration  8.71s (tests 49%, transform 41%, import 10%)
+
+[remote] done exit=0 (runner 94.130.181.173, sync 3s, remote total 13s)

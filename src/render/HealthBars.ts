@@ -12,8 +12,9 @@ export function barEligible(e: EntitySnapshot, player: { x: number; z: number },
     !(e.infected.state === 'dead' && e.infected.recoverAt < 0) &&
     (e.health.current < e.health.max || Math.hypot(e.transform.x - player.x, e.transform.z - player.z) <= 15);
 }
-export function barSize(width: number, height: number): { width: number; height: number } {
-  return Math.min(width, height) <= 480 ? { width: 48, height: 6 } : { width: 64, height: 8 };
+export function barSize(width: number, height: number, mega = false): { width: number; height: number } {
+  const phone = Math.min(width, height) <= 480;
+  return mega ? { width: phone ? 72 : 96, height: phone ? 8 : 10 } : { width: phone ? 48 : 64, height: phone ? 6 : 8 };
 }
 
 /** Three pooled billboard meshes, independent of population and quality tier.
@@ -47,9 +48,10 @@ export class HealthBars extends Group {
     this.probes.length = 0;
     for (const layer of this.meshes) layer.count = 0;
     const player = this.world.entities.get(1); if (!player) return;
-    const size = barSize(width, height);
     for (const e of this.world.entities.iterate()) {
       if (!barEligible(e, player.transform, this.definitions.get(e.archetype)?.bar === true) || !pickBodies.bounds(e.id, this.bounds)) continue;
+      // E32-AC09: the Mega's bar is larger; regular Alphas retain their E07 size and shared pool.
+      const size = barSize(width, height, !!e.infected?.pursuit);
       // Use the actual displayed bounds, including pose blending and interpolated movement.
       this.bounds.getCenter(this.center);
       this.direction.subVectors(this.center, camera.position);
@@ -64,7 +66,12 @@ export class HealthBars extends Group {
       this.projection.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
       pickBodies.bounds(e.id, this.screenBounds, this.projection);
       const top = (1 - this.screenBounds.max.y) * height / 2;
-      const x = (this.center.x + 1) * width / 2, y = top - 2 - (size.height + 4) / 2;
+      let x = (this.center.x + 1) * width / 2, y = top - 2 - (size.height + 4) / 2;
+      // A close Mega can extend above the frame while its body is visible. Keep its shared billboard readable.
+      if (e.infected?.pursuit) {
+        x = Math.max(size.width / 2 + 2, Math.min(width - size.width / 2 - 2, x));
+        y = Math.max(size.height / 2 + 2, Math.min(height - size.height / 2 - 2, y));
+      }
       if (x - size.width / 2 - 2 < 0 || x + size.width / 2 + 2 > width || y - size.height / 2 - 2 < 0 || y + size.height / 2 + 2 > height) continue;
       this.center.y = 1 - y / height * 2;
       this.center.unproject(camera);
