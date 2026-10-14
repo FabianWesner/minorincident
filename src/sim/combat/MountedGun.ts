@@ -127,7 +127,7 @@ export class MountedGun {
   }
   /** Combat phase, once per tick: spin/heat step and the rounds it releases. */
   update(): void {
-    const w = this.world, rounds = this.gun.step(this.mounted && this.trigger);
+    const w = this.world, rounds = this.gun.step(this.mounted && this.trigger && !w.missions?.state.states['cure-released']);
     if (!rounds) return;
     const def = action(minigun.actionId), muzzle = this.muzzle(this.origin), combat = w.combat;
     if (!combat) return;

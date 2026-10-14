@@ -1,6 +1,6 @@
 import { megaAlpha } from '../../data/megaAlpha';
 import { alphaDamageMultiplier, humanInfected } from '../../data/infected';
-import { storyProtected } from '../npc/storyProtection';
+import { cureCanKill, storyProtected } from '../npc/storyProtection';
 // Splash falloff/impulse adapted from Bruno Simon folio-2025 Explosions.js (MIT, 41046b5).
 import type { Vec2 } from '../../input/InputFrame';
 import type { EntitySnapshot, GameEvent } from '../world/types';
@@ -46,6 +46,24 @@ export function damageAmount(hit: DamageEvent, target: EntitySnapshot): number {
 }
 export class Damage {
   god = false;
+  /** Cure bypasses armor, boss HP floors and recovery; uses death events without blast/gib feedback. */
+  cure(target: EntitySnapshot, resident = true): void {
+    if (target.id === 1 || !cureCanKill(target) || target.corpse || target.health.current <= 0 && target.infected!.recoverAt < 0) return;
+    const amount = Math.max(0, target.health.current), b = target.infected!;
+    if (resident) this.world.infected?.down(target, true);
+    if (b.perched || b.special === 'cling') target.transform.y = (this.world.districts?.pavingHeight(target.transform.x, target.transform.z) ?? 0) + .7;
+    delete target.hidden; delete target.attachedTo;
+    target.health.current = 0; b.recoverAt = -1; b.state = 'dead'; b.deadAt = this.world.tick;
+    b.grabUntil = 0; b.until = 0; b.attackId = 0; b.targetId = 0; b.hidden = false; b.perched = false; b.path.length = 0;
+    delete b.specialAttack; delete target.infectionRise; delete target.infection;
+    if (target.civilian) { target.civilian.state = 'finished'; target.civilian.entered = this.world.tick; target.civilian.story = null; }
+    if (target.combat) { target.combat.attacking = false; target.combat.statuses.length = 0; }
+    if (!resident) target.corpse = true;
+    if (target.locomotion) { target.locomotion.vx = 0; target.locomotion.vz = 0; }
+    if (target.archetype === 'infected.crow') { for (let i = 0; i < 20; i++) if (b.birdAlive[i]) b.birdDeadMask = (b.birdDeadMask ?? 0) | 1 << i; b.birds = 0; b.birdAlive.fill(0); }
+    if (b.pursuit && this.world.megaPursuit) { this.world.megaPursuit.state.hp = 0; this.world.megaPursuit.state.mode = 'dead'; }
+    if (resident) this.world.events.emit({ type: 'combat.kill', tick: this.world.tick, attackId: 0, actionId: 'cure', sourceId: 1, targetId: target.id, position: { ...target.transform }, direction: { x: 0, z: 0 }, knockback: 0, amount, damageType: 'status' });
+  }
   constructor(private readonly world: SimWorld) {}
   /** Per-level toughness (L2): a melee hit does at most maxHP / hits, so the weapon needs `hits` hits to down a normal infected. */
   private meleeCap(hit: DamageEvent, target: EntitySnapshot): number | undefined {
@@ -57,6 +75,7 @@ export class Damage {
   apply(hit: DamageEvent): number {
     const target = this.world.entities.get(hit.targetId), source = this.world.entities.get(hit.sourceId);
     if (!target || !source) return 0;
+    if (this.world.missions?.state.states['cure-released'] && (source.infected || target.id === 1 || target.companion)) return 0;
     // E31 hull attacks own infected melee against the APC; seated people are inside its armor.
     const transportId = target.id === 1 ? this.world.vehicles?.active : target.passengerOf;
     if (target.hidden && transportId != null && source.kind === 'infected' && hit.type === 'melee' && this.world.entities.get(transportId)?.archetype === 'vehicle.military-apc') return 0;

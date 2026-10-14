@@ -1,0 +1,145 @@
+{
+  "baseline": "19efe5d1a9d6f400578a16873ec2ee20c03a88e9",
+  "focused": {
+    "passed": 31,
+    "failed": 0,
+    "skipped": 0,
+    "failures": []
+  },
+  "full_unit": {
+    "passed": 1443,
+    "failed": 1,
+    "skipped": 7,
+    "failures": [
+      {
+        "test": "T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts",
+        "message": "Error: Test timed out in 300000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."
+      }
+    ]
+  },
+  "asset_isolated_recheck": {
+    "passed": 1,
+    "failed": 0,
+    "skipped": 16,
+    "failures": []
+  },
+  "initial_full_unit_sim_levels": {
+    "passed": 2733,
+    "failed": 12,
+    "skipped": 9,
+    "failures": [
+      {
+        "test": "T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+        "message": "AssertionError: expected 4.424692000000505 to be less than or equal to 4"
+      },
+      {
+        "test": "T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms",
+        "message": "AssertionError: expected 4.6133109999937005 to be less than or equal to 4"
+      },
+      {
+        "test": "T-E32-13-perf-200 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling",
+        "message": "AssertionError: expected 4.079031000030227 to be less than or equal to 4"
+      },
+      {
+        "test": "T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+        "message": "AssertionError: expected 4.52584499999648 to be less than or equal to 4"
+      },
+      {
+        "test": "T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
+        "message": "AssertionError: expected 4.202694999985397 to be less than or equal to 4"
+      },
+      {
+        "test": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+        "message": "AssertionError: expected 5.036698999989312 to be less than or equal to 4"
+      },
+      {
+        "test": "L3 The Police Collapse T-E21-09 @E21 @E21-AC09 squad feels strong first: officers >= 60 % of S1 knockdowns, S1 damage below one life (PO 10-12 police -50 %), near the courier, never teleports",
+        "message": "AssertionError: expected 140.39999999999958 to be less than 100"
+      },
+      {
+        "test": "L3 The Police Collapse T-E21-10 @E21 @E21-AC10 squad falls apart systemically: non-increasing medians, <= 2 at the checkpoint, all 4 on <= 15 %, a corridor turn on >= 50 %",
+        "message": "AssertionError: expected 9 to be less than 9"
+      },
+      {
+        "test": "T-E32-23-S8 @E32-AC23 explicit expanding front kills every infected species, downed and remaining Mega; no recovery or conversion",
+        "message": "AssertionError: expected false to be true // Object.is equality"
+      },
+      {
+        "test": "T-E32-23-exclusions-S8 @E32-AC23 healthy people/animals, player and corgi excluded; particles/quality never decide death",
+        "message": "AssertionError: expected 45 to be +0 // Object.is equality"
+      },
+      {
+        "test": "T-E32-24/25-once-S8 @E32-AC24 @E32-AC25 release/retry/load permanent, campaign cleared once, approaching attacks/spawners suppressed",
+        "message": "AssertionError: expected 'error' to be 'ok' // Object.is equality"
+      },
+      {
+        "test": "T-E32-24-unloaded-S8 @E32-AC24 sleeping infected die in snapshots and survive five revisits without loading regions",
+        "message": "AssertionError: expected { id: 10, kind: 'infected', \u2026(7) } to be undefined"
+      }
+    ]
+  },
+  "timing_current": {
+    "passed": 14,
+    "failed": 1,
+    "skipped": 0,
+    "failures": [
+      {
+        "test": "T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+        "message": "AssertionError: expected 4.328071000010823 to be less than or equal to 4"
+      }
+    ]
+  },
+  "timing_baseline": {
+    "passed": 12,
+    "failed": 3,
+    "skipped": 0,
+    "failures": [
+      {
+        "test": "T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+        "message": "AssertionError: expected 4.837392999997974 to be less than or equal to 4"
+      },
+      {
+        "test": "T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms",
+        "message": "AssertionError: expected 4.460730999999214 to be less than or equal to 4"
+      },
+      {
+        "test": "T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+        "message": "AssertionError: expected 4.292464000000109 to be less than or equal to 4"
+      }
+    ]
+  },
+  "l3_baseline": {
+    "passed": 0,
+    "failed": 2,
+    "skipped": 19,
+    "failures": [
+      {
+        "test": "L3 The Police Collapse T-E21-09 @E21 @E21-AC09 squad feels strong first: officers >= 60 % of S1 knockdowns, S1 damage below one life (PO 10-12 police -50 %), near the courier, never teleports",
+        "message": "AssertionError: expected 140.39999999999958 to be less than 100"
+      },
+      {
+        "test": "L3 The Police Collapse T-E21-10 @E21 @E21-AC10 squad falls apart systemically: non-increasing medians, <= 2 at the checkpoint, all 4 on <= 15 %, a corridor turn on >= 50 %",
+        "message": "AssertionError: expected 9 to be less than 9"
+      }
+    ]
+  },
+  "verify_E32_sim_unit_smoke": {
+    "passed": 138,
+    "failed": 0,
+    "skipped": 2624,
+    "failures": []
+  },
+  "verify_browser_collection": {
+    "status": "blocked",
+    "node": "v26.0.0",
+    "error": "manifest.json needs an import attribute of type json",
+    "baseline_reproduced": true
+  },
+  "notes": [
+    "The initial full sweep used earlier S8 fixtures; its four S8 failures are superseded by the final focused run.",
+    "Full unit validation timed out in production asset validation at 300 seconds; the same test passed in its isolated rerun without changing its timeout.",
+    "Both L3 functional failures reproduce unchanged on HEAD. Three high-tier timing failures reproduce on HEAD; five of six initial timing failures passed on the isolated current rerun.",
+    "E32 verification passed its 138 selected sim/unit/smoke tests before browser collection failed; later flag, fresh-clock and pending-grab regressions pass in the final 31-test focused run.",
+    "No tests or budgets were loosened."
+  ]
+}

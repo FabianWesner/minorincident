@@ -320,7 +320,7 @@ export class SimWorld implements Lifecycle {
     if (districts.districts.some(d => d.layout.anchors['bike-start'] || d.layout.anchors['alarm-car-1'] || d.layout.anchors['gate-1'])) { this.toys = new Toys(this); this.toys.install(); this.events.on('sim.tick', () => this.toys?.update(), SimPhase.missions); }
     if (this.aftermath && this.toys) this.toys.carryOver(this.aftermath);
     this.events.on('sim.tick',()=>{
-      if(this.tick%60!==0 || this.inspectionGhost)return;
+      if(this.tick%60!==0 || this.inspectionGhost || this.missions?.state.states['cure-released'])return;
       const player=this.entities.get(1)!;
       for(const fire of this.districts!.fires)if((player.transform.x-fire.x)**2+(player.transform.z-fire.z)**2<=fire.radius**2)this.player!.damage(fire.damagePerSecond,this.tick);
     },SimPhase.combat);

@@ -88,7 +88,9 @@ function buildRetargetedClip(root: Object3D, name: string, additive: boolean, so
   const skinPlanted = skinned && /^(unarmed-(jab|cross|uppercut)|bat-|hurt)/.test(name);
   const contract = name === 'infected-flight' || name === 'animal-death' ? ['body','head','tail','packSocket','legFL','legFR','legBL','legBR','wingL','wingR'] : name.startsWith('corgi-') ? ['body','head','tail','packSocket','legFL','legFR','legBL','legBR'] : ['root','hip','torso','head','armL','armR','foreArmL','foreArmR','handL','handR','legL','legR','shinL','shinR','footL','footR','backpackSocket', ...skinned ? ['spine','chest','neck','clavicleL','clavicleR'] : []];
   for (const nodeName of contract) {
-    const node = root.getObjectByName(nodeName);
+    // Converted quadrupeds put limbs beside body under hip/torso. Roll their whole rig for death.
+    const wholeAnimal = name === 'animal-death' && nodeName === 'body' && root.getObjectByName('body')?.parent?.name === 'torso';
+    const node = root.getObjectByName(wholeAnimal ? 'hip' : nodeName);
     if (!node || additive && !upperBody.test(nodeName)) continue;
     if (name.startsWith('corgi-') && name !== 'corgi-sit' && /^legF[LR]$/.test(nodeName)) tracks.push(new VectorKeyframeTrack(`${nodeName}.scale`, [0, source.duration], [...node.scale.toArray(), ...node.scale.toArray()]));
     for (const path of ['rotation', 'translation'] as const) {
@@ -107,7 +109,7 @@ function buildRetargetedClip(root: Object3D, name: string, additive: boolean, so
           if (!additive) q.premultiply(node.quaternion);
           values.push(q.x, q.y, q.z, q.w);
         }
-        const rotation = new QuaternionKeyframeTrack(`${nodeName}.quaternion`, times, values);
+        const rotation = new QuaternionKeyframeTrack(`${node.name}.quaternion`, times, values);
         if (skinned && name.startsWith('unarmed-') && !skinClips.has(name)) softenChamber(rotation, source.duration, name === 'unarmed-knee');
         tracks.push(rotation);
       } else {
@@ -118,7 +120,7 @@ function buildRetargetedClip(root: Object3D, name: string, additive: boolean, so
           if (c === 1 && nodeName === 'hip' && groundClips.test(name)) delta *= Math.max(0, hipHeight - .15) / .55;
           values.push(delta + (additive ? 0 : node.position.getComponent(c)));
         }
-        tracks.push(new VectorKeyframeTrack(`${nodeName}.position`, times, values));
+        tracks.push(new VectorKeyframeTrack(`${node.name}.position`, times, values));
       }
     }
   }

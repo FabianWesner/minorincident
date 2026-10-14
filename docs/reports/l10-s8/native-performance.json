@@ -1,0 +1,98 @@
+[
+  {
+    "case": "high-z0.5",
+    "infectedRecords": 200,
+    "deadRecords": 200,
+    "corpseRecords": 200,
+    "timing": {
+      "frameP95": 5.5,
+      "simP95": 0.6999998092651367,
+      "simSamples": 600,
+      "draws": 147,
+      "triangles": 355727,
+      "voices": 12,
+      "puffs": 16,
+      "fanCues": 1,
+      "fan": 1,
+      "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+    },
+    "heap": {
+      "usedSize": 121155868,
+      "totalSize": 123748352,
+      "embedderHeapUsedSize": 1894416,
+      "backingStorageSize": 632132732
+    }
+  },
+  {
+    "case": "high-z1",
+    "infectedRecords": 200,
+    "deadRecords": 200,
+    "corpseRecords": 200,
+    "timing": {
+      "frameP95": 6.199999999998909,
+      "simP95": 0.5,
+      "simSamples": 600,
+      "draws": 165,
+      "triangles": 437531,
+      "voices": 11,
+      "puffs": 46,
+      "fanCues": 1,
+      "fan": 1,
+      "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+    },
+    "heap": {
+      "usedSize": 121614000,
+      "totalSize": 124534784,
+      "embedderHeapUsedSize": 1933336,
+      "backingStorageSize": 623308336
+    }
+  },
+  {
+    "case": "low-z0.5",
+    "infectedRecords": 100,
+    "deadRecords": 100,
+    "corpseRecords": 100,
+    "timing": {
+      "frameP95": 4.299999999999272,
+      "simP95": 0.6000003814697266,
+      "simSamples": 600,
+      "draws": 133,
+      "triangles": 183474,
+      "voices": 7,
+      "puffs": 4,
+      "fanCues": 1,
+      "fan": 1,
+      "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+    },
+    "heap": {
+      "usedSize": 83675276,
+      "totalSize": 86786048,
+      "embedderHeapUsedSize": 1850112,
+      "backingStorageSize": 377572365
+    }
+  },
+  {
+    "case": "low-z1",
+    "infectedRecords": 100,
+    "deadRecords": 100,
+    "corpseRecords": 100,
+    "timing": {
+      "frameP95": 4.700000000000728,
+      "simP95": 0.6000003814697266,
+      "simSamples": 600,
+      "draws": 144,
+      "triangles": 229321,
+      "voices": 8,
+      "puffs": 17,
+      "fanCues": 1,
+      "fan": 1,
+      "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+    },
+    "heap": {
+      "usedSize": 84322092,
+      "totalSize": 87310336,
+      "embedderHeapUsedSize": 1826128,
+      "backingStorageSize": 377596525
+    }
+  }
+]
