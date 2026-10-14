@@ -1,0 +1,133 @@
+{
+  "baselineCommit": "94601b3693c449d6756427258d9bc56b60c65ae3",
+  "typecheck": "pass",
+  "lint": "pass",
+  "productionBuild": "pass",
+  "unit": {
+    "passed": 1451,
+    "skipped": 7,
+    "host": "Hetzner"
+  },
+  "focusedFinal": {
+    "epilogue": 3,
+    "viewProgressionAndEpilogue": 39,
+    "legacyCheatGraph": 1,
+    "status": "pass"
+  },
+  "simAndLevels": {
+    "passed": 1305,
+    "failed": 7,
+    "skipped": 2,
+    "host": "Hetzner",
+    "failures": [
+      {
+        "test": "timing  tests/sim/levels/l10-assault.test.ts > T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+        "reason": "AssertionError: expected 4.232352999999421 to be less than or equal to 4"
+      },
+      {
+        "test": "functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-02 @E21 @E21-AC02 complete bot finishes single seed from L3-default (bat + axe), median time in band",
+        "reason": "AssertionError: expected [] to have a length of 1 but got +0"
+      },
+      {
+        "test": "functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2",
+        "reason": "AssertionError: expected 0 to be greater than or equal to 1"
+      },
+      {
+        "test": "functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-09 @E21 @E21-AC09 squad feels strong first: officers >= 60 % of S1 knockdowns, S1 damage below one life (PO 10-12 police -50 %), near the courier, never teleports",
+        "reason": "AssertionError: expected 0.5175718849840255 to be greater than or equal to 0.6"
+      },
+      {
+        "test": "functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-11 @E21 @E21-AC11 the single-seed complete route uses Oak and Boulevard around the wreck lines",
+        "reason": "AssertionError: expected 'timeout' to be 'complete' // Object.is equality"
+      },
+      {
+        "test": "functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-17 @E21 @E21-AC17 army checkpoint: >= 8 soldiers, the rendezvous ends the level straight into progression",
+        "reason": "AssertionError: expected 'timeout' to be 'complete' // Object.is equality"
+      },
+      {
+        "test": "functional  tests/sim/missions/campaign.test.ts > T-E12-07-L10 @E12 @E12-AC07 every cheat advances exactly one L10 step to level.completed",
+        "reason": "AssertionError: expected 'progression' to be 'result' // Object.is equality"
+      }
+    ],
+    "fixedAfterBroadRun": "T-E12-07-L10: focused unchanged assertion now passes; debug-only graph traversal retains its result state."
+  },
+  "verifyE32": {
+    "passed": 145,
+    "failed": 3,
+    "failures": [
+      {
+        "test": "T-E32-21-E3b @E32-AC21 seed-32 rocket checkpoint route arrival high",
+        "reason": "Error: Test timed out in 120000ms."
+      },
+      {
+        "test": "T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+        "reason": "AssertionError: expected 4.59939999999915 to be less than or equal to 4"
+      },
+      {
+        "test": "T-E32-20-perf-200 @E32-AC20 @E32-AC31 @E18-AC02 full-cap active dispersal predicate",
+        "reason": "AssertionError: expected 4.298985000001267 to be less than or equal to 4"
+      }
+    ],
+    "browserPhase": "not reached: sim gate failed"
+  },
+  "node26BrowserCollection": {
+    "tests": 95,
+    "files": 16,
+    "status": "pass"
+  },
+  "unchangedHeadAssault": {
+    "tier": "high",
+    "peak": 168,
+    "arrival": 12.666666666666666,
+    "bossId": 9,
+    "slots": 167,
+    "p95": 4.866953000000649,
+    "console": [
+      4002,
+      -27
+    ]
+  },
+  "browserInput": {
+    "matrixCasesPassed": 8,
+    "additionalWheelCasesPassed": 2,
+    "backends": [
+      "webgl",
+      "webgpu"
+    ],
+    "qualities": [
+      "high",
+      "low"
+    ],
+    "zooms": [
+      1,
+      0.5
+    ]
+  },
+  "sceneMatrix": {
+    "passed": 12,
+    "zeroPlaceholderFrames": true,
+    "cpuThrottle4": {
+      "webgl": 6,
+      "webgpu": 6,
+      "zeroPlaceholderFrames": true
+    }
+  },
+  "limits": "No test threshold or budget changed. L3 and pre-release L10 failures remain outside the epilogue path.",
+  "browserSmoke": {
+    "passed": 16,
+    "project": "chromium"
+  },
+  "nativeEndingPerformance": {
+    "webgl": 4,
+    "webgpu": 4,
+    "warmedCycles": 5,
+    "status": "pass",
+    "conditions": "quiet-run, headless Chrome, native Metal, desktop viewport; low/high quality",
+    "sharedEffectAndLightCounters": "pass in all eight cases"
+  },
+  "notMeasuredInThisLane": [
+    "physical iOS/Android FPS",
+    "release/seam hitch distribution",
+    "complete no-cheat L1-to-L10 route timing"
+  ]
+}

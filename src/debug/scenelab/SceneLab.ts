@@ -12,7 +12,7 @@ import { propFootprint } from '../../sim/interact/PropSystem';
 import { Box3, Matrix4, Mesh, Object3D, Raycaster, Vector3, type BufferAttribute, type InstancedMesh, type InterleavedBufferAttribute } from 'three';
 import { ArmyCheckpointBoom } from '../../sim/missions/ArmyCheckpointBoom';
 import { l2 } from '../../data/l2';
-import manifest from '../../assets/manifest.json';
+import manifest from '../../assets/manifest.json' with { type: 'json' };
 import type { AssetDef } from '../../assets/types';
 import { AssetRegistry } from '../../assets/registry';
 import { assetUrl } from '../../assets/assetUrl';
@@ -351,6 +351,15 @@ export class SceneLab {
       }
       if (spec.cureProgression.authored) {
         Object.assign(world.entities.get(1)!.transform, at); world.physics.playerBody!.setTranslation(at, true);
+      }
+      if (spec.cureProgression.epilogueElapsed !== undefined) {
+        const ticks = spec.cureProgression.epilogueElapsed;
+        if (!Number.isSafeInteger(ticks) || ticks < 0 || ticks > 9000) throw new Error('Invalid epilogue fixture clock');
+        mission.state.states['cure-released'] = true;
+        mission.state.steps.release.status = 'completed'; mission.state.steps.epilogue.status = 'active';
+        mission.l10!.cure.release();
+        mission.state.cureFront!.elapsed = ticks; mission.state.cureFront!.radius = ticks / 6;
+        mission.l10!.epilogue.update(); mission.l10!.cure.apply();
       }
       world.combat!.runner.loadout.state.selectedSide = spec.cureProgression.checkpoint ? 'RIGHT' : 'LEFT';
     }
@@ -693,6 +702,11 @@ export class SceneLab {
   }
   private applyCamera(): void {
     const c = this.camera; if (!c) return;
+    if (this.spec?.cureProgression?.epilogueElapsed !== undefined && c.mode === 'game' && c.target === 'courier') {
+      const view = this.game.view.view;
+      view.follow(); view.zoom(Math.log((c.zoom ?? 1) / view.getState().targetZoom), true);
+      return;
+    }
     const view = this.game.view.view, spherical = (target: [number, number, number], radius: number, polar: number, azimuth: number) => {
       const s = Math.sin(polar) * radius;
       view.preset('scene-lab', { target, position: [target[0] + s * Math.sin(azimuth), target[1] + Math.cos(polar) * radius, target[2] + s * Math.cos(azimuth)] });

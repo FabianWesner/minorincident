@@ -264,6 +264,10 @@ export class Game {
         const sim=loadMeasure('level:sim',data);await this.view.load();this.renderedDistricts=this.world.districts;this.lastLoad={dataMs:data-start,simMs:sim-data,viewMs:loadMeasure('level:view',sim)-sim};if (speculative) { this.speculative = { id, seed: opts?.seed ?? 1 }; this.clock.pause(); } else { this.transition.update(.95, 'Preparing sound…'); const audio=performance.now();await this.audio.load();loadMeasure('level:audio',audio); this.ui.loaded(); const hud=performance.now(); await this.ui.prepareHud(); loadMeasure('level:hud',hud); }
         if (performanceScenario && performanceLevels[performanceScenario].spot) this.view.preset(performanceLevels[performanceScenario].spot);
         if (id === 'L9') this.world.missions?.begin();
+        if (id === 'L10' && this.campaign?.cureResume?.cameraZoom !== undefined && !opts?.checkpoint) {
+          this.view.view.zoom(Math.log(this.campaign.cureResume.cameraZoom / this.view.view.getState().targetZoom), true);
+          this.view.advance(0);
+        }
         if (id === 'L10' && this.campaign) { this.watchCampaign(); this.saveCampaign(); }
         if (!speculative) { this.view.unfreeze(); this.view.update(1); await this.view.renderer.finishWarmUp(); await transitionPaint(); loadMeasure(`transition:${id}:first-frame`, start); this.firstLevelFrame(id); }
       }catch(error){ console.error("Level load failed", error); if (!speculative) this.transition.fail(); this.view.unfreeze(); this.view.missionHidden = false; throw error; }
@@ -321,7 +325,7 @@ export class Game {
     if (this.world.scenario === 'L10' && this.campaign.unlockedLevel === 10 && this.campaign.crossingHandover && this.world.missions?.state.checkpoint) {
       const live = this.world.progression?.campaign;
       if (live) { this.campaign.ownedActions = [...live.ownedActions]; this.campaign.racks = structuredClone(live.racks); this.campaign.world = structuredClone(live.world); }
-      this.campaign.cureResume = this.world.missions.saveResume();
+      this.campaign.cureResume = { ...this.world.missions.saveResume(), cameraZoom: this.view.view.getState().targetZoom };
     }
     if(this.world.progression?.campaign){this.world.progression.campaign=structuredClone(this.campaign);}
     return this.saves.write(this.campaign);
@@ -340,7 +344,7 @@ export class Game {
     });
     this.world.events.on('checkpoint.set', () => { if (this.world.scenario === 'L10') this.saveCampaign(); });
     this.world.events.on('checkpoint.restored', () => { if (this.world.scenario === 'L10') this.saveCampaign(); });
-    this.world.events.on('mission.signal', event => { if (event.type === 'mission.signal' && (event.name.startsWith('l9.') || event.name === 'cure-released')) this.saveCampaign(); });
+    this.world.events.on('mission.signal', event => { if (event.type === 'mission.signal' && (event.name.startsWith('l9.') || event.name === 'cure-released' || event.name.startsWith('epilogue-'))) this.saveCampaign(); });
     this.world.events.on('combat.attack',event=>{if(event.type==='combat.attack')save.usage[event.actionId]=(save.usage[event.actionId]??0)+1;});
     this.world.events.on('pickup.collected',event=>{if(event.type==='pickup.collected'&&'actionId' in event&&!save.ownedActions.includes(event.actionId))save.ownedActions.push(event.actionId);});
   }

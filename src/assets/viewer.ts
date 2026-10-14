@@ -9,7 +9,7 @@ import { anchorsFor } from '../data/placedLights';
 import { footprint } from '../render/LightField';
 import { Lighting } from '../render/Lighting';
 import { Materials } from '../render/Materials';
-import manifest from './manifest.json';
+import manifest from './manifest.json' with { type: 'json' };
 import type { AssetDef } from './types';
 
 export interface AssetViewerApi {

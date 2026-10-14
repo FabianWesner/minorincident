@@ -23,6 +23,10 @@ export function levelTenMission(resolve: (name: string) => Anchor | undefined): 
   if (!crash) throw new Error('Missing mission anchor: cure-crash');
   const anchors: Record<string, Anchor> = { 'cure-crash': crash };
   for (const name of cureAnchorNames) { const at = resolve(name); if (at) anchors[name] = at; }
+  for (const name of ['epilogue-survivors', 'epilogue-walk', 'epilogue-camera-target']) { const at = resolve(name); if (at) anchors[name] = at; }
+  // The final existing approach lane is a bounded collapse tableau, outside the release disc.
+  const arrival = resolve('dispersal-horizon');
+  if (arrival) anchors['epilogue-approach'] = arrival;
   const def: MissionDef = { id: 'L10', briefing: 'Find the airborne cure and bring it to the dispersal complex.', anchors, actors: {}, groups: {}, gates: {}, items: ['cure-canister'], states: [...cureStates, 'anchor-unavailable'], counters: [...cureCounters], checkpoints: [...cureCheckpoints], cinematics: {}, steps: [], finish: ['credits'], onStart: [{ kind: 'checkpoint', id: 'cure-crash' }], onComplete: [] };
   const step = (id: string, text: string, name: string, complete: Trigger, actions: ScriptAction[] = [], type: ObjectiveDef['type'] = 'custom') => {
     const previous = def.steps.at(-1);
@@ -44,5 +48,6 @@ export function levelTenMission(resolve: (name: string) => Anchor | undefined): 
   step('release', 'Release the cure at the console', 'cure-console', flag('cure-released'), [], 'interact');
   step('epilogue', 'Watch the cure spread — keep exploring', 'cure-console', flag('epilogue-finished'));
   step('credits', 'Minor Incident', 'cure-console', flag('credits-finished'));
+  def.steps.slice(-2).forEach(s => { s.waypoint = false; });
   return def;
 }
