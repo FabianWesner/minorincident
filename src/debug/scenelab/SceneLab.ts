@@ -1,4 +1,4 @@
-import { cure } from '../../levels/L10/district';
+import { cure, curePursuitRoute } from '../../levels/L10/district';
 import { cureEncounters, cureEncounterSlots, cureEncounterSpot } from '../../levels/L10/encounters';
 import { levelTenMission } from '../../levels/L10/mission';
 import { resolveCampaignMission } from '../../levels/missions';
@@ -327,7 +327,7 @@ export class SceneLab {
     }
     if (spec.megaAlpha) {
       const m = spec.megaAlpha, box = m.resident;
-      const pursuit = installMegaPursuit(world, { introduceTick: null, route: m.route, ...(box ? { resident: (x: number, z: number) => x >= Math.min(box[0][0], box[1][0]) && x <= Math.max(box[0][0], box[1][0]) && z >= Math.min(box[0][1], box[1][1]) && z <= Math.max(box[0][1], box[1][1]) } : {}) });
+      const pursuit = installMegaPursuit(world, { introduceTick: null, route: m.route === 'cure' ? curePursuitRoute : m.route, ...(box ? { resident: (x: number, z: number) => x >= Math.min(box[0][0], box[1][0]) && x <= Math.max(box[0][0], box[1][0]) && z >= Math.min(box[0][1], box[1][1]) && z <= Math.max(box[0][1], box[1][1]) } : {}) });
       const id = m.id ?? 'mega', entity = pursuit.introduce({ x: m.at[0], z: m.at[1] });
       this.actors.set(id, { id, kind: 'infected', entity, spec: { id, kind: 'infected', archetype: megaAlpha.archetype }, plan: null, track: [], lod: {}, drawn: 0, inView: 0, missed: 0, farClose: 0 });
       this.mega = { last: null, speeds: [], stepMaxM: 0, stepFrame: -1, modes: {}, samples: [], stuckLevelMax: 0, distanceMinM: Infinity };
