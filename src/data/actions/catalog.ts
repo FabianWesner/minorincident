@@ -57,8 +57,17 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
   ability('adrenaline', 1, 5, 15, 'adrenaline'),
   { ...ability('turret', 18, 8, 20, 'turret'), damage: 16, fireRate: 5, noiseRadius: 25, upgradeHooks: ['damage', 'cooldown', 'duration'] },
 ] satisfies ActionDef[]).map((definition) => { const def = validateAction(definition); return [def.id, def]; }));
+/**
+ * E32 §5.7 (L10-S6) mounted rotary minigun: fired from its mount (MountedGun), never carried in a rack, so it is deliberately not part of
+ * `catalog` (no roster, balance, pickup or upgrade rows). 20 rounds/s at 8 each: an ordinary infected (40 HP) falls in 5 rounds (0.25 s),
+ * a regular Alpha (200 HP, bullets x0.5) in 50 rounds (2.5 s of landed fire, 8 s of fire fit in the heat budget). Spin, heat and range
+ * live in `src/data/minigun.ts`. Presentation (tracer, muzzle, noise cue) resolves the id through `action()`.
+ */
+export const mountedActions: Readonly<Record<string, ActionDef>> = {
+  'weapon.rotary-minigun': validateAction({ ...gun('rotary-minigun', 8, 35, 20, 0, 0, 2.5, 3), viewAssetId: 'wpn.minigun-mounted', iconId: 'icon.machine-gun', stagger: 0.1, upgradeHooks: [] }),
+};
 /** Fixture-only projectile remains available for E05 regression, outside the player roster. */
-export function action(id: string): ActionDef { const def = catalog[id] ?? fixtures[id]; if (!def) throw new Error(`Unknown action: ${id}`); return def; }
+export function action(id: string): ActionDef { const def = catalog[id] ?? mountedActions[id] ?? fixtures[id]; if (!def) throw new Error(`Unknown action: ${id}`); return def; }
 
 /** Damage balance keeps the E05 swept-projectile reference alongside every damaging catalog action. */
 export const balanceActions = [...Object.values(catalog).filter((def) => def.damage > 0), fixtures['weapon.test-projectile']];

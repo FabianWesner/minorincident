@@ -43,6 +43,12 @@ body.full-ui:not([data-ui-screen=game]) [data-touch-controls],body.full-ui:not([
 .hud-durability-panel[data-stage="2"] .hud-bar-fill{background:#a86a12}
 .hud-durability-panel[data-stage="3"] .hud-bar-fill,.hud-durability-panel[data-stage="4"] .hud-bar-fill{background:#b3262e}
 .hud-durability-panel[data-floor="true"] .hud-bar-label{color:#ffd083}
+.hud-heat-panel{position:absolute;bottom:132px;left:50%;transform:translateX(-50%);width:min(320px,calc(100vw - 24px));box-sizing:border-box;padding:6px 8px}
+.hud-heat .hud-bar-fill{background:linear-gradient(90deg,#e0a526,#e5701f);transition:none}
+.hud-heat-panel[data-state="idle"] .hud-bar-fill,.hud-heat-panel[data-state="ready"] .hud-bar-fill{background:#3f8f6b}
+.hud-heat-panel[data-state="hot"] .hud-bar-fill{background:linear-gradient(90deg,#e0a526,#e5701f)}
+.hud-heat-panel[data-state="locked"] .hud-bar-fill{background:#c4262e}
+.hud-heat-panel[data-state="locked"] .hud-bar-label{color:#ffd8d0;font-weight:700}
 .hud-bars{display:grid;gap:5px;align-content:center;min-width:0}
 .hud-bar{height:24px;border:2px solid #101824;border-radius:8px;background:#3c3546;overflow:hidden;position:relative}
 .hud-bar-fill{height:100%;background:linear-gradient(#ef6670,#d9363e);width:100%;border-radius:4px}
@@ -139,6 +145,8 @@ body.full-ui:not([data-ui-screen=game]) [data-touch-controls],body.full-ui:not([
 [data-touch-action] img{width:32px;height:32px;pointer-events:none}
 [data-touch-action] span{display:block;font-size:10px;line-height:10px;pointer-events:none}
 .touch-ui .hud-durability-panel{top:calc(var(--hud-top) + var(--hud-map-size) + 172px);bottom:auto;transform:none;left:auto;right:var(--hud-right);width:min(150px,38vw);padding:4px 5px;border-radius:12px}
+.touch-ui .hud-heat-panel{top:calc(var(--hud-top) + var(--hud-map-size) + 172px);bottom:auto;transform:none;left:auto;right:var(--hud-right);width:min(170px,40vw);padding:4px 5px;border-radius:12px}
+.touch-ui .hud-heat .hud-bar{height:22px}.touch-ui .hud-heat .hud-bar-label{font-size:11px;line-height:18px}
 .touch-ui .hud-durability .hud-bar{height:22px}.touch-ui .hud-durability .hud-bar-label{font-size:11px;line-height:18px}
 .touch-ui .hud-stick-zone{display:block;bottom:var(--hud-bottom);left:var(--hud-left);width:96px;height:96px;border:1px solid #dfcba644;background:#18233320}
 .touch-ui [data-touch-stick]{z-index:27;border-color:#dfcba688!important;background:#18233340!important}

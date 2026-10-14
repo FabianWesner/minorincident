@@ -73,6 +73,11 @@ export interface SceneSpec {
   armyBoom?: { x: number; z?: number; closed?: boolean };
   /** L10 dispersal kit rotors/wheels: idle (default) or running at full rate. */
   dispersal?: { active?: boolean };
+  /** L10 mounted rotary minigun (the shipped MountedGun, drawn by MountedGunView; do not also place `wpn.minigun-mounted` as a prop): `at` is
+   * [x, z] or [x, deckHeight, z] like a 3-element prop, `yaw` the rest aim in degrees. `metrics.minigun`; courier actions mountGun / fireGun / dismountGun. */
+  /** Show the real HUD panels in the screenshots (needs the game UI: run with `--query ui=1`). */
+  hud?: boolean;
+  minigun?: { at: [number, number] | [number, number, number]; yaw?: number };
   emerge?: { house: string; count?: number; staggerS?: number | [number, number]; frame?: number; id?: string; /** Walk-out pace m/s (default the 1.25 m/s house stumble; the L1 lab staff run out at 5.3). */ speedMs?: number };
 }
 export interface PropSpec { decay?: string; powerGroup?: string; powered?: boolean; id?: string; asset: string; at: [number, number] | [number, number, number]; yaw?: number; /** Initial quaternion for a displaced pushable fixture. */ rotation?: [number, number, number, number]; scale?: number | [number, number, number]; tint?: string }
@@ -128,6 +133,8 @@ export type Action =
   | { mountBike: string }
   | { dismount: true }
   | { interact: true }
+  /** Courier: man the mounted minigun (the real interact press), fire it at an actor or point for `seconds` (trigger held), leave it (the quick rocket dismount). */
+  | { mountGun: true } | { fireGun: { at?: string | Point; seconds?: number } } | { dismountGun: true }
   | { chase: string }
   /** Infected starts a real outbreak grab of this human (defence/rescue review). */
   | { grab: string }
@@ -207,6 +214,8 @@ export interface Expectations {
   megaCruiseErrorMax?: number;
   /** E32-AC10 no teleport: largest single-tick displacement of the Mega Alpha while resident (`metrics.megaAlpha.stepMaxM`). */
   megaStepMaxM?: number;
+  /** L10-S6 mounted minigun gates (`metrics.minigun`): rounds fired, peak heat (0..1), frames locked out, frames mounted. */
+  minigunRoundsMin?: number; minigunHeatPeakMin?: number; minigunLockedFramesMin?: number; minigunMountedFramesMin?: number;
   /** Drawn frozen corpses / ground pickups further than this from the support at their xz (cm, `metrics.grounding`); a gate on zero drawn bodies fails (min counts below). */
   groundingMaxCm?: number;
   groundingCorpsesMin?: number;

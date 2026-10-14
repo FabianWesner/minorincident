@@ -23,6 +23,9 @@ export class Hud {
   private readonly health = this.bar('health');
   private readonly durability = this.bar('durability');
   private readonly durabilityPanel = node('div', 'vehicle-durability');
+  /** E32 L10-S6 mounted minigun: normalized heat bar, lock-out state and the mount prompt. */
+  private readonly heat = this.bar('heat');
+  private readonly heatPanel = node('div', 'minigun-heat');
   private readonly companion = node('span', 'corgi-state');
   private readonly corgiBadge = node('span', 'corgi-badge', '🐕');
   private readonly detail = node('dialog', 'objective-detail');
@@ -65,6 +68,8 @@ export class Hud {
     // E31 vehicle durability: only while seated in the APC; no repair affordance exists.
     this.durabilityPanel.className = 'hud-durability-panel hud-panel'; this.durabilityPanel.hidden = true; this.durabilityPanel.setAttribute('aria-label', 'Vehicle durability');
     this.durabilityPanel.append(this.durability.root); this.root.append(this.durabilityPanel);
+    this.heatPanel.className = 'hud-heat-panel hud-panel'; this.heatPanel.hidden = true; this.heatPanel.setAttribute('aria-label', 'Minigun heat');
+    this.heatPanel.append(this.heat.root); this.root.append(this.heatPanel);
     this.root.className = 'hud'; this.root.hidden = true;
     const vitals = node('div', 'vitals'); vitals.className = 'hud-vitals hud-panel';
     this.portrait.className = 'hud-portrait'; this.portrait.setAttribute('aria-label', 'Survivor portrait');
@@ -200,6 +205,15 @@ export class Hud {
       text(this.durability.label, floor ? 'Barely functional' : `Armor ${Math.ceil(apc.health.current)} / ${apc.health.max}`);
       attribute(this.durability.root, 'aria-valuenow', String(fraction * 100)); attribute(this.durability.root, 'aria-valuetext', floor ? 'Barely functional' : `${Math.ceil(apc.health.current)} of ${apc.health.max}`);
       attribute(this.durabilityPanel, 'data-stage', String(apc.vehicle?.stage ?? 0)); attribute(this.durabilityPanel, 'data-floor', String(floor));
+    }
+    const gun = world.mountedGun, near = !!gun && !gun.mounted && gun.canMount();
+    setHidden(this.heatPanel, !gun || !(gun.mounted || near || gun.heat > .005));
+    if (gun) {
+      const percent = Math.round(gun.heat * 100), state = gun.locked ? 'locked' : gun.heat >= .75 ? 'hot' : gun.mounted ? 'ready' : 'idle';
+      style(this.heat.fill, 'width', `${percent}%`);
+      text(this.heat.label, near ? 'Press E to man the minigun' : gun.locked ? `OVERHEATED ${percent}%` : `Minigun heat ${percent}%`);
+      attribute(this.heat.root, 'aria-valuenow', String(percent)); attribute(this.heat.root, 'aria-valuetext', gun.locked ? `Overheated, ${percent} percent` : `${percent} percent`);
+      attribute(this.heatPanel, 'data-state', state); attribute(this.heatPanel, 'data-mounted', String(gun.mounted));
     }
     attribute(this.portrait, 'data-variant', player.survivor?.variant ?? 'female');
     const portrait = `url("/assets/ui/portrait-survivor-${player.survivor?.variant === 'male' ? 'm' : 'f'}.png")`;
