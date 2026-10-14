@@ -1,6 +1,5 @@
 import type { Game } from '../Game';
-import { compositions } from '../levels/compositions';
-import { preset,revealCards,pickUpgrades,finishRewards,rackSize,nextLevelAfter,lastLevel,powerScore,type CampaignSave,type Level } from '../sim/progression/Campaign';
+import { revealCards,pickUpgrades,finishRewards,rackSize,nextLevelAfter,lastLevel,powerScore,type CampaignSave,type Level } from '../sim/progression/Campaign';
 import { SAVE_ERROR,type SaveResult } from '../sim/progression/Save';
 import { upgrades } from '../data/upgrades';
 import './campaign.css';
@@ -14,7 +13,6 @@ export class CampaignUI {
   private creditsTimer: ReturnType<typeof setTimeout> | undefined;
   private picks:string[]=[];
   private offeredMission:object|null=null;
-  private menuSave:CampaignSave|null=null;
   constructor(private readonly game:Game){
     this.root.addEventListener('keydown',event=>{if(event.key!=='Tab')return;const buttons=[...this.root.querySelectorAll<HTMLButtonElement>('button:not(:disabled)')];const first=buttons[0],last=buttons.at(-1);if(event.shiftKey&&document.activeElement===first){event.preventDefault();last?.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}});
     this.root.className='campaign-ui';this.root.hidden=true;this.root.setAttribute('role','dialog');this.root.setAttribute('aria-modal','true');this.heading.id='campaign-title';this.root.setAttribute('aria-labelledby',this.heading.id);this.message.setAttribute('role','status');this.root.append(this.heading,this.content,this.message);document.querySelector('#game')!.append(this.root);
@@ -27,20 +25,12 @@ export class CampaignUI {
   private save():void {if(!this.game.saveCampaign())this.message.textContent='Progress could not be saved. Browser storage is unavailable.';}
   hide():void {this.root.hidden=true;delete document.body.dataset.campaign;}
   showMenu(result:SaveResult):void {
-    this.menuSave=result.status==='ok'?result.save:null;this.screen(result.status==='error'?SAVE_ERROR:'Minor Incident');
-    if(result.status==='error')this.button('Start new',()=>this.characterSelect());
-    else{
-      if(this.menuSave){this.button('Continue',async()=>{await this.game.continueCampaign(this.menuSave!);});this.button('Level select',()=>this.levelSelect());}
-      this.button('Start new',()=>this.characterSelect());
-    }this.focus();
-  }
-  private characterSelect():void {this.screen('Choose your survivor');for(const character of ['female','male']as const)this.button(character==='female'?'Female survivor':'Male survivor',async()=>{await this.game.startCampaign(character);});this.focus();}
-  private levelSelect():void {
-    this.screen('Level select');const save=this.menuSave??this.game.campaign;if(!save)return;
-    const hint=document.createElement('p');hint.className='lock-hint';hint.setAttribute('role','status');hint.hidden=true;
-    for(let level=1;compositions[`L${level}`];level++){const b:HTMLButtonElement=this.button(`Level ${level}`,async()=>{if(b.getAttribute('aria-disabled')==='true'){hint.textContent=`Complete Level ${level-1} first`;hint.hidden=false;return;}await this.game.continueCampaign(save,level as Level); this.game.view.update(1);});const locked=level>save.unlockedLevel;if(locked)b.setAttribute('aria-disabled','true');b.classList.toggle('is-locked',locked);if(locked){b.textContent=`🔒 Level ${level}`;b.title=`Complete Level ${level-1} first`;b.setAttribute('aria-label',`Level ${level}, locked. Complete Level ${level-1} first`);}}
-    this.button('Level 10 · The Cure (axe start)', async () => { const standalone = preset('L10-default'); standalone.character = save.character; standalone.settings = { ...save.settings }; await this.game.continueCampaign(standalone, 10); });
-    this.content.append(hint);this.button('Back',()=>this.showMenu({status:'ok',save}));this.focus();
+    this.game.ui.init(true);
+    if (result.status === 'ok') this.game.campaign = result.save;
+    if (result.status !== 'error') { this.hide(); this.game.ui.show('title'); return; }
+    this.screen(SAVE_ERROR);
+    this.button('Start new', () => { this.hide(); this.game.ui.show('character'); });
+    this.focus();
   }
   /** A paused result screen can still hand off to progression; no sim polling/allocation when idle. */
   update():void {

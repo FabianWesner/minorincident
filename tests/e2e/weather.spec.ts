@@ -31,9 +31,9 @@ test('T-E28-08b @E28 @E28-AC08 menus do not expose weather selection and debug o
 test('T-E28-08c @E28 @E28-AC08 campaign level select keeps story weather', async ({ page }) => {
   await boot(page); const save = preset('L2-default');
   await page.evaluate(save => { const a = window.__SS__!; a.campaign.restore(save); a.campaign.save(); a.campaign.menu(); }, save);
-  await page.getByRole('button', { name: 'Level select', exact: true }).click();
+  await page.getByTestId('start-game').click();
   await expect(page.locator('[data-testid="campaign-replay-weather"]')).toHaveCount(0);
-  await page.getByRole('button', { name: 'Level 1', exact: true }).click();
+  await page.getByTestId('level-L1').click();
   await expect(page.getByRole('heading', { name: 'Mission briefing' })).toBeVisible({ timeout: 60_000 });
   expect(await page.evaluate(() => window.__SS__!.getState().weather!.kind)).toBe('clear');
 });
