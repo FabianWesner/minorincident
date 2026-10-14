@@ -14,6 +14,9 @@ export const longGunHolds: Record<string, LongGunHold> = {
   'wpn.rocket-launcher': { scale: .80, support: [.31, -.02, -.045], stance: .8, protract: 1.2, reach: .5, drop: .05, lateral: .18 },
   'wpn.smg': { scale: .65, support: [.34, .13, -.04], stance: .4, protract: 1.2, reach: .65, drop: .09, lateral: .05 },
 };
+/** The gunner on the L10 mounted minigun: right hand on the right spade grip, the support hand on the left one (axes of the support offset
+ * are the right-hand socket's), body square to the aim. Tuned in the Scene Lab close-ups of `l10-minigun-gunner`. */
+export const mountedGunHold: LongGunHold = { scale: 1, support: [0, 0, -.34], stance: 0, reach: .5, drop: .12, lateral: .17 };
 export const crowdLongGunHold: LongGunHold = { scale: 1, support: [0, -.075, .30], stance: Math.PI / 2, reach: .6, drop: .08, lateral: .24 };
 /** Two-handed low ready keeps the barrel forward, clear of the road. */
 export const gunCarryElevation = (assetId: string): number => longGunHolds[assetId] ? -.18 : -.75;

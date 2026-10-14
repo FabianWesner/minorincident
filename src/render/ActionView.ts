@@ -1,4 +1,4 @@
-import { gunCarryElevation, gunHoldOffset, longGunHolds } from './characters/GunAim';
+import { gunCarryElevation, gunHoldOffset, longGunHolds, mountedGunHold } from './characters/GunAim';
 import { meleeChains } from '../data/meleeCombos';
 import { AdditiveBlending, Box3, BufferAttribute, BufferGeometry, DoubleSide, Group, Mesh, MeshBasicNodeMaterial, RingGeometry, SphereGeometry, Vector3, type Object3D, type WebGPURenderer, type Material } from 'three/webgpu';
 import { actionIconUrl } from '../assets/icons';
@@ -160,7 +160,12 @@ export class ActionView extends Group {
       if (!aiming) this.gunUntil = -1;
     }
     const gun = action(loadout.current(selectedSide).id).category === 'ranged';
-    if (gun && !player.riding && this.character.rideWeight === 0 && player.health.current > 0) {
+    // L10 manned minigun: both hands on the spade grips, facing the aim; the carried weapon is not drawn (holders hidden below).
+    const gunner = !!this.world.mountedGun?.mounted && player.health.current > 0;
+    if (gunner) {
+      this.readyTick = -1; this.gunUntil = -1;
+      this.character.aimGun(this.world.mountedGun!.aim, 0, .995, true, 0, mountedGunHold);
+    } else if (gun && !player.riding && this.character.rideWeight === 0 && player.health.current > 0) {
       const age = this.gunUntil < 0 ? Infinity : this.world.tick - (this.gunUntil - 24);
       const input = this.world.inputFrame;
       const fire = selectedSide === 'LEFT' ? input.left : input.right;
@@ -212,7 +217,7 @@ export class ActionView extends Group {
         held.holder.rotation.set(0, 0, held.tilt); held.holder.position.set(0, 0, 0);
       }
       held.holder.scale.setScalar(inHand ? longGunHolds[def.viewAssetId]?.scale ?? 1 : 1);
-      held.holder.visible = inHand && !!mount && prop && !player.riding && this.character.rideWeight === 0 && !['weapon.fists', 'weapon.kick'].includes(def.id) && !(held.model.userData.placeholder === true && def.category === 'ability');
+      held.holder.visible = !gunner && inHand && !!mount && prop && !player.riding && this.character.rideWeight === 0 && !['weapon.fists', 'weapon.kick'].includes(def.id) && !(held.model.userData.placeholder === true && def.category === 'ability');
     }
     this.selected = loadout.state.selectedSide; const state = loadout.state[this.selected], def = action(loadout.current(this.selected).id), origin = player.transform;
     this.cue = null; this.shape = def.aimIndicator; this.offset = 0; this.maxHeight = 0; this.material.color.set(this.selected === 'LEFT' ? '#ffd166' : '#44ffe0'); this.material.transparent = true; this.material.opacity = def.aimIndicator === 'line' ? .18 * Math.max(0, (this.gunUntil - this.world.tick) / 24) : 1;
