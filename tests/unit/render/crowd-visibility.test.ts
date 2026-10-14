@@ -20,3 +20,14 @@ test('@E18-AC01 zoom selects detail with hysteresis, consistently across batches
   expect(visibility.lod(2, far)).toBe('lod2'); expect(visibility.lod(2, 103)).toBe('lod2');
   expect(visibility.lod(2, near)).toBe('lod1');
 });
+
+test('animation pixels use the rendered camera while inspection geometry retains its virtual close camera', () => {
+  const wide = new PerspectiveCamera(50, 1, .1, 1000), close = new PerspectiveCamera(50, 1, .1, 1000);
+  wide.position.z = 40; close.position.z = 10;
+  wide.updateMatrixWorld(); close.updateMatrixWorld();
+  const visibility = new CrowdVisibility(); visibility.begin(wide, 844, close);
+  const geometry = visibility.pixels(0, 0, 0, 1.8), animation = visibility.renderPixels(0, 0, 0, 1.8);
+  expect(geometry).toBeCloseTo(animation * 4, 12);
+  expect(geometry).toBeGreaterThan(104); expect(animation).toBeLessThan(88);
+  expect(visibility.lod(1, geometry)).toBe('lod1');
+});

@@ -98,6 +98,7 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     for (const [draws, tris] of [[proof.warDrawCalls, proof.warTriangles], [proof.collapseDrawCalls, proof.collapseTriangles]]) { expect(draws).toBeLessThanOrEqual(tier === 'high' ? 600 : 300); expect(tris).toBeLessThanOrEqual(tier === 'high' ? 1_500_000 : 500_000); }
     for (const awake of [proof.warAwakeProps, proof.collapseAwakeProps]) expect(awake).toBeLessThanOrEqual(tier === 'high' ? 150 : 60);
     // E18 frame targets: desktop high p95 within the 60 fps budget (14 ms incl. headroom); phone low >= 30 fps p50 at 4x CPU throttle.
+    if (process.env.PHONE_PERF === '1' && tier === 'low') for (const p95 of [proof.warP95, proof.collapseP95]) expect(p95).toBeLessThanOrEqual(33.3);
     if (tier === 'high') { expect(proof.warP95).toBeLessThanOrEqual(14); expect(proof.collapseP95).toBeLessThanOrEqual(14); }
     else { expect(proof.warP50).toBeLessThanOrEqual(1000 / 30); expect(proof.collapseP50).toBeLessThanOrEqual(1000 / 30); }
     // Hitch bound: 50 ms on desktop; the phone profile runs under a 4x CPU throttle, so the same bound is 80 ms there (20 ms unthrottled).

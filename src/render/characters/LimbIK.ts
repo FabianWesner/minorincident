@@ -21,9 +21,9 @@ export class LimbIK {
     this.a = middle.position.length(); this.b = end.position.length();
     this.upperDirection = middle.position.clone().normalize(); this.lowerDirection = end.position.clone().normalize();
   }
-  solve(target: Vector3, pole: Vector3, orientation: Quaternion, weight = 1): void {
+  solve(target: Vector3, pole: Vector3, orientation: Quaternion, weight = 1, worldReady = false): void {
     const parent = this.upper.parent!;
-    parent.updateWorldMatrix(true, false);
+    if (!worldReady) parent.updateWorldMatrix(true, false);
     this.target.copy(target).applyMatrix4(this.inverseParent.copy(parent.matrixWorld).invert()).sub(this.upper.position);
     parent.matrixWorld.decompose(this.joint, this.frame, this.axis); this.frame.invert();
     const distance = Math.max(.0001, Math.min(this.a + this.b - .0001, this.target.length()));

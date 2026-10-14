@@ -33,6 +33,7 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     expect(proof.groups?.some(g => g.ids.length > 0)).toBe(true);
     expect(proof.draws).toBeLessThanOrEqual(tier === 'high' ? 600 : 300);
     expect(proof.triangles).toBeLessThanOrEqual(tier === 'high' ? 1_500_000 : 500_000);
+    if (process.env.PHONE_PERF === '1' && tier === 'low') expect(proof.p95).toBeLessThanOrEqual(33.3);
     expect(Math.round((tier === 'high' ? proof.p95 : proof.p50) * 1e6) / 1e6).toBeLessThanOrEqual(tier === 'high' ? 14 : 1000 / 30);
   });
 });

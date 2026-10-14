@@ -903,7 +903,7 @@ export class GameView implements Lifecycle {
     lighting.setHeroLight(hero && field.active ? flashlight ?? field.heroAt(hero.x, hero.z) : null, hero ?? this.view.focus, this.world.tick / 60);
     // Low W6 keeps the palette moon shade and contact shadows; a promoted fire
     // still owns its one hero shadow map. Avoid a second city-wide moon pass.
-    lighting.sun.visible = !(this.world.scenario === 'L7' && this.quality === 'low');
+    if (this.world.scenario === 'L7' && this.quality === 'low') lighting.sun.visible = false;
     field.update(this.view.focus.x, this.view.focus.z, this.world.tick / 60);
     field.render(this.renderer);
   }

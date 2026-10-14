@@ -63,6 +63,7 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     // E18 frame targets: desktop high p95 within the 60 fps budget (14 ms incl. headroom); phone low >= 30 fps p50 at 4x CPU
     // throttle, the E18-AC08 emulation proxy (p95 is recorded for the report).
     if (tier === 'high') expect(proof.peakP95).toBeLessThanOrEqual(14); else expect(proof.peakP50).toBeLessThanOrEqual(1000 / 30);
+    if (process.env.PHONE_PERF === '1' && tier === 'low') expect(proof.peakP95).toBeLessThanOrEqual(33.3);
     expect(proof.revealMaxMs).toBeLessThanOrEqual(50); expect(proof.gateMaxMs).toBeLessThanOrEqual(50);
   });
 });

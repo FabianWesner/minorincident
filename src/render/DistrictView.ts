@@ -53,6 +53,7 @@ import { stripStrayDecorations } from './decorationFilter';
 import type { PaletteToken } from '../data/palette';
 import { layoutTerrainChunks } from '../sim/world/TerrainChunks';
 import { TerrainView } from './TerrainView';
+import { batchPerimeterPosts } from './PerimeterPosts';
 
 const crownTokens = new Map<string, [PaletteToken, PaletteToken]>(Object.values(worldAssets).flatMap(asset => asset.foliage ? [[asset.foliage.colors.join(':'), asset.foliage.tokens ?? ['foliageDark', 'foliageLight']]] : []));
 // Repeated fence panels dominated V1 (109k faces in each view/shadow pass).
@@ -108,6 +109,7 @@ export class DistrictView extends Group {
   horizonForWarmup(): Group | null { return this.terrainHorizon?.clone(true) ?? null; }
   private readonly mergedLayout: Mesh[] = [];
   private readonly ownedGeometry: BufferGeometry[] = [];
+  private readonly perimeterPosts: InstancedMesh[] = [];
   private readonly ownedMaterials: Material[] = [];
   private readonly windowMask = new MeshBasicNodeMaterial({ color: "#ffffff" });
   private readonly black = new MeshBasicNodeMaterial({ color: "#000000" });
@@ -160,12 +162,18 @@ export class DistrictView extends Group {
         slab.updateMatrixWorld(true); this.ground.add(slab);
       }
     }
+    const posts: [number, number, number][] = [];
     for (const fence of lab && !lab.perimeter ? [] : this.world.boundaries) {
       const x = (fence.min[0] + fence.max[0]) / 2, z = (fence.min[2] + fence.max[2]) / 2;
       const width = fence.max[0] - fence.min[0], depth = fence.max[2] - fence.min[2];
       for (const y of [.35, .8]) this.box(perimeter, 'picketWhite', [width, .15, depth], [x, y, z]);
       const length = Math.max(width, depth), count = Math.ceil(length / 2);
-      for (let i = 0; i <= count; i++) this.box(perimeter, 'woodWarm', [.16, 1.05, .16], [width > depth ? fence.min[0] + length * i / count : x, .525, depth > width ? fence.min[2] + length * i / count : z], false);
+      for (let i = 0; i <= count; i++) posts.push([width > depth ? fence.min[0] + length * i / count : x, .525, depth > width ? fence.min[2] + length * i / count : z]);
+    }
+    if (posts.length) {
+      const geometry = new BoxGeometry(.16, 1.05, .16); this.ownedGeometry.push(geometry);
+      this.perimeterPosts.push(...batchPerimeterPosts(posts, geometry, this.materials.get('woodWarm')));
+      perimeter.add(...this.perimeterPosts);
     }
     // Placement asset ids are known from the layout JSON: start their downloads now instead of
     // after each multi-megabyte layout GLB has arrived and been parsed.
@@ -1032,6 +1040,7 @@ export class DistrictView extends Group {
     for (const b of this.batches) b.dispose();
     for (const b of this.dressingBatches) b.dispose(); this.dressingBatches.length = 0;
     for (const g of this.grass) g.dispose();
+    for (const mesh of this.perimeterPosts) mesh.dispose(); this.perimeterPosts.length = 0;
     for (const g of this.ownedGeometry) g.dispose();
     for (const m of this.ownedMaterials) m.dispose();
     for (const t of this.textures) t.dispose();

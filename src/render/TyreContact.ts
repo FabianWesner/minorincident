@@ -1,5 +1,10 @@
 import { Matrix4, Mesh, Vector3, type BufferAttribute, type Object3D } from 'three/webgpu';
 
+/** Ground fitting needs tyre pivots, not every door, lamp and body panel. The render pass updates those later. */
+export function updateTyreMatrices(wheels: readonly { node: Object3D }[]): void {
+  for (const wheel of wheels) wheel.node.updateWorldMatrix(true, false);
+}
+
 /** Tyre cross-section of a wheel at runtime scale: [radial, |axial|] points that can be lowest at some lean (16 axial bins). */
 export type Profile = [number, number][];
 export function tyreProfile(wheel: Object3D | undefined, scale: number): Profile {
