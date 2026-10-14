@@ -1,0 +1,51 @@
+{
+  "seed": 32,
+  "ground": "district",
+  "time": "L9-crossing",
+  "dof": false,
+  "camera": {
+    "mode": "game",
+    "target": "corridor-line:infected.alpha:0",
+    "zoom": 1
+  },
+  "frames": 60,
+  "sheet": 30,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "lodPlaceholderFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "name": "l10-e2-rockets",
+  "note": "Production mission inventory and late-region threats. Game camera follows the regular Alpha so its silhouette, health bar and adjacent dogs are visible at both tiers/zooms; backpack and terminal have separate catalog scenes.",
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        3172,
+        55
+      ],
+      [
+        3257,
+        135
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        3212,
+        95
+      ],
+      "yaw": 210
+    }
+  ],
+  "cureProgression": {
+    "checkpoint": "cure-corridor",
+    "authored": true
+  },
+  "cureEncounter": "corridor-line"
+}

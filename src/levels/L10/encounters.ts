@@ -2,7 +2,7 @@ import { cure } from './district';
 import type { CureRegion } from './alphaContracts';
 import type { Point } from '../districts/types';
 
-/** R1–R4 resident peaks, authored along the road rather than in response to arsenal changes.
+/** R1–R6 resident peaks, authored along the road rather than in response to arsenal changes.
  * Low quality thins only ordinary humans. Dogs and regular Alpha encounters keep their mechanics/counts.
  * Checkpoint forecourts and the service/motor-pool roads remain clear of authored groups. */
 export interface CureEncounter {
@@ -21,10 +21,16 @@ export const cureEncounters: readonly CureEncounter[] = [
   { id: 'military-breach', region: 'military-zone', at: [2012, -75], regular: [18, 11], dogs: 2, alphas: 1 },
   { id: 'military-column', region: 'military-zone', at: [2137, -75], regular: [18, 11], dogs: 1, alphas: 0 },
   { id: 'military-exit', region: 'military-zone', at: [2252, -75], regular: [18, 11], dogs: 0, alphas: 1 },
+  { id: 'research-approach', region: 'research-campus', at: [2617, 45], regular: [22, 14], dogs: 2, alphas: 1 },
+  { id: 'research-lab', region: 'research-campus', at: [2682, 45], regular: [22, 14], dogs: 0, alphas: 0 },
+  { id: 'research-quarantine', region: 'research-campus', at: [2857, -5], regular: [22, 14], dogs: 2, alphas: 1 },
+  { id: 'corridor-line', region: 'destroyed-corridor', at: [3217, 95], regular: [32, 20], dogs: 2, alphas: 1 },
+  { id: 'corridor-breach', region: 'destroyed-corridor', at: [3317, 95], regular: [32, 20], dogs: 2, alphas: 1 },
+  { id: 'corridor-exit', region: 'destroyed-corridor', at: [3417, 95], regular: [32, 20], dogs: 1, alphas: 1 },
 ];
 export const cureMedkits = [
   { id: 'crash-approach', at: [732, 29] as Point },
-  ...['police-medkit', 'industrial-medkit', 'military-medkit'].map(id => ({ id, at: cure.anchors[id] })),
+  ...['police-medkit', 'industrial-medkit', 'military-medkit', 'research-medkit', 'corridor-medkit'].map(id => ({ id, at: cure.anchors[id] })),
   { id: 'fringe-detour', at: [937, 76] as Point },
   { id: 'industrial-service', at: [1517, -55] as Point },
   { id: 'military-motor-pool', at: [2137, 110] as Point },

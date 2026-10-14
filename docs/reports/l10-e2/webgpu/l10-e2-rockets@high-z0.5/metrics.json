@@ -1,0 +1,1714 @@
+{
+  "spec": "tests/scenes/catalog/l10-e2-rockets.json",
+  "backend": "webgpu",
+  "requestedBackend": "webgpu",
+  "tier": "high",
+  "frames": 60,
+  "timing": {
+    "openMs": 0,
+    "loadMs": 11964,
+    "runMs": 1825,
+    "sceneMs": 13789
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "undrawnFramesMax",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "drawCallsMax",
+        "pass": true,
+        "value": 50,
+        "limit": 300
+      },
+      {
+        "name": "trianglesMax",
+        "pass": true,
+        "value": 222067,
+        "limit": 500000
+      },
+      {
+        "name": "lodPlaceholderFramesMax",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "canvas.f0.varianceMin",
+        "pass": true,
+        "value": 975.8100242162346,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f0.variedTilesMin",
+        "pass": true,
+        "value": 63,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f30.varianceMin",
+        "pass": true,
+        "value": 2369.519760927017,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f30.variedTilesMin",
+        "pass": true,
+        "value": 63,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f60.varianceMin",
+        "pass": true,
+        "value": 3984.3558908459986,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f60.variedTilesMin",
+        "pass": true,
+        "value": 63,
+        "limit": 8
+      },
+      {
+        "name": "requestedBackend",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      }
+    ]
+  },
+  "pixels": [
+    {
+      "frame": 0,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          29.69182484567901,
+          25.676514274691357,
+          39.453792438271606
+        ],
+        "variance": 975.8100242162346,
+        "variedTiles": 63,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 30,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          32.403950617283954,
+          34.23413773148148,
+          47.57358024691358
+        ],
+        "variance": 2369.519760927017,
+        "variedTiles": 63,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 60,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          34.9022550154321,
+          42.54335841049383,
+          55.937158564814816
+        ],
+        "variance": 3984.3558908459986,
+        "variedTiles": 63,
+        "tiles": 64
+      }
+    }
+  ],
+  "consoleErrors": [],
+  "scene": {
+    "name": "l10-e2-rockets",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "veh.wreck:258",
+        "asset": "veh.wreck",
+        "at": [
+          3217,
+          115
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:259",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          3225,
+          115
+        ],
+        "yawDeg": 0
+      }
+    ],
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "entity": 1
+      },
+      {
+        "id": "corridor-line:infected.runner:0",
+        "kind": "infected",
+        "entity": 2
+      },
+      {
+        "id": "corridor-line:infected.runner:1",
+        "kind": "infected",
+        "entity": 3
+      },
+      {
+        "id": "corridor-line:infected.runner:2",
+        "kind": "infected",
+        "entity": 4
+      },
+      {
+        "id": "corridor-line:infected.runner:3",
+        "kind": "infected",
+        "entity": 5
+      },
+      {
+        "id": "corridor-line:infected.runner:4",
+        "kind": "infected",
+        "entity": 6
+      },
+      {
+        "id": "corridor-line:infected.runner:5",
+        "kind": "infected",
+        "entity": 7
+      },
+      {
+        "id": "corridor-line:infected.runner:6",
+        "kind": "infected",
+        "entity": 8
+      },
+      {
+        "id": "corridor-line:infected.runner:7",
+        "kind": "infected",
+        "entity": 9
+      },
+      {
+        "id": "corridor-line:infected.runner:8",
+        "kind": "infected",
+        "entity": 10
+      },
+      {
+        "id": "corridor-line:infected.runner:9",
+        "kind": "infected",
+        "entity": 11
+      },
+      {
+        "id": "corridor-line:infected.runner:10",
+        "kind": "infected",
+        "entity": 12
+      },
+      {
+        "id": "corridor-line:infected.runner:11",
+        "kind": "infected",
+        "entity": 13
+      },
+      {
+        "id": "corridor-line:infected.runner:12",
+        "kind": "infected",
+        "entity": 14
+      },
+      {
+        "id": "corridor-line:infected.runner:13",
+        "kind": "infected",
+        "entity": 15
+      },
+      {
+        "id": "corridor-line:infected.runner:14",
+        "kind": "infected",
+        "entity": 16
+      },
+      {
+        "id": "corridor-line:infected.runner:15",
+        "kind": "infected",
+        "entity": 17
+      },
+      {
+        "id": "corridor-line:infected.runner:16",
+        "kind": "infected",
+        "entity": 18
+      },
+      {
+        "id": "corridor-line:infected.runner:17",
+        "kind": "infected",
+        "entity": 19
+      },
+      {
+        "id": "corridor-line:infected.runner:18",
+        "kind": "infected",
+        "entity": 20
+      },
+      {
+        "id": "corridor-line:infected.runner:19",
+        "kind": "infected",
+        "entity": 21
+      },
+      {
+        "id": "corridor-line:infected.runner:20",
+        "kind": "infected",
+        "entity": 22
+      },
+      {
+        "id": "corridor-line:infected.runner:21",
+        "kind": "infected",
+        "entity": 23
+      },
+      {
+        "id": "corridor-line:infected.runner:22",
+        "kind": "infected",
+        "entity": 24
+      },
+      {
+        "id": "corridor-line:infected.runner:23",
+        "kind": "infected",
+        "entity": 25
+      },
+      {
+        "id": "corridor-line:infected.runner:24",
+        "kind": "infected",
+        "entity": 26
+      },
+      {
+        "id": "corridor-line:infected.runner:25",
+        "kind": "infected",
+        "entity": 27
+      },
+      {
+        "id": "corridor-line:infected.runner:26",
+        "kind": "infected",
+        "entity": 28
+      },
+      {
+        "id": "corridor-line:infected.runner:27",
+        "kind": "infected",
+        "entity": 29
+      },
+      {
+        "id": "corridor-line:infected.runner:28",
+        "kind": "infected",
+        "entity": 30
+      },
+      {
+        "id": "corridor-line:infected.runner:29",
+        "kind": "infected",
+        "entity": 31
+      },
+      {
+        "id": "corridor-line:infected.runner:30",
+        "kind": "infected",
+        "entity": 32
+      },
+      {
+        "id": "corridor-line:infected.runner:31",
+        "kind": "infected",
+        "entity": 33
+      },
+      {
+        "id": "corridor-line:infected.dog:0",
+        "kind": "infected",
+        "entity": 34
+      },
+      {
+        "id": "corridor-line:infected.dog:1",
+        "kind": "infected",
+        "entity": 35
+      },
+      {
+        "id": "corridor-line:infected.alpha:0",
+        "kind": "infected",
+        "entity": 36
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "armyBoom": null,
+    "scene": "l10-e2-rockets",
+    "frame": 60,
+    "tick": 60,
+    "backend": "webgpu",
+    "quality": "high",
+    "propPenetration": {
+      "samples": 2160,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "wheels": {},
+    "lodPlaceholders": {
+      "frames": 0,
+      "firstFrame": -1,
+      "assets": []
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 48,
+        "p95": 48,
+        "max": 50
+      },
+      "triangles": {
+        "p50": 217539,
+        "p95": 222067,
+        "max": 222067
+      },
+      "shadowDrawCalls": {
+        "p50": 38,
+        "p95": 38,
+        "max": 39
+      },
+      "shadowTriangles": {
+        "p50": 206358,
+        "p95": 210862,
+        "max": 210862
+      },
+      "stepMs": {
+        "p50": 10.8,
+        "p95": 12.9,
+        "max": 27.9
+      },
+      "lastFrame": {
+        "drawCalls": 48,
+        "triangles": 190380,
+        "shadowDrawCalls": 38,
+        "shadowTriangles": 179133,
+        "stepMs": 11,
+        "categories": {
+          "other": 40,
+          "shadows": 38,
+          "crowd": 8
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "grounding": {
+      "corpses": 0,
+      "corpseOffMaxCm": 0,
+      "pickups": 0,
+      "pickupOffMaxCm": 0,
+      "worst": []
+    },
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 1,
+      "hullWindups": 0,
+      "hullHits": 0,
+      "firstAttackFrame": 27,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "megaAlpha": null,
+    "minigun": null,
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0,
+      "holds": {}
+    },
+    "seeThrough": {
+      "frames": 0,
+      "solidRadiusMax": 0,
+      "cutLowProps": []
+    },
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "variety": {
+      "infected": {
+        "figures": 17,
+        "distinct": 17,
+        "per20": [
+          {
+            "figures": 17,
+            "distinct": 17
+          }
+        ],
+        "largestSameLookShare": 0.058823529411764705,
+        "largestModelShare": 0.23529411764705882
+      },
+      "pedestrian": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      }
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          3212,
+          95
+        ],
+        "yawDeg": 210,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            3212,
+            95
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 2.5,
+          "torsoPitchMaxDeg": 2.7,
+          "contacts": 3,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 4.4,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 10
+        }
+      },
+      "corridor-line:infected.runner:0": {
+        "kind": "infected",
+        "entity": 2,
+        "position": [
+          3212.6,
+          90.6
+        ],
+        "yawDeg": 180,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            3212.6,
+            90.6
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 45,
+          "torsoPitchMaxDeg": 48.6,
+          "contacts": 3,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 9.3,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 11
+        }
+      },
+      "corridor-line:infected.runner:1": {
+        "kind": "infected",
+        "entity": 3,
+        "position": [
+          3214.8,
+          90.6
+        ],
+        "yawDeg": 180,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            3214.8,
+            90.6
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 44.2,
+          "torsoPitchMaxDeg": 50.8,
+          "contacts": 3,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 17.8,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "corridor-line:infected.runner:2": {
+        "kind": "infected",
+        "entity": 4,
+        "position": [
+          3215.498,
+          91.922
+        ],
+        "yawDeg": 221.6,
+        "state": "chase",
+        "drawnFrames": 12,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 12
+        },
+        "firstDrawn": {
+          "frame": 49,
+          "at": [
+            3216.016,
+            91.466
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 25.3,
+          "torsoPitchMaxDeg": 29.4,
+          "contacts": 1,
+          "slideMaxCm": 0.2,
+          "slideP95Cm": 0.2,
+          "yawDriftMaxDeg": 0.1,
+          "liftMaxCm": 18.3,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 49
+        }
+      },
+      "corridor-line:infected.runner:3": {
+        "kind": "infected",
+        "entity": 5,
+        "position": [
+          3219.2,
+          90.6
+        ],
+        "yawDeg": 180,
+        "state": "idle",
+        "drawnFrames": 0,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {},
+        "firstDrawn": null,
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "corridor-line:infected.runner:4": {
+        "kind": "infected",
+        "entity": 6,
+        "position": [
+          3221.4,
+          90.6
+        ],
+        "yawDeg": 180,
+        "state": "idle",
+        "drawnFrames": 0,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {},
+        "firstDrawn": null,
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "corridor-line:infected.runner:5": {
+        "kind": "infected",
+        "entity": 7,
+        "position": [
+          3212.6,
+          92.8
+        ],
+        "yawDeg": 180,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            3212.6,
+            92.8
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 38.8,
+          "torsoPitchMaxDeg": 45.1,
+          "contacts": 3,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 17.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 27
+        }
+      },
+      "corridor-line:infected.runner:6": {
+        "kind": "infected",
+        "entity": 8,
+        "position": [
+          3213.342,
+          93.945
+        ],
+        "yawDeg": 218.3,
+        "state": "attack",
+        "drawnFrames": 60,
+        "inViewFrames": 29,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            3214.8,
+            92.8
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 19.2,
+          "torsoPitchMaxDeg": 78.1,
+          "contacts": 5,
+          "slideMaxCm": 0.4,
+          "slideP95Cm": 0.3,
+          "yawDriftMaxDeg": 0.1,
+          "liftMaxCm": 15.5,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 36
+        }
+      },
+      "corridor-line:infected.runner:7": {
+        "kind": "infected",
+        "entity": 9,
+        "position": [
+          3215.169,
+          93.606
+        ],
+        "yawDeg": 203.7,
+        "state": "chase",
+        "drawnFrames": 35,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 35
+        },
+        "firstDrawn": {
+          "frame": 26,
+          "at": [
+            3216.77,
+            92.901
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 26.5,
+          "torsoPitchMaxDeg": 51.6,
+          "contacts": 5,
+          "slideMaxCm": 0.1,
+          "slideP95Cm": 0.1,
+          "yawDriftMaxDeg": 0.1,
+          "liftMaxCm": 14.4,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 38
+        }
+      },
+      "corridor-line:infected.runner:8": {
+        "kind": "infected",
+        "entity": 10,
+        "position": [
+          3217.286,
+          93.385
+        ],
+        "yawDeg": 197,
+        "state": "chase",
+        "drawnFrames": 0,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {},
+        "firstDrawn": null,
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "corridor-line:infected.runner:9": {
+        "kind": "infected",
+        "entity": 11,
+        "position": [
+          3221.4,
+          92.8
+        ],
+        "yawDeg": 180,
+        "state": "idle",
+        "drawnFrames": 0,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {},
+        "firstDrawn": null,
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "corridor-line:infected.runner:10": {
+        "kind": "infected",
+        "entity": 12,
+        "position": [
+          3213.023,
+          95
+        ],
+        "yawDeg": 180,
+        "state": "chase",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            3213.08,
+            95
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 28.8,
+          "torsoPitchMaxDeg": 98.3,
+          "contacts": 4,
+          "slideMaxCm": 1.1,
+          "slideP95Cm": 0.9,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 14.8,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 17
+        }
+      },
+      "corridor-line:infected.runner:11": {
+        "kind": "infected",
+        "entity": 13,
+        "position": [
+          3213.915,
+          95
+        ],
+        "yawDeg": 180,
+        "state": "attack",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            3214.8,
+            95
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 16.4,
+          "torsoPitchMaxDeg": 163.9,
+          "contacts": 4,
+          "slideMaxCm": 1.6,
+          "slideP95Cm": 0.3,
+          "yawDriftMaxDeg": 0.1,
+          "liftMaxCm": 26.4,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 29
+        }
+      },
+      "corridor-line:infected.runner:12": {
+        "kind": "infected",
+        "entity": 14,
+        "position": [
+          3214.999,
+          95
+        ],
+        "yawDeg": 180,
+        "state": "chase",
+        "drawnFrames": 60,
+        "inViewFrames": 8,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            3217,
+            95
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 33.5,
+          "torsoPitchMaxDeg": 90.3,
+          "contacts": 7,
+          "slideMaxCm": 0.4,
+          "slideP95Cm": 0.1,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 12.9,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 11
+        }
+      },
+      "corridor-line:infected.runner:13": {
+        "kind": "infected",
+        "entity": 15,
+        "position": [
+          3217.199,
+          95
+        ],
+        "yawDeg": 180,
+        "state": "chase",
+        "drawnFrames": 11,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 11
+        },
+        "firstDrawn": {
+          "frame": 50,
+          "at": [
+            3217.829,
+            95
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 18.7,
+          "torsoPitchMaxDeg": 21.5,
+          "contacts": 2,
+          "slideMaxCm": 0.1,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0.1,
+          "liftMaxCm": 17.9,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 50
+        }
+      },
+      "corridor-line:infected.runner:14": {
+        "kind": "infected",
+        "entity": 16,
+        "position": [
+          3221.4,
+          95
+        ],
+        "yawDeg": 180,
+        "state": "idle",
+        "drawnFrames": 0,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {},
+        "firstDrawn": null,
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "corridor-line:infected.runner:15": {
+        "kind": "infected",
+        "entity": 17,
+        "position": [
+          3212.6,
+          97.2
+        ],
+        "yawDeg": 180,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            3212.6,
+            97.2
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 43,
+          "torsoPitchMaxDeg": 48.6,
+          "contacts": 3,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 13.9,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 11
+        }
+      },
+      "corridor-line:infected.runner:16": {
+        "kind": "infected",
+        "entity": 18,
+        "position": [
+          3213.342,
+          96.055
+        ],
+        "yawDeg": 141.7,
+        "state": "attack",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 39,
+          "lod1": 21
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            3214.8,
+            97.2
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 22.1,
+          "torsoPitchMaxDeg": 91.2,
+          "contacts": 4,
+          "slideMaxCm": 0.7,
+          "slideP95Cm": 0.4,
+          "yawDriftMaxDeg": 0.1,
+          "liftMaxCm": 18.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 21
+        }
+      },
+      "corridor-line:infected.runner:17": {
+        "kind": "infected",
+        "entity": 19,
+        "position": [
+          3215.169,
+          96.394
+        ],
+        "yawDeg": 156.3,
+        "state": "chase",
+        "drawnFrames": 60,
+        "inViewFrames": 16,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            3217,
+            97.2
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 15.9,
+          "torsoPitchMaxDeg": 69.4,
+          "contacts": 6,
+          "slideMaxCm": 0.4,
+          "slideP95Cm": 0.2,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 18.2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 17
+        }
+      },
+      "corridor-line:infected.runner:18": {
+        "kind": "infected",
+        "entity": 20,
+        "position": [
+          3217.286,
+          96.615
+        ],
+        "yawDeg": 163,
+        "state": "chase",
+        "drawnFrames": 21,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 21
+        },
+        "firstDrawn": {
+          "frame": 40,
+          "at": [
+            3218.423,
+            96.962
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 33.6,
+          "torsoPitchMaxDeg": 34.7,
+          "contacts": 3,
+          "slideMaxCm": 0.1,
+          "slideP95Cm": 0.1,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 12.2,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 2,
+          "worstSlideFrame": 54
+        }
+      },
+      "corridor-line:infected.runner:19": {
+        "kind": "infected",
+        "entity": 21,
+        "position": [
+          3221.4,
+          97.2
+        ],
+        "yawDeg": 180,
+        "state": "idle",
+        "drawnFrames": 0,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {},
+        "firstDrawn": null,
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "corridor-line:infected.runner:20": {
+        "kind": "infected",
+        "entity": 22,
+        "position": [
+          3212.6,
+          99.4
+        ],
+        "yawDeg": 180,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 37,
+          "lod1": 23
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            3212.6,
+            99.4
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 42.1,
+          "torsoPitchMaxDeg": 49.4,
+          "contacts": 3,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 11.7,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 11
+        }
+      },
+      "corridor-line:infected.runner:21": {
+        "kind": "infected",
+        "entity": 23,
+        "position": [
+          3214.8,
+          99.4
+        ],
+        "yawDeg": 180,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            3214.8,
+            99.4
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 47.2,
+          "torsoPitchMaxDeg": 50,
+          "contacts": 3,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 16.9,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 11
+        }
+      },
+      "corridor-line:infected.runner:22": {
+        "kind": "infected",
+        "entity": 24,
+        "position": [
+          3215.498,
+          98.078
+        ],
+        "yawDeg": 138.4,
+        "state": "chase",
+        "drawnFrames": 23,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 23
+        },
+        "firstDrawn": {
+          "frame": 38,
+          "at": [
+            3216.464,
+            98.928
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 33.6,
+          "torsoPitchMaxDeg": 34.7,
+          "contacts": 3,
+          "slideMaxCm": 0.1,
+          "slideP95Cm": 0.1,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 14.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 43
+        }
+      },
+      "corridor-line:infected.runner:23": {
+        "kind": "infected",
+        "entity": 25,
+        "position": [
+          3219.2,
+          99.4
+        ],
+        "yawDeg": 180,
+        "state": "idle",
+        "drawnFrames": 0,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {},
+        "firstDrawn": null,
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "corridor-line:infected.runner:24": {
+        "kind": "infected",
+        "entity": 26,
+        "position": [
+          3221.4,
+          99.4
+        ],
+        "yawDeg": 180,
+        "state": "idle",
+        "drawnFrames": 0,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {},
+        "firstDrawn": null,
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "corridor-line:infected.runner:25": {
+        "kind": "infected",
+        "entity": 27,
+        "position": [
+          3212.6,
+          101.6
+        ],
+        "yawDeg": 180,
+        "state": "idle",
+        "drawnFrames": 0,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {},
+        "firstDrawn": null,
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "corridor-line:infected.runner:26": {
+        "kind": "infected",
+        "entity": 28,
+        "position": [
+          3214.8,
+          101.6
+        ],
+        "yawDeg": 180,
+        "state": "idle",
+        "drawnFrames": 0,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {},
+        "firstDrawn": null,
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "corridor-line:infected.runner:27": {
+        "kind": "infected",
+        "entity": 29,
+        "position": [
+          3215.792,
+          100.005
+        ],
+        "yawDeg": 126.1,
+        "state": "chase",
+        "drawnFrames": 0,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {},
+        "firstDrawn": null,
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "corridor-line:infected.runner:28": {
+        "kind": "infected",
+        "entity": 30,
+        "position": [
+          3219.2,
+          101.6
+        ],
+        "yawDeg": 180,
+        "state": "idle",
+        "drawnFrames": 0,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {},
+        "firstDrawn": null,
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "corridor-line:infected.runner:29": {
+        "kind": "infected",
+        "entity": 31,
+        "position": [
+          3221.4,
+          101.6
+        ],
+        "yawDeg": 180,
+        "state": "idle",
+        "drawnFrames": 0,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {},
+        "firstDrawn": null,
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "corridor-line:infected.runner:30": {
+        "kind": "infected",
+        "entity": 32,
+        "position": [
+          3212.6,
+          103.8
+        ],
+        "yawDeg": 180,
+        "state": "idle",
+        "drawnFrames": 0,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {},
+        "firstDrawn": null,
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "corridor-line:infected.runner:31": {
+        "kind": "infected",
+        "entity": 33,
+        "position": [
+          3214.8,
+          103.8
+        ],
+        "yawDeg": 180,
+        "state": "idle",
+        "drawnFrames": 0,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {},
+        "firstDrawn": null,
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "corridor-line:infected.dog:0": {
+        "kind": "infected",
+        "entity": 34,
+        "position": [
+          3217,
+          103.8
+        ],
+        "yawDeg": 180,
+        "state": "idle",
+        "drawnFrames": 0,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {},
+        "firstDrawn": null,
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "corridor-line:infected.dog:1": {
+        "kind": "infected",
+        "entity": 35,
+        "position": [
+          3219.2,
+          103.8
+        ],
+        "yawDeg": 180,
+        "state": "idle",
+        "drawnFrames": 0,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {},
+        "firstDrawn": null,
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "corridor-line:infected.alpha:0": {
+        "kind": "infected",
+        "entity": 36,
+        "position": [
+          3221.4,
+          103.8
+        ],
+        "yawDeg": 180,
+        "state": "idle",
+        "drawnFrames": 0,
+        "inViewFrames": 0,
+        "missedInViewFrames": 0,
+        "lod": {},
+        "firstDrawn": null,
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 0,
+          "slideMaxCm": 0,
+          "slideP95Cm": null,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 60,
+      "sim": {
+        "infected": 35,
+        "courier": 1,
+        "actors": 36
+      },
+      "drawn": {
+        "vehicle": 0,
+        "infected": 17,
+        "courier": 1
+      }
+    },
+    "lods": {
+      "veh.wreck:258": "culled",
+      "decay.makeshift-barricade:259": "culled"
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [],
+    "actors": [],
+    "gunBodies": [],
+    "heldProps": [],
+    "summary": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}

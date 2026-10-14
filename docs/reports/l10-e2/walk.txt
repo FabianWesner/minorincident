@@ -1,0 +1,18 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/l10-encounters-2 -> 91.98.11.241:/srv/mi/ws/l10-encounters-2-2a90d1
+[remote] cache-gc deleted:none
+[remote] sync 11s, 10363 files; job /srv/mi/jobs/l10-encounters-2-2a90d1-82484-1791962550; queueing for a slot
+[runner] slot 0 acquired; load 0.36 0.19 0.29
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/l10-encounters-2-2a90d1-82484-1791962550[39m
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/levels/l10-campus-corridor.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 49971[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex[33m 29095[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-03-D3-low @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex[33m 20874[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m   Start at [22m 07:22:42
+[2m   Duration [22m 52.44s[2m (tests 96%, transform 4%, import 1%)[22m
+
+[remote] pulled test-results/epics/E32/D3
+[remote] done exit=0 (runner 91.98.11.241, sync 11s, remote total 56s)

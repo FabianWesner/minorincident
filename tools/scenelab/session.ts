@@ -71,7 +71,7 @@ export class SceneSession {
     await this.page.waitForFunction(() => !!window.__SS__ && !!window.__SCENE__, null, { timeout: 120_000 });
     await this.page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.pause(); });
     // Story/HUD overlays are not part of an isolated scene.
-    await this.page.addStyleTag({ content: '#hud:not([data-scene-hud]),.hud:not([data-scene-hud]),.story-bubble,.mission-subtitle,[data-testid=mission-button]{visibility:hidden!important}' });
+    await this.page.addStyleTag({ content: '#hud:not([data-scene-hud]),.hud:not([data-scene-hud]),.story-bubble,html:not([data-scene-hud]) .mission-subtitle,[data-testid=mission-button]{visibility:hidden!important}' });
   }
   /** Switch from isolation to a real registered mission; use Inspection for camera and time. */
   async inspectLevel(level: string, bot = false) {
@@ -86,8 +86,15 @@ export class SceneSession {
       await this.page.waitForFunction(() => !!window.__SCENE__, null, { timeout: 120_000 });
       await this.page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.pause(); });
     }
-    await this.page.evaluate(on => { document.documentElement.toggleAttribute('data-scene-hud', on); }, !!spec.hud);
-    return this.page.evaluate(s => window.__SCENE__!.load(s), spec);
+    await this.page.evaluate(({ hud, tier }) => {
+      document.documentElement.toggleAttribute('data-scene-hud', hud);
+      // Full UI applies persisted settings at level load; pin the requested QA tier there too.
+      window.__SS__!.settings.set({ quality: tier });
+    }, { hud: !!spec.hud, tier: this.options.tier });
+    const scene = await this.page.evaluate(s => window.__SCENE__!.load(s), spec);
+    const actual = await this.page.evaluate(() => window.__SS__!.getState().render.quality);
+    if (actual !== this.options.tier) throw new Error(`Scene quality ${actual}, requested ${this.options.tier}`);
+    return scene;
   }
   async step(frames: number) { return this.page.evaluate(n => window.__SCENE__!.step(n), frames); }
   async ready() { await this.page.evaluate(() => window.__SCENE__ ? window.__SCENE__.ready() : window.__SS__!.screenshotReady()); }

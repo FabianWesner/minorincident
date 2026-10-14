@@ -1,0 +1,559 @@
+{
+  "spec": "tests/scenes/catalog/l10-e2-backpack.json",
+  "backend": "webgpu",
+  "requestedBackend": "webgpu",
+  "tier": "low",
+  "frames": 60,
+  "timing": {
+    "openMs": 0,
+    "loadMs": 7304,
+    "runMs": 1423,
+    "sceneMs": 8727
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "undrawnFramesMax",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "drawCallsMax",
+        "pass": true,
+        "value": 32,
+        "limit": 300
+      },
+      {
+        "name": "trianglesMax",
+        "pass": true,
+        "value": 65899,
+        "limit": 500000
+      },
+      {
+        "name": "lodPlaceholderFramesMax",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "canvas.f0.varianceMin",
+        "pass": true,
+        "value": 334.48247666536565,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f0.variedTilesMin",
+        "pass": true,
+        "value": 35,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f30.varianceMin",
+        "pass": true,
+        "value": 333.3473319787231,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f30.variedTilesMin",
+        "pass": true,
+        "value": 35,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f60.varianceMin",
+        "pass": true,
+        "value": 333.2483717588983,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f60.variedTilesMin",
+        "pass": true,
+        "value": 35,
+        "limit": 8
+      },
+      {
+        "name": "requestedBackend",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      }
+    ]
+  },
+  "pixels": [
+    {
+      "frame": 0,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          21.850609567901234,
+          25.24854552469136,
+          27.563632330246914
+        ],
+        "variance": 334.48247666536565,
+        "variedTiles": 35,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 30,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          21.835380015432097,
+          25.235559413580248,
+          27.55292824074074
+        ],
+        "variance": 333.3473319787231,
+        "variedTiles": 35,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 60,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          21.836859567901236,
+          25.235461033950617,
+          27.553416280864198
+        ],
+        "variance": 333.2483717588983,
+        "variedTiles": 35,
+        "tiles": 64
+      }
+    }
+  ],
+  "consoleErrors": [],
+  "scene": {
+    "name": "l10-e2-backpack",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "bld.cure-lab-main:194",
+        "asset": "bld.cure-lab-main",
+        "at": [
+          2707,
+          23
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-generator:201",
+        "asset": "prop.cure-generator",
+        "at": [
+          2697,
+          65
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "veh.ambulance:204",
+        "asset": "veh.ambulance",
+        "at": [
+          2757,
+          65
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "kit.dispersal-console:205",
+        "asset": "kit.dispersal-console",
+        "at": [
+          2707,
+          39.5
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "prop.cure-canister-pedestal:206",
+        "asset": "prop.cure-canister-pedestal",
+        "at": [
+          2713,
+          39.5
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-quarantine-fence:223",
+        "asset": "prop.cure-quarantine-fence",
+        "at": [
+          2673,
+          76
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-quarantine-fence:224",
+        "asset": "prop.cure-quarantine-fence",
+        "at": [
+          2679,
+          76
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-quarantine-fence:225",
+        "asset": "prop.cure-quarantine-fence",
+        "at": [
+          2685,
+          76
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-quarantine-fence:226",
+        "asset": "prop.cure-quarantine-fence",
+        "at": [
+          2691,
+          76
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-quarantine-fence:227",
+        "asset": "prop.cure-quarantine-fence",
+        "at": [
+          2697,
+          76
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-quarantine-fence:228",
+        "asset": "prop.cure-quarantine-fence",
+        "at": [
+          2703,
+          76
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-quarantine-fence:229",
+        "asset": "prop.cure-quarantine-fence",
+        "at": [
+          2709,
+          76
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-quarantine-fence:230",
+        "asset": "prop.cure-quarantine-fence",
+        "at": [
+          2715,
+          76
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-quarantine-fence:231",
+        "asset": "prop.cure-quarantine-fence",
+        "at": [
+          2721,
+          76
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-quarantine-fence:232",
+        "asset": "prop.cure-quarantine-fence",
+        "at": [
+          2727,
+          76
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-quarantine-fence:233",
+        "asset": "prop.cure-quarantine-fence",
+        "at": [
+          2733,
+          76
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-quarantine-fence:234",
+        "asset": "prop.cure-quarantine-fence",
+        "at": [
+          2739,
+          76
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-quarantine-fence:235",
+        "asset": "prop.cure-quarantine-fence",
+        "at": [
+          2745,
+          76
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-quarantine-fence:236",
+        "asset": "prop.cure-quarantine-fence",
+        "at": [
+          2751,
+          76
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-quarantine-fence:237",
+        "asset": "prop.cure-quarantine-fence",
+        "at": [
+          2757,
+          76
+        ],
+        "yawDeg": 0
+      }
+    ],
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "entity": 1
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "armyBoom": null,
+    "scene": "l10-e2-backpack",
+    "frame": 60,
+    "tick": 60,
+    "backend": "webgpu",
+    "quality": "low",
+    "propPenetration": {
+      "samples": 60,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "wheels": {},
+    "lodPlaceholders": {
+      "frames": 0,
+      "firstFrame": -1,
+      "assets": []
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 32,
+        "p95": 32,
+        "max": 32
+      },
+      "triangles": {
+        "p50": 65899,
+        "p95": 65899,
+        "max": 65899
+      },
+      "shadowDrawCalls": {
+        "p50": 26,
+        "p95": 26,
+        "max": 26
+      },
+      "shadowTriangles": {
+        "p50": 60612,
+        "p95": 60612,
+        "max": 60612
+      },
+      "stepMs": {
+        "p50": 5.8,
+        "p95": 8.7,
+        "max": 28.5
+      },
+      "lastFrame": {
+        "drawCalls": 32,
+        "triangles": 65899,
+        "shadowDrawCalls": 26,
+        "shadowTriangles": 60612,
+        "stepMs": 3.6999998092651367,
+        "categories": {
+          "other": 29,
+          "shadows": 26,
+          "buildings": 3
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "grounding": {
+      "corpses": 0,
+      "corpseOffMaxCm": 0,
+      "pickups": 0,
+      "pickupOffMaxCm": 0,
+      "worst": []
+    },
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "hullWindups": 0,
+      "hullHits": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "megaAlpha": null,
+    "minigun": null,
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0,
+      "holds": {}
+    },
+    "seeThrough": {
+      "frames": 0,
+      "solidRadiusMax": 0,
+      "cutLowProps": []
+    },
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "variety": {
+      "infected": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      },
+      "pedestrian": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      }
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          2713,
+          45
+        ],
+        "yawDeg": 210,
+        "state": "idle",
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            2713,
+            45
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 9.9,
+          "torsoPitchMaxDeg": 10.2,
+          "contacts": 3,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 5.1,
+          "sinkMaxCm": 0.1,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 10
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 60,
+      "sim": {
+        "courier": 1,
+        "actors": 1
+      },
+      "drawn": {
+        "vehicle": 0,
+        "courier": 1
+      }
+    },
+    "lods": {
+      "bld.cure-lab-main:194": "lod2",
+      "prop.cure-generator:201": "culled",
+      "veh.ambulance:204": "culled",
+      "kit.dispersal-console:205": "lod1",
+      "prop.cure-canister-pedestal:206": "culled",
+      "prop.cure-quarantine-fence:223": "culled",
+      "prop.cure-quarantine-fence:224": "culled",
+      "prop.cure-quarantine-fence:225": "culled",
+      "prop.cure-quarantine-fence:226": "culled",
+      "prop.cure-quarantine-fence:227": "culled",
+      "prop.cure-quarantine-fence:228": "culled",
+      "prop.cure-quarantine-fence:229": "culled",
+      "prop.cure-quarantine-fence:230": "culled",
+      "prop.cure-quarantine-fence:231": "culled",
+      "prop.cure-quarantine-fence:232": "culled",
+      "prop.cure-quarantine-fence:233": "culled",
+      "prop.cure-quarantine-fence:234": "culled",
+      "prop.cure-quarantine-fence:235": "culled",
+      "prop.cure-quarantine-fence:236": "culled",
+      "prop.cure-quarantine-fence:237": "culled"
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [],
+    "actors": [],
+    "gunBodies": [],
+    "heldProps": [],
+    "summary": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}
