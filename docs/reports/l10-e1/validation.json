@@ -1,0 +1,157 @@
+{
+  "date": "2026-10-14",
+  "scope": "L10-E1 R1-R4",
+  "unit": {
+    "passed": 1392,
+    "skipped": 7,
+    "runner": "Hetzner",
+    "maxWorkers": 4
+  },
+  "epicAndSmokeSim": {
+    "passed": 89,
+    "runner": "Hetzner",
+    "maxWorkers": 1
+  },
+  "desktopBrowser": {
+    "passed": 31,
+    "maxWorkers": 2
+  },
+  "sceneMatrix": {
+    "passed": 60,
+    "backends": [
+      "webgl2",
+      "webgpu"
+    ],
+    "qualities": [
+      "high",
+      "low"
+    ],
+    "zooms": [
+      1.5,
+      1,
+      0.5
+    ]
+  },
+  "nativePerformance": {
+    "passed": 8,
+    "headless": true,
+    "angle": "metal",
+    "workers": 1,
+    "exclusiveLock": true,
+    "noOtherHeadlessChrome": true,
+    "noLocalVitest": true,
+    "preflightLoad": [
+      2.54,
+      6.03,
+      5.73
+    ],
+    "maxima": {
+      "high": {
+        "frameP95": 6.7,
+        "simP95": 1.1000003814697266,
+        "draws": 169,
+        "triangles": 420736,
+        "peak": 59,
+        "resident": 25,
+        "heapMB": 214.04588
+      },
+      "low": {
+        "frameP95": 5.6,
+        "simP95": 0.8999996185302734,
+        "draws": 162,
+        "triangles": 43681,
+        "peak": 38,
+        "resident": 9,
+        "heapMB": 166.373296
+      }
+    },
+    "budgets": {
+      "high": {
+        "frameP95": 16.7,
+        "simP95": 4,
+        "draws": 600,
+        "triangles": 1500000,
+        "peak": 200,
+        "resident": 25,
+        "heapMB": 400
+      },
+      "low": {
+        "frameP95": 33.3,
+        "simP95": 6,
+        "draws": 300,
+        "triangles": 500000,
+        "peak": 100,
+        "resident": 9,
+        "heapMB": 250
+      }
+    }
+  },
+  "verifyE32": {
+    "passed": true,
+    "commands": 6
+  },
+  "route": {
+    "high": {
+      "tier": "high",
+      "regions": [
+        {
+          "id": "crash-outskirts",
+          "ticks": 3421
+        },
+        {
+          "id": "residential-fringe",
+          "ticks": 8050
+        },
+        {
+          "id": "industrial-area",
+          "ticks": 10054
+        },
+        {
+          "id": "military-zone",
+          "ticks": 10795
+        }
+      ],
+      "p95": 1.4055799999987357,
+      "chunks": {
+        "resident": 15,
+        "queued": 0,
+        "unloaded": 183,
+        "inactive": 2,
+        "colliders": 30,
+        "navCells": 600000
+      },
+      "lastCheckpoint": "cure-research-entry"
+    },
+    "low": {
+      "tier": "low",
+      "regions": [
+        {
+          "id": "crash-outskirts",
+          "ticks": 3421
+        },
+        {
+          "id": "residential-fringe",
+          "ticks": 8050
+        },
+        {
+          "id": "industrial-area",
+          "ticks": 10054
+        },
+        {
+          "id": "military-zone",
+          "ticks": 10799
+        }
+      ],
+      "p95": 0.660702000001038,
+      "chunks": {
+        "resident": 6,
+        "queued": 0,
+        "unloaded": 192,
+        "inactive": 3,
+        "colliders": 10,
+        "navCells": 240000
+      },
+      "lastCheckpoint": "cure-research-entry"
+    }
+  }
+}
