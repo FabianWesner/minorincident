@@ -5,15 +5,66 @@
  "ground": "district",
  "time": "L9-crossing",
  "dof": false,
- "layout": { "district": "D-CROSSING", "bbox": [[-140, -390], [40, -270]] },
+ "layout": {
+  "district": "D-CROSSING",
+  "bbox": [
+   [
+    -140,
+    -390
+   ],
+   [
+    40,
+    -270
+   ]
+  ]
+ },
  "actors": [
-  { "id": "group", "kind": "infected", "archetype": "infected.runner", "count": 6, "at": [-50, -330], "spread": 2.2, "yaw": 270 }
+  {
+   "id": "group",
+   "kind": "infected",
+   "archetype": "infected.runner",
+   "count": 6,
+   "at": [
+    -50,
+    -330
+   ],
+   "spread": 2.2,
+   "yaw": 270
+  }
  ],
  "vehicles": [
-  { "id": "apc", "asset": "vehicle.military-apc", "at": [-95, -305], "yaw": 0, "health": 1000, "path": [[5, -305]] }
+  {
+   "id": "apc",
+   "asset": "vehicle.military-apc",
+   "at": [
+    -95,
+    -305
+   ],
+   "yaw": 0,
+   "health": 1000,
+   "path": [
+    [
+     5,
+     -305
+    ]
+   ],
+   "driven": true
+  }
  ],
- "camera": { "mode": "game", "target": "group-1", "zoom": 1 },
+ "camera": {
+  "mode": "game",
+  "target": "group-1",
+  "zoom": 1
+ },
  "frames": 420,
  "sheet": 30,
- "expect": { "consoleErrors": 0, "clippingMax": 0, "drawCallsMax": 300, "trianglesMax": 500000 }
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000,
+  "vehicleTiltMaxDeg": 8,
+  "vehicleSlipMaxDeg": 20,
+  "headlightsDarkFramesMax": 0
+ }
 }
