@@ -251,6 +251,8 @@ export interface CureFrontState {
 }
 export interface MissionState {
   cureFront?: CureFrontState;
+  /** Release-relative presentation clock and once-only cast ledger, saved with the mission/chunks. */
+  epilogue?: { phase: 'playable' | 'title' | 'credits' | 'done'; phaseTicks: number; survivors: number[]; approaching: number[]; groupsAuthored: boolean };
   /** L1 v2 story state (technician, accident timeline, infected exits, result counters). */
   l1?: L1State;
   /** L2 set-piece state; checkpoints snapshot it (ticks are shifted on restore). */

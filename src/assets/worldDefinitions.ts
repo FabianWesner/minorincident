@@ -1,4 +1,4 @@
-import manifest from "./manifest.json";
+import manifest from "./manifest.json" with { type: 'json' };
 import type { AssetDef } from "./types";
 export type WorldAssetDef = AssetDef & { world: NonNullable<AssetDef["world"]> };
 /** The canonical manifest remains the only source of asset dimensions and status. */

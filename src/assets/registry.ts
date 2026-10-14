@@ -3,7 +3,7 @@ import { Box3, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, SRGBColorSpace
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { KTX2Loader } from 'three/addons/loaders/KTX2Loader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
-import manifest from './manifest.json';
+import manifest from './manifest.json' with { type: 'json' };
 import { atLeast, variantPath, type AssetDef, type AssetQuality } from './types';
 import { placeholder } from './placeholders';
 import type { Materials } from '../render/Materials';

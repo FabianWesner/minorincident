@@ -147,6 +147,8 @@ export class Npcs {
   setAmbient(count: number): void { this.ambientTarget = count; }
   setQuality(tier: 'high' | 'low'): void {
     if(this.slice)return;
+    // L10 is authored as an empty journey until the bounded epilogue cast emerges.
+    if (this.world.scenario === 'L10') { this.world.infected!.director.setTier(tier); this.ambientTarget = 0; return; }
     if (this.civilians.outbreak) { this.world.infected!.director.tier = tier; return; }
     this.world.infected!.director.setTier(tier);
     this.ambientTarget = Math.round(npcs.density[this.civilians.level - 1] * (tier === 'low' ? .6 : 1));

@@ -96,3 +96,17 @@ test('T-E02-max-zoom @E02-AC03 @E18-AC01 max zoom keeps desktop and portrait gro
     }
   }
 });
+
+test('T-E32-26-camera-S9 @E32-AC26 epilogue pull widens the follow rig while wheel zoom, player tracking and resize keep working', () => {
+  for (const [width, height] of [[1600, 900], [390, 844]]) {
+    const view = new View(); view.resize(width, height); view.reset({ x: 0, z: 0 });
+    const base = view.radius; view.epilogueScale = 4; view.pull(2, -2, .4);
+    view.zoom(Math.log(.5), true); view.update({ x: 4, z: -3 }, 1 / 60);
+    expect(view.getState().zoom).toBe(.5); expect(view.radius).toBeCloseTo(base * 2);
+    expect(view.focus.x).toBeGreaterThan(0); expect(view.focus.z).toBeLessThan(0);
+    view.zoom(Math.log(2), true); view.update({ x: 4, z: -3 }, 1 / 60);
+    expect(view.getState().zoom).toBe(1); expect(view.radius).toBeCloseTo(base * 4);
+    view.resize(width, height); expect(view.radius).toBeCloseTo(base * 4);
+    view.reset({ x: 0, z: 0 }); expect(view.radius).toBeCloseTo(base);
+  }
+});

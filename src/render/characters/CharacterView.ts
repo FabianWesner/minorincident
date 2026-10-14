@@ -1,7 +1,7 @@
 import { BoxGeometry, Color, Group, Mesh, Quaternion, Vector3, type Material } from 'three/webgpu';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
-import manifest from '../../assets/manifest.json';
+import manifest from '../../assets/manifest.json' with { type: 'json' };
 import { atLeast, type AssetDef } from '../../assets/types';
 import { palette, type PaletteToken } from '../../data/palette';
 import { characterNodes } from '../../data/survivor';

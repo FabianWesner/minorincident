@@ -1,4 +1,5 @@
 import { l3, l3AttackView } from '../data/l3';
+import { epiloguePull } from '../sim/missions/LevelTenEpilogue';
 import { CrowdAccessories } from './characters/CrowdAccessories';
 import { carTransitionPose } from './characters/carTransition';
 import { WeatherView } from './WeatherView';
@@ -107,6 +108,7 @@ export class GameView implements Lifecycle {
   private readonly preparedDistrictViews = new Map<SimWorld['districts'], DistrictView>();
   private pendingPreparation: { shared: NonNullable<GameView['districtResources']>; instanceCapacity?: number } | null = null;
   private preparation: Promise<void> | null = null;
+  private epiloguePrepared: object | null = null;
   /** Pending L1 shader warm-up while the briefing is shown (see load()). */
   warming: Promise<void> | null = null;
   loadProgress?: (completed: number, total: number) => void;
@@ -204,6 +206,7 @@ export class GameView implements Lifecycle {
   /** Apply inexpensive tier controls without rebuilding the level or interrupting its simulation. */
   setQuality(tier: QualityTier): void {
     const changed = this.quality !== tier; this.quality = tier; this.resize();
+    if (changed) this.epiloguePrepared = null;
     if (changed && this.postFx) { const enabled = this.postFx.bloomEnabled.value; this.postFx.dispose(); this.retiredPostFx = this.postFx.diagnostics(); this.postFx = new PostFx(this.renderer, this.scene, this.camera, tier, this.look); this.postFx.bloomEnabled.value = enabled; this.postFx.setDof(this.dofEnabled); this.postFx.applyLook(); }
     this.lighting?.setQuality(tier); this.districts?.setQuality(tier);
     this.vfx?.set({ quality: tier }); this.crowd?.setQuality(tier); this.npcs?.setQuality(tier);
@@ -568,6 +571,20 @@ export class GameView implements Lifecycle {
       // Brief l3-polish: the station attack pulls back (eased) so the streams at the gates are on screen while the courier holds the yard.
       this.l3AttackScale += ((rescue ? 3.3 : l3AttackView(this.world) ? l3.attack.viewScale : 1) - this.l3AttackScale) * (1 - Math.exp(-4 * seconds));
       this.view.encounterScale = this.world.scenario === 'L3' ? this.l3AttackScale : 1;
+      const ending = this.world.missions?.state.epilogue;
+      const pull = ending ? epiloguePull(this.world.missions!.state.counters['epilogue-ticks']) : 0;
+      this.view.epilogueScale = 1 + 6 * pull;
+      if (this.world.missions?.l10) {
+        const target = this.world.missions.def.anchors['epilogue-camera-target'] ?? player.transform;
+        this.view.pull(target.x, target.z, .4 * pull);
+        if (ending && this.epiloguePrepared !== ending && this.districts) {
+          this.epiloguePrepared = ending;
+          const district = this.districts, generation = this.generation, quality = this.quality;
+          // Warm only the authored finale camera neighborhood before its later widening reveals close tiers.
+          this.preparation = district.prepare(target, () => generation !== this.generation || quality !== this.quality, 32);
+          this.preparation.catch(error => { if (generation === this.generation) console.error(error); });
+        }
+      }
       // Brief l3-polish (the phone finale cropped the group at the right edge): a portrait screen pulls less toward the line, so
       // the courier and her group stay in frame next to the surge.
       if (this.world.scenario === 'L3') this.view.pull(202, 0, rescue ? (this.view.camera.aspect < 1 ? .45 : .8) : 0, rescue ? 1.6 : undefined);
@@ -928,7 +945,7 @@ export class GameView implements Lifecycle {
     const retain = !!nextDistricts && nextDistricts === this.resourceDistricts;
     this.weatherProbeAsset = null; this.weatherPowerRevision = 0;
     if (this.weather) { this.scene.remove(this.weather); this.weather.dispose(); this.weather = null; }
-    this.playSeconds = 0; this.generation++; this.pendingPreparation = null; this.preparation = null; this.warming = null;
+    this.playSeconds = 0; this.generation++; this.pendingPreparation = null; this.preparation = null; this.epiloguePrepared = null; this.warming = null;
     if (this.background) { loadGate.setPaced(true); loadGate.background = true; } else loadGate.setPaced(false);
     this.contactShadows?.removeFromParent(); this.contactShadows?.dispose(); this.contactShadows = null;
     if (this.npcs) { this.scene.remove(this.npcs); this.npcs.dispose(); this.npcs = null; }

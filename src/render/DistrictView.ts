@@ -37,7 +37,7 @@ import { buildingDoors, doorwayOf, doorZone, doorSwingS } from "../data/building
 import type { Materials } from "./Materials";
 import { anchorsFor, placedLightId } from '../data/placedLights';
 import { worldAssets } from "../assets/worldDefinitions";
-import manifest from "../assets/manifest.json";
+import manifest from "../assets/manifest.json" with { type: 'json' };
 import type { AssetDef } from "../assets/types";
 import { InstancedGroup } from "./InstancedGroup";
 import { Grass, windPhase } from "./Grass";
@@ -979,7 +979,7 @@ export class DistrictView extends Group {
       for (let entry = queue.shift(); entry && !cancelled() && !this.disposed; entry = queue.shift()) {
         await this.pending.get(entry);
         const pending = (async () => {
-          if (!entry.nearLoaded && maximumDistance === Infinity) await this.loadHero(entry, 'lod1');
+          if (!entry.nearLoaded && (this.low || maximumDistance === Infinity)) await this.loadHero(entry, 'lod1');
           if (!entry.farLoaded) await this.loadHero(entry, 'lod2');
           if (lod === 'lod0' && !entry.loaded) await this.loadHero(entry);
         })();

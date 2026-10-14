@@ -1,4 +1,5 @@
 import { cureReached } from '../../sim/missions/CureFront';
+import { epiloguePull } from '../../sim/missions/LevelTenEpilogue';
 // Fireball: TSL noise-dissolved spheres with a fire gradient, adapted from Bruno Simon folio-2025 World/Fireballs.js (MIT, 41046b5).
 // Roll kick by distance and bullet time ramp: adapted from folio-2025 Explosions.js and Time.js bulletTime (MIT, 41046b5).
 import { AdditiveBlending, BoxGeometry, DoubleSide, DynamicDrawUsage, Frustum, Group, IcosahedronGeometry, InstancedBufferAttribute, InstancedMesh, Matrix4, MeshBasicNodeMaterial, MeshLambertNodeMaterial, PlaneGeometry, Quaternion, SphereGeometry, Vector3, type BufferGeometry, type Camera, type Node } from 'three/webgpu';
@@ -334,12 +335,13 @@ export class Blasts extends Group {
     const front = this.world.missions?.state.cureFront;
     if (!front) return;
     const focus = this.host.focus?.() ?? this.world.entities.get(1)!.transform, count = this.quality === 'low' ? 8 : 24;
+    const pull = epiloguePull(this.world.missions!.state.counters['epilogue-ticks'] ?? 0);
     for (let i = 0; i < count; i++) {
-      const angle = this.rng.next() * Math.PI * 2, distance = Math.sqrt(this.rng.next()) * Math.max(1, Math.min(48, front.radius));
+      const angle = this.rng.next() * Math.PI * 2, distance = Math.sqrt(this.rng.next()) * Math.max(1, Math.min(48 + 96 * pull, front.radius));
       const x = focus.x + Math.cos(angle) * distance, z = focus.z + Math.sin(angle) * distance;
       if (!cureReached(front, { x, z }) || !this.sourceVisible(x, z, 6)) continue;
       const ground = this.world.districts?.groundHeight(x, z) ?? 0;
-      this.puff(x, ground + .3, z, .3, .08, .15, 3, 2.2, 4, -2, .75, now);
+      this.puff(x, ground + .3, z, .3, .08, .15, 3, 2.2 + 6 * pull, 4 + 12 * pull, -2, .75, now);
     }
   }
   /** Fires, burning props/cars and smoke-grenade zones drive persistent emitters. */

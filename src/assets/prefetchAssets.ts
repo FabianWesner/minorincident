@@ -1,4 +1,4 @@
-import manifest from './manifest.json';
+import manifest from './manifest.json' with { type: 'json' };
 import { compositions } from '../levels/compositions';
 import type { DistrictLayout } from '../levels/districts/types';
 import { assetUrl } from './assetUrl';

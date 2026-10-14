@@ -1,0 +1,89 @@
+{
+  "seed": 32,
+  "ground": "district",
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        3900,
+        -120
+      ],
+      [
+        4120,
+        100
+      ]
+    ]
+  },
+  "minigun": {
+    "at": [
+      3990,
+      3,
+      -33
+    ],
+    "yaw": 0
+  },
+  "time": "L10-night",
+  "frames": 2160,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "lodPlaceholderFramesMax": 0
+  },
+  "name": "qa-l10-epilogue",
+  "note": "Production R7 game camera, last 36 s of the 150 s playable epilogue. Smooth expanding follow rig preserves input and player wheel zoom. Survivors walk from the existing refuge, pale cure mist fills the complex/coarse horizon, corpses remain. Review frames at 114/126/138/150 s in both tiers and zooms on both backends.",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        4002,
+        -9
+      ],
+      "floorY": 0
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "sheet": 360,
+  "shots": [
+    0,
+    720,
+    1440,
+    2159
+  ],
+  "dof": false,
+  "cureProgression": {
+    "checkpoint": "cure-disperse-ready",
+    "releaseReady": true,
+    "authored": true,
+    "epilogueElapsed": 6840
+  },
+  "script": [
+    {
+      "frame": 30,
+      "actor": "courier",
+      "do": {
+        "moveTo": [
+          4006,
+          -9
+        ],
+        "pace": "walk"
+      }
+    },
+    {
+      "frame": 720,
+      "actor": "courier",
+      "do": {
+        "moveTo": [
+          4002,
+          -9
+        ],
+        "pace": "walk"
+      }
+    }
+  ]
+}
