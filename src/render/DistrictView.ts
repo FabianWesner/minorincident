@@ -666,6 +666,13 @@ export class DistrictView extends Group {
   private spinActive = false;
   private spinLevel = 0;
   private readonly spinAngles = new Map<string, number>();
+  private cureCollected = false;
+  /** The pedestal contains the terminal canister; consumed story props never remain beside the carried copy. */
+  setCureCollected(collected: boolean): void {
+    if (this.cureCollected === collected) return;
+    this.cureCollected = collected;
+    for (const entry of this.lodBatches) if (entry.id === 'prop.cure-canister-pedestal') this.dirtyEntries.add(entry);
+  }
   /** Dispersal running (finale) or idle: fans, turbine rotors and valve wheels pick their rate from this. */
   setDispersalActive(on: boolean): void { this.spinActive = on; }
   /** One shared angle per rotation node, written only into that node's split batch (no extra draw calls per placement). */
@@ -727,6 +734,7 @@ export class DistrictView extends Group {
     const selectedRefs = new Map([[hero, [] as Object3D[]], [near, [] as Object3D[]], [far, [] as Object3D[]]]);
     const foliage = (!!worldAssets[entry.id].foliage || /^prop\.(tree|bush|hedge)/.test(entry.id));
     for (const [index, ref] of refs.entries()) {
+      if (entry.id === 'prop.cure-canister-pedestal' && this.cureCollected) continue;
       if (foliage && index >= Math.ceil(refs.length * this.materials.look.values.foliageDensity)) continue;
       const x = ref.position.x + origin[0], z = ref.position.z + origin[1];
       this.bounds.center.set(x, ref.position.y + height * ref.scale.y / 2, z); this.bounds.radius = radius * Math.max(ref.scale.x, ref.scale.y, ref.scale.z);

@@ -1,0 +1,60 @@
+{
+  "seed": 32,
+  "ground": "district",
+  "time": "L9-crossing",
+  "dof": false,
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "frames": 60,
+  "sheet": 30,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "lodPlaceholderFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "name": "l10-e2-terminal",
+  "note": "Production mission inventory and depth threats. Review terminal subtitles, unique backpack canister, quadruped dogs and regular Alpha bars, clear evasion lane at both quality tiers/zooms.",
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        2667,
+        1
+      ],
+      [
+        2752,
+        81
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        2707,
+        41
+      ],
+      "yaw": 270
+    }
+  ],
+  "cureProgression": {
+    "checkpoint": "cure-research-entry",
+    "authored": true
+  },
+  "script": [
+    {
+      "frame": 1,
+      "actor": "courier",
+      "do": {
+        "interact": true
+      }
+    }
+  ],
+  "hud": true
+}
