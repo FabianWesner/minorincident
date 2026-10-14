@@ -32,8 +32,8 @@ export class MountedGun {
     this.aim = { x: Math.cos(placement.yaw * Math.PI / 180), z: -Math.sin(placement.yaw * Math.PI / 180) };
     this.rng = new Rng(world.seed, 'mounted-gun');
   }
-  /** Gunner's feet height: the deck under the gun. */
-  private get seatY(): number { return this.placement.y + .7; }
+  /** Gunner's body-centre height: the feet stand on the deck top (8 cm above the gun's origin on a raised deck, `kit.dispersal-platform`). */
+  private get seatY(): number { return this.placement.y + .7 + (this.placement.y > 0 ? .08 : 0); }
   /** Heat as the HUD reads it: 0..1 plus whether the gun is locked out. */
   get heat(): number { return this.gun.heat; }
   get locked(): boolean { return this.gun.locked; }
@@ -43,7 +43,8 @@ export class MountedGun {
   canMount(): boolean {
     const w = this.world, p = w.entities.get(1);
     if (!p || p.health.current <= 0 || w.vehicles?.active != null || w.vehicles?.bicycle.riding || w.storyLock || Status.stunned(p, w.tick)) return false;
-    return this.distance() <= minigun.mountRadiusM;
+    // On the deck, not on the street below it (a deck gun is 3 m up).
+    return this.distance() <= minigun.mountRadiusM && Math.abs(p.transform.y - .7 - this.placement.y) <= 1.2;
   }
   /** Gunner position for a given aim: behind the pivot, on the deck. */
   private seat(): { x: number; z: number } {

@@ -269,7 +269,8 @@ export class SimWorld implements Lifecycle {
     this.carriedSurvivors = carriedSurvivors;
     this.scenario=composition.id;this.districts=districts;this.aftermath=composition.id==='L2'?aftermath:null;this.weather = new WeatherSystem(this, seed);
     this.lightPower?.install(districts);
-    this.player!.locomotion.groundHeight = (x, z) => this.districts?.groundHeight(x, z) ?? 0;
+    // Relative to the feet: a courier under a raised deck (L10 finale platform) must not be lifted through it.
+    this.player!.locomotion.groundHeight = (x, z) => this.districts?.groundBelow(x, z, (this.entities.get(1)?.transform.y ?? .7) - .7) ?? 0;
     this.interactables!.nav = districts.nav;
     const {min,max}=districts.nav;
     this.physics.load({name:composition.id,survivor:true,ground:{width:max[0]-min[0],depth:max[1]-min[1],center:{x:(min[0]+max[0])/2,z:(min[1]+max[1])/2}},player:{x:districts.playerStart[0],y:survivor.height/2+.005,z:districts.playerStart[1]}});

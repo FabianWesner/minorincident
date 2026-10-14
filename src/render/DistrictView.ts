@@ -475,6 +475,7 @@ export class DistrictView extends Group {
     // Solid occluders open the shared hole only while one of them is on the camera-to-courier ray.
     // PO 10-12 (L4 convoy ride): a ~1.7 m hole left the vehicle and group hidden behind a tall apartment block. The solid-occluder hole now
     // covers the group's real extent in screen units (about 2.8 m on foot, a vehicle length while driving) and the depth gate reaches the far end.
+    seeThrough.floor.value = player ? Math.max(0, player.y - .7) : 0;
     if (player) {
       const distance = view.camera.position.distanceTo(this.holeTarget.set(player.x, player.y, player.z)), screenHeight = 2 * distance * Math.tan(view.camera.fov * Math.PI / 360);
       const extent = (view.driving ? 9 : 4.5) * (view.camera.aspect < 1 ? 1.25 : 1);

@@ -263,7 +263,7 @@ export class SceneLab {
     if (spec.minigun) {
       const a = spec.minigun.at, three = a.length === 3;
       world.installMountedGun({ x: a[0], z: three ? a[2] : a[1], y: three ? a[1] : 0, yaw: spec.minigun.yaw ?? 0 });
-      this.gunStats = { rounds: 0, heatPeak: 0, lockedFrames: 0, mountedFrames: 0, firstRoundFrame: -1, dismountTicks: [] };
+      this.gunStats = { rounds: 0, heatPeak: 0, lockedFrames: 0, mountedFrames: 0, firstRoundFrame: -1, dismountTicks: [], feetMin: Infinity };
       world.events.on('combat.attack', ev => { if (ev.type === 'combat.attack' && ev.actionId === 'weapon.rotary-minigun' && this.gunStats) { this.gunStats.rounds++; if (this.gunStats.firstRoundFrame < 0) this.gunStats.firstRoundFrame = this.frame; } });
     }
     if (spec.megaAlpha) {
@@ -612,8 +612,9 @@ export class SceneLab {
   setCamera(camera: CameraSpec): void { this.camera = camera; this.applyCamera(); this.game.view.update(1); }
 
   /** Resolve a camera target: actor id, [x, z] or [x, y, z]. */
-  private target(t: [number, number, number] | Point | string | undefined, y = .8): [number, number, number] {
-    if (typeof t === 'string') { const entity = this.actors.get(t)?.entity ?? this.vehicles.get(t), e = entity === undefined ? undefined : this.world.entities.get(entity); if (!e) throw new Error(`camera: unknown actor ${t}`); return [e.transform.x, y, e.transform.z]; }
+  private target(t: [number, number, number] | Point | string | undefined, y = .8, feet = false): [number, number, number] {
+    // `feet`: the game camera's focus follows the feet height (View.update), so a courier on a deck or stair stays centred.
+    if (typeof t === 'string') { const entity = this.actors.get(t)?.entity ?? this.vehicles.get(t), e = entity === undefined ? undefined : this.world.entities.get(entity); if (!e) throw new Error(`camera: unknown actor ${t}`); return [e.transform.x, feet && this.actors.has(t) ? Math.max(0, e.transform.y - .72) : y, e.transform.z]; }
     if (!t) return [this.built!.center[0], y, this.built!.center[1]];
     return t.length === 3 ? [t[0], t[1], t[2]] : [t[0], y, t[1]];
   }
@@ -631,7 +632,7 @@ export class SceneLab {
     const vehicleTarget = c.mode === 'game' ? typeof c.target === 'string' && this.vehicles.has(c.target) : c.mode === 'follow' && this.vehicles.has(c.actor);
     const gameRadius = radius * (vehicleTarget ? 1.15 : 1);
     if (c.mode === 'game') spherical(this.target(c.target, 0), gameRadius * (c.zoom ?? 1), view.polar, view.azimuth);
-    else if (c.mode === 'follow') spherical(this.target(c.actor, 0), gameRadius * (c.zoom ?? 1), view.polar, view.azimuth);
+    else if (c.mode === 'follow') spherical(this.target(c.actor, 0, true), gameRadius * (c.zoom ?? 1), view.polar, view.azimuth);
     else if (c.mode === 'close') spherical(this.target(c.target), c.radius ?? 5, view.polar, c.azimuth === undefined ? view.azimuth : rad(c.azimuth));
     else if (c.mode === 'orbit') spherical(this.target(c.target), c.radius ?? 10, rad(c.polar ?? 54), rad((c.azimuth ?? 45) + (c.spin ?? 0) * this.frame / 60));
     else view.preset('scene-lab', { position: c.position, target: c.target });
@@ -848,14 +849,15 @@ export class SceneLab {
   /** E32-AC10 Mega Alpha pursuit probe: speed in detailed mode, largest resident step (no teleport), modes, distance every 0.5 s. */
   private mega: { last: { x: number; z: number; mode: string } | null; speeds: number[]; stepMaxM: number; stepFrame: number; modes: Record<string, number>; samples: { frame: number; d: number; mode: string; band: string | null }[]; stuckLevelMax: number; distanceMinM: number } | null = null;
   /** L10-S6 mounted minigun probe (`metrics.minigun`). */
-  private gunStats: { rounds: number; heatPeak: number; lockedFrames: number; mountedFrames: number; firstRoundFrame: number; dismountTicks: number[] } | null = null;
+  private gunStats: { rounds: number; heatPeak: number; lockedFrames: number; mountedFrames: number; firstRoundFrame: number; dismountTicks: number[]; /** Lowest courier feet height from the first mount on (a dismount that drops her off the deck shows here). */ feetMin: number } | null = null;
   private sampleGun(): void {
     const g = this.world.mountedGun, s = this.gunStats; if (!g || !s) return;
     s.heatPeak = Math.max(s.heatPeak, g.heat); if (g.locked) s.lockedFrames++; if (g.mounted) s.mountedFrames++;
+    if (s.mountedFrames > 0) s.feetMin = Math.min(s.feetMin, (this.world.entities.get(1)?.transform.y ?? .7) - .7);
   }
   private gunReport() {
     const g = this.world.mountedGun, s = this.gunStats; if (!g || !s) return null;
-    return { ...s, heatPeak: +s.heatPeak.toFixed(3), heat: +g.heat.toFixed(3), locked: g.locked, mounted: g.mounted, spin: +g.gun.spin.toFixed(2), selected: this.world.combat ? this.world.combat.runner.loadout.current(this.world.combat.runner.loadout.state.selectedSide).id : null };
+    return { ...s, feetMin: Number.isFinite(s.feetMin) ? +s.feetMin.toFixed(3) : null, heatPeak: +s.heatPeak.toFixed(3), heat: +g.heat.toFixed(3), locked: g.locked, mounted: g.mounted, spin: +g.gun.spin.toFixed(2), selected: this.world.combat ? this.world.combat.runner.loadout.current(this.world.combat.runner.loadout.state.selectedSide).id : null };
   }
   private sampleMega(): void {
     const m = this.mega, pursuit = this.world.megaPursuit, e = pursuit?.entity();
