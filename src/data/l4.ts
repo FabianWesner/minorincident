@@ -58,7 +58,7 @@ export const l4 = {
      * their posts, relaxed. Post names from `l4Posts`; points are world metres (snapped to clear ground).
      */
     offDuty: {
-      chat: [['n1', 'n2', [-24.5, -12.2]], ['s1', 's2', [-24.5, 15.6]], ['e1', 'e3', [-13.6, -8.5]], ['w2', 'w3', [-30.6, 7]]] as readonly (readonly [string, string, P])[],
+      chat: [['n1', 'n2', [-24.5, -12.2]], ['s1', 's2', [-24.5, 15.6]], ['e1', 'e3', [-14.7, -8.5]], ['w2', 'w3', [-30.6, 7]]] as readonly (readonly [string, string, P])[],
       coffee: [['n3', [-17.2, -12.4], [-20, -4]], ['t1', [-14, 12.8], [-20, 8]], ['hmg-1', [-31.2, -12.6], [-24, -6]]] as readonly (readonly [string, P, P])[],
       patrol: [['w1', [-31.4, -11.8], [-31.4, -5.5]], ['s3', [-19.5, 16.2], [-13.8, 16.2]], ['t2', [-14, -16.4], [-24, -16.6]], ['e2', [-13.8, 9.5], [-13.8, 2.5]]] as readonly (readonly [string, P, P])[],
       /** Seconds a patrol stops at each end, looking out. */
@@ -131,7 +131,7 @@ export const l4 = {
     alive: [.8, .9, .7] as readonly number[], aliveLow: [.7, .8, .6] as readonly number[],
     /** Fallback posts: line 1 falls back to the reception and the nests, the nests to the convoy, the convoy retreats in small groups. */
     fallback1: [[-27.5, -11.8], [-23.5, -11.8], [-19.5, -11.8], [-28.4, -2], [-28.4, 6.8], [-27.5, 15.2], [-24, 15.2], [-17.5, 9.2], [-20.5, -1]] as readonly P[],
-    fallback2: [[-14.2, -10], [-14.2, -6.7], [-14.2, -3.4], [-14.2, 0], [-14.2, 3.3], [-14.2, 6.6], [-14.2, 10], [-13, -15.5], [-13, 13.5]] as readonly P[],
+    fallback2: [[-16, -10], [-16, -6.7], [-16, -3.4], [-16, 0], [-16, 3.3], [-16, 6.6], [-16, 10], [-16, -15.5], [-16, 13.5]] as readonly P[],
     retreat: [[-6, -30], [4, -4], [-13, 31]] as readonly P[], // l4-collapse-2: the south group no longer retreats onto the escape street (x = -4)
     /** Flank spawn points per line (outside the line ends and corners; used only out of view and >= 12 m from the courier). */
     flanks: [
@@ -150,20 +150,22 @@ export const l4 = {
     /** The escape window: at "Fall back!" (and on a respawn in the collapse) infected farther than `nearM` from the courier ignore her for `s` (busy with the army). */
     escape: {
       /** First street point beyond the east camp perimeter: the escape checkpoint after Fall back. */
-      checkpoint: [-4, 4] as P,
+      // South of the parked truck/bus row: the former z=4 checkpoint and
+      // cross-plaza lane cut through the truck's hull and front bumper.
+      checkpoint: [-4, 16] as P,
       nearM: 7, s: 15,
       /**
        * The escape street (l4-collapse-2): out of the ring's east side, down the x = -4 street to Lakeshore Avenue and east to Kessler's
        * cellar door. From "Fall back!" (and after a respawn in the collapse) for `gapS` the horde leaves a gap on it: infected farther than
        * `nearM` from the courier within `gapM` of the route run off toward the army, and nothing emerges on it. Pursuers still chase.
        */
-      route: [[-12, 4], [-4, 4], [-4, 28], [-2, 41], [8, 43], [40, 43], [62, 42]] as readonly P[], gapM: 7, gapS: 40,
+      route: [[-12, 16], [-4, 16], [-4, 28], [-2, 41], [8, 43], [40, 43], [62, 42]] as readonly P[], gapM: 7, gapS: 40,
     },
     /** Camp checkpoints behind each remaining line; choose the nearest safe navigable post when the line falls. */
     checkpoints: [
       [[-25, -8], [-25, 4], [-25, 10]],
       [[-16, -11]], // rear of the north reception line, beside the camp medical supplies
-      [[-13.5, -14], [-13.5, -6], [-13.5, 4]], // behind the convoy crews, away from the tank swarm at the south end
+      [[-9.8, -16.5], [-9.8, -6.5], [-11, 16]], // bumper gaps behind the convoy crew, clear of the hulls and south tank swarm
     ] as readonly (readonly P[])[],
   },
   /** Section 5.4: allied fighters v3. */
@@ -191,7 +193,7 @@ export const l4 = {
   },
   heli: { alt: 17, orbitR: 30, omega: .26, centre: [-14, 4] as P, burstEveryS: [2.2, 3.6] as P, burst: { shots: 5, shotS: .09, damage: 22, hit: .6, rangeM: 60 }, startR: 95, arriveS: 7, withdrawS: 7 },
   /** Fuel truck at the plaza edge (Plaza Way, by the convoy gap): the tank shell sets it off at the line break (mega chain). */
-  fuelTruck: { x: 8, z: -9.5, yaw: Math.PI / 2, blast: 'explosion.fuel-truck' },
+  fuelTruck: { x: 16.3, z: -9.5, yaw: Math.PI / 2, blast: 'explosion.fuel-truck' },
   /** Beat 5-6: live damage and the collapse (soft marker for the hiding place after `markerAfterS`). */
   collapse: {
     markerAfterS: 15, fires: 4, burningCars: 3, pendingPerTick: 3,
@@ -211,7 +213,13 @@ export const l4 = {
 } as const;
 
 /** Convoy parking: the column ends along the plaza at x = -11, head (APC) in the north. See `l4Route`. */
-export const l4Convoy = { endX: -11 } as const;
+// Stop 15 cm before the old endpoint so the APC's nose clears the storefront steps by >0.3 m.
+export const l4Convoy = { endX: -11, endZ: -20.85 } as const;
+/** The wider blast wreck turns and settles west of the intact truck, clear of the frontage. */
+export const l4FuelCrater = { x: l4.fuelTruck.x - .8, z: l4.fuelTruck.z, yaw: -Math.PI / 2 };
+
+/** The gate closes behind the parked first bus, with >0.3 m at its rear bumper (old first rail left just 0.015 m). */
+export const l4ConvoyGate = { x: l4.perimeter.x1, z: [6.15, 9.2, 12.25] } as const;
 
 /** Named world points authored into the L4 layout copy (resolved through the ordinary mission anchor lookup). */
 export const l4Anchors: Record<string, P> = {
@@ -222,7 +230,7 @@ export const l4Anchors: Record<string, P> = {
   'l4-plaza': [-17, 3],
   'l4-cellar-door': [0, 0],            // replaced by the layout's kessler-cellar-door at load (see levelFourLayouts)
   'l4-brace': [0, 0],                  // replaced from the cellar placement
-  'l4-fuel': [8, -9.5],
+  'l4-fuel': [l4.fuelTruck.x, l4.fuelTruck.z],
   'l4-hmg-1': [-32.4, -14.1], 'l4-hmg-2': [-14.6, 17.3],
   'l4-tank-stop': [-20, 22],
   'photo-l4-convoy-arrival': [-6, 3], 'photo-l4-plaza-safe': [-20, 4], 'photo-l4-harbor-street-safe': [-12, -38], 'photo-l4-metro-entrance-safe': [57, -42],
@@ -249,9 +257,11 @@ export const l4Posts: readonly { name: string; at: P; face: P; role: 'qm' | 'lin
   { name: 'w1', at: [-31.8, -10.6], face: [-50, -10.6], role: 'line' }, { name: 'w2', at: [-33.6, -3], face: [-50, -3], role: 'line' }, { name: 'w3', at: [-31.8, 9.4], face: [-50, 9.4], role: 'line' },
   { name: 's1', at: [-27, 19.4], face: [-27, 34], role: 'line' }, { name: 's2', at: [-22, 19.4], face: [-22, 34], role: 'line' }, { name: 's3', at: [-17, 19.4], face: [-17, 34], role: 'line' },
   { name: 'hmg-1', at: [-32.4, -14.1], face: [-40, -26], role: 'hmg' }, { name: 'hmg-2', at: [-14.6, 17.3], face: [-4, 30], role: 'hmg' },
-  { name: 'e1', at: [-8.6, -12], face: [4, -12], role: 'truck' }, { name: 'e2', at: [-8.6, 12], face: [4, 12], role: 'truck' },
+  // These posts clear the parked hulls as well as the moving lane; alarm orders
+  // must never send a guard back into a bus after he has stepped aside.
+  { name: 'e1', at: [-7.6, -12], face: [4, -12], role: 'truck' }, { name: 'e2', at: [-8.6, 12], face: [4, 12], role: 'truck' },
   { name: 'g1', at: [-71, 42.6], face: [-71, 30], role: 'gate' }, { name: 'g2', at: [-71, 49.4], face: [-71, 58], role: 'gate' }, { name: 'g3', at: [-67.5, 44.5], face: [-50, 44], role: 'gate' },
-  { name: 't1', at: [-8, 24], face: [4, 30], role: 'truck' }, { name: 't2', at: [-6.5, -16], face: [-10, -34], role: 'truck' }, { name: 'e3', at: [-12, 2.2], face: [4, 4], role: 'truck' },
+  { name: 't1', at: [-8, 24], face: [4, 30], role: 'truck' }, { name: 't2', at: [-6.5, -16], face: [-10, -34], role: 'truck' }, { name: 'e3', at: [-14.3, 2.2], face: [4, 4], role: 'truck' },
 ];
 /** Registration tables of the reception kit and the places the residents and evacuees queue, chat and sit. */
 export const l4Crowd = {
@@ -353,7 +363,7 @@ export function l4Route(): { pts: RoutePoint[]; length: number } {
   arc(xP - RR, zG - RR, RR, 0, H);                 // right turn: south -> west
   line(xP - RR, zG, xE + RR, zG);
   arc(xE + RR, zG - RR, RR, H, Math.PI);           // right turn: west -> north
-  line(xE, zG - RR, xE, -21);
+  line(xE, zG - RR, xE, l4Convoy.endZ);
   // The last yaw repeats the previous segment's.
   if (pts.length > 1) pts[pts.length - 1].yaw = pts[pts.length - 2].yaw;
   return { pts, length: s };

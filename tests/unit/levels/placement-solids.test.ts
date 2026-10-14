@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { expect, test } from 'vitest';
 import { compositions } from '../../../src/levels/compositions';
 import { levelFourLayouts } from '../../../src/levels/L4/layout';
@@ -11,7 +11,7 @@ import type { DistrictLayout, Placement } from '../../../src/levels/districts/ty
 /**
  * General placement validator (PO 10-13 L4 "collision": a light tower through a privacy fence corner). Every placed prop with
  * a footprint (equipment, crates, sandbags, barriers, furniture, kits, decay pieces; vehicles have their own gate in
- * layout-overlap.test.ts) against every solid collider of another placement or the level, in every level L1-L9 and tier W0-W6.
+ * layout-overlap.test.ts; L4 vehicles are included here too) against every solid collider of another placement or the level, in every level L1-L9 and tier W0-W6.
  * Foliage and fence runs are excluded as the moving piece (crowns and hedges stand in beds, runs share posts by design).
  * 2026-10-13: 198 offender pairs; the free-standing equipment nudge (placementClearance `freestanding`) fixed the light towers
  * (195 left). The remaining pairs are the backlog in placement-solids.baseline.json; a new one fails. Report:
@@ -29,9 +29,10 @@ test('@E21 no placed prop cuts into a solid, L1-L9, every tier (new offenders on
     const base = c.districts.map(d => load(`${d.id}.layout.json`));
     const layouts = level === 'L2' ? levelTwoLayouts(base) : level === 'L3' ? levelThreeLayouts(base) : level === 'L4' ? levelFourLayouts(base) : level === 'L5' ? levelFiveLayouts(base) : base;
     for (const layout of layouts) for (const tier of [0, 1, 2, 3, 4, 5, 6] as const)
-      for (const o of solidOverlaps(layout, tier, moving)) found.push(`${level} ${layout.district}: ${o.placement} (${o.assetId}) x ${o.collider}`);
+      for (const o of solidOverlaps(layout, tier, p => moving(p) || level === 'L4' && p.assetId.startsWith('veh.'))) found.push(`${level} ${layout.district}: ${o.placement} (${o.assetId}) x ${o.collider}`);
   }
   const unique = [...new Set(found)].sort();
+  mkdirSync('test-results', { recursive: true });
   writeFileSync('test-results/placement-offenders.json', JSON.stringify({ count: unique.length, pairs: unique }, null, 1));
   if (process.env.UPDATE_PLACEMENT_BASELINE === '1') writeFileSync(baselinePath, JSON.stringify({ note: 'Known prop-vs-solid placement pairs on 2026-10-13 (qa-low-tier): layout backlog. Remove entries as they are fixed; never add one to pass a new placement.', pairs: unique }, null, 1));
   expect(unique.filter(p => !baseline.has(p))).toEqual([]);

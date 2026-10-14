@@ -10,7 +10,7 @@ afterEach(() => { world?.dispose(); world = undefined; });
 describe('L4 convoy ride collisions', () => {
   test('T-E22-04c @E22 @E22-AC04 during the live ride no convoy vehicle overlaps another vehicle entity (convoy, real cars, traffic)', async () => {
     const l = await loadL4(1); world = l.world; const w = l.world, s = l.mission.state.l4!, bad: string[] = []; // seed 1: the PO saw a dog under the bus (10-13)
-    const dims = (e: { archetype?: string }) => e.archetype === 'veh.evac-bus' ? [9.36, 2.7] : e.archetype === 'veh.military-truck' ? [6.93, 2.86] : e.archetype === 'veh.military-apc' ? [5.69, 3.1] : [4.5, 1.9];
+    const dims = (e: { archetype?: string }) => e.archetype === 'veh.evac-bus' ? [9.36, 2.7] : e.archetype === 'veh.military-truck' ? [6.93, 2.86] : e.archetype === 'veh.military-apc' ? [5.69, 3.1] : e.archetype === 'veh.fuel-truck' ? [11.265, 3.1601] : [4.5, 1.9];
     const obb = (e: { transform: { x: number; z: number; yaw: number }; archetype?: string }) => { const [len, wid] = dims(e); return { x: e.transform.x, z: e.transform.z, yaw: e.transform.yaw, hl: len / 2 - .05, hw: wid / 2 - .05 }; };
     type O = ReturnType<typeof obb>;
     const axes = (o: O) => [[Math.cos(o.yaw), -Math.sin(o.yaw)], [Math.sin(o.yaw), Math.cos(o.yaw)]];
@@ -31,10 +31,10 @@ describe('L4 convoy ride collisions', () => {
 
   test('T-E22-04f @E22 PO 10-12 "move this soldier away, all busses drive through him": during the live ride no actor stands inside a convoy vehicle hull', async () => {
     const l = await loadL4(1); world = l.world; const w = l.world, s = l.mission.state.l4!, bad: string[] = []; // seed 1: the PO saw a dog under the bus (10-13)
-    const dims = (e: { archetype?: string }) => e.archetype === 'veh.evac-bus' ? [9.36, 2.7] : e.archetype === 'veh.military-truck' ? [6.93, 2.86] : e.archetype === 'veh.military-apc' ? [5.69, 3.1] : [4.5, 1.9];
+    const dims = (e: { archetype?: string }) => e.archetype === 'veh.evac-bus' ? [9.36, 2.7] : e.archetype === 'veh.military-truck' ? [6.93, 2.86] : e.archetype === 'veh.military-apc' ? [5.69, 3.1] : e.archetype === 'veh.fuel-truck' ? [11.265, 3.1601] : [4.5, 1.9];
     const inside = (v: { transform: { x: number; z: number; yaw: number }; archetype?: string }, a: { x: number; z: number }) => {
       const [len, wid] = dims(v), dx = a.x - v.transform.x, dz = a.z - v.transform.z, c = Math.cos(v.transform.yaw), si = Math.sin(v.transform.yaw);
-      return Math.abs(dx * c + dz * si) < len / 2 && Math.abs(-dx * si + dz * c) < wid / 2;
+      return Math.abs(dx * c - dz * si) < len / 2 && Math.abs(dx * si + dz * c) < wid / 2;
     };
     const check = () => {
       for (const id of s.convoyIds) {

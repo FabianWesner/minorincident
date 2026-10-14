@@ -44,6 +44,10 @@ export class Npcs {
     } else if (flowNext >= 0 && flowNext !== cell) {
       // Reuse the shared reverse field rather than starving a long per-officer A* search.
       this.waypoint.x = nav.x(flowNext); this.waypoint.z = nav.z(flowNext);
+    } else if (e.civilian?.vehicleYield?.target === target && nav.visible(e.transform, target, .35)) {
+      // Kerb orders have a clear direct approach. A grid-centre detour can send
+      // an actor back underneath the bus it is stepping away from.
+      this.waypoint.x = target.x; this.waypoint.z = target.z;
     } else {
       // Quiet streets do not build a crowd flow field; followers still need their own route.
       const failed = this.unreachable.get(e.id), tick = this.world.tick;

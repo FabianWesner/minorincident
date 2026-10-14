@@ -10,6 +10,8 @@ import type { AssetDef } from '../../assets/types';
  * the same convention as layout placements (a yaw-0 prop faces its authored forward, an actor at yaw 0 faces +X).
  */
 export interface SceneSpec {
+  /** Production L4 convoy, population, braking and unload controller on an uncropped Fairhaven layout. */
+  l4Convoy?: boolean | 'parked';
   /** One R1–R6 production encounter, with the quality tier's authored crowd. */
   cureEncounter?: string;
   /** Production L10 graph/preset at a region checkpoint; fixture anchors stay on its existing slab. */
@@ -179,6 +181,8 @@ export type CameraSpec =
   | { mode: 'follow'; actor: string; zoom?: number };
 /** Optional pass/fail gates; the runner exits non-zero when one fails. */
 export interface Expectations {
+  /** L4: rendered-hull + 0.3 m versus all live posed actor footprints, every sampled tick. */
+  convoyOverlapFramesMax?: number;
   /** Count only visible living figures and channels actually drawn by their selected LOD. */
   infectedVarietyMin?: number;
   pedestrianVarietyMin?: number;
@@ -364,7 +368,8 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
     }
     layout.walkable.excluded = source.walkable.excluded.map(polygon => polygon.map(([x,z]) => [x+shift[0],z+shift[1]]));
   }
-  for (const name of spec.layout?.anchors ?? []) {
+  if (spec.l4Convoy && source) layout.colliders = structuredClone(source.colliders);
+  for (const name of spec.l4Convoy && source ? Object.keys(source.anchors) : spec.layout?.anchors ?? []) {
     const anchor = source?.anchors[name];
     if (!anchor) throw new Error(`Unknown layout anchor ${name}`);
     layout.anchors[name] = structuredClone(anchor);

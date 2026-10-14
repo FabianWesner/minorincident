@@ -1,6 +1,6 @@
 import { allyOnScreen } from '../outbreak/Allies';
 import { Rng } from '../../core/Rng';
-import { l4, l4Edges, l4Glass } from '../../data/l4';
+import { l4, l4FuelCrater, l4Edges, l4Glass } from '../../data/l4';
 import type { EntitySnapshot } from '../world/types';
 import type { SimWorld } from '../world/SimWorld';
 import type { L4State } from './types';
@@ -157,11 +157,15 @@ export class L4Spectacle {
   }
 
   // ---------------------------------------------------------------------------------------------------- the fuel truck and live damage
+  reserveFuelTruck(blocked = true): void {
+    const f = l4.fuelTruck;
+    this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: 900_450, blocked, wall: { x: f.x, y: 1, z: f.z, halfX: 2.5, halfY: 1, halfZ: 6.55 } });
+  }
   spawnFuelTruck(): void {
     const s = this.s(), f = l4.fuelTruck;
     const e = spawnSetPiece(this.world, 'veh.fuel-truck', { x: f.x, z: f.z, yaw: f.yaw });
     s.fuelId = e.id;
-    this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: 900_450, blocked: true, wall: { x: f.x, y: 1, z: f.z, halfX: 1.6, halfY: 1, halfZ: 5.6 } });
+    this.reserveFuelTruck();
   }
   /** The line break: the tank round hits the fuel truck; two seconds later the mega chain goes off and the shockwave shatters the glass around. */
   detonateFuelTruck(): void {
@@ -171,7 +175,7 @@ export class L4Spectacle {
     this.world.events.emit({ type: 'ally.attack', tick, sourceId: tank?.id ?? 0, targetId: 0, role: 'tank', weapon: 'door-gun', hit: true, from, to: { x: f.x, z: f.z } });
     this.world.explosions?.blast(f.blast, { x: f.x, z: f.z }, { sourceId: s.fuelId });
     const truck = this.world.entities.get(s.fuelId);
-    if (truck) { truck.hidden = true; const crater = spawnSetPiece(this.world, 'decay.fuel-truck-crater', { x: f.x, z: f.z, y: .7, yaw: f.yaw }); s.craterId = crater.id; }
+    if (truck) { truck.hidden = true; const crater = spawnSetPiece(this.world, 'decay.fuel-truck-crater', { ...l4FuelCrater, y: .7 }); s.craterId = crater.id; }
     this.world.events.emit({ type: 'world.blocker.changed', tick, id: 900_450, blocked: false, wall: { x: f.x, y: 1, z: f.z, halfX: 1.6, halfY: 1, halfZ: 5.6 } });
     this.shatter({ x: f.x, z: f.z }, 48);
   }

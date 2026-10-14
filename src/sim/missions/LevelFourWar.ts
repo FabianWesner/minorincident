@@ -1,6 +1,6 @@
 import { SimPhase } from '../../core/EventBus';
 import { Rng } from '../../core/Rng';
-import { l4, l4Anchors, l4Cars, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4Inside, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, type L4Weapon } from '../../data/l4';
+import { l4, l4Anchors, l4Cars, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4Inside, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyGate, type L4Weapon } from '../../data/l4';
 import { l4AlphaEmergence } from '../../levels/L4/layout';
 import { infectedDef } from '../../data/infected';
 import { Outbreak } from '../outbreak/Outbreak';
@@ -8,6 +8,7 @@ import { populateGrove } from '../outbreak/Population';
 import { allyState } from '../outbreak/Allies';
 import { emitEngine, stopEngine } from '../vehicles/ConvoySound';
 import { L4Spectacle, spawnSetPiece } from './L4Spectacle';
+import { L4ConvoyClearance } from './L4ConvoyClearance';
 import { respawnRule } from './Respawn';
 import { L4Collapse, freshDirector, postLine } from './L4Collapse';
 import type { Mission } from './Mission';
@@ -40,9 +41,11 @@ const fresh = (): L4State => ({
 export class LevelFourWar {
   private readonly route = l4Route();
   private readonly stations = l4ConvoyStations(this.route.length);
+  private readonly clearance: L4ConvoyClearance;
   private readonly spectacle: L4Spectacle;
   private readonly director: L4Collapse;
   constructor(private readonly mission: Mission) {
+    this.clearance = new L4ConvoyClearance(mission.world, () => this.s, this.route);
     this.spectacle = new L4Spectacle(mission.world, () => this.s, () => this.allyEntities());
     this.director = new L4Collapse({ mission, s: () => this.s, low: () => this.low, snap: (p, r) => this.snap(p, r), emerge: (p, push) => this.emerge(p, push), human: e => this.human(e), insideRing: p => this.insideRing(p), doors: () => this.doors(), fallBack: () => this.lineBreak('beats') });
   }
@@ -92,6 +95,7 @@ export class LevelFourWar {
     this.spawnCars();
     this.spawnMedkits();
     this.spectacle.spawnFuelTruck();
+    this.clearance.install();
     this.mission.radio('L4.briefing');
     // Gunfire is a loud event (E22 section 5): the player's machine gun 30 m, HMG 40 m, every other shot 20 m.
     world.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1 && e.actionId === l4.machineGun.id) this.gunshot(1, e.position, 30); });
@@ -258,39 +262,23 @@ export class LevelFourWar {
       target = Math.min(target, limit);
     }
     if (remaining > .02) target = Math.max(target, .12);
+    this.clearance.constrain();
+    target = Math.min(target, this.clearance.speedLimit());
     s.convoyV += Math.max(-c.brakeMs2 / 60, Math.min(c.accelMs2 / 60, target - s.convoyV));
-    const step = Math.min(remaining, s.convoyV / 60);
-    for (let i = 0; i < s.convoyS.length; i++) {
+    let step = Math.min(remaining, s.convoyV / 60);
+    const poses = s.convoyS.map((at, i) => {
+      const p = l4RoutePose(this.route, at + step), t = world.entities.get(s.convoyIds[i])!.transform;
+      const d = Math.atan2(Math.sin(p.yaw - t.yaw), Math.cos(p.yaw - t.yaw));
+      return { x: p.x, y: t.y, z: p.z, yaw: t.yaw + d * .2 };
+    });
+    if (!this.clearance.canAdvance(poses)) { step = 0; s.convoyV = 0; }
+    else for (let i = 0; i < s.convoyS.length; i++) {
       s.convoyS[i] += step;
-      const p = l4RoutePose(this.route, s.convoyS[i]), e = world.entities.get(s.convoyIds[i]);
-      // The heading eases onto the route tangent (about 5 ticks) so a corner starts as a steering ramp, not a snap of the yaw rate.
-      if (e) { const d = Math.atan2(Math.sin(p.yaw - e.transform.yaw), Math.cos(p.yaw - e.transform.yaw)); Object.assign(e.transform, { x: p.x, z: p.z, yaw: e.transform.yaw + d * .2 }); }
+      Object.assign(world.entities.get(s.convoyIds[i])!.transform, poses[i]);
     }
-    this.clearLane();
     const bus = world.entities.get(s.convoyIds[this.playerBus()])!;
     this.carry(bus.transform.x, bus.transform.z);
     if (remaining - step < .02 && s.convoyV < .15) this.arrive();
-  }
-  /**
-   * PO 2026-10-12 ("move this soldier away, all busses drive through him"): no actor stays inside a convoy hull. A resident, evacuee or soldier
-   * in a vehicle's path (hull plus 0.6 m at the sides and 1.5 m ahead) steps out sideways to the nearer edge.
-   */
-  private clearLane(): void {
-    const { world } = this.mission, s = this.s;
-    // Every actor, not only the authored crowd: pets, the corgi, dog walkers, strays (PO 10-13 "Bus is going over a dog").
-    const ids: number[] = [];
-    for (const e of world.entities.iterate()) if (e.id !== 1 && !e.hidden && e.health.current > 0 && !e.corpse && (e.civilian || e.companion || e.infected) && !String(e.archetype).startsWith('veh.')) ids.push(e.id);
-    for (const [i, vid] of s.convoyIds.entries()) {
-      const v = world.entities.get(vid), spec = l4.convoy.vehicles[i]; if (!v) continue;
-      const c = Math.cos(v.transform.yaw), si = Math.sin(v.transform.yaw);
-      for (const id of ids) {
-        const e = world.entities.get(id); if (!e || e.hidden || e.health.current <= 0) continue;
-        const dx = e.transform.x - v.transform.x, dz = e.transform.z - v.transform.z, along = dx * c + dz * si, side = -dx * si + dz * c;
-        if (along < -spec.len / 2 - .6 || along > spec.len / 2 + 1.5 || Math.abs(side) > spec.wid / 2 + .6) continue;
-        const out = (spec.wid / 2 + .9) * (side >= 0 ? 1 : -1);
-        e.transform.x += -si * (out - side); e.transform.z += c * (out - side); world.spatial.set(id, e.transform.x, e.transform.z);
-      }
-    }
   }
   /** Engines of the convoy: all five drive, the courier's bus is muffled; they idle for a few seconds after the stop, then are switched off. */
   private convoySound(tick: number): void {
@@ -305,7 +293,10 @@ export class LevelFourWar {
     for (const [i, v] of l4.convoy.vehicles.entries()) {
       const e = world.entities.get(s.convoyIds[i]); if (!e) continue;
       const c = Math.abs(Math.cos(e.transform.yaw)), n = Math.abs(Math.sin(e.transform.yaw));
-      const wall: CoverWall = { x: e.transform.x, y: .9, z: e.transform.z, halfX: (c * v.len + n * v.wid) / 2, halfY: .9, halfZ: (n * v.len + c * v.wid) / 2 };
+      // NPC routes use a .35 m capsule. Add the remaining posed-body radius
+      // plus vehicle clearance, so their paths agree with the rendered-hull guard.
+      const margin = .85;
+      const wall: CoverWall = { x: e.transform.x, y: .9, z: e.transform.z, halfX: (c * v.len + n * v.wid) / 2 + margin, halfY: .9, halfZ: (n * v.len + c * v.wid) / 2 + margin };
       world.events.emit({ type: 'world.blocker.changed', tick: world.tick, id: NAV_CONVOY + i, blocked, wall });
     }
   }
@@ -319,22 +310,24 @@ export class LevelFourWar {
     const bus = world.entities.get(s.convoyIds[this.playerBus()])!, player = world.entities.get(1)!, side = this.plazaSide(bus.transform);
     // At its rear corner: the follow camera looks from the south-east, so beside the middle of the bus she would stand behind it, unseen.
     const spec = l4.convoy.vehicles[this.playerBus()], off = spec.wid / 2 + .9, back = spec.len / 2 - .2, f = { x: Math.cos(bus.transform.yaw), z: -Math.sin(bus.transform.yaw) };
-    const out = this.snap({ x: bus.transform.x + side.x * off - f.x * back, z: bus.transform.z + side.z * off - f.z * back }, .45);
+    const out = this.clearance.safePoint(this.snap({ x: bus.transform.x + side.x * off - f.x * back, z: bus.transform.z + side.z * off - f.z * back }, .45), .9);
     Object.assign(player.transform, { x: out.x, z: out.z }); player.hidden = false; s.seated = false;
     world.physics.playerBody!.setTranslation(player.transform, true); world.physics.playerBody!.setNextKinematicTranslation(player.transform); world.physics.playerCollider!.setEnabled(true);
     world.player!.locomotion.reset(); Object.assign(world.previousPlayer!, player.transform); world.spatial.set(1, out.x, out.z); world.player!.setCheckpoint(player.transform);
     world.storyLock = null; world.clearInput();
     world.events.emit({ type: 'vehicle.exited', tick, sourceId: s.convoyIds[this.playerBus()], targetId: 1, role: 'passenger' });
     // The corgi beside her, toward the camera (not behind her in the follow view).
-    for (const e of world.entities.iterate()) if (e.companion) { e.hidden = false; const p = this.snap({ x: out.x + side.x * .9 - f.x * 1.2, z: out.z + side.z * .9 - f.z * 1.2 }, .4); Object.assign(e.transform, p); world.spatial.set(e.id, p.x, p.z); }
+    for (const e of world.entities.iterate()) if (e.companion) { e.hidden = false; const p = this.clearance.safePoint(this.snap({ x: out.x + side.x * .9 - f.x * 1.2, z: out.z + side.z * .9 - f.z * 1.2 }, .4), .95); Object.assign(e.transform, p); world.spatial.set(e.id, p.x, p.z); }
     // Evacuees step off both buses (on the plaza side, along the doors) and walk to the registration queue.
     const buses = l4.convoy.vehicles.map((v, i) => ({ v, i })).filter(b => b.v.asset === 'veh.evac-bus').map(b => world.entities.get(s.convoyIds[b.i])!.transform);
     for (const [k, id] of s.evacueeIds.entries()) {
       const e = world.entities.get(id); if (!e) continue;
       const b = buses[k % buses.length], n = this.plazaSide(b), f = { x: Math.cos(b.yaw), z: -Math.sin(b.yaw) }, along = (k % 5 - 2) * 1.4, w = 2.6 + (k % 2) * .6;
-      const p = this.snap({ x: b.x + n.x * w + f.x * along, z: b.z + n.z * w + f.z * along }, .4);
+      const p = this.clearance.safePoint(this.snap({ x: b.x + n.x * w + f.x * along, z: b.z + n.z * w + f.z * along }, .4), .9);
       e.hidden = false; Object.assign(e.transform, p); world.spatial.set(id, p.x, p.z); e.civilian!.pauseUntil = 0;
     }
+    this.clearance.parkRoutines();
+    this.clearance.rememberUnloaded();
     if (!this.mission.state.states.arrived) this.mission.setState('arrived', true);
     this.closeGate();
     world.events.emit({ type: 'l4.convoyArrived', tick });
@@ -366,7 +359,7 @@ export class LevelFourWar {
    */
   private closeGate(): void {
     const { world } = this, s = this.s, p = l4.perimeter;
-    if (!s.gateIds.length) for (const z of [5.65, 8.7, 11.75]) s.gateIds.push(spawnSetPiece(world, p.barrier, { x: p.x1, z, yaw: Math.PI / 2 }).id);
+    if (!s.gateIds.length) for (const z of l4ConvoyGate.z) s.gateIds.push(spawnSetPiece(world, p.barrier, { x: l4ConvoyGate.x, z, yaw: Math.PI / 2 }).id);
     this.gateNav(true); this.perimeter(true);
   }
   private gateNav(blocked: boolean): void {
@@ -382,7 +375,7 @@ export class LevelFourWar {
   private perimeterBark(): void {
     const s = this.s, tick = this.world.tick, p = l4.perimeter, t = this.world.entities.get(1)!.transform;
     if (!this.fence.length || tick < s.barkAt || t.x < p.x0 - 1 || t.x > p.x1 + 1 || t.z < p.z0 - 1 || t.z > p.z1 + 1) return;
-    if (Math.min(t.x - p.x0, p.x1 - t.x, t.z - p.z0, p.z1 - t.z) > p.barkM) return;
+    if (Math.min(t.x - p.x0, p.x1 - t.x, t.z - p.z0, p.z1 - t.z) > p.barkM && !this.clearance.overlaps(t, 1.35)) return;
     s.barkAt = tick + ticks(p.barkEveryS); this.mission.radio('L4.perimeter');
   }
 
@@ -904,7 +897,7 @@ export class LevelFourWar {
     for (const k of Object.keys(s.hmgLastAt)) s.hmgLastAt[Number(k)] += delta;
     if (this.breakRadioAt) this.breakRadioAt += delta;
     // The parked convoy is a nav blocker; the live ones come from the entities restored with the snapshot.
-    if (s.phase !== 'convoy') this.parkNav(true);
+    if (s.phase !== 'convoy') { this.parkNav(true); this.clearance.parkRoutines(); }
     // The perimeter and the convoy gate follow the phase (the barriers themselves come back with the snapshot).
     if (s.barkAt) s.barkAt += delta;
     for (let i = 0; i < s.edgeNext.length; i++) if (s.edgeNext[i]) s.edgeNext[i] += delta;
@@ -914,7 +907,7 @@ export class LevelFourWar {
     if (!camp) for (const id of s.gateIds) { const e = this.world.entities.get(id); if (e) e.hidden = true; }
     this.world.infected!.director.reserved = l4.alphas.count[this.low ? 'low' : 'high'] - s.alphaIds.length;
     const fuel = this.world.entities.get(s.fuelId);
-    this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: 900_450, blocked: !!fuel && !fuel.hidden, wall: { x: l4.fuelTruck.x, y: 1, z: l4.fuelTruck.z, halfX: 1.6, halfY: 1, halfZ: 5.6 } });
+    this.spectacle.reserveFuelTruck(!!fuel && !fuel.hidden);
     // A collapse retry restores the escape window; shared Respawn places the courier at its checkpoint anchor.
     if (s.phase === 'collapse') this.escapeWindow(this.world.entities.get(1)!.survivor!.checkpoint);
   }
