@@ -1,0 +1,57 @@
+{
+ "name": "qa-l9-healthy-driving",
+ "note": "L9-Q1 healthy/floor pair (healthy half): full-health APC drives the same 100 m of the dry shortcut as qa-l9-zero-driving. Look for: clean hull, no smoke, faster than the floor run, wheels grounded.",
+ "seed": 31,
+ "ground": "district",
+ "time": "L9-crossing",
+ "dof": false,
+ "layout": {
+  "district": "D-CROSSING",
+  "bbox": [
+   [
+    -300,
+    -80
+   ],
+   [
+    -130,
+    40
+   ]
+  ]
+ },
+ "vehicles": [
+  {
+   "id": "apc",
+   "asset": "vehicle.military-apc",
+   "at": [
+    -280,
+    -30
+   ],
+   "yaw": 0,
+   "path": [
+    [
+     -200,
+     -30
+    ]
+   ],
+   "health": 1000,
+   "floor": true
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": "apc",
+  "zoom": 1
+ },
+ "frames": 360,
+ "sheet": 45,
+ "trace": true,
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000,
+  "wheelSinkMaxCm": 2,
+  "wheelFloatMaxCm": 2.5,
+  "wheelSpikeMaxCm": 3
+ }
+}
