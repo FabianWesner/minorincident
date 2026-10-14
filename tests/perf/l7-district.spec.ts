@@ -12,7 +12,7 @@ for (const tier of ['high', 'low'] as const) test(`T-E29-19-district @E29-AC19 @
     await page.setViewportSize({ width: 390, height: 844 });
     const cdp = await context.newCDPSession(page); await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
   }
-  await boot(page, `/?test=1&scenelab=1${backend === 'webgl' ? '&renderer=webgl' : ''}&quality=${tier}&audio=muted&dpr=1`);
+  await boot(page, `/?test=1&scenelab=1${backend === 'webgl' ? '&renderer=webgl' : ''}&quality=${tier}&audio=muted&dpr=1${process.env.L7_PERF_DIAG === '1' ? '&loadProfile=1' : ''}`);
   const profileSession = process.env.L7_PERF_PROFILE === '1' ? await context.newCDPSession(page) : null;
   let profileData: unknown;
   if (profileSession) await page.exposeFunction('__perfSweepStartProfile', async () => {
@@ -48,6 +48,15 @@ for (const tier of ['high', 'low'] as const) test(`T-E29-19-district @E29-AC19 @
     // Drain setup GC/profiler timestamps while paused, as in the campaign
     // probe. Otherwise the first measured RAF includes the forced collection.
     for (let i = 0; i < 2; i++) await new Promise(r => requestAnimationFrame(r));
+    const programsBefore = { ...a.perf().nodeBuildMaterials }, pipelines: unknown[] = [];
+    const renderBackend = game.view.renderer.backend as unknown as { createRenderPipeline(...args: unknown[]): unknown };
+    const originalPipeline = renderBackend.createRenderPipeline;
+    if (diagnose) renderBackend.createRenderPipeline = function (...args) {
+      const start = performance.now(), result = originalPipeline.apply(this, args);
+      const object = args[0] as { material: { name: string; type: string }; object: { name: string; geometry: { attributes: object }; userData: Record<string, unknown> } };
+      pipelines.push({ ms: performance.now() - start, tick: a.tick(), material: object.material.name || object.material.type, object: object.object.name, attributes: Object.keys(object.object.geometry.attributes), static: !!object.object.userData.staticInstanceAttributes });
+      return result;
+    };
     const frames: number[] = [], sims: number[] = [], draws: number[] = [], triangles: number[] = [];
     const hitches: unknown[] = [];
     const costs: Record<string, number>[] = [];
@@ -69,10 +78,12 @@ for (const tier of ['high', 'low'] as const) test(`T-E29-19-district @E29-AC19 @
       }
     }
     a.pause();
+    if (diagnose) renderBackend.createRenderPipeline = originalPipeline;
     if (profile) await (window as unknown as { __perfSweepStopProfile(): Promise<void> }).__perfSweepStopProfile();
     (window as unknown as { gc(): void }).gc();
     const p95 = (v: number[], fraction = .95) => [...v].sort((a, b) => a - b)[Math.ceil(v.length * fraction) - 1];
     return { firesStart, firesEnd: fireCount(), tier, backend: a.perf().backend, blasts, peakInfected, frameP50: p95(frames, .5), frameP95: p95(frames), frameP99: p95(frames, .99), hitch: Math.max(...frames), simP95: p95(sims), draws: Math.max(...draws), triangles: Math.max(...triangles), heapMB: (a.perf().heapBytes ?? 0) / 1048576, peakPuffs, peakParts, peakParticles, heroLights, awakeProps, hitches,
+      pipelines, newPrograms: Object.fromEntries(Object.entries(a.perf().nodeBuildMaterials).map(([key, count]) => [key, count - (programsBefore[key] ?? 0)]).filter(([, count]) => Number(count) > 0)),
       costs: costs.length ? Object.fromEntries(Object.keys(costs[0]).map(key => [key, p95(costs.map(c => c[key]))])) : null };
   }, { tier, positions, diagnose: process.env.L7_PERF_DIAG === '1', profile: !!profileSession });
   const heapSession = await context.newCDPSession(page);
