@@ -7,7 +7,7 @@ import { captureSeams, restoreSeams } from '../../../src/sim/missions/l1Seams';
 import type { EntitySnapshot } from '../../../src/sim/world/types';
 import { LevelSixSubway } from '../../../src/sim/missions/LevelSixSubway';
 import type { Mission } from '../../../src/sim/missions/Mission';
-import { l7Fires } from '../../../src/levels/L7/layout';
+import { l7Exit, l7Fires } from '../../../src/levels/L7/layout';
 import { l7CorridorFires } from '../../../src/levels/L7/corridor';
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds) w.dispose(); worlds.length = 0; });
@@ -18,6 +18,12 @@ async function load(tier: 'high' | 'low' = 'high', roster?: EntitySnapshot[]) {
   return w;
 }
 const step = (w: SimWorld, n: number) => { for (let i = 0; i < n; i++) w.update(); };
+test('L7 starts the courier on the authored raised night exit', async () => {
+  const w = await load('high', []);
+  expect(w.entities.get(1)!.transform.y).toBeGreaterThan(l7Exit.position[1]);
+  step(w, 120);
+  expect(w.entities.get(1)!.transform.y).toBeGreaterThan(l7Exit.position[1]);
+});
 function teleport(w: SimWorld, x: number, z: number) {
   const p = w.entities.get(1)!;
   Object.assign(p.transform, { x, z, y: w.districts!.groundHeight(x, z) + .7 });
