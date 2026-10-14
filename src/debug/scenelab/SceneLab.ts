@@ -87,7 +87,7 @@ export class SceneLab {
   readonly actors = new Map<string, LabActor>();
   readonly vehicles = new Map<string, number>();
   /** `trace`: per-frame vehicle samples (frame, x, y, z, yaw deg, pitch/roll deg of the presented body, ground under it). */
-  private vehicleMotion = new Map<string, { yaw: number; yawRateMaxDegS: number; overlaps: number; ride?: TruckRideState }>();
+  private vehicleMotion = new Map<string, { yaw: number; yawRateMaxDegS: number; overlaps: number; ride?: TruckRideState; tiltMaxDeg?: number; tiltFrame?: number; slipMaxDeg?: number; slipFrame?: number; darkFrames?: number; firstDarkFrame?: number; x?: number; z?: number }>();
   private vehicleTrack = new Map<string, number[][]>();
   private camera: CameraSpec | null = null;
   private perf: { drawCalls: number; triangles: number; shadowDrawCalls: number; shadowTriangles: number; stepMs: number; categories: Record<string, number> }[] = [];
@@ -153,7 +153,7 @@ export class SceneLab {
       if (spec.layout.district === 'D-FAIR') source = (spec.layout.level === 'L7' ? levelSevenLayouts : spec.layout.level === 'L5' ? levelFiveLayouts : levelFourLayouts)([source])[0];
     }
     this.propSinkMaxCm = 0; this.propGroundSamples = 0; this.propPenetration.clear(); this.propPenetrationSamples = 0; this.propPenetrationTick = -1;
-    this.vehicleMotion.clear(); this.pursuit.clear(); this.mega = null; this.gunStats = null; this.attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1 };
+    this.vehicleMotion.clear(); this.pursuit.clear(); this.mega = null; this.gunStats = null; this.attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1, hull: 0, hullHits: 0 };
     this.spec = structuredClone(spec); this.companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 }; this.frame = 0; this.heldPropSamples = 0; this.heldPropClips.clear(); this.holds.clear(); this.seeThroughOpen = { frames: 0, solidRadiusMax: 0, cutLowProps: [] }; this.gunBodyHits.clear(); this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.metroClosed = 0; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0;
     const built = this.built = buildScene(spec, assets, source);
     this.game.view.labProbes().districts?.setDispersalActive(!!spec.dispersal?.active);
@@ -209,6 +209,9 @@ export class SceneLab {
     // Pursuit metrics: infected swings at the courier and bites on pedestrians (first frame of each).
     world.events.on('infected.attack', ev => { if (ev.type === 'infected.attack' && ev.targetId === 1) { this.attacks.courier++; if (this.attacks.firstFrame < 0) this.attacks.firstFrame = this.frame; } });
     world.events.on('telegraph', ev => { if (ev.type === 'telegraph' && ev.sourceId !== undefined && world.entities.get(ev.sourceId)?.infected?.l1?.targetId === 1) this.attacks.swings++; });
+    // E31 hull attacks on the APC: wind-ups and landed durability hits (contact and attack sources).
+    world.events.on('vehicle.attack-windup', ev => { if (ev.type === 'vehicle.attack-windup') this.attacks.hull++; });
+    world.events.on('vehicle.durability-hit', ev => { if (ev.type === 'vehicle.durability-hit' && ev.source === 'attack') this.attacks.hullHits++; });
     world.events.on('outbreak.bite', ev => { if (ev.type === 'outbreak.bite') { this.attacks.bites++; if (this.attacks.firstBiteFrame < 0) this.attacks.firstBiteFrame = this.frame; } });
     const player = world.entities.get(1)!;
     const courier = spec.actors?.find(a => a.kind === 'courier');
@@ -220,6 +223,18 @@ export class SceneLab {
       if (v.decay) world.entities.get(entity)!.vehicle!.decay = v.decay;
       if (v.floor) world.vehicles!.setFloorPolicy(entity, true);
       if (v.health !== undefined) { const car = world.entities.get(entity)!; world.vehicles!.damage(entity, Math.max(0, car.health.current - v.health)); }
+      if (v.driven) {
+        // The courier drives (L9: the APC is always the player's): her inputs steer the real active-vehicle path, so the
+        // view shows what the player sees (headlights, hull rim, aura). The authored path's autopilot supplies the inputs.
+        world.vehicles!.active = entity; world.entities.get(entity)!.vehicle!.driver = 1; world.vehicles!.rebuild();
+        const frame = emptyInput(), drive = { throttle: 0, steer: 0, brake: true, boost: false };
+        world.events.on('sim.tick', () => {
+          const car = world.entities.get(entity), pilot = world.vehicles!.autopilot.get(entity); if (!car || world.vehicles!.active !== entity) return;
+          drive.throttle = drive.steer = 0; drive.brake = true; pilot?.(drive, car);
+          frame.drive = { throttle: drive.throttle, steer: drive.steer }; frame.brake = drive.brake;
+          world.applyInput(frame, 'keyboard');
+        }, SimPhase.input - .25);
+      }
       if (v.l2Ride) {
         const state = { truckId: entity, rideS: v.l2Ride.distanceM ?? 0, rideV: v.l2Ride.speedMs ?? 0 }, driver = new L2TruckDrive(world, state);
         driver.prepare();
@@ -781,7 +796,7 @@ export class SceneLab {
    * of a courier running > 2 m/s while chasing her (along her running direction).
    */
   private readonly pursuit = new Map<string, { stuckRun: number; stuckRunMax: number; stuckFrame: number; lostNearFrames: number; overshootMaxM: number }>();
-  private attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1 };
+  private attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1, hull: 0, hullHits: 0 };
   private samplePursuit(actor: LabActor, e: EntitySnapshot): void {
     const b = e.infected, brain = b?.l1, tick = this.world.tick;
     if (!b || !brain || e.health.current <= 0 || e.corpse || e.hidden || e.emerging) return;
@@ -1004,6 +1019,24 @@ export class SceneLab {
       const e = this.world.entities.get(entity), motion = this.vehicleMotion.get(id); if (!e || !motion) continue;
       const delta = Math.atan2(Math.sin(e.transform.yaw - motion.yaw), Math.cos(e.transform.yaw - motion.yaw));
       motion.yawRateMaxDegS = Math.max(motion.yawRateMaxDegS, Math.abs(delta) * 60 * 180 / Math.PI); motion.yaw = e.transform.yaw;
+      const body = this.world.vehicles!.cars.get(entity)?.physics;
+      if (body) {
+        // Chassis tilt (roll/pitch from the body's up axis) and heading vs travel direction (sideways slide) per frame.
+        const q = body.rotation, tilt = Math.acos(Math.max(-1, Math.min(1, 1 - 2 * (q.x * q.x + q.z * q.z)))) * 180 / Math.PI;
+        if (tilt > (motion.tiltMaxDeg ?? 0)) { motion.tiltMaxDeg = +tilt.toFixed(1); motion.tiltFrame = this.frame; }
+        if (motion.x !== undefined && motion.z !== undefined) {
+          const vx = e.transform.x - motion.x, vz = e.transform.z - motion.z;
+          if (Math.hypot(vx, vz) * 60 > 3) {
+            const fx = Math.cos(e.transform.yaw), fz = -Math.sin(e.transform.yaw), along = Math.abs(vx * fx + vz * fz), side = Math.abs(vx * fz - vz * fx);
+            const slip = Math.atan2(side, along) * 180 / Math.PI;
+            if (slip > (motion.slipMaxDeg ?? 0)) { motion.slipMaxDeg = +slip.toFixed(1); motion.slipFrame = this.frame; }
+          }
+        }
+        motion.x = e.transform.x; motion.z = e.transform.z;
+        // A driven, intact vehicle shines its lamps (L9 dry night: the hull and road must read at the game camera).
+        const lamps = this.game.view.labProbes().vehicles;
+        if (lamps && this.world.vehicles!.active === entity && e.health.current > 0 && (e.vehicle?.stage ?? 0) < 3 && !lamps.lit(entity)) { motion.darkFrames = (motion.darkFrames ?? 0) + 1; motion.firstDarkFrame ??= this.frame; }
+      }
       const def = this.world.vehicles!.cars.get(entity)?.physics.def; if (!def) continue;
       for (const b of this.world.entities.iterate()) if (b.id !== entity && !b.hidden && (b.civilian || b.infected || b.companion || b.vehicle || b.traffic || b.kind === 'physics-prop')) {
         if (truckBodyOverlap(e.transform, def.length, def.width, b, this.world)) motion.overlaps++;
@@ -1203,9 +1236,9 @@ export class SceneLab {
       bodies, wheels: Object.fromEntries([...new Set([...this.wheels.values()].map(w => w.vehicle))].map(id => [id, [...this.wheels.values()].filter(w => w.vehicle === id).map(w => { const h = this.hubs.get(`${w.vehicle}|${w.wheel}`); return { ...w, hubSpikeCm: h?.spikeCm ?? 0, hubSpikeFrame: h?.spikeFrame ?? 0, hubStepCm: h?.stepCm ?? 0, hubStepFrame: h?.stepFrame ?? 0 }; })])), ...(this.spec?.trace ? { vehicleTrack: Object.fromEntries(this.vehicleTrack), wheelTrack: Object.fromEntries(this.wheelTrack) } : {}),
       perf: { drawCalls: band(p => p.drawCalls), triangles: band(p => p.triangles), shadowDrawCalls: band(p => p.shadowDrawCalls), shadowTriangles: band(p => p.shadowTriangles), stepMs: band(p => p.stepMs),
         lastFrame: this.perf.at(-1) ?? null, note: 'view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time' },
-      vehicles: Object.fromEntries([...this.vehicles].map(([id, entity]) => { const e = this.world.entities.get(entity); return [id, e ? { entity, position: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)], yawDeg: +(e.transform.yaw * 180 / Math.PI).toFixed(1), yawRateMaxDegS: this.vehicleMotion.get(id)?.yawRateMaxDegS ?? 0, bodyOverlaps: this.vehicleMotion.get(id)?.overlaps ?? 0, rideRemainingM: this.vehicleMotion.get(id)?.ride ? l2TruckPath.at(-1)!.s - this.vehicleMotion.get(id)!.ride!.rideS : null, health: Math.round(e.health.current), decay: e.vehicle?.decay ?? null, speed: +(e.vehicle?.speed ?? e.traffic?.speed ?? 0).toFixed(2) } : null]; })),
+      vehicles: Object.fromEntries([...this.vehicles].map(([id, entity]) => { const e = this.world.entities.get(entity); return [id, e ? { entity, position: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)], yawDeg: +(e.transform.yaw * 180 / Math.PI).toFixed(1), yawRateMaxDegS: this.vehicleMotion.get(id)?.yawRateMaxDegS ?? 0, bodyOverlaps: this.vehicleMotion.get(id)?.overlaps ?? 0, tiltMaxDeg: this.vehicleMotion.get(id)?.tiltMaxDeg ?? 0, tiltFrame: this.vehicleMotion.get(id)?.tiltFrame ?? -1, slipMaxDeg: this.vehicleMotion.get(id)?.slipMaxDeg ?? 0, slipFrame: this.vehicleMotion.get(id)?.slipFrame ?? -1, driven: this.world.vehicles!.active === entity, headlightsDarkFrames: this.vehicleMotion.get(id)?.darkFrames ?? 0, firstDarkFrame: this.vehicleMotion.get(id)?.firstDarkFrame ?? -1, rideRemainingM: this.vehicleMotion.get(id)?.ride ? l2TruckPath.at(-1)!.s - this.vehicleMotion.get(id)!.ride!.rideS : null, health: Math.round(e.health.current), decay: e.vehicle?.decay ?? null, speed: +(e.vehicle?.speed ?? e.traffic?.speed ?? 0).toFixed(2) } : null]; })),
       grounding: this.grounding(),
-      pursuit: { actors: Object.fromEntries([...this.pursuit].map(([id, p]) => [id, { stuckRunMax: p.stuckRunMax, stuckFrame: p.stuckFrame, lostNearFrames: p.lostNearFrames, overshootMaxM: +p.overshootMaxM.toFixed(2) }])), courierSwings: this.attacks.swings, courierAttacks: this.attacks.courier, firstAttackFrame: this.attacks.firstFrame, bites: this.attacks.bites, firstBiteFrame: this.attacks.firstBiteFrame },
+      pursuit: { actors: Object.fromEntries([...this.pursuit].map(([id, p]) => [id, { stuckRunMax: p.stuckRunMax, stuckFrame: p.stuckFrame, lostNearFrames: p.lostNearFrames, overshootMaxM: +p.overshootMaxM.toFixed(2) }])), courierSwings: this.attacks.swings, courierAttacks: this.attacks.courier, hullWindups: this.attacks.hull, hullHits: this.attacks.hullHits, firstAttackFrame: this.attacks.firstFrame, bites: this.attacks.bites, firstBiteFrame: this.attacks.firstBiteFrame },
       megaAlpha: this.megaReport(), minigun: this.gunReport(),
       heldProps: { samples: this.heldPropSamples, intersections: this.heldPropClips.size, holds: Object.fromEntries(this.holds) }, seeThrough: { ...this.seeThroughOpen }, companion: { ...this.companion }, bike: { ...this.bike }, variety, actors, clicks: this.clickReport(), visibility: this.visible, lods: this.lods(), clipping: clipping?.summary ?? null,
       emergence: this.emergence ? { building: this.emergence.house, door: { x: +this.emergence.x.toFixed(3), z: +this.emergence.z.toFixed(3), nx: this.emergence.nx, nz: this.emergence.nz }, release: [+this.emergence.ox.toFixed(3), +this.emergence.oz.toFixed(3)], residents: this.emergence.ids.length, doorOpenedFrame: this.emergence.openFrame } : null,
