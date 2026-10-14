@@ -2,7 +2,7 @@
 // named screens, visibility classes, first focus, and separate gameplay input context.
 import homePlaceholders from '../../public/ui/home/placeholders.json';
 import type { Game } from '../Game';
-import { newCampaign, type Level } from '../sim/progression/Campaign';
+import { newCampaign, type CampaignSave, type Level } from '../sim/progression/Campaign';
 import { defaultBindings, type Action } from '../data/bindings';
 import { Hud } from './Hud';
 import { button, node, setHidden } from './dom';
@@ -10,17 +10,21 @@ import { Settings, type UISettings } from './Settings';
 import { audioCredits, codeCredits, originalCredit, type Credit } from '../data/credits';
 import './ui.css';
 
+const levelTitles = ['Stop the Outbreak', 'Get Them Out', 'Reach the Safe Zone', 'Open the Escape Route', 'Hold the Line', 'Get Out', 'Cross the Ruined City', 'Escape the Zoo', 'Make the Crossing', 'Deliver the Cure'];
+const resumeLevel = (save: CampaignSave | null): number | null => save?.cureResume ? 10 : save?.l9Crash && !save.crossingHandover ? 9 : null;
+
 type Screen = 'title' | 'character' | 'levels' | 'pause' | 'settings' | 'credits' | 'upgrades' | 'rack' | 'loading' | null;
 declare const __BUILD_COMMIT__: string;
 export class GameUI {
   readonly root = node('div', 'menus');
-  readonly enabled: boolean;
+  enabled: boolean;
   readonly settings: Settings;
   /** Latest DOM update duration, measured independently of WebGL work. */
   updateMs = 0;
   readonly hud: Hud;
   private screen: Screen = null;
   private back: Screen = 'title';
+  private levelsBack: 'title' | 'character' = 'character';
   private variant: 'male' | 'female' = 'female';
   private nextLevel = 'L1';
   private started = false;
@@ -40,7 +44,9 @@ export class GameUI {
     this.settings = new Settings(storage);
     this.hud = new Hud(game);
   }
-  init(): void {
+  init(force = false): void {
+    if (this.started) return;
+    if (force) this.enabled = true;
     if (!this.enabled) return;
     document.body.classList.add('full-ui');document.body.classList.toggle('debug-ui',this.game.params.has('debug'));
     document.body.classList.toggle('touch-ui', navigator.maxTouchPoints > 0 || matchMedia('(pointer:coarse)').matches); this.root.className = 'menus'; this.root.prepend(homeArt());
@@ -53,7 +59,7 @@ export class GameUI {
     window.addEventListener('pointerdown', this.unhide, true);
     document.addEventListener('click', this.missionAccept);
     this.hud.init(); this.hud.loaded();
-    this.applySettings(); this.show('title'); this.started = true;
+    this.applySettings(false); this.show('title'); this.started = true;
   }
   private panel(id: Exclude<Screen, null>, title: string, detail: string): HTMLElement {
     const panel = node('section', `menu-${id}`); panel.dataset.menuScreen = id;
@@ -68,34 +74,36 @@ export class GameUI {
     const title = this.panel('title', 'MINOR INCIDENT', 'A quieter neighborhood today · Braver people tomorrow');
     title.append(button('start-game', 'Start game', () => {
       const saved = this.game.saves.load();
-      if (saved.status === 'ok') { this.game.campaign = saved.save; this.show('levels'); }
+      if (saved.status === 'ok') { this.levelsBack = 'title'; this.settings.patch(saved.save.settings); this.game.campaign = saved.save; this.show('levels'); }
       else this.show('character');
     }),
-      button('continue-game', 'Continue', () => { void this.continueSaved(); }),
-      button('title-levels', 'Level select', () => { const saved = this.game.saves.load(); if (saved.status === 'ok') { this.game.campaign = saved.save; this.show('levels'); } }),
       button('title-settings', 'Settings', () => { this.back = 'title'; this.show('settings'); }),
       button('title-credits', 'Credits & Licenses', () => this.show('credits')));
     const character = this.panel('character', 'Choose your survivor', 'Same courage. Your style.');
     for (const variant of ['female', 'male'] as const) character.append(button(`character-${variant}`, variant === 'female' ? 'Female survivor' : 'Male survivor', () => {
+      this.levelsBack = 'character';
       this.variant = variant; this.game.world.player?.select(variant, 0);
       this.game.campaign = newCampaign(variant, Number(this.game.params.get('seed') ?? 1));
       this.game.campaign.settings = { ...this.game.audio.settings }; this.applySettings(); this.show('levels');
     }));
     character.append(button('character-back', 'Back', () => this.show('title')));
-    const levels = this.panel('levels', 'Choose a level', 'Start in Sunset Grove.');
-    const names = ['Stop the Outbreak', 'Get Them Out', 'Reach the Safe Zone', 'Open the Escape Route', 'Hold the Line', 'Get Out'];
+    const levels = this.panel('levels', 'Choose a level', 'Replay any unlocked level.');
+    const levelList = node('div', 'level-list'); levelList.className = 'level-list'; levels.append(levelList);
     const lockHint = document.createElement('p'); lockHint.className = 'lock-hint'; lockHint.setAttribute('role', 'status'); lockHint.hidden = true;
-    for (let i = 1; i <= 6; i++) {
-      const b = button(`level-L${i}`, `L${i} · ${names[i - 1]}`, () => {
+    for (let i = 1; i <= 10; i++) {
+      const b = button(`level-L${i}`, `L${i} · ${levelTitles[i - 1]}`, () => {
         // Locked levels stay focusable (aria-disabled) so a tap or keyboard focus can explain why; activation is blocked.
         if (b.getAttribute('aria-disabled') === 'true') { lockHint.textContent = `Complete Level ${i - 1} first`; lockHint.hidden = false; return; }
-        void this.load(`L${i}`);
+        void this.load(`L${i}`, false, resumeLevel(this.game.campaign) === i);
       });
       b.addEventListener('focus', () => { if (b.getAttribute('aria-disabled') === 'true') { lockHint.textContent = `Complete Level ${i - 1} first`; lockHint.hidden = false; } else lockHint.hidden = true; });
-      levels.append(b);
+      const row = node('div', `level-row-L${i}`); row.className = 'level-row';
+      const restart = button(`level-restart-L${i}`, 'Restart', () => { void this.load(`L${i}`); });
+      restart.setAttribute('aria-label', `Restart Level ${i}`); restart.hidden = true;
+      row.append(b, restart); levelList.append(row);
     }
     levels.append(lockHint);
-    levels.append(button('levels-back', 'Back', () => this.show('character')));
+    levels.append(button('levels-back', 'Back', () => this.show(this.levelsBack)));
     // PO: pausing freezes the game but leaves the scene fully visible; the menu is a compact bar on top (screenshots).
     const pause = this.panel('pause', 'Paused', 'P / Esc to resume · R to restart · H hides the UI for screenshots');
     pause.setAttribute('aria-modal', 'false');
@@ -189,7 +197,7 @@ export class GameUI {
     select.addEventListener('change', () => { this.settings.patch({ [key]: key === 'textSize' ? Number(select.value) : select.value } as Partial<UISettings>); this.applySettings(); });
     row.append(select); parent.append(row);
   }
-  applySettings(): void {
+  applySettings(persist = true): void {
     if (!this.enabled) return;
     const value = this.settings.value;
     this.game.setQuality(value.quality);
@@ -203,22 +211,11 @@ export class GameUI {
     document.body.classList.toggle('colorblind-ui', value.colorblind);
     this.game.view.settings({ gore: value.gore, cameraShake: value.cameraShake, flashReduction: value.flashReduction, colorblind: value.colorblind, slowMotion: value.slowMotion, quality });
     this.game.world.npcs?.setQuality(quality);
-    this.game.audio.set({ muted: value.muted || this.game.params.get('audio') === 'muted', gore: value.gore });
+    this.game.audio.set({ muted: value.muted || this.game.params.get('audio') === 'muted', gore: value.gore }, persist);
     if (this.game.world.combat) this.game.world.combat.assist.setting = value.aimAssist;
-    this.game.campaignSettings(value);
+    if (persist) this.game.campaignSettings(value);
   }
-  private async continueSaved(): Promise<void> {
-    const saved = this.game.saves.load(); if (saved.status !== 'ok') return;
-
-    this.show('loading');
-    try {
-      await this.game.continueCampaign(saved.save);
-      if (this.game.campaignUI.root.hidden) this.show(null);
-    } catch {
-      this.show('title'); this.screens.get('title')!.querySelector('p')!.textContent = 'Could not load saved campaign. Please try again.';
-    }
-  }
-  private async load(id: string, racks = false): Promise<void> {
+  private async load(id: string, racks = false, resume = false): Promise<void> {
     const left: string[] = [], right: string[] = [];
     if (racks) for (const side of ['LEFT', 'RIGHT'] as const) for (let i = 0; i < 3; i++) {
       const value = this.root.querySelector<HTMLSelectElement>(`[data-testid="rack-${side}-${i}"]`)!.value;
@@ -226,11 +223,11 @@ export class GameUI {
     }
     this.show('loading');
     try {
-      if (this.game.campaign) await this.game.continueCampaign(this.game.campaign, Number(id.slice(1)) as Level);
+      if (this.game.campaign) await this.game.continueCampaign(this.game.campaign, resume ? undefined : Number(id.slice(1)) as Level);
       else { await this.game.loadLevel(id); this.game.world.player?.select(this.variant, 0); }
       if (racks && left.length && right.length) this.game.world.combat?.setLoadout(left, right);
       else if (id === 'L1') this.game.world.combat?.clearLoadout();
-      this.applySettings(); this.show(null);
+      this.applySettings(false); this.show(null);
       if (!this.game.audio.snapshot().background) this.game.clock.resume();
       this.game.view.update(1);
     } catch (error) {
@@ -245,15 +242,16 @@ export class GameUI {
     if (screen === 'title') this.game.telemetry?.home();
     if (screen === 'title') {
       this.game.campaignUI.hide();
-      const saved = this.game.saves.load();
-      for (const id of ['continue-game', 'title-levels']) this.root.querySelector<HTMLButtonElement>(`[data-testid=${id}]`)!.hidden = saved.status !== 'ok';
     }
     if (screen === 'levels') {
-      // PO: levels after L1 stay greyed out and unfocusable until the campaign has actually unlocked them.
-      const names = ['Stop the Outbreak', 'Get Them Out', 'Reach the Safe Zone', 'Open the Escape Route', 'Hold the Line', 'Get Out'], unlocked = this.game.campaign?.unlockedLevel ?? 1;
-      for (let i = 1; i <= 6; i++) {
+      const unlocked = this.game.campaign?.unlockedLevel ?? 1, resume = resumeLevel(this.game.campaign);
+      this.root.querySelector<HTMLElement>('.lock-hint')!.hidden = true;
+      for (let i = 1; i <= 10; i++) {
         const b = this.root.querySelector<HTMLButtonElement>(`[data-testid=level-L${i}]`)!, locked = i > unlocked;
-        if (locked) b.setAttribute('aria-disabled', 'true'); else b.removeAttribute('aria-disabled'); b.classList.toggle('is-locked', locked); b.textContent = `${locked ? '🔒 ' : ''}L${i} · ${names[i - 1]}`;
+        if (locked) b.setAttribute('aria-disabled', 'true'); else b.removeAttribute('aria-disabled'); b.classList.toggle('is-locked', locked); b.textContent = `${locked ? '🔒 ' : ''}L${i} · ${levelTitles[i - 1]}`;
+        b.classList.toggle('is-recommended', i === unlocked);
+        if (!locked && i === resume) { const tag = node('small', `level-resume-L${i}`, 'Resume'); tag.className = 'resume-tag'; b.append(tag); }
+        this.root.querySelector<HTMLButtonElement>(`[data-testid=level-restart-L${i}]`)!.hidden = locked || i !== resume;
         if (locked) { b.title = `Complete Level ${i - 1} first`; b.setAttribute('aria-label', `Level ${i}, locked. Complete Level ${i - 1} first`); } else { b.removeAttribute('title'); b.removeAttribute('aria-label'); }
       }
     }
@@ -265,7 +263,8 @@ export class GameUI {
     document.body.dataset.uiScreen = screen ?? 'game';
     if (screen) {
       this.game.clock.pause();
-      this.screens.get(screen)?.querySelector<HTMLElement>('button, select, input')?.focus({ preventScroll: true });
+      const focus = this.screens.get(screen)?.querySelector<HTMLElement>(screen === 'levels' ? '.is-recommended' : 'button, select, input');
+      focus?.focus();
     }
     this.pauseButton.hidden = screen !== null; this.homeButton.hidden = true;
   }
@@ -289,7 +288,7 @@ export class GameUI {
     this.setRestartConfirm(false); this.show('loading');
     try {
       await this.game.restartLevel();
-      this.applySettings(); this.show(null);
+      this.applySettings(false); this.show(null);
       if (!this.game.audio.snapshot().background) this.game.clock.resume();
       this.game.view.update(1);
     } catch (error) {
@@ -315,7 +314,7 @@ export class GameUI {
     if (!this.started || !this.enabled) return;
     this.missionPhase = ''; if (this.screen !== 'loading') this.show(null);
     if (this.game.campaign) this.settings.patch(this.game.campaign.settings, false);
-    this.applySettings(); this.hud.loaded();
+    this.applySettings(false); this.hud.loaded();
   }
   async prepareHud(): Promise<void> {
     if (!this.enabled || !this.started) return;

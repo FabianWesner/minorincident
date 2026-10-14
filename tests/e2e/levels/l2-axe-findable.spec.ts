@@ -39,8 +39,8 @@ test('T-E20-axe-replay @E20 menu replay still requires the axe even when it is a
   await boot(page, `${testUrl}&ui=1`);
   const save = preset('L3-default');
   await page.evaluate(save => { const a = window.__SS__!; a.campaign.restore(save); a.campaign.save(); a.campaign.menu(); }, save);
-  await page.getByRole('button', { name: 'Level select', exact: true }).click();
-  await page.getByRole('button', { name: 'Level 2', exact: true }).click();
+  await page.getByTestId('start-game').click();
+  await page.getByTestId('level-L2').click();
   await page.getByRole('button', { name: 'Begin mission' }).click();
   await page.evaluate(() => window.__SS__!.pause());
   const state = () => page.evaluate(() => window.__SS__!.missions.state()!);

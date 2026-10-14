@@ -10,6 +10,8 @@ import type { AssetDef } from '../../assets/types';
  * the same convention as layout placements (a yaw-0 prop faces its authored forward, an actor at yaw 0 faces +X).
  */
 export interface SceneSpec {
+  /** Native campaign menu over the game camera; run with --query ui=1. */
+  menuScreen?: 'title' | 'levels';
   /** One R1–R6 production encounter, with the quality tier's authored crowd. */
   cureEncounter?: string;
   /** Production L10 graph/preset at a region checkpoint; fixture anchors stay on its existing slab. */

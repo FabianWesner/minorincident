@@ -33,7 +33,9 @@ for (const quality of ['high', 'low']) test(`T-E32-16-E2 @E32-AC15 @E32-AC16 @E3
   expect(await page.evaluate(() => window.__SS__!.campaign.save())).toBe(true);
   await page.reload(); await page.waitForFunction(() => !!window.__SS__);
   await page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.campaign.menu(); });
-  await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  await page.getByTestId('start-game').click();
+  await expect(page.getByTestId('level-resume-L10')).toBeVisible();
+  await page.getByTestId('level-L10').click();
   await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');
   await page.evaluate(async () => { await window.__SS__!.screenshotReady(); window.__SS__!.pause(); });
   expect(await page.evaluate(() => window.__SS__!.missions.state()!.items)).toEqual(['cure-canister']);

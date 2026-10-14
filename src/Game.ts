@@ -306,10 +306,10 @@ export class Game {
     const settings = { ...save.settings, quality: save.settings.quality === 'auto' ? matchMedia('(pointer:coarse)').matches ? 'low' as const : 'high' as const : save.settings.quality };
     this.view.settings(settings);this.audio.set(save.settings);
     // Settings can save the previous live world: clear its resume only after those updates.
-    // Level select is a whole-level replay; Continue alone resumes L10's saved phase.
-    if (level !== undefined) delete this.campaign.cureResume;
+    // An explicit level is a whole-level restart; the menu's Resume action omits it.
+    if (level !== undefined) { delete this.campaign.cureResume; delete this.campaign.l9Crash; }
     await this.loadLevel(`L${level??save.unlockedLevel}`, fromL4 ? { setup: world => {
-      // A fresh handover equips the carried firearm; menu Continue keeps its loadout selection.
+      // A fresh handover equips the carried firearm; menu Resume keeps its loadout selection.
       if (world.scenario === 'L5' && world.combat) world.combat.runner.loadout.state.selectedSide = 'RIGHT';
     }, record: true } : undefined);
     this.view.settings(settings);

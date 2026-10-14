@@ -19,8 +19,8 @@ for (const entry of ['handover', 'level-select'] as const) {
       // A save that already owns and racks the axe (a replay after L2 / Continue) must still start without it.
       const save = preset('L3-default');
       await page.evaluate(save => { const a = window.__SS__!; a.campaign.restore(save); a.campaign.save(); a.campaign.menu(); }, save);
-      await page.getByRole('button', { name: 'Level select', exact: true }).click();
-      await page.getByRole('button', { name: 'Level 2', exact: true }).click();
+      await page.getByTestId('start-game').click();
+      await page.getByTestId('level-L2').click();
     }
     await page.getByRole('button', { name: 'Begin mission' }).click();
     await page.evaluate(() => window.__SS__!.pause());

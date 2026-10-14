@@ -2,8 +2,8 @@ import { mkdirSync } from 'node:fs';
 import { expect, test } from './fixtures';
 import { menuStart } from './ui-helpers';
 
-/** Continue reloads the level from the save; if it re-opens the briefing, accept it like a player would. */
-async function resumeAfterContinue(page: import('@playwright/test').Page): Promise<void> {
+/** Selecting a level reloads it from the save; if it re-opens the briefing, accept it like a player would. */
+async function resumeFromLevelList(page: import('@playwright/test').Page): Promise<void> {
   await expect(page.getByTestId('menu-title')).toBeHidden({ timeout: 120_000 });
   const begin = page.getByTestId('mission-button');
   await expect(begin.or(page.getByTestId('pause-button')).first()).toBeVisible({ timeout: 120_000 });
@@ -13,7 +13,7 @@ async function resumeAfterContinue(page: import('@playwright/test').Page): Promi
 
 /** PO 10-12: "Add a home button that brings me to initial menu". */
 test.describe('HUD Home button @ui-home', () => {
-  test('HUD Home returns to the initial menu, Continue restores the level, no attack input, focus order intact', async ({ page }, info) => {
+  test('HUD Home returns to the initial menu, Start game and the level list restore the level, no attack input, focus order intact', async ({ page }, info) => {
     test.setTimeout(240_000);
     await menuStart(page);
     const home = page.getByTestId('home-button');
@@ -51,14 +51,15 @@ test.describe('HUD Home button @ui-home', () => {
     await home.click();
     await expect(page.getByTestId('menu-title')).toBeVisible();
     expect(await page.evaluate(() => (window as unknown as { __canvasDown: number }).__canvasDown)).toBe(0);
-    await expect(page.getByTestId('continue-game')).toBeVisible();
+    await expect(page.getByTestId('continue-game')).toHaveCount(0);
     await expect(home).toBeHidden();
-    await page.getByTestId('continue-game').click();
-    await resumeAfterContinue(page);
+    await page.getByTestId('start-game').click();
+    await page.getByTestId('level-L1').click();
+    await resumeFromLevelList(page);
     await expect(home).toBeVisible();
   });
 
-  test('pause menu "Home" lands on the same initial menu and Continue works', async ({ page }) => {
+  test('pause menu "Home" lands on the same initial menu and the level list works', async ({ page }) => {
     test.setTimeout(240_000);
     await menuStart(page);
     await page.getByTestId('pause-button').click();
@@ -67,8 +68,9 @@ test.describe('HUD Home button @ui-home', () => {
     await item.click();
     await expect(page.getByTestId('menu-title')).toBeVisible();
     await expect(page.getByTestId('start-game')).toBeVisible();
-    await page.getByTestId('continue-game').click();
-    await resumeAfterContinue(page);
+    await page.getByTestId('start-game').click();
+    await page.getByTestId('level-L1').click();
+    await resumeFromLevelList(page);
     await expect(page.getByTestId('home-button')).toBeVisible();
   });
 

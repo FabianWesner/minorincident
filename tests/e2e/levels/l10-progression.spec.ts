@@ -1,13 +1,14 @@
 import { test, expect, boot } from '../fixtures';
+import { SAVE_KEY } from '../../../src/sim/progression/Save';
 import { preset } from '../../../src/sim/progression/Campaign';
 
-test('T-E32-02-select @E32 @E32-AC02 Level select starts The Cure standalone with axe only', async ({ page }) => {
+test('T-E32-02-select @E32 @E32-AC02 Unlocked level row starts The Cure standalone with axe only', async ({ page }) => {
   test.setTimeout(180_000);
   await boot(page);
-  const save = preset('L2-default');
+  const save = preset('L10-default');
   await page.evaluate(save => { window.__SS__!.campaign.restore(save); window.__SS__!.campaign.save(); window.__SS__!.campaign.menu(); }, save);
-  await page.getByRole('button', { name: 'Level select', exact: true }).click();
-  await page.getByRole('button', { name: 'Level 10 · The Cure (axe start)', exact: true }).click();
+  await page.getByTestId('start-game').click();
+  await page.getByTestId('level-L10').click();
   await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');
   await page.evaluate(async () => { await window.__SS__!.screenshotReady(); window.__SS__!.pause(); });
   const state = await page.evaluate(() => window.__SS__!.getState());
@@ -23,21 +24,25 @@ test('T-E32-02-select @E32 @E32-AC02 Level select starts The Cure standalone wit
   await page.reload();
   await page.waitForFunction(() => !!window.__SS__);
   await page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.campaign.menu(); });
-  await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  await page.getByTestId('start-game').click();
+  await expect(page.getByTestId('level-resume-L10')).toBeVisible();
+  await page.getByTestId('level-L10').click();
   await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');
   await page.evaluate(async () => { await window.__SS__!.screenshotReady(); window.__SS__!.pause(); });
   expect(await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint)).toBe('cure-industrial');
   const arsenal = await page.evaluate(() => window.__SS__!.getState().player!.weapons!.RIGHT.rack.map(slot => slot.id));
   expect(arsenal).toContain('weapon.pistol'); expect(arsenal).toContain('weapon.shotgun');
   await page.evaluate(() => window.__SS__!.campaign.menu());
-  await page.getByRole('button', { name: 'Level select', exact: true }).click();
-  await page.getByRole('button', { name: 'Level 10', exact: true }).click();
+  await page.getByTestId('start-game').click();
+  await page.getByTestId('level-restart-L10').click();
   await expect.poll(() => page.evaluate(() => window.__SS__!.missions.state()?.checkpoint), { timeout: 120_000 }).toBe('cure-crash');
   await page.evaluate(async () => { await window.__SS__!.screenshotReady(); window.__SS__!.pause(); });
   expect(await page.evaluate(() => window.__SS__!.campaign.state()!.ownedActions.filter(id => id.startsWith('weapon.')))).toEqual(['weapon.fire-axe']);
   await page.evaluate(() => window.__SS__!.campaign.menu());
-  await page.getByRole('button', { name: 'Start new', exact: true }).click();
+  await page.evaluate(key => { localStorage.removeItem(key); window.__SS__!.campaign.menu(); }, SAVE_KEY);
+  await page.getByTestId('start-game').click();
   await page.getByRole('button', { name: 'Female survivor', exact: true }).click();
+  await page.getByTestId('level-L1').click();
   await expect(page.getByRole('heading', { name: 'Mission briefing', exact: true })).toBeVisible({ timeout: 60_000 });
   const fresh = await page.evaluate(() => window.__SS__!.campaign.state());
   expect(fresh!.unlockedLevel).toBe(1); expect(fresh!.cureResume).toBeUndefined();
