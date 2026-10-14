@@ -78,6 +78,8 @@ export class LevelFourBot {
     // Fight: the axe for what is at arm's length, the machine gun for what comes at the courier from range (before contact).
     const fight = (range: number): boolean => {
       if (!fights || skip) return false;
+      // Keep outrunning a pursuing Alpha during the escape; stopping for melee lets it catch up.
+      if (s.phase === 'collapse' && w.infected!.active.some(e => e.archetype === 'infected.alpha' && e.health.current > 0 && dist(e.transform, p) < 14)) return false;
       if (near[0]) { strike(near[0], 'LEFT'); return true; }
       if (!gun) return false;
       const shot = this.threats(p, range).find(e => this.chasing(e) || dist(e.transform, p) < 11);
@@ -94,8 +96,11 @@ export class LevelFourBot {
       // Keep moving during a retreat: stopping for every shot sent the courier back into a lost line's crowd.
       const movingFight = (range: number) => { const move = frame.move; fight(range); frame.move = move; };
       const crowd = this.threats(p, 5), many = this.threats(p, 10).filter(e => this.chasing(e)).length;
-      const alpha = crowd.find(e => e.archetype === 'infected.alpha' && e.infected?.specialAttack);
-      if (alpha || (fights ? crowd.length >= 4 || many >= 6 : crowd.length >= 1 || many >= 2)) {
+      const alpha = this.threats(p, 14).find(e => e.archetype === 'infected.alpha' &&
+        e.infected?.specialAttack?.stage === 'telegraph');
+      // The slower newbie must start backing away before a crowd is already in melee range.
+      const detouring = this.detour && w.tick < this.detour.until && dist(p, this.detour) > .8;
+      if (!detouring && (alpha || (fights && !newbie ? crowd.length >= 4 || many >= 6 : crowd.length >= 1 || many >= 2))) {
         const at = this.walker.detour(w, hold, (alpha ?? crowd[0])?.transform);
         if (at) this.detour = { ...at, until: w.tick + 70 };
       }

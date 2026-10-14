@@ -1,0 +1,101 @@
+{
+  "name": "l4-infected-get-up",
+  "seed": 1,
+  "ground": "asphalt",
+  "time": "L4",
+  "size": 32,
+  "dof": false,
+  "note": "PO 10-14 recovery regression: three regular infected take real lethal melee hits, lie down for their authored 10\u201320 seconds, then stand, reacquire and attack. Bodies are recoverable, never converted into static corpses for spawn pressure.",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        4,
+        0
+      ]
+    },
+    {
+      "id": "regular-0",
+      "kind": "infected",
+      "at": [
+        -3,
+        -2
+      ],
+      "yaw": 0,
+      "state": "chase"
+    },
+    {
+      "id": "regular-1",
+      "kind": "infected",
+      "at": [
+        -3,
+        0
+      ],
+      "yaw": 0,
+      "state": "chase"
+    },
+    {
+      "id": "regular-2",
+      "kind": "infected",
+      "at": [
+        -3,
+        2
+      ],
+      "yaw": 0,
+      "state": "chase"
+    }
+  ],
+  "script": [
+    {
+      "frame": 15,
+      "actor": "regular-0",
+      "do": {
+        "hit": {
+          "from": "courier",
+          "heavy": true,
+          "amount": 999
+        }
+      }
+    },
+    {
+      "frame": 15,
+      "actor": "regular-1",
+      "do": {
+        "hit": {
+          "from": "courier",
+          "heavy": true,
+          "amount": 999
+        }
+      }
+    },
+    {
+      "frame": 15,
+      "actor": "regular-2",
+      "do": {
+        "hit": {
+          "from": "courier",
+          "heavy": true,
+          "amount": 999
+        }
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 1800,
+  "sheet": 120,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "courierAttacksMin": 1,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}
