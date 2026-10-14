@@ -491,7 +491,8 @@ sit=p(body=(0,0,8,0,-.062,0),head=z(-4),legBL=z(44.5),legBR=z(44.5),legFL=z(1.5)
 action('corgi-sit',.4,[(0,p()),(.5,{**sit,'body':(0,0,5,0,-.04,0),'legBL':z(35),'legBR':z(35),'legFL':z(2.5),'legFR':z(2.5)}),(1,sit)],dogs)
 
 action('infected-flight',.35,[(0,p()),(.25,p(wingL=(35,0,0),wingR=(-35,0,0))),(.5,p()),(.75,p(wingL=(-45,0,0),wingR=(45,0,0))),(1,p())],['body','head','wingL','wingR'])
-action('animal-death',.6,[(0,p()),(.35,p(body=(0,0,35,0,-.08,0),head=z(-15))),(.75,p(body=(0,0,85,0,-.24,0),head=z(-25),legFL=z(25),legFR=z(-15),legBL=z(35),legBR=z(15))),(1,p(body=(0,0,90,0,-.24,0),head=z(-25),legFL=z(25),legFR=z(-15),legBL=z(35),legBR=z(15)))],dogs+['wingL','wingR'])
+# Roll about the forward (X) axis: the old 85-90 degree Z rotation pitched the dog onto its tail (PO 10-14 'that dog looks strange').
+action('animal-death',.6,[(0,p()),(.35,p(body=(35,0,0,0,-.08,0),head=z(-15))),(.75,p(body=(85,0,0,0,-.24,0),head=z(-25),legFL=z(25),legFR=z(-15),legBL=z(35),legBR=z(15))),(1,p(body=(90,0,0,0,-.24,0),head=z(-25),legFL=z(25),legFR=z(-15),legBL=z(35),legBR=z(15)))],dogs+['wingL','wingR'])
 
 
 scene.frame_start=1

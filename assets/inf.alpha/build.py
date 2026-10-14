@@ -6,6 +6,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
+import bmesh
 import bpy
 from mathutils import Matrix, Vector
 
@@ -18,13 +19,20 @@ base = P.parent / 'inf.common-worker/build.py'
 # Redirect the worker's build metadata into this variant, leaving its source intact.
 sys.argv = [str(base), '--']
 ns = {'__file__': str(P / 'build.py'), '__name__': '__alpha_base__'}
-exec(compile(base.read_text(), str(base), 'exec'), ns)
+# Thin hair locks (spikes that decimate into slivers) are kept as their own joined mesh per
+# owner, so the far tier can drop them and keep only the smooth hair_base cap.
+HAIR = ('hair_layer', 'heavy_fringe', 'messy_crown', 'low_nape')
+source = base.read_text()
+key = "buckets.setdefault((o.parent.name,tuple("
+assert key in source
+source = source.replace(key, "buckets.setdefault((o.parent.name+('~hair' if o.name.startswith(%r) else ''),tuple(" % (HAIR,))
+exec(compile(source, str(base), 'exec'), ns)
 # The base's rest metadata describes the worker, not this derived rig.
 (P / 'rig-rest.json').unlink(missing_ok=True)
 parts, objects = ns['parts'], ns['objects']
 bpy.context.view_layer.update()
-# 1.45x height with additional chest/limb breadth, still the worker's human shape.
-shape = Matrix.Diagonal(Vector((1.45 * 1.14, 1.45 * 1.22, 1.45, 1)))
+# 1.47x height (hair locks are gone, so the crown is lower) with additional chest/limb breadth, still the worker's human shape.
+shape = Matrix.Diagonal(Vector((1.47 * 1.14, 1.47 * 1.22, 1.47, 1)))
 positions = {name: shape @ node.matrix_world.translation for name, node in parts.items()}
 parents = {name: node.parent.name if node.parent else None for name, node in parts.items()}
 owners = {obj.name: obj.parent.name for obj in objects}
@@ -63,7 +71,7 @@ caps = [obj for obj in objects if obj.name.startswith('stump_')]
 groups = {}
 for obj in objects:
     if obj not in caps:
-        groups.setdefault(obj.parent.name, []).append(obj)
+        groups.setdefault(obj.parent.name + ('__hair' if '~hair' in obj.name else ''), []).append(obj)
 objects = caps.copy()
 for owner, group in groups.items():
     bpy.ops.object.select_all(action='DESELECT')
@@ -73,7 +81,7 @@ for owner, group in groups.items():
     if len(group) > 1:
         bpy.ops.object.join()
     obj = group[0]
-    obj.name = owner + '__alpha'
+    obj.name = owner.replace('__hair', '') + ('__hairalpha' if owner.endswith('__hair') else '__alpha')
     objects.append(obj)
 for obj in objects:
     # Compact repeated slots introduced by joining.
@@ -88,6 +96,31 @@ for obj in objects:
 sources = {obj.name: obj.data.copy() for obj in objects}
 def triangles(obj):
     return sum(len(face.vertices) - 2 for face in obj.data.polygons)
+def prune(obj, smallest):
+    # Drop loose islands (cuffs, folds, laces, fingertips) whose longest side is below `smallest`
+    # metres: at 30 m they only decimate into slivers that break the silhouette.
+    bm = bmesh.new()
+    bm.from_mesh(obj.data)
+    seen, doomed = set(), []
+    for seed in bm.verts:
+        if seed.index in seen:
+            continue
+        island, stack = [], [seed]
+        seen.add(seed.index)
+        while stack:
+            v = stack.pop()
+            island.append(v)
+            for e in v.link_edges:
+                w = e.other_vert(v)
+                if w.index not in seen:
+                    seen.add(w.index)
+                    stack.append(w)
+        size = max(max(v.co[i] for v in island) - min(v.co[i] for v in island) for i in range(3))
+        if size < smallest:
+            doomed.extend(island)
+    bmesh.ops.delete(bm, geom=doomed, context='VERTS')
+    bm.to_mesh(obj.data)
+    bm.free()
 def reduce(obj, ratio):
     bpy.context.view_layer.objects.active = obj
     mod = obj.modifiers.new('alpha surface reduction', 'DECIMATE')
@@ -97,9 +130,21 @@ def reduce(obj, ratio):
     bpy.ops.object.modifier_apply(modifier=mod.name)
 records = []
 output = Path(args.glb).resolve()
+allobjects = objects
+ISLAND_MIN = 0.12
 for lod, limit in enumerate((7800, 2900, 950)):
-    for obj in objects:
+    for obj in allobjects:
         obj.data = sources[obj.name].copy()
+        obj.hide_set(False)
+    # Every tier omits the hair locks (at 1.45x they read as shards); the head keeps its smooth hair_base cap.
+    objects = [obj for obj in allobjects if not obj.name.endswith('__hairalpha')]
+    for obj in allobjects:
+        if obj not in objects:
+            obj.hide_set(True)
+    if lod == 2:
+        for obj in objects:
+            if obj not in caps:
+                prune(obj, ISLAND_MIN)
     total = sum(triangles(obj) for obj in objects)
     for obj in objects:
         reduce(obj, min(1, limit / total))
@@ -124,5 +169,5 @@ for lod, limit in enumerate((7800, 2900, 950)):
                     'fileKB': path.stat().st_size / 1024, 'dimensions': [max(v[i] for v in bounds) - min(v[i] for v in bounds) for i in range(3)]})
 (P / 'build-stats.json').write_text(json.dumps({'derivedFrom': str(base.relative_to(P.parents[1])),
     'heightRatio': records[0]['dimensions'][2] / (max(v.z for v in ns['bounds']) - min(v.z for v in ns['bounds'])),
-    'bodyHeightScale': 1.45, 'headScale': [.82, .82, .90], 'shapeScale': [1.653, 1.769, 1.45], 'lods': records,
+    'bodyHeightScale': 1.47, 'headScale': [.82, .82, .90], 'shapeScale': [1.6758, 1.7934, 1.47], 'lods': records,
     'parts': list(parts), 'materials': ['pal_infectedSkin', 'pal_asphalt', 'pal_blood', 'emi_infectedEye']}, indent=2) + '\n')
