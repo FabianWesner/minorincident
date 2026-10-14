@@ -186,6 +186,11 @@ export class Outbreak {
       if (c.state === 'finished' || c.state === 'infected') continue;
       if (world.missions?.state.l3?.waitingIds?.includes(e.id)) { this.routine(e); continue; }
       if (c.zooAnimal) { this.animalRoutine(e); continue; }
+      if (c.vehicleYield && c.vehicleYield.until > tick && ['calm', 'hide', 'alarmed', 'flee'].includes(c.state)) {
+        this.world.npcs!.move(e, c.vehicleYield.target, c.l1.walkSpeed * 1.5, c, .15);
+        continue;
+      }
+      if (c.vehicleYield && c.vehicleYield.until <= tick) delete c.vehicleYield;
       // E20 §5.2: allied fighters engage visible infected instead of fleeing (still biteable humans).
       if ((world.missions?.l6 || world.l7Encounters || world.missions?.l8) && c.survivor && updateSurvivor(world,e)) continue;
       if (c.ally && updateAlly(world, e, (a, b, id) => this.sees(a, b, id))) continue;
@@ -197,11 +202,6 @@ export class Outbreak {
       if (c.schedule && (c.state === 'calm' || c.state === 'alarmed')) followSeat(this.world, e);
       if ((tick + e.id) % 6 === 0 || this.heard.length) this.perceive(e);
       if (c.state === 'calm' && this.gunfire.length && (tick + e.id) % 6 === 3) this.hearGunfire(e);
-      if (c.vehicleYield && c.vehicleYield.until > tick && ['calm', 'hide', 'alarmed'].includes(c.state)) {
-        this.world.npcs!.move(e, c.vehicleYield.target, c.l1.walkSpeed * 1.5, c, .15);
-        continue;
-      }
-      if (c.vehicleYield && c.vehicleYield.until <= tick) delete c.vehicleYield;
       if (c.state === 'calm') this.routine(e);
       else if (c.state === 'alarmed') {
         this.face(e, c.threat, .2);

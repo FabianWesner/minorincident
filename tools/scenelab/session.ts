@@ -164,6 +164,7 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   const e = spec.expect ?? {}, checks: { name: string; pass: boolean; value: number; limit: number }[] = [];
   const add = (name: string, value: number, limit: number | undefined) => { if (limit !== undefined) checks.push({ name, pass: value <= limit, value, limit }); };
   add('propPenetrationFramesMax', metrics.propPenetration.framesMax, e.propPenetrationFramesMax);
+  add('convoyOverlapFramesMax', metrics.convoyOverlapFrames, e.convoyOverlapFramesMax);
   add('consoleErrors', errors.length, e.consoleErrors ?? 0);
   add('clipping', clipping.static.length + clipping.actors.length + clipping.heldProps.length + (clipping.gunBodies?.length ?? 0), e.clippingMax);
   add('heldPropIntersections', clipping.heldProps.length, e.heldPropIntersectionsMax);

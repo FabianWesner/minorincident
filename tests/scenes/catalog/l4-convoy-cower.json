@@ -1,0 +1,75 @@
+{
+  "name": "l4-convoy-cower",
+  "seed": 1,
+  "l4Convoy": true,
+  "time": "night",
+  "ground": "district",
+  "layout": {
+    "level": "L4",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        -90,
+        -85
+      ],
+      [
+        90,
+        70
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "cower-kerb",
+      "kind": "pedestrian",
+      "at": [
+        -70,
+        51.75
+      ],
+      "yaw": 180,
+      "look": {
+        "model": "npc.civilian-woman-b"
+      },
+      "state": {
+        "routine": "treat"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -71,
+      0,
+      49.5
+    ]
+  },
+  "frames": 240,
+  "sheet": 20,
+  "trace": true,
+  "note": "Production L4 convoy passes a crouching woman with a bag: early kerb walk and safe stationary cower at the road edge.",
+  "script": [
+    {
+      "frame": 1,
+      "spawnActor": {
+        "id": "woman-bag",
+        "kind": "pedestrian",
+        "at": [
+          -72.1,
+          47.75
+        ],
+        "yaw": 180,
+        "look": {
+          "model": "npc.civilian-woman-a",
+          "handProp": "bag"
+        },
+        "state": {
+          "routine": "treat"
+        }
+      }
+    }
+  ],
+  "expect": {
+    "convoyOverlapFramesMax": 0,
+    "consoleErrors": 0
+  }
+}

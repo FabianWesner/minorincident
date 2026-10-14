@@ -1,6 +1,8 @@
 import { cure } from '../../levels/L10/district';
 import { cureEncounters, cureEncounterSlots } from '../../levels/L10/encounters';
 import { levelTenMission } from '../../levels/L10/mission';
+import { resolveCampaignMission } from '../../levels/missions';
+import { convoyFootprint, convoyOverlaps } from '../../sim/missions/L4ConvoyClearance';
 import { preset } from '../../sim/progression/Campaign';
 import { applyCampaign } from '../../sim/progression/apply';
 import { completeCampaignLevel } from '../../sim/progression/carryover';
@@ -83,6 +85,7 @@ const toPoint = (p: Point | number[]) => Array.isArray(p) ? { x: p[0], z: p[1] }
  * Driven by tools/scenelab (CLI runner and MCP server); see docs/tools/scene-lab.md.
  */
 export class SceneLab {
+  private convoyOverlapFrames = 0;
   spec: SceneSpec | null = null;
   built: BuiltScene | null = null;
   frame = 0;
@@ -140,6 +143,7 @@ export class SceneLab {
   private readonly barOverrides = new Map<InfectedDef, boolean | undefined>();
   async load(spec: SceneSpec) {
     this.specials = [];
+    this.convoyOverlapFrames = 0;
     if (spec.cureEncounter) {
       const group = cureEncounters.find(g => g.id === spec.cureEncounter);
       if (!group) throw new Error(`Unknown cure encounter: ${spec.cureEncounter}`);
@@ -264,6 +268,16 @@ export class SceneLab {
       if (!v.l2Ride) this.vehicleMotion.set(id, { yaw: world.entities.get(entity)!.transform.yaw, yawRateMaxDegS: 0, overlaps: 0 });
     }
     spec.actors?.forEach((a, i) => this.spawn(a, i));
+    if (spec.l4Convoy) {
+      applyCampaign(world, preset('L4-default'));
+      const mission = world.loadMission(resolveCampaignMission('L4', world.districts!));
+      mission.begin();
+      if (spec.l4Convoy === 'parked') {
+        for (let t = 0; t < 60 * 60 && mission.state.l4!.phase === 'convoy'; t++) world.update();
+        if (mission.state.l4!.phase === 'convoy') throw new Error('L4 convoy did not arrive for parked fixture');
+      }
+      for (const [i, id] of mission.state.l4!.convoyIds.entries()) this.vehicles.set(`convoy-${i}`, id);
+    }
     if (spec.crossingCrash) {
       const def = levelNineMission((_district, name) => {
         const a = world.districts!.districts[0].layout.anchors[name];
@@ -922,6 +936,10 @@ export class SceneLab {
       stepMaxM: +m.stepMaxM.toFixed(3), stepFrame: m.stepFrame, modes: m.modes, stuckLevelMax: m.stuckLevelMax, distanceMinM: +m.distanceMinM.toFixed(2), samples: m.samples, state: structuredClone(this.world.megaPursuit?.state ?? null) };
   }
   private sample(): void {
+    const convoy = this.world.missions?.state.l4?.convoyIds;
+    if (convoy && [...this.world.entities.iterate()].some(e => !e.hidden && !e.corpse && e.health.current > 0 && (e.civilian || e.infected || e.companion || e.escort || e.id === 1) && convoy.some((id, i) => {
+      const v = this.world.entities.get(id); return !!v && convoyOverlaps(v.transform, i, e.transform, convoyFootprint(e));
+    }))) this.convoyOverlapFrames++;
     this.sampleMega(); this.sampleGun();
     this.recordPropPenetration();
     const probes = this.game.view.labProbes(), figures = new Map(this.game.view.crowdFigures().map(f => [f.id, f]));
@@ -1262,6 +1280,7 @@ export class SceneLab {
     const clipping = this.staticSets ? await this.clipping() : null;
     const bodies = [...this.bodies.values()].sort((x, y) => y.depthCm - x.depthCm);
     return { armyBoom: this.boom ? { closedAt: this.boomClosedAt, closed: !!this.spec?.armyBoom?.closed || !!this.boomClosedAt } : null, scene: this.spec?.name ?? null, frame: this.frame, tick: this.world.tick, backend: this.game.view.renderer.selectedBackend, quality: this.game.quality.tier,
+      convoyOverlapFrames: this.convoyOverlapFrames,
       propPenetration: { samples: this.propPenetrationSamples, framesMax: Math.max(0, ...[...this.propPenetration.values()].map(m => m.max)), pairs: [...this.propPenetration.values()] },
       props: { sinkMaxCm: this.propSinkMaxCm, samples: this.propGroundSamples, gaps: this.game.view.labProbes().districts?.propGroundGaps() ?? [] },
       bodies, wheels: Object.fromEntries([...new Set([...this.wheels.values()].map(w => w.vehicle))].map(id => [id, [...this.wheels.values()].filter(w => w.vehicle === id).map(w => { const h = this.hubs.get(`${w.vehicle}|${w.wheel}`); return { ...w, hubSpikeCm: h?.spikeCm ?? 0, hubSpikeFrame: h?.spikeFrame ?? 0, hubStepCm: h?.stepCm ?? 0, hubStepFrame: h?.stepFrame ?? 0 }; })])), ...(this.spec?.trace ? { vehicleTrack: Object.fromEntries(this.vehicleTrack), wheelTrack: Object.fromEntries(this.wheelTrack) } : {}),

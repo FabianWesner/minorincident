@@ -58,7 +58,12 @@ test('L4 @E22 @E22-AC17 a mid-war death keeps lost lines, soldiers, and the coll
   expect(l.mission.state.l4).toBe(s);
   expect(s.turnAt).toBe(turnAt);
   expect(s.director.lines.map(line => line.brokeAt)).toEqual(lost);
-  for (const id of dead) { const e = world.entities.get(id); expect(!e || e.health.current <= 0 || !!e.infection).toBe(true); }
+  for (const id of dead) {
+    const e = world.entities.get(id);
+    // A pending bite may finish during the respawn delay. The soldier remains
+    // lost when the same entity becomes infected; it must not return as an ally.
+    expect(!e || e.health.current <= 0 || !!e.infection || !!e.infected && e.faction === 'infected' && !e.civilian?.ally).toBe(true);
+  }
   runL4(world, l.mission, 'complete', { stopWhen: m => m.state.checkpoint === 'line-break' });
   expect(l.mission.state.checkpoint).toBe('line-break');
   expect((s.lineBreakAt - turnAt) / 60).toBeLessThanOrEqual(l4.lineBreak.defenseS);
@@ -110,7 +115,11 @@ test('L4 @E22 @E22-AC17 a falling line anchors at the nearest safe camp post rat
   l.mission.completeObjective('ride');
   const [x, z] = l4.director.checkpoints[2][1], player = world.entities.get(1)!;
   Object.assign(player.transform, { x, z }); world.physics.playerBody!.setTranslation(player.transform, true); world.spatial.set(1, x, z);
-  world.infected!.spawn('infected.runner', { x: x + 1, z });
+  // The bumper gaps are farther apart than the old side posts: threaten the
+  // first two on clear ground, leaving the third as the nearest safe post.
+  world.infected!.spawn('infected.runner', { x: x - 1, z });
+  const [firstX, firstZ] = l4.director.checkpoints[2][0];
+  world.infected!.spawn('infected.runner', { x: firstX - 1, z: firstZ });
   l.mission.l4!.campCheckpoint('nests', 2);
   world.update();
   const cp = player.survivor!.checkpoint, [safeX, safeZ] = l4.director.checkpoints[2][2];

@@ -48,7 +48,9 @@ describe('L4 PO round 10-13', () => {
     // After the gun and the turn the war keeps her in; at "Fall back!" (the line break) the gate opens onto the escape street.
     m.completeObjective('quartermaster'); m.completeObjective('hold');
     expect(s.phase).toBe('collapse');
-    const gate = { x: -13.5, z: 5.6 }; Object.assign(w.entities.get(1)!.transform, gate); w.physics.playerBody!.setTranslation({ x: gate.x, y: w.entities.get(1)!.transform.y, z: gate.z }, true); w.spatial.set(1, gate.x, gate.z);
+    // Use the authored passage below the parked trucks; the old z=5.6
+    // straight-line fixture walked through a truck rather than through the gate.
+    const [gx, gz] = l4.director.escape.route[0], gate = { x: gx, z: gz }; Object.assign(w.entities.get(1)!.transform, gate); w.physics.playerBody!.setTranslation({ x: gate.x, y: w.entities.get(1)!.transform.y, z: gate.z }, true); w.spatial.set(1, gate.x, gate.z);
     w.combat!.damage.god = true;
     out.escape = walk(1, 0, 4 * 60); expect(out.escape.x).toBeGreaterThan(pe.x1 + 2);
     record('po-round-perimeter', { exit: p0, bus, out });
