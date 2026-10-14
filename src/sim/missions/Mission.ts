@@ -14,6 +14,7 @@ import { captureSeams, restoreSeams } from './l1Seams';
 import { respawnAtCheckpoint, runOutRule } from './Respawn';
 import { dialogue } from '../../data/dialogue';
 import { SimPhase } from '../../core/EventBus';
+import { WorldHumans } from '../ai/Perception';
 import type { InputFrame } from '../../input/InputFrame';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot, GameEvent } from '../world/types';
@@ -440,6 +441,8 @@ export class Mission {
     if (!this.world.npcs && this.world.infected) { this.world.infected.pool.push(...this.world.infected.active); this.world.infected.active.length=0; }
     for (const entity of entities) if (entity.interactable) entity.interactable.interruptedAt = -1;
     this.world.entities.restore(entities, player);
+    // Healthy checkpoint victims can be bitten again; the old bite exclusion belongs to the discarded timeline.
+    if (this.world.infected?.hearing.humans instanceof WorldHumans) this.world.infected.hearing.humans.bitten.clear();
     if (!this.world.npcs && this.world.infected) {
       const ai=this.world.infected;
       ai.active.length=0; ai.director.queue.length=0;
