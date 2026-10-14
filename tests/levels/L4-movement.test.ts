@@ -1,0 +1,51 @@
+import { afterEach, expect, test } from 'vitest';
+import { survivor } from '../../src/data/survivor';
+import { emptyInput } from '../../src/input/InputFrame';
+import type { SimWorld } from '../../src/sim/world/SimWorld';
+import { loadL4 } from '../../tools/sim-runner/l4Bots';
+
+let world: SimWorld | undefined;
+afterEach(() => { world?.dispose(); world = undefined; });
+const step = (w: SimWorld, n: number) => { for (let i = 0; i < n; i++) w.update(); };
+function place(w: SimWorld, at: { x: number; z: number }): void {
+  w.clearInput(); w.player!.locomotion.reset();
+  const p = w.entities.get(1)!.transform;
+  Object.assign(p, at, { y: .72 }); w.physics.playerBody!.setTranslation(p, true); w.physics.playerBody!.setNextKinematicTranslation(p); w.spatial.set(1, p.x, p.z);
+}
+for (const phase of ['plaza', 'war', 'respawn']) test(`@E22 L4 ${phase} permits mouse and direct movement on open plaza tiles`, async () => {
+  const loaded = await loadL4(2); world = loaded.world;
+  const w = world, m = loaded.mission;
+  while (m.state.l4!.phase === 'convoy') w.update();
+  w.combat!.damage.god = true; m.completeObjective('quartermaster');
+  if (phase !== 'plaza') { while (!m.state.l4!.turnAt) w.update(); step(w, 180); }
+  if (phase === 'respawn') {
+    w.player!.damage(1000, w.tick, true); step(w, 180);
+    expect(w.entities.get(1)!.health.current).toBeGreaterThan(0); expect(m.state.checkpoint).toBe('turn');
+  }
+  const center = { x: -18, z: 4.5 }, d = 6 / Math.SQRT2;
+  for (const [dx, dz] of [[-d, d], [d, -d], [-d, -d], [d, d]]) for (const scheme of ['mouse-only', 'keyboard', 'touch'] as const) {
+    const target = { x: center.x + dx, z: center.z + dz };
+    expect(w.infected!.nav.clear(target.x, target.z, survivor.radius)).toBe(true);
+    place(w, center);
+    if (scheme === 'mouse-only') {
+      w.setInput({ moveTarget: target }); w.update(); w.applyInput(emptyInput(), scheme); step(w, 240);
+    } else {
+      w.applyInput({ ...emptyInput(), move: { x: dx / 6, z: dz / 6 } }, scheme); step(w, 82); w.applyInput(emptyInput(), scheme); step(w, 10);
+    }
+    const p = w.entities.get(1)!.transform;
+    expect(Math.hypot(p.x - target.x, p.z - target.z), `${phase}/${scheme}/${dx},${dz}`).toBeLessThan(1);
+  }
+}, 120_000);
+
+test('@E22 a real L4 armory-table corner cannot trap an outward click', async () => {
+  const loaded = await loadL4(2); world = loaded.world;
+  const w = world;
+  while (loaded.mission.state.l4!.phase === 'convoy') w.update();
+  const corner = { x: -25.855, z: 1.855 }, target = { x: corner.x - Math.SQRT2, z: corner.z + Math.SQRT2 };
+  expect(w.infected!.nav.clear(corner.x, corner.z, survivor.radius, true)).toBe(true);
+  expect(w.infected!.nav.clear(corner.x, corner.z, survivor.radius + .02)).toBe(false);
+  place(w, corner);
+  w.setInput({ moveTarget: target }); w.update(); w.applyInput(emptyInput(), 'mouse-only'); step(w, 120);
+  const p = w.entities.get(1)!.transform;
+  expect(Math.hypot(p.x - target.x, p.z - target.z)).toBeLessThan(1);
+}, 120_000);

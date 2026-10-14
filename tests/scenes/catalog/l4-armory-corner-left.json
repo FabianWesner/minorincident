@@ -1,0 +1,10 @@
+{
+  "name": "l4-armory-corner-left",
+  "note": "The courier starts at a physically valid round-capsule corner of the L4 armory table, then clicks away to screen-left. The square nav margin used to freeze this exact position. Look for continuous departure, no crossing through the table, and arrival on open tiles.",
+  "ground": "sidewalk", "time": "L4", "size": 16,
+  "props": [{ "id": "table", "asset": "prop.armory-table", "at": [0, 0] }],
+  "actors": [{ "id": "courier", "kind": "courier", "at": [-1.255, 0.655], "loadout": ["weapon.army-mg", "weapon.fire-axe"], "state": { "moveTo": [-3.376320344, 2.776320344], "pace": "run" } }],
+  "camera": { "mode": "follow", "actor": "courier", "zoom": 1 },
+  "frames": 120, "shots": [1, 15, 30, 60, 119],
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "propPenetrationFramesMax": 0 }
+}
