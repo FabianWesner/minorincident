@@ -87,21 +87,28 @@ test('T-E31-07-cancel @E31-AC07 unaware, staggered and out-of-reach infected can
   } finally { s.w.dispose(); }
 });
 
-test('T-E31-03 @E31-AC03 300 seated firing ticks emit no attacks, projectiles or blasts, mass still hits', async () => {
+for (const hp of [1000, 0]) test(`T-E31-03-${hp} @E31-AC03 300 driving firing ticks at ${hp} HP emit no attacks, projectiles or blasts, mass still hits`, async () => {
   const s = await fixture();
   try {
-    const p = s.w.entities.get(1)!; Object.assign(p.transform, { x: .71, z: 2.025 });
+    s.v.setFloorPolicy(s.id); s.v.damage(s.id, 1000 - hp);
+    // Leave space for five seconds of driving and the final ram inside the arena's navigation grid.
+    s.car.physics.body.setTranslation({ ...s.car.physics.body.translation(), x: -20 }, true); s.car.physics.postPhysics();
+    const p = s.w.entities.get(1)!; Object.assign(p.transform, { x: s.car.entity.transform.x + .71, z: 2.025 });
     s.w.physics.playerBody!.setTranslation(p.transform, true); s.w.physics.playerBody!.setNextKinematicTranslation(p.transform);
     s.w.setInput({ interact: true }); s.w.update(); s.w.clearInput();
     expect(s.v.active).toBe(s.id);
-    const frame = emptyInput(); frame.left.down = frame.left.held = frame.right.down = frame.right.held = true;
+    const startX = s.car.entity.transform.x;
+    // RMB also defaults to the vehicle handbrake; keep its explicit control released for this firing probe.
+    const frame = emptyInput(); frame.drive = { throttle: 1, steer: 0 }; frame.handbrake = false; frame.left.down = frame.left.held = frame.right.down = frame.right.held = true;
     s.w.applyInput(frame, 'keyboard'); for (let i = 0; i < 300; i++) s.w.update(); s.w.clearInput();
+    expect(s.car.entity.transform.x).toBeGreaterThan(startX + 5);
+    expect(s.car.physics.speed).toBeGreaterThan(1);
     expect(s.w.events.events().filter(e => ['combat.attack', 'combat.exploded', 'explosion'].includes(e.type))).toHaveLength(0);
     expect(s.w.combat!.projectiles).toHaveLength(0);
     const target = s.spawn(s.car.entity.transform.x + 3.1, s.car.entity.transform.z);
     s.car.physics.body.setLinvel({ x: 8, y: 0, z: 0 }, true); s.car.physics.postPhysics(); s.w.update();
     expect(s.w.entities.get(target)!.health.current).toBeLessThan(s.w.entities.get(target)!.health.max);
-    expect(s.car.entity.health.current).toBe(990);
+    expect(s.car.entity.health.current).toBe(hp === 0 ? 0 : 990);
   } finally { s.w.dispose(); }
 });
 

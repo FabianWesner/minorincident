@@ -1,3 +1,4 @@
+import { LevelNineBot } from '../../src/debug/bot/LevelNineBot';
 import { LevelEightBot } from '../../src/debug/bot/LevelEightBot';
 import { LevelSixBot } from '../../src/debug/bot/LevelSixBot';
 import { LevelThreeBot, type L3StreetChoice } from '../../src/debug/bot/LevelThreeBot';
@@ -14,12 +15,16 @@ import { compositions } from '../../src/levels/compositions';
 import { resolveCampaignMission, type MissionId } from '../../src/levels/missions';
 import type { Trigger } from '../../src/sim/missions/types';
 import { SimWorld } from '../../src/sim/world/SimWorld';
+import type { MissionResult } from '../../src/sim/missions/types';
+import { l7Rocket } from '../../src/data/l7';
+import { l7CorridorAnchors } from '../../src/levels/L7/corridor';
 import { runL1, Walker } from './l1Bots';
 
+export type RunnerLevel = MissionId | 'L7';
 export type CompletionPolicy = 'complete' | 'newbie';
 /** Same contract for individual levels and the fast completion battery. Times are simulation seconds. */
 export interface LevelReport {
-  level: MissionId; policy: CompletionPolicy; seed: number; completed: boolean;
+  level: RunnerLevel; policy: CompletionPolicy; seed: number; completed: boolean;
   timerRemaining?: number; runovers?: number; smashed?: number; maxConcurrentInfected?: number;
   time: number; deaths: number; kills: number; damageTaken: number;
   failures: Record<string, number>; objectiveTimeline: { id: string; t: number }[];
@@ -27,11 +32,11 @@ export interface LevelReport {
   outcome: 'complete' | 'stalled' | 'tick-budget' | 'load-error' | 'mission-failed';
   blocker: null | { objective: string | null; detail: string; player?: { x: number; z: number }; distance?: number; actors?: Record<string, { x: number; z: number; hp: number; state?: string; driver?: number | null; speed?: number; yaw?: number }> };
 }
-export async function loadLevel(level: MissionId, seed: number, campaign?: CampaignSave): Promise<SimWorld> {
+export async function loadLevel(level: RunnerLevel, seed: number, campaign?: CampaignSave): Promise<SimWorld> {
   const world = new SimWorld();
   try {
     await world.init(); const composition = compositions[level];
-    world.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), seed, null, level === 'L8' ? campaign?.results?.L7?.escapedSurvivors : undefined);
+    world.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), seed, level === 'L2' ? campaign?.world?.L1 ?? null : null, level === 'L7' ? campaign?.results?.L6?.escapedSurvivors : level === 'L8' ? campaign?.results?.L7?.escapedSurvivors : undefined);
     if(campaign)applyCampaign(world,campaign);
     if (!campaign && level === 'L10') applyCampaign(world, preset('L10-default'));
     if (!campaign && level === 'L8') applyCampaign(world, preset('L8-default'));
@@ -40,7 +45,8 @@ export async function loadLevel(level: MissionId, seed: number, campaign?: Campa
     if (!campaign && level === 'L4') applyCampaign(world, preset('L4-default'));
     if (!campaign && level === 'L3') applyCampaign(world, preset('L3-default'));
     if (!campaign && level === 'L2') applyCampaign(world, preset('L2-default'));
-    world.loadMission(resolveCampaignMission(level, world.districts!)).begin();
+    if (level === 'L7') world.l7Encounters!.prepare();
+    else world.loadMission(resolveCampaignMission(level, world.districts!)).begin();
     return world;
   } catch (error) { world.dispose(); throw error; }
 }
@@ -50,12 +56,13 @@ function findDrive(t: Trigger): Extract<Trigger, { kind: 'drive' }> | undefined 
   if (t.kind === 'all' || t.kind === 'any') return t.triggers.map(findDrive).find(Boolean);
 }
 /** Inputs and ordinary Begin/Retry/Skip menu actions only; no teleport, loadout injection or cheats. */
-export async function runLevel(level: MissionId, policy: CompletionPolicy, seed: number, maxSeconds = 1200, street: L3StreetChoice = 'auto', campaign?: CampaignSave): Promise<LevelReport> {
+export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, seed: number, maxSeconds = 1200, street: L3StreetChoice = 'auto', campaign?: CampaignSave, onComplete?: (world: SimWorld, result: MissionResult) => void): Promise<LevelReport> {
   const report: LevelReport = { level, policy, seed, completed: false, time: 0, deaths: 0, kills: 0, damageTaken: 0, failures: {}, objectiveTimeline: [], furthestObjective: null, activeObjectives: [], outcome: 'tick-budget', blocker: null };
   let world: SimWorld;
   try { world = await loadLevel(level, seed, campaign); }
   catch (error) { report.outcome = 'load-error'; report.failures['load-error'] = 1; report.blocker = { objective: null, detail: String(error) }; return report; }
   try {
+    if (level === 'L7') return runSeven(world, report, maxSeconds, onComplete);
     const mission = world.missions!, walker = new Walker(), rng = new Rng(seed, `campaign-${policy}`);
     const stops = [world.events.on('mission.failed', e => { if (e.type === 'mission.failed') report.failures[e.reason] = (report.failures[e.reason] ?? 0) + 1; }), world.events.on('player.died', () => { report.failures['player-died'] = (report.failures['player-died'] ?? 0) + 1; }), world.events.on('objective.completed', e => { if (e.type === 'objective.completed') report.objectiveTimeline.push({ id: e.id, t: world.tick / 60 }); })];
     if (level === 'L1') {
@@ -65,6 +72,9 @@ export async function runLevel(level: MissionId, policy: CompletionPolicy, seed:
       // E20: the shared L2 policy (ordinary inputs only), same as the browser bot.
       const bot = new LevelTwoBot(world, policy);
       for (let tick = 0; tick < maxSeconds * 60 && !bot.finished; tick++) { world.applyInput(bot.sample(), 'keyboard'); world.update(); }
+    } else if (level === 'L9') {
+      const bot = new LevelNineBot(world, 'road', true);
+      for (let i = 0; i < maxSeconds * 60 && !mission.l9!.state.finished; i++) { world.applyInput(bot.sample(), 'keyboard'); world.update(); }
     } else if (level === 'L8') {
       const bot = new LevelEightBot(world, policy);
       for (let i=0;i<maxSeconds*60&&!bot.finished;i++){followFrustum(world);world.applyInput(bot.sample(),'keyboard');world.update();}
@@ -165,7 +175,8 @@ export async function runLevel(level: MissionId, policy: CompletionPolicy, seed:
       report.failures[report.outcome] = (report.failures[report.outcome] ?? 0) + 1;
       report.blocker = { objective: step?.id ?? null, detail: mission.state.failure ?? `${report.outcome}: ${step?.text ?? 'no active objective'}`, player: { x: player.transform.x, z: player.transform.z }, ...(anchor ? { distance: distance(player.transform, anchor) } : {}), actors };
     }
-    if(campaign&&report.completed){
+    if (report.completed && onComplete) onComplete(world, mission.state.result!);
+    if(campaign&&report.completed&&!onComplete){
       campaign.results??={};campaign.results[level]=structuredClone(mission.state.result!);
       const weapons=world.entities.get(1)!.weapons!;campaign.racks={LEFT:weapons.LEFT.rack.map(s=>s.id),RIGHT:weapons.RIGHT.rack.map(s=>s.id)};
       campaign.ownedActions=[...new Set([...campaign.ownedActions,...campaign.racks.LEFT,...campaign.racks.RIGHT])];
@@ -173,4 +184,47 @@ export async function runLevel(level: MissionId, policy: CompletionPolicy, seed:
     }
     return report;
   } finally { world.dispose(); }
+}
+
+/** L7 deliberately has no mission graph: use its real pickup, encounter group and bus completion event. */
+function runSeven(world: SimWorld, report: LevelReport, maxSeconds: number, onComplete?: (world: SimWorld, result: MissionResult) => void): LevelReport {
+  const walker = new Walker(), boarding = l7CorridorAnchors['l7-bus-boarding'].position;
+  // Authored Northgate -> Lakeshore road route; keep the long injured group out of the frontage yards.
+  const route = [{ x: 88, z: 15 }, { x: 88, z: 46 }, { x: boarding[0], z: boarding[2] }];
+  let waypoint = 0;
+  const stop = world.events.on('level.completed', e => {
+    if (e.type !== 'level.completed' || e.id !== 'L7') return;
+    report.completed = true; report.outcome = 'complete'; report.time = e.result.time;
+    report.deaths = e.result.deaths; report.damageTaken = e.result.damage;
+    onComplete?.(world, e.result);
+  });
+  try {
+    for (let tick = 0; tick < maxSeconds * 60 && !report.completed; tick++) {
+      followFrustum(world);
+      const p = world.entities.get(1)!, f = emptyInput();
+      if (p.health.current <= 0) { report.deaths++; report.outcome = 'mission-failed'; break; }
+      if (!world.storyLock) {
+        const pickup = [...world.entities.iterate()].find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === l7Rocket.action);
+        if (!pickup && waypoint < route.length - 1 && distance(p.transform, route[waypoint]) < 2) waypoint++;
+        const goal = pickup?.transform ?? route[waypoint];
+        report.furthestObjective = pickup ? 'rocket-pickup' : 'bus-departure';
+        f.move = walker.step(world, goal, pickup ? .5 : 1, `${report.furthestObjective}-${waypoint}`) ?? f.move;
+        if (pickup && distance(p.transform, goal) < 1.5) f.interact = true;
+        const rack = p.weapons!.RIGHT.rack, rocket = rack.findIndex(s => s.id === l7Rocket.action);
+        if (rocket >= 0) f.selectedSlot = { side: 'RIGHT', index: rocket };
+        const enemies = world.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !e.emerging && !e.infectionRise && distance(e.transform, p.transform) < 24 && world.infected!.nav.visible(p.transform, e.transform, 0)).sort((a,b) => distance(a.transform, p.transform) - distance(b.transform, p.transform));
+        if (enemies[0]) { f.attackTarget = { id: enemies[0].id, side: 'RIGHT' }; f.right.held = true; }
+        // Keep the surviving group within its ordinary follow range before boarding.
+        const followers = world.l7Encounters!.state.roster.filter(r => r.status === 'following' && !world.l7Departure!.state.boarded.includes(r.id));
+        const limit = Math.max(12, Math.ceil(followers.length / 3) * 1.2 + 5);
+        if (!pickup && distance(p.transform, goal) > 10 && followers.some(r => { const e = world.entities.get(r.id); return e && distance(e.transform, p.transform) > limit; })) f.move = { x: 0, z: 0 };
+      }
+      world.applyInput(f, 'keyboard'); world.update();
+    }
+    if (!report.completed) {
+      report.time = world.tick / 60; report.failures[report.outcome] = 1;
+      report.blocker = { objective: report.furthestObjective, detail: JSON.stringify({ phase: world.l7Departure!.state.phase, hp: world.entities.get(1)!.health.current, roster: world.l7Encounters!.state.roster.map(r => ({ ...r, at: world.entities.get(r.id)?.transform })) }), player: { ...world.entities.get(1)!.transform } };
+    }
+    return report;
+  } finally { stop(); }
 }

@@ -1,3 +1,4 @@
+import { surfaceUnder } from '../../levels/districts/decorationSurface';
 import * as RAPIER from '@dimforge/rapier3d-compat';
 import { apcDurability, apcFloor, vehicleBoardingTicks, vehicleDef } from '../../data/vehicles';
 import { vehicleExplosion } from '../../data/explosions';
@@ -78,7 +79,19 @@ export class Vehicles {
     const car = this.cars.get(id); if (!car) throw new Error(`Unknown vehicle ${id}`);
     const state = car.entity.vehicle!; state.floor = on || undefined;
     if (on) { state.stage = this.stageOf(car); this.floorAppearance(car); }
-    car.physics.speedCap = on && car.entity.health.current <= 0 ? apcFloor.speedShare : 1; car.physics.overspeedDamp = apcFloor.overspeedDamp;
+    car.physics.speedCap = this.speedShare(car); car.physics.overspeedDamp = apcFloor.overspeedDamp;
+  }
+  /** L9 terrain cap and damage floor compose once, including damage/checkpoint rebuilds. */
+  private speedShare(car: Car): number {
+    let share = car.entity.vehicle!.floor && car.entity.health.current <= 0 ? apcFloor.speedShare : 1;
+    if (car.entity.vehicle!.floor && this.world.scenario === 'L9') {
+      const district = this.world.districts?.districts.find(d => d.id === 'D-CROSSING');
+      if (district) {
+        const p = car.entity.transform;
+        if (surfaceUnder(district.layout, p.x - district.origin[0], p.z - district.origin[1]) !== 'asphalt') share *= 12 / car.physics.def.topSpeed;
+      }
+    }
+    return share;
   }
   /** Stage boundaries are inclusive, in percent of max durability. */
   private stageOf(car: Car): number {
@@ -142,7 +155,7 @@ export class Vehicles {
         if (near && (car.doorTicks >= 36 || frame.interact)) this.enter(car);
       } else car.doorTicks = 0;
       state.boosting = drive.boost;
-      car.physics.speedCap = state.floor && car.entity.health.current <= 0 ? apcFloor.speedShare : 1;
+      car.physics.speedCap = this.speedShare(car);
       if (state.floor) this.floorContacts(car);
       this.impacts(car);
       car.physics.prePhysics();
@@ -279,7 +292,7 @@ export class Vehicles {
       const stage = this.stageOf(car);
       for (let next = (state.stage ?? 0) + 1; next <= stage; next++) this.world.events.emit({ type: 'vehicle.damage-stage', tick: this.world.tick, sourceId: car.entity.id, stage: next });
       state.stage = Math.max(state.stage ?? 0, stage); this.floorAppearance(car);
-      car.physics.speedCap = car.entity.health.current <= 0 ? apcFloor.speedShare : 1;
+      car.physics.speedCap = this.speedShare(car);
       return;
     }
     if (state.damage === 'exploded') return;
@@ -653,12 +666,13 @@ export class Vehicles {
       for (const contact of Object.values(state.apcContacts?.obstacles ?? {})) if (contact.separatedAt !== null) contact.separatedAt += delta;
       for (const passenger of state.passengers ?? []) { passenger.started += delta; passenger.pauseUntil += delta; if (passenger.story) passenger.story.start += delta; }
       const physics = new VehicleBody(vehicleDef(entity.archetype), this.world.physics.world!, entity.transform, entity.transform.yaw);
-      physics.speedCap = state.floor && entity.health.current <= 0 ? apcFloor.speedShare : 1; physics.overspeedDamp = apcFloor.overspeedDamp;
+      physics.overspeedDamp = apcFloor.overspeedDamp;
       Object.assign(physics.transform, entity.transform); Object.assign(physics.previous, entity.transform); entity.transform = physics.transform;
       physics.body.setTranslation(entity.transform, true);
       physics.speed = state.speed; physics.forwardSpeed = state.forwardSpeed;
       physics.body.setLinvel({ x: Math.cos(entity.transform.yaw) * state.forwardSpeed, y: 0, z: -Math.sin(entity.transform.yaw) * state.forwardSpeed }, true);
       this.cars.set(entity.id, { entity, physics, doorTicks: 0, noEnterUntil: this.world.tick, hits: new Map(), crashAt: this.world.tick });
+      physics.speedCap = this.speedShare(this.cars.get(entity.id)!);
       if (state.driver === 1) this.active = entity.id;
     }
     this.world.entities.get(1)!.hidden = this.active !== null;

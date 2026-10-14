@@ -13,12 +13,13 @@ const infectedGpuPattern = 'alpha-(?:asset|physical|support)[.]spec[.]ts|crowd-(
 const gpuSelectionPattern = `^(?=.*(?:${selection.pattern}|T-E07-physical-budget))(?=.*(?:${infectedGpuPattern}))`;
 const splitAlphaTiming = target === 'E07' && process.env.MI_VERIFY_REMOTE_SIM === '1';
 const splitE18Timing = target === 'E18' && process.env.MI_VERIFY_REMOTE_SIM === '1';
-const simPattern = splitAlphaTiming ? `^(?!.*T-E07-11).*(?:${selection.pattern})` : splitE18Timing ? `^(?!.*(?:@E18-AC02|@perf)).*(?:${selection.pattern})` : selection.pattern;
+const splitE31Timing = target === 'E31' && process.env.MI_VERIFY_REMOTE_SIM === '1';
+const simPattern = splitAlphaTiming ? `^(?!.*T-E07-11).*(?:${selection.pattern})` : splitE18Timing ? `^(?!.*(?:@E18-AC02|@perf)).*(?:${selection.pattern})` : splitE31Timing ? `^(?!.*T-E31-19-S4).*(?:${selection.pattern})` : selection.pattern;
 const simArgs = ['vitest', 'run', '-t', selection.pattern, '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest.json`];
-if (splitAlphaTiming || splitE18Timing) simArgs[3] = simPattern;
+if (splitAlphaTiming || splitE18Timing || splitE31Timing) simArgs[3] = simPattern;
 // Keep heavy simulation work off the shared Mac while browser/GPU gates stay local.
 const simCommand = process.env.MI_VERIFY_REMOTE_SIM === '1'
-  ? ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/vitest.json`, '--', 'npx', ...simArgs]
+  ? ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/vitest.json`, ...(target === 'E31' ? ['--pull', `${output}/campaign-seed-1.json`, '--pull', `${output}/q2-routes`] : []), '--', 'npx', ...simArgs]
   : ['sh', 'tools/sim-lock.sh', 'npx', ...simArgs];
 // Capture and pixel assertions need the native GPU; other browser checks run remotely.
 const l4VisualPattern = 'T-E22-18|T-E22-19|T-E22-boot|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn';
@@ -29,13 +30,21 @@ const commands: string[][] = [
   ['npm', 'run', 'typecheck'], ['npm', 'run', 'lint'],
   // These lane checks share a preview build with their queued browser runs.
   // Keep rebuilding dist from deleting chunks underneath an active capture.
-  target === 'E32' || target === 'E30' || target === 'E18' || target === 'E23' || target === 'E25' || target === 'E26' || target === 'E27' || target === 'E28'
+  target === 'E31' || target === 'E32' || target === 'E30' || target === 'E18' || target === 'E23' || target === 'E25' || target === 'E26' || target === 'E27' || target === 'E28'
     ? ['sh', 'tools/e2e-lock.sh', 'npm', 'run', 'build']
     : ['npm', 'run', 'build'],
   // Timing fixtures must not compete with other Vitest workers on the shared Mac.
   ...(splitAlphaTiming ? [['sh', 'tools/sim-lock.sh', 'npx', 'vitest', 'run', ...alphaTiming, '-t', 'T-E07-11', '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest-timing.json`]] : []),
   ...(splitE18Timing ? [['sh', 'tools/sim-lock.sh', 'npx', 'vitest', 'run', '-t', `^(?=.*(?:${selection.pattern}))(?=.*(?:@E18-AC02|@perf))`, '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest-timing.json`]] : []),
   simCommand,
+  // Reserve both existing runner slots in order; release slot 1 first so concurrent timing jobs cannot deadlock.
+  ...(splitE31Timing ? [[
+    'sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/vitest-timing.json`,
+    '--pull', `${output}/residency-perf-200.json`, '--pull', `${output}/residency-perf-100.json`, '--',
+    'sh', '-c', 'case "$(readlink /proc/self/fd/9)" in *.0) exec flock /srv/mi/locks/slot.1 "$@";; *.1) flock -u 9 || exit 2; exec flock /srv/mi/locks/slot.0 flock /srv/mi/locks/slot.1 "$@";; *) exit 2;; esac',
+    'sh', 'npx', 'vitest', 'run', 'tests/sim/world/chunk-residency.test.ts', '-t', 'T-E31-19-S4', '--maxWorkers=1',
+    '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest-timing.json`,
+  ]] : []),
   // Keep E07 visual/counter probes on the Mac; offload its remaining browser checks.
   ...(target === 'E07' && process.env.MI_VERIFY_REMOTE_BROWSER === '1'
     ? [
@@ -128,6 +137,7 @@ const commands: string[][] = [
               ]
               : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--workers=1']]),
             // Native Metal timing belongs on the Mac; Hetzner verifies the functional gates.
+            ...(target === 'E31' ? [['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', '--grep', `^(?=.*(?:${selection.pattern}))(?=.*@perf)`, '--project=chromium', '--workers=1']] : []),
             ...(target === 'E29' && process.platform === 'darwin' ? [['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/l7-rocket.spec.ts', 'tests/perf/l7-district.spec.ts', 'tests/perf/l7-encounters.spec.ts', '--project=chromium', '--workers=1']] : []),
           ]
         : target === 'E32'
@@ -149,7 +159,7 @@ for (const [command, ...args] of commands) {
   if ((target === 'E23' || target === 'E24') && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.some(a=>a==='tests/perf/l5-budgets.spec.ts'||a==='tests/perf/l6-budgets.spec.ts') ? 'gpu' : 'headless'}.json`);
   if ((target === 'E25' || target === 'E27') && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tools/perf/quiet-run.sh') ? 'gpu' : 'headless'}.json`);
   if (target === 'E30' && args.includes('playwright')) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tools/perf/quiet-run.sh') ? 'gpu' : 'headless'}.json`);
-  if (target === 'E31' && (args.includes('playwright') || args.some(a => a.includes('npx playwright test')))) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tools/remote/run.sh') ? 'headless' : 'gpu'}.json`);
+  if (target === 'E31' && (args.includes('playwright') || args.some(a => a.includes('npx playwright test')))) copyFileSync('test-results/playwright/results.json', `${output}/playwright-${args.includes('tools/perf/quiet-run.sh') ? 'perf' : args.includes('tools/remote/run.sh') ? 'headless' : 'gpu'}.json`);
   checks.push({ command: [command, ...args], exitCode: result.status });
   writeFileSync(`${output}/checks.json`, JSON.stringify({ target, ...selection, checks }, null, 2) + '\n');
   if (result.error || result.status !== 0) {
