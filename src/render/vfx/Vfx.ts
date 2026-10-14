@@ -193,7 +193,9 @@ export class Vfx extends Group {
     const dx = event.direction?.x ?? x - (source?.transform.x ?? x - 1), dz = event.direction?.z ?? z - (source?.transform.z ?? z);
     const length = Math.hypot(dx, dz) || 1, direction = { x: dx / length, z: dz / length };
     const heavy = event.actionId === 'weapon.kick' || (event.knockback ?? 0) >= .9 || event.amount >= 30;
-    const count = kill ? 48 : event.actionId === 'weapon.fists' ? 12 : heavy ? 40 : event.actionId === 'weapon.bat' ? 32 : event.actionId === 'weapon.crowbar' ? 28 : 24;
+    // A hull ram downs a whole group in a few frames: 48 droplets each made a speckle cloud of hundreds of dots at night
+    // (QA L9-Q1, l9-enc-shortcut-ram f240-f300). Rams keep a short heavy splash; the ground decals carry the impact.
+    const count = event.damageType === 'vehicle' ? 10 : kill ? 48 : event.actionId === 'weapon.fists' ? 12 : heavy ? 40 : event.actionId === 'weapon.bat' ? 32 : event.actionId === 'weapon.crowbar' ? 28 : 24;
     const n = this.gore === 'Off' ? 6 : Math.ceil(count / (this.quality === 'low' ? 4 : this.gore === 'Reduced' ? 2 : 1));
     const color = this.gore === 'Off' ? 0x776c75 : this.colorblind ? 0xffba48 : 0xe3293c;
     // Blood leaves the body where it stands: on the L3 ramp or deck that is the support height, not the street (y 0).
@@ -420,7 +422,8 @@ export class Vfx extends Group {
       for (const vehicle of this.vehicles.values()) {
         if (this.world.entities.get(vehicle.id)?.vehicle?.scripted) continue;
         // L9 floor vehicle: heavy smoke from the 25% stage on, never fire (it stays driveable until the scripted crash).
-        if (vehicle.healthFraction < (vehicle.floor ? 0.2501 : 0.4)) this.effect('vehicle-smoke', vehicle.position.x, vehicle.position.z, 0.7);
+        // The L9 floor hull's smoke is the Blasts exhaust trail (stage 3+); a second particle burst read as scattered dots.
+        if (!vehicle.floor && vehicle.healthFraction < 0.4) this.effect('vehicle-smoke', vehicle.position.x, vehicle.position.z, 0.7);
         if (vehicle.healthFraction < 0.15 && !vehicle.floor) this.effect('vehicle-fire', vehicle.position.x, vehicle.position.z, 0.6);
       }
       for (const e of this.world.entities.iterate()) { const h = e.hazard; if (h && this.world.tick < h.activeUntil && ['fire', 'toxic', 'live-wire'].includes(h.kind) && this.blasts.sourceVisible(e.transform.x, e.transform.z, h.radius + 5)) this.effect(h.kind === 'live-wire' ? 'electric' : h.kind as 'fire' | 'toxic', e.transform.x, e.transform.z, h.radius); }
