@@ -2,6 +2,7 @@ import { megaCueInterval } from '../../data/megaPresentation';
 import { SimPhase } from '../../core/EventBus';
 import { megaAlpha } from '../../data/megaAlpha';
 import { Status } from '../combat/Status';
+import { motionResponse } from '../locomotion/MotionResponse';
 import { moveAgent } from '../locomotion/AgentMotion';
 import type { NavGrid } from './NavGrid';
 import type { SimWorld } from '../world/SimWorld';
@@ -11,10 +12,11 @@ import type { EntitySnapshot } from '../world/types';
  * E32 §5.4 / AC10 (lane L10-S3): the one persistent Mega Alpha and its global pursuit.
  *
  * - It reads the player's position (sampled at 2 Hz: "approximately") with no sight, hearing or lure checks.
- * - It cruises at 0.7 × the nominal run everywhere. Where detailed collision/nav is resident it steers on the shared nav grid
+ * - Normal pursuit cruises at 0.7 × the nominal run. Where detailed collision/nav is resident it steers on the shared nav grid
  *   (towards the next authored route node while far, towards the player while near); inside `closeM` the shared Alpha chase brain
  *   (contact, barricade breach, special scheduler) runs it. Off-region it advances along the authored route graph at the same
- *   speed × sim-time every tick (route planning remains 2 Hz), without a mesh or collider.
+ *   speed × sim-time every tick (route planning remains 2 Hz), without a mesh or collider. Authored final-approach pressure
+ *   may add bounded catch-up beyond the camera, returning to normal cruise before contact.
  * - Stuck recovery escalates replan → authored alternate link → shared Alpha breach brain, and cycles, so no obstacle traps it for good.
  * - One entity, spawned once, always in the infected system (it counts against the cap even while coarse). Its compact pursuit state
  *   is a checkpoint seam (`world.megaPursuit`); entity HP/position/cooldowns ride the ordinary entity snapshot.
@@ -23,7 +25,11 @@ import type { EntitySnapshot } from '../world/types';
  */
 export interface PursuitNode { id: string; x: number; z: number; region?: string }
 /** Authored reachable waypoints (street centre lines, region seams); links are walkable both ways. */
-export interface PursuitRoute { nodes: readonly PursuitNode[]; links: readonly (readonly [string, string])[] }
+export interface PursuitRoute {
+  nodes: readonly PursuitNode[]; links: readonly (readonly [string, string])[];
+  /** Final courier approach: continuous offscreen catch-up, ending before detailed contact. */
+  pressure?: { from: string; trailM: number; speedMs: number };
+}
 export interface PursuitOptions {
   route?: PursuitRoute;
   /** L9-S4 seam: true where detailed collision/nav is loaded. Default: inside the AI nav grid and its active-district mask. */
@@ -178,7 +184,20 @@ export class MegaPursuit {
     // Never lured, never investigating a noise, never a civilian's pursuer: the player is the only target.
     delete e.noiseTarget; delete b.investigate; b.heardTargetId = 0; b.speed = megaAlpha.cruiseMs;
     if (b.specialAttack) { s.mode = 'close'; return false; }
-    if (!this.resident(e.transform.x, e.transform.z)) { this.coarse(e); return true; }
+    const pressure = this.options.route?.pressure;
+    // D-CURE progresses east along its authored R6/R7 delivery approach.
+    const pressured = !!pressure && this.nodes.size > 0 && this.nearestNode(s.target).x >= this.nodes.get(pressure.from)!.x;
+    if (!this.resident(e.transform.x, e.transform.z) || (pressured && dist(e.transform, player.transform) > pressure!.trailM)) { this.coarse(e, pressured ? pressure : undefined); return true; }
+    // Coarse actors expose zero locomotion intent. Seed the detailed response
+    // from their resolved travel only at the handoff, preserving that contract.
+    if (s.mode === 'coarse') {
+      const motion = e.locomotion ??= motionResponse(), velocity = e.motion?.velocity;
+      const speed = velocity ? Math.hypot(velocity.x, velocity.z) : 0;
+      const cruise = megaAlpha.cruiseMs * Status.speed(e);
+      motion.vx = speed > .01 ? velocity!.x / speed * cruise : 0;
+      motion.vz = speed > .01 ? velocity!.z / speed * cruise : 0;
+      motion.ax = motion.az = 0;
+    }
     const d = dist(e.transform, player.transform), free = !Status.stunned(e, tick) && b.grabUntil <= tick && (b.specialRecoveryUntil ?? 0) <= tick && b.state !== 'attack' && !e.combat!.attacking;
     this.monitor(e, d, free);
     if (s.breach) { s.mode = 'breach'; e.combat!.attacking = false; this.world.spatial.set(e.id, e.transform.x, e.transform.z); return true; }
@@ -257,13 +276,16 @@ export class MegaPursuit {
     s.breach = { link, until: tick + Math.round(megaAlpha.breachS * 60) };
     return true;
   }
-  /** Off-region: advance the same cruise speed × sim-time along the node route, every tick; no mesh, collider or nav. */
-  private coarse(e: EntitySnapshot): void {
+  /** Coarse route travel is continuous; authored final-approach pressure may catch up beyond the camera. */
+  private coarse(e: EntitySnapshot, pressure?: PursuitRoute['pressure']): void {
     const s = this.state, tick = this.world.tick;
     s.mode = 'coarse'; e.combat!.attacking = false; e.infected!.state = 'chase';
     s.stuck.sampleAt = tick; s.stuck.x = e.transform.x; s.stuck.z = e.transform.z; s.stuck.noPath = 0;
     if (s.breach || this.legBlocked()) { if (this.breachStep()) s.mode = 'breach'; return; }
-    let budget = megaAlpha.cruiseMs * Status.speed(e) / 60;
+    if (Status.stunned(e, tick)) return;
+    const gap = dist(e.transform, s.target);
+    const speed = pressure && gap > pressure.trailM ? Math.min(pressure.speedMs, megaAlpha.cruiseMs + (gap - pressure.trailM) * 2) : megaAlpha.cruiseMs;
+    let budget = speed * Status.speed(e) / 60;
     const t = e.transform, startX = t.x, startZ = t.z;
     while (budget > 1e-6) {
       if (this.legBlocked(t)) break;
@@ -279,7 +301,10 @@ export class MegaPursuit {
     if (moved > 1e-6) t.yaw = -Math.atan2(t.z - startZ, t.x - startX);
     s.coarseM += moved; s.x = t.x; s.z = t.z;
     t.y = .7 + (this.world.districts?.groundHeight(t.x, t.z) ?? 0);
-    if (e.locomotion) e.locomotion.vx = e.locomotion.vz = 0;
+    // This tick's coarse travel is already consumed; the shared motion phase
+    // publishes its displacement without trying to brake the actor again.
+    const motion = e.locomotion ??= motionResponse();
+    motion.vx = motion.vz = motion.ax = motion.az = 0; motion.updatedAt = tick;
     this.world.spatial.set(e.id, t.x, t.z);
   }
   /** Detailed steering on the shared nav grid at cruise speed. */

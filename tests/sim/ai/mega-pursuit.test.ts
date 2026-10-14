@@ -210,3 +210,20 @@ test('T-E32-10k @E32-AC10 removed without dying (restore from a pre-install snap
   expect([...w.entities.iterate()].filter(x => x.infected?.pursuit).length).toBe(1);
   expect(pursuit.state.mode).not.toBe('dead');
 });
+
+
+test('T-E32-10-E3b @E32-AC10 coarse to detailed handoff retains cruise on the first tick and next second', async () => {
+  const w = await course();
+  const pursuit = installMegaPursuit(w, { introduceTick: null, route: strip, resident: (x: number) => x >= -100 });
+  const id = pursuit.introduce({ x: -110, z: 0 });
+  for (let i = 0; i < 600 && pursuit.state.mode === 'coarse'; i++) {
+    const x = w.entities.get(id)!.transform.x; w.update();
+    if ((pursuit.state.mode as string) === 'detailed') expect((w.entities.get(id)!.transform.x - x) * 60).toBeCloseTo(megaAlpha.cruiseMs, 1);
+  }
+  expect(pursuit.state.mode).toBe('detailed');
+  for (let i = 0; i < 60; i++) {
+    const x = w.entities.get(id)!.transform.x; w.update();
+    expect((w.entities.get(id)!.transform.x - x) * 60).toBeCloseTo(megaAlpha.cruiseMs, 1);
+    expect(pursuit.state.id).toBe(id);
+  }
+});
