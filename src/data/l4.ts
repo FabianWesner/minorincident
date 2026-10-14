@@ -1,3 +1,5 @@
+import { l3 } from './l3';
+
 /**
  * Level 4 "The Safe City Falls" tuning table (specs/epic-22-level-4-the-safe-city-falls.md, sections 4 and 5). Data only.
  * Coordinates are world metres on D-FAIR (layouts/D-FAIR/layout.py; origin at the map centre, X east, Z south). The convoy enters
@@ -91,7 +93,7 @@ export const l4 = {
      */
     group: [2, 5] as P, groupEveryS: [2, 4] as P, inside: { everyS: 12, group: [1, 2] as P, minM: 9 },
     /** Infected hit like L3's (the PO found earlier levels too hard: a sensible player finishes with few deaths). */
-    infectedDamage: 1.5,
+    infectedDamage: l3.infectedDamage,
     emergeLeashM: 26,
   },
   /**

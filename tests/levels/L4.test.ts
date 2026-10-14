@@ -352,7 +352,8 @@ describe('L4 The Safe City Falls', () => {
       }, SimPhase.missions + 1);
       const gun = w.entities.get(1)!.weapons!.RIGHT.rack.map(r => r.id);
       step(w, 120);
-      const p = w.entities.get(1)!; w.player!.damage(p.health.current, w.tick);
+      const p = w.entities.get(1)!; w.player!.damage(p.health.current, w.tick, true);
+      expect(p.health.current).toBe(0);
       for (let i = 0; i < 400 && w.entities.get(1)!.health.current <= 0; i++) w.update();
       expect(respawns).toBe(1); expect(m.state.checkpoint).toBe(id);
       expect(w.entities.get(1)!.weapons!.RIGHT.rack.map(r => r.id)).toEqual(gun);

@@ -251,7 +251,7 @@ export class Mission {
   }
   private event(event: GameEvent): void {
     if (event.type === 'player.respawned') {
-      // L1 and the L4 escape keep the live world; L4 camp restores keep the collapse director progressing.
+      // L1 and L4 war/escape retries keep the live world and its progressing director.
       // Shared Respawn always places the courier at the last anchor and clears its threats (PO 2026-10-13).
       if (this.state.phase === 'playing') {
         const cp = this.world.entities.get(1)!.survivor!.checkpoint, anchor = { x: cp.x, z: cp.z };
