@@ -1,0 +1,54 @@
+{
+  "webgl": [
+    {
+      "at": "2026-10-14T12:42:30.917Z",
+      "load": [
+        2.5009765625,
+        6.0234375,
+        6.734375
+      ],
+      "otherHeadlessChrome": 0,
+      "localVitest": 0,
+      "browserSlots": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "command": [
+        "npx",
+        "playwright",
+        "test",
+        "tests/perf/l4-budgets.spec.ts",
+        "--project=chromium",
+        "--workers=1"
+      ]
+    }
+  ],
+  "webgpu": [
+    {
+      "at": "2026-10-14T12:50:58.765Z",
+      "load": [
+        2.9013671875,
+        4.06884765625,
+        5.4052734375
+      ],
+      "otherHeadlessChrome": 0,
+      "localVitest": 0,
+      "browserSlots": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "command": [
+        "npx",
+        "playwright",
+        "test",
+        "tests/perf/l4-budgets.spec.ts",
+        "--project=chromium",
+        "--workers=1"
+      ]
+    }
+  ]
+}
