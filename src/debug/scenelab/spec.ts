@@ -65,7 +65,7 @@ export interface SceneSpec {
   contrast?: { district?: string; route?: [number, number][][]; halfWidthM?: number; vergeM?: number; stepM?: number; landmarks?: [number, number, number][] };
   expect?: Expectations;
   /** Canvas edge check for an isolated actor; normalized crop excludes HUD and other figures. */
-  edgeNoise?: { rect: [number, number, number, number]; extremeEdgeShareMax: number };
+  edgeNoise?: { rect: [number, number, number, number]; extremeEdgeShareMax: number; /** Outline pixels per sqrt(area) of the dark body mask; every sampled frame must stay under it. */ silhouetteRoughnessMax?: number };
   /** L1 beat 9 house emergence (HouseEmergence, the game's own code): from `frame` (default 30) `count` (default 3)
    * residents come out of `house`'s front door (a placement id in the scene), `staggerS` apart (default [1.5, 4]), and
    * chase the courier. Residents are actors `<id>-0` .. (default id `resident`). */

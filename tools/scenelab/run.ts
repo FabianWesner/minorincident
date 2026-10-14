@@ -105,6 +105,7 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   if (spec.edgeNoise) {
     const value = Math.max(...edgeSamples.map(s => s.edges >= 20 ? s.extremeEdgeShare : Infinity));
     result.checks.push({ name: 'alphaSilhouetteBlackWhiteEdgeNoise', pass: value <= spec.edgeNoise.extremeEdgeShareMax, value, limit: spec.edgeNoise.extremeEdgeShareMax });
+    if (spec.edgeNoise.silhouetteRoughnessMax !== undefined) { const rough = Math.max(...edgeSamples.map(s => s.edges >= 20 ? s.silhouetteRoughness : Infinity)); result.checks.push({ name: "alphaSilhouetteRoughness", pass: rough <= spec.edgeNoise.silhouetteRoughnessMax, value: rough, limit: spec.edgeNoise.silhouetteRoughnessMax }); }
   }
   if (spec.contrast) {
     const worst = (pick: (r: ContrastResult) => number | undefined) => { const v = contrast.map(c => pick(c.result)).filter((x): x is number => x !== undefined && Number.isFinite(x)); return v.length ? Math.min(...v) : 0; };

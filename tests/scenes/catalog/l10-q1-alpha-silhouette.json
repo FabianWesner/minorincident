@@ -1,6 +1,6 @@
 {
-  "name": "l10-q1-alpha-silhouette-known-low-defect",
-  "note": "E32-AC09/30: regular Alpha centered at true high/low and zoom 0.5/1/1.5. Known low defect: jagged black/white triangles instead of the human silhouette; do not approve the low sheet until the asset lane resolves it.",
+  "name": "l10-q1-alpha-silhouette",
+  "note": "E32-AC09/30: regular Alpha centered at true high/low and zoom 0.5/1/1.5. Gates abrupt black/white edges and silhouette roughness (outline pixels per sqrt area of the dark body); the old LOD2 hair-lock spikes (before 577e83c6) exceed the roughness limit at the close zoom rows. Look at the sheet too.",
   "seed": 32,
   "ground": "asphalt",
   "time": "L4",
@@ -43,6 +43,7 @@
       0.75,
       0.95
     ],
-    "extremeEdgeShareMax": 0.1
+    "extremeEdgeShareMax": 0.1,
+    "silhouetteRoughnessMax": 15.5
   }
 }
