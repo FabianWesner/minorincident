@@ -43,14 +43,17 @@ for (const tier of ['high', 'low'] as const) test(`T-E29-19-district @E29-AC19 @
     };
     populate(); await a.screenshotReady(); a.resume();
     const warm = performance.now(); while (performance.now() - warm < 3000) await new Promise(r => requestAnimationFrame(r));
-    (window as unknown as { gc(): void }).gc();
+    a.pause(); (window as unknown as { gc(): void }).gc();
     if (profile) await (window as unknown as { __perfSweepStartProfile(): Promise<void> }).__perfSweepStartProfile();
+    // Drain setup GC/profiler timestamps while paused, as in the campaign
+    // probe. Otherwise the first measured RAF includes the forced collection.
+    for (let i = 0; i < 2; i++) await new Promise(r => requestAnimationFrame(r));
     const frames: number[] = [], sims: number[] = [], draws: number[] = [], triangles: number[] = [];
     const hitches: unknown[] = [];
     const costs: Record<string, number>[] = [];
     if (diagnose) a.debug.cpuProfile();
     let previous = 0, lastBlast = 0, lastProbe = 0, peakInfected = 0, peakPuffs = 0, peakParts = 0, peakParticles = 0, heroLights = 0, awakeProps = 0, blasts = 0;
-    const start = performance.now();
+    a.resume(); const start = performance.now();
     while (performance.now() - start < 8000) {
       const now = await new Promise<number>(r => requestAnimationFrame(r));
       if (previous) frames.push(now - previous); previous = now;
