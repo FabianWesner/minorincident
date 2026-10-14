@@ -72,6 +72,10 @@ export const l3 = {
     mouth: { mouths: [[-13.75, 'blvd'], [-13.75, 'commerce'], [-13.75, 'oak']] as readonly (readonly [number, 'blvd' | 'commerce' | 'oak'])[], clearM: 8, shiftM: 16 },
     /** A segment is populated (out of view) once the player is this far before its start. */
     populateAheadM: 55,
+    /** S1 emergences count returning downed infected as live; retain queued residents for later streets. Low uses half. */
+    s1LiveBudget: 40,
+    /** Initial S1 residents while the station fight runs; low uses half. Remaining authored residents stay queued. */
+    s1Preload: 12,
     /** Segment 3 also holds the horde: two packs of 125 at the on-ramp end of two avenues (seeded), streaming west. */
     horde: { packSize: 125, fromX: 72, toX: 132 },
     leashM: 9,
@@ -103,8 +107,8 @@ export const l3 = {
   },
   /** Multiplier on the infected hit (L1: 10 per hit, 0.9 s cycle): PO 10-09: was 1.8 (the L2 value), too punishing; 1.1 still hits harder than L1 but a straight-line player survives a few bites. */
   infectedDamage: 1.1,
-  /** Orchestrator 2026-10-13: the courier can outrun regulars; at most one in twenty human spawns is a sprinter. */
-  infected: { maxRegularMs: 4, sprinterEvery: 20 },
+  /** The courier outruns regulars; one in twenty humans is a sprinter. Humans recover near the upper end of the epic's 10–20 s window. */
+  infected: { maxRegularMs: 4, sprinterEvery: 20, recoverS: [18, 20] as P },
   /**
    * PO 10-09: a courier who keeps dying at one spot is not meant to hit the same wall for 20 deaths. From the `fromDeaths`-th death at the same checkpoint on,
    * every respawn thins the infected (living or still waiting at their doors) between `aheadM` metres ahead of the courier by

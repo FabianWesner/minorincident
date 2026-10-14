@@ -1,0 +1,26 @@
+{
+  "command": "Hetzner full tests/unit tests/sim --project timing",
+  "counts": {
+    "numTotalTests": 193,
+    "numPassedTests": 192,
+    "numFailedTests": 1,
+    "numPendingTests": 0,
+    "files": 25
+  },
+  "unit": {
+    "passed": 1
+  },
+  "sim": {
+    "passed": 191,
+    "failed": 1
+  },
+  "failures": [
+    {
+      "file": "sim/performance/zoo-s2.test.ts",
+      "name": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+      "messages": [
+        "AssertionError: expected 4.128769000002649 to be less than or equal to 4\n    at /srv/mi/jobs/l3-s1-tune-fb8b1f-27410-1792007744/tests/sim/performance/zoo-s2.test.ts:26:68\n    at file:///srv/mi/jobs/l3-s1-tune-fb8b1f-27410-1792007744/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    }
+  ]
+}

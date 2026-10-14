@@ -4,7 +4,9 @@ import { SceneSession, stopServer, writeJson, type Backend } from './session';
 
 /** Capture the production L3 opening with ordinary complete-bot inputs at the game camera. */
 const backend = (process.argv[2] ?? 'webgl2') as Backend;
-const out = `test-results/l3-getup-balance/s1-${backend}`;
+const out = process.argv[3] ?? `test-results/l3-getup-balance/s1-${backend}`;
+const captureX = Number(process.argv[4] ?? -110);
+assert(captureX >= -126 && captureX < -40, 'capture X must be inside S1');
 try {
   for (const tier of ['high', 'low'] as const) {
     const session = new SceneSession({ backend, tier, seed: 1 });
@@ -16,11 +18,11 @@ try {
       });
       let reached = false;
       for (let i = 0; i < 180 && !reached; i++) {
-        reached = await session.page.evaluate(async () => {
+        reached = await session.page.evaluate(async x => {
           const api = window.__SS__!; await api.step(60);
           const p = api.getState().player!.transform;
-          return p.x >= -110 && p.x < -40 && p.z > 24;
-        });
+          return p.x >= x && p.x < -40 && p.z > 24;
+        }, captureX);
       }
       assert(reached, `${tier}: complete bot did not reach S1 capture`);
       await session.page.evaluate(() => { window.__SS__!.bot.stop(); window.__SS__!.input.clear(); window.__SS__!.camera.follow(); });
