@@ -1,0 +1,113 @@
+{
+  "firesStart": 28,
+  "firesEnd": 28,
+  "tier": "low",
+  "backend": "webgl",
+  "blasts": 7,
+  "peakInfected": 100,
+  "frameP50": 18.400000000001455,
+  "frameP95": 34.29999999999927,
+  "frameP99": 39.600000000000364,
+  "hitch": 111.40000000000146,
+  "simP95": 5.899999618530273,
+  "draws": 125,
+  "triangles": 208248,
+  "heapMB": 237.99786186218262,
+  "peakPuffs": 120,
+  "peakParts": 0,
+  "peakParticles": 450,
+  "heroLights": 0,
+  "awakeProps": 0,
+  "hitches": [
+    {
+      "frame": 2,
+      "ms": 79.89999999999964,
+      "elapsed": 128.89999999999964,
+      "sim": 14.299999237060547,
+      "update": 0,
+      "render": 0,
+      "nodeBuilds": 346
+    },
+    {
+      "frame": 91,
+      "ms": 111.40000000000146,
+      "elapsed": 2166.7000000000007,
+      "sim": 31.800000190734863,
+      "update": 0,
+      "render": 0,
+      "nodeBuilds": 352
+    },
+    {
+      "frame": 92,
+      "ms": 68.5,
+      "elapsed": 2235.2000000000007,
+      "sim": 11,
+      "update": 0,
+      "render": 0,
+      "nodeBuilds": 352
+    }
+  ],
+  "pipelines": [
+    {
+      "ms": 3.8999996185302734,
+      "tick": 221,
+      "material": "MeshBasicNodeMaterial",
+      "object": "",
+      "attributes": [
+        "position",
+        "normal",
+        "uv",
+        "fbOrigin",
+        "fbParams"
+      ],
+      "static": false
+    },
+    {
+      "ms": 6.300000190734863,
+      "tick": 341,
+      "material": "pal_picketWhite",
+      "object": "",
+      "attributes": [
+        "position",
+        "normal",
+        "color",
+        "_parts",
+        "_state",
+        "_variant",
+        "_overlay",
+        "_placement0",
+        "_placement1",
+        "_placement2",
+        "_placement3",
+        "_placementColor"
+      ],
+      "static": true
+    }
+  ],
+  "newPrograms": {
+    "MeshBasicNodeMaterial:Mesh": 2,
+    "pal_picketWhite:acc.hair-side-part:lod1": 1,
+    "pal_picketWhite:static": 5,
+    "MeshBasicNodeMaterial:e27-blasts": 3
+  },
+  "costs": {
+    "simTick": 5.899999618530273,
+    "simTickMax": 4.100000381469727,
+    "sim": 5.699999809265137,
+    "physics": 0.7999992370605469,
+    "simNpcs": 0.9000005722045898,
+    "ai": 1.6999998092651367,
+    "audio": 0,
+    "input": 0.5,
+    "camera": 0.5,
+    "crowd": 0.7999992370605469,
+    "npcs": 7.100000381469727,
+    "accessories": 0.09999942779541016,
+    "occlusion": 0.6999998092651367,
+    "doors": 0,
+    "lod": 0.8000001907348633,
+    "lightField": 0.9000005722045898,
+    "lighting": 1.1000003814697266,
+    "ui": 0
+  }
+}

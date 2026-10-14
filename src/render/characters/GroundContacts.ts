@@ -89,13 +89,13 @@ export class GroundContacts {
       lowering = Math.max(lowering, this.joint.y - foot.target.y - height);
     }
     this.lowering = Math.min(.15, lowering / this.scale.y) * weight;
-    rig.hip.position.y -= this.lowering;
-    rig.hip.updateWorldMatrix(true, true);
+    // The caller refreshed the rig above. Only lowering changes its parent matrices.
+    if (this.lowering > 0) { rig.hip.position.y -= this.lowering; rig.hip.updateMatrixWorld(true); }
     this.pole.copy(this.forward);
     for (const foot of this.feet) {
       const support = foot.release < 0 ? stance : foot.release;
       if (foot.phase > support) foot.rotation.slerp(this.frame, Math.min(1, (foot.phase - support) / (1 - support) / .5));
-      foot.ik.solve(foot.target, this.pole, foot.rotation, weight);
+      foot.ik.solve(foot.target, this.pole, foot.rotation, weight, true);
     }
   }
 }

@@ -24,7 +24,7 @@ function reference(upper: Object3D, middle: Object3D, end: Object3D) {
 }
 
 test('IK matrix reuse matches the original solver under rotated, scaled and mirrored parents', () => {
-  for (const mirror of [1, -1]) {
+  for (const worldReady of [false, true]) for (const mirror of [1, -1]) {
     const parent = new Object3D(), upper = new Object3D(), middle = new Object3D(), end = new Object3D();
     parent.position.set(3, 2, -4); parent.rotation.set(.2, .6, -.3); parent.scale.set(1.2 * mirror, .8, 1.1);
     upper.position.set(.1, .4, -.2); middle.position.set(0, -.35, 0); end.position.set(0, -.3, 0);
@@ -34,7 +34,10 @@ test('IK matrix reuse matches the original solver under rotated, scaled and mirr
     for (let i = 0; i < 80; i++) {
       const target = parent.localToWorld(new Vector3(.2 * Math.sin(i), -.05, .15 * Math.cos(i)));
       const pole = new Vector3(1, .1, .3), orientation = new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), i * .03), weight = [0, .3, 1][i % 3];
-      expected(target, pole, orientation, weight); actual.solve(target, pole, orientation, weight);
+      expected(target, pole, orientation, weight);
+      // Crowd contact solvers already refresh this hierarchy before solving both legs.
+      copy.updateMatrixWorld(true);
+      actual.solve(target, pole, orientation, weight, worldReady);
       for (const [a, b] of [[upper, copiedUpper], [middle, copiedMiddle], [end, copiedEnd]]) {
         for (let c = 0; c < 16; c++) expect(b.matrixWorld.elements[c]).toBeCloseTo(a.matrixWorld.elements[c], 12);
       }

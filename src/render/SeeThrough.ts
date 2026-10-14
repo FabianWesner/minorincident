@@ -1,23 +1,23 @@
 import { Vector2, type Node } from 'three/webgpu';
-import { dot, fract, mix, positionView, positionWorld, screenCoordinate, screenSize, screenUV, smoothstep, uniform, vec2 } from 'three/tsl';
+import { dot, fract, mix, positionView, positionWorld, screenCoordinate, screenSize, screenUV, smoothstep, uniform, renderGroup, vec2 } from 'three/tsl';
 
 /** One player see-through hole shared by every occluder (leaf crowns, buildings, roofs, poles, props).
  * Foliage writes the projected centre/depth/radius each frame; DistrictView eases `strength` while an
  * occluder actually sits on the camera-to-courier ray. Screen UV has a top-left origin. */
 export const seeThrough = {
-  center: uniform(new Vector2(-10, -10)),
+  center: uniform(new Vector2(-10, -10)).setGroup(renderGroup),
   /** View-space z of the courier's farthest body point; only fragments nearer the camera are cut. */
-  depth: uniform(0),
-  radius: uniform(.1),
+  depth: uniform(0).setGroup(renderGroup),
+  radius: uniform(.1).setGroup(renderGroup),
   /** Hole radius for solid occluders (screen-height units): covers the whole survivor group or the player's vehicle, even behind a tall block. */
-  solidRadius: uniform(.17),
+  solidRadius: uniform(.17).setGroup(renderGroup),
   /** 0..1 eased opening of the solid-occluder hole (leaf crowns always use the full hole). */
-  strength: uniform(0),
+  strength: uniform(0).setGroup(renderGroup),
   /** 0..1 eased: a solid occluder hugs the camera (e.g. the camera above a pitched roof), so its cut widens past
    * the screen edges. A courier-sized hole in a roof 3 m from the lens left the frame one flat colour (L4 blank viewport). */
-  cover: uniform(0),
+  cover: uniform(0).setGroup(renderGroup),
   /** World height of the courier's feet (the deck, stair or paving she stands on, 0 on the street). Solid occluders are only cut above it. */
-  floor: uniform(0),
+  floor: uniform(0).setGroup(renderGroup),
 };
 
 /** Placements lower than this never count as occluders (DistrictView's camera-to-courier tests) and are never cut.

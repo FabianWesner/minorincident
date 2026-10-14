@@ -1,7 +1,7 @@
 import { ApcDamage } from './apcDamage';
 import { carDoorWeight, carTransitionTicks } from './characters/carTransition';
 import { VehicleOccupant } from './characters/VehicleOccupant';
-import { tyreSurface } from './TyreContact';
+import { tyreSurface, updateTyreMatrices } from './TyreContact';
 import { modelLod } from './lodPolicy';
 import { paletteTokens } from '../data/palette';
 // Adapted from Bruno Simon folio-2025 VisualVehicle.js (MIT, 41046b5): wheel pivots/suspension and lamps.
@@ -157,12 +157,12 @@ export class VehicleView extends Group {
       // Rapier drives on the flat y = 0 plane while the district draws its roads 5 cm above it (and kerbs, paint, paving
       // higher): rest the car on the drawn ground, each wheel on its own spot.
       if (this.ground) {
-        record.parent.updateMatrixWorld(true);
+        updateTyreMatrices(record.wheels);
         const heights = record.wheels.map(w => this.ground!(...this.wheelSpot(w.node)) ?? 0), mean = heights.reduce((a, b) => a + b, 0) / heights.length;
         record.parent.position.y += mean;
         for (let i = 0; i < record.wheels.length; i++) record.wheels[i].node.position.y += heights[i] - mean;
         // Tyre faces can meet a paving edge between mesh vertices, especially with steering and body lean.
-        record.parent.updateMatrixWorld(true);
+        updateTyreMatrices(record.wheels);
         for (const wheel of record.wheels) {
           // Parked wheels meet the same immutable ground every frame. Reuse their correction until the pose changes;
           // the matrix tolerance is below a micron, so this also covers sleeping physics jitter without visible sink.
@@ -174,7 +174,7 @@ export class VehicleView extends Group {
           // Moving a wheel along a leaning chassis also moves its tread sideways. Recheck the contact after settling:
           // at the station's paving boundary that small shift can put a face over a different ground triangle.
           for (let pass = 0; pass < 3; pass++) {
-            wheel.node.updateWorldMatrix(true, false);
+            if (pass > 0) wheel.node.updateWorldMatrix(false, false);
             let gap = Infinity;
             for (const local of wheel.contacts) {
               this.contact.copy(local).applyMatrix4(wheel.node.matrixWorld);
@@ -270,7 +270,7 @@ export class VehicleView extends Group {
         if (occupant.parent === record.model) record.parent.attach(occupant);
         occupant.visible = true; continue;
       }
-      record.model.add(occupant); occupant.visible = !(w.actorId === 1 && boarding);
+      if (occupant.parent !== record.model) record.model.add(occupant); occupant.visible = !(w.actorId === 1 && boarding);
       let seat = record.model.getObjectByName(w.seat);
       if (!seat) {
         // Older fire-engine exports have only driverSeat. Keep the seven cab positions distinct until authored nodes load.
@@ -278,7 +278,7 @@ export class VehicleView extends Group {
         let fallback = this.occupantSeats.get(w.actorId);
         if (!fallback) { fallback = new Group(); this.occupantSeats.set(w.actorId, fallback); }
         fallback.position.set(index === 0 ? 3.2 : index <= 2 ? 2.25 : 1.4, 1.25, index === 0 ? .65 : index <= 2 ? (index === 1 ? -.65 : .65) : (index - 4) * .65);
-        record.model.add(fallback); seat = fallback;
+        if (fallback.parent !== record.model) record.model.add(fallback); seat = fallback;
       }
       const wheel = w.driver ? record.model.getObjectByName('steeringWheel') : undefined;
       const target = w.driver ? new Vector3() : undefined;
@@ -333,7 +333,7 @@ export class VehicleView extends Group {
   /** Drawn ground height (GameView: the district's baked roads and paving); null where it draws none. */
   ground: ((x: number, z: number) => number | null) | null = null;
   private readonly spot = new Vector3();
-  private wheelSpot(node: Object3D): [number, number] { node.getWorldPosition(this.spot); return [this.spot.x, this.spot.z]; }
+  private wheelSpot(node: Object3D): [number, number] { this.spot.setFromMatrixPosition(node.matrixWorld); return [this.spot.x, this.spot.z]; }
   /** Wheel nodes per vehicle entity (Scene Lab tyre-vs-ground probe). */
   wheelNodes(): Map<number, Object3D[]> { return new Map([...this.records].map(([id, r]) => [id, r.wheels.map(w => w.node)])); }
   snapshot() { return [...this.records].map(([id, r]) => ({ id, apcDamage: r.apc?.snapshot() ?? null, transitionCouriers: [...this.occupants.values()].filter(o => o.parent === r.parent && o.visible).map(o => ({ actorId: o.actorId, asset: o.asset, phase: 'exit', position: o.position.toArray() })), doors: ['doorL','doorR','door_near_0','door_near_1','door_far_0','door_far_1'].flatMap(name => { const node = r.model.getObjectByName(name); let meshes = 0; node?.traverse(child => { if (child instanceof Mesh) meshes++; }); return node ? [{ name, yaw: node.rotation.y, meshes }] : []; }), decay: r.decay ?? null, bloodCoverage: this.bloodEnabled ? r.blood : 0, windshieldBloodCoverage: this.bloodEnabled ? r.blood : 0, wheels: r.wheels.map(w => ({ spin: w.node.rotation.z, steer: w.node.rotation.y })), brake: r.brake.color.r, sirens: r.sirens.map(s => s.color.toArray()), placeholder: !!r.model.userData.placeholder, occupants: [...this.occupants.values()].filter(o => o.parent === r.model && o.visible).map(o => ({ actorId: o.actorId, asset: o.asset, seated: true, position: o.position.toArray(), handGapM: [...o.handGapM] })) })); }

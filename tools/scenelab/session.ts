@@ -2,7 +2,7 @@ import { spawn, execFileSync, type ChildProcess } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { dirname, resolve } from 'node:path';
-import { chromium, type Browser, type BrowserContext, type Page } from '@playwright/test';
+import { chromium, devices, type Browser, type BrowserContext, type Page } from '@playwright/test';
 import { PNG } from 'pngjs';
 import { attachErrorGuard } from '../../tests/e2e/fixtures';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
@@ -14,7 +14,7 @@ if (port === 3300) throw new Error('Scene Lab must not use the shared dev-server
 export const origin = `http://127.0.0.1:${port}`;
 export type Backend = 'webgl2' | 'webgpu';
 /** `query`: extra game URL parameters, e.g. { skin: '0' } for the rigid courier (A/B checks). */
-export interface SessionOptions { backend?: Backend; tier?: 'high' | 'low'; viewport?: { width: number; height: number }; seed?: number; query?: Record<string, string>; /** E18 native timing: Chrome without the refresh-rate ceiling (still headless). */ nativeFrameTiming?: boolean; log?: (line: string) => void }
+export interface SessionOptions { /** Pixel 7 touch emulation for phone timing. */ phone?: boolean; backend?: Backend; tier?: 'high' | 'low'; viewport?: { width: number; height: number }; seed?: number; query?: Record<string, string>; /** E18 native timing: Chrome without the refresh-rate ceiling (still headless). */ nativeFrameTiming?: boolean; log?: (line: string) => void }
 
 let server: ChildProcess | null = null;
 const up = async () => { try { return (await fetch(origin)).ok; } catch { return false; } };
@@ -46,7 +46,7 @@ export class SceneSession {
   private guard!: ReturnType<typeof attachErrorGuard>;
   readonly options: Required<Omit<SessionOptions, 'log'>> & { log: (line: string) => void };
   constructor(options: SessionOptions = {}) {
-    this.options = { backend: options.backend ?? 'webgl2', tier: options.tier ?? 'high', viewport: options.viewport ?? { width: 1280, height: 720 }, seed: options.seed ?? 1, query: options.query ?? {}, nativeFrameTiming: options.nativeFrameTiming ?? false, log: options.log ?? (line => console.error(`[scene] ${line}`)) };
+    this.options = { phone: options.phone ?? false, backend: options.backend ?? 'webgl2', tier: options.tier ?? 'high', viewport: options.viewport ?? { width: 1280, height: 720 }, seed: options.seed ?? 1, query: options.query ?? {}, nativeFrameTiming: options.nativeFrameTiming ?? false, log: options.log ?? (line => console.error(`[scene] ${line}`)) };
   }
   get errors(): string[] { return this.guard?.errors ?? []; }
   /** A supplied browser is borrowed: close() releases only this session's isolated context. */
@@ -59,7 +59,7 @@ export class SceneSession {
     if (process.env.SCENE_UNCAPPED === '1' || this.options.nativeFrameTiming) args.push('--disable-frame-rate-limit', '--disable-gpu-vsync');
     this.ownsBrowser = !browser;
     this.browser = browser ?? await chromium.launch({ headless: true, args, ...(this.options.nativeFrameTiming ? { channel: 'chrome' } : {}) });
-    const context = await this.browser.newContext({ viewport: this.options.viewport, deviceScaleFactor: 1 });
+    const context = await this.browser.newContext({ ...(this.options.phone ? devices['Pixel 7'] : {}), viewport: this.options.viewport, deviceScaleFactor: 1 });
     this.context = context;
     this.page = await context.newPage();
     this.guard = attachErrorGuard(this.page);

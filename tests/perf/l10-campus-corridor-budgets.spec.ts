@@ -6,7 +6,7 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
   await boot(page, `/?test=1${backend === 'webgl' ? '&renderer=webgl' : ''}&quality=${quality}&audio=muted&dpr=1`);
   await page.evaluate(async quality => { window.__SS__!.settings.set({ quality: quality as 'high' | 'low' }); await window.__SS__!.loadLevel('L10', { seed: 32, checkpoint: 'cure-research' }); window.__SS__!.pause(); window.__SS__!.cheats.god(true); await window.__SS__!.step(3601); }, quality);
   if (zoom === .5) {
-    await page.mouse.move(800, 450);
+    const viewport = page.viewportSize()!; await page.mouse.move(viewport.width / 2, viewport.height / 2);
     for (let i = 0; i < 5; i++) await page.mouse.wheel(0, -100);
   }
   const result = await page.evaluate(async quality => {

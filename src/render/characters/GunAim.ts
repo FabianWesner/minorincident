@@ -127,6 +127,9 @@ export class CrowdGunAim {
   private readonly root = new Group();
   private readonly nodes: Object3D[];
   private readonly parents: number[];
+  private readonly active: number[] = [];
+  private readonly upperBody: number[] = [];
+  private readonly parentInverses = new Map<number, Matrix4>();
   private readonly matrix = new Matrix4();
   private readonly parent = new Matrix4();
   private readonly aim: GunAim;
@@ -137,12 +140,24 @@ export class CrowdGunAim {
   private readonly forward = new Vector3(1, 0, 0);
   private readonly barrel = new Vector3(0, 0, 1);
   constructor(model: Object3D, private readonly parts: string[]) {
-    this.nodes = parts.map(name => { const node = new Object3D(); node.name = name; return node; });
+    this.nodes = parts.map(name => { const node = new Object3D(); node.name = name; node.quaternion._onChange(() => {}); return node; });
     this.parents = parts.map(name => {
       let parent = model.getObjectByName(name)?.parent;
       while (parent && !parts.includes(parent.name)) parent = parent.parent;
       return parent ? parts.indexOf(parent.name) : -1;
     });
+    const torso = parts.indexOf('torso');
+    for (let i = 0; i < parts.length; i++) {
+      let ancestor = i;
+      while (ancestor >= 0 && ancestor !== torso) ancestor = this.parents[ancestor];
+      let parent = torso;
+      while (parent >= 0 && parent !== i) parent = this.parents[parent];
+      if (ancestor === torso) this.upperBody.push(i);
+      if (ancestor === torso || parent === i) {
+        this.active.push(i);
+        if (this.parents[i] >= 0) this.parentInverses.set(this.parents[i], new Matrix4());
+      } else { this.nodes[i].matrixAutoUpdate = false; this.nodes[i].matrixWorldAutoUpdate = false; }
+    }
     model.updateWorldMatrix(true, true);
     this.nodes.forEach((node, i) => {
       (this.nodes[this.parents[i]] ?? this.root).add(node);
@@ -175,32 +190,24 @@ export class CrowdGunAim {
     this.store(pose);
   }
   private load(pose: Float32Array): void {
-    this.nodes.forEach((node, i) => {
+    // Aiming only reads the torso branch and its ancestors; legs retain their
+    // authoritative atlas matrices. Siblings share one inverse parent pose.
+    for (const [parent, inverse] of this.parentInverses) inverse.fromArray(pose, parent * 16).invert();
+    for (const i of this.active) {
+      const node = this.nodes[i];
       this.matrix.fromArray(pose, i * 16);
-      if (this.parents[i] >= 0) this.matrix.premultiply(this.parent.fromArray(pose, this.parents[i] * 16).invert());
+      if (this.parents[i] >= 0) this.matrix.premultiply(this.parentInverses.get(this.parents[i])!);
       this.matrix.decompose(node.position, node.quaternion, node.scale);
-    });
+    }
   }
   private store(pose: Float32Array): void {
-    this.nodes.forEach((node, i) => {
-      let ancestor: Object3D | null = node;
-      while (ancestor && ancestor.name !== 'torso') ancestor = ancestor.parent;
-      if (ancestor) node.matrixWorld.toArray(pose, i * 16);
-    });
+    for (const i of this.upperBody) this.nodes[i].matrixWorld.toArray(pose, i * 16);
   }
   apply(pose: Float32Array, direction: { x: number; y?: number; z: number } = this.forward, elevation = Math.atan2(direction.y ?? 0, Math.hypot(direction.x, direction.z)), reach = .995, hold?: LongGunHold): void {
-    this.nodes.forEach((node, i) => {
-      this.matrix.fromArray(pose, i * 16);
-      if (this.parents[i] >= 0) this.matrix.premultiply(this.parent.fromArray(pose, this.parents[i] * 16).invert());
-      this.matrix.decompose(node.position, node.quaternion, node.scale);
-    });
+    this.load(pose);
     this.root.updateMatrixWorld(true);
     this.aim.apply(direction, this.barrel, elevation, reach, true, 0, hold);
     this.root.updateMatrixWorld(true);
-    this.nodes.forEach((node, i) => {
-      let ancestor: Object3D | null = node;
-      while (ancestor && ancestor.name !== 'torso') ancestor = ancestor.parent;
-      if (ancestor) node.matrixWorld.toArray(pose, i * 16);
-    });
+    this.store(pose);
   }
 }

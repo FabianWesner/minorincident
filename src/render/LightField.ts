@@ -1,7 +1,7 @@
 // Light-field pass adapted from Bruno Simon folio-2025 Tracks.js (MIT): a moving top-down orthographic
 // render target around the focus that world materials sample by world XZ.
 import { AdditiveBlending, DataTexture, FloatType, RGBAFormat, NearestFilter, Color, HalfFloatType, InstancedMesh, InstancedBufferAttribute, LinearFilter, Matrix4, MeshBasicNodeMaterial, OrthographicCamera, PlaneGeometry, Quaternion, RenderTarget, RendererUtils, Scene, Vector3, type WebGPURenderer, type Node } from 'three/webgpu';
-import { Fn, If, float, attribute, atan, dot, positionWorld, texture, uniform, uv, vec2, vec3 } from 'three/tsl';
+import { Fn, If, float, attribute, atan, dot, positionWorld, texture, uniform, renderGroup, uv, vec2, vec3 } from 'three/tsl';
 import { lightPalette, type LightAnchor, type LightToken } from '../data/lights';
 
 /** World-space light footprint. `aim` is the horizontal pool offset; `stretch` elongates it along the aim (spots). */
@@ -58,12 +58,12 @@ export function footprint(anchor: Pick<LightAnchor, 'type' | 'color' | 'intensit
  * Hundreds of pools cost one pass; `PaletteMaterial` samples `sample()` for ground, walls and figures. */
 export class LightField {
   readonly target: RenderTarget;
-  readonly center = uniform(vec2(0, 0));
-  readonly extent = uniform(80);
+  readonly center = uniform(vec2(0, 0)).setGroup(renderGroup);
+  readonly extent = uniform(80).setGroup(renderGroup);
   /** Time-of-day practical-light weight; fire/blast transients also work in daylight. */
-  readonly strength = uniform(0);
+  readonly strength = uniform(0).setGroup(renderGroup);
   /** Branch within the shared daylight/fire shader, avoiding a second scene graph. */
-  readonly enabled = uniform(0);
+  readonly enabled = uniform(0).setGroup(renderGroup);
   private readonly scene = new Scene();
   private readonly camera = new OrthographicCamera(-40, 40, 40, -40, .1, 200);
   private readonly mesh: InstancedMesh;

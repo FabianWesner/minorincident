@@ -74,6 +74,7 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     expect(proof.pairDrawCalls).toBeLessThanOrEqual(Math.ceil(proof.baselineDrawCalls * 1.2));
     // E18 frame targets: desktop high p95 within the 60 fps budget (14 ms incl. headroom); phone low >= 30 fps p50 at 4x CPU throttle; no hitch above 50 ms (80 ms throttled).
     if (tier === 'high') expect(proof.p95).toBeLessThanOrEqual(14); else expect(proof.p50).toBeLessThanOrEqual(1000 / 30);
+    if (process.env.PHONE_PERF === '1' && tier === 'low') expect(proof.p95).toBeLessThanOrEqual(33.3);
     expect(proof.max).toBeLessThanOrEqual(tier === 'high' ? 50 : 80);
   });
 });

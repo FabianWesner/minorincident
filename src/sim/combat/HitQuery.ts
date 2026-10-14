@@ -44,8 +44,36 @@ export class HitQuery {
       const grid = this.index(), ex = origin.x + direction.x * range, ez = origin.z + direction.z * range;
       if (++this.stamp === 0xffffffff) { this.stamps.fill(0); this.stamp = 1; }
       const list = this.candidates; list.length = 0;
-      for (let x = Math.floor((Math.min(origin.x, ex) - padding) / 8); x <= Math.floor((Math.max(origin.x, ex) + padding) / 8); x++) for (let z = Math.floor((Math.min(origin.z, ez) - padding) / 8); z <= Math.floor((Math.max(origin.z, ez) + padding) / 8); z++) {
-        for (const i of grid.cells.get(HitQuery.key(x, z)) ?? []) if (this.stamps[i] !== this.stamp) { this.stamps[i] = this.stamp; list.push(i); }
+      if (padding === 0 && Number.isFinite(origin.x) && Number.isFinite(origin.z) && Number.isFinite(ex) && Number.isFinite(ez)) {
+        // An unpadded sight ray only crosses a thin chain of cells, not its
+        // entire bounding rectangle. Inclusive wall buckets retain edge/corner hits.
+        let x = Math.floor(origin.x / 8), z = Math.floor(origin.z / 8);
+        const endX = Math.floor(ex / 8), endZ = Math.floor(ez / 8), dx = ex - origin.x, dz = ez - origin.z;
+        const stepX = Math.sign(dx), stepZ = Math.sign(dz), deltaX = dx ? 8 / Math.abs(dx) : Infinity, deltaZ = dz ? 8 / Math.abs(dz) : Infinity;
+        let nextX = dx ? ((x + (stepX > 0 ? 1 : 0)) * 8 - origin.x) / dx : Infinity;
+        let nextZ = dz ? ((z + (stepZ > 0 ? 1 : 0)) * 8 - origin.z) / dz : Infinity;
+        for (;;) {
+          const cell = grid.cells.get(HitQuery.key(x, z));
+          if (cell) for (const i of cell) if (this.stamps[i] !== this.stamp) { this.stamps[i] = this.stamp; closest = this.cover(this.walls[i], origin, direction, range, closest, ignoreId, padding); }
+          if (x === endX && z === endZ) break;
+          if (x === endX) nextX = Infinity;
+          if (z === endZ) nextZ = Infinity;
+          // A later cell cannot hide a nearer wall. Keep a conservative boundary
+          // margin; dynamic cover is still evaluated after the static traversal.
+          if (range > 0 && Math.min(nextX, nextZ) * range > closest + 1e-8) break;
+          if (Math.abs(nextX - nextZ) <= 1e-12) {
+            // A corner-touch can hit a wall in either side cell (including mixed-sign rays).
+            for (const [cx, cz] of [[x + stepX, z], [x, z + stepZ]]) {
+              const side = grid.cells.get(HitQuery.key(cx, cz));
+              if (side) for (const i of side) if (this.stamps[i] !== this.stamp) { this.stamps[i] = this.stamp; closest = this.cover(this.walls[i], origin, direction, range, closest, ignoreId, padding); }
+            }
+            x += stepX; z += stepZ; nextX += deltaX; nextZ += deltaZ;
+          } else if (nextX < nextZ) { x += stepX; nextX += deltaX; }
+          else { z += stepZ; nextZ += deltaZ; }
+        }
+      } else for (let x = Math.floor((Math.min(origin.x, ex) - padding) / 8); x <= Math.floor((Math.max(origin.x, ex) + padding) / 8); x++) for (let z = Math.floor((Math.min(origin.z, ez) - padding) / 8); z <= Math.floor((Math.max(origin.z, ez) + padding) / 8); z++) {
+        const cell = grid.cells.get(HitQuery.key(x, z));
+        if (cell) for (const i of cell) if (this.stamps[i] !== this.stamp) { this.stamps[i] = this.stamp; list.push(i); }
       }
       for (const i of list) closest = this.cover(this.walls[i], origin, direction, range, closest, ignoreId, padding);
       for (const wall of this.dynamicWalls) closest = this.cover(wall, origin, direction, range, closest, ignoreId, padding);
@@ -59,12 +87,20 @@ export class HitQuery {
     {
       if (wall.entityId !== undefined && wall.entityId === ignoreId) return closest;
       let near = 0, far = range;
-      for (const axis of ['x', 'y', 'z'] as const) {
-        const half = axis === 'x' ? wall.halfX : axis === 'y' ? wall.halfY : wall.halfZ, d = direction[axis] ?? 0;
-        const extent = half + (axis === 'y' ? 0 : padding);
-        const start = origin[axis] ?? .7;
-        if (Math.abs(d) < 1e-12) { if (start < wall[axis] - extent || start > wall[axis] + extent) { far = -1; break; } }
-        else { const a = (wall[axis] - extent - start) / d, b = (wall[axis] + extent - start) / d; near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b)); }
+      {
+        const d = direction.x, extent = wall.halfX + padding, start = origin.x;
+        if (Math.abs(d) < 1e-12) { if (start < wall.x - extent || start > wall.x + extent) return closest; }
+        else { const a = (wall.x - extent - start) / d, b = (wall.x + extent - start) / d; near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b)); }
+      }
+      {
+        const d = direction.y ?? 0, extent = wall.halfY, start = origin.y ?? .7;
+        if (Math.abs(d) < 1e-12) { if (start < wall.y - extent || start > wall.y + extent) return closest; }
+        else { const a = (wall.y - extent - start) / d, b = (wall.y + extent - start) / d; near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b)); }
+      }
+      {
+        const d = direction.z, extent = wall.halfZ + padding, start = origin.z;
+        if (Math.abs(d) < 1e-12) { if (start < wall.z - extent || start > wall.z + extent) return closest; }
+        else { const a = (wall.z - extent - start) / d, b = (wall.z + extent - start) / d; near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b)); }
       }
       return far >= near && near < closest ? near : closest;
     }

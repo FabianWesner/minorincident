@@ -5,6 +5,7 @@ delete process.env.NO_COLOR;
 
 // Parallel worktrees each set their own E2E_PORT so they never reuse another lane's server.
 const port = Number(process.env.E2E_PORT ?? 3301);
+const phonePerfSpecs = process.env.PHONE_PERF === '1' ? ['**/perf/*.spec.ts'] : [];
 // Browser tests are ALWAYS headless (the user works on this Mac; windows must never appear).
 // macOS: headless Chromium renders WebGL2 on the real GPU via ANGLE/Metal (low CPU load);
 // elsewhere (CI) SwiftShader. Headless WebGPU availability depends on the pinned browser and GPU;
@@ -34,7 +35,7 @@ export default defineConfig({
   },
   projects: [
     { name: 'chromium', testIgnore: '**/webgpu.spec.ts', use: { browserName: 'chromium' } },
-    { name: 'pixel-7', testMatch: ['**/smoke.spec.ts', '**/input-touch.spec.ts', '**/hud-touch.spec.ts', '**/mobile-hud-layout.spec.ts', '**/home-button.spec.ts', '**/apc-floor.spec.ts', '**/l9-browser-input.spec.ts'], use: { ...devices['Pixel 7'], browserName: 'chromium', viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 } },
+    { name: 'pixel-7', testMatch: [...phonePerfSpecs, '**/smoke.spec.ts', '**/input-touch.spec.ts', '**/hud-touch.spec.ts', '**/mobile-hud-layout.spec.ts', '**/home-button.spec.ts', '**/apc-floor.spec.ts', '**/l9-browser-input.spec.ts'], use: { ...devices['Pixel 7'], browserName: 'chromium', viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 } },
     { name: 'pixel-7-landscape', testMatch: ['**/smoke.spec.ts', '**/input-touch.spec.ts', '**/hud-touch.spec.ts', '**/mobile-hud-layout.spec.ts', '**/home-button.spec.ts', '**/apc-floor.spec.ts', '**/l9-browser-input.spec.ts'], use: { ...devices['Pixel 7 landscape'], browserName: 'chromium', viewport: { width: 844, height: 390 }, deviceScaleFactor: 1 } },
     { name: 'iphone-14', testMatch: ['**/smoke.spec.ts', '**/input-touch.spec.ts', '**/hud-touch.spec.ts', '**/mobile-hud-layout.spec.ts'], use: { ...devices['iPhone 14'], browserName: 'chromium', viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 } },
     { name: 'iphone-14-landscape', testMatch: ['**/smoke.spec.ts', '**/input-touch.spec.ts', '**/hud-touch.spec.ts', '**/mobile-hud-layout.spec.ts'], use: { ...devices['iPhone 14 landscape'], browserName: 'chromium', viewport: { width: 844, height: 390 }, deviceScaleFactor: 1 } },

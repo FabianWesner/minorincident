@@ -8,6 +8,8 @@ import type { View } from './View';
 import type { AssetQuality } from '../assets/types';
 import type { SimWorld } from '../sim/world/SimWorld';
 
+const assetIds = new Set(manifest.map(asset => asset.id));
+
 export const productionObstacleAssets: Record<string, string> = {
   'obstacle.cone': 'prop.traffic-cone', 'obstacle.fence': 'prop.picket-fence',
   'obstacle.barricade': 'prop.barricade', 'obstacle.trash-can': 'prop.trash-bin', 'obstacle.mailbox': 'prop.mailbox-blue',
@@ -60,7 +62,7 @@ export class EntityAssets extends Group {
       // physics props have their own renderer. Avoid a full manifest scan per
       // lamp on every frame (hundreds of anchors in production levels).
       if (entity.kind === 'light' || entity.kind === 'physics-prop' || entity.id === 1 || entity.bicycle || this.world.npcs && (entity.companion || entity.escort || entity.civilian) || this.world.vehicles?.cars.has(entity.id) || entity.faction === 'infected' || this.pending.has(entity.id)) continue;
-      const id = productionObstacleAssets[entity.archetype] ?? actorAssets[entity.archetype] ?? (manifest.some(a => a.id === entity.archetype) ? entity.archetype : entity.kind === 'escort' || entity.faction === 'civilian' ? 'npc.civilian-man-a' : undefined);
+      const id = productionObstacleAssets[entity.archetype] ?? actorAssets[entity.archetype] ?? (assetIds.has(entity.archetype) ? entity.archetype : entity.kind === 'escort' || entity.faction === 'civilian' ? 'npc.civilian-man-a' : undefined);
       if (!id) continue;
       const target = this.view?.cameraTarget ?? this.world.entities.get(1)!.transform;
       const distance = Math.hypot(entity.transform.x - target.x, entity.transform.z - target.z);

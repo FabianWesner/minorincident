@@ -13,13 +13,16 @@ export function profileCpu(game: Game): Record<string, number> {
     if (typeof original !== 'function') return;
     frame[category] ??= 0;
     if (maximum) frame[maximum] ??= 0;
+    let depth = 0;
     object[method] = function (...args: never[]) {
-      const start = performance.now();
+      const outer = depth++ === 0, start = outer ? performance.now() : 0;
       try { return original.apply(this, args); }
       finally {
-        const elapsed = performance.now() - start;
-        frame[category] += elapsed;
-        if (maximum) frame[maximum] = Math.max(frame[maximum], elapsed);
+        if (--depth === 0) {
+          const elapsed = performance.now() - start;
+          frame[category] += elapsed;
+          if (maximum) frame[maximum] = Math.max(frame[maximum], elapsed);
+        }
       }
     };
   };
@@ -34,6 +37,9 @@ export function profileCpu(game: Game): Record<string, number> {
   wrap(game.input, 'tap', 'telemetry');
   wrap(game.input, 'sample', 'input');
   wrap(view, 'advance', 'camera');
+  wrap(view, 'update', 'view');
+  wrap(view.weather, 'update', 'weather');
+  wrap(game.view.renderer, 'render', 'render');
   wrap(view.crowd, 'update', 'crowd');
   wrap(view.npcs, 'update', 'npcs');
   wrap(view.accessories, 'finish', 'accessories');

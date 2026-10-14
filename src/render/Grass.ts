@@ -1,7 +1,7 @@
 import { weatherSurface } from './WeatherView';
 // Adapted from Bruno Simon folio-2025 World/Grass.js and Wind.js (MIT, commit 41046b5).
 import { BufferGeometry, DoubleSide, Float32BufferAttribute, Mesh } from 'three/webgpu';
-import { attribute, cos, mix, positionLocal, sin, uniform, vec3, cameraViewMatrix } from 'three/tsl';
+import { attribute, cos, mix, positionLocal, sin, uniform, renderGroup, vec3, cameraViewMatrix } from 'three/tsl';
 import { Rng } from '../core/Rng';
 import { worldLook } from '../data/worldLook';
 import type { DistrictLayout } from '../levels/districts/types';
@@ -74,4 +74,4 @@ export class Grass extends Mesh {
   }
   dispose(): void { this.geometry.dispose(); }
 }
-export const windPhase = () => uniform(0);
+export const windPhase = () => uniform(0).setGroup(renderGroup);
