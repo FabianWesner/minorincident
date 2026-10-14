@@ -68,7 +68,7 @@ function trackStamp(t: Track, size: number, texel: number, cx: number, cz: numbe
 
 /** Two height layers share the previous field's 4 MiB budget (RGBA8 instead of R32F).
  * The camera window is bounded, so prints cannot tile into other streets. */
-export function rasterFootprints(data: Uint8Array, tracks: WeatherSystem['tracks'], tick: number, centerX: number, centerZ: number): number {
+export function rasterFootprints(data: Uint8Array, tracks: WeatherSystem['tracks'], tick: number, centerX: number, centerZ: number, touchedRows?: Set<number>): number {
   data.fill(0);
   const size = Math.sqrt(data.length / 4), texel = TRACK_SPAN / size;
   let pixels = 0;
@@ -80,6 +80,7 @@ export function rasterFootprints(data: Uint8Array, tracks: WeatherSystem['tracks
     const stamp = trackStamp(t, size, texel, cx, cz), height = Math.round(t.y / TRACK_HEIGHT * 255);
     let i = 0;
     for (let z = stamp.z0; i < stamp.coverage.length; z++) {
+      touchedRows?.add(z);
       let base = (z * size + stamp.x0) * 4;
       for (let x = 0; x < stamp.width; x++, i++, base += 4) {
         const value = Math.round(stamp.coverage[i] * fade * .65 * 255);

@@ -1,4 +1,4 @@
-import { DataTexture, FloatType, RGBAFormat } from 'three';
+import { DataTexture, FloatType, RGBAFormat, UnsignedByteType } from 'three';
 import { expect, test, vi } from 'vitest';
 import { installTextureRanges } from '../../../src/render/TextureRanges';
 
@@ -60,4 +60,18 @@ test('@E18-AC01 adjacent and overlapping pose rows upload once with their exact 
   expect(upload).toHaveBeenCalledWith(1, 0, 0, 2, 4, 3, 2, 3, pixels.subarray(32, 80));
   expect(texture.updateRanges).toHaveLength(0); expect(original).toHaveBeenCalledTimes(1);
   texture.dispose();
+});
+
+test('RGBA8 track rows preserve byte offsets and byte stride on both backends', () => {
+  for (const webgpu of [false, true]) {
+    const pixels = Uint8Array.from({ length: 128 }, (_, i) => i), texture = new DataTexture(pixels, 4, 8, RGBAFormat, UnsignedByteType);
+    const resource = { textureGPU: {}, texture: {}, glTextureType: 1, glFormat: 2, glType: 3 }, original = vi.fn(), upload = vi.fn();
+    const backend = { updateTexture: original, get: () => resource, ...(webgpu ? { device: { queue: { writeTexture: upload } } } : { gl: { texSubImage2D: upload }, state: { bindTexture: vi.fn() }, textureUtils: { setTextureParameters: vi.fn() } }) };
+    installTextureRanges(backend); backend.updateTexture(texture, {});
+    texture.addUpdateRange(32, 16); texture.addUpdateRange(48, 16); backend.updateTexture(texture, {});
+    expect(original).toHaveBeenCalledTimes(1); expect(upload).toHaveBeenCalledTimes(1);
+    if (webgpu) expect(upload).toHaveBeenCalledWith({ texture: resource.texture, origin: { x: 0, y: 2, z: 0 } }, pixels.subarray(32, 64), { bytesPerRow: 16 }, { width: 4, height: 2, depthOrArrayLayers: 1 });
+    else expect(upload).toHaveBeenCalledWith(1, 0, 0, 2, 4, 2, 2, 3, pixels.subarray(32, 64));
+    texture.dispose();
+  }
 });

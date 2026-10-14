@@ -62,6 +62,9 @@ export class WeatherView extends Group {
   private reducedFlash = false;
   private lastTrackTick = -1;
   private trackPixels = 0;
+  private trackPrevious = new Uint8Array(0);
+  private trackRows = new Set<number>();
+  private trackNextRows = new Set<number>();
   private readonly boltGeometry = new BufferGeometry();
   private readonly boltMaterial = new LineBasicNodeMaterial({ color: '#c4deff', depthWrite: false });
   private readonly bolt = new LineSegments(this.boltGeometry, this.boltMaterial);
@@ -166,13 +169,27 @@ export class WeatherView extends Group {
       weatherSurface.tracks.dispose();
       weatherSurface.tracks.image = { data: new Uint8Array(trackSize * trackSize * 4), width: trackSize, height: trackSize };
       weatherSurface.tracks.needsUpdate = true; this.lastTrackTick = -1;
+      this.trackRows.clear(); this.trackNextRows.clear();
     }
     const center = weatherSurface.trackCenter.value;
     const trackTick = Math.floor(this.world.tick / 6);
     if ((w.tracks.length > 0 || this.trackPixels > 0) && (trackTick !== this.lastTrackTick || center.x !== cx || center.y !== cz)) {
       center.set(cx, cz);
-      this.trackPixels = rasterFootprints(weatherSurface.tracks.image.data as Uint8Array, w.tracks, this.world.tick, cx, cz);
-      weatherSurface.tracks.needsUpdate = true; this.lastTrackTick = trackTick;
+      const data = weatherSurface.tracks.image.data as Uint8Array, rowSize = trackSize * 4;
+      if (this.trackPrevious.length !== data.length) this.trackPrevious = new Uint8Array(data.length);
+      this.trackPrevious.set(data); this.trackNextRows.clear();
+      this.trackPixels = rasterFootprints(data, w.tracks, this.world.tick, cx, cz, this.trackNextRows);
+      // The old and new stamp rows cover every byte that can change, including
+      // cleared/expired prints. Preserve the exact mask; do not resend 4 MiB for
+      // an unchanged field or a few fading soles (WebGL command-buffer stalls).
+      for (const z of this.trackNextRows) this.trackRows.add(z);
+      for (const z of this.trackRows) {
+        const start = z * rowSize, end = start + rowSize;
+        for (let i = start; i < end; i++) if (data[i] !== this.trackPrevious[i]) { weatherSurface.tracks.addUpdateRange(start, rowSize); break; }
+      }
+      if (weatherSurface.tracks.updateRanges.length) weatherSurface.tracks.needsUpdate = true;
+      const oldRows = this.trackRows; this.trackRows = this.trackNextRows; this.trackNextRows = oldRows;
+      this.lastTrackTick = trackTick;
     }
   }
   snapshot() { return { particles: this.particles, flash: this.flash, rayDitherRadius: 6, wetness: weatherSurface.wetness.value, accumulation: weatherSurface.accumulation.value, tracks: this.world.weather?.tracks.length ?? 0, trackPixels: this.trackPixels }; }
