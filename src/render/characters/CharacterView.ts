@@ -18,7 +18,7 @@ import { LimbIK } from './LimbIK';
 import { RiderContacts } from './RiderContacts';
 import { CourierLiving } from './CourierRig';
 
-type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { assetId: string; animator: KeyframeAnimator; living?: CourierLiving; gear: Group[]; aim: GunAim; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
+type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { assetId: string; animator: KeyframeAnimator; living?: CourierLiving; gear: Group[]; cure?: Group; aim: GunAim; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
 /** Hero hierarchy presentation. Cosmetic variants share identical sim state and attachment rules. */
 export class CharacterView extends Group {
   private readonly characters = new Map<SurvivorVariant, LoadedCharacter>();
@@ -54,7 +54,7 @@ export class CharacterView extends Group {
   get skinActive(): boolean { return this.riders.has(this.variant); }
   /** Held gear remains stowed until the hands have released the bicycle. */
   get rideWeight(): number { return this.characters.get(this.variant)?.animator.rideWeight ?? 0; }
-  async init(materials: Materials, bloodFeedback = false, low = false, outfit: 'survivor' | 'courier' = 'survivor', skin = false): Promise<void> {
+  async init(materials: Materials, bloodFeedback = false, low = false, outfit: 'survivor' | 'courier' = 'survivor', skin = false, cure = false): Promise<void> {
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
     for (const variant of ['female', 'male'] as const) {
       const id = `char.${outfit}-${variant}`, def = (manifest as AssetDef[]).find(asset => asset.id === id);
@@ -126,9 +126,33 @@ export class CharacterView extends Group {
           legs: [new LimbIK(r.legL, r.shinL, r.footL), new LimbIK(r.legR, r.shinR, r.footR)],
           soleHeight: r.footL.getWorldPosition(this.scratchA).y - r.root.getWorldPosition(this.scratchB).y });
       }
+      let canister: Group | undefined;
+      if (cure) {
+        const def = (manifest as AssetDef[]).find(asset => asset.id === 'prop.cure-canister')!;
+        canister = (await loader.loadAsync('/' + (low ? def.lods?.lod1 ?? def.glb : def.glb).replace(/^public\//, ''))).scene;
+        canister.traverse(node => {
+          if (!(node instanceof Mesh)) return;
+          const remap = (source: Material): Material => {
+            const material = node.geometry.hasAttribute('color') && !source.name.startsWith('emi_')
+              ? materials.fromVertexColors('cure:carried')
+              : materials.fromColor(`cure:${source.name}`, (source as import('three').MeshStandardMaterial).color, source.name.startsWith('emi_') ? .6 : 0);
+            material.movingFigure.value = 1; material.userData.sharedPalette = true;
+            source.dispose(); return material;
+          };
+          node.material = Array.isArray(node.material) ? node.material.map(remap) : remap(node.material);
+        });
+        canister.name = 'backpack-cure'; canister.visible = false;
+        // Cancel the asset's presentation turn: its frame faces the bag, window faces backward.
+        canister.updateMatrixWorld(true);
+        const back = canister.getObjectByName('backSocket')!.getWorldPosition(new Vector3()).applyAxisAngle(this.facingAxis, Math.PI);
+        canister.rotation.y = Math.PI; canister.scale.setScalar(.8);
+        canister.position.set(-.14, 0, 0).addScaledVector(back, -.8);
+        character.rig.backpackSocket.add(canister);
+        canister.traverse(node => { if (node instanceof Mesh) node.castShadow = true; });
+      }
       const animator = new KeyframeAnimator(character.rig, pilot ? skinClips : undefined);
       const living = animator.bones ? new CourierLiving(character.rig, animator.bones, variant === 'female' ? 1 : 2) : undefined;
-      this.characters.set(variant, { ...character, assetId: isSkin ? `${id}.skin` : id, animator, living, gear, aim: new GunAim(character.rig.armR, character.rig.foreArmR, character.rig.handR, character.rig.torso, [character.rig.armL, character.rig.foreArmL, character.rig.handL], [character.rig.weaponSocketR, character.rig.weaponSocketL], character.rig.head), sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
+      this.characters.set(variant, { ...character, assetId: isSkin ? `${id}.skin` : id, animator, living, gear, cure: canister, aim: new GunAim(character.rig.armR, character.rig.foreArmR, character.rig.handR, character.rig.torso, [character.rig.armL, character.rig.foreArmL, character.rig.handL], [character.rig.weaponSocketR, character.rig.weaponSocketL], character.rig.head), sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
     }
     this.makeParcel(materials);
   }
@@ -154,6 +178,10 @@ export class CharacterView extends Group {
       this.parcel.position.copy(this.worldToLocal(l.add(r).multiplyScalar(.5))); this.parcel.position.y += .04;
     }
     if (this.characters.get(pose.variant)?.animator.evaluations !== before) this.cpuMs = performance.now() - started;
+  }
+  /** Mission inventory is authoritative through death, save/load and installation. */
+  showCure(carried: boolean): void {
+    for (const character of this.characters.values()) if (character.cure) character.cure.visible = carried;
   }
   private carEvaluation = -1;
   private readonly carRest = new Map<import('three').Object3D, Quaternion>();
@@ -304,7 +332,7 @@ export class CharacterView extends Group {
   socket(side: 'LEFT' | 'RIGHT') { return this.characters.get(this.variant)?.sockets[side]; }
   getState() {
     const character = this.characters.get(this.variant);
-    return { visible: this.visible, supportHandGap: character?.aim.contactGap ?? 0, gunPose: character ? Object.fromEntries(['armR', 'foreArmR', 'handR', 'armL', 'foreArmL', 'handL', 'weaponSocketL', 'weaponSocketR', 'torso', 'head'].map(name => [name, character.rig[name as keyof LoadedCharacter['rig']].getWorldPosition(new Vector3()).toArray()])) : null, modelId: character?.assetId, position: this.position.toArray(), orientation: this.quaternion.toArray(), yaw: this.facing, pelvis: character?.rig.hip.getWorldPosition(this.scratchA).toArray() ?? null, head: character?.rig.head.getWorldPosition(this.scratchA).toArray() ?? null, feet: character ? [character.rig.footL.getWorldPosition(this.scratchA).toArray(), character.rig.footR.getWorldPosition(this.scratchA).toArray()] : null, bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, variant: this.variant, gearTier: this.tier, animation: character?.animator.state, clip: character?.animator.clip, missingClips: character?.animator.missingClips ?? 0,
+    return { visible: this.visible, cureVisible: character?.cure?.visible ?? false, supportHandGap: character?.aim.contactGap ?? 0, gunPose: character ? Object.fromEntries(['armR', 'foreArmR', 'handR', 'armL', 'foreArmL', 'handL', 'weaponSocketL', 'weaponSocketR', 'torso', 'head'].map(name => [name, character.rig[name as keyof LoadedCharacter['rig']].getWorldPosition(new Vector3()).toArray()])) : null, modelId: character?.assetId, position: this.position.toArray(), orientation: this.quaternion.toArray(), yaw: this.facing, pelvis: character?.rig.hip.getWorldPosition(this.scratchA).toArray() ?? null, head: character?.rig.head.getWorldPosition(this.scratchA).toArray() ?? null, feet: character ? [character.rig.footL.getWorldPosition(this.scratchA).toArray(), character.rig.footR.getWorldPosition(this.scratchA).toArray()] : null, bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, variant: this.variant, gearTier: this.tier, animation: character?.animator.state, clip: character?.animator.clip, missingClips: character?.animator.missingClips ?? 0,
       evaluations: character?.animator.evaluations ?? 0, skinned: this.skinActive, cpuMs: this.cpuMs, rideWeight: character?.animator.rideWeight ?? 0, sources: [...this.characters].map(([variant, c]) => ({ variant, source: c.source, reason: c.reason })) };
   }
   dispose(): void { for (const character of this.characters.values()) disposeCharacter(character.model); this.parcel?.traverse(node => { if (node instanceof Mesh) node.geometry.dispose(); }); this.parcel = null; this.characters.clear(); this.riders.clear(); this.bloodMaterials.length = 0; this.clear(); }

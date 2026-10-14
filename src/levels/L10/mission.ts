@@ -34,11 +34,11 @@ export function levelTenMission(resolve: (name: string) => Anchor | undefined): 
   step('crash', 'Leave the wreck on foot', 'cure-crash', spatial('cure-crash'));
   for (const region of cureRegions.slice(1, 4)) if ('weapon' in region) step(region.id, `Recover the ${region.weaponLabel} at the checkpoint`, region.checkpoint, spatial(region.checkpoint, true), [{ kind: 'arsenal', add: [region.weapon], remove: [] }, { kind: 'checkpoint', id: region.checkpoint }], 'interact');
   step('research-campus', 'Reach the research campus', 'cure-research-entry', spatial('cure-research-entry'), [{ kind: 'checkpoint', id: 'cure-research-entry' }], 'reach');
-  step('research', 'Read the research terminal', 'cure-terminal', flag('terminal-read'));
-  step('cure', 'Take the airborne cure', 'cure-canister', flag('cure-carried'), [{ kind: 'grant', item: 'cure-canister' }]);
-  step('research-exit', 'Leave the laboratory with the cure', 'cure-research', spatial('cure-research'), [{ kind: 'checkpoint', id: 'cure-research' }], 'reach');
-  step('destroyed-corridor', 'Recover the rocket launcher', 'cure-corridor', spatial('cure-corridor', true), [{ kind: 'arsenal', add: ['weapon.rocket-launcher'], remove: [] }, { kind: 'checkpoint', id: 'cure-corridor' }], 'interact');
-  step('dispersal-complex', 'Reach the dispersal complex', 'cure-complex', spatial('cure-complex'), [{ kind: 'checkpoint', id: 'cure-complex' }], 'reach');
+  step('research', 'Play the research recording', 'cure-terminal', spatial('cure-terminal', true), [{ kind: 'state', key: 'terminal-read', value: true }, { kind: 'radio', id: 'L10.research' }], 'interact');
+  step('cure', 'Pack the cure and carry it to the dispersal complex', 'cure-canister', spatial('cure-canister', true), [{ kind: 'grant', item: 'cure-canister' }, { kind: 'state', key: 'cure-carried', value: true }], 'interact');
+  step('research-exit', 'Deliver the cure — leave the laboratory', 'cure-research', spatial('cure-research'), [{ kind: 'checkpoint', id: 'cure-research' }], 'reach');
+  step('destroyed-corridor', 'Carry the cure through the corridor — recover the rocket launcher', 'cure-corridor', spatial('cure-corridor', true), [{ kind: 'arsenal', add: ['weapon.rocket-launcher'], remove: [] }, { kind: 'checkpoint', id: 'cure-corridor' }], 'interact');
+  step('dispersal-complex', 'Deliver the backpack cure to the dispersal complex', 'cure-complex', spatial('cure-complex'), [{ kind: 'checkpoint', id: 'cure-complex' }], 'reach');
   step('install', 'Install the cure at the dispersal console', 'cure-install', flag('cure-installed'), [{ kind: 'state', key: 'cure-carried', value: false }, { kind: 'checkpoint', id: 'cure-disperse-ready' }]);
   step('hold', 'Charge the system nearby and kill the Mega Alpha', 'cure-console', { kind: 'all', triggers: [flag('charge-ready'), flag('mega-dead'), flag('cure-installed')] });
   step('release', 'Release the cure at the console', 'cure-console', flag('cure-released'));

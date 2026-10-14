@@ -1,0 +1,7 @@
+Stopped queued E2 jobs within the 3-hour lane budget; none had browser admission.
+18548: npm run verify E32
+34978: npm run scene /tmp/l10-e2-rig-probe.json --tier low --backend webgl2 --shots 0,30,60 --size 1280x720 --out docs/reports/l10-e2/rig-low-probe
+63934: sh tools/e2e-lock.sh npx playwright test tests/e2e/levels/l10-cure.spec.ts --project=chromium --workers=1
+66791: lockf -k /tmp/minor-incident-e2e.lock.0 lockf -k /tmp/minor-incident-e2e.lock.1 lockf -k /tmp/minor-incident-e2e.lock.2 lockf -k /tmp/minor-incident-e2e.lock.3 sh tools/perf/quiet-run.sh npx playwright test tests/perf/l10-campus-corridor-budgets.spec.ts --project=chromium --workers=1
+80133: npm run scene:catalog --matrix --filter l10-e2-quarantine,l10-e2-rockets --backend webgl2 --jobs 1 --throttle 4 --query ui=1 --size 1280x720 --out docs/reports/l10-e2/centered-webgl2
+80399: npm run scene:catalog --matrix --filter l10-e2-quarantine,l10-e2-rockets --backend webgpu --jobs 1 --throttle 4 --query ui=1 --size 1280x720 --out docs/reports/l10-e2/centered-webgpu
