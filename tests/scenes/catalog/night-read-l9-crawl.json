@@ -1,0 +1,89 @@
+{
+ "name": "night-read-l9-crawl",
+ "note": "E31-AC16 crawl-away read at the L9 crash site: the courier moves from the crawl start beside the wrecked APC along the road to the crawl end (Scene Lab has no crawl pose or 0 HP state: running stands in; the e2e T-E31-16 owns those states). Route band vs verge >= 3:1 (median over the visible route) and the courier >= 3:1 against the ground. Look for the road leading away from the wreck, the wreck silhouette, night still dark.",
+ "seed": 31,
+ "ground": "district",
+ "time": "L9-crossing",
+ "dof": false,
+ "layout": {
+  "district": "D-CROSSING",
+  "bbox": [
+   [
+    480,
+    -70
+   ],
+   [
+    585,
+    70
+   ]
+  ]
+ },
+ "props": [
+  {
+   "id": "apc-wreck",
+   "asset": "veh.military-apc",
+   "decay": "wrecked",
+   "at": [
+    517.7,
+    -5.5,
+    0.0
+   ],
+   "yaw": 90
+  }
+ ],
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    527.5,
+    2.6
+   ]
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": "courier",
+  "zoom": 1
+ },
+ "contrast": {
+  "district": "D-CROSSING",
+  "stepM": 2
+ },
+ "frames": 240,
+ "sheet": 40,
+ "script": [
+  {
+   "frame": 0,
+   "actor": "courier",
+   "do": {
+    "run": [
+     [
+      534,
+      1
+     ],
+     [
+      547,
+      0
+     ],
+     [
+      570,
+      0
+     ]
+    ]
+   }
+  }
+ ],
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "navContrastMin": 2.5,
+  "playerContrastMin": 3,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000,
+  "navContrastFloor": 2.0
+ }
+}

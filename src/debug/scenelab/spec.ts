@@ -61,6 +61,8 @@ export interface SceneSpec {
    * asset (fence/hedge runs share end posts by design, so they are skipped by default); `slackCm` (default 2) is how far
    * a bone's flesh radius may sink into a prop surface before it is reported. */
   clipping?: { ignore?: [string, string][]; /** Tree crowns, bushes and hedges may overlap anything by design (trees rise behind houses, bushes stand in beds). */ ignoreFoliage?: boolean; sameAsset?: boolean; slackCm?: number };
+  /** Navigation-contrast measurement (E31-AC16): route vs verge from `layouts/<district>/routes.json` or an explicit `route`; gated by `expect.navContrastMin`. */
+  contrast?: { district?: string; route?: [number, number][][]; halfWidthM?: number; vergeM?: number; stepM?: number; landmarks?: [number, number, number][] };
   expect?: Expectations;
   /** Canvas edge check for an isolated actor; normalized crop excludes HUD and other figures. */
   edgeNoise?: { rect: [number, number, number, number]; extremeEdgeShareMax: number };
@@ -285,6 +287,14 @@ export interface Expectations {
   vehicleSlipMaxDeg?: number;
   /** Frames a driven vehicle above its dead-lamp damage stage had its headlights off. */
   headlightsDarkFramesMax?: number;
+  /** Median over the sampled frames of the per-frame median route/verge luminance ratio ((hi + .02) / (lo + .02) on relative luminance; the WCAG .05 value is reported as `wcag05`) over the sampled frames; needs `contrast`. E31-AC16: 3. */
+  navContrastMin?: number;
+  /** The worst sampled frame may not fall below this (same ratio): no black stretch of road. */
+  navContrastFloor?: number;
+  /** Same ratio for the player's body (90th percentile of a box at the screen centre) against the verge ground. */
+  playerContrastMin?: number;
+  /** Same ratio for building facade samples (`contrast.landmarks`) against the verge ground. */
+  landmarkContrastMin?: number;
   /** Highest final durability of any vehicle: attackers must actually damage the hull. */
   vehicleHealthMax?: number;
   /** At least this many E31 hull attack wind-ups on a vehicle (`metrics.pursuit.hullWindups`): the attackers keep attacking. */

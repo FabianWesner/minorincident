@@ -1,0 +1,68 @@
+{
+ "name": "night-read-l10-r2",
+ "note": "E31-AC16 night navigation read, L10 R2: the courier runs 50 m along the authored route. The route band must stay >= 3:1 against the verge (WCAG-style luminance ratio, median over the visible route) and the courier >= 3:1 against the ground. Look for a pale road band between dark verges, readable kerbs/lamps/windows, building silhouettes against the haze, night still dark.",
+ "seed": 32,
+ "ground": "district",
+ "time": "L10-night",
+ "dof": false,
+ "layout": {
+  "district": "D-CURE",
+  "bbox": [
+   [
+    835.0,
+    10
+   ],
+   [
+    1015.0,
+    150
+   ]
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    900,
+    80
+   ]
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": "courier",
+  "zoom": 1
+ },
+ "contrast": {
+  "district": "D-CURE",
+  "stepM": 2
+ },
+ "frames": 240,
+ "sheet": 40,
+ "script": [
+  {
+   "frame": 0,
+   "actor": "courier",
+   "do": {
+    "run": [
+     [
+      950,
+      80
+     ]
+    ]
+   }
+  }
+ ],
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "navContrastMin": 2.5,
+  "playerContrastMin": 3,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000,
+  "navContrastFloor": 2.0
+ }
+}

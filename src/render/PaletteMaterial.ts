@@ -32,7 +32,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   private outputFor: (mode: number) => Node;
   private readonly newCopy: () => PaletteMaterial;
   private weatherMode = -1;
-  constructor(readonly token: PaletteToken, palette: Texture, lighting: Lighting, emissive = 0, swatch?: Color, vertexSwatches = false, nodes?: { base: Node<'vec3'>; glow?: Node<'vec3'>; opacity?: Node<'float'>; surface?: Node<'float'>; interior?: Node<'float'> }) {
+  constructor(readonly token: PaletteToken, palette: Texture, lighting: Lighting, emissive = 0, swatch?: Color, vertexSwatches = false, nodes?: { base: Node<'vec3'>; /** 1 where a merged batch draws asphalt (palette attribute): the night road lift applies there. */ road?: Node<'float'>; glow?: Node<'vec3'>; opacity?: Node<'float'>; surface?: Node<'float'>; interior?: Node<'float'> }) {
     super(); this.newCopy = () => new PaletteMaterial(token, palette, lighting, emissive, swatch, vertexSwatches, nodes); this.name = `${emissive ? 'emi' : 'pal'}_${token}`;
     this.normalNode = normalView;
     // The swatch is data: palette colors share shader source instead of embedding
@@ -99,6 +99,10 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       // The survivor's own aura fill (readability rule): lifts the hero, not the ground ring around it.
       const fill = lighting.heroFillColor.mul(heroMask.mul(lighting.heroFill).mul(normalWorld.y.mul(.3).add(.7)));
       const shaded = mix(lit, surface.mul(lighting.shadow), shadow).add(surface.mul(field.add(fill))).add(rim).toVar();
+      // Night route read (E31-AC16): asphalt keeps a moon-pale sheen that no shadow removes, so the road is a pale band between dark verges.
+      const road = nodes?.road ?? (token === 'asphalt' && !emissive ? float(1) : undefined);
+      // Strongest around the camera focus (the survivor, or the vehicle being driven: the route ahead reads), easing to 40 % towards the screen edge so the night stays dark.
+      if (road) shaded.addAssign(surface.mul(lighting.roadLiftColor).mul(lighting.roadLift).mul(road).mul(positionWorld.xz.sub(lighting.roadFocus.xz).length().smoothstep(46, 14).mul(.6).add(.4)));
       // Dense fog keeps E28's visibility fill; daylight haze/ash (L3: .25–.4) must retain dark colours.
       if (mode & flags.fog) shaded.addAssign(surface.mul(.7).add(vec3(.18, .16, .14)).mul(heroMask).mul(weatherSurface.fog).mul(weatherSurface.fog.smoothstep(.4, .8)));
       if (nodes?.surface) If(nodes.surface.greaterThan(0), () => {
