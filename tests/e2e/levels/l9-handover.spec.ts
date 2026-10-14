@@ -35,7 +35,9 @@ for (const quality of ['high', 'low']) test(`T-E31-15-handover-browser @E31-AC14
     const game = (window.__SCENE__ as unknown as { game: Game }).game;
     game.ui.show('title');
   });
-  await page.getByTestId('continue-game').click();
+  await page.getByTestId('start-game').click();
+  await expect(page.getByTestId('level-resume-L10')).toBeVisible();
+  await page.getByTestId('level-L10').click();
   await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L10');
   await page.evaluate(async () => { window.__SS__!.pause(); await window.__SS__!.step(1); });
   expect(await page.evaluate(() => window.__SS__!.getState().player!.weapons!.RIGHT.rack.map(s => s.id))).toEqual(['weapon.fire-axe']);

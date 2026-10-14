@@ -18,8 +18,7 @@ truncate equipped racks to that level's capacity without deleting the saved setu
 `SaveStore` receives a storage adapter; the browser supplies localStorage under
 `minor-incident.campaign`. Version 2 stores character, seed, unlocked/completed levels,
 owned actions, upgrades, racks, settings, usage, and an optional reward transaction.
-L9's crash and L10's mission resume records persist their checkpoint state. Other levels do not persist physics, health, combat timers or mid-level position. Continue restarts
-an unlocked level at its briefing or resumes pending upgrade choices. Corrupt, invalid,
+L9's crash and L10's mission resume records persist their checkpoint state. Other levels do not persist physics, health, combat timers or mid-level position. Selecting an unlocked row restarts it at its briefing or resumes its saved L9/L10 record and pending upgrade choices. Corrupt, invalid,
 unknown-version, and inaccessible saves return an error result; CampaignUI displays
 Start new. Version 0 compatibility renames `level` to `unlockedLevel`; version 1 migrates
 to version 2 while retaining any existing world aftermath, survivor list and results.
@@ -29,7 +28,7 @@ before the result screen or automatic transition. L1's player-caused aftermath l
 `world.L1` (L2 always applies the scripted burned annex and outbreak house); L5's rescued
 survivor keys live in `survivors` for L6. Replays refresh these outcomes without granting
 rewards twice. Missing records use the existing level defaults. Start game opens the
-saved level selection when progress exists; CampaignUI's Start new starts a fresh run.
+saved level selection when progress exists; a new player chooses a survivor first.
 
 E14's title/character/level menus now start or continue this same campaign. Its
 pause/settings/HUD remain active during gameplay; progression hands off to
@@ -50,14 +49,14 @@ passengers are history; abilities/upgrades remain progression. The protected cor
 keeps its identity at L10. Save validation uses the lost IDs only to validate historical
 upgrade prerequisites, never to equip them. Finished S6 saves migrate to this transaction;
 pre-finale zero-HP crash saves migrate to the driveable floor at the saved position.
-Continue starts L10 on foot at `cure-crash`, with no reward or credits screen. The S7
+The L10 row starts on foot at `cure-crash`, with no reward or credits screen. The S7
 composition reuses the authored safe crawl ground; E32's region lanes replace/extend
 that opening without changing the campaign transaction.
 
 Scene catalog for S7: `npm run scene:catalog -- --filter 'l9-crash-handover,l9-crash-axe-start' --matrix --backend webgl2` (repeat with `webgpu`). These scenes live in `tests/` to keep the
 source-of-truth specs unchanged.
 
-L10-S1: `preset('L10-default')` is the axe-only standalone entry on Level select.
+L10-S1: `preset('L10-default')` supplies the axe-only standalone entry for debug/test consumers.
 Historical weapon prerequisites remain in `crossingHandover.lostWeapons`; selecting
 old unlocks never equips them at R1. `levelTenMission(resolveAnchor)` exports the
 seven-region ordered graph, checkpoint IDs and D1–D4 anchor contract in
@@ -70,7 +69,7 @@ capture. Checkpoints include the arsenal alongside entity loadout timers and exi
 `chunks` / `megaPursuit` seams. `saveResume()` provides current live state plus the
 last reached retry snapshot in `CampaignSave.cureResume`; `loadResume()` restores
 live state after services are installed, while death restores the retry snapshot.
-Continue resumes that record; explicit Level select clears it for a whole-level replay.
+Start game opens the ten-level list. The saved L9/L10 row shows Resume and restores that record; its secondary Restart action clears the record for a whole-level replay. The highest unlocked row receives initial focus.
 A saved death restores the retry checkpoint. The combat sequence continues across
 reloads so new rockets cannot reuse identities in the Mega's persisted hit ledger.
 Live resume preserves the Mega's saved position; the respawn fairness gap applies
