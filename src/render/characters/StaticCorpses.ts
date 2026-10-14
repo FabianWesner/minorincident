@@ -28,7 +28,7 @@ export class StaticCorpses extends Group {
   }
   begin(get: (id: number) => EntitySnapshot | undefined): void {
     // Checkpoint restore replaces the records (revives a body or re-uses its ID at a new pose): rebuild. A body that is
-    // hidden or deleted (L4 keeps a corpse budget) leaves its page alone: swap-remove, no frozen-geometry rebuild (frame hitch).
+    // hidden or deleted (level unload or restart) leaves its page alone: swap-remove, no frozen-geometry rebuild (frame hitch).
     let gone: string[] | null = null;
     for (const [key, body] of this.bodies) {
       const current = get(body.id);
