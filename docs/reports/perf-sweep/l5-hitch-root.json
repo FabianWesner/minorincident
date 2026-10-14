@@ -1,0 +1,19 @@
+{
+  "trace": "l5-kessler-trace/L5-high-webgl-4.trace.json.gz",
+  "longestFunction": {
+    "columnNumber": 66785,
+    "frame": "F0E03A59305C1C71902297FB79BDEC16",
+    "functionName": "frame",
+    "isolate": "5536090822832950229",
+    "lineNumber": 9,
+    "sampleTraceId": 8257886655566829,
+    "scriptId": "8",
+    "url": "http://127.0.0.1:3483/build/index-CoepQxPO.js"
+  },
+  "wallMs": 65.161,
+  "threadCpuMs": 5.515,
+  "commandBufferWaitCalls": 66,
+  "commandBufferWaitMs": 60.481,
+  "samplingWindowRafHitchMs": 38.3,
+  "note": "Trace/profile startup and RAF timestamps have different boundaries. The long callback confirms GPU command-buffer synchronization rather than 65 ms of JS execution; this trace did not reproduce the earlier >50 ms RAF maximum."
+}

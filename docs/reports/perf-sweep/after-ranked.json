@@ -1,115 +1,5 @@
 [
   {
-    "cell": "L5-high-webgl",
-    "spot": "D-FAIR/W0/pair-harbor-street",
-    "metric": "hitch",
-    "value": 74.5,
-    "limit": 50,
-    "ratio": 1.49,
-    "updateMs": 1.5,
-    "renderMs": 2.8000001907348633
-  },
-  {
-    "cell": "L5-high-webgl",
-    "spot": "D-FAIR/W0/pair-kessler-lane",
-    "metric": "hitch",
-    "value": 73.3,
-    "limit": 50,
-    "ratio": 1.466,
-    "updateMs": 1.3000001907348633,
-    "renderMs": 2.8999996185302734
-  },
-  {
-    "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/l5-basement-exit",
-    "metric": "hitch",
-    "value": 72.8,
-    "limit": 50,
-    "ratio": 1.456,
-    "updateMs": 1.5,
-    "renderMs": 2.3000001907348633
-  },
-  {
-    "cell": "L5-high-webgl",
-    "spot": "D-FAIR/W0/l5-basement-exit",
-    "metric": "hitch",
-    "value": 72.6,
-    "limit": 50,
-    "ratio": 1.452,
-    "updateMs": 1.5,
-    "renderMs": 3
-  },
-  {
-    "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/l5-group-of-five",
-    "metric": "hitch",
-    "value": 59.2,
-    "limit": 50,
-    "ratio": 1.1840000000000002,
-    "updateMs": 1.3999996185302734,
-    "renderMs": 2.59999942779541
-  },
-  {
-    "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/l5-sign-of-life",
-    "metric": "hitch",
-    "value": 58.2,
-    "limit": 50,
-    "ratio": 1.1640000000000001,
-    "updateMs": 1.2000007629394531,
-    "renderMs": 2.5
-  },
-  {
-    "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/pair-harbor-street",
-    "metric": "hitch",
-    "value": 56.6,
-    "limit": 50,
-    "ratio": 1.1320000000000001,
-    "updateMs": 1.4000005722045898,
-    "renderMs": 2.3000001907348633
-  },
-  {
-    "cell": "L5-high-webgl",
-    "spot": "D-FAIR/W0/l5-group-of-five",
-    "metric": "hitch",
-    "value": 56.5,
-    "limit": 50,
-    "ratio": 1.13,
-    "updateMs": 1.5,
-    "renderMs": 2.59999942779541
-  },
-  {
-    "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/pair-metro-entrance",
-    "metric": "hitch",
-    "value": 56.2,
-    "limit": 50,
-    "ratio": 1.124,
-    "updateMs": 1.3000001907348633,
-    "renderMs": 2.6000003814697266
-  },
-  {
-    "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/pair-kessler-lane",
-    "metric": "hitch",
-    "value": 53.2,
-    "limit": 50,
-    "ratio": 1.064,
-    "updateMs": 1.5,
-    "renderMs": 2.5
-  },
-  {
-    "cell": "L5-high-webgl",
-    "spot": "D-FAIR/W0/pair-metro-entrance",
-    "metric": "hitch",
-    "value": 40.2,
-    "limit": 50,
-    "ratio": 0.804,
-    "updateMs": 1.5,
-    "renderMs": 2.6999998092651367
-  },
-  {
     "cell": "L2-low-webgl",
     "spot": "D-GROVE/W0/l2-bridge-checkpoint",
     "metric": "triangles",
@@ -148,16 +38,6 @@
     "ratio": 0.7747633333333334,
     "updateMs": 2.200000762939453,
     "renderMs": 4.399999618530273
-  },
-  {
-    "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/l5-metro-shelter",
-    "metric": "hitch",
-    "value": 37.7,
-    "limit": 50,
-    "ratio": 0.754,
-    "updateMs": 1.6999998092651367,
-    "renderMs": 2.8000001907348633
   },
   {
     "cell": "L9-low-webgl",
@@ -1046,8 +926,8 @@
     "value": 282937,
     "limit": 500000,
     "ratio": 0.565874,
-    "updateMs": 1.6999998092651367,
-    "renderMs": 2.8000001907348633
+    "updateMs": 1.6000003814697266,
+    "renderMs": 2.799999237060547
   },
   {
     "cell": "L5-low-webgpu",
@@ -1156,8 +1036,8 @@
     "value": 162,
     "limit": 300,
     "ratio": 0.54,
-    "updateMs": 1.3000001907348633,
-    "renderMs": 2.8000001907348633
+    "updateMs": 1.2000007629394531,
+    "renderMs": 2.6999998092651367
   },
   {
     "cell": "L5-low-webgpu",
@@ -1236,8 +1116,8 @@
     "value": 161,
     "limit": 300,
     "ratio": 0.5366666666666666,
-    "updateMs": 1.5999994277954102,
-    "renderMs": 3.09999942779541
+    "updateMs": 1.5,
+    "renderMs": 2.90000057220459
   },
   {
     "cell": "L5-low-webgpu",
@@ -1328,6 +1208,16 @@
     "ratio": 0.532736,
     "updateMs": 1.5,
     "renderMs": 2.5
+  },
+  {
+    "cell": "L7-high-webgpu",
+    "spot": "start",
+    "metric": "hitch",
+    "value": 26.6,
+    "limit": 50,
+    "ratio": 0.532,
+    "updateMs": 2.8999996185302734,
+    "renderMs": 3
   },
   {
     "cell": "L3-high-webgl",
@@ -1636,8 +1526,8 @@
     "value": 252773,
     "limit": 500000,
     "ratio": 0.505546,
-    "updateMs": 1.4000005722045898,
-    "renderMs": 2.3000001907348633
+    "updateMs": 1.5999994277954102,
+    "renderMs": 2.59999942779541
   },
   {
     "cell": "L5-low-webgpu",
@@ -1790,6 +1680,16 @@
     "renderMs": 1.8000001907348633
   },
   {
+    "cell": "L7-high-webgl",
+    "spot": "start",
+    "metric": "hitch",
+    "value": 24,
+    "limit": 50,
+    "ratio": 0.48,
+    "updateMs": 3.09999942779541,
+    "renderMs": 3.1999998092651367
+  },
+  {
     "cell": "L8-low-webgl",
     "spot": "D-ZOO/W0/pair-zoo-service-yard",
     "metric": "drawCalls",
@@ -1810,14 +1710,24 @@
     "renderMs": 1.5
   },
   {
+    "cell": "L7-high-webgl",
+    "spot": "start",
+    "metric": "simMs",
+    "value": 1.8999996185302734,
+    "limit": 4,
+    "ratio": 0.47499990463256836,
+    "updateMs": 3.09999942779541,
+    "renderMs": 3.1999998092651367
+  },
+  {
     "cell": "L5-low-webgl",
     "spot": "D-FAIR/W0/l5-metro-doors",
     "metric": "triangles",
     "value": 236179,
     "limit": 500000,
     "ratio": 0.472358,
-    "updateMs": 1.5999994277954102,
-    "renderMs": 3.09999942779541
+    "updateMs": 1.5,
+    "renderMs": 2.90000057220459
   },
   {
     "cell": "L5-low-webgpu",
@@ -1916,8 +1826,8 @@
     "value": 232612,
     "limit": 500000,
     "ratio": 0.465224,
-    "updateMs": 1.5,
-    "renderMs": 2.8999996185302734
+    "updateMs": 1.6000003814697266,
+    "renderMs": 2.8000001907348633
   },
   {
     "cell": "L5-low-webgpu",
@@ -1950,6 +1860,16 @@
     "renderMs": 2.8000001907348633
   },
   {
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/l5-group-of-five",
+    "metric": "hitch",
+    "value": 23.1,
+    "limit": 50,
+    "ratio": 0.462,
+    "updateMs": 1.8999996185302734,
+    "renderMs": 2.6000003814697266
+  },
+  {
     "cell": "L2-high-webgl",
     "spot": "D-GROVE/W0/l2-collapse",
     "metric": "triangles",
@@ -1978,6 +1898,16 @@
     "ratio": 0.46107784431137727,
     "updateMs": 2.90000057220459,
     "renderMs": 4
+  },
+  {
+    "cell": "L7-high-webgl",
+    "spot": "start",
+    "metric": "p95",
+    "value": 7.7,
+    "limit": 16.7,
+    "ratio": 0.46107784431137727,
+    "updateMs": 3.09999942779541,
+    "renderMs": 3.1999998092651367
   },
   {
     "cell": "L3-high-webgl",
@@ -2060,16 +1990,6 @@
     "renderMs": 2.5
   },
   {
-    "cell": "L7-high-webgl",
-    "spot": "start",
-    "metric": "simMs",
-    "value": 1.7999992370605469,
-    "limit": 4,
-    "ratio": 0.4499998092651367,
-    "updateMs": 2.5,
-    "renderMs": 2.8999996185302734
-  },
-  {
     "cell": "L2-high-webgl",
     "spot": "start",
     "metric": "p95",
@@ -2136,8 +2056,8 @@
     "value": 221893,
     "limit": 500000,
     "ratio": 0.443786,
-    "updateMs": 1.5,
-    "renderMs": 2.5
+    "updateMs": 1.3000001907348633,
+    "renderMs": 3.1000003814697266
   },
   {
     "cell": "L5-low-webgpu",
@@ -2180,6 +2100,16 @@
     "renderMs": 2.1000003814697266
   },
   {
+    "cell": "L5-high-webgl",
+    "spot": "D-FAIR/W0/l5-group-of-five",
+    "metric": "hitch",
+    "value": 21.9,
+    "limit": 50,
+    "ratio": 0.43799999999999994,
+    "updateMs": 1.8000001907348633,
+    "renderMs": 2.8000001907348633
+  },
+  {
     "cell": "L4-high-webgl",
     "spot": "D-FAIR/W0/l4-war-line",
     "metric": "p95",
@@ -2200,14 +2130,24 @@
     "renderMs": 3.5
   },
   {
+    "cell": "L7-high-webgpu",
+    "spot": "start",
+    "metric": "p95",
+    "value": 7.3,
+    "limit": 16.7,
+    "ratio": 0.437125748502994,
+    "updateMs": 2.8999996185302734,
+    "renderMs": 3
+  },
+  {
     "cell": "L5-low-webgl",
     "spot": "D-FAIR/W0/l5-group-of-five",
     "metric": "triangles",
     "value": 218494,
     "limit": 500000,
     "ratio": 0.436988,
-    "updateMs": 1.3999996185302734,
-    "renderMs": 2.59999942779541
+    "updateMs": 1.8999996185302734,
+    "renderMs": 2.6000003814697266
   },
   {
     "cell": "L5-low-webgpu",
@@ -2266,8 +2206,8 @@
     "value": 218225,
     "limit": 500000,
     "ratio": 0.43645,
-    "updateMs": 1.3000001907348633,
-    "renderMs": 2.8000001907348633
+    "updateMs": 1.2000007629394531,
+    "renderMs": 2.6999998092651367
   },
   {
     "cell": "L5-low-webgpu",
@@ -2306,8 +2246,8 @@
     "value": 216918,
     "limit": 500000,
     "ratio": 0.433836,
-    "updateMs": 1.3000001907348633,
-    "renderMs": 2.6000003814697266
+    "updateMs": 1.4000005722045898,
+    "renderMs": 2.59999942779541
   },
   {
     "cell": "L5-low-webgpu",
@@ -2426,8 +2366,8 @@
     "value": 128,
     "limit": 300,
     "ratio": 0.4266666666666667,
-    "updateMs": 1.6999998092651367,
-    "renderMs": 2.8000001907348633
+    "updateMs": 1.6000003814697266,
+    "renderMs": 2.799999237060547
   },
   {
     "cell": "L5-low-webgpu",
@@ -2636,8 +2576,8 @@
     "value": 209168,
     "limit": 500000,
     "ratio": 0.418336,
-    "updateMs": 1.2000007629394531,
-    "renderMs": 2.5
+    "updateMs": 1.9000005722045898,
+    "renderMs": 2.40000057220459
   },
   {
     "cell": "L5-low-webgpu",
@@ -2680,14 +2620,24 @@
     "renderMs": 2.8000001907348633
   },
   {
+    "cell": "L5-high-webgl",
+    "spot": "D-FAIR/W0/pair-metro-entrance",
+    "metric": "hitch",
+    "value": 20.8,
+    "limit": 50,
+    "ratio": 0.41600000000000004,
+    "updateMs": 2.09999942779541,
+    "renderMs": 2.8000001907348633
+  },
+  {
     "cell": "L5-low-webgl",
     "spot": "D-FAIR/W0/l5-basement-exit",
     "metric": "triangles",
     "value": 207357,
     "limit": 500000,
     "ratio": 0.414714,
-    "updateMs": 1.5,
-    "renderMs": 2.3000001907348633
+    "updateMs": 1.1999998092651367,
+    "renderMs": 3.59999942779541
   },
   {
     "cell": "L5-low-webgpu",
@@ -2950,14 +2900,14 @@
     "renderMs": 3.5
   },
   {
-    "cell": "L7-high-webgl",
+    "cell": "L7-high-webgpu",
     "spot": "start",
-    "metric": "p95",
-    "value": 6.7,
-    "limit": 16.7,
-    "ratio": 0.4011976047904192,
-    "updateMs": 2.5,
-    "renderMs": 2.8999996185302734
+    "metric": "simMs",
+    "value": 1.5999994277954102,
+    "limit": 4,
+    "ratio": 0.39999985694885254,
+    "updateMs": 2.8999996185302734,
+    "renderMs": 3
   },
   {
     "cell": "L5-low-webgl",
@@ -2966,8 +2916,8 @@
     "value": 119,
     "limit": 300,
     "ratio": 0.39666666666666667,
-    "updateMs": 1.5,
-    "renderMs": 2.8999996185302734
+    "updateMs": 1.6000003814697266,
+    "renderMs": 2.8000001907348633
   },
   {
     "cell": "L5-low-webgpu",
@@ -3350,6 +3300,26 @@
     "renderMs": 3.3000001907348633
   },
   {
+    "cell": "L5-high-webgl",
+    "spot": "D-FAIR/W0/pair-plaza",
+    "metric": "p95",
+    "value": 6.3,
+    "limit": 16.7,
+    "ratio": 0.37724550898203596,
+    "updateMs": 1.8999996185302734,
+    "renderMs": 3.299999237060547
+  },
+  {
+    "cell": "L5-high-webgl",
+    "spot": "D-FAIR/W0/l5-metro-doors",
+    "metric": "p95",
+    "value": 6.3,
+    "limit": 16.7,
+    "ratio": 0.37724550898203596,
+    "updateMs": 1.8999996185302734,
+    "renderMs": 3.40000057220459
+  },
+  {
     "cell": "L10-low-webgl",
     "spot": "D-CURE/W0/l10-residential-security",
     "metric": "heapMB",
@@ -3380,6 +3350,16 @@
     "renderMs": 3.3000001907348633
   },
   {
+    "cell": "L7-low-webgl",
+    "spot": "start",
+    "metric": "hitch",
+    "value": 18.8,
+    "limit": 50,
+    "ratio": 0.376,
+    "updateMs": 1.6999998092651367,
+    "renderMs": 2.5
+  },
+  {
     "cell": "L3-high-webgpu",
     "spot": "D-CORRIDOR/W0/l3-army-checkpoint",
     "metric": "simMs",
@@ -3388,16 +3368,6 @@
     "ratio": 0.375,
     "updateMs": 2.1000003814697266,
     "renderMs": 2.8000001907348633
-  },
-  {
-    "cell": "L7-high-webgpu",
-    "spot": "start",
-    "metric": "simMs",
-    "value": 1.5,
-    "limit": 4,
-    "ratio": 0.375,
-    "updateMs": 2.3999996185302734,
-    "renderMs": 2.5
   },
   {
     "cell": "L8-low-webgl",
@@ -3480,24 +3450,14 @@
     "renderMs": 1.5
   },
   {
-    "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/pair-plaza",
-    "metric": "hitch",
-    "value": 18.6,
-    "limit": 50,
-    "ratio": 0.37200000000000005,
-    "updateMs": 1.5,
-    "renderMs": 2.8999996185302734
-  },
-  {
     "cell": "L5-high-webgl",
     "spot": "D-FAIR/W0/l5-metro-shelter",
     "metric": "triangles",
     "value": 557940,
     "limit": 1500000,
     "ratio": 0.37196,
-    "updateMs": 2.299999237060547,
-    "renderMs": 2.90000057220459
+    "updateMs": 2.1000003814697266,
+    "renderMs": 2.8999996185302734
   },
   {
     "cell": "L5-high-webgpu",
@@ -3528,26 +3488,6 @@
     "ratio": 0.37125748502994016,
     "updateMs": 2.40000057220459,
     "renderMs": 3
-  },
-  {
-    "cell": "L5-high-webgl",
-    "spot": "D-FAIR/W0/l5-metro-shelter",
-    "metric": "p95",
-    "value": 6.2,
-    "limit": 16.7,
-    "ratio": 0.37125748502994016,
-    "updateMs": 2.299999237060547,
-    "renderMs": 2.90000057220459
-  },
-  {
-    "cell": "L5-high-webgl",
-    "spot": "D-FAIR/W0/l5-metro-doors",
-    "metric": "p95",
-    "value": 6.2,
-    "limit": 16.7,
-    "ratio": 0.37125748502994016,
-    "updateMs": 1.8000001907348633,
-    "renderMs": 3.3000001907348633
   },
   {
     "cell": "L1-high-webgl",
@@ -3810,6 +3750,16 @@
     "renderMs": 2.8000001907348633
   },
   {
+    "cell": "L5-high-webgl",
+    "spot": "D-FAIR/W0/l5-metro-shelter",
+    "metric": "p95",
+    "value": 6.1,
+    "limit": 16.7,
+    "ratio": 0.3652694610778443,
+    "updateMs": 2.1000003814697266,
+    "renderMs": 2.8999996185302734
+  },
+  {
     "cell": "L4-high-webgl",
     "spot": "D-FAIR/W0/pair-plaza",
     "metric": "drawCalls",
@@ -3940,16 +3890,6 @@
     "renderMs": 2.8999996185302734
   },
   {
-    "cell": "L5-high-webgl",
-    "spot": "D-FAIR/W0/pair-plaza",
-    "metric": "p95",
-    "value": 6,
-    "limit": 16.7,
-    "ratio": 0.3592814371257485,
-    "updateMs": 1.6999998092651367,
-    "renderMs": 3.299999237060547
-  },
-  {
     "cell": "L3-low-webgl",
     "spot": "D-CORRIDOR/W0/l3-army-checkpoint",
     "metric": "heapMB",
@@ -3958,16 +3898,6 @@
     "ratio": 0.354177344,
     "updateMs": 1.7000007629394531,
     "renderMs": 2.8000001907348633
-  },
-  {
-    "cell": "L7-high-webgl",
-    "spot": "start",
-    "metric": "hitch",
-    "value": 17.7,
-    "limit": 50,
-    "ratio": 0.354,
-    "updateMs": 2.5,
-    "renderMs": 2.8999996185302734
   },
   {
     "cell": "L2-high-webgpu",
@@ -3988,16 +3918,6 @@
     "ratio": 0.3532934131736527,
     "updateMs": 2,
     "renderMs": 3.1999998092651367
-  },
-  {
-    "cell": "L7-high-webgpu",
-    "spot": "start",
-    "metric": "p95",
-    "value": 5.9,
-    "limit": 16.7,
-    "ratio": 0.3532934131736527,
-    "updateMs": 2.3999996185302734,
-    "renderMs": 2.5
   },
   {
     "cell": "L10-low-webgpu",
@@ -4170,6 +4090,26 @@
     "renderMs": 3.8000001907348633
   },
   {
+    "cell": "L5-high-webgl",
+    "spot": "D-FAIR/W0/pair-harbor-street",
+    "metric": "p95",
+    "value": 5.7,
+    "limit": 16.7,
+    "ratio": 0.3413173652694611,
+    "updateMs": 1.6999998092651367,
+    "renderMs": 3
+  },
+  {
+    "cell": "L5-high-webgl",
+    "spot": "D-FAIR/W0/pair-metro-entrance",
+    "metric": "p95",
+    "value": 5.7,
+    "limit": 16.7,
+    "ratio": 0.3413173652694611,
+    "updateMs": 2.09999942779541,
+    "renderMs": 2.8000001907348633
+  },
+  {
     "cell": "L4-high-webgl",
     "spot": "D-FAIR/W0/l4-first-turn",
     "metric": "drawCalls",
@@ -4220,14 +4160,14 @@
     "renderMs": 2.8000001907348633
   },
   {
-    "cell": "L7-high-webgpu",
+    "cell": "L7-low-webgpu",
     "spot": "start",
     "metric": "hitch",
     "value": 16.8,
     "limit": 50,
     "ratio": 0.336,
-    "updateMs": 2.3999996185302734,
-    "renderMs": 2.5
+    "updateMs": 1.3999996185302734,
+    "renderMs": 1.6999998092651367
   },
   {
     "cell": "L8-high-webgl",
@@ -4258,6 +4198,16 @@
     "ratio": 0.33532934131736525,
     "updateMs": 1.6000003814697266,
     "renderMs": 3.3000001907348633
+  },
+  {
+    "cell": "L5-high-webgl",
+    "spot": "D-FAIR/W0/l5-group-of-five",
+    "metric": "p95",
+    "value": 5.6,
+    "limit": 16.7,
+    "ratio": 0.33532934131736525,
+    "updateMs": 1.8000001907348633,
+    "renderMs": 2.8000001907348633
   },
   {
     "cell": "L8-high-webgl",
@@ -4400,16 +4350,6 @@
     "renderMs": 2.1999998092651367
   },
   {
-    "cell": "L7-low-webgl",
-    "spot": "start",
-    "metric": "hitch",
-    "value": 16.5,
-    "limit": 50,
-    "ratio": 0.33,
-    "updateMs": 1.7999992370605469,
-    "renderMs": 2.1000003814697266
-  },
-  {
     "cell": "L10-high-webgl",
     "spot": "D-CURE/W0/l10-residential-blocked-street",
     "metric": "heapMB",
@@ -4448,6 +4388,16 @@
     "ratio": 0.32934131736526945,
     "updateMs": 1.4000005722045898,
     "renderMs": 3.1000003814697266
+  },
+  {
+    "cell": "L5-high-webgl",
+    "spot": "D-FAIR/W0/l5-basement-exit",
+    "metric": "p95",
+    "value": 5.5,
+    "limit": 16.7,
+    "ratio": 0.32934131736526945,
+    "updateMs": 1.5,
+    "renderMs": 2.90000057220459
   },
   {
     "cell": "L8-high-webgl",
@@ -4711,23 +4661,13 @@
   },
   {
     "cell": "L5-high-webgl",
-    "spot": "D-FAIR/W0/l5-basement-exit",
+    "spot": "D-FAIR/W0/pair-kessler-lane",
     "metric": "p95",
     "value": 5.4,
     "limit": 16.7,
     "ratio": 0.3233532934131737,
-    "updateMs": 1.5,
-    "renderMs": 3
-  },
-  {
-    "cell": "L5-high-webgl",
-    "spot": "D-FAIR/W0/l5-sign-of-life",
-    "metric": "p95",
-    "value": 5.4,
-    "limit": 16.7,
-    "ratio": 0.3233532934131737,
-    "updateMs": 1.5,
-    "renderMs": 3
+    "updateMs": 1.3000001907348633,
+    "renderMs": 3.40000057220459
   },
   {
     "cell": "L6-high-webgl",
@@ -4880,16 +4820,6 @@
     "renderMs": 1.5999994277954102
   },
   {
-    "cell": "L5-high-webgl",
-    "spot": "D-FAIR/W0/l5-sign-of-life",
-    "metric": "hitch",
-    "value": 16,
-    "limit": 50,
-    "ratio": 0.32,
-    "updateMs": 1.5,
-    "renderMs": 3
-  },
-  {
     "cell": "L8-high-webgpu",
     "spot": "D-ZOO/W0/overview",
     "metric": "heapMB",
@@ -4971,23 +4901,13 @@
   },
   {
     "cell": "L5-high-webgl",
-    "spot": "D-FAIR/W0/pair-harbor-street",
+    "spot": "D-FAIR/W0/l5-sign-of-life",
     "metric": "p95",
     "value": 5.3,
     "limit": 16.7,
     "ratio": 0.31736526946107785,
     "updateMs": 1.5,
-    "renderMs": 2.8000001907348633
-  },
-  {
-    "cell": "L5-high-webgl",
-    "spot": "D-FAIR/W0/pair-metro-entrance",
-    "metric": "p95",
-    "value": 5.3,
-    "limit": 16.7,
-    "ratio": 0.31736526946107785,
-    "updateMs": 1.5,
-    "renderMs": 2.6999998092651367
+    "renderMs": 2.90000057220459
   },
   {
     "cell": "L9-high-webgl",
@@ -5116,8 +5036,8 @@
     "value": 94,
     "limit": 300,
     "ratio": 0.31333333333333335,
-    "updateMs": 1.2000007629394531,
-    "renderMs": 2.5
+    "updateMs": 1.9000005722045898,
+    "renderMs": 2.40000057220459
   },
   {
     "cell": "L5-low-webgpu",
@@ -5208,26 +5128,6 @@
     "ratio": 0.31137724550898205,
     "updateMs": 2,
     "renderMs": 2.799999237060547
-  },
-  {
-    "cell": "L5-high-webgl",
-    "spot": "D-FAIR/W0/pair-kessler-lane",
-    "metric": "p95",
-    "value": 5.2,
-    "limit": 16.7,
-    "ratio": 0.31137724550898205,
-    "updateMs": 1.3000001907348633,
-    "renderMs": 2.8999996185302734
-  },
-  {
-    "cell": "L5-high-webgl",
-    "spot": "D-FAIR/W0/l5-group-of-five",
-    "metric": "p95",
-    "value": 5.2,
-    "limit": 16.7,
-    "ratio": 0.31137724550898205,
-    "updateMs": 1.5,
-    "renderMs": 2.59999942779541
   },
   {
     "cell": "L8-high-webgl",
@@ -5326,8 +5226,8 @@
     "value": 93,
     "limit": 300,
     "ratio": 0.31,
-    "updateMs": 1.3000001907348633,
-    "renderMs": 2.6000003814697266
+    "updateMs": 1.4000005722045898,
+    "renderMs": 2.59999942779541
   },
   {
     "cell": "L5-low-webgpu",
@@ -5537,7 +5437,7 @@
     "limit": 1500000,
     "ratio": 0.30456266666666665,
     "updateMs": 1.3000001907348633,
-    "renderMs": 2.8999996185302734
+    "renderMs": 3.40000057220459
   },
   {
     "cell": "L5-high-webgpu",
@@ -5580,16 +5480,6 @@
     "renderMs": 2.40000057220459
   },
   {
-    "cell": "L5-high-webgl",
-    "spot": "D-FAIR/W0/l5-metro-doors",
-    "metric": "triangles",
-    "value": 455016,
-    "limit": 1500000,
-    "ratio": 0.303344,
-    "updateMs": 1.8000001907348633,
-    "renderMs": 3.3000001907348633
-  },
-  {
     "cell": "L1-high-webgl",
     "spot": "start",
     "metric": "drawCalls",
@@ -5608,6 +5498,16 @@
     "ratio": 0.30333333333333334,
     "updateMs": 1.8999996185302734,
     "renderMs": 2.1000003814697266
+  },
+  {
+    "cell": "L5-high-webgl",
+    "spot": "D-FAIR/W0/l5-metro-doors",
+    "metric": "triangles",
+    "value": 453992,
+    "limit": 1500000,
+    "ratio": 0.30266133333333334,
+    "updateMs": 1.8999996185302734,
+    "renderMs": 3.40000057220459
   },
   {
     "cell": "L5-high-webgpu",
@@ -5641,23 +5541,13 @@
   },
   {
     "cell": "L5-high-webgl",
-    "spot": "D-FAIR/W0/l5-metro-doors",
-    "metric": "drawCalls",
-    "value": 181,
-    "limit": 600,
-    "ratio": 0.3016666666666667,
-    "updateMs": 1.8000001907348633,
-    "renderMs": 3.3000001907348633
-  },
-  {
-    "cell": "L5-high-webgl",
     "spot": "D-FAIR/W0/l5-basement-exit",
     "metric": "triangles",
     "value": 452261,
     "limit": 1500000,
     "ratio": 0.30150733333333335,
     "updateMs": 1.5,
-    "renderMs": 3
+    "renderMs": 2.90000057220459
   },
   {
     "cell": "L5-high-webgpu",
@@ -5780,6 +5670,16 @@
     "renderMs": 2.6000003814697266
   },
   {
+    "cell": "L5-high-webgl",
+    "spot": "D-FAIR/W0/l5-metro-doors",
+    "metric": "drawCalls",
+    "value": 179,
+    "limit": 600,
+    "ratio": 0.29833333333333334,
+    "updateMs": 1.8999996185302734,
+    "renderMs": 3.40000057220459
+  },
+  {
     "cell": "L5-high-webgpu",
     "spot": "D-FAIR/W0/l5-metro-doors",
     "metric": "drawCalls",
@@ -5890,6 +5790,16 @@
     "renderMs": 1.3000001907348633
   },
   {
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/l5-metro-doors",
+    "metric": "heapMB",
+    "value": 73.75074,
+    "limit": 250,
+    "ratio": 0.29500296,
+    "updateMs": 1.5,
+    "renderMs": 2.90000057220459
+  },
+  {
     "cell": "L1-high-webgl",
     "spot": "D-GROVE/W0/l1-morning",
     "metric": "drawCalls",
@@ -5921,13 +5831,13 @@
   },
   {
     "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/l5-metro-doors",
+    "spot": "D-FAIR/W0/l5-metro-shelter",
     "metric": "heapMB",
-    "value": 73.611256,
+    "value": 73.608616,
     "limit": 250,
-    "ratio": 0.294445024,
-    "updateMs": 1.5999994277954102,
-    "renderMs": 3.09999942779541
+    "ratio": 0.294434464,
+    "updateMs": 1.6000003814697266,
+    "renderMs": 2.799999237060547
   },
   {
     "cell": "L1-low-webgl",
@@ -5948,16 +5858,6 @@
     "ratio": 0.293569456,
     "updateMs": 1.4000005722045898,
     "renderMs": 3
-  },
-  {
-    "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/l5-metro-shelter",
-    "metric": "heapMB",
-    "value": 73.365028,
-    "limit": 250,
-    "ratio": 0.293460112,
-    "updateMs": 1.6999998092651367,
-    "renderMs": 2.8000001907348633
   },
   {
     "cell": "L1-high-webgpu",
@@ -6060,6 +5960,26 @@
     "renderMs": 3
   },
   {
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/l5-group-of-five",
+    "metric": "heapMB",
+    "value": 73.239484,
+    "limit": 250,
+    "ratio": 0.29295793600000003,
+    "updateMs": 1.8999996185302734,
+    "renderMs": 2.6000003814697266
+  },
+  {
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/l5-sign-of-life",
+    "metric": "heapMB",
+    "value": 73.176568,
+    "limit": 250,
+    "ratio": 0.292706272,
+    "updateMs": 1.9000005722045898,
+    "renderMs": 2.40000057220459
+  },
+  {
     "cell": "L9-low-webgl",
     "spot": "D-CROSSING/W0/l9-long-sightline",
     "metric": "triangles",
@@ -6141,23 +6061,13 @@
   },
   {
     "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/l5-sign-of-life",
+    "spot": "D-FAIR/W0/l5-basement-exit",
     "metric": "heapMB",
-    "value": 73.094832,
+    "value": 73.039428,
     "limit": 250,
-    "ratio": 0.292379328,
-    "updateMs": 1.2000007629394531,
-    "renderMs": 2.5
-  },
-  {
-    "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/l5-group-of-five",
-    "metric": "heapMB",
-    "value": 73.077112,
-    "limit": 250,
-    "ratio": 0.292308448,
-    "updateMs": 1.3999996185302734,
-    "renderMs": 2.59999942779541
+    "ratio": 0.292157712,
+    "updateMs": 1.1999998092651367,
+    "renderMs": 3.59999942779541
   },
   {
     "cell": "L9-high-webgl",
@@ -6171,13 +6081,13 @@
   },
   {
     "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/l5-basement-exit",
+    "spot": "D-FAIR/W0/pair-kessler-lane",
     "metric": "heapMB",
-    "value": 72.961664,
+    "value": 72.967508,
     "limit": 250,
-    "ratio": 0.291846656,
-    "updateMs": 1.5,
-    "renderMs": 2.3000001907348633
+    "ratio": 0.291870032,
+    "updateMs": 1.3000001907348633,
+    "renderMs": 3.1000003814697266
   },
   {
     "cell": "L1-low-webgl",
@@ -6188,16 +6098,6 @@
     "ratio": 0.291745728,
     "updateMs": 1.0999994277954102,
     "renderMs": 3
-  },
-  {
-    "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/pair-kessler-lane",
-    "metric": "heapMB",
-    "value": 72.854628,
-    "limit": 250,
-    "ratio": 0.291418512,
-    "updateMs": 1.5,
-    "renderMs": 2.5
   },
   {
     "cell": "L1-low-webgl",
@@ -6218,6 +6118,16 @@
     "ratio": 0.29121033599999996,
     "updateMs": 1.1000003814697266,
     "renderMs": 2.5
+  },
+  {
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/pair-metro-entrance",
+    "metric": "heapMB",
+    "value": 72.633412,
+    "limit": 250,
+    "ratio": 0.29053364800000003,
+    "updateMs": 1.4000005722045898,
+    "renderMs": 2.59999942779541
   },
   {
     "cell": "L1-low-webgl",
@@ -6250,16 +6160,6 @@
     "renderMs": 2.3000001907348633
   },
   {
-    "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/pair-metro-entrance",
-    "metric": "heapMB",
-    "value": 72.515236,
-    "limit": 250,
-    "ratio": 0.290060944,
-    "updateMs": 1.3000001907348633,
-    "renderMs": 2.6000003814697266
-  },
-  {
     "cell": "L2-low-webgl",
     "spot": "D-GROVE/W0/l2-truck-ride",
     "metric": "drawCalls",
@@ -6286,8 +6186,8 @@
     "value": 87,
     "limit": 300,
     "ratio": 0.29,
-    "updateMs": 1.4000005722045898,
-    "renderMs": 2.3000001907348633
+    "updateMs": 1.5999994277954102,
+    "renderMs": 2.59999942779541
   },
   {
     "cell": "L5-low-webgpu",
@@ -6360,6 +6260,16 @@
     "renderMs": 3.09999942779541
   },
   {
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/pair-harbor-street",
+    "metric": "heapMB",
+    "value": 72.319168,
+    "limit": 250,
+    "ratio": 0.289276672,
+    "updateMs": 1.5999994277954102,
+    "renderMs": 2.59999942779541
+  },
+  {
     "cell": "L1-low-webgl",
     "spot": "D-GROVE/W0/l1-pickup",
     "metric": "heapMB",
@@ -6368,16 +6278,6 @@
     "ratio": 0.288922192,
     "updateMs": 1,
     "renderMs": 3.1000003814697266
-  },
-  {
-    "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/pair-harbor-street",
-    "metric": "heapMB",
-    "value": 72.200312,
-    "limit": 250,
-    "ratio": 0.288801248,
-    "updateMs": 1.4000005722045898,
-    "renderMs": 2.3000001907348633
   },
   {
     "cell": "L4-low-webgl",
@@ -6430,6 +6330,16 @@
     "renderMs": 2.6000003814697266
   },
   {
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/pair-plaza",
+    "metric": "heapMB",
+    "value": 71.861036,
+    "limit": 250,
+    "ratio": 0.287444144,
+    "updateMs": 1.6000003814697266,
+    "renderMs": 2.8000001907348633
+  },
+  {
     "cell": "L5-high-webgpu",
     "spot": "D-FAIR/W0/pair-plaza",
     "metric": "p95",
@@ -6478,16 +6388,6 @@
     "ratio": 0.2874251497005988,
     "updateMs": 0.7000007629394531,
     "renderMs": 3.200000762939453
-  },
-  {
-    "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/pair-plaza",
-    "metric": "heapMB",
-    "value": 71.722868,
-    "limit": 250,
-    "ratio": 0.28689147200000004,
-    "updateMs": 1.5,
-    "renderMs": 2.8999996185302734
   },
   {
     "cell": "L5-low-webgpu",
@@ -6587,7 +6487,7 @@
     "limit": 1500000,
     "ratio": 0.284536,
     "updateMs": 1.5,
-    "renderMs": 3
+    "renderMs": 2.90000057220459
   },
   {
     "cell": "L5-high-webgpu",
@@ -6648,26 +6548,6 @@
     "ratio": 0.284,
     "updateMs": 1.9000005722045898,
     "renderMs": 3.40000057220459
-  },
-  {
-    "cell": "L5-high-webgl",
-    "spot": "D-FAIR/W0/pair-plaza",
-    "metric": "hitch",
-    "value": 14.2,
-    "limit": 50,
-    "ratio": 0.284,
-    "updateMs": 1.6999998092651367,
-    "renderMs": 3.299999237060547
-  },
-  {
-    "cell": "L5-high-webgl",
-    "spot": "D-FAIR/W0/l5-metro-shelter",
-    "metric": "hitch",
-    "value": 14.2,
-    "limit": 50,
-    "ratio": 0.284,
-    "updateMs": 2.299999237060547,
-    "renderMs": 2.90000057220459
   },
   {
     "cell": "L8-high-webgl",
@@ -6746,8 +6626,8 @@
     "value": 85,
     "limit": 300,
     "ratio": 0.2833333333333333,
-    "updateMs": 1.3999996185302734,
-    "renderMs": 2.59999942779541
+    "updateMs": 1.8999996185302734,
+    "renderMs": 2.6000003814697266
   },
   {
     "cell": "L5-low-webgpu",
@@ -6840,6 +6720,16 @@
     "renderMs": 2.1000003814697266
   },
   {
+    "cell": "L5-low-webgl",
+    "spot": "start",
+    "metric": "heapMB",
+    "value": 70.684968,
+    "limit": 250,
+    "ratio": 0.282739872,
+    "updateMs": 1.2000007629394531,
+    "renderMs": 2.6999998092651367
+  },
+  {
     "cell": "L4-low-webgpu",
     "spot": "D-FAIR/W0/pair-plaza",
     "metric": "heapMB",
@@ -6858,16 +6748,6 @@
     "ratio": 0.28231462399999996,
     "updateMs": 1,
     "renderMs": 1.8000001907348633
-  },
-  {
-    "cell": "L5-low-webgl",
-    "spot": "start",
-    "metric": "heapMB",
-    "value": 70.566596,
-    "limit": 250,
-    "ratio": 0.28226638400000004,
-    "updateMs": 1.3000001907348633,
-    "renderMs": 2.8000001907348633
   },
   {
     "cell": "L9-high-webgl",
@@ -7096,8 +6976,8 @@
     "value": 83,
     "limit": 300,
     "ratio": 0.27666666666666667,
-    "updateMs": 1.5,
-    "renderMs": 2.5
+    "updateMs": 1.3000001907348633,
+    "renderMs": 3.1000003814697266
   },
   {
     "cell": "L5-low-webgpu",
@@ -7366,8 +7246,8 @@
     "value": 82,
     "limit": 300,
     "ratio": 0.2733333333333333,
-    "updateMs": 1.7999992370605469,
-    "renderMs": 2.1000003814697266
+    "updateMs": 1.6999998092651367,
+    "renderMs": 2.5
   },
   {
     "cell": "L7-low-webgpu",
@@ -7376,8 +7256,8 @@
     "value": 82,
     "limit": 300,
     "ratio": 0.2733333333333333,
-    "updateMs": 1.4000005722045898,
-    "renderMs": 1.6000003814697266
+    "updateMs": 1.3999996185302734,
+    "renderMs": 1.6999998092651367
   },
   {
     "cell": "L8-low-webgl",
@@ -7406,8 +7286,8 @@
     "value": 408768,
     "limit": 1500000,
     "ratio": 0.272512,
-    "updateMs": 2.5,
-    "renderMs": 2.8999996185302734
+    "updateMs": 3.09999942779541,
+    "renderMs": 3.1999998092651367
   },
   {
     "cell": "L7-high-webgpu",
@@ -7416,8 +7296,8 @@
     "value": 408768,
     "limit": 1500000,
     "ratio": 0.272512,
-    "updateMs": 2.3999996185302734,
-    "renderMs": 2.5
+    "updateMs": 2.8999996185302734,
+    "renderMs": 3
   },
   {
     "cell": "L4-low-webgpu",
@@ -7438,6 +7318,16 @@
     "ratio": 0.271575616,
     "updateMs": 1.8000001907348633,
     "renderMs": 2.8000001907348633
+  },
+  {
+    "cell": "L7-low-webgl",
+    "spot": "start",
+    "metric": "heapMB",
+    "value": 67.866924,
+    "limit": 250,
+    "ratio": 0.271467696,
+    "updateMs": 1.6999998092651367,
+    "renderMs": 2.5
   },
   {
     "cell": "L4-low-webgpu",
@@ -7486,8 +7376,8 @@
     "value": 81,
     "limit": 300,
     "ratio": 0.27,
-    "updateMs": 1.5,
-    "renderMs": 2.3000001907348633
+    "updateMs": 1.1999998092651367,
+    "renderMs": 3.59999942779541
   },
   {
     "cell": "L5-low-webgpu",
@@ -7610,16 +7500,6 @@
     "renderMs": 2.90000057220459
   },
   {
-    "cell": "L7-low-webgl",
-    "spot": "start",
-    "metric": "heapMB",
-    "value": 67.012344,
-    "limit": 250,
-    "ratio": 0.268049376,
-    "updateMs": 1.7999992370605469,
-    "renderMs": 2.1000003814697266
-  },
-  {
     "cell": "L1-high-webgl",
     "spot": "D-GROVE/W0/l1-safe",
     "metric": "hitch",
@@ -7706,8 +7586,8 @@
     "value": 397847,
     "limit": 1500000,
     "ratio": 0.2652313333333333,
-    "updateMs": 1.5,
-    "renderMs": 2.6999998092651367
+    "updateMs": 2.09999942779541,
+    "renderMs": 2.8000001907348633
   },
   {
     "cell": "L5-high-webgpu",
@@ -7728,6 +7608,16 @@
     "ratio": 0.26514951999999997,
     "updateMs": 1.9000005722045898,
     "renderMs": 2.5
+  },
+  {
+    "cell": "L7-low-webgpu",
+    "spot": "start",
+    "metric": "heapMB",
+    "value": 66.178556,
+    "limit": 250,
+    "ratio": 0.264714224,
+    "updateMs": 1.3999996185302734,
+    "renderMs": 1.6999998092651367
   },
   {
     "cell": "L4-low-webgpu",
@@ -7810,16 +7700,6 @@
     "renderMs": 2
   },
   {
-    "cell": "L7-low-webgpu",
-    "spot": "start",
-    "metric": "heapMB",
-    "value": 65.315452,
-    "limit": 250,
-    "ratio": 0.261261808,
-    "updateMs": 1.4000005722045898,
-    "renderMs": 1.6000003814697266
-  },
-  {
     "cell": "L3-high-webgl",
     "spot": "start",
     "metric": "triangles",
@@ -7890,14 +7770,14 @@
     "renderMs": 1.9000005722045898
   },
   {
-    "cell": "L7-low-webgpu",
-    "spot": "start",
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/l5-metro-shelter",
     "metric": "hitch",
     "value": 13,
     "limit": 50,
     "ratio": 0.26,
-    "updateMs": 1.4000005722045898,
-    "renderMs": 1.6000003814697266
+    "updateMs": 1.6000003814697266,
+    "renderMs": 2.799999237060547
   },
   {
     "cell": "L5-high-webgl",
@@ -7906,8 +7786,8 @@
     "value": 155,
     "limit": 600,
     "ratio": 0.25833333333333336,
-    "updateMs": 2.299999237060547,
-    "renderMs": 2.90000057220459
+    "updateMs": 2.1000003814697266,
+    "renderMs": 2.8999996185302734
   },
   {
     "cell": "L5-high-webgpu",
@@ -8086,7 +7966,7 @@
     "value": 379995,
     "limit": 1500000,
     "ratio": 0.25333,
-    "updateMs": 1.6999998092651367,
+    "updateMs": 1.8999996185302734,
     "renderMs": 3.299999237060547
   },
   {
@@ -8128,6 +8008,16 @@
     "ratio": 0.252,
     "updateMs": 2.59999942779541,
     "renderMs": 3
+  },
+  {
+    "cell": "L5-high-webgl",
+    "spot": "D-FAIR/W0/pair-plaza",
+    "metric": "hitch",
+    "value": 12.6,
+    "limit": 50,
+    "ratio": 0.252,
+    "updateMs": 1.8999996185302734,
+    "renderMs": 3.299999237060547
   },
   {
     "cell": "L9-low-webgl",
@@ -8312,6 +8202,16 @@
   {
     "cell": "L5-high-webgl",
     "spot": "start",
+    "metric": "hitch",
+    "value": 12.5,
+    "limit": 50,
+    "ratio": 0.25,
+    "updateMs": 1.4000005722045898,
+    "renderMs": 3.1000003814697266
+  },
+  {
+    "cell": "L5-high-webgl",
+    "spot": "start",
     "metric": "simMs",
     "value": 1,
     "limit": 4,
@@ -8326,8 +8226,28 @@
     "value": 1,
     "limit": 4,
     "ratio": 0.25,
-    "updateMs": 1.6999998092651367,
+    "updateMs": 1.8999996185302734,
     "renderMs": 3.299999237060547
+  },
+  {
+    "cell": "L5-high-webgl",
+    "spot": "D-FAIR/W0/l5-basement-exit",
+    "metric": "simMs",
+    "value": 1,
+    "limit": 4,
+    "ratio": 0.25,
+    "updateMs": 1.5,
+    "renderMs": 2.90000057220459
+  },
+  {
+    "cell": "L5-high-webgl",
+    "spot": "D-FAIR/W0/l5-group-of-five",
+    "metric": "simMs",
+    "value": 1,
+    "limit": 4,
+    "ratio": 0.25,
+    "updateMs": 1.8000001907348633,
+    "renderMs": 2.8000001907348633
   },
   {
     "cell": "L5-high-webgl",
@@ -8336,8 +8256,8 @@
     "value": 1,
     "limit": 4,
     "ratio": 0.25,
-    "updateMs": 1.8000001907348633,
-    "renderMs": 3.3000001907348633
+    "updateMs": 1.8999996185302734,
+    "renderMs": 3.40000057220459
   },
   {
     "cell": "L10-high-webgl",
@@ -8380,16 +8300,6 @@
     "renderMs": 3.1999998092651367
   },
   {
-    "cell": "L5-high-webgl",
-    "spot": "start",
-    "metric": "hitch",
-    "value": 12.4,
-    "limit": 50,
-    "ratio": 0.248,
-    "updateMs": 1.4000005722045898,
-    "renderMs": 3.1000003814697266
-  },
-  {
     "cell": "L9-low-webgl",
     "spot": "D-CROSSING/W0/l9-dry-shortcut",
     "metric": "hitch",
@@ -8428,6 +8338,16 @@
     "ratio": 0.24600000000000002,
     "updateMs": 1.3999996185302734,
     "renderMs": 2.3999996185302734
+  },
+  {
+    "cell": "L5-high-webgl",
+    "spot": "D-FAIR/W0/l5-metro-doors",
+    "metric": "hitch",
+    "value": 12.3,
+    "limit": 50,
+    "ratio": 0.24600000000000002,
+    "updateMs": 1.8999996185302734,
+    "renderMs": 3.40000057220459
   },
   {
     "cell": "L3-high-webgl",
@@ -8706,8 +8626,8 @@
     "value": 143,
     "limit": 600,
     "ratio": 0.23833333333333334,
-    "updateMs": 2.5,
-    "renderMs": 2.8999996185302734
+    "updateMs": 3.09999942779541,
+    "renderMs": 3.1999998092651367
   },
   {
     "cell": "L7-high-webgpu",
@@ -8716,8 +8636,8 @@
     "value": 143,
     "limit": 600,
     "ratio": 0.23833333333333334,
-    "updateMs": 2.3999996185302734,
-    "renderMs": 2.5
+    "updateMs": 2.8999996185302734,
+    "renderMs": 3
   },
   {
     "cell": "L4-high-webgl",
@@ -8731,43 +8651,63 @@
   },
   {
     "cell": "L5-high-webgl",
+    "spot": "D-FAIR/W0/pair-kessler-lane",
+    "metric": "hitch",
+    "value": 11.9,
+    "limit": 50,
+    "ratio": 0.23800000000000002,
+    "updateMs": 1.3000001907348633,
+    "renderMs": 3.40000057220459
+  },
+  {
+    "cell": "L5-high-webgl",
     "spot": "D-FAIR/W0/l5-metro-shelter",
     "metric": "heapMB",
-    "value": 94.994884,
+    "value": 95.034036,
     "limit": 400,
-    "ratio": 0.23748721,
-    "updateMs": 2.299999237060547,
-    "renderMs": 2.90000057220459
+    "ratio": 0.23758509,
+    "updateMs": 2.1000003814697266,
+    "renderMs": 2.8999996185302734
   },
   {
     "cell": "L5-high-webgl",
     "spot": "D-FAIR/W0/l5-metro-doors",
     "metric": "heapMB",
-    "value": 94.877788,
+    "value": 94.921524,
     "limit": 400,
-    "ratio": 0.23719447,
-    "updateMs": 1.8000001907348633,
-    "renderMs": 3.3000001907348633
+    "ratio": 0.23730381,
+    "updateMs": 1.8999996185302734,
+    "renderMs": 3.40000057220459
+  },
+  {
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/l5-group-of-five",
+    "metric": "p95",
+    "value": 7.9,
+    "limit": 33.3,
+    "ratio": 0.23723723723723728,
+    "updateMs": 1.8999996185302734,
+    "renderMs": 2.6000003814697266
   },
   {
     "cell": "L5-high-webgl",
     "spot": "D-FAIR/W0/l5-basement-exit",
     "metric": "heapMB",
-    "value": 94.454304,
+    "value": 94.467908,
     "limit": 400,
-    "ratio": 0.23613575999999997,
+    "ratio": 0.23616976999999997,
     "updateMs": 1.5,
-    "renderMs": 3
+    "renderMs": 2.90000057220459
   },
   {
     "cell": "L5-high-webgl",
     "spot": "D-FAIR/W0/l5-group-of-five",
     "metric": "heapMB",
-    "value": 94.409416,
+    "value": 94.450764,
     "limit": 400,
-    "ratio": 0.23602353999999998,
-    "updateMs": 1.5,
-    "renderMs": 2.59999942779541
+    "ratio": 0.23612691000000002,
+    "updateMs": 1.8000001907348633,
+    "renderMs": 2.8000001907348633
   },
   {
     "cell": "L4-high-webgl",
@@ -8790,16 +8730,6 @@
     "renderMs": 3
   },
   {
-    "cell": "L5-high-webgl",
-    "spot": "D-FAIR/W0/l5-metro-doors",
-    "metric": "hitch",
-    "value": 11.8,
-    "limit": 50,
-    "ratio": 0.23600000000000002,
-    "updateMs": 1.8000001907348633,
-    "renderMs": 3.3000001907348633
-  },
-  {
     "cell": "L10-low-webgl",
     "spot": "start",
     "metric": "hitch",
@@ -8813,21 +8743,21 @@
     "cell": "L5-high-webgl",
     "spot": "D-FAIR/W0/l5-sign-of-life",
     "metric": "heapMB",
-    "value": 94.366004,
+    "value": 94.383388,
     "limit": 400,
-    "ratio": 0.23591501,
+    "ratio": 0.23595847,
     "updateMs": 1.5,
-    "renderMs": 3
+    "renderMs": 2.90000057220459
   },
   {
     "cell": "L5-high-webgl",
     "spot": "D-FAIR/W0/pair-kessler-lane",
     "metric": "heapMB",
-    "value": 94.239888,
+    "value": 94.248944,
     "limit": 400,
-    "ratio": 0.23559971999999998,
+    "ratio": 0.23562235999999998,
     "updateMs": 1.3000001907348633,
-    "renderMs": 2.8999996185302734
+    "renderMs": 3.40000057220459
   },
   {
     "cell": "L4-high-webgl",
@@ -8873,11 +8803,11 @@
     "cell": "L5-high-webgl",
     "spot": "D-FAIR/W0/pair-metro-entrance",
     "metric": "heapMB",
-    "value": 93.906152,
+    "value": 93.924524,
     "limit": 400,
-    "ratio": 0.23476538000000002,
-    "updateMs": 1.5,
-    "renderMs": 2.6999998092651367
+    "ratio": 0.23481131000000002,
+    "updateMs": 2.09999942779541,
+    "renderMs": 2.8000001907348633
   },
   {
     "cell": "L3-high-webgl",
@@ -8887,6 +8817,16 @@
     "limit": 50,
     "ratio": 0.23399999999999999,
     "updateMs": 1.4000005722045898,
+    "renderMs": 2.90000057220459
+  },
+  {
+    "cell": "L5-high-webgl",
+    "spot": "D-FAIR/W0/l5-basement-exit",
+    "metric": "hitch",
+    "value": 11.7,
+    "limit": 50,
+    "ratio": 0.23399999999999999,
+    "updateMs": 1.5,
     "renderMs": 2.90000057220459
   },
   {
@@ -8903,11 +8843,11 @@
     "cell": "L5-high-webgl",
     "spot": "D-FAIR/W0/pair-harbor-street",
     "metric": "heapMB",
-    "value": 93.503804,
+    "value": 93.525528,
     "limit": 400,
-    "ratio": 0.23375951,
-    "updateMs": 1.5,
-    "renderMs": 2.8000001907348633
+    "ratio": 0.23381381999999998,
+    "updateMs": 1.6999998092651367,
+    "renderMs": 3
   },
   {
     "cell": "L3-low-webgl",
@@ -8953,11 +8893,21 @@
     "cell": "L5-high-webgl",
     "spot": "D-FAIR/W0/pair-plaza",
     "metric": "heapMB",
-    "value": 93.061428,
+    "value": 93.089812,
     "limit": 400,
-    "ratio": 0.23265357,
-    "updateMs": 1.6999998092651367,
+    "ratio": 0.23272452999999999,
+    "updateMs": 1.8999996185302734,
     "renderMs": 3.299999237060547
+  },
+  {
+    "cell": "L5-high-webgl",
+    "spot": "D-FAIR/W0/l5-sign-of-life",
+    "metric": "hitch",
+    "value": 11.6,
+    "limit": 50,
+    "ratio": 0.23199999999999998,
+    "updateMs": 1.5,
+    "renderMs": 2.90000057220459
   },
   {
     "cell": "L3-high-webgl",
@@ -9020,6 +8970,16 @@
     "renderMs": 1.8999996185302734
   },
   {
+    "cell": "L5-high-webgl",
+    "spot": "D-FAIR/W0/l5-metro-shelter",
+    "metric": "hitch",
+    "value": 11.5,
+    "limit": 50,
+    "ratio": 0.23,
+    "updateMs": 2.1000003814697266,
+    "renderMs": 2.8999996185302734
+  },
+  {
     "cell": "L6-high-webgl",
     "spot": "D-SUBWAY/W0/l6-chokepoint",
     "metric": "hitch",
@@ -9073,9 +9033,9 @@
     "cell": "L5-high-webgl",
     "spot": "start",
     "metric": "heapMB",
-    "value": 91.920104,
+    "value": 91.923764,
     "limit": 400,
-    "ratio": 0.22980025999999998,
+    "ratio": 0.22980941000000002,
     "updateMs": 1.4000005722045898,
     "renderMs": 3.1000003814697266
   },
@@ -9366,8 +9326,8 @@
     "value": 338216,
     "limit": 1500000,
     "ratio": 0.22547733333333334,
-    "updateMs": 1.5,
-    "renderMs": 2.8000001907348633
+    "updateMs": 1.6999998092651367,
+    "renderMs": 3
   },
   {
     "cell": "L5-high-webgpu",
@@ -9441,13 +9401,33 @@
   },
   {
     "cell": "L5-high-webgl",
-    "spot": "D-FAIR/W0/l5-basement-exit",
+    "spot": "D-FAIR/W0/pair-harbor-street",
     "metric": "simMs",
     "value": 0.9000005722045898,
     "limit": 4,
     "ratio": 0.22500014305114746,
-    "updateMs": 1.5,
+    "updateMs": 1.6999998092651367,
     "renderMs": 3
+  },
+  {
+    "cell": "L5-high-webgl",
+    "spot": "D-FAIR/W0/pair-metro-entrance",
+    "metric": "simMs",
+    "value": 0.9000005722045898,
+    "limit": 4,
+    "ratio": 0.22500014305114746,
+    "updateMs": 2.09999942779541,
+    "renderMs": 2.8000001907348633
+  },
+  {
+    "cell": "L5-high-webgl",
+    "spot": "D-FAIR/W0/l5-metro-shelter",
+    "metric": "simMs",
+    "value": 0.9000005722045898,
+    "limit": 4,
+    "ratio": 0.22500014305114746,
+    "updateMs": 2.1000003814697266,
+    "renderMs": 2.8999996185302734
   },
   {
     "cell": "L8-high-webgl",
@@ -9601,53 +9581,13 @@
   },
   {
     "cell": "L5-high-webgl",
-    "spot": "D-FAIR/W0/pair-harbor-street",
-    "metric": "simMs",
-    "value": 0.8999996185302734,
-    "limit": 4,
-    "ratio": 0.22499990463256836,
-    "updateMs": 1.5,
-    "renderMs": 2.8000001907348633
-  },
-  {
-    "cell": "L5-high-webgl",
-    "spot": "D-FAIR/W0/pair-metro-entrance",
-    "metric": "simMs",
-    "value": 0.8999996185302734,
-    "limit": 4,
-    "ratio": 0.22499990463256836,
-    "updateMs": 1.5,
-    "renderMs": 2.6999998092651367
-  },
-  {
-    "cell": "L5-high-webgl",
     "spot": "D-FAIR/W0/pair-kessler-lane",
     "metric": "simMs",
     "value": 0.8999996185302734,
     "limit": 4,
     "ratio": 0.22499990463256836,
     "updateMs": 1.3000001907348633,
-    "renderMs": 2.8999996185302734
-  },
-  {
-    "cell": "L5-high-webgl",
-    "spot": "D-FAIR/W0/l5-group-of-five",
-    "metric": "simMs",
-    "value": 0.8999996185302734,
-    "limit": 4,
-    "ratio": 0.22499990463256836,
-    "updateMs": 1.5,
-    "renderMs": 2.59999942779541
-  },
-  {
-    "cell": "L5-high-webgl",
-    "spot": "D-FAIR/W0/l5-metro-shelter",
-    "metric": "simMs",
-    "value": 0.8999996185302734,
-    "limit": 4,
-    "ratio": 0.22499990463256836,
-    "updateMs": 2.299999237060547,
-    "renderMs": 2.90000057220459
+    "renderMs": 3.40000057220459
   },
   {
     "cell": "L8-high-webgl",
@@ -9816,7 +9756,7 @@
     "value": 133,
     "limit": 600,
     "ratio": 0.22166666666666668,
-    "updateMs": 1.6999998092651367,
+    "updateMs": 1.8999996185302734,
     "renderMs": 3.299999237060547
   },
   {
@@ -9896,8 +9836,8 @@
     "value": 330316,
     "limit": 1500000,
     "ratio": 0.22021066666666667,
-    "updateMs": 1.5,
-    "renderMs": 2.59999942779541
+    "updateMs": 1.8000001907348633,
+    "renderMs": 2.8000001907348633
   },
   {
     "cell": "L5-high-webgpu",
@@ -10006,8 +9946,8 @@
     "value": 108531,
     "limit": 500000,
     "ratio": 0.217062,
-    "updateMs": 1.7999992370605469,
-    "renderMs": 2.1000003814697266
+    "updateMs": 1.6999998092651367,
+    "renderMs": 2.5
   },
   {
     "cell": "L7-low-webgpu",
@@ -10016,8 +9956,8 @@
     "value": 108531,
     "limit": 500000,
     "ratio": 0.217062,
-    "updateMs": 1.4000005722045898,
-    "renderMs": 1.6000003814697266
+    "updateMs": 1.3999996185302734,
+    "renderMs": 1.6999998092651367
   },
   {
     "cell": "L3-low-webgl",
@@ -10028,16 +9968,6 @@
     "ratio": 0.21666669845581055,
     "updateMs": 1.7000007629394531,
     "renderMs": 2.8000001907348633
-  },
-  {
-    "cell": "L7-low-webgl",
-    "spot": "start",
-    "metric": "simMs",
-    "value": 1.2999992370605469,
-    "limit": 6,
-    "ratio": 0.21666653951009116,
-    "updateMs": 1.7999992370605469,
-    "renderMs": 2.1000003814697266
   },
   {
     "cell": "L3-high-webgpu",
@@ -10208,6 +10138,16 @@
     "ratio": 0.214,
     "updateMs": 1.7999992370605469,
     "renderMs": 3.3000001907348633
+  },
+  {
+    "cell": "L5-high-webgl",
+    "spot": "D-FAIR/W0/pair-harbor-street",
+    "metric": "hitch",
+    "value": 10.7,
+    "limit": 50,
+    "ratio": 0.214,
+    "updateMs": 1.6999998092651367,
+    "renderMs": 3
   },
   {
     "cell": "L9-low-webgpu",
@@ -11080,6 +11020,16 @@
     "renderMs": 3.299999237060547
   },
   {
+    "cell": "L7-low-webgl",
+    "spot": "start",
+    "metric": "simMs",
+    "value": 1.2000007629394531,
+    "limit": 6,
+    "ratio": 0.20000012715657553,
+    "updateMs": 1.6999998092651367,
+    "renderMs": 2.5
+  },
+  {
     "cell": "L1-high-webgpu",
     "spot": "start",
     "metric": "simMs",
@@ -11177,7 +11127,7 @@
     "limit": 4,
     "ratio": 0.20000004768371582,
     "updateMs": 1.5,
-    "renderMs": 3
+    "renderMs": 2.90000057220459
   },
   {
     "cell": "L6-high-webgl",
@@ -11318,26 +11268,6 @@
     "ratio": 0.2,
     "updateMs": 1.4000005722045898,
     "renderMs": 2.5
-  },
-  {
-    "cell": "L5-low-webgl",
-    "spot": "start",
-    "metric": "hitch",
-    "value": 10,
-    "limit": 50,
-    "ratio": 0.2,
-    "updateMs": 1.3000001907348633,
-    "renderMs": 2.8000001907348633
-  },
-  {
-    "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/l5-metro-doors",
-    "metric": "hitch",
-    "value": 10,
-    "limit": 50,
-    "ratio": 0.2,
-    "updateMs": 1.5999994277954102,
-    "renderMs": 3.09999942779541
   },
   {
     "cell": "L6-high-webgl",
@@ -11567,6 +11497,26 @@
     "limit": 50,
     "ratio": 0.198,
     "updateMs": 1.7999992370605469,
+    "renderMs": 2.8000001907348633
+  },
+  {
+    "cell": "L5-low-webgl",
+    "spot": "start",
+    "metric": "hitch",
+    "value": 9.9,
+    "limit": 50,
+    "ratio": 0.198,
+    "updateMs": 1.2000007629394531,
+    "renderMs": 2.6999998092651367
+  },
+  {
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/pair-plaza",
+    "metric": "hitch",
+    "value": 9.9,
+    "limit": 50,
+    "ratio": 0.198,
+    "updateMs": 1.6000003814697266,
     "renderMs": 2.8000001907348633
   },
   {
@@ -11960,6 +11910,16 @@
     "renderMs": 3
   },
   {
+    "cell": "L7-high-webgl",
+    "spot": "start",
+    "metric": "heapMB",
+    "value": 76.02238,
+    "limit": 400,
+    "ratio": 0.19005595,
+    "updateMs": 3.09999942779541,
+    "renderMs": 3.1999998092651367
+  },
+  {
     "cell": "L4-high-webgl",
     "spot": "D-FAIR/W0/l4-harbor-street-safe",
     "metric": "heapMB",
@@ -12077,7 +12037,7 @@
     "limit": 600,
     "ratio": 0.18833333333333332,
     "updateMs": 1.5,
-    "renderMs": 3
+    "renderMs": 2.90000057220459
   },
   {
     "cell": "L5-high-webgpu",
@@ -12140,6 +12100,16 @@
     "renderMs": 3.1000003814697266
   },
   {
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/l5-metro-doors",
+    "metric": "hitch",
+    "value": 9.4,
+    "limit": 50,
+    "ratio": 0.188,
+    "updateMs": 1.5,
+    "renderMs": 2.90000057220459
+  },
+  {
     "cell": "L6-high-webgl",
     "spot": "D-SUBWAY/W0/l6-shelter-calm",
     "metric": "hitch",
@@ -12148,16 +12118,6 @@
     "ratio": 0.188,
     "updateMs": 1,
     "renderMs": 3.3000001907348633
-  },
-  {
-    "cell": "L7-high-webgl",
-    "spot": "start",
-    "metric": "heapMB",
-    "value": 75.062024,
-    "limit": 400,
-    "ratio": 0.18765505999999998,
-    "updateMs": 2.5,
-    "renderMs": 2.8999996185302734
   },
   {
     "cell": "L4-high-webgl",
@@ -12208,6 +12168,16 @@
     "ratio": 0.18600000000000003,
     "updateMs": 1.5,
     "renderMs": 2.8000001907348633
+  },
+  {
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/pair-harbor-street",
+    "metric": "hitch",
+    "value": 9.3,
+    "limit": 50,
+    "ratio": 0.18600000000000003,
+    "updateMs": 1.5999994277954102,
+    "renderMs": 2.59999942779541
   },
   {
     "cell": "L6-high-webgpu",
@@ -12270,6 +12240,16 @@
     "renderMs": 2.90000057220459
   },
   {
+    "cell": "L7-high-webgpu",
+    "spot": "start",
+    "metric": "heapMB",
+    "value": 73.930036,
+    "limit": 400,
+    "ratio": 0.18482509,
+    "updateMs": 2.8999996185302734,
+    "renderMs": 3
+  },
+  {
     "cell": "L4-high-webgpu",
     "spot": "D-FAIR/W0/l4-plaza-safe",
     "metric": "heapMB",
@@ -12310,16 +12290,6 @@
     "renderMs": 3.09999942779541
   },
   {
-    "cell": "L7-high-webgpu",
-    "spot": "start",
-    "metric": "heapMB",
-    "value": 73.57724,
-    "limit": 400,
-    "ratio": 0.1839431,
-    "updateMs": 2.3999996185302734,
-    "renderMs": 2.5
-  },
-  {
     "cell": "L3-low-webgl",
     "spot": "D-CORRIDOR/W0/l3-commerce-street",
     "metric": "simMs",
@@ -12328,6 +12298,16 @@
     "ratio": 0.1833333969116211,
     "updateMs": 1.1999998092651367,
     "renderMs": 3
+  },
+  {
+    "cell": "L7-low-webgpu",
+    "spot": "start",
+    "metric": "simMs",
+    "value": 1.1000003814697266,
+    "limit": 6,
+    "ratio": 0.1833333969116211,
+    "updateMs": 1.3999996185302734,
+    "renderMs": 1.6999998092651367
   },
   {
     "cell": "L1-low-webgl",
@@ -12426,8 +12406,8 @@
     "value": 109,
     "limit": 600,
     "ratio": 0.18166666666666667,
-    "updateMs": 1.5,
-    "renderMs": 2.6999998092651367
+    "updateMs": 2.09999942779541,
+    "renderMs": 2.8000001907348633
   },
   {
     "cell": "L5-high-webgpu",
@@ -12648,6 +12628,16 @@
     "ratio": 0.17600000000000002,
     "updateMs": 1.7999992370605469,
     "renderMs": 2.1000003814697266
+  },
+  {
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/l5-sign-of-life",
+    "metric": "hitch",
+    "value": 8.8,
+    "limit": 50,
+    "ratio": 0.17600000000000002,
+    "updateMs": 1.9000005722045898,
+    "renderMs": 2.40000057220459
   },
   {
     "cell": "L5-high-webgpu",
@@ -12960,6 +12950,16 @@
     "renderMs": 2.8000001907348633
   },
   {
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/pair-kessler-lane",
+    "metric": "hitch",
+    "value": 8.7,
+    "limit": 50,
+    "ratio": 0.174,
+    "updateMs": 1.3000001907348633,
+    "renderMs": 3.1000003814697266
+  },
+  {
     "cell": "L5-high-webgpu",
     "spot": "start",
     "metric": "hitch",
@@ -13080,6 +13080,16 @@
     "renderMs": 2.1999998092651367
   },
   {
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/l5-basement-exit",
+    "metric": "hitch",
+    "value": 8.6,
+    "limit": 50,
+    "ratio": 0.172,
+    "updateMs": 1.1999998092651367,
+    "renderMs": 3.59999942779541
+  },
+  {
     "cell": "L6-high-webgl",
     "spot": "start",
     "metric": "hitch",
@@ -13196,8 +13206,8 @@
     "value": 102,
     "limit": 600,
     "ratio": 0.17,
-    "updateMs": 1.5,
-    "renderMs": 2.59999942779541
+    "updateMs": 1.8000001907348633,
+    "renderMs": 2.8000001907348633
   },
   {
     "cell": "L5-high-webgpu",
@@ -13300,16 +13310,6 @@
     "renderMs": 3.1000003814697266
   },
   {
-    "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/l5-metro-doors",
-    "metric": "p95",
-    "value": 5.6,
-    "limit": 33.3,
-    "ratio": 0.16816816816816818,
-    "updateMs": 1.5999994277954102,
-    "renderMs": 3.09999942779541
-  },
-  {
     "cell": "L6-low-webgl",
     "spot": "D-SUBWAY/W0/l6-straggler",
     "metric": "p95",
@@ -13400,6 +13400,16 @@
     "renderMs": 2.8999996185302734
   },
   {
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/pair-metro-entrance",
+    "metric": "hitch",
+    "value": 8.4,
+    "limit": 50,
+    "ratio": 0.168,
+    "updateMs": 1.4000005722045898,
+    "renderMs": 2.59999942779541
+  },
+  {
     "cell": "L10-high-webgpu",
     "spot": "start",
     "metric": "hitch",
@@ -13438,16 +13448,6 @@
     "ratio": 0.16666666666666666,
     "updateMs": 1.4000005722045898,
     "renderMs": 3
-  },
-  {
-    "cell": "L7-low-webgpu",
-    "spot": "start",
-    "metric": "simMs",
-    "value": 1,
-    "limit": 6,
-    "ratio": 0.16666666666666666,
-    "updateMs": 1.4000005722045898,
-    "renderMs": 1.6000003814697266
   },
   {
     "cell": "L8-low-webgl",
@@ -13571,13 +13571,13 @@
   },
   {
     "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/l5-metro-shelter",
+    "spot": "D-FAIR/W0/l5-metro-doors",
     "metric": "p95",
     "value": 5.5,
     "limit": 33.3,
     "ratio": 0.1651651651651652,
-    "updateMs": 1.6999998092651367,
-    "renderMs": 2.8000001907348633
+    "updateMs": 1.5,
+    "renderMs": 2.90000057220459
   },
   {
     "cell": "L5-high-webgl",
@@ -13587,7 +13587,7 @@
     "limit": 600,
     "ratio": 0.165,
     "updateMs": 1.3000001907348633,
-    "renderMs": 2.8999996185302734
+    "renderMs": 3.40000057220459
   },
   {
     "cell": "L5-high-webgpu",
@@ -13810,6 +13810,26 @@
     "renderMs": 2.5
   },
   {
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/pair-plaza",
+    "metric": "p95",
+    "value": 5.4,
+    "limit": 33.3,
+    "ratio": 0.1621621621621622,
+    "updateMs": 1.6000003814697266,
+    "renderMs": 2.8000001907348633
+  },
+  {
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/l5-metro-shelter",
+    "metric": "p95",
+    "value": 5.4,
+    "limit": 33.3,
+    "ratio": 0.1621621621621622,
+    "updateMs": 1.6000003814697266,
+    "renderMs": 2.799999237060547
+  },
+  {
     "cell": "L4-low-webgl",
     "spot": "D-FAIR/W0/l4-convoy-arrival",
     "metric": "triangles",
@@ -13886,8 +13906,8 @@
     "value": 97,
     "limit": 600,
     "ratio": 0.16166666666666665,
-    "updateMs": 1.5,
-    "renderMs": 2.8000001907348633
+    "updateMs": 1.6999998092651367,
+    "renderMs": 3
   },
   {
     "cell": "L5-high-webgl",
@@ -13897,7 +13917,7 @@
     "limit": 600,
     "ratio": 0.16166666666666665,
     "updateMs": 1.5,
-    "renderMs": 3
+    "renderMs": 2.90000057220459
   },
   {
     "cell": "L5-high-webgpu",
@@ -14011,13 +14031,23 @@
   },
   {
     "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/pair-plaza",
+    "spot": "D-FAIR/W0/pair-kessler-lane",
     "metric": "p95",
     "value": 5.3,
     "limit": 33.3,
     "ratio": 0.15915915915915918,
-    "updateMs": 1.5,
-    "renderMs": 2.8999996185302734
+    "updateMs": 1.3000001907348633,
+    "renderMs": 3.1000003814697266
+  },
+  {
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/l5-basement-exit",
+    "metric": "p95",
+    "value": 5.3,
+    "limit": 33.3,
+    "ratio": 0.15915915915915918,
+    "updateMs": 1.1999998092651367,
+    "renderMs": 3.59999942779541
   },
   {
     "cell": "L10-high-webgl",
@@ -14160,14 +14190,14 @@
     "renderMs": 2.8000001907348633
   },
   {
-    "cell": "L7-low-webgl",
-    "spot": "start",
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/pair-harbor-street",
     "metric": "p95",
     "value": 5.2,
     "limit": 33.3,
     "ratio": 0.15615615615615616,
-    "updateMs": 1.7999992370605469,
-    "renderMs": 2.1000003814697266
+    "updateMs": 1.5999994277954102,
+    "renderMs": 2.59999942779541
   },
   {
     "cell": "L6-low-webgl",
@@ -14470,16 +14500,6 @@
     "renderMs": 2.6000003814697266
   },
   {
-    "cell": "L5-low-webgl",
-    "spot": "start",
-    "metric": "p95",
-    "value": 5,
-    "limit": 33.3,
-    "ratio": 0.15015015015015015,
-    "updateMs": 1.3000001907348633,
-    "renderMs": 2.8000001907348633
-  },
-  {
     "cell": "L10-low-webgl",
     "spot": "D-CURE/W0/l10-residential-detour",
     "metric": "p95",
@@ -14618,16 +14638,6 @@
     "ratio": 0.15000009536743164,
     "updateMs": 1.3999996185302734,
     "renderMs": 2.1999998092651367
-  },
-  {
-    "cell": "L5-low-webgl",
-    "spot": "start",
-    "metric": "simMs",
-    "value": 0.9000005722045898,
-    "limit": 6,
-    "ratio": 0.15000009536743164,
-    "updateMs": 1.3000001907348633,
-    "renderMs": 2.8000001907348633
   },
   {
     "cell": "L5-high-webgpu",
@@ -14930,6 +14940,36 @@
     "renderMs": 3.1999998092651367
   },
   {
+    "cell": "L5-low-webgl",
+    "spot": "start",
+    "metric": "simMs",
+    "value": 0.8999996185302734,
+    "limit": 6,
+    "ratio": 0.14999993642171225,
+    "updateMs": 1.2000007629394531,
+    "renderMs": 2.6999998092651367
+  },
+  {
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/pair-plaza",
+    "metric": "simMs",
+    "value": 0.8999996185302734,
+    "limit": 6,
+    "ratio": 0.14999993642171225,
+    "updateMs": 1.6000003814697266,
+    "renderMs": 2.8000001907348633
+  },
+  {
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/pair-harbor-street",
+    "metric": "simMs",
+    "value": 0.8999996185302734,
+    "limit": 6,
+    "ratio": 0.14999993642171225,
+    "updateMs": 1.5999994277954102,
+    "renderMs": 2.59999942779541
+  },
+  {
     "cell": "L8-low-webgl",
     "spot": "D-ZOO/W0/landmark",
     "metric": "simMs",
@@ -15171,12 +15211,22 @@
   },
   {
     "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/pair-kessler-lane",
+    "spot": "start",
     "metric": "p95",
     "value": 4.9,
     "limit": 33.3,
     "ratio": 0.14714714714714716,
-    "updateMs": 1.5,
+    "updateMs": 1.2000007629394531,
+    "renderMs": 2.6999998092651367
+  },
+  {
+    "cell": "L7-low-webgl",
+    "spot": "start",
+    "metric": "p95",
+    "value": 4.9,
+    "limit": 33.3,
+    "ratio": 0.14714714714714716,
+    "updateMs": 1.6999998092651367,
     "renderMs": 2.5
   },
   {
@@ -15338,26 +15388,6 @@
     "ratio": 0.14447998,
     "updateMs": 1,
     "renderMs": 3.3000001907348633
-  },
-  {
-    "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/pair-harbor-street",
-    "metric": "p95",
-    "value": 4.8,
-    "limit": 33.3,
-    "ratio": 0.14414414414414414,
-    "updateMs": 1.4000005722045898,
-    "renderMs": 2.3000001907348633
-  },
-  {
-    "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/l5-group-of-five",
-    "metric": "p95",
-    "value": 4.8,
-    "limit": 33.3,
-    "ratio": 0.14414414414414414,
-    "updateMs": 1.3999996185302734,
-    "renderMs": 2.59999942779541
   },
   {
     "cell": "L8-low-webgl",
@@ -15570,26 +15600,6 @@
     "renderMs": 2.5
   },
   {
-    "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/l5-basement-exit",
-    "metric": "p95",
-    "value": 4.7,
-    "limit": 33.3,
-    "ratio": 0.14114114114114115,
-    "updateMs": 1.5,
-    "renderMs": 2.3000001907348633
-  },
-  {
-    "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/l5-sign-of-life",
-    "metric": "p95",
-    "value": 4.7,
-    "limit": 33.3,
-    "ratio": 0.14114114114114115,
-    "updateMs": 1.2000007629394531,
-    "renderMs": 2.5
-  },
-  {
     "cell": "L6-low-webgl",
     "spot": "start",
     "metric": "p95",
@@ -15688,16 +15698,6 @@
     "ratio": 0.13813813813813813,
     "updateMs": 1.5,
     "renderMs": 2.5
-  },
-  {
-    "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/pair-metro-entrance",
-    "metric": "p95",
-    "value": 4.6,
-    "limit": 33.3,
-    "ratio": 0.13813813813813813,
-    "updateMs": 1.3000001907348633,
-    "renderMs": 2.6000003814697266
   },
   {
     "cell": "L8-low-webgl",
@@ -16121,53 +16121,13 @@
   },
   {
     "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/pair-plaza",
-    "metric": "simMs",
-    "value": 0.8000001907348633,
-    "limit": 6,
-    "ratio": 0.1333333651224772,
-    "updateMs": 1.5,
-    "renderMs": 2.8999996185302734
-  },
-  {
-    "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/pair-harbor-street",
-    "metric": "simMs",
-    "value": 0.8000001907348633,
-    "limit": 6,
-    "ratio": 0.1333333651224772,
-    "updateMs": 1.4000005722045898,
-    "renderMs": 2.3000001907348633
-  },
-  {
-    "cell": "L5-low-webgl",
     "spot": "D-FAIR/W0/pair-kessler-lane",
     "metric": "simMs",
     "value": 0.8000001907348633,
     "limit": 6,
     "ratio": 0.1333333651224772,
-    "updateMs": 1.5,
-    "renderMs": 2.5
-  },
-  {
-    "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/l5-basement-exit",
-    "metric": "simMs",
-    "value": 0.8000001907348633,
-    "limit": 6,
-    "ratio": 0.1333333651224772,
-    "updateMs": 1.5,
-    "renderMs": 2.3000001907348633
-  },
-  {
-    "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/l5-sign-of-life",
-    "metric": "simMs",
-    "value": 0.8000001907348633,
-    "limit": 6,
-    "ratio": 0.1333333651224772,
-    "updateMs": 1.2000007629394531,
-    "renderMs": 2.5
+    "updateMs": 1.3000001907348633,
+    "renderMs": 3.1000003814697266
   },
   {
     "cell": "L5-low-webgl",
@@ -16176,8 +16136,8 @@
     "value": 0.8000001907348633,
     "limit": 6,
     "ratio": 0.1333333651224772,
-    "updateMs": 1.3999996185302734,
-    "renderMs": 2.59999942779541
+    "updateMs": 1.8999996185302734,
+    "renderMs": 2.6000003814697266
   },
   {
     "cell": "L5-low-webgl",
@@ -16186,8 +16146,8 @@
     "value": 0.8000001907348633,
     "limit": 6,
     "ratio": 0.1333333651224772,
-    "updateMs": 1.6999998092651367,
-    "renderMs": 2.8000001907348633
+    "updateMs": 1.6000003814697266,
+    "renderMs": 2.799999237060547
   },
   {
     "cell": "L5-low-webgl",
@@ -16196,8 +16156,8 @@
     "value": 0.8000001907348633,
     "limit": 6,
     "ratio": 0.1333333651224772,
-    "updateMs": 1.5999994277954102,
-    "renderMs": 3.09999942779541
+    "updateMs": 1.5,
+    "renderMs": 2.90000057220459
   },
   {
     "cell": "L8-low-webgl",
@@ -16268,6 +16228,16 @@
     "ratio": 0.1333332061767578,
     "updateMs": 1.3999996185302734,
     "renderMs": 3.09999942779541
+  },
+  {
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/l5-sign-of-life",
+    "metric": "simMs",
+    "value": 0.7999992370605469,
+    "limit": 6,
+    "ratio": 0.1333332061767578,
+    "updateMs": 1.9000005722045898,
+    "renderMs": 2.40000057220459
   },
   {
     "cell": "L6-low-webgl",
@@ -16480,6 +16450,16 @@
     "renderMs": 2.3000001907348633
   },
   {
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/pair-metro-entrance",
+    "metric": "p95",
+    "value": 4.3,
+    "limit": 33.3,
+    "ratio": 0.12912912912912913,
+    "updateMs": 1.4000005722045898,
+    "renderMs": 2.59999942779541
+  },
+  {
     "cell": "L9-low-webgpu",
     "spot": "D-CROSSING/W0/l9-long-sightline",
     "metric": "p95",
@@ -16538,6 +16518,16 @@
     "ratio": 0.12612612612612614,
     "updateMs": 1.5,
     "renderMs": 2
+  },
+  {
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/l5-sign-of-life",
+    "metric": "p95",
+    "value": 4.2,
+    "limit": 33.3,
+    "ratio": 0.12612612612612614,
+    "updateMs": 1.9000005722045898,
+    "renderMs": 2.40000057220459
   },
   {
     "cell": "L5-low-webgpu",
@@ -16990,16 +16980,6 @@
     "renderMs": 1.8000001907348633
   },
   {
-    "cell": "L7-low-webgpu",
-    "spot": "start",
-    "metric": "p95",
-    "value": 3.9,
-    "limit": 33.3,
-    "ratio": 0.11711711711711713,
-    "updateMs": 1.4000005722045898,
-    "renderMs": 1.6000003814697266
-  },
-  {
     "cell": "L1-low-webgpu",
     "spot": "start",
     "metric": "simMs",
@@ -17041,13 +17021,13 @@
   },
   {
     "cell": "L5-low-webgl",
-    "spot": "D-FAIR/W0/pair-metro-entrance",
+    "spot": "D-FAIR/W0/l5-basement-exit",
     "metric": "simMs",
     "value": 0.7000007629394531,
     "limit": 6,
     "ratio": 0.11666679382324219,
-    "updateMs": 1.3000001907348633,
-    "renderMs": 2.6000003814697266
+    "updateMs": 1.1999998092651367,
+    "renderMs": 3.59999942779541
   },
   {
     "cell": "L8-low-webgl",
@@ -17318,6 +17298,16 @@
     "ratio": 0.11411411411411412,
     "updateMs": 0.40000057220458984,
     "renderMs": 3.09999942779541
+  },
+  {
+    "cell": "L7-low-webgpu",
+    "spot": "start",
+    "metric": "p95",
+    "value": 3.8,
+    "limit": 33.3,
+    "ratio": 0.11411411411411412,
+    "updateMs": 1.3999996185302734,
+    "renderMs": 1.6999998092651367
   },
   {
     "cell": "L8-low-webgpu",
@@ -17768,6 +17758,16 @@
     "ratio": 0.10000006357828777,
     "updateMs": 1.3999996185302734,
     "renderMs": 2.3999996185302734
+  },
+  {
+    "cell": "L5-low-webgl",
+    "spot": "D-FAIR/W0/pair-metro-entrance",
+    "metric": "simMs",
+    "value": 0.6000003814697266,
+    "limit": 6,
+    "ratio": 0.10000006357828777,
+    "updateMs": 1.4000005722045898,
+    "renderMs": 2.59999942779541
   },
   {
     "cell": "L5-low-webgpu",
