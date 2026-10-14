@@ -191,6 +191,11 @@ export class SceneLab {
       document.querySelector('#game')!.append(this.game.ui.hud.root);
       this.game.ui.hud.loaded(); this.game.ui.hud.update();
     }
+    if (spec.menuScreen) {
+      this.game.ui.init(true);
+      this.game.campaign = preset('L10-default');
+      this.game.ui.show(spec.menuScreen);
+    }
     this.calibrateSole();
     return this.describe();
   }

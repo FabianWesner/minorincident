@@ -265,3 +265,25 @@ body.ui-hidden [data-testid=home-button]{display:none!important}
 
 .touch-ui .hud-mega-label{bottom:2px}
 .touch-ui .hud-map.is-collapsed .hud-mega-label{clip-path:inset(50%);width:1px;height:1px;padding:0;overflow:hidden;white-space:nowrap}
+
+/* Ten campaign rows: keep navigation outside the scrolling list. */
+.menu-levels{width:min(840px,100%);max-height:100%;overflow:hidden;grid-template-rows:auto auto minmax(0,1fr) auto auto}
+.level-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;overflow:auto;overscroll-behavior:contain;padding:7px}
+.level-row{display:flex;gap:6px;min-width:0;align-items:stretch}
+.level-row>button:first-child{flex:1;min-width:0;text-align:left}
+.full-ui .level-row>.is-recommended{background:#f8bf70;color:#182333;border-color:#ffe4ab}
+.resume-tag{display:inline-block;margin-left:8px;padding:2px 6px;border-radius:6px;background:#182333;color:#fff4df;font-size:.75em}
+@media(max-width:600px){.level-list{grid-template-columns:1fr}.menu-levels{padding:16px;gap:8px}}
+@media(max-height:500px){.menu-levels{padding:12px;gap:6px}.menu-levels h1{font-size:24px}.menu-levels p{margin:0}.level-list{gap:8px}}
+
+.full-ui .menu-levels>button{background:#263448;color:var(--ui-ink);border-color:#a99b85}
+@media(max-width:600px){
+ .level-list{gap:8px}
+ .full-ui .level-row>button{min-height:48px}
+}
+@media(max-height:500px) and (orientation:landscape){
+ .full-ui[data-ui-screen=title] .menu-title{padding:16px;gap:8px}
+ .full-ui[data-ui-screen=title] .menu-title h1{font-size:40px;margin-bottom:8px}
+ .full-ui[data-ui-screen=title] .menu-title button{min-height:48px}
+ .full-ui[data-ui-screen=title] [data-testid=detail-title]{font-size:12px;letter-spacing:.5px}
+}

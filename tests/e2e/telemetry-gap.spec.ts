@@ -37,8 +37,8 @@ test('T-TELEMETRY-5 level select, campaign handover (L3 -> L4 -> L5), Continue a
 
   // 1. Level select (a save that unlocked L3) -> L3; finishing L3 hands over to L4 by itself, finishing L4 to L5 (the handover with a setup hook).
   await page.evaluate(save => { const a = window.__SS__!; a.campaign.restore(save); a.campaign.save(); a.campaign.menu(); }, preset('L3-default'));
-  await page.getByRole('button', { name: 'Level select', exact: true }).click();
-  await page.getByRole('button', { name: 'Level 3', exact: true }).click();
+  await page.getByTestId('start-game').click();
+  await page.getByTestId('level-L3').click();
   await inScenario('L3'); await finishLevel();
   await inScenario('L4'); await finishLevel();
   await inScenario('L5');
@@ -47,7 +47,8 @@ test('T-TELEMETRY-5 level select, campaign handover (L3 -> L4 -> L5), Continue a
   const reloaded = () => page.waitForFunction(() => window.__SS__!.getState().tick < 20 && window.__SS__!.getState().scenario === 'L5' && window.__SS__!.missions.state()?.phase === 'briefing', undefined, { timeout: 150_000 });
   await page.evaluate(async () => { const a = window.__SS__!; a.pause(); a.missions.begin(); await a.step(60); a.campaign.menu(); });
   expect(await page.evaluate(() => window.__SS__!.getState().tick)).toBeGreaterThan(40);
-  await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  await page.getByTestId('start-game').click();
+  await page.getByTestId('level-L5').click();
   await reloaded();
   await page.evaluate(async () => { const a = window.__SS__!; a.pause(); a.missions.begin(); await a.step(60); });
   expect(await page.evaluate(() => window.__SS__!.getState().tick)).toBeGreaterThan(40);

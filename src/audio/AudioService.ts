@@ -258,11 +258,11 @@ export class AudioService implements Lifecycle {
         this.pauseElement.append(text, button);
         document.body.append(this.ringElement, this.captionElement, this.controls, this.pauseElement);
     }
-    set(patch: Partial<AudioSettings>): void {
+    set(patch: Partial<AudioSettings>, persist = true): void {
         const accepted:Partial<AudioSettings>={};
         for(const key of ['muted','captions','noiseRings','mono','haptics','tinnitus']as const)if(typeof patch[key]==='boolean')accepted[key]=patch[key];
         if(patch.gore&&['Off','Reduced','Full'].includes(patch.gore))accepted.gore=patch.gore;
-        this.host.settingsChanged?.(accepted);
+        if (persist) this.host.settingsChanged?.(accepted);
         for (const key of ['muted', 'captions', 'noiseRings', 'mono', 'haptics', 'tinnitus'] as const)
             if (typeof patch[key] === 'boolean')
                 this.settings[key] = patch[key]!;
@@ -279,7 +279,7 @@ export class AudioService implements Lifecycle {
         if (!this.settings.noiseRings)
             this.clearRings();
         try {
-            localStorage.setItem('minor-incident.audio', JSON.stringify(this.settings));
+            if (persist) localStorage.setItem('minor-incident.audio', JSON.stringify(this.settings));
         }
         catch { /* Settings still work without persistence. */ }
         if (patch.tinnitus === false) {

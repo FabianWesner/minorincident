@@ -58,7 +58,7 @@ test('@E13 @E14 full menus start a saved campaign, restore settings and hand res
   await page.getByTestId('setting-quality').selectOption('low');
   const save=await page.evaluate(()=>window.__SS__!.campaign.state());
   expect(save!.character).toBe('male');expect(save!.settings).toMatchObject({aimAssist:'High',textSize:1.25,colorblind:true,quality:'low'});
-  await page.reload();await page.getByTestId('continue-game').click();
+  await page.reload();await page.getByTestId('start-game').click();await page.getByTestId('level-L1').click();
   await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});
   expect(await page.evaluate(()=>window.__SS__!.campaign.state())).toEqual(save);
   const state=await page.evaluate(()=>window.__SS__!.getState());expect(state.combat!.aimAssist).toBe('High');
@@ -79,7 +79,7 @@ test('T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, pr
   await page.evaluate(async save=>{const a=window.__SS__!;await a.loadScenario('combat-arena');a.campaign.restore(save);a.settings.set(save.settings);a.campaign.save();},save);
   await page.locator('[data-audio-controls] summary').click();await page.getByRole('checkbox',{name:'Mono audio',exact:true}).check();save.settings.mono=true;
   await page.reload();await page.waitForFunction(()=>!!window.__SS__);await page.evaluate(()=>window.__SS__!.ready);
-  await page.getByRole('button',{name:'Continue',exact:true}).click();await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});
+  await page.getByTestId('start-game').click();await page.getByTestId('level-L5').click();await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});
   await page.evaluate(()=>window.__SS__!.screenshotReady());
   expect(await page.evaluate(()=>window.__SS__!.campaign.state())).toEqual(save);
   const state=await page.evaluate(()=>window.__SS__!.getState());expect(state.scenario).toBe('L5');expect(state.player!.survivor!.variant).toBe('male');expect(state.player!.weapons!.LEFT.rack.map(s=>s.id)).toEqual(save.racks.LEFT);expect(state.player!.weapons!.RIGHT.rack.map(s=>s.id)).toEqual(save.racks.RIGHT);
@@ -88,7 +88,7 @@ test('T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, pr
   expect(state.player!.weapons!.selectedSide).toBe('RIGHT');
 });
 test('T-E13-06-browser @E13 @E13-AC06 corrupted and future saves show recoverable dialog without crashing',async({page})=>{
-  await page.goto(testUrl);
+  await page.goto(`${testUrl}&ui=1`);
   for(const data of ['{broken',JSON.stringify({...newCampaign(),version:999})]){
     await page.evaluate(({key,data})=>localStorage.setItem(key,data),{key:SAVE_KEY,data});await page.reload();await page.waitForFunction(()=>!!window.__SS__);await page.evaluate(()=>window.__SS__!.ready);
     await expect(page.getByRole('dialog',{name:'Save could not be loaded'})).toBeVisible();await expect(page.getByRole('button',{name:'Start new',exact:true})).toBeVisible();await photo(page,'save-error');
@@ -112,7 +112,7 @@ for(const scheme of ['mouse','keyboard','touch']as const)test(`T-E13-09-${scheme
     }else if(scheme==='touch')await b.tap();else await b.click();
   };
   try{
-    await boot(page);await page.evaluate(()=>window.__SS__!.campaign.menu());await activate('Start new');await activate('Female survivor');await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});await activate('Begin mission');
+    await boot(page);await page.evaluate(()=>window.__SS__!.campaign.menu());await activate('Start game');await activate('Female survivor');await activate('L1 · Stop the Outbreak');await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});await activate('Begin mission');
     // Test API completes the authored mission; all between-level navigation uses the physical device.
     await page.evaluate(async()=>{const a=window.__SS__!;a.pause();for(let i=0;i<100&&a.missions.state()!.phase!=='result';i++){const s=a.missions.state()!;if(s.phase==='cinematic')await a.step(600);else {a.cheats.completeObjective();await a.step(1);}}await a.screenshotReady();});
     await expect(page.getByRole('heading',{name:'Delivery complete. Outbreak: not contained.'})).toBeVisible();await photo(page,`result-${scheme}`);await activate('Continue');await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});expect(await page.evaluate(()=>window.__SS__!.getState().scenario)).toBe('L2');await activate('Begin mission');expect(await page.evaluate(()=>window.__SS__!.missions.state()!.phase)).toBe('playing');
@@ -120,7 +120,7 @@ for(const scheme of ['mouse','keyboard','touch']as const)test(`T-E13-09-${scheme
   }finally{if(guard){guard.dispose();expect(guard.errors).toEqual([]);}await context?.close();}
 });
 test('@E13 level select disables locked levels and can replay an unlocked level',async({page})=>{
-  test.setTimeout(180_000);await boot(page);const save=preset('L2-default');await page.evaluate(save=>{window.__SS__!.campaign.restore(save);window.__SS__!.campaign.save();window.__SS__!.campaign.menu();},save);await page.getByRole('button',{name:'Level select',exact:true}).click();await expect(page.getByRole('button',{name:/^Level 3, locked/})).toHaveAttribute('aria-disabled','true');await page.getByRole('button',{name:'Level 1',exact:true}).click();await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});expect(await page.evaluate(()=>window.__SS__!.getState().scenario)).toBe('L1');
+  test.setTimeout(180_000);await boot(page);const save=preset('L2-default');await page.evaluate(save=>{window.__SS__!.campaign.restore(save);window.__SS__!.campaign.save();window.__SS__!.campaign.menu();},save);await page.getByTestId('start-game').click();await expect(page.getByRole('button',{name:/^Level 3, locked/})).toHaveAttribute('aria-disabled','true');await page.getByTestId('level-L1').click();await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});expect(await page.evaluate(()=>window.__SS__!.getState().scenario)).toBe('L1');
 });
 // Reward screens removed (PO decision 2026-10-07); the data model is kept.
 test.fixme('@E13 offered cards survive reload and continue without reroll',async({page})=>{
