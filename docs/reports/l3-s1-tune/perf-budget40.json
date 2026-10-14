@@ -1,0 +1,96 @@
+{
+  "profiles": [
+    {
+      "profile": "high",
+      "measurements": [
+        {
+          "name": "defence",
+          "peakAlive": 41,
+          "frameP95": 7.299999999999272,
+          "simP95": 1.1999998092651367,
+          "drawCalls": 200,
+          "triangles": 887183
+        },
+        {
+          "name": "horde",
+          "peakAlive": 200,
+          "frameP95": 9.900000000001455,
+          "simP95": 2.5,
+          "drawCalls": 205,
+          "triangles": 1356032
+        },
+        {
+          "name": "rescue",
+          "peakAlive": 106,
+          "frameP95": 8.099999999991269,
+          "simP95": 1.7000007629394531,
+          "drawCalls": 228,
+          "triangles": 922335
+        }
+      ]
+    },
+    {
+      "profile": "low",
+      "measurements": [
+        {
+          "name": "defence",
+          "peakAlive": 33,
+          "frameP95": 13.100000000000364,
+          "simP95": 1,
+          "drawCalls": 165,
+          "triangles": 374250
+        },
+        {
+          "name": "horde",
+          "peakAlive": 100,
+          "frameP95": 12.900000000001455,
+          "simP95": 1.8000001907348633,
+          "drawCalls": 178,
+          "triangles": 506589
+        },
+        {
+          "name": "rescue",
+          "peakAlive": 44,
+          "frameP95": 9.400000000001455,
+          "simP95": 1.6000003814697266,
+          "drawCalls": 200,
+          "triangles": 442404
+        }
+      ]
+    },
+    {
+      "profile": "phone",
+      "measurements": [
+        {
+          "name": "defence",
+          "peakAlive": 28,
+          "frameP95": 19.599999999998545,
+          "simP95": 3.8000001907348633,
+          "drawCalls": 158,
+          "triangles": 301280
+        },
+        {
+          "name": "horde",
+          "peakAlive": 100,
+          "frameP95": 34.599999999998545,
+          "simP95": 5.5,
+          "drawCalls": 102,
+          "triangles": 425746
+        },
+        {
+          "name": "rescue",
+          "peakAlive": 58,
+          "frameP95": 33.19999999999709,
+          "simP95": 4.5,
+          "drawCalls": 126,
+          "triangles": 402970
+        }
+      ]
+    }
+  ],
+  "failures": [
+    "high standing infected 29 < 30",
+    "low horde triangles 506589 > 500000",
+    "phone horde frame p95 34.6 > 33.3333 ms"
+  ]
+}
