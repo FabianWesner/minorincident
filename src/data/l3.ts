@@ -115,7 +115,8 @@ export const l3 = {
   /** Corridor checkpoints by progress X (taken at the first calm moment after the courier passes the line, see LevelThreeCollapse.calmCheckpoint). */
   checkpointAt: { 'segment-2': -40, 'segment-2b': 8, 'segment-3': 50, 'segment-3b': 92 } as Record<string, number>,
   /** Bots (section 8). Bands are provisional until the first green 20-seed run (staging decision section 6). */
-  bots: { seeds: 1, completeMedianS: [120, 405] as P, newbieMedianS: [150, 270] as P, newbieMinSeeds: 1, newbieMaxMedianDeaths: 2 },
+  // PO 2026-10-11: the route is 50–80 % longer; both profiles use the former upper band × 1.8 (E21 §5.1).
+  bots: { seeds: 1, completeMedianS: [120, 405] as P, newbieMedianS: [150, 486] as P, newbieMinSeeds: 1, newbieMaxMedianDeaths: 2 },
 } as const;
 
 /** Named world points authored into the L3 layout copy (resolved through the ordinary mission anchor lookup). */

@@ -80,6 +80,7 @@ export function runL3(world: SimWorld, mission: Mission, profile: L3Profile, opt
   const audit = { sightViolations: 0, nonSightAlerts: 0, emerged: 0, emergeSeen: 0 };
   const streets = new Set<string>();
   const near30: number[][] = [[], [], []];
+  const prepopulated = [0, 0, 0];
   let maxConcurrent = 0, low = 0, samples = 0, medkits = 0, regression = 0, maxJump = 0, nearTicks = 0, calmTicks = 0, protectedFlags = 0;
   const lastPos = new Map<number, { x: number; z: number }>(), squadIds = new Set<number>();
   const offs = [
@@ -116,6 +117,8 @@ export function runL3(world: SimWorld, mission: Mission, profile: L3Profile, opt
   for (let tick = 0; tick < maxTicks && !bot.finished; tick++) {
     if (opts.stopWhen?.(mission)) break;
     const s = mission.state.l3!, player = world.entities.get(1)!, p = player.transform;
+    // Count the authored population before death-loop relief removes waiting entries.
+    for (let k = 0; k < 3; k++) if (!prepopulated[k] && s.populated[k]) prepopulated[k] = s.pending.filter(q => q.segment === k && !q.kind).length;
     maxConcurrent = Math.max(maxConcurrent, world.infected!.director.count);
     if (player.health.current > 0) { samples++; if (player.health.current < .2 * player.health.max) low++; }
     if (s.fallbackAt) {
@@ -151,7 +154,7 @@ export function runL3(world: SimWorld, mission: Mission, profile: L3Profile, opt
     s1: s.fallbackAt ? s1 : null,
     killDistances: { gun, melee },
     regressionM: regression, streets: [...streets],
-    density: { prepopulated: [0, 1, 2].map(k => s.pending.filter(q => q.segment === k && !q.kind).length), near30: near30.map(median), maxConcurrent, cap: world.infected!.director.cap },
+    density: { prepopulated, near30: near30.map(median), maxConcurrent, cap: world.infected!.director.cap },
     medkits, lowHpShare: samples ? low / samples : 0, audit, deathsAt,
   };
 }
