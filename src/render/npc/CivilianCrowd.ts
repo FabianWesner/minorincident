@@ -1,4 +1,4 @@
-import { markCrowdAppearance, crowdShirt, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout } from '../characters/CrowdAppearance';
+import { resolveCrowdAppearance, markCrowdAppearance, crowdShirt, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout } from '../characters/CrowdAppearance';
 import type { CrowdAccessories } from '../characters/CrowdAccessories';
 import { infectedContactDistance } from '../../sim/ai/CharacterSeparation';
 import { useBakedCrowdPose, useBakedCivilianPose, canHoldCrowdPose } from '../lodPolicy';
@@ -156,7 +156,7 @@ class CivilianBatch extends Group {
     }
     this.gripTriangles = baked.gripTriangles!; this.gripReach = baked.gripReach!;
     markCrowdAppearance(baked.geometry);
-    if (this.lod !== 'lod2') this.accessories?.registerSkull(this.model, baked.geometry);
+    this.accessories?.registerSkull(this.model, baked.geometry);
     baked.geometry.setAttribute('_clip_frame', this.frame); baked.geometry.setAttribute('_variant', this.tint); baked.geometry.setAttribute('_overlay', this.overlay);
     this.bakedClip = baked.clip;
     this.poses = new CrowdPosePalette(baked.clip, this.capacity); this.texture = this.poses.texture;
@@ -291,7 +291,7 @@ class CivilianBatch extends Group {
   private tintOf(e: EntitySnapshot, index: number, blend: number): void {
     if (e.appearance) this.shirt.set(e.appearance.tint);
     else this.shirt.copy(crowdShirt(e.id));
-    writeCrowdAppearance(this.tint, index, e.id, this.shirt, blend, this.lod === 'lod2' ? 0 : this.accessories?.slot(e), this.accessories?.hidesHair(e, this.lod));
+    writeCrowdAppearance(this.tint, index, e.id, this.shirt, blend, this.accessories?.slot(e), this.accessories?.hidesHair(e, this.lod));
     const figure = this.probe.figures.at(-1);
     if (figure?.id === e.id) figure.appearance = renderedCrowdLook(e.id, this.model, this.mesh.geometry, this.shirt, this.accessories?.drawnSlot(e, this.lod) ?? null);
   }
@@ -341,7 +341,8 @@ class CivilianBatch extends Group {
     if (!e.corpse) frame = this.locomotion.present(e.id, this.poses, frame, blend, clip, phase, this.transform, this.strideScale, motion.speed, renderTick / 60, near, layers.lean || layers.lunge || layers.flinch || layers.lurch ? layers : undefined, style, !baked, low && canHoldCrowdPose(e, tick) ? 2 : 1);
     if (e.corpse) {
       this.tintOf(e, index, 1);
-      this.corpses.place(e, this.model, this.mesh.geometry, this.mesh.material as MeshLambertNodeMaterial, this.bakedClip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1, this.transform, this.shirt, [.4, 0, 1]);
+      const source = this.accessories?.corpseSource(e, this.mesh.geometry, this.model, this.bakedClip.parts.indexOf('head')) ?? this.mesh.geometry;
+      this.corpses.place(e, this.model, source, this.mesh.material as MeshLambertNodeMaterial, this.bakedClip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1, this.transform, this.shirt, [.4, 0, 1], String(e.id), [], resolveCrowdAppearance(e));
       return false;
     }
     this.accessories?.place(e, this.lod, this.poses, frame, blend, this.transform);

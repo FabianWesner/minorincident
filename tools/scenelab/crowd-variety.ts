@@ -1,7 +1,7 @@
 /** Before/after native-GPU crowd variety and E18 measurements, under e2e-lock. */
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { SceneSession, readSpec, stopServer, evaluate } from './session';
-const phase = process.argv[2] ?? 'after';
+const phase = process.argv[2] ?? 'after', corpses = process.argv.includes('--corpses');
 const output = `test-results/crowd-variety/${phase}`;
 mkdirSync(output, { recursive: true });
 try {
@@ -21,18 +21,21 @@ try {
         writeFileSync(`${output}/${name}-${tier}.json`, JSON.stringify({ metrics, checks, looks, errors: session.errors }, null, 2));
       }
       if (process.argv.includes('--captures-only')) continue;
-      const perf = await session.page.evaluate(async tier => {
-        const a = window.__SS__!; await a.loadScenario(tier === 'high' ? 'perf-horde-200' : 'perf-horde-100'); a.pause(); a.cheats.god(true); a.camera.preset('perf-horde'); await a.screenshotReady(); const fixed = a.perf(); a.resume();
-        const frames: number[] = []; let previous = 0; const start = performance.now();
+      const perf = await session.page.evaluate(async ({ tier, corpses }) => {
+        const a = window.__SS__!; await a.loadScenario(tier === 'high' ? 'perf-horde-200' : 'perf-horde-100'); a.pause(); a.cheats.god(true); a.camera.preset('perf-horde'); if (corpses) { a.cheats.killAll(); await a.step(121); } await a.screenshotReady(); const fixed = a.perf(); a.resume();
+        const frames: number[] = [], sims: number[] = []; let previous = 0, lastTick = -1; const start = performance.now();
         for (let i = 0; i < 720 || performance.now() - start < 12000; i++) {
           const now = await new Promise<number>(r => requestAnimationFrame(r)); if (i >= 120 && previous) frames.push(now - previous); previous = now;
+          const tick = a.tick(); if (i >= 120 && tick !== lastTick) sims.push(a.perf().simTickMs); lastTick = tick;
         }
-        a.pause(); const sorted = frames.sort((x,y) => x-y);
-        return { fixed, final: a.perf(), count: a.getState().ai!.count, frameMsP95: sorted[Math.ceil(sorted.length * .95)-1] };
-      }, tier);
-      writeFileSync(`${output}/horde-${tier}.json`, JSON.stringify({ ...perf, errors: session.errors }, null, 2));
-      if (phase === 'after' && (perf.count !== (tier === 'high' ? 200 : 100) || perf.fixed.drawCalls > (tier === 'high' ? 600 : 300) || perf.fixed.triangles > (tier === 'high' ? 1500000 : 500000) || perf.frameMsP95 > (tier === 'high' ? 16.7 : 1000/30))) throw new Error(`E18 ${tier} budget: ${JSON.stringify(perf)}`);
-      console.log(JSON.stringify({ phase, tier, draws: perf.fixed.drawCalls, triangles: perf.fixed.triangles, p95: perf.frameMsP95, errors: session.errors }));
+        a.pause(); const sorted = frames.sort((x,y) => x-y), sim = sims.sort((x,y) => x-y);
+        return { fixed, final: a.perf(), count: a.getState().ai!.count, corpses: a.query({ kind: 'infected' }).filter(e => e.corpse).length, simMsP95: sim[Math.ceil(sim.length * .95)-1], frameMsP95: sorted[Math.ceil(sorted.length * .95)-1] };
+      }, { tier, corpses });
+      const cdp = await session.page.context().newCDPSession(session.page); await cdp.send('HeapProfiler.collectGarbage');
+      const heapMB = (await cdp.send('Runtime.getHeapUsage')).usedSize / 1e6; await cdp.detach();
+      writeFileSync(`${output}/horde-${tier}${corpses ? '-corpses' : ''}.json`, JSON.stringify({ ...perf, heapMB, errors: session.errors }, null, 2));
+      if (phase === 'after' && ((corpses ? perf.count !== 0 || perf.corpses !== (tier === 'high' ? 200 : 100) : perf.count !== (tier === 'high' ? 200 : 100)) || perf.fixed.drawCalls > (tier === 'high' ? 600 : 300) || perf.fixed.triangles > (tier === 'high' ? 1500000 : 500000) || perf.frameMsP95 > (tier === 'high' ? 16.7 : 33.3) || !Number.isFinite(perf.simMsP95) || perf.simMsP95 > (tier === 'high' ? 4 : 6) || heapMB > (tier === 'high' ? 400 : 250))) throw new Error(`E18 ${tier} budget: ${JSON.stringify(perf)}`);
+      console.log(JSON.stringify({ phase, tier, corpses: perf.corpses, draws: perf.fixed.drawCalls, triangles: perf.fixed.triangles, p95: perf.frameMsP95, simP95: perf.simMsP95, heapMB, errors: session.errors }));
     } finally { await session.close(); }
   }
 } finally { stopServer(); }

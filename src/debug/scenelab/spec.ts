@@ -183,6 +183,10 @@ export type CameraSpec =
   | { mode: 'follow'; actor: string; zoom?: number };
 /** Optional pass/fail gates; the runner exits non-zero when one fails. */
 export interface Expectations {
+  /** Trace the submitted appearance through LOD/pose/frozen-corpse transitions. */
+  appearanceChangesMax?: number;
+  appearanceActorsMin?: number;
+  appearanceCorpsesMin?: number;
   /** Require a real scheduler activation; dodge controls also retain courier health. */
   specialActiveMin?: number;
   specialActiveMove?: import('../../data/infected').InfectedSpecialMove;

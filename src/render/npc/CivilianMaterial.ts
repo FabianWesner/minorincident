@@ -26,7 +26,7 @@ export function civilianMaterial(shading: Materials | undefined, doubleSided: bo
     // dark sockets, grimy clothes (same colours, 25 % darker) and blood; hair, clothes and body stay the person's own.
     const sick = mix(vec3(luminance(clothing)).mul(.6), crowdSkinColor(true), .8), skinShift = parts.y.equal(-1).select(decay.mul(2.5).min(1), 0);
     const sunken = mix(sick, vec3(.18, .02, .03), socket.mul(.9));
-    const grimy = clothing.mul(dirt.mul(-.42).add(1));
+    const grimy = parts.y.lessThan(-3).select(clothing, clothing.mul(dirt.mul(-.42).add(1)));
     const skin = mix(grimy, sunken, skinShift);
     const bloody = mix(skin, vec3(.36, .02, .03), blood.mul(dirt).mul(.9));
     const base = mix(bloody, mix(vec3(.02), vec3(1, .015, .025), eyeGlow), eye);
