@@ -115,7 +115,8 @@ export function validateSave(raw:unknown):raw is CampaignSave {
   }
   if (save.cureResume !== undefined) {
     const resume = save.cureResume;
-    if (!record(resume) || save.unlockedLevel !== 10 || !save.crossingHandover || !validCureCheckpoint(resume.current) || !validCureCheckpoint(resume.checkpoint) || resume.current.state.checkpoint !== resume.checkpoint.state.checkpoint || JSON.stringify(resume.current.arsenal) !== JSON.stringify({ ownedActions: save.ownedActions, racks: save.racks })) return false;
+    if (!record(resume) || resume.cameraZoom !== undefined && (!Number.isFinite(resume.cameraZoom) || resume.cameraZoom < .5 || resume.cameraZoom > 1.5)) return false;
+    if (save.unlockedLevel !== 10 || !save.crossingHandover || !validCureCheckpoint(resume.current) || !validCureCheckpoint(resume.checkpoint) || resume.current.state.checkpoint !== resume.checkpoint.state.checkpoint || JSON.stringify(resume.current.arsenal) !== JSON.stringify({ ownedActions: save.ownedActions, racks: save.racks })) return false;
   }
   if(save.l9Crash!==undefined&&!validCrash(save.l9Crash))return false;
   if(save.transport!==undefined&&!validTransport(save.transport))return false;

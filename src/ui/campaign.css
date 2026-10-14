@@ -3,4 +3,8 @@
 @media(max-width:600px){.campaign-ui{inset:12px;padding:16px;font-size:16px}.campaign-ui h1{font-size:24px}.upgrade-cards{grid-template-columns:1fr;gap:0}.upgrade-cards button{min-height:100px}}
 
 .credits-roll { margin-block: 48px; animation: credits-roll 12s linear forwards; }
+body[data-campaign=open] .hud { visibility: hidden; }
+.campaign-ui.epilogue-title { inset: 0; display: grid; align-content: center; text-align: center; background: #10172188; border: 0; border-radius: 0; pointer-events: none; }
+.campaign-ui.epilogue-title[hidden] { display: none; }
+.campaign-ui.epilogue-title h1 { font-size: clamp(40px, 7vw, 92px); letter-spacing: .04em; text-shadow: 0 3px 8px #101721; }
 @keyframes credits-roll { from { transform: translateY(40px); opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } to { transform: translateY(-40px); opacity: 0; } }

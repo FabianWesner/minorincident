@@ -4,7 +4,7 @@ import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { crowdShirt, crowdVertexLayout, resolveCrowdAppearance, crowdAccessoryIds } from './CrowdAppearance';
 import { batchRigidParts } from './batchRigidParts';
 import { AssetRegistry } from '../../assets/registry';
-import manifest from '../../assets/manifest.json';
+import manifest from '../../assets/manifest.json' with { type: 'json' };
 import { hairTones, crowdAppearance } from '../../data/crowdAppearance';
 import type { EntitySnapshot } from '../../sim/world/types';
 import type { CrowdPosePalette } from './CrowdPosePalette';

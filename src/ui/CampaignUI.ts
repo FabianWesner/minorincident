@@ -13,6 +13,7 @@ export class CampaignUI {
   private creditsTimer: ReturnType<typeof setTimeout> | undefined;
   private picks:string[]=[];
   private offeredMission:object|null=null;
+  private endingPhase: string | null = null;
   constructor(private readonly game:Game){
     this.root.addEventListener('keydown',event=>{if(event.key!=='Tab')return;const buttons=[...this.root.querySelectorAll<HTMLButtonElement>('button:not(:disabled)')];const first=buttons[0],last=buttons.at(-1);if(event.shiftKey&&document.activeElement===first){event.preventDefault();last?.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}});
     this.root.className='campaign-ui';this.root.hidden=true;this.root.setAttribute('role','dialog');this.root.setAttribute('aria-modal','true');this.heading.id='campaign-title';this.root.setAttribute('aria-labelledby',this.heading.id);this.message.setAttribute('role','status');this.root.append(this.heading,this.content,this.message);document.querySelector('#game')!.append(this.root);
@@ -35,6 +36,27 @@ export class CampaignUI {
   /** A paused result screen can still hand off to progression; no sim polling/allocation when idle. */
   update():void {
     const mission=this.game.world.missions,save=this.game.campaign;
+    const ending = mission?.state.epilogue;
+    if (save && ending && ending.phase !== 'playable') {
+      // A phase autosave may precede the credits objective's completion in the same tick.
+      if (ending.phase === 'done' && mission.state.phase === 'playing') return;
+      if (ending.phase === 'credits') {
+        const roll = this.content.querySelector<HTMLElement>('.credits-roll');
+        if (roll) roll.style.animationDelay = `-${ending.phaseTicks / 60}s`;
+      }
+      if (this.endingPhase === ending.phase) return;
+      this.endingPhase = ending.phase;
+      if (ending.phase === 'done') { this.offeredMission = mission; this.showMenu({ status: 'ok', save }); return; }
+      const paused = this.game.clock.paused;
+      if (ending.phase === 'title') {
+        this.screen('Minor Incident'); this.root.classList.add('epilogue-title');
+        this.heading.dataset.testid = 'epilogue-title';
+        const line = document.createElement('p'); line.textContent = 'The outbreak is over.'; this.content.append(line);
+      } else { this.root.classList.remove('epilogue-title'); delete this.heading.dataset.testid; this.credits(save, true); }
+      // Title/credits use the saved simulation phase clock; focus/menu still pause normally.
+      if (!paused) this.game.clock.resume();
+      return;
+    }
     if(!save||!mission||mission.state.phase!=='progression'||this.offeredMission===mission)return;
     this.offeredMission=mission;
     const match=/^L([1-9]|10)$/.exec(mission.def.id);if(!match)return;
@@ -45,8 +67,15 @@ export class CampaignUI {
     void this.game.continueCampaign(save,nextLevelAfter(level)??undefined);
   }
   /** The end of the campaign: shown after the last level (L10) and whenever the next level is not built yet. */
-  credits(save:CampaignSave):void {
-    this.screen('Credits');const credits=document.createElement('p');credits.textContent='Minor Incident — A community still alive. Built with Three.js and Rapier. Technology reference: Bruno Simon (MIT).';credits.className='credits-roll';this.content.append(credits);this.creditsTimer=setTimeout(()=>{if(!this.root.hidden)this.showMenu({status:'ok',save});},12000);this.button('Main menu',()=>this.showMenu({status:'ok',save}));this.focus();
+  credits(save:CampaignSave, ending = false):void {
+    clearTimeout(this.creditsTimer);
+    this.screen('Credits');const credits=document.createElement('p');credits.textContent='Minor Incident — A community still alive. Built with Three.js and Rapier. Technology reference: Bruno Simon (MIT).';credits.className='credits-roll';this.content.append(credits);
+    if (ending) { credits.style.animationPlayState = 'paused'; credits.style.animationDelay = `-${(this.game.world.missions?.state.epilogue?.phaseTicks ?? 0) / 60}s`; }
+    else this.creditsTimer=setTimeout(()=>{if(!this.root.hidden)this.showMenu({status:'ok',save});},12000);
+    const back = this.button(ending ? 'Skip / Main menu' : 'Main menu',()=>{
+      if (ending) { this.game.world.missions?.l10?.epilogue.skip(); this.game.clock.resume(); }
+      else this.showMenu({status:'ok',save});
+    }); back.dataset.testid = 'ending-credits-back'; this.focus();
   }
   showRewards():void {
     const save=this.game.campaign!,p=save.pending!;
@@ -73,6 +102,6 @@ export class CampaignUI {
       this.button('Mission briefing',async()=>{finishRewards(save,racks);this.save();await this.game.continueCampaign(save);});
     }this.focus();
   }
-  reset():void {clearTimeout(this.creditsTimer);this.offeredMission=null;this.picks=[];this.hide();}
+  reset():void {clearTimeout(this.creditsTimer);this.offeredMission=null;this.endingPhase=null;this.root.classList.remove('epilogue-title');delete this.heading.dataset.testid;this.picks=[];this.hide();}
   dispose():void {clearTimeout(this.creditsTimer);this.hide();this.root.remove();}
 }

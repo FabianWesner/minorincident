@@ -28,8 +28,9 @@ export class View {
   private zoomRatio = 1;
   private targetZoom = 1;
   /** Wheel down zooms out; pinch spread zooms in. Default framing is unchanged. */
-  zoom(delta: number): void {
+  zoom(delta: number, instant = false): void {
     if (Number.isFinite(delta) && !this.blendTarget && !this.scripted) this.targetZoom = Math.max(zoomLimits[0], Math.min(zoomLimits[1], this.targetZoom * Math.exp(delta)));
+    if (instant) this.zoomRatio = this.targetZoom;
   }
   inspectionPose: CameraPose | null = null;
   inspectionGameLod = false;
@@ -42,6 +43,8 @@ export class View {
     camera.lookAt(this.cameraTarget); camera.updateMatrixWorld(); return camera;
   }
   encounterScale = 1;
+  /** Finale widening multiplies player zoom without locking wheel/pinch or follow input. */
+  epilogueScale = 1;
   driving = false;
   cameraShake = true;
   spot: string | null = null;
@@ -72,11 +75,11 @@ export class View {
     this.viewportHeight = height;
     this.camera.aspect = width / height;
     this.defaultRadius = width >= height ? cameraFraming.radiusM : Math.max(cameraFraming.radiusM, cameraFraming.portraitWidthM / (2 * Math.tan(this.camera.fov * Math.PI / 360) * this.camera.aspect));
-    this.radius = this.defaultRadius * this.zoomRatio * this.encounterScale;
+    this.radius = this.defaultRadius * this.zoomRatio * this.encounterScale * this.epilogueScale;
     this.camera.updateProjectionMatrix(); this.simCamera.aspect = this.camera.aspect; this.simCamera.updateProjectionMatrix(); this.update({ x: this.focus.x, z: this.focus.z, y: this.focus.y + feetOffset }, 0);
   }
   reset(player: { x: number; z: number; y?: number }): void {
-    this.encounterScale = 1; this.zoomRatio = this.targetZoom = 1; this.radius = this.defaultRadius;
+    this.encounterScale = this.epilogueScale = 1; this.zoomRatio = this.targetZoom = 1; this.radius = this.defaultRadius;
     this.driving = false; this.focus.set(player.x, Math.max(0, (player.y ?? feetOffset) - feetOffset), player.z); this.spot = null; this.blend = this.blendTarget = 0; this.shakeStrength = this.shakeTime = 0; this.rollAngle = this.rollSpeed = 0; this.pullWeight = 0;
     this.update(player, 0);
   }
@@ -102,7 +105,7 @@ export class View {
     if (this.cameraShake) this.rollSpeed += Math.max(-1.5, Math.min(1.5, strength)) * .55;
   }
   /** Scripted pull-backs own the framing: while one is active the player's zoom is neutral (it returns when the beat ends) and wheel/pinch cannot widen it. */
-  private get scripted(): boolean { return this.encounterScale > 1.02 || this.pullWeight > 0; }
+  private get scripted(): boolean { return this.encounterScale > 1.02 || this.pullWeight > 0 && this.epilogueScale === 1; }
   private scriptedAdjusted(zoom: number): number { return this.scripted ? 1 : zoom; }
   private readonly safeProbe = new Vector3();
   private pullAt(weight: number, out: Vector3): Vector3 {
@@ -125,7 +128,7 @@ export class View {
   update(player: { x: number; z: number; y?: number }, seconds: number): void {
     this.previousPosition.copy(this.tickPosition); this.previousQuaternion.copy(this.tickQuaternion);
     this.zoomRatio += (this.targetZoom - this.zoomRatio) * (1 - Math.exp(-12 * seconds));
-    this.radius = this.defaultRadius * this.scriptedAdjusted(this.zoomRatio) * this.encounterScale;
+    this.radius = this.defaultRadius * this.scriptedAdjusted(this.zoomRatio) * this.encounterScale * this.epilogueScale;
     this.focus.x += (player.x - this.focus.x) * (1 - Math.exp(-10 * seconds));
     this.focus.z += (player.z - this.focus.z) * (1 - Math.exp(-10 * seconds));
     // Elevated decks/ramps: follow the feet height (transform.y is the body centre, .72 m above the feet), damped so stairs do not jitter.

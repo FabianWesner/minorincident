@@ -1,4 +1,5 @@
 import { CureFront } from './CureFront';
+import { LevelTenEpilogue } from './LevelTenEpilogue';
 import { finale } from '../../data/l10Finale';
 import type { Mission } from './Mission';
 
@@ -8,10 +9,11 @@ export const cureChargeRadius = finale.holdRadius;
  * Called in the mission phase, so pause/focus cannot advance a second clock. */
 export class LevelTenFinale {
   readonly cure: CureFront;
-  constructor(private readonly mission: Mission) { this.cure = new CureFront(mission); }
+  readonly epilogue: LevelTenEpilogue;
+  constructor(private readonly mission: Mission) { this.cure = new CureFront(mission); this.epilogue = new LevelTenEpilogue(mission); }
   update(): void {
     const { world, state, def } = this.mission;
-    if (state.states['cure-released']) { this.cure.update(); return; }
+    if (state.states['cure-released']) { this.cure.update(); this.epilogue.update(); return; }
     const player = world.entities.get(1)!, console = def.anchors['cure-console'];
     const pressed = world.inputFrame.interact && !state.states['console-held'];
     state.states['console-held'] = world.inputFrame.interact;
