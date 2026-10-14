@@ -182,7 +182,8 @@ l.place('veh.military-truck',[1877,0,42]); l.data['placements'][-1]['decay']='wr
 for x,z in [(1997,-95),(2197,-95),(2327,130)]:
     pid=l.place('bld.cure-motor-shelter',[x,0,z])
     l.data['buildings'].append(dict(id=pid,assetId='bld.cure-motor-shelter',aabb=l.data['placements'][-1]['visualAabb'],label='Motor pool'))
-for x in [1997,2197,2327]: l.place('veh.military-truck',[x,0,130 if x==2327 else -95])
+# The shelter slab is 16 cm high; 1 mm clearance prevents quantized mesh contact.
+for x in [1997,2197,2327]: l.place('veh.military-truck',[x,.161,130 if x==2327 else -95])
 surface('checkpoint-road',[[1897,21],[2397,21],[2397,29],[1897,29]],'asphalt',.002)
 for z in range(-45,87,3): l.place('prop.cure-mil-fence',[2137,0,z],yaw=math.pi/2)
 for x,z in [(2137,-87),(2137,-63)]: l.place('prop.jersey-barrier',[x,0,z])
