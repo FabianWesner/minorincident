@@ -4,6 +4,7 @@ import type { CrowdClip } from '../../assets/crowd';
 import type { EntitySnapshot } from '../../sim/world/types';
 import { CrowdFigureProbe } from './CrowdFigureProbe';
 import { PaletteMaterial } from '../PaletteMaterial';
+import { staticInstanceAttributes } from '../StaticInstanceAttributes';
 
 const CELL = 40;
 interface Chunk { mesh: InstancedMesh; tint: InstancedBufferAttribute; overlay: InstancedBufferAttribute; probe: CrowdFigureProbe; keys: string[] }
@@ -138,9 +139,16 @@ export class StaticCorpses extends Group {
     const stains = new InstancedBufferAttribute(new Float32Array(128 * 4), 4); // crowd overlay layout (w: pose row, unused when frozen)
     geometry.setAttribute('_state', state); geometry.setAttribute('_variant', colors); geometry.setAttribute('_overlay', stains);
     const mesh = new InstancedMesh(geometry, frozen.material, 128); mesh.count = 0;
+    if (frozen.material instanceof PaletteMaterial) {
+      // Spatial/death/gore pages share the layout, while their matrices,
+      // appearance and bounds remain independent. Avoid a node build per UUID.
+      frozen.material.userData.batchFeatures = 'corpses';
+      mesh.instanceColor = new InstancedBufferAttribute(new Float32Array(128 * 3).fill(1), 3);
+      if (staticInstanceAttributes(mesh)) geometry.dispose();
+    }
     mesh.castShadow = false; mesh.receiveShadow = true; mesh.userData.preRenderSolo = true;
     const probe = new CrowdFigureProbe(); mesh.onAfterRender = () => probe.draw();
-    const page = { mesh, tint: colors, overlay: stains, probe, keys: [] as string[] }; pages.push(page); this.add(mesh);
+    const page = { mesh, tint: mesh.geometry.getAttribute('_variant') as InstancedBufferAttribute, overlay: mesh.geometry.getAttribute('_overlay') as InstancedBufferAttribute, probe, keys: [] as string[] }; pages.push(page); this.add(mesh);
     return page;
   }
   snapshot() { return { instances: this.bodies.size, draws: [...this.chunks.values()].reduce((n, pages) => n + pages.filter(page => page.mesh.count > 0).length, 0), figures: [...this.chunks.values()].flatMap(pages => pages.flatMap(page => page.probe.figures)) }; }

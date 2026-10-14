@@ -6,6 +6,7 @@ import { paletteTokens, type PaletteToken } from '../data/palette';
 import type { Lighting } from './Lighting';
 import { surfaceDetail } from './SurfaceDetail';
 import { seeThroughKeep } from './SeeThrough';
+import { hashArray, hashString } from 'three/src/nodes/core/NodeUtils.js';
 
 /** Palette-sampled Lambert node material with Bruno's captured drop-shadow, core shade and terrain bounce. */
 export class PaletteMaterial extends MeshLambertNodeMaterial {
@@ -23,6 +24,8 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   readonly movingFigure = uniform(0);
   // NodeMaterial.copy skips underscored internals; frozen copies need their own cache.
   private readonly _outputs = new Map<number, Node>();
+  private readonly _propertyHashes = new Map<string, number>();
+  private readonly _programValues: number[] = [];
   private outputFor: (mode: number) => Node;
   private readonly newCopy: () => PaletteMaterial;
   private weatherMode = -1;
@@ -130,6 +133,21 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
     const copy = this.newCopy(); copy.copy(this); copy.outputFor = this.outputFor;
     copy._outputs.clear(); copy.weatherMode = -1; copy.setWeatherMode(this.weatherMode);
     return copy;
+  }
+  /** Same key as NodeMaterial, without allocating a child record and hashing
+   * its property name on every submitted mesh. Re-read every node/key so graph
+   * replacement and node-version changes still invalidate the pipeline. */
+  override customProgramCacheKey(): string {
+    const values = this._programValues; values.length = 0;
+    for (const property of Object.getOwnPropertyNames(this)) {
+      if (property.startsWith('_')) continue;
+      const child = (this as unknown as Record<string, { isNode?: boolean; getCacheKey(): number } | null>)[property];
+      if (child?.isNode !== true) continue;
+      let name = this._propertyHashes.get(property);
+      if (name === undefined) { name = hashString(property.slice(0, -4)); this._propertyHashes.set(property, name); }
+      values.push(name, child.getCacheKey());
+    }
+    return this.type + hashArray(values);
   }
   setWeatherMode(mode: number): void {
     if (mode === this.weatherMode) return;

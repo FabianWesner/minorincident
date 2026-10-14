@@ -368,6 +368,10 @@ export class GameView implements Lifecycle {
     this.districts?.updateLods(this.view); this.crowd?.update(this.view); await Promise.all([this.crowd?.ready(), this.npcs?.ready(), this.districts?.ready()]);
     const restoreOccupants = await this.vehicles?.prewarmOccupants();
     const restoreCrash = await this.vehicles?.prewarmCrash();
+    // Put the rigid prototype in front of the loading camera, clear of the
+    // boarding vehicle/ground that would otherwise hide its first fragments.
+    const corgiFocus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(12).add(this.camera.position);
+    const restoreCorgi = this.npcs?.prewarmCorgi(corgiFocus);
     const restoreGates = this.world.scenario === 'L6' ? await this.interactions?.prewarmServiceGates() : undefined;
     if (this.world.scenario === 'L6') this.districts?.metroPower(true, false);
     t = loadMeasure('view:lod-ready', t);
@@ -389,8 +393,15 @@ export class GameView implements Lifecycle {
             await prepare();
           } finally { pulse.remove(); this.lighting.applyLook(); }
         } else await prepare();
+        // The temporary fire pulse above has now been removed. Execute the
+        // daylight graph too, while the rigid prototype still covers pixels;
+        // removing it first leaves a hiding corgi cold until its arrival.
+        if (restoreCorgi) {
+          if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
+          await this.renderer.finishWarmUp();
+        }
       }
-      finally { restore?.(); unwarm?.(); restoreGates?.(); restoreOccupants?.(); restoreCrash?.(); }
+      finally { restore?.(); unwarm?.(); restoreGates?.(); restoreOccupants?.(); restoreCrash?.(); restoreCorgi?.(); }
       if (this.healthBars) await preRender(this.renderer, this.barScene, this.camera, () => this.renderBars());
     };
     const finish = (): void => {
@@ -416,7 +427,7 @@ export class GameView implements Lifecycle {
     // a cold WebGL sidewalk shader synchronously at the first crossing seam.
     const horizon = this.districts?.horizonForWarmup();
     if (horizon) await this.warmHidden(horizon);
-    restoreOccupants?.(); restoreCrash?.(); finish();
+    restoreOccupants?.(); restoreCrash?.(); restoreCorgi?.(); finish();
   }
   /** Actor views are independent of each other and of the districts: create them and start their
    * loads concurrently (one network wave, not six); load() adds them in the established scene order. */

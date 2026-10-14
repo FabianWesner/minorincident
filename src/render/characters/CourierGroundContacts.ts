@@ -97,19 +97,20 @@ export class CourierGroundContacts {
   groundPose(): void {
     const rig = this.rig;
     rig.root.updateWorldMatrix(true, true);
-    const floor = rig.root.getWorldPosition(this.origin).y, s = this.scaleNode.getWorldScale(this.scale).y;
+    const floor = this.origin.setFromMatrixPosition(rig.root.matrixWorld).y, s = this.scaleNode.getWorldScale(this.scale).y;
     let deficit = 0;
     for (const foot of this.feet) {
-      foot.ik.end.getWorldPosition(this.joint); foot.ik.end.getWorldQuaternion(this.footFrame);
+      this.joint.setFromMatrixPosition(foot.ik.end.matrixWorld); foot.ik.end.getWorldQuaternion(this.footFrame);
       for (const x of [-.05, .085]) deficit = Math.max(deficit, floor - this.delta.set(x * s, -this.sole * s, 0).applyQuaternion(this.footFrame).add(this.joint).y);
     }
     if (deficit > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(this.scale).y; rig.hip.updateWorldMatrix(true, true); }
   }
-  update(phase: number, stride: number, run: number, weight: number, speed: number, dt: number, style?: GaitStyle): void {
+  update(phase: number, stride: number, run: number, weight: number, speed: number, dt: number, style?: GaitStyle, worldReady = false): void {
     const rig = this.rig;
     this.time += dt;
-    rig.root.updateWorldMatrix(true, true);
-    rig.root.getWorldPosition(this.origin); rig.root.getWorldQuaternion(this.frame); this.scaleNode.getWorldScale(this.scale);
+    if (!worldReady) rig.root.updateWorldMatrix(true, true);
+    rig.root.matrixWorld.decompose(this.origin, this.frame, this.scale);
+    if (this.scaleNode !== rig.root) this.scaleNode.matrixWorld.decompose(this.joint, this.footFrame, this.scale);
     const s = this.scale.y, ground = this.origin.y + this.sole * s;
     this.forward.set(1, 0, 0).applyQuaternion(this.frame); this.forward.y = 0; this.forward.normalize();
     const heading = Math.atan2(-this.forward.z, this.forward.x);
@@ -120,7 +121,7 @@ export class CourierGroundContacts {
     const legLength = (foot: Foot, knee: number): number => Math.sqrt(foot.a ** 2 + foot.b ** 2 + 2 * foot.a * foot.b * Math.cos(knee)) * s;
     /** Knee flexion for a hip-to-ankle distance (world). */
     const kneeOf = (foot: Foot, distance: number): number => { const d = Math.min(distance / s, foot.a + foot.b); return Math.PI - Math.acos(Math.max(-1, Math.min(1, (foot.a ** 2 + foot.b ** 2 - d * d) / (2 * foot.a * foot.b)))); };
-    const kneeNow = (foot: Foot): number => kneeOf(foot, foot.ik.upper.getWorldPosition(this.joint).distanceTo(foot.target));
+    const kneeNow = (foot: Foot): number => kneeOf(foot, this.joint.setFromMatrixPosition(foot.ik.upper.matrixWorld).distanceTo(foot.target));
     // Swing knee peaks (chibi legs: a readable arc, not motion-capture clearance).
     const drag = (foot: Foot): number => style?.drag && this.feet.indexOf(foot) === style.dragFoot ? style.drag : 0;
     const peakKnee = (gait: boolean, foot: Foot): number => (gait ? (68 + 17 * run) * (style?.knee ?? 1) * (1 - .55 * drag(foot)) : 50) * DEG;
@@ -134,7 +135,7 @@ export class CourierGroundContacts {
     const lock = (foot: Foot, yaw: number): void => { foot.locked = true; foot.swing = undefined; foot.planted.copy(foot.target); foot.planted.y = ground; foot.plantYaw = foot.yaw = yaw; };
     for (const foot of this.feet) {
       // Fresh contacts (first frame, after riding/kicks, teleports): lock where the foot is now.
-      if (foot.fresh) { foot.ik.end.getWorldPosition(foot.target); foot.pitch = 0; lock(foot, heading + toeOut * foot.side); foot.fresh = false; }
+      if (foot.fresh) { foot.target.setFromMatrixPosition(foot.ik.end.matrixWorld); foot.pitch = 0; lock(foot, heading + toeOut * foot.side); foot.fresh = false; }
       if (!foot.locked) continue;
       this.delta.copy(foot.planted).sub(neutralOf(foot, this.neutral)); this.delta.y = 0;
       if (this.delta.length() > reach * 1.1) {
@@ -153,7 +154,7 @@ export class CourierGroundContacts {
     for (const [index, foot] of this.feet.entries()) {
       const p = (phase + index * .5) % 1;
       // Also release a foot the leg can no longer reach (first steps from standstill plant earlier than the cycle would).
-      const stretched = moving && foot.locked && Math.hypot(foot.planted.x - foot.ik.upper.getWorldPosition(this.joint).x, foot.planted.z - this.joint.z) > reach * .68;
+      const stretched = moving && foot.locked && Math.hypot(foot.planted.x - this.joint.setFromMatrixPosition(foot.ik.upper.matrixWorld).x, foot.planted.z - this.joint.z) > reach * .68;
       // A foot that landed early (maxSwing) waits for its next stance window instead of releasing again at once.
       if (foot.hold && (p <= stance || !moving)) foot.hold = false;
       if (moving && foot.locked && (p > stance && !foot.hold || stretched)) {
@@ -302,10 +303,10 @@ export class CourierGroundContacts {
     for (const foot of this.feet) {
       const reaching = !foot.locked && foot.swing ? ease((foot.swing.u - .4) / .45) : 0;
       if (!foot.locked && reaching <= 0) continue;
-      foot.ik.upper.getWorldPosition(this.joint);
+      this.joint.setFromMatrixPosition(foot.ik.upper.matrixWorld);
       // A swing foot is judged at its landing point (the body-space swing path overshoots before heel strike).
       const point = foot.locked ? foot.target : gaitPlant(foot, 0, this.landing);
-      const dx = point.x - this.joint.x, dz = point.z - this.joint.z, offset = this.joint.y - rig.hip.getWorldPosition(this.delta).y;
+      const dx = point.x - this.joint.x, dz = point.z - this.joint.z, offset = this.joint.y - this.delta.setFromMatrixPosition(rig.hip.matrixWorld).y;
       const compression = moving && foot.locked && foot.phase >= 0 && foot.phase <= stance ? Math.sin(Math.PI * foot.phase / stance) ** 2 : 0;
       const supportKnee = (foot.locked ? 14 + 15 * run + (16 + 10 * run) * compression : 22) * DEG;
       const desired = foot.target.y + Math.sqrt(Math.max(.001, legLength(foot, supportKnee) ** 2 - dx * dx - dz * dz)) - offset;
@@ -322,13 +323,13 @@ export class CourierGroundContacts {
     // No foot to stand on and no pelvis yet (a crowd figure whose footwork starts mid-run with both feet in swing):
     // keep the clip's hip height. Infinity here made the filter Infinity - Infinity = NaN, and the NaN pelvis then
     // stuck, so the figure drew no pixels while the sim kept it biting (PO "invisible zombie").
-    if (height === Infinity) height = this.pelvisHeight === undefined ? rig.hip.getWorldPosition(this.joint).y : this.origin.y + this.pelvisHeight;
+    if (height === Infinity) height = this.pelvisHeight === undefined ? this.joint.setFromMatrixPosition(rig.hip.matrixWorld).y : this.origin.y + this.pelvisHeight;
     // Settle down quickly (heel strike), rise smoothly.
     const current = this.pelvisHeight === undefined ? height : this.origin.y + this.pelvisHeight;
     const filtered = current + (height - current) * (1 - Math.exp(-dt / (height < current ? .03 : .05)));
     height = locked.length ? Math.min(maximumHeight, Math.max(minimumHeight, filtered)) : filtered;
     this.pelvisHeight = height - this.origin.y;
-    rig.hip.getWorldPosition(this.joint);
+    this.joint.setFromMatrixPosition(rig.hip.matrixWorld);
     const parentScale = rig.hip.parent!.getWorldScale(this.delta).y;
     rig.hip.position.y += (height - this.joint.y) / parentScale * weight;
     // Standing steps shift the weight over the supporting foot.
@@ -341,7 +342,7 @@ export class CourierGroundContacts {
         // Swing height follows a knee profile (release flex -> peak -> the landing flex the
         // geometry needs), so the knee never races through the straight-leg singularity.
         const swing = foot.swing, u = swing.u;
-        foot.ik.upper.getWorldPosition(this.joint);
+        this.joint.setFromMatrixPosition(foot.ik.upper.matrixWorld);
         const dx = foot.target.x - this.joint.x, dz = foot.target.z - this.joint.z, floor = ground + swing.dip;
         const landing = kneeOf(foot, Math.hypot(dx, dz, this.joint.y - floor));
         // Guaranteed clearance through the swing, on top of the readable knee arc.
@@ -378,7 +379,7 @@ export class CourierGroundContacts {
     if (weight < 1 || style?.maxSwing) {
       let deficit = 0;
       for (const foot of this.feet) {
-        const end = foot.ik.end; end.getWorldPosition(this.joint); end.getWorldQuaternion(this.footFrame);
+        const end = foot.ik.end; this.joint.setFromMatrixPosition(end.matrixWorld); end.getWorldQuaternion(this.footFrame);
         for (const x of [-heel, toe]) deficit = Math.max(deficit, ground - soleDepth - (this.joint.y + this.delta.set(x, -soleDepth, 0).applyQuaternion(this.footFrame).y));
       }
       if (deficit > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(this.delta).y; rig.hip.updateWorldMatrix(true, true); }

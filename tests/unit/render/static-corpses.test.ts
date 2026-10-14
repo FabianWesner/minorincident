@@ -1,5 +1,11 @@
-import { Color, Frustum, InstancedMesh, Matrix4, MeshLambertNodeMaterial, OrthographicCamera, Vector3 } from 'three/webgpu';
-import { expect, test } from 'vitest';
+import { Color, Frustum, InstancedBufferAttribute, InstancedMesh, Matrix4, MeshLambertNodeMaterial, OrthographicCamera, PerspectiveCamera, Scene, Vector3 } from 'three/webgpu';
+import { vec3 } from 'three/tsl';
+import { expect, test, vi } from 'vitest';
+// @ts-expect-error Three's internal module has no declaration
+import RenderObjects from 'three/src/renderers/common/RenderObjects.js';
+import { Lighting } from '../../../src/render/Lighting';
+import { Materials } from '../../../src/render/Materials';
+import { installPaletteVariantCache } from '../../../src/render/Renderer';
 import { packCrowdParts } from '../../../src/assets/crowd';
 import { bakeInfected, framesPerClip, infectedClips } from '../../../src/render/characters/bakeInfected';
 import { createInfectedPlaceholder } from '../../../src/render/characters/infectedPlaceholder';
@@ -124,4 +130,23 @@ test('static bodies preserve flock instances and removed body parts @E07', () =>
   const restored = (pool.children[0] as InstancedMesh).geometry.getAttribute('_parts');
   expect(Array.from({ length: restored.count }, (_, i) => restored.getX(i))).toContain(baked.clip.parts.indexOf('head'));
   pool.dispose(); baked.geometry.dispose(); material.dispose();
+});
+
+test('palette corpse pages share shader keys while tint updates target each page own GPU attributes', () => {
+  const scene = new Scene(), lighting = new Lighting(scene), materials = new Materials(lighting), source = materials.shaded(vec3(1));
+  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const pool = new StaticCorpses(), frame = infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1;
+  for (const [i, x] of [0, 100].entries()) pool.place({ id: i + 1, corpse: true } as EntitySnapshot, 'runner', baked.geometry, source, baked.clip, frame, new Matrix4().makeTranslation(x, 0, 0), new Color(i ? '#e03020' : '#3070b0'), [0, 0, 0]);
+  const [a, b] = pool.children as InstancedMesh[];
+  expect(a.material).toBe(b.material); expect(a.userData.staticInstanceAttributes).toBe(true);
+  const tintA = a.geometry.getAttribute('_variant') as InstancedBufferAttribute, tintB = b.geometry.getAttribute('_variant') as InstancedBufferAttribute;
+  expect(tintA).not.toBe(tintB); expect(tintA.version).toBeGreaterThan(0); expect(tintB.version).toBeGreaterThan(0);
+  expect(tintA.getX(0) % 2).toBeCloseTo(new Color('#3070b0').r); expect(tintB.getX(0) % 2).toBeCloseTo(new Color('#e03020').r);
+  const Manager = RenderObjects as unknown as new (...args: unknown[]) => { get(...args: unknown[]): { getCacheKey(): number }; dispose(): void };
+  const objects = new Manager({ backend: {}, contextNode: { id: 1, version: 0 }, _currentSourceMaterial: null }, { getCacheKey: () => 0, delete: vi.fn() }, {}, { delete: vi.fn() }, { deleteForRender: vi.fn() }, {});
+  installPaletteVariantCache(objects);
+  const camera = new PerspectiveCamera(), lights = {}, context = { id: 1 };
+  const get = (mesh: InstancedMesh) => objects.get(mesh, mesh.material, scene, camera, lights, context, null).getCacheKey();
+  expect(get(a)).toBe(get(b)); expect(a.count).toBe(1); expect(b.count).toBe(1);
+  objects.dispose(); pool.dispose(); baked.geometry.dispose(); source.dispose(); materials.dispose(); lighting.dispose();
 });

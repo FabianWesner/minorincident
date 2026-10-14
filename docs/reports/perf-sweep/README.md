@@ -1,0 +1,141 @@
+# E18 campaign performance sweep
+
+Baseline revision: `b3d7492f`. A fresh `npm run build` is served by Vite preview on port 3483; Scene Lab port 3484 is reserved. Hardware: Apple M4, 16 GiB RAM, Chrome 155.0.8059.40 (Metal). Native Chrome is always headless, one worker, ANGLE Metal, uncapped cadence, viewport 1600×900 and DPR 1 on both quality tiers. Every timing invocation goes directly through `tools/perf/quiet-run.sh`, with admission conditions saved alongside the data.
+
+## Method
+
+Load each real level with seed 2 and its default progression. Begin its mission where available (L7 uses a departure controller), enable god mode, and sample the opening position plus every registered district photo target; L10 also includes authored checkpoint targets. Use instant normal game framing, await asset/shader readiness, warm for two seconds, collect garbage, then sample five seconds of real-clock gameplay. Optional full-skeleton Scene Lab recording is disabled. Read actual `perf().backend` to reject fallback. The per-cell table takes the maximum of each spot percentile and counter, rather than pooling easier spots with difficult ones. Sim p95 uses nonzero `simTickMs` (single tick), while raw hitches include frame sim/update/render costs. Retained JS heap uses CDP `Runtime.getHeapUsage.usedSize` after garbage collection, in decimal MB.
+
+The test API uses its standard test-mode UI; this is a fixed-camera campaign sweep, not a full bot playthrough, CPU-throttled phone certification, or a cold-start/whole-route streaming benchmark. Camera target teleports occur outside the measurement window. Existing stress/transition probes provide complementary coverage. No preset, population cap, effect, or draw-distance budget is changed.
+
+## Limits
+
+High/low: frame p95 ≤16.7/33.3 ms; sim p95 ≤4/6 ms; draws ≤600/300; triangles ≤1,500,000/500,000; heap ≤400/250 MB. Gameplay hitch ceiling: 50 ms. Sources: `specs/epic-18-performance-quality-mobile.md`, `specs/91-test-plan.md`, and the existing per-level perf specifications. `docs/qa/deploy-gate.md` also requires the usual static, unit, build and touched-area checks.
+
+## Reproduction
+
+```sh
+npm run build
+E2E_PORT=3483 SCENE_PORT=3484 SWEEP_PHASE=after PERF_CONDITIONS_LOG=docs/reports/perf-sweep/after-conditions.jsonl sh tools/perf/quiet-run.sh npx playwright test tests/perf/campaign-sweep.spec.ts --project=chromium --workers=1
+npx tsx tools/perf/campaign-summary.ts after
+```
+
+The default `after` phase asserts all budgets. To profile a measured offender, set `SWEEP_PROFILE=L<n>-<tier>-<backend>` and optionally `SWEEP_SPOT=<registered spot id>`, with a separate output phase and matching Playwright `--grep`; CPU profiles are saved next to the spot samples.
+
+## T-E07-11
+
+Hetzner baseline: 2.466385 ms p95 against 4 ms (38.3% margin). Confirmation after render changes: **2.154755 ms p95, 46.1% margin**, exceeding the requested 15% margin. [Baseline](T-E07-11-before.json), [confirmation](T-E07-11-confirmation.json). Mega-200 simulation work is outside this lane.
+
+## Fixes and validation
+
+Implemented three render fixes after CPU/pipeline profiling:
+
+1. `GroundField.height`: precomputed barycentric terms plus highest-face-first buckets, with conservative slope bounds and bucket invalidation on mesh additions. Clean L2 CPU sampling attributed 413 ms of a five-second window to repeated ground queries, mainly vehicle tyre contacts. The geometry and edge tolerance are preserved; horizontal faces return their constant height. Ray-cast comparison tests cover overlapping planes and slopes. Sampled ground-query CPU fell from 0.530 to 0.260 ms/frame (about 51%) in the matched diagnostic windows.
+2. `PaletteMaterial.customProgramCacheKey`: reuse the numeric scratch array and cache property-name hashes, while enumerating current properties and reading every current node key. Clean L2 sampling identified the original key construction as a render-side hot path. Five 100,000-call Hetzner rounds measured a 7.6% median CPU reduction. Reference-equivalence tests cover weather changes, direct node replacement, newly added nodes and frozen copies; no node-graph key is memoized across changes.
+3. Corgi prewarming: render a temporary clone of the actual rigid prototype in front of the loading camera, including the daylight graph after the temporary fire pulse is removed. Clean L4 recorded a 4.9 ms pipeline creation for `npc:pal_corgiOrange:2` at tick 140 and a 35.9 ms hitch. The temporary render object is removed before gameplay; companion simulation and assets are unchanged. After prewarming, pipeline creation disappeared from the arrival window and its hitch fell to 16.3 ms (about 55%).
+
+The initial 40-cell pass included `debug=true`, which enabled Rapier wireframe drawing. It passed all sampled budgets but is retained only as diagnostic evidence; it is not used to claim speedups. The final matrix and `clean-profiles`/`ordered-profile`/`revised-profiles` omit that flag. The original full-skeleton probe attempt is excluded.
+
+The L9 streaming tool now accepts either backend, rejects fallback, records p50/p99 in addition to p95, and can run route timing separately from its memory-lap audit. [All 12 baseline route/tier/backend cases](stream-summary.json) passed, with full crowd caps and streaming/crash work inside the measurement window. Retained heap is budgeted; larger transient `performance.memory` peaks are also retained in the raw evidence.
+
+The L7 stress fixture's old spawn list now filters collision-invalid points and fills legal points inside the same plaza footprint; its expected persistent-fire count follows the authored city plus corridor fire lists. Its caps, camera, rocket cadence, effects and timing budgets are preserved.
+
+Validation: typecheck/lint and seven focused cache/weather tests passed on Hetzner. Full unit run: 1,379 passed, two asset-derived checks failed (seven skipped). Both failures reproduce with the original render sources: [full unit summary](unit-summary.json), [baseline confirmation](baseline-unit-summary.json). They concern physics metadata and the `kit.dispersal-turbine-hall` static-collision cache, which this lane does not modify. Render fixes are committed as `6cbf89b7`; the main clean matrix records 40 cells and 324 sample windows. Its only failures were L5 high/low WebGL hitches (74.5/72.8 ms). A subsequent fresh-build recheck of both L5 WebGL cells and all four L7 cells passed every budget after commit `8a3ae831`, then all six passed again after `5549f82d`. The final table uses those six rechecks and the other 34 original passing cells; each row records its revision, with original overwritten measurements preserved in `initial-clean`. See [matrix manifest](matrix-manifest.json).
+
+An independent runner-GC variable collision blocked remote validation by failing to remove stale caches. Commit `ec37a867` fixes it; its retention/removal regression test passed on Hetzner.
+
+The full E18 verifier on Hetzner passed its static checks, build and 319 Node tests. Its browser stages failed to bind the default port (3301), so the browser checks were restarted with the reserved 3483/3484 ports. The original attempt is archived in [verify-attempt](verify-attempt/checks.json); native GPU timing is measured on the Mac, separately from remote functional checks.
+
+## L9 full-route supplemental measurements
+
+These fresh-build baseline measurements include streaming, full 200/100 crowd caps and crash work, rather than only stationary campaign cameras. Times are ms; retained heap is MB.
+
+| Route | Tier | Backend | p50 | p95 | p99 | Hitch | Sim p95 | Draws | Triangles | Heap MB |
+| --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| road | low | webgl | 3.20 | 6.50 | 8.10 | 15.20 | 0.90 | 98 | 302689 | 122.23 |
+| countryside | low | webgl | 3.50 | 6.60 | 8.30 | 13.50 | 0.90 | 98 | 378450 | 112.91 |
+| dry-shortcut | low | webgl | 2.90 | 7.30 | 8.80 | 15.10 | 0.90 | 98 | 301511 | 113.84 |
+| road | high | webgl | 5.10 | 11.10 | 13.00 | 35.40 | 1.10 | 116 | 1086519 | 161.62 |
+| countryside | high | webgl | 5.60 | 12.20 | 14.20 | 37.70 | 1.10 | 120 | 1033149 | 166.99 |
+| dry-shortcut | high | webgl | 5.70 | 11.90 | 13.50 | 35.60 | 1.10 | 118 | 1086519 | 165.96 |
+| road | high | webgpu | 5.30 | 11.40 | 13.40 | 36.10 | 1.00 | 116 | 1086519 | 157.06 |
+| countryside | high | webgpu | 5.70 | 12.60 | 14.50 | 36.60 | 1.00 | 122 | 1034707 | 162.45 |
+| dry-shortcut | high | webgpu | 5.80 | 12.30 | 13.90 | 25.00 | 1.00 | 116 | 1087477 | 161.36 |
+| road | low | webgpu | 1.60 | 5.10 | 6.40 | 14.90 | 0.60 | 98 | 302659 | 119.58 |
+| countryside | low | webgpu | 2.10 | 5.70 | 6.70 | 13.40 | 0.60 | 98 | 392608 | 110.41 |
+| dry-shortcut | low | webgpu | 1.90 | 5.90 | 6.90 | 14.00 | 0.60 | 98 | 301659 | 111.32 |
+
+Remote functional follow-up: **25 passed / 11 failed**. Nine failures report WebGPU buffer/device errors on the Hetzner adapter (`createBuffer` rejects even a 48-byte mapped buffer, or `Instance dropped in popErrorScope`); the other two are a controls timeout and the automatic-quality assertion. These are recorded in [functional-summary.json](functional-summary.json). The Mac sweep exercises the actual native WebGPU backend; native controls/quality follow-up is recorded below. This is not a green deploy gate.
+
+Native functional follow-up: **5 passed / 1 failed**: controls, context restoration, visibility, title settings and perf overlay passed; automatic quality still reports high after the six-second poll. [Native results](native-functional-results.json). Corgi Scene Lab: **12/12 passed** across both tiers, three zooms and both backends. Close/wide sheets were visually reviewed for colour, foot support, facing and clipping: [WebGL](corgi-webgl/index.md), [WebGPU](corgi-webgpu/index.md).
+
+## Additional L7 stress diagnostics
+
+The corrected full-cap rocket/fire probe passed high on both backends (11.0/10.6 ms p95), and low WebGPU passed at 33.0 ms with 4× CPU throttle. Low WebGL measured 34.5 ms, then 34.2 ms on an instrumented repeat, against its unchanged 33.3 ms limit. The instrumented repeat attributes 7.0 ms p95 to NPC view updates and records a 168.4 ms hitch alongside seven new node builds. These are additional phone/stress findings beyond the desktop campaign matrix. Raw results: [stress](l7-stress-after/district-perf-low.json), [phase profile](l7-stress-profile/district-perf-low.json). CPU profiling then identified crowd pose correction and frozen-page creation; follow-up render changes preserve all masks/poses and are described below.
+
+To capture Chrome tracing as well as a CPU profile, use `SWEEP_TRACE=1` and optionally `SWEEP_TRACE_SPOT=<id>`; trace files are gzip-compressed JSON (decompress before importing into Chrome). Reproducing L5 must retain the earlier camera visits: the isolated harbour camera has different mission state and does not reproduce the gaps. The complete profiled sequence reproduced a 59 ms gap at Kessler Lane, despite approximately 5 ms of recorded game work. [Sequence samples](l5-sequence-profile/L5-high-webgl.json). The Kessler trace showed 60.481 ms of command-buffer waiting inside a 65.161 ms callback (5.515 ms thread CPU): [trace summary](l5-hitch-root.json). GL-call instrumentation identified 4 MiB footprint-mask uploads as the blocking calls.
+
+## Additional closure fixes
+
+Commit `8a3ae831` preserves every footprint byte while recording the union of old/new stamp rows, uploading only changed RGBA8 rows on both backends, and skipping identical fields. No resolution, world span, print shape, lifetime or fade changes. Unit digests compare the reconstructed partial uploads against complete original raster outputs through shifts, fading, clearing and expiry. In L5 high/low WebGL, worst hitches fell to **13.9/22.7 ms**; largest individual texture upload fell from 66.9 ms to **2.8/7.3 ms**. [Six-cell fresh-build confirmation](upload-matrix/L5-high-webgl.json).
+
+The same commit removes redundant full-rig refreshes and position/parent transforms from crowd contact/IK presentation, using already-current matrices. A numerical oracle matches the original IK solver through rotated, scaled and mirrored parents. Footwork/ankle regression tests pass. The phone median improved from 17.5 to 15.7 ms in an initial matched check, while p95 remained borderline. L7 civilian corpse pages now use their existing authored corpse LOD for loading-time preparation.
+
+Convoy smoothness: **17/17 passed** across both tiers/backends and steady/uneven 60/120/30 Hz/phone cadences: [results](ride-results.json). The frame-rate settings, E18 limits, populations, effects and draw distances are unchanged. This lane has made no simulation-source change, deploy or merge.
+
+## Final supplemental phone findings
+
+The 4× CPU-throttled L7 phone probe remains **over its unchanged 33.3 ms p95 limit**: 34.3 ms WebGL / 34.1 ms WebGPU after the additional corpse-page changes. High stress passed both backends (12.5/12.8 ms p95; 18.7/37.3 ms worst hitches). Heap and all crowd/effect counters pass. [Four stress results](l7-corpse-after/district-perf-low.json). These CPU-throttled phone samples are separate from the 40 desktop cells and do not certify a real phone.
+
+The saved follow-up [program diagnostic](l7-final-program-profile/district-perf-low.json) measures NPC presentation at **6.2 ms p95**. The earlier phase-only profile measured 7.0 ms (the CPU-sampled run measured 7.5 ms); these are diagnostic windows, not a whole-game speedup claim. It records remaining cold blast/accessory/static node programs; the phone stress exception is **not closed**. No budget was raised to hide it.
+
+Corpse pages now reuse the established `staticInstanceAttributes` path: independent matrix/tint buffers and bounds, shared shader keys across spatial pages. A regression verifies shader-key equality and tint uploads to each page’s actual GPU attributes; standard corpse/gore/footwork tests pass. L7 ordinary base corpse pages are prepared during loading. The additional source is committed as `5549f82d`; its final desktop recheck is recorded in the matrix manifest.
+
+## after matrix
+
+Each cell reports the worst spot percentile and maximum counters/retained heap. Times are milliseconds; heap is decimal MB. Raw JSON contains every spot and frame sample.
+
+| Level | Tier | Backend | Revision | p50 | p95 | p99 | Hitch | Sim p95 | Draws | Triangles | Heap MB | Result |
+| --- | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| [L1](after/L1-high-webgl.json) | high | webgl | 6cbf89b7 | 5.60 | 8.40 | 9.20 | 13.40 | 1.20 | 248 | 801822 | 81.79 | pass |
+| [L1](after/L1-low-webgl.json) | low | webgl | 6cbf89b7 | 4.20 | 5.60 | 6.60 | 9.50 | 1.20 | 202 | 351130 | 73.40 | pass |
+| [L1](after/L1-high-webgpu.json) | high | webgpu | 6cbf89b7 | 5.10 | 6.10 | 9.00 | 13.80 | 0.90 | 248 | 801822 | 80.36 | pass |
+| [L1](after/L1-low-webgpu.json) | low | webgpu | 6cbf89b7 | 3.90 | 5.10 | 5.60 | 10.80 | 0.90 | 200 | 351130 | 72.07 | pass |
+| [L2](after/L2-high-webgl.json) | high | webgl | 6cbf89b7 | 6.00 | 7.50 | 12.60 | 29.30 | 1.00 | 228 | 1162145 | 88.51 | pass |
+| [L2](after/L2-low-webgl.json) | low | webgl | 6cbf89b7 | 4.80 | 6.90 | 10.80 | 23.30 | 0.90 | 204 | 394637 | 77.68 | pass |
+| [L2](after/L2-high-webgpu.json) | high | webgpu | 6cbf89b7 | 6.40 | 7.50 | 13.80 | 33.80 | 0.70 | 228 | 1162145 | 87.50 | pass |
+| [L2](after/L2-low-webgpu.json) | low | webgpu | 6cbf89b7 | 4.30 | 5.50 | 9.70 | 23.50 | 0.60 | 204 | 394637 | 77.01 | pass |
+| [L3](after/L3-high-webgl.json) | high | webgl | 6cbf89b7 | 4.80 | 6.80 | 8.00 | 12.80 | 1.40 | 178 | 797918 | 98.31 | pass |
+| [L3](after/L3-low-webgl.json) | low | webgl | 6cbf89b7 | 4.10 | 5.70 | 10.00 | 24.10 | 1.40 | 147 | 355105 | 88.54 | pass |
+| [L3](after/L3-high-webgpu.json) | high | webgpu | 6cbf89b7 | 4.70 | 6.10 | 8.30 | 10.80 | 1.50 | 178 | 797918 | 96.69 | pass |
+| [L3](after/L3-low-webgpu.json) | low | webgpu | 6cbf89b7 | 3.10 | 4.60 | 7.80 | 27.60 | 1.10 | 147 | 355105 | 87.31 | pass |
+| [L4](after/L4-high-webgl.json) | high | webgl | 6cbf89b7 | 5.90 | 7.30 | 9.80 | 16.20 | 1.20 | 222 | 687761 | 83.46 | pass |
+| [L4](after/L4-low-webgl.json) | low | webgl | 6cbf89b7 | 4.80 | 6.20 | 9.30 | 15.30 | 0.90 | 190 | 271554 | 72.49 | pass |
+| [L4](after/L4-high-webgpu.json) | high | webgpu | 6cbf89b7 | 6.40 | 7.70 | 8.90 | 15.30 | 0.90 | 222 | 687761 | 81.66 | pass |
+| [L4](after/L4-low-webgpu.json) | low | webgpu | 6cbf89b7 | 4.40 | 5.40 | 7.10 | 12.30 | 0.70 | 190 | 271554 | 71.01 | pass |
+| [L5](after/L5-high-webgl.json) | high | webgl | 5549f82d | 4.50 | 6.30 | 11.20 | 21.90 | 1.00 | 179 | 557940 | 95.03 | pass |
+| [L5](after/L5-low-webgl.json) | low | webgl | 5549f82d | 3.80 | 7.90 | 20.90 | 23.10 | 0.90 | 162 | 282937 | 73.75 | pass |
+| [L5](after/L5-high-webgpu.json) | high | webgpu | 6cbf89b7 | 3.90 | 4.80 | 5.90 | 9.90 | 0.60 | 179 | 557940 | 92.46 | pass |
+| [L5](after/L5-low-webgpu.json) | low | webgpu | 6cbf89b7 | 3.20 | 4.20 | 5.00 | 8.20 | 0.60 | 162 | 282937 | 71.66 | pass |
+| [L6](after/L6-high-webgl.json) | high | webgl | 6cbf89b7 | 3.50 | 5.40 | 6.50 | 11.50 | 0.80 | 157 | 287843 | 60.85 | pass |
+| [L6](after/L6-low-webgl.json) | low | webgl | 6cbf89b7 | 3.80 | 5.60 | 7.00 | 10.90 | 0.80 | 128 | 167550 | 55.15 | pass |
+| [L6](after/L6-high-webgpu.json) | high | webgpu | 6cbf89b7 | 2.50 | 3.30 | 4.20 | 11.30 | 0.60 | 157 | 287843 | 59.58 | pass |
+| [L6](after/L6-low-webgpu.json) | low | webgpu | 6cbf89b7 | 2.70 | 3.30 | 6.00 | 9.50 | 0.60 | 128 | 167550 | 54.09 | pass |
+| [L7](after/L7-high-webgl.json) | high | webgl | 5549f82d | 4.40 | 7.70 | 9.90 | 24.00 | 1.90 | 143 | 408768 | 76.02 | pass |
+| [L7](after/L7-low-webgl.json) | low | webgl | 5549f82d | 3.30 | 4.90 | 6.10 | 18.80 | 1.20 | 82 | 108531 | 67.87 | pass |
+| [L7](after/L7-high-webgpu.json) | high | webgpu | 5549f82d | 4.50 | 7.30 | 9.30 | 26.60 | 1.60 | 143 | 408768 | 73.93 | pass |
+| [L7](after/L7-low-webgpu.json) | low | webgpu | 5549f82d | 2.40 | 3.80 | 4.90 | 16.80 | 1.10 | 82 | 108531 | 66.18 | pass |
+| [L8](after/L8-high-webgl.json) | high | webgl | 6cbf89b7 | 3.80 | 5.50 | 7.10 | 14.20 | 0.90 | 184 | 553635 | 136.97 | pass |
+| [L8](after/L8-low-webgl.json) | low | webgl | 6cbf89b7 | 3.30 | 5.10 | 6.30 | 11.50 | 1.00 | 156 | 101091 | 97.12 | pass |
+| [L8](after/L8-high-webgpu.json) | high | webgpu | 6cbf89b7 | 3.20 | 4.00 | 4.60 | 10.20 | 0.60 | 184 | 553635 | 132.00 | pass |
+| [L8](after/L8-low-webgpu.json) | low | webgpu | 6cbf89b7 | 2.20 | 3.20 | 3.70 | 7.60 | 0.60 | 156 | 101091 | 93.55 | pass |
+| [L9](after/L9-high-webgl.json) | high | webgl | 6cbf89b7 | 4.50 | 5.40 | 6.30 | 14.60 | 0.70 | 328 | 177856 | 174.43 | pass |
+| [L9](after/L9-low-webgl.json) | low | webgl | 6cbf89b7 | 5.00 | 5.80 | 6.50 | 13.70 | 0.70 | 214 | 148642 | 134.02 | pass |
+| [L9](after/L9-high-webgpu.json) | high | webgpu | 6cbf89b7 | 3.50 | 4.20 | 5.20 | 11.50 | 0.40 | 328 | 177856 | 170.14 | pass |
+| [L9](after/L9-low-webgpu.json) | low | webgpu | 6cbf89b7 | 3.60 | 4.30 | 6.10 | 10.70 | 0.40 | 214 | 148642 | 131.16 | pass |
+| [L10](after/L10-high-webgl.json) | high | webgl | 6cbf89b7 | 3.90 | 5.40 | 6.20 | 13.50 | 0.90 | 169 | 95287 | 133.49 | pass |
+| [L10](after/L10-low-webgl.json) | low | webgl | 6cbf89b7 | 3.80 | 5.00 | 6.40 | 11.80 | 0.90 | 162 | 38889 | 98.36 | pass |
+| [L10](after/L10-high-webgpu.json) | high | webgpu | 6cbf89b7 | 2.70 | 3.40 | 3.80 | 8.70 | 0.60 | 169 | 95287 | 129.91 | pass |
+| [L10](after/L10-low-webgpu.json) | low | webgpu | 6cbf89b7 | 2.00 | 2.70 | 3.10 | 7.40 | 0.60 | 162 | 38889 | 95.71 | pass |
+
+40/40 cells recorded.

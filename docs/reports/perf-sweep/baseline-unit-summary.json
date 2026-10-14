@@ -1,0 +1,17 @@
+{
+  "passed": 3,
+  "failed": 2,
+  "total": 5,
+  "failures": [
+    {
+      "file": "unit/physics-metadata.test.ts",
+      "test": "@E26 authored GLB records are reproduced at layout build with masses, collision shapes and break rules",
+      "message": "AssertionError: expected { 'thr.molotov': { \u2026(11) }, \u2026(153) } to deeply equal { 'thr.molotov': { \u2026(11) }, \u2026(153) }\n    at /srv/mi/jobs/perf-sweep-e3cd38-7657-1791936687/tests/unit/physics-metadata.test.ts:6:29\n    at file:///srv/mi/jobs/perf-sweep-e3cd38-7657-1791936687/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1628:35\n    at file:///srv/mi/jobs/perf-sweep-e3cd38-7657-1791936687/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:26\n    at file:///srv/mi/jobs/perf-sweep-e3cd38-7657-1791936687/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3321:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///srv/mi/jobs/perf-sweep-e3cd38-7657-1791936687/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3316:10)\n    at file:///srv/mi/jobs/perf-sweep-e3cd38-7657-1791936687/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3301:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///srv/mi/jobs/perf-sweep-e3cd38-7657-1791936687/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3259:10)\n    at file:///srv/mi/jobs/perf-sweep-e3cd38-7657-1791936687/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3882:64"
+    },
+    {
+      "file": "unit/assets/static-collision.test.ts",
+      "test": "@E19 M1-07 baked static collision is current with delivered GLBs and has finite body-height geometry",
+      "message": "AssertionError: kit.dispersal-turbine-hall: run npm run assets:collision after changing GLBs: expected 'b8ae400ec636cd4c120a4bfbbd8ea2cb991c7\u2026' to be '07bbb8b8db850cb6a4c784dca0a0ce2d62df6\u2026' // Object.is equality\n    at /srv/mi/jobs/perf-sweep-e3cd38-7657-1791936687/tests/unit/assets/static-collision.test.ts:23:141\n    at file:///srv/mi/jobs/perf-sweep-e3cd38-7657-1791936687/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1628:35\n    at file:///srv/mi/jobs/perf-sweep-e3cd38-7657-1791936687/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:26\n    at file:///srv/mi/jobs/perf-sweep-e3cd38-7657-1791936687/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3321:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///srv/mi/jobs/perf-sweep-e3cd38-7657-1791936687/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3316:10)\n    at file:///srv/mi/jobs/perf-sweep-e3cd38-7657-1791936687/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3301:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///srv/mi/jobs/perf-sweep-e3cd38-7657-1791936687/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3259:10)\n    at file:///srv/mi/jobs/perf-sweep-e3cd38-7657-1791936687/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3882:64"
+    }
+  ]
+}

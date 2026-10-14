@@ -48,6 +48,15 @@ export class NpcView extends Group {
   setQuality(tier: 'high' | 'low'): void { this.civilians.setQuality(tier); }
   /** Wait for civilian batches and attached escort skins to finish streaming. */
   ready(): Promise<void> { return Promise.all([this.civilians.ready(), ...this.humanLoads.values(), ...this.petLoads.values()]).then(() => {}); }
+  /** A hiding/late-arriving corgi still needs its rigid material programs warmed
+   * before it first becomes visible. Clones share the actual hero geometry and
+   * materials, without adding a simulated companion or changing its state. */
+  prewarmCorgi(at: Vector3): () => void {
+    const root = this.dog.clone(true);
+    root.position.copy(at);
+    this.add(root);
+    return () => root.removeFromParent();
+  }
   async init(): Promise<void> {
     await this.civilians.init(); const loaded = await this.registry.loadAsset('char.corgi', 'lod1');
     this.dog = loaded.userData.placeholder ? createCorgiPlaceholder() : loaded as Group; this.dogSource = loaded.userData.placeholder ? 'placeholder' : 'glb'; if (loaded.userData.placeholder) this.placeholders.push(this.dog);
