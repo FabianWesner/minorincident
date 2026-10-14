@@ -3,6 +3,7 @@ import { basename, relative, resolve } from 'node:path';
 import { SceneSession, readSpec, stopServer, type Backend } from './session';
 import { runSpec } from './run';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
+import { catalogFlag } from './catalog-args';
 import { zoomLimits } from '../../src/render/View';
 
 /** npm run scene:catalog [-- --filter <glob>] [--dir <scene directory>] [--jobs 2] [--backend webgl2|webgpu] [--tier high|low] [--matrix] [--throttle 4] [--query key=value] [--size 960x540] [--out dir] [--list]
@@ -12,7 +13,7 @@ import { zoomLimits } from '../../src/render/View';
  * (`bld-grove-*`, `fight-*,ped-*`). Exit 1 when any gate fails or a scene throws. Docs: docs/tools/scene-lab.md.
  * `--matrix` (PO 10-13 low tier / close zoom): every scene runs at the high and the low quality tier, and scenes with a
  * game/follow camera also at zoom 1 and the closest player zoom (`zoomLimits[0]`), as `<scene>@<tier>-z<zoom>` rows. */
-const args = process.argv.slice(2), flag = (name: string) => { const i = args.indexOf(`--${name}`); return i >= 0 ? args[i + 1] : undefined; };
+const args = process.argv.slice(2), flag = (name: string) => catalogFlag(args, name);
 const dirs = (flag('dir') ? [resolve(flag('dir')!)] : [resolve('specs/scenes/catalog'), resolve('tests/scenes/catalog')]).filter(existsSync);
 const out = resolve(flag('out') ?? 'test-results/scene-catalog');
 const query = Object.fromEntries(args.flatMap((a, i) => a === '--query' ? [args[i + 1].split('=') as [string, string]] : []));

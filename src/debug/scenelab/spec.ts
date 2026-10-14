@@ -17,7 +17,7 @@ export interface SceneSpec {
   /** One R1–R6 production encounter, with the quality tier's authored crowd. */
   cureEncounter?: string;
   /** Production L10 graph/preset at a region checkpoint; fixture anchors stay on its existing slab. */
-  cureProgression?: { checkpoint?: string; authored?: boolean; /** Precharged fixture still needs an explicit release interaction. */ releaseReady?: boolean; /** Release-relative fixture clock for ending frame sequences. */ epilogueElapsed?: number; anchors?: Record<string, Point> };
+  cureProgression?: { checkpoint?: string; authored?: boolean; /** Precharged fixture still needs an explicit release interaction. */ releaseReady?: boolean; /** Restored active hold for exact boundary samples. */ chargeActive?: boolean; /** Release-relative fixture clock for ending frame sequences. */ epilogueElapsed?: number; anchors?: Record<string, Point> };
   /** Use the production L7 formation for authored survivor actors, without starting the mission population. */
   l7Group?: boolean;
   /** With `l7Group`: the production L7 bus (set piece, blocker), boarding of the authored survivors and the departure shot. */
@@ -242,6 +242,13 @@ export interface Expectations {
   megaCruiseErrorMax?: number;
   /** E32-AC10 no teleport: largest single-tick displacement of the Mega Alpha while resident (`metrics.megaAlpha.stepMaxM`). */
   megaStepMaxM?: number;
+  /** L10 finale numeric probes: closed ranges; missing probes fail. See metrics.cure. */
+  cure?: Partial<Record<'chargeTicks' | 'insideFrames' | 'boundaryFrames' | 'outsideFrames' | 'outsideAdvance' | 'releaseCount' | 'radius' | 'titleFrames' | 'creditsFrames' | 'playableTravel' | 'survivors' | 'fanFrames' | 'pullScale' | 'healthyDamage' | 'lateDeaths' | 'insideMisses' | 'mistPuffs' | 'smokeOverBudget', [number, number]>>;
+  /** Named controls must exist; checks final health, including each infected species. */
+  actorHealth?: Record<string, [number, number]>;
+  /** Actual travelled distance and maximum world X; seam fixtures must cross and return. */
+  actorTravel?: Record<string, [number, number]>;
+  actorMaxX?: Record<string, [number, number]>;
   /** L10-S6 mounted minigun gates (`metrics.minigun`): rounds fired, peak heat (0..1), frames locked out, frames mounted. */
   minigunRoundsMin?: number; minigunHeatPeakMin?: number; minigunLockedFramesMin?: number; minigunMountedFramesMin?: number;
   /** Lowest feet height of the courier from the first mount on (m): on the finale deck about 3.08, a drop to the street fails it. */

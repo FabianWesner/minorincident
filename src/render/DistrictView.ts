@@ -703,6 +703,8 @@ export class DistrictView extends Group {
   }
   /** Dispersal running (finale) or idle: fans, turbine rotors and valve wheels pick their rate from this. */
   setDispersalActive(on: boolean): void { this.spinActive = on; }
+  /** Scene Lab reads the same rotation nodes that are written to the rendered batches. */
+  dispersalProbe() { return { active: this.spinActive, level: this.spinLevel, angles: Object.fromEntries(this.spinAngles) }; }
   /** One shared angle per rotation node, written only into that node's split batch (no extra draw calls per placement). */
   private updateSpin(seconds: number): void {
     this.spinLevel += (+this.spinActive - this.spinLevel) * (1 - Math.exp(-1.2 * seconds));
