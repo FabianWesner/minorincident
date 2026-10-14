@@ -53,7 +53,7 @@ export class Npcs {
     }
     dx = this.waypoint.x - e.transform.x; dz = this.waypoint.z - e.transform.z;
     const routed = Math.hypot(dx, dz); if (routed < .01) return true;
-    const velocity = Math.min(speed, Math.max(0, distance - stop) * 4, routed * 4);
+    const velocity = Math.min(speed, Math.max(0, distance - stop) * 4, l3Follower ? routed * 4 : Infinity);
     const vx = dx / routed * velocity, vz = dz / routed * velocity;
     this.moveStep(e, vx / 60, vz / 60);
     this.world.spatial.set(e.id, e.transform.x, e.transform.z); return true;

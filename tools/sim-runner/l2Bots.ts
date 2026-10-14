@@ -132,7 +132,8 @@ export function runL2(world: SimWorld, mission: Mission, profile: L2Profile, opt
     }
     if (s.clusterReached && !cluster) {
       const [cx, cz] = l2.cluster.home;
-      cluster = { atApproach: s.clusterIds.map(id => world.entities.get(id)).filter((e): e is EntitySnapshot => !!e && e.health.current > 0 && e.transform.x >= cx - 18 && e.transform.x <= l2.checkpoint.gateX && Math.abs(e.transform.z - cz) <= 10).length, size: s.clusterIds.length };
+      // E20 §5.5 defines the cluster as a 15 m radius; a ±10 m Z strip discarded live members still inside that disk.
+      cluster = { atApproach: s.clusterIds.map(id => world.entities.get(id)).filter((e): e is EntitySnapshot => !!e && e.health.current > 0 && Math.hypot(e.transform.x - cx, e.transform.z - cz) <= 15).length, size: s.clusterIds.length };
     }
     if (s.gateClosedAt && !gate) gate = { closeS: (s.gateClosedAt - s.crossedAt) / 60, infectedInsideAfter: 0 };
     if (s.gateClosedAt) insideAfter = Math.max(insideAfter, alive().filter(e => inCheckpointZone(e.transform)).length);
