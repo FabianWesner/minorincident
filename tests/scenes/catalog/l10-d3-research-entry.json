@@ -1,0 +1,42 @@
+{
+  "name": "l10-d3-research-entry",
+  "note": "R5/R6 greybox: review clear story/pickup lane, low campus or ruined corridor silhouette, continuous seam and supported feet at all tiers/zooms.",
+  "seed": 32,
+  "ground": "district",
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        2427,
+        -45
+      ],
+      [
+        2507,
+        35
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        2467,
+        -5
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      2467,
+      -5
+    ],
+    "zoom": 1
+  },
+  "frames": 1,
+  "expect": {
+    "consoleErrors": 0
+  },
+  "time": "L9-crossing"
+}

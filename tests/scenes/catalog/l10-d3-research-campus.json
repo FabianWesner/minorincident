@@ -1,0 +1,42 @@
+{
+  "name": "l10-d3-research-campus",
+  "note": "Actual low research lab east forecourt, in front of the entry canopy. Review solid lab/roof/window silhouette, quarantine equipment, clear feet and no vanished geometry at both tiers/zooms.",
+  "seed": 32,
+  "ground": "district",
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        2670,
+        -10
+      ],
+      [
+        2765,
+        90
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        2725,
+        23
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      2725,
+      23
+    ],
+    "zoom": 1
+  },
+  "frames": 1,
+  "expect": {
+    "consoleErrors": 0
+  },
+  "time": "L9-crossing"
+}
