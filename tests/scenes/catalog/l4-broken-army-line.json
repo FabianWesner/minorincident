@@ -1,0 +1,11 @@
+{
+  "name": "l4-broken-army-line",
+  "note": "Army sandbags break under damage and expose an open gap. The nearby courier sees no rebuild prompt and no dashed placement rails; military collapse directs her toward the cellar. Intact cover still blocks before the hit.",
+  "ground": "sidewalk", "time": "L4", "size": 16,
+  "barricadeSlots": [{ "id": "l4-line", "groupId": "l4-line", "a": { "x": -0.7, "z": 0 }, "b": { "x": 0.7, "z": 0 }, "height": 0.85, "depth": 1.19, "initialHp": 500, "sandbag": true, "playerBuildable": false }],
+  "actors": [{ "id": "courier", "kind": "courier", "at": [0, 1.5], "loadout": ["weapon.army-mg", "weapon.fire-axe"] }, { "id": "corgi", "kind": "corgi", "at": [1.3, 2] }],
+  "script": [{ "frame": 30, "effect": { "barricadeHit": "l4-line", "amount": 10000 } }],
+  "camera": { "mode": "follow", "actor": "courier", "zoom": 1 },
+  "frames": 120, "shots": [1, 30, 60, 119],
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}

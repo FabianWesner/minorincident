@@ -1,0 +1,332 @@
+{
+  "browser": {
+    "cases": 40,
+    "passed": 40,
+    "movementCases": 24,
+    "guidanceCases": 8,
+    "armyLineCases": 8,
+    "sixMetreDestinations": 288,
+    "maxErrorM": 0.14752912093935125,
+    "e26ExistingBrowserCase": "passed"
+  },
+  "scenes": {
+    "webgl": {
+      "passed": 18,
+      "cases": 18,
+      "rows": [
+        {
+          "name": "l4-armory-corner-left@high-z0.5",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-armory-corner-left@high-z1",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-armory-corner-left@high-z1.5",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-armory-corner-left@low-z0.5",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-armory-corner-left@low-z1",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-armory-corner-left@low-z1.5",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-broken-army-line@high-z0.5",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-broken-army-line@high-z1",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-broken-army-line@high-z1.5",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-broken-army-line@low-z0.5",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-broken-army-line@low-z1",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-broken-army-line@low-z1.5",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-plaza-walk-left@high-z0.5",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-plaza-walk-left@high-z1",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-plaza-walk-left@high-z1.5",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-plaza-walk-left@low-z0.5",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-plaza-walk-left@low-z1",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-plaza-walk-left@low-z1.5",
+          "pass": true,
+          "errors": 0
+        }
+      ]
+    },
+    "webgpu": {
+      "passed": 18,
+      "cases": 18,
+      "rows": [
+        {
+          "name": "l4-armory-corner-left@high-z0.5",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-armory-corner-left@high-z1",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-armory-corner-left@high-z1.5",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-armory-corner-left@low-z0.5",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-armory-corner-left@low-z1",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-armory-corner-left@low-z1.5",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-broken-army-line@high-z0.5",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-broken-army-line@high-z1",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-broken-army-line@high-z1.5",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-broken-army-line@low-z0.5",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-broken-army-line@low-z1",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-broken-army-line@low-z1.5",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-plaza-walk-left@high-z0.5",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-plaza-walk-left@high-z1",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-plaza-walk-left@high-z1.5",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-plaza-walk-left@low-z0.5",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-plaza-walk-left@low-z1",
+          "pass": true,
+          "errors": 0
+        },
+        {
+          "name": "l4-plaza-walk-left@low-z1.5",
+          "pass": true,
+          "errors": 0
+        }
+      ]
+    }
+  },
+  "timing": {
+    "runner": "91.98.11.241",
+    "passed": 184,
+    "failed": 0,
+    "files": 22
+  },
+  "fullHetzner": {
+    "runner": "2.28.24.66",
+    "exitCode": 1,
+    "passed": 2647,
+    "failed": 6,
+    "skipped": 9,
+    "functionalPassed": 2469,
+    "functionalFailed": 0,
+    "functionalExecutedFiles": 365,
+    "failedTimingTitles": [
+      "T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms",
+      "T-E32-13-perf-200 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling",
+      "T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+      "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+      "T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+      "T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95"
+    ],
+    "L4Files": [
+      {
+        "file": "levels/L4-barricade-prompts.test.ts",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "file": "levels/L4-botprobe.test.ts",
+        "passed": 0,
+        "failed": 0
+      },
+      {
+        "file": "levels/L4-collapse.test.ts",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "file": "levels/L4-convoy.test.ts",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "file": "levels/L4-guidance.test.ts",
+        "passed": 1,
+        "failed": 0
+      },
+      {
+        "file": "levels/L4-movement.test.ts",
+        "passed": 4,
+        "failed": 0
+      },
+      {
+        "file": "levels/L4-po-round.test.ts",
+        "passed": 5,
+        "failed": 0
+      },
+      {
+        "file": "levels/L4-probe.test.ts",
+        "passed": 0,
+        "failed": 0
+      },
+      {
+        "file": "levels/L4-respawn.test.ts",
+        "passed": 6,
+        "failed": 0
+      },
+      {
+        "file": "levels/L4.test.ts",
+        "passed": 23,
+        "failed": 0
+      }
+    ]
+  },
+  "verifyE22": {
+    "exitCode": 0,
+    "remoteSim": {
+      "passed": 85,
+      "failed": 0,
+      "executedFiles": 21
+    },
+    "browser": {
+      "passed": 88,
+      "failed": 0
+    },
+    "nativePerf": {
+      "passed": 2,
+      "failed": 0
+    },
+    "commandExitCodes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "nativeL4Performance": {
+    "webgl": {
+      "passed": 2,
+      "cases": 2,
+      "reservationSeconds": 224.1
+    },
+    "webgpu": {
+      "passed": 2,
+      "cases": 2,
+      "reservationSeconds": 372.6
+    }
+  },
+  "L4MainLevelFile": {
+    "passed": 23,
+    "failed": 0,
+    "allL4ExecutedTests": 48
+  },
+  "newL4SimRegressions": {
+    "movement": 4,
+    "guidanceCheckpoint": 1,
+    "armyLine": 1,
+    "failed": 0
+  },
+  "typecheck": "passed",
+  "lint": "passed",
+  "productionBuild": "passed"
+}

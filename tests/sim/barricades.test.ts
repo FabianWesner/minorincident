@@ -10,6 +10,19 @@ const step = (w: SimWorld, n: number) => { for (let i = 0; i < n; i++) w.update(
 function teleport(w: SimWorld, x: number, z: number) { const p = w.entities.get(1)!; Object.assign(p.transform, { x, z, y: .705 }); w.physics.playerBody!.setTranslation(p.transform, true); w.player!.locomotion.reset(); w.spatial.set(1, x, z); }
 function slot(w: SimWorld, id = 'door') { return w.entities.values().find(e => e.barricade?.slot.id === id)!; }
 
+test('destructible cover marked non-buildable cannot auto-brace, repair or rebuild', async () => {
+  const w = await world('horde-arena');
+  const id = w.barricades!.spawn({ id: 'army-cover', groupId: 'army', a: { x: -1, z: 0 }, b: { x: 1, z: 0 }, height: 1, boardUp: true, initialHp: 200, playerBuildable: false });
+  const e = w.entities.get(id)!;
+  w.hazards!.hit(id, 50, 'bullet'); teleport(w, 0, 1.3); step(w, 120);
+  expect(e.health.current).toBe(150); expect(e.interactable!.enabled).toBe(false);
+  w.hazards!.hit(id, 1000, 'bullet'); step(w, 120);
+  expect(e.barricade!.intact).toBe(false); expect(e.interactable!.enabled).toBe(false);
+  w.events.emit({ type: 'interact.completed', tick: w.tick, id, kind: 'barricade', cycle: 0 });
+  expect(e.barricade!.intact).toBe(false);
+  expect(w.barricades!.playerBuildable(e)).toBe(false);
+});
+
 test('T-E26-02 @E26-AC02 prop-yard 300 authored bodies sleep after 1s without interaction', async () => {
   const w = await world('prop-yard'); step(w, 60);
   expect(w.props!.items).toHaveLength(300); expect(w.props!.items.filter(p => p.awake)).toHaveLength(0);

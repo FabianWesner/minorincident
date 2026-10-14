@@ -1,0 +1,13 @@
+{
+  "name": "l4-plaza-walk-left",
+  "note": "Courier with army MG walks six metres screen-left across open L4 plaza tiles; watch her leave the corgi behind briefly and stop on the target. Game camera, both quality tiers and zoom limits. Movement input regression is in l4-plaza-movement.spec.ts.",
+  "ground": "district", "time": "L4", "tier": 0,
+  "layout": { "level": "L4", "district": "D-FAIR", "bbox": [[-35, -19], [-8, 21]] },
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [-18, 4.5], "loadout": ["weapon.army-mg", "weapon.fire-axe"], "state": { "moveTo": [-22.242640687, 8.742640687], "pace": "run" } },
+    { "id": "corgi", "kind": "corgi", "at": [-17, 5.5] }
+  ],
+  "camera": { "mode": "follow", "actor": "courier", "zoom": 1 },
+  "frames": 180, "shots": [1, 30, 60, 90, 179],
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}
