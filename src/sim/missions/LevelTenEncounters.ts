@@ -1,6 +1,5 @@
-import { infectedDef } from '../../data/infected';
 import { cure } from '../../levels/L10/district';
-import { cureEncounters, cureEncounterSlots, cureMedkits } from '../../levels/L10/encounters';
+import { cureEncounters, cureEncounterSlots, cureEncounterSpot, cureMedkits } from '../../levels/L10/encounters';
 import type { SimWorld } from '../world/SimWorld';
 
 export interface CureEncounterState { spawned: Record<string, number>; medkits: Record<string, number> }
@@ -20,21 +19,21 @@ export class LevelTenEncounters {
       this.state.medkits[kit.id] = w.pickups!.spawn('medkit', { x: kit.at[0], z: kit.at[1] });
     }
     for (const group of cureEncounters) {
+      const assault = group.region === 'dispersal-complex';
+      if (assault && !w.missions.state.states['charge-active']) continue;
       const region = cure.regions.find(r => r.id === group.region)!;
       // Spatial entry keeps the first-minute crash population at six even with high-tier seam prefetch.
       // Later threats are beyond the entrance pickup; walking past without interacting still reveals them.
-      if (group.region !== 'crash-outskirts' && (w.missions.state.stats.time < 60 || player.transform.x < cure.anchors[region.checkpoint][0])) continue;
-      for (const slot of cureEncounterSlots(group, ai.director.tier)) {
-        if (this.state.spawned[slot.key] || !chunks.resident(slot.x, slot.z) || ai.director.count >= ai.director.cap || !ai.pool.length) continue;
-        const radius = infectedDef(slot.archetype).radius;
-        // Small deterministic search handles furniture without moving an encounter onto the alternative road.
-        for (let attempt = 0; attempt < 17; attempt++) {
-          const angle = attempt * Math.PI / 4, distance = Math.ceil(attempt / 8) * 1.5;
-          const at = { x: slot.x + Math.cos(angle) * distance, z: slot.z + Math.sin(angle) * distance };
-          if (!chunks.resident(at.x, at.z) || !ai.nav.clear(at.x, at.z, radius) || !ai.director.safe(slot.archetype, at)) continue;
-          this.state.spawned[slot.key] = ai.spawn(slot.archetype, at, { state: 'idle', yaw: Math.PI,
+      if (!assault && group.region !== 'crash-outskirts' && (w.missions.state.stats.time < 60 || player.transform.x < cure.anchors[region.checkpoint][0])) continue;
+      const slots = cureEncounterSlots(group, ai.director.tier);
+      // Boundary overlap can leave only a few slots: admit the mixed threats before filling with regulars.
+      if (assault) slots.sort((a, b) => Number(a.archetype === 'infected.runner') - Number(b.archetype === 'infected.runner'));
+      for (const slot of slots) {
+        if (this.state.spawned[slot.key] || !chunks.resident(slot.x, slot.z) || ai.director.count >= ai.director.cap - ai.director.reserved - ai.director.pendingTurns || !ai.pool.length) continue;
+        const at = cureEncounterSpot(ai.nav, slot, (x, z) => chunks.resident(x, z) && ai.director.safe(slot.archetype, { x, z }), assault ? 129 : 17);
+        if (at) {
+          this.state.spawned[slot.key] = ai.spawn(slot.archetype, at, { state: assault ? 'chase' : 'idle', yaw: Math.PI,
             ...(slot.archetype === 'infected.alpha' ? { cureRegion: group.region } : {}) });
-          break;
         }
       }
     }

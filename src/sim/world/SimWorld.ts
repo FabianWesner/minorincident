@@ -1,4 +1,6 @@
 import { finaleGunPlacement } from '../../data/minigun';
+import { curePursuitRoute } from '../../levels/L10/district';
+import { installMegaPursuit } from '../ai/MegaPursuit';
 import { ChunkResidency } from './ChunkResidency';
 import { layoutTerrainChunks } from './TerrainChunks';
 import { TrapRescue } from './TrapRescue';
@@ -299,6 +301,8 @@ export class SimWorld implements Lifecycle {
     for (const d of districts.districts) for (const slot of d.gameplay.barricades ?? []) this.barricades!.spawn({ ...slot, a: { x: slot.a.x + d.origin[0], z: slot.a.z + d.origin[1] }, b: { x: slot.b.x + d.origin[0], z: slot.b.z + d.origin[1] } });
     installCampaignNpcs(this);
     if (composition.id === 'L10') {
+      const entrance = curePursuitRoute.nodes[0];
+      installMegaPursuit(this, { route: curePursuitRoute, spawn: { x: entrance.x - 80, z: entrance.z } });
       const d = districts.districts.find(d => d.id === 'D-CURE');
       const at = d?.layout.anchors['dispersal-origin'];
       if (d && at) this.installMountedGun(finaleGunPlacement({ x: at.position[0] + d.origin[0], z: at.position[2] + d.origin[1] }));
