@@ -1,6 +1,6 @@
 import { allyOnScreen } from '../outbreak/Allies';
 import { Rng } from '../../core/Rng';
-import { l4, l4FuelCrater, l4Edges, l4Glass } from '../../data/l4';
+import { l4, l4FuelCrater, l4Edges, l4Emergence, l4Glass } from '../../data/l4';
 import type { EntitySnapshot } from '../world/types';
 import type { SimWorld } from '../world/SimWorld';
 import type { L4State } from './types';
@@ -85,7 +85,11 @@ export class L4Spectacle {
     }
     // Holding in the lake garden: turn the hull toward the next target, fire every 8-12 s.
     if (tick < s.tankFireAt) return;
-    const clear = (p: Point) => this.clearOfAllies(p, l4.tank.minDistM), target = this.cluster(3, clear) ?? this.cluster(1, clear);
+    const clear = (p: Point) => this.clearOfAllies(p, l4.tank.minDistM);
+    let target = this.cluster(3, clear) ?? this.cluster(1, clear);
+    // l4 merge fix: once the horde is locked in melee with the lines (every infected within minDistM of an ally) no cluster is safe to shell.
+    // After one missed second the tank shells the busiest street mouth outside the safety radius instead of idling for 10+ s.
+    if (!target && this.dueMisses++ >= 1) target = this.streetBarrage(clear);
     if (!target) { s.tankFireAt = tick + ticks(1); return; }
     const want = -Math.atan2(target.at.z - tank.transform.z, target.at.x - tank.transform.x);
     const delta = Math.atan2(Math.sin(want - tank.transform.yaw), Math.cos(want - tank.transform.yaw));
@@ -93,7 +97,22 @@ export class L4Spectacle {
     if (Math.abs(delta) > step) { tank.transform.yaw += Math.sign(delta) * step; return; }
     this.fireTank(tank, target.at);
   }
+  /** The street mouth (no building doors) that is clear of the courier and every ally and has the most infected within 25 m (ties: nearest to the courier). */
+  private streetBarrage(clear: (p: Point) => boolean): { at: Point; count: number } | null {
+    let best: { at: Point; count: number; d: number } | null = null;
+    const live = this.ai.active.filter(e => e.health.current > 0 && !e.hidden && !e.infected?.hidden && !e.infectionRise);
+    for (const m of l4Emergence) {
+      if (m.door) continue;
+      const at = { x: m.at[0], z: m.at[1] };
+      if (!clear(at)) continue;
+      const count = live.filter(e => dist(e.transform, at) <= 25).length, d = dist(at, this.player.transform);
+      if (!best || count > best.count || (count === best.count && d < best.d)) best = { at, count, d };
+    }
+    return best && { at: best.at, count: best.count };
+  }
+  private dueMisses = 0;
   fireTank(tank: EntitySnapshot, at: Point): void {
+    this.dueMisses = 0;
     const s = this.s(), tick = this.world.tick, rng = this.rng;
     s.tankShots++;
     const muzzle = { x: tank.transform.x + Math.cos(-tank.transform.yaw) * 4.2, z: tank.transform.z + Math.sin(-tank.transform.yaw) * 4.2 };
