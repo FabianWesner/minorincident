@@ -1,0 +1,14 @@
+{
+  "numPassedTests": 12,
+  "numFailedTests": 1,
+  "numPendingTests": 35,
+  "success": false,
+  "failures": [
+    {
+      "test": "T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+      "message": [
+        "AssertionError: expected 4.447555999999167 to be less than or equal to 4\n    at /srv/mi/jobs/l10-e3-68b109-95306-1791990988/tests/sim/performance/mega-moves.test.ts:24:104\n    at file:///srv/mi/jobs/l10-e3-68b109-95306-1791990988/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    }
+  ]
+}

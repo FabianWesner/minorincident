@@ -1,0 +1,75 @@
+{
+  "seed": 32,
+  "ground": "district",
+  "time": "L10-night",
+  "dof": false,
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "frames": 1200,
+  "sheet": 400,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "lodPlaceholderFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "name": "l10-e3-assault",
+  "note": "Production assault slots around the dispersal hold zone, game camera; dogs and regular Alphas flank the crowd. Both tiers retain every corpse.",
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        3927,
+        -100
+      ],
+      [
+        4077,
+        50
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        4002,
+        -27
+      ],
+      "yaw": 210
+    }
+  ],
+  "cureProgression": {
+    "checkpoint": "cure-disperse-ready",
+    "authored": true
+  },
+  "cureEncounter": "dispersal-assault",
+  "infectedCap": 200,
+  "megaAlpha": {
+    "at": [
+      3942,
+      -25
+    ]
+  },
+  "minigun": {
+    "at": [
+      3990,
+      3,
+      -33
+    ],
+    "yaw": 0
+  },
+  "script": [
+    {
+      "frame": 20,
+      "actor": "courier",
+      "do": {
+        "interact": true
+      }
+    }
+  ]
+}
