@@ -1,0 +1,10 @@
+{
+  "extends": "../../../specs/scenes/qa-l3-squad-follow.json",
+  "name": "l3-s1-getup-balance",
+  "note": "L3 S1 squad formation at the game camera. Review officer/courier separation, visible pistol aim, downed bodies and the open route at both tiers and zooms. This isolated fixture reuses qa-l3-squad-follow; production mission pacing and half-strength police are captured separately by tools/scenelab/l3-s1-balance.ts.",
+  "layout": {
+    "level": "L3",
+    "district": "D-CORRIDOR",
+    "bbox": [[-126, -12], [-50, 12]]
+  }
+}
