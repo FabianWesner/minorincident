@@ -19,7 +19,7 @@ test('the finale platform deck and its stair are walkable supports, a step at a 
   expect(topAt(-5, -4.5)).toBeCloseTo(3.08, 2); // deck corner near the stair end
   // Walk the stair from the foot (x ~ 0.2) up to the top (x = -4) along z = -6: no step above the 0.4 m autostep.
   let previous = 0, maxStep = 0;
-  for (let x = 0.15; x >= -4; x -= .05) { const top = topAt(x, -6); maxStep = Math.max(maxStep, top - previous); previous = top; }
+  for (let x = 0.15; x >= -4.2; x -= .05) { const top = topAt(x, -6); maxStep = Math.max(maxStep, top - previous); previous = top; }
   expect(previous).toBeCloseTo(3.08, 2);
   expect(maxStep).toBeLessThanOrEqual(.4);
   // The stair is as wide as drawn (1.3 m) and not wider.

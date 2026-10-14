@@ -44,8 +44,12 @@ test('T-E32-18g too far cannot mount; a deck gun lifts the gunner to the deck an
   const { w, gun } = await manned();
   teleport(w, -6, 4); press(w); expect(gun.mounted).toBe(false);
   const deck = await manned(3); press(deck.w); expect(deck.gun.mounted).toBe(true);
-  step(deck.w, 3); expect(deck.w.entities.get(1)!.transform.y).toBeCloseTo(3.7, 2);
+  // Feet on the deck top (the gun origin + 8 cm of grating), body centre .7 above them.
+  step(deck.w, 3); expect(deck.w.entities.get(1)!.transform.y).toBeCloseTo(3.78, 2);
   press(deck.w); expect(deck.gun.mounted).toBe(false);
+  expect(deck.w.entities.get(1)!.transform.y).toBeGreaterThan(3.6);
+  // On the street under the deck gun (planar distance is fine, the height is not): no mount.
+  const below = await manned(3); teleport(below.w, -1.2, 4, .705); press(below.w); expect(below.gun.mounted).toBe(false);
 });
 
 test('T-E32-18h spin-up first, then an ordinary infected (40 HP) falls within 0.25 s of landed fire; no carried weapon fires', async () => {
