@@ -108,7 +108,7 @@ export class Civilians {
       const c = e.civilian; if (!c || c.l1 || c.state === 'infected' || c.state === 'finished') continue;
       if (!c.adult) continue;
       if (e.combat && e.combat.staggerUntil > tick && c.knockedUntil <= tick) continue;
-      if (c.vehicleYield && c.vehicleYield.until > tick && ['calm', 'hide', 'alarmed'].includes(c.state)) {
+      if (c.vehicleYield && c.vehicleYield.until > tick && ['calm', 'hide', 'alarmed', 'flee'].includes(c.state)) {
         this.world.npcs!.move(e, c.vehicleYield.target, 2.8, c, .15); continue;
       }
       if (c.vehicleYield && c.vehicleYield.until <= tick) delete c.vehicleYield;

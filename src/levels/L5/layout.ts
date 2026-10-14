@@ -1,4 +1,4 @@
-import { l4, l4Anchors, l4Cars, l4ConvoyStations, l4Line, l4Route, l4RoutePose } from '../../data/l4';
+import { l4, l4FuelCrater, l4Anchors, l4Cars, l4ConvoyStations, l4Line, l4Route, l4RoutePose } from '../../data/l4';
 import subwayLayout from '../../../public/assets/layouts/D-SUBWAY.layout.json' with { type: 'json' };
 import { l5, l5Anchors, l5Survivors } from '../../data/l5';
 import { findClearSpot, footprints, moveOffSolids, freestanding, obstaclesOf } from '../placementClearance';
@@ -49,7 +49,7 @@ export const l5Dressing: readonly L5Dressing[] = [
   // ---------------------------------------------------------------- the war's wrecks: the convoy column, the tank where it stopped, the fuel-truck crater
   ...convoy,
   d('military', 'veh.tank', l4.tank.path[3][0] + .4, l4.tank.path[3][1] + 1.5, { yaw: H + .35, decay: 'wrecked', fixed: true }),
-  d('crater', 'decay.fuel-truck-crater', l4.fuelTruck.x, l4.fuelTruck.z, { yaw: H, fixed: true }),
+  d('crater', 'decay.fuel-truck-crater', l4FuelCrater.x, l4FuelCrater.z, { yaw: l4FuelCrater.yaw, fixed: true }),
   d('crater', 'decay.crater', -24.5, 6.5, { yaw: .3, fixed: true }), d('crater', 'decay.crater', -27, -5, { yaw: 1.2, fixed: true }), d('crater', 'decay.crater', -8, 14.5, { yaw: 2.1, fixed: true }),
   ...burnedCars,
   // ---------------------------------------------------------------- blown sandbag lines, abandoned nests, barriers pushed aside, wreckage
@@ -166,7 +166,7 @@ export function levelFiveLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     for (const c of subwayLayout.colliders.filter(c => c.id.startsWith('l6-0/'))) {
       layout.colliders.push({ ...c, minTier: 0, maxTier: 5, id: c.id.replace('l6-0/', 'l5-station/'), aabb: { min: [c.aabb.min[0] + station.position[0], c.aabb.min[1] - .45, c.aabb.min[2] + station.position[2]], max: [c.aabb.max[0] + station.position[0], c.aabb.max[1] - .45, c.aabb.max[2] + station.position[2]] } });
     }
-    moveOffSolids(layout, freestanding);
+    moveOffSolids(layout, p => freestanding(p) || p.assetId === 'decay.fuel-truck-crater');
     return layout;
   });
 }
