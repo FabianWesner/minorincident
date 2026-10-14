@@ -5,14 +5,30 @@ import { crowdAppearance, hairTones, skinTones, infectedSkinTones, trouserTones,
 import palette from '../../assets/palette.json';
 import manifest from '../../assets/manifest.json';
 const accessoryKinds = new Map((manifest as unknown as {id: string; accessory?: {slot: string}}[]).map(a => [a.id, a.accessory?.slot]));
+import { infectedDefinitions } from '../../data/infected';
+import type { EntitySnapshot } from '../../sim/world/types';
 import { characterNodes } from '../../data/survivor';
+export const crowdAccessoryIds = manifest.filter(a => a.id.startsWith('acc.') && !a.aliasOf).map(a => a.id).sort();
+/** Resolve identity without consulting pose, health, quality, LOD or pool membership. */
+export function resolveCrowdAppearance(e: EntitySnapshot, ids: readonly string[] = crowdAccessoryIds) {
+  const selected = e.appearance?.asset ?? e.civilian?.model ?? e.infected?.model ?? e.infected?.variant ?? e.archetype;
+  const model = selected.startsWith('infected.') ? infectedDefinitions.find(def => def.id === selected)?.asset ?? selected : selected;
+  const uniform = /firefighter|police|guard|hazmat|riot|armored|lab-|patient-zero|infected\.(dog|cat|crow|lion|gorilla|elephant|zebra|flamingo)/.test(model);
+  const eligible = !uniform && !e.civilian?.zooAnimal && !e.archetype.startsWith('healthy.') && (!e.infected || ['infected.runner', 'infected.sprinter'].includes(e.archetype));
+  const channels = crowdAppearance(e.id), explicit = e.appearance?.accessories.find(id => ids.includes(id));
+  const slot = eligible ? explicit ? ids.indexOf(explicit) + 1 : channels.accessory % (ids.length + 1) : 0;
+  const accessory = slot ? ids[slot - 1] : null, kind = accessoryKinds.get(accessory ?? '');
+  const hidesHair = kind === 'hat' || kind === 'hair' || !!accessory?.startsWith('acc.placeholder-');
+  return { ...channels, model, outfit: model, head: model, headwear: kind === 'hat' ? accessory : accessory ? null : model,
+    accessory, accessories: e.appearance?.accessories.length ? e.appearance.accessories : accessory ? [accessory] : [], slot, hidesHair, tint: e.appearance?.tint ?? shirtTones[channels.shirt], infectedSkin: !!e.infected };
+}
 const colors = { hair: hairTones.map(c => new Color(c)), skin: skinTones.map(c => new Color(c)), infected: infectedSkinTones.map(c => new Color(c)), trousers: trouserTones.map(c => new Color(c)), shirt: shirtTones.map(c => new Color(c)) };
 /** _variant.xyz: shirt RGB in the remainder modulo 2; hair/skin/trousers in integer pairs.
- * X also contains five accessory slot bits and a covered hair/headwear bit above the three hair bits. W remains the existing pose blend. */
+ * X also contains five accessory slot bits and a covered hair/headwear bit above the three hair bits. Z also carries the accessory tint palette index above the trouser bits. W remains the pose blend. */
 export function packedAppearance(id: number, shirt: Color, accessory = 0, hidesHair = false): [number, number, number] {
   const a = crowdAppearance(id);
   // Keep the remainder strictly below 2, including HDR story tints.
-  return [Math.min(1, shirt.r) + 2 * a.hair + 16 * (accessory % 32) + (hidesHair ? 512 : 0), Math.min(1, shirt.g) + 2 * a.skin, Math.min(1, shirt.b) + 2 * a.trousers];
+  return [Math.min(1, shirt.r) + 2 * a.hair + 16 * (accessory % 32) + (hidesHair ? 512 : 0), Math.min(1, shirt.g) + 2 * a.skin, Math.min(1, shirt.b) + 2 * a.trousers + 16 * crowdAppearance(id + 503).shirt];
 }
 export function writeCrowdAppearance(target: InstancedBufferAttribute, index: number, id: number, shirt: Color, blend: number, accessory = 0, hidesHair = false): void {
   target.setXYZW(index, ...packedAppearance(id, shirt, accessory, hidesHair), blend);
@@ -26,19 +42,20 @@ const pickColor = (palette: Color[], index: Node<'float'>) => {
 export function crowdSkinColor(infected = false) {
   return varying(pickColor(infected ? colors.infected : colors.skin, attribute('_variant', 'vec4').y.div(2).floor().mod(6)), 'crowdSkinTone');
 }
-/** No new vertex attribute: _parts.y tags skin (-1), hair (-2), trousers (-3); positive values retain shirt shading. */
+/** No new vertex attribute: _parts.y tags skin (-1), hair (-2), trousers (-3), accessory hat (-4) and hair (-5); positive values retain shirt shading. */
 export function crowdAppearanceColor(infected = false) {
   const variant = attribute('_variant', 'vec4'), parts = attribute('_parts', 'vec4'), source = attribute('color', 'vec3');
   const shirt = variant.xyz.mod(2);
   const hair = pickColor(colors.hair, variant.x.div(2).floor().mod(8));
   const skin = pickColor(infected ? colors.infected : colors.skin, variant.y.div(2).floor().mod(6));
   const trousers = pickColor(colors.trousers, variant.z.div(2).floor().mod(8));
+  const accessory = pickColor(colors.shirt, variant.z.div(16).floor().mod(12));
   const garment = parts.y.greaterThan(0).select(shirt.mul(parts.y), source);
   // Preserve the authored highlights and seams instead of flattening every material to one tone.
   const shade = source.dot(vec3(.2126, .7152, .0722));
   // Palette selection belongs to the vertices: repeating eight-tone branches for every shaded pixel costs frame time.
   return varying(parts.y.equal(-1).select(skin.mul(shade.div(infected ? .35 : .45).clamp(.65, 1.2)),
-    parts.y.equal(-2).select(hair.mul(shade.div(.12).clamp(.65, 1.3)), parts.y.equal(-3).select(trousers.mul(shade.div(.1).clamp(.65, 1.25)), garment))), 'crowdAppearanceColor');
+    parts.y.equal(-4).select(source.mul(accessory), parts.y.equal(-5).select(source.mul(hair), parts.y.equal(-2).select(hair.mul(shade.div(.12).clamp(.65, 1.3)), parts.y.equal(-3).select(trousers.mul(shade.div(.1).clamp(.65, 1.25)), garment))))), 'crowdAppearanceColor');
 }
 const tokenColors = Object.fromEntries(Object.entries(palette).map(([name, hex]) => [name, new Color(hex)])) as Record<keyof typeof palette, Color>;
 const headwearColors = Object.entries(palette).filter(([name]) => /^cap/.test(name)).map(([, hex]) => new Color(hex));

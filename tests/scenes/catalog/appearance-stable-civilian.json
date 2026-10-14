@@ -1,0 +1,203 @@
+{
+  "name": "appearance-stable-civilian",
+  "seed": 2,
+  "ground": "asphalt",
+  "size": 30,
+  "time": "L4",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        -9
+      ]
+    },
+    {
+      "id": "cap",
+      "kind": "pedestrian",
+      "at": [
+        -1.2,
+        0
+      ],
+      "look": {
+        "model": "npc.civilian-man-b",
+        "tint": "#46734d",
+        "accessories": [
+          "acc.hat-baseball-cap"
+        ]
+      },
+      "state": {
+        "infect": {
+          "instant": true
+        }
+      }
+    },
+    {
+      "id": "beanie",
+      "kind": "pedestrian",
+      "at": [
+        0,
+        0
+      ],
+      "look": {
+        "model": "npc.civilian-man-b",
+        "tint": "#46734d",
+        "accessories": [
+          "acc.hat-beanie"
+        ]
+      },
+      "state": {
+        "infect": {
+          "instant": true
+        }
+      }
+    },
+    {
+      "id": "hat",
+      "kind": "pedestrian",
+      "at": [
+        1.2,
+        0
+      ],
+      "look": {
+        "model": "npc.civilian-man-b",
+        "tint": "#46734d",
+        "accessories": [
+          "acc.hat-bucket-hat"
+        ]
+      },
+      "state": {
+        "infect": {
+          "instant": true
+        }
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      1.5
+    ],
+    "zoom": 1
+  },
+  "frames": 360,
+  "sheet": 30,
+  "trace": true,
+  "script": [
+    {
+      "frame": 30,
+      "actor": "cap",
+      "do": {
+        "hit": {
+          "heavy": true,
+          "amount": 1,
+          "from": [
+            0,
+            -6
+          ]
+        }
+      }
+    },
+    {
+      "frame": 150,
+      "actor": "cap",
+      "do": {
+        "hit": {
+          "heavy": true,
+          "amount": 1000,
+          "from": [
+            0,
+            -6
+          ]
+        }
+      }
+    },
+    {
+      "frame": 30,
+      "actor": "beanie",
+      "do": {
+        "hit": {
+          "heavy": true,
+          "amount": 1,
+          "from": [
+            0,
+            -6
+          ]
+        }
+      }
+    },
+    {
+      "frame": 150,
+      "actor": "beanie",
+      "do": {
+        "hit": {
+          "heavy": true,
+          "amount": 1000,
+          "from": [
+            0,
+            -6
+          ]
+        }
+      }
+    },
+    {
+      "frame": 30,
+      "actor": "hat",
+      "do": {
+        "hit": {
+          "heavy": true,
+          "amount": 1,
+          "from": [
+            0,
+            -6
+          ]
+        }
+      }
+    },
+    {
+      "frame": 150,
+      "actor": "hat",
+      "do": {
+        "hit": {
+          "heavy": true,
+          "amount": 1000,
+          "from": [
+            0,
+            -6
+          ]
+        }
+      }
+    },
+    {
+      "frame": 240,
+      "actor": "cap",
+      "do": {
+        "corpse": true
+      }
+    },
+    {
+      "frame": 240,
+      "actor": "beanie",
+      "do": {
+        "corpse": true
+      }
+    },
+    {
+      "frame": 240,
+      "actor": "hat",
+      "do": {
+        "corpse": true
+      }
+    }
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "appearanceChangesMax": 0,
+    "appearanceActorsMin": 3,
+    "appearanceCorpsesMin": 3
+  }
+}

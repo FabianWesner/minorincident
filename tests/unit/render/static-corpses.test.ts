@@ -9,6 +9,7 @@ import { installPaletteVariantCache } from '../../../src/render/Renderer';
 import { packCrowdParts } from '../../../src/assets/crowd';
 import { bakeInfected, framesPerClip, infectedClips } from '../../../src/render/characters/bakeInfected';
 import { createInfectedPlaceholder } from '../../../src/render/characters/infectedPlaceholder';
+import { resolveCrowdAppearance } from '../../../src/render/characters/CrowdAppearance';
 import { StaticCorpses } from '../../../src/render/characters/StaticCorpses';
 import { CrowdPosePalette } from '../../../src/render/characters/CrowdPosePalette';
 import type { EntitySnapshot } from '../../../src/sim/world/types';
@@ -149,4 +150,23 @@ test('palette corpse pages share shader keys while tint updates target each page
   const get = (mesh: InstancedMesh) => objects.get(mesh, mesh.material, scene, camera, lights, context, null).getCacheKey();
   expect(get(a)).toBe(get(b)); expect(a.count).toBe(1); expect(b.count).toBe(1);
   objects.dispose(); pool.dispose(); baked.geometry.dispose(); source.dispose(); materials.dispose(); lighting.dispose();
+});
+
+test('covered hair in triangle soup removes complete triangles instead of shifting the remaining faces @E07 @E18', () => {
+  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const source = baked.geometry.index ? baked.geometry.toNonIndexed() : baked.geometry.clone();
+  const parts = source.getAttribute('_parts');
+  // One triangle has mixed material tags; every other triangle remains visible.
+  for (let i = 0; i < parts.count; i++) { parts.setY(i, 0); parts.setW(i, 0); }
+  parts.setY(0, -2);
+  const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial();
+  const e = { id: 27, archetype: 'infected.runner', infected: { variant: 'inf.common-worker' } } as unknown as EntitySnapshot;
+  const look = { ...resolveCrowdAppearance(e), slot: 1, hidesHair: true, accessory: 'acc.hat-beanie' };
+  try {
+    pool.place(e, 'runner', source, material, baked.clip, 0, new Matrix4(), new Color('white'), [0, 0, 0], String(e.id), [], look);
+    const geometry = (pool.children[0] as InstancedMesh).geometry;
+    expect(geometry.index).toBeNull();
+    expect(geometry.getAttribute('position').count).toBe(source.getAttribute('position').count - 3);
+    expect(geometry.getAttribute('position').count % 3).toBe(0);
+  } finally { pool.dispose(); material.dispose(); source.dispose(); baked.geometry.dispose(); }
 });
