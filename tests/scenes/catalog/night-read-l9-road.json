@@ -1,0 +1,67 @@
+{
+ "name": "night-read-l9-road",
+ "note": "E31-AC16 dry-night road read: the courier runs along the L9 asphalt road. Route band vs verge >= 3:1 (median over the visible route) and the courier >= 3:1 against the ground. Look for a pale road band, readable edges, night still dark.",
+ "seed": 31,
+ "ground": "district",
+ "time": "L9-crossing",
+ "dof": false,
+ "layout": {
+  "district": "D-CROSSING",
+  "bbox": [
+   [
+    -80,
+    -400
+   ],
+   [
+    80,
+    -260
+   ]
+  ]
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -25,
+    -330
+   ]
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": "courier",
+  "zoom": 1
+ },
+ "contrast": {
+  "district": "D-CROSSING",
+  "stepM": 2
+ },
+ "frames": 240,
+ "sheet": 40,
+ "script": [
+  {
+   "frame": 0,
+   "actor": "courier",
+   "do": {
+    "run": [
+     [
+      25,
+      -330
+     ]
+    ]
+   }
+  }
+ ],
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "navContrastMin": 3,
+  "playerContrastMin": 3,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000
+ }
+}

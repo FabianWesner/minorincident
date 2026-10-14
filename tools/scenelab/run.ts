@@ -2,6 +2,7 @@ import { basename } from 'node:path';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 import { SceneSession, encodeWebm, evaluate, writeJson, type Backend } from './session';
 import { canvasFrame, canvasFrameChecks } from '../../tests/e2e/canvas-frame';
+import { measureContrast, type ContrastResult } from './contrast';
 
 /** One scene run, shared by the CLI (cli.ts), the catalog (catalog.ts) and MCP `run_scene`:
  * load, step in batches, capture shots / video / contact sheet, write metrics.json, evaluate the gates. */
@@ -34,29 +35,39 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   const stops = new Set([...shots, ...sheetAt]);
   if (video) for (let f = 0; f <= video * 60; f += 3) stops.add(f);
   let frame = 0;
+  const contrast: { frame: number; result: ContrastResult }[] = [], measure = async (f: number) => { if (!spec.contrast) return; const result = await measureContrast(session.page, spec); if (result) contrast.push({ frame: f, result }); };
   const pixels: { frame: number; pixels: Awaited<ReturnType<typeof canvasFrame>> }[] = [];
   for (const stop of [...stops].sort((a, b) => a - b)) {
     if (stop > frames) break;
     if (stop > frame) frame = await session.step(stop - frame);
     pixels.push({ frame: stop, pixels: await canvasFrame(session.page) });
     if (shots.includes(stop)) { const path = `${out}/shot-${String(stop).padStart(4, '0')}.png`; await session.screenshot(path); written.push(path); }
-    if (sheetAt.has(stop)) cells.push({ frame: stop, jpeg: await session.snapshot() });
+    if (sheetAt.has(stop)) { cells.push({ frame: stop, jpeg: await session.snapshot() }); await measure(stop); }
     if (video && stop <= video * 60 && stop % 3 === 0) jpegs.push(await session.page.screenshot({ type: 'jpeg', quality: 80 }));
   }
   if (frame < frames) await session.step(frames - frame);
+  if (!sheetAt.has(frames)) await measure(frames);
   if (!pixels.some(p => p.frame === frames)) pixels.push({ frame: frames, pixels: await canvasFrame(session.page) });
   if (jpegs.length) { const path = `${out}/video.webm`; encodeWebm(jpegs, path); written.push(path); }
   let sheetInfo: { path: string; cells: number; kb: number } | undefined;
   if (cells.length) { sheetInfo = await session.makeSheet(cells, `${out}/sheet.jpg`); written.push(sheetInfo.path); }
   const clipping = await session.clipping(), metrics = await session.metrics(), errors = session.errors.slice(errorsBefore);
   const result = evaluate(spec, metrics, clipping, errors);
+  if (spec.contrast) {
+    const worst = (pick: (r: ContrastResult) => number | undefined) => { const v = contrast.map(c => pick(c.result)).filter((x): x is number => x !== undefined && Number.isFinite(x)); return v.length ? Math.min(...v) : 0; };
+    const e = spec.expect ?? {}, gate = (name: string, value: number, min: number | undefined) => { if (min !== undefined) result.checks.push({ name, pass: value >= min, value, limit: min }); };
+    gate('navContrastMin', worst(r => r.median), e.navContrastMin); gate('playerContrastMin', worst(r => r.player), e.playerContrastMin); gate('landmarkContrastMin', worst(r => r.landmarks), e.landmarkContrastMin);
+    // At the closest zoom (< 1) the verge is off screen, so there is nothing to compare: the zoom 1 and 1.5 rows carry the gate.
+    if ((spec.camera as { zoom?: number } | undefined)?.zoom === undefined || (spec.camera as { zoom: number }).zoom >= 1) result.checks.push({ name: 'contrastSampled', pass: contrast.length > 0, value: contrast.length, limit: 1 });
+    else for (const name of ['navContrastMin', 'playerContrastMin', 'landmarkContrastMin']) { const i = result.checks.findIndex(c => c.name === name); if (i >= 0 && !contrast.length) result.checks.splice(i, 1); }
+  }
   result.checks.push(...pixels.flatMap(p => canvasFrameChecks(p.pixels, `canvas.f${p.frame}`)));
   // Renderer telemetry calls the WebGL2 fallback `webgl`; CLI uses the explicit API version.
   const requestedBackend = session.options.backend === 'webgl2' ? 'webgl' : 'webgpu';
   result.checks.push({ name: 'requestedBackend', pass: metrics.backend === requestedBackend, value: Number(metrics.backend === requestedBackend), limit: 1 });
   result.pass = result.checks.every(c => c.pass);
   const timing = { openMs: o.openMs ?? 0, loadMs, runMs: Date.now() - t0 - loadMs, sceneMs: Date.now() - t0 };
-  writeJson(`${out}/metrics.json`, { spec: o.file, backend: metrics.backend, requestedBackend: session.options.backend, tier: session.options.tier, frames: metrics.frame, timing, checks: result, pixels, consoleErrors: errors, scene, metrics, clipping });
+  writeJson(`${out}/metrics.json`, { spec: o.file, backend: metrics.backend, requestedBackend: session.options.backend, tier: session.options.tier, frames: metrics.frame, timing, checks: result, pixels, contrast: contrast.map(c => ({ frame: c.frame, candidates: c.result.candidates, pairs: c.result.pairs, median: +c.result.median.toFixed(2), wcag05: +c.result.wcag.toFixed(2), min: +c.result.min.toFixed(2), routeL: +c.result.routeL.toFixed(4), vergeL: +c.result.vergeL.toFixed(4), player: c.result.player && +c.result.player.toFixed(2), landmarks: c.result.landmarks && +c.result.landmarks.toFixed(2) })), consoleErrors: errors, scene, metrics, clipping });
   written.push(`${out}/metrics.json`);
   return { name, pass: result.pass, checks: result.checks, backend: metrics.backend, frames: metrics.frame, seconds: timing.sceneMs / 1000, failed: result.checks.filter(c => !c.pass), clipping: clipping.summary, sheet: sheetInfo?.path, sheetKb: sheetInfo?.kb, files: written, consoleErrors: errors };
 }
