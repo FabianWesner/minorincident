@@ -125,6 +125,8 @@ export class DistrictView extends Group {
     private readonly instanceCapacity?: number,
   ) {
     super();
+    // The hole is module-global: a previous district (scene) must not leave it half open.
+    seeThrough.strength.value = 0; seeThrough.cover.value = 0;
     this.name = "sunset-grove"; this.matrixAutoUpdate = false;
     this.foliage = new Foliage(materials, phase); this.add(this.foliage); this.foliage.setQuality(low);
   }
