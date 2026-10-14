@@ -10,7 +10,7 @@ import { layoutTerrainChunks } from '../../../src/sim/world/TerrainChunks';
 const layout = JSON.parse(readFileSync('public/assets/layouts/D-CURE.layout.json', 'utf8')) as DistrictLayout;
 test('T-E32-03-D1-D2 @E32-AC03 @E32-AC28 R1–R4 geometry, route lengths and pickup anchors agree', () => {
   expect(validateLayout(layout, worldAssets)).toEqual([]);
-  expect(cure.regions.map(r => cureRouteLength(r.route))).toEqual([250, 600, 750, 800]);
+  expect(cure.regions.map(r => cureRouteLength(r.route))).toEqual([250, 600, 750, 800, 550, 1000]);
   for (let i = 1; i < cure.regions.length; i++) expect(cure.regions[i - 1].route.at(-1)).toEqual(cure.regions[i].route[0]);
   expect(layout.anchors['cure-crash'].position).toEqual([547, 0, 0]);
   const w = new DistrictWorld(compositions.L10, [layout], 32);
@@ -32,7 +32,7 @@ test('T-E32-03-D1-D2 @E32-AC03 @E32-AC28 R1–R4 geometry, route lengths and pic
   expect(layout.placements.some(p => p.assetId === 'bld.cure-security-post')).toBe(true);
   expect(layout.placements.some(p => p.assetId === 'bld.cure-duplex')).toBe(true);
   expect(Math.max(...layout.buildings.map(b => b.aabb.max[1]))).toBeLessThan(12);
-  const chunks = layoutTerrainChunks(layout); expect(chunks).toHaveLength(120);
+  const chunks = layoutTerrainChunks(layout); expect(chunks).toHaveLength(198);
   const manifest = JSON.parse(readFileSync('public/assets/layouts/D-CURE.chunks/manifest.json', 'utf8'));
   expect(Object.keys(manifest.triangles)).toEqual(chunks.map(c => c.id));
   expect(Math.max(...Object.values(manifest.triangles) as number[])).toBeLessThanOrEqual(800);

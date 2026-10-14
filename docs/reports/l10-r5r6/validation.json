@@ -1,0 +1,246 @@
+{
+  "unit": {
+    "numPassedTests": 1390,
+    "numFailedTests": 0,
+    "numPendingTests": 7,
+    "workers": 1
+  },
+  "terrain": {
+    "cells": 198,
+    "cellTrianglesMax": 120,
+    "horizonTriangles": 2950
+  },
+  "route": {
+    "high": {
+      "tier": "high",
+      "p95": 0.27227100000163773,
+      "ticks": 20744,
+      "checkpoint": "cure-complex",
+      "chunks": {
+        "resident": 20,
+        "queued": 0,
+        "unloaded": 178,
+        "inactive": 3,
+        "colliders": 14,
+        "navCells": 800000
+      }
+    },
+    "low": {
+      "tier": "low",
+      "p95": 0.1408640000008745,
+      "ticks": 20744,
+      "checkpoint": "cure-complex",
+      "chunks": {
+        "resident": 9,
+        "queued": 0,
+        "unloaded": 189,
+        "inactive": 3,
+        "colliders": 7,
+        "navCells": 360000
+      }
+    }
+  },
+  "perf": [
+    {
+      "file": "webgl-high-z0.5.json",
+      "backend": "webgl",
+      "quality": "high",
+      "cameraZoom": 0.5000000000000002,
+      "frameP95": 5.5,
+      "simP95": 0.6000003814697266,
+      "draws": 98,
+      "triangles": 85503,
+      "heapMB": 194.576504,
+      "resident": 25
+    },
+    {
+      "file": "webgl-high-z1.json",
+      "backend": "webgl",
+      "quality": "high",
+      "cameraZoom": 1,
+      "frameP95": 5.9,
+      "simP95": 0.5,
+      "draws": 102,
+      "triangles": 86201,
+      "heapMB": 194.503432,
+      "resident": 25
+    },
+    {
+      "file": "webgl-low-z0.5.json",
+      "backend": "webgl",
+      "quality": "low",
+      "cameraZoom": 0.5000000000000002,
+      "frameP95": 5.8,
+      "simP95": 0.5,
+      "draws": 91,
+      "triangles": 26009,
+      "heapMB": 157.834888,
+      "resident": 9
+    },
+    {
+      "file": "webgl-low-z1.json",
+      "backend": "webgl",
+      "quality": "low",
+      "cameraZoom": 1,
+      "frameP95": 5.6,
+      "simP95": 0.5,
+      "draws": 91,
+      "triangles": 26337,
+      "heapMB": 157.745128,
+      "resident": 9
+    },
+    {
+      "file": "webgpu-high-z0.5.json",
+      "backend": "webgpu",
+      "quality": "high",
+      "cameraZoom": 0.5000000000000002,
+      "frameP95": 4.2,
+      "simP95": 0.40000057220458984,
+      "draws": 98,
+      "triangles": 85503,
+      "heapMB": 190.993496,
+      "resident": 25
+    },
+    {
+      "file": "webgpu-high-z1.json",
+      "backend": "webgpu",
+      "quality": "high",
+      "cameraZoom": 1,
+      "frameP95": 4,
+      "simP95": 0.40000057220458984,
+      "draws": 102,
+      "triangles": 86201,
+      "heapMB": 190.944732,
+      "resident": 25
+    },
+    {
+      "file": "webgpu-low-z0.5.json",
+      "backend": "webgpu",
+      "quality": "low",
+      "cameraZoom": 0.5000000000000002,
+      "frameP95": 4.2,
+      "simP95": 0.3000001907348633,
+      "draws": 91,
+      "triangles": 26009,
+      "heapMB": 155.052536,
+      "resident": 9
+    },
+    {
+      "file": "webgpu-low-z1.json",
+      "backend": "webgpu",
+      "quality": "low",
+      "cameraZoom": 1,
+      "frameP95": 3.1,
+      "simP95": 0.3000001907348633,
+      "draws": 91,
+      "triangles": 26337,
+      "heapMB": 155.114324,
+      "resident": 9
+    }
+  ],
+  "focusedTests": 38,
+  "assetValidatorRetry": {
+    "passed": 1,
+    "seconds": 228.388
+  },
+  "matrix": {
+    "webgl": {
+      "rows": 54,
+      "passed": 54,
+      "consoleErrors": 0
+    },
+    "webgpu": {
+      "rows": 54,
+      "passed": 54,
+      "consoleErrors": 0
+    }
+  },
+  "verify": {
+    "green": true,
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/remote/run.sh",
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/l10-r5r6",
+          "--pull",
+          "test-results/epics/E32/vitest.json",
+          "--",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "@(?:E32)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--maxWorkers=1",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E32/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "@(?:E32)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--grep-invert",
+          "@perf",
+          "--project=chromium",
+          "--workers=2"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "npx",
+          "playwright",
+          "test",
+          "tests/perf/l10-district-budgets.spec.ts",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": 0
+      }
+    ],
+    "tagged": {
+      "numPassedTests": 87,
+      "numFailedTests": 0,
+      "numPendingTests": 2536
+    },
+    "browserTestsPassed": 31,
+    "r1r4BudgetConfigsPassed": 8,
+    "d3BudgetConfigsPassed": 8
+  }
+}

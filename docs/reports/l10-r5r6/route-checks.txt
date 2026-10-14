@@ -1,0 +1,50 @@
+[pool] all runners full (mi-runner-1:2/2+0q, mi-runner-2:2/2+1q, mi-runner-3:2/2+0q); waiting 1s
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/l10-r5r6 -> 94.130.181.173:/srv/mi/ws/l10-r5r6-7c5d00
+[remote] cache-gc deleted: l10-alpha-contract-baseline-671ba2-*
+[remote] sync 116s, 9878 files; job /srv/mi/jobs/l10-r5r6-7c5d00-24283-1791943153; queueing for a slot
+[runner] slot 0 acquired; load 11.12 11.40 9.94
+
+ RUN  v5.0.3 /srv/mi/jobs/l10-r5r6-7c5d00-24283-1791943153
+
+ ✓  functional  tests/unit/levels/l10-district.test.ts (2 tests) 6167ms
+   ✓ T-E32-03-D1-D2 @E32-AC03 @E32-AC28 R1–R4 geometry, route lengths and pickup anchors agree 5448ms
+   ✓ T-E32-28-D1-ground @E32-AC28 exported cells retain shared 100 m edges within 2 cm 716ms
+ ✓  functional  tests/unit/levels/l10-campus-corridor.test.ts (3 tests) 6614ms
+   ✓ T-E32-03-D3 @E32-AC03 @E32-AC15 @E32-AC28 campus and corridor story anchors and full route are walkable 6609ms
+ ✓  functional  tests/sim/world/support-seams.test.ts (14 tests) 18959ms
+   ✓ @E21 D-CORRIDOR: raised walkable supports have no seam an actor sinks into 792ms
+   ✓ @E21 D-CROSSING: raised walkable supports have no seam an actor sinks into 7091ms
+   ✓ @E21 D-CURE: raised walkable supports have no seam an actor sinks into 9410ms
+   ✓ @E21 D-GROVE: raised walkable supports have no seam an actor sinks into 418ms
+   ✓ @E21 D-ZOO: raised walkable supports have no seam an actor sinks into 307ms
+ ✓  functional  tests/sim/levels/l10-campus-corridor.test.ts (2 tests) 29727ms
+   ✓ T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from research entry through R5/R6 reaches complex 17185ms
+   ✓ T-E32-03-D3-low @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from research entry through R5/R6 reaches complex 12538ms
+ ✓  functional  tests/levels/respawn-all-levels.test.ts (17 tests) 57455ms
+   ✓ death respawns exactly on the last reached checkpoint, every level (17)
+     ✓ L1 (start): back on the anchor, nothing within 9 m, grace, loadout kept 3796ms
+     ✓ L1 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept 2033ms
+     ✓ L2 (start): back on the anchor, nothing within 9 m, grace, loadout kept 4841ms
+     ✓ L2 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept 4422ms
+     ✓ L3 (start): back on the anchor, nothing within 9 m, grace, loadout kept 3421ms
+     ✓ L3 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept 2972ms
+     ✓ L4 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept 1882ms
+     ✓ L5 (start): back on the anchor, nothing within 9 m, grace, loadout kept 1385ms
+     ✓ L5 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept 1016ms
+     ✓ L6 (start): back on the anchor, nothing within 9 m, grace, loadout kept 812ms
+     ✓ L6 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept 465ms
+     ✓ L8 (start): back on the anchor, nothing within 9 m, grace, loadout kept 1636ms
+     ✓ L8 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept 1176ms
+     ✓ L9 (start): back on the anchor, nothing within 9 m, grace, loadout kept 4368ms
+     ✓ L9 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept 4653ms
+     ✓ L10 (start): back on the anchor, nothing within 9 m, grace, loadout kept 8770ms
+     ✓ L10 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept 9805ms
+
+ Test Files  5 passed (5)
+      Tests  38 passed (38)
+   Start at  02:06:55
+   Duration  62.18s (tests 91%, transform 8%, import 2%)
+
+[remote] pulled test-results/epics/E32/D3/route-high.json
+[remote] pulled test-results/epics/E32/D3/route-low.json
+[remote] done exit=0 (runner 94.130.181.173, sync 116s, remote total 411s)

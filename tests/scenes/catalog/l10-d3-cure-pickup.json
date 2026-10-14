@@ -1,0 +1,42 @@
+{
+  "name": "l10-d3-cure-pickup",
+  "note": "R5/R6 greybox: review clear story/pickup lane, low campus or ruined corridor silhouette, continuous seam and supported feet at all tiers/zooms.",
+  "seed": 32,
+  "ground": "district",
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        2673,
+        5
+      ],
+      [
+        2753,
+        85
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        2713,
+        41
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      2713,
+      41
+    ],
+    "zoom": 1
+  },
+  "frames": 1,
+  "expect": {
+    "consoleErrors": 0
+  },
+  "time": "L9-crossing"
+}

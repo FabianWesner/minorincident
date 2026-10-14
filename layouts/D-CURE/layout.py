@@ -1,4 +1,4 @@
-"""L10-D1/D2: R1–R4 on the shared 100 m streamer. R2's blocked street has an open northern detour."""
+"""L10-D1/D2/D3: R1–R6 on the shared 100 m streamer. R2's blocked street has an open northern detour."""
 import json
 import math
 import bpy
@@ -6,7 +6,7 @@ from mathutils import Vector
 from mathutils.geometry import tessellate_polygon
 from sslib.layout import Layout, material
 
-l = Layout('D-CURE', 'The Cure — crash, residential, industrial and military', size=(2000,600))
+l = Layout('D-CURE', 'The Cure — crash through research and destroyed corridor', size=(3300,600))
 l.yaw_matches_collision = True
 source = json.loads((l.root / 'layouts/D-CURE/routes.json').read_text())
 for obj in l.layers[0]: bpy.data.objects.remove(obj, do_unlink=True)
@@ -30,7 +30,7 @@ def clip(poly, axis, value, greater):
 
 chunks = []
 for z in range(-1,5):
-    for x in range(20):
+    for x in range(33):
         chunks.append(dict(id=f'cure-{x}-{z}', origin=[500+x*100,-200+z*100], size=100))
 l.data['terrainChunks'] = chunks
 
@@ -145,7 +145,7 @@ for detour in source['detours']:
 a,b=[807,25],[1057,25]
 surface('blocked-road',[[807,21],[1057,21],[1057,29],[807,29]],'asphalt',.002)
 for name,p in source['anchors'].items(): l.anchor(name,[p[0],0,p[1]])
-l.anchor('player-start',[547,0,0]); l.anchor('exit',[2467,0,-5])
+l.anchor('player-start',[547,0,0]); l.anchor('exit',[3697,0,-25])
 # Crash continuity: same safe position as L9 crawl-end, spent wreck behind the courier.
 l.place('veh.military-apc',[540,0,-5],yaw=1.5); l.data['placements'][-1]['decay']='wrecked'
 for x,z in [(557,30),(600,-35),(697,-35)]: l.place('prop.tree',[x,0,z])
@@ -188,6 +188,28 @@ surface('checkpoint-road',[[1897,21],[2397,21],[2397,29],[1897,29]],'asphalt',.0
 for z in range(-45,87,3): l.place('prop.cure-mil-fence',[2137,0,z],yaw=math.pi/2)
 for x,z in [(2137,-87),(2137,-63)]: l.place('prop.jersey-barrier',[x,0,z])
 for x,z in [(1850,19),(1864,19),(2127,-68),(2147,-68)]: l.place('prop.traffic-cone',[x,0,z])
+# R5: low laboratories and quarantine forecourt, all story anchors on a clear lane.
+for asset,x,z in [('bld.cure-lab-main',2707,23),('bld.cure-lab-annex',2607,23),('bld.cure-lab-annex',2777,23)]:
+    pid=l.place(asset,[x,0,z])
+    l.data['buildings'].append(dict(id=pid,assetId=asset,aabb=l.data['placements'][-1]['visualAabb'],label='Research laboratory'))
+for x,z in [(2547,65),(2657,65),(2847,20)]: l.place('prop.cure-iso-tent',[x,0,z])
+for x,z in [(2557,65),(2697,65),(2857,20)]: l.place('prop.cure-generator',[x,0,z])
+for x,z in [(2567,65),(2757,65)]: l.place('veh.ambulance',[x,0,z])
+# Reuse the device console as the recorded-message terminal; pickup sockets face the route.
+l.place('kit.dispersal-console',[2707,0,39.5],yaw=-math.pi/2)
+l.place('prop.cure-canister-pedestal',[2713,0,39.5])
+for x in range(2577,2798,6): l.place('prop.cure-quarantine-fence',[x,0,76])
+for z in range(-35,36,6):
+    if abs(z+5)>9: l.place('prop.cure-quarantine-fence',[2837,0,z],yaw=math.pi/2)
+# R6: rocket supply before the rubble defensive line; the northern breach stays open.
+l.place('veh.military-truck',[2937,0,10]);l.data['placements'][-1]['decay']='wrecked'
+for x,z in [(2929,3),(2945,3)]: l.place('prop.cure-drum-stack',[x,0,z])
+for x,z in [(3067,115),(3217,115),(3467,115),(3617,-45)]:
+    l.place('veh.wreck',[x,0,z])
+    l.place('decay.makeshift-barricade',[x+8,0,z])
+surface('corridor-blocked-road',[[2977,-9],[3577,-9],[3577,-1],[2977,-1]],'asphalt',.002)
+for i in range(110): l.place('decay.makeshift-barricade',[3317,0,-89+i*1.5])
+for x,z in [(3317,83),(3317,107)]: l.place('prop.jersey-barrier',[x,0,z])
 for p in l.data['placements']: p['maxTier']=6
 for c in l.data['colliders']: c['maxTier']=6
 # Semantic pavement shares the renderer's level top, no raised seam at the region/chunk boundary.

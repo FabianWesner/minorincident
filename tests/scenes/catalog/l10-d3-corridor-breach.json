@@ -1,0 +1,42 @@
+{
+  "name": "l10-d3-corridor-breach",
+  "note": "D-CURE northern defensive breach shoulder, beside the retained jersey barrier. Review the clear passage, low rubble line, supported feet and continuous road at both tiers/zooms.",
+  "seed": 32,
+  "ground": "district",
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        3277,
+        55
+      ],
+      [
+        3357,
+        135
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        3317,
+        86
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      3317,
+      86
+    ],
+    "zoom": 1
+  },
+  "frames": 1,
+  "expect": {
+    "consoleErrors": 0
+  },
+  "time": "L9-crossing"
+}

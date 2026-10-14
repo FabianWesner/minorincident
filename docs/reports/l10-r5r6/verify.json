@@ -1,0 +1,88 @@
+{
+  "green": true,
+  "checks": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/remote/run.sh",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l10-r5r6",
+        "--pull",
+        "test-results/epics/E32/vitest.json",
+        "--",
+        "npx",
+        "vitest",
+        "run",
+        "-t",
+        "@(?:E32)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--maxWorkers=1",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/epics/E32/vitest.json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "npx",
+        "playwright",
+        "test",
+        "--grep",
+        "@(?:E32)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--grep-invert",
+        "@perf",
+        "--project=chromium",
+        "--workers=2"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "npx",
+        "playwright",
+        "test",
+        "tests/perf/l10-district-budgets.spec.ts",
+        "--project=chromium",
+        "--workers=1"
+      ],
+      "exitCode": 0
+    }
+  ],
+  "tagged": {
+    "numPassedTests": 87,
+    "numFailedTests": 0,
+    "numPendingTests": 2536
+  },
+  "browserTestsPassed": 31,
+  "r1r4BudgetConfigsPassed": 8,
+  "d3BudgetConfigsPassed": 8
+}

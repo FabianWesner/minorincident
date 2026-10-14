@@ -6,11 +6,11 @@
       -300
     ],
     [
-      2500,
+      3800,
       -300
     ],
     [
-      2500,
+      3800,
       300
     ],
     [
@@ -201,6 +201,93 @@
           -5
         ]
       ]
+    },
+    {
+      "id": "research-campus",
+      "envelope": [
+        [
+          2467,
+          -200
+        ],
+        [
+          2967,
+          200
+        ]
+      ],
+      "checkpoint": "cure-research-entry",
+      "minutes": 6,
+      "route": [
+        [
+          2467,
+          -5
+        ],
+        [
+          2527,
+          -5
+        ],
+        [
+          2527,
+          45
+        ],
+        [
+          2807,
+          45
+        ],
+        [
+          2807,
+          -5
+        ],
+        [
+          2917,
+          -5
+        ]
+      ]
+    },
+    {
+      "id": "destroyed-corridor",
+      "envelope": [
+        [
+          2917,
+          -150
+        ],
+        [
+          3717,
+          150
+        ]
+      ],
+      "checkpoint": "cure-corridor",
+      "weapon": "weapon.rocket-launcher",
+      "minutes": 8,
+      "route": [
+        [
+          2917,
+          -5
+        ],
+        [
+          2977,
+          -5
+        ],
+        [
+          2977,
+          95
+        ],
+        [
+          3317,
+          95
+        ],
+        [
+          3577,
+          95
+        ],
+        [
+          3577,
+          -25
+        ],
+        [
+          3697,
+          -25
+        ]
+      ]
     }
   ],
   "anchors": {
@@ -299,6 +386,58 @@
     "cure-research-entry": [
       2467,
       -5
+    ],
+    "cure-terminal": [
+      2707,
+      41
+    ],
+    "cure-canister": [
+      2713,
+      41
+    ],
+    "cure-research": [
+      2807,
+      45
+    ],
+    "research-quarantine": [
+      2807,
+      -5
+    ],
+    "research-medkit": [
+      2487,
+      -2
+    ],
+    "r5-r6-seam": [
+      2917,
+      -5
+    ],
+    "cure-corridor": [
+      2937,
+      -5
+    ],
+    "rocket-pickup": [
+      2937,
+      -5
+    ],
+    "corridor-medkit": [
+      2933,
+      -2
+    ],
+    "corridor-breach": [
+      3317,
+      95
+    ],
+    "corridor-blocked-road": [
+      3317,
+      -5
+    ],
+    "r6-r7-seam": [
+      3697,
+      -25
+    ],
+    "cure-complex": [
+      3697,
+      -25
     ]
   },
   "detours": [
@@ -352,6 +491,181 @@
           2397,
           -5
         ]
+      ]
+    }
+  ],
+  "threatDepth": [
+    {
+      "region": "crash-outskirts",
+      "routeStart": 0,
+      "routeEnd": 250,
+      "resident": {
+        "high": [
+          4,
+          8
+        ],
+        "low": [
+          4,
+          8
+        ]
+      },
+      "dogs": [
+        0,
+        0
+      ],
+      "alphas": [
+        0,
+        0
+      ],
+      "groupSize": [
+        1,
+        2
+      ]
+    },
+    {
+      "region": "residential-fringe",
+      "routeStart": 250,
+      "routeEnd": 850,
+      "resident": {
+        "high": [
+          12,
+          24
+        ],
+        "low": [
+          8,
+          16
+        ]
+      },
+      "dogs": [
+        1,
+        2
+      ],
+      "alphas": [
+        0,
+        0
+      ]
+    },
+    {
+      "region": "industrial-area",
+      "routeStart": 850,
+      "routeEnd": 1600,
+      "resident": {
+        "high": [
+          25,
+          45
+        ],
+        "low": [
+          16,
+          28
+        ]
+      },
+      "dogs": [
+        2,
+        4
+      ],
+      "alphas": [
+        1,
+        1
+      ]
+    },
+    {
+      "region": "military-zone",
+      "routeStart": 1600,
+      "routeEnd": 2400,
+      "resident": {
+        "high": [
+          45,
+          75
+        ],
+        "low": [
+          28,
+          45
+        ]
+      },
+      "dogs": [
+        2,
+        4
+      ],
+      "alphas": [
+        1,
+        2
+      ],
+      "groupSize": [
+        10,
+        20
+      ]
+    },
+    {
+      "region": "research-campus",
+      "routeStart": 2400,
+      "routeEnd": 2950,
+      "resident": {
+        "high": [
+          55,
+          85
+        ],
+        "low": [
+          35,
+          55
+        ]
+      },
+      "dogs": [
+        2,
+        4
+      ],
+      "alphas": [
+        1,
+        2
+      ]
+    },
+    {
+      "region": "destroyed-corridor",
+      "routeStart": 2950,
+      "routeEnd": 3950,
+      "resident": {
+        "high": [
+          80,
+          130
+        ],
+        "low": [
+          50,
+          75
+        ]
+      },
+      "dogs": [
+        3,
+        5
+      ],
+      "alphas": [
+        2,
+        3
+      ],
+      "groupSize": [
+        20,
+        35
+      ]
+    },
+    {
+      "region": "dispersal-complex",
+      "routeStart": 3950,
+      "routeEnd": 4300,
+      "resident": {
+        "high": [
+          140,
+          190
+        ],
+        "low": [
+          75,
+          95
+        ]
+      },
+      "alphas": [
+        0,
+        3
+      ],
+      "alphasLow": [
+        0,
+        2
       ]
     }
   ]
