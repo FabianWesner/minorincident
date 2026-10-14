@@ -10,7 +10,12 @@ test('T-E31-20-L1-prop @E31-AC20 @E20-AC04 L1 carried bin cannot strand the seat
   save.world = { L1: aftermath };
   const w = await loadLevel('L2', 1, save);
   try {
-    expect(w.props!.items.some(p => p.id === aftermath.props[0].id)).toBe(false);
+    // E20 carryover (PO 10-08): shoved props persist from this campaign run.
+    // The truck must depart from the rear contact without deleting the carried bin.
+    const bin = w.props!.items.find(p => p.id === aftermath.props[0].id);
+    expect(bin).toBeDefined();
+    const at = bin!.body.translation(), saved = aftermath.props[0].p;
+    expect(Math.hypot(at.x - saved[0], at.z - saved[2])).toBeLessThanOrEqual(.25);
     const bot = new LevelTwoBot(w);
     for (let i = 0; i < 90 * 60 && !w.missions!.state.l2!.arrivedAt; i++) { w.applyInput(bot.sample(), 'keyboard'); w.update(); }
     expect(w.missions!.state.l2!.arrivedAt).toBeGreaterThan(0);
