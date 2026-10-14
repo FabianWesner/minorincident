@@ -101,7 +101,10 @@ for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['hig
         expect(distance(await position(page), target)).toBeLessThan(1);
       }
       if (input === 'stick') await stickTo(page, cdp, target);
-      results.push({ input, target, reached: await position(page), perf: await page.evaluate(() => { const p = window.__SS__!.perf(); return { backend: p.backend, tier: p.quality.tier, draws: p.drawCalls, triangles: p.triangles }; }) });
+      const perf = await page.evaluate(() => { const p = window.__SS__!.perf(); return { backend: p.backend, tier: p.quality.tier, draws: p.drawCalls, triangles: p.triangles }; });
+      expect(perf.draws).toBeLessThanOrEqual(quality === 'high' ? 600 : 300);
+      expect(perf.triangles).toBeLessThanOrEqual(quality === 'high' ? 1_500_000 : 500_000);
+      results.push({ input, target, reached: await position(page), perf });
     }
     writeFileSync(`${out}/movement.json`, JSON.stringify(results, null, 2));
   });
