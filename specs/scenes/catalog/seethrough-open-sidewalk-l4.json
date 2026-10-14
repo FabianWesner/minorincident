@@ -1,0 +1,51 @@
+{
+ "name": "seethrough-open-sidewalk-l4",
+ "note": "PO 10-14 'buildings that are not in the way get transparent and ruin the UI': L4 Fairhaven Harbor Street, courier on the open sidewalk, nothing between camera and courier. No building or vehicle may be cut (zero see-through strength/cover).",
+ "seed": 1,
+ "ground": "district",
+ "time": "night",
+ "layout": {
+  "level": "L4",
+  "district": "D-FAIR",
+  "bbox": [
+   [
+    -60,
+    -89
+   ],
+   [
+    40,
+    11
+   ]
+  ]
+ },
+ "clipping": {
+  "ignoreFoliage": true
+ },
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    -13.7,
+    -22.5
+   ],
+   "yaw": 0,
+   "state": "idle"
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   -13.7,
+   -22.5
+  ],
+  "zoom": 1
+ },
+ "frames": 60,
+ "expect": {
+  "consoleErrors": 0
+ },
+ "shots": [
+  50
+ ]
+}
