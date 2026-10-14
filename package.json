@@ -42,7 +42,7 @@
     "scene:layout": "sh tools/e2e-lock.sh tsx tools/scenelab/cli.ts specs/scenes/layout-sweep/*.json",
     "scene:mcp": "tsx tools/scenelab/mcp.ts",
     "scene:catalog": "sh tools/e2e-lock.sh tsx tools/scenelab/catalog.ts",
-    "scene:matrix": "sh tools/e2e-lock.sh tsx tools/scenelab/catalog.ts --matrix --backend webgpu --filter 'seat-*,ped-*,corgi-*,area-grove-*'",
+    "scene:matrix": "sh tools/e2e-lock.sh tsx tools/scenelab/catalog.ts --matrix --backend webgpu --filter 'seat-*,ped-*,corgi-*,area-grove-*,seethrough-*'",
     "assets:bake-statics": "tsx tools/assets/bake-statics.ts"
   },
   "dependencies": {
