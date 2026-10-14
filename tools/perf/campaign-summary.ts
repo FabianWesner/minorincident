@@ -3,7 +3,7 @@ import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 const root = 'docs/reports/perf-sweep';
 const phase = process.argv[2] ?? 'after';
 type Row = { spot: { id: string }; p50: number; p95: number; p99: number; hitch: number; simMs: number; drawCalls: number; triangles: number; heapMB: number; updateMs: number; renderMs: number; backend: string };
-type Cell = { level: string; tier: string; backend: string; rows: Row[] };
+type Cell = { level: string; tier: string; backend: string; sourceRevision?: string; rows: Row[] };
 const cells: Cell[] = readdirSync(`${root}/${phase}`).filter(f => /^L\d+-(high|low)-(webgl|webgpu)\.json$/.test(f)).map(f => JSON.parse(readFileSync(`${root}/${phase}/${f}`, 'utf8')));
 if (phase === 'after' && cells.length !== 40) throw new Error(`Incomplete campaign matrix: ${cells.length}/40 cells`);
 for (const c of cells) {
@@ -14,8 +14,8 @@ const max = (c: Cell, key: keyof Omit<Row, 'spot' | 'backend'>) => Math.max(...c
 const lines = [
   `## ${phase} matrix`, '',
   'Each cell reports the worst spot percentile and maximum counters/retained heap. Times are milliseconds; heap is decimal MB. Raw JSON contains every spot and frame sample.', '',
-  '| Level | Tier | Backend | p50 | p95 | p99 | Hitch | Sim p95 | Draws | Triangles | Heap MB | Result |',
-  '| --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |',
+  '| Level | Tier | Backend | Revision | p50 | p95 | p99 | Hitch | Sim p95 | Draws | Triangles | Heap MB | Result |',
+  '| --- | --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | --- |',
 ];
 const offenders: { cell: string; spot: string; metric: string; value: number; limit: number; ratio: number; updateMs: number; renderMs: number }[] = [];
 for (const c of cells) {
@@ -24,7 +24,7 @@ for (const c of cells) {
   const failures = Object.entries(limits).filter(([key, limit]) => max(c, key as keyof typeof limits) > limit).map(([key]) => key);
   if (c.rows.some(r => r.backend !== c.backend)) failures.push('backend fallback');
   const metrics = (['p50','p95','p99','hitch','simMs','drawCalls','triangles','heapMB'] as const).map(k => max(c,k).toFixed(k === 'drawCalls' || k === 'triangles' ? 0 : 2));
-  lines.push(`| [${c.level}](${phase}/${c.level}-${c.tier}-${c.backend}.json) | ${c.tier} | ${c.backend} | ${metrics.join(' | ')} | ${failures.join(', ') || 'pass'} |`);
+  lines.push(`| [${c.level}](${phase}/${c.level}-${c.tier}-${c.backend}.json) | ${c.tier} | ${c.backend} | ${c.sourceRevision ?? '—'} | ${metrics.join(' | ')} | ${failures.join(', ') || 'pass'} |`);
   for (const r of c.rows) for (const [metric, limit] of Object.entries(limits)) offenders.push({ cell: `${c.level}-${c.tier}-${c.backend}`, spot: r.spot.id, metric, value: r[metric as keyof typeof limits], limit, ratio: r[metric as keyof typeof limits] / limit, updateMs: r.updateMs, renderMs: r.renderMs });
 }
 lines.push('', `${cells.length}/40 cells recorded.`, '');
