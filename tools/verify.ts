@@ -18,8 +18,9 @@ const simPattern = splitAlphaTiming ? `^(?!.*T-E07-11).*(?:${selection.pattern})
 const simArgs = ['vitest', 'run', '-t', selection.pattern, '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest.json`];
 if (splitAlphaTiming || splitE18Timing || splitE31Timing) simArgs[3] = simPattern;
 // Keep heavy simulation work off the shared Mac while browser/GPU gates stay local.
+// E32 includes wall-clock budgets: reserve the existing runner slots while those tests run.
 const simCommand = process.env.MI_VERIFY_REMOTE_SIM === '1'
-  ? ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/vitest.json`, ...(target === 'E31' ? ['--pull', `${output}/campaign-seed-1.json`, '--pull', `${output}/q2-routes`] : []), '--', 'npx', ...simArgs]
+  ? ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/vitest.json`, ...(target === 'E31' ? ['--pull', `${output}/campaign-seed-1.json`, '--pull', `${output}/q2-routes`] : []), '--', ...(target === 'E32' ? ['bash', 'tools/remote/timing-isolated.sh'] : []), 'npx', ...simArgs]
   : ['sh', 'tools/sim-lock.sh', 'npx', ...simArgs];
 // Capture and pixel assertions need the native GPU; other browser checks run remotely.
 const l4VisualPattern = 'T-E22-18|T-E22-19|T-E22-boot|T-E13-05|S-02|S-01|T-E07-crowd-drawn|20 infected corpses remain drawn';

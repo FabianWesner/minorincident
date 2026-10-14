@@ -18,12 +18,13 @@ const inRing = (p: { x: number; z: number }) => { const r = l4.map.ring; return 
 interface Trace {
   beats: { beat: string; t: number; cause: string; soldiers: number; inside: number }[]; soldiers: { t: number; n: number }[]; fallBackRadio: number; breakT: number; cause: string; knockdowns: number; barricades: number; turnedAtTurn: number; tank: string; maxAlive: number;
   /** l4-collapse-2: line-1 size at the turn; infected on the escape street east of the ring (> 12 m from the courier) at "Fall back!" and 4 s later; the most drawn bodies in one 4 m square; attackers around the still courier (samples with >= 4 within 2.5 m: occupied 90-degree quadrants). */
-  line1Size: number; gapAtFallBack: number; gapAfter: number; heapMax: number; ringSamples: number[]; pressMax: number;
+  line1Size: number; gapAtFallBack: number; gapAfter: number; heapMax: number; corpseLosses: number; ringSamples: number[]; pressMax: number;
 }
 const escapeDistance = (p: { x: number; z: number }) => { const r = l4.director.escape.route; let best = Infinity; for (let i = 1; i < r.length; i++) { const [ax, az] = r[i - 1], [bx, bz] = r[i], dx = bx - ax, dz = bz - az, t = Math.max(0, Math.min(1, ((p.x - ax) * dx + (p.z - az) * dz) / (dx * dx + dz * dz))); best = Math.min(best, Math.hypot(p.x - ax - dx * t, p.z - az - dz * t)); } return best; };
 /** Runs the war with the courier idle at the quartermaster (god); `shoot` downs the nearest live infected in 26 m every 6 ticks (an oracle machine gunner). */
 function war(w: SimWorld, m: Mission, seed: number, tier: 'high' | 'low', shoot: boolean): Trace {
-  const s = m.state.l4!, tr: Trace = { beats: [], soldiers: [], fallBackRadio: -1, breakT: -1, cause: '', knockdowns: 0, barricades: 0, turnedAtTurn: 0, tank: '', maxAlive: 0, line1Size: 0, gapAtFallBack: -1, gapAfter: -1, heapMax: 0, ringSamples: [], pressMax: 0 };
+  const corpseIds = new Set<number>();
+  const s = m.state.l4!, tr: Trace = { beats: [], soldiers: [], fallBackRadio: -1, breakT: -1, cause: '', knockdowns: 0, barricades: 0, turnedAtTurn: 0, tank: '', maxAlive: 0, line1Size: 0, gapAtFallBack: -1, gapAfter: -1, heapMax: 0, corpseLosses: 0, ringSamples: [], pressMax: 0 };
   const onStreet = () => { const p = w.entities.get(1)!.transform; return w.infected!.active.filter(e => e.health.current > 0 && !e.hidden && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) > 12 && e.transform.x > -8 && escapeDistance(e.transform) < l4.director.escape.gapM).length; }; // the street out of the ring (its plaza end holds the pursuers)
   const t = (tick: number) => +((tick - s.turnAt) / 60).toFixed(2);
   w.events.on('l4.beat', e => { if (e.type === 'l4.beat') tr.beats.push({ beat: e.beat, t: t(e.tick), cause: e.cause, soldiers: e.soldiers, inside: e.inside }); });
@@ -31,6 +32,8 @@ function war(w: SimWorld, m: Mission, seed: number, tier: 'high' | 'low', shoot:
   w.events.on('dialogue.line', e => { if (e.type === 'dialogue.line' && e.id === 'L4.fallback') tr.fallBackRadio = t(e.tick); });
   runL4(w, m, 'idle', { seed, god: true, maxSeconds: 480, stopWhen: mm => {
     const st = mm.state.l4!;
+    for (const id of corpseIds) if (!w.entities.get(id)?.corpse) { tr.corpseLosses++; corpseIds.delete(id); }
+    for (const e of w.entities.iterate()) if (e.corpse && e.faction === 'infected') corpseIds.add(e.id);
     if (st.turnAt && (w.tick - st.turnAt) % 60 === 0) tr.soldiers.push({ t: t(w.tick), n: st.soldierIds.filter(id => { const e = w.entities.get(id); return e?.civilian && !e.infection && e.health.current > 0; }).length });
     tr.maxAlive = Math.max(tr.maxAlive, w.infected!.active.filter(e => e.health.current > 0).length);
     if (st.turnAt && !tr.line1Size) tr.line1Size = st.director.lines[0].size;
@@ -57,6 +60,7 @@ function war(w: SimWorld, m: Mission, seed: number, tier: 'high' | 'low', shoot:
   return tr;
 }
 function beatsOnTime(tr: Trace): void {
+  expect(tr.corpseLosses, 'corpses persist through the whole war').toBe(0);
   expect(tr.beats.map(b => b.beat)).toEqual(['line-1', 'nests', 'armor']);
   for (const [i, b] of tr.beats.entries()) {
     const def = l4.director.lines[i];
@@ -84,13 +88,13 @@ describe('L4 collapse director', () => {
     void inRing;
   }, HEAVY);
 
-  test('T-E22-13-escape @E22 @E22-AC13 @E22-AC15 l4-collapse-2: at "Fall back!" the horde leaves a gap on the escape street; no corpse mound and no stack around a still courier', async () => {
+  test('T-E22-13-escape @E22 @E22-AC13 @E22-AC15 l4-collapse-2: at "Fall back!" the horde leaves a gap on the escape street; corpses persist throughout the war and no stack surrounds a still courier', async () => {
     const l = await loadL4(2); world = l.world;
     const tr = war(l.world, l.mission, 2, 'high', false);
     // The gap: infected on the escape street (beyond the pursuers) run off toward the army and nothing emerges on it.
     expect(tr.gapAfter).toBeGreaterThanOrEqual(0); expect(tr.gapAfter).toBeLessThanOrEqual(Math.max(3, tr.gapAtFallBack / 3));
-    // Corpse heaps: at most heap.max drawn bodies in any 4 m square around the courier who never moved.
-    expect(tr.heapMax).toBeLessThanOrEqual(l4.war.heap.max.high);
+    // PO 10-14: bodies remain for the whole level, including dense visible piles.
+    expect(tr.corpseLosses).toBe(0);
     // Attackers around the still courier take ring slots: most crowded samples occupy at least three quadrants.
     if (tr.ringSamples.length) expect(tr.ringSamples.reduce((a, b) => a + b, 0) / tr.ringSamples.length).toBeGreaterThanOrEqual(2.5);
     // The rest wait on the outer rings: no mound of bodies pressing on her (the 1.4 m ring holds about eight).

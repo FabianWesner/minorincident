@@ -1,4 +1,3 @@
-import { SimPhase } from '../../core/EventBus';
 import { Rng } from '../../core/Rng';
 import { l4, l4Anchors, l4Cars, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4Inside, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, type L4Weapon } from '../../data/l4';
 import { l4AlphaEmergence } from '../../levels/L4/layout';
@@ -103,8 +102,6 @@ export class LevelFourWar {
     // Every knockdown or kill counts as a "kill" for the war balance (the infected recover: PO rule), credited to who dealt it.
     world.events.on('combat.kill', e => { if (e.type === 'combat.kill') this.killed(e.sourceId, e.targetId); });
     this.director.listen();
-    // Body clearing runs after every system of the tick (a blast or a burst can down several in one tick, after the mission update).
-    world.events.on('sim.tick', () => { const s = this.mission.state.l4; if (s && s.phase !== 'convoy' && s.phase !== 'plaza' && world.tick % 30 === 0) this.clearBodies(); }, SimPhase.cleanup);
   }
   private spawnConvoy(): void {
     const { world } = this.mission, s = this.s;
@@ -505,7 +502,6 @@ export class LevelFourWar {
   private emerge(at: Point, push = false): number {
     const { world } = this.mission, ai = world.infected!, o = this.outbreak();
     const limit = Math.floor(ai.director.cap * (push ? 1 : this.director.aliveShare())) - ai.director.reserved - l4.war.headroom;
-    if (ai.director.count >= limit) this.settleDowned(1);
     if (!this.spawnRoom(ai.director.reserved) || ai.director.count >= limit || !ai.pool.length || this.inGap(at)) return 0;
     const out = this.snap(at, .45), id = o.spawnPedestrian(out), e = world.entities.get(id)!;
     o.turnNow(e);
@@ -523,8 +519,7 @@ export class LevelFourWar {
       if (s.alphaAnchors.includes(entry.anchor) || (entry.high && this.low)) continue;
       if (s.alphaIds.length >= count) return;
       if (world.tick < s.turnAt + ticks(entry.afterTurnS)) return;
-      // Its slot is reserved: a full cap (bites turn people past it) settles a downed body to make room rather than holding the Alpha back.
-      if (ai.director.count >= ai.director.cap) this.settleDowned(1);
+      // Its slot stays reserved; recoverable bodies retain their own slots until they rise.
       if (ai.director.count >= ai.director.cap || !ai.pool.length || !this.spawnRoom()) return;
       const anchor = this.anchor(entry.anchor), radius = infectedDef('infected.alpha').radius;
       // Its own street mouth, or (that one in view) the nearest street emergence point out of view and 24 m from the courier.
@@ -617,47 +612,6 @@ export class LevelFourWar {
     }
   }
   private insideRing(p: Point): boolean { const r = l4.map.ring; return p.x > r.x0 && p.x < r.x1 && p.z > r.z0 && p.z < r.z1; }
-  /**
-   * Replenishment (l4-collapse; as l3-horde-5x): downed infected keep their slot until they get up (strict cap), so a fighting army fills
-   * the cap with bodies and new infected and bites stall. When the alive count needs room, the longest-downed bodies settle into drawn
-   * corpses; `headroom` slots stay free so a bite turns rather than kills.
-   */
-  private replenish(): void {
-    const ai = this.world.infected!, tick = this.world.tick; if (tick % 10) return;
-    const over = ai.director.count - (ai.director.cap - ai.director.reserved - l4.war.headroom); if (over <= 0) return;
-    this.settleDowned(over);
-  }
-  /** Settle the `n` longest-downed bodies (not Alphas) into drawn corpses; returns how many. */
-  private settleDowned(n: number): number {
-    const ai = this.world.infected!, tick = this.world.tick;
-    const downed = ai.active.filter(e => e.health.current <= 0 && (e.infected?.recoverAt ?? -1) >= 0 && tick - e.infected!.deadAt >= 120 && e.archetype !== 'infected.alpha').sort((a, b) => a.infected!.deadAt - b.infected!.deadAt);
-    let done = 0;
-    for (const e of downed) { if (done >= n) break; ai.settle(e); done++; }
-    this.s.director.settled += done;
-    return done;
-  }
-  /**
-   * Keep at most `corpseMax` drawn bodies (the oldest out of view go first) and at most `heap.max` per `heap.cellM` square (the oldest
-   * first, also in view: a courier camping at one spot would otherwise stand on a mound). Removed bodies leave the world: settled bodies
-   * have their own ids (the pool assigns new ones) and the corpse renderer drops them one by one, so ~1000 dead records no longer cost
-   * every entity scan and checkpoint.
-   */
-  private clearBodies(): void {
-    const { world } = this.mission, tier = this.low ? 'low' : 'high', max = l4.war.corpseMax[tier], heap = l4.war.heap;
-    // A body an Alpha is throwing stays until it lands (the throw keeps positioning it).
-    const flying = new Set(world.infected!.active.map(a => a.infected?.specialAttack?.projectile?.objectId ?? 0));
-    const bodies = [...world.entities.iterate()].filter(e => e.corpse && e.faction === 'infected' && !e.hidden && !flying.has(e.id));
-    bodies.sort((a, b) => (b.infected?.deadAt ?? 0) - (a.infected?.deadAt ?? 0)); // newest first
-    const cells = new Map<number, number>(), drop = (e: EntitySnapshot) => { world.entities.delete(e.id); world.spatial.delete(e.id); };
-    const kept: EntitySnapshot[] = [];
-    for (const e of bodies) {
-      const cell = Math.floor(e.transform.x / heap.cellM) * 4096 + Math.floor(e.transform.z / heap.cellM), n = cells.get(cell) ?? 0;
-      if (n >= heap.max[tier]) { drop(e); continue; }
-      cells.set(cell, n + 1); kept.push(e);
-    }
-    let excess = kept.length - max;
-    for (let i = kept.length - 1; i >= 0 && excess > 0; i--) { const e = kept[i]; if (!world.infected!.director.offscreen(e.transform)) continue; drop(e); excess--; }
-  }
   /** The line breaks when the collapse director has taken all three lines (`beats`), at the latest `defenseS` after the turn. */
   private checkLineBreak(): void {
     const { world } = this.mission, s = this.s;
@@ -858,7 +812,7 @@ export class LevelFourWar {
       if (tick >= s.turnDueAt) this.turn();
     }
     if (s.phase === 'war' || s.phase === 'collapse' || s.phase === 'cellar' || s.phase === 'done') {
-      this.alphas(); this.waves(); this.replenish();
+      this.alphas(); this.waves();
       if (s.phase === 'war') {
         if (s.infectedAtT30 < 0 && tick >= s.warAt + ticks(30)) s.infectedAtT30 = world.infected!.active.filter(e => e.health.current > 0).length;
         if (s.tankPhase === 'off' && tick >= s.warAt + ticks(l4.tank.enterAfterS)) this.spectacle.startTank();

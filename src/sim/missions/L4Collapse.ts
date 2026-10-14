@@ -236,10 +236,14 @@ export class L4Collapse {
       else press(nearest.transform);
     }
   }
-  /** Send an Alpha to the tank (around its rear deck); false when there is no tank (any more). */
+  /** Stage near the tank until arrival, a perceived human, or the armour beat ends. */
   private toTank(id: number, b: NonNullable<EntitySnapshot['infected']>): boolean {
     const s = this.s, tank = this.world.entities.get(s.tankId);
-    if (!tank || s.tankPhase === 'off' || s.tankPhase === 'gone') return false;
+    if (!tank || s.tankPhase === 'off' || s.tankPhase === 'gone' || s.tankPhase === 'silent') return false;
+    const e = this.world.entities.get(id)!;
+    // Tank staging ends as soon as a human is perceived or the Alpha arrives.
+    // Otherwise the scripted branch suppresses its combat brain forever.
+    if (this.world.infected!.hearing.closest(e, b.heardTargetId ?? 0) || (b.scripted && dist(e.transform, b.scripted) <= 1.2)) return false;
     b.scripted = this.h.snap({ x: tank.transform.x + (id % 3 - 1) * 2.5, z: tank.transform.z + 3 }, .55); return true;
   }
   /** The charge stage outside a slot: authored for the nest slots, else 8 m straight out of the slot. */

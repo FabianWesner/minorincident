@@ -165,6 +165,8 @@ export class InfectedSystem {
   }
   /** Keep the existing frozen death figure while returning its simulated slot to the replenishment pool. */
   settle(entity: EntitySnapshot): void {
+    // A recoverable body still owns a live timer and its concurrency slot.
+    if (entity.infected!.recoverAt >= 0) return;
     const body = structuredClone({ ...entity, locomotion: undefined, motion: undefined, combat: { ...entity.combat!, reaction: undefined }, infected: { ...entity.infected!, l1: undefined, path: [], recoverAt: -1 } }); body.corpse = true;
     delete body.locomotion; delete body.motion; delete body.combat!.reaction;
     delete body.infected!.l1; body.infected!.path.length = 0;
@@ -1350,7 +1352,8 @@ export class InfectedSystem {
     if (b.pathGrid !== grid) { b.pathGrid = grid; b.goal = -1; b.path.length = 0; }
     const nav = this.navigation.grid(e.transform); target = this.navigation.target(e.transform, target);
     let x = target.x, z = target.z;
-    const useFlow = this.active.length > 20 && !b.roar && !b.specialAttack && !b.scripted; // Roar and scripted paths must never follow the live-player flow field.
+    // Only a courier chase can share its flow field; soldier and investigation goals need their own route.
+    const useFlow = this.active.length > 20 && !b.roar && !b.specialAttack && !b.scripted && !b.investigate && (b.heardTargetId ?? 1) <= 1;
     if (!nav.visible(e.transform, target, e.combat!.radius)) {
       // Clear paths steer directly; cell searches are needed only around cover.
       const from = nav.nearestCell(e.transform.x, e.transform.z), to = nav.nearestCell(x, z);
