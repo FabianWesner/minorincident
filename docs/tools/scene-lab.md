@@ -235,6 +235,7 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 - `heldPropHoldMin` (mug/phone: lowest drawn prop centre between hip 0 and shoulders 1, over every frame and LOD band; `metrics.heldProps.holds.<actor>` gives `heightMin`, `straightMax` and frames per `lods`). The seated drinker before the 10-13 fix: 0.34; now 0.53. Use 0.5.
 - `heldPropArmStraightMax` (mug/phone: shoulder-wrist distance over arm length; 1 is a hanging straight arm). Use 0.95.
 - `seeThroughLowPropsMax` (placements lower than an occluder, 1.1 m, drawn with the courier-hole cut material; `metrics.seeThrough.cutLowProps`). Use 0.
+- `seeThroughCutPixelsMax` / `seeThroughCutInsideMin` (PO 10-14 "buildings that are not in the way get transparent"): the end frame against the same frame with the solid-occluder cut forced off. Pixels that differ outside the hole disc around the courier (radius `solidRadius`, whole screen while a roof hugs the lens) are buildings or vehicles cut with nothing in the way: use 0. Inside the disc a real occluder must differ (`...InsideMin`). Result in `metrics.json` `seeThroughCut`; `metrics.seeThrough.occluders` names the placement that opened the hole. Scenes: `seethrough-open-sidewalk-l4`, `seethrough-behind-building-l4`.
 - `seeThroughOpenFramesMin` (frames the solid-occluder hole was open; a cutaway fixture must actually open it). `metrics.seeThrough` also reports `solidRadiusMax`.
 - `footSlideMaxCm`
 - `footSinkMaxCm` (deepest sole below the floor, spawn frames 0-2 excluded)
