@@ -1,0 +1,41 @@
+{
+  "name": "l4-fuel-crater-continuity",
+  "seed": 1,
+  "time": "L5",
+  "ground": "district",
+  "layout": {
+    "level": "L5",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        -90,
+        -85
+      ],
+      [
+        90,
+        70
+      ]
+    ]
+  },
+  "camera": {
+    "mode": "game",
+    "target": "inspect-crater"
+  },
+  "frames": 60,
+  "sheet": 10,
+  "note": "Devastated L5 twin: the same blast wreck as L4, rotated and settled 0.8 m west of the truck, clear of the frontage.",
+  "expect": {
+    "consoleErrors": 0
+  },
+  "tier": 5,
+  "actors": [
+    {
+      "id": "inspect-crater",
+      "kind": "courier",
+      "at": [
+        15.5,
+        -9.5
+      ]
+    }
+  ]
+}
