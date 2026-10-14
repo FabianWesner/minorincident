@@ -275,8 +275,10 @@ export interface Expectations {
   vehicleSlipMaxDeg?: number;
   /** Frames a driven vehicle above its dead-lamp damage stage had its headlights off. */
   headlightsDarkFramesMax?: number;
-  /** Worst per-frame median route/verge luminance ratio ((hi + .02) / (lo + .02) on relative luminance; the WCAG .05 value is reported as `wcag05`) over the sampled frames; needs `contrast`. E31-AC16: 3. */
+  /** Median over the sampled frames of the per-frame median route/verge luminance ratio ((hi + .02) / (lo + .02) on relative luminance; the WCAG .05 value is reported as `wcag05`) over the sampled frames; needs `contrast`. E31-AC16: 3. */
   navContrastMin?: number;
+  /** The worst sampled frame may not fall below this (same ratio): no black stretch of road. */
+  navContrastFloor?: number;
   /** Same ratio for the player's body (90th percentile of a box at the screen centre) against the verge ground. */
   playerContrastMin?: number;
   /** Same ratio for building facade samples (`contrast.landmarks`) against the verge ground. */

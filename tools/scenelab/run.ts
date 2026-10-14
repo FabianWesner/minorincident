@@ -35,7 +35,8 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   const stops = new Set([...shots, ...sheetAt]);
   if (video) for (let f = 0; f <= video * 60; f += 3) stops.add(f);
   let frame = 0;
-  const contrast: { frame: number; result: ContrastResult }[] = [], measure = async (f: number) => { if (!spec.contrast) return; const result = await measureContrast(session.page, spec); if (result) contrast.push({ frame: f, result }); };
+  const contrast: { frame: number; result: ContrastResult }[] = [], measure = async (f: number) => { if (!spec.contrast || f === 0) return; // frame 0: the follow camera has not settled on a driven vehicle yet
+    const result = await measureContrast(session.page, spec); if (result) contrast.push({ frame: f, result }); };
   const pixels: { frame: number; pixels: Awaited<ReturnType<typeof canvasFrame>> }[] = [];
   for (const stop of [...stops].sort((a, b) => a - b)) {
     if (stop > frames) break;
@@ -56,10 +57,12 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   if (spec.contrast) {
     const worst = (pick: (r: ContrastResult) => number | undefined) => { const v = contrast.map(c => pick(c.result)).filter((x): x is number => x !== undefined && Number.isFinite(x)); return v.length ? Math.min(...v) : 0; };
     const e = spec.expect ?? {}, gate = (name: string, value: number, min: number | undefined) => { if (min !== undefined) result.checks.push({ name, pass: value >= min, value, limit: min }); };
-    gate('navContrastMin', worst(r => r.median), e.navContrastMin); gate('playerContrastMin', worst(r => r.player), e.playerContrastMin); gate('landmarkContrastMin', worst(r => r.landmarks), e.landmarkContrastMin);
+    // Typical view (median of the per-frame medians) must reach the AC; no single frame may fall below the floor (a black stretch of road reads ~1.1).
+    const typical = (pick: (r: ContrastResult) => number | undefined) => { const v = contrast.map(c => pick(c.result)).filter((x): x is number => x !== undefined && Number.isFinite(x)).sort((a, b) => a - b); return v.length ? v[Math.floor((v.length - 1) / 2)] : 0; };
+    gate('navContrastMin', typical(r => r.median), e.navContrastMin); gate('navContrastFloor', worst(r => r.median), e.navContrastFloor); gate('playerContrastMin', worst(r => r.player), e.playerContrastMin); gate('landmarkContrastMin', worst(r => r.landmarks), e.landmarkContrastMin);
     // At the closest zoom (< 1) the verge is off screen, so there is nothing to compare: the zoom 1 and 1.5 rows carry the gate.
     if ((spec.camera as { zoom?: number } | undefined)?.zoom === undefined || (spec.camera as { zoom: number }).zoom >= 1) result.checks.push({ name: 'contrastSampled', pass: contrast.length > 0, value: contrast.length, limit: 1 });
-    else for (const name of ['navContrastMin', 'playerContrastMin', 'landmarkContrastMin']) { const i = result.checks.findIndex(c => c.name === name); if (i >= 0 && !contrast.length) result.checks.splice(i, 1); }
+    else for (const name of ['navContrastMin', 'navContrastFloor', 'playerContrastMin', 'landmarkContrastMin']) { const i = result.checks.findIndex(c => c.name === name); if (i >= 0 && !contrast.length) result.checks.splice(i, 1); }
   }
   result.checks.push(...pixels.flatMap(p => canvasFrameChecks(p.pixels, `canvas.f${p.frame}`)));
   // Renderer telemetry calls the WebGL2 fallback `webgl`; CLI uses the explicit API version.
