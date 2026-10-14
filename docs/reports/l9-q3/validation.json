@@ -1,0 +1,188 @@
+{
+  "typecheck": "pass",
+  "lint": "pass",
+  "build": "pass",
+  "unit": {
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npm run test:unit",
+    "passed": 1400,
+    "failed": 1,
+    "skipped": 7,
+    "failure": "T-E17-02b timed out at unchanged 300000 ms",
+    "retry": {
+      "passed": 17,
+      "failed": 0,
+      "durationSeconds": 190.66,
+      "runner": "91.98.11.241"
+    },
+    "final": {
+      "passed": 1401,
+      "failed": 0,
+      "skipped": 7,
+      "runner": "91.98.11.241",
+      "workers": 2,
+      "runnerSlots": "both reserved"
+    }
+  },
+  "simLevels": {
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/sim tests/levels -t E31 --maxWorkers=2",
+    "passed": 80,
+    "failed": 1,
+    "failure": "T-E31-19-S4-200 p95 5.899016 ms > 4 ms",
+    "continuousSeed1Campaign": "pass",
+    "isolatedTimingRetry": {
+      "passed": 1,
+      "failed": 1,
+      "failure": "200-infected p95 4.386340 ms > 4 ms",
+      "runner": "2.28.24.66",
+      "runnerSlots": "both reserved"
+    },
+    "secondHostTimingRetry": {
+      "passed": 2,
+      "failed": 0,
+      "runner": "91.98.11.241",
+      "runnerSlots": "both reserved",
+      "limitsMs": [
+        4,
+        6
+      ]
+    }
+  },
+  "browser": {
+    "previousKeyboardPassed": 6,
+    "previousFailures": "close-zoom WebGPU captured crowd matrices; no allowlist added",
+    "finalFocusedTouch": {
+      "project": "pixel-7",
+      "backend": "webgpu",
+      "zoom": 0.5,
+      "hp": 0,
+      "passed": 1,
+      "failed": 0,
+      "durationSeconds": 32.9
+    },
+    "matrix": {
+      "passed": 13,
+      "failed": 0,
+      "status": "interrupted at three-hour ceiling",
+      "chromiumPassed": 10,
+      "pixel7Passed": 3,
+      "remaining": "17 cases; pixel landscape not completed"
+    },
+    "streaming": "final rerun not reached before three-hour ceiling"
+  },
+  "sceneMatrix": {
+    "passed": 240,
+    "failed": 0,
+    "backends": [
+      "webgl2",
+      "webgpu"
+    ],
+    "tiers": [
+      "high",
+      "low"
+    ],
+    "zooms": [
+      0.5,
+      1,
+      1.5
+    ],
+    "retirementScene": {
+      "passed": 12,
+      "failed": 0,
+      "backends": [
+        "webgl2",
+        "webgpu"
+      ],
+      "tiers": [
+        "high",
+        "low"
+      ],
+      "zooms": [
+        0.5,
+        1,
+        1.5
+      ]
+    }
+  },
+  "nativePerf": {
+    "passed": 6,
+    "failed": 0,
+    "command": "E2E_PORT=33959 sh tools/perf/quiet-run.sh npx playwright test tests/perf/l9-dress.spec.ts tests/perf/l9-handover-budgets.spec.ts --project=chromium --workers=1",
+    "dressed": [
+      {
+        "backend": "webgl",
+        "tier": "high",
+        "regionsAndZooms": 15,
+        "maxFrameP95Ms": 5.5,
+        "maxSimP95Ms": 1.0999994277954102,
+        "maxDraws": 65,
+        "maxTriangles": 243505,
+        "maxHeapMB": 160.864832
+      },
+      {
+        "backend": "webgl",
+        "tier": "low",
+        "regionsAndZooms": 15,
+        "maxFrameP95Ms": 10,
+        "maxSimP95Ms": 2.6999998092651367,
+        "maxDraws": 56,
+        "maxTriangles": 72969,
+        "maxHeapMB": 115.938356
+      },
+      {
+        "backend": "webgpu",
+        "tier": "high",
+        "regionsAndZooms": 15,
+        "maxFrameP95Ms": 3.400000000001455,
+        "maxSimP95Ms": 1,
+        "maxDraws": 65,
+        "maxTriangles": 243505,
+        "maxHeapMB": 156.249692
+      },
+      {
+        "backend": "webgpu",
+        "tier": "low",
+        "regionsAndZooms": 15,
+        "maxFrameP95Ms": 13.200000000011642,
+        "maxSimP95Ms": 2.59999942779541,
+        "maxDraws": 56,
+        "maxTriangles": 72969,
+        "maxHeapMB": 112.32584
+      }
+    ],
+    "handover": [
+      {
+        "quality": "high",
+        "frameP95": 5.7,
+        "simP95": 0.5,
+        "draws": 169,
+        "triangles": 102837,
+        "peak": 6,
+        "heapMB": 206.970096
+      },
+      {
+        "quality": "low",
+        "frameP95": 6.2,
+        "simP95": 0.5,
+        "draws": 162,
+        "triangles": 44425,
+        "peak": 4,
+        "heapMB": 170.90148
+      }
+    ]
+  },
+  "rendererCrowdUnit": {
+    "passed": 278,
+    "failed": 0
+  },
+  "verifyRemote": {
+    "functionalPassed": 109,
+    "failed": 0,
+    "timing": {
+      "p95_200_ms": 2.894346,
+      "limit_200_ms": 4,
+      "p95_100_ms": 1.247175,
+      "limit_100_ms": 6
+    },
+    "browser": "old build run stopped to rebuild after confirmed crowd-buffer diagnosis"
+  }
+}

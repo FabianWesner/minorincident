@@ -1,0 +1,32 @@
+{
+  "extends": "qa-l9-q3-pair-fork-1000.json",
+  "name": "qa-l9-q3-pair-crossing-start",
+  "note": "Q3 L9 half of armored-departure pair: same shared unarmed APC, seated at the authored crossing start. Compare zoo departure with the same game framing.",
+  "layout": {
+    "district": "D-CROSSING",
+    "bbox": [
+      [
+        -600,
+        -70
+      ],
+      [
+        -500,
+        70
+      ]
+    ]
+  },
+  "vehicles": [
+    {
+      "id": "apc",
+      "asset": "vehicle.military-apc",
+      "at": [
+        -550,
+        0
+      ],
+      "yaw": 0,
+      "health": 1000,
+      "floor": true,
+      "driven": true
+    }
+  ]
+}

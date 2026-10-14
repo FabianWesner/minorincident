@@ -17,8 +17,8 @@ import { CrowdFigureProbe } from './characters/CrowdFigureProbe';
 import { contactShadowMaterial } from './ContactShadows';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
-import { BoxGeometry, BufferGeometry, PlaneGeometry, Color, ConeGeometry, DoubleSide, FrontSide, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, RingGeometry, Frustum, Sphere, Vector3, StreamDrawUsage } from 'three/webgpu';
-import { mix, attribute, instancedBufferAttribute, mat4, normalGeometry, vec3, positionGeometry, vec4, float, cameraViewMatrix, luminance, screenCoordinate, uniform } from 'three/tsl';
+import { BoxGeometry, BufferGeometry, PlaneGeometry, Color, ConeGeometry, DoubleSide, FrontSide, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, RingGeometry, Frustum, Sphere, Vector3, StreamDrawUsage } from 'three/webgpu';
+import { mix, attribute, mat4, normalGeometry, vec3, positionGeometry, vec4, float, cameraViewMatrix, luminance, screenCoordinate, uniform } from 'three/tsl';
 import { crowdBlendedMatrix, packCrowdParts } from '../assets/crowd';
 import type { Materials } from './Materials';
 import { AssetRegistry } from '../assets/registry';
@@ -212,13 +212,19 @@ export class CrowdView extends Group {
       const mesh = slot ?? new InstancedMesh(baked.geometry, material, capacity); mesh.userData.preRenderTextures = [texture];
       mesh.instanceMatrix.setUsage(StreamDrawUsage);
       if (slot) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.geometry = baked.geometry; mesh.material = material; this.heroSlots.delete(key); } mesh.userData.preRenderSolo = true; mesh.name = key; mesh.frustumCulled = false; mesh.count = 0;
-      // E17's explicit instance * part order: positionNode runs after default instancing.
+      // E17's explicit instance * part transform order.
       const matrices = new InstancedInterleavedBuffer(mesh.instanceMatrix.array, 16, 1).setUsage(StreamDrawUsage);
       mesh.onBeforeRender = () => { matrices.version = mesh.instanceMatrix.version; matrices.clearUpdateRanges(); matrices.addUpdateRange(0, mesh.count * 16); };
-      const column = (offset: number) => instancedBufferAttribute(matrices, 'vec4' as const, 16, offset);
+      // Bind the current batch's matrices per draw, as CivilianCrowd does. Captured
+      // buffer nodes can keep a retired LOD's GPU buffer in a shared shader state.
+      for (let i = 0; i < 4; i++) baked.geometry.setAttribute(`_crowd${i}`, new InterleavedBufferAttribute(matrices, 4, i * 4));
+      const column = (offset: number) => attribute(`_crowd${offset / 4}`, 'vec4');
       const instance = mat4(column(0), column(4), column(8), column(12));
       material.positionNode = instance.mul(matrix.mul(vec4(positionGeometry.mul(visible).mul(crowdHeadwearVisibility()), 1))).xyz;
       material.normalNode = instance.mul(matrix.mul(vec4(normalGeometry, 0))).xyz.transformDirection(cameraViewMatrix);
+      Object.defineProperty(mesh, 'isInstancedMesh', { value: false, writable: true });
+      mesh.userData.staticInstanceAttributes = true;
+      mesh.userData.staticInstancePosition = material.positionNode;
       mesh.onAfterRender = () => probe.draw();
       this.batches.set(`${key}:${lod}`, { animal: !!model.getObjectByName('legFL'), locomotion, probe, poses, lod, role: key, mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), strideScale: baked.strideScale, windup: def.windup, texture, count: 0, placeholders: fallback }); this.add(mesh);
       if (this.world.scenario === 'L7' && lod === (this.low ? 'lod2' : 'lod1')) {
