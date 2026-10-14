@@ -1,0 +1,48 @@
+{
+  "name": "l10-q1-alpha-silhouette-known-low-defect",
+  "note": "E32-AC09/30: regular Alpha centered at true high/low and zoom 0.5/1/1.5. Known low defect: jagged black/white triangles instead of the human silhouette; do not approve the low sheet until the asset lane resolves it.",
+  "seed": 32,
+  "ground": "asphalt",
+  "time": "L4",
+  "size": 40,
+  "dof": false,
+  "actors": [
+    {
+      "id": "alpha",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 210,
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      1.5,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 30,
+  "sheet": 30,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "edgeNoise": {
+    "rect": [
+      0.25,
+      0.05,
+      0.75,
+      0.95
+    ],
+    "extremeEdgeShareMax": 0.1
+  }
+}

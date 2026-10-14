@@ -186,6 +186,10 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   add('megaCruiseErrorMax', metrics.megaAlpha?.cruiseError ?? Infinity, e.megaCruiseErrorMax);
   add('megaStepMaxM', metrics.megaAlpha?.stepMaxM ?? Infinity, e.megaStepMaxM);
   const atLeast = (name: string, value: number, limit: number | undefined) => { if (limit !== undefined) checks.push({ name, pass: value >= limit, value, limit }); };
+  atLeast('specialActiveMin', metrics.specials?.filter(s => s.stage === 'active' && (!e.specialActiveMove || s.move === e.specialActiveMove)).length ?? 0, e.specialActiveMin);
+  atLeast('courierHpMin', Object.values(metrics.actors).find(a => a.kind === 'courier')?.health ?? 0, e.courierHpMin);
+  atLeast('megaCoarseFramesMin', metrics.megaAlpha?.modes.coarse ?? 0, e.megaCoarseFramesMin);
+  atLeast('megaDetailedFramesMin', metrics.megaAlpha?.modes.detailed ?? 0, e.megaDetailedFramesMin);
   atLeast('minigunRoundsMin', metrics.minigun?.rounds ?? 0, e.minigunRoundsMin); atLeast('minigunHeatPeakMin', metrics.minigun?.heatPeak ?? 0, e.minigunHeatPeakMin);
   atLeast('minigunLockedFramesMin', metrics.minigun?.lockedFrames ?? 0, e.minigunLockedFramesMin); atLeast('minigunMountedFramesMin', metrics.minigun?.mountedFrames ?? 0, e.minigunMountedFramesMin); atLeast('minigunFeetMin', metrics.minigun?.feetMin ?? -1, e.minigunFeetMin);
   if (e.groundingMaxCm !== undefined) add('groundingMaxCm', Math.max(metrics.grounding?.corpseOffMaxCm ?? Infinity, metrics.grounding?.pickupOffMaxCm ?? Infinity), e.groundingMaxCm);

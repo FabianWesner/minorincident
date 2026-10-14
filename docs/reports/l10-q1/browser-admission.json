@@ -1,0 +1,26 @@
+{
+  "status": "unmeasured",
+  "at": "2026-10-14T10:14:16.520568+00:00",
+  "waitSeconds": 1840,
+  "reason": "No shared browser slot admitted within the binding 30-minute queue cutoff. Existing quiet-run lock processes were present for over 2 and 3 hours.",
+  "requestedBackends": [
+    "webgl2",
+    "webgpu"
+  ],
+  "requestedTiers": [
+    "high",
+    "low"
+  ],
+  "requestedZooms": [
+    0.5,
+    1,
+    1.5
+  ],
+  "scenes": 31,
+  "variantsPerBackend": 186,
+  "newCaptures": 0,
+  "qualityPinWithUI": "unmeasured",
+  "alphaPixelThreshold": "synthetic control tested; real canvas unmeasured",
+  "nativePerformance": "unmeasured",
+  "verifyE32": "Static checks passed; stopped before queued build to avoid a build/capture race."
+}

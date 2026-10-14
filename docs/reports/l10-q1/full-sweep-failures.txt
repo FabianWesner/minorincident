@@ -1,0 +1,55 @@
+Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   timing  tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-perf @E19 @E18-AC02 @perf 200 L1 infected with 40 humans: Node sim p95 <= 4 ms
+AssertionError: expected 7.741932000000816 to be less than or equal to 7.51251375000038
+ ❯ tests/sim/ai/l1-perception.test.ts:441:17
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL   timing  tests/sim/performance/alpha-support.test.ts > T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms
+AssertionError: expected 4.621074000024237 to be less than or equal to 4
+ ❯ tests/sim/performance/alpha-support.test.ts:29:147
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL   timing  tests/sim/performance/zoo-s2.test.ts > T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms
+AssertionError: expected 4.0991139999823645 to be less than or equal to 4
+ ❯ tests/sim/performance/zoo-s2.test.ts:26:68
+     24|     const proof = { count, zoo: ids.length, activations, simMsP95: tim…
+     25|     mkdirSync('docs/reports/zoo-s2', { recursive: true }); writeFileSy…
+     26|     expect(activations).toBeGreaterThan(0); expect(proof.simMsP95).toB…
+       |                                                                    ^
+     27|   } finally { w.dispose(); }
+     28| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL   timing  tests/sim/world/chunk-residency.test.ts > T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95
+AssertionError: expected 5.415142999991076 to be less than or equal to 4
+ ❯ tests/sim/world/chunk-residency.test.ts:87:71
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL   functional  tests/unit/assets/validate.test.ts > T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts
+Error: Test timed out in 300000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/unit/assets/validate.test.ts:83:1
+     81|   expect(new Set(manifest.map((a) => a.id)).size).toBe(manifest.length…
+     82| });
+     83| test('T-E17-02b @E17-AC02 production outputs satisfy orientation, pale…
+       | ^
+     84|   const assets = manifest as AssetDef[];
+     85|   const reports = await validateAssets(assets, true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  5 failed | 378 passed | 3 skipped (386)
+      Tests  5 failed | 2639 passed | 9 skipped (2653)
+   Start at  09:44:01
+   Duration  3271.13s (tests 98%, import 1%)
+
+[remote] done exit=1 (runner 94.130.181.173, sync 42s, remote total 3284s)

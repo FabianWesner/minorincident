@@ -1,0 +1,33 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/l10-q1 -> 94.130.181.173:/srv/mi/ws/l10-q1-90f4e3
+[remote] cache-gc deleted:none
+[remote] sync 16s, 10431 files; job /srv/mi/jobs/l10-q1-90f4e3-95107-1791974478; queueing for a slot
+[runner] slot 0 acquired; load 0.75 1.70 4.10
+
+ RUN  v5.0.3 /srv/mi/jobs/l10-q1-90f4e3-95107-1791974478
+
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-perf @E19 @E18-AC02 @perf 200 L1 infected with 40 humans: Node sim p95 <= 4 ms
+[perf] 200 L1 infected p50 1.25 ms p95 1.90 ms max 5.81 ms; modes {"chase":140,"attracted":24,"search":21,"wander":7,"bite":8}; bites 16
+
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-perf @E19 @E18-AC02 @perf 200 L1 infected with 40 humans: Node sim p95 <= 4 ms
+[perf] E18 reference p95 1.86 ms
+
+ ✓  timing  tests/sim/ai/l1-perception.test.ts (15 tests | 14 skipped) 2386ms
+   ✓ L1 v2 infected perception (15)
+     ✓ T-E19-perf @E19 @E18-AC02 @perf 200 L1 infected with 40 humans: Node sim p95 <= 4 ms 2384ms
+ ✓  timing  tests/sim/world/chunk-residency.test.ts (11 tests | 10 skipped) 4492ms
+   ✓ T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95 4490ms
+ ✓  timing  tests/sim/performance/alpha-support.test.ts (2 tests | 1 skipped) 1628ms
+   ✓ T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms 1626ms
+ ✓  timing  tests/sim/performance/zoo-s2.test.ts (2 tests | 1 skipped) 2081ms
+   ✓ T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms 2080ms
+ ✓  functional  tests/unit/assets/validate.test.ts (17 tests | 16 skipped) 173820ms
+   ✓ T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts 173818ms
+
+ Test Files  5 passed (5)
+      Tests  5 passed | 42 skipped (47)
+   Start at  10:41:36
+   Duration  189.74s (tests 98%, transform 2%, import 1%)
+
+JSON report written to /srv/mi/jobs/l10-q1-90f4e3-95107-1791974478/test-results/l10-q1/failure-rerun.json
+[remote] pulled test-results/l10-q1/failure-rerun.json
+[remote] done exit=0 (runner 94.130.181.173, sync 16s, remote total 193s)
