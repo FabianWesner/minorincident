@@ -3,7 +3,7 @@ import type { Node } from 'three/webgpu';
 import { attribute, varying, vec3 } from 'three/tsl';
 import { crowdAppearance, hairTones, skinTones, infectedSkinTones, trouserTones, shirtTones } from '../../data/crowdAppearance';
 import palette from '../../assets/palette.json';
-import manifest from '../../assets/manifest.json';
+import manifest from '../../assets/manifest.json' with { type: 'json' };
 const accessoryKinds = new Map((manifest as unknown as {id: string; accessory?: {slot: string}}[]).map(a => [a.id, a.accessory?.slot]));
 import { infectedDefinitions } from '../../data/infected';
 import type { EntitySnapshot } from '../../sim/world/types';

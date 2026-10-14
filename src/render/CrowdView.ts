@@ -22,7 +22,7 @@ import { mix, attribute, mat4, normalGeometry, vec3, positionGeometry, vec4, flo
 import { crowdBlendedMatrix, packCrowdParts } from '../assets/crowd';
 import type { Materials } from './Materials';
 import { AssetRegistry } from '../assets/registry';
-import manifest from '../assets/manifest.json';
+import manifest from '../assets/manifest.json' with { type: 'json' };
 import { civilianRoles } from '../data/npcs';
 import { infectedDefinitions } from '../data/infected';
 import type { EntitySnapshot } from '../sim/world/types';

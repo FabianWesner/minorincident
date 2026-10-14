@@ -1,7 +1,7 @@
 import { Box3, Mesh, MeshBasicMaterial, Vector3, type Group, type Material } from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
-import manifest from './manifest.json';
+import manifest from './manifest.json' with { type: 'json' };
 import { atLeast, type AssetDef } from './types';
 import { palette, type PaletteToken } from '../data/palette';
 

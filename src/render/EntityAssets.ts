@@ -2,7 +2,7 @@ import { modelLod } from './lodPolicy';
 import { Group, Mesh, type Object3D, type BufferGeometry, type Material } from 'three/webgpu';
 import { AssetRegistry } from '../assets/registry';
 import { staticBatch } from '../assets/staticBatch';
-import manifest from '../assets/manifest.json';
+import manifest from '../assets/manifest.json' with { type: 'json' };
 import type { Materials } from './Materials';
 import type { View } from './View';
 import type { AssetQuality } from '../assets/types';

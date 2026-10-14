@@ -1,6 +1,6 @@
 // Adapted from Bruno Simon folio-2025 Confetti.js, Leaves.js, Trails.js and Noises.js (MIT, 41046b5).
 import { Color, CustomBlending, OneFactor, OneMinusSrcAlphaFactor, DoubleSide, DynamicDrawUsage, InstancedBufferAttribute, InstancedMesh, Matrix4, MeshBasicNodeMaterial, PlaneGeometry, type Node, DepthTexture, ViewportDepthTextureNode, TextureLoader, SRGBColorSpace, type Texture } from 'three/webgpu';
-import manifest from '../../assets/manifest.json';
+import manifest from '../../assets/manifest.json' with { type: 'json' };
 import type { AssetDef } from '../../assets/types';
 import { texture, attribute, cameraWorldMatrix, cos, float, Fn, mix, positionGeometry, sin, uniform, uv, vec3, vec4, linearDepth } from 'three/tsl';
 

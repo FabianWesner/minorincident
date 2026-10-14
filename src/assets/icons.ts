@@ -1,4 +1,4 @@
-import manifest from './manifest.json';
+import manifest from './manifest.json' with { type: 'json' };
 const urls = import.meta.glob<string>('./icons/*.svg', { eager: true, query: '?url', import: 'default' });
 /** Browser-ready icon URLs (Vite inlines small SVGs); HUD consumes the same manifest IDs. */
 export function actionIconUrl(id: string): string {

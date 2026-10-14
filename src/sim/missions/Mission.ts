@@ -253,12 +253,14 @@ export class Mission {
   }
   private result(): void {
     this.state.phase = 'result'; this.state.stats.time = (this.world.tick - this.startTick) / 60;
+    // The L10 route timing includes its playable epilogue; title and credits have their own presentation clock.
+    if (this.state.epilogue && this.state.cureFront) this.state.stats.time -= Math.max(0, this.state.cureFront.elapsed - this.state.counters['epilogue-ticks']) / 60;
     const l5 = this.l5?.result();
     this.state.result = { ...structuredClone(this.state.stats), ...this.l1?.result(), ...l5, ...this.l6?.result(), ...this.l8?.result() };
     this.l9?.end();
     this.emit({ type: 'level.completed', id: this.def.id, result: this.state.result });
     // E20/E21: no caption card or reward screen after L2 and L3; the campaign continues straight into the next level.
-    if (this.def.l2 || this.def.l3 || this.def.l4 || this.def.l5 || this.def.l8 || this.def.l9) this.continue();
+    if (this.def.l2 || this.def.l3 || this.def.l4 || this.def.l5 || this.def.l8 || this.def.l9 || this.state.epilogue) this.continue();
   }
   continue(): void { if (this.state.phase === 'result') { this.state.phase = 'progression'; this.emit({ type: 'progression.requested', id: this.def.id }); } }
   private fail(reason: FailReason, def?: ObjectiveDef): void {
