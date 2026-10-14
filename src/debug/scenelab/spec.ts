@@ -234,6 +234,8 @@ export interface Expectations {
   emergeOutsideMax?: number;
   /** Frames any actor drew its far LOD (lod2) within 14 m of the camera. */
   farLodCloseMax?: number;
+  /** Frames any placement was drawn from a coarser stand-in mesh than its selected LOD band, i.e. its LOD0/LOD1 had not arrived (`metrics.lodPlaceholders`). Use 0. */
+  lodPlaceholderFramesMax?: number;
   /** Frames a living actor stood in a door aperture or leaf sweep (src/data/buildingDoors.ts) while that door was not
    * fully open (`metrics.doors`). */
   doorClosedFramesMax?: number;

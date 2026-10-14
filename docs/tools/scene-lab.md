@@ -254,6 +254,7 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 - `drawCallsMax`
 - `trianglesMax`
 - `emergeOutsideMax` (`emerge` residents first drawn past the door threshold, or never drawn)
+- `lodPlaceholderFramesMax` (frames a placement was drawn from a coarser stand-in mesh than its selected LOD band, so its real LOD0/LOD1 had not arrived; `metrics.lodPlaceholders` names asset and tiers; use 0)
 - `farLodCloseMax` (frames any actor drew its far LOD, lod2, within 14 m of the camera; `metrics.actors.<id>.farLodCloseFrames`)
 - `actorHitsMax` (bone-vs-prop hits only, `clipping.actors`; static layout pairs are not counted)
 - `doorClosedFramesMax` (frames a living actor stood in a door aperture or leaf sweep while that animated door was not fully open; see `metrics.doors`). Animated door leaves are left out of the bone clipping because they swing at runtime. `emerge` residents pass through their door here too.
