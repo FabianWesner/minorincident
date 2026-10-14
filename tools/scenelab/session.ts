@@ -180,7 +180,7 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   add('megaStepMaxM', metrics.megaAlpha?.stepMaxM ?? Infinity, e.megaStepMaxM);
   const atLeast = (name: string, value: number, limit: number | undefined) => { if (limit !== undefined) checks.push({ name, pass: value >= limit, value, limit }); };
   atLeast('minigunRoundsMin', metrics.minigun?.rounds ?? 0, e.minigunRoundsMin); atLeast('minigunHeatPeakMin', metrics.minigun?.heatPeak ?? 0, e.minigunHeatPeakMin);
-  atLeast('minigunLockedFramesMin', metrics.minigun?.lockedFrames ?? 0, e.minigunLockedFramesMin); atLeast('minigunMountedFramesMin', metrics.minigun?.mountedFrames ?? 0, e.minigunMountedFramesMin);
+  atLeast('minigunLockedFramesMin', metrics.minigun?.lockedFrames ?? 0, e.minigunLockedFramesMin); atLeast('minigunMountedFramesMin', metrics.minigun?.mountedFrames ?? 0, e.minigunMountedFramesMin); atLeast('minigunFeetMin', metrics.minigun?.feetMin ?? -1, e.minigunFeetMin);
   if (e.groundingMaxCm !== undefined) add('groundingMaxCm', Math.max(metrics.grounding?.corpseOffMaxCm ?? Infinity, metrics.grounding?.pickupOffMaxCm ?? Infinity), e.groundingMaxCm);
   if (e.groundingCorpsesMin !== undefined) checks.push({ name: 'groundingCorpsesMin', pass: (metrics.grounding?.corpses ?? 0) >= e.groundingCorpsesMin, value: metrics.grounding?.corpses ?? 0, limit: e.groundingCorpsesMin });
   if (e.groundingPickupsMin !== undefined) checks.push({ name: 'groundingPickupsMin', pass: (metrics.grounding?.pickups ?? 0) >= e.groundingPickupsMin, value: metrics.grounding?.pickups ?? 0, limit: e.groundingPickupsMin });
