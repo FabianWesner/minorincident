@@ -662,7 +662,7 @@ export class GameView implements Lifecycle {
   getState() {
     const materialInventory = new Map<string, { name: string; palette: boolean; plainLit: boolean; emissive: number }>();
     this.scene.traverse((child) => { if (child instanceof Mesh) for (const material of Array.isArray(child.material) ? child.material : [child.material]) materialInventory.set(material.uuid, { name: material.name, palette: material instanceof PaletteMaterial, plainLit: (material instanceof MeshLambertNodeMaterial || material instanceof MeshStandardMaterial) && !(material instanceof PaletteMaterial), emissive: material.userData.emissiveStrength ?? 0 }); });
-    return { machineGuns: this.districts?.machineGunState() ?? [], weather: this.weather?.snapshot() ?? null, bicycle: this.bicycle?.snapshot() ?? null, quality: this.quality, pixelRatio: this.renderer.getPixelRatio(), postFx: this.postFx?.snapshot() ?? null, moveMarker: this.destination ? { visible: this.destination.visible, position: this.destination.position.toArray() } : null, missionMarker:this.marker ? {visible:this.marker.visible,position:this.marker.position.toArray()} : null, districts:this.districts?.getState()??null, backend: this.renderer.selectedBackend, camera: this.view.getState(), lighting: this.lighting?.getState() ?? null,
+    return { placeholderDraws: this.districts?.placeholderDraws() ?? [], machineGuns: this.districts?.machineGunState() ?? [], weather: this.weather?.snapshot() ?? null, bicycle: this.bicycle?.snapshot() ?? null, quality: this.quality, pixelRatio: this.renderer.getPixelRatio(), postFx: this.postFx?.snapshot() ?? null, moveMarker: this.destination ? { visible: this.destination.visible, position: this.destination.position.toArray() } : null, missionMarker:this.marker ? {visible:this.marker.visible,position:this.marker.position.toArray()} : null, districts:this.districts?.getState()??null, backend: this.renderer.selectedBackend, camera: this.view.getState(), lighting: this.lighting?.getState() ?? null,
       npcs: this.npcs?.snapshot() ?? null, accessories: this.accessories?.snapshot() ?? [],
       vehicles: [...(this.vehicles?.snapshot() ?? []), ...(this.vehicleFeedback?.getState() ?? []).map(v => ({ ...v, wheels: [], brake: 0, sirens: [], placeholder: true }))], entityAssets: this.entityAssets?.getState() ?? null, character: this.character?.getState() ?? null, contactShadows: this.contactShadows?.getState() ?? null, crowd: this.crowd?.getState() ?? null, healthBars: this.healthBars?.snapshot() ?? null, actions: this.actions?.getState() ?? null,
       vfx: this.vfx?.snapshot() ?? null, infected: this.crowd?.getGoreState() ?? [],
@@ -900,7 +900,11 @@ export class GameView implements Lifecycle {
     // residency on every load. A briefing snapshot waits only for its visible assets.
     if (this.params.get('test') === '1' && this.world.missions?.state.phase !== 'briefing') await this.preparation;
     this.accessories?.begin(); this.districts?.updateLods(this.view); this.crowd?.update(this.view); this.npcs?.update(this.camera, 1, this.view.lodCamera); this.accessories?.finish();
-    await Promise.all([this.districts?.ready(), this.crowd?.ready(), this.npcs?.ready(), this.vehicles?.ready(), this.entityAssets?.ready(), this.interactions?.synchronize(), this.syncMountedGun()]); }
+    await Promise.all([this.districts?.ready(), this.crowd?.ready(), this.npcs?.ready(), this.vehicles?.ready(), this.entityAssets?.ready(), this.interactions?.synchronize(), this.syncMountedGun()]);
+    // Tier loads chain (LOD1 stand-in, then LOD0) and each step is requested by the next partition: settle them, so a snapshot
+    // never shows a building drawn from a stand-in mesh (lod-pop: the first Scene Lab frame showed crude LOD2 shapes).
+    for (let i = 0; i < 6 && this.districts?.placeholderDraws().length; i++) { this.districts.updateLods(this.view); await this.districts.ready(); }
+  }
   /** Same-district transitions reuse decoded prototypes; leaving the district retires the cache. */
   reset(nextDistricts?: string): void {
     const retain = !!nextDistricts && nextDistricts === this.resourceDistricts;

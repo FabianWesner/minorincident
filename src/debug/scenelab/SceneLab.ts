@@ -90,6 +90,8 @@ export class SceneLab {
   private vehicleMotion = new Map<string, { yaw: number; yawRateMaxDegS: number; overlaps: number; ride?: TruckRideState }>();
   private vehicleTrack = new Map<string, number[][]>();
   private camera: CameraSpec | null = null;
+  /** Frames in which a building/prop placement was drawn from a coarser stand-in mesh than its selected LOD band (lod-pop). */
+  private placeholders = { frames: 0, firstFrame: -1, assets: new Set<string>() };
   private perf: { drawCalls: number; triangles: number; shadowDrawCalls: number; shadowTriangles: number; stepMs: number; categories: Record<string, number> }[] = [];
   private hits = new Map<string, Hit>();
   /** Actor pairs whose torsos/heads interpenetrate (worst depth, frame, sampled-frame count). */
@@ -154,7 +156,7 @@ export class SceneLab {
     }
     this.propSinkMaxCm = 0; this.propGroundSamples = 0; this.propPenetration.clear(); this.propPenetrationSamples = 0; this.propPenetrationTick = -1;
     this.vehicleMotion.clear(); this.pursuit.clear(); this.mega = null; this.gunStats = null; this.attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1 };
-    this.spec = structuredClone(spec); this.companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 }; this.frame = 0; this.heldPropSamples = 0; this.heldPropClips.clear(); this.holds.clear(); this.seeThroughOpen = { frames: 0, solidRadiusMax: 0, cutLowProps: [] }; this.gunBodyHits.clear(); this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.metroClosed = 0; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0;
+    this.spec = structuredClone(spec); this.companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 }; this.frame = 0; this.heldPropSamples = 0; this.heldPropClips.clear(); this.holds.clear(); this.seeThroughOpen = { frames: 0, solidRadiusMax: 0, cutLowProps: [] }; this.gunBodyHits.clear(); this.actors.clear(); this.vehicles.clear(); this.perf = []; this.placeholders = { frames: 0, firstFrame: -1, assets: new Set() }; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.metroClosed = 0; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0;
     const built = this.built = buildScene(spec, assets, source);
     this.game.view.labProbes().districts?.setDispersalActive(!!spec.dispersal?.active);
     if (spec.armyBoom && !spec.armyBoom.closed) for (const p of built.layout.placements) if (p.assetId === 'kit.army-checkpoint') p.boomOpen = true;
@@ -662,6 +664,8 @@ export class SceneLab {
       if (this.spec?.megaHud) this.game.ui.hud.update();
       this.frame++;
       this.sample();
+      const standIns = this.game.view.labProbes().districts?.placeholderDraws() ?? [];
+      if (standIns.length) { this.placeholders.frames++; if (this.placeholders.firstFrame < 0) this.placeholders.firstFrame = this.frame - 1; for (const d of standIns) this.placeholders.assets.add(`${d.assetId} ${d.lod}->${d.shown}`); }
       const gaps = this.game.view.labProbes().districts?.propGroundGaps() ?? [];
       this.propGroundSamples += gaps.length;
       this.propSinkMaxCm = Math.max(this.propSinkMaxCm, 0, ...gaps.map(g => -g.gapCm));
@@ -1201,6 +1205,7 @@ export class SceneLab {
       propPenetration: { samples: this.propPenetrationSamples, framesMax: Math.max(0, ...[...this.propPenetration.values()].map(m => m.max)), pairs: [...this.propPenetration.values()] },
       props: { sinkMaxCm: this.propSinkMaxCm, samples: this.propGroundSamples, gaps: this.game.view.labProbes().districts?.propGroundGaps() ?? [] },
       bodies, wheels: Object.fromEntries([...new Set([...this.wheels.values()].map(w => w.vehicle))].map(id => [id, [...this.wheels.values()].filter(w => w.vehicle === id).map(w => { const h = this.hubs.get(`${w.vehicle}|${w.wheel}`); return { ...w, hubSpikeCm: h?.spikeCm ?? 0, hubSpikeFrame: h?.spikeFrame ?? 0, hubStepCm: h?.stepCm ?? 0, hubStepFrame: h?.stepFrame ?? 0 }; })])), ...(this.spec?.trace ? { vehicleTrack: Object.fromEntries(this.vehicleTrack), wheelTrack: Object.fromEntries(this.wheelTrack) } : {}),
+      lodPlaceholders: { frames: this.placeholders.frames, firstFrame: this.placeholders.firstFrame, assets: [...this.placeholders.assets].sort() },
       perf: { drawCalls: band(p => p.drawCalls), triangles: band(p => p.triangles), shadowDrawCalls: band(p => p.shadowDrawCalls), shadowTriangles: band(p => p.shadowTriangles), stepMs: band(p => p.stepMs),
         lastFrame: this.perf.at(-1) ?? null, note: 'view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time' },
       vehicles: Object.fromEntries([...this.vehicles].map(([id, entity]) => { const e = this.world.entities.get(entity); return [id, e ? { entity, position: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)], yawDeg: +(e.transform.yaw * 180 / Math.PI).toFixed(1), yawRateMaxDegS: this.vehicleMotion.get(id)?.yawRateMaxDegS ?? 0, bodyOverlaps: this.vehicleMotion.get(id)?.overlaps ?? 0, rideRemainingM: this.vehicleMotion.get(id)?.ride ? l2TruckPath.at(-1)!.s - this.vehicleMotion.get(id)!.ride!.rideS : null, health: Math.round(e.health.current), decay: e.vehicle?.decay ?? null, speed: +(e.vehicle?.speed ?? e.traffic?.speed ?? 0).toFixed(2) } : null]; })),
