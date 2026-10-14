@@ -1,7 +1,7 @@
 import { Box3, Vector3, BoxGeometry, BufferAttribute, BufferGeometry, Color, Group, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, StreamDrawUsage } from 'three/webgpu';
 import { attribute, instanceColor } from 'three/tsl';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { crowdShirt, crowdVertexLayout } from './CrowdAppearance';
+import { crowdShirt, crowdVertexLayout, resolveCrowdAppearance, crowdAccessoryIds } from './CrowdAppearance';
 import { batchRigidParts } from './batchRigidParts';
 import { AssetRegistry } from '../../assets/registry';
 import manifest from '../../assets/manifest.json';
@@ -16,28 +16,23 @@ const definitions = new Map((manifest as unknown as { id: string; accessory?: Ac
 const hairColors = hairTones.map(c => new Color(c));
 export type AccessoryLod = 'lod0' | 'lod1' | 'lod2';
 /** Head-local assets, shared across both human crowds: at most one draw per accessory/LOD, never per figure/model.
- * Zero LOD2 triangles is intentional; phones keep the coloured hair and garments without accessory draws. */
+ * LOD2 reuses the <=80 triangle LOD1 head piece so pose and quality changes preserve headwear. */
 export class CrowdAccessories extends Group {
   readonly ids: string[];
   private readonly registry = new AssetRegistry(() => {});
   private readonly batches = new Map<string, InstancedMesh>();
   private readonly headTransform = new Matrix4();
   private disposed = false;
+  private readonly corpseSources = new Map<string, BufferGeometry>();
   private readonly fits = new Map<string, Matrix4>();
   private readonly fitTransform = new Matrix4();
   constructor(private readonly shading?: Materials) {
     super(); this.name = 'crowd-accessories';
-    this.ids = manifest.filter(a => a.id.startsWith('acc.') && !a.aliasOf).map(a => a.id).sort();
+    this.ids = [...crowdAccessoryIds];
     if (!this.ids.length) this.ids.push('acc.placeholder-hat', 'acc.placeholder-hair');
   }
   slot(e: EntitySnapshot): number {
-    // Uniforms and animals retain their authored headgear.
-    if (e.civilian?.zooAnimal || e.archetype.startsWith('healthy.')) return 0;
-    if (e.infected && !['infected.runner', 'infected.sprinter'].includes(e.archetype)) return 0;
-    const model = e.appearance?.asset ?? e.civilian?.model ?? e.infected?.model ?? e.infected?.variant ?? e.archetype;
-    if (/firefighter|police|guard|hazmat|riot|armored|lab-|patient-zero|infected\.(dog|cat|crow|lion|gorilla|elephant|zebra|flamingo)/.test(model)) return 0;
-    const explicit = e.appearance?.accessories.find(id => this.ids.includes(id));
-    return explicit ? this.ids.indexOf(explicit) + 1 : crowdAppearance(e.id).accessory % (this.ids.length + 1);
+    return resolveCrowdAppearance(e, this.ids).slot;
   }
   hidesHair(e: EntitySnapshot, lod: string): boolean {
     const id = this.drawnSlot(e, lod); if (!id) return false;
@@ -56,7 +51,7 @@ export class CrowdAccessories extends Group {
     this.fits.set(model, new Matrix4().makeScale(scale.x, scale.y, scale.z).setPosition(offset));
   }
   drawnSlot(e: EntitySnapshot, lod: string): string | null {
-    if (lod === 'lod2') return null;
+    void lod;
     const slot = this.slot(e); return !slot ? null : this.ids[slot - 1];
   }
   async init(): Promise<void> {
@@ -112,17 +107,50 @@ export class CrowdAccessories extends Group {
   begin(): void { for (const mesh of this.batches.values()) { mesh.count = 0; mesh.visible = false; } }
   place(e: EntitySnapshot, lod: AccessoryLod, poses: CrowdPosePalette, frame: number, blend: readonly number[], transform: Matrix4, hiddenHead = false): void {
     const slot = this.slot(e), head = poses.clip.parts.indexOf('head');
-    if (!slot || lod === 'lod2' || head < 0 || hiddenHead || e.corpse) return;
-    const mesh = this.batches.get(`${this.ids[slot - 1]}:${lod}`); if (!mesh || mesh.count >= 350) return;
+    if (!slot || head < 0 || hiddenHead || e.corpse) return;
+    const mesh = this.batches.get(`${this.ids[slot - 1]}:${lod === 'lod2' ? 'lod1' : lod}`); if (!mesh || mesh.count >= 350) return;
     poses.part(frame, blend[0], blend[1], head, this.headTransform).premultiply(transform);
-    const id = this.ids[slot - 1], model = e.appearance?.asset ?? e.civilian?.model ?? e.infected?.model ?? e.infected?.variant ?? e.archetype;
-    const base = model.replace(/\.aftermath$/, ''), authored = definitions.get(id)?.fits?.[base];
-    if (authored) this.fitTransform.makeScale(...authored.scale as [number, number, number]).setPosition(...authored.offset as [number, number, number]);
-    else { const fit = this.fits.get(model); if (fit) this.fitTransform.copy(fit); else this.fitTransform.identity(); }
+    const id = this.ids[slot - 1], model = resolveCrowdAppearance(e, this.ids).model;
+    this.fit(id, model);
     this.headTransform.multiply(this.fitTransform);
     mesh.setMatrixAt(mesh.count, this.headTransform);
     mesh.setColorAt(mesh.count++, definitions.get(id)?.tint === 'hair' ? hairColors[crowdAppearance(e.id).hair] : crowdShirt(e.id + 503));
     mesh.visible = true;
+  }
+  private fit(id: string, model: string): void {
+    const base = model.replace(/\.aftermath$/, ''), authored = definitions.get(id)?.fits?.[base];
+    if (authored) this.fitTransform.makeScale(...authored.scale as [number, number, number]).setPosition(...authored.offset as [number, number, number]);
+    else { const fit = this.fits.get(model); if (fit) this.fitTransform.copy(fit); else this.fitTransform.identity(); }
+  }
+  /** Freeze the selected accessory into the body's head part and spatial pages, with no separate head draw. */
+  corpseSource(e: EntitySnapshot, source: BufferGeometry, model: string, head: number): BufferGeometry {
+    const look = resolveCrowdAppearance(e, this.ids);
+    if (!look.accessory || head < 0) return source;
+    const accessory = this.batches.get(`${look.accessory}:lod1`);
+    if (!accessory) return source;
+    const key = `${source.uuid}/${model}/${look.accessory}/${head}`;
+    const cached = this.corpseSources.get(key); if (cached) return cached;
+    this.fit(look.accessory, model);
+    // Render backends may pad colours/normals to vec4 in place. Read the semantic
+    // channels from both sources rather than borrowing their GPU attribute layout.
+    const body = new BufferGeometry(), piece = new BufferGeometry();
+    for (const [geometry, original] of [[body, source], [piece, accessory.geometry]]) {
+      for (const [name, size] of [['position', 3], ['normal', 3], ['color', 3], ['_parts', 4]] as const) {
+        const input = original.getAttribute(name); if (!input) continue;
+        const values = new Float32Array(input.count * size);
+        for (let i = 0; i < input.count; i++) for (let c = 0; c < size; c++) values[i * size + c] = input.getComponent(i, c);
+        geometry.setAttribute(name, new BufferAttribute(values, size));
+      }
+      geometry.setIndex(original.index?.clone() ?? Array.from({ length: original.getAttribute('position').count }, (_, i) => i));
+    }
+    piece.applyMatrix4(this.fitTransform);
+    const count = piece.getAttribute('position').count, parts = new Float32Array(count * 4);
+    for (let i = 0; i < count; i++) { parts[i * 4] = head; parts[i * 4 + 1] = definitions.get(look.accessory)?.tint === 'hair' ? -5 : -4; }
+    piece.setAttribute('_parts', new BufferAttribute(parts, 4));
+    const merged = mergeGeometries([body, piece]);
+    if (!merged) throw new Error(`Cannot freeze crowd accessory ${look.accessory} on ${model}`);
+    body.dispose(); piece.dispose();
+    this.corpseSources.set(key, merged); return merged;
   }
   finish(): void {
     for (const mesh of this.batches.values()) if (mesh.count) { mesh.instanceMatrix.clearUpdateRanges(); mesh.instanceMatrix.addUpdateRange(0, mesh.count * 16); mesh.instanceMatrix.needsUpdate = true; mesh.instanceColor!.clearUpdateRanges(); mesh.instanceColor!.addUpdateRange(0, mesh.count * 3); mesh.instanceColor!.needsUpdate = true; }
@@ -132,5 +160,5 @@ export class CrowdAccessories extends Group {
     return { id, instances: mesh.count, draws: mesh.count ? 1 : 0, triangles: mesh.count * (mesh.geometry.index?.count ?? mesh.geometry.getAttribute('position').count) / 3,
       layout: { buffers, locations, webgpu: buffers <= 8, webgl2: locations <= 16 } };
   }); }
-  dispose(): void { this.disposed = true; for (const mesh of this.batches.values()) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.dispose(); } void this.registry.dispose(); this.batches.clear(); this.clear(); }
+  dispose(): void { this.disposed = true; for (const mesh of this.batches.values()) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.dispose(); } void this.registry.dispose(); this.batches.clear(); for (const geometry of this.corpseSources.values()) geometry.dispose(); this.corpseSources.clear(); this.clear(); }
 }

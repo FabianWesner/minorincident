@@ -95,7 +95,7 @@ test('prebuilt pedestrian bakes receive hair/trousers tags without an extra attr
   }
 });
 
-test('head accessories share a rigid instance draw across models and disappear at LOD2 @E18-AC01', async () => {
+test('head accessories share a rigid instance draw across models and preserve identity at LOD2 @E18-AC01', async () => {
   const { CrowdAccessories } = await import('../../../src/render/characters/CrowdAccessories');
   const { CrowdPosePalette } = await import('../../../src/render/characters/CrowdPosePalette');
   const { Matrix4, Group, Mesh, BoxGeometry, MeshBasicMaterial } = await import('three');
@@ -114,13 +114,13 @@ test('head accessories share a rigid instance draw across models and disappear a
   accessories.place({...actor,id:2,appearance:{...actor.appearance!,asset:'npc.civilian-woman-a'}},'lod1',poses,0,[0,1],new Matrix4().makeTranslation(5,0,6));
   accessories.place(actor,'lod2',poses,0,[0,1],new Matrix4()); accessories.finish();
   const drawn = accessories.snapshot().filter(b=>b.instances);
-  expect(drawn).toHaveLength(1); expect(drawn[0].draws).toBe(1); expect(drawn[0].instances).toBe(2);
-  expect(drawn[0].triangles/2).toBeLessThanOrEqual(80);
+  expect(drawn).toHaveLength(1); expect(drawn[0].draws).toBe(1); expect(drawn[0].instances).toBe(3);
+  expect(drawn[0].triangles/3).toBeLessThanOrEqual(80);
   expect(drawn[0].layout).toEqual({buffers:5,locations:8,webgpu:true,webgl2:true});
   const mesh = accessories.children.find(n=>n.name===drawn[0].id) as import('three').InstancedMesh;
   const result = new Matrix4(); mesh.getMatrixAt(0,result); expect(result.elements.slice(12,15)).toEqual([3,expect.closeTo(1.6),4]);
   expect(accessories.hidesHair(actor, 'lod1')).toBe(true);
-  expect(accessories.slot({...actor,civilian:{adult:false,model:'npc.civilian-kid'},appearance:{...actor.appearance!,asset:'npc.civilian-kid'}} as unknown as import('../../../src/sim/world/types').EntitySnapshot)).toBeGreaterThan(0); expect(accessories.hidesHair(actor, 'lod2')).toBe(false);
+  expect(accessories.slot({...actor,civilian:{adult:false,model:'npc.civilian-kid'},appearance:{...actor.appearance!,asset:'npc.civilian-kid'}} as unknown as import('../../../src/sim/world/types').EntitySnapshot)).toBeGreaterThan(0); expect(accessories.hidesHair(actor, 'lod2')).toBe(true);
   expect(crowdVertexLayout(mesh.geometry, mesh.instanceMatrix).buffers + 1).toBeLessThanOrEqual(8);
   poses.texture.dispose(); accessories.dispose(); load.mockRestore();
 });
