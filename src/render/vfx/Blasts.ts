@@ -13,7 +13,7 @@ import { FxPool } from './FxPool';
 import type { LightField } from '../LightField';
 
 type Blast = Extract<GameEvent, { type: 'explosion' }>;
-interface Column { ground?: number; born: number; x: number; z: number; until: number; rate: number; size: number; heat: number; acc: number; shade: number; cloud: number; light?: { remove(): void } | null }
+interface Column { /** Moving source (L9 floor APC): extra puffs per metre driven, short-lived low trail puffs. */ trail?: number; ground?: number; born: number; x: number; z: number; until: number; rate: number; size: number; heat: number; acc: number; shade: number; cloud: number; light?: { remove(): void } | null }
 interface Glow { ground?: number; x: number; z: number; radius: number; color: number; intensity: number; born: number; life: number }
 /** E25 light-field pool (LightField.addTransient): intensity on the §6 0..10 scale; ttl seconds (Infinity until removed). */
 export type BlastLight = (x: number, z: number, hex: string, intensity: number, radius: number, ttl: number, flicker: boolean) => { remove(): void } | null;
@@ -297,7 +297,9 @@ export class Blasts extends Group {
       const e = this.world.entities.get(id); if (!e) continue;
       // Exhaust at the rear: keep the cab and forward route clear, track movement each frame.
       c.x = e.transform.x - Math.cos(e.transform.yaw) * 2; c.z = e.transform.z + Math.sin(e.transform.yaw) * 2; c.ground = e.transform.y + .1;
-      this.emit(c, seconds);
+      // A driving hull spaced its puffs 2 m apart (scattered round dots, QA L9-Q1): emit per metre so the trail stays continuous.
+      const rate = c.rate; c.rate += Math.abs(e.vehicle?.speed ?? 0) * (c.trail ?? 0);
+      this.emit(c, seconds); c.rate = rate;
     }
     this.writeFlamesAndGlows(now);
     this.syncParts();
@@ -320,6 +322,9 @@ export class Blasts extends Group {
         // Smoke grenade cloud: low, thick, slow, filling the authored radius.
         const a = this.rng.next() * Math.PI * 2, d = Math.sqrt(this.rng.next()) * c.cloud * .8;
         this.puff(c.x + Math.cos(a) * d, ground + .4 + this.rng.next() * .8, c.z + Math.sin(a) * d, j() * .3, .18 + this.rng.next() * .2, j() * .3, 4 + this.rng.next() * 1.5, c.size * .45, c.size * (.9 + this.rng.next() * .35), c.heat, c.shade + j() * .08, born);
+      } else if (c.trail) {
+        // Exhaust trail: overlapping soft puffs that start large, rise slowly and thin out within ~3 s behind the hull.
+        this.puff(c.x + j() * .4 * c.size, ground + 1 + this.rng.next() * .5, c.z + j() * .4 * c.size, j() * .25, .7 + this.rng.next() * .5, j() * .25, 2.6 + this.rng.next(), c.size * .6, c.size * (1.15 + this.rng.next() * .35), c.heat, c.shade + j() * .06, born);
       } else this.puff(c.x + j() * .5 * c.size, ground + .5 + this.rng.next() * .4, c.z + j() * .5 * c.size, j() * .3, (c.size >= 2 ? 3 : 1.5) + this.rng.next() * .9, j() * .3, 7 + this.rng.next() * 2.5, c.size * .3, c.size * (.85 + this.rng.next() * .45), c.heat, c.shade + j() * .08, born);
     }
   }
@@ -334,7 +339,7 @@ export class Blasts extends Group {
         vehicles.add(e.id);
         let c = this.vehicleColumns.get(e.id);
         if (!c) { c = { born: now, x: e.transform.x, z: e.transform.z, until: Infinity, rate: 0, size: 0, heat: 0, acc: 1, shade: .3, cloud: 0 }; this.vehicleColumns.set(e.id, c); }
-        const heavy = e.vehicle.stage === 4; c.rate = (heavy ? 5 : 2) * (low ? .5 : 1); c.size = heavy ? 1.25 : .65; c.shade = heavy ? .22 : .5;
+        const heavy = e.vehicle.stage === 4; c.rate = (heavy ? 5 : 2) * (low ? .5 : 1); c.size = heavy ? 1.25 : .65; c.shade = heavy ? .22 : .5; c.trail = (heavy ? 1.4 : .7) * (low ? .5 : 1);
       }
       const burningFire = e.hazard?.kind === 'fire' && this.world.tick < e.hazard.activeUntil;
       const burningProp = !!e.destructible && !e.destructible.broken && e.destructible.burningUntil > this.world.tick;

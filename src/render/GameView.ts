@@ -883,7 +883,7 @@ export class GameView implements Lifecycle {
         flashlight = footprint({type:'spot',color:'light_led_white',intensity:9,range:18,angle:48,flicker:'none',shadow:'hero',position:[hero.x,hero.y+1,hero.z],direction:[Math.cos(yaw),-.3,-Math.sin(yaw)]});
         field.push(flashlight);
       }
-      this.vehicles?.pushLights(field);
+      this.vehicles?.pushLights(field, aura);
       // Pickups keep a small cool glint pool so loot stays findable in the dark.
       for (const entity of this.world.entities.iterate()) if (entity.pickup && !entity.hidden) field.push(pickupLight(entity.transform.x, entity.transform.z));
     }

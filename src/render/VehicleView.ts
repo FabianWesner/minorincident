@@ -206,6 +206,9 @@ export class VehicleView extends Group {
       }
       this.updateOccupants(id, record, alpha);
       record.apc?.update(state.stage ?? 0, this.world.tick + alpha, state.braking);
+      // Night readability (specs/06 §6): the survivor's rim moves to the hull she drives; she is hidden inside it.
+      const rim = this.world.vehicles!.active === id ? 1 : 0;
+      for (const material of record.paint) if (material instanceof PaletteMaterial) material.figureRim.value = rim;
       record.brake.color.set('#ff2d2d').multiplyScalar(record.decay || record.apc && !record.apc.lightsOn ? 0 : state.braking ? 4 : .15);
       for (let i = 0; i < record.sirens.length; i++) record.sirens[i].color.set(i === 0 ? '#ff2d2d' : '#2f6bff').multiplyScalar(record.decay ? 0 : (Math.floor(this.world.tick / 30) % 2 === i) ? 4 : .1);
       record.door.position.y = .025 + body.def.suspension + body.def.wheelRadius + .15 - p.y;
@@ -288,21 +291,35 @@ export class VehicleView extends Group {
       occupant.pose(seat, target, fit, car.physics.def.id === 'vehicle.pickup' && asset === 'char.courier-female' ? -.65 : -.5);
     }
   }
-  /** E25: the driven car's headlights/brake lights and emergency light bars, from the asset's authored anchors. */
-  pushLights(field: LightField): void {
+  /** E25: the driven car's headlights/brake lights and emergency light bars, from the asset's authored anchors.
+   * `aura` is the preset's survivor aura: while she drives, it becomes a soft pool around the hull. */
+  pushLights(field: LightField, aura = 0): void {
     for (const [id, car] of this.world.vehicles!.cars) {
       const record = this.records.get(id), driven = this.world.vehicles!.active === id;
-      if (!record || record.apc && !record.apc.lightsOn || record.decay || car.entity.health.current <= 0 || record.model.getObjectByName('lightsFront')?.userData.damagedLightOff || !(driven || car.physics.def.emergency)) continue;
+      if (record && driven && aura > 0) {
+        const p = car.entity.transform, ground = this.world.districts?.groundHeight(p.x, p.z) ?? 0;
+        field.push(footprint({ type: 'point', color: 'light_led_white', intensity: aura * 1.5, range: car.physics.def.length / 2 + 2.5, flicker: 'none', position: [p.x, ground + 2.4, p.z], direction: [0, -1, 0] }, ground));
+      }
+      if (!record || !this.lit(id)) continue;
       record.model.updateWorldMatrix(true, false);
       for (const a of anchorsFor(car.physics.def.asset)) {
         const beacon = a.type === 'beacon' || !!a.strobe;
         if (!a.pool && !beacon || !driven && !beacon) continue;
-        lampPosition.fromArray(a.position).applyMatrix4(record.model.matrixWorld); lampDirection.fromArray(a.direction).transformDirection(record.model.matrixWorld);
-        const light = footprint({ ...a, position: lampPosition.toArray(), direction: lampDirection.toArray() }, this.world.districts?.groundHeight(lampPosition.x, lampPosition.z) ?? 0, id * 3.1);
+        // Authored level beams (APC, tank) threw a 20 m saturated wedge: dip them like the other low beams (~7 degrees).
+        const level = a.type === 'spot' && a.direction[1] > -.04;
+        lampPosition.fromArray(a.position).applyMatrix4(record.model.matrixWorld);
+        lampDirection.set(a.direction[0], level ? -.12 : a.direction[1], a.direction[2]).normalize().transformDirection(record.model.matrixWorld);
+        const light = footprint({ ...a, ...(level ? { color: 'light_led_white' as const } : {}), position: lampPosition.toArray(), direction: lampDirection.toArray() }, this.world.districts?.groundHeight(lampPosition.x, lampPosition.z) ?? 0, id * 3.1);
         if (/brake/i.test(a.name) && !car.entity.vehicle!.braking) { light.r *= .3; light.g *= .3; light.b *= .3; }
         field.push(light);
       }
     }
+  }
+  /** Whether this vehicle's lamps shine now (driven or emergency, intact, powered); Scene Lab gates on it. */
+  lit(id: number): boolean {
+    const car = this.world.vehicles!.cars.get(id), record = this.records.get(id);
+    if (!car || !record) return false;
+    return !(record.apc && !record.apc.lightsOn || record.decay || car.entity.health.current <= 0 || record.model.getObjectByName('lightsFront')?.userData.damagedLightOff) && (this.world.vehicles!.active === id || car.physics.def.emergency);
   }
   feedback(event: VehicleFeedbackEvent, enabled: boolean): void {
     this.feedbackEvents.set(event.id, { ...event, position: { ...event.position } }); this.bloodEnabled = enabled;
