@@ -137,7 +137,7 @@ export class ControlIntent {
     // Match the grid's corner clearance before Rapier performs the actual sweep.
     if (nav) {
       const next = { x: p.x, z: p.z }, step = survivor.speed / 60;
-      nav.move(next, frame.move.x * step, frame.move.z * step, survivor.radius + .02);
+      nav.move(next, frame.move.x * step, frame.move.z * step, survivor.radius + .02, true);
       frame.move.x = (next.x - p.x) / step; frame.move.z = (next.z - p.z) / step;
     }
     // Keep acceleration along the routed step instead of coasting sideways into a corner.
