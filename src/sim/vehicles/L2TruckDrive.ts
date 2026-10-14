@@ -18,6 +18,23 @@ export function truckBoxOverlap(p: TruckPose, length: number, width: number, q: 
   }
   return true;
 }
+/** Signed SAT clearance: negative means penetration; larger values mean the footprints are farther apart. */
+function truckPropClearance(p: TruckPose, length: number, width: number, prop: NonNullable<SimWorld['props']>['items'][number], margin: number, exact = false): number {
+  const centre = prop.collider.translation(), q = prop.collider.rotation();
+  // Project the actual cuboid into X/Z: a tipped bin's height becomes part of its footprint.
+  const axes = [[1 - 2*(q.y*q.y + q.z*q.z), 2*(q.x*q.z - q.w*q.y)], [2*(q.x*q.y - q.w*q.z), 2*(q.y*q.z + q.w*q.x)], [2*(q.x*q.z + q.w*q.y), 1 - 2*(q.x*q.x + q.y*q.y)]];
+  const c = Math.cos(p.yaw), s = Math.sin(p.yaw), dx = centre.x - p.x, dz = centre.z - p.z;
+  let clearance = -Infinity;
+  for (const [ax, az] of [[c, -s], [s, c], ...axes.map(([x, z]) => [z, -x])]) {
+    if (ax*ax + az*az < 1e-8) continue;
+    const a = Math.abs(ax*c - az*s) * (length/2 + margin) + Math.abs(ax*s + az*c) * (width/2 + margin);
+    const b = axes.reduce((sum, [x, z], i) => sum + Math.abs(ax*x + az*z) * prop.half[i], 0);
+    const gap = (Math.abs(dx*ax + dz*az) - (a + b)) / Math.hypot(ax, az);
+    if (!exact && gap >= 0) return gap;
+    clearance = Math.max(clearance, gap);
+  }
+  return clearance;
+}
 export function truckBodyOverlap(p: TruckPose, length: number, width: number, e: EntitySnapshot, world: SimWorld, margin = 0): boolean {
   const car = world.vehicles?.cars.get(e.id);
   if (car || e.traffic) {
@@ -27,19 +44,7 @@ export function truckBodyOverlap(p: TruckPose, length: number, width: number, e:
     return truckBoxOverlap(p, length + margin * 2, width + margin * 2, e.transform, drawnLength, drawnWidth);
   }
   const prop = e.kind === 'physics-prop' ? world.props?.items.find(p => p.entityId === e.id) : undefined;
-  if (prop) {
-    const centre = prop.collider.translation(), q = prop.collider.rotation();
-    // Project the actual cuboid into X/Z: a tipped bin's height becomes part of its footprint.
-    const axes = [[1 - 2*(q.y*q.y + q.z*q.z), 2*(q.x*q.z - q.w*q.y)], [2*(q.x*q.y - q.w*q.z), 2*(q.y*q.z + q.w*q.x)], [2*(q.x*q.z + q.w*q.y), 1 - 2*(q.x*q.x + q.y*q.y)]];
-    const c = Math.cos(p.yaw), s = Math.sin(p.yaw), dx = centre.x - p.x, dz = centre.z - p.z;
-    for (const [ax, az] of [[c, -s], [s, c], ...axes.map(([x, z]) => [z, -x])]) {
-      if (ax*ax + az*az < 1e-8) continue;
-      const a = Math.abs(ax*c - az*s) * (length/2 + margin) + Math.abs(ax*s + az*c) * (width/2 + margin);
-      const b = axes.reduce((sum, [x, z], i) => sum + Math.abs(ax*x + az*z) * prop.half[i], 0);
-      if (Math.abs(dx*ax + dz*az) >= a + b) return false;
-    }
-    return true;
-  }
+  if (prop) return truckPropClearance(p, length, width, prop, margin) < 0;
   const c = Math.cos(p.yaw), s = Math.sin(p.yaw), dx = e.transform.x - p.x, dz = e.transform.z - p.z;
   const ox = Math.max(0, Math.abs(dx * c - dz * s) - length / 2), oz = Math.max(0, Math.abs(dx * s + dz * c) - width / 2);
   const radius = (e.civilian?.state === 'finished' ? .85 : e.combat?.radius ?? .35) + margin;
@@ -98,10 +103,25 @@ export class L2TruckDrive {
       return Math.hypot(centre.x - t.x, centre.z - t.z) <= reach + truckRadius + radius + .4;
     });
     const walls = world.infected!.nav.walls.filter(w => Math.abs(w.x - t.x) < reach + w.halfX + 5 && Math.abs(w.z - t.z) < reach + w.halfZ + 5);
+    // Carried props may already touch the rear bumper when the truck is boarded.
+    // Permit only departure that increases their exact SAT clearance. Future poses
+    // which worsen the contact still brake; front/side obstructions keep the usual margin.
+    const departing = new Map<number, { prop: NonNullable<SimWorld['props']>['items'][number]; clearance: number; actual: number }>();
+    const current = truckPoseAt(s.rideS), next = truckPoseAt(s.rideS + .2), cs = Math.cos(current.yaw), sn = Math.sin(current.yaw);
+    for (const e of bodies) if (e.kind === 'physics-prop') {
+      const prop = world.props!.items.find(p => p.entityId === e.id)!;
+      const centre = prop.collider.translation();
+      if ((centre.x - current.x) * cs - (centre.z - current.z) * sn >= -def.length / 2) continue;
+      const clearance = truckPropClearance(current, def.length, def.width, prop, .4, true);
+      const actual = truckPropClearance(current, def.length, def.width, prop, 0, true);
+      if (clearance < 0 && truckPropClearance(next, def.length, def.width, prop, .4, true) > clearance && truckPropClearance(next, def.length, def.width, prop, 0, true) >= actual) departing.set(e.id, { prop, clearance, actual });
+    }
     let gap = Infinity;
     for (let ds = 0; ds <= reach; ds += .2) {
       const p = truckPoseAt(s.rideS + ds);
       for (const e of bodies) if (truckBodyOverlap(p, def.length, def.width, e, world, e.traffic?.stopped && (e.traffic.yieldUntil ?? 0) > world.tick ? .12 : .4)) {
+        const rear = departing.get(e.id);
+        if (rear && truckPropClearance(p, def.length, def.width, rear.prop, .4, true) >= rear.clearance && truckPropClearance(p, def.length, def.width, rear.prop, 0, true) >= rear.actual) continue;
         this.yield(e, p);
         // Ambient traffic stops for the siren as the engine approaches its crossing.
         if (e.traffic) e.traffic.yieldUntil = world.tick + 120;
