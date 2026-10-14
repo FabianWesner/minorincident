@@ -26,7 +26,7 @@ for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['hig
         await expect(page.getByTestId('interaction-prompt')).toBeHidden();
         await page.keyboard.press('e'); await step(90);
         expect(await page.evaluate(id => window.__SS__!.getEntity(id)!.barricade!.intact, slot.id)).toBe(false);
-        await page.screenshot({ path: `${out}/${phase}-${slot.state.slot.id}.png` });
+        await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: `${out}/${phase}-${slot.state.slot.id}.png` });
       }
     }
     expect(await page.evaluate(() => window.__SS__!.perf().backend)).toBe(renderer);

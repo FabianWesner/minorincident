@@ -22,11 +22,12 @@ for (const phase of ['plaza', 'war', 'respawn']) test(`@E22 L4 ${phase} permits 
     w.player!.damage(1000, w.tick, true); step(w, 180);
     expect(w.entities.get(1)!.health.current).toBeGreaterThan(0); expect(m.state.checkpoint).toBe('turn');
   }
-  const center = { x: -18, z: 4.5 }, d = 6 / Math.SQRT2;
+  const center = { x: -17.5, z: 4 }, d = 6 / Math.SQRT2;
   for (const [dx, dz] of [[-d, d], [d, -d], [-d, -d], [d, d]]) for (const scheme of ['mouse-only', 'keyboard', 'touch'] as const) {
     const target = { x: center.x + dx, z: center.z + dz };
     expect(w.infected!.nav.clear(target.x, target.z, survivor.radius)).toBe(true);
     place(w, center);
+    expect(w.infected!.nav.visible(center, target, survivor.radius), `${scheme}: open straight route`).toBe(true);
     if (scheme === 'mouse-only') {
       w.setInput({ moveTarget: target }); w.update(); w.applyInput(emptyInput(), scheme); step(w, 240);
     } else {
