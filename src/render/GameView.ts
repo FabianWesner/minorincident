@@ -434,7 +434,9 @@ export class GameView implements Lifecycle {
   private accessories: CrowdAccessories | null = null;
   /** The manned minigun is drawn by its own animated view (created when a level installs the gun); returns its load. */
   private syncMountedGun(): Promise<void> | undefined {
-    if (!this.world.mountedGun) { if (this.mountedGunView) { this.mountedGunView.dispose(); this.mountedGunView = null; } return undefined; }
+    const gun = this.world.mountedGun;
+    // The finale gun follows the existing predictive chunk ring; R1 does not fetch an R7 weapon mesh.
+    if (!gun || (this.world.chunks && !this.world.chunks.resident(gun.placement.x, gun.placement.z))) { if (this.mountedGunView) { this.mountedGunView.dispose(); this.mountedGunView = null; } return undefined; }
     if (!this.mountedGunView && this.materials) { this.mountedGunView = new MountedGunView(this.world, this.quality === 'low', this.materials, this.renderer); this.scene.add(this.mountedGunView); }
     this.mountedGunView?.update();
     return this.mountedGunView?.ready();

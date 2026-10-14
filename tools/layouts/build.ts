@@ -1,3 +1,4 @@
+import { finale } from '../../src/data/l10Finale';
 import { writePhysicsMetadata } from '../assets/physics-metadata';
 import { createHash } from "node:crypto";
 import {
@@ -50,7 +51,7 @@ export function layoutSourceHash(id: string): string {
     hash.update(readFileSync("assets/kit.crossing-crash/model.glb"));
     hash.update(readFileSync("tools/layouts/compress.ts"));
   }
-  if (id === "D-CURE") hash.update(readFileSync("layouts/D-CURE/routes.json")).update(readFileSync("tools/l9/build-terrain.ts"));
+  if (id === "D-CURE") hash.update(readFileSync("layouts/D-CURE/routes.json")).update(readFileSync("tools/l9/build-terrain.ts")).update(JSON.stringify(finale));
   // Literal placement references in this district and the shared authoring library.
   const source =
     readFileSync(`layouts/${id}/layout.py`, "utf8") +
@@ -60,7 +61,7 @@ export function layoutSourceHash(id: string): string {
     ...new Set(
       [...source.matchAll(/['"]((?:bld|prop|veh)\.[\w-]+)['"]/g)].map(
         (m) => m[1],
-      ),
+      ).concat(id === "D-CURE" ? finale.props.map(p => p.asset) : []),
     ),
   ].sort();
   const manifest = Object.fromEntries(JSON.parse(readFileSync("src/assets/manifest.json", "utf8")).map((asset: { id: string }) => [asset.id, asset]));
@@ -96,6 +97,10 @@ export function buildLayout(
     outputs.every(existsSync)
   )
     return { rebuilt: false, sourceHash };
+  if (id === 'D-CURE') {
+    mkdirSync('.cache/layouts', { recursive: true });
+    writeFileSync('.cache/layouts/D-CURE-finale.json', JSON.stringify(finale));
+  }
   const result = spawnSync(
     "python3",
     ["tools/blender/run.py", "tools/blender/build_layout.py", id],

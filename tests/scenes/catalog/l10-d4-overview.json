@@ -1,0 +1,60 @@
+{
+  "seed": 32,
+  "ground": "district",
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        3940,
+        -80
+      ],
+      [
+        4090,
+        45
+      ]
+    ]
+  },
+  "minigun": {
+    "at": [
+      3990,
+      3,
+      -33
+    ],
+    "yaw": 0
+  },
+  "time": "L9-crossing",
+  "frames": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "name": "l10-d4-overview",
+  "note": "Entire R7 assembly in the epilogue pull-out framing: every dispersal module visible together under the shipped night lighting; E18 draw and triangle budgets still hold. The other D4 scenes cover the player camera zoom matrix.",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        4004.5,
+        -27
+      ],
+      "floorY": 0
+    }
+  ],
+  "camera": {
+    "mode": "orbit",
+    "target": [
+      4000,
+      0,
+      -27
+    ],
+    "radius": 150,
+    "polar": 54,
+    "azimuth": 45
+  },
+  "sheet": 60,
+  "dispersal": {
+    "active": true
+  }
+}
