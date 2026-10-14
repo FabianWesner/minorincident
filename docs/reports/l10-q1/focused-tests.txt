@@ -1,0 +1,16 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/l10-q1 -> 94.130.181.173:/srv/mi/ws/l10-q1-90f4e3
+[remote] cache-gc deleted:none
+[remote] sync 14s, 10437 files; job /srv/mi/jobs/l10-q1-90f4e3-7012-1791975045; queueing for a slot
+[runner] slot 0 acquired; load 0.15 0.52 2.45
+
+ RUN  v5.0.3 /srv/mi/jobs/l10-q1-90f4e3-7012-1791975045
+
+ ✓  functional  tests/unit/tooling/l10-scene-catalog.test.ts (6 tests) 37ms
+ ✓  functional  tests/unit/tooling/scenelab.test.ts (12 tests) 83ms
+
+ Test Files  2 passed (2)
+      Tests  18 passed (18)
+   Start at  10:51:01
+   Duration  1.77s (import 61%, transform 34%, tests 5%)
+
+[remote] done exit=0 (runner 94.130.181.173, sync 14s, remote total 4s)

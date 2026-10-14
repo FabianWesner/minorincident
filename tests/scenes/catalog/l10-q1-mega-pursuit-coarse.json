@@ -1,0 +1,55 @@
+{
+  "name": "l10-q1-mega-pursuit-coarse",
+  "note": "E32-AC10/14: one persistent Mega crosses the authored residency edge from coarse 2 Hz travel into detailed pursuit without respawn or HP reset. The courier game camera and real warning ring stay visible while the boss is offscreen; telemetry requires both pursuit modes.",
+  "ground": "asphalt",
+  "time": "L4",
+  "size": 160,
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        30,
+        0
+      ],
+      "state": "idle"
+    }
+  ],
+  "megaAlpha": {
+    "id": "mega",
+    "at": [
+      -28,
+      0
+    ],
+    "resident": [
+      [
+        -20,
+        -50
+      ],
+      [
+        80,
+        50
+      ]
+    ]
+  },
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "frames": 240,
+  "sheet": 30,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "megaCruiseErrorMax": 0.02,
+    "megaStepMaxM": 0.25,
+    "megaCoarseFramesMin": 30,
+    "megaDetailedFramesMin": 30,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "megaHud": true,
+  "hud": true
+}

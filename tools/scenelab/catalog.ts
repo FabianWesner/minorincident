@@ -37,7 +37,7 @@ const entries: Entry[] = dirs.flatMap(dir => readdirSync(dir).filter(f => f.ends
 if (!entries.length) { console.error(`no catalog scene matches ${flag('filter')}; names: ${dirs.flatMap(dir => readdirSync(dir).filter(f => f.endsWith('.json')).map(f => basename(f, '.json'))).join(' ')}`); process.exit(2); }
 if (args.includes('--list')) { console.log(entries.map(e => e.name).join('\n')); process.exit(0); }
 
-type Row = { name: string; file: string; pass: boolean; seconds: number; frames: number; gates: string; failed: string[]; sheet?: string; sheetKb?: number; error?: string; errors: number; note?: string };
+type Row = { name: string; file: string; pass: boolean; seconds: number; frames: number; gates: string; failed: string[]; sheet?: string; sheetKb?: number; error?: string; errors: number; note?: string; requestedTier?: string; actualTier?: string };
 const rows: Row[] = [], started = Date.now();
 const sessions: SceneSession[] = [];
 let queue: Entry[] = [];
@@ -57,7 +57,7 @@ try {
         const frames = spec.frames ?? 120;
         const r = await runSpec(session, spec, { file: relative(process.cwd(), e.file), out: dirName, shots: [], sheet: spec.sheet ?? Math.max(1, Math.ceil(frames / 16)) });
         const fmt = (n: number) => Number.isInteger(n) ? String(n) : n.toFixed(1);
-        rows.push({ name: e.name, file: relative(process.cwd(), e.file), pass: r.pass, seconds: r.seconds, frames: r.frames, errors: r.consoleErrors.length, gates: r.checks.map(c => `${c.pass ? 'ok' : 'FAIL'} ${c.name} ${fmt(c.value)}/${c.limit}`).join('; '), failed: r.failed.map(c => `${c.name} ${fmt(c.value)} > ${c.limit}`), sheet: r.sheet && relative(out, r.sheet), sheetKb: r.sheetKb, note: (spec as { note?: string }).note });
+        rows.push({ name: e.name, file: relative(process.cwd(), e.file), pass: r.pass, seconds: r.seconds, frames: r.frames, errors: r.consoleErrors.length, requestedTier: e.tier, actualTier: r.actualTier, gates: r.checks.map(c => `${c.pass ? 'ok' : 'FAIL'} ${c.name} ${fmt(c.value)}/${c.limit}`).join('; '), failed: r.failed.map(c => `${c.name} ${fmt(c.value)} > ${c.limit}`), sheet: r.sheet && relative(out, r.sheet), sheetKb: r.sheetKb, note: (spec as { note?: string }).note });
       } catch (error) {
         rows.push({ name: e.name, file: relative(process.cwd(), e.file), pass: false, seconds: (Date.now() - t0) / 1000, frames: 0, errors: session.errors.length, gates: '', failed: [], error: String(error).split('\n').slice(0, 3).join(' '), });
       }

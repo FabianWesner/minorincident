@@ -2,6 +2,7 @@ import { basename } from 'node:path';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 import { SceneSession, encodeWebm, evaluate, writeJson, type Backend } from './session';
 import { canvasFrame, canvasFrameChecks } from '../../tests/e2e/canvas-frame';
+import { canvasEdgeNoise } from './edge-noise';
 
 /** One scene run, shared by the CLI (cli.ts), the catalog (catalog.ts) and MCP `run_scene`:
  * load, step in batches, capture shots / video / contact sheet, write metrics.json, evaluate the gates. */
@@ -35,28 +36,57 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   if (video) for (let f = 0; f <= video * 60; f += 3) stops.add(f);
   let frame = 0;
   const pixels: { frame: number; pixels: Awaited<ReturnType<typeof canvasFrame>> }[] = [];
+  const edgeSamples: { frame: number; edges: number; extremeEdges: number; extremeEdgeShare: number }[] = [];
   for (const stop of [...stops].sort((a, b) => a - b)) {
     if (stop > frames) break;
     if (stop > frame) frame = await session.step(stop - frame);
     pixels.push({ frame: stop, pixels: await canvasFrame(session.page) });
+    if (spec.edgeNoise) edgeSamples.push({ frame: stop, ...await canvasEdgeNoise(session.page, spec.edgeNoise.rect) });
     if (shots.includes(stop)) { const path = `${out}/shot-${String(stop).padStart(4, '0')}.png`; await session.screenshot(path); written.push(path); }
     if (sheetAt.has(stop)) cells.push({ frame: stop, jpeg: await session.snapshot() });
     if (video && stop <= video * 60 && stop % 3 === 0) jpegs.push(await session.page.screenshot({ type: 'jpeg', quality: 80 }));
   }
   if (frame < frames) await session.step(frames - frame);
   if (!pixels.some(p => p.frame === frames)) pixels.push({ frame: frames, pixels: await canvasFrame(session.page) });
+  if (spec.edgeNoise && !edgeSamples.some(s => s.frame === frames)) edgeSamples.push({ frame: frames, ...await canvasEdgeNoise(session.page, spec.edgeNoise.rect) });
   if (jpegs.length) { const path = `${out}/video.webm`; encodeWebm(jpegs, path); written.push(path); }
   let sheetInfo: { path: string; cells: number; kb: number } | undefined;
   if (cells.length) { sheetInfo = await session.makeSheet(cells, `${out}/sheet.jpg`); written.push(sheetInfo.path); }
   const clipping = await session.clipping(), metrics = await session.metrics(), errors = session.errors.slice(errorsBefore);
+  const actualTier = await session.page.evaluate(() => window.__SS__!.getState().render.quality);
   const result = evaluate(spec, metrics, clipping, errors);
+  const ring = spec.megaHud ? await session.page.evaluate(megaId => {
+    const ring = document.querySelector<HTMLElement>('#mega-distance-ring');
+    const label = document.querySelector<HTMLElement>('#mega-distance-label');
+    const map = document.querySelector<HTMLElement>('#minimap');
+    const r = ring?.getBoundingClientRect(), m = map?.getBoundingClientRect();
+    const visible = !!ring && !ring.hidden && !!r?.width && getComputedStyle(ring).visibility === 'visible';
+    return { visible, labelVisible: !!label && !label.hidden && !!label.getBoundingClientRect().width && getComputedStyle(label).visibility === 'visible', band: ring?.dataset.band, text: label?.textContent,
+      centerErrorPx: r && m ? Math.hypot(r.x + r.width / 2 - m.x - m.width / 2, r.y + r.height / 2 - m.y - m.height / 2) : Infinity,
+      exactPins: [...document.querySelectorAll<HTMLElement>('#minimap [data-entity-id]')].filter(p => !p.hidden && p.dataset.entityId === String(megaId)).length,
+      coordinates: !!ring && ['data-world-x', 'data-world-z', 'data-entity-id'].some(a => ring.hasAttribute(a)) };
+  }, scene.actors.find(a => a.id === (spec.megaAlpha?.id ?? 'mega'))?.entity) : null;
+  if (ring) {
+    const band = metrics.megaAlpha?.samples.at(-1)?.band;
+    const correctBand = band ? ring.visible && ring.labelVisible && ring.band === band && ring.text === `Mega Alpha: ${band}` : !ring.visible && !ring.labelVisible;
+    result.checks.push(
+      { name: 'megaRingBandAndText', pass: correctBand, value: Number(correctBand), limit: 1 },
+      { name: 'megaRingPlayerCentered', pass: !band || ring.centerErrorPx <= 1, value: band ? ring.centerErrorPx : 0, limit: 1 },
+      { name: 'megaRingNoExactMarker', pass: !ring.exactPins && !ring.coordinates, value: ring.exactPins + Number(ring.coordinates), limit: 0 },
+    );
+  }
+  if (spec.edgeNoise) {
+    const value = Math.max(...edgeSamples.map(s => s.edges >= 20 ? s.extremeEdgeShare : Infinity));
+    result.checks.push({ name: 'alphaSilhouetteBlackWhiteEdgeNoise', pass: value <= spec.edgeNoise.extremeEdgeShareMax, value, limit: spec.edgeNoise.extremeEdgeShareMax });
+  }
   result.checks.push(...pixels.flatMap(p => canvasFrameChecks(p.pixels, `canvas.f${p.frame}`)));
   // Renderer telemetry calls the WebGL2 fallback `webgl`; CLI uses the explicit API version.
   const requestedBackend = session.options.backend === 'webgl2' ? 'webgl' : 'webgpu';
   result.checks.push({ name: 'requestedBackend', pass: metrics.backend === requestedBackend, value: Number(metrics.backend === requestedBackend), limit: 1 });
+  result.checks.push({ name: 'requestedQuality', pass: actualTier === session.options.tier && metrics.quality === actualTier, value: Number(actualTier === session.options.tier && metrics.quality === actualTier), limit: 1 });
   result.pass = result.checks.every(c => c.pass);
   const timing = { openMs: o.openMs ?? 0, loadMs, runMs: Date.now() - t0 - loadMs, sceneMs: Date.now() - t0 };
-  writeJson(`${out}/metrics.json`, { spec: o.file, backend: metrics.backend, requestedBackend: session.options.backend, tier: session.options.tier, frames: metrics.frame, timing, checks: result, pixels, consoleErrors: errors, scene, metrics, clipping });
+  writeJson(`${out}/metrics.json`, { spec: o.file, backend: metrics.backend, requestedBackend: session.options.backend, tier: session.options.tier, actualTier, frames: metrics.frame, timing, checks: result, pixels, edgeSamples, ring, consoleErrors: errors, scene, metrics, clipping });
   written.push(`${out}/metrics.json`);
-  return { name, pass: result.pass, checks: result.checks, backend: metrics.backend, frames: metrics.frame, seconds: timing.sceneMs / 1000, failed: result.checks.filter(c => !c.pass), clipping: clipping.summary, sheet: sheetInfo?.path, sheetKb: sheetInfo?.kb, files: written, consoleErrors: errors };
+  return { name, pass: result.pass, checks: result.checks, backend: metrics.backend, actualTier, frames: metrics.frame, seconds: timing.sceneMs / 1000, failed: result.checks.filter(c => !c.pass), clipping: clipping.summary, sheet: sheetInfo?.path, sheetKb: sheetInfo?.kb, files: written, consoleErrors: errors };
 }

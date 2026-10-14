@@ -372,6 +372,22 @@ mug hold only in the standing unit test, the bus only at <= 1 tick per frame): m
 the ride spec runs both tiers, both backends and phone cadences; (4) metrics compared against the same query that was wrong
 (corgi paw sink was measured against the sim floor that had the seam): the seam guard checks the support query itself.
 
+## L10 pursuit and cure catalog
+
+`scene:matrix` includes `l10-q1-*`: seeded dog idle/coats/pounce/pack, obstructed and
+coarse/detailed Mega pursuit, charge/slam/grab timelines, distance-band HUD fixtures,
+both courier cure-backpack rigs, Alpha/Mega scale and R1–R7 production crops.
+Use `--query ui=1` for the UI quality-pin regression; every run records `actualTier`
+and gates `requestedQuality` after loading and stepping. Ring fixtures also gate
+band text, player centering and absence of an exact Mega entity marker.
+
+The explicitly named `l10-q1-alpha-silhouette-known-low-defect` runs at high/low
+and zoom 0.5/1/1.5. Its `alphaSilhouetteBlackWhiteEdgeNoise` canvas gate measures
+abrupt black/white edges in an isolated actor crop, exposing the known low Alpha
+triangle defect. There is no expected-failure exemption. Inspect the sheet even
+when it passes: this diagnostic does not replace visual silhouette review.
+See `docs/reports/l10-q1/README.md` for scope, batch recipes and captured evidence.
+
 ## MCP server
 
 `npm run scene:mcp` starts a stdio MCP server (`@modelcontextprotocol/sdk` 1.32.1, MIT).

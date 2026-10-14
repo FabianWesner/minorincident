@@ -95,6 +95,7 @@ export class SceneLab {
   /** Frames in which a building/prop placement was drawn from a coarser stand-in mesh than its selected LOD band (lod-pop). */
   private placeholders = { frames: 0, firstFrame: -1, assets: new Set<string>() };
   private perf: { drawCalls: number; triangles: number; shadowDrawCalls: number; shadowTriangles: number; stepMs: number; categories: Record<string, number> }[] = [];
+  private specials: { frame: number; sourceId: number; move: string; stage: string }[] = [];
   private hits = new Map<string, Hit>();
   /** Actor pairs whose torsos/heads interpenetrate (worst depth, frame, sampled-frame count). */
   private bodies = new Map<string, { a: string; b: string; depthCm: number; frame: number; count: number }>();
@@ -138,6 +139,7 @@ export class SceneLab {
   /** Build and load a scene; returns the resolved placements/actors so a caller can address them by id. */
   private readonly barOverrides = new Map<InfectedDef, boolean | undefined>();
   async load(spec: SceneSpec) {
+    this.specials = [];
     if (spec.cureEncounter) {
       const group = cureEncounters.find(g => g.id === spec.cureEncounter);
       if (!group) throw new Error(`Unknown cure encounter: ${spec.cureEncounter}`);
@@ -217,6 +219,7 @@ export class SceneLab {
     // Hand-overs move in the missions phase, like the L1 story beats, so AgentMotion publishes their walking speed.
     world.events.on('sim.tick', () => this.driveHandovers(), SimPhase.missions);
     world.combat!.damage.god = true;
+    world.events.on('infected.special', ev => { if (ev.type === 'infected.special') this.specials.push({ frame: this.frame, sourceId: ev.sourceId, move: ev.move, stage: ev.stage }); });
     // Pursuit metrics: infected swings at the courier and bites on pedestrians (first frame of each).
     world.events.on('infected.attack', ev => { if (ev.type === 'infected.attack' && ev.targetId === 1) { this.attacks.courier++; if (this.attacks.firstFrame < 0) this.attacks.firstFrame = this.frame; } });
     world.events.on('telegraph', ev => { if (ev.type === 'telegraph' && ev.sourceId !== undefined && world.entities.get(ev.sourceId)?.infected?.l1?.targetId === 1) this.attacks.swings++; });
@@ -1243,7 +1246,7 @@ export class SceneLab {
     const q = (a: number[], p: number) => a.length ? Math.round(a.slice().sort((x, y) => x - y)[Math.floor((a.length - 1) * p)] * 100) / 100 : null;
     const band = (pick: (p: SceneLab['perf'][number]) => number) => { const a = this.perf.map(pick); return { p50: q(a, .5), p95: q(a, .95), max: q(a, 1) }; };
     const actors = Object.fromEntries([...this.actors.values()].map(a => { const e = this.world.entities.get(a.entity); return [a.id, { kind: a.kind, entity: a.entity, position: e ? [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)] : null, yawDeg: e ? +(e.transform.yaw * 180 / Math.PI).toFixed(1) : null,
-      state: e?.civilian?.state ?? e?.infected?.state ?? e?.companion?.state ?? (a.kind === 'courier' ? e?.survivor?.animation : undefined) ?? null, drawnFrames: a.drawn, inViewFrames: a.inView, missedInViewFrames: a.missed, lod: a.lod, firstDrawn: a.first ?? null, farLodCloseFrames: a.farClose, ...(a.emerge ? { emerge: true } : {}), motion: summarizeMotion(a.track), ...(this.spec?.trace ? { track: a.track.map(f => ({ ...f, feet: f.feet.map(c => ({ heel: c.heel.map(v => +v.toFixed(3)), toe: c.toe.map(v => +v.toFixed(3)) })) })) } : {}) }]; }));
+      state: e?.civilian?.state ?? e?.infected?.state ?? e?.companion?.state ?? (a.kind === 'courier' ? e?.survivor?.animation : undefined) ?? null, health: e?.health.current ?? null, drawnFrames: a.drawn, inViewFrames: a.inView, missedInViewFrames: a.missed, lod: a.lod, firstDrawn: a.first ?? null, farLodCloseFrames: a.farClose, ...(a.emerge ? { emerge: true } : {}), motion: summarizeMotion(a.track), ...(this.spec?.trace ? { track: a.track.map(f => ({ ...f, feet: f.feet.map(c => ({ heel: c.heel.map(v => +v.toFixed(3)), toe: c.toe.map(v => +v.toFixed(3)) })) })) } : {}) }]; }));
     const visibleLooks = this.game.view.crowdFigures().filter(f => f.drawn && f.appearance && !this.world.entities.get(f.id)?.corpse && (this.world.entities.get(f.id)?.health.current ?? 0) > 0).sort((a,b) => a.id-b.id);
     const variety = Object.fromEntries((['infected', 'pedestrian'] as const).map(kind => [kind, crowdVariety(visibleLooks.filter(f => {
       const e = this.world.entities.get(f.id)!;
@@ -1261,7 +1264,7 @@ export class SceneLab {
       vehicles: Object.fromEntries([...this.vehicles].map(([id, entity]) => { const e = this.world.entities.get(entity); return [id, e ? { entity, position: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)], yawDeg: +(e.transform.yaw * 180 / Math.PI).toFixed(1), yawRateMaxDegS: this.vehicleMotion.get(id)?.yawRateMaxDegS ?? 0, bodyOverlaps: this.vehicleMotion.get(id)?.overlaps ?? 0, tiltMaxDeg: this.vehicleMotion.get(id)?.tiltMaxDeg ?? 0, tiltFrame: this.vehicleMotion.get(id)?.tiltFrame ?? -1, slipMaxDeg: this.vehicleMotion.get(id)?.slipMaxDeg ?? 0, slipFrame: this.vehicleMotion.get(id)?.slipFrame ?? -1, driven: this.world.vehicles!.active === entity, headlightsDarkFrames: this.vehicleMotion.get(id)?.darkFrames ?? 0, firstDarkFrame: this.vehicleMotion.get(id)?.firstDarkFrame ?? -1, rideRemainingM: this.vehicleMotion.get(id)?.ride ? l2TruckPath.at(-1)!.s - this.vehicleMotion.get(id)!.ride!.rideS : null, health: Math.round(e.health.current), decay: e.vehicle?.decay ?? null, speed: +(e.vehicle?.speed ?? e.traffic?.speed ?? 0).toFixed(2) } : null]; })),
       grounding: this.grounding(),
       pursuit: { actors: Object.fromEntries([...this.pursuit].map(([id, p]) => [id, { stuckRunMax: p.stuckRunMax, stuckFrame: p.stuckFrame, lostNearFrames: p.lostNearFrames, overshootMaxM: +p.overshootMaxM.toFixed(2) }])), courierSwings: this.attacks.swings, courierAttacks: this.attacks.courier, hullWindups: this.attacks.hull, hullHits: this.attacks.hullHits, firstAttackFrame: this.attacks.firstFrame, bites: this.attacks.bites, firstBiteFrame: this.attacks.firstBiteFrame },
-      megaAlpha: this.megaReport(), minigun: this.gunReport(),
+      megaAlpha: this.megaReport(), minigun: this.gunReport(), specials: this.specials,
       heldProps: { samples: this.heldPropSamples, intersections: this.heldPropClips.size, holds: Object.fromEntries(this.holds) }, seeThrough: { ...this.seeThroughOpen }, companion: { ...this.companion }, bike: { ...this.bike }, variety, actors, clicks: this.clickReport(), visibility: this.visible, lods: this.lods(), clipping: clipping?.summary ?? null,
       emergence: this.emergence ? { building: this.emergence.house, door: { x: +this.emergence.x.toFixed(3), z: +this.emergence.z.toFixed(3), nx: this.emergence.nx, nz: this.emergence.nz }, release: [+this.emergence.ox.toFixed(3), +this.emergence.oz.toFixed(3)], residents: this.emergence.ids.length, doorOpenedFrame: this.emergence.openFrame } : null,
       doors: Object.fromEntries([...this.doors].map(([id, d]) => [id, { closedFrames: d.closedFrames, firstClosedFrame: d.firstClosedFrame, inDoorwayFrames: d.inDoorwayFrames, maxOpen: +d.maxOpen.toFixed(2) }])), log: [...this.log] };

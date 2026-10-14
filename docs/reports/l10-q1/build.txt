@@ -1,0 +1,54 @@
+
+> build
+> NODE_ENV=production vite build --configLoader runner
+
+vite v6.4.3 building for production...
+transforming...
+✓ 513 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/preview/index.html                             1.65 kB │ gzip:     0.72 kB
+dist/index.html                                     2.48 kB │ gzip:     0.81 kB
+dist/build/civilianBakeData-C28ELSXR.js             3.68 kB
+dist/build/BufferGeometryUtils-E8HioxtM.js          6.88 kB
+dist/build/civilianBake.worker-DMOUKRvT.js          8.73 kB
+dist/build/basis_transcoder-o4Hde_L7.js            57.53 kB
+dist/build/three.module-B-nHBglW.js               206.11 kB
+dist/build/civilianSource-cKBzLpd-.js             409.02 kB
+dist/build/basis_transcoder-VXdx5NbI.wasm         527.33 kB │ gzip:   244.57 kB
+dist/build/prepareCivilianGeometry-CeEd-Nh1.js  2,020.20 kB
+dist/build/rapier-C6GCbKVJ.wasm                 3,082.10 kB │ gzip: 1,171.17 kB
+dist/build/index-C5QfBGUQ.css                      33.73 kB │ gzip:     7.41 kB
+dist/build/lookViewpoints-BX-OEann.js               0.23 kB │ gzip:     0.16 kB
+dist/build/modulepreload-polyfill-B5Qt9EMX.js       0.71 kB │ gzip:     0.40 kB
+dist/build/preload-helper-BlTxHScW.js               1.11 kB │ gzip:     0.65 kB
+dist/build/crowdProbe-Cm5l-wof.js                   1.35 kB │ gzip:     0.78 kB
+dist/build/controls-DGdjkqyP.js                     1.40 kB │ gzip:     0.74 kB
+dist/build/worldLook-DT8mxh_z.js                    1.64 kB │ gzip:     0.76 kB
+dist/build/crowd-3Ggb61WG.js                        2.22 kB │ gzip:     1.21 kB
+dist/build/l5-BzjuPOyZ.js                           3.98 kB │ gzip:     1.91 kB
+dist/build/lookPatch-BT7ef7_D.js                    5.26 kB │ gzip:     2.69 kB
+dist/build/navigation-CBvcs22g.js                   5.30 kB │ gzip:     2.47 kB
+dist/build/probe-6n5s2w4q.js                        7.43 kB │ gzip:     3.00 kB
+dist/build/index-CeASUo79.js                       12.12 kB │ gzip:     4.40 kB
+dist/build/Inspection-D2XQzwfZ.js                  12.83 kB │ gzip:     4.39 kB
+dist/build/l4-Dtv5YxOp.js                          14.79 kB │ gzip:     6.21 kB
+dist/build/meleeCombos-gTTk2ipY.js                 14.88 kB │ gzip:     4.88 kB
+dist/build/MotionLab-DwEdMidD.js                   20.03 kB │ gzip:     8.43 kB
+dist/build/LevelFiveBot-B4iAoUZy.js                22.52 kB │ gzip:     6.18 kB
+dist/build/index-BpZX2ejN.js                       27.23 kB │ gzip:     7.29 kB
+dist/build/testApi-pCfmNs0E.js                     27.56 kB │ gzip:    10.41 kB
+dist/build/Physics-24_8hvfl.js                     68.53 kB │ gzip:    23.48 kB
+dist/build/Pickups-inwWU8fH.js                     73.51 kB │ gzip:    23.57 kB
+dist/build/light-anchors-DQGCSUUw.js               90.38 kB │ gzip:     6.79 kB
+dist/build/SceneLab-B3cnRafx.js                    93.32 kB │ gzip:    32.43 kB
+dist/build/Debug-DoeeJH5i.js                      155.75 kB │ gzip:    32.99 kB
+dist/build/PropSystem-DghWC2Mc.js                 165.45 kB │ gzip:    49.19 kB
+dist/build/registry-DI4UdkpK.js                   187.97 kB │ gzip:    64.55 kB
+dist/build/rapier-ykuY6d4E.js                     212.13 kB │ gzip:    36.15 kB
+dist/build/three.module-CKUsqngo.js               289.01 kB │ gzip:    77.36 kB
+dist/build/install-DpexBGjP.js                    666.08 kB │ gzip:   179.23 kB
+dist/build/WeatherView-B8so5VH9.js              1,048.23 kB │ gzip:   231.72 kB
+dist/build/index-BnpeOW5c.js                    1,113.03 kB │ gzip:   347.92 kB
+dist/build/character-clips-BgcRYFdn.js          1,939.70 kB │ gzip:   341.78 kB
+✓ built in 4.08s
