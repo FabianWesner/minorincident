@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitest/config';
 
 // Wall-clock budgets need the CPU to themselves; functional tests still use four workers.
+// Vitest puts isolated single-worker groupOrder=0 files last; positive orders run timing first.
 const timingFiles = [
   'tests/sim/ai/director.test.ts',
   'tests/sim/ai/l1-perception.test.ts',
@@ -25,8 +26,8 @@ export default defineConfig({
     testTimeout: 30_000,
     restoreMocks: true,
     projects: [
-      { extends: true, test: { name: 'timing', include: timingFiles, fileParallelism: false, sequence: { groupOrder: 0 } } },
-      { extends: true, test: { name: 'functional', include: ['tests/unit/**/*.test.ts', 'tests/sim/**/*.test.ts', 'tests/levels/**/*.test.ts'], exclude: timingFiles, sequence: { groupOrder: 1 } } },
+      { extends: true, test: { name: 'timing', include: timingFiles, fileParallelism: false, sequence: { groupOrder: 1 } } },
+      { extends: true, test: { name: 'functional', include: ['tests/unit/**/*.test.ts', 'tests/sim/**/*.test.ts', 'tests/levels/**/*.test.ts'], exclude: timingFiles, sequence: { groupOrder: 2 } } },
     ],
   },
 });
