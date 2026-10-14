@@ -37,6 +37,13 @@ test('@E20 after the alarm every playing tick has objective text and destination
   const report = runL2(world, l.mission, 'complete', { maxSeconds: 600, stopWhen: m => {
     if (!m.state.l2!.alarmAt || m.state.phase !== 'playing') return false;
     const active = m.def.steps.filter(s => m.state.steps[s.id].status === 'active');
+    // PO 2026-10-13: combat continues for five seconds after the final objective.
+    if (m.state.runOutUntil !== undefined) {
+      expect(active).toHaveLength(0);
+      expect(m.def.steps.every(s => m.state.steps[s.id].status === 'completed')).toBe(true);
+      expect(world!.tick).toBeLessThanOrEqual(m.state.runOutUntil);
+      return false;
+    }
     expect(active.length, `tick ${world!.tick}, phase ${m.state.l2!.phase}`).toBeGreaterThan(0);
     expect(active[0].text).not.toBe('');
     expect(m.state.marker).toBe(active[0].waypoint === false ? null : active[0].anchor);

@@ -94,13 +94,12 @@ export class NavGrid {
     return cell;
   }
   private nearestCellUncached(x: number, z: number, radius?: number): number {
-    const reachable = (cell: number) => radius === undefined || this.visible({ x, z }, { x: this.x(cell), z: this.z(cell) }, radius);
-    const cell=this.cell(x,z);if(cell<0||!this.blocked[cell] && reachable(cell))return cell;
+    const cell=this.cell(x,z);if(cell<0||!this.blocked[cell] && (radius === undefined || this.visible({ x, z }, { x: this.x(cell), z: this.z(cell) }, radius)))return cell;
     let nearest=-1,distance=Infinity;
     for(let dz=-6;dz<=6;dz++)for(let dx=-6;dx<=6;dx++){
       const candidate=this.cell(x+dx*this.cellSize,z+dz*this.cellSize);if(candidate<0||this.blocked[candidate])continue;
       // A farther cell cannot replace the current answer; avoid its segment test.
-      const d=(this.x(candidate)-x)**2+(this.z(candidate)-z)**2;if(d<distance&&reachable(candidate)){nearest=candidate;distance=d;}
+      const d=(this.x(candidate)-x)**2+(this.z(candidate)-z)**2;if(d<distance&&(radius === undefined || this.visible({ x, z }, { x: this.x(candidate), z: this.z(candidate) }, radius))){nearest=candidate;distance=d;}
     }
     return nearest;
   }

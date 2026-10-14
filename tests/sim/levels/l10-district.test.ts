@@ -17,6 +17,7 @@ for (const tier of ['high', 'low'] as const) test(`T-E32-03-D1-D2-${tier} @E32-A
     applyCampaign(w, preset('L10-default'));
     w.chunks!.setQuality(tier);
     const mission = w.loadMission(resolveCampaignMission('L10', w.districts!)); mission.begin();
+    for (const side of ['LEFT', 'RIGHT'] as const) expect(w.entities.get(1)!.weapons![side].rack.map(s => s.id)).toEqual(['weapon.fire-axe']);
     const times: number[] = [], regions: { id: string; ticks: number }[] = [];
     for (const region of cure.regions.slice(0, 4)) {
       const start = w.tick;

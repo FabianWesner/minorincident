@@ -1,0 +1,126 @@
+{
+  "main": "b3d7492f",
+  "runner": "94.130.181.173",
+  "command": "npx vitest run tests/unit tests/levels tests/sim --maxWorkers=4",
+  "files": 364,
+  "passed": 2560,
+  "failed": 23,
+  "existingSkipped": 9,
+  "failures": [
+    {
+      "file": "tests/levels/L1.test.ts",
+      "test": "L1 v2 mission T-E19-house @E19 @E19-AC25 beat 9: ten residents come out of ONE house front door near the garage, one by one, 1.5-4 s apart",
+      "failure": "TypeError: Cannot read properties of null (reading 'ids')"
+    },
+    {
+      "file": "tests/levels/L1.test.ts",
+      "test": "L1 v2 mission T-E19-respawn-world @E19 PO rule: a death after the bat keeps the world (corpses, infected, pedestrians, props, objectives, bat)",
+      "failure": "AssertionError: expected [ { id: 1000000000, \u2026(5) }, \u2026(689) ] to deeply equal [ { id: 1000000000, \u2026(5) }, \u2026(689) ]"
+    },
+    {
+      "file": "tests/levels/L2.test.ts",
+      "test": "L2 The Failed Rescue T-E20-13 @E20 @E20-AC13 cluster of 12-16 on the approach; complete passes killing <= 50 %; side path and car alarm each suffice",
+      "failure": "AssertionError: expected 10 to be greater than or equal to 12"
+    },
+    {
+      "file": "tests/levels/L3-route.test.ts",
+      "test": "@E21 @E21-route L3 wreck lines close both sidewalks for player and NPCs; the connected detour crosses Oak, Boulevard and the elevated highway",
+      "failure": "AssertionError: {\"officer\":{\"x\":50.81353813597728,\"z\":-20.56969695151603,\"y\":1.015,\"yaw\":-4.72523586181338},\"player\":{\"x\":206.96238708496094,\"y\":0.9200000166893005,\"z\":-0.06956455111503601,\"yaw\":-0.288313794346646}}: expected 157.48878835182674 to be less than or equal to 8"
+    },
+    {
+      "file": "tests/levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-02 @E21 @E21-AC02 complete bot finishes single seed from L3-default (bat + axe), median time in band",
+      "failure": "AssertionError: expected 411.95 to be less than or equal to 405"
+    },
+    {
+      "file": "tests/levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2",
+      "failure": "AssertionError: expected 481.26666666666665 to be less than or equal to 270"
+    },
+    {
+      "file": "tests/levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-09 @E21 @E21-AC09 squad feels strong first: officers >= 60 % of S1 knockdowns, S1 damage below one life (PO 10-12 police -50 %), near the courier, never teleports",
+      "failure": "AssertionError: expected 0.5722070844686649 to be greater than or equal to 0.6"
+    },
+    {
+      "file": "tests/levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-12 @E21 @E21-AC12 escalation: pre-populated 250/625/1000 (+-20 %), live infected near the courier rise S1 -> S3, caps never exceeded",
+      "failure": "AssertionError: expected 190 to be greater than or equal to 200"
+    },
+    {
+      "file": "tests/levels/L5.test.ts",
+      "test": "L5 Aftermath T-E23-09 @E23 @E23-AC09 the group grows and follows: stand-to-interact 1.0 s, the counter steps 0 to 5, followers within 8 m, no jump above 1 m per tick, slower than the courier's run",
+      "failure": "AssertionError: expected 0.798162583518931 to be greater than or equal to 0.8"
+    },
+    {
+      "file": "tests/levels/L6.test.ts",
+      "test": "T-E24-02 @E24 @E24-AC02 @E24-AC10 single-seed complete bot (PO: no batteries) protects and rejoins the community",
+      "failure": "AssertionError: expected 275.31666666666666 to be less than or equal to 270"
+    },
+    {
+      "file": "tests/levels/continuity.test.ts",
+      "test": "L1 -> L2 world-state continuity T-CONT-01S @continuity after the L1 lab blast the L2 town has the burned annex, the debris cells blocked, the outbreak house aftermath and this run's carryover",
+      "failure": "AssertionError: expected 1.753133986961202 to be less than 0.25"
+    },
+    {
+      "file": "tests/unit/physics-metadata.test.ts",
+      "test": "@E26 authored GLB records are reproduced at layout build with masses, collision shapes and break rules",
+      "failure": "AssertionError: expected { 'thr.molotov': { \u2026(11) }, \u2026(153) } to deeply equal { 'thr.molotov': { \u2026(11) }, \u2026(153) }"
+    },
+    {
+      "file": "tests/sim/levels/l10-district.test.ts",
+      "test": "T-E32-03-D1-high @E32-AC02 @E32-AC03 @E32-AC27 @E32-AC28 axe route through R1/R2 retains ground/nav/checkpoint support",
+      "failure": "Error: Arsenal transaction needs campaign progression and combat"
+    },
+    {
+      "file": "tests/sim/levels/l10-district.test.ts",
+      "test": "T-E32-03-D1-low @E32-AC02 @E32-AC03 @E32-AC27 @E32-AC28 axe route through R1/R2 retains ground/nav/checkpoint support",
+      "failure": "Error: Arsenal transaction needs campaign progression and combat"
+    },
+    {
+      "file": "tests/sim/missions/l10-progression.test.ts",
+      "test": "T-E32-27-chunks-high @E32 @E32-AC27 @E32-AC28 region retry and fresh reload restore inactive chunks and the same Mega",
+      "failure": "Error: Missing layout: D-CURE"
+    },
+    {
+      "file": "tests/sim/missions/l10-progression.test.ts",
+      "test": "T-E32-27-chunks-low @E32 @E32-AC27 @E32-AC28 region retry and fresh reload restore inactive chunks and the same Mega",
+      "failure": "Error: Missing layout: D-CURE"
+    },
+    {
+      "file": "tests/sim/missions/l2-axe-objective.test.ts",
+      "test": "@E20 after the alarm every playing tick has objective text and destinations have markers, including the doors checkpoint",
+      "failure": "AssertionError: tick 7883, phase done: expected 0 to be greater than 0"
+    },
+    {
+      "file": "tests/sim/performance/alpha-physical.test.ts",
+      "test": "T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms",
+      "failure": "AssertionError: expected 5.566337000112981 to be less than or equal to 4"
+    },
+    {
+      "file": "tests/sim/performance/alpha-support.test.ts",
+      "test": "T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms",
+      "failure": "AssertionError: expected 5.032033000141382 to be less than or equal to 4"
+    },
+    {
+      "file": "tests/sim/performance/alpha.test.ts",
+      "test": "T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms",
+      "failure": "AssertionError: expected 5.004972999915481 to be less than or equal to 4"
+    },
+    {
+      "file": "tests/sim/performance/zoo-s1.test.ts",
+      "test": "T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
+      "failure": "AssertionError: expected 4.902289999881759 to be less than or equal to 4"
+    },
+    {
+      "file": "tests/sim/performance/zoo-s2.test.ts",
+      "test": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+      "failure": "AssertionError: expected 5.6257580001838505 to be less than or equal to 4"
+    },
+    {
+      "file": "tests/unit/assets/static-collision.test.ts",
+      "test": "@E19 M1-07 baked static collision is current with delivered GLBs and has finite body-height geometry",
+      "failure": "AssertionError: kit.dispersal-turbine-hall: run npm run assets:collision after changing GLBs: expected 'b8ae400ec636cd4c120a4bfbbd8ea2cb991c7\u2026' to be '07bbb8b8db850cb6a4c784dca0a0ce2d62df6\u2026' // Object.is equality"
+    }
+  ]
+}

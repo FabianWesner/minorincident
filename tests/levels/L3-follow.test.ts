@@ -149,6 +149,10 @@ describe('L3 squad and checkpoint', () => {
       for(const e of w.entities.iterate()) if(e.hazard?.kind==='fire') e.hazard.activeUntil=-1;
       // Isolate shared follower steering; street crowds are covered by the real-input playthrough.
       m.state.l3!.pending = []; m.state.l3!.waves = []; m.state.l3!.populated = [true, true, true];
+      const quiet = () => {
+        m.state.l3!.furthestAt = w.tick; // This locomotion fixture does not exercise forward-pressure emergences.
+        for (const e of w.infected!.active) { e.health.current = 0; e.infected!.recoverAt = -1; }
+      };
       const p = w.entities.get(1)!, z = l3.map.streets[street];
       const start = { x: -110, y: p.transform.y, z }; Object.assign(p.transform, start); w.physics.playerBody!.setTranslation(start, true);
       const squad = m.state.l3!.squad;
@@ -156,6 +160,7 @@ describe('L3 squad and checkpoint', () => {
       const still = new Map<number, { x: number; z: number; ticks: number }>();
       let stuckTicks = 0;
       for (let tick = 0; tick < 3000 && Math.hypot(p.transform.x + 62, p.transform.z - z) > .8; tick++) {
+        quiet();
         followFrustum(w); w.applyInput({ ...emptyInput(), moveTarget: { x: -62, z }, navigation: true }, 'mouse-only'); w.update();
         for (const q of squad) {
           const e = w.entities.get(q.id)!, previous = still.get(q.id);
@@ -164,7 +169,7 @@ describe('L3 squad and checkpoint', () => {
           if (Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) > 10) stuckTicks = Math.max(stuckTicks, ticks);
         }
       }
-      for(let tick=0;tick<300;tick++){w.applyInput(emptyInput(),'mouse-only');w.update();}
+      for(let tick=0;tick<300;tick++){quiet();w.applyInput({...emptyInput(),cancelMove:true},'mouse-only');w.update();}
       expect(stuckTicks).toBeLessThanOrEqual(180);
       expect(p.transform.x).toBeGreaterThan(-64);
       expect(m.state.l3!.lost.filter(q => q.cause === 'separated')).toHaveLength(0);

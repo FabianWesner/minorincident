@@ -24,6 +24,7 @@ export class DistrictWorld {
   readonly districts;
   readonly nav;
   readonly playerStart: Point;
+  readonly playerStartHeight: number;
   /** Visible perimeter fence footprints; shared district seams stay open. */
   readonly boundaries: Aabb[] = [];
   readonly warnings: string[] = [];
@@ -138,6 +139,8 @@ export class DistrictWorld {
     const d = this.districts[0],
       p = resolvePosition(d.gameplay.playerStart, d.layout);
     this.playerStart = [p[0] + d.origin[0], p[1] + d.origin[1]];
+    const start = d.gameplay.playerStart;
+    this.playerStartHeight = 'anchor' in start ? d.layout.anchors[start.anchor].position[1] : 0;
     const reached = this.nav.flood(this.playerStart);
     for (const d of this.districts)
       for (const obj of d.gameplay.objectives) {

@@ -1,0 +1,131 @@
+{
+  "main": "c81ea8ec5e72df10fa505af16ca419d80d71399b",
+  "sourceHead": "183f8ff772adb4d02cc0169e04670c56d48502c4",
+  "runner": "94.130.181.173",
+  "command": "bash tools/remote/timing-isolated.sh npx vitest run tests/unit tests/levels tests/sim --maxWorkers=4",
+  "exitCode": 0,
+  "files": 385,
+  "passedFiles": 382,
+  "existingSkippedFiles": 3,
+  "passedTests": 2642,
+  "failedTests": 0,
+  "existingSkippedTests": 9,
+  "vitestSeconds": 2497.67,
+  "remoteSeconds": 2502,
+  "mega200": {
+    "count": 200,
+    "activations": 4,
+    "simMsP95": 3.0203159999800846,
+    "budgetMs": 4,
+    "infected": 200
+  },
+  "zooS1_200": {
+    "count": 200,
+    "animals": 40,
+    "minInfected": 200,
+    "activations": 100,
+    "cap": 200,
+    "ticks": 600,
+    "simMsP95": 2.554842999961693,
+    "budgetMs": 4
+  },
+  "static": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "build": "passed (full-sweep static test)"
+  },
+  "continuousCampaign": [
+    {
+      "level": "L1",
+      "completed": true,
+      "time": 121.91666666666667,
+      "deaths": 0
+    },
+    {
+      "level": "L2",
+      "completed": true,
+      "time": 132.88333333333333,
+      "deaths": 0
+    },
+    {
+      "level": "L3",
+      "completed": true,
+      "time": 349.45,
+      "deaths": 0
+    },
+    {
+      "level": "L4",
+      "completed": true,
+      "time": 317.25,
+      "deaths": 1
+    },
+    {
+      "level": "L5",
+      "completed": true,
+      "time": 182.08333333333334,
+      "deaths": 0
+    },
+    {
+      "level": "L6",
+      "completed": true,
+      "time": 270.85,
+      "deaths": 0
+    },
+    {
+      "level": "L7",
+      "completed": true,
+      "time": 631.6666666666666,
+      "deaths": 0
+    },
+    {
+      "level": "L8",
+      "completed": true,
+      "time": 138.98333333333332,
+      "deaths": 0
+    },
+    {
+      "level": "L9",
+      "completed": true,
+      "time": 126.81666666666666,
+      "deaths": 0
+    }
+  ],
+  "existingSkipped": [
+    {
+      "file": "tests/levels/L4-botprobe.test.ts",
+      "test": "L4 complete bot probe"
+    },
+    {
+      "file": "tests/levels/L4-probe.test.ts",
+      "test": "L4 collapse probe (idle player, god)"
+    },
+    {
+      "file": "tests/unit/tooling/e2e-lock.test.ts",
+      "test": "machine browser capacity reserves units across concurrent jobs and releases them for waiting jobs"
+    },
+    {
+      "file": "tests/unit/tooling/e2e-lock.test.ts",
+      "test": "machine browser capacity returns a child exit 75 exactly once and preserves its stderr"
+    },
+    {
+      "file": "tests/unit/tooling/e2e-lock.test.ts",
+      "test": "machine browser capacity charges the Playwright worker count, including separated CLI arguments"
+    },
+    {
+      "file": "tests/unit/tooling/e2e-lock.test.ts",
+      "test": "machine browser capacity rejects undersized and invalid reservations before launching a command"
+    },
+    {
+      "file": "tests/unit/tooling/e2e-lock.test.ts",
+      "test": "machine browser capacity allows nesting within a reservation and rejects expansion"
+    },
+    {
+      "file": "tests/unit/tooling/e2e-lock.test.ts",
+      "test": "machine browser capacity can acquire nonadjacent free slots without holding a partial reservation"
+    },
+    {
+      "file": "tests/unit/tooling/e2e-lock.test.ts",
+      "test": "machine browser capacity quiet-run covers the legacy fourth slot even with E2E_SLOTS=1"
+    }
+  ]
+}

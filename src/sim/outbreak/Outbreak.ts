@@ -191,6 +191,9 @@ export class Outbreak {
       if (c.ally && updateAlly(world, e, (a, b, id) => this.sees(a, b, id))) continue;
       // E23: a found survivor follows the courier (unarmed, biteable, no flight).
       if (c.survivor && updateSurvivor(world, e)) continue;
+      // L5's sheltered station residents keep their indoor routines until L6's breach.
+      // They are already protected story actors; outside panic must not send them out of the station.
+      if (world.missions?.state.l5?.stationIds.includes(e.id)) { this.routine(e); continue; }
       if (c.schedule && (c.state === 'calm' || c.state === 'alarmed')) followSeat(this.world, e);
       if ((tick + e.id) % 6 === 0 || this.heard.length) this.perceive(e);
       if (c.state === 'calm' && this.gunfire.length && (tick + e.id) % 6 === 3) this.hearGunfire(e);

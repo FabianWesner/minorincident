@@ -71,6 +71,7 @@ describe('L5 Aftermath', () => {
     expect(r.simSeconds).toBeGreaterThanOrEqual(l5.bots.completeMedianS[0]); expect(r.simSeconds).toBeLessThanOrEqual(l5.bots.completeMedianS[1]);
     expect(r.rescued).toBeGreaterThanOrEqual(4); expect(r.found.map(f => f.key).sort()).toEqual(l5Survivors.map(s => s.key).sort());
     expect(r.maxConcurrent).toBeLessThanOrEqual(l5.infected.cap.high);
+    expect(l.mission.state.result!.stationOccupants!.every(e => e.civilian!.state === 'calm')).toBe(true);
     expect(r.timeline.map(t => t.type)).toEqual(expect.arrayContaining(['l5.emerged', 'l5.searching', 'l5.accounted', 'l5.shutter', 'l5.sheltered']));
   }, HEAVY);
 
@@ -317,6 +318,7 @@ describe('L5 Aftermath', () => {
     expect(m.state.result!.survivors).toHaveLength(5);
     expect(m.state.result!.stationOccupants!.map(e => e.id)).toEqual(s.stationIds);
     expect(m.state.result!.stationOccupants).toHaveLength(24);
+    expect(m.state.result!.stationOccupants!.every(e => e.civilian!.state === 'calm')).toBe(true);
   }, HEAVY);
 
   test('T-E23-16 @E23 @E23-AC16 checkpoints: dying right after outside and each survivor-n restores the snapshot (followers, lost survivors stay lost, infected)', async () => {
