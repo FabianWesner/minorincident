@@ -399,11 +399,12 @@ Use `--query ui=1` for the UI quality-pin regression; every run records `actualT
 and gates `requestedQuality` after loading and stepping. Ring fixtures also gate
 band text, player centering and absence of an exact Mega entity marker.
 
-The explicitly named `l10-q1-alpha-silhouette-known-low-defect` runs at high/low
-and zoom 0.5/1/1.5. Its `alphaSilhouetteBlackWhiteEdgeNoise` canvas gate measures
-abrupt black/white edges in an isolated actor crop, exposing the known low Alpha
-triangle defect. There is no expected-failure exemption. Inspect the sheet even
-when it passes: this diagnostic does not replace visual silhouette review.
+The `l10-q1-alpha-silhouette` fixture runs at high/low and zoom 0.5/1/1.5. Its
+`alphaSilhouetteBlackWhiteEdgeNoise` canvas gate measures abrupt black/white edges in an
+isolated actor crop, and `alphaSilhouetteRoughness` bounds outline pixels per sqrt(area) of
+the dark body (the old LOD2 hair-lock spikes exceed it at the close zoom rows). There is no
+expected-failure exemption. Inspect the sheet even when it passes: this diagnostic does not
+replace visual silhouette review.
 See `docs/reports/l10-q1/README.md` for scope, batch recipes and captured evidence.
 
 ## MCP server
