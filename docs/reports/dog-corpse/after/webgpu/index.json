@@ -1,0 +1,83 @@
+{
+  "seconds": 21.662,
+  "rows": [
+    {
+      "name": "qa-dog-corpse@high-z0.5",
+      "file": "tests/scenes/dog-corpse/qa-dog-corpse.json",
+      "pass": true,
+      "seconds": 3.632,
+      "frames": 90,
+      "errors": 0,
+      "gates": "ok consoleErrors 0/0; ok canvas.f0.varianceMin 554.0/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f30.varianceMin 345.2/1; ok canvas.f30.variedTilesMin 64/8; ok canvas.f60.varianceMin 346.4/1; ok canvas.f60.variedTilesMin 64/8; ok canvas.f90.varianceMin 360.1/1; ok canvas.f90.variedTilesMin 64/8; ok requestedBackend 1/1",
+      "failed": [],
+      "sheet": "qa-dog-corpse@high-z0.5/sheet.jpg",
+      "sheetKb": 19,
+      "note": "Dead/knocked-down dogs next to an alive dog and a downed infected: must read as a dog lying down (head, legs, ears attached)."
+    },
+    {
+      "name": "qa-dog-corpse@high-z1",
+      "file": "tests/scenes/dog-corpse/qa-dog-corpse.json",
+      "pass": true,
+      "seconds": 3.671,
+      "frames": 90,
+      "errors": 0,
+      "gates": "ok consoleErrors 0/0; ok canvas.f0.varianceMin 129.1/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f30.varianceMin 106.1/1; ok canvas.f30.variedTilesMin 64/8; ok canvas.f60.varianceMin 107.7/1; ok canvas.f60.variedTilesMin 64/8; ok canvas.f90.varianceMin 112.4/1; ok canvas.f90.variedTilesMin 64/8; ok requestedBackend 1/1",
+      "failed": [],
+      "sheet": "qa-dog-corpse@high-z1/sheet.jpg",
+      "sheetKb": 12,
+      "note": "Dead/knocked-down dogs next to an alive dog and a downed infected: must read as a dog lying down (head, legs, ears attached)."
+    },
+    {
+      "name": "qa-dog-corpse@high-z1.5",
+      "file": "tests/scenes/dog-corpse/qa-dog-corpse.json",
+      "pass": true,
+      "seconds": 5.877,
+      "frames": 90,
+      "errors": 0,
+      "gates": "ok consoleErrors 0/0; ok canvas.f0.varianceMin 60.1/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f30.varianceMin 50.9/1; ok canvas.f30.variedTilesMin 64/8; ok canvas.f60.varianceMin 52.0/1; ok canvas.f60.variedTilesMin 64/8; ok canvas.f90.varianceMin 54.0/1; ok canvas.f90.variedTilesMin 64/8; ok requestedBackend 1/1",
+      "failed": [],
+      "sheet": "qa-dog-corpse@high-z1.5/sheet.jpg",
+      "sheetKb": 11,
+      "note": "Dead/knocked-down dogs next to an alive dog and a downed infected: must read as a dog lying down (head, legs, ears attached)."
+    },
+    {
+      "name": "qa-dog-corpse@low-z0.5",
+      "file": "tests/scenes/dog-corpse/qa-dog-corpse.json",
+      "pass": true,
+      "seconds": 1.556,
+      "frames": 90,
+      "errors": 0,
+      "gates": "ok consoleErrors 0/0; ok canvas.f0.varianceMin 433.8/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f30.varianceMin 312.6/1; ok canvas.f30.variedTilesMin 64/8; ok canvas.f60.varianceMin 323.0/1; ok canvas.f60.variedTilesMin 64/8; ok canvas.f90.varianceMin 338.1/1; ok canvas.f90.variedTilesMin 64/8; ok requestedBackend 1/1",
+      "failed": [],
+      "sheet": "qa-dog-corpse@low-z0.5/sheet.jpg",
+      "sheetKb": 17,
+      "note": "Dead/knocked-down dogs next to an alive dog and a downed infected: must read as a dog lying down (head, legs, ears attached)."
+    },
+    {
+      "name": "qa-dog-corpse@low-z1",
+      "file": "tests/scenes/dog-corpse/qa-dog-corpse.json",
+      "pass": true,
+      "seconds": 1.596,
+      "frames": 90,
+      "errors": 0,
+      "gates": "ok consoleErrors 0/0; ok canvas.f0.varianceMin 119.2/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f30.varianceMin 97.8/1; ok canvas.f30.variedTilesMin 64/8; ok canvas.f60.varianceMin 101.7/1; ok canvas.f60.variedTilesMin 64/8; ok canvas.f90.varianceMin 106.1/1; ok canvas.f90.variedTilesMin 64/8; ok requestedBackend 1/1",
+      "failed": [],
+      "sheet": "qa-dog-corpse@low-z1/sheet.jpg",
+      "sheetKb": 12,
+      "note": "Dead/knocked-down dogs next to an alive dog and a downed infected: must read as a dog lying down (head, legs, ears attached)."
+    },
+    {
+      "name": "qa-dog-corpse@low-z1.5",
+      "file": "tests/scenes/dog-corpse/qa-dog-corpse.json",
+      "pass": true,
+      "seconds": 2.653,
+      "frames": 90,
+      "errors": 0,
+      "gates": "ok consoleErrors 0/0; ok canvas.f0.varianceMin 54.9/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f30.varianceMin 47.3/1; ok canvas.f30.variedTilesMin 64/8; ok canvas.f60.varianceMin 49.3/1; ok canvas.f60.variedTilesMin 64/8; ok canvas.f90.varianceMin 51.1/1; ok canvas.f90.variedTilesMin 64/8; ok requestedBackend 1/1",
+      "failed": [],
+      "sheet": "qa-dog-corpse@low-z1.5/sheet.jpg",
+      "sheetKb": 11,
+      "note": "Dead/knocked-down dogs next to an alive dog and a downed infected: must read as a dog lying down (head, legs, ears attached)."
+    }
+  ]
+}
