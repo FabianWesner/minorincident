@@ -121,7 +121,7 @@ const commands: string[][] = [
         ]
         : target === 'E32'
           ? [
-            ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--project=chromium', '--workers=2'],
+            ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--project=chromium', '--workers=1'],
             ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/l10-district-budgets.spec.ts', '--project=chromium', '--workers=1'],
           ]
         : target === 'E30'

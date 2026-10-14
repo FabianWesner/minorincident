@@ -1,0 +1,14 @@
+{
+  "extends": "l10-region-seam.json",
+  "name": "l10-q3-seam",
+  "note": "Q3 D-CURE streaming regression: ordinary running crosses the R1/R2 region boundary and the x=800 terrain seam. Capture frequently so asynchronous asset work gets browser tasks within the two-second prefetch horizon (the sheet is thinned to 24 cells). Review road continuity, courier support and complete geometry on both quality tiers and zooms.",
+  "sheet": 30,
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0,
+    "undrawnFramesMax": 0,
+    "lodPlaceholderFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}
