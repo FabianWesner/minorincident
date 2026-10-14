@@ -1,5 +1,5 @@
 import { cure } from '../../levels/L10/district';
-import { cureEncounters, cureEncounterSlots } from '../../levels/L10/encounters';
+import { cureEncounters, cureEncounterSlots, cureEncounterSpot } from '../../levels/L10/encounters';
 import { levelTenMission } from '../../levels/L10/mission';
 import { resolveCampaignMission } from '../../levels/missions';
 import { convoyFootprint, convoyOverlaps } from '../../sim/missions/L4ConvoyClearance';
@@ -267,7 +267,18 @@ export class SceneLab {
       }
       if (!v.l2Ride) this.vehicleMotion.set(id, { yaw: world.entities.get(entity)!.transform.yaw, yawRateMaxDegS: 0, overlaps: 0 });
     }
-    spec.actors?.forEach((a, i) => this.spawn(a, i));
+    spec.actors?.forEach((a, i) => {
+      if (spec.cureEncounter && a.id?.startsWith(`${spec.cureEncounter}:`)) {
+        const at = cureEncounterSpot(world.infected!.nav, { x: a.at![0], z: a.at![1], archetype: a.archetype! }, () => true, spec.cureEncounter === 'dispersal-assault' ? 129 : 17);
+        if (!at) throw new Error(`No clear cure encounter slot: ${a.id}`);
+        a = { ...a, at: [at.x, at.z] };
+      }
+      this.spawn(a, i);
+      if (spec.cureEncounter === 'dispersal-assault' && a.kind === 'infected') {
+        const e = world.entities.get(this.actors.get(a.id!)!.entity)!;
+        e.infected!.state = 'chase';
+      }
+    });
     if (spec.l4Convoy) {
       applyCampaign(world, preset('L4-default'));
       const mission = world.loadMission(resolveCampaignMission('L4', world.districts!));

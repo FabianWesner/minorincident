@@ -1,12 +1,14 @@
 import { cure } from './district';
 import type { CureRegion } from './alphaContracts';
 import type { Point } from '../districts/types';
+import type { NavGrid } from '../../sim/ai/NavGrid';
+import { infectedDef } from '../../data/infected';
 
-/** R1–R6 resident peaks, authored along the road rather than in response to arsenal changes.
+/** R1–R6 resident peaks and R7 console assault, authored independently of arsenal changes.
  * Low quality thins only ordinary humans. Dogs and regular Alpha encounters keep their mechanics/counts.
  * Checkpoint forecourts and the service/motor-pool roads remain clear of authored groups. */
 export interface CureEncounter {
-  id: string; region: CureRegion; at: Point; regular: readonly [number, number]; dogs: number; alphas: number; tough?: number;
+  id: string; region: CureRegion; at: Point; regular: readonly [number, number]; dogs: number; alphas: number; alphasLow?: number; tough?: number;
 }
 export const cureEncounters: readonly CureEncounter[] = [
   { id: 'crash-singletons', region: 'crash-outskirts', at: [592, -8], regular: [2, 2], dogs: 0, alphas: 0 },
@@ -27,6 +29,7 @@ export const cureEncounters: readonly CureEncounter[] = [
   { id: 'corridor-line', region: 'destroyed-corridor', at: [3217, 95], regular: [32, 20], dogs: 2, alphas: 1 },
   { id: 'corridor-breach', region: 'destroyed-corridor', at: [3317, 95], regular: [32, 20], dogs: 2, alphas: 1 },
   { id: 'corridor-exit', region: 'destroyed-corridor', at: [3417, 95], regular: [32, 20], dogs: 1, alphas: 1 },
+  { id: 'dispersal-assault', region: 'dispersal-complex', at: cure.anchors['cure-console'], regular: [160, 80], dogs: 4, alphas: 3, alphasLow: 2 },
 ];
 export const cureMedkits = [
   { id: 'crash-approach', at: [732, 29] as Point },
@@ -40,11 +43,26 @@ export const cureMedkits = [
 export function cureEncounterSlots(group: CureEncounter, tier: 'high' | 'low') {
   const regular = group.regular[tier === 'high' ? 0 : 1];
   const roles = [...Array.from({ length: regular }, (_, i) => i < (group.tough ?? 0) ? 'infected.firefighter' : 'infected.runner'),
-    ...Array<string>(group.dogs).fill('infected.dog'), ...Array<string>(group.alphas).fill('infected.alpha')];
+    ...Array<string>(group.dogs).fill('infected.dog'), ...Array<string>(tier === 'low' ? group.alphasLow ?? group.alphas : group.alphas).fill('infected.alpha')];
   const indices = new Map<string, number>();
   return roles.map((archetype, i) => {
     const index = indices.get(archetype) ?? 0; indices.set(archetype, index + 1);
+    // Four staggered ranks outside the hold disc; specials lead their own flank.
+    const assault = group.region === 'dispersal-complex', angle = i * 2.399963229728653;
+    const radius = 42 + (i % 4) * 3;
     return { key: `${group.id}:${archetype}:${index}`, archetype,
-      x: group.at[0] + (i % 5 - 2) * 2.2, z: group.at[1] + (Math.floor(i / 5) - 2) * 2.2 };
+      x: group.at[0] + (assault ? Math.cos(angle) * radius : (i % 5 - 2) * 2.2),
+      z: group.at[1] + (assault ? Math.sin(angle) * radius : (Math.floor(i / 5) - 2) * 2.2) };
   });
+}
+
+/** Same bounded placement search for production and the Scene Lab encounter fixture. */
+export function cureEncounterSpot(nav: NavGrid, slot: { x: number; z: number; archetype: string }, eligible: (x: number, z: number) => boolean = () => true, attempts = 17) {
+  const radius = infectedDef(slot.archetype).radius;
+  for (let attempt = 0; attempt < attempts; attempt++) {
+    const angle = attempt * Math.PI / 4, distance = Math.ceil(attempt / 8) * 1.5;
+    const at = { x: slot.x + Math.cos(angle) * distance, z: slot.z + Math.sin(angle) * distance };
+    if (eligible(at.x, at.z) && nav.clear(at.x, at.z, radius)) return at;
+  }
+  return null;
 }
