@@ -3,7 +3,7 @@ import type { CDPSession, Page } from '@playwright/test';
 import { boot, expect, test } from '../fixtures';
 
 type Point = { x: number; z: number };
-const center = { x: -18, z: 4.5 }, d = 6 / Math.SQRT2;
+const center = { x: -17.5, z: 4 }, d = 6 / Math.SQRT2;
 const targets = [
   { name: 'left', key: 'a', x: center.x - d, z: center.z + d },
   { name: 'right', key: 'd', x: center.x + d, z: center.z - d },
@@ -34,7 +34,7 @@ async function clickTo(page: Page, target: Point, capture?: string): Promise<voi
     expect(input.moveTarget, JSON.stringify({ point, screen, input, picks: await page.evaluate(() => window.__SS__!.input.lastPick()) })).toBeDefined();
     expect(distance(input.moveTarget!, point)).toBeLessThan(.05);
     await step(page, 60);
-    if (capture && i === 0) await page.screenshot({ path: capture });
+    if (capture && i === 0) { await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: capture }); }
   }
   expect(distance(await position(page), target)).toBeLessThan(1);
 }

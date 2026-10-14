@@ -38,10 +38,10 @@ for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['hig
     expect(proof.rect.x + proof.rect.width).toBeLessThanOrEqual(1280); expect(proof.rect.y + proof.rect.height).toBeLessThanOrEqual(720);
     const out = `test-results/l4-walk-left/guidance-${renderer}-${quality}-z${zoom}`;
     mkdirSync(out, { recursive: true }); await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: `${out}/plaza-arrow.png` });
-    await page.evaluate(p => window.__SS__!.teleport('player', { x: p[0] - 3, z: p[2] + 3 }), proof.anchor.position); await step(20);
+    await page.evaluate(p => window.__SS__!.teleport('player', { x: p[0] - 1.5, z: p[2] + 1.5 }), proof.anchor.position); await step(90);
     await expect(arrow).toHaveAttribute('data-offscreen', 'false');
     expect(await page.evaluate(() => window.__SS__!.getState().render.missionMarker!.visible)).toBe(true);
-    await page.screenshot({ path: `${out}/cellar-beacon.png` });
+    await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: `${out}/cellar-beacon.png` });
     writeFileSync(`${out}/guidance.json`, JSON.stringify(proof, null, 2));
   });
 }
