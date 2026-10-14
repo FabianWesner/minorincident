@@ -8,6 +8,8 @@ import { resolveCampaignMission } from '../../../src/levels/missions';
 import { applyCampaign } from '../../../src/sim/progression/apply';
 import { preset } from '../../../src/sim/progression/Campaign';
 import { MegaPursuit } from '../../../src/sim/ai/MegaPursuit';
+import { applyCampaign } from '../../../src/sim/progression/apply';
+import { preset } from '../../../src/sim/progression/Campaign';
 
 const layout = JSON.parse(readFileSync('public/assets/layouts/D-CURE.layout.json', 'utf8')) as DistrictLayout;
 for (const tier of ['high', 'low'] as const) test(`T-E32-03-D1-D2-${tier} @E32-AC02 @E32-AC05 @E32-AC03 @E32-AC27 @E32-AC28 route through R1–R4 acquires the ordered arsenal and retains ground/nav/checkpoint support`, async () => {
@@ -17,6 +19,7 @@ for (const tier of ['high', 'low'] as const) test(`T-E32-03-D1-D2-${tier} @E32-A
     applyCampaign(w, preset('L10-default'));
     w.chunks!.setQuality(tier);
     const mission = w.loadMission(resolveCampaignMission('L10', w.districts!)); mission.begin();
+    for (const side of ['LEFT', 'RIGHT'] as const) expect(w.entities.get(1)!.weapons![side].rack.map(s => s.id)).toEqual(['weapon.fire-axe']);
     const times: number[] = [], regions: { id: string; ticks: number }[] = [];
     for (const region of cure.regions.slice(0, 4)) {
       const start = w.tick;
