@@ -129,7 +129,7 @@ describe('L4 PO round 10-13', () => {
     w.events.on('l4.beat', e => { if (e.type === 'l4.beat') beats.push(`${e.beat}@${((e.tick - s.turnAt) / 60).toFixed(1)}`); });
     w.events.on('infected.attack', e => { if (e.type === 'infected.attack' && s.alphaIds.includes(e.sourceId) && w.entities.get(e.targetId)?.civilian?.ally?.role === 'soldier') alphaReached.add(e.sourceId); });
     w.events.on('barricade.damaged', e => { if (e.type === 'barricade.damaged' && s.alphaIds.includes(e.sourceId)) alphaReached.add(e.sourceId); });
-    let seen = 0, maxGroup = 0;
+    let seen = 0, maxGroup = 0; const threats = new Set<number>();
     const r = runL4(w, m, 'idle', { seed: 2, god: true, maxSeconds: 480, stopWhen: mm => {
       const st = mm.state.l4!;
       // Not in bulk: what one emergence point releases at once (one tick) is a small group.
@@ -138,6 +138,7 @@ describe('L4 PO round 10-13', () => {
       const soldiers = soldierIds().map(id => w.entities.get(id)!);
       for (const e of w.infected!.active) {
         if (e.health.current <= 0 || e.hidden) continue;
+        threats.add(e.id);
         const near = soldiers.some(x => dist(x.transform, e.transform) < 2.2);
         if (near && st.origin[e.id] !== undefined && !reached.has(e.id)) { reached.add(e.id); reachSectors.add(sector(points[st.origin[e.id]])); }
         if (e.archetype === 'infected.alpha' && (near || nests.some(n => dist(n, e.transform) < 3) || pallets.some(p => dist(p, e.transform) < 2))) alphaReached.add(e.id);
@@ -149,10 +150,12 @@ describe('L4 PO round 10-13', () => {
     const total = [...byTick.values()].reduce((a, b) => a + b, 0), share = Math.max(...byTick.values()) / total;
     const inside = s.emergedIds.filter(id => (s.origin[id] ?? -1) >= l4Emergence.length).length;
     const quadrants = new Set([...reachSectors].map(k => Math.floor(k / 2)));
-    const out = { total, share, maxGroup, perPoint: Object.fromEntries([...byTick.entries()].map(([k, v]) => [k, v])), inside, reachSectors: [...reachSectors], quadrants: quadrants.size, reached: reached.size,
+    const out = { total, share, maxGroup, perPoint: Object.fromEntries([...byTick.entries()].map(([k, v]) => [k, v])), inside, reachSectors: [...reachSectors], quadrants: quadrants.size, reached: reached.size, threats: threats.size,
       alphas: s.alphaIds.length, alphaReached: alphaReached.size, alphaAnchors: s.alphaAnchors, beats, breakAfterS: r.breakAfterS, cause: s.lineCause, knockdowns: s.director.knockdowns, barricades: s.director.barricades };
     record('po-round-war', out);
-    expect(total).toBeGreaterThan(100);
+    // PO 10-14: downed infected keep their slots (they get up) under the 120 cap, so the war counts distinct threats
+    // (initial turns + new arrivals + Alphas), not only new arrivals.
+    expect(threats.size, '> 100 distinct infected fight in the war').toBeGreaterThan(100);
     expect(share, 'no emergence point delivers more than 25 %').toBeLessThanOrEqual(.25);
     expect(maxGroup, 'groups of 2-5, not a stream').toBeLessThanOrEqual(l4.war.group[1]);
     expect(new Set(Object.keys(out.perPoint)).size).toBeGreaterThanOrEqual(12);
