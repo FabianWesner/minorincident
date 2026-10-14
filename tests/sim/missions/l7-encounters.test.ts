@@ -189,3 +189,16 @@ test('T-E29-08-turning @E29-AC08 pending survivor transformations reserve a slot
     expect(c.state.roster[i].status).toBe('turned');
   });
 });
+
+test('T-E31-20-armed-roster @E31-AC20 @E29-AC11 carried armed shelter resident follows the L7 group instead of holding an old post', async () => {
+  const source = await load('high'), base = source.entities.get(source.l7Encounters!.state.roster[0].id)!;
+  const carried = structuredClone(base); carried.id = 10_000;
+  carried.civilian!.ally = { role: 'officer', engaged: false, run: null, runSpeed: 3.8, post: { x: 273, z: 15 }, hold: true, targetId: 0, nextAttack: 0, hits: 0, forceUntil: 0 };
+  const w = await load('high', [carried]);
+  teleport(w, 263, 15);
+  const e = w.entities.get(carried.id)!, start = e.transform.x;
+  step(w, 300);
+  expect(e.transform.x).toBeLessThan(start - 2);
+  expect(e.civilian!.survivor?.mode).toBe('follow');
+  expect(e.health.current).toBe(carried.health.current);
+});

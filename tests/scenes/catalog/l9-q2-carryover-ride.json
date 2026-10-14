@@ -1,0 +1,16 @@
+{
+  "extends": "../qa-l2-truck-drive-full.json",
+  "name": "l9-q2-carryover-ride",
+  "note": "Q2 campaign L1-to-L2 continuity: Engine 3 leaves its restored station apron and completes the real ride. Historical displaced-bin clearance is asserted by T-E31-20-L1-prop; this game-camera scene reviews the resulting clear lane and grounded truck.",
+  "sheet": 120,
+  "expect": {
+    "consoleErrors": 0,
+    "bodyOverlapMaxCm": 0,
+    "vehicleBodyOverlapsMax": 0,
+    "wheelSinkMaxCm": 0.5,
+    "vehicleYawRateMaxDegS": 25,
+    "vehicleRideRemainingMaxM": 0.02,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}
