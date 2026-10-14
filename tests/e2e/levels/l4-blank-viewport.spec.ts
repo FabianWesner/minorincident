@@ -3,7 +3,7 @@ import { PNG } from 'pngjs';
 import { test, expect, boot, testUrl } from '../fixtures';
 
 /** PO 2026-10-12: "When I walk north, the screen gets fully blie" / "High buildigs block th eview".
- * North of Kessler's Hardware (the cellar door, objective "Find somewhere to hide") the follow camera
+ * North of Kessler's Hardware (the cellar door, objective "Run to the cellar") the follow camera
  * hangs 2-5 m above the store's pitched roof; the roof filled the whole frame except the courier-sized
  * see-through circle (or all of it). Real keyboard input walks to the cellar door; every frame must show content. */
 const output = 'test-results/epics/E22/blank-viewport';
