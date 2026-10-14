@@ -1,0 +1,82 @@
+{
+  "target": "E22",
+  "epics": [
+    "E22"
+  ],
+  "pattern": "@(?:E22)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+  "checks": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/remote/run.sh",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/l4-walk-left",
+        "--pull",
+        "test-results/epics/E22/vitest.json",
+        "--",
+        "npx",
+        "vitest",
+        "run",
+        "-t",
+        "@(?:E22)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--maxWorkers=1",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/epics/E22/vitest.json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "npx",
+        "playwright",
+        "test",
+        "--grep",
+        "@(?:E22)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--grep-invert",
+        "@perf",
+        "--project=chromium",
+        "--workers=1"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "npx",
+        "playwright",
+        "test",
+        "tests/perf/l4-budgets.spec.ts",
+        "--project=chromium",
+        "--workers=1"
+      ],
+      "exitCode": 0
+    }
+  ]
+}
