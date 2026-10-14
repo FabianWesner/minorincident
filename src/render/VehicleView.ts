@@ -305,11 +305,13 @@ export class VehicleView extends Group {
       for (const a of anchorsFor(car.physics.def.asset)) {
         const beacon = a.type === 'beacon' || !!a.strobe;
         if (!a.pool && !beacon || !driven && !beacon) continue;
-        // Authored level beams (APC, tank) threw a 20 m saturated wedge: dip them like the other low beams (~7 degrees).
+        // Authored level beams (APC, tank) threw a 20 m saturated wedge (QA L9-Q1): dip them like the other low beams (~7 degrees),
+        // warm white at 60% so the two pools do not burn out the dry ground.
         const level = a.type === 'spot' && a.direction[1] > -.04;
         lampPosition.fromArray(a.position).applyMatrix4(record.model.matrixWorld);
         lampDirection.set(a.direction[0], level ? -.12 : a.direction[1], a.direction[2]).normalize().transformDirection(record.model.matrixWorld);
         const light = footprint({ ...a, ...(level ? { color: 'light_led_white' as const } : {}), position: lampPosition.toArray(), direction: lampDirection.toArray() }, this.world.districts?.groundHeight(lampPosition.x, lampPosition.z) ?? 0, id * 3.1);
+        if (level) { light.r *= .6; light.g *= .6; light.b *= .6; }
         if (/brake/i.test(a.name) && !car.entity.vehicle!.braking) { light.r *= .3; light.g *= .3; light.b *= .3; }
         field.push(light);
       }
