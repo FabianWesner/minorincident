@@ -8,11 +8,11 @@
           -300
         ],
         [
-          2500,
+          3800,
           -300
         ],
         [
-          2500,
+          3800,
           300
         ],
         [
@@ -28,6 +28,54 @@
     }
   ],
   "anchors": {
+    "corridor-blocked-road": {
+      "position": [
+        3317,
+        0,
+        -5
+      ],
+      "yaw": 0
+    },
+    "corridor-breach": {
+      "position": [
+        3317,
+        0,
+        95
+      ],
+      "yaw": 0
+    },
+    "corridor-medkit": {
+      "position": [
+        2933,
+        0,
+        -2
+      ],
+      "yaw": 0
+    },
+    "cure-canister": {
+      "position": [
+        2713,
+        0,
+        41
+      ],
+      "yaw": 0
+    },
+    "cure-complex": {
+      "position": [
+        3697,
+        0,
+        -25
+      ],
+      "yaw": 0
+    },
+    "cure-corridor": {
+      "position": [
+        2937,
+        0,
+        -5
+      ],
+      "yaw": 0
+    },
     "cure-crash": {
       "position": [
         547,
@@ -52,6 +100,14 @@
       ],
       "yaw": 0
     },
+    "cure-research": {
+      "position": [
+        2807,
+        0,
+        45
+      ],
+      "yaw": 0
+    },
     "cure-research-entry": {
       "position": [
         2467,
@@ -68,11 +124,19 @@
       ],
       "yaw": 0
     },
+    "cure-terminal": {
+      "position": [
+        2707,
+        0,
+        41
+      ],
+      "yaw": 0
+    },
     "exit": {
       "position": [
-        2467,
+        3697,
         0,
-        -5
+        -25
       ],
       "yaw": 0
     },
@@ -212,6 +276,38 @@
       ],
       "yaw": 0
     },
+    "r5-r6-seam": {
+      "position": [
+        2917,
+        0,
+        -5
+      ],
+      "yaw": 0
+    },
+    "r6-r7-seam": {
+      "position": [
+        3697,
+        0,
+        -25
+      ],
+      "yaw": 0
+    },
+    "research-medkit": {
+      "position": [
+        2487,
+        0,
+        -2
+      ],
+      "yaw": 0
+    },
+    "research-quarantine": {
+      "position": [
+        2807,
+        0,
+        -5
+      ],
+      "yaw": 0
+    },
     "residential-blocked-street": {
       "position": [
         937,
@@ -225,6 +321,14 @@
         937,
         0,
         80
+      ],
+      "yaw": 0
+    },
+    "rocket-pickup": {
+      "position": [
+        2937,
+        0,
+        -5
       ],
       "yaw": 0
     },
@@ -243,11 +347,11 @@
       -300
     ],
     [
-      2500,
+      3800,
       -300
     ],
     [
-      2500,
+      3800,
       300
     ],
     [
@@ -667,6 +771,57 @@
       "assetId": "bld.cure-motor-shelter",
       "id": "bld.cure-motor-shelter:140",
       "label": "Motor pool"
+    },
+    {
+      "aabb": {
+        "max": [
+          2720.275,
+          7.4519,
+          30.35
+        ],
+        "min": [
+          2693.725,
+          0,
+          15.65
+        ]
+      },
+      "assetId": "bld.cure-lab-main",
+      "id": "bld.cure-lab-main:194",
+      "label": "Research laboratory"
+    },
+    {
+      "aabb": {
+        "max": [
+          2613.4,
+          7.15,
+          29.1
+        ],
+        "min": [
+          2600.6,
+          0,
+          16.9
+        ]
+      },
+      "assetId": "bld.cure-lab-annex",
+      "id": "bld.cure-lab-annex:195",
+      "label": "Research laboratory"
+    },
+    {
+      "aabb": {
+        "max": [
+          2783.4,
+          7.15,
+          29.1
+        ],
+        "min": [
+          2770.6,
+          0,
+          16.9
+        ]
+      },
+      "assetId": "bld.cure-lab-annex",
+      "id": "bld.cure-lab-annex:196",
+      "label": "Research laboratory"
     }
   ],
   "colliders": [
@@ -3780,10 +3935,3104 @@
       "id": "prop.jersey-barrier:189",
       "maxTier": 6,
       "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2720.275,
+          7.4519,
+          30.35
+        ],
+        "min": [
+          2693.725,
+          0,
+          15.65
+        ]
+      },
+      "id": "bld.cure-lab-main:194",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2613.4,
+          7.15,
+          29.1
+        ],
+        "min": [
+          2600.6,
+          0,
+          16.9
+        ]
+      },
+      "id": "bld.cure-lab-annex:195",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2783.4,
+          7.15,
+          29.1
+        ],
+        "min": [
+          2770.6,
+          0,
+          16.9
+        ]
+      },
+      "id": "bld.cure-lab-annex:196",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2550.15,
+          3.1,
+          68.78
+        ],
+        "min": [
+          2543.85,
+          0,
+          61.22
+        ]
+      },
+      "id": "prop.cure-iso-tent:197",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2660.15,
+          3.1,
+          68.78
+        ],
+        "min": [
+          2653.85,
+          0,
+          61.22
+        ]
+      },
+      "id": "prop.cure-iso-tent:198",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2850.15,
+          3.1,
+          23.78
+        ],
+        "min": [
+          2843.85,
+          0,
+          16.22
+        ]
+      },
+      "id": "prop.cure-iso-tent:199",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2558.4,
+          2.38,
+          65.585
+        ],
+        "min": [
+          2555.6,
+          0,
+          64.415
+        ]
+      },
+      "id": "prop.cure-generator:200",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2698.4,
+          2.38,
+          65.585
+        ],
+        "min": [
+          2695.6,
+          0,
+          64.415
+        ]
+      },
+      "id": "prop.cure-generator:201",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2858.4,
+          2.38,
+          20.585
+        ],
+        "min": [
+          2855.6,
+          0,
+          19.415
+        ]
+      },
+      "id": "prop.cure-generator:202",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2570.3294998407364,
+          3.3754999339580536,
+          66.37000000476837
+        ],
+        "min": [
+          2563.6705001592636,
+          0,
+          63.62999999523163
+        ]
+      },
+      "id": "veh.ambulance:203",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2760.3294998407364,
+          3.3754999339580536,
+          66.37000000476837
+        ],
+        "min": [
+          2753.6705001592636,
+          0,
+          63.62999999523163
+        ]
+      },
+      "id": "veh.ambulance:204",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2708.65,
+          2.025,
+          40.3
+        ],
+        "min": [
+          2705.35,
+          0,
+          38.7
+        ]
+      },
+      "id": "kit.dispersal-console:205",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2713.7,
+          1.705,
+          40.2
+        ],
+        "min": [
+          2712.3,
+          0,
+          38.8
+        ]
+      },
+      "id": "prop.cure-canister-pedestal:206",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2578.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2575.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:207",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2584.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2581.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:208",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2590.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2587.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:209",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2596.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2593.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:210",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2602.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2599.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:211",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2608.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2605.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:212",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2614.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2611.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:213",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2620.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2617.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:214",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2626.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2623.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:215",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2632.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2629.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:216",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2638.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2635.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:217",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2644.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2641.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:218",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2650.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2647.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:219",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2656.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2653.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:220",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2662.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2659.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:221",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2668.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2665.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:222",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2674.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2671.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:223",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2680.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2677.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:224",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2686.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2683.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:225",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2692.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2689.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:226",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2698.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2695.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:227",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2704.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2701.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:228",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2710.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2707.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:229",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2716.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2713.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:230",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2722.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2719.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:231",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2728.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2725.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:232",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2734.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2731.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:233",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2740.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2737.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:234",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2746.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2743.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:235",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2752.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2749.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:236",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2758.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2755.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:237",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2764.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2761.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:238",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2770.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2767.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:239",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2776.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2773.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:240",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2782.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2779.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:241",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2788.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2785.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:242",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2794.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2791.41,
+          0,
+          75.55
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:243",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2837.45,
+          2.1,
+          -33.41
+        ],
+        "min": [
+          2836.55,
+          0,
+          -36.59
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:244",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2837.45,
+          2.1,
+          -27.41
+        ],
+        "min": [
+          2836.55,
+          0,
+          -30.59
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:245",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2837.45,
+          2.1,
+          -21.41
+        ],
+        "min": [
+          2836.55,
+          0,
+          -24.59
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:246",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2837.45,
+          2.1,
+          -15.41
+        ],
+        "min": [
+          2836.55,
+          0,
+          -18.59
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:247",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2837.45,
+          2.1,
+          8.59
+        ],
+        "min": [
+          2836.55,
+          0,
+          5.41
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:248",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2837.45,
+          2.1,
+          14.59
+        ],
+        "min": [
+          2836.55,
+          0,
+          11.41
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:249",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2837.45,
+          2.1,
+          20.59
+        ],
+        "min": [
+          2836.55,
+          0,
+          17.41
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:250",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2837.45,
+          2.1,
+          26.59
+        ],
+        "min": [
+          2836.55,
+          0,
+          23.41
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:251",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2837.45,
+          2.1,
+          32.59
+        ],
+        "min": [
+          2836.55,
+          0,
+          29.41
+        ]
+      },
+      "id": "prop.cure-quarantine-fence:252",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2940.463298,
+          3.64641,
+          11.4499975
+        ],
+        "min": [
+          2933.536702,
+          0,
+          8.5500025
+        ]
+      },
+      "id": "veh.military-truck:253",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2929.64,
+          2.12,
+          3.535
+        ],
+        "min": [
+          2928.36,
+          0,
+          2.465
+        ]
+      },
+      "id": "prop.cure-drum-stack:254",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          2945.64,
+          2.12,
+          3.535
+        ],
+        "min": [
+          2944.36,
+          0,
+          2.465
+        ]
+      },
+      "id": "prop.cure-drum-stack:255",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3069.2000000476837,
+          1.8999999463558197,
+          115.89999997615814
+        ],
+        "min": [
+          3064.7999999523163,
+          0,
+          114.10000002384186
+        ]
+      },
+      "id": "veh.wreck:256",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3076.6396000385284,
+          1.5,
+          115.8410159945488
+        ],
+        "min": [
+          3073.3603999614716,
+          0,
+          114.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:257",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3219.2000000476837,
+          1.8999999463558197,
+          115.89999997615814
+        ],
+        "min": [
+          3214.7999999523163,
+          0,
+          114.10000002384186
+        ]
+      },
+      "id": "veh.wreck:258",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3226.6396000385284,
+          1.5,
+          115.8410159945488
+        ],
+        "min": [
+          3223.3603999614716,
+          0,
+          114.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:259",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3469.2000000476837,
+          1.8999999463558197,
+          115.89999997615814
+        ],
+        "min": [
+          3464.7999999523163,
+          0,
+          114.10000002384186
+        ]
+      },
+      "id": "veh.wreck:260",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3476.6396000385284,
+          1.5,
+          115.8410159945488
+        ],
+        "min": [
+          3473.3603999614716,
+          0,
+          114.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:261",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3619.2000000476837,
+          1.8999999463558197,
+          -44.10000002384186
+        ],
+        "min": [
+          3614.7999999523163,
+          0,
+          -45.89999997615814
+        ]
+      },
+      "id": "veh.wreck:262",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3626.6396000385284,
+          1.5,
+          -44.1589840054512
+        ],
+        "min": [
+          3623.3603999614716,
+          0,
+          -45.8410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:263",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -88.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -89.8410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:264",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -86.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -88.3410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:265",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -85.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -86.8410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:266",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -83.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -85.3410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:267",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -82.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -83.8410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:268",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -80.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -82.3410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:269",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -79.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -80.8410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:270",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -77.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -79.3410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:271",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -76.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -77.8410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:272",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -74.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -76.3410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:273",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -73.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -74.8410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:274",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -71.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -73.3410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:275",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -70.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -71.8410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:276",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -68.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -70.3410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:277",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -67.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -68.8410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:278",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -65.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -67.3410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:279",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -64.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -65.8410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:280",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -62.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -64.3410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:281",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -61.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -62.8410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:282",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -59.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -61.3410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:283",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -58.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -59.8410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:284",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -56.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -58.3410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:285",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -55.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -56.8410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:286",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -53.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -55.3410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:287",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -52.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -53.8410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:288",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -50.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -52.3410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:289",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -49.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -50.8410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:290",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -47.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -49.3410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:291",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -46.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -47.8410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:292",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -44.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -46.3410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:293",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -43.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -44.8410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:294",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -41.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -43.3410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:295",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -40.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -41.8410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:296",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -38.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -40.3410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:297",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -37.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -38.8410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:298",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -35.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -37.3410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:299",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -34.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -35.8410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:300",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -32.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -34.3410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:301",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -31.158984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -32.8410159945488
+        ]
+      },
+      "id": "decay.makeshift-barricade:302",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -29.658984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -31.341015994548798
+        ]
+      },
+      "id": "decay.makeshift-barricade:303",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -28.158984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -29.841015994548798
+        ]
+      },
+      "id": "decay.makeshift-barricade:304",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -26.658984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -28.341015994548798
+        ]
+      },
+      "id": "decay.makeshift-barricade:305",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -25.158984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -26.841015994548798
+        ]
+      },
+      "id": "decay.makeshift-barricade:306",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -23.658984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -25.341015994548798
+        ]
+      },
+      "id": "decay.makeshift-barricade:307",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -22.158984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -23.841015994548798
+        ]
+      },
+      "id": "decay.makeshift-barricade:308",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -20.658984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -22.341015994548798
+        ]
+      },
+      "id": "decay.makeshift-barricade:309",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -19.158984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -20.841015994548798
+        ]
+      },
+      "id": "decay.makeshift-barricade:310",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -17.658984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -19.341015994548798
+        ]
+      },
+      "id": "decay.makeshift-barricade:311",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -16.158984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -17.841015994548798
+        ]
+      },
+      "id": "decay.makeshift-barricade:312",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -14.658984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -16.341015994548798
+        ]
+      },
+      "id": "decay.makeshift-barricade:313",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -13.158984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -14.841015994548798
+        ]
+      },
+      "id": "decay.makeshift-barricade:314",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -11.658984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -13.341015994548798
+        ]
+      },
+      "id": "decay.makeshift-barricade:315",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -10.158984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -11.841015994548798
+        ]
+      },
+      "id": "decay.makeshift-barricade:316",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -8.658984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -10.341015994548798
+        ]
+      },
+      "id": "decay.makeshift-barricade:317",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -7.158984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -8.841015994548798
+        ]
+      },
+      "id": "decay.makeshift-barricade:318",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -5.658984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -7.341015994548798
+        ]
+      },
+      "id": "decay.makeshift-barricade:319",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -4.158984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -5.841015994548798
+        ]
+      },
+      "id": "decay.makeshift-barricade:320",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -2.6589840054512024
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -4.341015994548798
+        ]
+      },
+      "id": "decay.makeshift-barricade:321",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -1.1589840054512024
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -2.8410159945487976
+        ]
+      },
+      "id": "decay.makeshift-barricade:322",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          0.3410159945487976
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -1.3410159945487976
+        ]
+      },
+      "id": "decay.makeshift-barricade:323",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          1.8410159945487976
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          0.1589840054512024
+        ]
+      },
+      "id": "decay.makeshift-barricade:324",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          3.3410159945487976
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          1.6589840054512024
+        ]
+      },
+      "id": "decay.makeshift-barricade:325",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          4.841015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          3.1589840054512024
+        ]
+      },
+      "id": "decay.makeshift-barricade:326",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          6.341015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          4.658984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:327",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          7.841015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          6.158984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:328",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          9.341015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          7.658984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:329",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          10.841015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          9.158984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:330",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          12.341015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          10.658984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:331",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          13.841015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          12.158984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:332",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          15.341015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          13.658984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:333",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          16.841015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          15.158984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:334",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          18.341015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          16.658984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:335",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          19.841015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          18.158984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:336",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          21.341015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          19.658984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:337",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          22.841015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          21.158984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:338",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          24.341015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          22.658984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:339",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          25.841015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          24.158984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:340",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          27.341015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          25.658984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:341",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          28.841015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          27.158984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:342",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          30.341015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          28.658984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:343",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          31.841015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          30.158984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:344",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          33.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          31.658984005451202
+        ]
+      },
+      "id": "decay.makeshift-barricade:345",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          34.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          33.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:346",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          36.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          34.6589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:347",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          37.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          36.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:348",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          39.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          37.6589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:349",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          40.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          39.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:350",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          42.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          40.6589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:351",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          43.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          42.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:352",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          45.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          43.6589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:353",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          46.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          45.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:354",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          48.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          46.6589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:355",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          49.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          48.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:356",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          51.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          49.6589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:357",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          52.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          51.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:358",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          54.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          52.6589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:359",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          55.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          54.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:360",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          57.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          55.6589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:361",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          58.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          57.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:362",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          60.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          58.6589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:363",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          61.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          60.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:364",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          63.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          61.6589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:365",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          64.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          63.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:366",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          66.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          64.6589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:367",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          67.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          66.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:368",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          69.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          67.6589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:369",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          70.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          69.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:370",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          72.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          70.6589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:371",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          73.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          72.1589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:372",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          75.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          73.6589840054512
+        ]
+      },
+      "id": "decay.makeshift-barricade:373",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.5,
+          0.949999988079071,
+          83.36000001430511
+        ],
+        "min": [
+          3315.5,
+          0,
+          82.63999998569489
+        ]
+      },
+      "id": "prop.jersey-barrier:374",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3318.5,
+          0.949999988079071,
+          107.36000001430511
+        ],
+        "min": [
+          3315.5,
+          0,
+          106.63999998569489
+        ]
+      },
+      "id": "prop.jersey-barrier:375",
+      "maxTier": 6,
+      "minTier": 0
     }
   ],
   "district": "D-CURE",
-  "geometryHash": "1474691c1c1c2217023392da0d53782c1b285e2c48c3ef80d597915847dfc6cc",
+  "geometryHash": "d02edecef4e565955d08f885d5c053dd120158bb00cec7ba20ead619e2bd99c3",
   "lawns": [],
   "layers": [
     {
@@ -9847,6 +13096,5649 @@
         ]
       },
       "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.cure-lab-main",
+      "id": "bld.cure-lab-main:194",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2707,
+        0,
+        23
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2720.275,
+          7.4519,
+          30.35
+        ],
+        "min": [
+          2693.725,
+          0,
+          15.65
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.cure-lab-annex",
+      "id": "bld.cure-lab-annex:195",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2607,
+        0,
+        23
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2613.4,
+          7.15,
+          29.1
+        ],
+        "min": [
+          2600.6,
+          0,
+          16.9
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.cure-lab-annex",
+      "id": "bld.cure-lab-annex:196",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2777,
+        0,
+        23
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2783.4,
+          7.15,
+          29.1
+        ],
+        "min": [
+          2770.6,
+          0,
+          16.9
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-iso-tent",
+      "id": "prop.cure-iso-tent:197",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2547,
+        0,
+        65
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2550.15,
+          3.1,
+          68.78
+        ],
+        "min": [
+          2543.85,
+          0,
+          61.22
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-iso-tent",
+      "id": "prop.cure-iso-tent:198",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2657,
+        0,
+        65
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2660.15,
+          3.1,
+          68.78
+        ],
+        "min": [
+          2653.85,
+          0,
+          61.22
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-iso-tent",
+      "id": "prop.cure-iso-tent:199",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2847,
+        0,
+        20
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2850.15,
+          3.1,
+          23.78
+        ],
+        "min": [
+          2843.85,
+          0,
+          16.22
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-generator",
+      "id": "prop.cure-generator:200",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2557,
+        0,
+        65
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2558.4,
+          2.38,
+          65.585
+        ],
+        "min": [
+          2555.6,
+          0,
+          64.415
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-generator",
+      "id": "prop.cure-generator:201",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2697,
+        0,
+        65
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2698.4,
+          2.38,
+          65.585
+        ],
+        "min": [
+          2695.6,
+          0,
+          64.415
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-generator",
+      "id": "prop.cure-generator:202",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2857,
+        0,
+        20
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2858.4,
+          2.38,
+          20.585
+        ],
+        "min": [
+          2855.6,
+          0,
+          19.415
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "veh.ambulance",
+      "id": "veh.ambulance:203",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2567,
+        0,
+        65
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2570.3294998407364,
+          3.3754999339580536,
+          66.37000000476837
+        ],
+        "min": [
+          2563.6705001592636,
+          0,
+          63.62999999523163
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "veh.ambulance",
+      "id": "veh.ambulance:204",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2757,
+        0,
+        65
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2760.3294998407364,
+          3.3754999339580536,
+          66.37000000476837
+        ],
+        "min": [
+          2753.6705001592636,
+          0,
+          63.62999999523163
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "kit.dispersal-console",
+      "id": "kit.dispersal-console:205",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2707,
+        0,
+        39.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2708.65,
+          2.025,
+          40.3
+        ],
+        "min": [
+          2705.35,
+          0,
+          38.7
+        ]
+      },
+      "yaw": -1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-canister-pedestal",
+      "id": "prop.cure-canister-pedestal:206",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2713,
+        0,
+        39.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2713.7,
+          1.705,
+          40.2
+        ],
+        "min": [
+          2712.3,
+          0,
+          38.8
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:207",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2577,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2578.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2575.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:208",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2583,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2584.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2581.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:209",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2589,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2590.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2587.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:210",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2595,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2596.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2593.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:211",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2601,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2602.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2599.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:212",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2607,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2608.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2605.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:213",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2613,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2614.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2611.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:214",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2619,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2620.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2617.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:215",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2625,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2626.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2623.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:216",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2631,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2632.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2629.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:217",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2637,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2638.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2635.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:218",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2643,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2644.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2641.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:219",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2649,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2650.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2647.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:220",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2655,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2656.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2653.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:221",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2661,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2662.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2659.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:222",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2667,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2668.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2665.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:223",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2673,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2674.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2671.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:224",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2679,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2680.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2677.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:225",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2685,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2686.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2683.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:226",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2691,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2692.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2689.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:227",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2697,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2698.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2695.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:228",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2703,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2704.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2701.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:229",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2709,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2710.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2707.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:230",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2715,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2716.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2713.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:231",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2721,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2722.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2719.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:232",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2727,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2728.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2725.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:233",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2733,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2734.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2731.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:234",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2739,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2740.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2737.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:235",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2745,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2746.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2743.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:236",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2751,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2752.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2749.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:237",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2757,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2758.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2755.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:238",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2763,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2764.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2761.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:239",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2769,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2770.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2767.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:240",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2775,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2776.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2773.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:241",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2781,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2782.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2779.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:242",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2787,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2788.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2785.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:243",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2793,
+        0,
+        76
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2794.59,
+          2.1,
+          76.45
+        ],
+        "min": [
+          2791.41,
+          0,
+          75.55
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:244",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2837,
+        0,
+        -35
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2837.45,
+          2.1,
+          -33.41
+        ],
+        "min": [
+          2836.55,
+          0,
+          -36.59
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:245",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2837,
+        0,
+        -29
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2837.45,
+          2.1,
+          -27.41
+        ],
+        "min": [
+          2836.55,
+          0,
+          -30.59
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:246",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2837,
+        0,
+        -23
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2837.45,
+          2.1,
+          -21.41
+        ],
+        "min": [
+          2836.55,
+          0,
+          -24.59
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:247",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2837,
+        0,
+        -17
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2837.45,
+          2.1,
+          -15.41
+        ],
+        "min": [
+          2836.55,
+          0,
+          -18.59
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:248",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2837,
+        0,
+        7
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2837.45,
+          2.1,
+          8.59
+        ],
+        "min": [
+          2836.55,
+          0,
+          5.41
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:249",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2837,
+        0,
+        13
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2837.45,
+          2.1,
+          14.59
+        ],
+        "min": [
+          2836.55,
+          0,
+          11.41
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:250",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2837,
+        0,
+        19
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2837.45,
+          2.1,
+          20.59
+        ],
+        "min": [
+          2836.55,
+          0,
+          17.41
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:251",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2837,
+        0,
+        25
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2837.45,
+          2.1,
+          26.59
+        ],
+        "min": [
+          2836.55,
+          0,
+          23.41
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-quarantine-fence",
+      "id": "prop.cure-quarantine-fence:252",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2837,
+        0,
+        31
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2837.45,
+          2.1,
+          32.59
+        ],
+        "min": [
+          2836.55,
+          0,
+          29.41
+        ]
+      },
+      "yaw": 1.5707963267948966
+    },
+    {
+      "allowRoad": false,
+      "assetId": "veh.military-truck",
+      "decay": "wrecked",
+      "id": "veh.military-truck:253",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2937,
+        0,
+        10
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2940.463298,
+          3.64641,
+          11.4499975
+        ],
+        "min": [
+          2933.536702,
+          0,
+          8.5500025
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-drum-stack",
+      "id": "prop.cure-drum-stack:254",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2929,
+        0,
+        3
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2929.64,
+          2.12,
+          3.535
+        ],
+        "min": [
+          2928.36,
+          0,
+          2.465
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.cure-drum-stack",
+      "id": "prop.cure-drum-stack:255",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        2945,
+        0,
+        3
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          2945.64,
+          2.12,
+          3.535
+        ],
+        "min": [
+          2944.36,
+          0,
+          2.465
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "veh.wreck",
+      "id": "veh.wreck:256",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3067,
+        0,
+        115
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3069.2000000476837,
+          1.8999999463558197,
+          115.89999997615814
+        ],
+        "min": [
+          3064.7999999523163,
+          0,
+          114.10000002384186
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:257",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3075,
+        0,
+        115
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3076.6396000385284,
+          1.5,
+          115.8410159945488
+        ],
+        "min": [
+          3073.3603999614716,
+          0,
+          114.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "veh.wreck",
+      "id": "veh.wreck:258",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3217,
+        0,
+        115
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3219.2000000476837,
+          1.8999999463558197,
+          115.89999997615814
+        ],
+        "min": [
+          3214.7999999523163,
+          0,
+          114.10000002384186
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:259",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3225,
+        0,
+        115
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3226.6396000385284,
+          1.5,
+          115.8410159945488
+        ],
+        "min": [
+          3223.3603999614716,
+          0,
+          114.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "veh.wreck",
+      "id": "veh.wreck:260",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3467,
+        0,
+        115
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3469.2000000476837,
+          1.8999999463558197,
+          115.89999997615814
+        ],
+        "min": [
+          3464.7999999523163,
+          0,
+          114.10000002384186
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:261",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3475,
+        0,
+        115
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3476.6396000385284,
+          1.5,
+          115.8410159945488
+        ],
+        "min": [
+          3473.3603999614716,
+          0,
+          114.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "veh.wreck",
+      "id": "veh.wreck:262",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3617,
+        0,
+        -45
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3619.2000000476837,
+          1.8999999463558197,
+          -44.10000002384186
+        ],
+        "min": [
+          3614.7999999523163,
+          0,
+          -45.89999997615814
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:263",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3625,
+        0,
+        -45
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3626.6396000385284,
+          1.5,
+          -44.1589840054512
+        ],
+        "min": [
+          3623.3603999614716,
+          0,
+          -45.8410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:264",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -89.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -88.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -89.8410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:265",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -87.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -86.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -88.3410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:266",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -86.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -85.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -86.8410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:267",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -84.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -83.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -85.3410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:268",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -83.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -82.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -83.8410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:269",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -81.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -80.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -82.3410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:270",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -80.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -79.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -80.8410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:271",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -78.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -77.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -79.3410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:272",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -77.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -76.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -77.8410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:273",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -75.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -74.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -76.3410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:274",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -74.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -73.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -74.8410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:275",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -72.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -71.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -73.3410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:276",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -71.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -70.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -71.8410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:277",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -69.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -68.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -70.3410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:278",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -68.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -67.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -68.8410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:279",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -66.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -65.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -67.3410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:280",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -65.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -64.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -65.8410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:281",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -63.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -62.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -64.3410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:282",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -62.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -61.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -62.8410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:283",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -60.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -59.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -61.3410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:284",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -59.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -58.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -59.8410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:285",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -57.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -56.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -58.3410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:286",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -56.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -55.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -56.8410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:287",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -54.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -53.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -55.3410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:288",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -53.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -52.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -53.8410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:289",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -51.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -50.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -52.3410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:290",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -50.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -49.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -50.8410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:291",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -48.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -47.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -49.3410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:292",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -47.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -46.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -47.8410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:293",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -45.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -44.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -46.3410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:294",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -44.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -43.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -44.8410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:295",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -42.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -41.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -43.3410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:296",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -41.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -40.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -41.8410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:297",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -39.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -38.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -40.3410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:298",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -38.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -37.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -38.8410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:299",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -36.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -35.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -37.3410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:300",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -35.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -34.1589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -35.8410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:301",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -33.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -32.6589840054512
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -34.3410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:302",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -32.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -31.158984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -32.8410159945488
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:303",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -30.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -29.658984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -31.341015994548798
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:304",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -29.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -28.158984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -29.841015994548798
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:305",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -27.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -26.658984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -28.341015994548798
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:306",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -26.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -25.158984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -26.841015994548798
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:307",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -24.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -23.658984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -25.341015994548798
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:308",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -23.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -22.158984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -23.841015994548798
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:309",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -21.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -20.658984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -22.341015994548798
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:310",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -20.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -19.158984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -20.841015994548798
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:311",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -18.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -17.658984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -19.341015994548798
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:312",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -17.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -16.158984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -17.841015994548798
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:313",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -15.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -14.658984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -16.341015994548798
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:314",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -14.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -13.158984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -14.841015994548798
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:315",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -12.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -11.658984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -13.341015994548798
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:316",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -11.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -10.158984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -11.841015994548798
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:317",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -9.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -8.658984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -10.341015994548798
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:318",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -8.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -7.158984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -8.841015994548798
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:319",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -6.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -5.658984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -7.341015994548798
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:320",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -5.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -4.158984005451202
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -5.841015994548798
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:321",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -3.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -2.6589840054512024
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -4.341015994548798
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:322",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -2.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          -1.1589840054512024
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -2.8410159945487976
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:323",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        -0.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          0.3410159945487976
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          -1.3410159945487976
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:324",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        1.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          1.8410159945487976
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          0.1589840054512024
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:325",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        2.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          3.3410159945487976
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          1.6589840054512024
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:326",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        4.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          4.841015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          3.1589840054512024
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:327",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        5.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          6.341015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          4.658984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:328",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        7.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          7.841015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          6.158984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:329",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        8.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          9.341015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          7.658984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:330",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        10.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          10.841015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          9.158984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:331",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        11.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          12.341015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          10.658984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:332",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        13.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          13.841015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          12.158984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:333",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        14.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          15.341015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          13.658984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:334",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        16.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          16.841015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          15.158984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:335",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        17.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          18.341015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          16.658984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:336",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        19.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          19.841015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          18.158984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:337",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        20.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          21.341015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          19.658984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:338",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        22.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          22.841015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          21.158984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:339",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        23.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          24.341015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          22.658984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:340",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        25.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          25.841015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          24.158984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:341",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        26.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          27.341015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          25.658984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:342",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        28.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          28.841015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          27.158984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:343",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        29.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          30.341015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          28.658984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:344",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        31.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          31.841015994548798
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          30.158984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:345",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        32.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          33.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          31.658984005451202
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:346",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        34.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          34.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          33.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:347",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        35.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          36.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          34.6589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:348",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        37.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          37.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          36.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:349",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        38.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          39.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          37.6589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:350",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        40.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          40.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          39.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:351",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        41.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          42.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          40.6589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:352",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        43.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          43.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          42.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:353",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        44.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          45.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          43.6589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:354",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        46.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          46.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          45.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:355",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        47.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          48.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          46.6589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:356",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        49.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          49.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          48.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:357",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        50.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          51.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          49.6589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:358",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        52.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          52.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          51.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:359",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        53.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          54.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          52.6589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:360",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        55.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          55.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          54.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:361",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        56.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          57.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          55.6589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:362",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        58.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          58.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          57.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:363",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        59.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          60.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          58.6589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:364",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        61.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          61.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          60.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:365",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        62.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          63.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          61.6589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:366",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        64.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          64.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          63.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:367",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        65.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          66.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          64.6589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:368",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        67.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          67.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          66.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:369",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        68.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          69.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          67.6589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:370",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        70.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          70.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          69.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:371",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        71.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          72.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          70.6589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:372",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        73.0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          73.8410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          72.1589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "decay.makeshift-barricade",
+      "id": "decay.makeshift-barricade:373",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        74.5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.6396000385284,
+          1.5,
+          75.3410159945488
+        ],
+        "min": [
+          3315.3603999614716,
+          0,
+          73.6589840054512
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.jersey-barrier",
+      "id": "prop.jersey-barrier:374",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        83
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.5,
+          0.949999988079071,
+          83.36000001430511
+        ],
+        "min": [
+          3315.5,
+          0,
+          82.63999998569489
+        ]
+      },
+      "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.jersey-barrier",
+      "id": "prop.jersey-barrier:375",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3317,
+        0,
+        107
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3318.5,
+          0.949999988079071,
+          107.36000001430511
+        ],
+        "min": [
+          3315.5,
+          0,
+          106.63999998569489
+        ]
+      },
+      "yaw": 0
     }
   ],
   "roads": {
@@ -10204,6 +19096,182 @@
         "start": "route-21"
       },
       {
+        "end": "route-23",
+        "id": "route-22",
+        "laneWidth": 8,
+        "points": [
+          [
+            2467,
+            -5
+          ],
+          [
+            2527,
+            -5
+          ]
+        ],
+        "start": "route-22"
+      },
+      {
+        "end": "route-24",
+        "id": "route-23",
+        "laneWidth": 8,
+        "points": [
+          [
+            2527,
+            -5
+          ],
+          [
+            2527,
+            45
+          ]
+        ],
+        "start": "route-23"
+      },
+      {
+        "end": "route-25",
+        "id": "route-24",
+        "laneWidth": 8,
+        "points": [
+          [
+            2527,
+            45
+          ],
+          [
+            2807,
+            45
+          ]
+        ],
+        "start": "route-24"
+      },
+      {
+        "end": "route-26",
+        "id": "route-25",
+        "laneWidth": 8,
+        "points": [
+          [
+            2807,
+            45
+          ],
+          [
+            2807,
+            -5
+          ]
+        ],
+        "start": "route-25"
+      },
+      {
+        "end": "route-27",
+        "id": "route-26",
+        "laneWidth": 8,
+        "points": [
+          [
+            2807,
+            -5
+          ],
+          [
+            2917,
+            -5
+          ]
+        ],
+        "start": "route-26"
+      },
+      {
+        "end": "route-28",
+        "id": "route-27",
+        "laneWidth": 8,
+        "points": [
+          [
+            2917,
+            -5
+          ],
+          [
+            2977,
+            -5
+          ]
+        ],
+        "start": "route-27"
+      },
+      {
+        "end": "route-29",
+        "id": "route-28",
+        "laneWidth": 8,
+        "points": [
+          [
+            2977,
+            -5
+          ],
+          [
+            2977,
+            95
+          ]
+        ],
+        "start": "route-28"
+      },
+      {
+        "end": "route-30",
+        "id": "route-29",
+        "laneWidth": 8,
+        "points": [
+          [
+            2977,
+            95
+          ],
+          [
+            3317,
+            95
+          ]
+        ],
+        "start": "route-29"
+      },
+      {
+        "end": "route-31",
+        "id": "route-30",
+        "laneWidth": 8,
+        "points": [
+          [
+            3317,
+            95
+          ],
+          [
+            3577,
+            95
+          ]
+        ],
+        "start": "route-30"
+      },
+      {
+        "end": "route-32",
+        "id": "route-31",
+        "laneWidth": 8,
+        "points": [
+          [
+            3577,
+            95
+          ],
+          [
+            3577,
+            -25
+          ]
+        ],
+        "start": "route-31"
+      },
+      {
+        "end": "route-33",
+        "id": "route-32",
+        "laneWidth": 8,
+        "points": [
+          [
+            3577,
+            -25
+          ],
+          [
+            3697,
+            -25
+          ]
+        ],
+        "start": "route-32"
+      },
+      {
         "end": "industrial-service-1",
         "id": "industrial-service-0",
         "laneWidth": 6,
@@ -10495,6 +19563,83 @@
         ]
       },
       {
+        "id": "route-23",
+        "point": [
+          2527,
+          -5
+        ]
+      },
+      {
+        "id": "route-24",
+        "point": [
+          2527,
+          45
+        ]
+      },
+      {
+        "id": "route-25",
+        "point": [
+          2807,
+          45
+        ]
+      },
+      {
+        "id": "route-26",
+        "point": [
+          2807,
+          -5
+        ]
+      },
+      {
+        "id": "route-27",
+        "point": [
+          2917,
+          -5
+        ]
+      },
+      {
+        "id": "route-28",
+        "point": [
+          2977,
+          -5
+        ]
+      },
+      {
+        "id": "route-29",
+        "point": [
+          2977,
+          95
+        ]
+      },
+      {
+        "id": "route-30",
+        "point": [
+          3317,
+          95
+        ]
+      },
+      {
+        "id": "route-31",
+        "point": [
+          3577,
+          95
+        ]
+      },
+      {
+        "id": "route-32",
+        "point": [
+          3577,
+          -25
+        ]
+      },
+      {
+        "id": "route-33",
+        "point": [
+          3697,
+          -25
+        ]
+      },
+      {
         "id": "industrial-service-1",
         "point": [
           1297,
@@ -10547,11 +19692,11 @@
           -300
         ],
         [
-          2500,
+          3800,
           -300
         ],
         [
-          2500,
+          3800,
           300
         ],
         [
@@ -11141,6 +20286,292 @@
       "height": 0.002,
       "polygon": [
         [
+          2467.0,
+          -1.0
+        ],
+        [
+          2467.0,
+          -9.0
+        ],
+        [
+          2527.0,
+          -9.0
+        ],
+        [
+          2527.0,
+          -1.0
+        ],
+        [
+          2467.0,
+          -1.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          2523.0,
+          -5.0
+        ],
+        [
+          2531.0,
+          -5.0
+        ],
+        [
+          2531.0,
+          45.0
+        ],
+        [
+          2523.0,
+          45.0
+        ],
+        [
+          2523.0,
+          -5.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          2527.0,
+          49.0
+        ],
+        [
+          2527.0,
+          41.0
+        ],
+        [
+          2807.0,
+          41.0
+        ],
+        [
+          2807.0,
+          49.0
+        ],
+        [
+          2527.0,
+          49.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          2811.0,
+          45.0
+        ],
+        [
+          2803.0,
+          45.0
+        ],
+        [
+          2803.0,
+          -5.0
+        ],
+        [
+          2811.0,
+          -5.0
+        ],
+        [
+          2811.0,
+          45.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          2807.0,
+          -1.0
+        ],
+        [
+          2807.0,
+          -9.0
+        ],
+        [
+          2917.0,
+          -9.0
+        ],
+        [
+          2917.0,
+          -1.0
+        ],
+        [
+          2807.0,
+          -1.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          2917.0,
+          -1.0
+        ],
+        [
+          2917.0,
+          -9.0
+        ],
+        [
+          2977.0,
+          -9.0
+        ],
+        [
+          2977.0,
+          -1.0
+        ],
+        [
+          2917.0,
+          -1.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          2973.0,
+          -5.0
+        ],
+        [
+          2981.0,
+          -5.0
+        ],
+        [
+          2981.0,
+          95.0
+        ],
+        [
+          2973.0,
+          95.0
+        ],
+        [
+          2973.0,
+          -5.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          2977.0,
+          99.0
+        ],
+        [
+          2977.0,
+          91.0
+        ],
+        [
+          3317.0,
+          91.0
+        ],
+        [
+          3317.0,
+          99.0
+        ],
+        [
+          2977.0,
+          99.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          3317.0,
+          99.0
+        ],
+        [
+          3317.0,
+          91.0
+        ],
+        [
+          3577.0,
+          91.0
+        ],
+        [
+          3577.0,
+          99.0
+        ],
+        [
+          3317.0,
+          99.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          3581.0,
+          95.0
+        ],
+        [
+          3573.0,
+          95.0
+        ],
+        [
+          3573.0,
+          -25.0
+        ],
+        [
+          3581.0,
+          -25.0
+        ],
+        [
+          3581.0,
+          95.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          3577.0,
+          -21.0
+        ],
+        [
+          3577.0,
+          -29.0
+        ],
+        [
+          3697.0,
+          -29.0
+        ],
+        [
+          3697.0,
+          -21.0
+        ],
+        [
+          3577.0,
+          -21.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
           1300.0,
           25.0
         ],
@@ -11508,6 +20939,110 @@
       "size": 100
     },
     {
+      "id": "cure-20--1",
+      "origin": [
+        2500,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-21--1",
+      "origin": [
+        2600,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-22--1",
+      "origin": [
+        2700,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-23--1",
+      "origin": [
+        2800,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-24--1",
+      "origin": [
+        2900,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-25--1",
+      "origin": [
+        3000,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-26--1",
+      "origin": [
+        3100,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-27--1",
+      "origin": [
+        3200,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-28--1",
+      "origin": [
+        3300,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-29--1",
+      "origin": [
+        3400,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-30--1",
+      "origin": [
+        3500,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-31--1",
+      "origin": [
+        3600,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-32--1",
+      "origin": [
+        3700,
+        -300
+      ],
+      "size": 100
+    },
+    {
       "id": "cure-0-0",
       "origin": [
         500,
@@ -11663,6 +21198,110 @@
       "id": "cure-19-0",
       "origin": [
         2400,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-20-0",
+      "origin": [
+        2500,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-21-0",
+      "origin": [
+        2600,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-22-0",
+      "origin": [
+        2700,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-23-0",
+      "origin": [
+        2800,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-24-0",
+      "origin": [
+        2900,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-25-0",
+      "origin": [
+        3000,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-26-0",
+      "origin": [
+        3100,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-27-0",
+      "origin": [
+        3200,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-28-0",
+      "origin": [
+        3300,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-29-0",
+      "origin": [
+        3400,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-30-0",
+      "origin": [
+        3500,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-31-0",
+      "origin": [
+        3600,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-32-0",
+      "origin": [
+        3700,
         -200
       ],
       "size": 100
@@ -11828,6 +21467,110 @@
       "size": 100
     },
     {
+      "id": "cure-20-1",
+      "origin": [
+        2500,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-21-1",
+      "origin": [
+        2600,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-22-1",
+      "origin": [
+        2700,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-23-1",
+      "origin": [
+        2800,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-24-1",
+      "origin": [
+        2900,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-25-1",
+      "origin": [
+        3000,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-26-1",
+      "origin": [
+        3100,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-27-1",
+      "origin": [
+        3200,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-28-1",
+      "origin": [
+        3300,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-29-1",
+      "origin": [
+        3400,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-30-1",
+      "origin": [
+        3500,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-31-1",
+      "origin": [
+        3600,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-32-1",
+      "origin": [
+        3700,
+        -100
+      ],
+      "size": 100
+    },
+    {
       "id": "cure-0-2",
       "origin": [
         500,
@@ -11983,6 +21726,110 @@
       "id": "cure-19-2",
       "origin": [
         2400,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-20-2",
+      "origin": [
+        2500,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-21-2",
+      "origin": [
+        2600,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-22-2",
+      "origin": [
+        2700,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-23-2",
+      "origin": [
+        2800,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-24-2",
+      "origin": [
+        2900,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-25-2",
+      "origin": [
+        3000,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-26-2",
+      "origin": [
+        3100,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-27-2",
+      "origin": [
+        3200,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-28-2",
+      "origin": [
+        3300,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-29-2",
+      "origin": [
+        3400,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-30-2",
+      "origin": [
+        3500,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-31-2",
+      "origin": [
+        3600,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-32-2",
+      "origin": [
+        3700,
         0
       ],
       "size": 100
@@ -12148,6 +21995,110 @@
       "size": 100
     },
     {
+      "id": "cure-20-3",
+      "origin": [
+        2500,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-21-3",
+      "origin": [
+        2600,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-22-3",
+      "origin": [
+        2700,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-23-3",
+      "origin": [
+        2800,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-24-3",
+      "origin": [
+        2900,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-25-3",
+      "origin": [
+        3000,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-26-3",
+      "origin": [
+        3100,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-27-3",
+      "origin": [
+        3200,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-28-3",
+      "origin": [
+        3300,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-29-3",
+      "origin": [
+        3400,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-30-3",
+      "origin": [
+        3500,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-31-3",
+      "origin": [
+        3600,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-32-3",
+      "origin": [
+        3700,
+        100
+      ],
+      "size": 100
+    },
+    {
       "id": "cure-0-4",
       "origin": [
         500,
@@ -12306,9 +22257,113 @@
         200
       ],
       "size": 100
+    },
+    {
+      "id": "cure-20-4",
+      "origin": [
+        2500,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-21-4",
+      "origin": [
+        2600,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-22-4",
+      "origin": [
+        2700,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-23-4",
+      "origin": [
+        2800,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-24-4",
+      "origin": [
+        2900,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-25-4",
+      "origin": [
+        3000,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-26-4",
+      "origin": [
+        3100,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-27-4",
+      "origin": [
+        3200,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-28-4",
+      "origin": [
+        3300,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-29-4",
+      "origin": [
+        3400,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-30-4",
+      "origin": [
+        3500,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-31-4",
+      "origin": [
+        3600,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-32-4",
+      "origin": [
+        3700,
+        200
+      ],
+      "size": 100
     }
   ],
-  "title": "The Cure \u2014 crash, residential, industrial and military",
+  "title": "The Cure \u2014 crash through research and destroyed corridor",
   "version": 1,
   "walkable": {
     "cellSize": 1,

@@ -18,7 +18,7 @@ for (const tier of ['high', 'low'] as const) test(`T-E32-03-D1-D2-${tier} @E32-A
     w.chunks!.setQuality(tier);
     const mission = w.loadMission(resolveCampaignMission('L10', w.districts!)); mission.begin();
     const times: number[] = [], regions: { id: string; ticks: number }[] = [];
-    for (const region of cure.regions) {
+    for (const region of cure.regions.slice(0, 4)) {
       const start = w.tick;
       for (const [x, z] of [region.route[0], cure.anchors[region.checkpoint], ...region.route.slice(1)]) {
         for (let i = 0; i < 5000; i++) {

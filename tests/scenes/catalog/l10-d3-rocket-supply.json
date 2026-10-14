@@ -1,0 +1,54 @@
+{
+  "name": "l10-d3-rocket-supply",
+  "note": "Rocket visual fixture at the named supply/pickup anchor; S1 entitlement transaction is exercised by the route sim. Review rocket silhouette, clear lane and supported feet at both tiers/zooms.",
+  "seed": 32,
+  "ground": "district",
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        2897,
+        -45
+      ],
+      [
+        2977,
+        35
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        2935,
+        -5
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      2935,
+      -5
+    ],
+    "zoom": 1
+  },
+  "frames": 1,
+  "expect": {
+    "consoleErrors": 0
+  },
+  "time": "L9-crossing",
+  "script": [
+    {
+      "frame": 0,
+      "effect": {
+        "weaponPickup": "weapon.rocket-launcher",
+        "at": [
+          2937,
+          -5
+        ]
+      }
+    }
+  ]
+}
