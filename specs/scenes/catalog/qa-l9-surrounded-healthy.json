@@ -1,7 +1,7 @@
 {
  "extends": "../../../tests/scenes/l9-apc/surrounded.json",
  "name": "qa-l9-surrounded-healthy",
- "note": "L9-Q1 surrounded (healthy half): courier inside the stopped APC, four runners attack the hull from the corners. Look for: healthy APC: runners stay outside the hull, no clipping, hull damage reads, courier seated cleanly.",
+ "note": "L9-Q1 surrounded (healthy half): courier inside the stopped APC on the L9 dry ground (the crossing's own infected brain, not the L1 sight-only one), four runners attack the hull from the corners. Look for: healthy APC: runners stay outside the hull, no clipping, hull damage reads, courier seated cleanly.",
  "vehicles": [
   {
    "id": "apc",
@@ -13,5 +13,31 @@
    "health": 1000,
    "floor": true
   }
- ]
+ ],
+ "ground": "district",
+ "time": "L9-crossing",
+ "dof": false,
+ "layout": {
+  "district": "D-CROSSING",
+  "bbox": [
+   [
+    -40,
+    -40
+   ],
+   [
+    40,
+    40
+   ]
+  ]
+ },
+ "frames": 300,
+ "sheet": 19,
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000,
+  "hullWindupsMin": 12,
+  "vehicleHealthMax": 900
+ }
 }

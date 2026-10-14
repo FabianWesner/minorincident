@@ -1,7 +1,7 @@
 {
  "extends": "../../../tests/scenes/l9-apc/surrounded.json",
  "name": "qa-l9-surrounded-floor",
- "note": "L9-Q1 surrounded (floor half): courier inside the stopped APC, four runners attack the hull from the corners. Look for: 0 HP floor APC: hull intact with maximum dents and smoke, attackers do not push it through the floor, no wreck swap.",
+ "note": "L9-Q1 surrounded (floor half): courier inside the stopped APC on the L9 dry ground (the crossing's own infected brain, not the L1 sight-only one), four runners attack the hull from the corners. Look for: 0 HP floor APC: hull intact with maximum dents and smoke, attackers do not push it through the floor, no wreck swap.",
  "vehicles": [
   {
    "id": "apc",
@@ -13,5 +13,30 @@
    "health": 0,
    "floor": true
   }
- ]
+ ],
+ "ground": "district",
+ "time": "L9-crossing",
+ "dof": false,
+ "layout": {
+  "district": "D-CROSSING",
+  "bbox": [
+   [
+    -40,
+    -40
+   ],
+   [
+    40,
+    40
+   ]
+  ]
+ },
+ "frames": 300,
+ "sheet": 19,
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000,
+  "hullWindupsMin": 12
+ }
 }
