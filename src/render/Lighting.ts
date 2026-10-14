@@ -81,6 +81,9 @@ export class Lighting {
   /** Survivor-only fill at night (preset `aura`), warm lantern white. */
   readonly heroFill = uniform(0);
   readonly heroFillColor = uniform(new Color('#ffe9cf'));
+  /** Night route read (preset `roadLift`): moon-pale sheen added to asphalt, independent of the moon's shadow term. */
+  readonly roadLift = uniform(0);
+  readonly roadLiftColor = uniform(new Color('#a9b6d6'));
   /** Weight of the sun/moon shadow map on light-field pools (hero shadows at night). */
   readonly fieldShadow = uniform(0);
   /** The preset shadow colour at full brightness: the hue light-field pools keep inside hero shadows. */
@@ -112,7 +115,7 @@ export class Lighting {
     this.fallbackEnvironment.needsUpdate = true;
     if (renderer) this.environment = sharedEnvironment ?? new Environment(renderer);
     // These values describe the entire view; they are identical for every world draw.
-    for (const node of [this.direction, this.color, this.intensity, this.worldPaletteEnabled, this.shadow, this.skyAmbient, this.groundAmbient, this.fogColor, this.fogColorA, this.fogCenter, this.fogNear, this.fogFar, this.hero, this.rim, this.rimColor, this.heroFill, this.heroFillColor, this.fieldShadow, this.shadowHue]) node.setGroup(renderGroup);
+    for (const node of [this.direction, this.color, this.intensity, this.worldPaletteEnabled, this.shadow, this.skyAmbient, this.groundAmbient, this.fogColor, this.fogColorA, this.fogCenter, this.fogNear, this.fogFar, this.hero, this.rim, this.rimColor, this.roadLift, this.roadLiftColor, this.heroFill, this.heroFillColor, this.fieldShadow, this.shadowHue]) node.setGroup(renderGroup);
     this.bounce = look.nodes.bounce;
     this.coreShadowEdgeHigh = look.nodes.coreLightEdge; this.coreShadowEdgeLow = look.nodes.coreShadowEdge;
     this.fogRadialStart = look.nodes.fogRatioA; this.fogRadialEnd = look.nodes.fogRatioB;
@@ -139,7 +142,7 @@ export class Lighting {
     this.worldPaletteEnabled.value = Number(name === 'L1');
     this.preset = name; const p = timeOfDay[name];
     if (this.environment) this.environmentNode.value = this.environment.get(name).texture;
-    this.field.strength.value = p.practical ?? 0; this.rim.value = p.rim ?? 0; this.heroFill.value = (p.aura ?? 0) * 3.2;
+    this.field.strength.value = p.practical ?? 0; this.rim.value = p.rim ?? 0; this.roadLift.value = p.roadLift ?? 0; this.heroFill.value = (p.aura ?? 0) * 3.2;
     this.direction.value.setFromSphericalCoords(1, p.polar, p.azimuth);
     this.color.value.set(p.sun); this.intensity.value = p.intensity; this.shadow.value.set(p.shadow);
     this.sun.color.set(p.sun); this.sun.intensity = p.intensity;
