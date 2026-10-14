@@ -668,14 +668,15 @@ export class LevelFourWar {
   private lineBreak(cause: 'time' | 'beats' | 'forced'): void {
     const { world } = this.mission, s = this.s, tick = world.tick;
     if (s.phase !== 'war') return;
-    s.phase = 'collapse'; s.lineBreakAt = tick; s.lineCause = cause; s.markerAt = tick + ticks(l4.collapse.markerAfterS); s.collapseWaveAt = tick + ticks(4);
+    s.phase = 'collapse'; s.lineBreakAt = tick; s.lineCause = cause; s.markerAt = tick; s.collapseWaveAt = tick + ticks(4);
     s.killsAtBreak = s.kills.player + s.kills.soldiers + s.kills.armedCivilians + s.kills.unarmedCivilians + s.kills.heli + s.kills.tank + s.kills.other;
     s.infectedAtBreak = world.infected!.active.filter(e => e.health.current > 0).length; s.soldiersAtBreak = this.liveSoldiers().length;
     world.events.emit({ type: 'l4.lineBreaks', tick, cause });
     // The gate opens a moment later (the fuel-truck chain lands on this tick; l4-po-round perf: the break frame peaked at 54 ms).
     this.gateOpenAt = tick + ticks(.4);
     this.escapeWindow();
-    this.mission.radio('L4.air'); this.spectacle.withdrawHeli(); this.spectacle.detonateFuelTruck(); this.spectacle.fires();
+    this.spectacle.withdrawHeli(); this.spectacle.detonateFuelTruck(); this.spectacle.fires();
+    this.mission.radio('L4.fallback');
     s.director.burnAt = tick + ticks(1); this.populateCollapse(); s.pockets = l4Pockets.map((_, i) => i);
     if (!this.mission.state.states['line-broken']) this.mission.setState('line-broken', true);
     const [x, z] = l4.director.escape.checkpoint;
@@ -872,8 +873,6 @@ export class LevelFourWar {
         if (this.gateOpenAt && tick >= this.gateOpenAt) { this.gateOpenAt = 0; this.openGate(); }
         if (s.director.burnAt && tick >= s.director.burnAt) this.burnCars();
         if (tick % 20 === 0 && this.gapOpen()) this.clearGap();
-        // The hiding place is only a soft marker for the first seconds: the courier finds her own way first.
-        if (tick < s.markerAt && this.mission.state.marker === 'l4-cellar-door') this.mission.state.marker = null;
       }
       if (s.phase === 'cellar') this.cellarUpdate();
       // L4 infected hit like L3's (section 5.1 tuning; PO: a sensible player finishes with few deaths).
