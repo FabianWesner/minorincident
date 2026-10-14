@@ -76,12 +76,10 @@ export const l4 = {
     fromS: 0, waveEveryS: 11,
     /** Infected per wave per street edge, the first waves small; `waveScale` multiplies them (PO 2026-10-12 design: outside infected x3-5, peak alive capped by `caps`). */
     waveSize: [6, 9, 12, 14, 14, 14, 14, 14, 14, 14] as readonly number[], edgesPerWave: 3, waveScale: 3, pendMax: 160,
-    /** Replenishment: downed infected settle into drawn bodies when the alive count needs room, keeping this many slots free so bites still turn. */
+    /** Keep slots free for bites; downed infected retain their own slots until they recover. */
     headroom: 12,
-    /** Drawn bodies kept at most (the oldest out of view are cleared first): replenishment would otherwise leave 800+ on the plaza. */
-    corpseMax: { high: 160, low: 70 },
-    /** Corpse heaps (l4-collapse-2): at most `max` drawn bodies per `cellM` square (a camping courier piles them up); the oldest go first, also in view. */
-    heap: { cellM: 4, max: { high: 7, low: 5 } },
+    /** Corpse-pile telemetry cells; bodies persist for the whole level (PO 10-14). */
+    heap: { cellM: 4 },
     /** Seconds the streets keep emerging after the line break (collapse). */
     collapseWaveEveryS: 9, collapseWaveSize: 3, collapseCapInfected: 80,
     caps: { infected: { high: 120, low: 60 }, characters: { high: 190, low: 95 } },

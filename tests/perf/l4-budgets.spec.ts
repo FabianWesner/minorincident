@@ -37,7 +37,10 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     await step(`${l4}.phase === 'plaza'`, 800); await step(`${l4}.turnDueAt > 0 && ${l4}.turnDueAt - window.__SS__.getState().tick < 120`, 900);
     const turn = await record(`${l4}.turnAt > 0`, 2_000);
     // The war: from the tank's entry; the peak: HMG and rifles firing, the tank in place, the helicopter orbiting, the waves arriving.
-    await step(`${l4}.tankPhase === 'hold' && ${l4}.heliPhase === 'orbit' && ${l4}.alphaIds.length >= 3`, 900);
+    // Capture the requested surviving-army state after an actual loss, rather than assuming
+    // that a timed Alpha entrance already killed a soldier. Recoverable bodies keep their slots.
+    const armyLostSomeone = `window.__SS__.query({}).filter(e => e.civilian?.ally?.role === 'soldier' && e.health.current > 0 && e.kind !== 'infected').length < ${l4}.soldiersAtTurn`;
+    await step(`${l4}.tankPhase === 'hold' && ${l4}.heliPhase === 'orbit' && ${l4}.alphaIds.length >= 3 && ${armyLostSomeone}`, 900);
     // Populate the acceptance peak through the ordinary spawn APIs. The natural route often
     // kills the early waves before tank entry, so it cannot prove the specified 80/40 stress case.
     await page.evaluate(tier => {
