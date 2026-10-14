@@ -86,6 +86,7 @@ export class SceneSession {
       await this.page.waitForFunction(() => !!window.__SCENE__, null, { timeout: 120_000 });
       await this.page.evaluate(async () => { await window.__SS__!.ready; window.__SS__!.pause(); });
     }
+    await this.page.evaluate(on => { document.documentElement.toggleAttribute('data-scene-hud', on); }, !!spec.hud);
     return this.page.evaluate(s => window.__SCENE__!.load(s), spec);
   }
   async step(frames: number) { return this.page.evaluate(n => window.__SCENE__!.step(n), frames); }
@@ -177,6 +178,9 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   add('undrawnFramesMax', Math.max(0, ...Object.values(metrics.actors).map(a => a.missedInViewFrames)), e.undrawnFramesMax);
   add('megaCruiseErrorMax', metrics.megaAlpha?.cruiseError ?? Infinity, e.megaCruiseErrorMax);
   add('megaStepMaxM', metrics.megaAlpha?.stepMaxM ?? Infinity, e.megaStepMaxM);
+  const atLeast = (name: string, value: number, limit: number | undefined) => { if (limit !== undefined) checks.push({ name, pass: value >= limit, value, limit }); };
+  atLeast('minigunRoundsMin', metrics.minigun?.rounds ?? 0, e.minigunRoundsMin); atLeast('minigunHeatPeakMin', metrics.minigun?.heatPeak ?? 0, e.minigunHeatPeakMin);
+  atLeast('minigunLockedFramesMin', metrics.minigun?.lockedFrames ?? 0, e.minigunLockedFramesMin); atLeast('minigunMountedFramesMin', metrics.minigun?.mountedFrames ?? 0, e.minigunMountedFramesMin);
   if (e.groundingMaxCm !== undefined) add('groundingMaxCm', Math.max(metrics.grounding?.corpseOffMaxCm ?? Infinity, metrics.grounding?.pickupOffMaxCm ?? Infinity), e.groundingMaxCm);
   if (e.groundingCorpsesMin !== undefined) checks.push({ name: 'groundingCorpsesMin', pass: (metrics.grounding?.corpses ?? 0) >= e.groundingCorpsesMin, value: metrics.grounding?.corpses ?? 0, limit: e.groundingCorpsesMin });
   if (e.groundingPickupsMin !== undefined) checks.push({ name: 'groundingPickupsMin', pass: (metrics.grounding?.pickups ?? 0) >= e.groundingPickupsMin, value: metrics.grounding?.pickups ?? 0, limit: e.groundingPickupsMin });

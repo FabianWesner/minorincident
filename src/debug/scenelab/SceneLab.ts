@@ -61,7 +61,8 @@ type Plan =
   | { type: 'mount'; bike: string; at: number }
   | { type: 'click'; entity: number; at: number }
   | { type: 'drive'; throttle: number; steer: number; until: number }
-  | { type: 'interact' };
+  | { type: 'interact' }
+  | { type: 'gun'; at: Point | string | null; until: number };
 interface LabActor { id: string; kind: ActorSpec['kind']; entity: number; spec: ActorSpec; plan: Plan | null; track: MotionFrame[]; lod: Record<string, number>; drawn: number; /** Frames the living actor was inside the camera frustum, and how many of those it was not drawn. */ inView: number; missed: number; sole?: number;
   /** First drawn frame and sim position; for `emerge` residents also how far past the door threshold (m, + = outside). */
   first?: { frame: number; at: [number, number]; outM?: number };
@@ -152,7 +153,7 @@ export class SceneLab {
       if (spec.layout.district === 'D-FAIR') source = (spec.layout.level === 'L7' ? levelSevenLayouts : spec.layout.level === 'L5' ? levelFiveLayouts : levelFourLayouts)([source])[0];
     }
     this.propSinkMaxCm = 0; this.propGroundSamples = 0; this.propPenetration.clear(); this.propPenetrationSamples = 0; this.propPenetrationTick = -1;
-    this.vehicleMotion.clear(); this.pursuit.clear(); this.mega = null; this.attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1 };
+    this.vehicleMotion.clear(); this.pursuit.clear(); this.mega = null; this.gunStats = null; this.attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1 };
     this.spec = structuredClone(spec); this.companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 }; this.frame = 0; this.heldPropSamples = 0; this.heldPropClips.clear(); this.holds.clear(); this.seeThroughOpen = { frames: 0, solidRadiusMax: 0, cutLowProps: [] }; this.gunBodyHits.clear(); this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.metroClosed = 0; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0;
     const built = this.built = buildScene(spec, assets, source);
     this.game.view.labProbes().districts?.setDispersalActive(!!spec.dispersal?.active);
@@ -258,6 +259,12 @@ export class SceneLab {
       mission.begin();
       const id = mission.l9!.state.carId;
       world.vehicles!.damage(id, 1000 - spec.crossingCrash.health); this.vehicles.set('apc', id);
+    }
+    if (spec.minigun) {
+      const a = spec.minigun.at, three = a.length === 3;
+      world.installMountedGun({ x: a[0], z: three ? a[2] : a[1], y: three ? a[1] : 0, yaw: spec.minigun.yaw ?? 0 });
+      this.gunStats = { rounds: 0, heatPeak: 0, lockedFrames: 0, mountedFrames: 0, firstRoundFrame: -1, dismountTicks: [] };
+      world.events.on('combat.attack', ev => { if (ev.type === 'combat.attack' && ev.actionId === 'weapon.rotary-minigun' && this.gunStats) { this.gunStats.rounds++; if (this.gunStats.firstRoundFrame < 0) this.gunStats.firstRoundFrame = this.frame; } });
     }
     if (spec.megaAlpha) {
       const m = spec.megaAlpha, box = m.resident;
@@ -433,6 +440,8 @@ export class SceneLab {
       else if ('dismount' in a) actor.plan = { type: 'mount', bike: '', at: this.frame };
       else if ('drive' in a) { this.game.input.scheme = 'keyboard'; actor.plan = { type: 'drive', throttle: a.drive.throttle, steer: a.drive.steer ?? 0, until: this.frame + ticks(a.drive.seconds ?? 1) }; }
       else if ('interact' in a) actor.plan = { type: 'interact' };
+      else if ('mountGun' in a || 'dismountGun' in a) actor.plan = { type: 'interact' };
+      else if ('fireGun' in a) actor.plan = { type: 'gun', at: a.fireGun.at ?? null, until: this.frame + ticks(a.fireGun.seconds ?? 2) };
       else if ('hit' in a) world.player!.damage(a.hit.amount ?? 5, world.tick);
       return;
     }
@@ -700,6 +709,14 @@ export class SceneLab {
     } else if (plan?.type === 'drive') {
       if (this.frame >= plan.until) { courier.plan = null; frame.brake = true; }
       else frame.drive = { throttle: plan.throttle, steer: plan.steer };
+    } else if (plan?.type === 'gun') {
+      if (this.frame >= plan.until) courier.plan = null;
+      else {
+        const gun = world.mountedGun, target = typeof plan.at === 'string' ? this.actors.get(plan.at) : undefined;
+        const to = target ? world.entities.get(target.entity)!.transform : plan.at && typeof plan.at !== 'string' ? toPoint(plan.at) : null;
+        if (to && gun) { const dx = to.x - gun.placement.x, dz = to.z - gun.placement.z, d = Math.hypot(dx, dz) || 1; frame.aim = { x: dx / d, z: dz / d }; frame.aimSource = 'pointer'; }
+        frame.left = { down: false, held: true, up: false };
+      }
     } else if (plan?.type === 'interact') {
       frame.interact = true; courier.plan = null;
     } else if (plan?.type === 'mount') {
@@ -830,6 +847,16 @@ export class SceneLab {
   }
   /** E32-AC10 Mega Alpha pursuit probe: speed in detailed mode, largest resident step (no teleport), modes, distance every 0.5 s. */
   private mega: { last: { x: number; z: number; mode: string } | null; speeds: number[]; stepMaxM: number; stepFrame: number; modes: Record<string, number>; samples: { frame: number; d: number; mode: string; band: string | null }[]; stuckLevelMax: number; distanceMinM: number } | null = null;
+  /** L10-S6 mounted minigun probe (`metrics.minigun`). */
+  private gunStats: { rounds: number; heatPeak: number; lockedFrames: number; mountedFrames: number; firstRoundFrame: number; dismountTicks: number[] } | null = null;
+  private sampleGun(): void {
+    const g = this.world.mountedGun, s = this.gunStats; if (!g || !s) return;
+    s.heatPeak = Math.max(s.heatPeak, g.heat); if (g.locked) s.lockedFrames++; if (g.mounted) s.mountedFrames++;
+  }
+  private gunReport() {
+    const g = this.world.mountedGun, s = this.gunStats; if (!g || !s) return null;
+    return { ...s, heatPeak: +s.heatPeak.toFixed(3), heat: +g.heat.toFixed(3), locked: g.locked, mounted: g.mounted, spin: +g.gun.spin.toFixed(2), selected: this.world.combat ? this.world.combat.runner.loadout.current(this.world.combat.runner.loadout.state.selectedSide).id : null };
+  }
   private sampleMega(): void {
     const m = this.mega, pursuit = this.world.megaPursuit, e = pursuit?.entity();
     if (!m || !pursuit || !e) return;
@@ -848,7 +875,7 @@ export class SceneLab {
       stepMaxM: +m.stepMaxM.toFixed(3), stepFrame: m.stepFrame, modes: m.modes, stuckLevelMax: m.stuckLevelMax, distanceMinM: +m.distanceMinM.toFixed(2), samples: m.samples, state: structuredClone(this.world.megaPursuit?.state ?? null) };
   }
   private sample(): void {
-    this.sampleMega();
+    this.sampleMega(); this.sampleGun();
     this.recordPropPenetration();
     const probes = this.game.view.labProbes(), figures = new Map(this.game.view.crowdFigures().map(f => [f.id, f]));
     const audit = probes.districts?.seeThroughAudit();
@@ -1177,7 +1204,7 @@ export class SceneLab {
       vehicles: Object.fromEntries([...this.vehicles].map(([id, entity]) => { const e = this.world.entities.get(entity); return [id, e ? { entity, position: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)], yawDeg: +(e.transform.yaw * 180 / Math.PI).toFixed(1), yawRateMaxDegS: this.vehicleMotion.get(id)?.yawRateMaxDegS ?? 0, bodyOverlaps: this.vehicleMotion.get(id)?.overlaps ?? 0, rideRemainingM: this.vehicleMotion.get(id)?.ride ? l2TruckPath.at(-1)!.s - this.vehicleMotion.get(id)!.ride!.rideS : null, health: Math.round(e.health.current), decay: e.vehicle?.decay ?? null, speed: +(e.vehicle?.speed ?? e.traffic?.speed ?? 0).toFixed(2) } : null]; })),
       grounding: this.grounding(),
       pursuit: { actors: Object.fromEntries([...this.pursuit].map(([id, p]) => [id, { stuckRunMax: p.stuckRunMax, stuckFrame: p.stuckFrame, lostNearFrames: p.lostNearFrames, overshootMaxM: +p.overshootMaxM.toFixed(2) }])), courierSwings: this.attacks.swings, courierAttacks: this.attacks.courier, firstAttackFrame: this.attacks.firstFrame, bites: this.attacks.bites, firstBiteFrame: this.attacks.firstBiteFrame },
-      megaAlpha: this.megaReport(),
+      megaAlpha: this.megaReport(), minigun: this.gunReport(),
       heldProps: { samples: this.heldPropSamples, intersections: this.heldPropClips.size, holds: Object.fromEntries(this.holds) }, seeThrough: { ...this.seeThroughOpen }, companion: { ...this.companion }, bike: { ...this.bike }, variety, actors, clicks: this.clickReport(), visibility: this.visible, lods: this.lods(), clipping: clipping?.summary ?? null,
       emergence: this.emergence ? { building: this.emergence.house, door: { x: +this.emergence.x.toFixed(3), z: +this.emergence.z.toFixed(3), nx: this.emergence.nx, nz: this.emergence.nz }, release: [+this.emergence.ox.toFixed(3), +this.emergence.oz.toFixed(3)], residents: this.emergence.ids.length, doorOpenedFrame: this.emergence.openFrame } : null,
       doors: Object.fromEntries([...this.doors].map(([id, d]) => [id, { closedFrames: d.closedFrames, firstClosedFrame: d.firstClosedFrame, inDoorwayFrames: d.inDoorwayFrames, maxOpen: +d.maxOpen.toFixed(2) }])), log: [...this.log] };
