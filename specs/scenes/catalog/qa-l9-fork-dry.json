@@ -1,0 +1,61 @@
+{
+ "name": "qa-l9-fork-dry",
+ "note": "L9-Q1 fork: healthy APC takes the dry-shortcut branch (gravel, 9 m, heading to (-250,-30)) for 60 m. Look for: wheels grounded, dry terrain readable, no pop at the fork, facing follows velocity.",
+ "seed": 31,
+ "ground": "district",
+ "time": "L9-crossing",
+ "dof": false,
+ "layout": {
+  "district": "D-CROSSING",
+  "bbox": [
+   [
+    -520,
+    -60
+   ],
+   [
+    -340,
+    40
+   ]
+  ]
+ },
+ "vehicles": [
+  {
+   "id": "apc",
+   "asset": "vehicle.military-apc",
+   "at": [
+    -470,
+    0
+   ],
+   "yaw": 0,
+   "path": [
+    [
+     -450,
+     0
+    ],
+    [
+     -390.6,
+     -9
+    ]
+   ],
+   "health": 1000,
+   "floor": true
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": "apc",
+  "zoom": 1
+ },
+ "frames": 300,
+ "sheet": 30,
+ "trace": true,
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000,
+  "wheelSinkMaxCm": 2,
+  "wheelFloatMaxCm": 2.5,
+  "wheelSpikeMaxCm": 3
+ }
+}

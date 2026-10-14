@@ -1,0 +1,17 @@
+{
+ "extends": "../../../tests/scenes/l9-apc/surrounded.json",
+ "name": "qa-l9-surrounded-healthy",
+ "note": "L9-Q1 surrounded (healthy half): courier inside the stopped APC, four runners attack the hull from the corners. Look for: healthy APC: runners stay outside the hull, no clipping, hull damage reads, courier seated cleanly.",
+ "vehicles": [
+  {
+   "id": "apc",
+   "asset": "vehicle.military-apc",
+   "at": [
+    0,
+    0
+   ],
+   "health": 1000,
+   "floor": true
+  }
+ ]
+}

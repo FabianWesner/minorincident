@@ -1,0 +1,57 @@
+{
+ "name": "qa-l9-seam-drive",
+ "note": "L9-Q1 seam: healthy APC drives 140 m across the x=0 streaming seam of the road branch. Look for: no pop, flicker or ground gap at the seam, wheels grounded, steady camera.",
+ "seed": 31,
+ "ground": "district",
+ "time": "L9-crossing",
+ "dof": false,
+ "layout": {
+  "district": "D-CROSSING",
+  "bbox": [
+   [
+    -600,
+    -400
+   ],
+   [
+    600,
+    400
+   ]
+  ]
+ },
+ "vehicles": [
+  {
+   "id": "apc",
+   "asset": "vehicle.military-apc",
+   "at": [
+    -70,
+    -330
+   ],
+   "yaw": 0,
+   "path": [
+    [
+     70,
+     -330
+    ]
+   ],
+   "health": 1000,
+   "floor": true
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": "apc",
+  "zoom": 1
+ },
+ "frames": 360,
+ "sheet": 40,
+ "trace": true,
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000,
+  "wheelSinkMaxCm": 2,
+  "wheelFloatMaxCm": 2.5,
+  "wheelSpikeMaxCm": 3
+ }
+}

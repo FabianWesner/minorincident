@@ -1,0 +1,61 @@
+{
+ "name": "qa-l9-fork-countryside",
+ "note": "L9-Q1 fork: healthy APC takes the countryside branch (gravel, 9 m, heading to (-300,240)) for 60 m. Look for: wheels grounded, gravel surface and verge readable, no pop at the fork, facing follows velocity.",
+ "seed": 31,
+ "ground": "district",
+ "time": "L9-crossing",
+ "dof": false,
+ "layout": {
+  "district": "D-CROSSING",
+  "bbox": [
+   [
+    -520,
+    -40
+   ],
+   [
+    -380,
+    120
+   ]
+  ]
+ },
+ "vehicles": [
+  {
+   "id": "apc",
+   "asset": "vehicle.military-apc",
+   "at": [
+    -470,
+    0
+   ],
+   "yaw": 0,
+   "path": [
+    [
+     -450,
+     0
+    ],
+    [
+     -418,
+     51
+    ]
+   ],
+   "health": 1000,
+   "floor": true
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": "apc",
+  "zoom": 1
+ },
+ "frames": 300,
+ "sheet": 30,
+ "trace": true,
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000,
+  "wheelSinkMaxCm": 2,
+  "wheelFloatMaxCm": 2.5,
+  "wheelSpikeMaxCm": 3
+ }
+}

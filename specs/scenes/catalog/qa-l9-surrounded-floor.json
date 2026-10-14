@@ -1,0 +1,17 @@
+{
+ "extends": "../../../tests/scenes/l9-apc/surrounded.json",
+ "name": "qa-l9-surrounded-floor",
+ "note": "L9-Q1 surrounded (floor half): courier inside the stopped APC, four runners attack the hull from the corners. Look for: 0 HP floor APC: hull intact with maximum dents and smoke, attackers do not push it through the floor, no wreck swap.",
+ "vehicles": [
+  {
+   "id": "apc",
+   "asset": "vehicle.military-apc",
+   "at": [
+    0,
+    0
+   ],
+   "health": 0,
+   "floor": true
+  }
+ ]
+}

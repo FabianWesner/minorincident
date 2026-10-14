@@ -1,0 +1,61 @@
+{
+ "name": "qa-l9-fork-road",
+ "note": "L9-Q1 fork: healthy APC leaves the common start along the road branch (asphalt, 12 m, heading to (-350,-330)) for 60 m. Look for: wheels grounded on the branch surface, no floating or sunk hull, the fork reads as one road, facing follows velocity.",
+ "seed": 31,
+ "ground": "district",
+ "time": "L9-crossing",
+ "dof": false,
+ "layout": {
+  "district": "D-CROSSING",
+  "bbox": [
+   [
+    -520,
+    -100
+   ],
+   [
+    -380,
+    40
+   ]
+  ]
+ },
+ "vehicles": [
+  {
+   "id": "apc",
+   "asset": "vehicle.military-apc",
+   "at": [
+    -470,
+    0
+   ],
+   "yaw": 0,
+   "path": [
+    [
+     -450,
+     0
+    ],
+    [
+     -432.6,
+     -57.6
+    ]
+   ],
+   "health": 1000,
+   "floor": true
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": "apc",
+  "zoom": 1
+ },
+ "frames": 300,
+ "sheet": 30,
+ "trace": true,
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000,
+  "wheelSinkMaxCm": 2,
+  "wheelFloatMaxCm": 2.5,
+  "wheelSpikeMaxCm": 3
+ }
+}
