@@ -1,0 +1,127 @@
+{
+  "seed": 32,
+  "tier": "high",
+  "bossId": 9,
+  "bossIdChanged": false,
+  "bossStepMaxM": 1.3617927253366489,
+  "bossStepPeak": {
+    "tick": 19640,
+    "mode": "close",
+    "distance": 1.8300000000000043,
+    "hp": 2100,
+    "lastDamage": 19640
+  },
+  "bossApproachStepMaxM": 0.10500000000020485,
+  "checkpoint": "cure-corridor",
+  "released": true,
+  "seconds": 348.01666666666665,
+  "hp": 80.93333333332959,
+  "deaths": 0,
+  "peak": 168,
+  "rocketHits": 10,
+  "activation": 287.43333333333334,
+  "arrival": 30.116666666666674,
+  "timeline": [
+    {
+      "id": "dispersal-complex",
+      "seconds": 216.16666666666666
+    },
+    {
+      "id": "install",
+      "seconds": 285.01666666666665
+    },
+    {
+      "id": "hold",
+      "seconds": 347.43333333333334
+    },
+    {
+      "id": "release",
+      "seconds": 348.01666666666665
+    }
+  ],
+  "activity": {
+    "destroyed-corridor": {
+      "elapsedSeconds": 216.61666666666667,
+      "movingSeconds": 216.61666666666667,
+      "pressureSeconds": 37.86666666666667,
+      "fireIntentSeconds": 37.86666666666667,
+      "holdSeconds": 0,
+      "fullChargeBossGateSeconds": 0,
+      "quietSeconds": 0,
+      "metres": 973.4704670820157,
+      "shots": 31,
+      "kills": 104
+    },
+    "dispersal-complex": {
+      "elapsedSeconds": 131.4,
+      "movingSeconds": 115.81666666666666,
+      "pressureSeconds": 54.78333333333333,
+      "fireIntentSeconds": 54.78333333333333,
+      "holdSeconds": 60,
+      "fullChargeBossGateSeconds": 0,
+      "quietSeconds": 1.2166666666666666,
+      "metres": 509.4874940394035,
+      "shots": 45,
+      "kills": 120
+    }
+  },
+  "activityCategoriesOverlap": true,
+  "active": [
+    "epilogue"
+  ],
+  "player": {
+    "x": 4001.77001953125,
+    "y": 0.7049999833106995,
+    "z": -26.3042049407959,
+    "yaw": -0.0065802071607233455
+  },
+  "boss": {
+    "tick": 20881,
+    "id": 9,
+    "mode": "dead",
+    "introducedAt": 0,
+    "introduceTick": 5400,
+    "x": 3998.136157241285,
+    "z": -20.78334300047831,
+    "hp": 0,
+    "maxHp": 3000,
+    "target": {
+      "x": 3995.3662109375,
+      "z": -22.663244247436523
+    },
+    "route": [],
+    "routeAt": 20191,
+    "passed": "cure-route-41",
+    "blocked": {},
+    "breach": null,
+    "stuck": {
+      "level": 0,
+      "since": -1,
+      "sampleAt": 20198,
+      "x": 3998.2023393813815,
+      "z": -20.74870872739061,
+      "noPath": 0,
+      "goal": null
+    },
+    "lastDamage": {
+      "tick": 20211,
+      "amount": 300,
+      "sourceId": 1
+    },
+    "coarseM": 1281.1626183249366,
+    "audio": {
+      "next": 20918,
+      "step": 20257,
+      "index": 13,
+      "last": {
+        "x": 3998.136157241285,
+        "z": -20.78334300047831
+      }
+    }
+  },
+  "expectedRemainingMinutes": [
+    13.5,
+    18.5
+  ],
+  "withinRemainingBand": false
+}

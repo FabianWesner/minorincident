@@ -1,0 +1,78 @@
+{
+  "seed": 32,
+  "ground": "district",
+  "time": "L10-night",
+  "dof": false,
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "frames": 4200,
+  "sheet": 600,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "lodPlaceholderFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "megaCoarseFramesMin": 30,
+    "megaDetailedFramesMin": 30,
+    "megaStepMaxM": 0.25
+  },
+  "name": "l10-e3b-mega-arrival",
+  "note": "Persistent hunter advances continuously on the authored R7 approach; offscreen catch-up ends 120 m away, followed by cruise into the game camera and hold zone. No boss replacement. Isolated arrival fixture; the existing E3 assault performance suite covers the full mixed crowd.",
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        3927,
+        -100
+      ],
+      [
+        4077,
+        50
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        4002,
+        -27
+      ],
+      "yaw": 210
+    }
+  ],
+  "cureProgression": {
+    "checkpoint": "cure-disperse-ready",
+    "authored": true
+  },
+  "megaAlpha": {
+    "id": "mega",
+    "at": [
+      3760,
+      -25
+    ],
+    "route": "cure"
+  },
+  "minigun": {
+    "at": [
+      3990,
+      3,
+      -33
+    ],
+    "yaw": 0
+  },
+  "script": [
+    {
+      "frame": 20,
+      "actor": "courier",
+      "do": {
+        "interact": true
+      }
+    }
+  ]
+}

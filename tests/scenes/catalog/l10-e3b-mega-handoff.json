@@ -1,0 +1,55 @@
+{
+  "name": "l10-e3b-mega-handoff",
+  "note": "Cruise remains continuous across the coarse/detailed residency edge, including the first second after handoff. Game camera and warning ring.",
+  "ground": "asphalt",
+  "time": "L4",
+  "size": 160,
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        30,
+        0
+      ],
+      "state": "idle"
+    }
+  ],
+  "megaAlpha": {
+    "id": "mega",
+    "at": [
+      -28,
+      0
+    ],
+    "resident": [
+      [
+        -20,
+        -50
+      ],
+      [
+        80,
+        50
+      ]
+    ]
+  },
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "frames": 720,
+  "sheet": 90,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "megaCruiseErrorMax": 0.02,
+    "megaStepMaxM": 0.25,
+    "megaCoarseFramesMin": 30,
+    "megaDetailedFramesMin": 30,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "megaHud": true,
+  "hud": true
+}

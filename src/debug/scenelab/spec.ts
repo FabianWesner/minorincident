@@ -77,7 +77,7 @@ export interface SceneSpec {
    * `route` (nodes/links) and a `resident` box: outside it the pursuit runs coarse (off-region, the L9-S4 seam). `metrics.megaAlpha`. */
   /** Show the production HUD for distance-ring QA, with the game camera. */
   megaHud?: boolean;
-  megaAlpha?: { id?: string; at: Point; route?: import('../../sim/ai/MegaPursuit').PursuitRoute; resident?: [Point, Point] };
+  megaAlpha?: { id?: string; at: Point; route?: import('../../sim/ai/MegaPursuit').PursuitRoute | 'cure'; resident?: [Point, Point] };
   /** Exercise the shipped checkpoint closure rule with the scene's courier and live officer followers. */
   crossingCrash?: { health: number; /** Keep the departure anchor and adopt the authored APC for full-route probes. */ driveFromStart?: boolean; handover?: boolean };
   armyBoom?: { x: number; z?: number; closed?: boolean };
