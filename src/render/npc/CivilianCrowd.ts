@@ -49,7 +49,7 @@ type Clip = typeof civilianClips[number];
 /** Models drawn from the first frame. Any other id found on an entity (`appearance.asset` or `civilian.model`, e.g. the L5/L6 aftermath and shelter skins) gets its lod1/lod2 batches on first sight, so new NPC ids need no code edit. */
 /** The crowd model an entity draws with, or null when it is no crowd figure. */
 export function crowdModelOf(e: EntitySnapshot): string | null {
-  if (e.escort || e.civilian?.zooAnimal) return null;
+  if (e.escort || e.civilian?.zooAnimal || e.civilian?.pet) return null;
   const c = e.civilian;
   // Old checkpoints may still contain an adult skin on a protected child.
   if (c?.adult === false && !c.pet) return 'npc.civilian-kid';

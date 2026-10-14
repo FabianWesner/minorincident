@@ -1,0 +1,55 @@
+Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/unit/physics-metadata.test.ts > @E26 authored GLB records are reproduced at layout build with masses, collision shapes and break rules
+AssertionError: expected { 'thr.molotov': { …(11) }, …(153) } to deeply equal { 'thr.molotov': { …(11) }, …(153) }
+
+- Expected
++ Received
+
+@@ -4145,11 +4145,11 @@
+        0,
+      ],
+      "class": "fixed",
+      "flammable": false,
+      "friction": 0.8,
+-     "hash": "07bbb8b8db850cb6a4c784dca0a0ce2d62df67552899b086dbcdbec5f81b4ce5",
++     "hash": "b8ae400ec636cd4c120a4bfbbd8ea2cb991c7a14c54b3e0d62531e65c9f03b07",
+      "kickable": false,
+      "mass": 0,
+      "pushable": false,
+      "restitution": 0.05,
+      "sounds": "prop.metal-heavy",
+
+ ❯ tests/unit/physics-metadata.test.ts:6:29
+      4|
+      5| test('@E26 authored GLB records are reproduced at layout build with ma…
+      6|   expect(physicsMetadata()).toEqual(physicsAssets);
+       |                             ^
+      7|   expect(Object.keys(physicsAssets).length).toBeGreaterThanOrEqual(80);
+      8|   expect(pushableProps['prop.shopping-cart'].mass).toBe(35);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL   functional  tests/unit/assets/static-collision.test.ts > @E19 M1-07 baked static collision is current with delivered GLBs and has finite body-height geometry
+AssertionError: kit.dispersal-turbine-hall: run npm run assets:collision after changing GLBs: expected 'b8ae400ec636cd4c120a4bfbbd8ea2cb991c7…' to be '07bbb8b8db850cb6a4c784dca0a0ce2d62df6…' // Object.is equality
+
+Expected: "07bbb8b8db850cb6a4c784dca0a0ce2d62df67552899b086dbcdbec5f81b4ce5"
+Received: "b8ae400ec636cd4c120a4bfbbd8ea2cb991c7a14c54b3e0d62531e65c9f03b07"
+
+ ❯ tests/unit/assets/static-collision.test.ts:23:141
+     21| test('@E19 M1-07 baked static collision is current with delivered GLBs…
+     22|   for (const [id, data] of Object.entries(staticCollision)) {
+     23|     expect(createHash('sha256').update(readFileSync(data.source)).dige…
+       |                                                                                                                                             ^
+     24|     // A low pallet can have no body-height volume; every taller solid…
+     25|     expect(data.boxes.length > 0 || (manifest.find(a => a.id === id)?.…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed | 207 passed | 1 skipped (210)
+      Tests  2 failed | 1378 passed | 7 skipped (1387)
+   Start at  23:15:53
+   Duration  267.28s (tests 92%, import 6%, transform 2%)
+
+[remote] done exit=1 (runner 91.98.11.241, sync 87s, remote total 3879s)

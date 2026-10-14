@@ -365,8 +365,8 @@ export class SceneLab {
         entity = o.spawnPedestrian(at, { model: a.look?.model, tint: a.look?.tint, accessories: a.look?.accessories, handProp: a.look?.handProp ?? null, tier: a.look?.tier, role: a.look?.role, yaw,
           schedule: [this.stand(at, yaw)] });
       } else if (a.kind === 'animal') {
-        if (!a.species) throw new Error('Animal fixture requires a zoo species');
-        entity = world.npcs!.civilians.spawn(a.species, at, { zooAnimal: a.species, waypoints: [at] });
+        if (!a.species && !a.pet) throw new Error('Animal fixture requires a zoo species or pet');
+        entity = world.npcs!.civilians.spawn(a.species ?? 'dog', at, { ...(a.pet ? { pet: a.pet } : { zooAnimal: a.species }), waypoints: [at] });
         world.entities.get(entity)!.transform.yaw = yaw;
       } else if (a.kind === 'infected') {
         entity = world.infected!.spawn(a.archetype ?? 'infected.runner', at, { yaw, state: 'idle', ...(a.look?.model ? { variant: a.look.model } : {}), ...(a.look?.tier ? { tier: a.look.tier } : {}) });
@@ -928,7 +928,7 @@ export class SceneLab {
           forward = [Math.cos(c.getState().yaw), 0, -Math.sin(c.getState().yaw)]; clipName = c.getState().clip;
           if (visible && !(clipName && unplantedClips.test(clipName))) courierBody = this.bones(joints, joints.armL.map((v, i) => (v + joints!.armR[i]) / 2));
         }
-      } else if (actor.kind === 'corgi') {
+      } else if (actor.kind === 'corgi' || actor.kind === 'animal' && !!e?.civilian?.pet) {
         const root = probes.npcs?.heroRoot(actor.entity); visible = !!root?.visible; label = probes.npcs?.heroClip(actor.entity);
         if (root) {
           root.updateMatrixWorld(true); feet = ['legFL', 'legFR', 'legBL', 'legBR'].flatMap(n => { const leg = root.getObjectByName(n); if (!leg) return []; const paw = this.paw(leg); return [{ heel: paw, toe: paw, yaw: 0 }]; });
@@ -939,7 +939,7 @@ export class SceneLab {
             dogBodies.push([{ name: 'body', a: at(body, -.3), b: at(body, .25), radius: .25 }, { name: 'head', a: at(head, .1, .06), b: at(head, .3, -.01), radius: .24 }]);
           }
           const player = this.world.entities.get(1), v = player?.survivor?.velocity, speed = Math.hypot(v?.x ?? 0, v?.z ?? 0);
-          if (e && player && speed > 2.5) {
+          if (actor.kind === 'corgi' && e && player && speed > 2.5) {
             const lag = Math.max(0, ((player.transform.x - e.transform.x) * v!.x + (player.transform.z - e.transform.z) * v!.z) / speed);
             this.companion.runningSamples++;
             if (lag > this.companion.runLagMaxM) { this.companion.runLagMaxM = lag; this.companion.runLagFrame = this.frame; }

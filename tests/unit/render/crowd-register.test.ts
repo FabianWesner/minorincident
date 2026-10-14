@@ -33,3 +33,9 @@ test('sitting and lying skins are restored to the exported standing pose and los
   restoreStanding(plain);
   expect(plain.children).toHaveLength(1);
 });
+
+test('T-E32-07-pet-preload @E32 @E32-AC07 seeded healthy dog palettes are never registered as human crowd skins', () => {
+  for (const model of ['amb.dog', 'amb.dog.black', 'amb.dog.cream']) {
+    expect(crowdModelOf({ civilian: { adult: true, pet: 'dog', model } } as unknown as EntitySnapshot)).toBeNull();
+  }
+});

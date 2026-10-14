@@ -1,0 +1,50 @@
+{
+  "passed": 72,
+  "failed": 6,
+  "failures": [
+    {
+      "file": "l10-district.test.ts",
+      "tests": [
+        {
+          "name": "T-E32-03-D1-high @E32-AC02 @E32-AC03 @E32-AC27 @E32-AC28 axe route through R1/R2 retains ground/nav/checkpoint support",
+          "message": "Error: Arsenal transaction needs campaign progression and combat"
+        },
+        {
+          "name": "T-E32-03-D1-low @E32-AC02 @E32-AC03 @E32-AC27 @E32-AC28 axe route through R1/R2 retains ground/nav/checkpoint support",
+          "message": "Error: Arsenal transaction needs campaign progression and combat"
+        }
+      ]
+    },
+    {
+      "file": "l10-progression.test.ts",
+      "tests": [
+        {
+          "name": "T-E32-27-chunks-high @E32 @E32-AC27 @E32-AC28 region retry and fresh reload restore inactive chunks and the same Mega",
+          "message": "Error: Missing layout: D-CURE"
+        },
+        {
+          "name": "T-E32-27-chunks-low @E32 @E32-AC27 @E32-AC28 region retry and fresh reload restore inactive chunks and the same Mega",
+          "message": "Error: Missing layout: D-CURE"
+        }
+      ]
+    },
+    {
+      "file": "mega-audio.test.ts",
+      "tests": [
+        {
+          "name": "T-E32-13-perf-200 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling",
+          "message": "AssertionError: expected 7.70753200002946 to be less than or equal to 4"
+        }
+      ]
+    },
+    {
+      "file": "mega-moves.test.ts",
+      "tests": [
+        {
+          "name": "T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+          "message": "AssertionError: expected 6.6901940000243485 to be less than or equal to 4"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "name": "l10-alpha-scale",
+  "note": "Live regular Alpha and the one MegaPursuit actor use the existing Alpha brain, world-space bars and separate asset scales. The regular Alpha at left must be about half the Mega height and have a visibly smaller health bar. No second combat system. Compare high/low at game camera zooms 1 and 0.5.",
+  "seed": 32,
+  "ground": "asphalt",
+  "time": "L4",
+  "size": 64,
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -1,
+        -1
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        -1.2,
+        1.2
+      ],
+      "yaw": 270,
+      "state": "idle"
+    }
+  ],
+  "megaAlpha": {
+    "id": "mega",
+    "at": [
+      1.2,
+      -1.2
+    ]
+  },
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      2.6,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 36,
+  "sheet": 18,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  }
+}

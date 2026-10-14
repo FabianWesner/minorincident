@@ -2,6 +2,8 @@ import type { InfectedSpecialMove } from '../../data/infected';
 
 /** Serializable AI and crowd animation intent; all timers are fixed sim ticks. */
 export interface InfectedState {
+  /** L10 authored regular Alpha ownership, serialized with the entity. */
+  cureRegion?: import('../../levels/L10/alphaContracts').CureRegion;
   /** Entity-owned timers survive checkpoints and chunk serialization. */
   specialCooldowns?: Partial<Record<InfectedSpecialMove, number>>;
   specialAttack?: InfectedSpecialAttack;

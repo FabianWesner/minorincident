@@ -1,0 +1,33 @@
+{
+  "baselineCommit": "b3d7492f4da5b9882ba9812afb6247d7bad8bc69",
+  "baselineFailedTests": 23,
+  "simLevelFailuresMatched": 21,
+  "additional": [
+    "T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms"
+  ],
+  "currentFailures": [
+    "L1 v2 mission T-E19-house @E19 @E19-AC25 beat 9: ten residents come out of ONE house front door near the garage, one by one, 1.5-4 s apart",
+    "L1 v2 mission T-E19-respawn-world @E19 PO rule: a death after the bat keeps the world (corpses, infected, pedestrians, props, objectives, bat)",
+    "L2 The Failed Rescue T-E20-13 @E20 @E20-AC13 cluster of 12-16 on the approach; complete passes killing <= 50 %; side path and car alarm each suffice",
+    "@E21 @E21-route L3 wreck lines close both sidewalks for player and NPCs; the connected detour crosses Oak, Boulevard and the elevated highway",
+    "L3 The Police Collapse T-E21-02 @E21 @E21-AC02 complete bot finishes single seed from L3-default (bat + axe), median time in band",
+    "L3 The Police Collapse T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2",
+    "L3 The Police Collapse T-E21-09 @E21 @E21-AC09 squad feels strong first: officers >= 60 % of S1 knockdowns, S1 damage below one life (PO 10-12 police -50 %), near the courier, never teleports",
+    "L3 The Police Collapse T-E21-12 @E21 @E21-AC12 escalation: pre-populated 250/625/1000 (+-20 %), live infected near the courier rise S1 -> S3, caps never exceeded",
+    "L5 Aftermath T-E23-09 @E23 @E23-AC09 the group grows and follows: stand-to-interact 1.0 s, the counter steps 0 to 5, followers within 8 m, no jump above 1 m per tick, slower than the courier's run",
+    "T-E24-02 @E24 @E24-AC02 @E24-AC10 single-seed complete bot (PO: no batteries) protects and rejoins the community",
+    "L1 -> L2 world-state continuity T-CONT-01S @continuity after the L1 lab blast the L2 town has the burned annex, the debris cells blocked, the outbreak house aftermath and this run's carryover",
+    "T-E32-03-D1-high @E32-AC02 @E32-AC03 @E32-AC27 @E32-AC28 axe route through R1/R2 retains ground/nav/checkpoint support",
+    "T-E32-03-D1-low @E32-AC02 @E32-AC03 @E32-AC27 @E32-AC28 axe route through R1/R2 retains ground/nav/checkpoint support",
+    "T-E32-27-chunks-high @E32 @E32-AC27 @E32-AC28 region retry and fresh reload restore inactive chunks and the same Mega",
+    "T-E32-27-chunks-low @E32 @E32-AC27 @E32-AC28 region retry and fresh reload restore inactive chunks and the same Mega",
+    "@E20 after the alarm every playing tick has objective text and destinations have markers, including the doors checkpoint",
+    "T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms",
+    "T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms",
+    "T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms",
+    "T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
+    "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+    "T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms"
+  ],
+  "additionalTimingResult": "zoo-s3 high and low both pass when isolated on the same runner, for both current and HEAD"
+}

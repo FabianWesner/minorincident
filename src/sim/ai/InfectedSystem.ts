@@ -1,3 +1,5 @@
+import { dogModel } from '../../data/dogAppearance';
+import { cureAlphaPopulation, cureAlphaCap, cureRegularAlphaCount, type CureRegion } from '../../levels/L10/alphaContracts';
 import { megaAlpha } from '../../data/megaAlpha';
 import { balancedCrowdModel, regularInfectedModels } from '../../data/crowdAppearance';
 import { isCorgi, isCorgiModel, storyProtected } from '../npc/storyProtection';
@@ -25,7 +27,7 @@ import { steerFlockDive, updateFlock } from './Flock';
 import { SpawnDirector } from './SpawnDirector';
 import { NavGrid } from './NavGrid';
 import type { InfectedState } from './types';
-export interface InfectedSpawn { state?: InfectedState['state']; yaw?: number; variant?: string; pack?: number; packIndex?: number; perched?: boolean; birds?: number; /** L1 v2 speed tier; derived from the variant when omitted. */ tier?: InfectedSpeedTier; /** E32 Mega Alpha introduced in a non-resident region (no loaded nav to validate against). */ offNav?: boolean }
+export interface InfectedSpawn { cureRegion?: CureRegion; state?: InfectedState['state']; yaw?: number; variant?: string; pack?: number; packIndex?: number; perched?: boolean; birds?: number; /** L1 v2 speed tier; derived from the variant when omitted. */ tier?: InfectedSpeedTier; /** E32 Mega Alpha introduced in a non-resident region (no loaded nav to validate against). */ offNav?: boolean }
 const l1Ticks = (seconds: number) => Math.round(seconds * 60);
 const hearingReactionTicks = 15, hearingTurnRadS = 14;
 /** Fixed-step infected brain. Entities and path storage are prewarmed and reused, without Rapier bodies. */
@@ -74,7 +76,7 @@ export class InfectedSystem {
     this.hearing = new Perception(world);
     this.perches = definition.perches ?? [];
     installCharacterSeparation(world); installAgentMotion(world);
-    validateInfected(); this.rng = new Rng(world.seed, 'infected'); this.nav = new NavGrid(definition.ground, definition.walls ?? [], definition.navigationClearance ?? 0.65, definition.ground.center, mask); this.navigation = new DistrictNavigation(definition, this.nav); this.director = new SpawnDirector(this); this.props = new PropThrows(world); this.alphaSupport = new AlphaSupportMoves(this);
+    validateInfected(); this.rng = new Rng(world.seed, 'infected'); this.nav = new NavGrid(definition.ground, definition.walls ?? [], definition.navigationClearance ?? 0.65, definition.ground.center, mask); this.navigation = new DistrictNavigation(definition, this.nav); this.director = new SpawnDirector(this); if (world.scenario === 'L10') this.director.strict = true; this.props = new PropThrows(world); this.alphaSupport = new AlphaSupportMoves(this);
     for (let i = 0; i < 350; i++) {
       const brain: InfectedState = { state: 'idle', pathGrid: -1, grabNextTick: 0, combo: 0, targetId: 0, activeUntil: 0, speed: 0, until: 0, cooldown: 0, attackId: 0, special: '', hidden: false, deadAt: -1, recoverAt: -1, downs: 0, revived: false, reviveUsed: false, legLost: false, detached: false, pack: 0, packIndex: 0, birds: 0, birdPositions: new Array(60).fill(0), birdAlive: new Array(20).fill(0), scatterUntil: 0, variant: '', path: [], pathIndex: 0, goal: -1, dx: 0, dz: 0, grabHits: 0, grabUntil: 0, grabX: 0, grabZ: 0, perched: false };
       this.pool.push({ id: 0, kind: 'infected', archetype: '', faction: 'infected', health: { current: 0, max: 0 }, transform: { x: 0, y: 0.7, z: 0, yaw: 0 }, infected: brain, combat: { radius: 0.35, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } }); this.counters.allocated++;
@@ -123,6 +125,10 @@ export class InfectedSystem {
     // E32-AC08: no spawn may stand in for, or be drawn as, the player's corgi.
     if (isCorgiModel(id) || isCorgiModel(opts.variant)) throw new RangeError('The corgi is never an infected spawn');
     const def = infectedDef(id);
+    if (id === 'infected.alpha' && opts.variant !== megaAlpha.asset && (this.world.scenario === 'L10' || opts.cureRegion)) {
+      if (!opts.cureRegion) throw new RangeError('L10 regular Alpha requires an authored cure region');
+      if (cureRegularAlphaCount(cureAlphaPopulation(this.world), opts.cureRegion) >= cureAlphaCap(opts.cureRegion, this.director.tier)) throw new Error('L10 regular Alpha region cap reached');
+    }
     const perch = this.perchFor(id, position, opts.perched);
     if (perch) position = perch;
     if (opts.yaw !== undefined && !Number.isFinite(opts.yaw)) throw new RangeError('Invalid infected facing');
@@ -135,7 +141,7 @@ export class InfectedSystem {
     entity.locomotion = motionResponse(); delete entity.motion;
     delete entity.infected!.investigate; delete entity.infected!.model; delete entity.infected!.birdDeadMask; delete entity.infectionRise; delete entity.appearance; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden; delete entity.corpse;
     delete entity.infected!.roar; delete entity.corpseThrown; delete entity.infected!.pursuit; delete entity.infected!.megaStaggerReady; delete entity.infected!.megaRocketIds;
-    delete entity.infected!.territory; delete entity.infected!.vault; delete entity.infected!.specialAttack; delete entity.infected!.specialCooldowns; delete entity.infected!.specialRecoveryUntil;
+    delete entity.infected!.cureRegion; delete entity.infected!.territory; delete entity.infected!.vault; delete entity.infected!.specialAttack; delete entity.infected!.specialCooldowns; delete entity.infected!.specialRecoveryUntil;
     entity.archetype = id; entity.health.current = entity.health.max = def.hp * INFECTED_TOUGHNESS;
     Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? .7 + (this.world.districts?.pavingHeight(position.x, position.z) ?? 0); entity.transform.yaw = opts.yaw ?? 0;
     Object.assign(entity.combat!, { radius: def.radius, armor: 0, shield: def.special === 'shield', staggerUntil: 0, attacking: false, damageMultiplier: 1 }); entity.combat!.statuses.length = 0; delete entity.combat!.reaction;
@@ -144,6 +150,8 @@ export class InfectedSystem {
     if (id === 'infected.crow') entity.health.current = entity.health.max = entity.infected!.birds * INFECTED_TOUGHNESS;
     if (this.l1 && def.special === 'lunge') this.initL1(entity, opts.tier ?? l1SpeedTier(entity.infected!.variant)); else delete entity.infected!.l1;
     this.world.entities.adopt(entity);
+    if (opts.cureRegion) entity.infected!.cureRegion = opts.cureRegion;
+    if (id === 'infected.dog' && !opts.variant) entity.infected!.variant = dogModel(this.world.seed, entity.id, true);
     if (!opts.variant && (id === 'infected.runner' || id === 'infected.sprinter')) {
       entity.infected!.variant = balancedCrowdModel(regularInfectedModels,
         this.active.filter(e => e.health.current > 0 && !e.hidden && !e.infected?.hidden).map(e => ({ model: e.infected!.model ?? e.infected!.variant, x: e.transform.x, z: e.transform.z })), position, entity.id);

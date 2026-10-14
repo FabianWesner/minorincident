@@ -1,3 +1,4 @@
+import { dogCoats, dogCoat } from '../data/dogAppearance';
 import { megaAlpha } from '../data/megaAlpha';
 import { regularInfectedModels } from '../data/crowdAppearance';
 import { crowdAppearanceColor, crowdShirt, markCrowdAppearance, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout, crowdHeadwearVisibility } from './characters/CrowdAppearance';
@@ -48,7 +49,7 @@ function tierGait(b: { speed?: number; tier?: string; l1?: { tier: string } }): 
 }
 export class CrowdView extends Group {
   private readonly registry: AssetRegistry;
-  private readonly definitions = new Map<string, { id: string; asset: string; windup: number }>();
+  private readonly definitions = new Map<string, { id: string; asset: string; windup: number; decay?: string }>();
   private readonly modelAliases = new Map<string, string>();
   private readonly pending = new Map<string, Promise<void>>();
   private readonly heroSlots = new Map<string, InstancedMesh>();
@@ -102,11 +103,12 @@ export class CrowdView extends Group {
   async init(): Promise<void> {
     const started = performance.now();
     const variants = manifest.filter(a => (a.status === 'integrated' || a.status === 'final') && a.category === 'infected' && !infectedDefinitions.some(d => d.asset === a.id) && a.id !== 'inf.corpse-poses');
-    const models = new Set([...this.world.entities.iterate()].flatMap(e => e.civilian?.schedule && e.civilian.model ? [e.civilian.model] : []));
+    const models = new Set([...this.world.entities.iterate()].flatMap(e => e.civilian?.schedule && !e.civilian.pet && e.civilian.model ? [e.civilian.model] : []));
     const animals = [...new Set([...this.world.entities.iterate()].flatMap(e => e.civilian?.zooAnimal ? [e.civilian.zooAnimal] : []))];
     const healthyDefinitions = animals.map(species => ({ ...infectedDefinitions.find(d => d.id === `infected.${species}`)!, id: `healthy.${species}`, asset: `amb.${species}` }));
     // Healthy amb.* assets are catalog props, so register their real rigs explicitly as animated crowds.
-    const allDefinitions = [...healthyDefinitions, ...[...models].map(model => ({ ...infectedDefinitions[0], id: model, asset: model })), ...infectedDefinitions, { ...infectedDefinitions[0], id: 'infected.patient-zero', asset: 'npc.patient-zero-courier' }, ...variants.map(a => ({ ...infectedDefinitions[0], id: a.id, asset: a.id }))];
+    const dogDefinitions = dogCoats.slice(1).map(coat => ({ ...infectedDefinitions.find(d => d.id === 'infected.dog')!, id: `inf.dog.${coat}`, decay: coat }));
+    const allDefinitions = [...dogDefinitions, ...healthyDefinitions, ...[...models].map(model => ({ ...infectedDefinitions[0], id: model, asset: model })), ...infectedDefinitions, { ...infectedDefinitions[0], id: 'infected.patient-zero', asset: 'npc.patient-zero-courier' }, ...variants.map(a => ({ ...infectedDefinitions[0], id: a.id, asset: a.id }))];
     // L1 v2: every infected is a pedestrian that keeps its look and is drawn by the civilian crowd (lane D); this view
     // only needs the plain runner fallback plus scripted infected actors. Without the outbreak layer keep the old set.
     const regularCrowd = this.world.scenario === 'L7' || this.world.scenario?.startsWith('perf-horde-');
@@ -114,7 +116,10 @@ export class CrowdView extends Group {
     const l1Roles = new Set<string>(regularCrowd || this.world.scenario === 'L6' || this.world.npcs?.civilians.outbreak || this.world.districts?.districts.some(d => isOutbreakDistrict(d.id)) ? ['infected.runner', ...actors] : ['infected.runner', ...actors, ...civilianRoles.map(role => role.variant), ...models]);
     if (regularCrowd) for (const model of regularInfectedModels) l1Roles.add(model);
     for (const species of animals) { l1Roles.add(`healthy.${species}`); l1Roles.add(`infected.${species}`); }
-    for (const entity of this.world.entities.iterate()) if (entity.infected) {
+    for (const entity of this.world.entities.iterate()) {
+      // A future pet turn or another seeded spawn may use any coat of the same dog rig.
+      if (entity.archetype === 'infected.dog' || entity.civilian?.pet === 'dog') l1Roles.add('inf.dog');
+      if (!entity.infected) continue;
       l1Roles.add(entity.archetype);
       const model = entity.infected.model ?? entity.infected.variant;
       if (model) l1Roles.add(model);
@@ -127,8 +132,9 @@ export class CrowdView extends Group {
     const definitions = grove || regularCrowd ? allDefinitions.filter(def => l1Roles.has(def.id) || l1Roles.has(def.asset)) : allDefinitions;
     for (const def of definitions) {
       // Registrations must not remove the asset spelling used by model overrides.
-      const key = def.id.startsWith('healthy.') ? def.id : registerCrowdModel(this.modelAliases, def);
-      if (def.id.startsWith('healthy.')) this.modelAliases.set(def.id, key);
+      const independent = def.id.startsWith('healthy.') || dogCoat(def.id);
+      const key = independent ? def.id : registerCrowdModel(this.modelAliases, def);
+      if (independent) this.modelAliases.set(def.id, key);
       this.definitions.set(key, def);
       if (!this.low) {
         const mesh = new InstancedMesh(new BufferGeometry(), this.shading?.shaded(vec3(1)) ?? new MeshBasicNodeMaterial(), 350);
@@ -141,15 +147,15 @@ export class CrowdView extends Group {
     loadMeasure('view:infected-crowd', started);
     this.update();
   }
-  private async loadBatch(def: { id: string; asset: string; windup: number }, lod: 'lod0' | 'lod1' | 'lod2'): Promise<void> {
+  private async loadBatch(def: { id: string; asset: string; windup: number; decay?: string }, lod: 'lod0' | 'lod1' | 'lod2'): Promise<void> {
       const key = crowdModelKey(def);
-      const role = def.id.startsWith('infected.') ? def.id.slice(9) : 'runner', asset = def.asset;
-      const loaded = await this.registry.loadAsset(asset, lod) as Group;
+      const role = dogCoat(def.id) ? 'dog' : def.id.startsWith('infected.') ? def.id.slice(9) : 'runner', asset = def.asset;
+      const loaded = await this.registry.loadAsset(asset, lod, def.decay) as Group;
       await loadGate.foreground(); await loadGate.wait(); // bakes wait for the level pick, then one per frame
       if (this.disposed) return;
-      const healthy = def.id.startsWith('healthy.'), human = !/^(infected|healthy)\.(dog|cat|crow|lion|gorilla|elephant|zebra|flamingo)$/.test(def.id);
+      const healthy = def.id.startsWith('healthy.'), human = !dogCoat(def.id) && !/^(infected|healthy)\.(dog|cat|crow|lion|gorilla|elephant|zebra|flamingo)$/.test(def.id);
       const fallback = Boolean(loaded.userData.placeholder), model = fallback ? createInfectedPlaceholder(role) : loaded;
-      const baked = bakeInfected(model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback, undefined, fallback ? undefined : `${asset}:${lod}`), capacity = role === 'crow' ? 800 : 350;
+      const baked = bakeInfected(model, this.registry.definition(asset).animatedNodes, role === 'crawler' && !fallback, undefined, fallback ? undefined : `${asset}${def.decay ? `.${def.decay}` : ''}:${lod}`), capacity = role === 'crow' ? 800 : 350;
       const locomotion = new CrowdLocomotion(model, baked.clip, this.footwork);
       const probe = new CrowdFigureProbe(); probe.lod = lod; probe.sole = locomotion.sole; if (model.getObjectByName('legFL')) probe.animal(model);
       // Baking expands rigid parts to triangle soup. Index identical vertices before
@@ -391,7 +397,8 @@ export class CrowdView extends Group {
         }
       }
       if ((b.state === 'attack' || (b.state === 'dead' && b.special === 'explode')) && this.world.tick < b.until) {
-        const mesh = this.telegraphs[b.special === 'charge' || b.special === 'pin' || b.special === 'pounce' ? 1 : 0]; if (b.special === 'explode') this.transform.makeScale(3.75, 1, 3.75); else this.transform.makeRotationY(-Math.atan2(b.dz, b.dx)); this.transform.setPosition(e.transform.x, 0.06, e.transform.z); mesh.setMatrixAt(mesh.count++, this.transform);
+        const mesh = this.telegraphs[b.special === 'charge' || b.special === 'pin' || b.special === 'pounce' ? 1 : 0]; if (b.special === 'explode') this.transform.makeScale(3.75, 1, 3.75); else { this.transform.makeRotationY(-Math.atan2(b.dz, b.dx)); if (b.special === 'pounce') this.transform.multiply(this.physicalArrowScale); }
+        this.transform.setPosition(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? e.transform.y - .7) + .065, e.transform.z); mesh.setMatrixAt(mesh.count++, this.transform);
       }
     }
     for (const batch of this.batches.values()) {
