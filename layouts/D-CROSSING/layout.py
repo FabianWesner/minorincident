@@ -168,20 +168,20 @@ for route in source['routes']:
                 marks.append([[cx-tx*2+nx*.025,cz-tz*2+nz*.025],[cx-tx*2-nx*.025,cz-tz*2-nz*.025],[cx+tx*2-nx*.025,cz+tz*2-nz*.025],[cx+tx*2+nx*.025,cz+tz*2+nz*.025]])
         else:
             # L9-Q1 (QA: "the dry-shortcut ground is a flat purple plane with no features, so there is no cue that the APC is
-            # moving"): two dark tyre ruts, dashed, 14 m clear of every fork, bend and merge. Visual only (not a sim surface).
+            # moving"): two pale worn tyre ruts (moonlit contrast), dashed, 14 m clear of every fork, bend and merge. Visual only (not a sim surface).
             s,i=14.0,0
             while s+RUT_DASH[i%4] < d-14:
                 e=RUT_DASH[i%4]
                 for off in (-1.25,1.25):
                     c0=[a[0]+tx*s+ux*off,a[1]+tz*s+uz*off]
-                    ruts.append(([[c0[0]-ux*.25,c0[1]-uz*.25],[c0[0]+ux*.25,c0[1]+uz*.25],[c0[0]+ux*.25+tx*e,c0[1]+uz*.25+tz*e],[c0[0]-ux*.25+tx*e,c0[1]-uz*.25+tz*e]],height+.0035))
+                    ruts.append(([[c0[0]+ux*.3,c0[1]+uz*.3],[c0[0]-ux*.3,c0[1]-uz*.3],[c0[0]-ux*.3+tx*e,c0[1]-uz*.3+tz*e],[c0[0]+ux*.3+tx*e,c0[1]+uz*.3+tz*e]],height+.0035))  # same winding as the strips (upward faces)
                 s+=e+RUT_GAP[i%4]; i+=1
     for i,p in enumerate(route['risks']): l.anchor(f"risk-{route['id']}-{i}",[p[0],0,p[1]])
 # Ownership at the fork and the merge: the asphalt road is the through route, the gravel tracks branch off its edge.
 order={'countryside':0,'dry-shortcut':1,'road':2}
 for name,poly,token,height in sorted(strips,key=lambda t:order[t[0]]): surface(name,poly,token,height)
 for mark in marks: surface('road-mark',mark,'picketWhite',.008)
-for poly,height in ruts: surface('track-rut',poly,'leatherShadow',height,cut=False)
+for poly,height in ruts: surface('track-rut',poly,'canvasTan',height,cut=False)
 
 for name,p in [('crossing-start',source['start']),('player-start',source['start']),('outskirts',source['outskirts']),('exit',source['outskirts']),('road-fork',[-450,0]),('countryside',[0,240]),('dry-shortcut',[0,-30]),('chunk-seam',[0,-330])]: l.anchor(name,[p[0],0,p[1]])
 for v in source['viewpoints']: l.anchor(v['id'],[v['from'][0],0,v['from'][1]])

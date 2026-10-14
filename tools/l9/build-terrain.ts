@@ -36,7 +36,7 @@ for (const node of horizon.getRoot().listNodes()) {
   if (!node.getMesh()) { node.dispose(); continue; }
   if (node.getExtras().terrainChunk) {
     const mesh = node.getMesh()!;
-    for (const p of mesh.listPrimitives()) if (['pal_picketWhite', 'pal_leatherShadow'].includes(p.getMaterial()?.getName() ?? '')) p.dispose(); // paint and gravel ruts are near-field detail
+    for (const p of mesh.listPrimitives()) if (['pal_picketWhite', 'pal_canvasTan'].includes(p.getMaterial()?.getName() ?? '')) p.dispose(); // paint and gravel ruts are near-field detail
     const [x, y, z] = node.getTranslation();
     node.setTranslation([x, y - .010, z]); // no coplanar fighting; even 1 cm fork arrows stay within the 2 cm seam budget
     node.setExtras({});
