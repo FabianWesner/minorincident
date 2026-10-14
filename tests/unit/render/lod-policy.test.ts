@@ -25,7 +25,10 @@ test('@load phone initial downloads include only tiers used at the spawn', () =>
   expect(initialDistrictLods(true, false, 0)).toEqual(['lod1', 'lod2']);
   expect(initialDistrictLods(true, false, 16.01)).toEqual(['lod2']);
   expect(initialDistrictLods(false, true, 100)).toEqual(['lod1', 'lod2']);
-  expect(initialDistrictLods(false, false, 0, true, true)).toEqual(['lod2']);
+  // lod-pop: nothing the first frames draw at LOD0/LOD1 may open on the LOD2 stand-in, with or without the WebGL spawn warm-up.
+  expect(initialDistrictLods(false, false, 0, true)).toEqual(['lod1', 'lod2']);
+  expect(initialDistrictLods(false, false, lodPolicy.lod2From, true)).toEqual(['lod1', 'lod2']);
+  expect(initialDistrictLods(false, false, lodPolicy.lod2From + lodPolicy.hysteresis + .01, true)).toEqual(['lod2']);
   expect(initialDistrictLods(false, false, 0, true)).toEqual(['lod1', 'lod2']);
   expect(initialDistrictLods(false, false, 46, true)).toEqual(['lod2']);
 });

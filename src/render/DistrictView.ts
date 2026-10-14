@@ -62,7 +62,7 @@ const privacyFenceLodPolicy = { lod1From: 6, lod2From: 45, hysteresis: 2 };
  * even up close; the E20 rescue peak at the Grove Market otherwise spends ~100 k of the 500 k phone budget on one building. */
 const heavyOnLow = (id: string) => ((worldAssets[id] as { authoredLodTriangles?: { lod1?: number } }).authoredLodTriangles?.lod1 ?? 0) >= 50_000;
 
-interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; id: string; decay?: string; lit: boolean; loaded: boolean; nearLoaded: boolean; farLoaded: boolean; bands: (Lod | undefined)[] }
+interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; id: string; decay?: string; lit: boolean; loaded: boolean; nearLoaded: boolean; farLoaded: boolean; heroShown: Lod; bands: (Lod | undefined)[] }
 /** Shared static instances; detailed prototypes stream only into the close view. */
 export class DistrictView extends Group {
   readonly spots = new Map<string, CameraPose>();
@@ -174,7 +174,7 @@ export class DistrictView extends Group {
       if (p.minTier > this.world.composition.tier || p.maxTier < this.world.composition.tier) continue;
       const distance = focus ? Math.hypot(p.position[0] + d.origin[0] - focus.x, p.position[2] + d.origin[1] - focus.z) : 0;
       const lods = initialLods.get(p.assetId) ?? new Set<Lod>();
-      for (const lod of initialDistrictLods(this.low, worldAssets[p.assetId]?.category === 'prop', distance, focus !== undefined, heroAtSpawn)) lods.add(lod);
+      for (const lod of initialDistrictLods(this.low, worldAssets[p.assetId]?.category === 'prop', distance, focus !== undefined)) lods.add(lod);
       initialLods.set(p.assetId, lods);
       // These tiers are required by prepare() before revealing phone/L6 play.
       // Start their decode beside the layout GLB, rather than after it finishes.
@@ -339,7 +339,7 @@ export class DistrictView extends Group {
               batch.traverse(o => { if (o instanceof Mesh && o.name === 'window-light') this.windows.push(o); });
             }
             const dimensions = new Box3().setFromObject(prototypes[0]).getSize(new Vector3());
-            this.lodBatches.push({ hero, near, far, refs, id, decay, lit: power === 'true', loaded: false, nearLoaded, farLoaded, bands: [], origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55, half: Math.max(dimensions.x, dimensions.z) / 2 });
+            this.lodBatches.push({ hero, near, far, refs, id, decay, lit: power === 'true', loaded: false, nearLoaded, farLoaded, heroShown: nearLoaded ? 'lod1' : 'lod2', bands: [], origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55, half: Math.max(dimensions.x, dimensions.z) / 2 });
           }),
         );
         // Dynamic nav-blockers use the same positions/extents as their Rapier colliders.
@@ -765,7 +765,9 @@ export class DistrictView extends Group {
       for (const child of batch.children) if (child instanceof InstancedMesh) child.count = batch.references.length;
       if (batch.references.length) batch.update();
     }
-    if (this.world.composition.id === 'L7' && this.low && near.references.length && !entry.nearLoaded && !this.pending.has(entry)) {
+    // A placement in view whose LOD1 has not arrived is drawn from the LOD2 placeholder: fetch the tier now (the background prepare()
+    // walks the level nearest-first from the spawn and can be far behind a fast walker). Props never draw LOD1 on the low tier.
+    if ((near.references.length || hero.references.length && !this.low) && !entry.nearLoaded && !this.pending.has(entry)) {
       this.pending.set(entry, this.loadHero(entry, 'lod1').finally(() => this.pending.delete(entry)));
     }
     if (hero.references.length && !entry.loaded && !this.pending.has(entry)) {
@@ -862,8 +864,14 @@ export class DistrictView extends Group {
   private async loadHero(entry: LodBatch, lod: Lod = 'lod0'): Promise<void> {
     const prototype = await this.registry.asset(entry.id, entry.lit, lod, entry.decay);
     if (this.disposed) return;
+    await this.swapTier(entry, lod, lod, prototype);
+    // The hero slot shows a LOD2 stand-in until its LOD0 arrives; once LOD1 is resident it shows that instead.
+    if (lod === 'lod1' && !this.disposed && !entry.loaded && entry.heroShown === 'lod2') await this.swapTier(entry, 'lod0', 'lod1', prototype);
+  }
+  /** Replace a slot's batch (`slot`) with the prototype of mesh tier `lod`; the slot keeps its current references. */
+  private async swapTier(entry: LodBatch, slot: Lod, lod: Lod, prototype: Object3D): Promise<void> {
     // Allocate full placement capacity, then retain only currently visible refs.
-    const old = lod === 'lod0' ? entry.hero : lod === 'lod1' ? entry.near : entry.far;
+    const old = slot === 'lod0' ? entry.hero : slot === 'lod1' ? entry.near : entry.far;
     const replacement = new InstancedGroup(prototype, entry.refs.slice(), old.capacity);
     let replacementTriangles = 0; if (this.low) replacement.traverse(node => { if (node instanceof Mesh) replacementTriangles += (node.geometry.index?.count ?? node.geometry.getAttribute('position').count) / 3; });
     // Phone tier: far LODs and buildings heavier than 30k triangles per placement skip the shadow pass.
@@ -879,8 +887,8 @@ export class DistrictView extends Group {
     old.traverse(node => { const index = this.windows.indexOf(node as Mesh); if (index !== -1) this.windows.splice(index, 1); });
     replacement.traverse(node => { if (node instanceof Mesh && node.name === 'window-light') this.windows.push(node); });
     this.batches[this.batches.indexOf(old)] = replacement;
-    if (lod === 'lod0') { entry.hero = replacement; entry.loaded = true; }
-    else if (lod === 'lod1') { entry.near = replacement; entry.nearLoaded = true; }
+    if (slot === 'lod0') { entry.hero = replacement; entry.heroShown = lod; if (lod === 'lod0') entry.loaded = true; }
+    else if (slot === 'lod1') { entry.near = replacement; entry.nearLoaded = true; }
     else { entry.far = replacement; entry.farLoaded = true; }
     this.dirtyEntries.add(entry);
     old.removeFromParent(); old.dispose();
@@ -975,6 +983,19 @@ export class DistrictView extends Group {
   lodState(): { assetId: string; origin: [number, number]; position: [number, number, number]; lod: Lod | 'culled' }[] {
     return this.lodBatches.flatMap(entry => entry.refs.map(ref => ({ assetId: entry.id, origin: entry.origin, position: ref.position.toArray() as [number, number, number],
       lod: entry.hero.references.includes(ref) ? 'lod0' as const : entry.near.references.includes(ref) ? 'lod1' as const : entry.far.references.includes(ref) ? 'lod2' as const : 'culled' as const })));
+  }
+  /** Placements drawn this frame from a coarser mesh than the band selected for them (the tier's real mesh has not arrived,
+   * so a placeholder is shown). `lod` is the selected band, `shown` the mesh actually drawn. */
+  placeholderDraws(): { assetId: string; lod: Lod; shown: Lod; x: number; z: number }[] {
+    const out: { assetId: string; lod: Lod; shown: Lod; x: number; z: number }[] = [];
+    for (const entry of this.lodBatches) for (const [lod, batch, shown] of [
+      ['lod0', entry.hero, entry.heroShown],
+      ['lod1', entry.near, entry.nearLoaded ? 'lod1' : 'lod2'],
+    ] as const) {
+      if (shown === lod || !batch.references.length) continue;
+      for (const ref of batch.references) out.push({ assetId: entry.id, lod, shown, x: ref.position.x + entry.origin[0], z: ref.position.z + entry.origin[1] });
+    }
+    return out;
   }
   getState() {
     return {

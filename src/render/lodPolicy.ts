@@ -7,10 +7,11 @@ export const lodPolicy = { lod1From: 8, lod2From: 24, hysteresis: 2 } as const;
 export const lowLodPolicy = { lod1From: 0, lod2From: 16, hysteresis: 2 } as const;
 /** Initial phone download: props only draw LOD2; LOD1 is needed only around the spawn.
  * Other buildings start with LOD2 and acquire their close tier after play starts. */
-export function initialDistrictLods(low: boolean, prop: boolean, distance: number, streaming = false, heroAtSpawn = false): Lod[] {
+export function initialDistrictLods(low: boolean, prop: boolean, distance: number, streaming = false): Lod[] {
   // WebGL warms spawn LOD0 before play; WebGPU keeps the original nearby LOD1
-  // until its hero swaps. Intermediate tiers outside the spawn stream later.
-  if (!low) return streaming && (heroAtSpawn || distance > lodPolicy.lod1From) ? ['lod2'] : ['lod1', 'lod2'];
+  // until its hero swaps. Everything the first frames can draw at LOD0/LOD1 (up to the LOD2 edge) also has its LOD1 resident, so the
+  // hero/near batches never open on the crude LOD2 stand-in (lod-pop); tiers beyond the view stream later.
+  if (!low) return streaming && distance > lodPolicy.lod2From + lodPolicy.hysteresis ? ['lod2'] : ['lod1', 'lod2'];
   if (prop || distance > lowLodPolicy.lod2From) return ['lod2'];
   return streaming ? ['lod1'] : ['lod1', 'lod2'];
 }
