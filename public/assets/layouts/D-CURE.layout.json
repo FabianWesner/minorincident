@@ -8,11 +8,11 @@
           -300
         ],
         [
-          3800,
+          4200,
           -300
         ],
         [
-          3800,
+          4200,
           300
         ],
         [
@@ -68,6 +68,14 @@
       ],
       "yaw": 0
     },
+    "cure-console": {
+      "position": [
+        4002,
+        0,
+        -27
+      ],
+      "yaw": 0
+    },
     "cure-corridor": {
       "position": [
         2937,
@@ -84,6 +92,14 @@
       ],
       "yaw": 0
     },
+    "cure-disperse-ready": {
+      "position": [
+        4002,
+        0,
+        -27
+      ],
+      "yaw": 0
+    },
     "cure-industrial": {
       "position": [
         1257,
@@ -92,11 +108,27 @@
       ],
       "yaw": 0
     },
+    "cure-install": {
+      "position": [
+        4006.5,
+        0,
+        -39
+      ],
+      "yaw": 0
+    },
     "cure-military": {
       "position": [
         1857,
         0,
         25
+      ],
+      "yaw": 0
+    },
+    "cure-release": {
+      "position": [
+        4002,
+        0,
+        -27
       ],
       "yaw": 0
     },
@@ -132,11 +164,83 @@
       ],
       "yaw": 0
     },
+    "dispersal-gun": {
+      "position": [
+        3990,
+        3,
+        -33
+      ],
+      "yaw": 0
+    },
+    "dispersal-horizon": {
+      "position": [
+        4080,
+        0,
+        -27
+      ],
+      "yaw": 0
+    },
+    "dispersal-origin": {
+      "position": [
+        4000,
+        0,
+        -27
+      ],
+      "yaw": 0
+    },
+    "dispersal-stair-foot": {
+      "position": [
+        4000.2,
+        0,
+        -33
+      ],
+      "yaw": 0
+    },
+    "dispersal-stair-top": {
+      "position": [
+        3996,
+        3.08,
+        -33
+      ],
+      "yaw": 0
+    },
+    "epilogue-camera": {
+      "position": [
+        4045,
+        50,
+        18
+      ],
+      "yaw": 0
+    },
+    "epilogue-camera-target": {
+      "position": [
+        4000,
+        0,
+        -27
+      ],
+      "yaw": 0
+    },
+    "epilogue-survivors": {
+      "position": [
+        4025,
+        0,
+        8
+      ],
+      "yaw": 0
+    },
+    "epilogue-walk": {
+      "position": [
+        4002,
+        0,
+        -9
+      ],
+      "yaw": 0
+    },
     "exit": {
       "position": [
-        3697,
+        4002,
         0,
-        -25
+        -27
       ],
       "yaw": 0
     },
@@ -169,6 +273,110 @@
         1517,
         0,
         100
+      ],
+      "yaw": 0
+    },
+    "lane-ew-0": {
+      "position": [
+        3978,
+        0,
+        -25
+      ],
+      "yaw": 0
+    },
+    "lane-ew-1": {
+      "position": [
+        3990,
+        0,
+        -25
+      ],
+      "yaw": 0
+    },
+    "lane-ew-2": {
+      "position": [
+        4000,
+        0,
+        -21
+      ],
+      "yaw": 0
+    },
+    "lane-ew-3": {
+      "position": [
+        4012,
+        0,
+        -23
+      ],
+      "yaw": 0
+    },
+    "lane-ew-4": {
+      "position": [
+        4022,
+        0,
+        -25
+      ],
+      "yaw": 0
+    },
+    "lane-n-0": {
+      "position": [
+        3996,
+        0,
+        -22.6
+      ],
+      "yaw": 0
+    },
+    "lane-n-1": {
+      "position": [
+        3996,
+        0,
+        -19
+      ],
+      "yaw": 0
+    },
+    "lane-n-2": {
+      "position": [
+        4002,
+        0,
+        -9
+      ],
+      "yaw": 0
+    },
+    "lane-n-3": {
+      "position": [
+        4010,
+        0,
+        -7
+      ],
+      "yaw": 0
+    },
+    "lane-s-0": {
+      "position": [
+        4004.5,
+        0,
+        -21.75
+      ],
+      "yaw": 0
+    },
+    "lane-s-1": {
+      "position": [
+        4004.5,
+        0,
+        -30
+      ],
+      "yaw": 0
+    },
+    "lane-s-2": {
+      "position": [
+        4004.5,
+        0,
+        -39
+      ],
+      "yaw": 0
+    },
+    "lane-s-3": {
+      "position": [
+        4004.5,
+        0,
+        -47
       ],
       "yaw": 0
     },
@@ -347,11 +555,11 @@
       -300
     ],
     [
-      3800,
+      4200,
       -300
     ],
     [
-      3800,
+      4200,
       300
     ],
     [
@@ -7029,10 +7237,231 @@
       "id": "prop.jersey-barrier:375",
       "maxTier": 6,
       "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          4000.8,
+          2.025,
+          -25.35
+        ],
+        "min": [
+          3999.2,
+          0,
+          -28.65
+        ]
+      },
+      "id": "kit.dispersal-console:376",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3998.1515,
+          4.165,
+          -30.8
+        ],
+        "min": [
+          3985.8485,
+          0,
+          -35.2
+        ]
+      },
+      "id": "kit.dispersal-platform:377",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          4019.915,
+          7.335,
+          -33.7
+        ],
+        "min": [
+          4008.085,
+          0,
+          -44.3
+        ]
+      },
+      "id": "kit.dispersal-tank-bullet:378",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3991.915,
+          7.335,
+          -7.7
+        ],
+        "min": [
+          3980.085,
+          0,
+          -18.3
+        ]
+      },
+      "id": "kit.dispersal-tank-bullet:379",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          4027.2375,
+          12.8,
+          -6.6049999999999995
+        ],
+        "min": [
+          4016.7625,
+          0,
+          -15.395
+        ]
+      },
+      "id": "kit.dispersal-tank-sphere:380",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          4036.95,
+          17.8,
+          -26.7
+        ],
+        "min": [
+          4025.05,
+          0,
+          -35.3
+        ]
+      },
+      "id": "kit.dispersal-filtration-tower:381",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3975.95,
+          17.8,
+          3.3000000000000007
+        ],
+        "min": [
+          3964.05,
+          0,
+          -5.300000000000001
+        ]
+      },
+      "id": "kit.dispersal-filtration-tower:382",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3965.6,
+          9.75,
+          -37.9
+        ],
+        "min": [
+          3958.4,
+          0,
+          -48.1
+        ]
+      },
+      "id": "kit.dispersal-fan-housing:383",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          4008.4,
+          11.5,
+          -52.9
+        ],
+        "min": [
+          3991.6,
+          0,
+          -65.1
+        ]
+      },
+      "id": "kit.dispersal-turbine-hall:384",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          3996.04,
+          3.62,
+          6.3
+        ],
+        "min": [
+          3987.96,
+          0,
+          3.7
+        ]
+      },
+      "id": "kit.dispersal-pipe-straight:385",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          4004.04,
+          4.41,
+          7.67
+        ],
+        "min": [
+          3995.96,
+          0,
+          2.33
+        ]
+      },
+      "id": "kit.dispersal-pipe-tee:386",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          4010.9,
+          3.62,
+          7.9
+        ],
+        "min": [
+          4005.1,
+          0,
+          2.1
+        ]
+      },
+      "id": "kit.dispersal-pipe-elbow:387",
+      "maxTier": 6,
+      "minTier": 0
+    },
+    {
+      "aabb": {
+        "max": [
+          4037.62365,
+          7.0,
+          24.1
+        ],
+        "min": [
+          4026.37635,
+          0,
+          15.9
+        ]
+      },
+      "id": "bld.cure-service-building:388",
+      "maxTier": 6,
+      "minTier": 0
     }
   ],
   "district": "D-CURE",
-  "geometryHash": "d02edecef4e565955d08f885d5c053dd120158bb00cec7ba20ead619e2bd99c3",
+  "geometryHash": "be99204df07265de983c51a151616882e390957fe7dce1869894fc47424343b2",
   "lawns": [],
   "layers": [
     {
@@ -18739,6 +19168,409 @@
         ]
       },
       "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "kit.dispersal-console",
+      "id": "kit.dispersal-console:376",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        4000,
+        0,
+        -27
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          4000.8,
+          2.025,
+          -25.35
+        ],
+        "min": [
+          3999.2,
+          0,
+          -28.65
+        ]
+      },
+      "yaw": 0.0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "kit.dispersal-platform",
+      "id": "kit.dispersal-platform:377",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3992,
+        0,
+        -33
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3998.1515,
+          4.165,
+          -30.8
+        ],
+        "min": [
+          3985.8485,
+          0,
+          -35.2
+        ]
+      },
+      "yaw": 0.0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "kit.dispersal-tank-bullet",
+      "id": "kit.dispersal-tank-bullet:378",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        4014,
+        0,
+        -39
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          4019.915,
+          7.335,
+          -33.7
+        ],
+        "min": [
+          4008.085,
+          0,
+          -44.3
+        ]
+      },
+      "yaw": 3.141592653589793
+    },
+    {
+      "allowRoad": false,
+      "assetId": "kit.dispersal-tank-bullet",
+      "id": "kit.dispersal-tank-bullet:379",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3986,
+        0,
+        -13
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3991.915,
+          7.335,
+          -7.7
+        ],
+        "min": [
+          3980.085,
+          0,
+          -18.3
+        ]
+      },
+      "yaw": 0.0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "kit.dispersal-tank-sphere",
+      "id": "kit.dispersal-tank-sphere:380",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        4022,
+        0,
+        -11
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          4027.2375,
+          12.8,
+          -6.6049999999999995
+        ],
+        "min": [
+          4016.7625,
+          0,
+          -15.395
+        ]
+      },
+      "yaw": 3.141592653589793
+    },
+    {
+      "allowRoad": false,
+      "assetId": "kit.dispersal-filtration-tower",
+      "id": "kit.dispersal-filtration-tower:381",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        4031,
+        0,
+        -31
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          4036.95,
+          17.8,
+          -26.7
+        ],
+        "min": [
+          4025.05,
+          0,
+          -35.3
+        ]
+      },
+      "yaw": 0.0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "kit.dispersal-filtration-tower",
+      "id": "kit.dispersal-filtration-tower:382",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3970,
+        0,
+        -1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3975.95,
+          17.8,
+          3.3000000000000007
+        ],
+        "min": [
+          3964.05,
+          0,
+          -5.300000000000001
+        ]
+      },
+      "yaw": 3.141592653589793
+    },
+    {
+      "allowRoad": false,
+      "assetId": "kit.dispersal-fan-housing",
+      "id": "kit.dispersal-fan-housing:383",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3962,
+        0,
+        -43
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3965.6,
+          9.75,
+          -37.9
+        ],
+        "min": [
+          3958.4,
+          0,
+          -48.1
+        ]
+      },
+      "yaw": 0.0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "kit.dispersal-turbine-hall",
+      "id": "kit.dispersal-turbine-hall:384",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        4000,
+        0,
+        -59
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          4008.4,
+          11.5,
+          -52.9
+        ],
+        "min": [
+          3991.6,
+          0,
+          -65.1
+        ]
+      },
+      "yaw": 0.0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "kit.dispersal-pipe-straight",
+      "id": "kit.dispersal-pipe-straight:385",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        3992,
+        0,
+        5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          3996.04,
+          3.62,
+          6.3
+        ],
+        "min": [
+          3987.96,
+          0,
+          3.7
+        ]
+      },
+      "yaw": 0.0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "kit.dispersal-pipe-tee",
+      "id": "kit.dispersal-pipe-tee:386",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        4000,
+        0,
+        5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          4004.04,
+          4.41,
+          7.67
+        ],
+        "min": [
+          3995.96,
+          0,
+          2.33
+        ]
+      },
+      "yaw": 0.0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "kit.dispersal-pipe-elbow",
+      "id": "kit.dispersal-pipe-elbow:387",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        4008,
+        0,
+        5
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          4010.9,
+          3.62,
+          7.9
+        ],
+        "min": [
+          4005.1,
+          0,
+          2.1
+        ]
+      },
+      "yaw": 0.0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "bld.cure-service-building",
+      "id": "bld.cure-service-building:388",
+      "lightGroup": "block-0",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        4032,
+        0,
+        20
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ],
+      "visualAabb": {
+        "max": [
+          4037.62365,
+          7.0,
+          24.1
+        ],
+        "min": [
+          4026.37635,
+          0,
+          15.9
+        ]
+      },
+      "yaw": 0
     }
   ],
   "roads": {
@@ -19272,6 +20104,134 @@
         "start": "route-32"
       },
       {
+        "end": "route-34",
+        "id": "route-33",
+        "laneWidth": 8,
+        "points": [
+          [
+            3697,
+            -25
+          ],
+          [
+            3797,
+            -25
+          ]
+        ],
+        "start": "route-33"
+      },
+      {
+        "end": "route-35",
+        "id": "route-34",
+        "laneWidth": 8,
+        "points": [
+          [
+            3797,
+            -25
+          ],
+          [
+            3797,
+            -41
+          ]
+        ],
+        "start": "route-34"
+      },
+      {
+        "end": "route-36",
+        "id": "route-35",
+        "laneWidth": 8,
+        "points": [
+          [
+            3797,
+            -41
+          ],
+          [
+            3897,
+            -41
+          ]
+        ],
+        "start": "route-35"
+      },
+      {
+        "end": "route-37",
+        "id": "route-36",
+        "laneWidth": 8,
+        "points": [
+          [
+            3897,
+            -41
+          ],
+          [
+            3897,
+            -25
+          ]
+        ],
+        "start": "route-36"
+      },
+      {
+        "end": "route-38",
+        "id": "route-37",
+        "laneWidth": 8,
+        "points": [
+          [
+            3897,
+            -25
+          ],
+          [
+            3940,
+            -25
+          ]
+        ],
+        "start": "route-37"
+      },
+      {
+        "end": "route-39",
+        "id": "route-38",
+        "laneWidth": 8,
+        "points": [
+          [
+            3940,
+            -25
+          ],
+          [
+            3955,
+            -25
+          ]
+        ],
+        "start": "route-38"
+      },
+      {
+        "end": "route-40",
+        "id": "route-39",
+        "laneWidth": 8,
+        "points": [
+          [
+            3955,
+            -25
+          ],
+          [
+            3968,
+            -23
+          ]
+        ],
+        "start": "route-39"
+      },
+      {
+        "end": "route-41",
+        "id": "route-40",
+        "laneWidth": 8,
+        "points": [
+          [
+            3968,
+            -23
+          ],
+          [
+            3978,
+            -25
+          ]
+        ],
+        "start": "route-40"
+      },
+      {
         "end": "industrial-service-1",
         "id": "industrial-service-0",
         "laneWidth": 6,
@@ -19640,6 +20600,62 @@
         ]
       },
       {
+        "id": "route-34",
+        "point": [
+          3797,
+          -25
+        ]
+      },
+      {
+        "id": "route-35",
+        "point": [
+          3797,
+          -41
+        ]
+      },
+      {
+        "id": "route-36",
+        "point": [
+          3897,
+          -41
+        ]
+      },
+      {
+        "id": "route-37",
+        "point": [
+          3897,
+          -25
+        ]
+      },
+      {
+        "id": "route-38",
+        "point": [
+          3940,
+          -25
+        ]
+      },
+      {
+        "id": "route-39",
+        "point": [
+          3955,
+          -25
+        ]
+      },
+      {
+        "id": "route-40",
+        "point": [
+          3968,
+          -23
+        ]
+      },
+      {
+        "id": "route-41",
+        "point": [
+          3978,
+          -25
+        ]
+      },
+      {
         "id": "industrial-service-1",
         "point": [
           1297,
@@ -19692,11 +20708,11 @@
           -300
         ],
         [
-          3800,
+          4200,
           -300
         ],
         [
-          3800,
+          4200,
           300
         ],
         [
@@ -20572,6 +21588,214 @@
       "height": 0.002,
       "polygon": [
         [
+          3697.0,
+          -21.0
+        ],
+        [
+          3697.0,
+          -29.0
+        ],
+        [
+          3797.0,
+          -29.0
+        ],
+        [
+          3797.0,
+          -21.0
+        ],
+        [
+          3697.0,
+          -21.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          3801.0,
+          -25.0
+        ],
+        [
+          3793.0,
+          -25.0
+        ],
+        [
+          3793.0,
+          -41.0
+        ],
+        [
+          3801.0,
+          -41.0
+        ],
+        [
+          3801.0,
+          -25.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          3797.0,
+          -37.0
+        ],
+        [
+          3797.0,
+          -45.0
+        ],
+        [
+          3897.0,
+          -45.0
+        ],
+        [
+          3897.0,
+          -37.0
+        ],
+        [
+          3797.0,
+          -37.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          3893.0,
+          -41.0
+        ],
+        [
+          3901.0,
+          -41.0
+        ],
+        [
+          3901.0,
+          -25.0
+        ],
+        [
+          3893.0,
+          -25.0
+        ],
+        [
+          3893.0,
+          -41.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          3897.0,
+          -21.0
+        ],
+        [
+          3897.0,
+          -29.0
+        ],
+        [
+          3940.0,
+          -29.0
+        ],
+        [
+          3940.0,
+          -21.0
+        ],
+        [
+          3897.0,
+          -21.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          3940.0,
+          -21.0
+        ],
+        [
+          3940.0,
+          -29.0
+        ],
+        [
+          3955.0,
+          -29.0
+        ],
+        [
+          3955.0,
+          -21.0
+        ],
+        [
+          3940.0,
+          -21.0
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          3954.391771262984,
+          -21.04651320939753
+        ],
+        [
+          3955.608228737016,
+          -28.95348679060247
+        ],
+        [
+          3968.608228737016,
+          -26.95348679060247
+        ],
+        [
+          3967.391771262984,
+          -19.04651320939753
+        ],
+        [
+          3954.391771262984,
+          -21.04651320939753
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
+          3968.7844645405526,
+          -19.07767729723632
+        ],
+        [
+          3967.2155354594474,
+          -26.92232270276368
+        ],
+        [
+          3977.2155354594474,
+          -28.92232270276368
+        ],
+        [
+          3978.7844645405526,
+          -21.07767729723632
+        ],
+        [
+          3968.7844645405526,
+          -19.07767729723632
+        ]
+      ],
+      "surface": "asphalt"
+    },
+    {
+      "height": 0.002,
+      "polygon": [
+        [
           1300.0,
           25.0
         ],
@@ -21043,6 +22267,38 @@
       "size": 100
     },
     {
+      "id": "cure-33--1",
+      "origin": [
+        3800,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-34--1",
+      "origin": [
+        3900,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-35--1",
+      "origin": [
+        4000,
+        -300
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-36--1",
+      "origin": [
+        4100,
+        -300
+      ],
+      "size": 100
+    },
+    {
       "id": "cure-0-0",
       "origin": [
         500,
@@ -21302,6 +22558,38 @@
       "id": "cure-32-0",
       "origin": [
         3700,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-33-0",
+      "origin": [
+        3800,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-34-0",
+      "origin": [
+        3900,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-35-0",
+      "origin": [
+        4000,
+        -200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-36-0",
+      "origin": [
+        4100,
         -200
       ],
       "size": 100
@@ -21571,6 +22859,38 @@
       "size": 100
     },
     {
+      "id": "cure-33-1",
+      "origin": [
+        3800,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-34-1",
+      "origin": [
+        3900,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-35-1",
+      "origin": [
+        4000,
+        -100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-36-1",
+      "origin": [
+        4100,
+        -100
+      ],
+      "size": 100
+    },
+    {
       "id": "cure-0-2",
       "origin": [
         500,
@@ -21830,6 +23150,38 @@
       "id": "cure-32-2",
       "origin": [
         3700,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-33-2",
+      "origin": [
+        3800,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-34-2",
+      "origin": [
+        3900,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-35-2",
+      "origin": [
+        4000,
+        0
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-36-2",
+      "origin": [
+        4100,
         0
       ],
       "size": 100
@@ -22099,6 +23451,38 @@
       "size": 100
     },
     {
+      "id": "cure-33-3",
+      "origin": [
+        3800,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-34-3",
+      "origin": [
+        3900,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-35-3",
+      "origin": [
+        4000,
+        100
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-36-3",
+      "origin": [
+        4100,
+        100
+      ],
+      "size": 100
+    },
+    {
       "id": "cure-0-4",
       "origin": [
         500,
@@ -22358,6 +23742,38 @@
       "id": "cure-32-4",
       "origin": [
         3700,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-33-4",
+      "origin": [
+        3800,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-34-4",
+      "origin": [
+        3900,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-35-4",
+      "origin": [
+        4000,
+        200
+      ],
+      "size": 100
+    },
+    {
+      "id": "cure-36-4",
+      "origin": [
+        4100,
         200
       ],
       "size": 100
