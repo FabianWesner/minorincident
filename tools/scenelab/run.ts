@@ -60,7 +60,7 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   const contrast: { frame: number; result: ContrastResult }[] = [], measure = async (f: number) => { if (!spec.contrast || f === 0) return; // frame 0: the follow camera has not settled on a driven vehicle yet
     const result = await measureContrast(session.page, spec); if (result) contrast.push({ frame: f, result }); };
   const pixels: { frame: number; pixels: Awaited<ReturnType<typeof canvasFrame>> }[] = [];
-  const edgeSamples: { frame: number; edges: number; extremeEdges: number; extremeEdgeShare: number }[] = [];
+  const edgeSamples: ({ frame: number } & Awaited<ReturnType<typeof canvasEdgeNoise>>)[] = [];
   for (const stop of [...stops].sort((a, b) => a - b)) {
     if (stop > frames) break;
     if (stop > frame) frame = await session.step(stop - frame);
