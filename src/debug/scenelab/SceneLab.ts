@@ -1,3 +1,4 @@
+import { cureEncounters, cureEncounterSlots } from '../../levels/L10/encounters';
 import { levelTenMission } from '../../levels/L10/mission';
 import { preset } from '../../sim/progression/Campaign';
 import { applyCampaign } from '../../sim/progression/apply';
@@ -136,6 +137,13 @@ export class SceneLab {
   /** Build and load a scene; returns the resolved placements/actors so a caller can address them by id. */
   private readonly barOverrides = new Map<InfectedDef, boolean | undefined>();
   async load(spec: SceneSpec) {
+    if (spec.cureEncounter) {
+      const group = cureEncounters.find(g => g.id === spec.cureEncounter);
+      if (!group) throw new Error(`Unknown cure encounter: ${spec.cureEncounter}`);
+      spec = { ...spec, actors: [...(spec.actors ?? []), ...cureEncounterSlots(group, this.game.quality.tier).map(s => ({
+        id: s.key, kind: 'infected' as const, archetype: s.archetype, at: [s.x, s.z] as Point, yaw: 180,
+      }))] };
+    }
     if (!spec.megaHud) {
       delete this.game.ui.hud.root.dataset.sceneHud;
       if (this.spec?.megaHud && !this.game.ui.enabled) this.game.ui.hud.root.remove();

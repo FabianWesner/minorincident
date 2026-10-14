@@ -33,7 +33,12 @@ for (const tier of ['high', 'low'] as const) test(`T-E32-03-D1-D2-${tier} @E32-A
             break;
           }
           expect(i, `stuck toward ${x},${z} from ${p.x},${p.z}`).toBeLessThan(4999);
-          w.setInput({ move: { x: dx / d, z: dz / d } });
+          const threats = w.infected!.active.filter(e => e.health.current > 0 && !e.infected!.hidden);
+          threats.sort((a, b) => Math.hypot(a.transform.x - p.x, a.transform.z - p.z) - Math.hypot(b.transform.x - p.x, b.transform.z - p.z));
+          const target = threats[0], rack = w.combat!.runner.loadout.state.RIGHT.rack;
+          const aim = target ? { x: target.transform.x - p.x, z: target.transform.z - p.z } : { x: dx, z: dz };
+          w.setInput({ move: { x: dx / d, z: dz / d }, selectedSlot: { side: 'RIGHT', index: rack.length - 1 },
+            aim, right: { down: !!target, held: !!target, up: false } });
           const at = performance.now(); w.update(); times.push(performance.now() - at);
           expect(w.chunks!.resident(p.x, p.z)).toBe(true);
           expect(w.physics.floorHeight(p.x, p.z)).toBeGreaterThanOrEqual(0);
@@ -45,6 +50,8 @@ for (const tier of ['high', 'low'] as const) test(`T-E32-03-D1-D2-${tier} @E32-A
     }
     w.setInput({ move: { x: 0, z: 0 } });
     expect(w.entities.get(1)!.health.current).toBe(w.entities.get(1)!.health.max);
+    expect(mission.state.stats.deaths).toBe(0);
+    expect(Object.keys(w.l10Encounters!.state.spawned).length).toBeGreaterThan(40);
     expect(w.entities.get(1)!.weapons!.LEFT.rack.map(s => s.id)).toEqual(['weapon.fire-axe']);
     expect(w.entities.get(1)!.weapons!.RIGHT.rack.map(s => s.id)).toEqual(['weapon.fire-axe', 'weapon.pistol', 'weapon.shotgun', 'weapon.army-mg']);
     expect(mission.state.checkpoint).toBe('cure-research-entry');

@@ -4,7 +4,12 @@ test.use({ channel: 'chrome', headless: true, launchOptions: { args: ['--use-ang
 for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high','low'] as const) for (const zoom of [1, .5]) test(`@perf @E32-AC31 D1/D2 R1–R4 and seams ${backend} ${quality} zoom ${zoom} E18 budgets`, async ({ page, context }) => {
   test.setTimeout(180_000);
   await boot(page, `/?test=1${backend === 'webgl' ? '&renderer=webgl' : ''}&quality=${quality}&audio=muted&dpr=1`);
-  await page.evaluate(async () => { await window.__SS__!.loadLevel('L10', { seed: 32 }); });
+  await page.evaluate(async () => {
+    const a = window.__SS__!; await a.loadLevel('L10', { seed: 32 });
+    // This is an isolated renderer/AI stress sweep, not the no-cheat completion fixture.
+    // Its rapid anchor teleports must not bypass the authored first-minute population guard.
+    a.pause(); a.cheats.god(true); await a.step(3601);
+  });
   if (zoom === .5) {
     await page.mouse.move(800, 450);
     for (let i = 0; i < 5; i++) await page.mouse.wheel(0, -100);
@@ -14,7 +19,7 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
     const rows: { x: number; z: number; cameraZoom: number; frameP95: number; simP95: number }[] = [];
     const p95 = (v: number[]) => v.sort((a,b) => a-b)[Math.ceil(v.length * .95)-1];
     let draws = 0, triangles = 0, peak = 0, resident = 0;
-    const spots = [{ x:547,z:0 }, { x:747,z:25 }, { x:767,z:25 }, { x:937,z:80 }, { x:1237,z:25 }, { x:1257,z:25 }, { x:1517,z:100 }, { x:1517,z:-55 }, { x:1837,z:25 }, { x:1857,z:25 }, { x:2137,z:-75 }, { x:2327,z:110 }, { x:2467,z:-5 }];
+    const spots = [{ x:547,z:0 }, { x:747,z:25 }, { x:767,z:25 }, { x:937,z:80 }, { x:1237,z:25 }, { x:1257,z:25 }, { x:1517,z:100 }, { x:1517,z:-55 }, { x:1837,z:25 }, { x:1857,z:25 }, { x:1950,z:-75 }, { x:2060,z:-75 }, { x:2137,z:-75 }, { x:2327,z:110 }, { x:2467,z:-5 }];
     for (const spot of spots) {
       a.teleport('player', spot); a.camera.follow(); a.resume();
       await a.screenshotReady();
@@ -42,5 +47,6 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
   expect(result.frameP95).toBeLessThanOrEqual(quality === 'low' ? 33.3 : 16.7); expect(result.simP95).toBeLessThanOrEqual(quality === 'low' ? 6 : 4);
   expect(result.draws).toBeLessThanOrEqual(quality === 'low' ? 300 : 600); expect(result.triangles).toBeLessThanOrEqual(quality === 'low' ? 500000 : 1500000);
   expect(result.resident).toBeLessThanOrEqual(quality === 'low' ? 9 : 25);
+  expect(result.peak).toBeGreaterThanOrEqual(quality === 'low' ? 28 : 45);
   expect(result.peak).toBeLessThanOrEqual(quality === 'low' ? 100 : 200); expect(heapMB).toBeLessThanOrEqual(quality === 'low' ? 250 : 400);
 });

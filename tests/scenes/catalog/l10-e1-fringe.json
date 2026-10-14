@@ -1,0 +1,49 @@
+{
+  "name": "l10-e1-fringe",
+  "note": "Production depth encounter and intended checkpoint weapon. Review both tiers/zooms: readable humans, low dogs and stock Alpha bar; open road for evasion. Crowds come from the shipped encounter data.",
+  "seed": 32,
+  "ground": "district",
+  "time": "L9-crossing",
+  "dof": false,
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        817,
+        40
+      ],
+      [
+        902,
+        120
+      ]
+    ]
+  },
+  "cureEncounter": "fringe-patrol",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        857,
+        80
+      ],
+      "loadout": [
+        "weapon.pistol",
+        "weapon.pistol"
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "frames": 60,
+  "sheet": 30,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}
