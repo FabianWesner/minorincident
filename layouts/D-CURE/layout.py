@@ -1,4 +1,4 @@
-"""L10-D1/D2/D3: R1–R6 on the shared 100 m streamer. R2's blocked street has an open northern detour."""
+"""L10-D1/D2/D3/D4: R1–R7 on the shared 100 m streamer. R2's blocked street has an open northern detour."""
 import json
 import math
 import bpy
@@ -6,7 +6,7 @@ from mathutils import Vector
 from mathutils.geometry import tessellate_polygon
 from sslib.layout import Layout, material
 
-l = Layout('D-CURE', 'The Cure — crash through research and destroyed corridor', size=(3300,600))
+l = Layout('D-CURE', 'The Cure — crash through research and destroyed corridor', size=(3700,600))
 l.yaw_matches_collision = True
 source = json.loads((l.root / 'layouts/D-CURE/routes.json').read_text())
 for obj in l.layers[0]: bpy.data.objects.remove(obj, do_unlink=True)
@@ -30,7 +30,7 @@ def clip(poly, axis, value, greater):
 
 chunks = []
 for z in range(-1,5):
-    for x in range(33):
+    for x in range(37):
         chunks.append(dict(id=f'cure-{x}-{z}', origin=[500+x*100,-200+z*100], size=100))
 l.data['terrainChunks'] = chunks
 
@@ -116,6 +116,8 @@ surface('crash-dry',[[500,-125],[740,-125],[740,125],[500,125]],'khaki',-.004)
 l.data['surfaces'].append(dict(surface='grass',height=0,polygon=source['bounds']))
 # Graph shares the exact boundary vertex; no duplicate slab or invisible region gate.
 route = [p for i,r in enumerate(source['regions']) for p in (r['route'] if i == 0 else r['route'][1:])]
+# Vehicle-width road ends at the apron; the remaining critical route is pedestrian nav.
+route = route[:route.index([3978,-25])+1]
 for i,p in enumerate(route): l.data['roads']['nodes'].append(dict(id=f'route-{i}',point=p))
 for i,(a,b) in enumerate(zip(route,route[1:])):
     width=8; d=math.dist(a,b); nx=-(b[1]-a[1])/d*width/2; nz=(b[0]-a[0])/d*width/2
@@ -145,7 +147,7 @@ for detour in source['detours']:
 a,b=[807,25],[1057,25]
 surface('blocked-road',[[807,21],[1057,21],[1057,29],[807,29]],'asphalt',.002)
 for name,p in source['anchors'].items(): l.anchor(name,[p[0],0,p[1]])
-l.anchor('player-start',[547,0,0]); l.anchor('exit',[3697,0,-25])
+l.anchor('player-start',[547,0,0]); l.anchor('exit',[4002,0,-27])
 # Crash continuity: same safe position as L9 crawl-end, spent wreck behind the courier.
 l.place('veh.military-apc',[540,0,-5],yaw=1.5); l.data['placements'][-1]['decay']='wrecked'
 for x,z in [(557,30),(600,-35),(697,-35)]: l.place('prop.tree',[x,0,z])
@@ -210,6 +212,21 @@ for x,z in [(3067,115),(3217,115),(3467,115),(3617,-45)]:
 surface('corridor-blocked-road',[[2977,-9],[3577,-9],[3577,-1],[2977,-1]],'asphalt',.002)
 for i in range(110): l.place('decay.makeshift-barricade',[3317,0,-89+i*1.5])
 for x,z in [(3317,83),(3317,107)]: l.place('prop.jersey-barrier',[x,0,z])
+# R7 uses the TS finale anchors, serialized by tools/layouts/build.ts before Blender.
+finale = json.loads((l.root / '.cache/layouts/D-CURE-finale.json').read_text())
+ox,oz = source['anchors']['dispersal-origin']
+surface('dispersal-apron',[[ox-48,oz-42],[ox+44,oz-42],[ox+44,oz+40],[ox-48,oz+40]],'asphalt',.002)
+for prop in finale['props']:
+    x,z = prop['at']
+    l.place(prop['asset'],[ox+x,0,oz+z],yaw=math.radians(prop['yaw']))
+# Named paths document the clear rocket dodge corridors; all use the same nav surface.
+for lane in finale['lanes']:
+    for i,(x,z) in enumerate(lane['points']): l.anchor(lane['id']+'-'+str(i),[ox+x,0,oz+z])
+l.anchor('dispersal-gun',[ox-10,3,oz-6])
+l.anchor('dispersal-stair-top',[ox-4,3.08,oz-6])
+l.anchor('epilogue-camera',[ox+45,50,oz+45])
+# Low refuge beyond the arena: a future survivor emergence point, clear of every dodge lane.
+l.place('bld.cure-service-building',[ox+32,0,oz+47])
 for p in l.data['placements']: p['maxTier']=6
 for c in l.data['colliders']: c['maxTier']=6
 # Semantic pavement shares the renderer's level top, no raised seam at the region/chunk boundary.
