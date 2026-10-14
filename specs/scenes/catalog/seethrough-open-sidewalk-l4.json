@@ -31,6 +31,14 @@
    ],
    "yaw": 0,
    "state": "idle"
+  },
+  {
+   "id": "corgi",
+   "kind": "corgi",
+   "at": [
+    -14.6,
+    -22.0
+   ]
   }
  ],
  "camera": {
@@ -43,9 +51,11 @@
  },
  "frames": 60,
  "expect": {
-  "consoleErrors": 0
+  "consoleErrors": 0,
+  "seeThroughCutPixelsMax": 0
  },
  "shots": [
-  50
- ]
+  59
+ ],
+ "sheet": 20
 }
