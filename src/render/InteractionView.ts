@@ -242,14 +242,14 @@ export class InteractionView extends Group {
         if (e.barricade && e.archetype!=='l6.service-gate') {
           const b = e.barricade, s = b.slot;
           object.rotation.y = -Math.atan2(s.b.z - s.a.z, s.b.x - s.a.x);
-          object.getObjectByName('slot-ghost')!.visible = !b.intact && !!player && Math.hypot(player.transform.x - e.transform.x, player.transform.z - e.transform.z) <= 8;
+          object.getObjectByName('slot-ghost')!.visible = !b.intact && this.world.barricades!.playerBuildable(e) && !!player && Math.hypot(player.transform.x - e.transform.x, player.transform.z - e.transform.z) <= 8;
           object.getObjectByName('slot-brace')!.visible = b.intact;
           object.getObjectByName('slot-crack')!.visible = b.intact && e.health.current < e.health.max * .7;
           const age = this.world.tick - b.hitTick;
           if (b.intact && age < 12) object.position.x += Math.sin(age * 2) * .045 * (1 - age / 12);
         }
       }
-      if (player && e.interactable && (e.interactable.enabled || e.barricade && !e.barricade.intact) && (!e.interactable.completed || e.interactable.instant && isDoor(e.interactable.kind))) {
+      if (player && e.interactable && (!e.barricade || this.world.barricades!.playerBuildable(e)) && (e.interactable.enabled || e.barricade && !e.barricade.intact) && (!e.interactable.completed || e.interactable.instant && isDoor(e.interactable.kind))) {
         const d = (e.transform.x - player.transform.x) ** 2 + (e.transform.z - player.transform.z) ** 2;
         if (d < nearest) { nearest = d; selected = e; }
         if (d < ringDistance && isMissionInteraction(this.world, e)) { ringDistance = d; ringTarget = e; }
@@ -268,7 +268,10 @@ export class InteractionView extends Group {
       // Leave the survivor's head/torso clear when they stand just behind the device.
       this.projection.set(selected.transform.x, 2.8, selected.transform.z).project(camera);
       this.panel.style.left = `${(this.projection.x + 1) * innerWidth / 2}px`; this.panel.style.top = `${(1 - this.projection.y) * innerHeight / 2}px`;
-      const label = selected.barricade && !selected.barricade.intact ? `${c.label} · ${Math.round(selected.barricade.coverage * 100)}% coverage` : c.label, caption = selected.barricade && !c.enabled ? 'Push props into the rail · 80% needed' : c.hint || (c.completed && isDoor(c.kind) ? `E / middle-click to ${c.open ? 'close' : 'open'}` : nearest <= c.radius ** 2 ? c.instant ? 'Stand here · E / middle-click' : 'Stand here to interact' : 'Move into the ring');
+      const b = selected.barricade;
+      const label = b && !b.intact ? `${c.label} · ${Math.round(b.coverage * 100)}% coverage` : c.label;
+      const purpose = !b ? null : b.intact ? 'Repair the barricade: stand here to reinforce it' : b.slot.boardUp ? 'Seal this opening: stand here to board it up' : c.enabled ? 'Barricade the gap: press E / middle-click to brace the crates' : 'Barricade the gap: push crates into the marked line · 80% needed';
+      const caption = c.hint || purpose || (c.completed && isDoor(c.kind) ? `E / middle-click to ${c.open ? 'close' : 'open'}` : nearest <= c.radius ** 2 ? c.instant ? 'Stand here · E / middle-click' : 'Stand here to interact' : 'Move into the ring');
       if (this.label.textContent !== label) this.label.textContent = label;
       if (this.caption.textContent !== caption) this.caption.textContent = caption;
       this.panel.dataset.entityId = String(selected.id); this.panel.dataset.hint = c.hint;

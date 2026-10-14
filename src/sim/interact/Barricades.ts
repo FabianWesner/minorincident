@@ -13,6 +13,8 @@ export interface BarricadeSlot {
   initialHp?: number;
   /** Low sandbag cover permits runners to cross in 72 ticks. */
   sandbag?: boolean;
+  /** Army/destructible cover can break without exposing a player rebuild interaction. */
+  playerBuildable?: boolean;
 }
 /** Serialized on the slot entity: checkpoints preserve HP, coverage and participating prop IDs. */
 export interface BarricadeState { slot: BarricadeSlot; coverage: number; props: string[]; carId?: number; intact: boolean; hitTick: number; breaks: number }
@@ -28,7 +30,7 @@ export class Barricades {
     world.events.on('interact.completed', e => {
       if (e.type !== 'interact.completed') return;
       const entity = world.entities.get(e.id), b = entity?.barricade;
-      if (!entity || !b) return;
+      if (!entity || !b || !this.playerBuildable(entity)) return;
       if (b.intact) {
         entity.health.current = Math.min(entity.health.max, entity.health.current + entity.health.max * .25);
         this.emit(entity, 'barricade.repaired');
@@ -61,6 +63,11 @@ export class Barricades {
     return id;
   }
   private find(slotId: string): EntitySnapshot | undefined { return this.world.entities.values().find(e => e.barricade?.slot.id === slotId); }
+  /** Campaign rebuilds belong to the missions that use them; sandbox E26 fixtures remain buildable. */
+  playerBuildable(entity: EntitySnapshot): boolean {
+    return !!entity.barricade && entity.barricade.slot.playerBuildable !== false &&
+      (!/^L\d+$/.test(this.world.scenario ?? '') || this.world.missions?.def.l2 === true || this.world.missions?.def.l6 === true);
+  }
   /** Mission predicate: unknown/unbuilt/broken slots return false. */
   barricadeIntact(slotId: string): boolean { return this.find(slotId)?.barricade?.intact === true; }
   /** Empty or unknown groups return false; every authored slot must be intact. */
@@ -106,6 +113,7 @@ export class Barricades {
     for (const e of this.world.entities.iterate()) {
       const b = e.barricade, c = e.interactable; if (!b || !c) continue;
       if (b.intact && e.health.current <= 0) this.break(e);
+      if (!this.playerBuildable(e)) { c.enabled = false; c.progress = 0; b.coverage = b.intact ? 1 : 0; continue; }
       const candidates = b.intact ? null : this.candidates(e);
       b.coverage = b.intact || b.slot.boardUp || this.car(e) ? 1 : candidates!.coverage;
       c.label = b.intact ? 'Repair' : b.slot.boardUp ? 'Board up' : 'Brace';
