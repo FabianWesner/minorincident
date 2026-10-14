@@ -24,9 +24,9 @@ const presets = {
   "L6-subway": { sun: "#9fb4ff", intensity: 0, polar: 1.55, azimuth: 2.2, shadow: "#39365f", sky: "#111b29", fog: "#293141", fogNear: 30, fogFar: 85, practical: 1, rim: .25, aura: 1.3 },
   L6: { sun: '#9fb4ff', intensity: 0.38, polar: 1.55, azimuth: 2.2, shadow: '#39365f', sky: '#202c4b', fog: '#344161', fogNear: 45, fogFar: 120, practical: 1, rim: .4, aura: .45 },
   /** Open crossing: retain the journey's moonlight, with air clear enough for 150 m sight lines. `roadLift`: E31-AC16 night route read (the asphalt road is a pale moonlit band, 3:1 against the verge). */
-  'L9-crossing': { sun: '#9fb4ff', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#39365f', sky: '#202c4b', fog: '#344161', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, roadLift: 2.3 },
+  'L9-crossing': { sun: '#9fb4ff', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#39365f', sky: '#202c4b', fog: '#344161', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, roadLift: 2 },
   /** L10 night run (E32): the L9 moonlight with a darker shadow tint (dark verges), a brighter horizon haze for building silhouettes and the asphalt `roadLift`, so R1-R6 read at 3:1 (E31-AC16) while the night stays night. */
-  'L10-night': { sun: '#9fb4ff', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#2b2949', sky: '#2a3a63', fog: '#3d4c75', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, roadLift: 2.3 },
+  'L10-night': { sun: '#9fb4ff', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#25243f', sky: '#2a3a63', fog: '#3d4c75', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, roadLift: 1.8 },
   /** E30 intact zoo at night: cool moonlight, powered warm practicals; no mandatory blackout. */
   "L8-zoo": { sun: '#9fb4ff', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#39365f', sky: '#202c4b', fog: '#344161', fogNear: 45, fogFar: 120, practical: 1, rim: .4, aura: .45 },
   /** Night segments without fires (L4 blackout blocks, scripted night beats): moonlight only, practicals carry the scene. */

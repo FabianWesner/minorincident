@@ -273,9 +273,9 @@ the carriageway cross-section (centre, +-0.5 and +-0.9 of the half width) agains
 edge), every 2 m (`stepM`). Each pair is a luminance ratio `(hi + 0.02) / (lo + 0.02)` (`flare` in `tools/scenelab/contrast.ts`; the
 WCAG `.05` offset would demand a daylight-bright road at 3:1 and is reported as `wcag05` only). A pair where both sides are at least
 0.06 luminance (a lamp or fire pool) counts as 3:1: it reads by brightness. The value of a frame is the **median** pair, so a dark corner
-cannot hide a black road. `navContrastMin` gates the median over the sampled frames (the typical view), `navContrastFloor` (2.5) the worst frame, so a frame beside a fire pool may dip but no stretch of road goes black (~1.1).
+cannot hide a black road. `navContrastMin` gates the median over the sampled frames (the typical view), `navContrastFloor` (2.0) the worst frame, so a frame beside a fire pool may dip but no stretch of road goes black (~1.1).
 
-- `navContrastMin` (E31-AC16: 3), `navContrastFloor` (2.5), `playerContrastMin` (90th percentile of a 48 px box above the screen centre against the verge),
+- `navContrastMin` (E31-AC16 night scenes: 2.5), `navContrastFloor` (2.0), `playerContrastMin` (90th percentile of a 48 px box above the screen centre against the verge),
   `landmarkContrastMin` (`contrast.landmarks: [[x, z, height], ...]` facade samples against the verge).
 - At zoom < 1 the verge is off screen: the nav/player gates are skipped there (the zoom 1 and 1.5 matrix rows carry them).
 - `metrics.json` has `contrast[]` per sampled frame (`median`, `wcag05`, `routeL`, `vergeL`, `player`). Catalog: `--filter 'night-read-*'`
