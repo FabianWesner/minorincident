@@ -1,7 +1,7 @@
 // Adapted from Bruno Simon folio-2025 Materials/MeshDefaultMaterial.js (MIT).
 import { weatherSurface, trackMask, weatherMaterialFlags } from './WeatherView';
-import { MeshLambertNodeMaterial, type Texture, type Node, type Color } from 'three/webgpu';
-import { Fn, If, Discard, attribute, float, max, vec3, mix, normalWorld, normalView, positionWorld, texture, uniform, vec2, vec4, luminance, rangeFogFactor, positionGeometry, color, positionViewDirection, cameraPosition, reflect } from 'three/tsl';
+import { MeshLambertNodeMaterial, NodeUpdateType, type Texture, type Node, type Color } from 'three/webgpu';
+import { sharedUniformGroup, Fn, If, Discard, attribute, float, max, vec3, mix, normalWorld, normalView, positionWorld, texture, uniform, vec2, vec4, luminance, rangeFogFactor, positionGeometry, color, positionViewDirection, cameraPosition, reflect } from 'three/tsl';
 import { paletteTokens, type PaletteToken } from '../data/palette';
 import type { Lighting } from './Lighting';
 import { surfaceDetail } from './SurfaceDetail';
@@ -10,18 +10,21 @@ import { hashArray, hashString } from 'three/src/nodes/core/NodeUtils.js';
 
 /** Palette-sampled Lambert node material with Bruno's captured drop-shadow, core shade and terrain bounce. */
 export class PaletteMaterial extends MeshLambertNodeMaterial {
-  readonly fade = uniform(1);
-  readonly emissivePower = uniform(1);
+  // Material-local values are identical across its meshes during one render.
+  // Keep them separate from the global lighting group and per-object matrices.
+  private readonly _uniformGroup = sharedUniformGroup('palette', 0, NodeUpdateType.RENDER);
+  readonly fade = uniform(1).setGroup(this._uniformGroup);
+  readonly emissivePower = uniform(1).setGroup(this._uniformGroup);
   /** Accumulated blood amount controls broad surface splats, not a fragment probability. */
-  readonly bloodCoverage = uniform(0);
+  readonly bloodCoverage = uniform(0).setGroup(this._uniformGroup);
   /** Render-only emissive hit pulse. */
-  readonly hitFlash = uniform(0);
+  readonly hitFlash = uniform(0).setGroup(this._uniformGroup);
   /** E27 burned variant: 0 = authored surface, 1 = charred soot (exploded cars). */
-  readonly char = uniform(0);
+  readonly char = uniform(0).setGroup(this._uniformGroup);
   /** E25 night readability: 1 on crowd figures (infected/civilians) for a moonlit silhouette rim. */
-  readonly figureRim = uniform(0);
+  readonly figureRim = uniform(0).setGroup(this._uniformGroup);
   /** Moving figures shed ash; snow still accumulates as on the rest of the world. */
-  readonly movingFigure = uniform(0);
+  readonly movingFigure = uniform(0).setGroup(this._uniformGroup);
   // NodeMaterial.copy skips underscored internals; frozen copies need their own cache.
   private readonly _outputs = new Map<number, Node>();
   private readonly _propertyHashes = new Map<string, number>();
@@ -34,7 +37,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
     this.normalNode = normalView;
     // The swatch is data: palette colors share shader source instead of embedding
     // a different texture coordinate literal in every fragment program.
-    const original = nodes?.base ?? (vertexSwatches ? attribute('color', 'vec3') : swatch ? uniform(swatch).rgb : texture(palette, vec2(uniform((paletteTokens.indexOf(token) + 0.5) / (paletteTokens.length * 2)), 0.5)).rgb);
+    const original = nodes?.base ?? (vertexSwatches ? attribute('color', 'vec3') : swatch ? uniform(swatch).setGroup(this._uniformGroup).rgb : texture(palette, vec2(uniform((paletteTokens.indexOf(token) + 0.5) / (paletteTokens.length * 2)).setGroup(this._uniformGroup), 0.5)).rgb);
     const base = !swatch && !vertexSwatches && !nodes && !emissive ? surfaceDetail(token, original, lighting.look.nodes) : original;
     const caughtShadow = float(1).toVar();
     this.receivedShadowNode = Fn(([shadow]: [Node<'vec3'>]) => { caughtShadow.mulAssign(shadow.r); return float(1); }) as unknown as NonNullable<MeshLambertNodeMaterial['receivedShadowNode']>;

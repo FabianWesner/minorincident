@@ -76,6 +76,8 @@ test('@transition outro prefetch warms authored decay assets without assembling 
   const assemble = vi.spyOn(layoutModule, 'levelTwoLayouts');
   const source = readFileSync('public/assets/layouts/D-GROVE.layout.json', 'utf8');
   const requested: string[] = [];
+  const arrayBuffer = vi.spyOn(Response.prototype, 'arrayBuffer');
+  const blob = vi.spyOn(Response.prototype, 'blob');
   vi.stubGlobal('fetch', vi.fn(async (url: string, options: RequestInit & { priority?: string }) => {
     expect(options.priority).toBe('low'); requested.push(url);
     return new Response(url.endsWith('.layout.json') ? source : new Uint8Array([0]));
@@ -95,6 +97,9 @@ test('@transition outro prefetch warms authored decay assets without assembling 
   expect(requested.some(url => /npc\.police-officer/.test(url))).toBe(true);
   expect(requested.some(url => /npc\.national-guard/.test(url))).toBe(true);
   expect(requested.some(url => /decay\.broken-glass(?:\.lod2)?\.glb/.test(url))).toBe(true);
+  expect(blob).toHaveBeenCalled();
+  expect(arrayBuffer).not.toHaveBeenCalled();
+  arrayBuffer.mockRestore(); blob.mockRestore();
 });
 
 test('@transition preload adoption keeps progress and another level cannot advance its card', async () => {

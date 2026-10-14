@@ -1,6 +1,7 @@
 import { markCrowdAppearance, crowdShirt, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout } from '../characters/CrowdAppearance';
 import type { CrowdAccessories } from '../characters/CrowdAccessories';
 import { infectedContactDistance } from '../../sim/ai/CharacterSeparation';
+import { useBakedCrowdPose, useBakedCivilianPose, canHoldCrowdPose } from '../lodPolicy';
 import { CrowdVisibility } from '../CrowdVisibility';
 // E07 GPU rigid-part crowd path, adapted from Bruno InstancedGroup.js (MIT).
 import { StaticCorpses } from '../characters/StaticCorpses';
@@ -198,7 +199,7 @@ class CivilianBatch extends Group {
       const pixels = this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8);
       // Low-tier downed bodies use the existing far geometry; close bodies and living figures retain their detail.
       if ((shotId !== undefined && !this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8) ? 'lod1' : this.visibility.band(e.id, (e.health?.current ?? 1) <= 0 ? pixels * .55 : pixels, this.model)) !== this.lod) continue;
-      if (!e.civilian && e.infected && keepsLook(e)) { if (this.place(e, index, alpha)) { index++; shadowPixels = Math.max(shadowPixels, pixels); } continue; }
+      if (!e.civilian && e.infected && keepsLook(e)) { if (this.place(e, index, alpha, low)) { index++; shadowPixels = Math.max(shadowPixels, pixels); } continue; }
       if (!c || c.pet || e.hidden || c.state === 'infected') continue;
       const down = c.state === 'down' || c.state === 'finished' || this.world.tick < c.knockedUntil;
       const rising = c.state === 'rising', startle = c.state === 'alarmed' && !!c.l1;
@@ -234,9 +235,11 @@ class CivilianBatch extends Group {
       const handProp = (c.story ? c.story.prop : activity?.prop) ?? (carried ? carried as CivilianProp : c.ally?.role === 'officer' ? 'pistol' : c.ally?.gun ? 'rifle' : undefined);
       const holding = !!handProp && (c.state === 'calm' || c.state === 'grabbed' && c.ally?.role === 'officer') && !!this.props && !!(c.story || c.ally?.gun || c.ally?.role === 'officer' || e.appearance?.handProp !== null);
       const sourceFrame = frame;
-      const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
+      const player = this.world.entities.get(1)!.transform;
+      const baked = low && !handProp && useBakedCivilianPose(e, true, this.distant, this.visibility.renderPixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8), Math.hypot(presented.x - player.x, presented.z - player.z), clip);
+      const blend = this.poses.sample(e.id, baked ? `${clip}:baked` : clip, frame, renderTick / 60);
       // The near batch is the pixel band: the courier's footwork there, stance plants or the baked clip further out.
-      frame = this.locomotion.present(e.id, this.poses, frame, blend, clip, phase, this.transform, this.strideScale, speed, renderTick / 60, !this.distant);
+      frame = this.locomotion.present(e.id, this.poses, frame, blend, clip, phase, this.transform, this.strideScale, speed, renderTick / 60, !this.distant, undefined, undefined, !baked);
       if (holding && !weaponProps.has(handProp!)) {
         // Mug and phone: elbow bent, hand at chest height; a standing or seated drinker raises the mug to the mouth every ~8 s.
         const bent = handProp === 'coffee' || handProp === 'phone', still = speed < .06 && !down && !rising;
@@ -299,7 +302,7 @@ class CivilianBatch extends Group {
     return [...frozen, ...[...this.deadFeet.values()].filter(c => !ids.has(c.id) && (this.world.entities.get(c.id)?.health.current ?? 1) <= 0)];
   }
   /** A pedestrian who rose infected: same model and tint, full overlay, infected locomotion and fight clips. */
-  private place(e: EntitySnapshot, index: number, alpha: number): boolean {
+  private place(e: EntitySnapshot, index: number, alpha: number, low = false): boolean {
     const b = e.infected!, tick = this.world.tick;
     if (e.hidden || b.hidden) return false;
     if (e.corpse && this.corpses.has(e.id)) return false;
@@ -313,9 +316,11 @@ class CivilianBatch extends Group {
     const duration = authoredClips.get(clip)!.duration, renderTick = Math.max(0, tick + alpha - 1);
     const phase = b.state === 'dead' ? (reaction?.groundDeath ? 1 : Math.min(1, (tick - b.deadAt) / 60 / duration)) - InfectedMoves.stir(e, renderTick, duration) : clip === 'windup' ? .5 : clip === 'get-up' ? Math.min(1, (age - .7) / getUpSpan(reaction!)) : heavy ? Math.min(1, age / .7) : strides[clip] ? this.gait.sample(e.id, Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60), clip, this.strideScale, motion.speed) : (renderTick / 60 + e.id * .137) / duration % 1;
     const presented = this.presentation.sample(e.id, e.transform, tick, alpha);
+    const player = this.world.entities.get(1)!.transform;
+    const baked = low && useBakedCrowdPose(e, true, this.distant, this.visibility.renderPixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8), Math.hypot(presented.x - player.x, presented.z - player.z), tick);
     // Hunched silhouette: the whole body leans forward (pivot at the feet) on top of the tier gait's arms-forward pose.
     // QA2b: the read holds in every state - standing/searching infected sway and twitch on top of the hunch.
-    const still = motion.speed <= .2 && b.state !== 'dead', t = tick / 60 + e.id * .71, near = !this.distant || !!b.roar || (b.state !== 'dead' && !heavy && !strides[clip]);
+    const still = motion.speed <= .2 && b.state !== 'dead', t = tick / 60 + e.id * .71, near = !baked && (!this.distant || !!b.roar || (b.state !== 'dead' && !heavy && !strides[clip]));
     const moving = !!strides[clip] && motion.speed > .06;
     const { layers, style } = this.moves.sample(e, b.state, b.until, (windups.get(e.archetype) ?? .5), renderTick, presented.yaw, motion.speed, moving ? clip : undefined);
     const target = this.world.entities.get(b.heardTargetId || b.l1?.targetId || 1);
@@ -332,8 +337,8 @@ class CivilianBatch extends Group {
     if (b.state === 'dead') this.deadFeet.set(e.id, { id: e.id, x: presented.x, y: presented.y - .7, z: presented.z });
     let frame = civilianClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
     const sourceFrame = frame;
-    const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
-    if (!e.corpse) frame = this.locomotion.present(e.id, this.poses, frame, blend, clip, phase, this.transform, this.strideScale, motion.speed, renderTick / 60, near, layers.lean || layers.lunge || layers.flinch || layers.lurch ? layers : undefined, style);
+    const blend = this.poses.sample(e.id, baked ? `${clip}:baked` : clip, frame, renderTick / 60);
+    if (!e.corpse) frame = this.locomotion.present(e.id, this.poses, frame, blend, clip, phase, this.transform, this.strideScale, motion.speed, renderTick / 60, near, layers.lean || layers.lunge || layers.flinch || layers.lurch ? layers : undefined, style, !baked, low && canHoldCrowdPose(e, tick) ? 2 : 1);
     if (e.corpse) {
       this.tintOf(e, index, 1);
       this.corpses.place(e, this.model, this.mesh.geometry, this.mesh.material as MeshLambertNodeMaterial, this.bakedClip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1, this.transform, this.shirt, [.4, 0, 1]);

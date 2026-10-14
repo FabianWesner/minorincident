@@ -1,4 +1,4 @@
-import { BufferAttribute, Group, Mesh, MeshLambertNodeMaterial, Quaternion, Vector3, type Object3D } from 'three/webgpu';
+import { BufferAttribute, Group, Matrix4, Mesh, MeshLambertNodeMaterial, Quaternion, Vector3, type Object3D } from 'three/webgpu';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { batchRigidParts } from './batchRigidParts';
@@ -20,6 +20,11 @@ export class VehicleOccupant extends Group {
   private readonly point = new Vector3();
   private readonly pole = new Vector3();
   private readonly orientation = new Quaternion();
+  private readonly parentRotation = new Quaternion();
+  private readonly seatRotation = new Quaternion();
+  private readonly matrixPosition = new Vector3();
+  private readonly matrixScale = new Vector3();
+  private readonly inverseParent = new Matrix4();
   private readonly grip = new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), Math.PI / 2);
   private readonly torso: Object3D;
   private readonly torsoRest = new Quaternion();
@@ -70,19 +75,22 @@ export class VehicleOccupant extends Group {
     // Compact car cushions/roofs are authored for smaller seated figures than the standing hero.
     this.scale.setScalar(fit);
     seat.updateWorldMatrix(true, false);
-    this.parent!.worldToLocal(this.position.copy(seat.getWorldPosition(this.point)));
-    this.quaternion.copy(this.parent!.getWorldQuaternion(this.orientation).invert()).multiply(seat.getWorldQuaternion(new Quaternion()));
+    this.parent!.updateWorldMatrix(true, false);
+    this.parent!.matrixWorld.decompose(this.matrixPosition, this.parentRotation, this.matrixScale);
+    seat.matrixWorld.decompose(this.matrixPosition, this.seatRotation, this.matrixScale);
+    this.position.setFromMatrixPosition(seat.matrixWorld).applyMatrix4(this.inverseParent.copy(this.parent!.matrixWorld).invert());
+    this.quaternion.copy(this.parentRotation).invert().multiply(this.seatRotation);
     if (wheel) this.position.x += Math.max(0, Math.min(.2, wheel.x - this.position.x - .35 * fit)); // stay within the cushion
     this.torso.quaternion.copy(this.torsoRest);
     this.torso.rotateZ(wheel ? driverLean : -.25);
     this.updateWorldMatrix(true, true);
     for (let i = 0; i < 2; i++) {
-      if (wheel) { this.point.copy(wheel).add(new Vector3(-.04, .025, i === 0 ? -.12 : .12)); this.parent!.localToWorld(this.point); }
-      else this.localToWorld(this.point.set(.2, .1, i === 0 ? -.11 : .11));
+      if (wheel) { this.point.copy(wheel).add(new Vector3(-.04, .025, i === 0 ? -.12 : .12)); this.point.applyMatrix4(this.parent!.matrixWorld); }
+      else this.point.set(.2, .1, i === 0 ? -.11 : .11).applyMatrix4(this.matrixWorld);
       this.pole.set(.15, -.8, i === 0 ? -.3 : .3).transformDirection(this.parent!.matrixWorld);
-      this.orientation.copy(this.parent!.getWorldQuaternion(new Quaternion())).multiply(this.grip);
-      this.arms[i].solve(this.point, this.pole, this.orientation);
-      this.handGapM[i] = this.arms[i].end.getWorldPosition(this.hand).distanceTo(this.point);
+      this.orientation.copy(this.parentRotation).multiply(this.grip);
+      this.arms[i].solve(this.point, this.pole, this.orientation, 1, true);
+      this.handGapM[i] = this.hand.setFromMatrixPosition(this.arms[i].end.matrixWorld).distanceTo(this.point);
     }
     if (this.bones) driveHelpers(this.rig, this.bones);
   }

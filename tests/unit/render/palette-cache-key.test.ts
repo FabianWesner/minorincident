@@ -23,3 +23,19 @@ test('palette keys match Three through weather, direct node replacement, added n
     expect(copy.customProgramCacheKey()).toBe(reference.call(copy)); copy.dispose();
   } finally { materials.dispose(); lighting.dispose(); }
 });
+
+test('palette uniforms share a render group within each material without sharing values across materials', () => {
+  const lighting = new Lighting(new Scene()), materials = new Materials(lighting);
+  try {
+    const first = materials.get('sidewalk'), second = materials.get('asphalt');
+    const group = first.fade.groupNode;
+    expect(group.shared).toBe(true); expect(group.updateType).toBe('render');
+    for (const node of [first.emissivePower, first.bloodCoverage, first.hitFlash, first.char, first.figureRim, first.movingFigure]) expect(node.groupNode).toBe(group);
+    expect(second.fade.groupNode).not.toBe(group);
+    first.fade.value = .2; expect(second.fade.value).toBe(1);
+    const copy = first.frozenCopy();
+    expect(copy.fade.groupNode.shared).toBe(true); expect(copy.fade.groupNode.updateType).toBe('render');
+    first.setWeatherMode(weatherMaterialFlags.fog); copy.setWeatherMode(weatherMaterialFlags.fog);
+    expect(copy.fade.value).toBe(first.fade.value); copy.dispose();
+  } finally { materials.dispose(); lighting.dispose(); }
+});

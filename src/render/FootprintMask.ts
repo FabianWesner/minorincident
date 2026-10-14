@@ -71,6 +71,7 @@ function trackStamp(t: Track, size: number, texel: number, cx: number, cz: numbe
 export function rasterFootprints(data: Uint8Array, tracks: WeatherSystem['tracks'], tick: number, centerX: number, centerZ: number, touchedRows?: Set<number>): number {
   data.fill(0);
   const size = Math.sqrt(data.length / 4), texel = TRACK_SPAN / size;
+  const markedRows = touchedRows ? new Uint8Array(size) : undefined;
   let pixels = 0;
   for (const t of tracks) {
     const edge = TRACK_SPAN / 2 - Math.max(Math.abs(t.x - centerX), Math.abs(t.z - centerZ));
@@ -80,10 +81,12 @@ export function rasterFootprints(data: Uint8Array, tracks: WeatherSystem['tracks
     const stamp = trackStamp(t, size, texel, cx, cz), height = Math.round(t.y / TRACK_HEIGHT * 255);
     let i = 0;
     for (let z = stamp.z0; i < stamp.coverage.length; z++) {
-      touchedRows?.add(z);
+      // A dense horde overlaps the same rows thousands of times. Publish each row once.
+      if (touchedRows && !markedRows![z]) { markedRows![z] = 1; touchedRows.add(z); }
       let base = (z * size + stamp.x0) * 4;
       for (let x = 0; x < stamp.width; x++, i++, base += 4) {
-        const value = Math.round(stamp.coverage[i] * fade * .65 * 255);
+        const coverage = stamp.coverage[i];
+        const value = coverage === 0 ? 0 : Math.round(coverage * fade * .65 * 255);
         // Ground and elevated support can both carry tracks at the same X/Z.
         const offset = base + (t.y > .4 ? 2 : 0);
         if (!data[offset]) data[offset + 1] = height;

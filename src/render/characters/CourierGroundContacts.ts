@@ -1,6 +1,7 @@
 import { Quaternion, Vector3, type Object3D } from 'three';
 import type { CharacterRig } from './rig';
 import { LimbIK } from './LimbIK';
+import { updateWorldTranslation } from './updateWorldTranslation';
 
 /** World-locked feet with stepping release. A locked foot never translates or
  * yaws; it leaves the ground only by a gait swing (distance-driven phase) or by a
@@ -103,7 +104,7 @@ export class CourierGroundContacts {
       this.joint.setFromMatrixPosition(foot.ik.end.matrixWorld); foot.ik.end.getWorldQuaternion(this.footFrame);
       for (const x of [-.05, .085]) deficit = Math.max(deficit, floor - this.delta.set(x * s, -this.sole * s, 0).applyQuaternion(this.footFrame).add(this.joint).y);
     }
-    if (deficit > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(this.scale).y; rig.hip.updateWorldMatrix(true, true); }
+    if (deficit > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(this.scale).y; updateWorldTranslation(rig.hip); }
   }
   update(phase: number, stride: number, run: number, weight: number, speed: number, dt: number, style?: GaitStyle, worldReady = false): void {
     const rig = this.rig;
@@ -336,7 +337,7 @@ export class CourierGroundContacts {
     const shiftTarget = !moving && locked.length === 1 ? locked[0].side * .028 : 0;
     this.shift += (shiftTarget - this.shift) * (1 - Math.exp(-dt / .09));
     rig.hip.position.z -= this.shift * s / parentScale * weight;
-    rig.hip.updateWorldMatrix(true, true);
+    updateWorldTranslation(rig.hip);
     for (const foot of this.feet) {
       if (!foot.locked && foot.swing) {
         // Swing height follows a knee profile (release flex -> peak -> the landing flex the
@@ -370,7 +371,7 @@ export class CourierGroundContacts {
       this.footFrame.setFromAxisAngle(this.up, foot.yaw).multiply(this.footPitch.setFromAxisAngle(this.lateralAxis, foot.pitch));
       // Knee between the body heading and the foot's own direction.
       this.pole.set(1, 0, 0).applyQuaternion(this.footFrame); this.pole.y = 0; this.pole.add(this.forward).normalize();
-      foot.ik.solve(foot.target, this.pole, this.footFrame, weight);
+      foot.ik.solve(foot.target, this.pole, this.footFrame, weight, true);
     }
     // Blending in or out (crowd footwork admission, ~0.12 s): the pelvis has moved `weight` of the way to the solved
     // height but the partially slerped legs fold less than that, so the soles dipped 2-3 cm under the floor (QA: infected
@@ -382,7 +383,7 @@ export class CourierGroundContacts {
         const end = foot.ik.end; this.joint.setFromMatrixPosition(end.matrixWorld); end.getWorldQuaternion(this.footFrame);
         for (const x of [-heel, toe]) deficit = Math.max(deficit, ground - soleDepth - (this.joint.y + this.delta.set(x, -soleDepth, 0).applyQuaternion(this.footFrame).y));
       }
-      if (deficit > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(this.delta).y; rig.hip.updateWorldMatrix(true, true); }
+      if (deficit > 1e-4) { rig.hip.position.y += deficit / rig.hip.parent!.getWorldScale(this.delta).y; updateWorldTranslation(rig.hip); }
     }
   }
 }

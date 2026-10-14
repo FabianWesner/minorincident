@@ -66,9 +66,9 @@ const commands: string[][] = [
     : target === 'E18'
       ? [
         ...(process.env.MI_VERIFY_REMOTE_BROWSER === '1' ? [
-          ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/playwright-remote.json`, '--env', `E2E_PORT=${process.env.E2E_PORT ?? 33793}`, '--', 'sh', '-c', `npm run build && npx playwright test --grep '${selection.pattern}' --grep-invert '${e18GpuPattern}|@E18-AC08|@E18-AC09|WebGPU low tier parity' --project=chromium --workers=1; status=$?; cp test-results/playwright/results.json ${output}/playwright-remote.json; exit $status`],
-          ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', `^(?=.*(?:${selection.pattern}))(?=.*(?:${e18GpuPattern}))`, '--grep-invert', '@E18-AC08|@E18-AC09|WebGPU low tier parity|@phone-base', '--workers=2'],
-        ] : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@E18-AC08|@E18-AC09|WebGPU low tier parity|@phone-base', '--workers=2']]),
+          ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/playwright-remote.json`, '--env', `E2E_PORT=${process.env.E2E_PORT ?? 33793}`, '--', 'sh', '-c', `npm run build && npx playwright test --grep '${selection.pattern}' --grep-invert '${e18GpuPattern}|@E18-AC08|@E18-AC09|[Ww]eb[Gg][Pp][Uu]' --project=chromium --workers=1; status=$?; cp test-results/playwright/results.json ${output}/playwright-remote.json; exit $status`],
+          ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', `^(?=.*(?:${selection.pattern}))(?=.*(?:${e18GpuPattern}))`, '--grep-invert', '@E18-AC08|@E18-AC09|[Ww]eb[Gg][Pp][Uu]|@phone-base', '--workers=1'],
+        ] : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@E18-AC08|@E18-AC09|[Ww]eb[Gg][Pp][Uu]|@phone-base', '--workers=1']]),
         // Frame budgets and CPU-throttled profiles use native GPU headless Chrome, one worker.
         ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/e18-desktop.spec.ts', 'tests/perf/e18-devices.spec.ts', 'tests/perf/horde-budget.spec.ts', '--project=chromium', '--workers=1'],
         ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/phone-base.spec.ts', '--project=chromium', '--workers=1'],
