@@ -1,7 +1,7 @@
 import { markCrowdAppearance, crowdShirt, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout } from '../characters/CrowdAppearance';
 import type { CrowdAccessories } from '../characters/CrowdAccessories';
 import { infectedContactDistance } from '../../sim/ai/CharacterSeparation';
-import { useBakedCrowdPose, useBakedCivilianPose, canHoldCrowdPose } from '../lodPolicy';
+import { useBakedCivilianPose, canHoldCrowdPose } from '../lodPolicy';
 import { CrowdVisibility } from '../CrowdVisibility';
 // E07 GPU rigid-part crowd path, adapted from Bruno InstancedGroup.js (MIT).
 import { StaticCorpses } from '../characters/StaticCorpses';
@@ -237,7 +237,7 @@ class CivilianBatch extends Group {
       const sourceFrame = frame;
       const player = this.world.entities.get(1)!.transform;
       const baked = low && !handProp && useBakedCivilianPose(e, true, this.distant, this.visibility.renderPixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8), Math.hypot(presented.x - player.x, presented.z - player.z), clip);
-      const blend = this.poses.sample(e.id, baked ? `${clip}:baked` : clip, frame, renderTick / 60);
+      const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
       // The near batch is the pixel band: the courier's footwork there, stance plants or the baked clip further out.
       frame = this.locomotion.present(e.id, this.poses, frame, blend, clip, phase, this.transform, this.strideScale, speed, renderTick / 60, !this.distant, undefined, undefined, !baked);
       if (holding && !weaponProps.has(handProp!)) {
@@ -316,11 +316,9 @@ class CivilianBatch extends Group {
     const duration = authoredClips.get(clip)!.duration, renderTick = Math.max(0, tick + alpha - 1);
     const phase = b.state === 'dead' ? (reaction?.groundDeath ? 1 : Math.min(1, (tick - b.deadAt) / 60 / duration)) - InfectedMoves.stir(e, renderTick, duration) : clip === 'windup' ? .5 : clip === 'get-up' ? Math.min(1, (age - .7) / getUpSpan(reaction!)) : heavy ? Math.min(1, age / .7) : strides[clip] ? this.gait.sample(e.id, Math.max(0, motion.distance - motion.speed * (1 - alpha) / 60), clip, this.strideScale, motion.speed) : (renderTick / 60 + e.id * .137) / duration % 1;
     const presented = this.presentation.sample(e.id, e.transform, tick, alpha);
-    const player = this.world.entities.get(1)!.transform;
-    const baked = low && useBakedCrowdPose(e, true, this.distant, this.visibility.renderPixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8), Math.hypot(presented.x - player.x, presented.z - player.z), tick);
     // Hunched silhouette: the whole body leans forward (pivot at the feet) on top of the tier gait's arms-forward pose.
     // QA2b: the read holds in every state - standing/searching infected sway and twitch on top of the hunch.
-    const still = motion.speed <= .2 && b.state !== 'dead', t = tick / 60 + e.id * .71, near = !baked && (!this.distant || !!b.roar || (b.state !== 'dead' && !heavy && !strides[clip]));
+    const still = motion.speed <= .2 && b.state !== 'dead', t = tick / 60 + e.id * .71, near = (!this.distant || !!b.roar || (b.state !== 'dead' && !heavy && !strides[clip]));
     const moving = !!strides[clip] && motion.speed > .06;
     const { layers, style } = this.moves.sample(e, b.state, b.until, (windups.get(e.archetype) ?? .5), renderTick, presented.yaw, motion.speed, moving ? clip : undefined);
     const target = this.world.entities.get(b.heardTargetId || b.l1?.targetId || 1);
@@ -337,8 +335,8 @@ class CivilianBatch extends Group {
     if (b.state === 'dead') this.deadFeet.set(e.id, { id: e.id, x: presented.x, y: presented.y - .7, z: presented.z });
     let frame = civilianClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
     const sourceFrame = frame;
-    const blend = this.poses.sample(e.id, baked ? `${clip}:baked` : clip, frame, renderTick / 60);
-    if (!e.corpse) frame = this.locomotion.present(e.id, this.poses, frame, blend, clip, phase, this.transform, this.strideScale, motion.speed, renderTick / 60, near, layers.lean || layers.lunge || layers.flinch || layers.lurch ? layers : undefined, style, !baked, low && canHoldCrowdPose(e, tick) ? 2 : 1);
+    const blend = this.poses.sample(e.id, clip, frame, renderTick / 60);
+    if (!e.corpse) frame = this.locomotion.present(e.id, this.poses, frame, blend, clip, phase, this.transform, this.strideScale, motion.speed, renderTick / 60, near, layers.lean || layers.lunge || layers.flinch || layers.lurch ? layers : undefined, style, true, low && canHoldCrowdPose(e, tick) ? 2 : 1);
     if (e.corpse) {
       this.tintOf(e, index, 1);
       this.corpses.place(e, this.model, this.mesh.geometry, this.mesh.material as MeshLambertNodeMaterial, this.bakedClip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1, this.transform, this.shirt, [.4, 0, 1]);
