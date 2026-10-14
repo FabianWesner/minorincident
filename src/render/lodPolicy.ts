@@ -1,5 +1,4 @@
 import type { EntitySnapshot } from '../sim/world/types';
-import { infectedContactDistance } from '../sim/ai/CharacterSeparation';
 /** High world detail stays near the camera target; authored distance tiers cover the rest.
  * The whole-screen 45 m LOD0 margin exceeds L1's 1.5M triangle cap even after prop/crowd fixes.
  * Small props additionally consider projected pixels; hysteresis avoids boundary flicker. */
@@ -53,11 +52,10 @@ export function propLod(pixels: number, previous?: Lod): Lod {
 
 const phonePosePixels = 160;
 
-/** Phones draw the authored GPU gait for ordinary far-band figures below 160 CSS pixels outside the melee contact ring plus 17 cm.
- * Reactions, specials, rising bodies and every close figure keep procedural contacts. */
-export function useBakedCrowdPose(e: EntitySnapshot, low: boolean, distant: boolean, pixels: number, distance: number, tick: number): boolean {
-  return low && distant && pixels < phonePosePixels && distance > infectedContactDistance(e.combat?.radius ?? .35) + .17 && isSimpleCrowdPose(e, tick);
-}
+/** Infected never use the baked gait (10-14 gate fix): the atlas pose skips the ground solve, so a drawn infected slid up to 37 cm
+ * per contact and sank soles up to 21 cm at far zoom on the low tier (corgi-behaviour@low-z1.5), also at a steady run. Their
+ * ordinary gait keeps the procedural contacts; only the held-pose reuse below remains. */
+
 /** Ordinary locomotion/idle only: action telegraphs and reactions always update immediately. */
 function ordinaryCrowdPose(e: EntitySnapshot, tick: number): boolean {
   const b = e.infected;

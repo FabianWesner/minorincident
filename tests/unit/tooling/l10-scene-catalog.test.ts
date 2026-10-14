@@ -75,7 +75,7 @@ describe('L10-Q1 Scene Lab catalog @E32', () => {
       }
       return edgeNoise(data, 24, 24, [0, 0, 1, 1]);
     };
-    const limit = scenes.get('l10-q1-alpha-silhouette-known-low-defect')!.edgeNoise!.extremeEdgeShareMax;
+    const limit = scenes.get('l10-q1-alpha-silhouette')!.edgeNoise!.extremeEdgeShareMax;
     expect(pixels(false).edges).toBeGreaterThan(20);
     expect(pixels(false).extremeEdgeShare).toBeLessThan(limit);
     expect(pixels(true).extremeEdgeShare).toBeGreaterThan(limit);

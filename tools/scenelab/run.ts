@@ -60,7 +60,7 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   const contrast: { frame: number; result: ContrastResult }[] = [], measure = async (f: number) => { if (!spec.contrast || f === 0) return; // frame 0: the follow camera has not settled on a driven vehicle yet
     const result = await measureContrast(session.page, spec); if (result) contrast.push({ frame: f, result }); };
   const pixels: { frame: number; pixels: Awaited<ReturnType<typeof canvasFrame>> }[] = [];
-  const edgeSamples: { frame: number; edges: number; extremeEdges: number; extremeEdgeShare: number }[] = [];
+  const edgeSamples: ({ frame: number } & Awaited<ReturnType<typeof canvasEdgeNoise>>)[] = [];
   for (const stop of [...stops].sort((a, b) => a - b)) {
     if (stop > frames) break;
     if (stop > frame) frame = await session.step(stop - frame);
@@ -83,14 +83,14 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   const actualTier = await session.page.evaluate(() => window.__SS__!.getState().render.quality);
   const result = evaluate(spec, metrics, clipping, errors);
   const ring = spec.megaHud ? await session.page.evaluate(megaId => {
-    const ring = document.querySelector<HTMLElement>('#mega-distance-ring');
-    const label = document.querySelector<HTMLElement>('#mega-distance-label');
-    const map = document.querySelector<HTMLElement>('#minimap');
+    const ring = document.querySelector<HTMLElement>('[data-testid="mega-distance-ring"]');
+    const label = document.querySelector<HTMLElement>('[data-testid="mega-distance-label"]');
+    const map = document.querySelector<HTMLElement>('[data-testid="minimap"]');
     const r = ring?.getBoundingClientRect(), m = map?.getBoundingClientRect();
     const visible = !!ring && !ring.hidden && !!r?.width && getComputedStyle(ring).visibility === 'visible';
     return { visible, labelVisible: !!label && !label.hidden && !!label.getBoundingClientRect().width && getComputedStyle(label).visibility === 'visible', band: ring?.dataset.band, text: label?.textContent,
       centerErrorPx: r && m ? Math.hypot(r.x + r.width / 2 - m.x - m.width / 2, r.y + r.height / 2 - m.y - m.height / 2) : Infinity,
-      exactPins: [...document.querySelectorAll<HTMLElement>('#minimap [data-entity-id]')].filter(p => !p.hidden && p.dataset.entityId === String(megaId)).length,
+      exactPins: [...document.querySelectorAll<HTMLElement>('[data-testid="minimap"] [data-entity-id]')].filter(p => !p.hidden && p.dataset.entityId === String(megaId)).length,
       coordinates: !!ring && ['data-world-x', 'data-world-z', 'data-entity-id'].some(a => ring.hasAttribute(a)) };
   }, scene.actors.find(a => a.id === (spec.megaAlpha?.id ?? 'mega'))?.entity) : null;
   if (ring) {
@@ -105,6 +105,7 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   if (spec.edgeNoise) {
     const value = Math.max(...edgeSamples.map(s => s.edges >= 20 ? s.extremeEdgeShare : Infinity));
     result.checks.push({ name: 'alphaSilhouetteBlackWhiteEdgeNoise', pass: value <= spec.edgeNoise.extremeEdgeShareMax, value, limit: spec.edgeNoise.extremeEdgeShareMax });
+    if (spec.edgeNoise.silhouetteRoughnessMax !== undefined) { const rough = Math.max(...edgeSamples.map(s => s.edges >= 20 ? s.silhouetteRoughness : Infinity)); result.checks.push({ name: "alphaSilhouetteRoughness", pass: rough <= spec.edgeNoise.silhouetteRoughnessMax, value: rough, limit: spec.edgeNoise.silhouetteRoughnessMax }); }
   }
   if (spec.contrast) {
     const worst = (pick: (r: ContrastResult) => number | undefined) => { const v = contrast.map(c => pick(c.result)).filter((x): x is number => x !== undefined && Number.isFinite(x)); return v.length ? Math.min(...v) : 0; };
