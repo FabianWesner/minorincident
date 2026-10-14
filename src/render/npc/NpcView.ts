@@ -1,3 +1,4 @@
+import { dogCoat } from '../../data/dogAppearance';
 import type { CrowdAccessories } from '../characters/CrowdAccessories';
 // World-anchored badges and transient bark messages adapt Bruno InteractivePoints.js/Bubble.js (MIT).
 import { BoxGeometry, Color, Group, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, Vector3, type Camera, type Object3D, type Material } from 'three/webgpu';
@@ -22,6 +23,8 @@ export class NpcView extends Group {
   private readonly heroes = new Map<number, Hero>();
   private readonly registry: AssetRegistry;
   private dog!: Group;
+  private readonly pets = new Map<string, Group>();
+  private readonly petLoads = new Map<string, Promise<void>>();
   private readonly humans = new Map<string, Group>();
   private readonly humanLoads = new Map<string, Promise<void>>();
   private child!: Group;
@@ -44,10 +47,11 @@ export class NpcView extends Group {
   }
   setQuality(tier: 'high' | 'low'): void { this.civilians.setQuality(tier); }
   /** Wait for civilian batches and attached escort skins to finish streaming. */
-  ready(): Promise<void> { return Promise.all([this.civilians.ready(), ...this.humanLoads.values()]).then(() => {}); }
+  ready(): Promise<void> { return Promise.all([this.civilians.ready(), ...this.humanLoads.values(), ...this.petLoads.values()]).then(() => {}); }
   async init(): Promise<void> {
     await this.civilians.init(); const loaded = await this.registry.loadAsset('char.corgi', 'lod1');
     this.dog = loaded.userData.placeholder ? createCorgiPlaceholder() : loaded as Group; this.dogSource = loaded.userData.placeholder ? 'placeholder' : 'glb'; if (loaded.userData.placeholder) this.placeholders.push(this.dog);
+    await Promise.all([...new Set([...this.world.entities.iterate()].flatMap(e => e.civilian?.pet === 'dog' ? [e.civilian.model ?? 'amb.dog'] : []))].map(model => this.loadPet(model)));
     await this.loadHuman('npc.civilian-man-a');
     this.child = await this.registry.loadAsset('npc.brother', 'lod1') as Group;
     fitCivilianHeight(this.child, 'npc.brother');
@@ -65,6 +69,17 @@ export class NpcView extends Group {
       const def = this.registry.definition('char.corgi');
       batchRigidParts(this.dog, [...def.requiredNodes, ...def.animatedNodes, ...def.sockets], material, source => (source as import('three').MeshBasicMaterial).color);
     }
+  }
+  private loadPet(model: string): Promise<void> {
+    let pending = this.petLoads.get(model);
+    if (!pending) {
+      pending = this.registry.loadAsset('amb.dog', 'lod1', dogCoat(model)).then(root => {
+        root.traverse(node => { if (node instanceof Mesh) node.castShadow = node.receiveShadow = true; });
+        this.pets.set(model, root as Group);
+      });
+      this.petLoads.set(model, pending);
+    }
+    return pending;
   }
   private loadHuman(model: string): Promise<void> {
     let pending = this.humanLoads.get(model);
@@ -99,10 +114,11 @@ export class NpcView extends Group {
     for (const e of this.world.entities.iterate()) {
       if (e.traffic || e.convoy) { this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(e.transform.x, .6, e.transform.z); this.cars.setMatrixAt(cars++, this.transform); continue; }
       if (!e.companion && !e.escort && !e.civilian?.pet) continue;
-      const model = e.escort ? e.escort.child ? 'npc.brother' : e.appearance?.asset ?? e.civilian?.model ?? (e.archetype.startsWith('npc.') && e.archetype !== 'npc.escort' ? e.archetype : 'npc.civilian-man-a') : 'char.corgi';
+      const model = e.civilian?.pet === 'dog' ? e.civilian.model ?? 'amb.dog' : e.escort ? e.escort.child ? 'npc.brother' : e.appearance?.asset ?? e.civilian?.model ?? (e.archetype.startsWith('npc.') && e.archetype !== 'npc.escort' ? e.archetype : 'npc.civilian-man-a') : 'char.corgi';
       if (e.escort && !e.escort.child && !this.humans.has(model)) void this.loadHuman(model);
-      const prototype = e.escort ? e.escort.child ? this.child : this.humans.get(model) ?? this.humans.get('npc.civilian-man-a')! : this.dog;
-      const drawnModel = prototype.userData.assetId ?? model;
+      if (e.civilian?.pet === 'dog' && !this.pets.has(model)) { this.loadPet(model); continue; }
+      const prototype = e.civilian?.pet === 'dog' ? this.pets.get(model)! : e.escort ? e.escort.child ? this.child : this.humans.get(model) ?? this.humans.get('npc.civilian-man-a')! : this.dog;
+      const drawnModel = e.civilian?.pet === 'dog' ? model : prototype.userData.assetId ?? model;
       let hero = this.heroes.get(e.id);
       if (hero && hero.model !== drawnModel) { this.remove(hero.root); hero.humanAnimator?.dispose(); hero.badge?.remove(); this.heroes.delete(e.id); hero = undefined; }
       if (!hero) {
@@ -110,11 +126,11 @@ export class NpcView extends Group {
         const legs = ['legFL', 'legFR', 'legBL', 'legBR', 'legL', 'legR'].map(name => root.getObjectByName(name)).filter((n): n is Object3D => !!n);
         const badge = e.escort ? document.createElement('div') : null;
         if (badge) { badge.dataset.escortId = String(e.id); badge.style.cssText = 'position:fixed;pointer-events:none;transform:translate(-50%,-100%);background:#292537;color:#fff0cc;border:2px solid #d8bd74;border-radius:50%;padding:5px 9px;font:700 18px system-ui;z-index:6'; document.querySelector('#game')!.appendChild(badge); }
-        hero = { model: drawnModel, humanAnimator: e.escort ? new NpcAnimator(root) : undefined, animator: e.escort ? null : new QuadrupedAnimator(root), root, legs, head: root.getObjectByName('head'), tail: root.getObjectByName('tail'), badge, source: e.escort ? prototype.userData.placeholder ? 'placeholder' : 'glb' : this.dogSource, moving: false, tick: -1, x: e.transform.x, z: e.transform.z }; this.heroes.set(e.id, hero); this.add(root);
+        hero = { model: drawnModel, humanAnimator: e.escort ? new NpcAnimator(root) : undefined, animator: e.escort ? null : new QuadrupedAnimator(root), root, legs, head: root.getObjectByName('head'), tail: root.getObjectByName('tail'), badge, source: e.escort || e.civilian?.pet === 'dog' ? prototype.userData.placeholder ? 'placeholder' : 'glb' : this.dogSource, moving: false, tick: -1, x: e.transform.x, z: e.transform.z }; this.heroes.set(e.id, hero); this.add(root);
       }
       if (hero.tick !== this.world.tick) { hero.moving = e.motion?.moving ?? Math.hypot(hero.x - e.transform.x, hero.z - e.transform.z) > .001; hero.x = e.transform.x; hero.z = e.transform.z; hero.tick = this.world.tick; }
       const presented = this.presentation.sample(e.id, e.transform, this.world.tick, alpha);
-      hero.root.visible = !e.hidden && e.companion?.state !== 'hide'; hero.root.position.set(presented.x, presented.y - (e.escort ? .7 : .3), presented.z); hero.root.rotation.set(0, presented.yaw, 0);
+      hero.root.visible = !e.hidden && e.companion?.state !== 'hide'; hero.root.position.set(presented.x, presented.y - (e.escort || e.civilian?.pet === 'dog' ? .7 : .3), presented.z); hero.root.rotation.set(0, presented.yaw, 0);
       const down = e.escort?.state === 'downed' || e.escort?.state === 'dead' || this.world.tick < (e.escort?.knockedUntil ?? 0) || e.civilian?.state === 'down' || e.civilian?.state === 'rising';
       if (down && hero.animator) { hero.root.rotation.z = Math.PI / 2; hero.root.position.y = .25; }
       const motion = e.motion ?? this.motion.sample(e.id, this.world.tick, e.transform.x, e.transform.z);

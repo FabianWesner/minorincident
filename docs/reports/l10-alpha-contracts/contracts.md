@@ -1,0 +1,9 @@
+L10-S2 integration contract
+
+Regular Alpha encounter callers pass `InfectedSpawn.cureRegion` using the region IDs exported by `cureRegions`. `cureAlphaCounts` gives authored minimum/maximum counts; `cureAlphaCap` applies R7's 3/2 high/low limit. Direct spawns fail before allocation at the quota; the existing director keeps over-cap requests queued. R3–R6 count authored entity records even after death, including serialized inactive chunks; R7 counts living/recovering Alpha records. Mega's pursuit/asset identity is excluded from regular quotas and remains in the existing global 200/100 cap. L10 downed infected reserve their global slots. The stock E07 combat scheduler, HP, resistance and four specials remain the combat implementation.
+
+Dog coats are chosen from the level seed and entity ID without consuming a gameplay RNG. The chosen model string stays in the normal entity snapshot, so checkpoint/stream/save restores retain it. The view loads the base/black/cream GLB variants using the asset registry's existing palette-variant path. Healthy pet dogs use `amb.dog` through the NPC quadruped animator; infected dogs use the existing instanced animal crowd batches. An explicitly authored infected model still overrides the seed. The corgi has its own protected model and lifecycle.
+
+The dog pounce warning uses the shared flat amber arrow on the supporting ground for the existing 0.65 s windup. Mega health bars are 1.5× the regular width (96/72 px desktop/phone), with the existing three pooled draws and a viewport clamp when its visible body extends above the close frame; regular Alpha bars keep their E07 sizes.
+
+Scene catalog: `l10-dog-coats`, `l10-dog-pounce`, `l10-dog-pack`, `l10-alpha-scale` in `tests/scenes/catalog/`. Matrix commands request high/low and game-camera zoom 1/0.5 (and the catalog's additional distant zoom), on WebGL2 and WebGPU. `verify E32` routes native performance tests through the shared quiet-run reservation with one worker.

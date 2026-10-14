@@ -1,0 +1,279 @@
+Failed Tests 22 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/levels/L1.test.ts > L1 v2 mission > T-E19-house @E19 @E19-AC25 beat 9: ten residents come out of ONE house front door near the garage, one by one, 1.5-4 s apart
+TypeError: Cannot read properties of null (reading 'ids')
+ ❯ tests/levels/L1.test.ts:216:61
+    214|     runL1(w, mission, 'complete', { seed: 2, stopWhen: m => !!m.state.…
+    215|     w.clearInput();
+    216|     for (let i = 0; i < 60 * 60 && mission.state.l1!.house!.ids.length…
+       |                                                             ^
+    217|     for (let i = 0; i < 120; i++) w.update(); // the last one is noted…
+    218|     const house = mission.state.l1!.house!;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/22]⎯
+
+ FAIL   functional  tests/levels/L1.test.ts > L1 v2 mission > T-E19-respawn-world @E19 PO rule: a death after the bat keeps the world (corpses, infected, pedestrians, props, objectives, bat)
+AssertionError: expected [ { id: 1000000000, …(5) }, …(689) ] to deeply equal [ { id: 1000000000, …(5) }, …(689) ]
+
+- Expected
++ Received
+
+@@ -5121,11 +5121,11 @@
+    },
+    {
+      "dead": true,
+      "id": 157,
+      "kind": "infected",
+-     "state": "dead",
++     "state": "wander",
+      "x": 12.638588112155908,
+      "z": 34.46061961241407,
+    },
+    {
+      "dead": false,
+@@ -5153,11 +5153,11 @@
+    },
+    {
+      "dead": true,
+      "id": 167,
+      "kind": "infected",
+-     "state": "dead",
++     "state": "wander",
+      "x": 3.5112200286771467,
+      "z": 31.600151145966958,
+    },
+    {
+      "dead": false,
+
+ ❯ tests/levels/L1.test.ts:335:20
+    333|     expect(a.corpses).toBeGreaterThan(0);
+    334|     expect({ corpses: a.corpses, infected: a.infected, pedestrians: a.…
+    335|     expect(a.rows).toEqual(b.rows);
+       |                    ^
+    336|     record('respawn-world', { corpses: a.corpses, infected: a.infected…
+    337|     // Nothing reset: objectives, outbreak counters, the beat 9 house,…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/22]⎯
+
+ FAIL   functional  tests/levels/L2.test.ts > L2 The Failed Rescue > T-E20-13 @E20 @E20-AC13 cluster of 12-16 on the approach; complete passes killing <= 50 %; side path and car alarm each suffice
+AssertionError: expected 10 to be greater than or equal to 12
+ ❯ tests/levels/L2.test.ts:184:59
+    182|   test('T-E20-13 @E20 @E20-AC13 cluster of 12-16 on the approach; comp…
+    183|     const side = await complete(), alarm = await battery('complete', {…
+    184|     for (const r of side) { expect(r.cluster!.atApproach).toBeGreaterT…
+       |                                                           ^
+    185|     expect(side.filter(r => r.clusterKilled <= r.clusterSize / 2).leng…
+    186|     // Forced choices: the side path (the complete battery, with the <…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/22]⎯
+
+ FAIL   functional  tests/levels/L3-route.test.ts > @E21 @E21-route L3 wreck lines close both sidewalks for player and NPCs; the connected detour crosses Oak, Boulevard and the elevated highway
+AssertionError: {"officer":{"x":50.81353813597728,"z":-20.56969695151603,"y":1.015,"yaw":-4.72523586181338},"player":{"x":206.96238708496094,"y":0.9200000166893005,"z":-0.06956455111503601,"yaw":-0.288313794346646}}: expected 157.48878835182674 to be less than or equal to 8
+ ❯ tests/levels/L3-route.test.ts:59:155
+     57|       const e=w.entities.get(q.id)!;
+     58|       expect(e.health.current).toBeGreaterThan(0);
+     59|       expect(Math.hypot(e.transform.x-player.transform.x,e.transform.z…
+       |                                                                                                                                                           ^
+     60|     }
+     61|     expect(state.squad).toHaveLength(4);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/22]⎯
+
+ FAIL   functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-02 @E21 @E21-AC02 complete bot finishes single seed from L3-default (bat + axe), median time in band
+AssertionError: expected 411.95 to be less than or equal to 405
+ ❯ tests/levels/L3.test.ts:54:77
+     52|     expect(runs.filter(r => r.outcome === 'complete')).toHaveLength(se…
+     53|     const t = median(runs.map(r => r.simSeconds));
+     54|     expect(t).toBeGreaterThanOrEqual(l3.bots.completeMedianS[0]); expe…
+       |                                                                             ^
+     55|   }, HEAVY);
+     56|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/22]⎯
+
+ FAIL   functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2
+AssertionError: expected 481.26666666666665 to be less than or equal to 270
+ ❯ tests/levels/L3.test.ts:62:75
+     60|     expect(median(runs.map(r => r.deaths))).toBeLessThanOrEqual(l3.bot…
+     61|     const t = median(runs.filter(r => r.outcome === 'complete').map(r …
+     62|     expect(t).toBeGreaterThanOrEqual(l3.bots.newbieMedianS[0]); expect…
+       |                                                                           ^
+     63|   }, HEAVY);
+     64|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/22]⎯
+
+ FAIL   functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-09 @E21 @E21-AC09 squad feels strong first: officers >= 60 % of S1 knockdowns, S1 damage below one life (PO 10-12 police -50 %), near the courier, never teleports
+AssertionError: expected 0.5722070844686649 to be greater than or equal to 0.6
+ ❯ tests/levels/L3.test.ts:208:55
+    206|     const officers = runs.reduce((a, r) => a + r.s1!.officerKills, 0),…
+    207|     record('s1', { officers, player, damage: median(runs.map(r => r.s1…
+    208|     expect(officers / Math.max(1, officers + player)).toBeGreaterThanO…
+       |                                                       ^
+    209|     // PO 2026-10-12 (verbatim): "reduce the power of the gun by 50% f…
+    210|     // for the police so the user needs to start running away (with so…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/22]⎯
+
+ FAIL   functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-12 @E21 @E21-AC12 escalation: pre-populated 250/625/1000 (+-20 %), live infected near the courier rise S1 -> S3, caps never exceeded
+AssertionError: expected 190 to be greater than or equal to 200
+ ❯ tests/levels/L3.test.ts:237:117
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/22]⎯
+
+ FAIL   functional  tests/levels/L5.test.ts > L5 Aftermath > T-E23-09 @E23 @E23-AC09 the group grows and follows: stand-to-interact 1.0 s, the counter steps 0 to 5, followers within 8 m, no jump above 1 m per tick, slower than the courier's run
+AssertionError: expected 0.798162583518931 to be greater than or equal to 0.8
+ ❯ tests/levels/L5.test.ts:191:27
+    189|     const b = await loadL5(1); const r = runL5(b.world, b.mission, 'co…
+    190|     record('follow', { followShare: r.followShare, maxFollowerJump: r.…
+    191|     expect(r.followShare).toBeGreaterThanOrEqual(.8); expect(r.maxFoll…
+       |                           ^
+    192|   }, HEAVY);
+    193|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/22]⎯
+
+ FAIL   functional  tests/levels/L6.test.ts > T-E24-02 @E24 @E24-AC02 @E24-AC10 single-seed complete bot (PO: no batteries) protects and rejoins the community
+AssertionError: expected 275.31666666666666 to be less than or equal to 270
+ ❯ tests/levels/L6.test.ts:40:218
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/22]⎯
+
+ FAIL   functional  tests/levels/continuity.test.ts > L1 -> L2 world-state continuity > T-CONT-01S @continuity after the L1 lab blast the L2 town has the burned annex, the debris cells blocked, the outbreak house aftermath and this run's carryover
+AssertionError: expected 1.753133986961202 to be less than 0.25
+ ❯ tests/levels/continuity.test.ts:41:174
+     39|     const bodies = [...w2.entities.iterate()].filter(e => e.civilian?.…
+     40|     for (const b of aftermath.bodies) expect(bodies.some(e => Math.hyp…
+     41|     for (const p of aftermath.props) { const item = w2.props!.items.fi…
+       |                                                                                                                                                                              ^
+     42|     // L2 is still completable with the carryover (E20 band is the 20-…
+     43|     const l2run = runL2(w2, m2, 'complete', { seed: 1, maxSeconds: 600…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/22]⎯
+
+ FAIL   functional  tests/sim/levels/l10-district.test.ts > T-E32-03-D1-high @E32-AC02 @E32-AC03 @E32-AC27 @E32-AC28 axe route through R1/R2 retains ground/nav/checkpoint support
+ FAIL   functional  tests/sim/levels/l10-district.test.ts > T-E32-03-D1-low @E32-AC02 @E32-AC03 @E32-AC27 @E32-AC28 axe route through R1/R2 retains ground/nav/checkpoint support
+Error: Arsenal transaction needs campaign progression and combat
+ ❯ transactArsenal src/sim/progression/arsenal.ts:9:37
+      7|   if ([...add, ...remove].some(id => !catalog[id]) || add.some(id => r…
+      8|   const save = world.progression?.campaign;
+      9|   if (!save || !world.combat) throw new Error('Arsenal transaction nee…
+       |                                     ^
+     10|   const acquired = add.filter(id => !save.ownedActions.includes(id));
+     11|   const owned = [...new Set([...save.ownedActions.filter(id => !remove…
+ ❯ Mission.run src/sim/missions/Mission.ts:330:23
+ ❯ Mission.complete src/sim/missions/Mission.ts:206:66
+ ❯ Mission.update src/sim/missions/Mission.ts:183:61
+ ❯ src/sim/missions/Mission.ts:76:60
+ ❯ EventBus.emit src/core/EventBus.ts:42:41
+ ❯ SimWorld.update src/sim/world/SimWorld.ts:349:17
+ ❯ tests/sim/levels/l10-district.test.ts:29:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/22]⎯
+
+ FAIL   functional  tests/sim/missions/l10-progression.test.ts > T-E32-27-chunks-high @E32 @E32-AC27 @E32-AC28 region retry and fresh reload restore inactive chunks and the same Mega
+ FAIL   functional  tests/sim/missions/l10-progression.test.ts > T-E32-27-chunks-low @E32 @E32-AC27 @E32-AC28 region retry and fresh reload restore inactive chunks and the same Mega
+Error: Missing layout: D-CURE
+ ❯ src/sim/world/DistrictWorld.ts:48:26
+     46|     this.districts = composition.districts.map((d) => {
+     47|       const layout = layouts.find((l) => l.district === d.id);
+     48|       if (!layout) throw new Error(`Missing layout: ${d.id}`);
+       |                          ^
+     49|       const gameplay = { ...(d.gameplay ?? districtGameplay[d.id]), ..…
+     50|       if (gameplay.decay.some(layer => !isWorldTier(layer.tier))) thro…
+ ❯ new DistrictWorld src/sim/world/DistrictWorld.ts:46:44
+ ❯ SimWorld.loadComposition src/sim/world/SimWorld.ts:256:21
+ ❯ tests/sim/missions/l10-progression.test.ts:102:9
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/22]⎯
+
+ FAIL   functional  tests/sim/missions/l2-axe-objective.test.ts > @E20 after the alarm every playing tick has objective text and destinations have markers, including the doors checkpoint
+AssertionError: tick 7883, phase done: expected 0 to be greater than 0
+ ❯ Object.stopWhen tests/sim/missions/l2-axe-objective.test.ts:40:78
+     38|     if (!m.state.l2!.alarmAt || m.state.phase !== 'playing') return fa…
+     39|     const active = m.def.steps.filter(s => m.state.steps[s.id].status …
+     40|     expect(active.length, `tick ${world!.tick}, phase ${m.state.l2!.ph…
+       |                                                                              ^
+     41|     expect(active[0].text).not.toBe('');
+     42|     expect(m.state.marker).toBe(active[0].waypoint === false ? null : …
+ ❯ runL2 tools/sim-runner/l2Bots.ts:100:14
+ ❯ tests/sim/missions/l2-axe-objective.test.ts:37:18
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/22]⎯
+
+ FAIL   functional  tests/sim/performance/alpha-physical.test.ts > T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms
+AssertionError: expected 4.742074999958277 to be less than or equal to 4
+ ❯ tests/sim/performance/alpha-physical.test.ts:29:101
+     27|     const proof = { count, alphas: ids.length, minInfected, activation…
+     28|     mkdirSync('test-results/alpha-s2', { recursive: true }); writeFile…
+     29|     expect(activations).toBeGreaterThan(0); expect(minInfected).toBe(c…
+       |                                                                                                     ^
+     30|   } finally { w.dispose(); }
+     31| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[15/22]⎯
+
+ FAIL   functional  tests/sim/performance/alpha-support.test.ts > T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms
+AssertionError: expected 5.370268000056967 to be less than or equal to 4
+ ❯ tests/sim/performance/alpha-support.test.ts:29:147
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[16/22]⎯
+
+ FAIL   functional  tests/sim/performance/alpha.test.ts > T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms
+AssertionError: expected 5.12516100006178 to be less than or equal to 4
+ ❯ tests/sim/performance/alpha.test.ts:29:61
+     27|     const proof = { count, alphas: ids.length, minInfected, cap: ai.di…
+     28|     mkdirSync('test-results/alpha-s1', { recursive: true }); writeFile…
+     29|     expect(minInfected).toBe(count); expect(proof.simMsP95).toBeLessTh…
+       |                                                             ^
+     30|   } finally { w.dispose(); }
+     31| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[17/22]⎯
+
+ FAIL   functional  tests/sim/performance/zoo-s1.test.ts > T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms
+AssertionError: expected 6.337881999788806 to be less than or equal to 4
+ ❯ tests/sim/performance/zoo-s1.test.ts:30:101
+     28|     const proof = { count, animals: ids.length, minInfected, activatio…
+     29|     mkdirSync('test-results/zoo-s1', { recursive: true }); writeFileSy…
+     30|     expect(activations).toBeGreaterThan(0); expect(minInfected).toBe(c…
+       |                                                                                                     ^
+     31|   } finally { w.dispose(); }
+     32| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[18/22]⎯
+
+ FAIL   functional  tests/sim/performance/zoo-s2.test.ts > T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms
+AssertionError: expected 5.554168999893591 to be less than or equal to 4
+ ❯ tests/sim/performance/zoo-s2.test.ts:26:68
+     24|     const proof = { count, zoo: ids.length, activations, simMsP95: tim…
+     25|     mkdirSync('docs/reports/zoo-s2', { recursive: true }); writeFileSy…
+     26|     expect(activations).toBeGreaterThan(0); expect(proof.simMsP95).toB…
+       |                                                                    ^
+     27|   } finally { w.dispose(); }
+     28| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[19/22]⎯
+
+ FAIL   functional  tests/sim/performance/zoo-s3.test.ts > T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms
+AssertionError: expected 5.532389000058174 to be less than or equal to 4
+ ❯ tests/sim/performance/zoo-s3.test.ts:26:68
+     24|     const proof = { count, zoo: ids.length, activations, simMsP95: tim…
+     25|     mkdirSync('docs/reports/zoo-s3', { recursive: true }); writeFileSy…
+     26|     expect(activations).toBeGreaterThan(0); expect(proof.simMsP95).toB…
+       |                                                                    ^
+     27|   } finally { w.dispose(); }
+     28| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[20/22]⎯
+
+
+ Test Files  16 failed | 138 passed | 2 skipped (156)
+      Tests  22 failed | 1190 passed | 2 skipped (1214)
+   Start at  23:20:23
+   Duration  1996.36s (tests 99%, import 1%)
+
+[remote] done exit=1 (runner 91.98.11.241, sync 25s, remote total 2168s)

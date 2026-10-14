@@ -49,3 +49,10 @@ test('T-E07-06-bars-bounds @E07-AC06 bounds follow displayed poses, interpolatio
   bodies.begin(); expect(bodies.bounds(7, box)).toBeNull();
   geometry.dispose(); palette.texture.dispose();
 });
+
+test('T-E32-09-bars @E32 @E32-AC09 regular Alpha bars remain smaller than Mega bars on desktop and phone', () => {
+  for (const [width, height] of [[1600, 900], [390, 844], [844, 390]]) {
+    const regular = barSize(width, height), mega = barSize(width, height, true);
+    expect(mega.width).toBe(regular.width * 1.5); expect(mega.height).toBeGreaterThan(regular.height);
+  }
+});

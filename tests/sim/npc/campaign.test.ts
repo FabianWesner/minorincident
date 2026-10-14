@@ -1,3 +1,4 @@
+import { dogModel } from '../../../src/data/dogAppearance';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { expect, test } from 'vitest';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
@@ -66,7 +67,7 @@ test('T-E08-17 @E08 @E08-AC17 100 seeds use data pet probability and 2–4s down
     w.npcs!.civilians.grab(owner, attacker, true); const e = w.entities.get(pet)!;
     if (e.civilian!.state === 'down') {
       turned++; const duration = e.civilian!.downTicks; durations.add(duration); expect(duration).toBeGreaterThanOrEqual(120); expect(duration).toBeLessThanOrEqual(240);
-      step(w, duration - 1); expect(e.civilian!.state).toBe('down'); step(w, 1); expect(e.civilian!.state).toBe('rising'); step(w, 72); expect(w.events.events().find(e => e.type === 'civilian.turned' && e.id === pet)).toMatchObject({ variant: 'inf.dog-retriever' });
+      step(w, duration - 1); expect(e.civilian!.state).toBe('down'); step(w, 1); expect(e.civilian!.state).toBe('rising'); step(w, 72); expect(w.events.events().find(e => e.type === 'civilian.turned' && e.id === pet)).toMatchObject({ variant: dogModel(seed, pet, true) });
     }
     w.dispose();
   }
