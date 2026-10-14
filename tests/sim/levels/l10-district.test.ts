@@ -8,8 +8,6 @@ import { resolveCampaignMission } from '../../../src/levels/missions';
 import { applyCampaign } from '../../../src/sim/progression/apply';
 import { preset } from '../../../src/sim/progression/Campaign';
 import { MegaPursuit } from '../../../src/sim/ai/MegaPursuit';
-import { applyCampaign } from '../../../src/sim/progression/apply';
-import { preset } from '../../../src/sim/progression/Campaign';
 
 const layout = JSON.parse(readFileSync('public/assets/layouts/D-CURE.layout.json', 'utf8')) as DistrictLayout;
 for (const tier of ['high', 'low'] as const) test(`T-E32-03-D1-D2-${tier} @E32-AC02 @E32-AC05 @E32-AC03 @E32-AC27 @E32-AC28 route through R1–R4 acquires the ordered arsenal and retains ground/nav/checkpoint support`, async () => {
