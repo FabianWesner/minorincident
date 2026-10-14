@@ -83,14 +83,14 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   const actualTier = await session.page.evaluate(() => window.__SS__!.getState().render.quality);
   const result = evaluate(spec, metrics, clipping, errors);
   const ring = spec.megaHud ? await session.page.evaluate(megaId => {
-    const ring = document.querySelector<HTMLElement>('#mega-distance-ring');
-    const label = document.querySelector<HTMLElement>('#mega-distance-label');
-    const map = document.querySelector<HTMLElement>('#minimap');
+    const ring = document.querySelector<HTMLElement>('[data-testid="mega-distance-ring"]');
+    const label = document.querySelector<HTMLElement>('[data-testid="mega-distance-label"]');
+    const map = document.querySelector<HTMLElement>('[data-testid="minimap"]');
     const r = ring?.getBoundingClientRect(), m = map?.getBoundingClientRect();
     const visible = !!ring && !ring.hidden && !!r?.width && getComputedStyle(ring).visibility === 'visible';
     return { visible, labelVisible: !!label && !label.hidden && !!label.getBoundingClientRect().width && getComputedStyle(label).visibility === 'visible', band: ring?.dataset.band, text: label?.textContent,
       centerErrorPx: r && m ? Math.hypot(r.x + r.width / 2 - m.x - m.width / 2, r.y + r.height / 2 - m.y - m.height / 2) : Infinity,
-      exactPins: [...document.querySelectorAll<HTMLElement>('#minimap [data-entity-id]')].filter(p => !p.hidden && p.dataset.entityId === String(megaId)).length,
+      exactPins: [...document.querySelectorAll<HTMLElement>('[data-testid="minimap"] [data-entity-id]')].filter(p => !p.hidden && p.dataset.entityId === String(megaId)).length,
       coordinates: !!ring && ['data-world-x', 'data-world-z', 'data-entity-id'].some(a => ring.hasAttribute(a)) };
   }, scene.actors.find(a => a.id === (spec.megaAlpha?.id ?? 'mega'))?.entity) : null;
   if (ring) {
