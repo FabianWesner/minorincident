@@ -47,7 +47,8 @@
      -100,
      -30
     ]
-   ]
+   ],
+   "driven": true
   }
  ],
  "camera": {
@@ -61,6 +62,9 @@
   "consoleErrors": 0,
   "clippingMax": 0,
   "drawCallsMax": 300,
-  "trianglesMax": 500000
+  "trianglesMax": 500000,
+  "vehicleTiltMaxDeg": 8,
+  "vehicleSlipMaxDeg": 20,
+  "headlightsDarkFramesMax": 0
  }
 }

@@ -206,6 +206,7 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   add('lostTargetNearFramesMax', Math.max(0, ...pursuit.map(p => p.lostNearFrames)), e.lostTargetNearFramesMax);
   add('overshootMaxM', Math.max(0, ...pursuit.map(p => p.overshootMaxM)), e.overshootMaxM);
   if (e.courierSwingsMin !== undefined) checks.push({ name: 'courierSwingsMin', pass: (metrics.pursuit?.courierSwings ?? 0) >= e.courierSwingsMin, value: metrics.pursuit?.courierSwings ?? 0, limit: e.courierSwingsMin });
+  if (e.hullWindupsMin !== undefined) checks.push({ name: 'hullWindupsMin', pass: (metrics.pursuit?.hullWindups ?? 0) >= e.hullWindupsMin, value: metrics.pursuit?.hullWindups ?? 0, limit: e.hullWindupsMin });
   if (e.courierAttacksMin !== undefined) checks.push({ name: 'courierAttacksMin', pass: (metrics.pursuit?.courierAttacks ?? 0) >= e.courierAttacksMin, value: metrics.pursuit?.courierAttacks ?? 0, limit: e.courierAttacksMin });
   if (e.firstBiteFrameMax !== undefined) { const f = metrics.pursuit?.firstBiteFrame ?? -1; checks.push({ name: 'firstBiteFrameMax', pass: f >= 0 && f <= e.firstBiteFrameMax, value: f, limit: e.firstBiteFrameMax }); }
   if (e.propGroundSamplesMin !== undefined) checks.push({ name: 'propGroundSamplesMin', pass: metrics.props.samples >= e.propGroundSamplesMin, value: metrics.props.samples, limit: e.propGroundSamplesMin });
@@ -217,5 +218,9 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   add('wheelFloatMaxCm', Math.max(0, ...wheels.map(w => w.gapMaxCm)), e.wheelFloatMaxCm);
   add('bikeUndrawnFramesMax', (metrics.bike?.missedFrames ?? 0) + (metrics.bike?.offFrames ?? 0), e.bikeUndrawnFramesMax);
   add('wheelSpikeMaxCm', Math.max(0, ...wheels.map(w => w.hubSpikeCm)), e.wheelSpikeMaxCm);
+  add('vehicleTiltMaxDeg', Math.max(0, ...Object.values(metrics.vehicles).map(v => v?.tiltMaxDeg ?? 0)), e.vehicleTiltMaxDeg);
+  add('vehicleSlipMaxDeg', Math.max(0, ...Object.values(metrics.vehicles).map(v => v?.slipMaxDeg ?? 0)), e.vehicleSlipMaxDeg);
+  add('headlightsDarkFramesMax', Math.max(0, ...Object.values(metrics.vehicles).map(v => v?.headlightsDarkFrames ?? 0)), e.headlightsDarkFramesMax);
+  add('vehicleHealthMax', Math.max(0, ...Object.values(metrics.vehicles).map(v => v?.health ?? 0)), e.vehicleHealthMax);
   return { pass: checks.every(c => c.pass), checks };
 }

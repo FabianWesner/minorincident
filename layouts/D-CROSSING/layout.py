@@ -47,12 +47,14 @@ patches=[]
 # Centre x=516, 16 m gap, floor 5.5 m down, 8 m wide; it tapers out to ground level at z=+-90. CCW polygon.
 GULLY_X, GULLY_HALF, GULLY_DEPTH, GULLY_FLOOR, GULLY_LEN = 516.0, 8.0, 5.5, 4.0, 90.0
 GULLY_HOLE=[[GULLY_X-GULLY_HALF,-GULLY_LEN],[GULLY_X+GULLY_HALF,-GULLY_LEN],[GULLY_X+GULLY_HALF,GULLY_LEN],[GULLY_X-GULLY_HALF,GULLY_LEN]]
-def surface(name, poly, token, height=0):
+def surface(name, poly, token, height=0, cut=True):
     # Arrow silhouettes are concave; partition them into convex triangles.
+    # cut=False: a thin overlay that sits a few mm above its owner instead of cutting it (gravel ruts): cutting hundreds of
+    # dashes out of the route strips would multiply their triangles past the 10k streamed-horizon budget.
     if any((b[0]-a[0])*(c[1]-b[1])-(b[1]-a[1])*(c[0]-b[0]) < -1e-8 for a,b,c in zip(poly,poly[1:]+poly[:1],poly[2:]+poly[:2])):
         for tri in tessellate_polygon([[Vector((x,z,0)) for x,z in poly]]):
-            patches.append((name,[poly[v] if isinstance(v,int) else [v.x,v.y] for v in tri],token,height))
-    else: patches.append((name,poly,token,height))
+            patches.append((name,[poly[v] if isinstance(v,int) else [v.x,v.y] for v in tri],token,height,cut))
+    else: patches.append((name,poly,token,height,cut))
 
 def halfplane(poly,a,b,inside):
     out=[]
@@ -81,11 +83,12 @@ def subtract(poly,cutter):
     return outside
 
 def emit_surfaces():
-    for index,(name,poly,token,height) in enumerate(patches):
+    for index,(name,poly,token,height,_) in enumerate(patches):
         pieces=[poly]
         # Flat surface ownership, rather than stacked coplanar slabs. This avoids depth flicker
         # even at the 200 m review camera; paint and intersecting fork lanes have one owner.
-        for _,cutter,_,_ in patches[index+1:]:
+        for _,cutter,_,_,cuts in patches[index+1:]:
+            if not cuts: continue
             pieces=[piece for p in pieces for piece in subtract(p,cutter)]
         # L9-A2: the collapsed-road gully replaces the flat ground (the sim ground stays flat; S6 owns the crash).
         pieces=[piece for p in pieces for piece in subtract(p,GULLY_HOLE)]
@@ -130,26 +133,55 @@ surface('dry-ground',dry,'khaki',-.004)
 l.data['surfaces'].append(dict(surface='grass',height=0,polygon=l.data['bounds']))
 l.data['surfaces'].append(dict(surface='gravel',height=0,polygon=dry+[dry[0]]))
 emitted=set()
+strips=[]; marks=[]; ruts=[]
+# Rut dash pattern (m): uneven so the eye reads ground speed, not a stripe; the APC/car tracks run on them.
+RUT_DASH=[5,3.5,6,4.5]; RUT_GAP=[2.5,3,2,3.5]
+def unit(a,b): d=math.dist(a,b); return ((b[0]-a[0])/d,(b[1]-a[1])/d)
+def miter(pts,i,half):
+    # Left offset of vertex i: a mitered corner, so consecutive segments meet without a wedge hole or an overlap.
+    ns=[(-t[1],t[0]) for t in ([unit(pts[i-1],pts[i])] if i>0 else [])+([unit(pts[i],pts[i+1])] if i<len(pts)-1 else [])]
+    nx,nz=sum(n[0] for n in ns),sum(n[1] for n in ns); k=half/max(.35,(nx*ns[0][0]+nz*ns[0][1]))
+    return (nx*k,nz*k) if len(ns)>1 else (ns[0][0]*half,ns[0][1]*half)
 for route in source['routes']:
     pts=route['points']; width=route['width']
     l.data['roads']['edges'].append(dict(id=route['id'],start='start',end='outskirts',points=pts,laneWidth=width))
-    for a,b in zip(pts,pts[1:]):
+    height=.002 if route['id']=='road' else .004 if route['id']=='countryside' else .006
+    token='asphalt' if route['surface']=='asphalt' else 'woodWarm' if route['id']=='countryside' else 'khakiLight'
+    for j,(a,b) in enumerate(zip(pts,pts[1:])):
         d=math.dist(a,b); nx=-(b[1]-a[1])/d*width/2; nz=(b[0]-a[0])/d*width/2
         poly=[[a[0]+nx,a[1]+nz],[a[0]-nx,a[1]-nz],[b[0]-nx,b[1]-nz],[b[0]+nx,b[1]+nz]]
         key=(tuple(a),tuple(b))
         if key in emitted: continue
         emitted.add(key)
-        height=.002 if route['id']=='road' else .004 if route['id']=='countryside' else .006
-        token='asphalt' if route['surface']=='asphalt' else 'woodWarm' if route['id']=='countryside' else 'khakiLight'
-        surface(route['id'],poly,token,height)
         l.data['surfaces'].append(dict(surface=route['surface'],height=height,polygon=poly+[poly[0]]))
+        # Drawn strip (QA L9-Q1: square segment ends left "large flat brown and lavender polygons" at the fork and bends):
+        # mitered corners within a route; a branch that leaves or rejoins the shared asphalt reaches 8 m into it (the road owns it).
+        t=unit(a,b); ma,mb=miter(pts,j,width/2),miter(pts,j+1,width/2); sa,sb=a,b
+        road=[tuple(q) for q in source['routes'][0]['points']]
+        if route['id']!='road' and j>0 and tuple(a) in road: sa=[a[0]-t[0]*8,a[1]-t[1]*8]; ma=(nx,nz)
+        if route['id']!='road' and j+2<len(pts) and tuple(b) in road: sb=[b[0]+t[0]*8,b[1]+t[1]*8]; mb=(nx,nz)
+        strips.append((route['id'],[[sa[0]+ma[0],sa[1]+ma[1]],[sa[0]-ma[0],sa[1]-ma[1]],[sb[0]-mb[0],sb[1]-mb[1]],[sb[0]+mb[0],sb[1]+mb[1]]],token,height))
+        tx,tz=(b[0]-a[0])/d,(b[1]-a[1])/d; ux,uz=nx/(width/2),nz/(width/2)
         if route['id']=='road':
             for s in range(8,int(d)-4,20):
                 cx=a[0]+(b[0]-a[0])*s/d; cz=a[1]+(b[1]-a[1])*s/d
-                tx=(b[0]-a[0])/d*2; tz=(b[1]-a[1])/d*2
-                mark=[[cx-tx+nx*.025,cz-tz+nz*.025],[cx-tx-nx*.025,cz-tz-nz*.025],[cx+tx-nx*.025,cz+tz-nz*.025],[cx+tx+nx*.025,cz+tz+nz*.025]]
-                surface('road-mark',mark,'picketWhite',.008)
+                marks.append([[cx-tx*2+nx*.025,cz-tz*2+nz*.025],[cx-tx*2-nx*.025,cz-tz*2-nz*.025],[cx+tx*2-nx*.025,cz+tz*2-nz*.025],[cx+tx*2+nx*.025,cz+tz*2+nz*.025]])
+        else:
+            # L9-Q1 (QA: "the dry-shortcut ground is a flat purple plane with no features, so there is no cue that the APC is
+            # moving"): two pale worn tyre ruts (moonlit contrast), dashed, 14 m clear of every fork, bend and merge. Visual only (not a sim surface).
+            s,i=14.0,0
+            while s+RUT_DASH[i%4] < d-14:
+                e=RUT_DASH[i%4]
+                for off in (-1.25,1.25):
+                    c0=[a[0]+tx*s+ux*off,a[1]+tz*s+uz*off]
+                    ruts.append(([[c0[0]+ux*.3,c0[1]+uz*.3],[c0[0]-ux*.3,c0[1]-uz*.3],[c0[0]-ux*.3+tx*e,c0[1]-uz*.3+tz*e],[c0[0]+ux*.3+tx*e,c0[1]+uz*.3+tz*e]],height+.0035))  # same winding as the strips (upward faces)
+                s+=e+RUT_GAP[i%4]; i+=1
     for i,p in enumerate(route['risks']): l.anchor(f"risk-{route['id']}-{i}",[p[0],0,p[1]])
+# Ownership at the fork and the merge: the asphalt road is the through route, the gravel tracks branch off its edge.
+order={'countryside':0,'dry-shortcut':1,'road':2}
+for name,poly,token,height in sorted(strips,key=lambda t:order[t[0]]): surface(name,poly,token,height)
+for mark in marks: surface('road-mark',mark,'picketWhite',.008)
+for poly,height in ruts: surface('track-rut',poly,'canvasTan',height,cut=False)
 
 for name,p in [('crossing-start',source['start']),('player-start',source['start']),('outskirts',source['outskirts']),('exit',source['outskirts']),('road-fork',[-450,0]),('countryside',[0,240]),('dry-shortcut',[0,-30]),('chunk-seam',[0,-330])]: l.anchor(name,[p[0],0,p[1]])
 for v in source['viewpoints']: l.anchor(v['id'],[v['from'][0],0,v['from'][1]])
