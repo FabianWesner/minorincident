@@ -1,0 +1,73 @@
+{
+  "extends": "../../../specs/scenes/catalog/qa-l9-seam-drive.json",
+  "name": "qa-l9-q3-stream-retire",
+  "note": "Q3 streaming retirement regression: follow the existing APC along 520 m of the road branch, repeatedly unloading terrain and changing prop LOD residency. Watch for missing terrain or stale GPU bindings; console and original E18/vehicle contact gates stay strict. Nearby infected exercise lazy hero LOD swaps and per-batch crowd matrices.",
+  "vehicles": [
+    {
+      "id": "apc",
+      "asset": "vehicle.military-apc",
+      "at": [
+        -70,
+        -330
+      ],
+      "yaw": 0,
+      "path": [
+        [
+          450,
+          -330
+        ]
+      ],
+      "health": 1000,
+      "floor": true,
+      "driven": true
+    }
+  ],
+  "frames": 4200,
+  "sheet": 300,
+  "shots": [
+    0,
+    2100,
+    4200
+  ],
+  "actors": [
+    {
+      "id": "infected-0",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "look": {
+        "model": "inf.common-worker"
+      },
+      "at": [
+        -45,
+        -325
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-1",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "look": {
+        "model": "inf.jogger"
+      },
+      "at": [
+        80,
+        -325
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "infected-2",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "look": {
+        "model": "inf.cashier"
+      },
+      "at": [
+        180,
+        -325
+      ],
+      "state": "idle"
+    }
+  ]
+}
