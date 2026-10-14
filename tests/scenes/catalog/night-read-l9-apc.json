@@ -1,0 +1,63 @@
+{
+ "name": "night-read-l9-apc",
+ "note": "E31-AC16 dry-night navigation while driving: the healthy APC drives 90 m along the L9 asphalt road (the lift follows the camera focus, not the hidden courier). Route band vs verge >= 3:1 (median over the visible route). Look for a pale road band ahead of the headlights, dark verges, night still dark.",
+ "seed": 31,
+ "ground": "district",
+ "time": "L9-crossing",
+ "dof": false,
+ "layout": {
+  "district": "D-CROSSING",
+  "bbox": [
+   [
+    -170,
+    -400
+   ],
+   [
+    50,
+    -260
+   ]
+  ]
+ },
+ "vehicles": [
+  {
+   "id": "apc",
+   "asset": "vehicle.military-apc",
+   "at": [
+    -120,
+    -330
+   ],
+   "yaw": 0,
+   "path": [
+    [
+     -30,
+     -330
+    ]
+   ],
+   "health": 1000,
+   "floor": true,
+   "driven": true
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": "apc",
+  "zoom": 1
+ },
+ "contrast": {
+  "district": "D-CROSSING",
+  "stepM": 2
+ },
+ "frames": 360,
+ "sheet": 60,
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "navContrastMin": 2.5,
+  "navContrastFloor": 2.0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000,
+  "vehicleTiltMaxDeg": 8,
+  "vehicleSlipMaxDeg": 20,
+  "headlightsDarkFramesMax": 0
+ }
+}

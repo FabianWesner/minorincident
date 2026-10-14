@@ -108,5 +108,5 @@ compositions.L8 = { id: 'L8', tier: 0, timeOfDay: 'L8-zoo', districts: [{ id: 'D
 compositions.L9 = { ...compositions['D-CROSSING'], id: 'L9' };
 
 /** L10-D1: same global crawl-end, now continuing into the streamed cure district. */
-compositions['D-CURE'] = { id: 'D-CURE', tier: 0, timeOfDay: 'L9-crossing', districts: [{ id: 'D-CURE', origin: [0, 0] }] };
+compositions['D-CURE'] = { id: 'D-CURE', tier: 0, timeOfDay: 'L10-night', districts: [{ id: 'D-CURE', origin: [0, 0] }] };
 compositions.L10 = { ...compositions['D-CURE'], id: 'L10' };

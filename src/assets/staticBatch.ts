@@ -1,6 +1,6 @@
 // Adapted from Bruno Simon folio-2025 Materials.js (MIT).
-import { Box3, BufferAttribute, BufferGeometry, InterleavedBuffer, InterleavedBufferAttribute, Color, Sphere, Vector3, Group, MathUtils, Matrix3, Matrix4, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, type Object3D, type Material } from 'three/webgpu';
-import { attribute, luminance, varying, cameraPosition, normalWorld, positionWorld, vec3 } from 'three/tsl';
+import { type Node, Box3, BufferAttribute, BufferGeometry, InterleavedBuffer, InterleavedBufferAttribute, Color, Sphere, Vector3, Group, MathUtils, Matrix3, Matrix4, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, type Object3D, type Material } from 'three/webgpu';
+import { attribute, float, luminance, varying, cameraPosition, normalWorld, positionWorld, vec3 } from 'three/tsl';
 import { paletteTokens, type PaletteToken } from '../data/palette';
 import { anchorsFor } from '../data/placedLights';
 import type { Materials } from '../render/Materials';
@@ -222,6 +222,12 @@ export async function staticBatchAsync(source: Object3D, lit: boolean, materials
   }
 }
 
+/** Night road read: 1 on asphalt, 1.4 on road paint within 3 cm of the ground (retroreflective, so lines stay brighter than the road; plinths, fences and trims are not lifted), 0 elsewhere. */
+function roadMask(): Node<'float'> {
+  const index = attribute('_palette', 'float'), is = (token: PaletteToken) => index.sub(paletteTokens.indexOf(token)).abs().lessThan(.5);
+  return is('asphalt').select(float(1), is('picketWhite').and(positionWorld.y.lessThan(.03)).select(float(1.4), float(0)));
+}
+
 /** Rebuild exactly the same graph for runtime batches and lossless build output. */
 export function staticBatchMaterial(materials: Materials | undefined, emissive: boolean, lit: boolean, anchors: boolean, hasSurface: boolean, hasWindows: boolean, world = true, foliage = false): Material {
   const base = materials && world ? varying(materials.sample(attribute('_palette', 'float')), 'worldPaletteColor').mul(emissive && !lit && !anchors ? .08 : 1) : attribute('color', 'vec3');
@@ -233,7 +239,7 @@ export function staticBatchMaterial(materials: Materials | undefined, emissive: 
   const interior = hasWindows ? attribute('_window', 'float').greaterThan(.5).select(rooms, 1) : undefined;
   const glow = emissive && (lit || anchors) ? base.div(luminance(base).max(.001)).mul(hasWindows ? attribute('_window', 'float').greaterThan(.5).select(.6, 2) : 2).mul(power ?? 1).mul(interior ?? 1) : undefined;
   // InstancedGroup owns the placement-specific base; direct prototype renders use texel zero.
-  const material = materials ? foliage ? materials.foliage(world) : materials.shaded(hasWindows ? base.mul(attribute('_window', 'float').greaterThan(.5).select(.025, 1)) : base, glow, undefined, hasSurface ? attribute('_surface', 'float') : undefined) : emissive && lit ? new MeshBasicNodeMaterial({ vertexColors: true }) : new MeshLambertNodeMaterial({ vertexColors: true });
+  const material = materials ? foliage ? materials.foliage(world) : materials.shaded(hasWindows ? base.mul(attribute('_window', 'float').greaterThan(.5).select(.025, 1)) : base, glow, undefined, hasSurface ? attribute('_surface', 'float') : undefined, world && !emissive ? roadMask() : undefined) : emissive && lit ? new MeshBasicNodeMaterial({ vertexColors: true }) : new MeshLambertNodeMaterial({ vertexColors: true });
   material.userData.emissiveStrength = emissive && lit ? 2 : 0;
   material.userData.batchFeatures = `${+hasSurface}:${+hasWindows}:${+!!glow}`;
   material.userData.worldPaletteOnly = !!materials && world;
