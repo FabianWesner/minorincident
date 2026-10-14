@@ -79,6 +79,8 @@ export interface PropSpec { decay?: string; powerGroup?: string; powered?: boole
 export type ActorKind = 'courier' | 'pedestrian' | 'infected' | 'corgi' | 'animal';
 export interface Look { model?: string; tint?: string; accessories?: string[]; handProp?: string | null; tier?: 'frail' | 'average' | 'athletic'; gearTier?: number; role?: string }
 export interface ActorSpec {
+  /** Healthy generic dog on the shipped pet lifecycle (seeded coat). */
+  pet?: 'dog';
   /** Feet height for a stationary actor on a raised deck (metres above world ground). */
   floorY?: number;
   /** Use the same walking-foot support as the L5 metro followers. */
@@ -274,7 +276,7 @@ export function validateSpec(spec: SceneSpec, assets: Map<string, AssetDef>): st
   let couriers = 0;
   spec.actors?.forEach((a, i) => {
     if (!['courier', 'pedestrian', 'infected', 'corgi', 'animal'].includes(a.kind)) errors.push(`actors[${i}].kind: ${a.kind}`);
-    if (a.kind === 'animal' && !['lion', 'gorilla', 'elephant', 'zebra', 'flamingo'].includes(a.species ?? '')) errors.push(`actors[${i}].species: ${a.species}`);
+    if (a.kind === 'animal' && a.pet !== 'dog' && !['lion', 'gorilla', 'elephant', 'zebra', 'flamingo'].includes(a.species ?? '')) errors.push(`actors[${i}].species: ${a.species}`);
     if (a.kind === 'courier') couriers++;
     if (a.at) point(a.at, `actors[${i}].at`);
     if (a.id) { if (ids.has(a.id)) errors.push(`duplicate id ${a.id}`); ids.add(a.id); }

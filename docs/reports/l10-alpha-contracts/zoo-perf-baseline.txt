@@ -1,0 +1,14 @@
+[runner] slot 0 acquired; load 0.98 1.01 2.06
+
+ RUN  v5.0.3 /srv/mi/jobs/l10-alpha-contract-baseline-671ba2-82655-1791935882
+
+ ✓  functional  tests/sim/performance/zoo-s3.test.ts (2 tests) 2462ms
+   ✓ T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms 1729ms
+   ✓ T-E07-11-zoo-s3-100 @E07-AC11 @E18-AC02 mixed zoo specials stay within 6ms 730ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  23:58:05
+   Duration  6.14s (transform 50%, tests 41%, import 9%)
+
+[remote] done exit=0 (runner 94.130.181.173, sync 3s, remote total 9s)

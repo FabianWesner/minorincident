@@ -1,0 +1,44 @@
+[runner] slot 1 acquired; load 6.23 5.64 4.20
+
+ RUN  v5.0.3 /srv/mi/jobs/l10-alpha-contract-baseline-671ba2-48631-1791934824
+
+ ❯  timing  tests/sim/performance/mega-moves.test.ts (2 tests | 1 failed) 5429ms
+   × T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18 4062ms
+   ✓ T-E32-11-perf-100 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18 1364ms
+ ❯  timing  tests/sim/performance/mega-audio.test.ts (2 tests | 1 failed) 12639ms
+   × T-E32-13-perf-200 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling 9101ms
+   ✓ T-E32-13-perf-100 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling 3536ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   timing  tests/sim/performance/mega-audio.test.ts > T-E32-13-perf-200 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling
+AssertionError: expected 8.206560999999056 to be less than or equal to 4
+ ❯ tests/sim/performance/mega-audio.test.ts:14:94
+     12|     ms.sort((a,b)=>a-b);const proof={count:w.infected!.director.count,…
+     13|     mkdirSync('test-results/epics/E32/audio',{recursive:true});writeFi…
+     14|     expect(proof.count).toBe(count);expect(cues).toBeGreaterThanOrEqua…
+       |                                                                                              ^
+     15|   } finally{w.dispose();}
+     16| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL   timing  tests/sim/performance/mega-moves.test.ts > T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18
+AssertionError: expected 8.483930999999757 to be less than or equal to 4
+ ❯ tests/sim/performance/mega-moves.test.ts:24:104
+     22|     const proof = { count, activations, simMsP95: times[Math.ceil(time…
+     23|     mkdirSync('test-results/epics/E32', { recursive: true }); writeFil…
+     24|     expect(activations).toBeGreaterThan(0); expect(proof.infected).toB…
+       |                                                                                                        ^
+     25|   } finally { w.dispose(); }
+     26| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  2 failed | 2 passed (4)
+   Start at  23:40:28
+   Duration  23.07s (tests 80%, transform 17%, import 3%)
+
+[remote] done exit=1 (runner 94.130.181.173, sync 3s, remote total 25s)

@@ -1,3 +1,4 @@
+import { dogModel } from '../../data/dogAppearance';
 import { storyProtected } from './storyProtection';
 import { Rng } from '../../core/Rng';
 import { infectedDef } from '../../data/infected';
@@ -43,6 +44,7 @@ export class Civilians {
     const e = this.world.entities.create({ kind: animal || options.pet ? 'pet' : 'civilian', archetype: animal ? `animal.${options.zooAnimal}` : options.child ? 'npc.child' : `npc.${role}`, faction: 'civilian', transform: { ...position, y: .7, yaw: 0 }, health: { current: 100, max: 100 }, civilian,
       combat: { radius: animal?.radius ?? .35, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } });
     if (animal) civilian.l1 = { walkSpeed: 1, fleeSpeed: 2, startleTicks: 30, refuge: null, target: null, repickAt: 0, noticed: -1 };
+    if (options.pet === 'dog') { civilian.model = dogModel(this.world.seed, e.id, false); civilian.variant = civilian.model.replace(/^amb\./, 'inf.'); }
     this.world.spatial.set(e.id, position.x, position.z); return e.id;
   }
   state(e: EntitySnapshot, state: CivilianState, duration = 0): void {
@@ -133,7 +135,7 @@ export class Civilians {
             // Handoff while both authored silhouettes lie low; the newborn owns the rise.
             c.risingInfectedId = ai.spawn('infected.runner', e.transform, { variant: c.variant, yaw: e.transform.yaw, state: 'migration', perched: false });
             const newborn = this.world.entities.get(c.risingInfectedId)!;
-            if (c.schedule) newborn.infected!.model = c.model;
+            if (c.schedule && c.pet !== 'dog') newborn.infected!.model = c.model;
             newborn.infectionRise = { started: tick, until: c.until }; newborn.combat!.damageMultiplier = .2;
             e.hidden = true; this.world.spatial.delete(e.id);
           }
@@ -141,7 +143,7 @@ export class Civilians {
       } else if (c.state === 'rising' && tick >= c.until) {
         if (c.risingInfectedId || ai.pool.length > 0 && ai.director.count < ai.director.cap) {
           const infectedId = c.risingInfectedId ?? ai.spawn(c.pet ? `infected.${c.pet}` : 'infected.runner', e.transform, { variant: c.variant, state: 'chase', perched: false });
-          const newborn = this.world.entities.get(infectedId)!; if (c.schedule) newborn.infected!.model = c.model; delete newborn.infectionRise; newborn.infected!.state = 'chase';
+          const newborn = this.world.entities.get(infectedId)!; if (c.schedule && c.pet !== 'dog') newborn.infected!.model = c.model; delete newborn.infectionRise; newborn.infected!.state = 'chase';
           delete c.risingInfectedId; this.turns++; this.state(e, 'infected'); e.hidden = true; this.world.spatial.delete(e.id);
           this.world.events.emit({ type: 'civilian.turned', tick, id: e.id, infectedId, variant: c.variant, position: { x: e.transform.x, z: e.transform.z } });
         } else { this.state(e, 'down', 1); }

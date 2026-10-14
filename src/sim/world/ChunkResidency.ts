@@ -162,6 +162,10 @@ export class ChunkResidency {
     if (e.combat) { if (e.combat.staggerUntil) e.combat.staggerUntil += delta; for (const status of e.combat.statuses) { status.expires += delta; status.nextDot += delta; } }
   }
   setQuality(tier: QualityTier): void { this.tier = tier; this.world.infected?.director.setTier(tier); this.update(); }
+  /** Compact inactive records are counted only for authored spawn admission, never every AI tick. */
+  *inactiveEntities(): IterableIterator<EntitySnapshot> {
+    for (const json of this.inactive.values()) for (const record of JSON.parse(json) as SleepingEntity[]) yield record.entity;
+  }
   consumedPickups(): number[] {
     const consumed: number[] = [];
     for (const json of this.inactive.values()) for (const { entity: e } of JSON.parse(json) as SleepingEntity[]) if (e.pickup && 'kind' in e.pickup && e.pickup.collected && e.pickup.kind !== 'item' && e.pickup.kind !== 'throwable') consumed.push(e.id);

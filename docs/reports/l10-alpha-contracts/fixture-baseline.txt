@@ -1,0 +1,64 @@
+[runner] slot 1 acquired; load 1.05 2.71 3.38
+
+ RUN  v5.0.3 /srv/mi/jobs/l10-alpha-contract-baseline-671ba2-61310-1791935193
+
+ ❯  functional  tests/sim/missions/l10-progression.test.ts (9 tests | 2 failed | 7 skipped) 183ms
+   ↓ T-E32-01 @E32 @E32-AC01 ordered graph prevents skipping arsenal, cure and release prerequisites
+   ↓ T-E32-27 @E32 @E32-AC27 every region retries with its arsenal, mission items, chunk and Mega seam
+   ↓ T-E32-05 @E32 @E32-AC05 arsenal additions/removals and retry checkpoint survive JSON SaveStore round trip
+   ↓ T-E32-27b @E32 @E32-AC27 live progress reload retains the prior retry snapshot
+   × T-E32-27-chunks-high @E32 @E32-AC27 @E32-AC28 region retry and fresh reload restore inactive chunks and the same Mega 176ms
+   × T-E32-27-chunks-low @E32 @E32-AC27 @E32-AC28 region retry and fresh reload restore inactive chunks and the same Mega 4ms
+   ↓ T-E32-27-death @E32 @E32-AC27 death returns to the reached industrial checkpoint with both acquired guns
+   ↓ T-E32-27-death-save @E32 @E32-AC27 saving during death resumes at the retry checkpoint
+   ↓ T-E32-27-attack-ids @E32 @E32-AC27 fresh reload preserves attack IDs for the Mega rocket ledger
+ ❯  functional  tests/sim/levels/l10-district.test.ts (3 tests | 2 failed | 1 skipped) 2890ms
+   × T-E32-03-D1-high @E32-AC02 @E32-AC03 @E32-AC27 @E32-AC28 axe route through R1/R2 retains ground/nav/checkpoint support 1606ms
+   × T-E32-03-D1-low @E32-AC02 @E32-AC03 @E32-AC27 @E32-AC28 axe route through R1/R2 retains ground/nav/checkpoint support 1282ms
+   ↓ T-E32-28-D1 @E32-AC10 @E32-AC28 authored pursuit crosses the R1/R2 seam using shared residency
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/sim/levels/l10-district.test.ts > T-E32-03-D1-high @E32-AC02 @E32-AC03 @E32-AC27 @E32-AC28 axe route through R1/R2 retains ground/nav/checkpoint support
+ FAIL   functional  tests/sim/levels/l10-district.test.ts > T-E32-03-D1-low @E32-AC02 @E32-AC03 @E32-AC27 @E32-AC28 axe route through R1/R2 retains ground/nav/checkpoint support
+Error: Arsenal transaction needs campaign progression and combat
+ ❯ transactArsenal src/sim/progression/arsenal.ts:9:37
+      7|   if ([...add, ...remove].some(id => !catalog[id]) || add.some(id => r…
+      8|   const save = world.progression?.campaign;
+      9|   if (!save || !world.combat) throw new Error('Arsenal transaction nee…
+       |                                     ^
+     10|   const acquired = add.filter(id => !save.ownedActions.includes(id));
+     11|   const owned = [...new Set([...save.ownedActions.filter(id => !remove…
+ ❯ Mission.run src/sim/missions/Mission.ts:330:23
+ ❯ Mission.complete src/sim/missions/Mission.ts:206:66
+ ❯ Mission.update src/sim/missions/Mission.ts:183:61
+ ❯ src/sim/missions/Mission.ts:76:60
+ ❯ EventBus.emit src/core/EventBus.ts:42:41
+ ❯ SimWorld.update src/sim/world/SimWorld.ts:349:17
+ ❯ tests/sim/levels/l10-district.test.ts:29:43
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL   functional  tests/sim/missions/l10-progression.test.ts > T-E32-27-chunks-high @E32 @E32-AC27 @E32-AC28 region retry and fresh reload restore inactive chunks and the same Mega
+ FAIL   functional  tests/sim/missions/l10-progression.test.ts > T-E32-27-chunks-low @E32 @E32-AC27 @E32-AC28 region retry and fresh reload restore inactive chunks and the same Mega
+Error: Missing layout: D-CURE
+ ❯ src/sim/world/DistrictWorld.ts:48:26
+     46|     this.districts = composition.districts.map((d) => {
+     47|       const layout = layouts.find((l) => l.district === d.id);
+     48|       if (!layout) throw new Error(`Missing layout: ${d.id}`);
+       |                          ^
+     49|       const gameplay = { ...(d.gameplay ?? districtGameplay[d.id]), ..…
+     50|       if (gameplay.decay.some(layer => !isWorldTier(layer.tier))) thro…
+ ❯ new DistrictWorld src/sim/world/DistrictWorld.ts:46:44
+ ❯ SimWorld.loadComposition src/sim/world/SimWorld.ts:256:21
+ ❯ tests/sim/missions/l10-progression.test.ts:102:9
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+
+ Test Files  2 failed (2)
+      Tests  4 failed | 8 skipped (12)
+   Start at  23:46:36
+   Duration  7.12s (tests 45%, transform 42%, import 13%)
+
+[remote] done exit=1 (runner 94.130.181.173, sync 2s, remote total 10s)

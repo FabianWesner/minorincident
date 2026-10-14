@@ -1,3 +1,5 @@
+import { megaAlpha } from '../../data/megaAlpha';
+import { cureAlphaPopulation, cureAlphaCap, cureRegularAlphaCount } from '../../levels/L10/alphaContracts';
 import { moveAgent } from '../locomotion/AgentMotion';
 import { infectedDef } from '../../data/infected';
 import type { InfectedSystem, InfectedSpawn } from './InfectedSystem';
@@ -106,7 +108,10 @@ export class SpawnDirector {
     return Math.hypot(target.x - player.transform.x, target.z - player.transform.z) >= 18 && this.offscreen(target) && this.ai.nav.clear(target.x, target.z, infectedDef(id).radius);
   }
   request(archetype: string, position: { x: number; z: number }, options: InfectedSpawn = {}): void {
-    infectedDef(archetype); if (!Number.isFinite(position.x) || !Number.isFinite(position.z)) throw new RangeError('Spawn position must be finite');
+    infectedDef(archetype);
+    if (this.ai.world.scenario === 'L10' && archetype === 'infected.alpha' && options.variant !== megaAlpha.asset && !options.cureRegion) throw new RangeError('L10 regular Alpha requires an authored cure region');
+    if (options.cureRegion) cureAlphaCap(options.cureRegion, this.tier);
+    if (!Number.isFinite(position.x) || !Number.isFinite(position.z)) throw new RangeError('Spawn position must be finite');
     this.queue.push({ archetype, position: { ...position }, options: { ...options } });
   }
   /** E08 turning is an on-screen transformation, rather than an off-screen population spawn. */
@@ -125,6 +130,7 @@ export class SpawnDirector {
     for (let i = 0; i < this.queue.length;) {
       const request = this.queue[i], weight = request.archetype === 'infected.crow' ? (request.options.birds ?? 20) * 0.25 : 1;
       if (count + weight > this.cap - this.reserved - this.pendingTurns || !(request.turning ? this.ai.nav.clear(request.position.x, request.position.z, infectedDef(request.archetype).radius) : this.safe(request.archetype, request.position, request.options.perched)) || !this.ai.pool.length) { i++; continue; }
+      if (request.archetype === 'infected.alpha' && request.options.cureRegion && cureRegularAlphaCount(cureAlphaPopulation(this.ai.world), request.options.cureRegion) >= cureAlphaCap(request.options.cureRegion, this.tier)) { i++; continue; }
       const id = this.ai.spawn(request.archetype, request.position, request.options);
       if (request.migration) {
         const group = request.migration.group; if (!group.members.length) group.started = this.ai.world.tick;
