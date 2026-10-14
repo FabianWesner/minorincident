@@ -25,10 +25,11 @@ test('T-E32-01 @E32 @E32-AC01 ordered graph prevents skipping arsenal, cure and 
   expect(checkpoints).toEqual(['cure-residential','cure-industrial','cure-military','cure-research-entry','cure-research','cure-corridor','cure-complex','cure-disperse-ready']);
   expect(cureRegions.reduce((n, r) => n + r.routeMetres, 0)).toBe(4300);
   while (m.state.steps.hold.status !== 'active') m.completeObjective();
+  m.state.counters['charge-ticks'] = 3600; m.setState('charge-active', true);
   m.setState('mega-dead', false); world.update(); expect(m.state.steps.hold.status).toBe('active');
   m.setState('mega-dead', true); world.update(); expect(m.state.steps.release.status).toBe('active');
   expect(m.state.steps.epilogue.status).toBe('pending');
-  m.setState('cure-released', true); world.update(); expect(m.state.steps.epilogue.status).toBe('active');
+  world.setInput({ interact: true }); world.update(); world.clearInput(); expect(m.state.steps.epilogue.status).toBe('active');
   m.setState('epilogue-finished', true); world.update(); expect(m.state.steps.credits.status).toBe('active');
   m.setState('credits-finished', true); world.update(); world.update();
   expect(world.events.events().filter(e => e.type === 'level.completed')).toHaveLength(1);

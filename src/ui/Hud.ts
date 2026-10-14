@@ -1,3 +1,4 @@
+import { cureFinaleText } from '../sim/missions/LevelTenFinale';
 import { isMega } from '../data/megaPresentation';
 import { MegaRing } from './MegaRing';
 import { healthFraction } from './health';
@@ -55,6 +56,7 @@ export class Hud {
   private storyX = 0;
   private storyZ = 0;
   private readonly interaction = node('div', 'interaction-ring');
+  private readonly finaleAction = button('dispersal-action', 'Activate dispersal console', () => this.game.input.interactOnce());
   private readonly stops: (() => void)[] = [];
   private damagedUntil = -1;
   private barkUntil = -1;
@@ -103,7 +105,8 @@ export class Hud {
     this.vignette.className = 'hud-vignette'; this.damage.className = 'hud-damage'; this.bark.className = 'hud-bark'; this.interaction.className = 'hud-interaction';
     this.damage.hidden = this.bark.hidden = this.interaction.hidden = true;
     const stick = node('div', 'stick-zone'); stick.className = 'hud-stick-zone';
-    this.root.append(stick, this.vignette, vitals, companion, this.map, this.tracker, this.damage, this.bark, this.interaction, this.onboarding.element, this.detail);
+    this.finaleAction.className = 'hud-dispersal-action'; this.finaleAction.hidden = true;
+    this.root.append(this.finaleAction, stick, this.vignette, vitals, companion, this.map, this.tracker, this.damage, this.bark, this.interaction, this.onboarding.element, this.detail);
   }
   private bar(name: string) {
     const root = node('div', `${name}-bar`), fill = node('div', `${name}-fill`), label = node('span', `${name}-label`);
@@ -248,7 +251,11 @@ export class Hud {
     setHidden(this.tracker, !objective && !done); if (done) text(this.trackerText, `✓ ${done.text}`);
     const remaining = mission?.def.id === 'L3' && mission.state.deadlineTicks !== null ? Math.ceil(mission.state.deadlineTicks / 60) : null;
     const deadline = remaining === null ? '' : `Gates close in ${Math.floor(remaining / 60)}:${String(remaining % 60).padStart(2, '0')} · `;
-    if (objective) text(this.trackerText, `${deadline}${objective.text}${anchor ? ` · ${Math.round(Math.hypot(anchor.x - px, anchor.z - pz))}\u00a0m` : ''}`);
+    if (objective) text(this.trackerText, `${deadline}${cureFinaleText(mission) ?? objective.text}${anchor ? ` · ${Math.round(Math.hypot(anchor.x - px, anchor.z - pz))}\u00a0m` : ''}`);
+    const finaleStep = mission?.def.id === 'L10' ? mission.interactStepInRange() : null;
+    const finaleAction = !!finaleStep && ['install', 'hold', 'release'].includes(finaleStep.id);
+    setHidden(this.finaleAction, !finaleAction);
+    if (finaleAction) text(this.finaleAction, finaleStep!.id === 'install' ? 'Install cure' : finaleStep!.id === 'hold' ? 'Activate dispersal console' : 'Release cure');
     // Explain standing interactions in their ring; optional objectives remain visible alongside the main task.
     if (objective && mission) {
       const optional = mission.def.steps.filter(step => step.optional && step !== objective && mission.state.steps[step.id].status === 'active');
@@ -256,7 +263,8 @@ export class Hud {
       if (inRing) {
         const seconds = inRing.complete.kind === 'interact' ? inRing.complete.seconds : 0;
         const progress = seconds ? Math.min(100, Math.round(mission.state.steps[inRing.id].interaction / (seconds * 60) * 100)) : 0;
-        text(this.trackerText, `Hold still or press E · ${inRing.text.replace(/^Optional: /, '')} · ${progress}%`);
+        const explicit = mission.def.id === 'L10' && ['hold', 'release'].includes(inRing.id);
+        text(this.trackerText, explicit ? `Press E or tap the console action · ${inRing.text}` : `Hold still or press E · ${inRing.text.replace(/^Optional: /, '')} · ${progress}%`);
       }
       else if (optional.length) text(this.trackerText, `${this.trackerText.textContent} · ${optional[0].text}`);
     }

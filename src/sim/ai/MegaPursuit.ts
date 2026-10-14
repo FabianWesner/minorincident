@@ -394,16 +394,18 @@ export class MegaPursuit {
   /**
    * After the entity restore of a checkpoint. Timers shift by the checkpoint delta; a Mega killed since the checkpoint stays dead
    * (E32: a legitimate early kill remains dead); a living one keeps ≥ respawnGapM from the restored player.
+   * The ready snapshot passes `retainKill=false` and `respawn=false`: restore the exact captured boss.
    * `respawn=false` is a live save resume: retain the captured position without applying the death/checkpoint fairness gap.
    */
-  restore(saved: unknown, respawn = true): void {
+  restore(saved: unknown, respawn = true, retainKill = true): void {
     const s = structuredClone(saved as MegaPursuitState), delta = this.world.tick - s.tick, ai = this.world.infected!;
-    const killed = this.state.mode === 'dead' && this.state.id !== 0, shift = (t: number) => t >= 0 && Number.isFinite(t) ? t + delta : t;
+    const killed = retainKill && this.state.mode === 'dead' && this.state.id !== 0, shift = (t: number) => t >= 0 && Number.isFinite(t) ? t + delta : t;
     if (s.audio) { s.audio.next = shift(s.audio.next); s.audio.step = shift(s.audio.step); }
-    s.introducedAt = shift(s.introducedAt); s.routeAt = -Infinity; if (s.introduceTick !== null) s.introduceTick = shift(s.introduceTick);
+    s.introducedAt = shift(s.introducedAt); s.routeAt = retainKill ? -Infinity : shift(s.routeAt); if (s.introduceTick !== null) s.introduceTick = shift(s.introduceTick);
     for (const link of Object.keys(s.blocked)) s.blocked[link] = shift(s.blocked[link]);
     if (s.breach) s.breach.until = shift(s.breach.until);
-    s.stuck = { level: 0, since: -1, sampleAt: this.world.tick, x: s.x, z: s.z, noPath: 0, goal: null };
+    if (retainKill) s.stuck = { level: 0, since: -1, sampleAt: this.world.tick, x: s.x, z: s.z, noPath: 0, goal: null };
+    else { s.stuck.since = shift(s.stuck.since); s.stuck.sampleAt = shift(s.stuck.sampleAt); }
     if (s.lastDamage) s.lastDamage.tick = shift(s.lastDamage.tick);
     s.tick = this.world.tick;
     // The cap reservation follows the restored phase: held while dormant, released once introduced.

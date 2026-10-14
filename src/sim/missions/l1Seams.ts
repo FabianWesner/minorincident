@@ -46,7 +46,10 @@ export function restoreSeams(world: SimWorld, saved: Record<string, unknown> | u
     const seam = resolve(world, name);
     if (!seam || !saved || !(name in saved)) continue;
     const snapshot = structuredClone(saved[name]);
-    if (name === 'megaPursuit') world.megaPursuit!.restore(snapshot, respawn);
+    if (name === 'megaPursuit') {
+      const ready = world.missions?.state.checkpoint === 'cure-disperse-ready';
+      world.megaPursuit!.restore(snapshot, respawn && !ready, !ready);
+    }
     else seam.restore(snapshot);
   }
 }
