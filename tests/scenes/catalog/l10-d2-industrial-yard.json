@@ -1,0 +1,42 @@
+{
+  "name": "l10-d2-industrial-yard",
+  "note": "D-CURE actual loading-yard warehouse dock, courier on the clear east forecourt. Review both tiers and zooms: dock doors/canopy/bollards, roof silhouette, clear feet, no floating or vanished geometry.",
+  "seed": 32,
+  "ground": "district",
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        1367,
+        55
+      ],
+      [
+        1437,
+        135
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        1414,
+        78
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      1414,
+      78
+    ],
+    "zoom": 1
+  },
+  "frames": 1,
+  "expect": {
+    "consoleErrors": 0
+  },
+  "time": "L9-crossing"
+}

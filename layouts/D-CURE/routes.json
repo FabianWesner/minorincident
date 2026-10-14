@@ -3,23 +3,23 @@
   "bounds": [
     [
       500,
-      -200
+      -300
     ],
     [
-      1300,
-      -200
+      2500,
+      -300
     ],
     [
-      1300,
-      200
-    ],
-    [
-      500,
-      200
+      2500,
+      300
     ],
     [
       500,
-      -200
+      300
+    ],
+    [
+      500,
+      -300
     ]
   ],
   "start": [
@@ -109,6 +109,98 @@
           25
         ]
       ]
+    },
+    {
+      "id": "industrial-area",
+      "envelope": [
+        [
+          1237,
+          -200
+        ],
+        [
+          1837,
+          250
+        ]
+      ],
+      "checkpoint": "cure-industrial",
+      "weapon": "weapon.shotgun",
+      "minutes": 7,
+      "route": [
+        [
+          1237,
+          25
+        ],
+        [
+          1297,
+          25
+        ],
+        [
+          1297,
+          100
+        ],
+        [
+          1517,
+          100
+        ],
+        [
+          1747,
+          100
+        ],
+        [
+          1747,
+          25
+        ],
+        [
+          1837,
+          25
+        ]
+      ]
+    },
+    {
+      "id": "military-zone",
+      "envelope": [
+        [
+          1837,
+          -225
+        ],
+        [
+          2487,
+          225
+        ]
+      ],
+      "checkpoint": "cure-military",
+      "weapon": "weapon.army-mg",
+      "minutes": 7,
+      "route": [
+        [
+          1837,
+          25
+        ],
+        [
+          1897,
+          25
+        ],
+        [
+          1897,
+          -75
+        ],
+        [
+          2137,
+          -75
+        ],
+        [
+          2397,
+          -75
+        ],
+        [
+          2397,
+          -5
+        ],
+        [
+          2467,
+          -5
+        ]
+      ]
     }
   ],
   "anchors": {
@@ -147,6 +239,120 @@
     "r2-r3-seam": [
       1237,
       25
+    ],
+    "cure-industrial": [
+      1257,
+      25
+    ],
+    "shotgun-pickup": [
+      1257,
+      25
+    ],
+    "industrial-medkit": [
+      1253,
+      28
+    ],
+    "industrial-yard": [
+      1517,
+      100
+    ],
+    "industrial-service": [
+      1517,
+      -55
+    ],
+    "industrial-blocked-yard": [
+      1517,
+      25
+    ],
+    "r3-r4-seam": [
+      1837,
+      25
+    ],
+    "cure-military": [
+      1857,
+      25
+    ],
+    "mg-pickup": [
+      1857,
+      25
+    ],
+    "military-medkit": [
+      1853,
+      28
+    ],
+    "military-breach": [
+      2137,
+      -75
+    ],
+    "military-motor-pool": [
+      2137,
+      110
+    ],
+    "military-blocked-checkpoint": [
+      2137,
+      25
+    ],
+    "r4-r5-seam": [
+      2467,
+      -5
+    ],
+    "cure-research-entry": [
+      2467,
+      -5
     ]
-  }
+  },
+  "detours": [
+    {
+      "id": "industrial-service",
+      "region": "industrial-area",
+      "route": [
+        [
+          1297,
+          25
+        ],
+        [
+          1297,
+          -55
+        ],
+        [
+          1517,
+          -55
+        ],
+        [
+          1747,
+          -55
+        ],
+        [
+          1747,
+          25
+        ]
+      ]
+    },
+    {
+      "id": "military-motor-pool",
+      "region": "military-zone",
+      "route": [
+        [
+          1897,
+          25
+        ],
+        [
+          1897,
+          110
+        ],
+        [
+          2137,
+          110
+        ],
+        [
+          2397,
+          110
+        ],
+        [
+          2397,
+          -5
+        ]
+      ]
+    }
+  ]
 }

@@ -1,0 +1,43 @@
+{
+  "name": "l10-d2-military-motor-pool",
+  "note": "D-CURE actual motor-pool shelter and parked truck, courier on its open east forecourt. Review both tiers and zooms: roof/posts/truck fit, clear lane, continuous ground, no floating or vanished geometry.",
+  "seed": 32,
+  "ground": "district",
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        2297,
+        105
+      ],
+      [
+        2367,
+        155
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        2334,
+        130
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      2334,
+      130
+    ],
+    "zoom": 1
+  },
+  "frames": 1,
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0
+  },
+  "time": "L9-crossing"
+}
