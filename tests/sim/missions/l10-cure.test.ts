@@ -57,7 +57,7 @@ test('T-E32-15/16/27-E2 @E32-AC05 @E32-AC15 @E32-AC16 @E32-AC27 terminal, unique
     for (let i = 0; i < 1200; i++) w.update();
     expect(w.events.events().filter(e => e.type === 'combat.attack' && e.actionId === 'weapon.rocket-launcher').length).toBeGreaterThanOrEqual(10);
     expect(m.state.items).toEqual(['cure-canister']);
-    w.clearInput(); m.setState('cure-installed', true); w.update();
+    w.clearInput(); focus('cure-install'); w.setInput({ interact: true }); w.update(); w.clearInput();
     expect(m.state.checkpoint).toBe('cure-disperse-ready');
     expect(m.state.states['cure-carried']).toBe(false);
     w.tick += 180; // Expire the shared two-second respawn grace before the next death.

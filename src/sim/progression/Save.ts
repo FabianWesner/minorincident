@@ -1,4 +1,4 @@
-import { validCureCheckpoint } from './cureSave';
+import { migrateCureResume, validCureCheckpoint } from './cureSave';
 import { catalog } from '../../data/actions/catalog';
 import { upgrades } from '../../data/upgrades';
 import { eligible, lastLevel, meetsPrerequisite, validRacks, type CampaignSave } from './Campaign';
@@ -69,6 +69,7 @@ export function migrate(raw:unknown):unknown {
   if(record(raw)&&raw.version===0){const {level,...rest}=raw;raw={...rest,version:1,unlockedLevel:level};}
   if(record(raw)&&raw.version===1)raw={...raw,version:2};
   raw = dropLegacyL3Weapons(raw);
+  if (record(raw) && raw.cureResume !== undefined) raw = { ...raw, cureResume: migrateCureResume(raw.cureResume) };
   // Retired pre-finale breakdown saves retain their position, roster and zero durability.
   if (record(raw) && raw.unlockedLevel === 9 && record(raw.l9Crash) && record(raw.l9Crash.state) && raw.l9Crash.state.phase === 'driving' && record(raw.l9Crash.vehicle) && record(raw.l9Crash.vehicle.health) && raw.l9Crash.vehicle.health.current === 0 && record(raw.l9Crash.vehicle.vehicle)) {
     const copy = structuredClone(raw.l9Crash);
