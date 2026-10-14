@@ -218,6 +218,8 @@ export interface Expectations {
   megaStepMaxM?: number;
   /** L10-S6 mounted minigun gates (`metrics.minigun`): rounds fired, peak heat (0..1), frames locked out, frames mounted. */
   minigunRoundsMin?: number; minigunHeatPeakMin?: number; minigunLockedFramesMin?: number; minigunMountedFramesMin?: number;
+  /** Lowest feet height of the courier from the first mount on (m): on the finale deck about 3.08, a drop to the street fails it. */
+  minigunFeetMin?: number;
   /** Drawn frozen corpses / ground pickups further than this from the support at their xz (cm, `metrics.grounding`); a gate on zero drawn bodies fails (min counts below). */
   groundingMaxCm?: number;
   groundingCorpsesMin?: number;

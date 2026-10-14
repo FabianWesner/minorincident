@@ -16,6 +16,8 @@ export const seeThrough = {
   /** 0..1 eased: a solid occluder hugs the camera (e.g. the camera above a pitched roof), so its cut widens past
    * the screen edges. A courier-sized hole in a roof 3 m from the lens left the frame one flat colour (L4 blank viewport). */
   cover: uniform(0),
+  /** World height of the courier's feet (the deck, stair or paving she stands on, 0 on the street). Solid occluders are only cut above it. */
+  floor: uniform(0),
 };
 
 /** Placements lower than this never count as occluders (DistrictView's camera-to-courier tests) and are never cut.
@@ -29,10 +31,11 @@ export const seeThroughHole = (scale = 1, radius: Node<'float'> = seeThrough.rad
 
 /** Solid occluders use a slightly tighter circle than leaf crowns: a lamp post beside the courier stays whole.
  * They dissolve with an ordered (interleaved gradient noise) dither instead of blending, so
- * they stay opaque, depth-writing and in their batch. Fragments below 0.3 m (ground, kerbs, lawns) are kept. */
+ * they stay opaque, depth-writing and in their batch. Fragments below 0.3 m above the courier's feet (ground, kerbs, lawns, and the deck or stair she stands on) are kept:
+ * PO 10-14 (minigun deck): the cut dissolved a jagged hole in the floor under the gunner. */
 export const seeThroughKeep = () => {
   // With `cover` the radius grows to 3 (beyond any screen corner from any centre): everything nearer than the courier opens.
-  const hole = positionWorld.y.greaterThan(.3).select(mix(1, seeThroughHole(.85, mix(seeThrough.solidRadius, 3, seeThrough.cover), .75), seeThrough.strength), 1);
+  const hole = positionWorld.y.greaterThan(seeThrough.floor.add(.3)).select(mix(1, seeThroughHole(.85, mix(seeThrough.solidRadius, 3, seeThrough.cover), .75), seeThrough.strength), 1);
   const noise = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
   return hole.greaterThan(noise);
 };
