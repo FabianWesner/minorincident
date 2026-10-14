@@ -808,7 +808,7 @@ export class GameView implements Lifecycle {
     if (!this.weather && this.lighting && this.world.weather) { this.weather = new WeatherView(this.world, this.lighting); this.scene.add(this.weather); }
     this.weather?.update(this.view, this.quality, this.vfxSettings.flashReduction ?? false);
     const drivenCar = this.world.vehicles?.cars.get(this.world.vehicles.active ?? -1);
-    this.districts?.updateLods(this.view, drivenCar?.physics.body.linvel());
+    this.districts?.updateLods(this.view, drivenCar?.physics.body.linvel() ?? survivor?.velocity);
     this.districts?.cull(this.view, this.quality);
     const locked = this.world.controls.snapshot()?.attack;
     const lockedEntity = locked ? this.world.entities.get(locked.id) : undefined;

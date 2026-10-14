@@ -24,7 +24,7 @@ if (values.level) {
   if (values.route && !['auto', 'blvd', 'commerce', 'oak'].includes(values.route)) throw new RangeError('Route (L3 street) must be auto, blvd, commerce or oak');
   const reports = [];
   for (const level of values.level === 'all' ? missionIds : [values.level as MissionId]) for (let i = 0; i < seeds; i++) {
-    const report = await runLevel(level, values.policy as CompletionPolicy, seed + i, values.ticks === undefined ? 1200 : ticks / 60, values.route as 'auto' | 'blvd' | 'commerce' | 'oak' | undefined);
+    const report = await runLevel(level, values.policy as CompletionPolicy, seed + i, values.ticks === undefined ? undefined : ticks / 60, values.route as 'auto' | 'blvd' | 'commerce' | 'oak' | undefined);
     reports.push(report);
     console.log(JSON.stringify({ level, seed: seed + i, completed: report.completed, time: report.time, deaths: report.deaths, outcome: report.outcome, furthestObjective: report.furthestObjective }));
   }

@@ -1,0 +1,10 @@
+Verifying E32: npm run typecheck
+Verifying E32: npm run lint
+Verifying E32: sh tools/e2e-lock.sh npm run build
+Verifying E32: sh tools/remote/run.sh /Users/wesner/Workspace/minorincident/.claude/worktrees/l10-q3 --pull test-results/epics/E32/vitest.json -- bash tools/remote/timing-isolated.sh npx vitest run -t @(?:E32)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$) --maxWorkers=1 --reporter=default --reporter=json --outputFile=test-results/epics/E32/vitest.json
+      Tests  158 passed | 2625 skipped (2783)
+Verifying E32: sh tools/e2e-lock.sh npx playwright test --grep @(?:E32)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$) --grep-invert @perf --project=chromium --workers=1
+  57 passed (11.7m)
+Verifying E32: sh tools/perf/quiet-run.sh npx playwright test tests/perf/l10-district-budgets.spec.ts --project=chromium --workers=1
+Quiet-run preflight: load < 3; no local Vitest or headless Chrome processes; all configured browser slots held.
+  8 passed (10.7m)
