@@ -1,0 +1,20 @@
+{
+  "command": "Hetzner bash tools/remote/timing-isolated.sh vitest zoo-s2 --project timing --maxWorkers=1",
+  "runner": "94.130.181.173",
+  "counts": {
+    "numTotalTests": 2,
+    "numPassedTests": 2,
+    "numFailedTests": 0,
+    "numPendingTests": 0
+  },
+  "criteria": [
+    {
+      "name": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+      "status": "passed"
+    },
+    {
+      "name": "T-E07-11-zoo-s2-100 @E07-AC11 @E18-AC02 mixed zoo specials stay within 6ms",
+      "status": "passed"
+    }
+  ]
+}

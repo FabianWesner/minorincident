@@ -1,0 +1,203 @@
+[
+  {
+    "profile": "high",
+    "measurements": [
+      {
+        "name": "defence",
+        "peakAlive": 153,
+        "frameP95": 8,
+        "simP95": 1.5999994277954102,
+        "drawCalls": 204,
+        "triangles": 1442241
+      },
+      {
+        "name": "horde",
+        "peakAlive": 200,
+        "frameP95": 10.200000000004366,
+        "simP95": 2.5,
+        "drawCalls": 212,
+        "triangles": 1432991
+      },
+      {
+        "name": "rescue",
+        "peakAlive": 90,
+        "frameP95": 7.69999999999709,
+        "simP95": 1.5,
+        "drawCalls": 228,
+        "triangles": 909320
+      }
+    ]
+  },
+  {
+    "profile": "high",
+    "tier": "high",
+    "measurements": [
+      {
+        "name": "defence",
+        "peakAlive": 153,
+        "frameP95": 8,
+        "simP95": 1.5999994277954102,
+        "drawCalls": 204,
+        "triangles": 1442241
+      },
+      {
+        "name": "horde",
+        "peakAlive": 200,
+        "frameP95": 10.200000000004366,
+        "simP95": 2.5,
+        "drawCalls": 212,
+        "triangles": 1432991
+      },
+      {
+        "name": "rescue",
+        "peakAlive": 90,
+        "frameP95": 7.69999999999709,
+        "simP95": 1.5,
+        "drawCalls": 228,
+        "triangles": 909320
+      }
+    ],
+    "seed": 2,
+    "counts": {
+      "infected": 31,
+      "officers": 9
+    },
+    "streetCounts": {
+      "infected": 153,
+      "spawned": 942
+    },
+    "streetDrawCalls": 207,
+    "streetTriangles": 1257793,
+    "streetP50": 6,
+    "streetP95": 10.200000000004366,
+    "attackDrawCalls": 141,
+    "attackTriangles": 466777,
+    "blvdDrawCalls": 195,
+    "blvdTriangles": 852260,
+    "attackP50": 6.100000000005821,
+    "attackP95": 8,
+    "attackMax": 12.89999999999418,
+    "fallbackMaxMs": 14,
+    "blvdP50": 4.400000000001455,
+    "blvdP95": 7.5,
+    "simP95": 1.5999994277954102,
+    "updateP95": 2.90000057220459,
+    "renderP95": 4.199999809265137,
+    "fallbackFired": true
+  },
+  {
+    "profile": "low",
+    "measurements": [
+      {
+        "name": "defence",
+        "peakAlive": 84,
+        "frameP95": 13.600000000000364,
+        "simP95": 1.1999998092651367,
+        "drawCalls": 166,
+        "triangles": 485025
+      },
+      {
+        "name": "horde",
+        "peakAlive": 100,
+        "frameP95": 13.5,
+        "simP95": 1.7000007629394531,
+        "drawCalls": 174,
+        "triangles": 474931
+      },
+      {
+        "name": "rescue",
+        "peakAlive": 59,
+        "frameP95": 12.099999999998545,
+        "simP95": 1.1999998092651367,
+        "drawCalls": 195,
+        "triangles": 468178
+      }
+    ]
+  },
+  {
+    "profile": "low",
+    "tier": "low",
+    "measurements": [
+      {
+        "name": "defence",
+        "peakAlive": 84,
+        "frameP95": 13.600000000000364,
+        "simP95": 1.1999998092651367,
+        "drawCalls": 166,
+        "triangles": 485025
+      },
+      {
+        "name": "horde",
+        "peakAlive": 100,
+        "frameP95": 13.5,
+        "simP95": 1.7000007629394531,
+        "drawCalls": 174,
+        "triangles": 474931
+      },
+      {
+        "name": "rescue",
+        "peakAlive": 59,
+        "frameP95": 12.099999999998545,
+        "simP95": 1.1999998092651367,
+        "drawCalls": 195,
+        "triangles": 468178
+      }
+    ],
+    "seed": 2,
+    "counts": {
+      "infected": 15,
+      "officers": 9
+    },
+    "streetCounts": {
+      "infected": 100,
+      "spawned": 488
+    },
+    "streetDrawCalls": 171,
+    "streetTriangles": 461807,
+    "streetP50": 6.69999999999709,
+    "streetP95": 13.5,
+    "attackDrawCalls": 116,
+    "attackTriangles": 252079,
+    "blvdDrawCalls": 164,
+    "blvdTriangles": 399467,
+    "attackP50": 7.599999999998545,
+    "attackP95": 13.600000000000364,
+    "attackMax": 18.399999999999636,
+    "fallbackMaxMs": 17.600000000000364,
+    "blvdP50": 6.400000000001455,
+    "blvdP95": 12.100000000002183,
+    "simP95": 1.1999998092651367,
+    "updateP95": 2.5,
+    "renderP95": 10.199999809265137,
+    "fallbackFired": true
+  },
+  {
+    "profile": "phone",
+    "measurements": [
+      {
+        "name": "defence",
+        "peakAlive": 90,
+        "frameP95": 33.20000000000073,
+        "simP95": 4.800000190734863,
+        "drawCalls": 169,
+        "triangles": 390028
+      },
+      {
+        "name": "horde",
+        "peakAlive": 100,
+        "frameP95": 33.599999999998545,
+        "simP95": 5.600000381469727,
+        "drawCalls": 171,
+        "triangles": 415638
+      },
+      {
+        "name": "rescue",
+        "peakAlive": 67,
+        "frameP95": 34.89999999999418,
+        "simP95": 4.59999942779541,
+        "drawCalls": 194,
+        "triangles": 420989
+      }
+    ]
+  }
+]
