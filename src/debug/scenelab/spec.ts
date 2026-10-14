@@ -13,7 +13,7 @@ export interface SceneSpec {
   /** One R1–R6 production encounter, with the quality tier's authored crowd. */
   cureEncounter?: string;
   /** Production L10 graph/preset at a region checkpoint; fixture anchors stay on its existing slab. */
-  cureProgression?: { checkpoint?: string; authored?: boolean };
+  cureProgression?: { checkpoint?: string; authored?: boolean; anchors?: Record<string, Point> };
   /** Use the production L7 formation for authored survivor actors, without starting the mission population. */
   l7Group?: boolean;
   /** With `l7Group`: the production L7 bus (set piece, blocker), boarding of the authored survivors and the departure shot. */

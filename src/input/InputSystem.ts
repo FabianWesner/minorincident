@@ -125,6 +125,8 @@ export class InputSystem implements Lifecycle {
   private readonly mouseActivity = (): void => {
     this.setScheme(this.moving() ? 'mouse-keyboard' : 'mouse-only');
   };
+  /** Explicit HUD/device action, shared by pointer buttons and the keyboard/touch frame. */
+  interactOnce(): void { this.interact = true; }
   private moving(): boolean { return this.active.has('moveUp') || this.active.has('moveDown') || this.active.has('moveLeft') || this.active.has('moveRight'); }
   private readonly key = (code: string, held: boolean): void => {
     if (code === 'ShiftLeft' || code === 'ShiftRight') return;

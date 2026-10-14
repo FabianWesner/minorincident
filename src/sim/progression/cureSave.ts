@@ -27,3 +27,17 @@ export function validCureCheckpoint(v: unknown): v is MissionCheckpoint {
   if (!player || !record(player.survivor) || !record(player.survivor.checkpoint) || !record(player.weapons) || !['LEFT','RIGHT'].every(side => { const hand = player.weapons[side]; return record(hand) && Array.isArray(hand.rack) && hand.rack.map(slot => record(slot) ? slot.id : null).join() === (a.racks as Record<string, string[]>)[side].join(); })) return false;
   return v.seams === undefined || record(v.seams);
 }
+
+/** S1/E2 saves predate explicit console activation; preserve their checkpoint and inventory. */
+export function migrateCureResume(raw: unknown): unknown {
+  if (!record(raw)) return raw;
+  const copy = structuredClone(raw);
+  for (const name of ['current', 'checkpoint']) {
+    const checkpoint = copy[name];
+    if (!record(checkpoint) || !record(checkpoint.state) || !record(checkpoint.state.states)) continue;
+    const states = checkpoint.state.states;
+    if (states['charge-active'] === undefined) states['charge-active'] = false;
+    if (states['console-held'] === undefined) states['console-held'] = false;
+  }
+  return copy;
+}

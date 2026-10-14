@@ -98,7 +98,8 @@ export function respawnAtCheckpoint(world: SimWorld, anchor: Spot, worldKept = t
   world.physics.playerBody!.setTranslation(player.transform, true);
   world.previousPlayer = { ...player.transform }; world.spatial.set(1, at.x, at.z);
   if (player.survivor) player.survivor.invulnerableUntil = world.tick + ticks(respawnRule.graceS);
-  clearThreat(world, at);
+  // E32 ready is an exact pre-assault snapshot; keep its captured defenders and cooldowns.
+  if (world.missions?.state.checkpoint !== 'cure-disperse-ready') clearThreat(world, at);
   gatherAllies(world, at, worldKept);
 }
 

@@ -305,7 +305,10 @@ export class SceneLab {
       if (model === 'male' || model === 'female') save.character = model;
       applyCampaign(world, save);
       const at = { ...world.entities.get(1)!.transform };
-      const mission = world.loadMission(levelTenMission(name => spec.cureProgression?.authored ? { x: cure.anchors[name][0], z: cure.anchors[name][1], radius: 2 } : !spec.cureProgression?.checkpoint && name !== 'cure-crash' ? undefined : { x: at.x, z: at.z, radius: 2 }));
+      const mission = world.loadMission(levelTenMission(name => {
+        const anchor = spec.cureProgression?.anchors?.[name] ?? (spec.cureProgression?.authored ? cure.anchors[name] : undefined);
+        return anchor ? { x: anchor[0], z: anchor[1], radius: 2 } : !spec.cureProgression?.checkpoint && name !== 'cure-crash' ? undefined : { x: at.x, z: at.z, radius: 2 };
+      }));
       mission.begin();
       if (spec.cureProgression.checkpoint) mission.loadCheckpoint(spec.cureProgression.checkpoint);
       if (spec.cureProgression.authored) {

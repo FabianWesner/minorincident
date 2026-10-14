@@ -1,3 +1,4 @@
+import { LevelTenFinale } from './LevelTenFinale';
 import { transactArsenal } from '../progression/arsenal';
 import { LevelNineCrash } from './LevelNineCrash';
 import { LevelEightZoo } from './LevelEightZoo';
@@ -51,9 +52,11 @@ export class Mission {
   /** E30 sanctuary, internal outbreak and armored escape. */
   readonly l8: LevelEightZoo | null;
   readonly l9: LevelNineCrash | null;
+  readonly l10: LevelTenFinale | null;
   private startTick: number;
   constructor(readonly world: SimWorld, readonly def: MissionDef) {
     const errors = validateMission(def); if (errors.length) throw new Error(errors.join('\n'));
+    this.l10 = def.id === 'L10' ? new LevelTenFinale(this) : null;
     this.l9 = def.l9 ? new LevelNineCrash(this) : null;
     this.l8 = def.l8 ? new LevelEightZoo(this) : null;
     this.l1 = def.l1 ? new LevelOneOutbreak(this) : null;
@@ -116,8 +119,9 @@ export class Mission {
   interactSnap(p: { x: number; z: number }): { x: number; z: number } {
     if (this.state.phase !== 'playing') return p;
     for (const def of this.def.steps) {
-      if (this.state.steps[def.id].status !== 'active' || def.complete.kind !== 'interact' || def.complete.actor) continue;
-      const a = this.def.anchors[def.complete.anchor];
+      const trigger = this.interactTrigger(def.complete);
+      if (this.state.steps[def.id].status !== 'active' || !trigger || trigger.actor) continue;
+      const a = this.def.anchors[trigger.anchor];
       if (Math.hypot(p.x - a.x, p.z - a.z) <= a.radius + CLICK_SNAP_M) return { x: a.x, z: a.z };
     }
     return p;
@@ -125,12 +129,22 @@ export class Mission {
   /** True while the player stands in an active step's interact ring: an `E` press belongs to the objective
    * (E19 QA1-01: pick up the parcel without also leaving the bicycle). */
   /** The active interact step whose ring the player stands in (HUD prompt), or null. */
+  private interactTrigger(t: Trigger): Extract<Trigger, { kind: 'interact' }> | undefined {
+    if (t.kind === 'interact') return t;
+    if (t.kind === 'all') for (const child of t.triggers) { const found = this.interactTrigger(child); if (found) return found; }
+    return undefined;
+  }
   interactStepInRange(): ObjectiveDef | null {
     if (this.state.phase !== 'playing') return null;
-    return this.def.steps.find(def => this.state.steps[def.id].status === 'active' && def.complete.kind === 'interact' && this.inside(def.complete.anchor)) ?? null;
+    if (this.l10 && this.state.steps.hold.status === 'active' && !this.state.states['charge-active'] && this.def.anchors['cure-console'] && this.inside('cure-console')) {
+      const hold = this.def.steps.find(s => s.id === 'hold')!;
+      return { ...hold, text: 'Activate the dispersal console', type: 'interact', complete: { kind: 'interact', anchor: 'cure-console', seconds: .6 } };
+    }
+    const step = this.def.steps.find(def => this.state.steps[def.id].status === 'active' && this.interactTrigger(def.complete) && this.inside(this.interactTrigger(def.complete)!.anchor));
+    return step ? { ...step, complete: this.interactTrigger(step.complete)! } : null;
   }
   interactionAvailable(): boolean {
-    return this.state.phase === 'playing' && this.def.steps.some(def => this.state.steps[def.id].status === 'active' && def.complete.kind === 'interact' && this.inside(def.complete.anchor));
+    return this.interactStepInRange() !== null;
   }
   private satisfied(t: Trigger, step?: StepState): boolean {
     switch (t.kind) {
@@ -159,7 +173,7 @@ export class Mission {
   }
   private update(): void {
     if (this.state.phase !== 'playing') return;
-    this.l1?.update(); this.l2?.update(); this.l3?.update(); this.l4?.update(); this.l5?.update(); this.l6?.update(); this.l8?.update(); this.l9?.update();
+    this.l10?.update(); this.l1?.update(); this.l2?.update(); this.l3?.update(); this.l4?.update(); this.l5?.update(); this.l6?.update(); this.l8?.update(); this.l9?.update();
     const alive=this.world.entities.get(1)!.health.current>0;
     this.state.stats.time = (this.world.tick - this.startTick) / 60;
     if (this.state.deadlineTicks !== null && --this.state.deadlineTicks <= 0) { this.state.deadlineTicks = 0; this.fail('timeout'); return; }
