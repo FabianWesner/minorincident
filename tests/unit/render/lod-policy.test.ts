@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { initialDistrictLods, lodPolicy, modelLod, pickLod, propLod } from '../../../src/render/lodPolicy';
+import { initialDistrictLods, lodPolicy, modelLod, pickLod, propLod, useBakedCrowdPose, useBakedCivilianPose, canHoldCrowdPose } from '../../../src/render/lodPolicy';
 
 test('@E19 @E19-AC24 near assets retain LOD0; the rest of the view uses authored distance LODs', () => {
   expect(pickLod(0)).toBe('lod0'); expect(pickLod(7)).toBe('lod0'); expect(pickLod(9)).toBe('lod1'); expect(pickLod(25)).toBe('lod2');
@@ -56,4 +56,31 @@ test('@E18-AC01 small prop screen-size hysteresis keeps both boundaries stable',
   expect(propLod(143, 'lod1')).toBe('lod1'); expect(propLod(145, 'lod1')).toBe('lod0');
   expect(propLod(35, 'lod1')).toBe('lod1'); expect(propLod(33, 'lod1')).toBe('lod2');
   expect(propLod(45, 'lod2')).toBe('lod2'); expect(propLod(47, 'lod2')).toBe('lod1');
+});
+
+
+test('phone baked poses retain desktop, nearby, large, reacting and special figures', () => {
+  const e = { archetype: 'infected.runner', infected: { state: 'chase', legLost: false } } as import('../../../src/sim/world/types').EntitySnapshot;
+  const pick = (low = true, distant = true, pixels = 50, distance = 20) => useBakedCrowdPose(e, low, distant, pixels, distance, 10);
+  for (const state of ['idle', 'wander', 'search', 'attracted', 'chase'] as const) { e.infected!.state = state; expect(pick()).toBe(true); }
+  expect(pick(false)).toBe(false); expect(pick(true, false)).toBe(false);
+  expect(pick(true, true, 120)).toBe(true); expect(pick(true, true, 159)).toBe(true); expect(pick(true, true, 160)).toBe(false); expect(pick(true, true, 50, 1.25)).toBe(false); expect(pick(true, true, 50, 1.26)).toBe(true); expect(pick(true, true, 50, 2)).toBe(true);
+  e.combat = { radius: .6 } as NonNullable<typeof e.combat>; expect(pick(true, true, 50, 1.5)).toBe(false); expect(pick(true, true, 50, 1.51)).toBe(true); delete e.combat;
+  e.infected!.state = 'attack'; expect(pick()).toBe(false); expect(pick(true, true, 50, 1.3)).toBe(false); expect(canHoldCrowdPose(e, 10)).toBe(true); e.infected!.state = 'chase';
+  e.infected!.roar = { sourceId: 1, attackId: 1, x: 0, z: 0, until: 20 }; expect(pick()).toBe(false); delete e.infected!.roar;
+  e.infected!.legLost = true; expect(pick()).toBe(false); e.infected!.legLost = false;
+  e.archetype = 'infected.alpha'; expect(pick()).toBe(false); e.archetype = 'infected.runner';
+  e.combat = { reaction: { until: 20 } } as NonNullable<typeof e.combat>; expect(pick()).toBe(false);
+});
+
+test('phone pedestrian gait band preserves story actions, pets and close figures', () => {
+  const e = { civilian: { state: 'calm' } } as import('../../../src/sim/world/types').EntitySnapshot;
+  const pick = (clip = 'npc-walk', low = true, distant = true, pixels = 50, distance = 20) => useBakedCivilianPose(e, low, distant, pixels, distance, clip);
+  for (const state of ['calm', 'flee', 'alarmed'] as const) { e.civilian!.state = state; expect(pick()).toBe(true); }
+  expect(pick('swing')).toBe(false); expect(pick('civ-startle')).toBe(false); expect(pick('npc-water')).toBe(false);
+  expect(pick('npc-walk', false)).toBe(false); expect(pick('npc-walk', true, false)).toBe(false);
+  expect(pick('npc-walk', true, true, 120)).toBe(true); expect(pick('npc-walk', true, true, 159)).toBe(true); expect(pick('npc-walk', true, true, 160)).toBe(false); expect(pick('npc-walk', true, true, 50, 2)).toBe(false);
+  e.civilian!.state = 'down'; expect(pick()).toBe(false); e.civilian!.state = 'calm';
+  e.civilian!.story = { clip: 'npc-look-around', start: 0 }; expect(pick()).toBe(false); delete e.civilian!.story;
+  e.civilian!.pet = 'dog'; expect(pick()).toBe(false);
 });

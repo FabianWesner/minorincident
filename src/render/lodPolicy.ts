@@ -1,3 +1,5 @@
+import type { EntitySnapshot } from '../sim/world/types';
+import { infectedContactDistance } from '../sim/ai/CharacterSeparation';
 /** High world detail stays near the camera target; authored distance tiers cover the rest.
  * The whole-screen 45 m LOD0 margin exceeds L1's 1.5M triangle cap even after prop/crowd fixes.
  * Small props additionally consider projected pixels; hysteresis avoids boundary flicker. */
@@ -47,4 +49,35 @@ export function propLod(pixels: number, previous?: Lod): Lod {
   const hero = previous === 'lod0' ? 112 : previous ? 144 : 128;
   const far = previous === 'lod2' ? 46 : previous ? 34 : 40;
   return pixels > hero ? 'lod0' : pixels > far ? 'lod1' : 'lod2';
+}
+
+const phonePosePixels = 160;
+
+/** Phones draw the authored GPU gait for ordinary far-band figures below 160 CSS pixels outside the melee contact ring plus 17 cm.
+ * Reactions, specials, rising bodies and every close figure keep procedural contacts. */
+export function useBakedCrowdPose(e: EntitySnapshot, low: boolean, distant: boolean, pixels: number, distance: number, tick: number): boolean {
+  return low && distant && pixels < phonePosePixels && distance > infectedContactDistance(e.combat?.radius ?? .35) + .17 && isSimpleCrowdPose(e, tick);
+}
+/** Ordinary locomotion/idle only: action telegraphs and reactions always update immediately. */
+function ordinaryCrowdPose(e: EntitySnapshot, tick: number): boolean {
+  const b = e.infected;
+  return (e.archetype === 'infected.runner' || e.archetype === 'infected.sprinter')
+    && !!b && !b.legLost && !b.roar && !b.specialAttack && !e.infectionRise
+    && (!e.combat?.reaction || tick >= e.combat.reaction.until);
+}
+export function isSimpleCrowdPose(e: EntitySnapshot, tick: number): boolean {
+  const b = e.infected;
+  return ordinaryCrowdPose(e, tick) && !!b && (b.state === 'idle' || b.state === 'wander' || b.state === 'search' || b.state === 'attracted' || b.state === 'chase');
+}
+/** Ordinary attack clips may hold one short frame too; clip/stage changes always solve immediately. */
+export function canHoldCrowdPose(e: EntitySnapshot, tick: number): boolean {
+  return isSimpleCrowdPose(e, tick) || e.infected?.state === 'attack' && ordinaryCrowdPose(e, tick);
+}
+
+/** Small ordinary pedestrians use the same phone gait band; props and story/action poses stay procedural. */
+export function useBakedCivilianPose(e: EntitySnapshot, low: boolean, distant: boolean, pixels: number, distance: number, clip: string): boolean {
+  const c = e.civilian;
+  return low && distant && pixels < phonePosePixels && distance > 2 && !!c && !c.story && !c.pet
+    && (c.state === 'calm' || c.state === 'flee' || c.state === 'alarmed')
+    && (clip === 'npc-walk' || clip === 'npc-walk-relaxed' || clip === 'run' || clip === 'civ-flee' || clip === 'idle' || clip === 'npc-look-around');
 }

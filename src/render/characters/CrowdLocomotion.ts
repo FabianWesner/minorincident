@@ -1,6 +1,7 @@
 import { Group, Matrix4, Object3D, Quaternion, Vector3 } from 'three';
 import type { CrowdClip } from '../../assets/crowd';
 import { GroundContacts } from './GroundContacts';
+import { updateWorldTranslation } from './updateWorldTranslation';
 import type { CharacterRig } from './rig';
 import { cadenceStride, gaitShape, strides } from './clips';
 import { PawContacts } from './PawContacts';
@@ -30,6 +31,7 @@ const gaitStyles: Record<string, { stance: number; run: number; knee?: number }>
   shamble: { stance: .6, run: 0, knee: .8 }, 'infected-frail': { stance: .5, run: .35, knee: .85 }, 'infected-lurch': { stance: .3, run: .85 }, 'infected-sprint': { stance: .26, run: 1, knee: 1.1 },
   run: { stance: .3, run: 1 }, 'infected-run': { stance: .3, run: 1 }, 'civ-flee': { stance: .3, run: 1 },
 };
+const correctedJoints = new Set(['hip', 'torso', 'head', 'legL', 'legR', 'shinL', 'shinR', 'footL', 'footR']);
 const Z = new Vector3(0, 0, 1), X = new Vector3(1, 0, 0);
 interface Footwork { contacts: CourierGroundContacts; owner: CrowdLocomotion; time: number; weight: number; active: number; run: number; stance: number }
 /** Per-figure footwork shared by every LOD batch of one crowd, with a per-frame budget of fully solved figures. */
@@ -38,6 +40,7 @@ export class CrowdFootwork {
   readonly far = new Map<number, { contacts: GroundContacts; owner: CrowdLocomotion; time: number }>();
   private frame = 0;
   private admitted = 0;
+  get frameId(): number { return this.frame; }
   /** Figures solved this frame (tests and perf probes). */
   count = 0;
   constructor(public cap = 64) {}
@@ -65,12 +68,15 @@ export class CrowdLocomotion {
   private readonly parents: number[];
   private readonly restParents: Matrix4[];
   private readonly world: Matrix4[];
+  private readonly parentInverses = new Map<number, Matrix4>();
   private readonly inverse = new Matrix4();
   private readonly scale = new Vector3();
   private readonly point = new Vector3();
   private readonly rotation = new Quaternion();
   private readonly rig: CharacterRig;
   private readonly contacts = new Map<number, GroundContacts>();
+  private readonly heldPoses = new Map<number, { clip: string; frame: number; instance: Matrix4; time: number; seen: number }>();
+  private prunedAt = -1;
   private readonly paws = new Map<number, PawContacts>();
   private readonly animal: boolean;
   private readonly groundedAnimal: boolean;
@@ -85,8 +91,16 @@ export class CrowdLocomotion {
     this.preserveAnimalJoints = model.getObjectByName('root')?.userData.ss_preserveAnimalJoints === true;
     model.updateMatrixWorld(true);
     const originals = clip.parts.map(name => model.getObjectByName(name)!);
-    this.nodes = originals.map(node => { const copy = new Object3D(); copy.name = node.name; return copy; });
+    this.nodes = originals.map(node => {
+      const copy = new Object3D(); copy.name = node.name;
+      // These private pose bones only use quaternions. Euler synchronization would convert every bone again.
+      copy.quaternion._onChange(() => {});
+      // Rigid decorations only inherit their atlas matrix; contacts/layers never modify their TRS.
+      copy.matrixAutoUpdate = this.animal || correctedJoints.has(node.name);
+      return copy;
+    });
     this.parents = originals.map(node => originals.indexOf(node.parent!));
+    for (const parent of this.parents) if (parent >= 0 && !this.parentInverses.has(parent)) this.parentInverses.set(parent, new Matrix4());
     this.restParents = originals.map(node => node.parent?.matrixWorld.clone() ?? new Matrix4());
     this.world = originals.map(node => node.matrixWorld.clone());
     this.rest = originals.map(node => ({ position: node.position.clone(), quaternion: node.quaternion.clone(), scale: node.scale.clone() }));
@@ -94,6 +108,7 @@ export class CrowdLocomotion {
       const parent = this.parents[i]; (parent < 0 ? this.frame : this.nodes[parent]).add(node);
       if (parent < 0) this.world[i].decompose(node.position, node.quaternion, node.scale);
       else { node.position.copy(this.rest[i].position); node.quaternion.copy(this.rest[i].quaternion); node.scale.copy(this.rest[i].scale); }
+      if (!node.matrixAutoUpdate) node.updateMatrix();
     });
     this.rig = Object.fromEntries(this.nodes.map(node => [node.name, node])) as CharacterRig;
     // The instance frame supplies heading and world scale; internal GLB scale remains on the skeleton.
@@ -110,27 +125,62 @@ export class CrowdLocomotion {
     this.nodes.forEach((node, i) => {
       node.position.copy(this.rest[i].position); node.quaternion.copy(this.rest[i].quaternion); node.scale.copy(this.rest[i].scale);
       if (this.parents[i] < 0) { node.updateMatrix(); this.inverse.copy(this.restParents[i]).multiply(node.matrix).decompose(node.position, node.quaternion, node.scale); }
+      if (!node.matrixAutoUpdate) node.updateMatrix();
     });
     this.frame.updateMatrixWorld(true);
   }
-  private load(pose: Float32Array, instance: Matrix4): void {
+  private load(pose: Float32Array, instance: Matrix4, layers?: CrowdLayers, phase = 0): void {
     this.nodes.forEach((_, i) => this.world[i].fromArray(pose, i * 16));
+    // Siblings share a parent pose; invert it once for this figure.
+    for (const [parent, inverse] of this.parentInverses) inverse.copy(this.world[parent]).invert();
     this.nodes.forEach((node, i) => {
       const parent = this.parents[i];
-      if (parent < 0) this.inverse.identity(); else this.inverse.copy(this.world[parent]).invert();
-      this.inverse.multiply(this.world[i]).decompose(node.position, node.quaternion, node.scale);
+      node.matrixAutoUpdate = this.animal || correctedJoints.has(node.name);
+      if (parent < 0) this.inverse.identity(); else this.inverse.copy(this.parentInverses.get(parent)!);
+      this.inverse.multiply(this.world[i]);
+      if (node.matrixAutoUpdate) this.inverse.decompose(node.position, node.quaternion, node.scale);
+      else { node.matrix.copy(this.inverse); node.matrixWorldNeedsUpdate = true; }
     });
-    this.frame.matrixAutoUpdate = false; this.frame.matrix.copy(instance); this.frame.updateMatrixWorld(true);
+    this.frame.matrixAutoUpdate = false; this.frame.matrix.copy(instance); this.frame.matrixWorldNeedsUpdate = true;
+    if (layers) {
+      // Layers only read the hip ancestor scale. Refresh that short chain before
+      // applying them, then expand the complete posed hierarchy exactly once.
+      this.rig.hip?.parent?.updateWorldMatrix(true, false);
+      this.layer(layers, phase);
+    }
+    this.frame.updateMatrixWorld(true);
   }
   private store(pose: Float32Array, instance: Matrix4): void {
     this.inverse.copy(instance).invert();
-    this.nodes.forEach((node, i) => this.world[i].multiplyMatrices(this.inverse, node.matrixWorld).toArray(pose, i * 16));
+    const m = this.inverse.elements;
+    // Ordinary instance frames have yaw and translation only. Preserve the
+    // general inverse above, but avoid multiplying known zeros for every part.
+    if (m[1] === 0 && m[3] === 0 && m[4] === 0 && m[5] === 1 && m[6] === 0 && m[7] === 0 && m[9] === 0 && m[11] === 0 && m[15] === 1) {
+      for (let i = 0; i < this.nodes.length; i++) {
+        const w = this.nodes[i].matrixWorld.elements, offset = i * 16;
+        for (let column = 0; column < 12; column += 4) {
+          pose[offset + column] = (m[0] * w[column] + 0) + m[8] * w[column + 2] + 0;
+          pose[offset + column + 1] = w[column + 1] + 0;
+          pose[offset + column + 2] = (m[2] * w[column] + 0) + m[10] * w[column + 2] + 0;
+          pose[offset + column + 3] = 0;
+        }
+        pose[offset + 12] = (m[0] * w[12] + 0) + m[8] * w[14] + m[12];
+        pose[offset + 13] = w[13] + m[13];
+        pose[offset + 14] = (m[2] * w[12] + 0) + m[10] * w[14] + m[14];
+        pose[offset + 15] = 1;
+      }
+    } else this.nodes.forEach((node, i) => this.world[i].multiplyMatrices(this.inverse, node.matrixWorld).toArray(pose, i * 16));
   }
   /** Zombie moves and hunch as rotations/offsets in the hip parent's space (+x forward, +z lateral). */
   private layer(layers: CrowdLayers, phase: number): void {
     const { hip, torso, head } = this.rig;
     if (!hip || !torso) return;
-    const parentScale = hip.parent!.getWorldScale(this.scale).y / this.frame.getWorldScale(this.scale).y || 1;
+    // Ordinary contacts never alter the arms. Retain their atlas matrices;
+    // special upper-body layers acquire TRS only when they actually change it.
+    if (layers.throwPose || layers.chestBeat) for (const node of [this.rig.armL, this.rig.armR, this.rig.foreArmL, this.rig.foreArmR]) {
+      if (node && !node.matrixAutoUpdate) { node.matrix.decompose(node.position, node.quaternion, node.scale); node.matrixAutoUpdate = true; }
+    }
+    const parentScale = this.scale.setFromMatrixScale(hip.parent!.matrixWorld).y / this.scale.setFromMatrixScale(this.frame.matrixWorld).y || 1;
     const lean = layers.lean ?? 0, roll = layers.roll ?? 0, flinch = layers.flinch ?? 0, lunge = layers.lunge ?? 0, lurch = layers.lurch ?? 0;
     if (lean || roll) hip.quaternion.premultiply(this.rotation.setFromAxisAngle(Z, -lean)).premultiply(this.rotation.setFromAxisAngle(X, roll));
     if (lunge) { hip.position.x += lunge / parentScale; torso.quaternion.premultiply(this.rotation.setFromAxisAngle(Z, -Math.max(-.6, Math.min(.6, lunge * 1.6)))); }
@@ -162,7 +212,6 @@ export class CrowdLocomotion {
       head?.quaternion.premultiply(this.rotation.setFromAxisAngle(Z, -x * .3 * flinch)).premultiply(this.rotation.setFromAxisAngle(X, z * .25 * flinch));
       hip.position.x += x * .04 * flinch / parentScale; hip.position.z += z * .04 * flinch / parentScale;
     }
-    hip.updateMatrixWorld(true);
   }
   /** Legacy stance plants (mid band): world-space stance heels, no yaw lock or turn steps. */
   correct(id: number, pose: Float32Array, instance: Matrix4, phase: number, name: string, scale: number, speed: number, layers?: CrowdLayers, time?: number): void {
@@ -177,15 +226,14 @@ export class CrowdLocomotion {
       const left = previous.contacts.contact(0), right = previous.contacts.contact(1);
       if (left && right) contacts.inherit(phase, [left, right]);
     }
-    this.load(pose, instance);
-    if (layers) this.layer(layers, phase);
+    this.load(pose, instance, layers, phase);
     const stride = cadenceStride(this.animal ? 'corgi-trot' : name, scale, speed), run = /run|sprint|flee/.test(name) ? 1 : 0;
     if (this.animal) {
       let paws = this.paws.get(id);
       if (!paws) { paws = new PawContacts(this.frame, this.model); this.paws.set(id, paws); }
       if (speed > .06 && strides[name]) paws.update(phase, stride, 'corgi-trot');
       else paws.hold(1 / 60, this.groundedAnimal);
-    } else if (contacts && strides[name] && speed > .06) contacts.update(phase, stride, run, 1, this.stance(name, stride, this.frame.getWorldScale(this.scale).y), true);
+    } else if (contacts && strides[name] && speed > .06) contacts.update(phase, stride, run, 1, this.stance(name, stride, this.scale.setFromMatrixScale(this.frame.matrixWorld).y), true);
     if (contacts && time !== undefined) this.footwork.far.set(id, { contacts, owner: this, time });
     // Humans always keep the sole correction; large authored quadrupeds retain it after paw/contact pose layers.
     if (!this.animal || (this.groundedAnimal && (gaitStyles[name] || standingClips.has(name)))) this.ground();
@@ -196,10 +244,10 @@ export class CrowdLocomotion {
   private ground(): void {
     const { hip, footL, footR } = this.rig;
     if (!hip || !footL || !footR || !this.sole) return;
-    const floor = this.frame.getWorldPosition(this.point).y;
+    const floor = this.frame.matrixWorld.elements[13];
     let deficit = 0;
     for (const foot of [footL, footR]) for (const x of [-.05, .085]) deficit = Math.max(deficit, floor - this.point.set(x, -this.sole, 0).applyMatrix4(foot.matrixWorld).y);
-    if (deficit > 1e-4) { hip.position.y += deficit / hip.parent!.getWorldScale(this.scale).y; hip.updateMatrixWorld(true); }
+    if (deficit > 1e-4) { hip.position.y += deficit / this.scale.setFromMatrixScale(hip.parent!.matrixWorld).y; updateWorldTranslation(hip); }
   }
   reset(id: number): void { this.contacts.get(id)?.reset(); this.paws.get(id)?.reset(); }
   /**
@@ -207,7 +255,36 @@ export class CrowdLocomotion {
    * footwork runs: world-locked feet with yaw, step turns, knee-profile swings, pelvis over the support leg.
    * Further out moving figures keep the stance plants; standing far figures show the baked clip.
    */
-  present(id: number, poses: CrowdPosePalette, frame: number, blend: [number, number], clip: string, phase: number, instance: Matrix4, scale: number, speed: number, time: number, near: boolean, layers?: CrowdLayers, style?: GaitStyle): number {
+  present(id: number, poses: CrowdPosePalette, frame: number, blend: [number, number], clip: string, phase: number, instance: Matrix4, scale: number, speed: number, time: number, near: boolean, layers?: CrowdLayers, style?: GaitStyle, procedural = true, cadence = 1): number {
+    const step = this.footwork.frameId;
+    if (step % 120 === 0 && step !== this.prunedAt) {
+      this.prunedAt = step;
+      for (const [key, pose] of this.heldPoses) if (time < pose.seen || time - pose.seen > 2) this.heldPoses.delete(key);
+    }
+    const previous = this.heldPoses.get(id);
+    const a = instance.elements, b = previous?.instance.elements;
+    const barelyMoved = cadence > 1 && b && (a[12] - b[12]) ** 2 + (a[13] - b[13]) ** 2 + (a[14] - b[14]) ** 2 <= .05 ** 2;
+    if (procedural && cadence > 1 && barelyMoved && previous && previous.clip === clip && time > previous.time && time - previous.time < 1 / 40 && step % cadence !== id % cadence) {
+      // Hold the complete world pose, so even between solves a planted foot cannot slide with the root.
+      const contacts = this.footwork.states.get(id);
+      if (contacts && this.footwork.admit(id)) contacts.active = step;
+      instance.copy(previous.instance); poses.reuse(id, previous.frame); blend[1] = 1; previous.seen = time;
+      return previous.frame;
+    }
+    const result = this.solve(id, poses, frame, blend, clip, phase, instance, scale, speed, time, near, layers, style, procedural);
+    if (procedural && cadence > 1) {
+      const held = previous ?? { clip, frame: result, instance: new Matrix4(), time, seen: time };
+      held.clip = clip; held.frame = result; held.instance.copy(instance); held.time = held.seen = time; this.heldPoses.set(id, held);
+    } else this.heldPoses.delete(id);
+    return result;
+  }
+  private solve(id: number, poses: CrowdPosePalette, frame: number, blend: [number, number], clip: string, phase: number, instance: Matrix4, scale: number, speed: number, time: number, near: boolean, layers?: CrowdLayers, style?: GaitStyle, procedural = true): number {
+    if (!procedural) {
+      this.footwork.states.delete(id); this.footwork.far.delete(id); this.reset(id);
+      // The caller tags the pose mode so entering/leaving the baked band uses the usual TRS transition.
+      if (blend[1] < 1) { const row = poses.correct(id, frame, blend[0], blend[1], () => {}); blend[1] = 1; return row; }
+      return frame;
+    }
     const grounded = !this.animal && !!this.reach && (!!gaitStyles[clip] || standingClips.has(clip));
     let state = this.footwork.states.get(id);
     if (state && (time < state.time || time - state.time > .3)) { this.footwork.states.delete(id); state = undefined; }
@@ -241,8 +318,7 @@ export class CrowdLocomotion {
         // Walk/run clip switches blend the gait shape (stance, knee flex) over ~0.15 s instead of jumping.
         if (gait) { const k = 1 - Math.exp(-dt / .15); state.run += (gait.run - state.run) * k; state.stance += (gait.stance - state.stance) * k; }
         const row = poses.correct(id, frame, blend[0], blend[1], pose => {
-          this.load(pose, instance);
-          if (layers) this.layer(layers, phase);
+          this.load(pose, instance, layers, phase);
           const stride = moving ? cadenceStride(clip, scale, speed) : 0;
           // load() and layer() have already refreshed the complete rig.
           footwork.contacts.update(moving ? phase : 0, stride, footwork.run, footwork.weight, moving ? speed : 0, dt, { stance: footwork.stance, knee: gait?.knee, maxSwing: .4, ...style }, true);

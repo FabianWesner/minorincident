@@ -20,6 +20,12 @@ export class CrowdVisibility {
     this.point.set(x, y, z).applyMatrix4(this.lodCamera.matrixWorldInverse);
     return height * this.lodCamera.projectionMatrix.elements[5] * this.height / (2 * Math.max(.1, -this.point.z));
   }
+  /** Animation detail follows the pixels actually drawn, including wide inspection cameras. */
+  renderPixels(x: number, y: number, z: number, height: number): number {
+    if (!this.camera) return 200;
+    this.point.set(x, y, z).applyMatrix4(this.camera.matrixWorldInverse);
+    return height * this.camera.projectionMatrix.elements[5] * this.height / (2 * Math.max(.1, -this.point.z));
+  }
   visible(x: number, y: number, z: number, radius: number): boolean {
     this.bounds.center.set(x, y, z); this.bounds.radius = radius;
     return !this.camera || this.frustum.intersectsSphere(this.bounds);

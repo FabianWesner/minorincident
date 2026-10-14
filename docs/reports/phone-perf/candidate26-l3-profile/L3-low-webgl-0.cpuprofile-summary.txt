@@ -1,0 +1,82 @@
+self
+661.6  (program)
+222.0 ../../../../../node_modules/three/build/three.core.js:10570 multiplyMatrices
+176.4 ../../../../../node_modules/three/build/three.core.js:13067 updateMatrixWorld
+143.2 ../../../../../node_modules/three/build/three.webgpu.js:66246 update
+120.0  (garbage collector)
+114.9 ../../../../../node_modules/three/build/three.webgpu.js:65515 _renderObjectDirect
+111.4  bufferSubData
+104.7 src/render/characters/CrowdLocomotion.ts:132 load
+93.2 src/core/EventBus.ts:27 emit
+81.8 ../../../../../node_modules/three/build/three.webgpu.js:64904 _projectObject
+77.7 src/sim/spatial/SpatialHash.ts:47 query
+75.5 ../../../../../node_modules/three/build/three.core.js:11079 decompose
+66.6 ../../../../../node_modules/three/build/three.core.js:13116 updateWorldMatrix
+54.7 src/sim/ai/CharacterSeparation.ts:79 id
+54.0 src/debug/performance/profileCpu.ts:17 d.<computed>
+53.8 src/render/CrowdView.ts:234 update
+49.6 src/render/Renderer.ts:103 i.draw
+48.2 src/sim/ai/NavGrid.ts:277 move
+46.9 src/render/GameView.ts:706 update
+46.5 src/sim/lighting/LightPower.ts:89 isOn
+45.5 src/render/npc/CivilianCrowd.ts:459 update
+44.1 ../../../../../node_modules/three/build/three.webgpu.js:13717 update
+42.9 ../../../../../node_modules/three/build/three.core.js:10183 copy
+40.9 src/sim/outbreak/Allies.ts:38 updateAlly
+40.3 src/sim/world/DistrictWorld.ts:151 groundHeight
+39.5  bindBuffer
+39.2 ../../../../../node_modules/three/build/three.webgpu.js:31330 get needsGeometryUpdate
+38.9 ../../../../../node_modules/three/build/three.webgpu.js:75093 draw
+38.9 src/render/DistrictView.ts:510 huggedOccluder
+38.8 src/sim/ai/CharacterSeparation.ts:35
+37.0 src/sim/ai/NavGrid.ts:109 clear
+34.4 ../../../../../node_modules/three/build/three.core.js:10743 invert
+33.9 src/sim/world/SimWorld.ts:250
+33.4 src/levels/districts/validate.ts:16 inside
+32.8 src/sim/ai/Perception.ts:152 hears
+32.7 ../../../../../node_modules/three/build/three.webgpu.js:66302 updateNumber
+26.9 src/sim/combat/Combat.ts:65 intent
+26.9 src/render/npc/CivilianCrowd.ts:305 place
+26.5 ../../../../../node_modules/three/build/three.webgpu.js:33869 _updateBindings
+26.3 src/render/npc/CivilianCrowd.ts:183 update
+inclusive
+5515.9  (root)
+4607.3 src/core/Ticker.ts:13 now
+4604.1 src/core/EventBus.ts:27 emit
+4583.4 src/Game.ts:136
+4529.2 src/debug/performance/profileCpu.ts:17 d.<computed>
+3364.9 src/render/GameView.ts:706 update
+1585.9 ../../../../../node_modules/three/build/three.webgpu.js:63158 render
+1585.9 src/render/Renderer.ts:54 render
+1583.7 ../../../../../node_modules/three/build/three.webgpu.js:63316 _renderScene
+1542.2 ../../../../../node_modules/three/build/three.webgpu.js:65140 _renderObjects
+1541.8 ../../../../../node_modules/three/build/three.webgpu.js:65368 renderObject
+1540.7 ../../../../../node_modules/three/build/three.webgpu.js:65515 _renderObjectDirect
+1526.0 ../../../../../node_modules/three/build/three.webgpu.js:90683 render
+1525.7 src/render/PostFx.ts:95 render
+1522.2 ../../../../../node_modules/three/build/three.webgpu.js:39812 render
+1499.2 ../../../../../node_modules/three/build/three.webgpu.js:56314 updateBeforeNode
+1499.2 ../../../../../node_modules/three/build/three.webgpu.js:58483 updateBefore
+1432.8 ../../../../../node_modules/three/build/three.webgpu.js:42938 updateBefore
+1151.9 src/core/Clock.ts:19 advance
+1151.3 src/Game.ts:149
+1144.5 src/Game.ts:367 simTick
+1103.6 src/sim/world/SimWorld.ts:366 update
+1061.6 src/render/npc/NpcView.ts:120 update
+1008.1 src/render/npc/CivilianCrowd.ts:459 update
+931.8 src/render/npc/CivilianCrowd.ts:183 update
+856.2 src/render/npc/CivilianCrowd.ts:305 place
+701.6 src/render/characters/CrowdLocomotion.ts:252 present
+680.6 src/render/characters/CrowdLocomotion.ts:275 solve
+676.2 src/render/characters/CrowdPosePalette.ts:66 correct
+661.6  (program)
+502.5 src/render/characters/CrowdLocomotion.ts:211 correct
+502.5 src/render/characters/CrowdLocomotion.ts:330
+402.1 ../../../../../node_modules/three/build/three.webgpu.js:33675 updateForRender
+396.4 ../../../../../node_modules/three/build/three.webgpu.js:33869 _updateBindings
+390.7 src/sim/npc/install.ts:61
+369.0 ../../../../../node_modules/three/build/three.webgpu.js:33885 _update
+353.7 src/render/characters/CrowdLocomotion.ts:132 load
+301.9 ../../../../../node_modules/three/build/three.webgpu.js:47393 updateShadow
+301.9 ../../../../../node_modules/three/build/three.webgpu.js:47520 updateBefore
+297.5 ../../../../../node_modules/three/build/three.webgpu.js:47369 renderShadow

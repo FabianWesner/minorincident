@@ -8,7 +8,7 @@ import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGe
 import { CrowdVisibility } from './CrowdVisibility';
 import { crowdModelKey, registerCrowdModel } from './crowdModels';
 import { simplifyCrowdLod } from './characters/crowdLodGeometry';
-import { crowdLod } from './lodPolicy';
+import { crowdLod, useBakedCrowdPose, canHoldCrowdPose } from './lodPolicy';
 import { StaticCorpses } from './characters/StaticCorpses';
 import { CrowdFootwork, CrowdLocomotion } from './characters/CrowdLocomotion';
 import { InfectedMoves, getUpSpan } from './characters/InfectedMoves';
@@ -338,7 +338,8 @@ export class CrowdView extends Group {
       const resting = b.state === 'dead' ? this.corpsePosition(e, b.deadAt) : e.transform;
       const settle = b.state === 'dead' ? reaction?.groundDeath ? 1 : Math.min(1, (this.world.tick - b.deadAt) / 60) : 0;
       const x = presented.x + (resting.x - e.transform.x) * settle, z = presented.z + (resting.z - e.transform.z) * settle;
-      const blend = batch.poses.sample(e.id, clip, frame, renderTick / 60);
+      const baked = this.low && useBakedCrowdPose(e, true, batch.lod === 'lod2', this.visibility.renderPixels(e.transform.x, e.transform.y, e.transform.z, dimensions.y), Math.hypot(x - player.transform.x, z - player.transform.z), this.world.tick);
+      const blend = batch.poses.sample(e.id, baked ? `${clip}:baked` : clip, frame, renderTick / 60);
       const fade = 0;
       if (e.archetype === 'infected.crow') {
         for (let bird = 0; bird < 20; bird++) if ((e.infected?.birdDeadMask ?? 0) & 1 << bird) {
@@ -365,7 +366,7 @@ export class CrowdView extends Group {
         if (target?.survivor && Math.hypot(x - target.transform.x, z - target.transform.z) < infectedContactDistance(e.combat!.radius) + .15) layers.lunge = Math.min(layers.lunge ?? 0, .04);
         const layered = !crawling && (layers.lunge || layers.flinch || layers.lurch || layers.chestBeat || layers.trunkSwipe || layers.throwPose) ? layers : undefined;
         // Zoomed-out encounters retain planted feet inside the same 12 m action range; the footwork cap is unchanged.
-        frame = batch.locomotion.present(e.id, batch.poses, frame, blend, clip, phase, this.transform, batch.strideScale, motion.speed, renderTick / 60, (band === 'lod1' || distance <= 12 || !moving || !!specialAttack || !!e.infected?.roar) && !crawling, layered, style);
+        frame = batch.locomotion.present(e.id, batch.poses, frame, blend, clip, phase, this.transform, batch.strideScale, motion.speed, renderTick / 60, (band === 'lod1' || distance <= 12 || !moving || !!specialAttack || !!e.infected?.roar) && !crawling, layered, style, !baked, this.low && canHoldCrowdPose(e, this.world.tick) ? 2 : 1);
         if (!batch.animal) this.accessories?.place(e, batch.lod as 'lod0' | 'lod1' | 'lod2', batch.poses, frame, blend, this.transform, !!((feedback?.mask ?? 0) & 16));
         batch.probe.add(e.id, clip, phase, this.transform, batch.poses, frame, ...blend, batch.mesh.geometry);
         const figure = batch.probe.figures.at(-1);

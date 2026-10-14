@@ -11,7 +11,7 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
     a.pause(); a.cheats.god(true); await a.step(3601);
   });
   if (zoom === .5) {
-    await page.mouse.move(800, 450);
+    const viewport = page.viewportSize()!; await page.mouse.move(viewport.width / 2, viewport.height / 2);
     for (let i = 0; i < 5; i++) await page.mouse.wheel(0, -100);
   }
   const result = await page.evaluate(async quality => {

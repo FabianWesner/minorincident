@@ -101,6 +101,7 @@ for (const profile of ['high', 'low', 'phone'] as const) test.describe(profile, 
     for (const [draws, tris] of [[proof.attackDrawCalls, proof.attackTriangles], [proof.blvdDrawCalls, proof.blvdTriangles], [proof.streetDrawCalls, proof.streetTriangles]]) { expect(draws).toBeLessThanOrEqual(tier === 'high' ? 600 : 300); expect(tris).toBeLessThanOrEqual(tier === 'high' ? 1_500_000 : 500_000); }
     // E18 frame targets: desktop high p95 within the 60 fps budget (14 ms incl. headroom); phone low >= 30 fps p50 at 4x CPU
     // throttle, the E18-AC08 emulation proxy (p95 recorded for the report).
+    if (process.env.PHONE_PERF === '1' && tier === 'low') for (const p95 of [proof.attackP95, proof.blvdP95, proof.streetP95]) expect(p95).toBeLessThanOrEqual(33.3);
     if (tier === 'high') { expect(proof.attackP95).toBeLessThanOrEqual(14); expect(proof.blvdP95).toBeLessThanOrEqual(14); expect(proof.streetP95).toBeLessThanOrEqual(14); }
     else { expect(proof.attackP50).toBeLessThanOrEqual(1000 / 30); expect(proof.blvdP50).toBeLessThanOrEqual(1000 / 30); expect(proof.streetP50).toBeLessThanOrEqual(1000 / 30); }
     expect(proof.fallbackMaxMs).toBeLessThanOrEqual(50);

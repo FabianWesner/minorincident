@@ -30,7 +30,10 @@ export function attachErrorGuard(page: Page): { errors: string[]; dispose(): voi
   } };
 }
 export const test = base.extend<{ errorGuard: void }>({
-  errorGuard: [async ({ page }, use) => {
+  errorGuard: [async ({ page, context }, use) => {
+    if (process.env.PHONE_PERF === '1') {
+      const cdp = await context.newCDPSession(page); await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
+    }
     if (process.env.E2E_SKIN !== undefined) await page.addInitScript(skin => {
       const url = new URL(location.href); if (!url.searchParams.has('skin')) { url.searchParams.set('skin', skin); history.replaceState(null, '', url); }
     }, process.env.E2E_SKIN);

@@ -33,14 +33,15 @@ export class CrowdPosePalette {
       const used = new Set([...this.states.values()].map(s => s.row));
       let row = this.clip.frames;
       while (used.has(row)) row++;
-      for (let i = 0; i < this.width; i++) this.rows[row * this.width + i] = this.component(frame, i);
+      this.copyFrame(frame, row * this.width);
       (this.texture.image.data as Float32Array).set(this.rows.subarray(row * this.width, (row + 1) * this.width), row * this.width);
       this.dirty(row);
       state = { clip, frame, row, weight: 1, started: time - this.seconds, seen: time };
       this.states.set(id, state);
     } else if (state.clip !== clip) {
       const offset = state.row * this.width;
-      for (let i = 0; i < this.width; i++) this.rows[offset + i] = this.component(state.frame, i) * state.weight + this.rows[offset + i] * (1 - state.weight);
+      const low = Math.floor(state.frame), alpha = state.frame - low, from = low * this.width, to = Math.ceil(state.frame) * this.width;
+      for (let i = 0; i < this.width; i++) this.rows[offset + i] = (this.rows[from + i] * (1 - alpha) + this.rows[to + i] * alpha) * state.weight + this.rows[offset + i] * (1 - state.weight);
       // clipTexture owns its upload buffer; update only on clip changes.
       (this.texture.image.data as Float32Array).set(this.rows.subarray(offset, offset + this.width), offset);
       this.dirty(state.row);
@@ -49,16 +50,23 @@ export class CrowdPosePalette {
     state.frame = frame; state.seen = time;
     return [state.row, state.weight];
   }
+  /** Frame bounds are shared by every component in a pose row. */
+  private copyFrame(frame: number, offset: number): void {
+    const low = Math.floor(frame), alpha = frame - low, from = low * this.width, to = Math.ceil(frame) * this.width;
+    for (let i = 0; i < this.width; i++) this.rows[offset + i] = this.rows[from + i] * (1 - alpha) + this.rows[to + i] * alpha;
+  }
   private component(frame: number, component: number): number {
     const low = Math.floor(frame), alpha = frame - low;
     return this.rows[low * this.width + component] * (1 - alpha) + this.rows[Math.ceil(frame) * this.width + component] * alpha;
   }
+  /** Keep the last displayed pose authoritative while a phone figure holds its world transform. */
+  reuse(id: number, frame: number): void { const state = this.states.get(id)!; state.frame = frame; state.weight = 1; }
   /** Per-instance contact correction in the same GPU draw. Settled poses keep
    * using the immutable atlas; only moving figures upload a corrected row. */
   correct(id: number, frame: number, outgoing: number, weight: number, correct: (pose: Float32Array) => void): number {
     const row = this.states.get(id)!.row + this.capacity;
     const pose = this.rows.subarray(row * this.width, (row + 1) * this.width);
-    for (let i = 0; i < this.width; i++) pose[i] = this.component(frame, i);
+    this.copyFrame(frame, row * this.width);
     if (weight < 1) for (let i = 0; i < this.width; i += 16) {
       // Matrix lerp collapses a part at opposing rotations. Blend TRS so an
       // interrupted turn/fall never shrinks a figure to zero between clips.
