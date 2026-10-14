@@ -32,6 +32,7 @@ export class Npcs {
     if (distance <= stop) { if (e.companion?.velocity) e.companion.velocity.x = e.companion.velocity.z = 0; return true; }
     const l3Follower = !!e.civilian?.ally?.follow && !!this.world.missions?.def.l3;
     const cell = l3Follower ? nav.nearestCell(e.transform.x, e.transform.z, .35) : -1;
+    const flowNext = l3Follower && distance > 30 ? nav.flowNext(cell) : -1;
     if (l3Follower && cell < 0) {
       // Rounded bodies can enter an alley narrower than the baked crowd grid. Walk out; never teleport.
       const last = this.escapes.get(e.id), tick = this.world.tick;
@@ -40,11 +41,11 @@ export class Npcs {
       if (fresh) this.escapes.set(e.id, { x: e.transform.x, z: e.transform.z, tick, cell: escape });
       if (escape < 0) return false;
       this.waypoint.x = nav.x(escape); this.waypoint.z = nav.z(escape);
-    } else if (l3Follower && distance > 30) {
+    } else if (flowNext >= 0 && flowNext !== cell) {
       // Reuse the shared reverse field rather than starving a long per-officer A* search.
-      const next = nav.flowNext(cell); if (next === cell || next < 0) return false;
-      this.waypoint.x = nav.x(next); this.waypoint.z = nav.z(next);
+      this.waypoint.x = nav.x(flowNext); this.waypoint.z = nav.z(flowNext);
     } else {
+      // Quiet streets do not build a crowd flow field; followers still need their own route.
       const failed = this.unreachable.get(e.id), tick = this.world.tick;
       if (failed && tick < failed.until && Math.abs(failed.x - target.x) + Math.abs(failed.z - target.z) < .25) return false;
       if (!nav.steer(e.transform, target, path, e.civilian?.zooAnimal ? e.combat!.radius : .35, this.waypoint, budget)) { this.unreachable.set(e.id, { x: target.x, z: target.z, until: tick + 60 }); return false; }
@@ -52,7 +53,8 @@ export class Npcs {
     }
     dx = this.waypoint.x - e.transform.x; dz = this.waypoint.z - e.transform.z;
     const routed = Math.hypot(dx, dz); if (routed < .01) return true;
-    const vx = dx / routed * Math.min(speed, Math.max(0, distance - stop) * 4), vz = dz / routed * Math.min(speed, Math.max(0, distance - stop) * 4);
+    const velocity = Math.min(speed, Math.max(0, distance - stop) * 4, l3Follower ? routed * 4 : Infinity);
+    const vx = dx / routed * velocity, vz = dz / routed * velocity;
     this.moveStep(e, vx / 60, vz / 60);
     this.world.spatial.set(e.id, e.transform.x, e.transform.z); return true;
   }

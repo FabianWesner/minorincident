@@ -276,8 +276,10 @@ export class SimWorld implements Lifecycle {
     this.player!.locomotion.groundHeight = (x, z) => this.districts?.groundBelow(x, z, (this.entities.get(1)?.transform.y ?? .7) - .7) ?? 0;
     this.interactables!.nav = districts.nav;
     const {min,max}=districts.nav;
-    this.physics.load({name:composition.id,survivor:true,ground:{width:max[0]-min[0],depth:max[1]-min[1],center:{x:(min[0]+max[0])/2,z:(min[1]+max[1])/2}},player:{x:districts.playerStart[0],y:survivor.height/2+.005,z:districts.playerStart[1]}});
-    Object.assign(this.entities.get(1)!.transform,{x:districts.playerStart[0],y:survivor.height/2+.005,z:districts.playerStart[1]});this.previousPlayer={...this.entities.get(1)!.transform};this.player!.setCheckpoint(this.entities.get(1)!.transform);this.spatial.set(1,districts.playerStart[0],districts.playerStart[1]);
+    // Respect the authored floor at load; relative grounding can then keep bodies below overhead decks.
+    const spawnY = districts.playerStartHeight + survivor.height/2 + .005;
+    this.physics.load({name:composition.id,survivor:true,ground:{width:max[0]-min[0],depth:max[1]-min[1],center:{x:(min[0]+max[0])/2,z:(min[1]+max[1])/2}},player:{x:districts.playerStart[0],y:spawnY,z:districts.playerStart[1]}});
+    Object.assign(this.entities.get(1)!.transform,{x:districts.playerStart[0],y:spawnY,z:districts.playerStart[1]});this.previousPlayer={...this.entities.get(1)!.transform};this.player!.setCheckpoint(this.entities.get(1)!.transform);this.spatial.set(1,districts.playerStart[0],districts.playerStart[1]);
     const streamed = districts.districts.find(d => d.layout.terrainChunks?.length);
     if (streamed) {
       this.chunks = new ChunkResidency(this, layoutTerrainChunks(streamed.layout, streamed.origin), streamed.layout.terrainChunks![0].size); this.chunks.update();
@@ -286,7 +288,7 @@ export class SimWorld implements Lifecycle {
       for(const d of districts.districts)for(const aabb of d.decay.colliders.map((c)=>c.aabb).concat(d.blockers))this.physics.addStatic(aabb,d.origin);
       for (const boundary of districts.boundaries) this.physics.addStatic(boundary, [0, 0]);
     }
-    this.props = new PropSystem(this); this.props.install(districts, this.aftermath?.props.filter(p => districts.districts.some(d => d.pushables.some(q => `${d.id}/${q.id}` === p.id))));
+    this.props = new PropSystem(this); this.props.install(districts, this.aftermath?.props.filter(p => districts.districts.some(d => d.pushables.some(q => `${d.id}/${q.id}` === p.id))), !!this.aftermath);
     this.events.on('sim.tick', () => this.props?.prePhysics(), SimPhase.ai);
     this.events.on('sim.tick', () => this.props?.postPhysics(), SimPhase.physics);
     this.physics.world!.step();

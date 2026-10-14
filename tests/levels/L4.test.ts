@@ -4,6 +4,7 @@ import { l4, l4Anchors, l4Edges, l4Emergence, l4Inside, l4Route, l4ConvoyStation
 import { l4AlphaEmergence, l4BreakableLine } from '../../src/levels/L4/layout';
 import { completeCampaignLevel } from '../../src/sim/progression/carryover';
 import { preset } from '../../src/sim/progression/Campaign';
+import { SimPhase } from '../../src/core/EventBus';
 import { action } from '../../src/data/actions/catalog';
 import { timeOfDay } from '../../src/data/timeOfDay';
 import { emptyInput } from '../../src/input/InputFrame';
@@ -314,27 +315,55 @@ describe('L4 The Safe City Falls', () => {
     l.mission.completeObjective('hold'); step(w, 90); expect(fires()).toBeGreaterThanOrEqual(3);
   }, HEAVY);
 
-  test('T-E22-17 @E22 @E22-AC17 checkpoints arrival, turn, line-break restore the war state (soldiers, armed state, spectacle actors)', async () => {
-    const l = await loadL4(2); world = l.world; const m = l.mission, w = l.world, s = m.state.l4!;
-    while (s.phase === 'convoy') w.update();
+  test('T-E22-17 @E22 @E22-AC17 checkpoints preserve the live battlefield across deaths, with only live infection losses', async () => {
+    // PO 10-13: checkpoints keep progress; "Keep the civilians like usually, just let Zombies flood in".
+    const l = await loadL4(2); world = l.world; const m = l.mission, w = l.world;
+    while (m.state.l4!.phase === 'convoy') w.update();
     step(w, 3 * 60);
     runL4(w, m, 'complete', { stopWhen: mm => mm.state.checkpoint === 'arrival' });
     const snaps: Record<string, unknown> = {};
     for (const id of l4.checkpoints) {
       runL4(w, m, 'complete', { stopWhen: mm => mm.state.checkpoint === id });
       expect(m.state.checkpoint).toBe(id);
-      const snap = { alphaIds: [...s.alphaIds], line: [...w.entities.iterate()].filter(e => e.barricade?.slot.groupId === 'l4-line').map(e => ({ id: e.id, hp: e.health.current, intact: e.barricade!.intact })), phase: s.phase, soldiers: s.soldierIds.filter(i => { const e = w.entities.get(i); return !!e && e.civilian?.state !== 'finished' && e.health.current > 0; }).length, armed: s.armed.filter(a => w.entities.get(a.id)?.civilian?.ally).length, tankPhase: s.tankPhase, heliPhase: s.heliPhase, gun: w.entities.get(1)!.weapons!.RIGHT.rack.map(r => r.id) };
-      snaps[id] = snap;
-      for (let i = 0; i < 120; i++) w.update();
-      const p = w.entities.get(1)!; w.player!.damage(p.health.current, w.tick);
+      const s = m.state.l4!, live = s.phase === 'war' || s.phase === 'collapse';
+      const armed = s.armed.filter(a => w.entities.get(a.id)?.civilian?.ally).map(a => a.id);
+      const bitten = new Set(armed.filter(i => (w.entities.get(i)?.infection?.biteSourceId ?? 0) > 0));
+      const turned = new Set<number>();
+      const stopInfections = w.events.on('outbreak.infection', e => {
+        if (e.type !== 'outbreak.infection' || !armed.includes(e.entityId)) return;
+        if (e.phase === 'stagger') {
+          expect(w.entities.get(e.entityId)!.infection!.biteSourceId).toBeGreaterThan(0);
+          bitten.add(e.entityId);
+        }
+        if (e.phase === 'infected') { expect(bitten.has(e.entityId)).toBe(true); turned.add(e.entityId); }
+      });
+      const battlefield = () => {
+        const state = m.state.l4!;
+        return structuredClone({ phase: state.phase, turnAt: state.turnAt, alphaIds: state.alphaIds,
+          lines: state.director.lines, armed: state.armed, tankPhase: state.tankPhase, heliPhase: state.heliPhase,
+          actors: [...w.entities.iterate()].filter(e => e.id !== 1 && (e.civilian || e.barricade?.slot.groupId === 'l4-line'))
+            .map(e => ({ id: e.id, kind: e.kind, hp: e.health.current, civilian: e.civilian, infection: e.infection, barricade: e.barricade })) });
+      };
+      let before: ReturnType<typeof battlefield> | undefined, respawns = 0;
+      const stopBefore = w.events.on('player.respawned', () => { if (live) before = battlefield(); }, SimPhase.missions - 1);
+      const stopAfter = w.events.on('player.respawned', () => {
+        respawns++;
+        if (live) { expect(m.state.l4).toBe(s); expect(battlefield()).toEqual(before); }
+      }, SimPhase.missions + 1);
+      const gun = w.entities.get(1)!.weapons!.RIGHT.rack.map(r => r.id);
+      step(w, 120);
+      const p = w.entities.get(1)!; w.player!.damage(p.health.current, w.tick, true);
+      expect(p.health.current).toBe(0);
       for (let i = 0; i < 400 && w.entities.get(1)!.health.current <= 0; i++) w.update();
-      expect(m.state.checkpoint).toBe(id);
-      expect(s.phase, `${id} phase`).toBe(snap.phase);
-      expect(s.alphaIds).toEqual(snap.alphaIds);
-      for (const rail of snap.line) expect(w.entities.get(rail.id)).toMatchObject({ health: { current: rail.hp }, barricade: { intact: rail.intact } });
-      expect(s.tankPhase).toBe(snap.tankPhase); expect(s.heliPhase).toBe(snap.heliPhase);
-      expect(w.entities.get(1)!.weapons!.RIGHT.rack.map(r => r.id)).toEqual(snap.gun);
-      expect(s.armed.filter(a => w.entities.get(a.id)?.civilian?.ally).length).toBe(snap.armed);
+      expect(respawns).toBe(1); expect(m.state.checkpoint).toBe(id);
+      expect(w.entities.get(1)!.weapons!.RIGHT.rack.map(r => r.id)).toEqual(gun);
+      const remaining = m.state.l4!.armed.filter(a => w.entities.get(a.id)?.civilian?.ally).map(a => a.id);
+      if (live) {
+        expect(remaining).toEqual(armed.filter(i => !turned.has(i)));
+        expect(armed.length - remaining.length).toBeLessThanOrEqual(bitten.size);
+      } else expect(remaining).toEqual(armed);
+      snaps[id] = { live, armedBefore: armed.length, armedAfter: remaining.length, bitten: [...bitten], turned: [...turned] };
+      stopBefore(); stopAfter(); stopInfections();
     }
     record('checkpoints', snaps);
   }, HEAVY);

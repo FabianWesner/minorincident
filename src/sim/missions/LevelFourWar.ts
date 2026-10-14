@@ -887,15 +887,9 @@ export class LevelFourWar {
     if (s.phase === 'plaza') { this.turn(); return true; }
     return false;
   }
-  /** Camp retries restore actors without rewinding the collapse director; escape retries keep their ongoing world. */
+  /** War retries keep the live battlefield; escape retries reopen the reached escape window. */
   respawn(): void {
-    if (this.s.phase === 'war') {
-      // Restore the reached camp snapshot while keeping the collapse's clock, lost lines and run counters.
-      const live = this.s, { director, arrivedAt, gunAt, turnDueAt, turnAt, warAt, kills, infectedAtT30 } = live;
-      this.mission.restore();
-      Object.assign(live, this.s, { director, arrivedAt, gunAt, turnDueAt, turnAt, warAt, kills, infectedAtT30 });
-      this.mission.state.l4 = live;
-    } else if (this.s.phase === 'collapse') this.escapeWindow(this.world.entities.get(1)!.survivor!.checkpoint);
+    if (this.s.phase === 'collapse') this.escapeWindow(this.world.entities.get(1)!.survivor!.checkpoint);
   }
   /** Checkpoint restore: shift the timeline. Entities (soldiers, convoy, tank, infected, pickups) come back from the snapshot. */
   restore(delta: number): void {
