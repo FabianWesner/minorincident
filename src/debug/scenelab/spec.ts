@@ -105,7 +105,7 @@ export interface ActorSpec {
   loadout?: [string | string[], string | string[]];
   god?: boolean;
 }
-export interface VehicleSpec { /** E31: L9 floor policy (zero HP stays driveable at 60% speed, staged damage). `health` sets the durability. */ floor?: boolean; health?: number; decay?: import('../../sim/vehicles/Vehicles').VehicleState['decay']; id?: string; asset: string; at: [number, number]; yaw?: number; path?: Point[]; panic?: boolean; /** Run the real passenger-ride driver, starting at an arc distance (fixture setup only). */ l2Ride?: { distanceM?: number; speedMs?: number } }
+export interface VehicleSpec { /** E31: L9 floor policy (zero HP stays driveable at 60% speed, staged damage). `health` sets the durability. */ floor?: boolean; /** The courier drives it (active vehicle): `path` becomes her driving input; lamps, hull rim and aura as in play. */ driven?: boolean; health?: number; decay?: import('../../sim/vehicles/Vehicles').VehicleState['decay']; id?: string; asset: string; at: [number, number]; yaw?: number; path?: Point[]; panic?: boolean; /** Run the real passenger-ride driver, starting at an arc distance (fixture setup only). */ l2Ride?: { distanceM?: number; speedMs?: number } }
 /** Actor commands. Strings are shorthands: 'idle' | 'chase' | 'follow' | 'flee' | 'infect'. */
 export type Action =
   | 'idle' | 'chase' | 'follow' | 'flee' | 'infect'
@@ -263,6 +263,16 @@ export interface Expectations {
   bikeUndrawnFramesMax?: number;
   /** Worst one-frame hub height spike of any wheel (up then straight back down), in cm: a height pop, not a real step. */
   wheelSpikeMaxCm?: number;
+  /** Largest chassis roll/pitch of any vehicle (body up axis vs vertical), in degrees. */
+  vehicleTiltMaxDeg?: number;
+  /** Largest angle between a moving vehicle's heading and its travel direction (above 3 m/s): sideways sliding. */
+  vehicleSlipMaxDeg?: number;
+  /** Frames a driven vehicle above its dead-lamp damage stage had its headlights off. */
+  headlightsDarkFramesMax?: number;
+  /** Highest final durability of any vehicle: attackers must actually damage the hull. */
+  vehicleHealthMax?: number;
+  /** At least this many E31 hull attack wind-ups on a vehicle (`metrics.pursuit.hullWindups`): the attackers keep attacking. */
+  hullWindupsMin?: number;
 }
 
 const rad = (deg: number | undefined) => (deg ?? 0) * Math.PI / 180;
