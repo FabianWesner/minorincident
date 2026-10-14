@@ -10,7 +10,7 @@ import { preset } from '../../../src/sim/progression/Campaign';
 import type { DistrictLayout } from '../../../src/levels/districts/types';
 const layout = JSON.parse(readFileSync('public/assets/layouts/D-CURE.layout.json', 'utf8')) as DistrictLayout;
 
-for (const tier of ['high', 'low'] as const) test(`T-E32-06-E1-${tier} @E32-AC02 @E32-AC06 @E32-AC09 @E32-AC27 depth population, health detours and checkpoint slot persistence`, async () => {
+for (const tier of ['high', 'low'] as const) test(`T-E32-06-E2-${tier} @E32-AC02 @E32-AC06 @E32-AC09 @E32-AC15 @E32-AC16 @E32-AC27 depth population, health detours and checkpoint slot persistence`, async () => {
   const w = new SimWorld(); await w.init();
   try {
     w.loadComposition(compositions.L10, [layout], 32); applyCampaign(w, preset('L10-default'));
@@ -33,7 +33,7 @@ for (const tier of ['high', 'low'] as const) test(`T-E32-06-E1-${tier} @E32-AC02
     expect(Object.keys(w.l10Encounters!.state.spawned).every(key => key.startsWith('crash-'))).toBe(true);
     expect(w.infected!.director.count).toBeLessThanOrEqual(8);
     w.tick = 3600; w.update();
-    for (const region of cure.regions.slice(0, 4)) {
+    for (const region of cure.regions.slice(0, 6)) {
       const groups = cureEncounters.filter(g => g.region === region.id);
       const slots = groups.flatMap(g => cureEncounterSlots(g, tier));
       for (const group of groups) {
@@ -49,6 +49,22 @@ for (const tier of ['high', 'low'] as const) test(`T-E32-06-E1-${tier} @E32-AC02
       }
       expect(slots.every(s => !!w.l10Encounters!.state.spawned[s.key])).toBe(true);
       expect(slots.filter(s => s.archetype === 'infected.alpha').length).toBe(curve.alphas[1]);
+      if (region.id === 'research-campus' || region.id === 'destroyed-corridor') {
+        focus(region.id === 'research-campus' ? 2707 : 3317, region.id === 'research-campus' ? 45 : 95); populate();
+        expect(w.infected!.director.count, `${region.id} resident peak`).toBeGreaterThanOrEqual(curve.resident[tier][0]);
+      }
+      if (region.id === 'research-campus') {
+        focus(...cure.anchors['cure-research-entry']); w.update();
+        expect(m.state.checkpoint).toBe('cure-research-entry');
+        for (const name of ['cure-terminal', 'cure-canister', 'cure-research']) {
+          focus(...cure.anchors[name]); w.setInput({ interact: true }); w.update(); w.clearInput();
+        }
+        expect(m.state.items).toEqual(['cure-canister']);
+        expect(m.state.states['terminal-read']).toBe(true);
+        expect(m.state.states['cure-carried']).toBe(true);
+        expect(m.state.checkpoint).toBe('cure-research');
+        expect(w.events.events().filter(e => e.type === 'dialogue.line' && e.id === 'L10.research')).toHaveLength(1);
+      }
       if (region.weapon) {
         // Complete the current spatial interaction through ordinary input, then retry that exact transaction.
         focus(...cure.anchors[region.checkpoint]); w.clearInput();
@@ -63,6 +79,10 @@ for (const tier of ['high', 'low'] as const) test(`T-E32-06-E1-${tier} @E32-AC02
         expect(new Set(ids).size).toBe(ids.length);
       }
     }
+    focus(...cure.anchors['cure-complex']); w.update();
+    expect(m.state.checkpoint).toBe('cure-complex');
+    expect(m.state.items).toEqual(['cure-canister']);
+    expect(w.progression!.campaign!.ownedActions).toContain('weapon.rocket-launcher');
     for (const kit of cureMedkits) {
       focus(...kit.at); populate();
       expect(w.infected!.nav.clear(kit.at[0], kit.at[1], .3), kit.id).toBe(true);

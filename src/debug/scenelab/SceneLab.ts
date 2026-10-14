@@ -1,3 +1,4 @@
+import { cure } from '../../levels/L10/district';
 import { cureEncounters, cureEncounterSlots } from '../../levels/L10/encounters';
 import { levelTenMission } from '../../levels/L10/mission';
 import { preset } from '../../sim/progression/Campaign';
@@ -300,11 +301,16 @@ export class SceneLab {
     }
     if (spec.cureProgression) {
       const save = preset('L10-default');
+      const model = spec.actors?.find(actor => actor.kind === 'courier')?.look?.model;
+      if (model === 'male' || model === 'female') save.character = model;
       applyCampaign(world, save);
-      const at = world.entities.get(1)!.transform;
-      const mission = world.loadMission(levelTenMission(name => !spec.cureProgression?.checkpoint && name !== 'cure-crash' ? undefined : { x: at.x, z: at.z, radius: 2 }));
+      const at = { ...world.entities.get(1)!.transform };
+      const mission = world.loadMission(levelTenMission(name => spec.cureProgression?.authored ? { x: cure.anchors[name][0], z: cure.anchors[name][1], radius: 2 } : !spec.cureProgression?.checkpoint && name !== 'cure-crash' ? undefined : { x: at.x, z: at.z, radius: 2 }));
       mission.begin();
       if (spec.cureProgression.checkpoint) mission.loadCheckpoint(spec.cureProgression.checkpoint);
+      if (spec.cureProgression.authored) {
+        Object.assign(world.entities.get(1)!.transform, at); world.physics.playerBody!.setTranslation(at, true);
+      }
       world.combat!.runner.loadout.state.selectedSide = spec.cureProgression.checkpoint ? 'RIGHT' : 'LEFT';
     }
     if (spec.l7Group) {
