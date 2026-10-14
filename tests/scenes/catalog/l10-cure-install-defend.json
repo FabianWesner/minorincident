@@ -1,0 +1,222 @@
+{
+  "name": "l10-cure-install-defend",
+  "note": "Production finale graph from complex checkpoint: explicit installation captures ready before activation. Charge is visible in the game HUD. Courier leaves the 25 m zone: retained charge and Return to dispersal console must remain readable; re-entry resumes. Inspect both quality tiers and game zooms.",
+  "ground": "sidewalk",
+  "size": 150,
+  "props": [
+    {
+      "id": "console",
+      "asset": "kit.dispersal-console",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "platform",
+      "asset": "kit.dispersal-platform",
+      "at": [
+        -8,
+        -6
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "tank-a",
+      "asset": "kit.dispersal-tank-bullet",
+      "at": [
+        14,
+        -12
+      ],
+      "yaw": 180
+    },
+    {
+      "id": "tank-b",
+      "asset": "kit.dispersal-tank-bullet",
+      "at": [
+        -14,
+        14
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "sphere",
+      "asset": "kit.dispersal-tank-sphere",
+      "at": [
+        22,
+        16
+      ],
+      "yaw": 180
+    },
+    {
+      "id": "tower-e",
+      "asset": "kit.dispersal-filtration-tower",
+      "at": [
+        31,
+        -4
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "tower-nw",
+      "asset": "kit.dispersal-filtration-tower",
+      "at": [
+        -30,
+        26
+      ],
+      "yaw": 180
+    },
+    {
+      "id": "fan-w",
+      "asset": "kit.dispersal-fan-housing",
+      "at": [
+        -38,
+        -16
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "hall-s",
+      "asset": "kit.dispersal-turbine-hall",
+      "at": [
+        0,
+        -32
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "pipe-straight",
+      "asset": "kit.dispersal-pipe-straight",
+      "at": [
+        -8,
+        32
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "pipe-tee",
+      "asset": "kit.dispersal-pipe-tee",
+      "at": [
+        0,
+        32
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "pipe-elbow",
+      "asset": "kit.dispersal-pipe-elbow",
+      "at": [
+        8,
+        32
+      ],
+      "yaw": 0
+    }
+  ],
+  "minigun": {
+    "at": [
+      -10,
+      3,
+      -6
+    ],
+    "yaw": 0
+  },
+  "clipping": {
+    "ignoreFoliage": true
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        6.5,
+        -12
+      ],
+      "yaw": 180
+    }
+  ],
+  "script": [
+    {
+      "frame": 20,
+      "actor": "courier",
+      "do": {
+        "interact": true
+      }
+    },
+    {
+      "frame": 35,
+      "actor": "courier",
+      "do": {
+        "moveTo": [
+          1,
+          0
+        ]
+      }
+    },
+    {
+      "frame": 230,
+      "actor": "courier",
+      "do": {
+        "interact": true
+      }
+    },
+    {
+      "frame": 370,
+      "actor": "courier",
+      "do": {
+        "moveTo": [
+          30,
+          2
+        ]
+      }
+    },
+    {
+      "frame": 900,
+      "actor": "courier",
+      "do": {
+        "moveTo": [
+          1,
+          0
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 1300,
+  "shots": [
+    10,
+    30,
+    240,
+    390,
+    830,
+    1290
+  ],
+  "sheet": 6,
+  "expect": {
+    "consoleErrors": 0,
+    "lodPlaceholderFramesMax": 0
+  },
+  "hud": true,
+  "megaHud": true,
+  "cureProgression": {
+    "checkpoint": "cure-complex",
+    "anchors": {
+      "cure-install": [
+        6.5,
+        -12
+      ],
+      "cure-console": [
+        1,
+        0
+      ],
+      "cure-disperse-ready": [
+        6.5,
+        -12
+      ]
+    }
+  }
+}

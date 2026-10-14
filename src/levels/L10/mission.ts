@@ -16,7 +16,7 @@ export const cureAnchorNames = [...cureCheckpoints, 'cure-terminal', 'cure-canis
 /** Finale controllers own these booleans. Charge-ready means 3,600 eligible ticks; credits-finished follows the playable epilogue. */
 /** Elapsed eligible simulation ticks (durations, not absolute timestamps), available to S7/S9. */
 export const cureCounters = ['charge-ticks', 'epilogue-ticks'];
-export const cureStates = ['terminal-read', 'cure-carried', 'cure-installed', 'charge-ready', 'mega-dead', 'cure-released', 'epilogue-finished', 'credits-finished'];
+export const cureStates = ['charge-active', 'console-held', 'terminal-read', 'cure-carried', 'cure-installed', 'charge-ready', 'mega-dead', 'cure-released', 'epilogue-finished', 'credits-finished'];
 /** Optional anchors let region lanes land independently. Missing anchors cannot complete spatial objectives. */
 export function levelTenMission(resolve: (name: string) => Anchor | undefined): MissionDef {
   const crash = resolve('cure-crash');
@@ -39,9 +39,9 @@ export function levelTenMission(resolve: (name: string) => Anchor | undefined): 
   step('research-exit', 'Deliver the cure — leave the laboratory', 'cure-research', spatial('cure-research'), [{ kind: 'checkpoint', id: 'cure-research' }], 'reach');
   step('destroyed-corridor', 'Carry the cure through the corridor — recover the rocket launcher', 'cure-corridor', spatial('cure-corridor', true), [{ kind: 'arsenal', add: ['weapon.rocket-launcher'], remove: [] }, { kind: 'checkpoint', id: 'cure-corridor' }], 'interact');
   step('dispersal-complex', 'Deliver the backpack cure to the dispersal complex', 'cure-complex', spatial('cure-complex'), [{ kind: 'checkpoint', id: 'cure-complex' }], 'reach');
-  step('install', 'Install the cure at the dispersal console', 'cure-install', flag('cure-installed'), [{ kind: 'state', key: 'cure-carried', value: false }, { kind: 'checkpoint', id: 'cure-disperse-ready' }]);
-  step('hold', 'Charge the system nearby and kill the Mega Alpha', 'cure-console', { kind: 'all', triggers: [flag('charge-ready'), flag('mega-dead'), flag('cure-installed')] });
-  step('release', 'Release the cure at the console', 'cure-console', flag('cure-released'));
+  step('install', 'Install the cure in the dispersal device', 'cure-install', { kind: 'all', triggers: [flag('cure-carried'), spatial('cure-install', true)] }, [{ kind: 'state', key: 'cure-installed', value: true }, { kind: 'state', key: 'cure-carried', value: false }, { kind: 'checkpoint', id: 'cure-disperse-ready' }], 'interact');
+  step('hold', 'Charge the system nearby and kill the Mega Alpha', 'cure-console', { kind: 'all', triggers: [flag('charge-active'), { kind: 'count', key: 'charge-ticks', atLeast: 3600 }, flag('charge-ready'), flag('mega-dead'), flag('cure-installed')] });
+  step('release', 'Release the cure at the console', 'cure-console', { kind: 'all', triggers: [flag('cure-released'), spatial('cure-console', true)] }, [], 'interact');
   step('epilogue', 'Watch the cure spread — keep exploring', 'cure-console', flag('epilogue-finished'));
   step('credits', 'Minor Incident', 'cure-console', flag('credits-finished'));
   return def;
