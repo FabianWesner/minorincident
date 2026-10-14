@@ -3,7 +3,8 @@ import type { CDPSession, Page } from '@playwright/test';
 import { boot, expect, test } from '../fixtures';
 
 type Point = { x: number; z: number };
-const center = { x: -17.5, z: 4 }, d = 6 / Math.SQRT2;
+// Same start as tests/levels/L4-movement.test.ts (a14716df): the parked convoy nav margin covers the old east tile from (-17.5, 4).
+const center = { x: -18.2, z: 4 }, d = 6 / Math.SQRT2;
 const targets = [
   { name: 'left', key: 'a', x: center.x - d, z: center.z + d },
   { name: 'right', key: 'd', x: center.x + d, z: center.z - d },
