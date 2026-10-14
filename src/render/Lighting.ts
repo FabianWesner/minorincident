@@ -83,7 +83,7 @@ export class Lighting {
   readonly heroFillColor = uniform(new Color('#ffe9cf'));
   /** Night route read (preset `roadLift`): moon-pale sheen added to asphalt, independent of the moon's shadow term. */
   readonly roadLift = uniform(0);
-  readonly roadLiftColor = uniform(new Color('#a9b6d6'));
+  readonly roadLiftColor = uniform(new Color('#86a8c0'));
   /** Centre of the road lift: the camera focus (the survivor on foot, the vehicle when driving). */
   readonly roadFocus = uniform(new Vector3());
   /** Weight of the sun/moon shadow map on light-field pools (hero shadows at night). */
