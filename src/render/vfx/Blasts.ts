@@ -1,3 +1,4 @@
+import { cureReached } from '../../sim/missions/CureFront';
 // Fireball: TSL noise-dissolved spheres with a fire gradient, adapted from Bruno Simon folio-2025 World/Fireballs.js (MIT, 41046b5).
 // Roll kick by distance and bullet time ramp: adapted from folio-2025 Explosions.js and Time.js bulletTime (MIT, 41046b5).
 import { AdditiveBlending, BoxGeometry, DoubleSide, DynamicDrawUsage, Frustum, Group, IcosahedronGeometry, InstancedBufferAttribute, InstancedMesh, Matrix4, MeshBasicNodeMaterial, MeshLambertNodeMaterial, PlaneGeometry, Quaternion, SphereGeometry, Vector3, type BufferGeometry, type Camera, type Node } from 'three/webgpu';
@@ -122,7 +123,7 @@ export class Blasts extends Group {
         const base = vec3(st.w).mul(mix(.62, 1.12, sun)).mul(ambient);
         // Lit from below by the fire: low, young puffs glow orange on their undersides (spec 07 §6).
         const ember = st.z.mul(float(1).sub(progress).pow(2.5)).mul(smoothstep(4.5, .6, positionWorld.y)).mul(normalWorld.y.negate().mul(.35).add(.75));
-        const smokeColor = st.z.lessThan(0).select(vec3(.2, .48, .09).mul(mix(.62, 1.12, sun)).mul(ambient), base);
+        const smokeColor = st.z.lessThan(-1.5).select(vec3(.55, .82, .8).mul(mix(.75, 1.12, sun)).mul(ambient.max(.6)), st.z.lessThan(0).select(vec3(.2, .48, .09).mul(mix(.62, 1.12, sun)).mul(ambient), base));
         // Practical radiance lights the cloud; damp the player-ray contribution so
         // the readability aura does not turn the foreground smoke into a bright veil.
         const color = mix(smokeColor, vec3(1, .42, .12).mul(1.2), ember.clamp(0, .6)).add(host.field ? host.field.sample().mul(positionWorld.y.smoothstep(3.5, 1.5)).mul(nearRay.select(.25, 3)) : vec3(0));
@@ -133,7 +134,7 @@ export class Blasts extends Group {
         // and bloom while keeping the final measured coverage below the 40% cap.
         const dither = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
         nearRay.and(dither.greaterThanEqual(.3)).discard();
-        return vec4(color, edge.mul(grain).mul(fade).mul(.97).mul(alive).mul(mix(.38, 1, seeThroughHole(1.15))));
+        return vec4(color, edge.mul(grain).mul(fade).mul(st.z.lessThan(-1.5).select(.32, .97)).mul(alive).mul(mix(.38, 1, seeThroughHole(1.15))));
       })();
       this.puffs.renderOrder = 3;
     }
@@ -328,8 +329,22 @@ export class Blasts extends Group {
       } else this.puff(c.x + j() * .5 * c.size, ground + .5 + this.rng.next() * .4, c.z + j() * .5 * c.size, j() * .3, (c.size >= 2 ? 3 : 1.5) + this.rng.next() * .9, j() * .3, 7 + this.rng.next() * 2.5, c.size * .3, c.size * (.85 + this.rng.next() * .45), c.heat, c.shade + j() * .08, born);
     }
   }
+  /** Mist uses the smoke puff pool (400/120); only the local camera neighborhood is sampled. */
+  private cureMist(now: number): void {
+    const front = this.world.missions?.state.cureFront;
+    if (!front) return;
+    const focus = this.host.focus?.() ?? this.world.entities.get(1)!.transform, count = this.quality === 'low' ? 8 : 24;
+    for (let i = 0; i < count; i++) {
+      const angle = this.rng.next() * Math.PI * 2, distance = Math.sqrt(this.rng.next()) * Math.max(1, Math.min(48, front.radius));
+      const x = focus.x + Math.cos(angle) * distance, z = focus.z + Math.sin(angle) * distance;
+      if (!cureReached(front, { x, z }) || !this.sourceVisible(x, z, 6)) continue;
+      const ground = this.world.districts?.groundHeight(x, z) ?? 0;
+      this.puff(x, ground + .3, z, .3, .08, .15, 3, 2.2, 4, -2, .75, now);
+    }
+  }
   /** Fires, burning props/cars and smoke-grenade zones drive persistent emitters. */
   private syncSources(now: number): void {
+    this.cureMist(now);
     const vehicles = new Set<number>();
     const seen = new Set<number>(), clouds = new Set<number>(), low = this.quality === 'low';
     const player = this.world.entities.get(1);

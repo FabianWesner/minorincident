@@ -344,6 +344,11 @@ export class SceneLab {
       }));
       mission.begin();
       if (spec.cureProgression.checkpoint) mission.loadCheckpoint(spec.cureProgression.checkpoint);
+      if (spec.cureProgression.releaseReady) {
+        mission.state.states['charge-active'] = mission.state.states['charge-ready'] = mission.state.states['mega-dead'] = true;
+        mission.state.counters['charge-ticks'] = 3600;
+        mission.state.steps.hold.status = 'completed'; mission.state.steps.release.status = 'active';
+      }
       if (spec.cureProgression.authored) {
         Object.assign(world.entities.get(1)!.transform, at); world.physics.playerBody!.setTranslation(at, true);
       }

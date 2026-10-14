@@ -184,6 +184,7 @@ export class InfectedSystem {
   }
   alert(entity: EntitySnapshot): void { if (entity.infected!.state === 'idle' || entity.infected!.state === 'wander') { entity.infected!.state = 'alerted'; entity.infected!.until = this.world.tick + 6; } }
   update(): void {
+    if (this.world.progression?.campaign?.world?.infectionCleared && this.world.scenario !== 'L10' && this.world.missions?.state.id !== 'L10') for (const e of this.active) this.world.combat?.damage.cure(e);
     const courier = this.world.entities.get(1)!; this.budget = 2000; this.routes = 0; this.director.update();
     this.barricades.length = 0; for (const e of this.world.entities.iterate()) if (e.kind === 'barricade' && e.health.current > 0) this.barricades.push(e);
     if (this.active.length > 20) this.navigation.flow(courier.transform, 1500);
@@ -193,6 +194,11 @@ export class InfectedSystem {
       const b = e.infected!; if (e.health.current <= 0) { this.dead(e); continue; }
       if (e.infectionRise && this.world.tick < e.infectionRise.until) { e.combat!.attacking = false; continue; }
       if (e.attachedTo !== undefined) { e.combat!.attacking = false; continue; }
+      if (this.world.missions?.state.states['cure-released']) {
+        this.cancelSpecial(e.id); if (b.special === 'pin') this.releasePin(e);
+        e.combat!.attacking = false; b.grabUntil = 0; b.state = 'chase';
+        this.seek(e, courier.transform); this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
+      }
       // E32 Mega Alpha: global pursuit owns its movement; close range and recovery hand the tick to the Alpha brain below.
       if (b.pursuit && this.world.megaPursuit?.drive(e)) continue;
       if (this.world.barricades?.vault(e)) continue;
@@ -557,9 +563,9 @@ export class InfectedSystem {
       // or while clinging. The living-only reveal path no longer runs for it.
       if (b.special === 'cling') { b.hidden = false; b.perched = false; e.transform.y = (this.world.districts?.pavingHeight(e.transform.x, e.transform.z) ?? 0) + .7; }
       if (e.archetype === 'infected.crow') { for (let i = 0; i < 20; i++) if (b.birdAlive[i]) b.birdDeadMask = (b.birdDeadMask ?? 0) | 1 << i; b.birds = 0; b.birdAlive.fill(0); }
-      if (b.special === 'explode') { b.attackId = this.nextAttackId(); b.until = this.world.tick + 60; this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, special: 'explode', duration: 1 }); }
+      if (b.special === 'explode' && !this.world.missions?.state.states['cure-released']) { b.attackId = this.nextAttackId(); b.until = this.world.tick + 60; this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, special: 'explode', duration: 1 }); }
     }
-    if (b.special === 'explode' && this.world.tick === b.until) {
+    if (b.special === 'explode' && !this.world.missions?.state.states['cure-released'] && this.world.tick === b.until) {
       for (const target of this.world.entities.iterate()) {
         if (target.civilian?.adult === false || target.escort?.child || target === e || target.health.current <= 0 || Math.hypot(target.transform.x - e.transform.x, target.transform.z - e.transform.z) > 3 || !this.world.combat!.query.visible(e.transform, target.transform)) continue;
         const amount = this.world.combat!.damage.apply({ attackId: b.attackId, actionId: e.archetype, sourceId: e.id, targetId: target.id, origin: e.transform, direction: { x: 0, z: 0 }, base: 35, multiplier: 1, type: 'explosive', radius: 3, knockback: 0, stagger: 0 });

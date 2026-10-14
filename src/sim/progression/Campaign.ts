@@ -26,7 +26,7 @@ export interface CampaignSave {
   results?:Record<string, import('../missions/types').MissionResult>;
   pending?:{level:Level; cards:string[]; phase:'unlock'|'cards'|'racks'};
   /** Campaign world-state continuity: what this run's L1 left behind in the town (src/levels/continuity.ts). */
-  world?:{L1?:L1Aftermath};
+  world?:{L1?:L1Aftermath; infectionCleared?: { level: 10; releasedAt: number }};
 }
 export const fixedUnlocks: Readonly<Record<Level,readonly string[]>> = {
   // L1 v2 (spec section 10): the baseball bat found in the garage is the permanent unlock, not a choice.
