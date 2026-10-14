@@ -10,6 +10,7 @@ import { Status } from '../combat/Status';
 import { Bicycle } from './Bicycle';
 import { Obstacles } from './Obstacles';
 import { VehicleBody } from './VehicleBody';
+import { emitEngine } from './ConvoySound';
 /** Serialized vehicle component. Native handles live only in Vehicles.cars. */
 export interface VehiclePassenger {
   id: number; seat?: number;
@@ -496,6 +497,10 @@ export class Vehicles {
         this.world.physics.playerBody!.setTranslation(player.transform, true); this.world.physics.playerBody!.setNextKinematicTranslation(player.transform); this.world.spatial.set(1, player.transform.x, player.transform.z);
       }
       this.updatePassengers(car); this.infected(car); this.damageState(car);
+      // The L9 mission APC keeps its staged engine/tyres until the authored impact stops it.
+      // Reuse the convoy emitter's bounded cadence and persistent audio loops.
+      if (this.world.missions?.l9?.state.carId === car.entity.id && state.driver === 1 && this.operable(car) && this.world.tick % 6 === 0)
+        emitEngine(this.world, car.entity.id, car.physics.speed, true);
       if (this.active === car.entity.id && this.operable(car) && car.physics.recoverFlip()) {
         state.recoveringUntil = 0;
         this.world.events.emit({ type: 'vehicle.recovering', tick: this.world.tick, sourceId: car.entity.id });
