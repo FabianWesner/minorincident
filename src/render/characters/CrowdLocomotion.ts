@@ -185,7 +185,7 @@ export class CrowdLocomotion {
       if (!paws) { paws = new PawContacts(this.frame, this.model); this.paws.set(id, paws); }
       if (speed > .06 && strides[name]) paws.update(phase, stride, 'corgi-trot');
       else paws.hold(1 / 60, this.groundedAnimal);
-    } else if (contacts && strides[name] && speed > .06) contacts.update(phase, stride, run, 1, this.stance(name, stride, this.frame.getWorldScale(this.scale).y));
+    } else if (contacts && strides[name] && speed > .06) contacts.update(phase, stride, run, 1, this.stance(name, stride, this.frame.getWorldScale(this.scale).y), true);
     if (contacts && time !== undefined) this.footwork.far.set(id, { contacts, owner: this, time });
     // Humans always keep the sole correction; large authored quadrupeds retain it after paw/contact pose layers.
     if (!this.animal || (this.groundedAnimal && (gaitStyles[name] || standingClips.has(name)))) this.ground();
@@ -244,7 +244,8 @@ export class CrowdLocomotion {
           this.load(pose, instance);
           if (layers) this.layer(layers, phase);
           const stride = moving ? cadenceStride(clip, scale, speed) : 0;
-          footwork.contacts.update(moving ? phase : 0, stride, footwork.run, footwork.weight, moving ? speed : 0, dt, { stance: footwork.stance, knee: gait?.knee, maxSwing: .4, ...style });
+          // load() and layer() have already refreshed the complete rig.
+          footwork.contacts.update(moving ? phase : 0, stride, footwork.run, footwork.weight, moving ? speed : 0, dt, { stance: footwork.stance, knee: gait?.knee, maxSwing: .4, ...style }, true);
           this.ground();
           this.store(pose, instance);
         });

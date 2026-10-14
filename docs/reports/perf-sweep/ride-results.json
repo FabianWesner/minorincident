@@ -1,0 +1,800 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-sweep/node_modules/.bin/playwright",
+      "test",
+      "tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+      "--project=chromium",
+      "--workers=1",
+      "--reporter=line,json"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-sweep/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-sweep/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-sweep/test-results/playwright/run-3483",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-sweep/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-sweep/test-results/playwright/run-3483",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-sweep/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/apc-floor.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-sweep/test-results/playwright/run-3483",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-sweep/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/apc-floor.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-sweep/test-results/playwright/run-3483",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-sweep/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-sweep/test-results/playwright/run-3483",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-sweep/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-sweep/test-results/playwright/run-3483",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-sweep/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "line"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3483 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3483",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+      "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E22-ride-smooth-60hz @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12985,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T02:04:49.332Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9fd57db25b74ef3955be-9ef3fb3bf3485a2379c2",
+          "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+          "line": 33,
+          "column": 3
+        },
+        {
+          "title": "T-E22-ride-smooth-120hz @E22 the L4 convoy bus does not vibrate on screen during the ride (120hz)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21645,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T02:05:02.544Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9fd57db25b74ef3955be-1b81cd508df83a977be4",
+          "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+          "line": 33,
+          "column": 3
+        },
+        {
+          "title": "T-E22-ride-smooth-uneven-120hz @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21882,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T02:05:24.195Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9fd57db25b74ef3955be-97e081eb24bd1dd7a47c",
+          "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+          "line": 33,
+          "column": 3
+        },
+        {
+          "title": "T-E22-ride-smooth-30hz @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7670,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T02:05:46.084Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9fd57db25b74ef3955be-496b10d2f3f3d25dfcf3",
+          "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+          "line": 33,
+          "column": 3
+        },
+        {
+          "title": "T-E22-ride-smooth-uneven-phone @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8297,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T02:05:53.759Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9fd57db25b74ef3955be-745ed0ef556d8858bc46",
+          "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+          "line": 33,
+          "column": 3
+        },
+        {
+          "title": "T-E22-ride-smooth-60hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz-webgl-low)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12394,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T02:06:02.065Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9fd57db25b74ef3955be-48dd17e388014d920856",
+          "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+          "line": 33,
+          "column": 3
+        },
+        {
+          "title": "T-E22-ride-smooth-uneven-120hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz-webgl-low)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21850,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T02:06:14.466Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9fd57db25b74ef3955be-f1abf24ec893e00b555e",
+          "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+          "line": 33,
+          "column": 3
+        },
+        {
+          "title": "T-E22-ride-smooth-30hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz-webgl-low)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7652,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T02:06:36.324Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9fd57db25b74ef3955be-4ddeb255d44b0cc2f9d3",
+          "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+          "line": 33,
+          "column": 3
+        },
+        {
+          "title": "T-E22-ride-smooth-uneven-phone-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone-webgl-low)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8173,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T02:06:43.983Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9fd57db25b74ef3955be-eef0522503a8f5f7d67e",
+          "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+          "line": 33,
+          "column": 3
+        },
+        {
+          "title": "T-E22-ride-smooth-60hz-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz-webgpu-high)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12191,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T02:06:52.163Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9fd57db25b74ef3955be-f1b8c09a5101280f8b34",
+          "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+          "line": 33,
+          "column": 3
+        },
+        {
+          "title": "T-E22-ride-smooth-uneven-120hz-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz-webgpu-high)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21729,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T02:07:04.359Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9fd57db25b74ef3955be-24d2ccd717215d7eb8d7",
+          "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+          "line": 33,
+          "column": 3
+        },
+        {
+          "title": "T-E22-ride-smooth-30hz-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz-webgpu-high)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7519,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T02:07:26.093Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9fd57db25b74ef3955be-cd2ed86790bc625aa054",
+          "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+          "line": 33,
+          "column": 3
+        },
+        {
+          "title": "T-E22-ride-smooth-uneven-phone-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone-webgpu-high)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8070,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T02:07:33.618Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9fd57db25b74ef3955be-38b6a696bd758e03779c",
+          "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+          "line": 33,
+          "column": 3
+        },
+        {
+          "title": "T-E22-ride-smooth-60hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz-webgpu-low)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12280,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T02:07:41.693Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9fd57db25b74ef3955be-e57335488444cc08b95e",
+          "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+          "line": 33,
+          "column": 3
+        },
+        {
+          "title": "T-E22-ride-smooth-uneven-120hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz-webgpu-low)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21789,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T02:07:53.982Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9fd57db25b74ef3955be-a5fe710df348c8638578",
+          "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+          "line": 33,
+          "column": 3
+        },
+        {
+          "title": "T-E22-ride-smooth-30hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz-webgpu-low)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7364,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T02:08:15.779Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9fd57db25b74ef3955be-2a1d7014f7cb36ec4047",
+          "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+          "line": 33,
+          "column": 3
+        },
+        {
+          "title": "T-E22-ride-smooth-uneven-phone-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone-webgpu-low)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8092,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-14T02:08:23.153Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9fd57db25b74ef3955be-7c00ec1d0f9b162cfbd4",
+          "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+          "line": 33,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-14T02:04:48.688Z",
+    "duration": 222736.217,
+    "expected": 17,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

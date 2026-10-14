@@ -1,9 +1,10 @@
-import { Quaternion, Vector3, type Object3D } from 'three';
+import { Matrix4, Quaternion, Vector3, type Object3D } from 'three';
 
 /** Two-joint presentation correction. Targets and bend poles are world-space;
  * rest offsets supply lengths, so the same solver fits the loaded courier rig. */
 export class LimbIK {
   private readonly target = new Vector3();
+  private readonly inverseParent = new Matrix4();
   private readonly axis = new Vector3();
   private readonly bend = new Vector3();
   private readonly joint = new Vector3();
@@ -23,8 +24,8 @@ export class LimbIK {
   solve(target: Vector3, pole: Vector3, orientation: Quaternion, weight = 1): void {
     const parent = this.upper.parent!;
     parent.updateWorldMatrix(true, false);
-    parent.worldToLocal(this.target.copy(target)).sub(this.upper.position);
-    parent.getWorldQuaternion(this.frame).invert();
+    this.target.copy(target).applyMatrix4(this.inverseParent.copy(parent.matrixWorld).invert()).sub(this.upper.position);
+    parent.matrixWorld.decompose(this.joint, this.frame, this.axis); this.frame.invert();
     const distance = Math.max(.0001, Math.min(this.a + this.b - .0001, this.target.length()));
     this.axis.copy(this.target).normalize();
     this.bend.copy(pole).applyQuaternion(this.frame).addScaledVector(this.axis, -this.bend.dot(this.axis)).normalize();

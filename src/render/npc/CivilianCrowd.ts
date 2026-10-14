@@ -176,7 +176,7 @@ class CivilianBatch extends Group {
     // L6 settled bodies use LOD1. Preparing its other bands repeats the bake
     // and node build without populating those pages.
     // L4 (l4-collapse-2): the war kills pedestrians and soldiers of every model; each first corpse page compiled mid-fight.
-    if ((this.world.scenario === 'L6' || this.world.scenario === 'L4') && this.lod === 'lod1') this.corpses.prepare(this.model, baked.geometry, material, baked.clip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1);
+    if ((this.world.scenario === 'L6' || this.world.scenario === 'L4') && this.lod === 'lod1' || this.world.scenario === 'L7' && this.lod === this.corpseLod) this.corpses.prepare(this.model, baked.geometry, material, baked.clip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1);
     this.add(this.mesh); if (placeholder) disposeCharacter(model); this.update();
   }
   update(alpha = 1, low = false, shotId?: number, figures?: readonly EntitySnapshot[]): void {

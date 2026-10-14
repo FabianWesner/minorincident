@@ -9,13 +9,14 @@ import type { Game } from '../../src/Game';
 import { writeFileSync } from 'node:fs';
 
 const output = process.env.L9_OUTPUT ?? 'test-results/epics/E31/l9-stream';
+const requestedBackend = process.env.L9_BACKEND === 'webgpu' ? 'webgpu' : 'webgl2';
 // The quiet gate can queue behind other jobs: build the current sources after admission.
 execFileSync('npm', ['run', 'build'], { stdio: 'inherit' });
 const results: unknown[] = [];
 try {
   for (const profile of (['high', 'low', 'phone'] as const).filter(p => !process.env.L9_PROFILE || p === process.env.L9_PROFILE)) {
     const low = profile !== 'high', cap = low ? 100 : 200;
-    const session = new SceneSession({ tier: low ? 'low' : 'high', nativeFrameTiming: true, query: { loadProfile: '1' }, viewport: profile === 'phone' ? { width: 390, height: 844 } : { width: 1600, height: 900 } });
+    const session = new SceneSession({ backend: requestedBackend, tier: low ? 'low' : 'high', nativeFrameTiming: true, query: { loadProfile: '1' }, viewport: profile === 'phone' ? { width: 390, height: 844 } : { width: 1600, height: 900 } });
     try {
       await session.open();
       const cdp = await session.page.context().newCDPSession(session.page);
@@ -28,6 +29,7 @@ try {
           vehicles: [{ id: 'apc', asset: 'vehicle.military-apc', at: crossing.start, yaw: 0, path: route.points, ...(process.env.L9_FLOOR === '1' ? { floor: true, health: 0 } : {}) }],
           camera: { mode: 'game', target: 'apc', zoom: 1 } };
         await session.load(spec); await session.ready();
+        await session.page.evaluate(() => window.__SS__!.debug.figureJoints(false));
         // As in the existing E18 probes: exclude transient level-load garbage
         // from the after-warmup timing window, while all route streaming remains measured.
         await cdp.send('HeapProfiler.collectGarbage');
@@ -37,9 +39,11 @@ try {
         const measurement = await session.page.evaluate(async ({ cap, diagnose }) => {
           const api = window.__SS__!;
           const game = (window.__SCENE__ as unknown as { game: Game }).game, world = game.world;
-          const gl = (game.view.renderer as unknown as { backend: { gl: WebGL2RenderingContext } }).backend.gl;
-          const debugGpu = gl.getExtension('WEBGL_debug_renderer_info');
-          const gpu = String(gl.getParameter(debugGpu?.UNMASKED_RENDERER_WEBGL ?? gl.RENDERER));
+          const gl = (game.view.renderer as unknown as { backend: { gl?: WebGL2RenderingContext } }).backend.gl;
+          const debugGpu = gl?.getExtension('WEBGL_debug_renderer_info');
+          const navigatorGpu = navigator as Navigator & { gpu?: { requestAdapter(): Promise<{ info: { vendor: string; description: string; architecture: string } } | null> } };
+          const adapter = gl ? null : await navigatorGpu.gpu?.requestAdapter();
+          const gpu = gl ? String(gl.getParameter(debugGpu?.UNMASKED_RENDERER_WEBGL ?? gl.RENDERER)) : `${adapter?.info.vendor ?? ''} ${adapter?.info.description ?? ''} ${adapter?.info.architecture ?? ''}`;
           const coldPipelines: unknown[] = [];
           const backend = (game.view.renderer as unknown as { backend: { createRenderPipeline(...args: unknown[]): unknown } }).backend;
           const createPipeline = backend.createRenderPipeline;
@@ -112,7 +116,7 @@ try {
           if (diagnose) backend.createRenderPipeline = createPipeline;
           const final = api.getEntity(car.id)!, p95 = (v: number[]) => v.sort((a, b) => a - b)[Math.ceil(v.length * .95) - 1];
           return { completed: !!world.missions?.l9?.state.finished, crash: world.missions?.l9?.snapshot(),
-            seconds: (performance.now() - start) / 1000, distance, frameP95: p95(frames), simP95: p95(sims), hitch, draws, triangles, resident, loading, geometries, heapPeakMB,
+            seconds: (performance.now() - start) / 1000, distance, frameP50: [...frames].sort((a,b) => a-b)[Math.ceil(frames.length * .5) - 1], frameP95: p95(frames), frameP99: frames[Math.ceil(frames.length * .99) - 1], simP95: p95(sims), hitch, draws, triangles, resident, loading, geometries, heapPeakMB,
             final: final.transform, hp: final.health.current, samples, hitches, coldPipelines, shadowTriangles, submittedTriangles, heroLights, awakeProps, particles, puffs, parts, gpu, terrain: api.perf().terrain, backend: api.perf().backend, infected: api.perf().infected?.count, nodeBuilds: api.perf().nodeBuilds };
         }, { cap, diagnose: cpuProfile });
         if (cpuProfile) writeFileSync('/tmp/l9-stream-cpu.json', JSON.stringify((await cdp.send('Profiler.stop')).profile));
@@ -120,13 +124,13 @@ try {
         const heap = await cdp.send('Runtime.getHeapUsage');
         const limits = { frameP95: low ? 33.3 : 16.7, simP95: low ? 6 : 4, draws: low ? 300 : 600, triangles: low ? 500000 : 1500000, resident: low ? 9 : 25, heapMB: low ? 250 : 400, heroLights: low ? 3 : 8, awakeProps: low ? 60 : 150, particles: low ? 2000 : 6000, puffs: low ? 120 : 400, parts: low ? 40 : 120 };
         const heapMB = heap.usedSize / 1e6;
-        const pass = measurement.completed && measurement.infected === cap && measurement.draws > 1 && !/swiftshader|llvmpipe|software/i.test(measurement.gpu) && session.errors.length === 0 && heapMB <= limits.heapMB && Object.entries(limits).filter(([key]) => key !== 'heapMB').every(([key, limit]) => measurement[key as keyof typeof measurement] as number <= limit) && (profile === 'phone' || measurement.hitch <= 50);
+        const pass = measurement.backend === (requestedBackend === 'webgpu' ? 'webgpu' : 'webgl') && measurement.completed && measurement.infected === cap && measurement.draws > 1 && !/swiftshader|llvmpipe|software/i.test(measurement.gpu) && session.errors.length === 0 && heapMB <= limits.heapMB && Object.entries(limits).filter(([key]) => key !== 'heapMB').every(([key, limit]) => measurement[key as keyof typeof measurement] as number <= limit) && (profile === 'phone' || measurement.hitch <= 50);
         const result = { profile, route: route.id, ...measurement, heapMB, heap, limits, pass, errors: session.errors };
         results.push(result); writeJson(`${output}/performance.json`, results);
         console.log(JSON.stringify({ ...result, samples: undefined, hitches: undefined, terrain: undefined, heap: undefined, final: undefined }));
         if (!pass) process.exitCode = 1;
       }
-      if (process.env.L9_CPU_PROFILE) continue;
+      if (process.env.L9_CPU_PROFILE || process.env.L9_SKIP_MEMORY === '1') continue;
       // Five complete outward/backward camera sweeps, same resident cell set at each endpoint.
       const rounds = [];
       for (let lap = 0; lap <= 5; lap++) {

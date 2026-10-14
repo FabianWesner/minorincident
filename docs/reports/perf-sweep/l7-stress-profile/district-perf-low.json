@@ -1,0 +1,61 @@
+{
+  "firesStart": 28,
+  "firesEnd": 28,
+  "tier": "low",
+  "backend": "webgl",
+  "blasts": 7,
+  "peakInfected": 100,
+  "frameP50": 17.600000000000364,
+  "frameP95": 34.20000000000073,
+  "frameP99": 42.20000000000073,
+  "hitch": 168.39999999999964,
+  "simP95": 5.700000762939453,
+  "draws": 125,
+  "triangles": 208230,
+  "heapMB": 233.9247751235962,
+  "peakPuffs": 120,
+  "peakParts": 0,
+  "peakParticles": 447,
+  "heroLights": 0,
+  "awakeProps": 0,
+  "hitches": [
+    {
+      "frame": 2,
+      "ms": 72.89999999999964,
+      "elapsed": 111.49999980926441,
+      "sim": 13.100000381469727,
+      "update": 0,
+      "render": 0,
+      "nodeBuilds": 336
+    },
+    {
+      "frame": 99,
+      "ms": 168.39999999999964,
+      "elapsed": 2182.4999998092644,
+      "sim": 22.899999618530273,
+      "update": 0,
+      "render": 0,
+      "nodeBuilds": 343
+    }
+  ],
+  "costs": {
+    "simTick": 5.700000762939453,
+    "simTickMax": 3.799999237060547,
+    "sim": 5.299999237060547,
+    "physics": 0.8000001907348633,
+    "simNpcs": 0.9000005722045898,
+    "ai": 1.6000003814697266,
+    "audio": 0,
+    "input": 0.10000038146972656,
+    "camera": 0.8000001907348633,
+    "crowd": 0.6999998092651367,
+    "npcs": 7,
+    "accessories": 0,
+    "occlusion": 0.6999998092651367,
+    "doors": 0,
+    "lod": 0.8999996185302734,
+    "lightField": 0.8999996185302734,
+    "lighting": 1,
+    "ui": 0
+  }
+}
