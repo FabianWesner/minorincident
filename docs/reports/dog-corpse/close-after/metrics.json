@@ -1,0 +1,631 @@
+{
+  "spec": "tests/scenes/dog-corpse/close.json",
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "high",
+  "frames": 82,
+  "timing": {
+    "openMs": 1450,
+    "loadMs": 3606,
+    "runMs": 1317,
+    "sceneMs": 4923
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "canvas.f0.varianceMin",
+        "pass": true,
+        "value": 578.7678161312906,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f0.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f30.varianceMin",
+        "pass": true,
+        "value": 405.77547097961906,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f30.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f60.varianceMin",
+        "pass": true,
+        "value": 397.81639372643076,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f60.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f80.varianceMin",
+        "pass": true,
+        "value": 413.579004634219,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f80.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f82.varianceMin",
+        "pass": true,
+        "value": 414.0069460266077,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f82.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "requestedBackend",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      }
+    ]
+  },
+  "pixels": [
+    {
+      "frame": 0,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          97.53084201388889,
+          71.89498263888889,
+          70.10718641493055
+        ],
+        "variance": 578.7678161312906,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 30,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          99.43304144965278,
+          72.8720876736111,
+          70.43295789930555
+        ],
+        "variance": 405.77547097961906,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 60,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          98.99304796006945,
+          73.0291015625,
+          70.47174370659722
+        ],
+        "variance": 397.81639372643076,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 80,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          99.12112630208334,
+          73.07380099826389,
+          70.48893446180556
+        ],
+        "variance": 413.579004634219,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 82,
+      "pixels": {
+        "width": 1280,
+        "height": 720,
+        "mean": [
+          99.1320681423611,
+          73.07723090277777,
+          70.48915690104167
+        ],
+        "variance": 414.0069460266077,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    }
+  ],
+  "consoleErrors": [],
+  "scene": {
+    "name": "qa-dog-corpse-close",
+    "frame": 0,
+    "placements": [],
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "entity": 1
+      },
+      {
+        "id": "dog-alive",
+        "kind": "infected",
+        "entity": 3
+      },
+      {
+        "id": "dog-corpse",
+        "kind": "infected",
+        "entity": 4
+      },
+      {
+        "id": "dog-shot",
+        "kind": "infected",
+        "entity": 5
+      },
+      {
+        "id": "woman",
+        "kind": "infected",
+        "entity": 6
+      },
+      {
+        "id": "pet",
+        "kind": "animal",
+        "entity": 7
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "armyBoom": null,
+    "scene": "qa-dog-corpse-close",
+    "frame": 82,
+    "tick": 82,
+    "backend": "webgl",
+    "quality": "high",
+    "propPenetration": {
+      "samples": 338,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "wheels": {},
+    "lodPlaceholders": {
+      "frames": 0,
+      "firstFrame": -1,
+      "assets": []
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 45,
+        "p95": 45,
+        "max": 45
+      },
+      "triangles": {
+        "p50": 74157,
+        "p95": 74157,
+        "max": 90120
+      },
+      "shadowDrawCalls": {
+        "p50": 39,
+        "p95": 39,
+        "max": 40
+      },
+      "shadowTriangles": {
+        "p50": 45903,
+        "p95": 45903,
+        "max": 75655
+      },
+      "stepMs": {
+        "p50": 2.6,
+        "p95": 3.4,
+        "max": 215.7
+      },
+      "lastFrame": {
+        "drawCalls": 43,
+        "triangles": 65965,
+        "shadowDrawCalls": 39,
+        "shadowTriangles": 45903,
+        "stepMs": 1.6999998092651367,
+        "categories": {
+          "other": 38,
+          "shadows": 39,
+          "crowd": 5
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "grounding": {
+      "corpses": 2,
+      "corpseOffMaxCm": 0,
+      "pickups": 0,
+      "pickupOffMaxCm": 0,
+      "worst": [
+        {
+          "id": 4,
+          "at": [
+            0,
+            0,
+            0.8
+          ],
+          "support": 0,
+          "offCm": 0
+        },
+        {
+          "id": 6,
+          "at": [
+            0.2,
+            0,
+            -0.6
+          ],
+          "support": 0,
+          "offCm": 0
+        }
+      ]
+    },
+    "pursuit": {
+      "actors": {
+        "woman": {
+          "stuckRunMax": 0,
+          "stuckFrame": -1,
+          "lostNearFrames": 5,
+          "overshootMaxM": 0
+        }
+      },
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "hullWindups": 0,
+      "hullHits": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "megaAlpha": null,
+    "minigun": null,
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0,
+      "holds": {}
+    },
+    "seeThrough": {
+      "frames": 0,
+      "solidRadiusMax": 0,
+      "cutLowProps": []
+    },
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 82,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "variety": {
+      "infected": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      },
+      "pedestrian": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      }
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          -3,
+          2.5
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 82,
+        "inViewFrames": 82,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 82
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -3,
+            2.5
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 82,
+          "torsoPitchMinDeg": 2.9,
+          "torsoPitchMaxDeg": 3.4,
+          "contacts": 3,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 4.6,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 10
+        }
+      },
+      "dog-alive": {
+        "kind": "infected",
+        "entity": 3,
+        "position": [
+          -1.8,
+          0.8
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 82,
+        "inViewFrames": 82,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 82
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -1.8,
+            0.8
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 82,
+          "torsoPitchMinDeg": 91.6,
+          "torsoPitchMaxDeg": 91.6,
+          "contacts": 4,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0.4,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "dog-corpse": {
+        "kind": "infected",
+        "entity": 4,
+        "position": [
+          0,
+          0.8
+        ],
+        "yawDeg": 0,
+        "state": "dead",
+        "drawnFrames": 82,
+        "inViewFrames": 5,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 82
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            0,
+            0.8
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 82,
+          "torsoPitchMinDeg": 91.6,
+          "torsoPitchMaxDeg": 91.6,
+          "contacts": 4,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0.4,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "dog-shot": {
+        "kind": "infected",
+        "entity": 5,
+        "position": [
+          0.3,
+          0.8
+        ],
+        "yawDeg": 0,
+        "state": "idle",
+        "drawnFrames": 82,
+        "inViewFrames": 82,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod1": 82
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            1.8,
+            0.8
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 82,
+          "torsoPitchMinDeg": 91.6,
+          "torsoPitchMaxDeg": 91.6,
+          "contacts": 4,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 0.4,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "woman": {
+        "kind": "infected",
+        "entity": 6,
+        "position": [
+          0.2,
+          -0.6
+        ],
+        "yawDeg": -12.2,
+        "state": "dead",
+        "drawnFrames": 82,
+        "inViewFrames": 5,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 5,
+          "lod1": 77
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            0.2,
+            -0.6
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 82,
+          "torsoPitchMinDeg": 39,
+          "torsoPitchMaxDeg": 39.8,
+          "contacts": 1,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 11,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "pet": {
+        "kind": "animal",
+        "entity": 7,
+        "position": [
+          -1.8,
+          -0.8
+        ],
+        "yawDeg": 0,
+        "state": "calm",
+        "drawnFrames": 82,
+        "inViewFrames": 82,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 82
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -1.8,
+            -0.8
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 82,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 4,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 40,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 82,
+      "sim": {
+        "infected": 2,
+        "pedestrian": 1,
+        "courier": 1,
+        "animal": 1,
+        "actors": 6
+      },
+      "drawn": {
+        "vehicle": 0,
+        "infected": 4,
+        "courier": 1,
+        "animal": 1
+      }
+    },
+    "lods": {},
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [],
+    "actors": [],
+    "gunBodies": [],
+    "heldProps": [],
+    "summary": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}
