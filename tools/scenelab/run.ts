@@ -1,5 +1,6 @@
 import { basename } from 'node:path';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
+import { PNG } from 'pngjs';
 import { SceneSession, encodeWebm, evaluate, writeJson, type Backend } from './session';
 import { canvasFrame, canvasFrameChecks } from '../../tests/e2e/canvas-frame';
 
@@ -15,6 +16,26 @@ export function sheetFrames(sheet: number, frames: number): number[] {
   const all: number[] = []; for (let f = 0; f <= frames; f += Math.max(1, Math.round(sheet))) all.push(f);
   if (all.length <= maxSheetCells) return all;
   return Array.from({ length: maxSheetCells }, (_, i) => all[Math.round(i * (all.length - 1) / (maxSheetCells - 1))]);
+}
+
+/** Cut-pixel gate (PO 10-14): the frame as played against the same frame with the solid-occluder cut forced off. Pixels that differ outside the
+ * hole disc around the courier are buildings or vehicles opened with nothing in the way; inside the disc a real occluder must differ. */
+export async function measureCut(session: SceneSession) {
+  await session.ready();
+  const cut = PNG.sync.read(await session.page.screenshot({ type: 'png' }));
+  const hole = await session.page.evaluate(() => window.__SCENE__!.cutProbe(true));
+  await session.step(1); await session.ready();
+  const full = PNG.sync.read(await session.page.screenshot({ type: 'png' }));
+  await session.page.evaluate(() => window.__SCENE__!.cutProbe(false));
+  if (!hole || cut.width !== full.width || cut.height !== full.height) return { outside: Infinity, inside: 0, strength: 0, cover: 0, occluder: '' };
+  const cx = hole.center[0] * cut.width, cy = hole.center[1] * cut.height, radius = hole.solidRadius * cut.height * (hole.cover > .5 ? 100 : 1);
+  let outside = 0, inside = 0;
+  for (let y = 0; y < cut.height; y++) for (let x = 0; x < cut.width; x++) {
+    const i = (y * cut.width + x) * 4;
+    if (Math.abs(cut.data[i] - full.data[i]) + Math.abs(cut.data[i + 1] - full.data[i + 1]) + Math.abs(cut.data[i + 2] - full.data[i + 2]) < 36) continue;
+    if (Math.hypot(x - cx, y - cy) <= radius) inside++; else outside++;
+  }
+  return { outside, inside, strength: hole.strength, cover: hole.cover, occluder: hole.occluder };
 }
 
 export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOptions) {
@@ -48,15 +69,21 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   if (jpegs.length) { const path = `${out}/video.webm`; encodeWebm(jpegs, path); written.push(path); }
   let sheetInfo: { path: string; cells: number; kb: number } | undefined;
   if (cells.length) { sheetInfo = await session.makeSheet(cells, `${out}/sheet.jpg`); written.push(sheetInfo.path); }
+  const cutExpected = spec.expect?.seeThroughCutPixelsMax !== undefined || spec.expect?.seeThroughCutInsideMin !== undefined;
+  const cutPixels = cutExpected ? await measureCut(session) : null;
   const clipping = await session.clipping(), metrics = await session.metrics(), errors = session.errors.slice(errorsBefore);
   const result = evaluate(spec, metrics, clipping, errors);
+  if (cutPixels) {
+    if (spec.expect?.seeThroughCutPixelsMax !== undefined) result.checks.push({ name: 'seeThroughCutPixelsOutside', pass: cutPixels.outside <= spec.expect.seeThroughCutPixelsMax, value: cutPixels.outside, limit: spec.expect.seeThroughCutPixelsMax });
+    if (spec.expect?.seeThroughCutInsideMin !== undefined) result.checks.push({ name: 'seeThroughCutPixelsInside', pass: cutPixels.inside >= spec.expect.seeThroughCutInsideMin, value: cutPixels.inside, limit: spec.expect.seeThroughCutInsideMin });
+  }
   result.checks.push(...pixels.flatMap(p => canvasFrameChecks(p.pixels, `canvas.f${p.frame}`)));
   // Renderer telemetry calls the WebGL2 fallback `webgl`; CLI uses the explicit API version.
   const requestedBackend = session.options.backend === 'webgl2' ? 'webgl' : 'webgpu';
   result.checks.push({ name: 'requestedBackend', pass: metrics.backend === requestedBackend, value: Number(metrics.backend === requestedBackend), limit: 1 });
   result.pass = result.checks.every(c => c.pass);
   const timing = { openMs: o.openMs ?? 0, loadMs, runMs: Date.now() - t0 - loadMs, sceneMs: Date.now() - t0 };
-  writeJson(`${out}/metrics.json`, { spec: o.file, backend: metrics.backend, requestedBackend: session.options.backend, tier: session.options.tier, frames: metrics.frame, timing, checks: result, pixels, consoleErrors: errors, scene, metrics, clipping });
+  writeJson(`${out}/metrics.json`, { spec: o.file, backend: metrics.backend, requestedBackend: session.options.backend, tier: session.options.tier, frames: metrics.frame, timing, checks: result, seeThroughCut: cutPixels, pixels, consoleErrors: errors, scene, metrics, clipping });
   written.push(`${out}/metrics.json`);
   return { name, pass: result.pass, checks: result.checks, backend: metrics.backend, frames: metrics.frame, seconds: timing.sceneMs / 1000, failed: result.checks.filter(c => !c.pass), clipping: clipping.summary, sheet: sheetInfo?.path, sheetKb: sheetInfo?.kb, files: written, consoleErrors: errors };
 }

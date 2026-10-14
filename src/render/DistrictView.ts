@@ -484,6 +484,7 @@ export class DistrictView extends Group {
       if (this.seeThroughReference) { seeThrough.solidRadius.value = 3; seeThrough.strength.value = 1; return; }
       if (view.driving && this.foliage.reveal) seeThrough.depth.value -= 3;
     }
+    if (this.seeThroughOff) { seeThrough.strength.value = 0; seeThrough.cover.value = 0; return; }
     const hugged = Boolean(player && this.foliage.reveal && this.huggedOccluder(view));
     this.occluderId = hugged ? 'hugged' : '';
     const goal = player && this.foliage.reveal && (hugged || this.occluded(view, player)) ? 1 : 0;
@@ -533,6 +534,8 @@ export class DistrictView extends Group {
   }
   /** Debug/test: open the see-through hole across the whole screen (reference frame for visibility checks). */
   seeThroughReference = false;
+  /** Scene Lab: solid occluders never open (the uncut picture the cut-pixel gate diffs against). */
+  seeThroughOff = false;
   private frameSeconds = 0;
   /** Scene Lab: the placement that currently opens the hole (`hugged` when one fills the lens). */
   occluderId = '';
@@ -993,7 +996,7 @@ export class DistrictView extends Group {
   /** Scene Lab probe: current detail band of every static instance (`culled` outside the frustum), district-local positions. */
   /** Scene Lab: the courier hole's live state, and placements lower than an occluder whose drawn batch would still be cut
    * by it (must stay empty: PO 10-13 bench without planks at zoom 0.66). */
-  seeThroughAudit(): { strength: number; cover: number; solidRadius: number; occluder: string; cutLowProps: string[] } {
+  seeThroughAudit(): { strength: number; cover: number; solidRadius: number; center: [number, number]; occluder: string; cutLowProps: string[] } {
     const cut = new Set<string>();
     for (const entry of this.lodBatches) {
       if (entry.height >= occluderMinHeight || worldAssets[entry.id].foliage) continue;
@@ -1001,7 +1004,7 @@ export class DistrictView extends Group {
         if (node instanceof Mesh && (Array.isArray(node.material) ? node.material : [node.material]).some(m => m.userData.seeThrough)) cut.add(entry.id);
       });
     }
-    return { strength: seeThrough.strength.value, cover: seeThrough.cover.value, solidRadius: seeThrough.solidRadius.value, occluder: this.occluderId, cutLowProps: [...cut].sort() };
+    return { strength: seeThrough.strength.value, cover: seeThrough.cover.value, solidRadius: seeThrough.solidRadius.value, center: seeThrough.center.value.toArray() as [number, number], occluder: this.occluderId, cutLowProps: [...cut].sort() };
   }
   lodState(): { assetId: string; origin: [number, number]; position: [number, number, number]; lod: Lod | 'culled' }[] {
     return this.lodBatches.flatMap(entry => entry.refs.map(ref => ({ assetId: entry.id, origin: entry.origin, position: ref.position.toArray() as [number, number, number],

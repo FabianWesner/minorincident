@@ -1283,6 +1283,12 @@ export class SceneLab {
   renderDiagnostics() { return { scene: this.spec?.name ?? null, frame: this.frame, tick: this.world.tick, ...this.game.view.renderDiagnostics() }; }
   /** Screenshot readiness: streamed LOD0 and pending assets resolved, two presented frames. */
   ready(): Promise<void> { return this.game.screenshotReady(); }
+  /** Cut-pixel gate: force the solid-occluder cut off (or back on) and report the hole as last drawn (centre in screen UV, top-left origin). */
+  cutProbe(off: boolean): { center: [number, number]; solidRadius: number; strength: number; cover: number; occluder: string } | null {
+    const audit = this.game.view.labProbes().districts?.seeThroughAudit() ?? null;
+    this.game.view.settings({ seeThroughOff: off });
+    return audit && { center: audit.center, solidRadius: audit.solidRadius, strength: audit.strength, cover: audit.cover, occluder: audit.occluder };
+  }
   /** Point-in-scene to client pixels (for cropping close-ups from a screenshot). */
   project(p: [number, number, number]): { x: number; y: number } { const q = this.game.view.project(...p); return { x: (q[0] + 1) / 2 * innerWidth, y: (1 - q[1]) / 2 * innerHeight }; }
 }
