@@ -1,0 +1,54 @@
+{
+  "seed": 32,
+  "ground": "district",
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        3940,
+        -80
+      ],
+      [
+        4090,
+        45
+      ]
+    ]
+  },
+  "minigun": {
+    "at": [
+      3990,
+      3,
+      -33
+    ],
+    "yaw": 0
+  },
+  "time": "L9-crossing",
+  "frames": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "name": "l10-d4-epilogue",
+  "note": "R7 production district crop: all dispersal modules, three clear dodge corridors, supported deck gun, horizon and epilogue refuge.",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        4002,
+        -9
+      ],
+      "floorY": 0
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      4002,
+      -9
+    ],
+    "zoom": 1
+  },
+  "sheet": 60
+}
