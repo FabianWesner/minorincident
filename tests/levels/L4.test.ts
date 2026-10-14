@@ -247,14 +247,14 @@ describe('L4 The Safe City Falls', () => {
     record('spectacle', { bursts: bursts.size, tank, heliPasses, heliAlt });
   }, HEAVY);
 
-  test('T-E22-13 @E22 @E22-AC13 the line breaks after the third lost line ("Fall back!", also with the idle bot): fuel-truck mega chain, objective "Find somewhere to hide", the helicopter withdraws', async () => {
+  test('T-E22-13 @E22 @E22-AC13 the line breaks after the third lost line ("Fall back!", also with the idle bot): fuel-truck mega chain, objective "Run to the cellar", the helicopter withdraws', async () => {
     const l = await loadL4(2); world = l.world; const w = l.world, s = l.mission.state.l4!;
     const r = runL4(w, l.mission, 'idle', { seed: 2, god: true, maxSeconds: 400, stopWhen: m => m.state.l4!.lineBreakAt > 0 && m.world.tick - m.state.l4!.lineBreakAt > 12 * 60 });
     const armor = l4.director.lines[2];
     expect(s.lineCause).toBe('beats'); expect(r.breakAfterS).toBeGreaterThanOrEqual(armor.earliestS + l4.lineBreak.fallBackS - .2); expect(r.breakAfterS).toBeLessThanOrEqual(armor.dueS + l4.lineBreak.fallBackS + 1);
     const explosions = w.events.events().filter(e => e.type === 'explosion' && e.tick >= s.lineBreakAt).map(e => (e as { defId: string }).defId);
     expect(explosions).toEqual(expect.arrayContaining(['explosion.gas-pump', 'explosion.gas-canopy', 'explosion.gas-tanks']));
-    expect(l.mission.def.steps.find(x => x.id === 'hide')!.text).toBe('Find somewhere to hide');
+    expect(l.mission.def.steps.find(x => x.id === 'hide')!.text).toBe('Run to the cellar');
     expect(l.mission.state.steps.hide.status).toBe('active'); expect(s.heliPhase).toBe('gone');
     expect(l.mission.state.states['line-broken']).toBe(true);
     // Losing half a line's soldiers breaks it from its earliest beat on (not before): line 1 falls at 50 s instead of 62 s.

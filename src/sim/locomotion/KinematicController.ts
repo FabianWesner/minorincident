@@ -92,7 +92,7 @@ export class KinematicController {
       // Keep coast at ground-level route corners inside the grid clearance.
       // Elevated supports need the 3D capsule sweep: the grid has no height.
       this.next.x = transform.x; this.next.z = transform.z;
-      this.navigationGrid.move(this.next, this.displacement.x, this.displacement.z, survivor.radius);
+      this.navigationGrid.move(this.next, this.displacement.x, this.displacement.z, survivor.radius, true);
       this.displacement.x = this.next.x - transform.x; this.displacement.z = this.next.z - transform.z;
     }
     const controller = this.physics.characterController!, collider = this.physics.playerCollider!;

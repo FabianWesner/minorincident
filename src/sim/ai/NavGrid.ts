@@ -273,25 +273,26 @@ export class NavGrid {
     return true;
   }
   /** Sweeps movement in subcell increments; axis fallback slides around collider corners. */
-  move(position: { x: number; z: number }, dx: number, dz: number, radius: number): void {
+  move(position: { x: number; z: number }, dx: number, dz: number, radius: number, capsule = false): void {
     const count = Math.max(1, Math.ceil(Math.hypot(dx, dz) / 0.2)); dx /= count; dz /= count;
     // Rapier contact or crowd pushes can leave a body inside the grid's conservative margin.
     // Recover enough clearance to slide out instead of rejecting every step along the face.
     // Checked only once a step is refused, so free movement costs nothing extra.
-    let touched = false;
+    let touched = false, rounded = false;
     for (let i = 0; i < count; i++) {
-      if (this.clear(position.x + dx, position.z + dz, radius)) { position.x += dx; position.z += dz; continue; }
+      if (this.clear(position.x + dx, position.z + dz, radius, rounded)) { position.x += dx; position.z += dz; continue; }
       if (!touched) {
         touched = true;
         if (!this.clear(position.x, position.z, radius)) {
-          // The capsule can fit inside the grid's square margin (the L1 courier was 1 cm inside a parked sedan's margin).
-          // Use the smallest bounded radius cut that clears the starting point so the sweep can slide out.
-          // The normal radius is retried on the next move.
-          const fit = marginSteps.find(cut => cut < radius && this.clear(position.x, position.z, radius - cut));
-          if (fit !== undefined) { radius -= fit; i--; continue; }
+          // Rapier's capsule fits beside box corners that the square grid margin rejects.
+          // Recover using its circular footprint first, retaining the full body radius;
+          // shallow contact corrections still use the smallest bounded margin cut.
+          rounded = capsule && this.clear(position.x, position.z, radius, true);
+          const fit = rounded ? undefined : marginSteps.find(cut => cut < radius && this.clear(position.x, position.z, radius - cut, capsule));
+          if (rounded || fit !== undefined) { if (fit !== undefined) radius -= fit; rounded = capsule; i--; continue; }
         }
       }
-      if (this.clear(position.x + dx, position.z, radius)) position.x += dx; if (this.clear(position.x, position.z + dz, radius)) position.z += dz;
+      if (this.clear(position.x + dx, position.z, radius, rounded)) position.x += dx; if (this.clear(position.x, position.z + dz, radius, rounded)) position.z += dz;
     }
   }
   private neighbor(cell: number, direction: number): number {
