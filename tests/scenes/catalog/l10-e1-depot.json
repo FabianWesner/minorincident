@@ -1,0 +1,49 @@
+{
+  "name": "l10-e1-depot",
+  "note": "Production depth encounter and intended checkpoint weapon. Review both tiers/zooms: readable humans, low dogs and stock Alpha bar; open road for evasion. Crowds come from the shipped encounter data.",
+  "seed": 32,
+  "ground": "district",
+  "time": "L9-crossing",
+  "dof": false,
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        1472,
+        60
+      ],
+      [
+        1557,
+        140
+      ]
+    ]
+  },
+  "cureEncounter": "depot-alpha",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        1512,
+        100
+      ],
+      "loadout": [
+        "weapon.shotgun",
+        "weapon.shotgun"
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "frames": 60,
+  "sheet": 30,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}
