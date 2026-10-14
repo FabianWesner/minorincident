@@ -1,0 +1,331 @@
+{
+  "unit": {
+    "numPassedTests": 1441,
+    "numFailedTests": 0,
+    "numPendingTests": 7,
+    "success": true,
+    "failures": []
+  },
+  "sim": {
+    "numPassedTests": 1267,
+    "numFailedTests": 17,
+    "numPendingTests": 2,
+    "success": false,
+    "failures": [
+      {
+        "test": "T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget",
+        "message": [
+          "AssertionError: expected 5.288563999987673 to be less than or equal to 4\n    at /srv/mi/jobs/l10-e3-68b109-93147-1791985738/tests/sim/ai/director.test.ts:44:520\n    at file:///srv/mi/jobs/l10-e3-68b109-93147-1791985738/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        ]
+      },
+      {
+        "test": "T-E08-11-high @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity",
+        "message": [
+          "AssertionError: L1 high: expected 4.219667999976082 to be less than or equal to 4\n    at /srv/mi/jobs/l10-e3-68b109-93147-1791985738/tests/sim/npc/campaign.test.ts:57:43\n    at file:///srv/mi/jobs/l10-e3-68b109-93147-1791985738/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        ]
+      },
+      {
+        "test": "T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms",
+        "message": [
+          "AssertionError: expected 6.858397000003606 to be less than or equal to 4\n    at /srv/mi/jobs/l10-e3-68b109-93147-1791985738/tests/sim/performance/alpha-physical.test.ts:29:101\n    at file:///srv/mi/jobs/l10-e3-68b109-93147-1791985738/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        ]
+      },
+      {
+        "test": "T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms",
+        "message": [
+          "AssertionError: expected 6.713776999968104 to be less than or equal to 4\n    at /srv/mi/jobs/l10-e3-68b109-93147-1791985738/tests/sim/performance/alpha-support.test.ts:29:147\n    at file:///srv/mi/jobs/l10-e3-68b109-93147-1791985738/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        ]
+      },
+      {
+        "test": "T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms",
+        "message": [
+          "AssertionError: expected 5.106595000019297 to be less than or equal to 4\n    at /srv/mi/jobs/l10-e3-68b109-93147-1791985738/tests/sim/performance/alpha.test.ts:29:61\n    at file:///srv/mi/jobs/l10-e3-68b109-93147-1791985738/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        ]
+      },
+      {
+        "test": "T-E18-02-200 @E18-AC02 @perf Node sim p95 200 living infected <= 4ms",
+        "message": [
+          "AssertionError: expected 5.414763999986462 to be less than or equal to 4\n    at /srv/mi/jobs/l10-e3-68b109-93147-1791985738/tests/sim/performance/horde.test.ts:8:98\n    at file:///srv/mi/jobs/l10-e3-68b109-93147-1791985738/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        ]
+      },
+      {
+        "test": "T-E32-20-perf-200 @E32-AC20 @E32-AC31 @E18-AC02 full-cap active dispersal predicate",
+        "message": [
+          "AssertionError: expected 5.976398999977391 to be less than or equal to 4\n    at /srv/mi/jobs/l10-e3-68b109-93147-1791985738/tests/sim/performance/l10-finale.test.ts:30:23\n    at file:///srv/mi/jobs/l10-e3-68b109-93147-1791985738/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        ]
+      },
+      {
+        "test": "T-E32-13-perf-200 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling",
+        "message": [
+          "AssertionError: expected 5.317330999998376 to be less than or equal to 4\n    at /srv/mi/jobs/l10-e3-68b109-93147-1791985738/tests/sim/performance/mega-audio.test.ts:14:94\n    at file:///srv/mi/jobs/l10-e3-68b109-93147-1791985738/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        ]
+      },
+      {
+        "test": "T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+        "message": [
+          "AssertionError: expected 5.781483000027947 to be less than or equal to 4\n    at /srv/mi/jobs/l10-e3-68b109-93147-1791985738/tests/sim/performance/mega-moves.test.ts:24:104\n    at file:///srv/mi/jobs/l10-e3-68b109-93147-1791985738/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        ]
+      },
+      {
+        "test": "T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
+        "message": [
+          "AssertionError: expected 5.671397000027355 to be less than or equal to 4\n    at /srv/mi/jobs/l10-e3-68b109-93147-1791985738/tests/sim/performance/zoo-s1.test.ts:30:101\n    at file:///srv/mi/jobs/l10-e3-68b109-93147-1791985738/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        ]
+      },
+      {
+        "test": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+        "message": [
+          "AssertionError: expected 5.838501000020187 to be less than or equal to 4\n    at /srv/mi/jobs/l10-e3-68b109-93147-1791985738/tests/sim/performance/zoo-s2.test.ts:26:68\n    at file:///srv/mi/jobs/l10-e3-68b109-93147-1791985738/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        ]
+      },
+      {
+        "test": "T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+        "message": [
+          "AssertionError: expected 5.810005999985151 to be less than or equal to 4\n    at /srv/mi/jobs/l10-e3-68b109-93147-1791985738/tests/sim/performance/zoo-s3.test.ts:26:68\n    at file:///srv/mi/jobs/l10-e3-68b109-93147-1791985738/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        ]
+      },
+      {
+        "test": "T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95",
+        "message": [
+          "AssertionError: expected 5.637808999978006 to be less than or equal to 4\n    at /srv/mi/jobs/l10-e3-68b109-93147-1791985738/tests/sim/world/chunk-residency.test.ts:87:71\n    at file:///srv/mi/jobs/l10-e3-68b109-93147-1791985738/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        ]
+      },
+      {
+        "test": "L3 The Police Collapse T-E21-09 @E21 @E21-AC09 squad feels strong first: officers >= 60 % of S1 knockdowns, S1 damage below one life (PO 10-12 police -50 %), near the courier, never teleports",
+        "message": [
+          "AssertionError: expected 140.39999999999958 to be less than 100\n    at /srv/mi/jobs/l10-e3-68b109-93147-1791985738/tests/levels/L3.test.ts:212:49"
+        ]
+      },
+      {
+        "test": "L3 The Police Collapse T-E21-10 @E21 @E21-AC10 squad falls apart systemically: non-increasing medians, <= 2 at the checkpoint, all 4 on <= 15 %, a corridor turn on >= 50 %",
+        "message": [
+          "AssertionError: expected 9 to be less than 9\n    at /srv/mi/jobs/l10-e3-68b109-93147-1791985738/tests/levels/L3.test.ts:223:57"
+        ]
+      },
+      {
+        "test": "T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+        "message": [
+          "AssertionError: expected false to be true // Object.is equality\n    at /srv/mi/jobs/l10-e3-68b109-93147-1791985738/tests/sim/levels/l10-assault.test.ts:51:45\n    at file:///srv/mi/jobs/l10-e3-68b109-93147-1791985738/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        ]
+      },
+      {
+        "test": "T-E32-21-E3-low @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+        "message": [
+          "AssertionError: expected false to be true // Object.is equality\n    at /srv/mi/jobs/l10-e3-68b109-93147-1791985738/tests/sim/levels/l10-assault.test.ts:51:45\n    at file:///srv/mi/jobs/l10-e3-68b109-93147-1791985738/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        ]
+      }
+    ]
+  },
+  "budgets": {
+    "numPassedTests": 8,
+    "numFailedTests": 1,
+    "numPendingTests": 0,
+    "success": false,
+    "failures": [
+      {
+        "test": "T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+        "message": [
+          "AssertionError: expected 4.946219000001292 to be less than or equal to 4\n    at /srv/mi/jobs/l10-e3-68b109-11178-1791986509/tests/sim/performance/mega-moves.test.ts:24:104\n    at file:///srv/mi/jobs/l10-e3-68b109-11178-1791986509/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        ]
+      }
+    ]
+  },
+  "mega-budget": {
+    "numPassedTests": 2,
+    "numFailedTests": 0,
+    "numPendingTests": 0,
+    "success": true,
+    "failures": []
+  },
+  "perf-rerun": {
+    "numPassedTests": 12,
+    "numFailedTests": 1,
+    "numPendingTests": 35,
+    "success": false,
+    "failures": [
+      {
+        "test": "T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+        "message": [
+          "AssertionError: expected 4.447555999999167 to be less than or equal to 4\n    at /srv/mi/jobs/l10-e3-68b109-95306-1791990988/tests/sim/performance/mega-moves.test.ts:24:104\n    at file:///srv/mi/jobs/l10-e3-68b109-95306-1791990988/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        ]
+      }
+    ]
+  },
+  "verify": {
+    "exitCode": 1,
+    "passed": 118,
+    "failed": 3,
+    "kind": "CPU p95",
+    "details": "S7 200=4.33 ms, Mega 200=4.26 ms, E3 high=4.61 ms versus 4 ms; isolated rerun under budgets."
+  },
+  "camera": {
+    "webgl2": {
+      "passed": 6,
+      "total": 6,
+      "requestedZoomsInspected": [
+        1,
+        0.5
+      ]
+    },
+    "webgpu": {
+      "passed": 6,
+      "total": 6,
+      "requestedZoomsInspected": [
+        1,
+        0.5
+      ]
+    },
+    "throttle": 4
+  },
+  "calibration": {
+    "seed": 32,
+    "checkpoint": "cure-corridor",
+    "released": true,
+    "seconds": 486.65,
+    "hp": 53.29999999999981,
+    "deaths": 0,
+    "peak": 168,
+    "rocketHits": 10,
+    "activation": 287.43333333333334,
+    "arrival": 179.10000000000002,
+    "timeline": [
+      {
+        "id": "dispersal-complex",
+        "seconds": 216.16666666666666
+      },
+      {
+        "id": "install",
+        "seconds": 285.01666666666665
+      },
+      {
+        "id": "hold",
+        "seconds": 485.1
+      },
+      {
+        "id": "release",
+        "seconds": 486.65
+      }
+    ],
+    "activity": {
+      "destroyed-corridor": {
+        "elapsedSeconds": 216.61666666666667,
+        "movingSeconds": 216.61666666666667,
+        "pressureSeconds": 37.86666666666667,
+        "fireIntentSeconds": 37.86666666666667,
+        "holdSeconds": 0,
+        "fullChargeBossGateSeconds": 0,
+        "quietSeconds": 0,
+        "metres": 973.4704670820157,
+        "shots": 31,
+        "kills": 104
+      },
+      "dispersal-complex": {
+        "elapsedSeconds": 270.03333333333336,
+        "movingSeconds": 145.25,
+        "pressureSeconds": 94.76666666666667,
+        "fireIntentSeconds": 94.76666666666667,
+        "holdSeconds": 197.66666666666666,
+        "fullChargeBossGateSeconds": 137.65,
+        "quietSeconds": 25.35,
+        "metres": 629.8664966175363,
+        "shots": 76,
+        "kills": 168
+      }
+    },
+    "activityCategoriesOverlap": true,
+    "active": [
+      "epilogue"
+    ],
+    "player": {
+      "x": 4003.687744140625,
+      "y": 0.7099999785423279,
+      "z": -26.199045181274414,
+      "yaw": -3.5846652550838347
+    },
+    "boss": {
+      "tick": 29199,
+      "id": 9,
+      "mode": "dead",
+      "introducedAt": 0,
+      "introduceTick": 5400,
+      "x": 4000.1744486091357,
+      "z": -21.465209547781033,
+      "hp": 0,
+      "maxHp": 3000,
+      "target": {
+        "x": 4009.99365234375,
+        "z": -23.126855850219727
+      },
+      "route": [],
+      "routeAt": 29101,
+      "passed": "cure-route-41",
+      "blocked": {},
+      "breach": null,
+      "stuck": {
+        "level": 0,
+        "since": -1,
+        "sampleAt": 29075,
+        "x": 3999.6266894414066,
+        "z": -21.36375487727474,
+        "noPath": 0,
+        "goal": null
+      },
+      "lastDamage": {
+        "tick": 29105,
+        "amount": 300,
+        "sourceId": 1
+      },
+      "coarseM": 1013.507999743376,
+      "audio": {
+        "next": 29164,
+        "step": 29137,
+        "index": 18,
+        "last": {
+          "x": 4000.1744486091357,
+          "z": -21.465209547781033
+        }
+      }
+    },
+    "expectedRemainingMinutes": [
+      13.5,
+      18.5
+    ],
+    "withinRemainingBand": false
+  },
+  "remainingBandMinutes": [
+    13.5,
+    18.5
+  ],
+  "laneComplete": false,
+  "native": {
+    "passed": 8,
+    "total": 8,
+    "liveBoss": true,
+    "qualities": [
+      "high",
+      "low"
+    ],
+    "zooms": [
+      1,
+      0.5
+    ],
+    "backends": [
+      "webgl",
+      "webgpu"
+    ],
+    "worstFrameP95": {
+      "high": 8.6,
+      "low": 5.4
+    },
+    "worstSimP95": {
+      "high": 1.8,
+      "low": 1.3
+    }
+  },
+  "remainingIssues": [
+    "AC04 remaining-route timing band unmet: 486.65 s versus inferred 810\u20131110 s",
+    "AC21 measured checkpoint route arrival 179.1 s versus 10\u201340 s",
+    "Synthetic Mega-200 CPU p95 remains above budget in multi-file isolated batch despite separate-file pass",
+    "Untouched L3 T-E21-09 and T-E21-10 functional failures"
+  ]
+}

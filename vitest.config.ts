@@ -11,6 +11,7 @@ const timingFiles = [
   'tests/sim/npc/campaign.test.ts',
   'tests/sim/performance/**/*.test.ts',
   'tests/sim/levels/l10-district.test.ts',
+  'tests/sim/levels/l10-assault.test.ts',
   'tests/sim/world/chunk-residency.test.ts',
   'tests/sim/player.test.ts',
   'tests/sim/vehicles/consequences.test.ts',
