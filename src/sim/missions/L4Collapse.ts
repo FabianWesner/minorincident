@@ -67,7 +67,7 @@ export class L4Collapse {
     const s = this.s, d = this.d, tick = this.world.tick;
     if (s.phase !== 'war' || !s.turnAt) return;
     this.alphaJobs();
-    if (d.lines[2].brokeAt && !d.fallBackAt && tick >= d.lines[2].brokeAt + ticks(l4.lineBreak.fallBackS)) { d.fallBackAt = tick; this.h.mission.radio('L4.fallback'); this.h.fallBack(); return; }
+    if (d.lines[2].brokeAt && !d.fallBackAt && tick >= d.lines[2].brokeAt + ticks(l4.lineBreak.fallBackS)) { d.fallBackAt = tick; this.h.fallBack(); return; }
     if (tick % 10) return;
     const i = this.current(); if (i < 0) return;
     const line = d.lines[i], def = D.lines[i], t = this.t;

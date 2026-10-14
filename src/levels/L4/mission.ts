@@ -5,8 +5,8 @@ import type { Anchor, MissionDef, ObjectiveDef, Trigger } from '../../sim/missio
 import type { DistrictId } from '../districts/types';
 
 /**
- * L4 "The Safe City Falls" objective graph (E22 section 4): ride -> quartermaster (machine gun) -> hold the plaza -> find somewhere to
- * hide -> bar the cellar door. Beats are driven by `LevelFourWar` (def.l4) through mission states; the line breaks by its first-of
+ * L4 "The Safe City Falls" objective graph (E22 section 4): ride -> quartermaster (machine gun) -> hold the plaza -> run to the
+ * cellar -> bar the cellar door. Beats are driven by `LevelFourWar` (def.l4) through mission states; the line breaks by its first-of
  * collapse director (three lines lost at fixed beats, then "Fall back!"), never by clearing the plaza. No fail timer, no reward screen:
  * the barred cellar door completes the level (after the battle has gone on above for a while) and the campaign continues into L5.
  */
@@ -36,7 +36,7 @@ export function levelFourMission(resolve: (district: DistrictId, name: string) =
   const qm = step('quartermaster', 'interact', 'Report to the quartermaster', 'l4-quartermaster', { kind: 'interact', anchor: 'l4-quartermaster', seconds: l4.calm.issueS }, after('ride'));
   qm.onComplete = [{ kind: 'grant', item: 'machine-gun' }, { kind: 'checkpoint', id: 'arrival' }];
   step('hold', 'custom', 'Hold the plaza with the army', 'l4-plaza', state('line-broken'), { kind: 'state', key: 'turned', equals: true }).waypoint = false;
-  step('hide', 'interact', 'Find somewhere to hide', 'l4-cellar-door', { kind: 'interact', anchor: 'l4-cellar-door', seconds: l4.cellar.interactS }, { kind: 'state', key: 'line-broken', equals: true });
+  step('hide', 'interact', 'Run to the cellar', 'l4-cellar-door', { kind: 'interact', anchor: 'l4-cellar-door', seconds: l4.cellar.interactS }, { kind: 'state', key: 'line-broken', equals: true });
   step('bar', 'interact', 'Bar the cellar door', 'l4-brace', { kind: 'interact', anchor: 'l4-brace', seconds: l4.cellar.barS }, after('hide'));
   step('wait', 'custom', 'Stay down', 'l4-brace', state('done'), after('bar')).waypoint = false;
   return def;

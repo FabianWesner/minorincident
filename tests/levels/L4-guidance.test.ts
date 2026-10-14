@@ -1,0 +1,30 @@
+import { afterEach, expect, test } from 'vitest';
+import { l4 } from '../../src/data/l4';
+import { dialogue } from '../../src/data/dialogue';
+import type { SimWorld } from '../../src/sim/world/SimWorld';
+import { loadL4 } from '../../tools/sim-runner/l4Bots';
+
+let world: SimWorld | undefined;
+afterEach(() => { world?.dispose(); world = undefined; });
+test('@E22 the line break immediately names and marks the cellar and retains its escape checkpoint after death', async () => {
+  const loaded = await loadL4(2); world = loaded.world;
+  const w = world, m = loaded.mission;
+  m.completeObjective('ride'); m.completeObjective('quartermaster');
+  w.combat!.damage.god = true;
+  while (!m.state.l4!.turnAt) w.update();
+  m.completeObjective('hold'); w.update();
+  expect(m.state.l4!.phase).toBe('collapse');
+  expect(m.def.steps.find(s => s.id === 'hide')!.text).toBe('Run to the cellar');
+  expect(m.state.steps.hide.status).toBe('active');
+  expect(m.state.marker).toBe('l4-cellar-door');
+  expect(w.events.events().some(e => e.type === 'dialogue.line' && e.id === 'L4.fallback' && e.text === dialogue['L4.fallback'])).toBe(true);
+  expect(m.state.checkpoint).toBe('line-break');
+  w.player!.damage(1000, w.tick, true);
+  for (let i = 0; i < 180; i++) w.update();
+  const p = w.entities.get(1)!;
+  expect(p.health.current).toBeGreaterThan(0);
+  expect(m.state.checkpoint).toBe('line-break');
+  expect(m.state.marker).toBe('l4-cellar-door');
+  const [x, z] = l4.director.escape.checkpoint;
+  expect(Math.hypot(p.transform.x - x, p.transform.z - z)).toBeLessThan(1.5);
+}, 120_000);

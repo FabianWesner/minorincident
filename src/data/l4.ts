@@ -192,9 +192,9 @@ export const l4 = {
   heli: { alt: 17, orbitR: 30, omega: .26, centre: [-14, 4] as P, burstEveryS: [2.2, 3.6] as P, burst: { shots: 5, shotS: .09, damage: 22, hit: .6, rangeM: 60 }, startR: 95, arriveS: 7, withdrawS: 7 },
   /** Fuel truck at the plaza edge (Plaza Way, by the convoy gap): the tank shell sets it off at the line break (mega chain). */
   fuelTruck: { x: 8, z: -9.5, yaw: Math.PI / 2, blast: 'explosion.fuel-truck' },
-  /** Beat 5-6: live damage and the collapse (soft marker for the hiding place after `markerAfterS`). */
+  /** Beat 5-6: live damage and the collapse; the cellar marker appears at the line break. */
   collapse: {
-    markerAfterS: 15, fires: 4, burningCars: 3, pendingPerTick: 3,
+    fires: 4, burningCars: 3, pendingPerTick: 3,
     /** Soldiers pockets along both routes fight turned soldiers and infected (sim-light). */
     pockets: 2,
   },
