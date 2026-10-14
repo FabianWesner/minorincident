@@ -62,6 +62,8 @@ export interface SceneSpec {
    * a bone's flesh radius may sink into a prop surface before it is reported. */
   clipping?: { ignore?: [string, string][]; /** Tree crowns, bushes and hedges may overlap anything by design (trees rise behind houses, bushes stand in beds). */ ignoreFoliage?: boolean; sameAsset?: boolean; slackCm?: number };
   expect?: Expectations;
+  /** Canvas edge check for an isolated actor; normalized crop excludes HUD and other figures. */
+  edgeNoise?: { rect: [number, number, number, number]; extremeEdgeShareMax: number };
   /** L1 beat 9 house emergence (HouseEmergence, the game's own code): from `frame` (default 30) `count` (default 3)
    * residents come out of `house`'s front door (a placement id in the scene), `staggerS` apart (default [1.5, 4]), and
    * chase the courier. Residents are actors `<id>-0` .. (default id `resident`). */
@@ -179,6 +181,12 @@ export type CameraSpec =
   | { mode: 'follow'; actor: string; zoom?: number };
 /** Optional pass/fail gates; the runner exits non-zero when one fails. */
 export interface Expectations {
+  /** Require a real scheduler activation; dodge controls also retain courier health. */
+  specialActiveMin?: number;
+  specialActiveMove?: import('../../data/infected').InfectedSpecialMove;
+  courierHpMin?: number;
+  megaCoarseFramesMin?: number;
+  megaDetailedFramesMin?: number;
   /** Count only visible living figures and channels actually drawn by their selected LOD. */
   infectedVarietyMin?: number;
   pedestrianVarietyMin?: number;

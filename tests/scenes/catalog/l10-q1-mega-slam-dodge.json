@@ -1,0 +1,37 @@
+{
+  "extends": "l10-q1-mega-slam.json",
+  "name": "l10-q1-mega-slam-dodge",
+  "note": "E32-AC11: courier starts a real input run during the windup, perpendicular to the committed move. Review the telegraph, cleared impact area and recovery with the same game camera.",
+  "script": [
+    {
+      "frame": 0,
+      "actor": "mega",
+      "do": {
+        "special": "alpha.ground-slam",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 12,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            -0.5,
+            12
+          ]
+        ]
+      }
+    }
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "actorHitsMax": 0,
+    "specialActiveMin": 1,
+    "courierHpMin": 100,
+    "specialActiveMove": "alpha.ground-slam"
+  }
+}
