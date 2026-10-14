@@ -265,6 +265,23 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 - `sameAsset: true`: also check chains of one asset. Fence and hedge runs share end posts by design, so they are skipped by default.
 - `slackCm` (default 2).
 
+### Night navigation contrast (E31-AC16)
+
+`"contrast": { "district": "D-CURE" }` (or `{ "route": [[[x, z], ...]], "halfWidthM": 4 }`) measures how well the route reads from the
+presented canvas, at every contact-sheet frame and the last frame. Samples sit on the authored route (`layouts/<district>/routes.json`):
+the carriageway cross-section (centre, +-0.5 and +-0.9 of the half width) against the nearest verge on screen (1.5 / 3 / 4.5 m beyond the
+edge), every 2 m (`stepM`). Each pair is a luminance ratio `(hi + 0.02) / (lo + 0.02)` (`flare` in `tools/scenelab/contrast.ts`; the
+WCAG `.05` offset would demand a daylight-bright road at 3:1 and is reported as `wcag05` only). A pair where both sides are at least
+0.06 luminance (a lamp or fire pool) counts as 3:1: it reads by brightness. The value of a frame is the **median** pair, so a dark corner
+cannot hide a black road; the gate takes the worst frame.
+
+- `navContrastMin` (E31-AC16: 3), `playerContrastMin` (90th percentile of a 48 px box above the screen centre against the verge),
+  `landmarkContrastMin` (`contrast.landmarks: [[x, z, height], ...]` facade samples against the verge).
+- At zoom < 1 the verge is off screen: the nav/player gates are skipped there (the zoom 1 and 1.5 matrix rows carry them).
+- `metrics.json` has `contrast[]` per sampled frame (`median`, `wcag05`, `routeL`, `vergeL`, `player`). Catalog: `--filter 'night-read-*'`
+  (R1-R6 on D-CURE and the L9 road/crawl site). The lighting side is the preset field `roadLift` (`src/data/timeOfDay.ts`): a moon-pale
+  sheen on asphalt and ground-level road paint, strongest around the survivor and easing to 40 % at the screen edge.
+
 ## Layout sweep (gate for layout changes)
 
 - `npm run scene:layout` runs `specs/scenes/layout-sweep/*.json`: L2 on D-GROVE as a 4x3 grid of `layout: { level: 'L2' }` crops and L3 on D-CORRIDOR as 6 cells (the L3 layout copy is applied automatically for that district, tier 2), each with `expect.staticOverlapMax: 0` (mesh pairs from `clipping.static`; `python3 tools/scenelab/sweep-summary.py <out>` lists them). Regenerate the specs with `python3 tools/scenelab/gen-layout-sweep.py`.
