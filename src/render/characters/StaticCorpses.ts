@@ -1,4 +1,4 @@
-import { writeCrowdAppearance } from './CrowdAppearance';
+import { writeCrowdAppearance, renderedCrowdLook, resolveCrowdAppearance } from './CrowdAppearance';
 import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial, Vector3 } from 'three/webgpu';
 import type { CrowdClip } from '../../assets/crowd';
 import type { EntitySnapshot } from '../../sim/world/types';
@@ -46,30 +46,31 @@ export class StaticCorpses extends Group {
     }
     for (const pages of this.chunks.values()) for (const page of pages) for (const figure of page.probe.figures) figure.drawn = false;
   }
-  place(e: EntitySnapshot, key: string, source: BufferGeometry, material: MeshLambertNodeMaterial, clip: CrowdClip, frame: number, instance: Matrix4, tint: Color, overlay: number[], instanceKey = String(e.id), hiddenParts: readonly string[] = []): void {
+  place(e: EntitySnapshot, key: string, source: BufferGeometry, material: MeshLambertNodeMaterial, clip: CrowdClip, frame: number, instance: Matrix4, tint: Color, overlay: number[], instanceKey = String(e.id), hiddenParts: readonly string[] = [], look?: ReturnType<typeof resolveCrowdAppearance>): void {
     if (this.bodies.has(instanceKey)) return;
     this.bodies.set(instanceKey, e);
     // Keep distant bodies in separate bounds so ordinary frustum culling skips their geometry. 40 m cells (l4-collapse-2; was 16 m): every
     // page is its own InstancedMesh and three builds a node program per InstancedMesh (its uuid is in the cache key), so each new page
     // compiled mid-fight (~60 builds in the L4 war, the line-break hitches).
-    const cellKey = `${key}/${Math.floor(instance.elements[12] / CELL)}/${Math.floor(instance.elements[14] / CELL)}`;
-    const prepared = this.chunks.get(key);
+    const appearanceKey = look?.accessory ? `${key}:${look.accessory}` : key;
+    const cellKey = `${appearanceKey}/${Math.floor(instance.elements[12] / CELL)}/${Math.floor(instance.elements[14] / CELL)}`;
+    const prepared = this.chunks.get(appearanceKey);
     if (!this.chunks.has(cellKey) && prepared?.every(page => page.mesh.count === 0)) {
-      this.chunks.delete(key); this.chunks.set(cellKey, prepared);
+      this.chunks.delete(appearanceKey); this.chunks.set(cellKey, prepared);
     }
     let page = this.chunks.get(cellKey)?.at(-1);
     if (!page || page.mesh.count >= 128) {
-      page = this.createPage(cellKey, source, material, clip, frame, hiddenParts);
+      page = this.createPage(cellKey, source, material, clip, frame, hiddenParts, look?.hidesHair);
     }
     const index = page.mesh.count++;
     this.slots.set(instanceKey, { page, index }); page.keys[index] = instanceKey;
-    page.mesh.setMatrixAt(index, instance); writeCrowdAppearance(page.tint, index, e.id, tint, 1);
+    page.mesh.setMatrixAt(index, instance); writeCrowdAppearance(page.tint, index, e.id, tint, 1, look?.slot, look?.hidesHair);
     page.overlay.setXYZ(index, overlay[0], overlay[1], overlay[2]);
     page.mesh.instanceMatrix.needsUpdate = page.tint.needsUpdate = page.overlay.needsUpdate = true;
     // Frozen pages need no per-frame bounds work. Recompute when a body joins,
     // covering every final death vertex so culling cannot drop a visible body.
     page.mesh.computeBoundingSphere();
-    page.probe.figures.push({ id: e.id, instanceKey, clip: 'death-back', phase: 1, drawn: false, feet: [] });
+    page.probe.figures.push({ id: e.id, instanceKey, clip: 'death-back', phase: 1, drawn: false, feet: [], ...(look ? { appearance: renderedCrowdLook(e.id, look.model, source, tint, look.accessory) } : {}) });
   }
   /** Drop one body: the page's last instance moves into its slot (matrix, tint, overlay), bounds refit. */
   private drop(instanceKey: string): void {
@@ -90,15 +91,19 @@ export class StaticCorpses extends Group {
   prepare(key: string, source: BufferGeometry, material: MeshLambertNodeMaterial, clip: CrowdClip, frame: number): void {
     if (![...this.chunks.keys()].some(k => k === key || k.startsWith(`${key}/`))) this.createPage(key, source, material, clip, frame, []);
   }
-  private createPage(key: string, source: BufferGeometry, material: MeshLambertNodeMaterial, clip: CrowdClip, frame: number, hiddenParts: readonly string[]): Chunk {
+  private createPage(key: string, source: BufferGeometry, material: MeshLambertNodeMaterial, clip: CrowdClip, frame: number, hiddenParts: readonly string[], hidesHair = false): Chunk {
     let pages = this.chunks.get(key);
     if (!pages) { pages = []; this.chunks.set(key, pages); }
-    const frozenKey = `${source.uuid}/${material.uuid}/${frame}/${hiddenParts.join(',')}`;
+    const frozenKey = `${source.uuid}/${material.uuid}/${frame}/${hiddenParts.join(',')}/${hidesHair}`;
     let frozen = this.frozen.get(frozenKey);
     if (!frozen) {
       const geometry = new BufferGeometry(), parts = source.getAttribute('_parts');
       const hidden = new Set(hiddenParts.map(name => clip.parts.indexOf(name)));
-      const kept = Array.from({ length: parts.count }, (_, i) => i).filter(i => !hidden.has(parts.getX(i)));
+      const visible = (i: number) => !hidden.has(parts.getX(i)) && !(hidesHair && (parts.getY(i) === -2 || parts.getW(i) >= 4));
+      // Colour tags may differ at vertices of one triangle. Keep whole triangles
+      // in triangle soup; indexed geometry is filtered through its index below.
+      const kept = source.index ? Array.from({ length: parts.count }, (_, i) => i).filter(visible)
+        : Array.from({ length: Math.floor(parts.count / 3) }, (_, triangle) => triangle * 3).flatMap(i => [i, i + 1, i + 2].every(visible) ? [i, i + 1, i + 2] : []);
       for (const name of ['position', 'normal', 'color', '_parts']) {
         const original = source.getAttribute(name), data = new Float32Array(kept.length * original.itemSize);
         for (const [output, i] of kept.entries()) {

@@ -204,6 +204,8 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   }
   if (e.sameLookShareMax !== undefined) add('sameLookShareMax', Math.max(...Object.values(metrics.variety).map(m => m.largestSameLookShare)), e.sameLookShareMax);
   if (e.infectedModelShareMax !== undefined) add('infectedModelShareMax', metrics.variety.infected.largestModelShare, e.infectedModelShareMax);
+  add('appearanceChangesMax', Math.max(0, ...(metrics.appearance ?? []).map(a => a.looks.length - 1)), e.appearanceChangesMax);
+  for (const [name, value, minimum] of [['appearanceActorsMin', (metrics.appearance ?? []).length, e.appearanceActorsMin], ['appearanceCorpsesMin', (metrics.appearance ?? []).filter(a => a.corpseFrames > 0).length, e.appearanceCorpsesMin]] as const) if (minimum !== undefined) checks.push({ name, pass: value >= minimum, value, limit: minimum });
   add('drawCallsMax', metrics.perf.drawCalls.max ?? 0, e.drawCallsMax);
   add('trianglesMax', metrics.perf.triangles.max ?? 0, e.trianglesMax);
   const actors = Object.values(metrics.actors);

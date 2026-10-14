@@ -1,0 +1,179 @@
+{
+  "name": "appearance-stable-infected",
+  "seed": 2,
+  "ground": "asphalt",
+  "size": 30,
+  "time": "L4",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        -9
+      ]
+    },
+    {
+      "id": "infected-0",
+      "kind": "infected",
+      "at": [
+        -1.2,
+        0
+      ],
+      "look": {
+        "model": "inf.common-worker"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "infected-1",
+      "kind": "infected",
+      "at": [
+        0,
+        0
+      ],
+      "look": {
+        "model": "inf.common-worker"
+      },
+      "state": "idle"
+    },
+    {
+      "id": "infected-2",
+      "kind": "infected",
+      "at": [
+        1.2,
+        0
+      ],
+      "look": {
+        "model": "inf.common-worker"
+      },
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      1.5
+    ],
+    "zoom": 1
+  },
+  "frames": 360,
+  "sheet": 30,
+  "trace": true,
+  "script": [
+    {
+      "frame": 30,
+      "actor": "infected-0",
+      "do": {
+        "hit": {
+          "heavy": true,
+          "amount": 1,
+          "from": [
+            0,
+            -6
+          ]
+        }
+      }
+    },
+    {
+      "frame": 150,
+      "actor": "infected-0",
+      "do": {
+        "hit": {
+          "heavy": true,
+          "amount": 1000,
+          "from": [
+            0,
+            -6
+          ]
+        }
+      }
+    },
+    {
+      "frame": 30,
+      "actor": "infected-1",
+      "do": {
+        "hit": {
+          "heavy": true,
+          "amount": 1,
+          "from": [
+            0,
+            -6
+          ]
+        }
+      }
+    },
+    {
+      "frame": 150,
+      "actor": "infected-1",
+      "do": {
+        "hit": {
+          "heavy": true,
+          "amount": 1000,
+          "from": [
+            0,
+            -6
+          ]
+        }
+      }
+    },
+    {
+      "frame": 30,
+      "actor": "infected-2",
+      "do": {
+        "hit": {
+          "heavy": true,
+          "amount": 1,
+          "from": [
+            0,
+            -6
+          ]
+        }
+      }
+    },
+    {
+      "frame": 150,
+      "actor": "infected-2",
+      "do": {
+        "hit": {
+          "heavy": true,
+          "amount": 1000,
+          "from": [
+            0,
+            -6
+          ]
+        }
+      }
+    },
+    {
+      "frame": 240,
+      "actor": "infected-0",
+      "do": {
+        "corpse": true
+      }
+    },
+    {
+      "frame": 240,
+      "actor": "infected-1",
+      "do": {
+        "corpse": true
+      }
+    },
+    {
+      "frame": 240,
+      "actor": "infected-2",
+      "do": {
+        "corpse": true
+      }
+    }
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "appearanceChangesMax": 0,
+    "appearanceActorsMin": 3,
+    "appearanceCorpsesMin": 3
+  }
+}
