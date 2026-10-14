@@ -1,0 +1,39 @@
+{
+  "renderCommit": "6cbf89b7",
+  "ground": {
+    "baseline": "clean-profiles/L2-high-webgl-0.cpuprofile",
+    "after": "ordered-profile/L2-high-webgl-0.cpuprofile",
+    "sampledCpuMs": [
+      413.3,
+      208.9
+    ],
+    "frames": [
+      780,
+      804
+    ],
+    "sampledMsPerFrame": [
+      0.5298717948717949,
+      0.25982587064676615
+    ],
+    "reductionPercent": 50.964389280310286
+  },
+  "shaderKey": {
+    "raw": "shader-key-cost.json",
+    "medianMsPer100000Calls": [
+      1882.49,
+      1739.63
+    ],
+    "reductionPercent": 7.588884934315709
+  },
+  "corgi": {
+    "baseline": "clean-profiles/L4-low-webgl.json",
+    "after": "revised-profiles/L4-low-webgl.json",
+    "hitchMs": [
+      35.9,
+      16.3
+    ],
+    "reductionPercent": 54.59610027855153,
+    "latePipelinesBefore": 1,
+    "latePipelinesAfter": 0
+  }
+}

@@ -1,0 +1,1 @@
+{"at":"2026-10-13T23:38:01.277Z","load":[2.52001953125,3.3935546875,3.75537109375],"otherHeadlessChrome":0,"localVitest":0,"browserSlots":[0,1,2,3],"command":["sh","-c","L7_PERF_BACKEND=webgl npx playwright test tests/perf/l7-district.spec.ts --project=chromium --workers=1; L7_PERF_BACKEND=webgpu npx playwright test tests/perf/l7-district.spec.ts --project=chromium --workers=1"]}
