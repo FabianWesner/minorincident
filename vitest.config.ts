@@ -14,6 +14,8 @@ const timingFiles = [
   'tests/sim/world/chunk-residency.test.ts',
   'tests/sim/player.test.ts',
   'tests/sim/vehicles/consequences.test.ts',
+  // Aggregate all-level weather replay has a fixed 120 s deadline and needs the CPU too.
+  'tests/sim/weather.test.ts',
   'tests/sim/weapons.test.ts',
   'tests/unit/progression/perf.test.ts',
 ];
