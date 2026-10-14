@@ -2,6 +2,7 @@ import { finaleGunPlacement } from '../../data/minigun';
 import { ChunkResidency } from './ChunkResidency';
 import { layoutTerrainChunks } from './TerrainChunks';
 import { TrapRescue } from './TrapRescue';
+import { LevelTenEncounters } from '../missions/LevelTenEncounters';
 import { LevelSevenEncounters } from '../missions/LevelSevenEncounters';
 import { LevelSevenDeparture } from '../missions/LevelSevenDeparture';
 import { isWorldTier, type Tier } from '../../levels/districts/types';
@@ -95,6 +96,7 @@ export class SimWorld implements Lifecycle {
   missions: Mission | null = null;
   carriedSurvivors: readonly EntitySnapshot[] | undefined;
   l7Encounters: LevelSevenEncounters | null = null;
+  l10Encounters: LevelTenEncounters | null = null;
   l7Departure: LevelSevenDeparture | null = null;
   /** E32 L10 Mega Alpha global pursuit (one persistent boss); null outside L10 and its fixtures. */
   megaPursuit: import('../ai/MegaPursuit').MegaPursuit | null = null;
@@ -298,6 +300,8 @@ export class SimWorld implements Lifecycle {
       const d = districts.districts.find(d => d.id === 'D-CURE');
       const at = d?.layout.anchors['dispersal-origin'];
       if (d && at) this.installMountedGun(finaleGunPlacement({ x: at.position[0] + d.origin[0], z: at.position[2] + d.origin[1] }));
+      this.l10Encounters = new LevelTenEncounters(this);
+      this.events.on('sim.tick', () => this.l10Encounters?.update(), SimPhase.missions - .1);
     }
     if (composition.id === 'L7') {
       installL7Dressing(this);
@@ -400,7 +404,7 @@ export class SimWorld implements Lifecycle {
     this.chunks?.dispose(); this.chunks = null;
     this.inspectionGhost = false; this.weather = null; this.lightPower = null;
     this.vehicles?.dispose(); this.vehicles = null;
-    this.carriedSurvivors = undefined; this.l7Encounters = null; this.l7Departure = null; this.megaPursuit?.dispose(); this.megaPursuit = null; this.mountedGun = null; this.storyLock = null; this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.infectedMeleeHits = null; this.npcs = null; this.pickups = null; this.hazards = null; this.explosions = null; this.props = null; this.barricades = null; this.toys = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
+    this.carriedSurvivors = undefined; this.l7Encounters = null; this.l10Encounters = null; this.l7Departure = null; this.megaPursuit?.dispose(); this.megaPursuit = null; this.mountedGun = null; this.storyLock = null; this.missions?.dispose(); this.missions = null; this.mission = null; this.progression = null; this.infected = null; this.infectedMeleeHits = null; this.npcs = null; this.pickups = null; this.hazards = null; this.explosions = null; this.props = null; this.barricades = null; this.toys = null; this.interactables = null; this.combat = null; this.player = null; this.physics.reset(); this.entities.reset(); this.spatial.reset(); this.events.reset();
     this.preparedDistricts.clear(); this.preparedNpcNavigation.clear();
     this.tick = 0; this.districts = null; this.aftermath = null; this.scenario = null; this.previousPlayer = null; this.rng = null; this.clearInput(); this.openDoors.clear();
   }
