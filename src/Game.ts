@@ -320,7 +320,7 @@ export class Game {
     if (this.world.scenario === 'L9' && this.world.missions?.l9 && !this.campaign.crossingHandover) this.campaign.l9Crash = this.world.missions.l9.save();
     if (this.world.scenario === 'L10' && this.campaign.unlockedLevel === 10 && this.campaign.crossingHandover && this.world.missions?.state.checkpoint) {
       const live = this.world.progression?.campaign;
-      if (live) { this.campaign.ownedActions = [...live.ownedActions]; this.campaign.racks = structuredClone(live.racks); }
+      if (live) { this.campaign.ownedActions = [...live.ownedActions]; this.campaign.racks = structuredClone(live.racks); this.campaign.world = structuredClone(live.world); }
       this.campaign.cureResume = this.world.missions.saveResume();
     }
     if(this.world.progression?.campaign){this.world.progression.campaign=structuredClone(this.campaign);}
@@ -340,7 +340,7 @@ export class Game {
     });
     this.world.events.on('checkpoint.set', () => { if (this.world.scenario === 'L10') this.saveCampaign(); });
     this.world.events.on('checkpoint.restored', () => { if (this.world.scenario === 'L10') this.saveCampaign(); });
-    this.world.events.on('mission.signal', event => { if (event.type === 'mission.signal' && event.name.startsWith('l9.')) this.saveCampaign(); });
+    this.world.events.on('mission.signal', event => { if (event.type === 'mission.signal' && (event.name.startsWith('l9.') || event.name === 'cure-released')) this.saveCampaign(); });
     this.world.events.on('combat.attack',event=>{if(event.type==='combat.attack')save.usage[event.actionId]=(save.usage[event.actionId]??0)+1;});
     this.world.events.on('pickup.collected',event=>{if(event.type==='pickup.collected'&&'actionId' in event&&!save.ownedActions.includes(event.actionId))save.ownedActions.push(event.actionId);});
   }

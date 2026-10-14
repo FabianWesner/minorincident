@@ -64,7 +64,7 @@ export class Civilians {
   /** Story beats use the same deterministic cycle as systemic grabs, bypassing only the chance roll. */
   grab(id: number, attackerId: number, scripted = false): boolean {
     const e = this.world.entities.get(id), source = this.world.entities.get(attackerId), c = e?.civilian;
-    if (!e || storyProtected(this.world, e) || !c?.adult || !source?.infected || source.health.current <= 0 || source.infectionRise || !mobileStates.has(c.state) || this.turns >= npcs.turnChainLimit[this.level - 1]) return false;
+    if (this.world.missions?.state.states['cure-released'] || !e || storyProtected(this.world, e) || !c?.adult || !source?.infected || source.health.current <= 0 || source.infectionRise || !mobileStates.has(c.state) || this.turns >= npcs.turnChainLimit[this.level - 1]) return false;
     if (this.holds(attackerId)) return false;
     if (!scripted && !this.world.infected!.tryGrabCivilian(attackerId, { id, adult: c.adult, variant: c.variant, position: e.transform })) return false;
     if (scripted) this.world.events.emit({ type: 'civilian.grabbed', tick: this.world.tick, sourceId: attackerId, targetId: id, variant: c.variant, rescueUntil: this.world.tick + npcs.grabTicks });
@@ -123,7 +123,7 @@ export class Civilians {
       }
       if (c.state === 'grabbed') {
         const attacker = this.world.entities.get(c.attacker);
-        if (!attacker || attacker.health.current <= 0 || attacker.combat!.staggerUntil > tick || Math.hypot(attacker.transform.x - e.transform.x, attacker.transform.z - e.transform.z) > 1.8) {
+        if (this.world.missions?.state.states['cure-released'] || !attacker || attacker.health.current <= 0 || attacker.combat!.staggerUntil > tick || Math.hypot(attacker.transform.x - e.transform.x, attacker.transform.z - e.transform.z) > 1.8) {
           this.state(e, 'flee'); this.world.events.emit({ type: 'civilian.saved', tick, id: e.id }); this.world.missions?.civilianSaved(e.id);
         } else if (tick >= c.until) this.state(e, 'bitten', this.duration(c.outbreak ? [30, 42] : npcs.staggerTicks));
       } else if (c.state === 'bitten') { if (tick >= c.until) this.down(e); }

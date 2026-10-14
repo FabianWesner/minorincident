@@ -416,6 +416,7 @@ export class Mission {
   }
   /** Restore mission/actors/racks, retain run totals and permanently killed scripted bosses. */
   restore(id = this.state.checkpoint ?? 'start', resume = false): void {
+    if (!resume && this.state.cureFront) { this.l10?.cure.apply(); return; }
     this.world.controls.reset();
     const checkpoint = this.checkpoints.get(id); if (!checkpoint) throw new Error(`Unknown checkpoint: ${id}`);
     const timeout = this.state.failure === 'timeout';
@@ -426,6 +427,8 @@ export class Mission {
     for (const step of Object.values(this.state.steps)) if (step.status === 'active') step.started += delta;
     if (checkpoint.arsenal && this.world.progression?.campaign) Object.assign(this.world.progression.campaign, structuredClone(checkpoint.arsenal));
     const entities = structuredClone(checkpoint.entities);
+    // Mid-front saves may contain a fall still in flight; preserve its age on a fresh tick-zero clock.
+    if (this.state.cureFront) for (const e of entities) if (e.infected?.state === 'dead' && e.infected.recoverAt < 0 && !e.corpse) e.infected.deadAt += delta;
     // Consumed health pickups stay consumed (00 §6.2: a respawn keeps the level's pickups; PO 2026-10-07 med packs never respawn).
     const consumed = new Set<number>(this.world.chunks?.consumedPickups());
     for (const e of this.world.entities.iterate()) if (e.pickup && 'kind' in e.pickup && e.pickup.collected && e.pickup.kind !== 'item' && e.pickup.kind !== 'throwable') consumed.add(e.id);
@@ -461,6 +464,7 @@ export class Mission {
     this.world.npcs?.restore(delta);
     this.l1?.restore(delta);
     restoreSeams(this.world, checkpoint.seams, !resume);
+    this.l10?.cure.apply();
     for (const [actor, entityId] of Object.entries(this.state.actors)) if (this.deadBosses.has(actor)) for (const step of Object.values(this.state.steps)) if (step.status === 'active' && !step.kills.includes(entityId)) step.kills.push(entityId);
     if (this.state.tier !== null) this.world.setTier(this.state.tier);
     this.world.vehicles?.rebuild(false, delta);

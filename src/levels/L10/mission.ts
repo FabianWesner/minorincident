@@ -41,7 +41,7 @@ export function levelTenMission(resolve: (name: string) => Anchor | undefined): 
   step('dispersal-complex', 'Deliver the backpack cure to the dispersal complex', 'cure-complex', spatial('cure-complex'), [{ kind: 'checkpoint', id: 'cure-complex' }], 'reach');
   step('install', 'Install the cure in the dispersal device', 'cure-install', { kind: 'all', triggers: [flag('cure-carried'), spatial('cure-install', true)] }, [{ kind: 'state', key: 'cure-installed', value: true }, { kind: 'state', key: 'cure-carried', value: false }, { kind: 'checkpoint', id: 'cure-disperse-ready' }], 'interact');
   step('hold', 'Charge the system nearby and kill the Mega Alpha', 'cure-console', { kind: 'all', triggers: [flag('charge-active'), { kind: 'count', key: 'charge-ticks', atLeast: 3600 }, flag('charge-ready'), flag('mega-dead'), flag('cure-installed')] });
-  step('release', 'Release the cure at the console', 'cure-console', { kind: 'all', triggers: [flag('cure-released'), spatial('cure-console', true)] }, [], 'interact');
+  step('release', 'Release the cure at the console', 'cure-console', flag('cure-released'), [], 'interact');
   step('epilogue', 'Watch the cure spread — keep exploring', 'cure-console', flag('epilogue-finished'));
   step('credits', 'Minor Incident', 'cure-console', flag('credits-finished'));
   return def;

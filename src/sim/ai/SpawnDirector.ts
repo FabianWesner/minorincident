@@ -123,6 +123,7 @@ export class SpawnDirector {
     for (let i = 0; i < count; i++) this.request(archetype, this.spawnPoints[this.point++ % this.spawnPoints.length], { state: 'chase' });
   }
   update(): void {
+    if (this.ai.world.missions?.state.states['cure-released'] || this.ai.world.progression?.campaign?.world?.infectionCleared) { this.queue.length = 0; return; }
     const player = this.ai.world.entities.get(1)!;
     this.camera.x = player.transform.x; this.camera.z = player.transform.z;
     if (this.ambientTarget > this.count + this.queue.length && this.ai.world.tick % 60 === 0) this.wave('infected.runner', 1);

@@ -243,7 +243,14 @@ export interface L5State {
   lastShot: Record<number, number>; waitedAt: number; infectedMax: number; deadAtMetro: number;
 }
 export interface StepState { status: 'pending' | 'active' | 'completed' | 'cancelled'; started: number; kills: number[]; events: Record<string, number>; interaction: number; driveArrived?: boolean; holds?: Record<string, number> }
+/** Authoritative cure distance is metres; elapsed is fixed ticks, independent of render quality. */
+export interface CureFrontState {
+  releasedAt: number; elapsed: number; radius: number;
+  fronts: { x: number; z: number; distance: number }[];
+  affectedIds: number[];
+}
 export interface MissionState {
+  cureFront?: CureFrontState;
   /** L1 v2 story state (technician, accident timeline, infected exits, result counters). */
   l1?: L1State;
   /** L2 set-piece state; checkpoints snapshot it (ticks are shifted on restore). */
