@@ -6,7 +6,7 @@ import { expect, test, vi } from 'vitest';
 import { CharacterView } from '../../../src/render/characters/CharacterView';
 import type { Materials } from '../../../src/render/Materials';
 
-test.each(['female', 'male'] as const)('selected %s courier loads alone; a later menu choice joins one load and retains both rigs', async selected => {
+for (const deferred of [false, true]) test.each(['female', 'male'] as const)(`selected %s courier (${deferred ? 'deferred' : 'direct'}) loads alone; a later menu choice joins one load and retains both rigs`, async selected => {
   const loader = vi.spyOn(GLTFLoader.prototype, 'loadAsync').mockImplementation(async path => {
     const bytes = readFileSync(`public${path}`);
     return new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
@@ -15,7 +15,8 @@ test.each(['female', 'male'] as const)('selected %s courier loads alone; a later
   const materials = { fromVertexColors: material, fromColor: material, get: material, unique: material } as unknown as Materials;
   const character = new CharacterView(), other = selected === 'female' ? 'male' : 'female';
   try {
-    await character.init(materials, false, false, 'courier', true, false, selected);
+    await character.init(materials, false, false, 'courier', true, false, deferred ? null : selected);
+    if (deferred) { expect(loader).not.toHaveBeenCalled(); expect(await character.readyVariant(selected)).toBe(true); }
     expect(loader).toHaveBeenCalledTimes(1);
     expect(loader.mock.calls[0][0]).toBe(`/assets/models/char.courier-${selected}.skin.glb`);
     expect(await character.readyVariant(selected)).toBe(false);
