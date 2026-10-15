@@ -64,12 +64,13 @@ const privacyFenceLodPolicy = { lod1From: 6, lod2From: 45, hysteresis: 2 };
 const heavyOnLow = (id: string) => ((worldAssets[id] as { authoredLodTriangles?: { lod1?: number } }).authoredLodTriangles?.lod1 ?? 0) >= 50_000;
 
 interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; /** Local footprint of LOD0 (centre offset and half extents): occluder tests use the real oriented box, not the longest side squared. */ foot: { cx: number; cz: number; hx: number; hz: number }; id: string; decay?: string; lit: boolean; loaded: boolean; nearLoaded: boolean; farLoaded: boolean; heroShown: Lod; bands: (Lod | undefined)[] }
+interface DressingEntry { id: string; batch: InstancedGroup; refs: Object3D[]; origin: [number, number]; center: Vector3; radius: number; foot: LodBatch['foot']; height: number }
 /** Shared static instances; detailed prototypes stream only into the close view. */
 export class DistrictView extends Group {
   readonly spots = new Map<string, CameraPose>();
   readonly batches: InstancedGroup[] = [];
   private readonly dressingBatches: InstancedGroup[] = [];
-  private readonly dressingEntries: { batch: InstancedGroup; refs: Object3D[]; origin: [number, number]; center: Vector3; radius: number }[] = [];
+  private readonly dressingEntries: DressingEntry[] = [];
   readonly windows: Mesh[] = [];
   private readonly machineGuns: { root: Object3D; gun: Object3D; muzzle: Object3D }[] = [];
   /** HMG nests retain their authored gun/muzzle hierarchy so shots rotate the
@@ -84,6 +85,14 @@ export class DistrictView extends Group {
     nest.n.root.updateWorldMatrix(true,true);return nest.n.muzzle.getWorldPosition(new Vector3());
   }
   private readonly lodBatches: LodBatch[] = [];
+  /** Scene Lab A/B baseline: submit interiors of closed buildings too. */
+  interiorCullOff = false;
+  private interiorCpuMs = 0;
+  private interiorRevision = 0;
+  private appliedInteriorRevision = -1;
+  private appliedInteriorCullOff = false;
+  private readonly interiorPose = { x: Infinity, y: Infinity, z: Infinity };
+  private readonly interiorBuildings: { entry: LodBatch; ref: Object3D; props: { entry: LodBatch | DressingEntry; ref: Object3D }[]; visible: boolean }[] = [];
   private readonly pending = new Map<LodBatch, Promise<void>>();
   private disposed = false;
   private readonly frustum = new Frustum();
@@ -326,8 +335,8 @@ export class DistrictView extends Group {
               const prototype = await this.registry.asset(id, power === 'true', this.low ? 'lod2' : 'lod0', decay);
               const batch = new InstancedGroup(prototype, refs.slice(), this.instanceCapacity ?? refs.length);
               if (this.low && ['L3', 'L7'].includes(this.world.composition.id)) batch.traverse(node => { if (node instanceof Mesh) node.castShadow = false; });
-              const bounds = new Box3().setFromObject(prototype).getBoundingSphere(new Sphere());
-              this.dressingEntries.push({ batch, refs, origin: d.origin, center: bounds.center, radius: bounds.radius });
+              const box = new Box3().setFromObject(prototype), bounds = box.getBoundingSphere(new Sphere()), size = box.getSize(new Vector3());
+              this.dressingEntries.push({ id, batch, refs, origin: d.origin, center: bounds.center, radius: bounds.radius, foot: { cx: bounds.center.x, cz: bounds.center.z, hx: size.x / 2, hz: size.z / 2 }, height: size.y });
               this.dressingBatches.push(batch); root.add(batch); this.freezeBatch(batch); return;
             }
             const nearLoaded = initialLods.get(id)?.has('lod1') ?? true;
@@ -389,6 +398,7 @@ export class DistrictView extends Group {
         }
       }),
     );
+    this.tagInteriors();
     // Runtime-only emitter placeholders; gameplay damage remains in the fixed-step sim.
     for (const f of this.world.fires) {
       for (let i = 0; i < 3; i++) {
@@ -489,14 +499,65 @@ export class DistrictView extends Group {
     seeThrough.strength.value = player && this.foliage.reveal && !this.seeThroughOff ? 1 : 0;
     this.occluderId = '';
     this.cutPlacements.clear();
-    if (!player || !this.foliage.reveal || this.seeThroughOff) { this.updateCutPlacements(); return; }
+    if (!player || !this.foliage.reveal || this.seeThroughOff) { this.updateCutPlacements(); this.updateInteriors(view, player); return; }
     const feet = player.y - .7;
     const box = subject ?? this.subjectBox.set(this.holeTarget.set(player.x - .55, feet, player.z - .55), this.holeCorner.set(player.x + .55, feet + 1.9, player.z + .55));
     projectReveal(view.camera, box);
-    if (this.seeThroughReference) { this.updateCutPlacements(true); seeThrough.solidRadius.value = 3; seeThrough.strength.value = 1; return; }
+    if (this.seeThroughReference) { this.updateCutPlacements(true); this.updateInteriors(view, player); seeThrough.solidRadius.value = 3; seeThrough.strength.value = 1; return; }
     // Only the placements that actually sit between the lens and some part of the subject (courier or whole player vehicle) are eligible for the cut.
     this.occludedSubject(view, box);
     this.updateCutPlacements();
+    this.updateInteriors(view, player);
+  }
+  /** Resolve ownership once from oriented building footprints, independently of asset/placement names. */
+  private tagInteriors(): void {
+    for (const entry of this.lodBatches) if (worldAssets[entry.id].category === 'building' && /^bld\./.test(entry.id)) for (const ref of entry.refs) {
+      this.interiorBuildings.push({ entry, ref, props: [], visible: true });
+    }
+    const props = [...this.lodBatches.filter(e => worldAssets[e.id].category === 'prop' && !worldAssets[e.id].foliage), ...this.dressingEntries.filter(e => (manifest as AssetDef[]).find(a => a.id === e.id)?.category === 'prop')];
+    for (const entry of props) for (const ref of entry.refs) {
+      const owner = this.interiorBuildings.find(b => {
+        const [c, s, x, z] = DistrictView.footFrame(b.entry, b.ref);
+        // Require the complete prop footprint within the building, so doorstep/street furniture stays drawn.
+        const [pc, ps, px, pz] = DistrictView.footFrame(entry, ref);
+        for (const dx of [-entry.foot.hx, entry.foot.hx]) for (const dz of [-entry.foot.hz, entry.foot.hz]) {
+          const wx = px + dx * ref.scale.x * pc + dz * ref.scale.z * ps - x;
+          const wz = pz - dx * ref.scale.x * ps + dz * ref.scale.z * pc - z;
+          if (Math.abs((wx * c - wz * s) / b.ref.scale.x) >= b.entry.foot.hx - .2 || Math.abs((wx * s + wz * c) / b.ref.scale.z) >= b.entry.foot.hz - .2) return false;
+        }
+        return ref.position.y >= b.ref.position.y && ref.position.y + entry.height * ref.scale.y < b.ref.position.y + b.entry.height * b.ref.scale.y;
+      });
+      if (owner) { owner.props.push({ entry, ref }); ref.userData.interiorBuilding = owner.ref; }
+    }
+  }
+  /** Runs after reveal selection and applies changed buildings before this frame renders, even with a stationary camera. */
+  private updateInteriors(view: View, player?: { x: number; y: number; z: number }): void {
+    const started = performance.now();
+    const x = player?.x ?? Infinity, y = player?.y ?? Infinity, z = player?.z ?? Infinity;
+    if (this.appliedInteriorRevision === this.interiorRevision && this.appliedInteriorCullOff === this.interiorCullOff
+      && this.interiorPose.x === x && this.interiorPose.y === y && this.interiorPose.z === z) {
+      this.interiorCpuMs = performance.now() - started; return;
+    }
+    this.interiorPose.x = x; this.interiorPose.y = y; this.interiorPose.z = z;
+    this.appliedInteriorRevision = this.interiorRevision; this.appliedInteriorCullOff = this.interiorCullOff;
+    let changed: Set<LodBatch | DressingEntry> | undefined;
+    for (const building of this.interiorBuildings) {
+      const { entry, ref } = building;
+      const [c, s, x, z] = DistrictView.footFrame(entry, ref);
+      const dx = (player?.x ?? Infinity) - x, dz = (player?.z ?? Infinity) - z;
+      const inside = !!player && Math.abs((dx * c - dz * s) / ref.scale.x) < entry.foot.hx && Math.abs((dx * s + dz * c) / ref.scale.z) < entry.foot.hz
+        && player.y >= ref.position.y && player.y < ref.position.y + entry.height * ref.scale.y;
+      const visible = this.interiorCullOff || inside || ref.userData.occluder === true;
+      if (building.visible === visible) continue;
+      building.visible = visible;
+      for (const batch of [entry.hero, entry.near, entry.far]) batch.interiorVisible(visible, ref);
+      for (const prop of building.props) { prop.ref.userData.interiorHidden = !visible; (changed ??= new Set()).add(prop.entry); }
+    }
+    for (const entry of changed ?? []) {
+      if ('hero' in entry) { this.dirtyEntries.add(entry); this.partition(entry, view); }
+      else this.partitionDressing(entry);
+    }
+    this.interiorCpuMs = performance.now() - started;
   }
   // Legacy footprint probes remain available for diagnostics; they no longer control reveal.
   /** How far in front of the lens a solid occluder counts as filling the view. Measured at L4 Kessler's Hardware
@@ -504,7 +565,7 @@ export class DistrictView extends Group {
   static readonly hugDistance = 8;
   private readonly lensRay = new Vector3();
   private readonly lensPoint = new Vector3();
-  private static readonly footFrames = new WeakMap<Object3D, { entry: LodBatch; px: number; pz: number; qy: number; qw: number; sx: number; sz: number; frame: [number, number, number, number] }>();
+  private static readonly footFrames = new WeakMap<Object3D, { entry: Pick<LodBatch, 'foot' | 'origin'>; px: number; pz: number; qy: number; qw: number; sx: number; sz: number; frame: [number, number, number, number] }>();
   private readonly cutPlacements = new Set<Object3D>();
   private updateCutPlacements(all = false): void {
     for (const entry of this.lodBatches) {
@@ -512,12 +573,13 @@ export class DistrictView extends Group {
       for (const ref of entry.refs) {
         const enabled = all || this.cutPlacements.has(ref);
         if (ref.userData.occluder === enabled) continue;
+        if (worldAssets[entry.id].category === 'building') this.interiorRevision++;
         entry.hero.seeThrough(enabled, ref); entry.near.seeThrough(enabled, ref); entry.far.seeThrough(enabled, ref);
       }
     }
   }
   /** Local frame of a placement's real footprint (yaw only): `[cos, sin, centre x, centre z]` on the district plane. */
-  private static footFrame(entry: LodBatch, ref: Object3D): [number, number, number, number] {
+  private static footFrame(entry: Pick<LodBatch, 'foot' | 'origin'>, ref: Object3D): [number, number, number, number] {
     const cached = this.footFrames.get(ref);
     // Placement geometry is static; pushed props invalidate by their actual transform.
     // Reuse the frame across the camera ray and all forty lens samples.
@@ -790,19 +852,21 @@ export class DistrictView extends Group {
     this.cameraPosition = p.toArray(); this.cameraRotation = rotation; this.cameraAspect = view.camera.aspect; this.cameraHeight = view.viewportHeight; this.cameraGameLod = view.inspectionGameLod;
     this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(view.camera.projectionMatrix, view.camera.matrixWorldInverse));
     for (const entry of this.lodBatches) this.partition(entry, view);
-    for (const entry of this.dressingEntries) {
-      const { batch, refs, origin, center, radius } = entry, next: Object3D[] = [];
-      for (const ref of refs) {
-        this.bounds.center.copy(center).applyMatrix4(ref.matrix); this.bounds.center.x += origin[0]; this.bounds.center.z += origin[1];
-        this.bounds.radius = radius * Math.max(ref.scale.x, ref.scale.y, ref.scale.z);
-        if (this.frustum.intersectsSphere(this.bounds)) next.push(ref);
-      }
-      if (next.length === batch.references.length && next.every((ref, i) => ref === batch.references[i])) continue;
-      batch.references.length = 0; batch.references.push(...next); batch.visible = next.length > 0;
-      for (const child of batch.children) if (child instanceof InstancedMesh) child.count = next.length;
-      if (next.length) batch.update();
-    }
+    for (const entry of this.dressingEntries) this.partitionDressing(entry);
     this.dirtyEntries.clear();
+  }
+  private partitionDressing(entry: DressingEntry): void {
+    const { batch, refs, origin, center, radius } = entry, next: Object3D[] = [];
+    for (const ref of refs) {
+      if (ref.userData.interiorHidden) continue;
+      this.bounds.center.copy(center).applyMatrix4(ref.matrix); this.bounds.center.x += origin[0]; this.bounds.center.z += origin[1];
+      this.bounds.radius = radius * Math.max(ref.scale.x, ref.scale.y, ref.scale.z);
+      if (this.frustum.intersectsSphere(this.bounds)) next.push(ref);
+    }
+    if (next.length === batch.references.length && next.every((ref, i) => ref === batch.references[i])) return;
+    batch.references.length = 0; batch.references.push(...next); batch.visible = next.length > 0;
+    for (const child of batch.children) if (child instanceof InstancedMesh) child.count = next.length;
+    if (next.length) batch.update();
   }
   private partition(entry: LodBatch, view: View): void {
     const { hero, near, far, refs, origin, height, radius } = entry;
@@ -810,6 +874,7 @@ export class DistrictView extends Group {
     const foliage = (!!worldAssets[entry.id].foliage || /^prop\.(tree|bush|hedge)/.test(entry.id));
     let prefetchNear = false, prefetchHero = false;
     for (const [index, ref] of refs.entries()) {
+      if (ref.userData.interiorHidden) continue;
       if (entry.id === 'prop.cure-canister-pedestal' && this.cureCollected) continue;
       if (foliage && index >= Math.ceil(refs.length * this.materials.look.values.foliageDensity)) continue;
       const x = ref.position.x + origin[0], z = ref.position.z + origin[1];
@@ -1111,6 +1176,7 @@ export class DistrictView extends Group {
         0,
       ),
       windPhase: this.phase.value,
+      interiors: { cpuMs: this.interiorCpuMs, buildings: this.interiorBuildings.length, hiddenBuildings: this.interiorBuildings.filter(b => !b.visible).length, placements: this.interiorBuildings.reduce((n, b) => n + b.props.length, 0) },
       foliage: this.foliage.getState(),
       seeThrough: { strength: seeThrough.strength.value, cover: seeThrough.cover.value, radius: seeThrough.radius.value, center: seeThrough.center.value.toArray() },
       movedProps: [...this.propLinks.values()].filter(Boolean).length,
