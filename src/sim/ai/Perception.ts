@@ -124,12 +124,9 @@ export class Perception {
    * target, so a nearby police line draws the crowd first. 0 everywhere else. */
   playerBiasM = 0;
   private readonly cosHalf = Math.cos(l1v2.infected.visionConeDeg / 2 * Math.PI / 180);
-  constructor(private readonly world: SimWorld) {
-    this.humans = new WorldHumans(world);
-    world.events.on('combat.attack', event => {
-      if (event.type === 'combat.attack' && event.sourceId === 1 && ['weapon.handgun', 'weapon.army-mg', 'weapon.shotgun', 'weapon.rocket-launcher'].includes(event.actionId)) this.shotUntil = world.tick + 60;
-    });
-  }
+  constructor(private readonly world: SimWorld) { this.humans = new WorldHumans(world); }
+  /** The infected system records real courier gunshots on its existing combat subscription. */
+  shot(): void { this.shotUntil = this.world.tick + 60; }
   /** Clear line of sight between two ground points (static cover walls + active dynamic blockers). */
   lineOfSight(from: Vec2, to: Vec2): boolean {
     return (this.world.combat?.query.visible(from, to) ?? true) && this.los.clear(from, to);
@@ -158,6 +155,8 @@ export class Perception {
   /** PO #25: nearby humans are smelled/heard through cover, independent of facing and sight. */
   hears(e: EntitySnapshot, target: Vec2): boolean {
     const dx = target.x - e.transform.x, dz = target.z - e.transform.z, squared = dx * dx + dz * dz;
+    // Allies share this query for defence; PO #25 changes infected awareness only.
+    if (!e.infected) return squared <= 4 && this.lineOfSight(e.transform, target);
     if (squared <= this.hearingM * this.hearingM) return true;
     if (squared > 144) return false;
     // Only the courier's running/shooting expands the radius. Keep the common

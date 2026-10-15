@@ -1,3 +1,4 @@
+import { catalog as actionCatalog, mountedActions } from '../../data/actions/catalog';
 import { l3BaseCollision } from '../../levels/L3/collision';
 import { dogModel } from '../../data/dogAppearance';
 import { cureAlphaPopulation, cureAlphaCap, cureRegularAlphaCount, type CureRegion } from '../../levels/L10/alphaContracts';
@@ -118,6 +119,7 @@ export class InfectedSystem {
     });
     world.events.on('combat.attack', (event) => {
       if (event.type !== 'combat.attack' || event.sourceId !== 1) return;
+      if ((actionCatalog[event.actionId] ?? mountedActions[event.actionId])?.category === 'ranged') this.hearing.shot();
       for (const e of this.active) if (e.infected!.grabUntil > world.tick) {
         if (e.infected!.special === 'cling') e.infected!.grabUntil = 0;
         else if (e.infected!.special === 'pin' && ++e.infected!.grabHits >= 2) this.releasePin(e);
