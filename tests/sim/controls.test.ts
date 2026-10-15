@@ -4,6 +4,28 @@ import { emptyInput } from '../../src/input/InputFrame';
 import { Recorder } from '../../src/input/Recorder';
 import { stateHash } from '../../src/sim/world/stateHash';
 
+test('T-E03-melee-escape @E03 @E21 a ground click during a planted axe swing resumes movement without another attack', async () => {
+  const world = new SimWorld(); await world.init(); world.loadScenario('combat-arena');
+  try {
+    world.combat!.setLoadout(['weapon.fire-axe'], ['weapon.kick']);
+    const swing = emptyInput(); swing.attackInPlace = true; swing.left.down = true; swing.aim = { x: 1, z: 0 };
+    world.applyInput(swing, 'mouse-only'); world.update(); world.applyInput(emptyInput(), 'mouse-only');
+    const attack = world.combat!.runner.running.LEFT!;
+    expect(attack.inPlace).toBe(true);
+    const start = { ...world.entities.get(1)!.transform };
+    const move = emptyInput(); move.pointerGround = true; move.moveTarget = { x: start.x + 5, z: start.z };
+    move.left = { down: true, held: false, up: true }; move.mouseAttack = true; move.cancelMove = true;
+    world.applyInput(move, 'mouse-only'); world.update(); world.applyInput(emptyInput(), 'mouse-only');
+    while (world.tick + 1 < attack.endsAt) {
+      world.update();
+      expect(world.entities.get(1)!.transform.x).toBeCloseTo(start.x, 3);
+    }
+    for (let tick = 0; tick < 90; tick++) world.update();
+    expect(world.entities.get(1)!.transform.x).toBeGreaterThan(start.x + 3);
+    expect(world.events.events().filter(e => e.type === 'combat.attack')).toHaveLength(1);
+  } finally { world.dispose(); }
+});
+
 test('T-E03-command-replay @E03 @E03-AC10 @E03-AC15 held target command reaches range, repeats and replays deterministically', async () => {
   const original = new SimWorld(), replay = new SimWorld();
   await original.init(); await replay.init();

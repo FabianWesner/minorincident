@@ -468,6 +468,9 @@ export class Outbreak {
   }
   private kill(e: EntitySnapshot): void {
     this.stats.killed++; this.dropProp(e); e.civilian!.eyesGlow = false;
+    // Allied fighters use health for rescue membership and friendly-fire clearance. A fatal bite at the director cap
+    // must leave a dead fighter, not a 100-HP "finished" body that still blocks the line and counts as a survivor.
+    if (e.civilian!.ally) e.health.current = 0;
     this.state(e, 'finished'); this.world.events.emit({ type: 'civilian.finished', tick: this.world.tick, id: e.id });
   }
 

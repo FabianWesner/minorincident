@@ -64,7 +64,8 @@ function helpers(page: Page) {
         const q = ground[(groundStart + j) % ground.length];
         const point = await page.evaluate(q => window.__SS__!.input.project(q, 'player'), q);
         await page.mouse.click(point.x, point.y); await step(1);
-        if (await page.evaluate(() => window.__SS__!.input.lastPick().length === 0)) break;
+        // A pick miss can still select melee aim assist. Confirm the actual move command, not the pick diagnostic.
+        if (await page.evaluate(() => !!window.__SS__!.getState().input.frame.moveTarget)) break;
       }
       await page.evaluate(() => window.__SS__!.camera.follow());
     };

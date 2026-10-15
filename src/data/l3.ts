@@ -44,7 +44,7 @@ export const l3 = {
     hp: 100,
     gun: { damage: 15, shotS: 1 / 1.5, rangeM: 22, nearM: 15, hitNear: .6, hitFar: .25 },
     /** The squad follows 3-8 m around/behind the courier; running beyond its band is a regroup order. */
-    squad: { gun: { damage: 25, shotS: .35, rangeM: 22, nearM: 15, hitNear: .85, hitFar: .55 }, size: 4, minFollowM: 3, maxFollowM: 6, engageM: 18, leashM: 8, separatedM: 40, separatedS: 3, moveMs: 6.2, slowerMs: 0, breakoutS: 12 },
+    squad: { gun: { damage: 25, shotS: .35, rangeM: 22, nearM: 15, hitNear: .85, hitFar: .55 }, s1HitNear: .9, size: 4, minFollowM: 3, maxFollowM: 6, engageM: 18, leashM: 8, separatedM: 40, separatedS: 3, moveMs: 6.2, slowerMs: 0, breakoutS: 12 },
     moveMs: 3.6,
   },
   /** Section 5.10: soldiers at the army checkpoint cover the last 20 m before the zone line. */
@@ -114,7 +114,7 @@ export const l3 = {
    * every respawn thins the infected (living or still waiting at their doors) between `aheadM` metres ahead of the courier by
    * `stepFrac` per death (max `maxFrac`). Hordes and density stay for anyone who plays it through; only a death loop eases.
    */
-  mercy: { fromDeaths: 1, stepFrac: .3, maxFrac: .75, aheadM: [12, 90] as P, behindM: 20 },
+  mercy: { fromDeaths: 1, stepFrac: .5, maxFrac: .9, aheadM: [12, 90] as P, behindM: 20, respawnDelayS: 20 },
   checkpoints: ['armory', 'fallback', 'segment-2', 'segment-2b', 'segment-3', 'segment-3b'] as const,
   /** Corridor checkpoints by progress X (taken at the first calm moment after the courier passes the line, see LevelThreeCollapse.calmCheckpoint). */
   checkpointAt: { 'segment-2': -40, 'segment-2b': 8, 'segment-3': 50, 'segment-3b': 92 } as Record<string, number>,
@@ -143,7 +143,8 @@ export const l3Anchors: Record<string, P> = {
   'photo-l3-station-yard': [-140, 2], 'photo-l3-station-attack': [-141, -13], 'photo-l3-squad-strong': [-92, 0],
   'photo-l3-oak-avenue': [-22, 28], 'photo-l3-commerce-street': [8, 0], 'photo-l3-grove-boulevard': [18, -28],
   'photo-l3-alone': [96, 0], 'photo-l3-army-checkpoint': [146, 0],
-  'l3-hmg': [144.0, -7.2],
+  // Inner lane: the previous post behind the checkpoint wall had no clear firing line.
+  'l3-hmg': [145.5, -1.5],
 };
 for (const [name, point] of Object.entries(l3Anchors)) if (name.startsWith('l3-soldier-') || name === 'l3-hmg' || name === 'photo-l3-army-checkpoint') l3Anchors[name] = [point[0] + l3ArmyOffset, point[1]];
 /** Photo spots (section 6): name and camera offset, same framing scale as the L2 spots. */
