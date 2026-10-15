@@ -16,6 +16,8 @@ export interface SceneSpec {
   l4Convoy?: boolean | 'parked' | 'hold';
   /** Production L3 rendezvous, rescued group and full authored finale crowd. */
   l3Rendezvous?: boolean;
+  /** Production L6 shelter and gate with the collected equipment. */
+  l6Subway?: 'pickup' | 'lamp' | 'gate' | 'entry';
   /** Production L5 discovery/follower controller, with named prior finds restored before the shot. */
   l5Aftermath?: { found: string[]; alphaAt?: Point; metroIngress?: boolean };
   /** One R1–R6 production encounter, with the quality tier's authored crowd. */
@@ -414,8 +416,8 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
     }
     layout.walkable.excluded = source.walkable.excluded.map(polygon => polygon.map(([x,z]) => [x+shift[0],z+shift[1]]));
   }
-  if ((spec.l4Convoy || spec.l3Rendezvous) && source) layout.colliders = structuredClone(source.colliders);
-  for (const name of (spec.l4Convoy || spec.l3Rendezvous || spec.l5Aftermath) && source ? Object.keys(source.anchors) : spec.layout?.anchors ?? []) {
+  if ((spec.l4Convoy || spec.l3Rendezvous || spec.l6Subway) && source) layout.colliders = structuredClone(source.colliders);
+  for (const name of (spec.l4Convoy || spec.l3Rendezvous || spec.l5Aftermath || spec.l6Subway) && source ? Object.keys(source.anchors) : spec.layout?.anchors ?? []) {
     const anchor = source?.anchors[name];
     if (!anchor) throw new Error(`Unknown layout anchor ${name}`);
     layout.anchors[name] = structuredClone(anchor);

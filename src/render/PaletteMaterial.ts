@@ -126,6 +126,17 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         const mask = weatherSurface.fog.mul(positionWorld.y.negate().add(3).div(3).clamp(0, 1)).mul(positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(2, 18)).clamp(0, .7);
         result.assign(mix(result, lighting.radialFog.add(field.mul(.2)), mask));
       }
+      if (!emissive) {
+        const offset = positionWorld.xz.sub(lighting.hero.xz), reach = offset.length();
+        const facing = offset.dot(lighting.headlampAim).div(reach.max(.01));
+        const cone = facing.smoothstep(.78, .92).mul(reach.smoothstep(18, 14)).mul(lighting.headlampOn);
+        const courierGlow = reach.smoothstep(2.4, .8);
+        // Preserve small coloured practical pools and emissive infected eyes.
+        const accent = luminance(field).smoothstep(.15, .8);
+        const colour = max(max(cone, courierGlow), accent);
+        const dark = mix(vec3(luminance(result)).mul(.38), result, colour);
+        result.assign(mix(result, dark, lighting.subwayDarkness));
+      }
       result.addAssign(this.hitFlash);
       return vec4(result, this.fade.mul(nodes?.opacity ?? 1));
     })();

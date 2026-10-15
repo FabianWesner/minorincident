@@ -54,6 +54,10 @@ export class LevelSixSubway {
     });
     for(const x of l6.gates){const id=w.barricades!.spawn({id:`l6-gate-${x}`,groupId:'l6-service',a:{x,z:13.9},b:{x,z:16.1},height:2.3,depth:.22});const e=w.entities.get(id)!;e.archetype='l6.service-gate';e.transform.y=.6;e.interactable!.enabled=false;this.s.gates.push({id,x,closedAt:0,hold:0});}
     for(const at of [{x:281,z:24},{x:286,z:5}]){const id=w.hazards!.spawn('fire',at,{radius:1.3,duration:7200});w.entities.get(id)!.transform.y=3.95;}
+    const lampId=w.interactables!.spawn('switch',{x:1.5,z:6},{radius:2,holdTime:.3,label:'Pick up headlamp'});
+    const lamp=w.entities.get(lampId)!;lamp.archetype='pickup.headlamp';lamp.transform.y=.9;
+    lamp.pickup={kind:'item',item:'headlamp',radius:2,collected:false};
+    lamp.interactable!.hint='E / middle-click · wear the headlamp';
     // Initial shelter power (emergency off until the second breach) is level setup, not a failure: apply it silently
     // (as a tier change does) so the first LightPower sync emits no power.off / lamp.power-off cue at tick 1.
     this.power();this.w.lightPower?.install(this.w.districts!);this.mission.requestCheckpoint('shelter');
@@ -79,7 +83,7 @@ export class LevelSixSubway {
   }
   private breach(second:boolean):void {
     const s=this.s,w=this.w;
-    if(second){s.phase='fails';s.mainPower=false;s.emergency=true;s.flashlight=true;this.power();w.events.emit({type:'power.off',tick:w.tick,group:'metro-main'});s.arrivals={remaining:8,door:0,nextAt:w.tick};}
+    if(second){s.phase='fails';s.mainPower=false;s.emergency=true;this.power();w.events.emit({type:'power.off',tick:w.tick,group:'metro-main'});s.arrivals={remaining:8,door:0,nextAt:w.tick};}
     else {s.phase='first';this.spawn(2,[0],1);this.mission.setState('breached',true);}
     w.events.emit({type:second?'l6.breach2':'l6.breach1',tick:w.tick});
   }
@@ -108,6 +112,7 @@ export class LevelSixSubway {
   }
   update():void {
     const s=this.s,w=this.w,t=w.tick,p=w.entities.get(1)!.transform;
+    s.flashlight=this.mission.state.items.includes('headlamp');
     if(s.phase==='shelter'&&t===s.startAt+300)this.say(s.survivors.find(r=>r.injured)!.id,l6InjuryLines.patient);
     for(const r of this.living()){const e=w.entities.get(r.id);if(!e||e.health.current<=0||e.civilian?.state==='finished')r.status='dead';else if(e.infection||e.infected)r.status='turned';}
     if(!s.firstBang&&t>=s.breach1At-120){s.firstBang=true;this.bang(false);}
