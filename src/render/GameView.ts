@@ -1,3 +1,4 @@
+import { MilitaryPerimeter } from './MilitaryPerimeter';
 import { l3, l3AttackView } from '../data/l3';
 import { epiloguePull } from '../sim/missions/LevelTenEpilogue';
 import { CrowdAccessories } from './characters/CrowdAccessories';
@@ -152,6 +153,7 @@ export class GameView implements Lifecycle {
   private frozenStarted = -1;
   private frozenPose: SurvivorState | null = null;
   private destination: Mesh | null = null;
+  private militaryPerimeter: MilitaryPerimeter | null = null;
   private readonly bikeOrientation = new Quaternion();
   private cube: Mesh | null = null;
   private character: CharacterView | null = null;
@@ -300,6 +302,7 @@ export class GameView implements Lifecycle {
       this.meshes.push(ground, this.cube); this.scene.add(...this.meshes);
     }
     if (this.character) { this.contactShadows = new ContactShadows(this.world); this.scene.add(this.contactShadows); }
+    if (this.world.missions?.state.l4) { this.militaryPerimeter = new MilitaryPerimeter(this.world); this.scene.add(this.militaryPerimeter); }
     if (player) {
       const material = new MeshBasicNodeMaterial({ color: '#64ffce', depthWrite: false, depthTest: false }); material.name = 'keep_moveMarker';
       this.destination = new Mesh(new RingGeometry(.22, .32, 32), material);
@@ -754,8 +757,12 @@ export class GameView implements Lifecycle {
     if (this.missionHidden && this.missionUI) this.missionUI.root.hidden = true;
     if (this.warming || this.frozenFrame) { if (!this.missionHidden) this.missionUI?.update(this.camera, innerWidth, innerHeight); return; }
     if (this.contextLost) return;
+    this.militaryPerimeter?.update();
     if (this.destination) {
-      const target = this.world.controls.moveTarget; this.destination.visible = target != null;
+      const blocked = this.world.controls.blockedMove, active = blocked && blocked.until > this.world.tick;
+      const target = active ? blocked.point : this.world.controls.moveTarget; this.destination.visible = target != null;
+      (this.destination.material as MeshBasicNodeMaterial).color.set(active ? '#ff704f' : '#64ffce');
+      this.destination.scale.setScalar(active ? 1.4 : 1);
       if (target) this.destination.position.set(target.x, .12, target.z);
     }
     const profileStart = this.renderer.profile ? performance.now() : 0;
@@ -992,6 +999,7 @@ export class GameView implements Lifecycle {
     if (this.fixtureProps) { this.scene.remove(this.fixtureProps); this.fixtureProps.dispose(); this.fixtureProps = null; }
     if (this.interactions) { this.scene.remove(this.interactions); this.interactions.dispose(); this.interactions = null; }
     if (this.mountedGunView) { this.scene.remove(this.mountedGunView); this.mountedGunView.dispose(); this.mountedGunView = null; }
+    if (this.militaryPerimeter) { this.militaryPerimeter.removeFromParent(); this.militaryPerimeter.dispose(); this.militaryPerimeter = null; }
     if (this.entityAssets) { this.scene.remove(this.entityAssets); this.entityAssets.dispose(); this.entityAssets = null; }
     if (this.vehicles) { this.scene.remove(this.vehicles); this.vehicles.dispose(); this.vehicles = null; }
     if (this.l2Props) { this.scene.remove(this.l2Props); this.l2Props.dispose(); this.l2Props = null; }

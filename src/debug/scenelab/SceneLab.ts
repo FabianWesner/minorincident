@@ -310,9 +310,13 @@ export class SceneLab {
       applyCampaign(world, preset('L4-default'));
       const mission = world.loadMission(resolveCampaignMission('L4', world.districts!));
       mission.begin();
-      if (spec.l4Convoy === 'parked') {
+      if (spec.l4Convoy === 'parked' || spec.l4Convoy === 'hold') {
         for (let t = 0; t < 60 * 60 && mission.state.l4!.phase === 'convoy'; t++) world.update();
         if (mission.state.l4!.phase === 'convoy') throw new Error('L4 convoy did not arrive for parked fixture');
+      }
+      if (spec.l4Convoy === 'hold') {
+        mission.completeObjective('quartermaster');
+        while (!mission.state.l4!.turnAt) world.update();
       }
       for (const [i, id] of mission.state.l4!.convoyIds.entries()) this.vehicles.set(`convoy-${i}`, id);
     }
