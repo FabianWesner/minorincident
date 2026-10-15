@@ -1,0 +1,96 @@
+{
+  "name": "l10-lod-player-route",
+  "note": "Ordinary click navigation around a jersey barrier on the R7 apron exercises the same player BFS as the arrival calibration. Game-camera matrix checks supported movement and destination arrival; exact path/order/budget equivalence is covered in nav-reach-equivalence.test.ts.",
+  "seed": 32,
+  "ground": "district",
+  "time": "L10-night",
+  "dof": false,
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        3935,
+        -85
+      ],
+      [
+        4055,
+        35
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        3988,
+        -27
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "frames": 300,
+  "sheet": 50,
+  "clipping": {
+    "ignoreFoliage": true
+  },
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "lodPlaceholderFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "actorTravel": {
+      "courier": [
+        10,
+        16
+      ]
+    },
+    "actorMaxX": {
+      "courier": [
+        3997.5,
+        3998.5
+      ]
+    }
+  },
+  "script": [
+    {
+      "frame": 0,
+      "actor": "courier",
+      "do": {
+        "moveTo": [
+          3998,
+          -27
+        ],
+        "pace": "run"
+      }
+    }
+  ],
+  "minigun": {
+    "at": [
+      3990,
+      3,
+      -33
+    ],
+    "yaw": 0
+  },
+  "props": [
+    {
+      "id": "route-barrier",
+      "asset": "prop.jersey-barrier",
+      "at": [
+        3993,
+        -27
+      ],
+      "yaw": 90
+    }
+  ]
+}

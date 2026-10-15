@@ -23,7 +23,7 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
       (game.view as unknown as { params: URLSearchParams }).params.delete('test');
       const district = game.view.labProbes().districts!;
       const renderer = (game.view as unknown as { renderer: Renderer }).renderer;
-      const builds: unknown[] = [];
+      const builds: { tick: number; path: string[]; material: string; transparent: boolean; side: number; castShadow: boolean; receiveShadow: boolean; attributes: string[] }[] = [];
       const onBuild = renderer.debug.onNodeBuilderCreated;
       renderer.debug.onNodeBuilderCreated = (builder, object) => {
         onBuild?.(builder, object);
@@ -56,11 +56,13 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
     const cdp = await context.newCDPSession(page); await cdp.send('HeapProfiler.collectGarbage'); const heap = await cdp.send('Runtime.getHeapUsage');
     const heapMB = heap.usedSize / 1e6;
     const out = 'test-results/lod-standins/perf/startup'; mkdirSync(out, { recursive: true });
+    await page.screenshot({ path: `${out}/${backend}-${quality}-z${zoom}.png` });
     writeFileSync(`${out}/${backend}-${quality}-z${zoom}.json`, JSON.stringify({ ...result, heapMB }, null, 2));
     expect(result.backend).toBe(backend); expect(result.quality).toBe(quality); expect(result.cameraZoom).toBeCloseTo(zoom, 2);
     expect(result.x).toBeGreaterThan(3995); expect(result.badFrames).toBe(0);
+    expect(result.builds.filter(b => b.material === 'pal_picketWhite' && b.path.includes('body')), 'mounted gun programs must be built behind the loading card').toEqual([]);
     expect(result.frameP95).toBeLessThanOrEqual(quality === 'low' ? 33.3 : 16.7); expect(result.simP95).toBeLessThanOrEqual(quality === 'low' ? 6 : 4);
-    if (quality === 'high') expect(result.frameMax, 'desktop streaming hitch').toBeLessThanOrEqual(50);
+    expect(result.frameMax, 'desktop streaming hitch at either quality').toBeLessThanOrEqual(50);
     expect(result.draws).toBeLessThanOrEqual(quality === 'low' ? 300 : 600); expect(result.triangles).toBeLessThanOrEqual(quality === 'low' ? 500000 : 1500000);
     expect(result.resident).toBeLessThanOrEqual(quality === 'low' ? 9 : 25); expect(result.infected).toBeLessThanOrEqual(quality === 'low' ? 100 : 200); expect(heapMB).toBeLessThanOrEqual(quality === 'low' ? 250 : 400);
   });
