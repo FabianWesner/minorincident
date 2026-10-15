@@ -40,6 +40,7 @@ export class LevelSevenDeparture {
     const w = this.world;
     const bus = spawnSetPiece(w, l7Bus.asset, { x: l7Bus.x, z: cfg.lane.z, y: w.districts!.groundHeight(l7Bus.x, cfg.lane.z) + .7, yaw: l7Bus.yaw });
     this.state.busId = bus.id;
+    w.solids.aliasBlocker(NAV_BUS, bus.id);
     this.blocker = w.physics.addBlocker(this.wall);
     w.events.emit({ type: 'world.blocker.changed', tick: w.tick, id: NAV_BUS, blocked: true, wall: this.wall });
   }
