@@ -225,9 +225,9 @@ export class LevelFiveAftermath {
     if (look) { look.hidden = false; this.world.spatial.set(look.id, look.transform.x, look.transform.z); if (look.civilian) look.civilian.story = { clip: 'npc-wave-in', start: world.tick }; }
     world.events.emit({ type: 'l5.accounted', tick: world.tick });
   }
-  private following(): { r: L5State['survivors'][number]; e: EntitySnapshot }[] {
+  private following(sheltered = false): { r: L5State['survivors'][number]; e: EntitySnapshot }[] {
     const out: { r: L5State['survivors'][number]; e: EntitySnapshot }[] = [];
-    for (const r of this.s.survivors) if (r.status === 'following') { const e = this.entity(r.id); if (e) out.push({ r, e }); }
+    for (const r of this.s.survivors) if (r.status === 'following' || sheltered && r.status === 'sheltered') { const e = this.entity(r.id); if (e) out.push({ r, e }); }
     return out;
   }
   /** A found survivor is lost when bitten (turns in about 3 s: same entity, same look) or killed. */
@@ -282,7 +282,7 @@ export class LevelFiveAftermath {
     // The courier and waving lookout occupy the right lane. Fill the open left
     // lane from the back, in arrival order: a late straggler must not pass through
     // followers already standing inside the narrow ingress.
-    const ordered = this.following().sort((a, b) => a.e.transform.z - b.e.transform.z || a.e.id - b.e.id);
+    const ordered = this.following(true).sort((a, b) => a.e.transform.z - b.e.transform.z || a.e.id - b.e.id);
     const slot = Math.max(0, ordered.findIndex(f => f.e.id === e.id));
     return { x: door.x - .4, z: door.z - 4.4 + slot * .75 };
   }
