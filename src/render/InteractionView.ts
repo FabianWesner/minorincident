@@ -14,7 +14,6 @@ import type { EntitySnapshot } from '../sim/world/types';
 import type { Materials } from './Materials';
 import './interaction.css';
 import { l6, l6Doors, l6Entries } from '../data/l6';
-import { PaletteMaterial } from './PaletteMaterial';
 const assetIds: Record<string, string> = {
   'hazard.propane': 'haz.propane-tank', 'hazard.barrel': 'haz.propane-tank', 'hazard.gas-can': 'haz.gas-can',
   'hazard.extinguisher': 'prop.fire-extinguisher',
