@@ -51,6 +51,23 @@ test('teleport and checkpoint allies reserve distinct radius-aware slots', async
     expect(w.entities.get(ids[0])!.transform).toMatchObject({ x: -400, z: -400 });
   } finally { w.dispose(); }
 });
+
+test('a deferred checkpoint keeps its requested pose and restores collider and grace on admission', async () => {
+  const w = await arena();
+  try {
+    const tank = spawnSetPiece(w, 'veh.tank', { x: 12, z: 0 }), player = w.entities.get(1)!;
+    respawnAtCheckpoint(w, { x: 12, z: 0 });
+    expect(player.pendingAdmission).toBeDefined(); expect(w.physics.playerCollider!.isEnabled()).toBe(false);
+    tick(w, 35);
+    expect(player.pendingAdmission).toMatchObject({ x: 12, z: 0, writer: 'checkpoint.respawn' });
+    expect(player.transform).toMatchObject({ x: 12, z: 0 });
+    tank.hidden = true; tick(w, 30);
+    expect(player.pendingAdmission).toBeUndefined(); expect(player.hidden).not.toBe(true);
+    expect(w.physics.playerCollider!.isEnabled()).toBe(true);
+    expect(player.survivor!.invulnerableUntil - w.tick).toBeGreaterThan(90);
+    expect(w.solids.clear(player.transform, .35, 1)).toBe(true);
+  } finally { w.dispose(); }
+});
 test('guard audits a stationary actor when a tank moves over it and retains bounded diagnostics', async () => {
   const w = await arena();
   try {

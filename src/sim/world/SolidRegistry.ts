@@ -192,14 +192,21 @@ export class SolidRegistry {
     this.syncHulls(); this.writers.set(e, writer);
     const to = this.find(e.transform, actorRadius(e), e.id, range, navigation);
     if (!to) {
-      if (!e.pendingAdmission) { e.pendingAdmission = { ...e.transform, writer, hidden: e.hidden, range, navigation }; this.deferred++; }
+      if (!e.pendingAdmission) { e.pendingAdmission = { ...e.transform, writer, hidden: e.hidden, range, navigation, ...(e.id === 1 ? { colliderEnabled: this.world.physics.playerCollider?.isEnabled() } : {}) }; this.deferred++; }
       else Object.assign(e.pendingAdmission, e.transform, { writer, range, navigation, hidden });
+      if (e.id === 1) this.world.physics.playerCollider?.setEnabled(false);
       e.hidden = true; this.world.spatial.delete(e.id); return false;
     }
     Object.assign(e.transform, to);
-    if (e.pendingAdmission) e.hidden = hidden;
-    delete e.pendingAdmission;
+    if (e.pendingAdmission) { e.pendingAdmission.hidden = hidden; this.releasePending(e); }
     this.publish(e, true); this.admitted++; return true;
+  }
+  private releasePending(e: EntitySnapshot): void {
+    const pending = e.pendingAdmission; if (!pending) return;
+    e.hidden = pending.hidden;
+    if (e.id === 1 && pending.colliderEnabled !== undefined) this.world.physics.playerCollider?.setEnabled(pending.colliderEnabled);
+    if (e.survivor && e.health.current > 0 && pending.graceTicks) e.survivor.invulnerableUntil = this.world.tick + pending.graceTicks;
+    delete e.pendingAdmission;
   }
   relocate(e: EntitySnapshot, at: Point, writer: string, range = 1.5, navigation = true): boolean {
     this.syncHulls(); const to = this.find(at, actorRadius(e), e.id, range, navigation);
@@ -227,14 +234,14 @@ export class SolidRegistry {
     this.nav = nav; this.navRevision = nav?.revision ?? -1;
     this.bodies.length = this.moved.length = 0; this.live.clear();
     for (const e of this.world.entities.iterate()) {
-      if (e.pendingAdmission && e.health.current <= 0) { e.hidden = e.pendingAdmission.hidden; delete e.pendingAdmission; }
+      if (e.pendingAdmission && e.health.current <= 0) this.releasePending(e);
       if (e.pendingAdmission) {
         const pending = e.pendingAdmission, p = e.transform;
         const scripted = pending.x !== p.x || pending.z !== p.z || pending.y !== p.y;
         if (scripted) Object.assign(pending, p);
         if (!scripted && this.world.tick % 30 !== e.id % 30) { e.hidden = true; this.world.spatial.delete(e.id); continue; }
         const to = this.find(pending, actorRadius(e), e.id, pending.range ?? 4, pending.navigation ?? true);
-        if (to) { Object.assign(e.transform, to); e.hidden = pending.hidden; delete e.pendingAdmission; this.admitted++; this.publish(e); }
+        if (to) { Object.assign(e.transform, to); this.releasePending(e); this.admitted++; this.publish(e); }
         else { e.hidden = true; this.world.spatial.delete(e.id); continue; }
       }
       if (!actor(e)) continue;
@@ -332,6 +339,7 @@ export class SolidRegistry {
           if (to) { Object.assign(p, to); valid = true; }
           else if (!old) {
             e.pendingAdmission = { ...proposed, writer: this.writers.get(e) ?? 'tick.admission', hidden: e.hidden, range: 4, navigation: false };
+            if (e.id === 1) { e.pendingAdmission.colliderEnabled = this.world.physics.playerCollider?.isEnabled(); this.world.physics.playerCollider?.setEnabled(false); }
             e.hidden = true; this.world.spatial.delete(e.id); this.live.delete(e.id); this.deferred++; continue;
           }
         }
