@@ -382,6 +382,7 @@ export class SceneLab {
       if (spec.l7Departure) {
         world.l7Departure = new LevelSevenDeparture(world); world.l7Departure.install();
         if (spec.l7Departure === 'follow') world.l7Departure.cameraPose = () => null;
+        this.vehicles.set('departure-bus', world.l7Departure.state.busId);
         world.events.on('sim.tick', () => world.l7Departure?.update(), SimPhase.missions);
       }
     }
