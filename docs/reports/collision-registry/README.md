@@ -7,7 +7,7 @@ The courier/corgi and APC contact additions follow the L1–L4 and L5–L9 visua
 ## Implementation
 
 - `SimWorld.solids` extends the existing static NavGrid compound bake. Vehicles use the existing circle/OBB contact primitive and spatial hash. Parked route blockers alias the canonical hull, so admission uses its exact footprint.
-- E09 vehicles, traffic, convoy, tank and fuel/setpiece hulls register by entity ID, including restore. Explicit passengers and attachments exempt only their owner relationships. Dead cosmetics have no actor mask.
+- E09 vehicles, traffic, convoy, tank and fuel/setpiece hulls register by entity ID, including restore. Explicit passenger entry/seated animations have no free actor footprint; attachments exempt contact only with their owner or other attachments on that owner. Dead cosmetics have no actor mask.
 - One radius/height-aware occupancy query serves infected/civilian admission, checkpoint restore/respawn, vehicle exits and scripted relocation. Blocked requests retain their ID and encounter slot; they retry instead of accepting a blocked fallback. Scripted doorway walks retain their authored path until they clear the footprint.
 - Final contact commit follows actor grounding and vehicle movement and precedes published animation displacement. It includes the courier and corgi. Conflicting motion components reserve their previous valid poses; independent formations keep moving.
 - The guard checks moved/new actors each tick and independently audits the full population every 60 ticks. Its 64-entry offender ring records tick, actor, solid/actor, depth and last writer. Level completion fails on any penetration invariant failure; Scene Lab exposes the same counters. Deferred requests remain reported separately: L8 can finish while its authored tunnel arrivals are still walking to clear ground. Their identities and encounter slots remain retained. Available-space repro scenes and E18 horde fixtures additionally require zero pending requests.
@@ -22,13 +22,18 @@ This report is in progress; passing subsets do **not** establish a green deploy 
 | Four audit reproductions, five cases | unmodified source plus regression tests (`d9743890d`) | All five fail, including the natural L4 tank/Alpha case. |
 | Same reproductions through L4 tick 15700 | earlier registry snapshots, including `45cdd3e04` | All five pass; no actor lost. |
 | L1–L10 opening 300-tick invariant battery | `45cdd3e04` | All ten pass. |
+| Fresh full unit suite | `fcabb2f79` | 1,463 passed, zero failed, seven skipped. The three earlier failures also pass their focused rerun. |
+| L1–L10 campaign completion | latest completion battery before `cb4783d1f` | 10/10 complete; zero penetration invariant failures in every level. L8 retains three pending authored tunnel arrivals; all other levels have none. |
+| L5 ingress/checkpoints and L7 departure | `f8f6e41ac` | 16/16 selected tests pass, including the unchanged L5 newbie time limit and all 35 passengers boarding. |
+| WebGPU collision/combat matrix | preceding frozen build | 94/94 pass, both quality tiers and zoom 1.5/1/.5. Final source adds 12 station/boarding rows still awaiting validation. |
+| Native GPU desktop/horde and bus rides | preceding frozen build | Desktop/horde budgets pass and all 17 ride configurations pass. Both emulated mobile L6 probes fail during fixture setup; mission initialization cap fix committed, measurements pending. Physical-device/manual checks remain skipped. |
 | Full unit/sim/level sweep | `45cdd3e04` | 2727 passed, 114 failed, 9 skipped. Later movement/admission fixes require a new full result. |
 | APC healthy/floor, WebGL, high/low, zoom 1.5/1/.5 | attack-facing preview | 12/12 pass, zero physical failures/pending; torso and attack-arm penetration gates ≤2 cm. [Rows](apc-gates.json). |
 | Courier/corgi with eight real attackers; Butcher game camera | preceding frozen high/WebGL preview | Both numeric gates pass; broader final matrix pending. |
 | Isolated Node E18, 200 actors | `45cdd3e04` | p95 1.264 ms vs 1.707 ms baseline (−26%); 200 retained, zero failures/pending. |
 | Isolated Node E18, 100 actors | `45cdd3e04` | p95 .808 ms vs .968 ms baseline (−17%); 100 retained, zero failures/pending. [Earlier measurement](sim-performance-earlier.json). |
 
-The final source still needs its queued full suite, completion battery, both backend matrices and performance result. Existing scene expectations are retained; the added contact gates tighten overlap to 2 cm. The new eight-runner fixture uses the production 60 HP toughness-adjusted value.
+The final source still needs its queued full sim/level suite, final backend matrices and isolated performance comparison. The latest L1 complete-bot timing test exceeds its unchanged 180 s limit; a paired source-only baseline run is queued. [Compact completed evidence](validation-current.json). Existing scene expectations are retained; the added contact gates tighten overlap to 2 cm. The new eight-runner fixture uses the production 60 HP toughness-adjusted value.
 
 ### Game-camera inspection
 
