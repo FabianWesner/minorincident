@@ -1,161 +1,22 @@
 {
+  "extends": "../l7-departure/departure.json",
   "name": "movement-l7-bus-wheels",
-  "note": "Production L7 boarding and moving bus wheel pivots. Corgi is retained as a hidden passenger during departure.",
-  "seed": 29,
-  "tier": 6,
-  "time": "L6",
-  "ground": "district",
-  "dof": false,
-  "l7Group": true,
-  "l7Departure": true,
-  "layout": {
-    "level": "L7",
-    "district": "D-FAIR",
-    "bbox": [
-      [
-        -92,
-        36
-      ],
-      [
-        48,
-        64
-      ]
-    ],
-    "anchors": [
-      "l7-bus-boarding",
-      "l7-bus"
-    ]
-  },
+  "note": "Production L7 departure with courier and corgi at the door, isolating wheel travel on the evacuation lane. The corgi remains a hidden passenger; full survivor boarding has its existing departure scenes and sim tests.",
   "actors": [
     {
       "id": "courier",
       "kind": "courier",
       "at": [
-        -60,
-        49
-      ],
-      "yaw": 180,
-      "loadout": [
-        "weapon.rocket-launcher",
-        "weapon.kick"
-      ],
-      "state": {
-        "walk": [
-          [
-            -70.5,
-            47.5
-          ]
-        ]
-      }
-    },
-    {
-      "id": "follower-0",
-      "kind": "pedestrian",
-      "at": [
-        -54.0,
-        46.4
-      ],
-      "yaw": 180,
-      "look": {
-        "model": "npc.civilian-woman-b"
-      },
-      "state": {
-        "survivor": {
-          "slot": 0
-        }
-      }
-    },
-    {
-      "id": "follower-1",
-      "kind": "pedestrian",
-      "at": [
-        -54.0,
+        -70.5,
         47.5
-      ],
-      "yaw": 180,
-      "look": {
-        "model": "npc.civilian-man-b"
-      },
-      "state": {
-        "survivor": {
-          "slot": 1
-        }
-      }
-    },
-    {
-      "id": "follower-2",
-      "kind": "pedestrian",
-      "at": [
-        -54.0,
-        48.6
-      ],
-      "yaw": 180,
-      "look": {
-        "model": "npc.civilian-woman-a"
-      },
-      "state": {
-        "survivor": {
-          "slot": 2
-        }
-      }
-    },
-    {
-      "id": "follower-3",
-      "kind": "pedestrian",
-      "at": [
-        -55.2,
-        46.4
-      ],
-      "yaw": 180,
-      "look": {
-        "model": "npc.civilian-man-a"
-      },
-      "state": {
-        "survivor": {
-          "slot": 3
-        }
-      }
-    },
-    {
-      "id": "follower-4",
-      "kind": "pedestrian",
-      "at": [
-        -55.2,
-        47.5
-      ],
-      "yaw": 180,
-      "look": {
-        "model": "npc.civilian-elderly"
-      },
-      "state": {
-        "survivor": {
-          "slot": 4
-        }
-      }
-    },
-    {
-      "id": "follower-5",
-      "kind": "pedestrian",
-      "at": [
-        -55.2,
-        48.6
-      ],
-      "yaw": 180,
-      "look": {
-        "model": "npc.civilian-woman-b"
-      },
-      "state": {
-        "survivor": {
-          "slot": 5
-        }
-      }
+      ]
     },
     {
       "id": "corgi",
       "kind": "corgi",
       "at": [
-        -59,
-        48
+        -69,
+        47.5
       ]
     }
   ],
@@ -164,72 +25,11 @@
     "actor": "courier",
     "zoom": 1
   },
-  "frames": 1100,
-  "shots": [
-    0,
-    120,
-    240,
-    360,
-    480,
-    540,
-    600,
-    660,
-    720,
-    780,
-    840,
-    900,
-    1000
-  ],
-  "sheet": 100,
+  "frames": 480,
+  "sheet": 60,
   "expect": {
     "consoleErrors": 0,
     "drawCallsMax": 300,
     "trianglesMax": 500000
-  },
-  "script": [
-    {
-      "frame": 0,
-      "effect": {
-        "fire": [
-          -80.5,
-          54
-        ],
-        "radius": 1.8,
-        "duration": 1500
-      }
-    },
-    {
-      "frame": 0,
-      "effect": {
-        "fire": [
-          -63,
-          52.5
-        ],
-        "radius": 1.8,
-        "duration": 1500
-      }
-    },
-    {
-      "frame": 0,
-      "effect": {
-        "fire": [
-          -52,
-          55
-        ],
-        "radius": 1.8,
-        "duration": 1500
-      }
-    },
-    {
-      "frame": 0,
-      "effect": {
-        "fire": [
-          -36,
-          53
-        ],
-        "radius": 1.8,
-        "duration": 1500
-      }
-    }
-  ]
+  }
 }

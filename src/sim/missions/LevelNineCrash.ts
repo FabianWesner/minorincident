@@ -38,7 +38,12 @@ export class LevelNineCrash {
     }
     // Restore occupants before spawning: their IDs belong to the incoming transport.
     const corgi = w.npcs!.companion.spawn();
-    if (!payload) w.vehicles!.boardPassenger(this.state.carId, corgi);
+    if (!payload) {
+      const car = w.vehicles!.cars.get(this.state.carId)!, t = car.entity.transform, def = car.physics.def, z = def.width / 2 + .55;
+      const dog = w.entities.get(corgi)!;
+      Object.assign(dog.transform, { x: t.x + Math.cos(t.yaw) * def.doorX + Math.sin(t.yaw) * z, z: t.z - Math.sin(t.yaw) * def.doorX + Math.cos(t.yaw) * z });
+      w.spatial.set(corgi, dog.transform.x, dog.transform.z); w.vehicles!.boardPassenger(this.state.carId, corgi);
+    }
     w.vehicles!.setFloorPolicy(this.state.carId);
     const saved = w.progression?.campaign?.l9Crash;
     if (saved) {

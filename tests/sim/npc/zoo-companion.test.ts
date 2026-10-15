@@ -41,3 +41,11 @@ test('@E29 @E30 bus passenger keeps the same corgi identity at zoo arrival', asy
   expect([...next.entities.iterate()].filter(e => e.companion)).toHaveLength(1);
   expect(Math.hypot(arrived.transform.x - next.entities.get(1)!.transform.x, arrived.transform.z - next.entities.get(1)!.transform.z)).toBeLessThan(3);
 });
+test('@E31 standalone crossing start keeps the protected corgi aboard the APC', async () => {
+  const w = await loadLevel('L9', 32); worlds.push(w);
+  const dog = [...w.entities.iterate()].find(e => e.companion)!;
+  expect(dog.passengerOf).toBe(w.vehicles!.active);
+  step(w, 90);
+  expect(w.entities.get(dog.id)?.hidden).toBe(true);
+  expect(w.entities.get(dog.id)?.health.current).toBe(100);
+});
