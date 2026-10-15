@@ -439,7 +439,7 @@ export class AudioService implements Lifecycle {
             const p = this.host.project(position);
             direction = p.x < 0.4 ? 'left' : p.x > 0.6 ? 'right' : p.y < 0.4 ? 'ahead' : 'behind';
         }
-        this.captions.push({ text: `[${text}${direction ? ` — ${direction}` : ''}]`, expires: this.context.currentTime + duration });
+        this.captions.push({ text: `[${text}${direction ? `, ${direction}` : ''}]`, expires: this.context.currentTime + duration });
         if (this.captions.length > 4)
             this.captions.shift();
         this.showCaptions();
@@ -621,7 +621,7 @@ export class AudioService implements Lifecycle {
             }
             const special = 'special' in event ? event.special : event.kind;
             const id = telegraphCues[special] ?? telegraphCues[entity?.archetype ?? ''] ?? telegraphCues[`infected.${special}`] ?? eventCues.telegraph;
-            if ('duration' in event && (special === 'alpha.charge' || special === 'alpha.ground-slam')) this.caption(special === 'alpha.charge' ? 'Alpha charging — clear the marked path' : 'Alpha ground slam — leave the marked circle', position, event.duration);
+            if ('duration' in event && (special === 'alpha.charge' || special === 'alpha.ground-slam')) this.caption(special === 'alpha.charge' ? 'Alpha charging: clear the marked path' : 'Alpha ground slam: leave the marked circle', position, event.duration);
             this.play(id, { position, offscreen: position ? this.host.offscreen(position) : false }, source);
             return;
         }
