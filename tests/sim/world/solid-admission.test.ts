@@ -280,6 +280,21 @@ test('courier and corgi remain outside eight attackers through windup and knockb
   } finally { w.dispose(); }
 });
 
+test('the courier can push out of eight living bodies while every committed footprint stays clear', async () => {
+  const w = await arena();
+  try {
+    const player = w.entities.get(1)!, start = { ...player.transform };
+    const ids = Array.from({ length: 8 }, (_, i) => {
+      const angle = i * Math.PI / 4;
+      const id = w.infected!.spawn('infected.runner', { x: start.x + Math.cos(angle) * 1.1, z: start.z + Math.sin(angle) * 1.1 }, { state: 'idle' });
+      w.entities.get(id)!.combat!.staggerUntil = 600; return id;
+    });
+    w.setInput({ move: { x: 1, z: 0 } }); tick(w, 120);
+    expect(player.transform.x - start.x).toBeGreaterThan(1.5);
+    expect(ids.every(id => w.entities.get(id)!.health.current === 60 && !w.entities.get(id)!.hidden)).toBe(true);
+  } finally { w.dispose(); }
+});
+
 test('parked rotated hull admission uses its exact footprint rather than its coarse route box', async () => {
   const w = await arena();
   try {
