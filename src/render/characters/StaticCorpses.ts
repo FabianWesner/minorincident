@@ -109,6 +109,7 @@ export class StaticCorpses extends Group {
         const pieces = [this.frozenPose(base, material, clip, frame, hiddenParts, hidesHair).geometry, this.frozenPose(accessory, material, clip, frame, hiddenParts, hidesHair).geometry];
         const indexed = pieces.map(piece => { if(piece.index)return piece;const wrapper=new BufferGeometry();for(const name of Object.keys(piece.attributes))wrapper.setAttribute(name,piece.getAttribute(name));wrapper.setIndex(Array.from({length:piece.getAttribute('position').count},(_,i)=>i));return wrapper; });
         geometry = mergeGeometries(indexed)!;
+        geometry.boundingSphere = pieces[0].boundingSphere!.clone().union(pieces[1].boundingSphere!);
         indexed.forEach((piece,i)=>{if(piece!==pieces[i])piece.dispose();});
       } else {
         geometry = new BufferGeometry(); const parts = source.getAttribute('_parts');
@@ -141,6 +142,7 @@ export class StaticCorpses extends Group {
           geometry.setIndex(kept.length > 65535 ? new Uint32BufferAttribute(triangles, 1) : new Uint16BufferAttribute(triangles, 1));
         }
       }
+      if (!geometry.boundingSphere) geometry.computeBoundingSphere();
       // One frozen material per source material: every death frame / gore mask shares its shader (l4-collapse-2: a copy per mask
       // compiled a new pipeline mid-fight for each new dismemberment combination).
       let frozenMaterial = this.frozenMaterials.get(material.uuid);

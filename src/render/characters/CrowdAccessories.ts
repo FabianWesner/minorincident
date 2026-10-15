@@ -151,6 +151,7 @@ export class CrowdAccessories extends Group {
     for (const name of ['position', 'normal', 'color', '_parts']) merged.setAttribute(name, source.getAttribute(name));
     merged.setIndex(source.index);
     merged.userData.corpseBody = source; merged.userData.corpseAccessory = piece;
+    merged.userData.appearanceTags = source.userData.appearanceTags;
     this.corpseSources.set(key, merged); return merged;
   }
   finish(): void {
