@@ -1,3 +1,4 @@
+import { actorRadius } from '../world/SolidRegistry';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { CoverWall } from '../combat/HitQuery';
@@ -33,6 +34,7 @@ export class LevelSevenDeparture {
   handedOver = false;
   private blocker: number | undefined;
   private readonly from = new Map<number, { x: number; z: number }>();
+  private readonly approaches = new Map<number, { x: number; z: number; at: number; around?: { x: number; z: number } }>();
   private readonly boarding = l7CorridorAnchors['l7-bus-boarding'].position;
   private readonly wall: CoverWall = { x: l7Bus.x, y: 1.5, z: l7Bus.z, halfX: 4.68, halfY: 1.5, halfZ: 1.48 };
   constructor(private readonly world: SimWorld) {}
@@ -75,11 +77,30 @@ export class LevelSevenDeparture {
     // courier is standing between its centre and the last waiting survivor.
     const near = distance(e.transform, queue) <= 1.6 + (e.combat?.radius ?? .35);
     if (near && w.tick - s.lastEnterAt >= cfg.gapTicks) {
-      e.passengerOf = s.busId;
+      e.passengerOf = s.busId; this.approaches.delete(e.id);
       s.lastEnterAt = w.tick; s.entering[e.id] = w.tick; this.from.set(e.id, { x: e.transform.x, z: e.transform.z });
       return true;
     }
-    if (!near) w.npcs!.move(e, queue, (w.l7Encounters!.state.roster.find(r => r.id === e.id)?.injured ? 1.4 : 3.8), c, .5, 1600);
+    if (!near) {
+      let approach = this.approaches.get(e.id);
+      if (!approach) { approach = { x: e.transform.x, z: e.transform.z, at: w.tick }; this.approaches.set(e.id, approach); }
+      if (distance(e.transform, approach) > .05) { approach.x = e.transform.x; approach.z = e.transform.z; approach.at = w.tick; }
+      if (approach.around && distance(e.transform, approach.around) < .15) delete approach.around;
+      let goal = approach.around ?? queue;
+      const courier = w.entities.get(1)!, p = courier.transform, dx = queue.x - e.transform.x, dz = queue.z - e.transform.z, length2 = dx * dx + dz * dz;
+      const t = length2 ? ((p.x - e.transform.x) * dx + (p.z - e.transform.z) * dz) / length2 : 0;
+      const clearance = actorRadius(e) + actorRadius(courier) + .05;
+      // Only a stalled close approach needs a detour. Keep ordinary queue
+      // travel and its existing boarding cadence, then walk around the courier.
+      if (!approach.around && w.tick - approach.at >= 30 && Math.abs(p.y - e.transform.y) < 1.2 && distance(p, e.transform) < clearance + .75 && t > 0 && t < 1 && Math.hypot(e.transform.x + t * dx - p.x, e.transform.z + t * dz - p.z) < clearance) {
+        const length = Math.sqrt(length2), side = dx * (p.z - e.transform.z) - dz * (p.x - e.transform.x) >= 0 ? 1 : -1;
+        for (const sign of [side, -side]) {
+          const around = { x: e.transform.x + sign * dz / length, z: e.transform.z - sign * dx / length };
+          if (w.solids.clear({ ...around, y: e.transform.y }, actorRadius(e), e.id)) { goal = approach.around = around; break; }
+        }
+      }
+      w.npcs!.move(e, goal, r.injured ? 1.4 : 3.8, c, goal === queue ? .5 : .05, 1600);
+    }
     w.spatial.set(e.id, e.transform.x, e.transform.z);
     return true;
   }
