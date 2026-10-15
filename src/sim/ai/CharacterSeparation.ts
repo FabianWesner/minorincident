@@ -79,7 +79,7 @@ export function installCharacterSeparation(world: SimWorld): void {
       }
     }
     const visit = (id: number): void => {
-      const body = active!, { entity: e, radius: r } = body;
+      const body = active!, { entity: e } = body;
       const neighbor = radii[id]; if (!neighbor || neighbor.entity === e) return;
       const other = neighbor.entity;
       const dx = e.transform.x - other.transform.x, dz = e.transform.z - other.transform.z, squared = dx * dx + dz * dz;
