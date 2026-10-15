@@ -13,6 +13,11 @@ try {
         const a = window.__SS__!; await a.ready; await a.loadLevel('L6', { seed: 1, progression: 'L6-default' });
         a.pause(); a.missions.begin(); a.cheats.god(true);
       });
+      await session.page.evaluate(async () => {
+        const a=window.__SS__!, lamp=a.query({}).find(e=>e.archetype==='pickup.headlamp');
+        if(lamp){a.teleport(1,{x:lamp.transform.x+1.3,z:lamp.transform.z}); await a.step(1); const lab=window.__SCENE__ as unknown as {game:import('../../src/Game').Game}; const rig=lab.game.view.view, p=a.getEntity(1)!.transform;rig.focus.set(p.x,p.y-.7,p.z);rig.update(p,0);await a.screenshotReady();}
+      });
+      await session.page.screenshot({path:`${out}/${backend}-${tier}-pickup.png`});
       for (const spot of ['shelter', 'gate'] as const) {
         await session.page.evaluate(async spot => {
           const a = window.__SS__!;
@@ -32,6 +37,11 @@ try {
           const name = `${backend}-${tier}-${spot}-z${zoom}`;
           await session.page.screenshot({ path: `${out}/${name}.png` });
           rows.push({ name, camera: await session.page.evaluate(() => window.__SS__!.getState().render.camera), perf: await session.page.evaluate(() => window.__SS__!.perf()), errors: session.errors });
+        }
+        if(spot==='shelter'){
+          await session.page.evaluate(async()=>{const a=window.__SS__!;a.survivor.select('male',0);await a.step(1);await a.screenshotReady();});
+          await session.page.screenshot({path:`${out}/${backend}-${tier}-male-headlamp.png`});
+          await session.page.evaluate(async()=>{window.__SS__!.survivor.select('female',0);await window.__SS__!.step(1);});
         }
       }
     } finally { await session.close(); }

@@ -181,6 +181,9 @@ export class CharacterView extends Group {
       if (lamp) {
         headlamp = (await loader.loadAsync('/assets/models/acc.headlamp.glb')).scene;
         headlamp.name = 'courier-headlamp'; headlamp.visible = false;
+        // The couriers' authored caps sit above the head pivot (different heights).
+        headlamp.position.set(variant === 'female' ? .08 : .04, variant === 'female' ? .3 : .19, 0);
+        headlamp.scale.set(variant === 'female' ? 1.3 : 1.1, 1, variant === 'female' ? 1.2 : 1);
         headlamp.traverse(node => { if (node instanceof Mesh) {
           const source = node.material as import('three').MeshStandardMaterial;
           node.material = materials.fromColor(`headlamp:${source.name}`, source.color, source.name.startsWith('emi_') ? .8 : 0);

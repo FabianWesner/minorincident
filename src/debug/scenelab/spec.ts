@@ -377,7 +377,7 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
   }
   // Recentering moves the crop (and its bbox) so its centre lands on the origin.
   const shift: Point = spec.layout?.recenter && bbox ? [-(bbox[0][0] + bbox[1][0]) / 2, -(bbox[0][1] + bbox[1][1]) / 2] : [0, 0];
-  for (const p of kept) { p.position[0] += shift[0]; p.position[2] += shift[1]; for (const k of ['min', 'max'] as const) { p.visualAabb[k][0] += shift[0]; p.visualAabb[k][2] += shift[1]; } if (!(p.assetId === 'kit.highway-onramp' && p.lightGroup === 'l3-highway')) p.lightGroup = labLightGroup; }
+  for (const p of kept) { p.position[0] += shift[0]; p.position[2] += shift[1]; for (const k of ['min', 'max'] as const) { p.visualAabb[k][0] += shift[0]; p.visualAabb[k][2] += shift[1]; } if (!spec.l6Subway && !(p.assetId === 'kit.highway-onramp' && p.lightGroup === 'l3-highway')) p.lightGroup = labLightGroup; }
   spec.props?.forEach((prop, i) => kept.push(placementFor(prop, i, assets)));
   const center: Point = bbox && !spec.layout?.recenter ? [(bbox[0][0] + bbox[1][0]) / 2, (bbox[0][1] + bbox[1][1]) / 2] : [0, 0];
   const halfX = bbox ? Math.abs(bbox[1][0] - bbox[0][0]) / 2 + 8 : (spec.size ?? 40) / 2, halfZ = bbox ? Math.abs(bbox[1][1] - bbox[0][1]) / 2 + 8 : (spec.size ?? 40) / 2;
@@ -417,6 +417,7 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
     layout.walkable.excluded = source.walkable.excluded.map(polygon => polygon.map(([x,z]) => [x+shift[0],z+shift[1]]));
   }
   if ((spec.l4Convoy || spec.l3Rendezvous || spec.l6Subway) && source) layout.colliders = structuredClone(source.colliders);
+  if (spec.l6Subway && source) layout.lightGroups = structuredClone(source.lightGroups);
   for (const name of (spec.l4Convoy || spec.l3Rendezvous || spec.l5Aftermath || spec.l6Subway) && source ? Object.keys(source.anchors) : spec.layout?.anchors ?? []) {
     const anchor = source?.anchors[name];
     if (!anchor) throw new Error(`Unknown layout anchor ${name}`);
