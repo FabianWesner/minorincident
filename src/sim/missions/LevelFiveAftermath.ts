@@ -154,7 +154,8 @@ export class LevelFiveAftermath {
       const id = alpha ? ai.spawn('infected.alpha', at) : o.spawnPedestrian(at), e = this.entity(id)!;
       if (!alpha) o.turnNow(e);
       if (!e.infected) continue;
-      if (alpha) e.infected.territory = { x: at.x, z: at.z, radius: l5.infected.leashM };
+      // Keep the town encounter bounded without cancelling targets inside normal sight.
+      if (alpha) e.infected.territory = { x: at.x, z: at.z, radius: Math.max(l5.infected.leashM, ai.hearing.rangeM) };
       const brain = e.infected.l1; if (brain) { brain.homeX = g.at[0]; brain.homeZ = g.at[1]; brain.leashM = l5.infected.leashM; }
       if (e.combat) e.combat.damageMultiplier = l5.infected.damage;
       s.infectedIds.push(id); left--;
@@ -179,8 +180,25 @@ export class LevelFiveAftermath {
   private emerge(): void {
     const { world } = this.mission, s = this.s, tick = world.tick;
     if (s.phase !== 'cellar') return;
-    this.teleport(world.entities.get(1)!, this.anchor('l5-out'));
-    for (const e of world.entities.iterate()) if (e.companion) { const p = this.snap({ x: this.anchor('l5-out').x - 1.2, z: this.anchor('l5-out').z + .8 }, .4); Object.assign(e.transform, p); world.spatial.set(e.id, p.x, p.z); }
+    const door = world.progression?.campaign?.shelterEntry ?? this.anchor('l5-cellar-door');
+    const yaw = door.yaw ?? -Math.PI / 2, player = world.entities.get(1)!, radius = player.combat?.radius ?? .35;
+    let exit: Point | undefined;
+    // Admission uses the current navigation collision map and live infected bodies.
+    // Keep all candidates just outside the remembered doorway, within the PO's 1.5 m.
+    for (const offset of [0, -.35, .35, -.7, .7, -1.05, 1.05]) {
+      for (const step of [1, 1.25, 1.45]) {
+        const p = { x: door.x + Math.cos(yaw + offset) * step, z: door.z - Math.sin(yaw + offset) * step };
+        if (!world.infected!.nav.clear(p.x, p.z, radius) || !world.trapRescue!.reachable(p.x, p.z)) continue;
+        if (world.physics.world!.intersectionWithShape({ ...p, y: (world.districts?.groundHeight(p.x, p.z) ?? 0) + .725 }, { x: 0, y: 0, z: 0, w: 1 }, world.physics.playerCollider!.shape, undefined, undefined, world.physics.playerCollider!)) continue;
+        if (world.infected!.active.some(e => e.health.current > 0 && !e.hidden && dist(e.transform, p) < radius + (e.combat?.radius ?? .4) + .05)) continue;
+        exit = p; break;
+      }
+      if (exit) break;
+    }
+    if (!exit) return; // Retry admission on the next tick if the doorway is temporarily occupied.
+    player.transform.yaw = yaw;
+    this.teleport(player, exit);
+    for (const e of world.entities.iterate()) if (e.companion) { const p = this.snap({ x: exit.x - 1.2, z: exit.z + .8 }, .4); Object.assign(e.transform, p); world.spatial.set(e.id, p.x, p.z); }
     s.phase = 'emerged'; s.emergedAt = tick;
     if (!this.mission.state.states.emerged) this.mission.setState('emerged', true);
     world.events.emit({ type: 'l5.emerged', tick });
@@ -200,9 +218,9 @@ export class LevelFiveAftermath {
     this.checkAccounted();
   }
   private find(r: L5State['survivors'][number]): void {
-    const { world } = this.mission, s = this.s, tick = world.tick, e = this.entity(r.id), def = l5Survivors.find(d => d.key === r.key)!;
+    const { world } = this.mission, s = this.s, tick = world.tick, e = this.entity(r.id);
     if (!e?.civilian?.survivor || r.status !== 'hidden') return;
-    const out = this.snap({ x: def.outAt[0], z: def.outAt[1] }, .4), c = e.civilian, sv = c.survivor!;
+    const out = this.snap(this.anchor(`l5-ring-${r.key}`), .4), c = e.civilian, sv = c.survivor!;
     Object.assign(e.transform, out); e.hidden = false; world.spatial.set(e.id, out.x, out.z);
     c.pauseUntil = 0; c.path.length = 0; c.goal = -1; c.schedule = this.hiddenSchedule(out); c.scheduleStep = 0; c.activityUntil = 0;
     sv.mode = 'follow'; sv.slot = s.found; sv.foundAt = tick; sv.waitAt = tick + ticks(l5.follow.waitEveryS);
@@ -233,7 +251,7 @@ export class LevelFiveAftermath {
   private losses(): void {
     const { world } = this.mission, s = this.s, tick = world.tick;
     for (const r of s.survivors) {
-      if (r.status !== 'following' && r.status !== 'hidden') continue;
+      if (r.status !== 'following' && r.status !== 'hidden' && r.status !== 'sheltered') continue;
       const e = this.entity(r.id), c = e?.civilian;
       const turned = !!e && (!!e.infection || !!e.infected || c?.state === 'bitten' || c?.state === 'down' || c?.state === 'rising' || c?.state === 'infected');
       const dead = !e || e.health.current <= 0 || c?.state === 'finished';
@@ -253,13 +271,13 @@ export class LevelFiveAftermath {
     if (player.health.current <= 0 || s.phase !== 'search' && s.phase !== 'metro') return;
     for (const r of s.survivors) {
       if (r.status !== 'hidden') continue;
-      const def = l5Survivors.find(d => d.key === r.key)!, hide = this.anchor(`l5-hide-${r.key}`), ring = this.anchor(`l5-ring-${r.key}`);
-      const d = dist(player.transform, hide);
+      const def = l5Survivors.find(d => d.key === r.key)!, ring = this.anchor(`l5-ring-${r.key}`);
+      const d = dist(player.transform, ring);
       // Sign of life: audible (position + subtitle) within 25 m, never beyond.
       if (d <= l5.survivors.cueRangeM && tick >= r.cueAt) {
         r.cueAt = tick + ticks(l5.survivors.cueEveryS);
-        s.cue = { key: r.key, x: hide.x, z: hide.z, until: tick + ticks(l5.survivors.pingS), text: dialogue[def.cue.id] };
-        world.events.emit({ type: 'l5.cue', tick, key: r.key, position: { x: hide.x, z: hide.z }, text: dialogue[def.cue.id], distance: d });
+        s.cue = { key: r.key, x: ring.x, z: ring.z, until: tick + ticks(l5.survivors.pingS), text: dialogue[def.cue.id] };
+        world.events.emit({ type: 'l5.cue', tick, key: r.key, position: { x: ring.x, z: ring.z }, text: dialogue[def.cue.id], distance: d });
       }
       // Standing next to the spot for 1.0 s (or pressing E there) brings them out.
       if (dist(player.transform, ring) <= l5.survivors.reachM) {
@@ -348,6 +366,7 @@ export class LevelFiveAftermath {
   update(): void {
     const { world, state } = this.mission, s = state.l5; if (!s || !world.infected) return;
     const tick = world.tick;
+    if (s.phase === 'cellar' && state.steps.emerge.status === 'completed') this.emerge();
     if (s.phase === 'emerged' && tick >= s.emergedAt + ticks(l5.emerge.objectiveAfterS)) this.startSearch();
     // No marker ever points at a survivor (or at the search area): only the cellar brace and the Metro entrance are marked.
     if (state.marker === 'l5-plaza') state.marker = null;
@@ -369,6 +388,9 @@ export class LevelFiveAftermath {
   }
   /** The result: survivors that reached the station alive (keys, carried into L6) and their count as `rescued`. */
   result(): { survivors: string[]; stationOccupants: EntitySnapshot[]; rescuedSurvivors: EntitySnapshot[] } {
+    // A bite/turn can land during the closing animation, after the entry roster was
+    // marked sheltered. Reconcile the real people before committing the L6 save.
+    this.losses();
     const s = this.mission.state.l5, keys = s ? s.survivors.filter(r => r.status === 'sheltered').map(r => r.key) : [];
     this.mission.state.stats.rescued = keys.length;
     return { survivors: keys, rescuedSurvivors: s ? s.survivors.filter(r => r.status === 'sheltered').map(r => structuredClone(this.entity(r.id)!)) : [], stationOccupants: s ? s.stationIds.map(id => structuredClone(this.entity(id)!)) : [] };

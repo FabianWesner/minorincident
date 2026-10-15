@@ -728,8 +728,9 @@ export class InfectedSystem {
     else this.wanderL1(e, b, brain);
     this.world.spatial.set(e.id, e.transform.x, e.transform.z);
   }
-  /** Local arrival admission, recomputed from live positions (also after checkpoint restore).
-   * Everywhere beyond the garage the same infected resume their normal pursuit and combat. */
+  /** PO 10-15 #4b: while the courier is at the garage (bat pickup) only the nearest `maxPursuers` infected may pursue her.
+   * Recomputed from live positions every tick (also after a checkpoint restore); the rest are handled in `divertFromForecourt`.
+   * Beyond the garage radius everyone resumes normal pursuit and combat. */
   private prepareForecourt(player: { x: number; z: number }): void {
     this.forecourt = null; this.forecourtPursuers.clear();
     if (this.world.scenario !== 'L1') return;
@@ -738,25 +739,34 @@ export class InfectedSystem {
     const garage = { x: anchor[0] + district.origin[0], z: anchor[2] + district.origin[1] };
     if (Math.hypot(player.x - garage.x, player.z - garage.z) > l1v2.forecourt.playerRadiusM) return;
     this.forecourt = garage;
-    const nearby = this.active.filter(e => e.health.current > 0 && e.infected?.l1 && !e.emerging && !e.infectionRise && Math.hypot(e.transform.x - garage.x, e.transform.z - garage.z) < l1v2.forecourt.divertRadiusM);
+    const cfg = l1v2.forecourt;
+    const nearby = this.active.filter(e => e.health.current > 0 && e.infected?.l1 && !e.emerging && !e.infectionRise && Math.hypot(e.transform.x - garage.x, e.transform.z - garage.z) < cfg.divertRadiusM);
     nearby.sort((a, b) => Math.hypot(a.transform.x - player.x, a.transform.z - player.z) - Math.hypot(b.transform.x - player.x, b.transform.z - player.z) || a.id - b.id);
-    for (const e of nearby.slice(0, l1v2.forecourt.maxPursuers)) this.forecourtPursuers.add(e.id);
+    for (const e of nearby.slice(0, cfg.maxPursuers)) this.forecourtPursuers.add(e.id);
   }
+  /** The excess lose the courier while she is at the bat, like after a respawn. Those already on their way to her wait `holdM` behind the
+   * garage, on the side away from her route to the fire station (a hold ring around her pinned her in; a diversion to the street groups
+   * or leaving them where they stood put the pack on her route: complete bot 16 deaths, 464 s). Street wanderers keep their block.
+   * Everyone notices her normally again once she is beyond `playerRadiusM`. Population and speeds are untouched. */
   private divertFromForecourt(e: EntitySnapshot, b: InfectedState, brain: L1Brain): boolean {
-    const garage = this.forecourt;
-    if (!garage || this.forecourtPursuers.has(e.id) || Math.hypot(e.transform.x - garage.x, e.transform.z - garage.z) >= l1v2.forecourt.divertRadiusM) return false;
-    // Keep systemic street fights. Only courier pursuit and approaches into the small apron are rerouted.
-    if (brain.targetId > 1 && (brain.mode === 'chase' || brain.mode === 'bite') && Math.hypot(e.transform.x - garage.x, e.transform.z - garage.z) > l1v2.forecourt.playerRadiusM) return false;
-    const groups = l1v2.street.groups.filter(([x, z]) => Math.hypot(x - garage.x, z - garage.z) > 14);
-    const [x, z] = groups[e.id % groups.length], cell = this.nav.nearestCell(x, z, e.combat!.radius);
-    if (cell < 0) return false;
-    brain.targetId = 0; brain.cueUntil = 0; brain.biteTargetId = 0;
+    const garage = this.forecourt, cfg = l1v2.forecourt;
+    if (!garage || this.forecourtPursuers.has(e.id)) return false;
+    const away = Math.hypot(e.transform.x - garage.x, e.transform.z - garage.z);
+    if (away >= cfg.divertRadiusM) return false;
+    // Keep systemic street fights. Only courier pursuit and approaches into the apron are rerouted.
+    if (brain.targetId > 1 && (brain.mode === 'chase' || brain.mode === 'bite') && away > cfg.playerRadiusM) return false;
+    const tick = this.world.tick;
+    brain.ignoreId = 1; brain.ignoreUntil = tick + 90;
+    if (brain.mode === 'wander') return false;
+    brain.targetId = 0; brain.cueUntil = 0; brain.biteTargetId = 0; brain.looking = false; brain.pauseUntil = 0;
+    b.targetId = 0; b.grabUntil = 0; e.combat!.attacking = false;
+    const station = this.world.missions?.def.anchors['fire-bay-trigger'];
+    const bx = station ? garage.x - station.x : 1, bz = station ? garage.z - station.z : 0, bl = Math.hypot(bx, bz) || 1, side = ((e.id % 7) - 3) * 2.5;
+    const cell = this.nav.nearestCell(garage.x + bx / bl * cfg.holdM - bz / bl * side, garage.z + bz / bl * cfg.holdM + bx / bl * side, e.combat!.radius);
+    if (cell < 0) { brain.mode = 'wander'; brain.hasGoal = false; b.state = 'wander'; return false; }
     brain.mode = 'attracted'; brain.goalX = this.nav.x(cell); brain.goalZ = this.nav.z(cell); brain.hasGoal = true;
-    brain.search.until = this.world.tick + 60; brain.looking = false; brain.pauseUntil = 0;
-    b.state = 'attracted'; b.targetId = 0; b.grabUntil = 0; e.combat!.attacking = false;
-    this.steerL1(e, brain, { x: brain.goalX, z: brain.goalZ }, brain.runSpeed);
-    this.world.spatial.set(e.id, e.transform.x, e.transform.z);
-    return true;
+    brain.search.until = tick + 90; b.state = 'attracted';
+    return false;
   }
   /** Re-evaluates the closest visible human (0.25 s cadence); losing every human while chasing starts a search. */
   private perceive(e: EntitySnapshot, b: InfectedState, brain: L1Brain): void {

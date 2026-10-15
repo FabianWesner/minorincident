@@ -1,0 +1,254 @@
+{
+  "date": "2026-10-15",
+  "codeCommit": "8011542c1",
+  "typecheck": "passed",
+  "lint": "passed",
+  "build": "passed",
+  "finalL5": {
+    "numTotalTests": 35,
+    "numPassedTests": 35,
+    "numFailedTests": 0,
+    "numPendingTests": 0
+  },
+  "deploymentBrowser": {
+    "startTime": "2026-10-15T10:46:41.616Z",
+    "duration": 1333144.144,
+    "expected": 90,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 1
+  },
+  "visualMatrix": {
+    "passed": 48,
+    "total": 48,
+    "requestedSheetsInspected": 32,
+    "details": "matrix.json"
+  },
+  "initialUnit": {
+    "numTotalTests": 1473,
+    "numPassedTests": 1465,
+    "numFailedTests": 1,
+    "numPendingTests": 7
+  },
+  "initialBroad": {
+    "numTotalTests": 2829,
+    "numPassedTests": 2801,
+    "numFailedTests": 19,
+    "numPendingTests": 9
+  },
+  "initialBroadFailures": [
+    {
+      "file": "tests/sim/ai/director.test.ts",
+      "test": "T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget",
+      "message": "AssertionError: expected 5.369494000013219 to be less than or equal to 4",
+      "resolvedByFinalL5OrTypecheck": false,
+      "resolvedBy": "timing-isolated"
+    },
+    {
+      "file": "tests/sim/levels/l10-arrival.test.ts",
+      "test": "T-E32-21-E3b @E32-AC21 seed-32 rocket checkpoint route arrival high",
+      "message": "Error: Test timed out in 120000ms.",
+      "resolvedByFinalL5OrTypecheck": false,
+      "resolvedBy": "timing-isolated"
+    },
+    {
+      "file": "tests/sim/levels/l10-assault.test.ts",
+      "test": "T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+      "message": "AssertionError: expected 6.35164700000314 to be less than or equal to 4",
+      "resolvedByFinalL5OrTypecheck": false,
+      "resolvedBy": "timing-isolated"
+    },
+    {
+      "file": "tests/sim/npc/campaign.test.ts",
+      "test": "T-E08-11-high @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity",
+      "message": "AssertionError: L1 high: expected 4.280770000012126 to be less than or equal to 4",
+      "resolvedByFinalL5OrTypecheck": false,
+      "resolvedBy": "timing-isolated"
+    },
+    {
+      "file": "tests/sim/performance/alpha-physical.test.ts",
+      "test": "T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms",
+      "message": "AssertionError: expected 7.122893000021577 to be less than or equal to 4",
+      "resolvedByFinalL5OrTypecheck": false,
+      "resolvedBy": "timing-isolated"
+    },
+    {
+      "file": "tests/sim/performance/alpha-support.test.ts",
+      "test": "T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms",
+      "message": "AssertionError: expected 6.292383999971207 to be less than or equal to 4",
+      "resolvedByFinalL5OrTypecheck": false,
+      "resolvedBy": "timing-isolated"
+    },
+    {
+      "file": "tests/sim/performance/alpha.test.ts",
+      "test": "T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms",
+      "message": "AssertionError: expected 5.527154999959748 to be less than or equal to 4",
+      "resolvedByFinalL5OrTypecheck": false,
+      "resolvedBy": "timing-isolated"
+    },
+    {
+      "file": "tests/sim/performance/horde.test.ts",
+      "test": "T-E18-02-200 @E18-AC02 @perf Node sim p95 200 living infected <= 4ms",
+      "message": "AssertionError: expected 6.415261999994982 to be less than or equal to 4",
+      "resolvedByFinalL5OrTypecheck": false,
+      "resolvedBy": "timing-isolated"
+    },
+    {
+      "file": "tests/sim/performance/l10-finale.test.ts",
+      "test": "T-E32-20-perf-200 @E32-AC20 @E32-AC31 @E18-AC02 full-cap active dispersal predicate",
+      "message": "AssertionError: expected 6.074887000024319 to be less than or equal to 4",
+      "resolvedByFinalL5OrTypecheck": false,
+      "resolvedBy": "timing-isolated"
+    },
+    {
+      "file": "tests/sim/performance/mega-audio.test.ts",
+      "test": "T-E32-13-perf-200 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling",
+      "message": "AssertionError: expected 5.628174000012223 to be less than or equal to 4",
+      "resolvedByFinalL5OrTypecheck": false,
+      "resolvedBy": "timing-isolated"
+    },
+    {
+      "file": "tests/sim/performance/mega-moves.test.ts",
+      "test": "T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+      "message": "AssertionError: expected 6.32104700000491 to be less than or equal to 4",
+      "resolvedByFinalL5OrTypecheck": false,
+      "resolvedBy": "timing-isolated"
+    },
+    {
+      "file": "tests/sim/performance/zoo-s1.test.ts",
+      "test": "T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
+      "message": "AssertionError: expected 5.838826999999583 to be less than or equal to 4",
+      "resolvedByFinalL5OrTypecheck": false,
+      "resolvedBy": "timing-isolated"
+    },
+    {
+      "file": "tests/sim/performance/zoo-s2.test.ts",
+      "test": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+      "message": "AssertionError: expected 9.150236000015866 to be less than or equal to 4",
+      "resolvedByFinalL5OrTypecheck": false,
+      "resolvedBy": "timing-isolated"
+    },
+    {
+      "file": "tests/sim/performance/zoo-s3.test.ts",
+      "test": "T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+      "message": "AssertionError: expected 6.04690399998799 to be less than or equal to 4",
+      "resolvedByFinalL5OrTypecheck": false,
+      "resolvedBy": "timing-isolated"
+    },
+    {
+      "file": "tests/sim/world/chunk-residency.test.ts",
+      "test": "T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95",
+      "message": "AssertionError: expected 6.865017000003718 to be less than or equal to 4",
+      "resolvedByFinalL5OrTypecheck": false,
+      "resolvedBy": "timing-isolated"
+    },
+    {
+      "file": "tests/levels/L5-encounters.test.ts",
+      "test": "@E23 @E23-AC04 Alphas stay in town away from the Metro and final escort leg, high",
+      "message": "AssertionError: expected undefined to be defined",
+      "resolvedByFinalL5OrTypecheck": true,
+      "resolvedBy": "final-l5-all"
+    },
+    {
+      "file": "tests/levels/L5-encounters.test.ts",
+      "test": "@E23 @E23-AC04 Alphas stay in town away from the Metro and final escort leg, low",
+      "message": "AssertionError: expected undefined to be defined",
+      "resolvedByFinalL5OrTypecheck": true,
+      "resolvedBy": "final-l5-all"
+    },
+    {
+      "file": "tests/levels/l5-po-1015.test.ts",
+      "test": "PO #18 @E23 @E23-AC16 every L5 safe-space exit returns to its entry door, faces out and rejects occupied exit spots",
+      "message": "AssertionError: expected 'emerged' to be 'cellar' // Object.is equality",
+      "resolvedByFinalL5OrTypecheck": true,
+      "resolvedBy": "final-l5-all"
+    },
+    {
+      "file": "tests/unit/static.test.ts",
+      "test": "T-E01-01b @E01 @E01-AC01 typecheck, lint and build exit zero without warnings",
+      "message": "AssertionError: ",
+      "resolvedByFinalL5OrTypecheck": true,
+      "resolvedBy": "final npm run typecheck (same command invoked by the static guard)"
+    }
+  ],
+  "isolatedTimingRecheck": {
+    "numPassedTests": 197,
+    "numFailedTests": 0,
+    "numPendingTests": 0,
+    "numTotalTests": 197
+  },
+  "finalVerifyE23": "Initial command exited at browser failures. All three failures have successful focused rechecks, covering 44/44 browser cases across runs. Final simulator selection 60/60 and final native performance 2/2 pass. The command was not rerun end to end.",
+  "finalNativeTiming": {
+    "passed": 2,
+    "total": 2,
+    "details": "native-performance.json",
+    "sourceCommit": "8011542c1",
+    "quietReservationReleased": true
+  },
+  "rawEvidence": "test-results/l5-po-1015/",
+  "assetRecheck": {
+    "numPassedTests": 1,
+    "numFailedTests": 0,
+    "numPendingTests": 16
+  },
+  "initialBroadFailuresRemaining": 0,
+  "currentE23Sim": {
+    "numPassedTests": 60,
+    "numFailedTests": 0,
+    "numPendingTests": 2772,
+    "numTotalTests": 2832,
+    "note": "60 selected cases passed; 2772 cases filtered by the E23/smoke tag selector."
+  },
+  "e23BrowserCoverage": {
+    "initialStats": {
+      "startTime": "2026-10-15T11:57:14.710Z",
+      "duration": 978350.455,
+      "expected": 41,
+      "skipped": 0,
+      "unexpected": 3,
+      "flaky": 0
+    },
+    "resolvedInitialFailures": [
+      "T-E23-14b @E23 @E23-AC14 the first 60 s of L5 measure at least 18 LU below the battle mix of L4's war phase (offline render of the production graph)",
+      "T-E23-17 @E23 @E23-AC17 @E23-AC18 real-input playthrough: unbar the door, find the five by their signs of life, lead them to the Metro; photo spots; 0 console errors",
+      "T-E23-15b @E23 @E23-AC15 handover: the barred L4 cellar door loads L5 (L4 end loadout, no reward screen); the Metro shutter loads L6 with the rescued survivors in the campaign"
+    ],
+    "remainingInitialFailures": 0,
+    "coveredCases": 44,
+    "method": "Initial complete browser run plus successful focused rechecks; not one green end-to-end verify invocation."
+  },
+  "audioComparison": {
+    "war": {
+      "lufs": -11.6,
+      "truePeak": -0.9
+    },
+    "quiet": {
+      "lufs": -40,
+      "truePeak": -16.4
+    },
+    "differenceLU": 28.4,
+    "cues": [
+      "bed.wind",
+      "bed.fire",
+      "ambient.debris",
+      "door.wood",
+      "dialogue.radio",
+      "infected.hurt",
+      "gore.squelch",
+      "ambient.collapse",
+      "ambient.dog"
+    ]
+  },
+  "realInput": {
+    "passed": true,
+    "rescued": 5,
+    "consoleErrors": 0,
+    "details": "real-input.json"
+  },
+  "sceneMatrix": {
+    "passed": 60,
+    "total": 60,
+    "manuallyReviewed": 40,
+    "details": "matrix.json"
+  }
+}

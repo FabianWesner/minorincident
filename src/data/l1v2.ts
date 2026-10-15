@@ -56,8 +56,8 @@ export const l1v2 = {
   director: { hordeMinInfectedNearGarage: 6, hordeLeaveGarageM: 5, hordeRadiusM: 35, capHigh: 60, capLow: 30, spawnFrustumMargin: 0.1 },
   /** Beat 9 house: `doorM` the front-door distance band from the garage door; the walk out lives in HouseEmergence. */
   house: { count: 10, staggerS: [1.5, 4], firstAfterS: 0.5, doorM: [6, 25] },
-  /** PO 10-15 #4b: keep every resident, but spread pursuit out of the confined bat forecourt. */
-  forecourt: { maxPursuers: 3, playerRadiusM: 8, divertRadiusM: 32 },
+  /** PO 10-15 #4b: keep every resident, but at most `maxPursuers` pursue the courier within `playerRadiusM` of the garage; the excess within `divertRadiusM` wait `holdM` behind it. */
+  forecourt: { maxPursuers: 3, playerRadiusM: 20, divertRadiusM: 32, holdM: 16 },
   /** PO 10-10: small groups across Juniper, the western loop and Larch, with shared Elm Street approaches to the restored station.
    * Planned as the courier leaves the Annex for the bat; only clear off-screen ground admits a resident. */
   street: {

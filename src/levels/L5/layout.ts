@@ -119,7 +119,12 @@ export function levelFiveLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     if (canopy) canopy.collisionId = 'l5.metro-ingress';
     if (canopy) layout.anchors['l5-metro-shutter'] = { position: [canopy.position[0], 1.2, canopy.position[2] + 2.43], yaw: 0 };
     if (metro) layout.anchors['pair-metro-entrance'] = { position: [metro.position[0], 0, metro.position[2]], yaw: 0 };
-    if (door) layout.anchors['l5-cellar-door'] = { position: [...door.position], yaw: 0 };
+    if (door) layout.anchors['l5-cellar-door'] = { position: [...door.position], yaw: l4.cellar.outwardYaw };
+    if (door) {
+      const x = door.position[0] + Math.cos(l4.cellar.outwardYaw), z = door.position[2] - Math.sin(l4.cellar.outwardYaw);
+      layout.anchors['l5-out'] = { position: [x, 0, z], yaw: l4.cellar.outwardYaw };
+      layout.anchors['photo-l5-basement-exit'] = structuredClone(layout.anchors['l5-out']);
+    }
     // The cellar yard (an island): the courier starts at the stair foot, the barred door is on the back wall (as in L4).
     if (inner) {
       const [cx, , cz] = inner.position;

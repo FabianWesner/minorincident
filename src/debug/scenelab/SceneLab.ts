@@ -316,6 +316,57 @@ export class SceneLab {
       }
       for (const [i, id] of mission.state.l4!.convoyIds.entries()) this.vehicles.set(`convoy-${i}`, id);
     }
+    if (spec.l5Aftermath) {
+      world.scenario = 'L5';
+      applyCampaign(world, preset('L5-default'));
+      const mission = world.loadMission(resolveCampaignMission('L5', world.districts!));
+      mission.begin(); mission.completeObjective('emerge'); mission.l5!.advance();
+      // Fixture setup uses the shipped discovery interaction, then restores its checkpoint.
+      for (const key of spec.l5Aftermath.found) {
+        const ring = mission.def.anchors[`l5-ring-${key}`];
+        if (!ring) throw new Error(`Unknown L5 survivor ${key}`);
+        Object.assign(player.transform, ring); world.physics.playerBody!.setTranslation(player.transform, true);
+        for (let tick = 0; tick < 61; tick++) world.update();
+      }
+      if (spec.l5Aftermath.found.length) mission.restore(`survivor-${spec.l5Aftermath.found.length}`);
+      mission.state.subtitle = null;
+      // Isolate discovery and fear from unrelated infected elsewhere in Fairhaven.
+      const alphaId = spec.l5Aftermath.alphaAt ? world.infected!.active.find(e => e.archetype === 'infected.alpha')?.id : undefined;
+      for (const infected of [...world.infected!.active]) if (infected.id !== alphaId) world.infected!.release(infected);
+      if (courier?.at) {
+        Object.assign(player.transform, { x: courier.at[0], z: courier.at[1] });
+        world.physics.playerBody!.setTranslation(player.transform, true); world.physics.playerBody!.setNextKinematicTranslation(player.transform);
+        Object.assign(world.previousPlayer!, player.transform); world.spatial.set(1, player.transform.x, player.transform.z);
+      }
+      for (const [i, r] of mission.state.l5!.survivors.filter(r => r.status === 'following').entries()) {
+        const e = world.entities.get(r.id)!;
+        Object.assign(e.transform, { x: player.transform.x - (spec.l5Aftermath.alphaAt ? 4 : 2) - i, z: player.transform.z + (spec.l5Aftermath.alphaAt ? 2 : 0) }); world.spatial.set(e.id, e.transform.x, e.transform.z);
+        this.actors.set(r.key, { id: r.key, kind: 'pedestrian', entity: r.id, spec: { id: r.key, kind: 'pedestrian' }, plan: null, track: [], lod: {}, drawn: 0, inView: 0, missed: 0, farClose: 0 });
+      }
+      if (spec.l5Aftermath.metroIngress) {
+        // Recorded real-input jam: the standing corgi and all five people at the
+        // stairs. The production controller must walk the group through it.
+        const poses = [[38.25599, -47.54761], [37.20675, -48.27262], [37.75909, -48.02834], [37.21383, -47.56967], [38.38523, -48.24918]];
+        mission.state.l5!.survivors.forEach((r, i) => {
+          const e = world.entities.get(r.id)!;
+          Object.assign(e.transform, { x: poses[i][0], z: poses[i][1] }); delete e.locomotion;
+          world.spatial.set(e.id, e.transform.x, e.transform.z);
+        });
+        player.transform.y = world.districts!.groundHeight(player.transform.x, player.transform.z) + .72;
+        world.physics.playerBody!.setTranslation(player.transform, true); world.physics.playerBody!.setNextKinematicTranslation(player.transform);
+        Object.assign(world.previousPlayer!, player.transform);
+        const dog = world.entities.get(world.npcs!.companion.spawn())!;
+        Object.assign(dog.transform, { x: 37.77191, z: -49.34055, y: .975 }); delete dog.locomotion;
+        Object.assign(dog.companion!, { state: 'follow', following: false, velocity: { x: 0, z: 0 }, pickup: null });
+        world.spatial.set(dog.id, dog.transform.x, dog.transform.z);
+      }
+    }
+    if (spec.l5Aftermath?.alphaAt) {
+      const at = spec.l5Aftermath.alphaAt, alpha = world.infected!.active.find(e => e.archetype === 'infected.alpha')!;
+      const id = alpha.id; Object.assign(alpha.transform, { x: at[0], z: at[1], yaw: 0 }); world.spatial.set(id, at[0], at[1]);
+      if (alpha.infected!.territory) Object.assign(alpha.infected!.territory, { x: at[0], z: at[1] });
+      this.actors.set('alpha', { id: 'alpha', kind: 'infected', entity: id, spec: { id: 'alpha', kind: 'infected', archetype: 'infected.alpha' }, plan: null, track: [], lod: {}, drawn: 0, inView: 0, missed: 0, farClose: 0 });
+    }
     if (spec.crossingCrash) {
       const def = levelNineMission((_district, name) => {
         const a = world.districts!.districts[0].layout.anchors[name];

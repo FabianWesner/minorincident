@@ -107,7 +107,9 @@ export class LightPower {
   }
   get night(): boolean {
     const preset = this.world.missions?.state.timeOfDay ?? this.world.districts?.composition.timeOfDay;
-    return !!preset && (timeOfDay[preset].practical ?? 0) > .5;
+    // E23 is sunset: its strong practical blend adds firelight while the sun is still up.
+    // It must not shorten sight to the full-night 9.6 m range.
+    return !!preset && preset !== 'L5' && (timeOfDay[preset].practical ?? 0) > .5;
   }
   sightMultiplier(target: { x: number; z: number }, night = this.night): number {
     if (!night) return 1;

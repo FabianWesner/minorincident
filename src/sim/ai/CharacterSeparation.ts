@@ -7,10 +7,12 @@ import { SimPhase } from '../../core/EventBus';
 /** Human-sized infected contact spacing; larger bodies reserve their extra radius as well. */
 export const meleeRing = 1.08;
 export const infectedContactDistance = (radius: number): number => meleeRing + Math.max(0, radius - .35);
-function radius(e: EntitySnapshot): number {
+function radius(e: EntitySnapshot, world: SimWorld): number {
   if (!e.survivor && !e.companion && !e.escort && !e.civilian && !e.infected) return 0;
   if (e.infectionRise || e.hidden || e.emerging || e.health.current <= 0 || e.attachedTo !== undefined || (e.infected && (e.infected.hidden || e.transform.y > 2)) || e.companion?.state === 'hide' || e.civilian?.state === 'down' || e.civilian?.state === 'rising') return 0;
-  if (e.companion) return .9;
+  // The standing dog's comfort circle fills the Metro stairs. During ingress,
+  // reserve its body width so the five people can pass on either side.
+  if (e.companion) return world.missions?.state.l5?.metroAt ? .2 : .9;
   if (e.civilian?.pet) return .5;
   return e.survivor || e.companion || e.escort || (e.civilian && e.civilian.state !== 'infected' && e.civilian.state !== 'finished') || e.infected ? e.combat?.radius ?? .35 : 0;
 }
@@ -38,7 +40,7 @@ export function installCharacterSeparation(world: SimWorld): void {
     for (const id of radiusIds) radii[id] = undefined; radiusIds.length = 0;
     let bodyCount = 0, maximumRadius = 0;
     for (const e of world.entities.iterate()) {
-      const r = radius(e); if (!r) continue;
+      const r = radius(e, world); if (!r) continue;
       let body = records.get(e);
       if (!body) { body = { entity: e, radius: r, extra: 0, contact: 0, category: 0, infected: false, courier: false, crowd: false, l1: false, fixed: false, charge: false, passiveCompanion: false }; records.set(e, body); }
       else body.radius = r;
