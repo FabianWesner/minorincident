@@ -50,6 +50,7 @@ export class SolidRegistry {
   private maxHull = 0;
   private maxActor: number = survivor.radius;
   private readonly changedActors = new Set<number>();
+  private readonly changedHulls = new Set<number>();
   private changedTick = -1;
   private navRevision = -1;
   private nav: import('../ai/NavGrid').NavGrid | undefined;
@@ -75,7 +76,7 @@ export class SolidRegistry {
   }
   private syncHulls(): boolean {
     let changed = false;
-    if (this.changedTick !== this.world.tick) { this.changedActors.clear(); this.changedTick = this.world.tick; }
+    if (this.changedTick !== this.world.tick) { this.changedActors.clear(); this.changedHulls.clear(); this.changedTick = this.world.tick; }
     for (const e of this.world.entities.iterate()) if (e.vehicle || e.traffic || e.convoy || e.kind === 'setpiece') this.register(e);
     for (const [id, h] of this.hulls) {
       const e = this.world.entities.get(id), p = h.entity.transform;
@@ -84,7 +85,7 @@ export class SolidRegistry {
       h.quiet = stable ? h.quiet + 1 : 0;
       // Parked hulls participate in ordinary grid routes. Moving convoy/traffic still use their existing yielding/sweeps.
       if (e.vehicle || e.traffic || e.archetype === 'veh.tank') this.parkedHull(h, h.quiet >= 15 && (e.vehicle?.speed ?? e.traffic?.speed ?? 0) < .2);
-      if (h.dirty || h.pose.x !== p.x || h.pose.z !== p.z || h.pose.y !== p.y || h.pose.yaw !== p.yaw) { this.hullIndex.set(id, p.x, p.z); Object.assign(h.pose, p); h.dirty = false; changed = true;
+      if (h.dirty || h.pose.x !== p.x || h.pose.z !== p.z || h.pose.y !== p.y || h.pose.yaw !== p.yaw) { this.hullIndex.set(id, p.x, p.z); Object.assign(h.pose, p); h.dirty = false; changed = true; this.changedHulls.add(id);
         this.world.spatial.query({ x: p.x, z: p.z, r: this.maxHull + this.maxActor }, this.nearby, false);
         for (const actorId of this.nearby) this.changedActors.add(actorId); }
     }
@@ -229,7 +230,17 @@ export class SolidRegistry {
       if (!actor(e)) continue;
       const radius = actorRadius(e);
       this.maxActor = Math.max(this.maxActor, radius); this.bodies.push(e); this.live.set(e.id, e);
-      const old = this.committed.get(e), p = e.transform;
+      this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+    }
+    // Scripted writers and revived actors may not have updated the shared index. Changed
+    // hulls inspect the complete current actor index before selecting the tick's guard set.
+    for (const id of this.changedHulls) {
+      const h = this.hulls.get(id); if (!h) continue;
+      this.world.spatial.query({ x: h.pose.x, z: h.pose.z, r: this.maxHull + this.maxActor }, this.nearby, false);
+      for (const actorId of this.nearby) this.changedActors.add(actorId);
+    }
+    for (const e of this.bodies) {
+      const radius = actorRadius(e), old = this.committed.get(e), p = e.transform;
       if (full || this.changedActors.has(e.id) || !old || old.x !== p.x || old.z !== p.z || old.y !== p.y) this.moved.push(e);
       else {
         const proof = this.validated.get(e);
@@ -237,6 +248,14 @@ export class SolidRegistry {
       }
     }
     this.committing = true;
+    // Accept a mutually clear set of simultaneous proposals atomically. A coherent formation
+    // must be able to enter positions its neighbours vacate during this same tick.
+    let simultaneous = true;
+    for (const e of this.moved) if (!this.clear(e.transform, actorRadius(e), e.id, true, tolerance)) { simultaneous = false; break; }
+    if (simultaneous) {
+      for (const e of this.moved) if (e.id === 1) this.publish(e);
+      this.finish(full); return;
+    }
     // Reserve prior committed positions before accepting any proposed motion. A later actor
     // cannot consume an earlier actor's rollback position. New admissions reserve only after motion.
     for (const e of this.moved) {
@@ -295,6 +314,9 @@ export class SolidRegistry {
       // bodies and solids. Full audits independently check the complete index once per second.
       if (!valid) this.auditActor(e);
     }
+    this.finish(full);
+  }
+  private finish(full: boolean): void {
     if (full) for (const e of this.bodies) if (actor(e)) this.auditActor(e);
     for (const e of this.bodies) if (actor(e)) {
       const old = this.committed.get(e);
@@ -325,5 +347,5 @@ export class SolidRegistry {
     }
   }
   snapshot() { return { failures: this.failures, pending: this.world.entities.values().filter(e => e.pendingAdmission).length, admitted: this.admitted, deferred: this.deferred, offenders: this.offenders.map(o => ({ ...o })) }; }
-  reset(): void { this.bodies.length = this.moved.length = this.nearby.length = this.hullNeighbors.length = 0; this.changedActors.clear(); this.changedTick = -1; this.live.clear(); this.committing = false; this.blockerOwners.clear(); this.hulls.clear(); this.hullIndex.reset(); this.committed = new WeakMap(); this.proposed = new WeakMap(); this.validated = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = -1; this.nav = undefined; }
+  reset(): void { this.bodies.length = this.moved.length = this.nearby.length = this.hullNeighbors.length = 0; this.changedActors.clear(); this.changedHulls.clear(); this.changedTick = -1; this.live.clear(); this.committing = false; this.blockerOwners.clear(); this.hulls.clear(); this.hullIndex.reset(); this.committed = new WeakMap(); this.proposed = new WeakMap(); this.validated = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = -1; this.nav = undefined; }
 }

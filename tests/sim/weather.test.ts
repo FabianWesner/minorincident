@@ -113,7 +113,9 @@ test('T-E28-08 @E28 @E28-AC08 every override preserves all registered mission gr
     const w = new SimWorld(); await w.init(); const c = compositions[id], layouts=c.districts.map(d=>JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8')));
     w.loadComposition(c,layouts,28);
     for (const kind of weatherKinds) {
-    if(id==='L6'&&kind!==weatherKinds[0]){w.reset();w.loadComposition(c,layouts,28);}
+    // Each override compares the same authored cast. Re-preparing missions on the previous
+    // run's parked vehicles stacked new zoo/APC casts onto occupied admission points.
+    if(kind!==weatherKinds[0]){w.reset();w.loadComposition(c,layouts,28);}
     if (id === 'L10') applyCampaign(w, preset('L10-default'));
     const m = w.loadMission(resolveCampaignMission(id, w.districts!)); w.weather!.setOverride(kind); m.begin();
     let guard = 0;
@@ -123,6 +125,7 @@ test('T-E28-08 @E28 @E28-AC08 every override preserves all registered mission gr
       guard++; m.completeObjective();
     }
     expect(guard).toBeLessThan(100); expect(['cinematic', 'result', 'progression']).toContain(m.state.phase);
+    expect(w.solids.failures, JSON.stringify(w.solids.offenders)).toBe(0);
     rows.push({ id, kind, steps: [...m.state.completedObjectives], phase: m.state.phase });
     }
     w.dispose();
