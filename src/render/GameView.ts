@@ -854,6 +854,12 @@ export class GameView implements Lifecycle {
       subject = this.revealSubject;
     }
     this.districts?.updateFoliage(this.view, current, lockedEntity && lockedEntity.health.current > 0 ? lockedEntity.transform : undefined, subject);
+    // Scenes without a DistrictView (Scene Lab asphalt scenes with asset occluders) open the same bounded, immediate reveal.
+    if (!this.districts) {
+      seeThrough.cover.value = 0;
+      seeThrough.strength.value = subject ? 1 : 0;
+      if (subject) projectReveal(this.camera, subject); else seeThrough.center.value.set(-10, -10);
+    }
     this.updateBossHole(current);
     this.healthBars?.update(this.camera, this.view.viewportHeight * this.camera.aspect, this.view.viewportHeight, this.barOccluded);
     if (this.world.missions?.state.l3) {
