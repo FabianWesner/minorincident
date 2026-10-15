@@ -53,9 +53,15 @@ export class LevelFourWar {
   private anchor(name: string) { return this.mission.def.anchors[name]; }
   private outbreak(): Outbreak { return this.world.npcs!.civilians.outbreak!; }
   private get low(): boolean { return this.world.infected!.director.tier === 'low'; }
+  /** Legacy convoy riders have an explicit owner in the existing seated/roster state. */
+  passengerHull(e: EntitySnapshot): number | undefined {
+    const s = this.mission.state.l4;
+    if (!s?.seated || !e.hidden || e.pendingAdmission || !(e.id === 1 || e.companion || s.evacueeIds.includes(e.id))) return undefined;
+    return s.convoyIds[this.playerBus()];
+  }
   /** The shared admission/contact owner preserves the convoy's existing posed clearance. */
   clearOfConvoy(at: Point, e: EntitySnapshot, radius: number): boolean {
-    if (e.passengerOf !== undefined || e.attachedTo !== undefined || e.id === 1 && e.hidden && !e.pendingAdmission) return true;
+    if (e.passengerOf !== undefined || e.attachedTo !== undefined || this.passengerHull(e) !== undefined) return true;
     return !this.clearance.overlaps(at, Math.max(radius, convoyFootprint(e)));
   }
   private snap(p: Point, r = .4): Point {
