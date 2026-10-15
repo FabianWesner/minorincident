@@ -10,7 +10,7 @@ const dist = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
  * One tick of a found E23 survivor (called by the outbreak layer for live civilians with `survivor` in follow mode). They are unarmed,
  * biteable humans like anyone else; the escort rules of section 5.4: follow the courier at 2-5 m (each in its own slot behind and to
  * the side of her; through a narrow passage the grid route makes them single file), run at 3.8 m/s (slower than the courier and
- * every infected), call "Wait!" when more than 10 m behind, and crouch in cover while an infected is within 8 m. No fail state: a
+ * every infected), call "Wait!" when more than 10 m behind, and briefly crouch before regrouping when an infected is within 8 m. No fail state: a
  * survivor that is lost is simply gone. Returns true (the follower owns the tick).
  */
 export function updateSurvivor(world: SimWorld, e: EntitySnapshot): boolean {

@@ -4,7 +4,7 @@ import { completeCampaignLevel } from '../../src/sim/progression/carryover';
 import { l5MusicReady } from '../../src/data/musicBeats';
 import { afterEach, expect, test } from 'vitest';
 import { emptyInput } from '../../src/input/InputFrame';
-import { l5Survivors } from '../../src/data/l5';
+import { l5, l5Survivors } from '../../src/data/l5';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
 import { loadL5, runL5 } from '../../tools/sim-runner/l5Bots';
 
@@ -88,7 +88,7 @@ test('PO #20b @E23 @E23-AC09 survivor-1 restore: Alpha at 15 m engages, follower
   for (let tick = 0; tick < 5 * 60; tick++) {
     w.update();
     reacted ||= follower.civilian!.survivor!.cover;
-    if (reacted && !follower.civilian!.survivor!.cover && distance(previous, follower.transform) > .001 && resumed < 0) resumed = tick;
+    if (reacted && !follower.civilian!.survivor!.cover && w.tick >= follower.civilian!.knockedUntil && distance(previous, follower.transform) > .001 && resumed < 0) resumed = tick;
     maxJump = Math.max(maxJump, distance(previous, follower.transform)); previous = { ...follower.transform };
   }
   expect(reacted).toBe(true); expect(resumed).toBeGreaterThanOrEqual(0); expect(resumed).toBeLessThan(5 * 60);
@@ -98,7 +98,7 @@ test('PO #20b @E23 @E23-AC09 survivor-1 restore: Alpha at 15 m engages, follower
   for (let tick = 0; tick < 8 * 60; tick++) {
     w.applyInput({ ...emptyInput(), move: { x: 1, z: 0 }, walk: true }, 'keyboard'); w.update();
     maxJump = Math.max(maxJump, distance(previous, follower.transform)); previous = { ...follower.transform };
-    expect(distance(follower.transform, w.entities.get(1)!.transform)).toBeLessThanOrEqual(8);
+    expect(distance(follower.transform, w.entities.get(1)!.transform)).toBeLessThanOrEqual(l5.follow.maxM);
   }
   expect(follower.civilian!.survivor!.mode).toBe('follow'); expect(maxJump).toBeLessThan(1);
 }, 300_000);
