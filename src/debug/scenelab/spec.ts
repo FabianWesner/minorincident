@@ -86,6 +86,8 @@ export interface SceneSpec {
   /** Exercise the shipped checkpoint closure rule with the scene's courier and live officer followers. */
   crossingCrash?: { health: number; /** Keep the departure anchor and adopt the authored APC for full-route probes. */ driveFromStart?: boolean; handover?: boolean };
   armyBoom?: { x: number; z?: number; closed?: boolean };
+  /** L2 Grove Market doors (kit.market-doors) with the layout `level: 'L2'`: closed, open, or opening at `openAtFrame`. */
+  marketDoors?: { open?: boolean; openAtFrame?: number };
   /** L10 dispersal kit rotors/wheels: idle (default) or running at full rate. */
   dispersal?: { active?: boolean };
   /** L10 mounted rotary minigun (the shipped MountedGun, drawn by MountedGunView; do not also place `wpn.minigun-mounted` as a prop): `at` is

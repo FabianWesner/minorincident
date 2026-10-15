@@ -193,6 +193,7 @@ export class DistrictAssets {
       // Keep the Metro shutter independent of its static shell.
       if(id==='int.metro-exit')asset.userData.splitDoors=['exitGate'];
       if (id === 'bld.metro-entrance') asset.userData.splitDoors = ['shutter'];
+      if (id === 'kit.market-doors') asset.userData.splitDoors = ['marketLeafL', 'marketLeafR'];
       if (spinNodes[id]) asset.userData.splitDoors = spinNodes[id].map(s => s.node);
       // Preserve the HMG's authored barrel frame and socket through static batching.
       const machineGun = id === 'prop.hmg-nest' ? asset.getObjectByName('gun') : undefined;

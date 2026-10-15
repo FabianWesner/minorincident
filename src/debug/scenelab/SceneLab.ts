@@ -195,6 +195,7 @@ export class SceneLab {
     this.camera = spec.camera ?? { mode: 'game', target: built.center };
     this.applyCamera();
     if (this.boom) this.game.view.labProbes().districts?.updateArmyBoom(spec.armyBoom?.closed ? 0 : 1);
+    if (spec.marketDoors) this.game.view.labProbes().districts?.marketDoors(!!spec.marketDoors.open && spec.marketDoors.openAtFrame === undefined, true);
     // Prop triangles for the per-frame bone checks (LOD0 GLBs, cached by the registry across loads).
     await Promise.all([this.game.screenshotReady(), this.prepareClipping()]);
     if (spec.hud || spec.megaHud) {
@@ -854,6 +855,7 @@ export class SceneLab {
       const start = performance.now();
       this.nextRenderFrame();
       if (this.boom) this.game.view.labProbes().districts?.updateArmyBoom(this.spec?.armyBoom?.closed ? 0 : this.boomClosedAt ? Math.max(0, 1 - (this.world.tick - this.boomClosedAt) / 42) : 1);
+      if (this.spec?.marketDoors) this.game.view.labProbes().districts?.marketDoors(!!this.spec.marketDoors.open || (this.spec.marketDoors.openAtFrame !== undefined && this.frame >= this.spec.marketDoors.openAtFrame));
       this.game.view.frame(1 / 60); await this.game.step(1);
       // `?profile` (set by the runner) attributes every submitted draw, including the PostFx scene pass and shadows.
       const stepMs = performance.now() - start, info = this.game.view.renderer.info.render, profile = Object.entries(this.game.view.renderer.profile ?? {});
@@ -1475,7 +1477,7 @@ export class SceneLab {
     }).map(f => f.appearance!))]));
     const clipping = this.staticSets ? await this.clipping() : null;
     const bodies = [...this.bodies.values()].sort((x, y) => y.depthCm - x.depthCm);
-    return { armyBoom: this.boom ? { closedAt: this.boomClosedAt, closed: !!this.spec?.armyBoom?.closed || !!this.boomClosedAt } : null, scene: this.spec?.name ?? null, frame: this.frame, tick: this.world.tick, backend: this.game.view.renderer.selectedBackend, quality: this.game.quality.tier,
+    return { marketDoors: this.spec?.marketDoors ? { openness: this.game.view.labProbes().districts?.marketDoorOpenness() ?? null, posed: this.game.view.labProbes().districts?.marketDoorPlacements() ?? [] } : null, armyBoom: this.boom ? { closedAt: this.boomClosedAt, closed: !!this.spec?.armyBoom?.closed || !!this.boomClosedAt } : null, scene: this.spec?.name ?? null, frame: this.frame, tick: this.world.tick, backend: this.game.view.renderer.selectedBackend, quality: this.game.quality.tier,
       convoyOverlapFrames: this.convoyOverlapFrames,
       propPenetration: { samples: this.propPenetrationSamples, framesMax: Math.max(0, ...[...this.propPenetration.values()].map(m => m.max)), pairs: [...this.propPenetration.values()] },
       props: { sinkMaxCm: this.propSinkMaxCm, samples: this.propGroundSamples, gaps: this.game.view.labProbes().districts?.propGroundGaps() ?? [] },

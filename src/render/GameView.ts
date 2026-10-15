@@ -856,6 +856,7 @@ export class GameView implements Lifecycle {
       this.districts?.updateArmyBoom(at ? Math.max(0, 1 - (this.world.tick - at) / 42) : 1);
     }
     if (this.params.get('doors') !== '0') this.districts?.updateDoors(this.doorBodies(), this.world.openDoors.values());
+    const marketState = this.world.missions?.state.l2; if (marketState) this.districts?.marketDoors(marketState.doorsOpenAt > 0 && this.world.tick >= marketState.doorsOpenAt);
     const shutterAt = this.world.missions?.state.l5?.shutterAt;
     if (this.world.scenario === 'L5') this.districts?.updateMetroShutter(Math.min(1, Math.max(0, shutterAt ? (this.world.tick - shutterAt) / 120 : 0)));
     this.wireframe?.update();
