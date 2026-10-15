@@ -27,7 +27,7 @@ import { ActionView } from './ActionView';
 import type { SurvivorState } from '../data/survivor';
 import { CharacterView } from './characters/CharacterView';
 import { useSkinnedCourier } from './characters/RiderContacts';
-import { BoxGeometry, Color, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, Scene, MeshLambertNodeMaterial, MeshStandardMaterial, type Material } from 'three/webgpu';
+import { Box3, BoxGeometry, Color, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, Scene, MeshLambertNodeMaterial, MeshStandardMaterial, type Material } from 'three/webgpu';
 import type { Lifecycle } from '../core/Lifecycle';
 import { lerp } from '../core/maths';
 import type { SimWorld } from '../sim/world/SimWorld';
@@ -40,7 +40,7 @@ import { Lighting } from './Lighting';
 import { Materials } from './Materials';
 import { Lookdev } from './Lookdev';
 import { Occlusion } from './Occlusion';
-import { seeThrough } from './SeeThrough';
+import { projectReveal, seeThrough } from './SeeThrough';
 import { PostFx } from './PostFx';
 import { photoSpots } from '../../tests/fixtures/scenarios/lookdev';
 import type { TimeOfDay } from '../data/timeOfDay';
@@ -84,7 +84,10 @@ export class GameView implements Lifecycle {
   private l3AttackScale = 1;
   private bossHole = 0;
   /** Scene Lab courier-visibility probe: hide the courier and/or every crowd figure (including the Mega) for one screenshot. */
-  private probeHide = { courier: false, crowd: false };
+  private readonly revealSubject = new Box3();
+  private readonly revealVehicle = new Box3();
+  private probeVisibilityPending = false;
+  private probeHide = { courier: false, crowd: false, environment: false };
   private readonly storyFocus = new Vector3();
   private readonly storyOffset = new Vector3();
   readonly view = new View();
@@ -693,15 +696,15 @@ export class GameView implements Lifecycle {
   }
   /** The boss hole opens while the Mega is within 14 m of the courier; it only drops boss fragments nearer the lens than her, inside a courier-sized disc. */
   private updateBossHole(player?: { x: number; z: number }): void {
-    const goal = player && this.megaDistance(player) < 14 ? .2 : 0;   // Alpha-sized boss: a partial hole is enough (PO 10-15)
-    this.bossHole += (goal - this.bossHole) * .3; if (Math.abs(goal - this.bossHole) < .01) this.bossHole = goal;
+    const goal = player && this.megaDistance(player) < 14 ? 1 : 0;
+    this.bossHole = goal;
     seeThrough.bossStrength.value = this.bossHole;
     const screenHeight = 2 * this.camera.position.distanceTo(this.view.focus) * Math.tan(this.camera.fov * Math.PI / 360);
     seeThrough.bossRadius.value = Math.min(.3, Math.max(.1, 2.8 / screenHeight));
   }
   /** Scene Lab: hide the courier / the crowd (Mega included) and redraw, for the courier-visible-share probe. */
-  probeVisibility(hide: { courier: boolean; crowd: boolean }): number {
-    this.probeHide = { ...hide }; this.update(1);
+  probeVisibility(hide: { courier: boolean; crowd: boolean; environment?: boolean }): number {
+    this.probeHide = { ...hide, environment: hide.environment ?? false }; this.probeVisibilityPending = true; this.update(1);
     const player = this.world.entities.get(1); return player ? this.megaDistance(player.transform) : Infinity;
   }
   /** Project a world point to viewport-normalized coordinates, for masks and input integration. */
@@ -857,8 +860,22 @@ export class GameView implements Lifecycle {
     this.districts?.cull(this.view, this.quality);
     const locked = this.world.controls.snapshot()?.attack;
     const lockedEntity = locked ? this.world.entities.get(locked.id) : undefined;
-    if (this.districts) this.districts.interactionOccluded = !!current && !!this.interactions?.occludesPlayer(this.camera, current);
-    this.districts?.updateFoliage(this.view, current, lockedEntity && lockedEntity.health.current > 0 ? lockedEntity.transform : undefined);
+    let subject: Box3 | undefined;
+    if (current) {
+      const feet = current.y - .7;
+      this.revealSubject.min.set(current.x - .55, feet, current.z - .55);
+      this.revealSubject.max.set(current.x + .55, feet + 1.9, current.z + .55);
+      if ((this.world.entities.get(1) as { riding?: number } | undefined)?.riding !== undefined && this.bicycle?.playerBounds(this.revealVehicle)) this.revealSubject.union(this.revealVehicle);
+      if (this.vehicles?.playerBounds(this.revealVehicle) || this.entityAssets?.playerBounds(this.revealVehicle)) this.revealSubject.union(this.revealVehicle);
+      subject = this.revealSubject;
+    }
+    this.districts?.updateFoliage(this.view, current, lockedEntity && lockedEntity.health.current > 0 ? lockedEntity.transform : undefined, subject);
+    // Scenes without a DistrictView (Scene Lab asphalt scenes with asset occluders) open the same bounded, immediate reveal.
+    if (!this.districts) {
+      seeThrough.cover.value = 0;
+      seeThrough.strength.value = subject ? 1 : 0;
+      if (subject) projectReveal(this.camera, subject); else seeThrough.center.value.set(-10, -10);
+    }
     this.updateBossHole(current);
     this.healthBars?.update(this.camera, this.view.viewportHeight * this.camera.aspect, this.view.viewportHeight, this.barOccluded);
     if (this.world.missions?.state.l3) {
@@ -866,6 +883,7 @@ export class GameView implements Lifecycle {
       this.districts?.updateArmyBoom(at ? Math.max(0, 1 - (this.world.tick - at) / 42) : 1);
     }
     if (this.params.get('doors') !== '0') this.districts?.updateDoors(this.doorBodies(), this.world.openDoors.values());
+    const marketState = this.world.missions?.state.l2; if (marketState) this.districts?.marketDoors(marketState.doorsOpenAt > 0 && this.world.tick >= marketState.doorsOpenAt);
     const shutterAt = this.world.missions?.state.l5?.shutterAt;
     if (this.world.scenario === 'L5') this.districts?.updateMetroShutter(Math.min(1, Math.max(0, shutterAt ? (this.world.tick - shutterAt) / 120 : 0)));
     this.wireframe?.update();
@@ -874,6 +892,17 @@ export class GameView implements Lifecycle {
     this.renderer.beginProfile(this.camera);
     const renderStart = profileStart ? performance.now() : 0;
     if (profileStart) this.updateCpuMs = renderStart - profileStart;
+    if (this.probeVisibilityPending || this.probeHide.courier || this.probeHide.crowd || this.probeHide.environment) {
+      // The reference removes every possible foreground solid, including static kits and parked cars.
+      if (this.districts) this.districts.visible = !this.probeHide.environment;
+      if (this.npcs) this.npcs.visible = !this.probeHide.environment;
+      if (this.interactions) this.interactions.visible = !this.probeHide.environment;
+      if (this.fixtureProps) this.fixtureProps.visible = !this.probeHide.environment;
+      if (this.bicycle) this.bicycle.visible = !((this.world.entities.get(1) as { riding?: number } | undefined)?.riding !== undefined ? this.probeHide.courier : this.probeHide.environment);
+      this.vehicles?.probeVisibility(this.probeHide.courier, !!this.probeHide.environment);
+      this.entityAssets?.probeVisibility(this.probeHide.courier, !!this.probeHide.environment);
+      this.probeVisibilityPending = false;
+    }
     if (this.weatherProbeAsset) {
       const saved = new Map<Mesh, boolean>(), background = this.scene.background, backgroundNode = this.scene.backgroundNode;
       this.scene.background = new Color(0); this.scene.backgroundNode = null;

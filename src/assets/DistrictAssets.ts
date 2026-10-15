@@ -24,9 +24,9 @@ import { decodeStaticBake } from './staticBakeData';
 import { decompressCivilianBake } from './civilianBakeData';
 import { openFireStationBays } from './fireStationBays';
 import { vehicleDecayFallback } from './vehicleDecay';
-import { occluderMinHeight } from '../render/SeeThrough';
+import { lodHeightSlack, occluderMinHeight } from '../render/SeeThrough';
 /** Props lower than an occluder keep every fragment while the courier see-through hole is open. */
-export const isUncutProp = (id: string, drawnHeight = Infinity): boolean => worldAssets[id]?.category === 'prop' && !worldAssets[id].foliage && Math.min(worldAssets[id].dimensions.y, drawnHeight) < occluderMinHeight;
+export const isUncutProp = (id: string, drawnHeight = Infinity): boolean => worldAssets[id]?.category === 'prop' && !worldAssets[id].foliage && Math.min(worldAssets[id].dimensions.y, drawnHeight) < occluderMinHeight * lodHeightSlack;
 /** Deduplicated runtime URLs for the placement tiers requested by HTTP prefetch. */
 export function districtAssetUrls(id: string, definition: (id: string) => import('./types').AssetDef, lods: ('lod1' | 'lod2')[] = ['lod1', 'lod2'], decay?: string): string[] {
   const def = definition(productionIds[id] ?? id);
@@ -193,6 +193,7 @@ export class DistrictAssets {
       // Keep the Metro shutter independent of its static shell.
       if(id==='int.metro-exit')asset.userData.splitDoors=['exitGate'];
       if (id === 'bld.metro-entrance') asset.userData.splitDoors = ['shutter'];
+      if (id === 'kit.market-doors') asset.userData.splitDoors = ['marketLeafL', 'marketLeafR'];
       if (spinNodes[id]) asset.userData.splitDoors = spinNodes[id].map(s => s.node);
       // Preserve the HMG's authored barrel frame and socket through static batching.
       const machineGun = id === 'prop.hmg-nest' ? asset.getObjectByName('gun') : undefined;

@@ -9,9 +9,9 @@ export const l6 = {
 export const l6BreachModels = [l6.breach.model, 'npc.civilian-man-b.aftermath', 'npc.civilian-woman-b.aftermath', 'npc.civilian-woman-a', 'npc.civilian-elderly'] as const;
 /** Fixed shelter and maintenance cast, including every possible carried L5 survivor. */
 export const l6CastModels = [...new Set([...l6BreachModels, 'npc.marcus.aftermath', 'npc.shelter-survivor.bandaged', 'npc.shelter-survivor.lying', 'npc.shelter-survivor.sitting', 'npc.civilian-man-b.aftermath', 'npc.civilian-woman-b.aftermath', ...l5Survivors.map(s=>s.model)])];
-export const l6Doors = [{ x: -10, z: -10 }, { x: 10, z: -10 }, ...[54, 126, 198].map(x => ({ x, z: 11.2 })), ...[78, 162, 228].map(x => ({ x, z: 18.8 }))];
+export const l6Doors = [{ x: -10, z: -18 }, { x: 10, z: -18 }, ...[54, 126, 198].map(x => ({ x, z: 11.2 })), ...[78, 162, 228].map(x => ({ x, z: 18.8 }))];
 export const l6PhotoSpots = [
-  ['l6-shelter-calm', [0, 6]], ['l6-first-breach', [-10, -6]], ['l6-shelter-fails', [0, 4]],
+  ['l6-shelter-calm', [0, -2]], ['l6-first-breach', [-10, -14]], ['l6-shelter-fails', [0, -4]],
   ['l6-tunnel-retreat', [110, 15]], ['l6-chokepoint', [150, 15]], ['l6-straggler', [130, 15]], ['l6-exit-night', [268, 15]],
 ] as const;
 export const l6InjuryLines = {

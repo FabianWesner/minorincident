@@ -1,4 +1,18 @@
 {
   "extends": "../l10-mega-moves/l10-mega-charge-wall.json",
-  "name": "l10-q1-mega-charge-wall"
+  "name": "l10-q1-mega-charge-wall",
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "actorHitsMax": 0,
+    "courierVisibleShareMin": 0.6,
+    "seeThroughCutPixelsMax": 0
+  },
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  }
 }
