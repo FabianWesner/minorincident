@@ -238,8 +238,8 @@ export interface Expectations {
   seeThroughCutInsideMax?: number;
   /** Share of the courier and ridden vehicle's own pixels visible on every sheet frame, including f0. Reference hides foreground solids and the crowd; Mega fixtures sample within 14 m. */
   courierVisibleShareMin?: number;
-  /** E32 close camera: while the Mega Alpha is within 6 m, its visible pixels (frame vs frame without the crowd) must stay at least this share of the viewport, so it still reads as a threat. */
-  megaVisibleShareMin?: number;
+  /** PO 10-15: within 6 m, Mega visible pixels / regular Alpha pixels at the identical transform and pose. Relative gate avoids incentivizing an oversized boss; use 0.9. */
+  megaAlphaVisibleRatioMin?: number;
   /** Placement pairs whose LOD0 meshes cut through each other (`clipping.static` only; bone hits not counted). */
   staticOverlapMax?: number;
   footSlideMaxCm?: number;
