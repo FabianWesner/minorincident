@@ -308,6 +308,15 @@ export class SceneLab {
         // Hold the completed physical closure for inspection, before the normal
         // two-second handover ends this scene. Combat and contact keep running.
         mission.state.l2!.phase = 'done';
+        // Reuse production pursuers: the rescue has already filled its cap.
+        // Fixture placement must retain identities/counts rather than add extras.
+        const probes = world.infected!.active.filter(e => e.health.current > 0 && !e.hidden).slice(0, 2);
+        for (const [i, id] of ['jamb-probe', 'panel-probe'].entries()) {
+          const e = probes[i]; if (!e) throw new Error('L2 checkpoint fixture needs two living pursuers');
+          if (!world.solids.relocate(e, { x: i ? 81.9 : 83.107, y: .7, z: 37 }, 'scene.l2-gate-probe', 0, false)) throw new Error('L2 gate probe placement blocked');
+          world.infected!.rush(e.id, world.entities.get(1)!.transform, world.tick + 600);
+          this.actors.set(id, { id, kind: 'infected', entity: e.id, spec: { id, kind: 'infected', archetype: e.archetype }, plan: null, track: [], lod: {}, drawn: 0, inView: 0, missed: 0, farClose: 0 });
+        }
       }
     }
     if (spec.l3Rendezvous) {
@@ -333,6 +342,7 @@ export class SceneLab {
     }
     if (spec.l4Convoy) {
       applyCampaign(world, preset('L4-default'));
+      world.infected!.director.setTier(this.game.quality.tier);
       const mission = world.loadMission(resolveCampaignMission('L4', world.districts!));
       mission.begin();
       if (spec.l4Convoy === 'parked' || spec.l4Convoy === 'hold') {
