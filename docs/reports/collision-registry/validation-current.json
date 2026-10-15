@@ -285,6 +285,30 @@
       "passed": 46,
       "failed": 0,
       "skipped": 0
+    },
+    {
+      "check": "player-contact-final",
+      "passed": 47,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "check": "l7-roster-final",
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "check": "traffic-footprints",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "check": "calm-health-boundary",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 1
     }
   ],
   "campaignThreeSeeds": {
@@ -801,5 +825,48 @@
     "failed": 45,
     "skipped": 2,
     "note": "Predates subsequent convoy, ram, L1 timing, L4, pursuit fixture and checkpoint replay fixes. Targeted reruns recorded separately."
+  },
+  "latestLevelReruns": [
+    {
+      "level": "L7",
+      "seed": 2,
+      "completed": true,
+      "time": 579.2166666666667,
+      "deaths": 0,
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 458,
+        "deferred": 0,
+        "requests": [],
+        "offenders": []
+      }
+    },
+    {
+      "level": "L6",
+      "seed": 1,
+      "completed": true,
+      "time": 272.55,
+      "deaths": 0,
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 180,
+        "deferred": 0,
+        "requests": [],
+        "offenders": []
+      }
+    }
+  ],
+  "remainingSelected": {
+    "passed": 118,
+    "failed": 25
+  },
+  "zooMixedIsolated": {
+    "count": 200,
+    "zoo": 20,
+    "activations": 47,
+    "simMsP95": 5.210015999999996,
+    "budgetMs": 4
   }
 }
