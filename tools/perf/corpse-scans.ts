@@ -33,7 +33,7 @@ try {
         const target = level === 'L2' ? 5190 : 7020;
         while (a.tick() < target) await a.step(Math.min(120, target - a.tick()));
         a.bot.stop(); a.debug.figureJoints(false); await a.screenshotReady();
-        return { tick: a.tick(), mission: a.missions.state(), player: a.getState().player.transform, active: a.getState().ai!.count };
+        return { tick: a.tick(), mission: a.missions.state(), player: a.getState().player!.transform, active: a.getState().ai!.count };
       }, level);
       await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });
       const result = await sample(20);
