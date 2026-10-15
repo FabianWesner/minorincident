@@ -63,10 +63,11 @@ export class CharacterView extends Group {
     if (!this.variantLoads.has(variant)) this.variantLoads.set(variant, this.prepareVariant?.(variant) ?? Promise.resolve());
     await this.variantLoads.get(variant); return true;
   }
-  async init(materials: Materials, bloodFeedback = false, low = false, outfit: 'survivor' | 'courier' = 'survivor', skin = false, cure = false, selected?: SurvivorVariant): Promise<void> {
+  async init(materials: Materials, bloodFeedback = false, low = false, outfit: 'survivor' | 'courier' = 'survivor', skin = false, cure = false, selected?: SurvivorVariant | null): Promise<void> {
     this.prepareVariant = variant => this.init(materials, bloodFeedback, low, outfit, skin, cure, variant);
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
-    for (const variant of selected ? [selected] : ['female', 'male'] as const) {
+    // null arms later preparation while a speculative L1 awaits the menu choice.
+    for (const variant of selected === null ? [] : selected ? [selected] : ['female', 'male'] as const) {
       if (this.characters.has(variant)) continue;
       const id = `char.${outfit}-${variant}`, def = (manifest as AssetDef[]).find(asset => asset.id === id);
       let isSkin = false;
