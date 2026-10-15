@@ -498,10 +498,14 @@ export class DistrictView extends Group {
     const hugged = Boolean(player && this.foliage.reveal && this.huggedOccluder(view));
     this.occluderId = hugged ? 'hugged' : '';
     const goal = player && this.foliage.reveal && (hugged || this.occluded(view, player)) ? 1 : 0;
-    seeThrough.strength.value += (goal - seeThrough.strength.value) * (1 - Math.exp(-(hugged ? 40 : 10) * this.frameSeconds));
+    // A loaded, paused camera has no elapsed presentation time. Its first image
+    // must already reveal the courier; otherwise a close ramp/roof fills the
+    // viewport until the first simulation step happens to advance the easing.
+    const blend = this.frameSeconds === 0 ? 1 : 1 - Math.exp(-(hugged ? 40 : 10) * this.frameSeconds);
+    seeThrough.strength.value += (goal - seeThrough.strength.value) * blend;
     if (Math.abs(goal - seeThrough.strength.value) < .002) seeThrough.strength.value = goal;
     // Opens fast (a roof filling the frame must not linger while the cut eases open, esp. on slow frames), closes at the ordinary rate.
-    seeThrough.cover.value += (+hugged - seeThrough.cover.value) * (1 - Math.exp(-(hugged ? 40 : 10) * this.frameSeconds));
+    seeThrough.cover.value += (+hugged - seeThrough.cover.value) * blend;
     if (Math.abs(+hugged - seeThrough.cover.value) < .002) seeThrough.cover.value = +hugged;
   }
   /** How far in front of the lens a solid occluder counts as filling the view. Measured at L4 Kessler's Hardware
@@ -509,25 +513,27 @@ export class DistrictView extends Group {
   static readonly hugDistance = 8;
   private readonly lensRay = new Vector3();
   private readonly lensPoint = new Vector3();
+  private static readonly footFrames = new WeakMap<Object3D, { entry: LodBatch; px: number; pz: number; qy: number; qw: number; sx: number; sz: number; frame: [number, number, number, number] }>();
   /** Local frame of a placement's real footprint (yaw only): `[cos, sin, centre x, centre z]` on the district plane. */
   private static footFrame(entry: LodBatch, ref: Object3D): [number, number, number, number] {
+    const cached = this.footFrames.get(ref);
+    // Placement geometry is static; pushed props invalidate by their actual transform.
+    // Reuse the frame across the camera ray and all forty lens samples.
+    if (cached && cached.entry === entry && cached.px === ref.position.x && cached.pz === ref.position.z && cached.qy === ref.quaternion.y && cached.qw === ref.quaternion.w && cached.sx === ref.scale.x && cached.sz === ref.scale.z) return cached.frame;
     const yaw = 2 * Math.atan2(ref.quaternion.y, ref.quaternion.w), c = Math.cos(yaw), s = Math.sin(yaw), { cx, cz } = entry.foot;
-    return [c, s, ref.position.x + entry.origin[0] + cx * ref.scale.x * c + cz * ref.scale.z * s, ref.position.z + entry.origin[1] - cx * ref.scale.x * s + cz * ref.scale.z * c];
-  }
-  /** World point against the placement's oriented footprint (not the square of its longest side: a 20 m shop row is 9 m deep). */
-  private static insideFootprint(entry: LodBatch, ref: Object3D, px: number, pz: number): boolean {
-    const [c, s, x, z] = DistrictView.footFrame(entry, ref), dx = px - x, dz = pz - z;
-    return Math.abs((dx * c - dz * s) / ref.scale.x) < entry.foot.hx && Math.abs((dx * s + dz * c) / ref.scale.z) < entry.foot.hz;
+    const frame: [number, number, number, number] = [c, s, ref.position.x + entry.origin[0] + cx * ref.scale.x * c + cz * ref.scale.z * s, ref.position.z + entry.origin[1] - cx * ref.scale.x * s + cz * ref.scale.z * c];
+    this.footFrames.set(ref, { entry, px: ref.position.x, pz: ref.position.z, qy: ref.quaternion.y, qw: ref.quaternion.w, sx: ref.scale.x, sz: ref.scale.z, frame });
+    return frame;
   }
   /** A tall solid placement sits right in front of the lens: points 1..hugDistance m along the centre and
    * the four quarter-screen rays (at least three of the five) fall inside its conservative upright box. */
   private huggedOccluder(view: View): boolean {
-    const camera = view.camera, o = camera.position, near: { entry: LodBatch; ref: Object3D; y0: number; y1: number }[] = [];
+    const camera = view.camera, o = camera.position, near: { frame: [number, number, number, number]; sx: number; sz: number; hx: number; hz: number; y0: number; y1: number }[] = [];
     for (const entry of this.lodBatches) {
       if (entry.height < occluderMinHeight || worldAssets[entry.id].foliage) continue;
       for (const ref of entry.refs) {
         const x = ref.position.x + entry.origin[0], z = ref.position.z + entry.origin[1], half = entry.half * Math.max(ref.scale.x, ref.scale.z);
-        if (Math.abs(x - o.x) < half + DistrictView.hugDistance && Math.abs(z - o.z) < half + DistrictView.hugDistance) near.push({ entry, ref, y0: ref.position.y, y1: ref.position.y + entry.height * ref.scale.y });
+        if (Math.abs(x - o.x) < half + DistrictView.hugDistance && Math.abs(z - o.z) < half + DistrictView.hugDistance) near.push({ frame: DistrictView.footFrame(entry, ref), sx: ref.scale.x, sz: ref.scale.z, hx: entry.foot.hx, hz: entry.foot.hz, y0: ref.position.y, y1: ref.position.y + entry.height * ref.scale.y });
       }
     }
     if (!near.length) return false;
@@ -536,7 +542,11 @@ export class DistrictView extends Group {
       this.lensRay.set(sx, sy, .5).unproject(camera).sub(o).normalize();
       for (let d = 1; d <= DistrictView.hugDistance; d++) {
         const p = this.lensPoint.copy(o).addScaledVector(this.lensRay, d);
-        if (near.some(b => p.y > b.y0 + .3 && p.y < b.y1 && DistrictView.insideFootprint(b.entry, b.ref, p.x, p.z))) { blocked++; break; }
+        if (near.some(b => {
+          if (p.y <= b.y0 + .3 || p.y >= b.y1) return false;
+          const [c, s, x, z] = b.frame, dx = p.x - x, dz = p.z - z;
+          return Math.abs((dx * c - dz * s) / b.sx) < b.hx && Math.abs((dx * s + dz * c) / b.sz) < b.hz;
+        })) { blocked++; break; }
       }
     }
     // Most of the frame, not a wall at one edge: a street corner keeps its ordinary courier-sized hole.
@@ -556,13 +566,21 @@ export class DistrictView extends Group {
     for (const entry of this.lodBatches) {
       if (entry.height < occluderMinHeight || worldAssets[entry.id].foliage) continue;
       for (const ref of entry.refs) {
+        // Reject distant placements before deriving their oriented centre. Include the
+        // entire centre offset so this preserves the exact 24 m test below at every yaw.
+        const offset = Math.abs(entry.foot.cx * ref.scale.x) + Math.abs(entry.foot.cz * ref.scale.z);
+        if (Math.abs(ref.position.x + entry.origin[0] - player.x) > 24 + offset || Math.abs(ref.position.z + entry.origin[1] - player.z) > 24 + offset) continue;
         const [c, sn, x, z] = DistrictView.footFrame(entry, ref);
         if (Math.abs(x - player.x) > 24 || Math.abs(z - player.z) > 24) continue;
         // Slab test in the placement's local frame (oriented footprint, real height).
         const ox = o.x - x, oz = o.z - z, sx = ref.scale.x, sz = ref.scale.z;
         const lox = (ox * c - oz * sn) / sx, loz = (ox * sn + oz * c) / sz, ldx = (dx * c - dz * sn) / sx, ldz = (dx * sn + dz * c) / sz;
         let enter = 0, exit = 1;
-        for (const [origin, delta, min, max] of [[lox, ldx, -entry.foot.hx, entry.foot.hx], [o.y, dy, ref.position.y, ref.position.y + entry.height * ref.scale.y], [loz, ldz, -entry.foot.hz, entry.foot.hz]]) {
+        for (let axis = 0; axis < 3; axis++) {
+          const origin = axis === 0 ? lox : axis === 1 ? o.y : loz;
+          const delta = axis === 0 ? ldx : axis === 1 ? dy : ldz;
+          const min = axis === 0 ? -entry.foot.hx : axis === 1 ? ref.position.y : -entry.foot.hz;
+          const max = axis === 0 ? entry.foot.hx : axis === 1 ? ref.position.y + entry.height * ref.scale.y : entry.foot.hz;
           if (Math.abs(delta) < 1e-6) { if (origin < min || origin > max) { exit = -1; break; } continue; }
           const a = (min - origin) / delta, b = (max - origin) / delta;
           enter = Math.max(enter, Math.min(a, b)); exit = Math.min(exit, Math.max(a, b));
