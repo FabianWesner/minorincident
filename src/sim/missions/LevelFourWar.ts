@@ -294,6 +294,7 @@ export class LevelFourWar {
       // plus vehicle clearance, so their paths agree with the rendered-hull guard.
       const margin = .85;
       const wall: CoverWall = { x: e.transform.x, y: .9, z: e.transform.z, halfX: (c * v.len + n * v.wid) / 2 + margin, halfY: .9, halfZ: (n * v.len + c * v.wid) / 2 + margin };
+      world.solids.aliasBlocker(NAV_CONVOY + i, e.id);
       world.events.emit({ type: 'world.blocker.changed', tick: world.tick, id: NAV_CONVOY + i, blocked, wall });
     }
   }

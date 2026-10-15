@@ -31,6 +31,7 @@ export class SolidRegistry {
   failures = 0;
   admitted = 0;
   deferred = 0;
+  private readonly blockerOwners = new Map<string, number>();
   private readonly hulls = new Map<number, Hull>();
   private readonly hullIndex = new SpatialHash();
   private committed = new WeakMap<EntitySnapshot, Transform>();
@@ -41,7 +42,7 @@ export class SolidRegistry {
   private readonly moved: EntitySnapshot[] = [];
   private readonly contact: Contact = { depth: 0, nx: 0, nz: 0, inside: false };
   private maxHull = 0;
-  private maxActor = survivor.radius;
+  private maxActor: number = survivor.radius;
   private readonly changedActors = new Set<number>();
   private navRevision = -1;
   private nav: import('../ai/NavGrid').NavGrid | undefined;
@@ -75,11 +76,18 @@ export class SolidRegistry {
     }
     return changed;
   }
+  /** A parked nav blocker and its registered hull are one solid for explicit passenger relationships. */
+  aliasBlocker(blockerId: number, hullId: number): void { this.blockerOwners.set(`blocker:${blockerId}`, hullId); }
   private solids(at: Point, radius: number, e: EntitySnapshot | undefined, visit: (box: SolidBox, id: number | string) => void): void {
+    const owner = e?.passengerOf ?? e?.attachedTo;
+    const activity = e?.civilian?.schedule?.[e.civilian.scheduleStep ?? 0];
+    const seatOwner = activity?.seatProp ? this.world.props?.items.find(p => p.id === activity.seatProp)?.entityId : undefined;
     this.world.infected?.nav.visitSolids(at.x, at.z, radius, (box, id) => {
+      if (at === e?.transform && (owner !== undefined && this.blockerOwners.get(id) === owner || seatOwner !== undefined && id === `blocker:${seatOwner}`)) return;
       // Support below the feet is walkable; navigation-only walls explicitly reserve the ground layer.
       if ((box.navBlocker && at.y < 1.8) || box.y + box.halfY > at.y - .65 + .05 && box.y - box.halfY < at.y + .65) visit(box, id);
     });
+    if (!this.hulls.size) return;
     this.hullIndex.query({ x: at.x, z: at.z, r: this.maxHull + radius }, this.hullNeighbors, false);
     const worldBox: SolidBox = { x: 0, y: 0, z: 0, halfX: 0, halfZ: 0, halfY: 0 };
     for (const id of this.hullNeighbors) {
@@ -232,5 +240,5 @@ export class SolidRegistry {
     }
   }
   snapshot() { return { failures: this.failures, pending: this.world.entities.values().filter(e => e.pendingAdmission).length, admitted: this.admitted, deferred: this.deferred, offenders: this.offenders.map(o => ({ ...o })) }; }
-  reset(): void { this.hulls.clear(); this.hullIndex.reset(); this.committed = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = -1; this.nav = undefined; }
+  reset(): void { this.blockerOwners.clear(); this.hulls.clear(); this.hullIndex.reset(); this.committed = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = -1; this.nav = undefined; }
 }
