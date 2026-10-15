@@ -43,8 +43,6 @@ export class View {
     camera.lookAt(this.cameraTarget); camera.updateMatrixWorld(); return camera;
   }
   encounterScale = 1;
-  /** Mega Alpha close camera: pull-back multiplier that keeps the player's zoom (unlike encounterScale, which neutralises it). */
-  bossScale = 1;
   /** The player's eased wheel/pinch zoom ratio (0.5 closest .. 1.5 widest). */
   get playerZoom(): number { return this.zoomRatio; }
   /** Finale widening multiplies player zoom without locking wheel/pinch or follow input. */
@@ -79,11 +77,11 @@ export class View {
     this.viewportHeight = height;
     this.camera.aspect = width / height;
     this.defaultRadius = width >= height ? cameraFraming.radiusM : Math.max(cameraFraming.radiusM, cameraFraming.portraitWidthM / (2 * Math.tan(this.camera.fov * Math.PI / 360) * this.camera.aspect));
-    this.radius = this.defaultRadius * this.zoomRatio * this.encounterScale * this.epilogueScale * this.bossScale;
+    this.radius = this.defaultRadius * this.zoomRatio * this.encounterScale * this.epilogueScale;
     this.camera.updateProjectionMatrix(); this.simCamera.aspect = this.camera.aspect; this.simCamera.updateProjectionMatrix(); this.update({ x: this.focus.x, z: this.focus.z, y: this.focus.y + feetOffset }, 0);
   }
   reset(player: { x: number; z: number; y?: number }): void {
-    this.encounterScale = this.epilogueScale = this.bossScale = 1; this.zoomRatio = this.targetZoom = 1; this.radius = this.defaultRadius;
+    this.encounterScale = this.epilogueScale = 1; this.zoomRatio = this.targetZoom = 1; this.radius = this.defaultRadius;
     this.driving = false; this.focus.set(player.x, Math.max(0, (player.y ?? feetOffset) - feetOffset), player.z); this.spot = null; this.blend = this.blendTarget = 0; this.shakeStrength = this.shakeTime = 0; this.rollAngle = this.rollSpeed = 0; this.pullWeight = 0;
     this.update(player, 0);
   }
@@ -132,7 +130,7 @@ export class View {
   update(player: { x: number; z: number; y?: number }, seconds: number): void {
     this.previousPosition.copy(this.tickPosition); this.previousQuaternion.copy(this.tickQuaternion);
     this.zoomRatio += (this.targetZoom - this.zoomRatio) * (1 - Math.exp(-12 * seconds));
-    this.radius = this.defaultRadius * this.scriptedAdjusted(this.zoomRatio) * this.encounterScale * this.epilogueScale * this.bossScale;
+    this.radius = this.defaultRadius * this.scriptedAdjusted(this.zoomRatio) * this.encounterScale * this.epilogueScale;
     this.focus.x += (player.x - this.focus.x) * (1 - Math.exp(-10 * seconds));
     this.focus.z += (player.z - this.focus.z) * (1 - Math.exp(-10 * seconds));
     // Elevated decks/ramps: follow the feet height (transform.y is the body centre, .72 m above the feet), damped so stairs do not jitter.
