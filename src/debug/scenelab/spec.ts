@@ -224,13 +224,17 @@ export interface Expectations {
   heldPropArmStraightMax?: number;
   /** Placements lower than an occluder (1.1 m) drawn with the courier-hole cut material (`metrics.seeThrough.cutLowProps`); use 0. */
   seeThroughLowPropsMax?: number;
+  /** Asset-id prefixes (e.g. `bld.supermarket`) that must never be marked for the courier cut in any frame (`metrics.seeThrough.cutPlacements`): the building is not in the way. */
+  seeThroughNeverCut?: string[];
   /** Minimum frames the solid-occluder hole was open, so a cutaway fixture cannot pass without exercising it. */
   seeThroughOpenFramesMin?: number;
   /** PO 10-14: pixels that differ between the frame and the same frame with the solid-occluder cut forced off, outside the hole disc around the courier (radius = solidRadius, screen heights): buildings and vehicles that are not in the way must stay opaque. Use 0. */
   seeThroughCutPixelsMax?: number;
   /** Minimum differing pixels inside the hole disc: a real occluder must still be cut. */
   seeThroughCutInsideMin?: number;
-  /** E32 close camera: while the Mega Alpha is within 14 m, the share of the courier's own screen pixels still visible (frame with the courier vs without her, crowd hidden as reference) on every sheet frame. */
+  /** Maximum changed pixels inside the reveal cone; 0 proves an adjacent building stays completely opaque. */
+  seeThroughCutInsideMax?: number;
+  /** Share of the courier and ridden vehicle's own pixels visible on every sheet frame, including f0. Reference hides foreground solids and the crowd; Mega fixtures sample within 14 m. */
   courierVisibleShareMin?: number;
   /** E32 close camera: while the Mega Alpha is within 6 m, its visible pixels (frame vs frame without the crowd) must stay at least this share of the viewport, so it still reads as a threat. */
   megaVisibleShareMin?: number;
