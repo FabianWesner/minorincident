@@ -37,8 +37,11 @@ test('T-E23-14a @E23 @E23-AC14 PO #19c zero music before survivor 1, current rec
     expect(loudness(music.path).lufs).toBeGreaterThan(-60);
     for (const checkpoint of ['survivor-1', 'survivor-5']) {
         if (checkpoint === 'survivor-5') await page.evaluate(async () => { const a = window.__SS__!; a.cheats.completeObjective('look'); await a.step(2); });
+        // Stop the live score first: restoring a found survivor must restart it from silence.
+        await page.evaluate(async () => { const a = window.__SS__!; a.missions.restore('outside'); await a.step(2); });
+        await expect.poll(() => page.evaluate(() => window.__SS__!.audio.snapshot().music.streamed.decks.filter(d => !d.paused).map(d => d.file)), { timeout: 2000 }).toEqual([]);
         await page.evaluate(async id => { const a = window.__SS__!; a.missions.restore(id); await a.step(2); }, checkpoint);
-        await expect.poll(() => page.evaluate(() => window.__SS__!.audio.snapshot().music.streamed.decks.filter(d => !d.paused).map(d => d.file)), { timeout: 2000 }).toEqual(['calm-L5']);
+        await expect.poll(() => page.evaluate(() => window.__SS__!.audio.snapshot().music.streamed.decks.filter(d => !d.paused && d.gain > 0).map(d => d.file)), { timeout: 2000 }).toEqual(['calm-L5']);
     }
 });
 test('T-E23-14b @E23 @E23-AC14 the first 60 s of L5 measure at least 18 LU below the battle mix of L4\'s war phase (offline render of the production graph)', async ({ page }) => {
