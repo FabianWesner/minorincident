@@ -1,0 +1,61 @@
+{
+  "name": "alpha-look-l5-east",
+  "note": "Production L5 Alpha spawn location and asset, ordinary chase and health bar in W5. No gameplay data overrides.",
+  "seed": 5,
+  "ground": "district",
+  "time": "L5",
+  "tier": 5,
+  "layout": {
+    "level": "L5",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        37,
+        2
+      ],
+      [
+        61,
+        26
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        52,
+        14
+      ],
+      "god": true
+    },
+    {
+      "id": "alpha",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        49,
+        14
+      ],
+      "yaw": 0,
+      "state": "chase"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      49,
+      1.2,
+      14
+    ],
+    "zoom": 1
+  },
+  "frames": 180,
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}
