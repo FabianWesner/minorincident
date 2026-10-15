@@ -1,5 +1,8 @@
 import { afterEach, expect, test, vi } from 'vitest';
 import { TextureNode, type DataTexture, type Node } from 'three/webgpu';
+// Three's binding manager is omitted from @types/three.
+// @ts-expect-error internal module has no declaration
+import { NodeSampledTexture } from 'three/src/renderers/common/nodes/NodeSampledTexture.js';
 import { ivec2, textureLoad } from 'three/tsl';
 import { clipTexture, poseTexture } from '../../../src/assets/crowd';
 
@@ -30,7 +33,11 @@ test('@E18 pose texture clones retain per-draw rebinding and mutable atlas uploa
   const first = clipTexture({ parts: ['root'], frames: 1, duration: 1, matrices: new Float32Array(16) });
   const second = clipTexture({ parts: ['root'], frames: 1, duration: 1, matrices: new Float32Array(16).fill(2) });
   const pose = poseTexture(first), sample = textureLoad(pose, ivec2(0, 0));
+  const binding = new NodeSampledTexture('pose', sample, null);
+  expect(binding.texture).toBe(first);
   pose.value = second;
+  expect(binding.update()).toBe(true);
+  expect(binding.texture).toBe(second);
   expect(sample.value).toBe(second);
   const version = second.version;
   (second.image.data as Float32Array)[0] = 3;
