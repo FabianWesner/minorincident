@@ -178,7 +178,7 @@ export class SolidRegistry {
   }
   /** Swept footprint against the registry's compound boxes and living bodies.
    * A charge may push a contacted body; an obstructed push stops the mover. */
-  sweep(e: EntitySnapshot, direction: { x: number; z: number }, distance: number, radius = actorRadius(e), push = false, bodies = true): number {
+  sweep(e: EntitySnapshot, direction: { x: number; z: number }, distance: number, radius = actorRadius(e), push: boolean | 'side' = false, bodies = true, contact?: (other: EntitySnapshot) => void): number {
     this.syncHulls();
     const p = e.transform, q = this.world.combat!.query;
     this.solids(p, radius + distance, e, box => {
@@ -190,13 +190,17 @@ export class SolidRegistry {
     });
     if (!bodies) return distance;
     const neighbors: number[] = [];
-    this.world.spatial.query({ x: p.x, z: p.z, r: distance + radius + this.maxActor }, neighbors, false);
+    this.world.spatial.query({ x: p.x, z: p.z, r: distance + radius + this.maxActor + (contact ? tolerance : 0) }, neighbors, false);
     for (const id of neighbors) {
       const other = this.world.entities.get(id);
       if (!other || other === e || !actor(other) || pairExempt(e, other) || !layers(p, other.transform)) continue;
       const t = other.transform, dx = t.x - p.x, dz = t.z - p.z;
       const along = dx * direction.x + dz * direction.z, lateral = dx * direction.z - dz * direction.x;
       const reach = actorRadius(e) + actorRadius(other), side2 = lateral * lateral;
+      // Contact damage includes the registry's 2 cm tolerance, before a push can
+      // move the contacted body. Each special owns its per-body hit set.
+      const closest = Math.max(0, Math.min(distance, along));
+      if (contact && (along - closest) ** 2 + side2 <= (reach + tolerance) ** 2) contact(other);
       if (side2 >= reach * reach || along < 0) continue;
       const entry = Math.max(0, along - Math.sqrt(reach * reach - side2));
       if (entry >= distance) continue;
@@ -204,6 +208,12 @@ export class SolidRegistry {
         const x = p.x + direction.x * distance, z = p.z + direction.z * distance;
         const ox = t.x - x, oz = t.z - z, length = Math.hypot(ox, oz);
         const to = { x: x + (length ? ox / length : direction.x) * (reach + skin), z: z + (length ? oz / length : direction.z) * (reach + skin), y: t.y };
+        if (push === 'side') {
+          // A locked herd line sheds the body to its contacted side, rather
+          // than carrying it ahead of the first zebra for the whole charge.
+          const side = lateral < 0 ? -1 : 1, shift = side * (reach + skin) - lateral;
+          to.x = t.x + direction.z * shift; to.z = t.z - direction.x * shift;
+        }
         if (this.relocate(other, to, 'special.swept-contact', 0, false)) continue;
       }
       distance = Math.max(0, entry - skin);

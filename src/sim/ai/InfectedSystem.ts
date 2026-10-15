@@ -1202,12 +1202,14 @@ export class InfectedSystem {
     this.physicalOrigin.x = x; this.physicalOrigin.z = z;
     for (const id of this.physicalNeighbors) {
       const target = this.world.entities.get(id);
-      if (!target || !this.physicalHuman(target) || pounce && target.id !== a.target.id) continue;
+      if (zebra || !target || !this.physicalHuman(target) || pounce && target.id !== a.target.id) continue;
       const dx = target.transform.x - x, dz = target.transform.z - z;
       const along = Math.max(0, Math.min(distance, dx * a.area.dx + dz * a.area.dz));
       if (Math.hypot(dx - along * a.area.dx, dz - along * a.area.dz) <= hitRadius + 1e-8 && q.visible(this.physicalOrigin, target.transform) && this.physicalPropVisible(this.physicalOrigin, target.transform)) this.physicalHit(e, target, mega ? megaAlpha.moves['alpha.charge'].damage : zebra ? 25 : elephant ? 40 : 30);
     }
-    if (!zebra) distance = Math.min(distance, this.world.solids.sweep(e, direction, distance, e.combat!.radius, !pounce));
+    distance = Math.min(distance, this.world.solids.sweep(e, direction, distance, e.combat!.radius, zebra ? 'side' : !pounce, true, zebra ? target => {
+      if (this.physicalHuman(target) && q.visible(this.physicalOrigin, target.transform) && this.physicalPropVisible(this.physicalOrigin, target.transform)) this.physicalHit(e, target, 25);
+    } : undefined));
     p.x += a.area.dx * Math.max(0, distance - (distance < step ? .001 : 0));
     p.z += a.area.dz * Math.max(0, distance - (distance < step ? .001 : 0));
     p.y = (this.world.districts?.pavingHeight(p.x, p.z) ?? 0) + .7 + (pounce && range > 0 ? Math.sin(Math.PI * Math.min(1, (travelled + distance) / range)) * .65 : 0);
