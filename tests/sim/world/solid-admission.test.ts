@@ -288,18 +288,20 @@ test('a wider house resident keeps its identity and walks clear of the pedestria
   } finally { w.dispose(); }
 });
 
-test('courier and corgi remain outside eight attackers through windup and knockback', async () => {
+test.each(['classic', 'L1'] as const)('courier and corgi remain outside eight %s attackers through windup and knockback', async brain => {
   const w = await arena();
   try {
     w.combat!.damage.god = true;
+    if (brain === 'L1') w.infected!.configureL1v2();
     const player = w.entities.get(1)!, dog = w.entities.get(w.npcs!.companion.spawn())!;
-    const ids = Array.from({ length: 8 }, (_, i) => w.infected!.spawn('infected.runner', { x: player.transform.x + Math.cos(i * Math.PI / 4) * 3, z: player.transform.z + Math.sin(i * Math.PI / 4) * 3 }, { state: 'chase' }));
+    const ids = Array.from({ length: 8 }, (_, i) => w.infected!.spawn('infected.runner', { x: player.transform.x + Math.cos(i * Math.PI / 4) * 3, z: player.transform.z + Math.sin(i * Math.PI / 4) * 3 }, { state: 'chase', yaw: Math.PI - i * Math.PI / 4 }));
     tick(w, 300);
     Object.assign(dog.transform, player.transform);
     Object.assign(w.entities.get(ids[0])!.transform, player.transform);
     tick(w);
     for (const e of [player, dog]) expect(w.solids.clear(e.transform, .35, e.id, true, .02)).toBe(true);
     expect(ids.every(id => !w.entities.get(id)!.pendingAdmission)).toBe(true);
+    expect(w.solids.snapshot()).toMatchObject({ failures: 0, pending: 0 });
     expect(w.infected!.director.count).toBe(8);
   } finally { w.dispose(); }
 });
