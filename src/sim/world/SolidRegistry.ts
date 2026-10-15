@@ -227,9 +227,14 @@ export class SolidRegistry {
         else { e.hidden = true; this.world.spatial.delete(e.id); continue; }
       }
       if (!actor(e)) continue;
-      this.maxActor = Math.max(this.maxActor, actorRadius(e)); this.bodies.push(e); this.live.set(e.id, e);
+      const radius = actorRadius(e);
+      this.maxActor = Math.max(this.maxActor, radius); this.bodies.push(e); this.live.set(e.id, e);
       const old = this.committed.get(e), p = e.transform;
       if (full || this.changedActors.has(e.id) || !old || old.x !== p.x || old.z !== p.z || old.y !== p.y) this.moved.push(e);
+      else {
+        const proof = this.validated.get(e);
+        if (!proof || proof.tick !== this.world.tick - 1 || proof.radius !== radius || proof.exemption !== exemption(e)) this.moved.push(e);
+      }
     }
     this.committing = true;
     // Reserve prior committed positions before accepting any proposed motion. A later actor

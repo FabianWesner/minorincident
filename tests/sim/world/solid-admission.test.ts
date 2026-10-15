@@ -91,3 +91,16 @@ test('a deferred casualty leaves admission and follows normal death cleanup', as
     expect(e.hidden).not.toBe(true);
   } finally { w.dispose(); }
 });
+
+test('a stationary revived actor is admitted again after its attachment exemption ends', async () => {
+  const w = await arena();
+  try {
+    const tank = spawnSetPiece(w, 'veh.tank', { x: 12, z: 0 });
+    const e = w.entities.get(w.infected!.spawn('infected.alpha', { x: 20, z: 0 }, { state: 'idle' }))!;
+    e.attachedTo = tank.id; Object.assign(e.transform, { x: 12, z: 0 }); tick(w);
+    e.health.current = 0; delete e.attachedTo; tick(w, 2);
+    e.health.current = 300; e.infected!.state = 'idle'; tick(w);
+    expect(w.solids.clear(e.transform, e.combat!.radius, e.id)).toBe(true);
+    expect(e.hidden).not.toBe(true); expect(e.pendingAdmission).toBeUndefined();
+  } finally { w.dispose(); }
+});

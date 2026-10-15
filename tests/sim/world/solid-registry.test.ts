@@ -57,6 +57,6 @@ test('collision natural L4: tank excludes every living Alpha through audit tick 
       }
     }
     expect(samples).toBeGreaterThan(0);
-    expect(w.solids.snapshot()).toMatchObject({ failures: 0, pending: 0 });
+    expect(w.solids.snapshot(), JSON.stringify(w.solids.offenders)).toMatchObject({ failures: 0, pending: 0 });
   } finally { w.dispose(); }
 }, 180_000);
