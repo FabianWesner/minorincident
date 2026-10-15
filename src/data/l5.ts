@@ -60,7 +60,7 @@ export const l5Survivors: readonly L5Survivor[] = [
   { key: 'rosa', name: 'Rosa', model: 'npc.rosa.aftermath', role: 'paramedic', place: 'the pharmacy back room', cover: 'inside', hideAt: [58, 36.8], ringAt: [58, 41.3], outAt: [59.2, 41.9],
     cue: { id: 'L5.cue.rosa', text: 'Knocking from inside the pharmacy.' }, found: 'You\'re real. I have not seen anyone in hours. Take me with you.' },
   { key: 'okafor', name: 'Mr. Okafor', model: 'npc.mr-okafor.aftermath', role: 'retired teacher', place: 'the church vestry', cover: 'inside', hideAt: [-38, -2.7], ringAt: [-33.5, -2.7], outAt: [-32.6, -2.7],
-    cue: { id: 'L5.cue.okafor', text: 'A voice, softly praying, from the church.' }, found: 'Bless you, child. Please — take me with you.' },
+    cue: { id: 'L5.cue.okafor', text: 'A voice, softly praying, from the church.' }, found: 'Bless you, child. Please, take me with you.' },
   { key: 'mia', name: 'Mia', model: 'npc.mia.aftermath', role: 'shop clerk', place: 'the apartment stairwell above Harbor Street', cover: 'inside', hideAt: [-77.7, -49.2], ringAt: [-76.2, -44.4], outAt: [-76.2, -43.1],
     cue: { id: 'L5.cue.mia', text: 'A radio crackles above Harbor Street.' }, found: 'Is it over? Please say it\'s over. Take me with you.' },
   { key: 'sam', name: 'Sam', model: 'npc.sam.aftermath', role: 'hunter', place: 'a wrecked bus on Lakeshore Avenue', cover: 'behind', hideAt: [-45, 46.3], ringAt: [-45, 42.6], outAt: [-43.8, 42.6],

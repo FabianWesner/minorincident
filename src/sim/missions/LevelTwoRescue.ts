@@ -36,7 +36,7 @@ const SHOUTS: readonly (readonly ['arrived' | 'exit' | 'doors', number, 'crew' |
   ['exit', .3, 'crew', 0, 'Hang on! We’re getting you out!'],
   ['doors', .2, 'crew', 1, 'Stand back from the glass!'],
   ['doors', 1.8, 'glass', 5, 'They’re inside! Hurry!'],
-  ['doors', 3.1, 'crew', 4, 'Chain’s going — stand clear!'],
+  ['doors', 3.1, 'crew', 4, 'Chain’s going! Stand clear!'],
 ];
 
 /**
