@@ -17,7 +17,7 @@ export class LevelSixSubway {
   private get s() { return this.mission.state.l6!; }
   prepare(): void {
     const w=this.w, rng=new Rng(w.seed,'l6-story'), start=w.tick;
-    const breach1=start+ticks(30+rng.next()**2*10), breach2=breach1+ticks(20+rng.next()**2*10);
+    const breach1=start+ticks(30+rng.next()*10), breach2=breach1+ticks(20+rng.next()*10);
     this.mission.state.l6={entries:l6Entries.map(e=>({door:e.door,warnedAt:0,remaining:e.count,nextAt:0})),phase:'shelter',startAt:start,breach1At:breach1,breach2At:breach2,abandonAt:0,nextWave:breach2+600,firstBang:false,secondBang:false,leaderX:6,leaderZ:-2,paused:false,survivors:[],gates:[],infectedIds:[],spawnLog:[],flashlight:false,mainPower:true,emergency:false,exitAt:0,gateAt:0,injuryLineAt:0,lastShot:0,mid:false,platform:false};
     w.npcs!.setAmbient(0);w.infected!.director.levelCap=60;w.infected!.director.strict=true;
     const o=w.npcs!.civilians.outbreak ?? new Outbreak(w,{refuges:[],tier:w.infected!.director.tier}); w.npcs!.civilians.outbreak=o; w.infected!.director.levelCap=60;
@@ -81,7 +81,7 @@ export class LevelSixSubway {
       // Doorway arrivals are the maintenance source. Later side-passages only emerge outside the camera.
       if(wave>2&&!ai.director.offscreen(at))continue;
       const model=balancedCrowdModel(l6BreachModels,ai.active.filter(e=>e.health.current>0&&!e.hidden&&!e.infected?.hidden).map(e=>({model:e.appearance?.asset??e.infected!.variant,x:e.transform.x,z:e.transform.z})),at,w.entities.size);
-      const id=o.spawnPedestrian(this.snap(at),{model}),e=w.entities.get(id)!;o.turnNow(e,wave===4?'frail':undefined);
+      const id=o.spawnPedestrian(this.snap(at),{model}),e=w.entities.get(id)!;o.turnNow(e);
       spawned++;this.s.infectedIds.push(id);this.s.spawnLog.push({id,door,x:e.transform.x,z:e.transform.z,tick:w.tick,wave,offscreen:ai.director.offscreen(at)});
     }
     return spawned;
@@ -143,7 +143,7 @@ export class LevelSixSubway {
     // half a second apart, from the side/ahead; never fill both escape lanes.
     for(const entry of s.entries??[]){
       const door=l6Doors[entry.door];
-      if(!entry.warnedAt&&p.x>=door.x-40&&p.x<door.x+8){entry.warnedAt=t;entry.nextAt=t+120;w.events.emit({type:'l6.bang',tick:t,breach:entry.door+1,position:door});}
+      if(!entry.warnedAt&&p.x>=door.x-26&&p.x<door.x+8){entry.warnedAt=t;entry.nextAt=t+120;w.events.emit({type:'l6.bang',tick:t,breach:entry.door+1,position:door});}
       if(entry.warnedAt&&entry.remaining&&t>=entry.nextAt){
         if(this.spawn(1,[entry.door],4)){entry.remaining--;entry.nextAt=t+30;}
         else entry.nextAt=t+15;
