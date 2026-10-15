@@ -313,9 +313,10 @@ describe('L1 v2 mission', () => {
     for (let i = 0; i < 30; i++) w.update();
     // A recent ordinary hit can make the intended lethal fixture hit a no-op.
     while (w.tick < w.entities.get(1)!.survivor!.invulnerableUntil) w.update();
+    // A downed infected that will get up again (recoverAt >= 0) is a live threat, not a corpse: the respawn rule moves it out of the clear ring with the living (Respawn.clearThreat).
     const snapshot = () => {
       const rows = [...w.entities.iterate()].filter(e => e.id !== 1)
-        .map(e => ({ id: e.id, kind: e.kind, dead: e.health.current <= 0, state: e.infected?.state ?? e.civilian?.state ?? '', x: e.transform.x, z: e.transform.z }));
+        .map(e => ({ id: e.id, kind: e.kind, dead: e.health.current <= 0, down: (e.infected?.recoverAt ?? -1) >= 0, state: e.infected?.state ?? e.civilian?.state ?? '', x: e.transform.x, z: e.transform.z }));
       return { rows, corpses: rows.filter(r => r.dead && r.kind === 'infected').length, infected: w.infected!.active.filter(e => e.health.current > 0).length, pedestrians: rows.filter(r => !r.dead && r.kind === 'civilian').length };
     };
     const steps = structuredClone(mission.state.steps), bites = w.npcs!.civilians.outbreak!.stats.bites, house = structuredClone(mission.state.l1!.house!);
@@ -328,7 +329,7 @@ describe('L1 v2 mission', () => {
     expect(after, 'respawned').not.toBeNull();
     const [b0, a0] = [before!, after!] as ReturnType<typeof snapshot>[];
     // PO 2026-10-13: the shared respawn pushes the living infected out of 9 m and gathers the companion; everything else stays as it is.
-    const still = (r: { kind: string; dead: boolean }) => r.dead || (r.kind !== 'infected' && r.kind !== 'companion' && r.kind !== 'escort');
+    const still = (r: { kind: string; dead: boolean; down: boolean }) => (r.dead && !r.down) || (r.kind !== 'infected' && r.kind !== 'companion' && r.kind !== 'escort');
     const [b, a] = [{ ...b0, rows: b0.rows.filter(still) }, { ...a0, rows: a0.rows.filter(still) }];
     expect(w.events.events().some(e => e.type === 'checkpoint.restored')).toBe(false);
     expect(a.corpses).toBeGreaterThan(0);
