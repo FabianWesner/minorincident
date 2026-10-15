@@ -10,6 +10,29 @@ import { placementColliders } from '../../src/levels/districts/staticCollision';
 import type { DistrictLayout, Placement } from '../../src/levels/districts/types';
 
 describe('L3 squad and checkpoint', () => {
+  test('@E21 retry relief also covers a street segment first populated after the respawn', async () => {
+    const counts: { inside: number; outside: string[]; total: number }[] = [];
+    for (const retry of [false, true]) {
+      const { world: w, mission: m } = await loadL3(1);
+      try {
+        const s = m.state.l3!, api = missionControls(w);
+        s.phase = 'corridor'; s.fallbackAt = 1; s.pending = []; s.waves = []; s.populated = [true, false, false];
+        api.teleport('player', { x: -110, z: 0 }); m.checkpoint('fallback');
+        if (retry) m.l3!.restore(0);
+        w.update();
+        expect(s.populated[1]).toBe(false);
+        api.teleport('player', { x: -94, z: 0 }); w.update();
+        expect(s.populated[1]).toBe(true);
+        const entries = s.pending.filter(q => q.segment === 1);
+        const inside = entries.filter(q => q.home.x > -130 && q.home.x < -20);
+        counts.push({ inside: inside.length, outside: entries.filter(q => !inside.includes(q)).map(q => JSON.stringify({ door: q.door, home: q.home })), total: entries.length });
+      } finally { w.dispose(); }
+    }
+    expect(counts[0].total).toBe(l3.density.groups[1].reduce((n, [, , size]) => n + size * l3.density.streetMultiplier, 0));
+    expect(counts[0].inside).toBeGreaterThan(0);
+    expect(counts[1].inside).toBe(Math.ceil(counts[0].inside * .5));
+    expect(counts[1].outside).toEqual(counts[0].outside);
+  }, 120_000);
   test('@E21 a returning body keeps its timer and the L3 pursuit delay when it gets up after respawn', async () => {
     const { world: w, mission: m } = await loadL3(1);
     try {

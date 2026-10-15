@@ -462,6 +462,8 @@ export class SceneLab {
         world.entities.get(entity)!.transform.yaw = yaw;
       } else if (a.kind === 'infected') {
         entity = world.infected!.spawn(a.archetype ?? 'infected.runner', at, { yaw, state: 'idle', ...(a.look?.model ? { variant: a.look.model } : {}), ...(a.look?.tier ? { tier: a.look.tier } : {}) });
+        // L3 layout fixtures have no mission controller to apply the corridor's contact damage.
+        if (world.scenario === 'L3') world.entities.get(entity)!.combat!.damageMultiplier = l3.infectedDamage;
       } else {
         entity = world.npcs!.companion.spawn(); const dog = world.entities.get(entity)!;
         if (a.at) this.teleport(dog, at);

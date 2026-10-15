@@ -3,7 +3,7 @@ import type { Game } from '../../src/Game';
 import { SceneSession, stopServer, writeJson, type Backend } from './session';
 
 /** Capture the production L3 Boulevard detour with ordinary complete-bot inputs at the game camera.
- * God mode isolates visual QA from survival; the unchanged real-input playthrough measures deaths. */
+ * Live damage stays enabled; the unchanged real-input playthrough supplies the survival gate. */
 const backend = (process.argv[2] ?? 'webgl2') as Backend;
 const out = process.argv[3] ?? `test-results/l3-blvd-browser/production-${backend}`;
 const captureX = Number(process.argv[4] ?? 10);
@@ -15,7 +15,7 @@ try {
       await session.open();
       await session.page.evaluate(async () => {
         const api = window.__SS__!;
-        await api.loadLevel('L3', { seed: 1 }); api.missions.begin(); api.pause(); api.cheats.god(true); api.bot.start('complete');
+        await api.loadLevel('L3', { seed: 1 }); api.missions.begin(); api.pause(); api.cheats.god(false); api.bot.start('complete');
       });
       let reached = false;
       for (let i = 0; i < 900 && !reached; i++) {
