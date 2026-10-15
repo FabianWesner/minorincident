@@ -10,6 +10,7 @@ import type { MissionResult } from '../sim/missions/types';
 import './mission.css';
 import { attribute, setHidden, style } from './dom';
 import { nextLevelAfter } from '../sim/progression/Campaign';
+import { checkpointName } from '../data/checkpointNames';
 
 /** Mission-only UI; progression choices and the full combat HUD remain E13/E14 consumers. */
 export class MissionUI {
@@ -75,7 +76,7 @@ export class MissionUI {
     setHidden(this.result,state.phase!=='result');
     if(this.phase!==state.phase){
       this.phase=state.phase;
-      const labels={briefing:['Mission briefing',mission.def.briefing,'Begin mission'],retry:['Mission failed',`${state.failure}. Retry from ${state.checkpoint??'level start'}.`,'Retry'],result:mission.def.l6?['Night. Still alive.',this.campaignSummary(),nextLevelAfter(6)?'Continue':'Credits']:mission.def.l1?['Delivery complete. Outbreak: not contained.','The fire station shutter holds, for now.','Continue']:['Level complete','Mission results','Continue'],progression:['Progression','Next: upgrades and loadout setup.',''],playing:['','',''],cinematic:['','','']};
+      const labels={briefing:['Mission briefing',mission.def.briefing,'Begin mission'],retry:['Mission failed',`${state.failure}. Retry from ${checkpointName(mission.def.id,state.checkpoint)}.`,'Retry'],result:mission.def.l6?['Night. Still alive.',this.campaignSummary(),nextLevelAfter(6)?'Continue':'Credits']:mission.def.l1?['Delivery complete. Outbreak: not contained.','The fire station shutter holds, for now.','Continue']:['Level complete','Mission results','Continue'],progression:['Progression','Next: upgrades and loadout setup.',''],playing:['','',''],cinematic:['','','']};
       const [title,detail,button]=labels[state.phase];this.text(this.heading,title);this.text(this.detail,detail);this.text(this.button,button);this.button.hidden=!button;
       if(!this.panel.hidden&&!this.button.hidden)this.button.focus({preventScroll:true});
     }
