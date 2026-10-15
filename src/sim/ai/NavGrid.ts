@@ -107,9 +107,12 @@ export class NavGrid {
   }
   x(cell: number): number { return (cell % this.width + 0.5) * this.cellSize - this.ground.width / 2 + this.center.x; }
   z(cell: number): number { return (Math.floor(cell / this.width) + 0.5) * this.cellSize - this.ground.depth / 2 + this.center.z; }
+  /** Navigation domain only. Exact physical admission uses the shared solid bake/hull registry. */
+  contains(x: number, z: number, radius = 0): boolean {
+    return (!this.mask || this.mask(x, z)) && Math.abs(x - this.center.x) + radius < this.ground.width / 2 && Math.abs(z - this.center.z) + radius < this.ground.depth / 2;
+  }
   clear(x: number, z: number, radius = 0, rounded = false, ignoreBlocker?: number): boolean {
-    if (this.mask && !this.mask(x, z)) return false;
-    if (Math.abs(x - this.center.x) + radius >= this.ground.width / 2 || Math.abs(z - this.center.z) + radius >= this.ground.depth / 2) return false;
+    if (!this.contains(x, z, radius)) return false;
     if (!this.buckets.size && !this.blockers.size) return true;
     const cellX = Math.floor(x / 4), cellZ = Math.floor(z / 4);
     const walls = this.buckets.get(cellX)?.get(cellZ);

@@ -154,7 +154,7 @@ export class SolidRegistry {
   /** Bounded nearest-first search. null means retain the request; never accept the blocked anchor. */
   find(at: Point, radius: number, ignoreId?: number, range = 4, navigation = true): Point | null {
     const nav = this.world.infected?.nav;
-    const fits = (p: Point) => (!navigation || !nav || nav.clear(p.x, p.z, radius, true)) && this.clear(p, radius, ignoreId);
+    const fits = (p: Point) => (!navigation || !nav || nav.contains(p.x, p.z, radius)) && this.clear(p, radius, ignoreId);
     if (fits(at)) return { ...at };
     // Use the exact APC projection before quantized search rings, retaining near-contact ram/door distances.
     if (range > 0) {
@@ -346,6 +346,10 @@ export class SolidRegistry {
       if (depth > tolerance + 1e-6) this.record(e, id, depth, false);
     }
   }
-  snapshot() { return { failures: this.failures, pending: this.world.entities.values().filter(e => e.pendingAdmission).length, admitted: this.admitted, deferred: this.deferred, offenders: this.offenders.map(o => ({ ...o })) }; }
+  snapshot() {
+    const pending = this.world.entities.values().filter(e => e.pendingAdmission);
+    return { failures: this.failures, pending: pending.length, admitted: this.admitted, deferred: this.deferred,
+      requests: pending.slice(0, 64).map(e => ({ id: e.id, archetype: e.archetype, ...e.pendingAdmission })), offenders: this.offenders.map(o => ({ ...o })) };
+  }
   reset(): void { this.bodies.length = this.moved.length = this.nearby.length = this.hullNeighbors.length = 0; this.changedActors.clear(); this.changedHulls.clear(); this.changedTick = -1; this.live.clear(); this.committing = false; this.blockerOwners.clear(); this.hulls.clear(); this.hullIndex.reset(); this.committed = new WeakMap(); this.proposed = new WeakMap(); this.validated = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = -1; this.nav = undefined; }
 }
