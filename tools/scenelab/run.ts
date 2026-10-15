@@ -23,7 +23,9 @@ export function sheetFrames(sheet: number, frames: number): number[] {
 /** Cut-pixel gate (PO 10-14): the frame as played against the same frame with the solid-occluder cut forced off. Pixels that differ outside the
  * hole disc around the courier are buildings or vehicles opened with nothing in the way; inside the disc a real occluder must differ. */
 export async function measureCut(session: SceneSession) {
-  await session.ready();
+  // The sim is paused, but presentation easing (gate hinges, ...) still moves a little with every redraw. Let it converge first so both captures
+  // show the same state and only the cut itself can differ.
+  for (let i = 0; i < 20; i++) await session.ready();
   const cut = PNG.sync.read(await session.page.screenshot({ type: 'png' }));
   const hole = await session.page.evaluate(() => window.__SCENE__!.cutProbe(true));
   await session.ready();
@@ -35,7 +37,8 @@ export async function measureCut(session: SceneSession) {
   for (let y = 0; y < cut.height; y++) for (let x = 0; x < cut.width; x++) {
     const i = (y * cut.width + x) * 4;
     if (Math.abs(cut.data[i] - full.data[i]) + Math.abs(cut.data[i + 1] - full.data[i + 1]) + Math.abs(cut.data[i + 2] - full.data[i + 2]) < 36) continue;
-    if (Math.hypot(x - cx, y - cy) <= radius) inside++; else outside++;
+    // The dither rim reaches full opacity exactly at the radius: a pixel whose centre lies within 1.5 px (one diagonal) of it is the disc edge, not a stray cut.
+    if (Math.hypot(x + .5 - cx, y + .5 - cy) <= radius + 1.5) inside++; else outside++;
   }
   return { outside, inside, strength: hole.strength, cover: hole.cover, occluder: hole.occluder };
 }
