@@ -16,7 +16,7 @@ export function actorRadius(e: EntitySnapshot): number {
   return e.survivor ? survivor.radius : e.combat?.radius ?? .35;
 }
 function actor(e: EntitySnapshot): boolean {
-  return !!(e.survivor || e.infected || e.civilian || e.companion || e.escort) && e.health.current > 0 && !e.corpse && !e.hidden && !e.infected?.hidden && !e.pendingAdmission;
+  return !!(e.survivor || e.infected || e.civilian || e.companion || e.escort) && e.health.current > 0 && e.civilian?.state !== 'finished' && !e.corpse && !e.hidden && !e.infected?.hidden && !e.pendingAdmission;
 }
 /** Passengers and clingers have an explicit owner. Cosmetics (dead bodies, debris) have no actor mask. */
 function attached(a: EntitySnapshot, id: number): boolean { return a.passengerOf === id || a.attachedTo === id || (a.id === 1 && !!a.hidden); }
@@ -288,5 +288,5 @@ export class SolidRegistry {
     }
   }
   snapshot() { return { failures: this.failures, pending: this.world.entities.values().filter(e => e.pendingAdmission).length, admitted: this.admitted, deferred: this.deferred, offenders: this.offenders.map(o => ({ ...o })) }; }
-  reset(): void { this.blockerOwners.clear(); this.hulls.clear(); this.hullIndex.reset(); this.committed = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = -1; this.nav = undefined; }
+  reset(): void { this.bodies.length = this.moved.length = this.nearby.length = this.hullNeighbors.length = 0; this.changedActors.clear(); this.blockerOwners.clear(); this.hulls.clear(); this.hullIndex.reset(); this.committed = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = -1; this.nav = undefined; }
 }
