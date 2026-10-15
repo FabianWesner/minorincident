@@ -123,3 +123,11 @@ All lanes ≤ 3 h, in order. Existing breaches, power failure, retreat, chokepoi
 | L6-Q1 Scene Lab + browser e2e | 3 h | Extend `qa-l6-*.json`, `tests/levels/L6.test.ts`, `tests/levels/campaign.test.ts` and headless `tests/e2e/levels/L6.spec.ts`: shelter ids, shotgun, night pair and zero credits/menu at L7 handover. |
 
 Epic report rationale: AC04/08/14/17 change because L5's station occupants persist and the newly specified L7 continues at night. The older low-tier 15-person shelter conflicts with the newer PO's 20–30; optimize visual LOD/routine update frequency instead of reducing that crowd. Retain `T-E24-01`…`T-E24-19`.
+
+
+## PO 2026-10-15: darkness and headlamp (binding)
+PO (verbatim): "L6 overall. Make the level darker. Let the user pickup a flashlight hat at the beginning, so only the viewport is enlightened. The rest is visibile, but gray and dark" and "with some light accents here and there."
+- L6 is much darker overall. At the start the courier picks up a headlamp (cap or helmet with a lamp), worn for the whole level.
+- The headlamp lights a cone in the facing or aim direction in full colour. Outside it the world stays visible but desaturated grey and dark.
+- Sparse light accents (lanterns, flickering strip lights, red emergency lights, signal lamps) form small coloured pools that guide the route.
+- Efficiency: one spotlight (shadows on high only), no new render pass, E18 budgets hold at high and low.
