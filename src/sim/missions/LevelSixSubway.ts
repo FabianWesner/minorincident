@@ -79,7 +79,7 @@ export class LevelSixSubway {
   }
   private breach(second:boolean):void {
     const s=this.s,w=this.w;
-    if(second){s.phase='fails';s.mainPower=false;s.emergency=true;s.flashlight=true;this.power();w.events.emit({type:'power.off',tick:w.tick,group:'metro-main'});this.spawn(8,[0,1],2);}
+    if(second){s.phase='fails';s.mainPower=false;s.emergency=true;s.flashlight=true;this.power();w.events.emit({type:'power.off',tick:w.tick,group:'metro-main'});s.arrivals={remaining:8,door:0,nextAt:w.tick};}
     else {s.phase='first';this.spawn(2,[0],1);this.mission.setState('breached',true);}
     w.events.emit({type:second?'l6.breach2':'l6.breach1',tick:w.tick});
   }
@@ -114,6 +114,7 @@ export class LevelSixSubway {
     if(!s.secondBang&&t>=s.breach2At-120){s.secondBang=true;this.bang(true);}
     if(s.phase==='shelter'&&t>=s.breach1At)this.breach(false);
     if(s.phase==='first'&&t>=s.breach2At)this.breach(true);
+    if(s.arrivals && t>=s.arrivals.nextAt){const a=s.arrivals;this.spawn(1,[a.door++%2],2);a.remaining--;a.nextAt=t+4;if(!a.remaining)delete s.arrivals;}
     if(s.phase==='fails'&&(t>=s.breach2At+900||s.survivors.filter(r=>r.status==='turned').length>=3))this.abandon();
     if(s.phase!=='retreat'&&s.phase!=='exit')return;
     const live=this.living(),healthy=live.filter(r=>!r.injured).map(r=>w.entities.get(r.id)!),tail=healthy.length?Math.min(...healthy.map(e=>e.transform.x)):s.leaderX;
@@ -152,5 +153,5 @@ export class LevelSixSubway {
     });
     return {rescued:out.length,survivors:out.map(r=>r.key),survivorsIn:s.survivors.length,escapedSurvivors};
   }
-  restore(delta:number):void {const s=this.s;for(const key of ['startAt','breach1At','breach2At','abandonAt','nextWave','exitAt','gateAt','injuryLineAt','lastShot'] as const)if(s[key])s[key]+=delta;for(const g of s.gates)if(g.closedAt)g.closedAt+=delta;this.power();}
+  restore(delta:number):void {const s=this.s;if(s.arrivals)s.arrivals.nextAt+=delta;for(const key of ['startAt','breach1At','breach2At','abandonAt','nextWave','exitAt','gateAt','injuryLineAt','lastShot'] as const)if(s[key])s[key]+=delta;for(const g of s.gates)if(g.closedAt)g.closedAt+=delta;this.power();}
 }
