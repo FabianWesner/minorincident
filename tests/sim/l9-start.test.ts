@@ -31,7 +31,11 @@ for (const hp of [730, 0]) test(`T-E31-02 @E31-AC02 actual L9 start restores the
       expect(w.entities.get(e.id)!.health).toEqual(e.health);
       if (e.weapons) expect(w.entities.get(e.id)!.weapons).toEqual(e.weapons);
     }
-    expect([...w.entities.iterate()].filter(e => e.passengerOf === id).map(e => e.id).sort()).toEqual(save.transport.occupants.filter(e => e.id !== 1).map(e => e.id).sort());
+    const dogs = [...w.entities.iterate()].filter(e => e.companion);
+    expect(dogs).toHaveLength(1); expect(dogs[0].passengerOf).toBe(id);
+    // Legacy L8 payloads have no corgi: supply it aboard while preserving every incoming passenger.
+    const expectedPassengers = [...new Set([...save.transport.occupants.filter(e => e.id !== 1).map(e => e.id), dogs[0].id])];
+    expect([...w.entities.iterate()].filter(e => e.passengerOf === id).map(e => e.id).sort()).toEqual(expectedPassengers.sort());
     const start = w.entities.get(id)!.transform.x;
     w.applyInput({ ...emptyInput(), drive: { throttle: 1, steer: 0 } }, 'keyboard');
     for (let tick = 0; tick < 30; tick++) w.update();
