@@ -1,0 +1,9 @@
+{
+  "extends": "../../../specs/scenes/catalog/fight-police-squad-vs4.json",
+  "name": "l3-police-target-loss",
+  "note": "Police continue their short moves to cover when a volley knocks their targets down. Review the pauses between targets: no frozen sidestep, no snap back to the post, continuous grounded steps, guns lowered between targets and bodies retained. The ally-combat-feel and lost-target regressions supply the movement gates.",
+  "script": [{"frame": 110, "actor": "wave", "do": {"hit": {"amount": 500}}}],
+  "frames": 300,
+  "sheet": 25,
+  "trace": true
+}
