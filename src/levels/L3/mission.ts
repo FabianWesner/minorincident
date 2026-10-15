@@ -26,6 +26,6 @@ export function levelThreeMission(resolve: (district: DistrictId, name: string) 
   const armory = step('armory', 'interact', 'Take a handgun from the armory', 'l3-armory', { kind: 'interact', anchor: 'l3-armory', seconds: l3.armory.interactS }, { kind: 'start' });
   armory.onComplete = [{ kind: 'grant', item: 'handgun' }, { kind: 'checkpoint', id: 'armory' }];
   step('defend', 'custom', 'Help defend the station', 'l3-yard', state('fallback'), { kind: 'state', key: 'attack', equals: true }).waypoint = false;
-  step('checkpoint', 'reach', 'Reach the rendezvous ring inside the army checkpoint', 'l3-zone', state('crossed'), { kind: 'state', key: 'fallback', equals: true });
+  step('checkpoint', 'reach', 'Get inside the army checkpoint', 'l3-zone', state('crossed'), { kind: 'state', key: 'fallback', equals: true });
   return def;
 }

@@ -1,0 +1,63 @@
+{
+  "name": "l4-finale-frontage",
+  "note": "PO #17b: game camera walks past the existing apartment moved into the former hardware lot, keeping both shopfronts, the apartment footprint and the Lakeshore sidewalk clear.",
+  "ground": "district",
+  "time": "L4",
+  "tier": 3,
+  "layout": {
+    "level": "L4",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        50,
+        24
+      ],
+      [
+        84,
+        49
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        60,
+        44
+      ],
+      "loadout": [
+        "weapon.army-mg",
+        "weapon.fire-axe"
+      ],
+      "state": {
+        "moveTo": [
+          75,
+          44
+        ],
+        "pace": "walk"
+      }
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        58,
+        45
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 180,
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}

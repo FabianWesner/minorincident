@@ -104,6 +104,8 @@ function installZooOutbreak(world: SimWorld, tier: QualityTier): void {
   world.missions!.setState('breached', true); zoo.state.breachedAt = Math.max(1, world.tick); zoo.state.nextWave = Number.MAX_SAFE_INTEGER;
   const ai = world.infected!, at = { x: -60, z: -12 }, player = world.entities.get(1)!;
   Object.assign(player.transform, at); world.previousPlayer = { ...player.transform }; world.spatial.set(1, at.x, at.z); world.physics.playerBody!.setTranslation(player.transform, true);
+  // The stress fixture moves the whole party to its photo spot, as a checkpoint restore does.
+  world.npcs!.companion.respawnNear();
   for (const id of zoo.state.animals) world.npcs!.civilians.outbreak!.turnNow(world.entities.get(id)!);
   const species = ['infected.lion', 'infected.gorilla', 'infected.elephant', 'infected.zebra', 'infected.flamingo'];
   const points = [];

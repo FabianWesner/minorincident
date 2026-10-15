@@ -27,11 +27,12 @@ parts, objects, M = ns['parts'], ns['objects'], ns['M']
 bpy.context.view_layer.update()
 
 # ---- shape --------------------------------------------------------------------------------------------------------
-HEIGHT = 3.3           # worker x3.3 = about 2.0x the Alpha (1.45 x 2.3 incl. hunch/head drop: measured ~1.95x)
-BULK = 1.30            # extra breadth/depth over the Alpha's 1.14/1.22 proportions
+HEIGHT = 1.70          # PO 10-15: same height as the regular Alpha (inf.alpha uses 1.47); stronger through mass, not size
+BULK = 1.55            # extra breadth/depth over the Alpha's 1.14/1.22 proportions
+S = HEIGHT / 3.3       # authored absolute offsets below were sized for the old x3.3 body
 shape = Matrix.Diagonal(Vector((HEIGHT * 1.14 * BULK, HEIGHT * 1.22 * BULK, HEIGHT, 1)))
-LEAN = math.radians(24)  # hunch baked into the rest pose (rest rotations stay identity)
-ARM_SCALE = 1.6          # oversized right arm (character right = -Y)
+LEAN = math.radians(14)  # hunch baked into the rest pose (rest rotations stay identity)
+ARM_SCALE = 1.5          # oversized right arm (character right = -Y)
 TORSO_TREE = {'torso', 'head', 'backpackSocket', 'armL', 'foreArmL', 'handL', 'armR', 'foreArmR', 'handR'}
 ARM_TREE = {'armR', 'foreArmR', 'handR'}
 parents = {n: (o.parent.name if o.parent else None) for n, o in parts.items()}
@@ -46,7 +47,7 @@ hunch = about(shaped_hip, Matrix.Rotation(LEAN, 4, 'Y'))
 shoulder = hunch @ (shape @ base_pos['armR'])
 armgrow = about(shoulder, Matrix.Scale(ARM_SCALE, 4))
 
-HEAD_DROP = Vector((.30, 0, -.15))   # the head sits low and forward of the shoulder mass
+HEAD_DROP = Vector((.30 * S, 0, -.15 * S))   # the head sits low and forward of the shoulder mass
 
 def tf(owner):
     m = shape
@@ -60,7 +61,7 @@ def tf(owner):
 
 positions = {n: tf(n) @ base_pos[n] for n in parts}
 # The head is shrunk locally (a small head on the mass reads brutish).
-HEAD_SHRINK = Matrix.Diagonal(Vector((.9, .9, .92, 1)))
+HEAD_SHRINK = Matrix.Diagonal(Vector((.8, .8, .84, 1)))
 head_pivot = base_pos['head']
 bodies = {}   # owner -> list of mesh objects (world-space data, identity matrix)
 caps = []
@@ -95,7 +96,7 @@ for obj in caps:
     obj.matrix_basis = Matrix.Identity(4)
 
 # Second pass (PO review): high-contrast dusk palette. Dark brown skin, near-black rags, red muscle mass, white bone, bright blood.
-PAL = {'mass': ns['mat']('redDark', '9e2938', .6), 'skin': ns['mat']('leatherShadow', '77482e', .74), 'cloth': M['uiDark'], 'blood': M['blood'], 'eye': M['eye'], 'bone': M['picketWhite']}
+PAL = {'mass': ns['mat']('redDark', '9e2938', .6), 'skin': ns['mat']('leatherShadow', '7a4630', .74), 'cloth': M['uiDark'], 'blood': M['blood'], 'eye': M['eye'], 'bone': M['picketWhite']}
 for owner, group in bodies.items():
     for obj in group:
         for i, material in enumerate(list(obj.data.materials)):
@@ -218,11 +219,11 @@ def features(detail):
     # Hunch as muscle: a wide trapezius ramp from the back of the neck over both shoulders, with a heavy shoulder mass on
     # each side (the right one bigger, matching the oversized arm), so the silhouette reads as hulking shoulders.
     hump_c = Vector((torso_lo.x + .48 * td, 0, torso_hi.z - .30 * th))
-    rx, ry, rz = .50 * td, .56 * tw, .30 * th
+    rx, ry, rz = .55 * td, .62 * tw, .34 * th
     put('torso', ellipsoid('hump', hump_c, (rx, ry, rz), PAL['mass'], seg + 2, rings + 1))
     for name, side, grow in (('shoulderL', 'armL', 1.0), ('shoulderR', 'armR', 1.25)):
-        sp = positions[side] + Vector((-.10, 0, .02 * grow))
-        put('torso', ellipsoid(name, sp, (.66 * grow, .62 * grow, .52 * grow), PAL['mass'], seg + 2, rings + 1))
+        sp = positions[side] + Vector((-.10 * S, 0, .02 * S * grow))
+        put('torso', ellipsoid(name, sp, (.80 * S * grow, .74 * S * grow, .62 * S * grow), PAL['mass'], seg + 2, rings + 1))
     # Exposed spine ridge: bone-white spikes riding the trapezius from the lower back up and over to the neck.
     count = 8
     for i in range(count):
@@ -230,7 +231,7 @@ def features(detail):
         c = hump_c + Vector((rx * math.cos(ang), 0, rz * math.sin(ang)))
         nrm = Vector((math.cos(ang) / rx, 0, math.sin(ang) / rz)).normalized()
         size = (.40 + .20 * math.sin(math.pi * i / (count - 1))) * td * .35
-        put('torso', spike('ridge%d' % i, c - nrm * .10, nrm, .10 * td * .75, size, PAL['bone'], sides))
+        put('torso', spike('ridge%d' % i, c - nrm * .10 * S, nrm, .10 * td * .75, size, PAL['bone'], sides))
     # Scars: diagonal slashes on the chest and a ragged band over the hump (blood palette, wounds read at distance).
     chest_x = torso_hi.x - .03 * td
     for i, (dy, dz, ang) in enumerate([(-.18, .66, .55), (-.05, .60, .55), (.10, .54, .55), (.24, .48, .55)]):
@@ -244,15 +245,29 @@ def features(detail):
         d = Vector((0, math.sin(ang), math.cos(ang)))
         d = (d - normal * d.dot(normal)).normalized()
         put('torso', slash('backScar%d' % i, hump_c + Vector((x, y, z)) + normal * .0, d, .34 * th, .07 * th, .05 * td, normal, PAL['cloth'], sides))
+    # Armour-like bone plates over both shoulders and glowing red veins crawling over the chest and the hump.
+    for name, side, grow in (('plateL', 'armL', 1.0), ('plateR', 'armR', 1.25)):
+        sp = positions[side] + Vector((-.06 * S, 0, .30 * S * grow))
+        put('torso', ellipsoid(name, sp, (.50 * S * grow, .52 * S * grow, .17 * S * grow), PAL['bone'], seg + 2, rings))
+    for i, (dy, dz, ang) in enumerate([(-.30, .78, .25), (.0, .72, -.25), (.30, .78, .3), (-.12, .40, .1), (.16, .36, -.15)]):
+        d = Vector((0, math.cos(ang), -math.sin(ang)))
+        put('torso', slash('chestVein%d' % i, Vector((chest_x - .01, dy * tw, torso_lo.z + dz * th)), d, .32 * th, .035 * th, .035 * td, (1, 0, 0), PAL['eye'], sides))
+    for i, (u, v, ang) in enumerate([(-.30, .30, .6), (.20, .20, -.6), (.0, -.15, .0)]):
+        y, z = u * ry, v * rz
+        x = -rx * math.sqrt(max(.04, 1 - (y / ry) ** 2 - (z / rz) ** 2))
+        normal = Vector((x / rx ** 2, y / ry ** 2, z / rz ** 2)).normalized()
+        d = Vector((0, math.sin(ang), math.cos(ang)))
+        d = (d - normal * d.dot(normal)).normalized()
+        put('torso', slash('backVein%d' % i, hump_c + Vector((x, y, z)) + normal * .01, d, .30 * th, .035 * th, .04 * td, normal, PAL['eye'], sides))
     # Heavy brow over glowing eyes: the brow overhangs but the eyes peek out in front of it so they read from above.
     if eye_pos:
         ex = max(c.x for c in eye_pos.values())
         ez = sum(c.z for c in eye_pos.values()) / len(eye_pos)
         ew = max(abs(c.y) for c in eye_pos.values())
-        put('head', ellipsoid('brow', Vector((ex - .10, 0, ez + .20)), (.20, ew + .30, .11), PAL['cloth'], seg + 2, rings))
-        put('head', ellipsoid('cheekbones', Vector((ex - .12, 0, ez - .22)), (.14, ew + .22, .08), PAL['bone'], seg + 2, rings))
+        put('head', ellipsoid('brow', Vector((ex - .10 * S, 0, ez + .20 * S)), (.20 * S, ew + .30 * S, .11 * S), PAL['cloth'], seg + 2, rings))
+        put('head', ellipsoid('cheekbones', Vector((ex - .12 * S, 0, ez - .22 * S)), (.14 * S, ew + .22 * S, .08 * S), PAL['bone'], seg + 2, rings))
     for s_, c in eye_pos.items():
-        put('head', ellipsoid('eye%d' % s_, c + Vector((.07, 0, -.01)), (.11, .17, .12), PAL['eye'], seg, max(3, rings - 1)))
+        put('head', ellipsoid('eye%d' % s_, c + Vector((.07 * S, 0, -.01 * S)), (.11 * S, .17 * S, .12 * S), PAL['eye'], seg, max(3, rings - 1)))
     return out
 
 def bodies_for_lod(level):
@@ -278,7 +293,7 @@ def closed_solid(obj, voxel, hull=False):
         bmesh.ops.delete(bm_, geom=[v for v in bm_.verts if not v.link_faces], context='VERTS')
         bm_.to_mesh(piece.data)
         bm_.free()
-        if not piece.data.polygons or (voxel > .2 and material.name == 'pal_blood'):
+        if not piece.data.polygons or (voxel > .2 * S and material.name == 'pal_blood'):
             # Scattered gore patches have no hull; the authored scars carry the wounds at the distant tier.
             bpy.data.objects.remove(piece)
             continue
@@ -356,7 +371,7 @@ def set_cap_lod(level):
             c.data.materials.append(m)
 
 TARGETS = (15600, 5700, 1900)
-VOXEL = (None, .11, .30)
+VOXEL = (None, .11 * S, .30 * S)
 records = []
 output = Path(args.glb).resolve()
 for lod in range(3):
@@ -451,6 +466,6 @@ for lod in range(3):
         bpy.data.objects.remove(o)
 (P / 'build-stats.json').write_text(json.dumps({
     'derivedFrom': 'assets/inf.common-worker/build.py (like inf.alpha)', 'heightScale': HEIGHT, 'bulk': BULK,
-    'leanDegrees': 24, 'oversizedArm': {'node': 'armR', 'scale': ARM_SCALE},
+    'leanDegrees': 14, 'oversizedArm': {'node': 'armR', 'scale': ARM_SCALE},
     'lods': records, 'parts': list(parts)}, indent=2) + '\n')
 print('OK', [r['triangles'] for r in records], 'caps', cap_tris)

@@ -1,5 +1,5 @@
 // Adapted from folio-2025 InstancedGroup.js by Bruno Simon (MIT), commit 41046b5.
-import { Color, DynamicDrawUsage, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Mesh, Object3D, Vector3 } from 'three/webgpu';
+import { Color, DynamicDrawUsage, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, Mesh, Object3D, Vector3 } from 'three/webgpu';
 import { staticInstanceAttributes } from './StaticInstanceAttributes';
 
 /** One batch per prototype mesh; nested child transforms are preserved. Geometry/material ownership stays with the caller. */
@@ -16,8 +16,14 @@ export class InstancedGroup extends Group {
       if (!(child instanceof Mesh)) return;
       for (let parent: Object3D | null = child; parent; parent = parent.parent) if (!parent.visible) return;
       const powered = child.geometry.hasAttribute('_lightBase');
+      const cut = (Array.isArray(child.material) ? child.material : [child.material]).some(m => m.userData.seeThrough === true);
       const geometry = powered ? child.geometry.clone() : child.geometry;
-      if (powered) { const bases = new Float32Array(capacity); references.forEach((reference, index) => { bases[index] = reference.userData.lightBase ?? 0; }); geometry.setAttribute('_lightBase', new InstancedBufferAttribute(bases, 1)); }
+      // Windows already use all eight portable vertex buffers: share one instance buffer for power and occlusion.
+      if (powered && cut) {
+        const state = new InstancedInterleavedBuffer(new Float32Array(capacity * 2), 2, 1).setUsage(DynamicDrawUsage);
+        geometry.setAttribute('_lightBase', new InterleavedBufferAttribute(state, 1, 0));
+        geometry.setAttribute('_occluder', new InterleavedBufferAttribute(state, 1, 1));
+      } else if (powered) geometry.setAttribute('_lightBase', new InstancedBufferAttribute(new Float32Array(capacity), 1));
       const mesh = new InstancedMesh(geometry, child.material, capacity);
       // Warm-up and LOD repartition both rewrite these transforms. Three's
       // generated interleaved matrix buffer must upload after either change.
@@ -27,7 +33,11 @@ export class InstancedGroup extends Group {
       // White is the identity tint. One vertex-input layout warms the same
       // pipeline for untinted and charred/tinted placements and every LOD.
       mesh.instanceColor = new InstancedBufferAttribute(new Float32Array(capacity * 3).fill(1), 3);
-      if (staticInstanceAttributes(mesh) && powered) geometry.dispose();
+      if (staticInstanceAttributes(mesh)) {
+        if (powered) geometry.dispose();
+        // The batch already owns attribute wrappers; keep immutable vertex arrays shared with its prototype.
+        if (cut && !powered) mesh.geometry.setAttribute('_occluder', new InstancedBufferAttribute(new Float32Array(capacity), 1).setUsage(DynamicDrawUsage));
+      }
       mesh.name = child.name; mesh.castShadow = child.castShadow; mesh.receiveShadow = child.receiveShadow;
       const local = new Matrix4().multiplyMatrices(inverse, child.matrixWorld), door = child.userData.door as string | undefined;
       this.batches.push({ mesh, local, ...(door ? { door, base: local.clone() } : {}) }); this.add(mesh);
@@ -91,6 +101,16 @@ export class InstancedGroup extends Group {
   private readonly axisY = new Vector3(0, 1, 0);
   private readonly axisZ = new Vector3(0, 0, 1);
   private readonly hiddenRoofScale = new Vector3(0, 0, 0);
+  /** Only placements intersecting the camera-to-courier view may dissolve; siblings keep their opaque surfaces. */
+  seeThrough(enabled: boolean, reference: Object3D): void {
+    reference.userData.occluder = enabled;
+    const index = this.references.indexOf(reference);
+    if (index < 0) return;
+    for (const batch of this.batches) {
+      const attr = batch.mesh.geometry.getAttribute('_occluder');
+      if (attr && attr.getX(index) !== +enabled) { attr.setX(index, +enabled); attr.needsUpdate = true; }
+    }
+  }
   /** Hide only this placement's roof; reference state survives streaming and LOD repartition. */
   roofVisible(visible: boolean, reference: Object3D): void {
     reference.userData.roofHidden = !visible;
@@ -101,6 +121,8 @@ export class InstancedGroup extends Group {
     }
   }
   private write(batch: { mesh: InstancedMesh; local: Matrix4; base?: Matrix4; door?: string }, i: number): void {
+    const occluder = batch.mesh.geometry.getAttribute('_occluder');
+    if (occluder) { occluder.setX(i, +(this.references[i].userData.occluder === true)); occluder.needsUpdate = true; }
     const lightBase = batch.mesh.geometry.getAttribute('_lightBase');
     if (batch.mesh.userData.ownedPowerGeometry) { lightBase.setX(i, this.references[i].userData.lightBase ?? 0); lightBase.needsUpdate = true; }
     this.references[i].updateWorldMatrix(true, false);

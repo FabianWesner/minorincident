@@ -116,7 +116,7 @@ export class LevelSevenDeparture {
     // Survivors already stepping through the door finish even if the player steps back.
     for (const id of Object.keys(s.entering).map(Number)) {
       const e = w.entities.get(id), t = (w.tick - s.entering[id]) / cfg.enterTicks;
-      if (!e || e.health.current <= 0 || e.infected || e.infection) { delete s.entering[id]; this.from.delete(id); continue; }
+      if (!e || e.health.current <= 0 || e.civilian?.state === 'finished' || e.infected || e.infection) { delete s.entering[id]; this.from.delete(id); continue; }
       const from = this.from.get(id) ?? e.transform, k = ease(Math.min(1, t));
       e.transform.x = from.x + (this.door.x - from.x) * k; e.transform.z = from.z + (this.door.z - from.z) * k;
       e.transform.yaw = Math.PI;
@@ -136,6 +136,7 @@ export class LevelSevenDeparture {
     s.phase = 'departing'; s.startedAt = w.tick;
     // The courier climbs aboard last: out of the world (no target for the horde, no collider), input locked for the shot.
     player.passengerOf = s.busId; player.hidden = true; w.spatial.delete(1); w.physics.playerCollider?.setEnabled(false);
+    for (const e of w.entities.iterate()) if (e.companion) { e.hidden = true; e.passengerOf = s.busId; w.spatial.delete(e.id); }
     w.storyLock = { scripted: null, skip: false }; w.clearInput();
     if (this.blocker !== undefined) { w.physics.removeBlocker(this.blocker); this.blocker = undefined; }
     w.events.emit({ type: 'world.blocker.changed', tick: w.tick, id: NAV_BUS, blocked: false, wall: this.wall });
@@ -147,15 +148,17 @@ export class LevelSevenDeparture {
     tr.x = x; tr.z = cfg.lane.z; tr.yaw = 0; tr.y = w.districts!.groundHeight(x, cfg.lane.z) + .7;
     const player = w.entities.get(1)!.transform;
     Object.assign(player, { x, z: cfg.lane.z });
+    for (const e of w.entities.iterate()) if (e.companion && e.passengerOf === s.busId) Object.assign(e.transform, tr);
     if (t >= 1) this.finish();
   }
   private finish(): void {
     const w = this.world, s = this.state;
     s.phase = 'done';
-    const escaped = s.boarded.map(id => structuredClone(w.entities.get(id)!)).filter(e => e.health.current > 0 && !e.infected && !e.infection);
+    const escaped = s.boarded.map(id => structuredClone(w.entities.get(id)!)).filter(e => e.health.current > 0 && e.civilian?.state !== 'finished' && !e.infected && !e.infection);
     for (const e of escaped) { e.hidden = false; delete e.passengerOf; if (e.civilian) e.civilian.pauseUntil = 0; }
     const result: MissionResult = {
       time: w.tick / 60, kills: 0, knockdowns: 0, damage: 0, deaths: 0, rescued: escaped.length, optionalObjectives: [],
+      companion: structuredClone([...w.entities.iterate()].find(e => e.companion)),
       survivors: escaped.map(e => e.civilian?.survivor?.key ?? `survivor-${e.id}`), escapedSurvivors: escaped,
     };
     w.events.emit({ type: 'level.completed', tick: w.tick, id: 'L7', result });

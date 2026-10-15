@@ -22,7 +22,7 @@ const phaseS = { stagger: .5, eyes: .7, rise: .6 } as const;
 const skinBlend = .4;
 const mobile = new Set<CivilianState>(['calm', 'alarmed', 'flee']);
 
-/** A refuge door (house, shop) or off-map edge. Entering it removes a fleeing pedestrian as "escaped". */
+/** A refuge doorstep (people shelter outside its closed door) or an off-map exit. */
 export interface Refuge { id: string; x: number; z: number }
 export interface OutbreakOptions {
   /** Refuge doors and map edges a fleeing pedestrian runs to (anchors `refuge-door-*`, `edge-in-*`). */
@@ -309,7 +309,7 @@ export class Outbreak {
   /** Public for scripted beats: a calm pedestrian panics now and flees from `threat` (L2 rescued people after the burst out). */
   panic(e: EntitySnapshot, threat: Vec2): void {
     const c = e.civilian; if (!c?.l1 || c.state !== 'calm' || e.infection) return;
-    c.threat.x = threat.x; c.threat.z = threat.z; this.dropProp(e); this.state(e, 'flee'); c.l1.repickAt = this.world.tick;
+    c.threat.x = threat.x; c.threat.z = threat.z; c.story = null; this.dropProp(e); this.state(e, 'flee'); c.l1.repickAt = this.world.tick;
   }
   /**
    * Flight to a haven along a street route (E20 rescued people heading for the checkpoint): no refuge choice and no
@@ -337,7 +337,7 @@ export class Outbreak {
       this.world.npcs!.moveStep(e, dx / d * c.l1!.fleeSpeed / 60, dz / d * c.l1!.fleeSpeed / 60);
     }
   }
-  /** Flee to the best refuge: near, and not past the threat. Entering it removes the pedestrian as escaped. */
+  /** Flee to a clear gathering spot outside the nearest refuge, away from the threat. */
   private flee(e: EntitySnapshot): void {
     const c = e.civilian!, l1 = c.l1!, tick = this.world.tick;
     if (l1.haven) { this.fleeHaven(e); return; }
@@ -348,7 +348,7 @@ export class Outbreak {
         const s = mine + (theirs < mine ? 60 + (mine - theirs) * 2 : 0);
         if (s < score) { score = s; best = r; }
       }
-      if (best && best.id !== l1.refuge) { l1.refuge = best.id; l1.target = { x: best.x, z: best.z }; c.path.length = 0; c.goal = -1; }
+      if (best && best.id !== l1.refuge) { l1.refuge = best.id; l1.target = best.id.startsWith('refuge-door-') ? this.refugeSpot(e, best) : { x: best.x, z: best.z }; c.path.length = 0; c.goal = -1; }
       l1.repickAt = tick + 60;
     }
     if (!l1.target) {
@@ -358,9 +358,7 @@ export class Outbreak {
       return;
     }
     if (l1.doorAt !== undefined) {
-      // Fumbling with the door: the pedestrian is still outside and can be caught.
-      this.face(e, l1.target, .2);
-      if (tick - l1.doorAt >= ticks(l1Pedestrians.doorOpenS)) this.escape(e);
+      this.shelter(e); // No entry into a closed door, even for old checkpoint state.
       return;
     }
     const before = { x: e.transform.x, z: e.transform.z };
@@ -371,16 +369,34 @@ export class Outbreak {
       this.world.npcs!.moveStep(e, dx / d * l1.fleeSpeed / 60, dz / d * l1.fleeSpeed / 60);
     }
     if (Math.hypot(e.transform.x - l1.target.x, e.transform.z - l1.target.z) <= l1Pedestrians.refugeReachM) {
-      if (l1.refuge?.startsWith('edge')) this.escape(e); else l1.doorAt = tick;
+      if (l1.refuge?.startsWith('edge') && !this.world.missions?.state.l4) this.escape(e); else this.shelter(e);
     }
   }
-  private escape(e: EntitySnapshot): void {
-    // Fairhaven civilians hide inside their refuge and retain their human identity.
-    // Their removal would make the alarm look like the entire camp had turned.
-    if (this.world.missions?.state.l4) {
-      this.state(e, 'hide'); e.hidden = true; this.world.spatial.delete(e.id);
-      return;
+  /** Spread a group over clear exterior pavement; never target the door leaf or a spot beyond it. */
+  private refugeSpot(e: EntitySnapshot, refuge: Refuge): Vec2 {
+    const nav = this.world.infected!.nav, angle = Math.atan2(e.transform.z - refuge.z, e.transform.x - refuge.x);
+    for (let radius = 1.4; radius <= 4; radius += .65) for (let k = 0; k < 9; k++) {
+      const a = angle + ((k + e.id % 9) % 9 - 4) * Math.PI / 12;
+      const p = { x: refuge.x + Math.cos(a) * radius, z: refuge.z + Math.sin(a) * radius };
+      if (!nav.clear(p.x, p.z, .5) || !nav.visible(refuge, p, .35)) continue;
+      let occupied = false;
+      for (const other of this.world.entities.iterate()) if (other.id !== e.id && other.civilian && !other.hidden && other.health.current > 0) {
+        const at = other.civilian.l1?.target ?? other.transform;
+        if (Math.hypot(at.x - p.x, at.z - p.z) < .85) { occupied = true; break; }
+      }
+      if (!occupied) return p;
     }
+    return { x: e.transform.x, z: e.transform.z };
+  }
+  private shelter(e: EntitySnapshot): void {
+    const c = e.civilian!, at = { x: e.transform.x, z: e.transform.z };
+    this.state(e, 'calm'); c.path.length = 0; c.goal = -1; delete c.l1!.doorAt;
+    c.schedule = [{ activity: 'look', anchor: 'refuge/shelter', target: at, facing: c.threat, ticks: ticks(600) }];
+    c.scheduleStep = 0; c.activityUntil = 0; c.pauseUntil = 0;
+    c.story = { clip: 'npc-cower', start: this.world.tick };
+    e.hidden = false; this.world.spatial.set(e.id, at.x, at.z);
+  }
+  private escape(e: EntitySnapshot): void {
     const refuge = e.civilian!.l1!.refuge ?? 'edge';
     this.stats.escaped++;
     this.world.events.emit({ type: 'outbreak.civilian-escaped', tick: this.world.tick, id: e.id, refuge });

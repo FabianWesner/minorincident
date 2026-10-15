@@ -6,6 +6,7 @@ import { autoRewards, lastLevel, type CampaignSave, type Level } from './Campaig
 
 /** Record the completed run before any result-screen navigation or level unload. Replays update aftermath without granting rewards again. */
 export function completeCampaignLevel(save: CampaignSave, level: Level, result: MissionResult, world: SimWorld): void {
+  if (level === 4) save.shelterEntry = structuredClone(world.progression?.campaign?.shelterEntry);
   if (level === 1) save.world = { ...save.world, L1: captureL1Aftermath(world) };
   save.results ??= {};
   save.results[`L${level}`] = structuredClone(result);

@@ -126,13 +126,22 @@ export class LevelEightZoo {
     for (const outlet of s.outlets) walkResidents(w, outlet, t);
     const player = w.entities.get(1)!;
     if (!s.escapeCheckpoint && distance(player.transform, this.door()) < 12) { s.escapeCheckpoint = true; this.mission.checkpoint('escape-route'); }
-    if (w.vehicles!.groupBoarded(s.carId, this.roster())) this.mission.setState('aboard', true);
+    if (w.vehicles!.groupBoarded(s.carId, [...this.roster(), ...[...w.entities.iterate()].filter(e => e.companion).map(e => e.id)])) this.mission.setState('aboard', true);
   }
   /** Cheat/test path (`completeObjective` before the breach): call the tunnel breach now so the escape objective becomes active. */
   advance(): boolean {
     if (this.mission.state.states.breached) return false;
     this.state.startedAt = this.w.tick - 3600; this.update();
     return !!this.mission.state.states.breached;
+  }
+  /** Shared follow AI yields to the transport approach only during the escape. */
+  companion(e: EntitySnapshot): boolean {
+    if (!this.state.breachedAt) return false;
+    const w = this.w, door = this.door();
+    if (w.vehicles!.active !== this.state.carId && distance(w.entities.get(1)!.transform, door) >= 12) return false;
+    if (distance(e.transform, door) < .7) w.vehicles!.boardPassenger(this.state.carId, e.id);
+    else w.npcs!.move(e, door, 8, e.companion!, .2);
+    return true;
   }
   /** Newly rescued zoo residents also belong to the complete living group. */
   roster(): number[] {
@@ -158,7 +167,7 @@ export class LevelEightZoo {
   result() {
     const transport = this.transferOrNull();
     if (!transport) return { rescued: 0, survivors: [], escapedSurvivors: [] };
-    const escaped = transport.occupants.filter(e => e.id !== 1);
+    const escaped = transport.occupants.filter(e => e.id !== 1 && !e.companion);
     if (this.w.progression?.campaign) this.w.progression.campaign.transport = transport;
     return { rescued: escaped.length, survivors: escaped.map(e => e.civilian?.survivor?.key ?? `survivor-${e.id}`), escapedSurvivors: escaped };
   }

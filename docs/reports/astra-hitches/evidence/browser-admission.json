@@ -1,0 +1,41 @@
+{
+  "note": "Admission reached the binding 30-minute cutoff. No further browser requests. Nonquiet pre-fix timings are not final performance acceptance. Final HDR fix has no post-fix browser measurement.",
+  "attempts": [
+    {
+      "batch": "before diagnostic",
+      "completion": "bounded command exit=124 wall=1150.16s",
+      "admission": "not admitted",
+      "result": "unmeasured"
+    },
+    {
+      "batch": "before diagnostic retry",
+      "completion": "bounded command exit=1 wall=551.15s",
+      "admission": "admitted",
+      "result": "diagnostic failed late-program assertion"
+    },
+    {
+      "batch": "load residency diagnostic",
+      "completion": "bounded command exit=1 wall=34.34s",
+      "admission": "admitted",
+      "result": "diagnostic failed late-program assertion"
+    },
+    {
+      "batch": "post-fix functional",
+      "completion": "browser batch exit=124 wall=60.29s admitted=False",
+      "admission": "not admitted",
+      "result": "unmeasured"
+    },
+    {
+      "batch": "post-fix quiet and matrix",
+      "completion": "browser batch exit=124 wall=60.38s admitted=False",
+      "admission": "not admitted",
+      "result": "unmeasured"
+    }
+  ],
+  "unmeasured": [
+    "post-fix low WebGL zoom-1 maximum under 50ms in quiet-run",
+    "post-fix startup and mixed-assault E18 matrix on both backends, qualities and zooms",
+    "new mounted-gun and WebGPU navigation game-camera sheets",
+    "canonical E32 browser verification"
+  ]
+}

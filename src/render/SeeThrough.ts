@@ -37,11 +37,12 @@ export const seeThroughHole = (scale = 1, radius: Node<'float'> = seeThrough.rad
  * They dissolve with an ordered (interleaved gradient noise) dither instead of blending, so
  * they stay opaque, depth-writing and in their batch. Fragments below 0.3 m above the courier's feet (ground, kerbs, lawns, and the deck or stair she stands on) are kept:
  * PO 10-14 (minigun deck): the cut dissolved a jagged hole in the floor under the gunner. */
-export const seeThroughKeep = () => {
+export const seeThroughKeep = (eligible?: Node<'float'>) => {
   // With `cover` the radius grows to 3 (beyond any screen corner from any centre): everything nearer than the courier opens.
   const hole = positionWorld.y.greaterThan(seeThrough.floor.add(.3)).select(mix(1, seeThroughHole(.85, mix(seeThrough.solidRadius, 3, seeThrough.cover), .75), seeThrough.strength), 1);
   const noise = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
-  return hole.greaterThan(noise);
+  const keep = hole.greaterThan(noise);
+  return eligible ? eligible.lessThan(.5).or(keep) : keep;
 };
 
 /** Mega Alpha dither (same noise as solid occluders): only boss fragments nearer the lens than the courier's far body point and inside a small

@@ -12,17 +12,17 @@ export const l5 = {
   /** Beat 1: caption, then ~10 s without an objective, then "Look for anyone still alive". */
   emerge: { interactS: 1.0, objectiveAfterS: 10, captionS: 6 },
   /** The five survivors: stand-to-interact time and reach, sign-of-life cues (heard within 25 m, never beyond 30 m), the direction ping. */
-  survivors: { interactS: 1.0, reachM: 1.7, cueRangeM: 25, cueMaxM: 30, cueEveryS: 7, pingS: 4, count: 5 },
+  survivors: { interactS: 1.0, reachM: 2.5, cueRangeM: 25, cueMaxM: 30, cueEveryS: 7, pingS: 4, count: 5 },
   /** Followers (E08 escort follow without a fail state): 2-5 m behind, run slower than the player and every infected. */
-  follow: { minM: 2, maxM: 5, runMs: 3.8, walkMs: 2.6, waitCallM: 10, waitEveryS: 12, coverM: 8, hp: 60 },
+  follow: { minM: 2, maxM: 5, runMs: 3.8, walkMs: 2.6, waitCallM: 10, waitEveryS: 12, coverM: 8, reactS: 1.2, hp: 60 },
   /** Sparse infected: wanderers at the start (ones and twos), the cap, damage like L4's. */
   infected: { start: { high: 18, low: 12 }, maxGroup: 3, cap: { high: 30, low: 30 }, damage: 1.25, leashM: 14 },
   /** Metro: the trigger at the foot of the entrance, every living follower crosses, the residents are shown briefly, then the shutter rolls shut. */
   metro: { triggerM: 1.2, gatherM: 15, waitS: 10, occupantViewS: 3, lookoutAfterS: 0, occupants: 24, stationX: 37.7854, stationZ: -78 },
   /** Sunset gloom ramp: sun intensity factor from 1 to `endFactor` over the story (time share and the share of survivors accounted for). */
   gloom: { rampS: 240, endFactor: 0.5, atMetroMax: 0.7 },
-  /** No music for the first `musicFromS` seconds, then a sparse low drone. */
-  audio: { musicFromS: 60, quietDb: -24 },
+  /** Ambience only until the first survivor is found; preserve the existing L5 recording. */
+  audio: { quietDb: -24 },
   medkits: { heal: 40, positions: [[45.5, 20], [30, -37.2], [-4, -37.2], [-22, 15], [-30.5, -2], [-44, 39.4], [58, 42.5]] as readonly P[] },
   checkpoints: ['outside', 'survivor-1', 'survivor-2', 'survivor-3', 'survivor-4', 'survivor-5'] as const,
   /** Bots (section 8). Keep the original acceptance bands; never pad bot time. */
@@ -46,7 +46,8 @@ export interface L5Survivor {
   /** Where the survivor is hidden (inside the building or vehicle: out of sight and out of reach) and where the player stands to find them. */
   hideAt: P;
   ringAt: P;
-  /** Where the survivor steps out when found. */
+  /** Reachable discovery anchor: the sound, interaction and reveal all use ringAt. */
+  prompt: string;
   outAt: P;
   /** Sign of life: what the player hears within 25 m (subtitle) and the line the survivor says when found. */
   cue: { id: string; text: string };
@@ -54,27 +55,28 @@ export interface L5Survivor {
 }
 /** Dale hides in the cab of the second convoy truck, where the L4 column parked on the plaza (now a wreck): out of sight of every street. */
 const column = l4Route(), truck = l4RoutePose(column, l4ConvoyStations(column.length).end[3]);
-export const l5Survivors: readonly L5Survivor[] = [
-  { key: 'dale', name: 'Dale', model: 'npc.dale.aftermath', role: 'mechanic', place: 'the cab of a wrecked military truck on the plaza', cover: 'behind', hideAt: [truck.x, truck.z], ringAt: [truck.x, truck.z - 3.1], outAt: [truck.x + 1, truck.z - 3.3],
+const survivors: Omit<L5Survivor, 'outAt'>[] = [
+  { key: 'dale', name: 'Dale', model: 'npc.dale.aftermath', role: 'mechanic', place: 'the cab of a wrecked military truck on the plaza', cover: 'behind', hideAt: [truck.x, truck.z], ringAt: [truck.x, truck.z - 3.1], prompt: "Hold still or press E: open the truck cab",
     cue: { id: 'L5.cue.dale', text: 'Someone is banging on metal, close by.' }, found: 'You… you\'re real. Take me with you.' },
-  { key: 'rosa', name: 'Rosa', model: 'npc.rosa.aftermath', role: 'paramedic', place: 'the pharmacy back room', cover: 'inside', hideAt: [58, 36.8], ringAt: [58, 41.3], outAt: [59.2, 41.9],
+  { key: 'rosa', name: 'Rosa', model: 'npc.rosa.aftermath', role: 'paramedic', place: 'the pharmacy back room', cover: 'inside', hideAt: [58, 36.8], ringAt: [58, 41.3], prompt: "Hold still or press E: open the pharmacy door",
     cue: { id: 'L5.cue.rosa', text: 'Knocking from inside the pharmacy.' }, found: 'You\'re real. I have not seen anyone in hours. Take me with you.' },
-  { key: 'okafor', name: 'Mr. Okafor', model: 'npc.mr-okafor.aftermath', role: 'retired teacher', place: 'the church vestry', cover: 'inside', hideAt: [-38, -2.7], ringAt: [-33.5, -2.7], outAt: [-32.6, -2.7],
-    cue: { id: 'L5.cue.okafor', text: 'A voice, softly praying, from the church.' }, found: 'Bless you, child. Please — take me with you.' },
-  { key: 'mia', name: 'Mia', model: 'npc.mia.aftermath', role: 'shop clerk', place: 'the apartment stairwell above Harbor Street', cover: 'inside', hideAt: [-77.7, -49.2], ringAt: [-76.2, -44.4], outAt: [-76.2, -43.1],
+  { key: 'okafor', name: 'Mr. Okafor', model: 'npc.mr-okafor.aftermath', role: 'retired teacher', place: 'the church vestry', cover: 'inside', hideAt: [-38, -2.7], ringAt: [-33.5, -2.7], prompt: "Hold still or press E: open the vestry door",
+    cue: { id: 'L5.cue.okafor', text: 'A voice, softly praying, from the church.' }, found: 'Bless you, child. Please, take me with you.' },
+  { key: 'mia', name: 'Mia', model: 'npc.mia.aftermath', role: 'shop clerk', place: 'the apartment stairwell above Harbor Street', cover: 'inside', hideAt: [-77.7, -49.2], ringAt: [-76.2, -44.4], prompt: "Hold still or press E: call up the stairwell",
     cue: { id: 'L5.cue.mia', text: 'A radio crackles above Harbor Street.' }, found: 'Is it over? Please say it\'s over. Take me with you.' },
-  { key: 'sam', name: 'Sam', model: 'npc.sam.aftermath', role: 'hunter', place: 'a wrecked bus on Lakeshore Avenue', cover: 'behind', hideAt: [-45, 46.3], ringAt: [-45, 42.6], outAt: [-43.8, 42.6],
+  { key: 'sam', name: 'Sam', model: 'npc.sam.aftermath', role: 'hunter', place: 'a wrecked bus on Lakeshore Avenue', cover: 'behind', hideAt: [-45, 46.3], ringAt: [-45, 42.6], prompt: "Hold still or press E: pry open the bus door",
     cue: { id: 'L5.cue.sam', text: 'A flashlight blinks inside a wrecked bus.' }, found: 'Thank God. I lost my rifle days ago. Take me with you.' },
 ];
 
+export const l5Survivors: readonly L5Survivor[] = survivors.map(s => ({ ...s, outAt: s.ringAt }));
+
 /** Named world points authored into the L5 layout copy (the cellar anchors come from the layout's own cellar placement). */
 export const l5Anchors: Record<string, P> = {
-  // The courier steps out on Kessler Lane (behind the store; the cellar door the L4 courier used is on its Lakeshore side). Stepping out in front of that
-  // door instead was tried: it starts next to Rosa, 10 m from the first survivor, and the bot follow share drops to 0.72-0.78 (gate 0.8).
-  'l5-out': [67.2, 27.6],
+  // Replaced from the actual shared entry door by levelFiveLayouts.
+  'l5-out': [66.4, 41.74],
   'l5-plaza': [-17, 3],
   'l5-metro-foot': [38.1854, -50.6],
-  'photo-l5-basement-exit': [67.2, 27.6], 'photo-l5-sign-of-life': [-45, 42.4], 'photo-l5-group-of-five': [10, -39], 'photo-l5-metro-shelter': [40.7854, -60.4], 'photo-l5-metro-doors': [37.7854, -48.5],
+  'photo-l5-basement-exit': [66.4, 41.74], 'photo-l5-sign-of-life': [-45, 42.4], 'photo-l5-group-of-five': [10, -39], 'photo-l5-metro-shelter': [40.7854, -60.4], 'photo-l5-metro-doors': [37.7854, -48.5],
 };
 /** Photo spots (section 6): the four L4 pair cameras (same anchors and framing) plus the L5 ones. */
 export const l5PhotoSpots: readonly (readonly [string, readonly [number, number, number]])[] = [

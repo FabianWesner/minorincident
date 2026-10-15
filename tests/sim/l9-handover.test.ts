@@ -51,7 +51,8 @@ for (const hp of [1000, 0]) test(`T-E31-15-handover @E31-AC14 @E31-AC15 ${hp} HP
     expect(next.npcs!.companion.safe).toBe(true);
     expect(next.entities.get(1)!.transform.x).toBe(547);
     for (const side of ['LEFT','RIGHT'] as const) expect(next.entities.get(1)!.weapons![side].rack.map(s => s.id)).toEqual(['weapon.fire-axe']);
-    const corgi = [...next.entities.iterate()].find(e => e.companion); expect(corgi?.health.current).toBeGreaterThan(0); expect(corgi?.id).toBe(dog);
+    const corgi = [...next.entities.iterate()].find(e => e.companion); expect(corgi?.health.current).toBeGreaterThan(0); expect(corgi?.id).toBe(dog); expect(corgi?.hidden).toBe(false);
+    expect(corgi!.transform.y).toBeCloseTo(.3 + next.districts!.groundHeight(corgi!.transform.x, corgi!.transform.z));
     opening.restore('cure-crash'); expect(next.entities.get(1)!.weapons!.LEFT.rack.map(s => s.id)).toEqual(['weapon.fire-axe']);
     expect(validateSave({ ...save, transport: {} })).toBe(false);
     expect(validateSave({ ...save, crossingHandover: undefined })).toBe(false);

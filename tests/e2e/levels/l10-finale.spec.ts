@@ -23,7 +23,7 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
     const [cx, cz] = cure.anchors['cure-console']; await go([cx + 26, cz + 6]);
     await page.evaluate(() => window.__SS__!.step(60));
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.counters['charge-ticks'])).toBe(120);
-    await expect(page.getByTestId('objective-text')).toContainText('Return to dispersal console');
+    await expect(page.getByTestId('objective-text')).toContainText('Back to the dispersal console');
     await page.screenshot({ path: `${out}/paused.png` });
     await go(cure.anchors['cure-console']); await page.evaluate(() => window.__SS__!.step(3480));
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.counters['charge-ticks'])).toBe(3600);

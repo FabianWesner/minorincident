@@ -2,7 +2,10 @@
 .campaign-ui[hidden]{display:none}.campaign-ui h1{margin:0 0 20px;color:#ffcf77;font-size:28px}.campaign-ui button{display:block;min-height:48px;width:100%;margin:8px 0;padding:12px;border:2px solid #6c8192;border-radius:10px;color:#fff4df;background:#354759;font:700 17px/1.4 system-ui;cursor:pointer;text-align:left}.campaign-ui button:focus-visible{outline:3px solid #61ded1;outline-offset:2px}.campaign-ui button[aria-pressed=true]{border-color:#61ded1;background:#244e50}.campaign-ui button[aria-pressed=true]:before{content:'✓ '}.campaign-ui button:disabled{opacity:.45;cursor:default}.campaign-ui fieldset{margin:12px 0;border:1px solid #6c8192;border-radius:10px}.upgrade-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.upgrade-cards button{min-height:180px}.campaign-ui [role=status]{color:#ffcf77;min-height:1.4em}body[data-campaign=open] .mission-ui{visibility:hidden}
 @media(max-width:600px){.campaign-ui{inset:12px;padding:16px;font-size:16px}.campaign-ui h1{font-size:24px}.upgrade-cards{grid-template-columns:1fr;gap:0}.upgrade-cards button{min-height:100px}}
 
-.credits-roll { margin-block: 48px; animation: credits-roll 12s linear forwards; }
+.credits-roll { margin-block: 0 44px; text-align: center; animation: credits-roll 12s linear forwards; }
+.credits-roll p { margin: 0 0 6px; font-size: .82em; }
+.credits-roll p:first-child { color: #ffcf77; font-size: 1.4em; font-weight: 700; }
+.credits-roll p:nth-child(2) { font-size: 1em; }
 body[data-campaign=open] .hud { visibility: hidden; }
 .campaign-ui.epilogue-title { inset: 0; display: grid; align-content: center; text-align: center; background: #10172188; border: 0; border-radius: 0; pointer-events: none; }
 .campaign-ui.epilogue-title[hidden] { display: none; }

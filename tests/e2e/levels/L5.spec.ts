@@ -3,6 +3,7 @@ import { PNG } from 'pngjs';
 import type { Page } from '@playwright/test';
 import { test, expect, boot, testUrl } from '../fixtures';
 import { l5Anchors, l5Survivors } from '../../../src/data/l5';
+import { l4 } from '../../../src/data/l4';
 
 /** E23 L5 browser runs. Browser runs only through tools/e2e-lock.sh, headless. */
 const output = 'test-results/epics/E23';
@@ -209,7 +210,21 @@ test.describe('L5 Aftermath in the browser', () => {
     if (!h.shots.has('l5-metro-shelter')) await snap('l5-metro-shelter');
     if (!h.shots.has('l5-metro-doors')) await snap('l5-metro-doors');
     if (!last.l5!.shutterAt) last = await mission();
-    for (let i = 0; i < 60 && !await page.evaluate(() => { const a = window.__SS__!; return a.getState().scenario === 'L6' || a.missions.state()?.phase === 'progression'; }); i++) await step(30);
+    for (let i = 0; i < 60 && !await page.evaluate(() => { const a = window.__SS__!; return a.getState().scenario === 'L6' || a.missions.state()?.phase === 'progression'; }); i++) {
+      // The photograph loop can finish before a crowded ingress does. Keep using
+      // the same real covering fire until the shutter closes, rather than stand
+      // idle for thirty seconds while the last living followers cross.
+      const arrival = (await mission()).l5!;
+      if (!arrival.shutterAt) {
+        // Rescuing a grabber can take the protector back up the stairs. Re-enter
+        // with the same ground-click inputs so the living group's ingress resumes.
+        if (!arrival.metroAt) { await go(metroFoot(), .4, 11); continue; }
+        if (await fightNearby(18)) continue;
+      }
+      await step(30);
+    }
+    const finished = await mission();
+    if (finished.id === 'L5') expect(finished.phase, 'paused sim must finish before waiting for streamed navigation').toBe('progression');
     await expect.poll(() => page.evaluate(() => window.__SS__!.getState().scenario), { timeout: 120_000 }).toBe('L6');
     const handover = await page.evaluate(() => ({ level: window.__SS__!.getState().scenario, survivors: window.__SS__!.campaign.state()!.survivors }));
     expect(handover.level).toBe('L6'); expect(handover.survivors!.slice().sort()).toEqual(l5Survivors.map(s => s.key).sort());
@@ -262,14 +277,17 @@ test.describe('L5 Aftermath in the browser', () => {
       const m = await page.evaluate(() => window.__SS__!.missions.state());
       if (!m || m.phase !== 'playing' || (await page.evaluate(() => window.__SS__!.getState().scenario)) !== 'L4') break;
       carried = await page.evaluate(() => { const w = window.__SS__!.getState().player!.weapons!; return { LEFT: w.LEFT.rack.map(r => r.id), RIGHT: w.RIGHT.rack.map(r => r.id) }; });
-      await page.evaluate(() => window.__SS__!.cheats.completeObjective());
+      if (m.l4?.phase === 'cellar' && m.l4.barredAt && !Object.values(m.steps).some(s => s.status === 'active')) {
+        // Completing the wait objective does not skip the authored battle above the cellar.
+        await page.evaluate(ticks => window.__SS__!.step(ticks), l4.cellar.battleAfterBarredS * 60);
+      } else await page.evaluate(() => window.__SS__!.cheats.completeObjective());
       if (await page.evaluate(() => window.__SS__!.missions.state()?.phase === 'playing' && window.__SS__!.getState().scenario === 'L4')) await page.evaluate(() => window.__SS__!.step(2));
     }
     // Automatic campaign navigation streams the next district after the completion event.
     await page.evaluate(() => window.__SS__!.screenshotReady());
     await expect(page.getByRole('heading', { name: 'Mission briefing' })).toBeVisible({ timeout: 120_000 });
     expect(await page.evaluate(() => window.__SS__!.getState().scenario)).toBe('L5');
-    await expect(page.locator('body')).not.toContainText(/Choose upgrades|Set up racks|Pick 2 of 3|Unlock reveal|Level complete/);
+    await expect(page.locator('body')).not.toContainText(/Choose upgrades|Set up racks|Pick 2 of 3|Unlock reveal|Well done, courier|Level complete/);
     await expect(page.locator('body')).toContainText('Hours later');
     const save = await page.evaluate(() => window.__SS__!.campaign.state());
     expect(save!.ownedActions).toEqual(expect.arrayContaining(['weapon.bat', 'weapon.fire-axe', 'weapon.handgun', 'weapon.army-mg'])); expect(save!.unlockedLevel).toBe(5);
@@ -288,7 +306,7 @@ test.describe('L5 Aftermath in the browser', () => {
     await page.evaluate(() => window.__SS__!.screenshotReady());
     await expect(page.getByRole('heading', { name: 'Mission briefing' })).toBeVisible({ timeout: 120_000 });
     expect(await page.evaluate(() => window.__SS__!.getState().scenario)).toBe('L6');
-    await expect(page.locator('body')).not.toContainText(/Choose upgrades|Set up racks|Pick 2 of 3|Unlock reveal|Level complete|Campaign complete/);
+    await expect(page.locator('body')).not.toContainText(/Choose upgrades|Set up racks|Pick 2 of 3|Unlock reveal|Well done, courier|Level complete|Campaign complete/);
     const after = await page.evaluate(() => window.__SS__!.campaign.state());
     expect(after!.unlockedLevel).toBe(6); expect(after!.survivors!.slice().sort()).toEqual(l5Survivors.map(s => s.key).sort());
   });

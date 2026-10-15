@@ -1,0 +1,35 @@
+{
+  "sourceRenderer": "cf2ae8b20",
+  "build": "9057be96",
+  "attempts": [
+    {
+      "kind": "quiet phone baseline",
+      "queuedUtc": "2026-10-15T06:47:57Z",
+      "releasedUtc": "2026-10-15T07:07:57Z",
+      "queueSeconds": 1200,
+      "exit": 124,
+      "admitted": false
+    },
+    {
+      "kind": "one-unit visual matrix, both backends",
+      "queuedUtc": "2026-10-15T07:09:30Z",
+      "admittedUtc": "2026-10-15T07:14:38Z",
+      "finishedUtc": "2026-10-15T07:18:56Z",
+      "queueSeconds": 308,
+      "reservationSeconds": 258,
+      "exit": 0,
+      "admitted": true
+    },
+    {
+      "kind": "quiet phone baseline, remaining queue allowance",
+      "queuedUtc": "2026-10-15T07:19:02Z",
+      "releasedUtc": "2026-10-15T07:23:42Z",
+      "queueSeconds": 280,
+      "exit": 124,
+      "admitted": false
+    }
+  ],
+  "totalQueueSecondsUpperBound": 1788,
+  "phoneMeasured": false,
+  "conditions": "No quiet-run preflight reached; no new condition log or frame timings. At initial admission checks the main broad WebGPU catalog held slots 1 and 2. Both own quiet requests and their descendants were terminated by process group, releasing reservations."
+}

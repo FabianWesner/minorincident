@@ -10,7 +10,7 @@ test('T-E22-bus-audio @E22 the L4 convoy has engine loops, the bus radio plays d
     await a.loadLevel('L4', { seed: 1, progression: 'L4-default' }); a.missions.begin(); a.pause();
     await a.audio.unlock(); a.audio.clearLog(); a.resume();
   });
-  await page.waitForTimeout(6000);
+  await page.waitForTimeout(9800); // PO reproduction: L4 seed 1, tick 588 (9.8 s).
   const ride = await page.evaluate(() => {
     const a = window.__SS__!, ids = a.missions.state()!.l4!.convoyIds, cues = a.audio.snapshot().cues as { cue: string; sourceId?: number; lowpass?: number }[];
     const engines = new Set(cues.filter(c => c.cue === 'vehicle.engine-low' && c.sourceId !== undefined).map(c => c.sourceId!));
@@ -19,8 +19,8 @@ test('T-E22-bus-audio @E22 the L4 convoy has engine loops, the bus radio plays d
   expect(ride.engines, 'every convoy vehicle has an engine loop').toBe(ride.convoy);
   expect(ride.tyres, 'road noise').toBeGreaterThan(0);
   expect(ride.radio.playing, 'radio streams').toBe(true);
-  expect(ride.radio.level, 'radio is audible but low').toBeGreaterThan(0.1);
-  expect(ride.radio.level).toBeLessThan(0.35);
+  expect(ride.radio.level, 'convoy music is audible at score level').toBeGreaterThan(0.5);
+  expect(ride.radio.level).toBeLessThan(0.65);
   // The outbreak alarm (first turn) ends the radio.
   await page.evaluate(() => { window.__SS__!.cheats.completeObjective('ride'); });
   expect(await page.evaluate(() => window.__SS__!.missions.state()!.l4!.phase)).toBe('plaza');

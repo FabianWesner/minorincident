@@ -10,7 +10,7 @@ const dist = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
  * One tick of a found E23 survivor (called by the outbreak layer for live civilians with `survivor` in follow mode). They are unarmed,
  * biteable humans like anyone else; the escort rules of section 5.4: follow the courier at 2-5 m (each in its own slot behind and to
  * the side of her; through a narrow passage the grid route makes them single file), run at 3.8 m/s (slower than the courier and
- * every infected), call "Wait!" when more than 10 m behind, and crouch in cover while an infected is within 8 m. No fail state: a
+ * every infected), call "Wait!" when more than 10 m behind, and briefly crouch before regrouping when an infected is within 8 m. No fail state: a
  * survivor that is lost is simply gone. Returns true (the follower owns the tick).
  */
 export function updateSurvivor(world: SimWorld, e: EntitySnapshot): boolean {
@@ -31,11 +31,15 @@ export function updateSurvivor(world: SimWorld, e: EntitySnapshot): boolean {
     world.spatial.set(e.id, me.x, me.z);
     return true;
   }
-  // Cover: crouch while an infected is close (the courier fights it; the group does not scatter).
-  if ((tick + e.id) % 6 === 0 || s.cover) {
-    s.cover = false;
-    for (const o of world.infected!.active) if (o.health.current > 0 && !o.hidden && !o.infected?.hidden && !o.infectionRise && dist(o.transform, me) <= f.coverM) { s.cover = true; break; }
+  // A threat causes one brief cower, then the survivor regroups behind the protector.
+  // Keep the reaction latched until the threat leaves so proximity cannot restart it every tick.
+  let threat: EntitySnapshot | undefined;
+  for (const o of world.infected!.active) if (o.health.current > 0 && !o.hidden && !o.infected?.hidden && !o.infectionRise && dist(o.transform, me) <= f.coverM && world.infected!.nav.visible(me, o.transform, 0)) {
+    if (!threat || dist(o.transform, me) < dist(threat.transform, me)) threat = o;
   }
+  if (!threat) delete s.fearUntil;
+  else s.fearUntil ??= tick + ticks(f.reactS);
+  s.cover = !!threat && tick < s.fearUntil!;
   if (s.cover) {
     if (c.story?.clip !== 'npc-cower') c.story = { clip: 'npc-cower', start: tick - (e.id * 11) % 30 };
     world.spatial.set(e.id, me.x, me.z);
@@ -48,8 +52,10 @@ export function updateSurvivor(world: SimWorld, e: EntitySnapshot): boolean {
   const v = player.survivor?.velocity ?? { x: 0, z: 0 }, speed = Math.hypot(v.x, v.z), slot = Math.max(0, s.slot);
   const stop = f.minM + .3 + .5 * slot;
   let goal: Point = p, reach = stop;
-  if (speed > .8) {
-    const hx = v.x / speed, hz = v.z / speed, back = f.minM + .3 + .55 * slot, side = (slot % 2 ? 1 : -1) * (.9 + .5 * Math.floor(slot / 2));
+  if (speed > .8 || threat) {
+    const toward = threat ? { x: threat.transform.x - p.x, z: threat.transform.z - p.z } : v;
+    const length = Math.hypot(toward.x, toward.z) || 1;
+    const hx = toward.x / length, hz = toward.z / length, back = f.minM + .3 + .55 * slot, side = (slot % 2 ? 1 : -1) * (.9 + .5 * Math.floor(slot / 2));
     const target = { x: p.x - hx * back - hz * side, z: p.z - hz * back + hx * side };
     if (world.infected!.nav.clear(target.x, target.z, .35)) { goal = target; reach = .5; }
   }

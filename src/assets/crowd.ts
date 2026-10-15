@@ -1,18 +1,30 @@
-import { BufferAttribute, DataTexture, FloatType, Group, InstancedMesh, InstancedInterleavedBuffer, Matrix4, MeshBasicNodeMaterial, Mesh, RGBAFormat, type Node, type BufferGeometry, type TextureNode } from 'three/webgpu';
-import { attribute, instancedBufferAttribute, int, ivec2, mat4, positionGeometry, textureLoad, uniform, vec4, mix, float, Fn, If } from 'three/tsl';
+import { BufferAttribute, DataTexture, FloatType, Group, InstancedMesh, InstancedInterleavedBuffer, Matrix4, MeshBasicNodeMaterial, Mesh, RGBAFormat, type Node, type BufferGeometry, TextureNode } from 'three/webgpu';
+import { attribute, instancedBufferAttribute, int, ivec2, mat4, positionGeometry, textureLoad, uniform, vec4, mix, float, Fn, If, nodeObject } from 'three/tsl';
 import { palette } from './palette';
 
 export interface CrowdClip { parts: string[]; frames: number; duration: number; matrices: number[] | Float32Array }
 export function clipTexture(clip: CrowdClip): DataTexture {
   const texture=new DataTexture(clip.matrices instanceof Float32Array ? clip.matrices : new Float32Array(clip.matrices),clip.parts.length*4,clip.frames,RGBAFormat,FloatType);
-  texture.needsUpdate=true; return texture;
+  // Pose samples address atlas texels directly. Its identity UV matrix never changes;
+  // TextureNode otherwise rebuilds it for every sampled column on every draw.
+  texture.matrixAutoUpdate=false; texture.needsUpdate=true; return texture;
 }
+/** Typed-array pose atlases are neither image bitmaps nor render targets: Three's
+ * dynamic flip-Y test is always false. Keep explicit texel coordinates and avoid
+ * one object update/uniform per matrix-column sample (16 samples per pose).
+ * TextureNode.clone retains this subclass, including civilian per-draw rebinding. */
+class PoseTextureNode extends TextureNode {
+  setupUV(_builder: unknown, uvNode: Node): Node { return uvNode; }
+}
+export const poseTexture = (texture: DataTexture) => nodeObject(new PoseTextureNode(texture));
+
 export { packCrowdParts } from './crowdParts';
 /** One texel per matrix column; shared by the crowd vertex shader and GPU readback probe. */
 export function crowdMatrix(texture: DataTexture | TextureNode, part: Parameters<typeof int>[0], frame: Parameters<typeof int>[0]) {
+  const atlas = texture instanceof DataTexture ? poseTexture(texture) : texture;
   const start=int(part).mul(4);
   const f = float(frame), low = f.floor(), high = f.ceil();
-  const column = (index:number) => mix(textureLoad(texture,ivec2(start.add(index),int(low))), textureLoad(texture,ivec2(start.add(index),int(high))), f.fract());
+  const column = (index:number) => mix(textureLoad(atlas,ivec2(start.add(index),int(low))), textureLoad(atlas,ivec2(start.add(index),int(high))), f.fract());
   return mat4(column(0),column(1),column(2),column(3));
 }
 /** Outgoing atlas rows are fetched only while an actor is transitioning. */

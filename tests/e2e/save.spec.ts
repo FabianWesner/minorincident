@@ -112,7 +112,7 @@ for(const scheme of ['mouse','keyboard','touch']as const)test(`T-E13-09-${scheme
     }else if(scheme==='touch')await b.tap();else await b.click();
   };
   try{
-    await boot(page);await page.evaluate(()=>window.__SS__!.campaign.menu());await activate('Start game');await activate('Female survivor');await activate('L1 · Stop the Outbreak');await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});await activate('Begin mission');
+    await boot(page);await page.evaluate(()=>window.__SS__!.campaign.menu());await activate('Start game');await activate('Female survivor');await activate('L1 · Special Delivery');await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});await activate('Begin mission');
     // Test API completes the authored mission; all between-level navigation uses the physical device.
     await page.evaluate(async()=>{const a=window.__SS__!;a.pause();for(let i=0;i<100&&a.missions.state()!.phase!=='result';i++){const s=a.missions.state()!;if(s.phase==='cinematic')await a.step(600);else {a.cheats.completeObjective();await a.step(1);}}await a.screenshotReady();});
     await expect(page.getByRole('heading',{name:'Delivery complete. Outbreak: not contained.'})).toBeVisible();await photo(page,`result-${scheme}`);await activate('Continue');await expect(page.getByRole('heading',{name:'Mission briefing'})).toBeVisible({timeout:60_000});expect(await page.evaluate(()=>window.__SS__!.getState().scenario)).toBe('L2');await activate('Begin mission');expect(await page.evaluate(()=>window.__SS__!.missions.state()!.phase)).toBe('playing');

@@ -1,0 +1,132 @@
+{
+  "name": "dog-bike-follow",
+  "ground": "sidewalk",
+  "size": 70,
+  "vehicles": [
+    {
+      "id": "bike",
+      "asset": "vehicle.bicycle",
+      "at": [
+        -18,
+        0
+      ],
+      "yaw": 0
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -19.2,
+        0
+      ],
+      "yaw": 0,
+      "god": true
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        -19.5,
+        1.5
+      ]
+    },
+    {
+      "id": "dog-run",
+      "kind": "animal",
+      "pet": "dog",
+      "at": [
+        -17,
+        -1.6
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "dog-flee",
+      "kind": "animal",
+      "pet": "dog",
+      "at": [
+        -16,
+        0.4
+      ],
+      "yaw": 0
+    }
+  ],
+  "script": [
+    {
+      "frame": 10,
+      "actor": "courier",
+      "do": {
+        "mountBike": "bike"
+      }
+    },
+    {
+      "frame": 60,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            14,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 60,
+      "actor": "dog-run",
+      "do": {
+        "run": [
+          [
+            14,
+            -1.6
+          ],
+          [
+            -17,
+            -1.6
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 70,
+      "actor": "dog-flee",
+      "do": {
+        "flee": [
+          -22,
+          0.4
+        ]
+      }
+    },
+    {
+      "frame": 300,
+      "camera": {
+        "mode": "follow",
+        "actor": "corgi",
+        "zoom": 0.65
+      }
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "dog-run",
+    "zoom": 0.65
+  },
+  "frames": 400,
+  "shots": [
+    80,
+    120,
+    160,
+    200,
+    260,
+    330,
+    400
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "footSinkMaxCm": 1
+  },
+  "note": "PO 10-15 'Dog looks broken': the healthy pet dog (amb.dog, the walker's shepherd; drawn by NpcView at lod1 on every tier) trotting at the jog (2.5 m/s) and flee (4.8 m/s) speeds while the courier rides past on the bike, then the companion corgi galloping behind the bike (frames 330/400). Check every frame for legs connected to the body and paws (no separate foot blobs) and no purple smear trailing under the body. Game camera at the PO zoom 0.65."
+}
