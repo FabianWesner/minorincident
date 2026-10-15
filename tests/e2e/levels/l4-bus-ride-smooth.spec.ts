@@ -1,3 +1,4 @@
+import { l4 } from '../../../src/data/l4';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { test, expect, boot, testUrl } from '../fixtures';
 
@@ -54,21 +55,24 @@ for (const { renderer, quality } of configs) for (const [pace, steps] of Object.
     // real frame, so a slower cadence runs the game faster than real time: wait the same game time (about 8 s at 60 Hz).
     const mean = steps.reduce((a, b) => a + b, 0) / steps.length;
     await page.waitForTimeout(Math.round(8000 * (1000 / 60) / mean));
-    const samples = await page.evaluate(() => new Promise<{ t: number; bus: number[]; apc: number[]; prop: number[]; wheels: number[] }[]>((resolve) => {
+    const samples = await page.evaluate((playerBusIndex: number) => new Promise<{ t: number; bus: number[]; apc: number[]; prop: number[]; wheels: number[] }[]>((resolve) => {
       const api = window.__SS__!, out: { t: number; bus: number[]; apc: number[]; prop: number[]; wheels: number[] }[] = [], ids = api.missions.state()!.l4!.convoyIds;
+      // PO 10-13 moved the courier to the first bus. The trailing bus is behind
+      // the lens during this sample, so its projection cannot measure subject jitter.
+      const subject = ids[playerBusIndex];
       let start = -1, fixed: number[] | null = null;
       const record = (now: number) => {
         if (start < 0) start = now;
         const elapsed = now - start, actors = api.getState().render.entityAssets!.actors as { id: number; position: number[]; wheels: { spin: number }[] }[];
         const at = (id: number) => { const a = actors.find(x => x.id === id)!.position, p = api.camera.project(a[0], a[1] + 1.5, a[2]); return [p[0] * innerWidth / 2, p[1] * innerHeight / 2]; };
-        const bus = actors.find(x => x.id === ids[ids.length - 1])!.position;
+        const bus = actors.find(x => x.id === subject)!.position;
         fixed ??= [bus[0] + 4, 0, bus[2] + 4];
         const f = api.camera.project(fixed[0], fixed[1], fixed[2]);
-        out.push({ t: elapsed, wheels: actors.find(x => x.id === ids[ids.length - 1])!.wheels.map(w => w.spin), bus: at(ids[ids.length - 1]), apc: at(ids[0]), prop: [f[0] * innerWidth / 2, f[1] * innerHeight / 2] });
+        out.push({ t: elapsed, wheels: actors.find(x => x.id === subject)!.wheels.map(w => w.spin), bus: at(subject), apc: at(ids[0]), prop: [f[0] * innerWidth / 2, f[1] * innerHeight / 2] });
         if (elapsed < 1500) requestAnimationFrame(record); else resolve(out);
       };
       requestAnimationFrame(record);
-    }));
+    }), l4.convoy.vehicles.findIndex(v => v.player));
     if (name === '60hz') await page.screenshot({ path: 'test-results/epics/E22/ride-bus.png' });
     const t = samples.map(s => s.t), fit = steps.reduce((a, b) => a + b, 0) / steps.length > 20 ? 250 : 100, jit = (pick: (s: typeof samples[number]) => number[]) => Math.hypot(rms(t, samples.map(s => pick(s)[0]), fit), rms(t, samples.map(s => pick(s)[1]), fit));
     // The lead vehicle only counts while it is on screen (behind the lens its projection is meaningless).

@@ -1,0 +1,69 @@
+{
+  "name": "collision-l2-checkpoint-contact",
+  "note": "Production L2 south checkpoint closure, held after the real controller closes all gates. The panel joins the eastern fence post, closing the old .715 m jamb passage for .7 m bodies; its contact margin stays outside the unchanged checkpoint boundary. Inspect the closed stripes, both jambs and pursuers on both tiers/zooms/renderers.",
+  "seed": 1,
+  "time": "L2",
+  "ground": "district",
+  "tier": 1,
+  "layout": {
+    "level": "L2",
+    "district": "D-GROVE"
+  },
+  "l2Release": "checkpoint",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        82,
+        32
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      82,
+      35.3
+    ],
+    "zoom": 1
+  },
+  "frames": 360,
+  "sheet": 24,
+  "expect": {
+    "consoleErrors": 0,
+    "collisionFailuresMax": 0,
+    "collisionPendingMax": 0,
+    "bodyOverlapMaxCm": 2
+  },
+  "size": 220,
+  "script": [
+    {
+      "frame": 1,
+      "spawnActor": {
+        "id": "jamb-probe",
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "at": [
+          83.107,
+          37
+        ],
+        "state": "chase"
+      }
+    },
+    {
+      "frame": 1,
+      "spawnActor": {
+        "id": "panel-probe",
+        "kind": "infected",
+        "archetype": "infected.runner",
+        "at": [
+          81.9,
+          37
+        ],
+        "state": "chase"
+      }
+    }
+  ]
+}

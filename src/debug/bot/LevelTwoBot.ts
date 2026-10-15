@@ -98,6 +98,12 @@ export class LevelTwoBot {
     if (near.length >= 3 || player.health.current < 70) this.retreatAt = Math.min(this.retreatAt, w.tick);
     const leaving = w.tick >= this.retreatAt;
     if (!leaving) { if (near[0] && !skip) strike(near[0]); else go(a['l2-forecourt'], 2.5, 'cover'); return frame; }
+    // Use a nearby health pickup while disengaging, before the next fight.
+    if (this.profile === 'complete' && player.health.current < 70) {
+      const kit = [...w.entities.iterate()].filter(e => !e.hidden && e.pickup && 'kind' in e.pickup && (e.pickup.kind === 'medkit' || e.pickup.kind === 'soda') && dist(p, e.transform) <= 16)
+        .sort((a, b) => dist(p, a.transform) - dist(p, b.transform))[0];
+      if (kit) { go(kit.transform, .1, `heal-${kit.id}`); return frame; }
+    }
     const route = l2Routes[this.opening];
     // After a respawn (checkpoint restore) rejoin the route at its nearest point instead of cutting across blocks.
     if (!this.last || dist(this.last, p) > 6) { this.waypoint = route.reduce((best, q, i) => dist(q, p) < dist(route[best], p) ? i : best, 0); this.walker.reset(); this.detour = null; if (this.opening === 'alarm' && this.waypoint <= ALARM_AT) this.alarmed = false; }
