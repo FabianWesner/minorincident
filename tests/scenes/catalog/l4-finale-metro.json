@@ -1,0 +1,92 @@
+{
+  "ground": "district",
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 180,
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "name": "l4-finale-metro",
+  "note": "PO #17: beyond the fallen plaza, Metro Road has stragglers from side streets. Four regular infected leave room to retreat north or south along either sidewalk.",
+  "time": "L4",
+  "tier": 3,
+  "layout": {
+    "level": "L4",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        38,
+        -25
+      ],
+      [
+        62,
+        30
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        48.5,
+        8
+      ],
+      "loadout": [
+        "weapon.army-mg",
+        "weapon.fists"
+      ]
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        49.7,
+        10
+      ]
+    },
+    {
+      "id": "straggler-0",
+      "kind": "infected",
+      "at": [
+        50,
+        -1
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "straggler-1",
+      "kind": "infected",
+      "at": [
+        48,
+        -3
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "straggler-2",
+      "kind": "infected",
+      "at": [
+        51,
+        -5
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "straggler-3",
+      "kind": "infected",
+      "at": [
+        49,
+        -7
+      ],
+      "state": "chase"
+    }
+  ]
+}

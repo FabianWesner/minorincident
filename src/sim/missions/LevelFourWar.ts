@@ -492,9 +492,9 @@ export class LevelFourWar {
     return [...this.world.entities.iterate()].filter(e => !e.hidden && e.health.current > 0 && (e.infected || e.civilian)).length < cap - keep;
   }
   /** One infected out of view at `at`; `push` (the collapse director's pressure) may use the whole cap, waves only the stage's share. */
-  private emerge(at: Point, push = false): number {
+  private emerge(at: Point, push = false, headroom: number = l4.war.headroom): number {
     const { world } = this.mission, ai = world.infected!, o = this.outbreak();
-    const limit = Math.floor(ai.director.cap * (push ? 1 : this.director.aliveShare())) - ai.director.reserved - l4.war.headroom;
+    const limit = Math.floor(ai.director.cap * (push ? 1 : this.director.aliveShare())) - ai.director.reserved - headroom;
     if (!this.spawnRoom(ai.director.reserved) || ai.director.count >= limit || !ai.pool.length || this.inGap(at)) return 0;
     const out = this.snap(at, .45), id = o.spawnPedestrian(out), e = world.entities.get(id)!;
     o.turnNow(e);
@@ -655,7 +655,11 @@ export class LevelFourWar {
   }
   /** Distance to the escape street (the polyline from the ring's east side to Kessler's door). */
   private escapeDistance(p: Point): number {
-    const r = l4.director.escape.route; let best = Infinity;
+    // The original gap protects the whole first break-away beat. After six seconds it
+    // protects only the way out of the plaza, leaving the later streets active.
+    const full = l4.director.escape.route;
+    const r = this.s.phase === 'collapse' && this.world.tick - this.s.lineBreakAt > ticks(6) ? full.slice(0, 4) : full;
+    let best = Infinity;
     for (let i = 1; i < r.length; i++) {
       const [ax, az] = r[i - 1], [bx, bz] = r[i], dx = bx - ax, dz = bz - az, t = Math.max(0, Math.min(1, ((p.x - ax) * dx + (p.z - az) * dz) / (dx * dx + dz * dz)));
       best = Math.min(best, Math.hypot(p.x - ax - dx * t, p.z - az - dz * t));
@@ -706,11 +710,11 @@ export class LevelFourWar {
     s.director.burnAt = near.length > 1 && s.burning.length < l4.collapse.burningCars ? this.world.tick + ticks(.7) : 0;
   }
   private populateCollapse(): void {
-    const s = this.s, doors = this.doors(), scale = this.low ? .5 : 1;
-    for (const [x, z, size] of l4CollapseGroups) {
-      const near = doors.filter(d => dist(d, { x, z }) < 14).sort((a, b) => dist(a, { x, z }) - dist(b, { x, z })).slice(0, 2);
-      if (!near.length) continue;
-      for (let i = 0; i < Math.ceil(size * scale); i++) s.pendingDoor.push({ id: 0, door: near[i % near.length].name, home: { x, z } });
+    const s = this.s, scale = this.low ? .5 : 1;
+    for (const [index, [x, z, size]] of l4CollapseGroups.entries()) {
+      // Street mouths are authored emergence points too. Lakeshore's middle blocks
+      // have no building door within 14 m, so the old door-only plan silently skipped them.
+      for (let i = 0; i < Math.ceil(size * scale); i++) s.pendingDoor.push({ id: 0, door: `l4-street-edge-${index}`, home: { x, z } });
     }
   }
   private emergeCollapse(): void {
@@ -720,10 +724,16 @@ export class LevelFourWar {
     for (const q of s.pendingDoor) {
       if (q.id !== 0 || spawned >= l4.collapse.pendingPerTick) continue;
       const a = this.anchor(q.door);
-      if (!ai.director.offscreen(a) || dist(a, p) < 24) continue;
-      const id = this.emerge(a); if (!id) { if (ai.director.count >= ai.director.cap) break; continue; }
+      if (dist(q.home, p) > 42 || !ai.director.offscreen(a) || dist(a, p) < 24) continue;
+      // After the war, the spare regular slots feed small street groups, still under the same cap.
+      const keep = q.home.z > 30 ? 8 : q.home.x > 0 ? 4 : 0;
+      const id = this.emerge(a, false, keep); if (!id) { if (ai.director.count >= ai.director.cap) break; continue; }
       const e = world.entities.get(id)!, brain = e.infected!.l1; q.id = id; spawned++;
-      if (brain) { brain.homeX = q.home.x; brain.homeZ = q.home.z; brain.leashM = 12; }
+      if (brain) {
+        brain.homeX = q.home.x; brain.homeZ = q.home.z; brain.leashM = 8;
+        // Door exits feed their street corner instead of drifting behind its buildings.
+        ai.rush(id, q.home, world.tick + ticks(18));
+      }
     }
     // Soldier pockets: three soldiers hold a street corner against a few infected (spawned out of view).
     for (const i of [...s.pockets]) {
