@@ -40,7 +40,7 @@ export const dialogue: Record<string, string> = {
   'L4.nests': 'The guns are down! Back to the trucks, move!',
   'L4.armor': 'The tank is gone quiet — they are all over it!',
   'L4.fallback': 'Fall back! Get to the cellar!',
-  'L4.break': 'Get to the cellar! Keep moving!',
+  'L4.break': 'Kessler’s cellar is at the far end of Harbor Street. Take Lakeshore, then Metro Road north. Keep moving!',
   'L4.alone': 'Soldier down — fall back, fall back!',
   'L4.twist': 'Above, the war goes on. Down here, one bulb holds.',
   'L5.briefing': 'Hours later. The war is over, and the city is silent. Somewhere in the ruins, someone must still be alive.',

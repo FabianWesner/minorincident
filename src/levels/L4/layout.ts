@@ -1,3 +1,4 @@
+import { moveFairhavenCellar } from '../fairhavenCellar';
 import { freestanding, moveOffSolids } from '../placementClearance';
 import { l4, l4Anchors, l4CollapseGroups, l4Edges, l4Line } from '../../data/l4';
 import type { DistrictLayout, Placement } from '../districts/types';
@@ -76,6 +77,7 @@ export const l4BreakableLine = ([['north', 6], ['west', 13], ['south', 20]] as c
 export function levelFourLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
   return structuredClone(layouts).map(layout => {
     if (layout.district !== 'D-FAIR') return layout;
+    moveFairhavenCellar(layout);
     const door = layout.anchors['kessler-cellar-door'], inner = layout.anchors['cellar-interior'];
     for (const [name, [x, z]] of Object.entries(l4Anchors)) layout.anchors[name] = { position: [x, 0, z], yaw: 0 };
     for (const [i, [x, z]] of l4CollapseGroups.entries()) layout.anchors[`l4-street-edge-${i}`] = { position: [x, 0, z], yaw: 0 };

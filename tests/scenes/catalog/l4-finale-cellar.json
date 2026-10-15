@@ -1,0 +1,96 @@
+{
+  "ground": "district",
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 180,
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "name": "l4-finale-cellar",
+  "note": "PO #17b: the relocated Kessler shell and its solid match at Harbor Street\u2019s northwest corner. The cellar ring stands at the visible south door, approached from the open street; L5 shares the entrance.",
+  "time": "L4",
+  "tier": 3,
+  "layout": {
+    "level": "L4",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        -85,
+        -59
+      ],
+      [
+        -57,
+        -31
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -79.3,
+        -40
+      ],
+      "loadout": [
+        "weapon.army-mg",
+        "weapon.fists"
+      ]
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        -78,
+        -38
+      ]
+    },
+    {
+      "id": "straggler-0",
+      "kind": "infected",
+      "at": [
+        -65,
+        -39
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "straggler-1",
+      "kind": "infected",
+      "at": [
+        -66,
+        -37
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "straggler-2",
+      "kind": "infected",
+      "at": [
+        -67,
+        -40
+      ],
+      "state": "chase"
+    }
+  ],
+  "script": [
+    {
+      "frame": 60,
+      "actor": "courier",
+      "do": {
+        "moveTo": [
+          -79.3,
+          -45.2801
+        ],
+        "pace": "walk"
+      }
+    }
+  ]
+}
