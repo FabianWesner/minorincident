@@ -74,31 +74,37 @@ test('PO #20b @E23 @E23-AC09 survivor-1 restore: Alpha at 15 m engages, follower
   const alpha = w.infected!.active.find(e => e.archetype === 'infected.alpha')!;
   for (const e of [...w.infected!.active]) if (e.id !== alpha.id) w.infected!.release(e);
   const follower = w.entities.get(mission.state.l5!.survivors.find(r => r.status === 'following')!.id)!;
-  // Open Harbor Street: player 15 m ahead of the Alpha, follower 7 m ahead.
+  // Open Harbor Street: Alpha 15 m from the protector, follower 2 m behind her.
+  // Start inside the follow radius, with the protector between the human and threat.
   const place = (id: number, x: number, z: number) => {
     const e = w.entities.get(id)!; Object.assign(e.transform, { x, z }); w.spatial.set(id, x, z);
     if (id === 1) { w.physics.playerBody!.setTranslation(e.transform, true); w.physics.playerBody!.setNextKinematicTranslation(e.transform); Object.assign(w.previousPlayer!, e.transform); }
   };
-  place(1, 10, -39); place(follower.id, 2, -39);
+  place(1, 10, -39); place(follower.id, 12, -39);
+  expect(distance(follower.transform, w.entities.get(1)!.transform)).toBeLessThanOrEqual(l5.follow.maxM);
   const alphaId = alpha.id; place(alphaId, -5, -39); alpha.transform.yaw = 0;
   if (alpha.infected!.territory) Object.assign(alpha.infected!.territory, { x: -5, z: -39 });
   let reacted = false, resumed = -1, alerted = false, maxJump = 0;
   w.events.on('ai.alerted', e => { if (e.type === 'ai.alerted' && e.targetId === alphaId) alerted = true; });
   let previous = { ...follower.transform };
   for (let tick = 0; tick < 5 * 60; tick++) {
+    // Once the reaction starts, the protector withdraws with ordinary walking input.
+    // A stationary survivor already in her slot need not move merely to prove recovery.
+    if (reacted) w.applyInput({ ...emptyInput(), move: { x: 1, z: 0 }, walk: true }, 'keyboard');
     w.update();
     reacted ||= follower.civilian!.survivor!.cover;
     if (reacted && !follower.civilian!.survivor!.cover && w.tick >= follower.civilian!.knockedUntil && distance(previous, follower.transform) > .001 && resumed < 0) resumed = tick;
     maxJump = Math.max(maxJump, distance(previous, follower.transform)); previous = { ...follower.transform };
+    expect(distance(follower.transform, w.entities.get(1)!.transform)).toBeLessThanOrEqual(l5.follow.maxM);
   }
-  expect(reacted).toBe(true); expect(resumed).toBeGreaterThanOrEqual(0); expect(resumed).toBeLessThan(5 * 60);
+  expect(reacted).toBe(true); expect(resumed, JSON.stringify({ tick: w.tick, follower: follower.transform, fearUntil: follower.civilian!.survivor!.fearUntil, knockedUntil: follower.civilian!.knockedUntil })).toBeGreaterThanOrEqual(0); expect(resumed).toBeLessThan(5 * 60);
   expect(alerted).toBe(true);
   expect(distance(w.entities.get(alphaId)!.transform, { x: -5, z: -39 })).toBeGreaterThan(1);
   // Keep the protector between the threat and follower, at ordinary walking pace.
   for (let tick = 0; tick < 8 * 60; tick++) {
     w.applyInput({ ...emptyInput(), move: { x: 1, z: 0 }, walk: true }, 'keyboard'); w.update();
     maxJump = Math.max(maxJump, distance(previous, follower.transform)); previous = { ...follower.transform };
-    expect(distance(follower.transform, w.entities.get(1)!.transform)).toBeLessThanOrEqual(l5.follow.maxM);
+    expect(distance(follower.transform, w.entities.get(1)!.transform), JSON.stringify({ tick, follower: follower.transform, player: w.entities.get(1)!.transform, cover: follower.civilian!.survivor!.cover, knockedUntil: follower.civilian!.knockedUntil, now: w.tick })).toBeLessThanOrEqual(l5.follow.maxM);
   }
   expect(follower.civilian!.survivor!.mode).toBe('follow'); expect(maxJump).toBeLessThan(1);
 }, 300_000);
