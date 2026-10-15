@@ -421,3 +421,22 @@ test('the legacy L4 seated courier exempts only its explicit convoy bus', async 
     expect(w.solids.clear(player.transform, .35, 1)).toBe(false);
   } finally { w.dispose(); }
 }, 120_000);
+
+test('a hull reappears with unchanged entity revision and excludes an actor admitted while it was hidden', async () => {
+  const w = await arena();
+  try {
+    const id = w.vehicles!.spawn('vehicle.school-bus', { x: 12, z: 0 }), car = w.vehicles!.cars.get(id)!;
+    tick(w, 2); car.entity.hidden = true; tick(w);
+    // Inside the long hull, outside the existing 1.5 m clinger attachment range.
+    const alpha = w.entities.get(w.infected!.spawn('infected.alpha', { x: 14, z: 0 }, { state: 'idle' }))!;
+    tick(w); const revision = w.entities.revision;
+    expect(alpha.attachedTo).toBeUndefined();
+    expect(car.physics.hullDistance(alpha.transform.x, alpha.transform.z)).toBeLessThan(alpha.combat!.radius);
+    car.entity.hidden = false; tick(w);
+    expect(w.entities.revision).toBe(revision);
+    expect(alpha.attachedTo).toBeUndefined();
+    expect(car.physics.hullDistance(alpha.transform.x, alpha.transform.z)).toBeGreaterThanOrEqual(alpha.combat!.radius - .02);
+    expect(w.infected!.director.count).toBe(1); expect(alpha.health.current).toBe(300);
+    expect(w.solids.snapshot()).toMatchObject({ failures: 0, pending: 0 });
+  } finally { w.dispose(); }
+});
