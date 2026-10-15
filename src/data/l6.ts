@@ -17,7 +17,7 @@ export const l6PhotoSpots = [
 export const l6InjuryLines = {
   treatment: 'That ankle is swollen. Keep the wrap tight; I will help you stand.',
   patient: 'It hurts to put weight on it. Please do not leave me behind.',
-  retreat: 'The injured cannot run. Stay with them — I will hold the rear.',
+  retreat: 'The injured cannot run. Stay with them; I will hold the rear.',
   straggler: 'My leg… I cannot keep up. Wait for me!',
   rejoin: 'Lean on me. We will get you to the others.',
 };

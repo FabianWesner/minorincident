@@ -48,11 +48,11 @@ for (const [index, def] of infectedDefinitions.filter(def => def.id !== 'infecte
     cue(id, 'telegraph', ['riot', 'armored', 'firefighter', 'gorilla'].includes(name) ? 'step' : 'vocal', name === 'screamer' ? 0.8 : name === 'bloated' ? 1 : 0.4, 100 + index * 27, { gain: 0.6, caption: captions[name] ?? `${name[0].toUpperCase() + name.slice(1)} preparing an attack`, rateSpread: 0, antiSpam: 0 });
 }
 telegraphCues['infected.alpha'] = 'telegraph.brute';
-for (const [move, caption] of [['alpha.grab-throw', 'Alpha preparing to throw a body or prop'], ['alpha.roar', 'Alpha inhaling to roar']] as const) {
+for (const [move, caption] of [['alpha.grab-throw', 'Alpha winding up a throw'], ['alpha.roar', 'Alpha inhaling to roar']] as const) {
   telegraphCues[move] = `telegraph.${move}`;
   cue(`telegraph.${move}`, 'telegraph', 'vocal', .8, 100, { gain: .6, caption, rateSpread: 0, antiSpam: 0 });
 }
-for (const [move, caption, duration] of [['lion.pounce', 'Lion pounce — clear the marked path', .6], ['lion.flank', 'Lion flanking sprint', .6], ['gorilla.roar', 'Gorilla beating its chest — infected converge here', 1], ['gorilla.pound', 'Gorilla ground pound — leave the marked circle', 1], ['gorilla.grab-throw', 'Gorilla preparing to throw a body or prop', .8], ['elephant.charge', 'Elephant stampede — clear the marked path', .9], ['elephant.swipe', 'Elephant trunk swipe — leave the marked arc', .7], ['zebra.kick', 'Zebra rear kick — leave the marked rear arc', .6], ['zebra.stampede', 'Zebra herd stampede — clear the marked corridors', .8], ['flamingo.dive', 'Flamingo flock dive — leave the marked circle', .6]] as const) {
+for (const [move, caption, duration] of [['lion.pounce', 'Lion pounce: clear the marked path', .6], ['lion.flank', 'Lion flanking sprint', .6], ['gorilla.roar', 'Gorilla beating its chest: infected converge here', 1], ['gorilla.pound', 'Gorilla ground pound: leave the marked circle', 1], ['gorilla.grab-throw', 'Gorilla winding up a throw', .8], ['elephant.charge', 'Elephant stampede: clear the marked path', .9], ['elephant.swipe', 'Elephant trunk swipe: leave the marked arc', .7], ['zebra.kick', 'Zebra rear kick: leave the marked rear arc', .6], ['zebra.stampede', 'Zebra herd stampede: clear the marked corridors', .8], ['flamingo.dive', 'Flamingo flock dive: leave the marked circle', .6]] as const) {
   telegraphCues[move] = `telegraph.${move}`;
   cue(`telegraph.${move}`, 'telegraph', move === 'gorilla.roar' ? 'step' : 'vocal', duration, 140, { gain: .6, caption, rateSpread: 0, antiSpam: 0 });
 }
@@ -61,7 +61,7 @@ telegraphCues.zebra = 'telegraph.zebra';
 for (const name of ['civilian', 'explosive']) {
     telegraphCues[name] = `telegraph.${name}`;
     telegraphCues[`infected.${name}`] = `telegraph.${name}`;
-    cue(`telegraph.${name}`, 'telegraph', 'vocal', 0.8, 160, { caption: `${name} approaching`, gain: 0.6 });
+    cue(`telegraph.${name}`, 'telegraph', 'vocal', 0.8, 160, { caption: name === 'explosive' ? 'Explosive infected approaching' : 'Infected approaching', gain: 0.6 });
 }
 for (const def of [...Object.values(catalog), ...balanceActions.filter(d => !(d.id in catalog))])
     cue(`action.${def.id}`, 'weapons', def.category === 'ranged' ? 'shot' : 'noise', def.category === 'ranged' ? 0.16 : 0.24, 150, { gain: 0.8, antiSpam: 0.025 });
@@ -306,9 +306,9 @@ for (const [id, stock, caption, rate, priority] of [
   ['mega.roar', 'telegraph.brute', 'Mega Alpha roaring', .48, 110],
   ['mega.impact', 'telegraph.gorilla', 'Mega Alpha distant impact', .55, 100],
   ['mega.step', 'telegraph.gorilla', 'Mega Alpha heavy footstep', .65, 100],
-  ['mega.charge', 'telegraph.brute', 'Mega Alpha charging — clear the marked path', .5, 150],
-  ['mega.slam', 'telegraph.gorilla', 'Mega Alpha slam — leave the marked circle', .55, 150],
-  ['mega.grab', 'telegraph.alpha.grab-throw', 'Mega Alpha grabbing — escape its reach', .5, 150],
+  ['mega.charge', 'telegraph.brute', 'Mega Alpha charging: clear the marked path', .5, 150],
+  ['mega.slam', 'telegraph.gorilla', 'Mega Alpha slam: leave the marked circle', .55, 150],
+  ['mega.grab', 'telegraph.alpha.grab-throw', 'Mega Alpha grabbing: get out of its reach', .5, 150],
   ['cure.recording', 'music.L6.base', undefined, 1, 120],
 ] as const) {
   megaAudioCues[id] = { ...audioCues[stock], id, caption, priority, bus: id === 'cure.recording' ? 'dialogue' : audioCues[stock].bus, rateSpread: 0, loop: false, initial: false, gain: .6 };

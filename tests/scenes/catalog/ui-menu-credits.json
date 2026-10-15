@@ -1,0 +1,29 @@
+{
+  "name": "ui-menu-credits",
+  "note": "Menu Credits & Licenses: the hand-authored Made by block (Fabian Wesner, AI models, harnesses, tools) above the generated licence list. Matrix covers high/low and zoom 1/0.5.",
+  "menuScreen": "credits",
+  "ground": "grass",
+  "size": 40,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "frames": 2,
+  "sheet": 2,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}

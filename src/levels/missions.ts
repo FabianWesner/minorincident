@@ -59,7 +59,7 @@ export function campaignMission(id: MissionId, resolve: (district: DistrictId, a
       bat.onStart = [{ kind: 'marker', anchor: 'garage-door' }];
       bat.onComplete = [{ kind: 'grant', item: 'bat' }, { kind: 'checkpoint', id: 'bat' }];
       // PO: the courier walks into the bay herself; no cinematic, auto-walk or input lock.
-      const fire = reach('firestation', 'Go into the fire station', 'fire-bay-trigger');
+      const fire = reach('firestation', 'Get inside the fire station', 'fire-bay-trigger');
       fire.onStart = [{ kind: 'radio', id: 'L1.fire' }];
       fire.onComplete = [{ kind: 'state', key: 'safe', value: true }, { kind: 'gate', id: 'fire-shutter', open: false }];
       end = fire.id; break;
