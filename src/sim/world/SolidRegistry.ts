@@ -34,7 +34,11 @@ export class SolidRegistry {
   deferred = 0;
   private readonly blockerOwners = new Map<string, number>();
   private readonly hulls = new Map<number, Hull>();
+  private hullRevision = -1;
+  private readonly hullCandidates: EntitySnapshot[] = [];
   private readonly hullIndex = new SpatialHash();
+  /** Contact queries use 2 m cells; AI and hearing retain the shared 4 m grid. */
+  private readonly bodyIndex = new SpatialHash(2);
   private readonly query = { x: 0, z: 0, r: 0 };
   private readonly correction = { x: 0, y: 0, z: 0 };
   private committed = new WeakMap<EntitySnapshot, Transform>();
@@ -44,6 +48,7 @@ export class SolidRegistry {
   private readonly nearby: number[] = [];
   private readonly hullNeighbors: number[] = [];
   private readonly bodies: EntitySnapshot[] = [];
+  private readonly bodyIds: number[] = [];
   private readonly moved: EntitySnapshot[] = [];
   private readonly rejected = new Set<number>();
   private readonly bodyRejections = new Map<number, number>();
@@ -56,7 +61,7 @@ export class SolidRegistry {
     return e && this.movedIds.has(id) && !this.rejected.has(id) ? actorRadius(e) : 0;
   }, intersects: (maximum, x, z) => {
     if (!maximum) return false;
-    const dx = Math.max(x - this.rollbackX, 0, this.rollbackX - x - 4), dz = Math.max(z - this.rollbackZ, 0, this.rollbackZ - z - 4);
+    const dx = Math.max(x - this.rollbackX, 0, this.rollbackX - x - 2), dz = Math.max(z - this.rollbackZ, 0, this.rollbackZ - z - 2);
     return dx * dx + dz * dz <= (this.rollbackRadius + maximum) ** 2;
   } };
 
@@ -65,9 +70,22 @@ export class SolidRegistry {
   private committing = false;
   private bodyConflict = false;
   private bodyConflictId = 0;
+  private clearPoint!: Point;
+  private clearEntity: EntitySnapshot | undefined;
+  private clearId: number | undefined;
+  private clearRadius = 0;
+  private clearLimit = 0;
+  private readonly visitClear = (id: number): boolean => {
+    const other = this.committing ? this.live[id] : this.world.entities.get(id);
+    if (id === this.clearId || !other || !this.committing && !actor(other) || pairExempt(this.clearEntity, other) || !layers(this.clearPoint, other.transform)) return true;
+    const dx = this.clearPoint.x - other.transform.x, dz = this.clearPoint.z - other.transform.z, reach = this.clearRadius + actorRadius(other) - this.clearLimit;
+    if (dx * dx + dz * dz >= reach * reach) return true;
+    this.bodyConflict = true; this.bodyConflictId = id; return false;
+  };
   private readonly contact: Contact = { depth: 0, nx: 0, nz: 0, inside: false };
   private maxHull = 0;
   private maxActor: number = survivor.radius;
+  private hasSolids(): boolean { return this.hulls.size > 0 || this.world.infected?.nav.hasSolids === true; }
   private readonly changedActors = new Set<number>();
   private readonly changedHulls = new Set<number>();
   private changedTick = -1;
@@ -96,7 +114,13 @@ export class SolidRegistry {
   private syncHulls(): boolean {
     let changed = false;
     if (this.changedTick !== this.world.tick) { this.changedActors.clear(); this.changedHulls.clear(); this.changedTick = this.world.tick; }
-    for (const e of this.world.entities.iterate()) if (e.vehicle || e.traffic || e.convoy || e.kind === 'setpiece') this.register(e);
+    if (this.hullRevision !== this.world.entities.revision) {
+      this.hullRevision = this.world.entities.revision; this.hullCandidates.length = 0;
+      for (const e of this.world.entities.iterate()) if (e.vehicle || e.traffic || e.convoy || e.kind === 'setpiece') this.hullCandidates.push(e);
+    }
+    // Retain hidden candidates: a hull may reappear without a membership change.
+    // Swept specials can query repeatedly in one tick without rescanning every actor.
+    for (const e of this.hullCandidates) this.register(e);
     for (const [id, h] of this.hulls) {
       const e = this.world.entities.get(id), p = h.entity.transform;
       if (e !== h.entity || e.hidden) { this.parkedHull(h, false); this.hulls.delete(id); this.hullIndex.delete(id); changed = true; continue; }
@@ -164,17 +188,12 @@ export class SolidRegistry {
     if (!Number.isFinite(at.x) || !Number.isFinite(at.y) || !Number.isFinite(at.z) || !Number.isFinite(radius) || radius <= 0) return false;
     let clear = true; const e = ignoreId === undefined ? undefined : this.world.entities.get(ignoreId);
     if (e && this.world.missions?.l4?.clearOfConvoy(at, e, radius) === false) return false;
-    this.solids(at, radius, e, b => { const c = boxContact(b, at.x, at.z, radius, this.contact); if (c.inside || c.depth > limit) clear = false; });
+    if (this.hasSolids()) this.solids(at, radius, e, b => { const c = boxContact(b, at.x, at.z, radius, this.contact); if (c.inside || c.depth > limit) clear = false; });
     if (!clear || !bodies) return clear;
     this.query.x = at.x; this.query.z = at.z; this.query.r = radius + this.maxActor;
-    this.world.spatial.query(this.query, this.nearby, false);
-    for (const id of this.nearby) {
-      const other = this.committing ? this.live[id] : this.world.entities.get(id);
-      if (id === ignoreId || !other || !this.committing && !actor(other) || pairExempt(e, other) || !layers(at, other.transform)) continue;
-      const dx = at.x - other.transform.x, dz = at.z - other.transform.z, reach = radius + actorRadius(other) - limit;
-      if (dx * dx + dz * dz < reach * reach) { this.bodyConflict = true; this.bodyConflictId = id; return false; }
-    }
-    return true;
+    this.clearPoint = at; this.clearEntity = e; this.clearId = ignoreId; this.clearRadius = radius; this.clearLimit = limit;
+    (this.committing ? this.bodyIndex : this.world.spatial).query(this.query, this.nearby, false, this.visitClear);
+    return !this.bodyConflict;
   }
   /** Swept footprint against the registry's compound boxes and living bodies.
    * A charge may push a contacted body; an obstructed push stops the mover. */
@@ -287,9 +306,12 @@ export class SolidRegistry {
   private publish(e: EntitySnapshot, ground = false): void {
     if (ground) groundAgent(this.world, e);
     this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+    if (this.committing && this.live[e.id]) this.bodyIndex.set(e.id, e.transform.x, e.transform.z);
     if (e.id === 1) {
       const physics = this.world.physics;
-      physics.playerBody?.setTranslation(e.transform, true); physics.playerBody?.setNextKinematicTranslation(e.transform);
+      const at = physics.playerBody?.translation();
+      if (!at || at.x !== e.transform.x || at.y !== e.transform.y || at.z !== e.transform.z) physics.playerBody?.setTranslation(e.transform, true);
+      physics.playerBody?.setNextKinematicTranslation(e.transform);
       const collider = physics.playerCollider?.translation();
       if (collider && (collider.x !== e.transform.x || collider.y !== e.transform.y || collider.z !== e.transform.z)) physics.world?.propagateModifiedBodyPositionsToColliders();
     }
@@ -300,7 +322,12 @@ export class SolidRegistry {
     const staticChanged = nav !== this.nav || nav?.revision !== this.navRevision;
     const full = this.world.tick % 60 === 0 || staticChanged;
     this.nav = nav; this.navRevision = nav?.revision ?? -1;
-    for (const e of this.bodies) this.live[e.id] = undefined;
+    for (const id of this.bodyIds) {
+      this.live[id] = undefined;
+      const e = this.world.entities.get(id);
+      if (!e || !actor(e)) this.bodyIndex.delete(id);
+    }
+    this.bodyIds.length = 0;
     this.bodies.length = this.moved.length = 0;
     for (const e of this.world.entities.iterate()) {
       if (e.pendingAdmission && e.health.current <= 0) this.releasePending(e);
@@ -319,6 +346,8 @@ export class SolidRegistry {
       if (!actor(e)) continue;
       const radius = actorRadius(e);
       this.maxActor = Math.max(this.maxActor, radius); this.bodies.push(e); this.live[e.id] = e;
+      this.bodyIds.push(e.id);
+      this.bodyIndex.set(e.id, e.transform.x, e.transform.z);
       this.world.spatial.set(e.id, e.transform.x, e.transform.z);
     }
     // Scripted writers and revived actors may not have updated the shared index. Changed
@@ -374,14 +403,14 @@ export class SolidRegistry {
     for (let i = 0; i < this.unresolved.length; i++) {
       const e = this.unresolved[i];
       const old = this.committed.get(e);
-      if (!old) { this.world.spatial.delete(e.id); continue; }
+      if (!old) { this.world.spatial.delete(e.id); this.bodyIndex.delete(e.id); continue; }
       Object.assign(e.transform, old); this.publish(e);
       const radius = actorRadius(e), proof = this.validated.get(e);
       // An unchanged body cannot intersect this same valid pose from last tick.
       // Reuse the hash's cell bounds to visit only unreserved moving proposals.
       const stable = proof?.tick === this.world.tick - 1 && proof.radius === radius && proof.exemption === exemption(e);
       this.rollbackX = old.x; this.rollbackZ = old.z; this.rollbackRadius = radius;
-      this.world.spatial.query({ x: old.x, z: old.z, r: radius + this.maxActor }, this.nearby, false, undefined, stable ? this.rollbackCells : undefined);
+      this.bodyIndex.query({ x: old.x, z: old.z, r: radius + this.maxActor }, this.nearby, false, undefined, stable ? this.rollbackCells : undefined);
       for (const id of this.nearby) {
         const other = this.live[id];
         if (!other || id === e.id || this.rejected.has(id) || stable && !this.movedIds.has(id) || pairExempt(e, other) || !layers(old, other.transform)) continue;
@@ -413,8 +442,11 @@ export class SolidRegistry {
           if (proof.crowdUntil <= this.world.tick) {
             // The contact query has a one-body reach: twelve nonpenetrating
             // centres cannot fit there. Count the local crowd in a 2 m ring.
-            this.world.spatial.query({ x: p.x, z: p.z, r: Math.max(2, radius + this.maxActor) }, this.nearby, false);
-            proof.crowded = this.nearby.length >= 8; proof.crowdUntil = this.world.tick + 30;
+            this.bodyIndex.query({ x: p.x, z: p.z, r: Math.max(2, radius + this.maxActor) }, this.nearby, false);
+            // Small classic bodies can already form a blocked cluster at four
+            // neighbours. L1 pursuit and larger footprints retain their cadence.
+            const cluster = !e.infected?.l1 && radius <= .35 ? 4 : 8;
+            proof.crowded = this.nearby.length >= cluster; proof.crowdUntil = this.world.tick + 30;
           }
           crowded = proof.crowded;
         }
@@ -428,11 +460,11 @@ export class SolidRegistry {
         if (proof) proof.blocked = 0;
         for (let pass = 0; pass < 4; pass++) {
           let moved = false;
-          this.solids(p, radius, e, b => {
+          if (this.hasSolids()) this.solids(p, radius, e, b => {
             const c = boxContact(b, p.x, p.z, radius, this.contact);
             if (c.depth > skin) { p.x += c.nx * c.depth; p.z += c.nz * c.depth; moved = true; }
           });
-          this.world.spatial.query({ x: p.x, z: p.z, r: radius + this.maxActor }, this.nearby, false);
+          this.bodyIndex.query({ x: p.x, z: p.z, r: radius + this.maxActor }, this.nearby, false);
           for (const id of this.nearby) {
             const other = this.live[id];
             if (id === e.id || !other || pairExempt(e, other) || !layers(p, other.transform)) continue;
@@ -445,10 +477,15 @@ export class SolidRegistry {
             p.x = to.x; p.z = to.z; moved = true;
           }
           if (!moved) break;
+          // A clear projection needs no further repair pass or duplicate body
+          // search. Grounding and the courier's 3D sweep can invalidate it below.
+          valid = this.clear(p, radius, e.id, true, tolerance);
+          if (valid) break;
         }
         // The courier's correction crosses the same 3D sweep as ordinary input.
         // A clear endpoint alone can otherwise cut through a stair riser or deck.
         if (e.id === 1) {
+          valid = false;
           const physics = this.world.physics, body = physics.playerBody, collider = physics.playerCollider, controller = physics.characterController;
           if (body && collider && controller) {
             physics.world!.propagateModifiedBodyPositionsToColliders();
@@ -458,15 +495,15 @@ export class SolidRegistry {
             p.x = from.x + displacement.x; p.y = from.y + displacement.y; p.z = from.z + displacement.z;
           }
         }
-        groundAgent(this.world, e);
-        valid = this.clear(p, radius, e.id, true, tolerance);
+        const y = p.y; groundAgent(this.world, e);
+        if (!valid || p.y !== y) valid = this.clear(p, radius, e.id, true, tolerance);
         if (!valid) {
           const to = old && this.clear(old, radius, e.id, true, tolerance) ? old : this.find(proposed, radius, e.id, 4, false);
           if (to) { Object.assign(p, to); valid = true; }
           else if (!old) {
             e.pendingAdmission = { ...proposed, writer: this.writers.get(e) ?? 'tick.admission', hidden: e.hidden, range: 4, navigation: false };
             if (e.id === 1) { e.pendingAdmission.colliderEnabled = this.world.physics.playerCollider?.isEnabled(); this.world.physics.playerCollider?.setEnabled(false); }
-            e.hidden = true; this.world.spatial.delete(e.id); this.live[e.id] = undefined; this.deferred++; continue;
+            e.hidden = true; this.world.spatial.delete(e.id); this.bodyIndex.delete(e.id); this.live[e.id] = undefined; this.deferred++; continue;
           }
         }
       }
@@ -512,5 +549,5 @@ export class SolidRegistry {
     return { failures: this.failures, pending: pending.length, admitted: this.admitted, deferred: this.deferred,
       requests: pending.slice(0, 64).map(e => ({ id: e.id, archetype: e.archetype, ...e.pendingAdmission })), offenders: this.offenders.map(o => ({ ...o })) };
   }
-  reset(): void { this.bodies.length = this.moved.length = this.nearby.length = this.hullNeighbors.length = 0; this.changedActors.clear(); this.changedHulls.clear(); this.changedTick = -1; this.rejected.clear(); this.bodyRejections.clear(); this.unresolved.length = 0; this.live.length = 0; this.committing = false; this.blockerOwners.clear(); this.hulls.clear(); this.hullIndex.reset(); this.committed = new WeakMap(); this.proposed = new WeakMap(); this.validated = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = -1; this.nav = undefined; }
+  reset(): void { this.bodyIds.length = this.bodies.length = this.moved.length = this.nearby.length = this.hullNeighbors.length = 0; this.changedActors.clear(); this.changedHulls.clear(); this.changedTick = -1; this.rejected.clear(); this.bodyRejections.clear(); this.unresolved.length = 0; this.live.length = 0; this.committing = false; this.blockerOwners.clear(); this.hulls.clear(); this.hullRevision = -1; this.hullCandidates.length = 0; this.hullIndex.reset(); this.bodyIndex.reset(); this.committed = new WeakMap(); this.proposed = new WeakMap(); this.validated = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = -1; this.nav = undefined; }
 }

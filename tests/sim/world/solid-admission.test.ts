@@ -84,6 +84,22 @@ test('repeating a blocked checkpoint request does not turn its hidden courier in
     expect(player.pendingAdmission).toBeDefined(); expect(w.solids.snapshot().failures).toBe(0);
   } finally { w.dispose(); }
 });
+test('a pooled body can return to its former position under its new identity', async () => {
+  const w = await arena();
+  try {
+    const ai = w.infected!, first = w.entities.get(ai.spawn('infected.runner', { x: 12, z: 0 }, { state: 'idle' }))!;
+    first.combat!.staggerUntil = 600; tick(w);
+    const oldId = first.id; ai.release(first);
+    const reused = w.entities.get(ai.spawn('infected.runner', { x: 16, z: 0 }, { state: 'idle' }))!;
+    expect(reused).toBe(first); expect(reused.id).not.toBe(oldId);
+    reused.combat!.staggerUntil = 600;
+    expect(w.solids.relocate(reused, { x: 12, y: .7, z: 0 }, 'test.reused-body', 0, false)).toBe(true);
+    tick(w);
+    expect(reused.transform.x).toBe(12); expect(reused.hidden).not.toBe(true);
+    expect(ai.active).toHaveLength(1); expect(w.solids.snapshot()).toMatchObject({ failures: 0, pending: 0 });
+  } finally { w.dispose(); }
+});
+
 test('a safe explicit relocation releases an earlier deferred checkpoint request', async () => {
   const w = await arena();
   try {

@@ -1,24 +1,88 @@
 {
   "name": "collision-l6-stair-contact",
-  "note": "Production L6 exit stairs with the courier, corgi and two standing pedestrians. Final courier contact corrections use the existing Rapier capsule sweep. Inspect ascent, separate bodies and planted feet on both tiers and game zooms; the courier must reach the top without crossing a riser or falling beneath the deck.",
+  "note": "Production L6 exit stairs with the courier, corgi and two standing pedestrians. Final courier contact corrections use the existing Rapier capsule sweep. Inspect ascent, separate bodies and planted feet on both tiers and game zooms; the courier must reach the top without crossing a riser or falling beneath the deck. The subway is authored at W0 only; requesting W5 asks for layout GLBs that do not exist.",
   "seed": 1,
   "ground": "district",
   "time": "L6",
-  "tier": 5,
+  "tier": 0,
   "layout": {
     "level": "L6",
     "district": "D-SUBWAY",
-    "bbox": [[241, 9], [264, 21]],
-    "ids": ["l6-24"]
+    "bbox": [
+      [
+        241,
+        9
+      ],
+      [
+        264,
+        21
+      ]
+    ],
+    "ids": [
+      "l6-24"
+    ]
   },
   "actors": [
-    { "id": "courier", "kind": "courier", "at": [244, 14.1], "state": "idle" },
-    { "id": "corgi", "kind": "corgi", "at": [243, 16], "state": "idle" },
-    { "id": "waiting-0", "kind": "pedestrian", "at": [250, 14.1], "state": "idle" },
-    { "id": "waiting-1", "kind": "pedestrian", "at": [252, 14.1], "state": "idle" }
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        244,
+        14.1
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        243,
+        16
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "waiting-0",
+      "kind": "pedestrian",
+      "at": [
+        250,
+        14.1
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "waiting-1",
+      "kind": "pedestrian",
+      "at": [
+        252,
+        14.1
+      ],
+      "state": "idle"
+    }
   ],
-  "script": [{ "frame": 30, "actor": "courier", "do": { "run": [[250, 14.1], [260, 14.1]] } }],
-  "camera": { "mode": "game", "target": "courier", "zoom": 1 },
+  "script": [
+    {
+      "frame": 30,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            250,
+            14.1
+          ],
+          [
+            260,
+            14.1
+          ]
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
   "frames": 600,
   "sheet": 30,
   "trace": true,
@@ -28,6 +92,11 @@
     "collisionFailuresMax": 0,
     "collisionPendingMax": 0,
     "bodyOverlapMaxCm": 2,
-    "actorMaxX": { "courier": [258, 262] }
+    "actorMaxX": {
+      "courier": [
+        258,
+        262
+      ]
+    }
   }
 }

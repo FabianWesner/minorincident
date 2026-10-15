@@ -9,6 +9,7 @@ const marginSteps = [0.002, 0.005, 0.01, 0.02, 0.04, 0.06, 0.08, 0.1];
 const nearestMemoCapacity = 64;
 /** Collider-baked district grid (0.5 m by default). Fixed workspaces serve budgeted A* and shared reverse flow fields. */
 export class NavGrid {
+  get hasSolids(): boolean { return this.buckets.size > 0 || this.blockers.size > 0; }
   /** Changes invalidate solid contact audits as well as routes. */
   revision = 0;
   readonly width: number;
