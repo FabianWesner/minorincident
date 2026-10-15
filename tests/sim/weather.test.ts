@@ -112,12 +112,13 @@ test('T-E28-08 @E28 @E28-AC08 every override preserves all registered mission gr
   for (const id of missionIds) {
     const w = new SimWorld(); await w.init(); const c = compositions[id], layouts=c.districts.map(d=>JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8')));
     w.loadComposition(c,layouts,28);
-    for (const kind of weatherKinds) {
-    // Each override compares the same authored cast. Re-preparing missions on the previous
-    // run's parked vehicles stacked new zoo/APC casts onto occupied admission points.
-    if(kind!==weatherKinds[0]){w.reset();w.loadComposition(c,layouts,28);}
     if (id === 'L10') applyCampaign(w, preset('L10-default'));
-    const m = w.loadMission(resolveCampaignMission(id, w.districts!)); w.weather!.setOverride(kind); m.begin();
+    const m = w.loadMission(resolveCampaignMission(id, w.districts!)); m.begin();
+    for (const kind of weatherKinds) {
+    // Compare the same authored cast from its production start snapshot. Loading another
+    // mission on the previous cast stacked parked hulls and duplicated zoo/APC residents.
+    if (kind !== weatherKinds[0]) m.restore('start', true);
+    w.weather!.setOverride(kind);
     let guard = 0;
     while (m.state.phase === 'playing' && guard < 100) {
       // Shared run-out advances sim time after the final objective, rather than completing another objective.

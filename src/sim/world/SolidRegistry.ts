@@ -39,7 +39,7 @@ export class SolidRegistry {
   private committed = new WeakMap<EntitySnapshot, Transform>();
   private writers = new WeakMap<EntitySnapshot, string>();
   private proposed = new WeakMap<EntitySnapshot, Transform>();
-  private validated = new WeakMap<EntitySnapshot, { tick: number; radius: number; exemption: number | string | undefined }>();
+  private validated = new WeakMap<EntitySnapshot, { tick: number; radius: number; exemption: number | string | undefined; blocked: number }>();
   private readonly nearby: number[] = [];
   private readonly hullNeighbors: number[] = [];
   private readonly bodies: EntitySnapshot[] = [];
@@ -48,6 +48,7 @@ export class SolidRegistry {
   private readonly unresolved: EntitySnapshot[] = [];
   private readonly live = new Map<number, EntitySnapshot>();
   private committing = false;
+  private bodyConflict = false;
   private readonly contact: Contact = { depth: 0, nx: 0, nz: 0, inside: false };
   private maxHull = 0;
   private maxActor: number = survivor.radius;
@@ -142,6 +143,7 @@ export class SolidRegistry {
   }
   /** Radius and height aware occupancy, shared by spawn, checkpoint, relocation and exits. */
   clear(at: Point, radius: number, ignoreId?: number, bodies = true, limit = skin): boolean {
+    this.bodyConflict = false;
     if (![at.x, at.y, at.z, radius].every(Number.isFinite) || radius <= 0) return false;
     let clear = true; const e = ignoreId === undefined ? undefined : this.world.entities.get(ignoreId);
     this.solids(at, radius, e, b => { const c = boxContact(b, at.x, at.z, radius, this.contact); if (c.inside || c.depth > limit) clear = false; });
@@ -151,7 +153,7 @@ export class SolidRegistry {
       const other = this.committing ? this.live.get(id) : this.world.entities.get(id);
       if (id === ignoreId || !other || !this.committing && !actor(other) || pairExempt(e, other) || !layers(at, other.transform)) continue;
       const dx = at.x - other.transform.x, dz = at.z - other.transform.z, reach = radius + actorRadius(other) - limit;
-      if (dx * dx + dz * dz < reach * reach) return false;
+      if (dx * dx + dz * dz < reach * reach) { this.bodyConflict = true; return false; }
     }
     return true;
   }
@@ -293,13 +295,16 @@ export class SolidRegistry {
       const radius = actorRadius(e), p = e.transform, proposed = this.proposed.get(e)!;
       Object.assign(p, proposed);
       let valid = this.clear(p, radius, e.id, true, tolerance);
+      if (valid) { const proof = this.validated.get(e); if (proof) proof.blocked = 0; }
       if (!valid) {
         const proof = this.validated.get(e);
-        if (e.infected && !e.infected.specialAttack && old && !this.failures && !staticChanged && !this.changedActors.has(e.id) && proof?.tick === this.world.tick - 1 && proof.radius === radius && proof.exemption === exemption(e)) {
+        const crowded = this.bodyConflict && this.nearby.length >= 12;
+        if (crowded && e.infected && !e.infected.specialAttack && proof && proof.blocked < 9 && old && !this.failures && !staticChanged && !this.changedActors.has(e.id) && proof?.tick === this.world.tick - 1 && proof.radius === radius && proof.exemption === exemption(e)) {
           // Every earlier transaction respected this reserved pose. With the same solid geometry,
           // footprint and attachment mask, rejecting motion needs no second contact search.
-          Object.assign(p, old); this.publish(e); continue;
+          proof.blocked++; Object.assign(p, old); this.publish(e); continue;
         }
+        if (proof) proof.blocked = 0;
         for (let pass = 0; pass < 4; pass++) {
           let moved = false;
           this.solids(p, radius, e, b => {
@@ -345,7 +350,7 @@ export class SolidRegistry {
       if (old) Object.assign(old, e.transform); else this.committed.set(e, { ...e.transform });
       const proof = this.validated.get(e);
       if (proof) { proof.tick = this.world.tick; proof.radius = actorRadius(e); proof.exemption = exemption(e); }
-      else this.validated.set(e, { tick: this.world.tick, radius: actorRadius(e), exemption: exemption(e) });
+      else this.validated.set(e, { tick: this.world.tick, radius: actorRadius(e), exemption: exemption(e), blocked: 0 });
     }
     this.committing = false;
   }

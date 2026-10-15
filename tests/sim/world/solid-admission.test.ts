@@ -125,6 +125,21 @@ test('a clear formation can enter positions its neighbours vacate during the sam
   } finally { w.dispose(); }
 });
 
+test('an isolated blocked actor projects along contact instead of freezing at its prior pose', async () => {
+  const w = await arena();
+  try {
+    const e = w.entities.get(w.infected!.spawn('infected.runner', { x: 12, z: 0 }, { state: 'idle' }))!;
+    const other = w.entities.get(w.infected!.spawn('infected.runner', { x: 12.716, z: 0 }, { state: 'idle' }))!;
+    for (const body of [e, other]) body.combat!.staggerUntil = 600;
+    tick(w);
+    e.transform.x += .2; e.transform.z += .3;
+    w.tick++; w.solids.commit();
+    expect(e.transform.z).toBeGreaterThan(.3);
+    expect(w.solids.clear(e.transform, e.combat!.radius, e.id, true, .02)).toBe(true);
+    expect(w.solids.offenders).toEqual([]);
+  } finally { w.dispose(); }
+});
+
 test('a wider house resident keeps its identity and walks clear of the pedestrian doorstep', async () => {
   const w = await arena();
   try {
