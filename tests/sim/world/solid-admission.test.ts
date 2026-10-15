@@ -248,6 +248,28 @@ test('an isolated blocked actor projects along contact instead of freezing at it
   } finally { w.dispose(); }
 });
 
+test('a cached dense-crowd contact permits a formation to enter the space its blocker vacates', async () => {
+  const w = await arena();
+  try {
+    const group = Array.from({ length: 9 }, (_, i) => w.entities.get(w.infected!.spawn('infected.runner', {
+      x: 10 + i % 3 * .8, z: Math.floor(i / 3) * .8,
+    }, { state: 'idle' }))!);
+    w.tick++; w.solids.commit();
+    // Populate the contact witness/density cache with a real rejected proposal.
+    group[4].transform.x += .25;
+    w.tick++; w.solids.commit();
+    const before = group.map(e => ({ ...e.transform }));
+    for (const e of group) { e.transform.x += .4; e.transform.z += .4; }
+    w.tick++; w.solids.commit();
+    for (let i = 0; i < group.length; i++) {
+      expect(group[i].transform.x).toBeCloseTo(before[i].x + .4, 8);
+      expect(group[i].transform.z).toBeCloseTo(before[i].z + .4, 8);
+    }
+    expect(w.solids.snapshot()).toMatchObject({ failures: 0, pending: 0 });
+    expect(w.infected!.director.count).toBe(9);
+  } finally { w.dispose(); }
+});
+
 test('a wider house resident keeps its identity and walks clear of the pedestrian doorstep', async () => {
   const w = await arena();
   try {
