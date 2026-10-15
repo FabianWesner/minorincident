@@ -24,6 +24,8 @@ async function finishLevel(level: 'L2' | 'L6', withAction: boolean) {
     const last = active.length === 1 && m.def.finish.includes(active[0].id);
     if (last) {
       // Calm start: no infected chasing, no swings in the last 2 s.
+      // Objectives are completed back to back here, so L6's staged breach arrivals (fed in over 32 ticks) are still pending: a calm start has none.
+      if (m.state.l6) delete m.state.l6.arrivals;
       for (const e of w.infected!.active) if (e.health.current > 0) { e.health.current = 0; e.hidden = true; }
       for (let i = 0; i < 180; i++) w.update();
       if (withAction) {
