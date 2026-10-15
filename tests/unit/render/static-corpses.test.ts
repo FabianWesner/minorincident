@@ -98,8 +98,8 @@ test('PO33 @E24 headwear reuses the prewarmed body pose and keeps identical draw
   const piece=body.clone();piece.translate(0,1,0);const combined=mergeGeometries([body,piece])!;combined.userData.corpseBody=body;combined.userData.corpseAccessory=piece;
   const pool=new StaticCorpses(),reference=new StaticCorpses(),material=new MeshLambertNodeMaterial(),clip={parts:['head'],frames:1,duration:1,matrices:new Matrix4().makeTranslation(2,0,0).elements};
   const e={id:8,corpse:true,archetype:'infected.runner'} as EntitySnapshot,look={...resolveCrowdAppearance(e),accessory:'acc.hat',hidesHair:true};
-  pool.prepare('runner',body,material,clip,0,true);const transforms=vi.spyOn(Matrix4.prototype,'fromArray');
-  try{pool.place(e,'runner',combined,material,clip,0,new Matrix4(),new Color('white'),[0,0,0],'8',[],look);expect(transforms.mock.calls.filter(([source])=>source===clip.matrices)).toHaveLength(6);}finally{transforms.mockRestore();}
+  pool.prepare('runner',body,material,clip,0,true);const bodyPosed=vi.spyOn(body,'getAttribute'),piecePosed=vi.spyOn(piece,'getAttribute');
+  try{pool.place(e,'runner',combined,material,clip,0,new Matrix4(),new Color('white'),[0,0,0],'8',[],look);expect(bodyPosed.mock.calls.filter(([name])=>name==='position')).toHaveLength(0);expect(piecePosed.mock.calls.filter(([name])=>name==='position').length).toBeGreaterThan(0);}finally{bodyPosed.mockRestore();piecePosed.mockRestore();}
   const plain=combined.clone();plain.userData={};reference.place(e,'runner',plain,material,clip,0,new Matrix4(),new Color('white'),[0,0,0],'8',[],look);
   const actual=(pool.children.at(-1) as InstancedMesh).geometry,expected=(reference.children[0] as InstancedMesh).geometry;
   for(const name of ['position','normal','color','_parts'])expect(actual.getAttribute(name).array).toEqual(expected.getAttribute(name).array);

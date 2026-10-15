@@ -105,6 +105,14 @@ export class StaticCorpses extends Group {
       if (base && accessory) {
         // The large body has already been posed behind the loading card.
         const pieces = [this.frozenPose(base, material, clip, frame, hiddenParts, hidesHair).geometry, this.frozenPose(accessory, material, clip, frame, hiddenParts, hidesHair).geometry];
+        // The body keeps the backend's colour layout; give the small piece the same itemSize so the attributes merge.
+        for (const name of ['position', 'normal', 'color', '_parts']) {
+          const want = pieces[0].getAttribute(name).itemSize, have = pieces[1].getAttribute(name);
+          if (have.itemSize === want) continue;
+          const values = new Float32Array(have.count * want);
+          for (let i = 0; i < have.count; i++) for (let c = 0; c < want; c++) values[i * want + c] = c < have.itemSize ? have.getComponent(i, c) : 1;
+          pieces[1].setAttribute(name, new BufferAttribute(values, want));
+        }
         const indexed = pieces.map(piece => { if(piece.index)return piece;const wrapper=new BufferGeometry();for(const name of Object.keys(piece.attributes))wrapper.setAttribute(name,piece.getAttribute(name));wrapper.setIndex(Array.from({length:piece.getAttribute('position').count},(_,i)=>i));return wrapper; });
         geometry = mergeGeometries(indexed)!;
         geometry.boundingSphere = pieces[0].boundingSphere!.clone().union(pieces[1].boundingSphere!);
