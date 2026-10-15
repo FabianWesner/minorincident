@@ -236,6 +236,9 @@ export class SolidRegistry {
     for (const e of this.world.entities.iterate()) {
       if (e.pendingAdmission && e.health.current <= 0) this.releasePending(e);
       if (e.pendingAdmission) {
+        // Vehicle/checkpoint rebuilds can reset the Rapier mask before this final
+        // phase. The admission owner keeps an uncommitted player body inactive.
+        if (e.id === 1) this.world.physics.playerCollider?.setEnabled(false);
         const pending = e.pendingAdmission, p = e.transform;
         const scripted = pending.x !== p.x || pending.z !== p.z || pending.y !== p.y;
         if (scripted) Object.assign(pending, p);
