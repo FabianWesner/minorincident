@@ -24,8 +24,6 @@ test('PO #3 only the garage between camera and courier dissolves; its batched ne
     lodBatches: [{ id: 'bld.garage-detached', height: 8, half: 1, origin: [0, 0], foot: { cx: 0, cz: 0, hx: 1, hz: 1 }, refs, hero, near, far }],
   }) as DistrictView;
   try {
-    expect(isUncutProp('prop.recycling-bin', 1), 'short drawn LODs stay whole even when the manifest is taller').toBe(true);
-    expect(isUncutProp('bld.garage-detached', 1)).toBe(false);
     view.updateFoliage({ camera, driving: false } as Parameters<DistrictView['updateFoliage']>[0], { x: 0, y: .72, z: 0 });
     for (const batch of [hero, near, far]) {
       const mesh = batch.children[0] as Mesh;
@@ -48,5 +46,7 @@ test('PO #3 only the garage between camera and courier dissolves; its batched ne
       expect(mask.data).toBe(power.data);
       expect('isInstancedInterleavedBuffer' in mask.data).toBe(true);
     } finally { windows.dispose(); }
+    expect(isUncutProp('prop.recycling-bin', 1), 'short drawn LODs stay whole even when the manifest is taller').toBe(true);
+    expect(isUncutProp('bld.garage-detached', 1)).toBe(false);
   } finally { hero.dispose(); near.dispose(); far.dispose(); geometry.dispose(); materials.dispose(); lighting.dispose(); }
 });

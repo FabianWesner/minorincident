@@ -320,5 +320,16 @@
   },
   "name": "l1-bat-forecourt-crowd",
   "note": "PO #4b: the shipped L1 forecourt admission steers a 28-infected population along the surrounding streets, with three courier pursuers at the apron. Same population at both tiers.",
-  "infectedCap": 60
+  "infectedCap": 60,
+  "vehicles": [
+    {
+      "id": "bike",
+      "asset": "vehicle.bicycle",
+      "at": [
+        24.8,
+        32.9
+      ],
+      "yaw": 0
+    }
+  ]
 }
