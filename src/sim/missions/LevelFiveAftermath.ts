@@ -284,7 +284,7 @@ export class LevelFiveAftermath {
     // followers already standing inside the narrow ingress.
     const ordered = this.following(true).sort((a, b) => a.e.transform.z - b.e.transform.z || a.e.id - b.e.id);
     const slot = Math.max(0, ordered.findIndex(f => f.e.id === e.id));
-    return { x: door.x - .4, z: door.z - 4.4 + slot * .75 };
+    return { x: door.x - .35, z: door.z - 4.4 + slot * .75 };
   }
   private metro(): void {
     const { world } = this.mission, s = this.s, tick = world.tick, player = world.entities.get(1)!;
