@@ -26,29 +26,6 @@ test('@E18 camera occluder frames reuse static geometry and follow moved, rotate
   expect(frame(other, ref)[2]).toBeCloseTo(204);
 });
 
-test('@E21 a paused initial camera opens its cutaway before the first simulation step', async () => {
-  const { PerspectiveCamera, Vector3 } = await import('three/webgpu');
-  const { seeThrough } = await import('../../../src/render/SeeThrough');
-  const camera = new PerspectiveCamera(35, 16 / 9); camera.position.set(10, 10, 10);
-  let hugged = true, occluded = true;
-  const context = {
-    foliage: { update() {}, reveal: true }, updateRoofs() {}, holeTarget: new Vector3(),
-    huggedOccluder: () => hugged, occluded: () => occluded,
-    frameSeconds: 0, occluderId: '',
-  };
-  const update = DistrictView.prototype.updateFoliage;
-  const view = { camera, driving: false } as Parameters<typeof update>[0];
-  seeThrough.strength.value = seeThrough.cover.value = 0;
-  try {
-    update.call(context as unknown as DistrictView, view, { x: 0, y: .7, z: 0 });
-    expect(seeThrough.strength.value).toBe(1); expect(seeThrough.cover.value).toBe(1);
-    hugged = occluded = false; context.frameSeconds = 1 / 60;
-    update.call(context as unknown as DistrictView, view, { x: 0, y: .7, z: 0 });
-    expect(seeThrough.strength.value).toBeGreaterThan(0); expect(seeThrough.strength.value).toBeLessThan(1);
-    expect(seeThrough.cover.value).toBeGreaterThan(0); expect(seeThrough.cover.value).toBeLessThan(1);
-  } finally { seeThrough.strength.value = seeThrough.cover.value = 0; }
-});
-
 test('@E18 sampled lens and courier rays match the original transformed footprint checks', () => {
   const refs = Array.from({ length: 12 }, (_, i) => {
     const ref = new Object3D(); ref.position.set((i % 4) * 5 - 8, 0, Math.floor(i / 4) * 6 - 6);

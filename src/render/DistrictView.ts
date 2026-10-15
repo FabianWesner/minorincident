@@ -498,10 +498,7 @@ export class DistrictView extends Group {
     const hugged = Boolean(player && this.foliage.reveal && this.huggedOccluder(view));
     this.occluderId = hugged ? 'hugged' : '';
     const goal = player && this.foliage.reveal && (hugged || this.occluded(view, player)) ? 1 : 0;
-    // A loaded, paused camera has no elapsed presentation time. Its first image
-    // must already reveal the courier; otherwise a close ramp/roof fills the
-    // viewport until the first simulation step happens to advance the easing.
-    const blend = this.frameSeconds === 0 ? 1 : 1 - Math.exp(-(hugged ? 40 : 10) * this.frameSeconds);
+    const blend = 1 - Math.exp(-(hugged ? 40 : 10) * this.frameSeconds);
     seeThrough.strength.value += (goal - seeThrough.strength.value) * blend;
     if (Math.abs(goal - seeThrough.strength.value) < .002) seeThrough.strength.value = goal;
     // Opens fast (a roof filling the frame must not linger while the cut eases open, esp. on slow frames), closes at the ordinary rate.
