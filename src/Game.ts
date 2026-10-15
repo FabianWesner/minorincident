@@ -178,7 +178,7 @@ export class Game {
       this.loading = true; this.restoredWhilePaused = false;
       try {
         await this.audioLoad; this.campaign = null; this.campaignUI.reset(); this.audio.reset(); this.ui.reset(); if (this.driver instanceof LevelOneBot) this.driver.dispose(); this.driver = null; this.input.reset(); this.view.reset(); this.world.reset(); this.clock.reset();
-        if (name !== null) { this.world.loadScenario(name, seed); this.quality.startLevel(); this.applyQuality(); if (name === 'mission-sandbox') this.world.loadMission(missionSandbox()); await this.view.load(); }
+        if (name !== null) { this.world.loadScenario(name, seed); if (name === 'survivor') this.world.player?.select(this.params.get('survivor') === 'male' ? 'male' : 'female', 0); this.quality.startLevel(); this.applyQuality(); if (name === 'mission-sandbox') this.world.loadMission(missionSandbox()); await this.view.load(); }
         else this.view.update();
         this.renderedDistricts=this.world.districts;
         if (deferAudio) this.audioLoad = this.audio.load().catch(error => console.error(error)); else await this.audio.load();
@@ -212,6 +212,7 @@ export class Game {
         if (this.campaign) { this.applyCampaign(); if (id === 'L1') this.world.combat?.clearLoadout(); this.watchCampaign(); }
         this.quality.startLevel(); this.applyQuality();
         this.view.missionHidden = false;
+        await this.view.prepareCharacterVariant();
         await this.audio.load(); this.ui.loaded(); await this.ui.prepareHud(); this.view.unfreeze(); this.view.update(1);
         await this.view.renderer.finishWarmUp(); await transitionPaint(); this.firstLevelFrame(id);
         return;

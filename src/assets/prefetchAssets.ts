@@ -46,7 +46,9 @@ export async function prefetchLevelAssets(level: string, concurrency: number, qu
   if (level === 'L2') add('bld.clinic-annex', 'burned');
   if (level === 'L5') add('decay.collapsed-facade');
   if (level === 'L3' || level === 'L5') add('decay.broken-glass');
-  const actors = new Set(level === 'L6' ? [...l6CastModels, ...l1Pedestrians.models] : [...(level === 'L3' ? l3CivilianModels : coreCivilianModels), ...(level === 'L5' ? l5Survivors.map(s => s.model) : [])]);
+  // L1's speculative view stages its cast around the spawn. Eager HTTP prefetch
+  // must not pull the later story bakes back across the Begin frontier.
+  const actors = new Set(level === 'L1' ? [] : level === 'L6' ? [...l6CastModels, ...l1Pedestrians.models] : [...(level === 'L3' ? l3CivilianModels : coreCivilianModels), ...(level === 'L5' ? l5Survivors.map(s => s.model) : [])]);
   actors.add('char.corgi'); actors.add(infectedDef('infected.runner').asset);
   for (const id of actors) {
     const def = definitions.get(id);

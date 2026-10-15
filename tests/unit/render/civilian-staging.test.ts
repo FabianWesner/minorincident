@@ -1,0 +1,53 @@
+import { expect, test, vi } from 'vitest';
+import { Group, PerspectiveCamera } from 'three/webgpu';
+import { CivilianCrowd } from '../../../src/render/npc/CivilianCrowd';
+import { l1CivilianModels } from '../../../src/data/npcs';
+import type { SimWorld } from '../../../src/sim/world/SimWorld';
+
+test.each(['high', 'low'] as const)('L1 %s stages later cast after Begin and warms before publishing batches', async tier => {
+  type Batch = Group & { model: string; lod: string; init(): Promise<void>; update(): void; dispose(): void };
+  const batches: Batch[] = [];
+  const prototype = CivilianCrowd.prototype as unknown as { batch(model: string, lod: string): Batch };
+  const batch = vi.spyOn(prototype, 'batch').mockImplementation((model, lod) => {
+    const b = Object.assign(new Group(), { model, lod, init: vi.fn(async () => {}), update: () => {}, dispose: () => {} });
+    batches.push(b); return b;
+  });
+  const player = { id: 1, transform: { x: 0, y: .7, z: 0 } };
+  const near = { id: 2, transform: { x: 4, y: .7, z: 0 }, civilian: { model: 'npc.civilian-man-a' } };
+  const far = { id: 3, transform: { x: 100, y: .7, z: 0 }, civilian: { model: 'npc.lab-tech-a' } };
+  const world = { tick: 0, scenario: 'L1', missions: { state: { phase: 'briefing' } }, entities: { get: () => player, iterate: () => [player, near, far] } };
+  const warm = vi.fn(async (b: Group) => { expect(b.parent).toBeNull(); });
+  const crowd = new CivilianCrowd(world as unknown as SimWorld, undefined, undefined, warm);
+  crowd.setQuality(tier);
+  try {
+    const discover = () => (crowd as unknown as { discover(): void }).discover();
+    const camera = new PerspectiveCamera(30, 16 / 9, .1, 200);
+    camera.position.set(4, .7, 25); camera.lookAt(4, .7, 0); camera.updateMatrixWorld();
+    await crowd.init(camera);
+    discover();
+    expect(batches.map(b => `${b.model}:${b.lod}`)).toEqual(['npc.civilian-man-a:lod1']);
+    world.missions.state.phase = 'playing';
+    discover(); await crowd.ready();
+    for (const model of l1CivilianModels) {
+      expect(batches.filter(b => b.model === model).map(b => b.lod).sort()).toEqual(tier === 'low' ? ['lod1', 'lod2'] : ['lod0', 'lod1', 'lod2']);
+    }
+    expect(batches.some(b => b.model === 'npc.police-officer' || b.model === 'npc.national-guard')).toBe(false);
+    expect(warm).toHaveBeenCalledTimes(batches.length - 1);
+    for (const b of batches) { expect(b.parent).toBe(crowd); expect(b.init).toHaveBeenCalledOnce(); }
+    discover(); await crowd.ready();
+    expect(batches).toHaveLength(l1CivilianModels.length * (tier === 'low' ? 2 : 3));
+  } finally { crowd.dispose(); batch.mockRestore(); }
+});
+
+// Initial-camera hero discovery belongs to the staged L1 path. Other levels
+// keep their established load barrier instead of adding hero work before play.
+test.each(['L7', 'L8', 'L9', 'L10'])('%s keeps camera discovery out of its initial crowd load', async scenario => {
+  const batch = vi.spyOn(CivilianCrowd.prototype as unknown as { batch(): Group }, 'batch').mockImplementation(() => Object.assign(new Group(), { model: 'npc.civilian-man-a', lod: 'lod1', init: async () => {}, dispose: () => {} }));
+  const update = vi.spyOn(CivilianCrowd.prototype, 'update').mockImplementation(() => {});
+  const world = { scenario, entities: { iterate: () => [] } } as unknown as SimWorld;
+  const crowd = new CivilianCrowd(world);
+  try {
+    await crowd.init(new PerspectiveCamera());
+    expect(update).toHaveBeenCalledExactlyOnceWith(1, undefined);
+  } finally { crowd.dispose(); update.mockRestore(); batch.mockRestore(); }
+});
