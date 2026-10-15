@@ -299,6 +299,7 @@ export interface L6State {
   exitAt:number; gateAt:number; injuryLineAt:number; lastShot:number; mid:boolean; platform:boolean;
   survivors:{key:string;id:number;injured:boolean;routine:'guard'|'sit'|'talk'|'treat'|'rest'|'share';status:'shelter'|'following'|'dead'|'turned'|'out';straggler:boolean;collected:boolean;rejoined:boolean;hold:number}[];
   gates:{id:number;x:number;closedAt:number;hold:number}[];
+  pushHintShown?: boolean;
   arrivals?: { remaining: number; door: number; nextAt: number };
   infectedIds:number[]; spawnLog:{id:number;door:number;x:number;z:number;tick:number;wave:number;offscreen:boolean}[];
 }
