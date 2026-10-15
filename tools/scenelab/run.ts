@@ -45,7 +45,7 @@ export async function measureCut(session: SceneSession) {
 
 /** E32 close camera: courier visible share. Five redraws of the same frame (no sim step, so the boss hole's dither pattern is identical):
  * all / courier hidden give the courier's visible pixels; environment and crowd hidden / subject also hidden give her unoccluded pixels; all vs crowd hidden gives the Mega's pixels. */
-export async function measureCourierShare(session: SceneSession) {
+export async function measureCourierShare(session: SceneSession, compareAlpha = false) {
   await session.ready();
   const shot = async (courier: boolean, crowd: boolean, environment = false) => { const d = await session.page.evaluate(([c, w, e]) => window.__SCENE__!.hideProbe(c, w, e), [courier, crowd, environment] as [boolean, boolean, boolean]); await session.ready(); return { d, png: PNG.sync.read(await session.page.screenshot({ type: 'png' })) }; };
   const all = await shot(false, false), noCourier = await shot(true, false), noCrowd = await shot(false, true), clear = await shot(false, true, true), none = await shot(true, true, true);
@@ -59,7 +59,22 @@ export async function measureCourierShare(session: SceneSession) {
     reference++; if (changed(all.png, noCourier.png, i)) visible++;
   }
   const mega = diff(all.png, noCrowd.png);
-  return { megaM: all.d, visible, reference, share: reference > 0 ? Math.min(1, visible / reference) : 0, megaPixels: mega, megaShare: mega / (all.png.width * all.png.height) };
+  // The old viewport-area minimum forced the boss to be wider than the PO allows.
+  // Compare identical camera distance, pose and lighting instead; never enlarge the asset to pass.
+  let alphaPixels = 0;
+  if (compareAlpha && all.d <= 6) {
+    try {
+      await session.page.evaluate(() => window.__SCENE__!.alphaReferenceProbe(true));
+      const alpha = await shot(false, false), alphaBackground = await shot(false, true);
+      // Its animated head moves the world-space health bar. Use this model's
+      // own hidden-crowd background so bar movement is never counted as body pixels.
+      alphaPixels = diff(alpha.png, alphaBackground.png);
+    } finally {
+      await session.page.evaluate(() => window.__SCENE__!.alphaReferenceProbe(false));
+      await session.ready();
+    }
+  }
+  return { alphaPixels, megaAlphaRatio: alphaPixels > 0 ? mega / alphaPixels : 0, megaM: all.d, visible, reference, share: reference > 0 ? Math.min(1, visible / reference) : 0, megaPixels: mega, megaShare: mega / (all.png.width * all.png.height) };
 }
 
 export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOptions) {
@@ -83,7 +98,7 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   const cutExpected = spec.expect?.seeThroughCutPixelsMax !== undefined || spec.expect?.seeThroughCutInsideMin !== undefined || spec.expect?.seeThroughCutInsideMax !== undefined;
   const cuts: ({ frame: number } & Awaited<ReturnType<typeof measureCut>>)[] = [];
   const contrast: { frame: number; result: ContrastResult }[] = [], measure = async (f: number) => {
-    if (spec.expect?.courierVisibleShareMin !== undefined || spec.expect?.megaVisibleShareMin !== undefined) shares.push({ frame: f, ...await measureCourierShare(session) });
+    if (spec.expect?.courierVisibleShareMin !== undefined || spec.expect?.megaAlphaVisibleRatioMin !== undefined) shares.push({ frame: f, ...await measureCourierShare(session, spec.expect?.megaAlphaVisibleRatioMin !== undefined) });
     if (cutExpected) cuts.push({ frame: f, ...await measureCut(session) });
     if (!spec.contrast || f === 0) return; // frame 0: the follow camera has not settled on a driven vehicle yet
     const result = await measureContrast(session.page, spec); if (result) contrast.push({ frame: f, result }); };
@@ -147,7 +162,7 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   if (shares.length) {
     const near = spec.megaAlpha ? shares.filter(s => s.megaM <= 14) : shares, contact = shares.filter(s => s.megaM <= 6);
     if (spec.expect?.courierVisibleShareMin !== undefined) result.checks.push({ name: 'courierVisibleShare', pass: near.every(s => s.share >= spec.expect!.courierVisibleShareMin!), value: near.length ? Math.min(...near.map(s => +s.share.toFixed(3))) : 1, limit: spec.expect.courierVisibleShareMin });
-    if (spec.expect?.megaVisibleShareMin !== undefined) result.checks.push({ name: 'megaVisibleShare', pass: contact.every(s => s.megaShare >= spec.expect!.megaVisibleShareMin!), value: contact.length ? Math.min(...contact.map(s => +s.megaShare.toFixed(4))) : 1, limit: spec.expect.megaVisibleShareMin });
+    if (spec.expect?.megaAlphaVisibleRatioMin !== undefined) result.checks.push({ name: 'megaAlphaVisibleRatio', pass: contact.length > 0 && contact.every(s => s.alphaPixels > 0 && s.megaAlphaRatio >= spec.expect!.megaAlphaVisibleRatioMin!), value: contact.length ? Math.min(...contact.map(s => +s.megaAlphaRatio.toFixed(4))) : 0, limit: spec.expect.megaAlphaVisibleRatioMin });
     result.checks.push({ name: spec.megaAlpha ? 'courierShareSampledNearMega' : 'courierShareSampled', pass: near.length > 0, value: near.length, limit: 1 });
   }
   if (cutPixels) {

@@ -11,6 +11,17 @@ const scenes = new Map(readdirSync(directory).filter(f => f.startsWith('l10-q1-'
 const assets = new Map((manifest as AssetDef[]).map(a => [a.id, a]));
 
 describe('L10-Q1 Scene Lab catalog @E32', () => {
+  it('keeps the Mega readable relative to an Alpha without requiring a larger body', () => {
+    // PO 10-15: an absolute 1.5% viewport gate encouraged widening the boss.
+    // The replacement compares visible pixels at the same pose/camera distance;
+    // the independent courier visibility requirement remains 60%.
+    for (const name of ['l10-mega-close-contact', 'l10-e3b-mega-arrival', 'l10-mega-speed-r6']) {
+      const scene = readSpec(`${directory}/${name}.json`);
+      expect(scene.expect?.megaAlphaVisibleRatioMin, name).toBe(.9);
+      expect(scene.expect?.courierVisibleShareMin, name).toBe(.6);
+      expect(scene.expect, name).not.toHaveProperty('megaVisibleShareMin');
+    }
+  });
   it('Q3 verifier admits one functional browser while other lanes occupy two slots', () => {
     const source = readFileSync('tools/verify.ts', 'utf8');
     const branch = source.slice(source.indexOf(": target === 'E32'"), source.indexOf(": target === 'E30'"));
