@@ -39,7 +39,7 @@ for (const quality of ['high', 'low'] as const) test(`ten level menu ${quality} 
   await page.getByTestId('start-game').click();
   await expect(page.getByTestId('level-L10')).toBeFocused();
   await expect(page.getByTestId('level-L10')).toHaveClass(/is-recommended/);
-  await expect(page.getByTestId('level-L10')).toHaveText('L10 · Deliver the Cure');
+  await expect(page.getByTestId('level-L10')).toHaveText('L10 · The Cure');
   await expect(page.getByTestId('level-resume-L10')).toHaveCount(0);
   await page.screenshot({ path: `${dir}/${info.project.name}-${quality}-levels.png` });
   const box = (await page.getByTestId('levels-back').boundingBox())!;

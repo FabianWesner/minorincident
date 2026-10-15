@@ -35,7 +35,7 @@ test.describe('L1 v2 real-input playthrough', () => {
     await page.getByRole('button', { name: 'Continue', exact: true }).click();
     await expect(page.getByRole('heading', { name: 'Mission briefing' })).toBeVisible({ timeout: 90_000 });
     expect(await page.evaluate(() => window.__SS__!.getState().scenario)).toBe('L2');
-    await expect(page.locator('body')).not.toContainText(/Choose upgrades|Set up racks|Pick 2 of 3|Unlock reveal/);
+    await expect(page.locator('body')).not.toContainText(/Choose upgrades|Set up racks|Pick 2 of 3|Unlock reveal|Well done, courier/);
     const save = await page.evaluate(() => window.__SS__!.campaign.state());
     expect(save!.ownedActions).toContain('weapon.bat'); expect(save!.upgrades).toHaveLength(2);
   });

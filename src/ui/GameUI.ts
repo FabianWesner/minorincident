@@ -8,9 +8,10 @@ import { Hud } from './Hud';
 import { button, node, setHidden } from './dom';
 import { Settings, type UISettings } from './Settings';
 import { audioCredits, codeCredits, originalCredit, type Credit } from '../data/credits';
+import { madeBy } from '../data/madeBy';
 import './ui.css';
 
-const levelTitles = ['Stop the Outbreak', 'Get Them Out', 'Reach the Safe Zone', 'Open the Escape Route', 'Hold the Line', 'Get Out', 'Cross the Ruined City', 'Escape the Zoo', 'Make the Crossing', 'Deliver the Cure'];
+const levelTitles = ['Special Delivery', 'The Failed Rescue', 'The Police Collapse', 'The Safe City Falls', 'Aftermath', 'The Subway', 'The Ruined City', 'The Zoo', 'The Crossing', 'The Cure'];
 const resumeLevel = (save: CampaignSave | null): number | null => save?.cureResume ? 10 : save?.l9Crash && !save.crossingHandover ? 9 : null;
 
 type Screen = 'title' | 'character' | 'levels' | 'pause' | 'settings' | 'credits' | 'upgrades' | 'rack' | 'loading' | null;
@@ -125,17 +126,27 @@ export class GameUI {
     const confirmText = node('span', 'restart-confirm-text', ''); confirmText.id = 'restart-confirm-text';
     confirm.append(confirmText, button('restart-confirm-yes', 'Restart', () => { void this.restart(); }), button('restart-confirm-cancel', 'Cancel', () => this.cancelRestart()));
     pause.append(confirm);
-    const credits = this.panel('credits', 'Credits & Licenses', 'Minor Incident · Every third-party library, recording and technology reference, with its license.');
+    const credits = this.panel('credits', 'Credits & Licenses', 'Who made Minor Incident, and every library, recording and reference it uses, with its license.');
     // Generated from package.json and the audio ledger (tools/credits/generate.ts), so the list stays complete.
     const list = node('div', 'credits-list'); list.className = 'credits-list';
     list.tabIndex = 0; list.setAttribute('role', 'region'); list.setAttribute('aria-label', 'Credits and licenses');
     const link = (id: string, label: string, href: string) => { const a = node('a', id, label); a.href = href; a.target = '_blank'; a.rel = 'noopener'; return a; };
+    // Hand-authored makers first (PO 10-15), then the generated licence list, unchanged.
+    list.append(node('h2', 'credits-made-heading', madeBy.headline));
+    const author = node('p', 'credits-made-author'); author.className = 'credit-row';
+    author.append(link('credits-made-author-link', madeBy.author.name, madeBy.author.url), ' · ', madeBy.author.role);
+    list.append(author);
+    for (const group of madeBy.groups) {
+      const row = node('p', `credits-made-${group.id}`); row.className = 'credit-row';
+      row.append(node('strong', `credits-made-${group.id}-heading`, group.heading), node('small', `credits-made-${group.id}-names`, group.names.join(' · ')));
+      list.append(row);
+    }
     const section = (id: string, heading: string, entries: readonly Credit[], note?: string) => {
       list.append(node('h2', `credits-${id}-heading`, heading));
       if (note) list.append(node('p', `credits-${id}-note`, note));
       entries.forEach((credit, i) => {
         const row = node('p', `credits-${id}-${i}`); row.className = 'credit-row';
-        row.append(credit.url ? link(`credits-${id}-${i}-source`, credit.title, credit.url) : credit.title, ' — ',
+        row.append(credit.url ? link(`credits-${id}-${i}-source`, credit.title, credit.url) : credit.title, ' by ',
           credit.authorUrl ? link(`credits-${id}-${i}-author`, credit.author, credit.authorUrl) : credit.author, ' · ',
           link(`credits-${id}-${i}-license`, credit.license, credit.licenseUrl));
         if (credit.detail) row.append(node('small', `credits-${id}-${i}-detail`, credit.detail));
@@ -368,11 +379,11 @@ export class GameUI {
       `Level: ${mission?.def.id ?? world.scenario ?? 'unknown'} · Seed: ${seed}`,
       `Step: ${active ? `${active.id} · ${active.text}` : 'none'} · Checkpoint: ${mission?.state.checkpoint ?? 'none'}`,
       `Sim: tick ${world.tick} · ${(world.tick / 60).toFixed(1)} s elapsed`,
-      `Player (x, z, y): ${player ? `${player.transform.x.toFixed(2)}, ${player.transform.z.toFixed(2)}, ${player.transform.y.toFixed(2)}` : 'unavailable'} · yaw ${player?.transform.yaw.toFixed(3) ?? '—'} rad`,
+      `Player (x, z, y): ${player ? `${player.transform.x.toFixed(2)}, ${player.transform.z.toFixed(2)}, ${player.transform.y.toFixed(2)}` : 'unavailable'} · yaw ${player?.transform.yaw.toFixed(3) ?? 'n/a'} rad`,
       `District: ${district} · Nearest: ${closest ? `${closest.id} (${closest.distance.toFixed(1)} m)` : 'none within 10 m'}`,
-      `Vehicle: ${driving ? 'driving' : bike?.mounted ? 'on bike' : 'on foot'}${player?.riding ? ` · entity ${player.riding}` : ''} · HP ${player ? `${player.health.current}/${player.health.max}` : '—'}`,
+      `Vehicle: ${driving ? 'driving' : bike?.mounted ? 'on bike' : 'on foot'}${player?.riding ? ` · entity ${player.riding}` : ''} · HP ${player ? `${player.health.current}/${player.health.max}` : 'n/a'}`,
       `Loadout: ${loadout || 'empty'} · Camera: ${this.game.view.view.getState().spot ?? 'follow'} / zoom ${this.game.view.view.getState().zoom.toFixed(2)}`,
-      `Backend: ${this.game.view.renderer.selectedBackend} · Quality: ${this.game.quality.tier} · FPS (2 s avg): ${this.fpsSamples.length ? (this.fpsSamples.reduce((sum, sample) => sum + sample.fps, 0) / this.fpsSamples.length).toFixed(1) : '—'}`,
+      `Backend: ${this.game.view.renderer.selectedBackend} · Quality: ${this.game.quality.tier} · FPS (2 s avg): ${this.fpsSamples.length ? (this.fpsSamples.reduce((sum, sample) => sum + sample.fps, 0) / this.fpsSamples.length).toFixed(1) : 'n/a'}`,
       `Entities: pedestrians ${entities.filter(e => e.civilian && e.health.current > 0 && !e.infected).length} · infected alive ${infected.filter(e => e.health.current > 0 && e.infected!.recoverAt < 0).length} · downed ${infected.filter(e => e.health.current > 0 && e.infected!.recoverAt >= 0).length} · corpses ${entities.filter(e => e.corpse || e.infected?.state === 'dead').length}`,
       `Build: ${typeof __BUILD_COMMIT__ === 'undefined' ? 'unknown' : __BUILD_COMMIT__}`,
     ];

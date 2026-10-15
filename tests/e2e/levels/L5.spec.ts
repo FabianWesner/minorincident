@@ -269,7 +269,7 @@ test.describe('L5 Aftermath in the browser', () => {
     await page.evaluate(() => window.__SS__!.screenshotReady());
     await expect(page.getByRole('heading', { name: 'Mission briefing' })).toBeVisible({ timeout: 120_000 });
     expect(await page.evaluate(() => window.__SS__!.getState().scenario)).toBe('L5');
-    await expect(page.locator('body')).not.toContainText(/Choose upgrades|Set up racks|Pick 2 of 3|Unlock reveal|Level complete/);
+    await expect(page.locator('body')).not.toContainText(/Choose upgrades|Set up racks|Pick 2 of 3|Unlock reveal|Well done, courier|Level complete/);
     await expect(page.locator('body')).toContainText('Hours later');
     const save = await page.evaluate(() => window.__SS__!.campaign.state());
     expect(save!.ownedActions).toEqual(expect.arrayContaining(['weapon.bat', 'weapon.fire-axe', 'weapon.handgun', 'weapon.army-mg'])); expect(save!.unlockedLevel).toBe(5);
@@ -288,7 +288,7 @@ test.describe('L5 Aftermath in the browser', () => {
     await page.evaluate(() => window.__SS__!.screenshotReady());
     await expect(page.getByRole('heading', { name: 'Mission briefing' })).toBeVisible({ timeout: 120_000 });
     expect(await page.evaluate(() => window.__SS__!.getState().scenario)).toBe('L6');
-    await expect(page.locator('body')).not.toContainText(/Choose upgrades|Set up racks|Pick 2 of 3|Unlock reveal|Level complete|Campaign complete/);
+    await expect(page.locator('body')).not.toContainText(/Choose upgrades|Set up racks|Pick 2 of 3|Unlock reveal|Well done, courier|Level complete|Campaign complete/);
     const after = await page.evaluate(() => window.__SS__!.campaign.state());
     expect(after!.unlockedLevel).toBe(6); expect(after!.survivors!.slice().sort()).toEqual(l5Survivors.map(s => s.key).sort());
   });
