@@ -126,7 +126,7 @@ export class LevelEightZoo {
     for (const outlet of s.outlets) walkResidents(w, outlet, t);
     const player = w.entities.get(1)!;
     if (!s.escapeCheckpoint && distance(player.transform, this.door()) < 12) { s.escapeCheckpoint = true; this.mission.checkpoint('escape-route'); }
-    if (w.vehicles!.groupBoarded(s.carId, this.roster())) this.mission.setState('aboard', true);
+    if (w.vehicles!.groupBoarded(s.carId, [...this.roster(), ...[...w.entities.iterate()].filter(e => e.companion).map(e => e.id)])) this.mission.setState('aboard', true);
   }
   /** Cheat/test path (`completeObjective` before the breach): call the tunnel breach now so the escape objective becomes active. */
   advance(): boolean {
@@ -146,7 +146,6 @@ export class LevelEightZoo {
   /** Newly rescued zoo residents also belong to the complete living group. */
   roster(): number[] {
     const ids = [...new Set([...this.state.roster, ...[...this.w.entities.iterate()].filter(e => e.civilian?.survivor?.mode === 'follow' && !e.civilian.zooAnimal).map(e => e.id)])];
-    ids.push(...[...this.w.entities.iterate()].filter(e => e.companion).map(e => e.id));
     return ids.filter(id => { const e = this.w.entities.get(id); return e && e.health.current > 0 && !e.infected && e.civilian?.state !== 'finished'; });
   }
   follower(e: EntitySnapshot): boolean {
