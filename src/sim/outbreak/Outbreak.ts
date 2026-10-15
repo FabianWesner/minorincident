@@ -512,8 +512,9 @@ export class Outbreak {
   /** The same entity becomes an infected: same id, asset, tint, accessories; speed from its tier (section 5.4). */
   private rise(e: EntitySnapshot, bitten = true): void {
     const ai = this.world.infected!, tick = this.world.tick, c = e.civilian!, inf = e.infection!;
-    const nav = ai.nav, cell = c.zooAnimal ? -1 : nav.clear(e.transform.x, e.transform.z, .4) ? -1 : nav.nearestCell(e.transform.x, e.transform.z);
-    const at = cell >= 0 ? { x: nav.x(cell), z: nav.z(cell) } : { x: e.transform.x, z: e.transform.z };
+    // A conversion keeps the admitted actor's pose. The coarse route margin is
+    // not another spawn owner; the shared admission query checks the new body below.
+    const at = { x: e.transform.x, z: e.transform.z };
     let id: number;
     try { id = ai.spawn(c.zooAnimal ? `infected.${c.zooAnimal}` : 'infected.runner', at, { variant: c.variant, yaw: e.transform.yaw, state: 'idle', perched: false, tier: inf.tier }); }
     catch { delete e.infection; this.kill(e); return; }
