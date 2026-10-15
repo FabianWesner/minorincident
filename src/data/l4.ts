@@ -4,7 +4,7 @@ import { l3 } from './l3';
  * Level 4 "The Safe City Falls" tuning table (specs/epic-22-level-4-the-safe-city-falls.md, sections 4 and 5). Data only.
  * Coordinates are world metres on D-FAIR (layouts/D-FAIR/layout.py; origin at the map centre, X east, Z south). The convoy enters
  * from the army gate at the west end of Lakeshore Avenue, tours the clean city and parks in the Reception Plaza; the war is
- * fought on the plaza and the streets around it; the player runs east to Kessler's Hardware and its cellar. Times in seconds,
+ * fought on the plaza and the streets around it; the player takes Lakeshore, Metro Road and Harbor Street to Kessler's cellar. Times in seconds,
  * speeds in m/s. Every number is read by the L4 controller, bots and tests.
  */
 type P = readonly [number, number];
@@ -197,6 +197,15 @@ export const l4 = {
     fires: 4, burningCars: 3, pendingPerTick: 3,
     /** Soldiers pockets along both routes fight turned soldiers and infected (sim-light). */
     pockets: 2,
+    /** A small side-street group beyond the protected break-away lane. */
+    egress: [10.2, 34] as P, streetLookS: 15,
+  },
+  /** PO #17b: the walk crosses Lakeshore, the unseen Metro Road blocks and Harbor Street to the far northwest refuge.
+   * The first legs reuse the existing break-away gap; both sidewalks remain open throughout. Running may shorten the walk.
+   */
+  finale: {
+    route: [[-12, 16], [-4, 16], [-4, 28], [-2, 41], [8, 43], [48.5, 43], [48.5, 20], [48.5, -15], [48.5, -37.4],
+      [20, -37.4], [-12, -37.4], [-44, -37.4], [-64, -39.5], [-79, -40], [-79.3, -45.2801]] as readonly P[],
   },
   /** Beat 7: the cellar. After the door is barred the battle goes on above for at least this long. */
   cellar: { outwardYaw: -Math.PI / 2, interactS: .6, barS: 1.0, battleAfterBarredS: 7 },
@@ -311,8 +320,11 @@ export const l4Glass: readonly (readonly [number, number, number])[] = [
   [17.6, -25.9, Math.PI / 2], [17.6, -8.5, Math.PI / 2], [17.6, 8.6, Math.PI / 2], [17.6, 25.9, Math.PI / 2],
   [-3, -44.8, 0], [12, -44.8, 0], [28, -44.8, 0], [-12, 39.2, 0], [-44, 39.2, 0], [26, 39.2, 0], [-30, -22.6, 0],
 ];
-/** The collapse: groups of infected waiting out of view along both routes to Kessler Lane (x, z, size), emerging from the nearest doors. */
+/** Post-collapse street homes (x, z, size): out-of-view emergence or existing stragglers arriving on foot under the same cap. */
 export const l4CollapseGroups: readonly (readonly [number, number, number])[] = [
+  [l4.collapse.egress[0], l4.collapse.egress[1], 2],
+  // Side-street pairs remain outside the protected Lakeshore corridor, with the full road open beside them.
+  [20, 54, 2], [42, 54, 2],
   [-46, -37.4, 3], [-24, -37.4, 4], [-4, -37.4, 4], [18, -37.4, 4], [38, -37.4, 3], [50, -22, 4], [50, -6, 4], [50, 12, 3],
   [-46, 44, 3], [-20, 44, 4], [4, 44, 4], [26, 44, 3], [45, 44, 4], [58, 44, 3], [62, 28.6, 3],
 ];
@@ -389,4 +401,18 @@ export function l4ConvoyStations(length: number): { start: number[]; end: number
 /** Street of a world point on the L4 map (nearest of the five streets), for population, bots and dressing tests. */
 export function l4Edge(x: number, z: number): 'lakeshore' | 'harbor' | 'plaza' | 'east' | 'west' {
   return z > 30 ? 'lakeshore' : z < -30 ? 'harbor' : x > 5 ? 'east' : x < -40 ? 'west' : 'plaza';
+}
+
+/** Remaining street-route distance, including the approach to its nearest leg; optionally writes the next turn for the minimap. */
+export function l4CellarDistance(p: { x: number; z: number }, next?: { x: number; z: number }): number {
+  const route = l4.finale.route;
+  let nearest = Infinity, remaining = 0, tail = 0;
+  for (let i = route.length - 1; i > 0; i--) {
+    const [ax, az] = route[i - 1], [bx, bz] = route[i], dx = bx - ax, dz = bz - az, length = Math.hypot(dx, dz);
+    const t = Math.max(0, Math.min(1, ((p.x - ax) * dx + (p.z - az) * dz) / (length * length)));
+    const d = Math.hypot(p.x - ax - t * dx, p.z - az - t * dz);
+    if (d < nearest) { nearest = d; remaining = d + (1 - t) * length + tail; if (next) { next.x = bx; next.z = bz; } }
+    tail += length;
+  }
+  return remaining;
 }

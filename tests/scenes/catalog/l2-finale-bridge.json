@@ -1,0 +1,223 @@
+{
+  "ground": "district",
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 180,
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000
+  },
+  "name": "l2-finale-bridge",
+  "note": "PO #7b: the real police posts engage the approaching horde on screen as the courier reaches the defended bridge line. The central gate and riverside bypass are open.",
+  "time": "L2",
+  "layout": {
+    "level": "L2",
+    "district": "D-GROVE",
+    "bbox": [
+      [
+        54,
+        19
+      ],
+      [
+        87,
+        43
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        71.3,
+        31.5
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.fists"
+      ]
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        73.5,
+        33
+      ]
+    },
+    {
+      "id": "police-0",
+      "kind": "pedestrian",
+      "at": [
+        77.89011557953565,
+        29.045183445500918
+      ],
+      "look": {
+        "model": "npc.police-officer",
+        "role": "officer",
+        "tint": "#2f4858"
+      },
+      "state": {
+        "ally": {
+          "role": "officer"
+        }
+      }
+    },
+    {
+      "id": "police-1",
+      "kind": "pedestrian",
+      "at": [
+        79.43962816694528,
+        33.85761062434692
+      ],
+      "look": {
+        "model": "npc.police-officer",
+        "role": "officer",
+        "tint": "#2f4858"
+      },
+      "state": {
+        "ally": {
+          "role": "officer"
+        }
+      }
+    },
+    {
+      "id": "police-2",
+      "kind": "pedestrian",
+      "at": [
+        81.45355339059327,
+        29.553553390593272
+      ],
+      "look": {
+        "model": "npc.police-officer",
+        "role": "officer",
+        "tint": "#2f4858"
+      },
+      "state": {
+        "ally": {
+          "role": "officer"
+        }
+      }
+    },
+    {
+      "id": "police-3",
+      "kind": "pedestrian",
+      "at": [
+        80.6,
+        31.2
+      ],
+      "look": {
+        "model": "npc.police-officer",
+        "role": "officer",
+        "tint": "#2f4858"
+      },
+      "state": {
+        "ally": {
+          "role": "officer"
+        }
+      }
+    },
+    {
+      "id": "straggler-0",
+      "kind": "infected",
+      "at": [
+        64,
+        27
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "straggler-1",
+      "kind": "infected",
+      "at": [
+        65.7,
+        27
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "straggler-2",
+      "kind": "infected",
+      "at": [
+        66.47612046748871,
+        27.38268343236509
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "straggler-3",
+      "kind": "infected",
+      "at": [
+        64,
+        31
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "straggler-4",
+      "kind": "infected",
+      "at": [
+        65.7,
+        31
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "straggler-5",
+      "kind": "infected",
+      "at": [
+        67.4,
+        31
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "straggler-6",
+      "kind": "infected",
+      "at": [
+        64.9238795325113,
+        35.38268343236509
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "straggler-7",
+      "kind": "infected",
+      "at": [
+        66.2845232737211,
+        35.44922424868455
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "straggler-8",
+      "kind": "infected",
+      "at": [
+        67.11298742572619,
+        35.692909649383466
+      ],
+      "state": "chase"
+    }
+  ],
+  "tier": 1,
+  "script": [
+    {
+      "frame": 30,
+      "actor": "courier",
+      "do": {
+        "moveTo": [
+          76.2,
+          30
+        ],
+        "pace": "walk"
+      }
+    }
+  ]
+}

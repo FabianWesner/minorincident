@@ -1,0 +1,90 @@
+[
+  {
+    "run": "l2-high-direct.json",
+    "equal": true,
+    "prefix": [
+      {
+        "type": "l2.alarm",
+        "t": 23.016666666666666
+      },
+      {
+        "type": "l2.truckDeparted",
+        "t": 26.6
+      },
+      {
+        "type": "l2.truckArrived",
+        "t": 50.916666666666664
+      },
+      {
+        "type": "l2.doorsOpen",
+        "t": 61.6
+      }
+    ]
+  },
+  {
+    "run": "l2-high-side.json",
+    "equal": true,
+    "prefix": [
+      {
+        "type": "l2.alarm",
+        "t": 23.016666666666666
+      },
+      {
+        "type": "l2.truckDeparted",
+        "t": 26.6
+      },
+      {
+        "type": "l2.truckArrived",
+        "t": 50.916666666666664
+      },
+      {
+        "type": "l2.doorsOpen",
+        "t": 61.6
+      }
+    ]
+  },
+  {
+    "run": "l2-low-direct.json",
+    "equal": true,
+    "prefix": [
+      {
+        "type": "l2.alarm",
+        "t": 23.016666666666666
+      },
+      {
+        "type": "l2.truckDeparted",
+        "t": 26.6
+      },
+      {
+        "type": "l2.truckArrived",
+        "t": 50.916666666666664
+      },
+      {
+        "type": "l2.doorsOpen",
+        "t": 61.6
+      }
+    ]
+  },
+  {
+    "run": "l2-low-side.json",
+    "equal": true,
+    "prefix": [
+      {
+        "type": "l2.alarm",
+        "t": 23.016666666666666
+      },
+      {
+        "type": "l2.truckDeparted",
+        "t": 26.6
+      },
+      {
+        "type": "l2.truckArrived",
+        "t": 50.916666666666664
+      },
+      {
+        "type": "l2.doorsOpen",
+        "t": 61.6
+      }
+    ]
+  }
+]

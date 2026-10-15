@@ -1,0 +1,17 @@
+{
+  "status": "unmeasured",
+  "attemptLimitSeconds": 900,
+  "exitCode": 124,
+  "admitted": false,
+  "browserLocksReleased": true,
+  "checks": [
+    "L2 high/low native frame and hitch budgets",
+    "L4 high/low native frame, hitch and per-step budgets"
+  ],
+  "reason": "Shared browser slots remained occupied; the bounded quiet-run attempt ended before admission.",
+  "otherEvidence": [
+    "All numeric isolated CPU budgets passed",
+    "Population caps pass",
+    "All 84 Scene Lab draw/triangle/visibility gates pass"
+  ]
+}
