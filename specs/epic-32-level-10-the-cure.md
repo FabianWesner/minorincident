@@ -59,11 +59,11 @@ Existing **bottomless campaign ammo** applies (E06 campaign override): no ammo c
 
 **`inf.dog`** is a derived generic non-corgi dog asset using the current `infected.dog` role/animal rigid-part pipeline (reuse retriever/K9 base where available; inspect placeholder status). It is visually low, four-legged, infected-eyed and distinct from humans/corgi. Default move speed **1.1× nominal player run**, packs **1–4**, bite/pounce windup ≥ **0.6 s**, ≤ **2 m** reach, cooldown ≥ **2 s**, damage **10 HP** per bite. Reuse animal steering/pounce and stagger, with no new sensing system. Hearing/LOS are ordinary local infected rules; dogs may be evaded with obstacles, killed or staggered by axe/firearms. Their low silhouette must remain readable under crowded/higher-camera views. Protected companion is excluded from infection, infected spawns, enemy targeting and cure damage; historical pet-infection paths cannot select it.
 
-Regular Alphas keep E07 HP/resistance/world-space bars and four specials; conventional weapons can kill them. R3 introduces one, later regions increase counts from the map table. Their smaller silhouette/bar and audio distinguish them from the ≈2× Mega Alpha. Reuse existing move cooldown/telegraph rules; no duplicate Alpha combat system.
+Regular Alphas keep E07 HP/resistance/world-space bars and four specials; conventional weapons can kill them. R3 introduces one, later regions increase counts from the map table. Their silhouette (plain, unarmoured), bar and audio distinguish them from the Mega Alpha, which has the same body size (PO 10-15). Reuse existing move cooldown/telegraph rules; no duplicate Alpha combat system.
 
 ### 5.4 One persistent Mega Alpha
 
-**`inf.mega-alpha`**, about **2× regular Alpha scale**, derived from its rig/LODs with heavier silhouette and unique roar. Introduce pursuit within the first **2 min** (default first R1 viewpoint at 1:30, start ≥ 80 m behind along a reachable route). Spawn once; stable ID persists through streaming/checkpoints. It always reads the player's global position, **without sight or hearing checks**; corgi lure cannot redirect it. This knowledge is AI-only: the player's minimap never receives an exact boss dot.
+**`inf.mega-alpha`**, the **same size as the regular Alpha** (PO 2026-10-15 (verbatim): "The Mega Alpha shouldn't be bigger than the regular ALpha. Just look stronger and more freightinng."), derived from its rig/LODs; it reads stronger and more frightening through silhouette and materials (heavier shoulders/arms within the same height, armour-like plates/scar tissue, darker palette, glowing red eyes/veins), plus its unique roar. Introduce pursuit within the first **2 min** (default first R1 viewpoint at 1:30, start ≥ 80 m behind along a reachable route). Spawn once; stable ID persists through streaming/checkpoints. It always reads the player's global position, **without sight or hearing checks**; corgi lure cannot redirect it. This knowledge is AI-only: the player's minimap never receives an exact boss dot.
 
 Cruise speed **0.7× nominal uninjured player's run speed** (±2%); never 0.7× a momentary slow/walk speed. It follows reachable shared region/nav waypoints around obstacles and continues while off-camera/off-region. Use the existing fixed-step AI and L9 snapshot route ownership; a coarse **2 Hz** off-region route update advances distance by the same speed × sim-time, then detailed AI resumes before close contact. No arbitrary teleport, respawn ahead, region-border stop or HP reset. A route obstacle cannot permanently trap it; reuse Alpha destructible-line breach/nav updates or authored reachable alternate paths. Persistent pursuit creates pressure without simulating all regions' crowds.
 
@@ -106,7 +106,7 @@ Playable epilogue **150 s default, permitted 120–180 s**. Player retains walk/
 
 | Asset / kit | Work / reuse | LOD0 / LOD1 / LOD2 triangle cap per module |
 | --- | --- | --- |
-| `inf.mega-alpha` | Integrated Alpha rig → ≈2× hero derivative, shared specials | 16,000 / 6,000 / 2,000 |
+| `inf.mega-alpha` | Integrated Alpha rig → same-size, stronger/more frightening derivative (PO 10-15), shared specials | 16,000 / 6,000 / 2,000 |
 | `inf.dog` | Generic retriever/K9 base → infected quadruped derivative, never corgi | 4,000 / 1,500 / 500 |
 | `prop.rotary-minigun` / `weapon.rotary-minigun` | One HMG-derived mounted gun+base, spin/aim/muzzle nodes | 8,000 / 3,000 / 1,000 total |
 | `prop.cure-canister` | Backpack/terminal/installed shared mesh | 1,500 / 600 / 200 |
@@ -144,7 +144,7 @@ All rows **NEW 2026-10-13**, each tagged `@E32-ACxx`; expected test IDs `T-E32-x
 | E32-AC06 | Depth-authored fixtures follow §4 density curve with axe few → handgun more → shotgun stronger → MG groups → rockets multiple Alphas → minigun assault; changing loadout alone spawns zero enemies. Global overlap cap ≤ 200/100 incl boss/dogs. | unit + sim (`T-E32-06`) |
 | E32-AC07 | inf.dog uses non-corgi quadruped base/animal role, fast low silhouette; default speed 1.1× run, ≥ 0.6 s telegraph, ≤ 2 m reach, ≥ 2 s cooldown and 10 HP/bite; ordinary LOS/stagger/death rules work. | unit + sim + visual (`T-E32-07`) |
 | E32-AC08 | Corgi is excluded from infection/spawn substitution/enemy targeting/cure damage; healthy humans/animals remain unharmed by cure. Negative fixtures cover historical pet paths and all cure phases. | unit + sim (`T-E32-08`) |
-| E32-AC09 | Regular Alphas match E07 bars/resistance/four specials and can die to conventional weapons; R3–R7 counts meet §4, silhouette/scale/bar distinguish them from ≈2× Mega Alpha. | sim + visual (`T-E32-09`) |
+| E32-AC09 | Regular Alphas match E07 bars/resistance/four specials and can die to conventional weapons; R3–R7 counts meet §4, silhouette/look/bar distinguish them from the same-size Mega Alpha. | sim + visual (`T-E32-09`) |
 | E32-AC10 | One Mega Alpha is introduced by 2:00, always pursues player without LOS/hearing/lure, cruise 0.7× nominal run ±2%; off-region state/position/HP persists, no teleport/respawn/border stop, obstacle route cannot permanently trap it. | unit + sim (`T-E32-10`) |
 | E32-AC11 | Mega charge/slam/grab only activate inside 12 m and meet §5.4 windup/range/speed/damage/cooldown/recovery; moves never overlap, grab always releases and dodge fixtures avoid hits. | sim + visual (`T-E32-11`) |
 | E32-AC12 | Full-HP Mega survives nine direct stock rockets and dies on tenth; conventional/minigun damage cannot reduce HP below 90% max or kill, rocket damage applies once/projectile, splash ≤ 2.5% max; stagger ≤ 0.5 s with ≥ 2 s shared cooldown. | unit + sim (`T-E32-12`) |
@@ -181,7 +181,7 @@ Order: **L9 changes/streaming → L10 assets → regions → encounters/weapons 
 
 | Lane | Budget | Depends on | Concrete change and reuse |
 | --- | --- | --- | --- |
-| L10-A1 assets | 3 h | E07 Alpha asset | Derive inf.mega-alpha at ≈2× scale, reuse rig/move poses, hero LODs and palette. |
+| L10-A1 assets | 3 h | E07 Alpha asset | Derive inf.mega-alpha at regular Alpha size (PO 10-15), stronger/more frightening look, reuse rig/move poses, hero LODs and palette. |
 | L10-A2 assets | 3 h | animal pipeline | Existing retriever/K9 non-corgi base → inf.dog, quadruped clips/LODs/eyes; reuse infected.dog brain contract. |
 | L10-A3 assets | 3 h | mounted-gun stock | Rotary gun/base/spin nodes and backpack cure canister/socket using existing prop/weapon builds. |
 | L10-A4 assets | 3 h | existing town/industrial stock | Residential fringe + industrial region kits, missing low modules only, instanced props/LODs. |
