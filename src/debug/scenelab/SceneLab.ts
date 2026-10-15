@@ -62,7 +62,7 @@ type Plan =
   | { type: 'path'; points: Point[]; index: number; run: boolean; loop: boolean }
   | { type: 'moveTo'; point: Point; run: boolean }
   | { type: 'turn'; yaw: number }
-  | { type: 'attack'; target: string; until: number; side: 'LEFT' | 'RIGHT'; move?: Point; aiming?: boolean }
+  | { type: 'attack'; target: string; until: number; side: 'LEFT' | 'RIGHT'; move?: Point; aiming?: boolean; inPlace?: boolean }
   | { type: 'mount'; bike: string; at: number }
   | { type: 'click'; entity: number; at: number }
   | { type: 'drive'; throttle: number; steer: number; until: number }
@@ -394,7 +394,7 @@ export class SceneLab {
       world.events.on('sim.tick', () => {
         if (this.boomClosedAt || spec.armyBoom?.closed) return;
         const ids = [1, ...[...world.entities.iterate()].filter(e => e.civilian?.ally?.follow && !e.infection).map(e => e.id)];
-        if (this.boom!.ready(ids)) { this.boomClosedAt = world.tick; this.boom!.set(true); }
+        if (this.boom!.ready(ids) || (this.boom!.clearBystanders(ids), this.boom!.ready(ids))) { this.boomClosedAt = world.tick; this.boom!.set(true); }
       }, SimPhase.missions);
     }
     // The emergence runs inside the tick in the mission phase, as LevelOneOutbreak does (motion is published from it).
@@ -528,7 +528,7 @@ export class SceneLab {
       else if ('moveTo' in a) actor.plan = { type: 'moveTo', point: a.moveTo, run: a.pace !== 'walk' };
       else if ('turn' in a) actor.plan = { type: 'turn', yaw: rad(a.turn) };
       else if ('aim' in a) actor.plan = { type: 'attack', target: a.aim, until: this.frame + ticks(a.seconds ?? 2), side: world.combat!.runner.loadout.state.selectedSide, move: a.move ?? [0, 0], aiming: true };
-      else if ('attack' in a) actor.plan = { type: 'attack', target: a.attack, until: this.frame + ticks(a.seconds ?? 2), side: a.side ?? 'LEFT', move: a.move };
+      else if ('attack' in a) actor.plan = { type: 'attack', target: a.attack, until: this.frame + ticks(a.seconds ?? 2), side: a.side ?? 'LEFT', move: a.move, inPlace: a.inPlace };
       else if ('select' in a) { const l = world.combat!.runner.loadout.state; l.selectedSide = a.select; if (a.index !== undefined) l[a.select].index = a.index; }
       else if ('click' in a) this.click(a.click, a.part ?? 'chest');
       else if ('mountBike' in a) actor.plan = { type: 'mount', bike: a.mountBike, at: this.frame };
@@ -780,7 +780,7 @@ export class SceneLab {
     const courier = [...this.actors.values()].find(a => a.kind === 'courier'); if (!courier) return;
     const world = this.world, p = world.entities.get(1)!.transform, plan = courier.plan;
     // InputSystem.inject merges into the last frame: name every one-tick field so a click's edges do not persist.
-    const frame: InputFrame & Record<string, unknown> = { ...emptyInput(), drive: undefined, brake: undefined, walk: undefined, moveTarget: undefined, attackTarget: undefined, navigation: undefined, cancelMove: undefined, mouseAttack: undefined, pointerTarget: undefined };
+    const frame: InputFrame & Record<string, unknown> = { ...emptyInput(), drive: undefined, brake: undefined, walk: undefined, moveTarget: undefined, attackTarget: undefined, attackInPlace: undefined, navigation: undefined, cancelMove: undefined, mouseAttack: undefined, pointerTarget: undefined };
     if (plan?.type === 'path') {
       let target = toPoint(plan.points[plan.index]);
       if (Math.hypot(target.x - p.x, target.z - p.z) < .35) {
@@ -798,6 +798,7 @@ export class SceneLab {
       const target = this.actors.get(plan.target);
       if (!target || this.frame >= plan.until) { courier.plan = null; frame.cancelMove = true; }
       else {
+        if (plan.inPlace) frame.attackInPlace = true;
         if (plan.move) {
           const t = world.entities.get(target.entity)!.transform, dx = t.x - p.x, dz = t.z - p.z, d = Math.hypot(dx, dz) || 1;
           frame.move = toPoint(plan.move); frame.walk = true; frame.aim = { x: dx / d, z: dz / d }; frame.aimSource = 'pointer';

@@ -3,12 +3,99 @@ import { readFileSync } from 'node:fs';
 import { emptyInput } from '../../src/input/InputFrame';
 import { l3, l3ArmyOffset } from '../../src/data/l3';
 import { ArmyCheckpointBoom } from '../../src/sim/missions/ArmyCheckpointBoom';
+import { respawnAtCheckpoint, respawnRule } from '../../src/sim/missions/Respawn';
 import { missionControls } from '../../src/sim/missions/controls';
 import { loadL3, followFrustum } from '../../tools/sim-runner/l3Bots';
 import { placementColliders } from '../../src/levels/districts/staticCollision';
 import type { DistrictLayout, Placement } from '../../src/levels/districts/types';
 
 describe('L3 squad and checkpoint', () => {
+  test('@E21 a returning body keeps its timer and the L3 pursuit delay when it gets up after respawn', async () => {
+    const { world: w, mission: m } = await loadL3(1);
+    try {
+      const s = m.state.l3!, api = missionControls(w);
+      s.phase = 'corridor'; s.fallbackAt = 1; s.pending = []; s.waves = []; s.populated = [true, true, true];
+      api.teleport('player', { x: -110, z: 0 });
+      const id = w.infected!.spawn('infected.runner', { x: -106, z: 0 }), body = w.entities.get(id)!, player = w.entities.get(1)!;
+      w.combat!.damage.apply({ attackId: 1, actionId: 'weapon.handgun', sourceId: 1, targetId: id, origin: { ...player.transform }, direction: { x: 1, z: 0 }, base: 10000, multiplier: 1, type: 'bullet', knockback: 0, stagger: 0 });
+      const recovery = body.infected!.recoverAt;
+      w.tick = recovery - 300; // The checkpoint captured a body that gets up after the default four-second delay expires.
+      respawnAtCheckpoint(w, player.transform, false);
+      const ignoreUntil = w.tick + l3.mercy.respawnDelayS * 60;
+      expect(player.transform.x).toBe(-110); expect(player.transform.z).toBe(0);
+      expect(player.survivor!.invulnerableUntil).toBe(w.tick + respawnRule.graceS * 60);
+      expect(body.infected!.recoverAt).toBe(recovery);
+      expect(body.infected!.l1!.ignoreUntil).toBe(ignoreUntil);
+      for (let i = 0; i < 301; i++) w.update();
+      expect(w.entities.get(id)).toBe(body); expect(body.health.current).toBe(body.health.max);
+      expect(body.infected!.l1!.ignoreUntil).toBe(ignoreUntil); expect(ignoreUntil).toBeGreaterThan(w.tick);
+    } finally { w.dispose(); }
+  }, 120_000);
+  test('@E21 second-retry relief thins the living crowd while retaining each downed body and recovery slot', async () => {
+    const { world: w, mission: m } = await loadL3(1);
+    try {
+      const s = m.state.l3!, api = missionControls(w), ai = w.infected!;
+      s.phase = 'corridor'; s.fallbackAt = 1; s.pending = []; s.waves = []; s.populated = [true, true, true];
+      api.teleport('player', { x: -110, z: 0 });
+      const fresh = Array.from({ length: 6 }, (_, i) => ai.spawn('infected.runner', { x: -96 + i, z: 0 }));
+      const id = ai.spawn('infected.runner', { x: -89, z: 0 }), body = w.entities.get(id)!;
+      w.combat!.damage.apply({ attackId: 1, actionId: 'weapon.handgun', sourceId: 1, targetId: id, origin: { ...w.entities.get(1)!.transform }, direction: { x: 1, z: 0 }, base: 10000, multiplier: 1, type: 'bullet', knockback: 0, stagger: 0 });
+      const recovery = body.infected!.recoverAt;
+      expect(recovery).toBeGreaterThan(w.tick);
+      m.l3!.restore(0); m.l3!.restore(0); w.update();
+      expect(fresh.filter(id => w.entities.get(id))).toHaveLength(3);
+      expect(w.entities.get(id)).toBe(body); expect(body.health.current).toBe(0);
+      expect(body.infected!.recoverAt).toBe(recovery); expect(ai.active).toContain(body);
+      expect(ai.director.count).toBeGreaterThanOrEqual(4);
+    } finally { w.dispose(); }
+  }, 120_000);
+  test('@E21 @E21-AC17 fatal bites at the infected cap retain a dead officer without blocking rescue or allied fire', async () => {
+    const { world: w, mission: m } = await loadL3(1);
+    try {
+      const s = m.state.l3!, api = missionControls(w), x = l3.finale.barrierX;
+      const victim = w.entities.get(s.officerIds[0])!, shooter = w.entities.get(s.officerIds[1])!;
+      api.teleport(victim.id, { x, z: 0 }); api.teleport(shooter.id, { x: x - 3, z: 0 });
+      const id = w.infected!.spawn('infected.runner', { x: x + 4, z: 0 }), target = w.entities.get(id)!;
+      w.infected!.director.levelCap = w.infected!.director.count;
+      expect(w.combat!.query.alliedShotClear(shooter, target, w.tick)).toBe(false);
+      w.events.emit({ type: 'outbreak.bite', tick: w.tick, sourceId: id, targetId: victim.id, position: { ...victim.transform }, turns: false });
+      expect(victim.civilian!.state).toBe('finished'); expect(victim.health.current).toBe(0);
+      expect(w.entities.get(victim.id)).toBe(victim);
+      expect(new ArmyCheckpointBoom(w, x).ready([victim.id])).toBe(true);
+      expect(w.combat!.query.alliedShotClear(shooter, target, w.tick)).toBe(true);
+    } finally { w.dispose(); }
+  }, 120_000);
+  test('@E21 @E21-AC17 HMG post can fire down the approach and into the resting compound', async () => {
+    const { world: w, mission: m } = await loadL3(1);
+    try {
+      const gunner = w.entities.get(m.state.l3!.soldierIds.at(-1)!)!;
+      expect(gunner.civilian!.ally!.weapon).toBe('hmg');
+      for (const x of [l3.map.zoneX - 6, l3.map.zoneX, l3.map.zoneX + 4]) {
+        expect(w.combat!.query.shotVisible(gunner.transform, { x, z: 0, y: .7 })).toBe(true);
+      }
+    } finally { w.dispose(); }
+  }, 120_000);
+  test('@E21 @E21-AC17 rescued officers at the compound edge stay inside after boom closure', async () => {
+    const { world: w, mission: m } = await loadL3(1);
+    try {
+      m.completeObjective('armory'); m.completeObjective('defend');
+      const s = m.state.l3!, api = missionControls(w);
+      s.pending = []; s.waves = []; s.populated = [true, true, true];
+      for (const e of w.infected!.active) { e.health.current = 0; e.infected!.recoverAt = -1; }
+      s.squad.forEach((q, i) => api.teleport(q.id, { x: l3.map.zoneX + (i === 0 ? .7 : 4 + i), z: i % 2 ? 1 : -1 }));
+      for (const e of w.entities.iterate()) if (e.companion) api.teleport(e.id, { x: l3.map.zoneX + 4, z: 1 });
+      api.teleport('player', { x: m.def.anchors['l3-zone'].x, z: 0 });
+      s.finaleAt = w.tick - l3.finale.minFightS * 60;
+      w.update();
+      expect(s.barrierClosedAt).toBeGreaterThan(0);
+      for (let i = 0; i < 60 && m.state.phase === 'playing'; i++) {
+        w.update();
+        expect(s.barrierClosedAt).toBeGreaterThan(0);
+        for (const q of s.squad) expect(w.entities.get(q.id)!.transform.x).toBeGreaterThanOrEqual(l3.map.zoneX);
+      }
+      expect(m.state.phase).toBe('progression');
+    } finally { w.dispose(); }
+  }, 120_000);
   test('@E21 army compound is walkable before the rendezvous and does not finish while the courier rests', async () => {
     const { world: w, mission: m } = await loadL3(1);
     try {

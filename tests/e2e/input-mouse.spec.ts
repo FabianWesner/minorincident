@@ -84,6 +84,21 @@ test('T-E03-14 @E03 @E03-AC14 click ground walks, retargets, stops and held grou
   expect(await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack'))).toEqual([]);
 });
 
+test('T-E03-ground-escape @E03 @E21 clear ground near a melee target stays movement; a near miss at its feet still targets it', async ({ page }) => {
+  await arena(page);
+  const id = await page.evaluate(() => window.__SS__!.spawn('infected.dummy', { x: 1.8, z: 0 }, { hp: 1000 }));
+  const ground = await point(page, .4, -.1);
+  await page.mouse.click(ground.x, ground.y);
+  const frame = await tick(page);
+  expect(frame.attackTarget).toBeUndefined();
+  expect(frame.moveTarget!.x).toBeCloseTo(.4, 2);
+  await tick(page, 90);
+  expect(await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack'))).toEqual([]);
+  const feet = await point(page, 2.1, .35);
+  await page.mouse.click(feet.x, feet.y);
+  expect((await tick(page)).attackTarget).toEqual({ id, side: 'LEFT' });
+});
+
 for (const button of ['left'] as const) test(`T-E03-15-${button} @E03 @E03-AC15 target click approaches then attacks ${button}`, async ({ page }) => {
   await arena(page);
   const id = await page.evaluate(() => window.__SS__!.spawn('infected.dummy', { x: 5, z: 0 }, { hp: 1000 }));

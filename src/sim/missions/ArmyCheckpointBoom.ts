@@ -24,8 +24,16 @@ export class ArmyCheckpointBoom {
    */
   clearBystanders(ids: readonly number[]): void {
     for (const e of this.world.entities.iterate()) {
-      if (!e.civilian || e.health.current <= 0 || ids.includes(e.id) || Math.abs(e.transform.x - this.wall.x) >= .6 || Math.abs(e.transform.z - this.wall.z) >= 2.2) continue;
+      if (!e.civilian || e.infection || e.health.current <= 0 || ids.includes(e.id) || Math.abs(e.transform.x - this.wall.x) >= .6 || Math.abs(e.transform.z - this.wall.z) >= 2.2) continue;
       e.transform.x = this.wall.x + 1.6; this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+      // Move the standing order as well as the body, so a guard or scheduled resident cannot walk back under the arm.
+      const c = e.civilian, clear = (p: { x: number; z: number }) => {
+        if (Math.abs(p.x - this.wall.x) < .6 && Math.abs(p.z - this.wall.z) < 2.2) p.x = e.transform.x;
+      };
+      c.waypoints.forEach(clear); c.schedule?.forEach(s => clear(s.target));
+      if (c.ally?.post) clear(c.ally.post);
+      if (c.ally?.run) clear(c.ally.run);
+      c.goal = -1; c.path.length = 0;
     }
   }
 }
