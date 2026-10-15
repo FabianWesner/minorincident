@@ -4,68 +4,76 @@ Source decision: `epics-pipeline/reports/astra-collision/README.md`; PO 2026-10-
 “We always havbe the problem that objects are overlapping, but shouldn't happen by design (eg alphas locked in a tank)”.
 The courier/corgi and APC contact additions follow the L1–L4 and L5–L9 visual audits.
 
+**The success bar is not fully met.** The implemented contact/admission gates pass. The low-count relative performance gate, mixed-special budget, remaining regression checks and final browser coverage keep the deploy gate red.
+
 ## Implementation
 
-- `SimWorld.solids` extends the existing static NavGrid compound bake. Vehicles use the existing circle/OBB contact primitive and spatial hash. Parked route blockers alias the canonical hull, so admission uses its exact footprint.
-- E09 vehicles, traffic, convoy, tank and fuel/setpiece hulls register by entity ID, including restore. Explicit passenger entry/seated animations have no free actor footprint; attachments exempt contact only with their owner or other attachments on that owner. Dead cosmetics have no actor mask.
-- One radius/height-aware occupancy query serves infected/civilian admission, checkpoint restore/respawn, vehicle exits and scripted relocation. Blocked requests retain their ID and encounter slot; they retry instead of accepting a blocked fallback. Scripted doorway walks retain their authored path until they clear the footprint.
-- Final contact commit follows actor grounding and vehicle movement and precedes published animation displacement. It includes the courier and corgi. Conflicting motion components reserve their previous valid poses; independent formations keep moving.
-- The guard checks moved/new actors each tick and independently audits the full population every 60 ticks. Its 64-entry offender ring records tick, actor, solid/actor, depth and last writer. Level completion fails on any penetration invariant failure; Scene Lab exposes the same counters. Deferred requests remain reported separately: L8 can finish while its authored tunnel arrivals are still walking to clear ground. Their identities and encounter slots remain retained. Available-space repro scenes and E18 horde fixtures additionally require zero pending requests.
-- Combat reach is unchanged. Soft presentation spacing accounts for large bodies and hull attack poses. Normal attack windup faces the victim and holds that heading while automatic movement stops, preventing residual steering from turning attackers into neighbours.
+- `SimWorld.solids` extends the existing static NavGrid compound bake. Vehicle contact shares the existing circle/OBB primitive and spatial hash. Parked route blockers alias the canonical hull.
+- E09 vehicles, traffic, convoy, tank and fuel/setpiece hulls register by stable entity ID, including restore. Passengers/attachments exempt only their explicit owner. The legacy L4 seated/roster state resolves to its actual bus ID; being hidden alone grants no hull exemption. Dead cosmetics have no actor mask.
+- One radius/height-aware occupancy query serves infected/civilian admission, checkpoint restore/respawn, vehicle exits and scripted relocation. Blocked requests retain their ID and concurrency/encounter slot and retry; no blocked fallback is accepted.
+- Final contact commit follows grounding and vehicle movement and precedes published animation displacement. It includes the courier and corgi. Conflicting components reserve prior valid poses; independent formations keep moving. Courier corrections sweep the existing Rapier capsule, and its collider is published with its final pose.
+- The guard validates moved/new actors each tick, independently audits the complete population every 60 ticks, and retains a 64-entry offender ring with tick, IDs, depth and writer. Level runners fail on invariant violations; Scene Lab exposes the same counters. Pending authored arrivals are reported separately, with identity/slot retained.
+- Combat damage and reach are unchanged. Attack windup faces its victim and holds that heading while movement stops. Soft pose spacing handles large bodies and stationary driven hulls; moving-vehicle ram contacts remain active.
+- Existing convoy posed clearance remains part of the shared query. Traffic braking includes pedestrian radii. A stalled L7 follower can sidestep a courier blocking the queue using the same occupancy query; normal queue cadence is retained.
 
-## Evidence and current limits
+## Validation
 
-This report is in progress; passing subsets do **not** establish a green deploy gate.
+Sources are recorded because the broad runs preceded later focused fixes. Passing subsets do not establish a green deploy gate.
 
-| Check | Source | Result |
-| --- | --- | --- |
-| Four audit reproductions, five cases | unmodified source plus regression tests (`d9743890d`) | All five fail, including the natural L4 tank/Alpha case. |
-| Same reproductions through L4 tick 15700 | current density/contact snapshot before `57cb0e8aa` | All five pass; all 33 admission/contact/regression tests pass. No actor lost. |
-| L1–L10 opening 300-tick invariant battery | `45cdd3e04` | All ten pass. |
-| Fresh full unit suite | `a9ea26f10` plus `9257f65a9`/`b79dff6d6` | 1,463 passed, zero failed, seven skipped. The three earlier failures also pass their focused rerun. |
-| L1–L10 campaign completion | latest completion battery before `cb4783d1f` | 10/10 complete; zero penetration invariant failures in every level. L8 retains three pending authored tunnel arrivals; all other levels have none. |
-| Three-seed L1–L10 completion battery | `e9e36b938`/`fd1303095` | 29/30 complete; zero invariant failures in all 30 runs. L7 seed 2 times out because a finished civilian with positive HP remains in the following roster. The existing L6 loss rule is applied in `055846876`; seed 2 now completes in 579.22 s, zero failures/pending, and all seven boarding tests pass. L8 retains 1/1/2 authored tunnel arrivals. |
-| Final contact/reproduction suite | `a9ea26f10` | 35/35 pass. |
-| Existing convoy posed clearance | `b79dff6d6` | 10/10 pass, including both tiers and three seeds, yields and woman/pet clearance. |
-| Moving APC/road/countryside ram gates | `2de827be6` | 4/4 selected gates pass; stationary hull pose spacing is retained. |
-| L5 ingress/checkpoints and L7 departure | `f8f6e41ac` | 16/16 selected tests pass, including the unchanged L5 newbie time limit and all 35 passengers boarding. |
-| WebGPU collision/combat matrix | preceding frozen build | 94/94 pass, both quality tiers and zoom 1.5/1/.5. Final source adds 12 station/boarding rows still awaiting validation. |
-| Native GPU desktop/horde and bus rides | preceding frozen build | Desktop/horde budgets pass and all 17 ride configurations pass. Both emulated mobile L6 probes fail during fixture setup; mission initialization cap fix committed, measurements pending. Physical-device/manual checks remain skipped. |
-| Full sim/level sweep | `e6a2c6aac` | 1,346 passed, 45 failed, two skipped. Predates the later convoy/ram, L1 timing, L4, pursuit fixture and checkpoint replay fixes; passing targeted reruns are recorded separately. |
-| APC healthy/floor, WebGL, high/low, zoom 1.5/1/.5 | attack-facing preview | 12/12 pass, zero physical failures/pending; torso and attack-arm penetration gates ≤2 cm. [Rows](apc-gates.json). |
-| WebGL collision/combat/vehicle matrix | `e6a2c6aac` frozen build | 100/106 pass. Every requested combat/APC/eight-attacker/get-up row passes, both tiers and zoom 1.5/1/.5. Six L5 ingress rows fail the unchanged stair-clearance gate; a 5 cm lane correction awaits browser rerun. [Rows](webgl-gates.json). |
-| L1 original timing gates | `b00f5be1b`, confirmed with `d3d195b78` | Complete 136.9 s; newbie 111.1 s/zero deaths. Both original timing assertions pass with normal inputs. |
-| L4 original alarm count/location and tank cadence gates | `a9ea26f10` / `d3d195b78` | Both pass: alarm timing/count/group/source assertions retained; tank shot gaps retain the original 7.9–12.8 s gate. |
-| Contact cache, same-ID corner conversion and eight-actor player/corgi checks | `d3d195b78` | All pass, including classic and real L1 brains. Natural L4 through tick 15700 also passes. |
-| Final contact, repeated checkpoint retry and convoy suite | `c9fa9516b` | 46/46 pass; no blocked courier request can inherit a seated-passenger hull exemption. |
-| Hearing/slam authored observer fixtures | `d89e64555` | 5/5 selected gates pass, with the observer placed clear before actor admission; original hearing time and exact slam boundary assertions retained. |
-| 24-target real rocket blast | `055270a55` | Passes the original count, radius, tick and recovery assertions with a nonoverlapping fixture; adds a ≤2 cm pair-penetration precondition. |
-| Weather/checkpoint replay and L6 stress fixture | `7350c7990` | 43/43 pass; the L6 fixture retains 100 visible infected, zero failures/pending. |
-| Five-seed pursuit arrival train | `1cc2f375f` | Original finite-arrival, deterministic repeat and ≥2 s spread assertions pass after synchronizing the scripted and physical courier. |
-| Isolated Node E18, 200 actors | `45cdd3e04` | p95 1.264 ms vs 1.707 ms baseline (−26%); 200 retained, zero failures/pending. |
-| Isolated Node E18, 100 actors | `45cdd3e04` | p95 .808 ms vs .968 ms baseline (−17%); 100 retained, zero failures/pending. [Earlier measurement](sim-performance-earlier.json). |
+| Check | Result and boundary |
+| --- | --- |
+| Four audit reproductions, five cases, unmodified `d9743890d` source | All five fail, including natural L4 tank/Alpha contact. |
+| Final contact/admission/reproduction/convoy/boarding/traffic selection | **59/59 pass** at `2aeda4f07`, including natural L4 through tick 15700, courier/corgi eight-attacker cases, blocked admission/restore, collider publication, changed radii and original convoy/boarding/traffic assertions. |
+| Legacy L4 owner isolation | Additional focused check passes: the seated courier exempts her own bus and still rejects a tank. Together these are **60 distinct passing checks**. |
+| Full unit suite | **1,463 passed, zero failed, seven skipped**. Latest full snapshot precedes the final rollback-bucket, boarding and publication refinements; their focused runs are recorded separately. |
+| Full sim/level sweep at `e6a2c6aac` | 1,346 passed, 45 failed, two skipped. Later focused fixes supersede parts of this result. |
+| Rerun of failing files at `2de827be6` | 118 passed, 25 failed. Nine failures subsequently pass focused reruns; **16 remain unresolved from that selection**. [Exact list and sources](remaining-gates.json). |
+| Matching unmodified-source selection | 140 passed; one L10 high-arrival test timed out at its unchanged 120 s wall-clock limit. This selection excludes the two zoo timing cases. |
+| L1–L10 three-seed completion battery | Zero invariant failures in all 30 runs; 29 complete. Its L7 seed-2 failure was subsequently fixed and rerun successfully (579.22 s, zero failures/pending). L8 retained 1/1/2 authored tunnel arrivals. |
+| Real campaign handover chain | The actual completed L1–L6 save was replayed through L7–L10 after the queue fix. **All ten levels complete, zero deaths and zero invariant failures in every report**. The single-process full test previously stalled; the successful prefix/tail replay is recorded explicitly. |
+| L1 original timing gates | Complete 136.9 s; newbie 111.1 s/zero deaths. Original timing assertions retained. |
+| L4 original alarm and tank gates | Original timing, count, group, emergence-source and 7.9–12.8 s shot-gap assertions pass. |
+| Weather/checkpoint replay and L6 stress fixture | 43/43 pass; 100 visible infected retained, zero failures/pending. |
+| Five-seed pursuit train | Original finite-arrival, deterministic repeat and ≥2 s spread assertions pass after synchronizing the scripted and physical courier. |
+| 24-target rocket fixture | Original count/radius/blast-tick/recovery assertions pass with clear actor positions. |
+| Additional safe 200-body rocket fixture | **Passes**: 200 visible, admitted full footprints, one unchanged 6 m rocket blast, 200 permanent kills in its blast tick, zero failures/pending. The incompatible original 3 m fixture remains unchanged. |
 
-The final isolated paired E18 comparison passes the requested 5% limit: **1.8621 → 1.9298 ms (+3.64%)** at 200 and **1.0826 → 1.1323 ms (+4.59%)** at 100, with every actor retained and zero failures/pending. It measures 3,600 ticks after 120 warmup ticks on both sources. [Raw samples and source boundaries](sim-performance-final.json). The final backend matrices remain unmeasured, and the broad sim/level suite is not green. The selected rerun at `2de827be6` reports 118 passed/25 failed; eight of those failures pass later focused runs. Seventeen remain unresolved from that selected source, including deferred special-attack cases, the impossible rocket packing fixture, L1 respawn preservation, L2 repeated-death mercy, L5 intruder/shutter progress, L6 siege timing, smoke targeting and encounter balance. The unmodified-source selection passes 140 checks, with one L10 arrival wall-clock timeout. [Failure names and boundaries](remaining-gates.json). The L1 timing regression was traced to repeated standing fights: the complete profile stopped against every pursuer while the novice already moved and struck. [The test concept](../../../specs/90-test-concept.md) defines novice as complete plus handicaps, and E19-AC14 requires using movement against packs. Both profiles now share the existing normal-input moving-strike base policy; novice reaction, miss and detour handicaps remain. The unchanged timing gates pass at 136.9/111.1 s. Attack damage/reach and authored encounter counts are unchanged. [Compact completed evidence](validation-current.json). Existing scene expectations are retained; the added contact gates tighten overlap to 2 cm. The new eight-runner fixture uses the production 60 HP toughness-adjusted value.
+[Compact completed evidence](validation-current.json) includes the campaign reports and source boundaries. `admitted` counts successful API operations, including repeated scripted placements; it is not a unique spawn count. Raw, larger run outputs are under `test-results/collision-s1/`.
 
-### Final contact and progress follow-ups
+L1 timing was traced to repeated standing fights: complete stopped against each pursuer while novice already moved and struck. [The test concept](../../../specs/90-test-concept.md) defines novice as complete plus handicaps, and E19-AC14 requires movement against packs. Both now share the existing normal-input moving-strike policy; novice reaction, miss and detour handicaps remain. Damage/reach and authored counts are unchanged.
 
-`dec44f800` sweeps courier contact corrections with the existing Rapier capsule, propagating collider poses after rollback. This prevents an endpoint projection from crossing a wall/riser. All **47** contact/reproduction/convoy gates pass, including the new wall-side regression and eight-attacker escape. The formerly stalled real L5→L6 handover now completes L6 in **272.55 s**, zero deaths/failures/pending. The original traffic suite also passes after braking includes pedestrian radii. A final continuous campaign, full unit run and paired ordinary-horde comparison are collecting.
+The L6 handover stall came from a courier correction crossing a stair/riser to a clear endpoint; the real capsule sweep fixes it (272.55 s, zero deaths/failures/pending). L7 also needed the existing L6 finished-civilian loss rule and a local queue detour around the courier. Entity and roster identities remain retained.
 
-The separate mixed-special 200-actor E18 probe is **red**: **5.21 ms p95 against 4 ms**, with both runner slots reserved. Its profiled run retains 200 actors and records zero invariant failures/pending. A special-contact cache trial increased cost and was reverted. The passing ordinary-horde 5% comparison does not establish that every E18 budget holds.
+## Performance — remaining blocker
 
-### Unmeasured final browser work
+Final three-pair measurement source: `9d6934be0`; baseline: unmodified `d9743890d` source. Each sample measures 3,600 ticks after 120 warmup ticks, with both Hetzner runner slots held. The later L4 passenger adapter is outside these fixtures' empty-hull path.
 
-After roughly 30 minutes of cumulative shared-slot waiting, the bounded final WebGPU batch stopped without acquiring a browser. The adjusted L5 lane, courier-follow get-up camera and new L6 stair-contact catalog row therefore lack final captures/backend matrix results. The repaired mobile E18 fixture has its green sim proof, but native mobile measurements and the remaining deploy browser gate were not rerun. No final green deploy-gate claim is made. The optional fourth CPU runner could not be provisioned because of Hetzner IP quota/capacity; the paired CPU comparison subsequently completed on the existing pool and passed.
+| Living/visible actors | Baseline median p95 | Changed median p95 | Change | ≤5% gate |
+| --- | --- | --- | --- | --- |
+| 200 | 1.791121 ms | 1.643316 ms | −8.25% | pass |
+| 100 | .921470 ms | 1.012389 ms | **+9.87%** | **fail** |
+
+Every changed sample retains the full visible population with zero invariant failures/pending. The separate mixed-special 200-actor probe is also **red: 4.951107 ms p95 against 4 ms**; its 100-actor 6 ms gate passes. A broader special-contact cache trial was slower and was reverted. [All three pairs](sim-performance-final.json) retain the variation; earlier passing single-pair results are historical evidence.
+
+## Browser evidence and unmeasured final work
+
+- Preceding frozen WebGPU build: **94/94 pass**, both quality tiers and zoom 1.5/1/.5.
+- Frozen WebGL build at `e6a2c6aac`: **100/106 pass**. Every requested combat/APC/eight-attacker/get-up row passes. Six L5 ingress rows fail the unchanged 2 cm shin-clearance gate (measured 1.3 cm); the 5 cm lane correction is committed and unmeasured. [Rows](webgl-gates.json).
+- APC healthy/floor attack-facing preview: **12/12 WebGL rows pass**, both tiers and all three zooms, including ≤2 cm torso/arm contact gates. [Rows](apc-gates.json).
+- Native GPU desktop/horde budgets and all **17** bus-ride configurations pass on the preceding frozen build. Both emulated-mobile L6 probes failed during setup because mission initialization overwrote the stress cap. The cap fix has its green sim proof; native mobile remeasurement is outstanding. Physical-device/manual checks remain skipped.
+
+After roughly 30 minutes of cumulative shared-slot waiting, the bounded final WebGPU batch stopped without acquiring a browser. Final backend matrices, repaired mobile measurements, adjusted L5/get-up captures and the new L6 stair/L7 courier-queue scenes remain **unmeasured**. The final catalog adds both new game-camera scenes to the automatic quality/zoom matrix. No final green browser/deploy-gate claim is made.
 
 ### Game-camera inspection
 
-Opened both [high](apc-high-z1.jpg) and [low](apc-low-z1.jpg) APC contact sheets. The four attackers remain visibly outside the side panels, with distinct heads and feet during approach and windup. Headlights illuminate the dry ground and the courier remains seated. Cyan attack wedges appear at the authored attack beats. These are visual observations in addition to numeric contact gates.
+Opened both [high](apc-high-z1.jpg) and [low](apc-low-z1.jpg) APC contact sheets. Attackers remain outside the side panels with distinct heads and feet during approach/windup. Headlights illuminate the ground and the courier stays seated. Cyan wedges appear at the authored attack beats.
 
-Also opened the latest [eight-attacker/corgi game camera](courier-corgi-high-z1.jpg), [close Butcher game camera](butcher-high-close.jpg), and [low-tier damaged APC](apc-floor-low-z1.jpg) sheets. The corgi remains outside the attack cluster; separate heads and feet remain visible, although the isometric projection is crowded. The close Butcher sequence keeps the forearm alongside the courier’s torso/backpack silhouette while cyan attack wedges overlap the image plane. The numeric forearm gate uses a torso/backpack capsule envelope, not an exact mesh intersection proof. The damaged APC retains four attackers outside the hull with lit ground beneath the headlights. The get-up close view originally cropped the courier; its camera now follows her and awaits capture rerun.
+Also opened the [eight-attacker/corgi camera](courier-corgi-high-z1.jpg), [close Butcher camera](butcher-high-close.jpg), and [low-tier damaged APC](apc-floor-low-z1.jpg). The corgi stays outside the attack cluster; separate heads/feet remain visible despite the crowded isometric projection. The Butcher forearm stays alongside the torso/backpack silhouette while cyan wedges overlap the image plane. Its numeric forearm gate uses a torso/backpack capsule envelope, not an exact mesh-intersection proof. The damaged APC retains four attackers outside the hull. The original close get-up view cropped the courier; its camera now follows her and awaits capture rerun.
 
-### Compatibility issues requiring an explicit scope decision
+## Unresolved compatibility and gameplay gates
 
-- `T-E29-06-200` creates 200 living radius-.35 m infected within 3 m of one blast and explicitly freezes their overlap. Its unchanged `positions <=3 m` precondition cannot coexist with the physical nonpenetration invariant; even allowing 2 cm pair penetration, 200 disjoint effective radius-.34 m disks require 72.6 m²; all disks whose centres fit within 3 m would have to fit in the radius-3.34 m disk (35.0 m²). The registry retains the encounters and admits them apart, so this fixture fails. Its assertions have not been relaxed.
-- The zebra stampede tests require a locked path at 10 m/s through an occupied actor footprint, while their point-distance hit threshold is smaller than the summed body radii. Resolving that special attack belongs to the deferred specials lane. No special collision exemption has been added to hide this conflict.
+- `T-E29-06-200` freezes 200 radius-.35 m living bodies inside 3 m. Even with 2 cm permitted pair penetration, disjoint effective radius-.34 m disks require 72.6 m² inside an enclosing radius-3.34 m disk of 35.0 m². The registry retains all actors and admits them apart, so the original ≤3 m precondition fails. Its assertion is unchanged. The additional 6 m blast proof passes; an explicit decision on replacing the invalid fixture is pending under the no-loosening instruction.
+- Eight special-attack checks remain red (Alpha charge, dog pounce, four Mega cases, two zebra cases). After fixing the charge observer's initial overlap, the unchanged locked-path assertion now exposes x=11.4598 versus 12 at its deadline. Special swept-contact migration remains in the later lane; no exemption hides these conflicts.
+- L2 repeated-death mercy, L5 intruder/shutter progress, L6 siege timing, smoke targeting, encounter balance and L10 high-arrival release remain unresolved, in addition to the performance gates. The L1 world-preserving respawn and L2 calm-health boundary now pass.
 
-No specs, reference assets, collision bake output or forbidden directories changed. No deploy or merge performed.
+No specs, reference assets, generated static-collision bake or forbidden directories changed. No baseline worktrees or extra build copies were created; temporary source archives/helpers were removed. No deploy or merge performed.
