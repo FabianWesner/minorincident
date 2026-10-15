@@ -1,5 +1,6 @@
 // Adapted from Bruno Simon InteractivePoints.js / RayCursor.js (MIT):
 // highlighted active point above geometry, range-based reveal, separate presentation state.
+import { PaletteMaterial } from './PaletteMaterial';
 import { modelLod } from './lodPolicy';
 import { BoxGeometry, CylinderGeometry, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, SphereGeometry, Vector3, type Camera, type Object3D, type BufferGeometry, type Material } from 'three/webgpu';
 import { uv, vec4 } from 'three/tsl';
@@ -34,6 +35,7 @@ export function isMissionInteraction(world: SimWorld, entity: EntitySnapshot): b
 export class InteractionView extends Group {
   private readonly registry: AssetRegistry;
   private readonly objects = new Map<number, Object3D>();
+  private readonly occluderMaterials = new Map<number, PaletteMaterial[]>();
   private readonly lods = new Map<number, AssetQuality>();
   private readonly prototypes = new Map<string, Promise<Group>>();
   private readonly geometries = new Set<BufferGeometry>();
@@ -95,6 +97,23 @@ export class InteractionView extends Group {
     if (this.objects.has(e.id) && this.lods.get(e.id) === lod) return;
     const load = this.create(e, lod).then(object => {
       if (!this.disposed) {
+        // Moving gate leaves are loaded outside DistrictAssets' static occluder batches.
+        // Give their palette materials the same bounded cut, without changing shared pickup/ground materials.
+        if (this.world.toys?.gateIds.includes(e.id) || e.archetype === 'l6.service-gate' || e.interactable?.kind === 'gate' || e.interactable?.kind === 'door' || e.interactable?.kind === 'car-door' || e.archetype === 'prop.fence') {
+          for (const material of this.occluderMaterials.get(e.id) ?? []) { material.dispose(); this.batchMaterials.delete(material); }
+          const copies = new Map<PaletteMaterial, PaletteMaterial>();
+          object.traverse(node => {
+            if (!(node instanceof Mesh)) return;
+            const cut = (material: Material) => {
+              if (!(material instanceof PaletteMaterial)) return material;
+              let copy = copies.get(material);
+              if (!copy) { copy = material.frozenCopy().seeThrough(); copies.set(material, copy); this.batchMaterials.add(copy); }
+              return copy;
+            };
+            node.material = Array.isArray(node.material) ? node.material.map(cut) : cut(node.material);
+          });
+          this.occluderMaterials.set(e.id, [...copies.values()]);
+        }
         this.objects.get(e.id)?.removeFromParent(); this.objects.set(e.id, object); this.lods.set(e.id, lod);
         object.position.set(e.transform.x, e.archetype==='l6.service-gate'?e.transform.y:e.pickup&&'kind' in e.pickup?e.transform.y-.3:0, e.transform.z); object.rotation.y = e.transform.yaw;
         if(e.archetype==='l6.service-gate'){const leaf=object.getObjectByName('gate');if(leaf)leaf.rotation.y=e.barricade?.intact?0:-Math.PI/2;} this.add(object);

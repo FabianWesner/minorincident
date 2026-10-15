@@ -226,7 +226,9 @@ export interface Expectations {
   seeThroughCutPixelsMax?: number;
   /** Minimum differing pixels inside the hole disc: a real occluder must still be cut. */
   seeThroughCutInsideMin?: number;
-  /** E32 close camera: while the Mega Alpha is within 14 m, the share of the courier's own screen pixels still visible (frame with the courier vs without her, crowd hidden as reference) on every sheet frame. */
+  /** Maximum changed pixels inside the reveal cone; 0 proves an adjacent building stays completely opaque. */
+  seeThroughCutInsideMax?: number;
+  /** Share of the courier and ridden vehicle's own pixels visible on every sheet frame, including f0. Reference hides foreground solids and the crowd; Mega fixtures sample within 14 m. */
   courierVisibleShareMin?: number;
   /** E32 close camera: while the Mega Alpha is within 6 m, its visible pixels (frame vs frame without the crowd) must stay at least this share of the viewport, so it still reads as a threat. */
   megaVisibleShareMin?: number;

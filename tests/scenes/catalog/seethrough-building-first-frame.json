@@ -1,0 +1,12 @@
+{
+  "name": "seethrough-building-first-frame",
+  "extends": "../../../specs/scenes/catalog/seethrough-behind-building-l4.json",
+  "expect": {
+    "consoleErrors": 0,
+    "seeThroughOpenFramesMin": 40,
+    "seeThroughCutInsideMin": 500,
+    "seeThroughCutPixelsMax": 0,
+    "courierVisibleShareMin": 0.6
+  },
+  "sheet": 20
+}

@@ -1,0 +1,44 @@
+{
+  "name": "seethrough-not-in-the-way",
+  "note": "PO counter-case: a house beside the courier stays opaque. Compare the identical frame with reveal disabled; zero changed pixels outside the bounded player cone, courier own pixels >=60%, including frame zero.",
+  "ground": "sidewalk",
+  "size": 60,
+  "time": "L3",
+  "props": [
+    {
+      "id": "beside",
+      "asset": "bld.house-a",
+      "at": [
+        5,
+        -5
+      ],
+      "yaw": 0
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 30,
+  "sheet": 10,
+  "expect": {
+    "consoleErrors": 0,
+    "courierVisibleShareMin": 0.6,
+    "seeThroughCutPixelsMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "seeThroughCutInsideMax": 0
+  }
+}
