@@ -374,6 +374,10 @@ export class GameView implements Lifecycle {
     // Native soft-particle depth samplers must compile with the actual MSAA target
     // bound. The first update below warms those programs in their render context.
     this.districts?.updateLods(this.view); this.crowd?.update(this.view); await Promise.all([this.crowd?.ready(), this.npcs?.ready(), this.districts?.ready()]);
+    // The resident mounted gun used to load only in update()/screenshotReady(),
+    // after the full warm-up. Its white vertex-colour mesh then linked on first
+    // camera entry (especially low WebGL). Include it in the same loading pass.
+    await this.syncMountedGun(); this.mountedGunView?.update();
     const restoreOccupants = await this.vehicles?.prewarmOccupants();
     const restoreCrash = await this.vehicles?.prewarmCrash();
     // Put the rigid prototype in front of the loading camera, clear of the
@@ -447,7 +451,7 @@ export class GameView implements Lifecycle {
     const gun = this.world.mountedGun;
     // The finale gun follows the existing predictive chunk ring; R1 does not fetch an R7 weapon mesh.
     if (!gun || (this.world.chunks && !this.world.chunks.resident(gun.placement.x, gun.placement.z))) { if (this.mountedGunView) { this.mountedGunView.dispose(); this.mountedGunView = null; } return undefined; }
-    if (!this.mountedGunView && this.materials) { this.mountedGunView = new MountedGunView(this.world, this.quality === 'low', this.materials, this.renderer); this.scene.add(this.mountedGunView); }
+    if (!this.mountedGunView && this.materials) { this.mountedGunView = new MountedGunView(this.world, this.quality === 'low', this.materials, this.renderer, model => this.warmHidden(model)); this.scene.add(this.mountedGunView); }
     this.mountedGunView?.update();
     return this.mountedGunView?.ready();
   }

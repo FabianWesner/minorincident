@@ -1,0 +1,68 @@
+{
+  "typecheck": {
+    "exit": 0
+  },
+  "lint": {
+    "exit": 0
+  },
+  "build": {
+    "exit": 0
+  },
+  "focusedRemote": {
+    "exit": 0,
+    "passed": 13
+  },
+  "continuation": {
+    "typecheck": {
+      "exit": 0
+    },
+    "lint": {
+      "exit": 0
+    },
+    "build": {
+      "exit": 0
+    },
+    "streamedGunUnit": {
+      "exit": 0,
+      "passed": 2
+    },
+    "finalUnit": {
+      "exit": 0,
+      "passed": 1471,
+      "failed": 0,
+      "skipped": 7,
+      "evidence": "unit-final-summary.json"
+    },
+    "broadUnitSimLevels": {
+      "exit": 1,
+      "passed": 2796,
+      "failed": 8,
+      "skipped": 9,
+      "snapshot": "before final renderer fix; see full-suite-summary.json",
+      "E3bSeconds": {
+        "high": 39.784,
+        "low": 22.572
+      }
+    },
+    "browser": "unmeasured after admission cutoff; see browser-admission.json",
+    "isolatedRechecks": {
+      "passed": 3,
+      "failed": 2,
+      "evidence": "rechecks-summary.json",
+      "L10FullRoute": {
+        "exit": 0,
+        "seconds": 132.425809865,
+        "gameplayExact": true
+      },
+      "cacheDisabledControl": {
+        "passed": 1,
+        "failed": 2,
+        "evidence": "cache-off-control-summary.json",
+        "L3DeathsWithAndWithoutMemo": 5,
+        "L4TankIntervalWithAndWithoutMemo": 14.116666666666667,
+        "continuitySeconds": 9.268159456
+      }
+    },
+    "localDiskCleanup": "No extra worktrees or build copies created. Completed dist build and stale untracked test artifacts removed; 12 GiB free after cleanup."
+  }
+}

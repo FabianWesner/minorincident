@@ -1,0 +1,435 @@
+{
+  "success": true,
+  "numPassedTests": 1471,
+  "numFailedTests": 0,
+  "numPendingTests": 7,
+  "numTotalTests": 1478,
+  "numPassedTestSuites": 287,
+  "numFailedTestSuites": 0,
+  "numPendingTestSuites": 0,
+  "exit": 0,
+  "testFiles": {
+    "passed": 246,
+    "skipped": 1,
+    "total": 247
+  },
+  "vitestDurationSeconds": 676.01,
+  "rawSha256": "de5287bbdf7e364288ff2dc4449fa8adcd6aac5ff5f516ca64518d66566c3e91",
+  "command": "MI_RUNNER_IP=94.130.181.173 sh tools/remote/run.sh \"$PWD\" --pull test-results/astra-hitches/unit-final.json -- npm run test:unit -- --maxWorkers=1 --reporter=default --reporter=json --outputFile=test-results/astra-hitches/unit-final.json",
+  "selectedFiles": [
+    {
+      "file": "unit/static.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "test": "T-E01-01b @E01 @E01-AC01 typecheck, lint and build exit zero without warnings",
+          "status": "passed",
+          "durationMs": 73026.41939499998,
+          "messages": []
+        }
+      ]
+    },
+    {
+      "file": "unit/assets/validate.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "test": "cheap LODs retain silhouettes while dense scenery still has a ratio budget",
+          "status": "passed",
+          "durationMs": 5.509905999992043,
+          "messages": []
+        },
+        {
+          "test": "living skins count animated materials and compare only their shipped group member",
+          "status": "passed",
+          "durationMs": 5.128870999993524,
+          "messages": []
+        },
+        {
+          "test": "living skins retain the base crowd animation and infection classifications",
+          "status": "passed",
+          "durationMs": 0.8902490000036778,
+          "messages": []
+        },
+        {
+          "test": "T-E17-02 @E17-AC02 validates geometry and rejects independent contract violations",
+          "status": "passed",
+          "durationMs": 5.618419999998878,
+          "messages": []
+        },
+        {
+          "test": "T-E17-06 @E17-AC06 current manifest status meets every inventory snapshot stage",
+          "status": "passed",
+          "durationMs": 6.986334000001079,
+          "messages": []
+        },
+        {
+          "test": "T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts",
+          "status": "passed",
+          "durationMs": 169110.143406,
+          "messages": []
+        },
+        {
+          "test": "distance cap for veh.test LODNaN cannot be relaxed by the manifest",
+          "status": "passed",
+          "durationMs": 560.2921219999844,
+          "messages": []
+        },
+        {
+          "test": "distance cap for veh.test LODNaN cannot be relaxed by the manifest",
+          "status": "passed",
+          "durationMs": 124.16062999999849,
+          "messages": []
+        },
+        {
+          "test": "distance cap for bld.house-test LODNaN cannot be relaxed by the manifest",
+          "status": "passed",
+          "durationMs": 2098.5289319999865,
+          "messages": []
+        },
+        {
+          "test": "distance cap for bld.house-test LODNaN cannot be relaxed by the manifest",
+          "status": "passed",
+          "durationMs": 256.9600869999849,
+          "messages": []
+        },
+        {
+          "test": "distance cap for house.test LODNaN cannot be relaxed by the manifest",
+          "status": "passed",
+          "durationMs": 291.10902400000487,
+          "messages": []
+        },
+        {
+          "test": "distance cap for bld.safe-house LODNaN cannot be relaxed by the manifest",
+          "status": "passed",
+          "durationMs": 2127.3596309999994,
+          "messages": []
+        },
+        {
+          "test": "@E17-AC02 decay caps apply to variants without changing the integrated base budget",
+          "status": "passed",
+          "durationMs": 1428.9954389999912,
+          "messages": []
+        },
+        {
+          "test": "@E17-AC02 burned budgets reject oversized siblings without altering existing wreck limits",
+          "status": "passed",
+          "durationMs": 1266.6265179999755,
+          "messages": []
+        },
+        {
+          "test": "living skins count animated material draws and reject duplicate attachment batches",
+          "status": "passed",
+          "durationMs": 1.4740059999749064,
+          "messages": []
+        },
+        {
+          "test": "living adult draw cap counts geometry under animated owners",
+          "status": "passed",
+          "durationMs": 0.5989939999999478,
+          "messages": []
+        },
+        {
+          "test": "integrated non-model presentation requires a shipped implementation",
+          "status": "passed",
+          "durationMs": 0.734437999984948,
+          "messages": []
+        }
+      ]
+    },
+    {
+      "file": "unit/levels/l2-static.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "test": "T-E20-15 @E20 @E20-AC15 W1 dressing manifest: section 5.7 minimum counts, exactly one smoking vehicle, nothing post-apocalyptic",
+          "status": "passed",
+          "durationMs": 1073.9483089999994,
+          "messages": []
+        },
+        {
+          "test": "T-E20-16 @E20 @E20-AC16 midday preset: high sun (polar <= 0.40, >= 0.30 above L1) and a probe shadow <= 0.6x the L1 length",
+          "status": "passed",
+          "durationMs": 0.6204240000224672,
+          "messages": []
+        },
+        {
+          "test": "T-E20-01 @E20 L2 starts where L1 ends: the station frame is the D-GROVE Fire Station 3 placement, the L2 copy removes what it replaces, the ambush doors stay by the market",
+          "status": "passed",
+          "durationMs": 1208.3276150000165,
+          "messages": []
+        }
+      ]
+    },
+    {
+      "file": "unit/levels/l3-static.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "test": "L3 static T-E21-11a @E21 @E21-AC11 corridor layout: valid, 280-340 m, three parallel streets, >= 6 cross-links <= 60 m apart",
+          "status": "passed",
+          "durationMs": 1263.1466839999994,
+          "messages": []
+        },
+        {
+          "test": "L3 static T-E21-11b @E21 @E21-AC11 sight blockers every <= 25 m on every street, no dead end longer than 30 m, edges sealed by visible geometry",
+          "status": "passed",
+          "durationMs": 2719.537789,
+          "messages": []
+        },
+        {
+          "test": "L3 static T-E21-11c @E21 @E21-AC11 gameplay points are walkable and reachable from the start",
+          "status": "passed",
+          "durationMs": 5.16881099999955,
+          "messages": []
+        },
+        {
+          "test": "L3 static T-E21-15 @E21 @E21-AC15 per-street damage: each street its type set, section 5.8 totals, nothing collapsed",
+          "status": "passed",
+          "durationMs": 42.34684700000071,
+          "messages": []
+        },
+        {
+          "test": "L3 static T-E21-16 @E21 @E21-AC16 late-afternoon light: polar 1.00-1.20 rad, sun hue 25-45 deg, probe shadow >= 1.6x L2, >= 2 smoke sources per street spot",
+          "status": "passed",
+          "durationMs": 0.8587320000006002,
+          "messages": []
+        },
+        {
+          "test": "L3 static T-E21-17a @E21 @E21-AC17 army checkpoint: heavier than the L2 police line (T-walls, sandbag nests, razor wire), military vehicles, evacuation buses",
+          "status": "passed",
+          "durationMs": 6.166063000000577,
+          "messages": []
+        },
+        {
+          "test": "@load L3 initial crowd covers every authored corpse and all emerging pedestrian models",
+          "status": "passed",
+          "durationMs": 0.9102090000014869,
+          "messages": []
+        },
+        {
+          "test": "T-E21-12b @E21 @E21-AC12 five times every L3 encounter with E18 concurrent caps",
+          "status": "passed",
+          "durationMs": 0.6967479999984789,
+          "messages": []
+        }
+      ]
+    },
+    {
+      "file": "unit/levels/l4-static.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "test": "L4 static T-E22-12-district @E22 @E22-AC10 @E22-AC12 Alpha approach anchors (PO 10-13: six to eight, from different directions) are on separated, reachable streets outside the defensive ring",
+          "status": "passed",
+          "durationMs": 73.46357299999727,
+          "messages": []
+        },
+        {
+          "test": "L4 static T-E22-13-district @E22 @E22-AC12 @E22-AC13 breakable-line anchors match existing sandbags; each pallet can open a clear crossing without moving other dressing",
+          "status": "passed",
+          "durationMs": 431.6506550000013,
+          "messages": []
+        },
+        {
+          "test": "L4 static T-E22-05a @E22 @E22-AC05 D-FAIR layout: valid, about 170 x 130 m, the five streets and Kessler Lane, clean W0 (no wrecks, decals or damage variants)",
+          "status": "passed",
+          "durationMs": 11.073677000000316,
+          "messages": []
+        },
+        {
+          "test": "L4 static T-E22-05b @E22 @E22-AC05 shops: >= 6 open shopfronts with lit interiors, apartment blocks, the town hall, the church, Kessler's Hardware and the Metro entrance stand",
+          "status": "passed",
+          "durationMs": 0.6423050000012154,
+          "messages": []
+        },
+        {
+          "test": "L4 static T-E22-05c @E22 @E22-AC05 army reception: sandbag line (>= 24 pallets), two HMG nests, light towers, barriers at the army gate and the street ends",
+          "status": "passed",
+          "durationMs": 1.2641230000008363,
+          "messages": []
+        },
+        {
+          "test": "L4 static T-E22-18a @E22 @E22-AC18 photo spots and the four pair cameras resolve to walkable points of the layout copy",
+          "status": "passed",
+          "durationMs": 246.10489900000175,
+          "messages": []
+        },
+        {
+          "test": "L4 static T-E22-01a @E22 @E22-AC01 two routes from the plaza to Kessler's cellar door (Harbor Street and Lakeshore), each walkable with the other closed",
+          "status": "passed",
+          "durationMs": 112.76256900000226,
+          "messages": []
+        },
+        {
+          "test": "L4 static T-E22-04a @E22 @E22-AC04 the convoy route is clear of every collider (bus, truck and APC footprints along the lanes) and the parked column does not overlap props",
+          "status": "passed",
+          "durationMs": 78.02688000000126,
+          "messages": []
+        },
+        {
+          "test": "L4 static T-E22-04b @E22 @E22-AC04 convoy vehicles never overlap each other, and never touch a static collider (any height), over the whole scripted ride and when parked",
+          "status": "passed",
+          "durationMs": 3485.600641000001,
+          "messages": []
+        },
+        {
+          "test": "L4 static T-E22-16a @E22 @E22-AC16 light: polar 1.15-1.30, fog far >= L3 + 20, less haze and a cleaner sky than L3",
+          "status": "passed",
+          "durationMs": 0.4544030000033672,
+          "messages": []
+        },
+        {
+          "test": "L4 static T-E22-nav @E22 every refuge door is reachable from the convoy start and the cellar yard is the only island",
+          "status": "passed",
+          "durationMs": 50.510951000000205,
+          "messages": []
+        }
+      ]
+    },
+    {
+      "file": "unit/levels/l5-static.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "test": "L5 static T-E23-05a @E23 @E23-AC05 same city: every L4 placement keeps its transform, the road graph is identical and every hero building footprint has IoU >= 0.9 with L4",
+          "status": "passed",
+          "durationMs": 107.01031300000068,
+          "messages": []
+        },
+        {
+          "test": "L5 static T-E23-05b @E23 @E23-AC05 nav differs from the clean city by at most 3 debris-narrowed street segments, each with a detour of at most 1.5x; every door and anchor stays reachable",
+          "status": "passed",
+          "durationMs": 128.89881799999966,
+          "messages": []
+        },
+        {
+          "test": "L5 static T-E23-05c @E23 @E23-AC05 the cellar yard is the only island: the courier starts in it and the door brace is inside it",
+          "status": "passed",
+          "durationMs": 3.9313700000002427,
+          "messages": []
+        },
+        {
+          "test": "L5 static T-E23-06a @E23 @E23-AC06 devastation: >= 10 burned cars, >= 3 wrecked military vehicles (tank and an HMG vehicle), >= 6 fires, >= 4 smoke columns, >= 4 collapsed facades, >= 30 corpses with >= 10 in uniform, destroyed barricades",
+          "status": "passed",
+          "durationMs": 2.8888520000000426,
+          "messages": []
+        },
+        {
+          "test": "L5 static T-E23-06b @E23 @E23-AC06 broken glass on every street frontage (>= 70 %), the power is out, nothing of the army's intact dressing remains, every plaza facade carries its w5 shell or a broken shopfront",
+          "status": "passed",
+          "durationMs": 2.1590529999994033,
+          "messages": []
+        },
+        {
+          "test": "L5 static T-E23-08a @E23 @E23-AC08 five hiding places >= 25 m apart, at least 4 inside or behind buildings (hidden from every street), each ring reachable, no objective marker on a survivor",
+          "status": "passed",
+          "durationMs": 38.3968019999993,
+          "messages": []
+        },
+        {
+          "test": "L5 static T-E23-04a @E23 @E23-AC04 the infected are laid out in ones and twos (no group above 3) and 12-20 of them at the start on both tiers",
+          "status": "passed",
+          "durationMs": 4.135092000000441,
+          "messages": []
+        },
+        {
+          "test": "L5 static T-E23-13a @E23 @E23-AC13 sunset: polar 1.45-1.55 rad, sun hue 0-25 degrees, intensity <= 0.7x L4, a gloom ramp of at least 30 % at the end",
+          "status": "passed",
+          "durationMs": 0.6722519999984797,
+          "messages": []
+        },
+        {
+          "test": "L5 static T-E23-17a @E23 @E23-AC17 @E23-AC18 photo spots: the four L4 pair cameras (same anchors and offsets) plus the L5 spots and closing-door view resolve to walkable points",
+          "status": "passed",
+          "durationMs": 1.17423300000155,
+          "messages": []
+        }
+      ]
+    },
+    {
+      "file": "unit/levels/l6-static.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "test": "T-E24-12 @E24 @E24-AC12 @E24-AC11 confined metro, passages and gates use shipped solid kits",
+          "status": "passed",
+          "durationMs": 12.555719999945723,
+          "messages": []
+        },
+        {
+          "test": "T-E24-14a @E24 @E24-AC14 underground has no sun and the exterior is darker/lower than L5",
+          "status": "passed",
+          "durationMs": 0.42231299995910376,
+          "messages": []
+        }
+      ]
+    },
+    {
+      "file": "unit/performance/nav-reach-equivalence.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "test": "@E18 @E32 reach flood preserves paths, ties and budgets at 0, perimeter false",
+          "status": "passed",
+          "durationMs": 125.4933660000097,
+          "messages": []
+        },
+        {
+          "test": "@E18 @E32 reach flood preserves paths, ties and budgets at 0, perimeter true",
+          "status": "passed",
+          "durationMs": 33.208336999989115,
+          "messages": []
+        },
+        {
+          "test": "@E18 @E32 reach flood preserves paths, ties and budgets at 3980.125, perimeter false",
+          "status": "passed",
+          "durationMs": 84.95591799996328,
+          "messages": []
+        },
+        {
+          "test": "@E18 @E32 reach flood preserves paths, ties and budgets at 3980.125, perimeter true",
+          "status": "passed",
+          "durationMs": 25.06322499999078,
+          "messages": []
+        },
+        {
+          "test": "@E18 resumed reach flood retains its original target and prepends its start when the player moves",
+          "status": "passed",
+          "durationMs": 0.9631560000125319,
+          "messages": []
+        },
+        {
+          "test": "@E32 repeated unbudgeted floods reuse only exact answers and copy the returned path",
+          "status": "passed",
+          "durationMs": 1.7512749999877997,
+          "messages": []
+        },
+        {
+          "test": "@E32 exact flood memo invalidates for blocker edits, perimeter changes, rebakes and recentering",
+          "status": "passed",
+          "durationMs": 8.334807000006549,
+          "messages": []
+        }
+      ]
+    },
+    {
+      "file": "unit/render/mounted-gun-warmup.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "test": "@E32 @E18 streamed gun waits for HDR compilation; disposed false",
+          "status": "passed",
+          "durationMs": 4.977811999968253,
+          "messages": []
+        },
+        {
+          "test": "@E32 @E18 streamed gun waits for HDR compilation; disposed true",
+          "status": "passed",
+          "durationMs": 0.5547409999417141,
+          "messages": []
+        }
+      ]
+    }
+  ]
+}
