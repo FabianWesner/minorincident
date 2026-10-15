@@ -16,7 +16,7 @@ export function actorRadius(e: EntitySnapshot): number {
   return e.survivor ? survivor.radius : e.combat?.radius ?? .35;
 }
 function actor(e: EntitySnapshot): boolean {
-  return !!(e.survivor || e.infected || e.civilian || e.companion || e.escort) && e.health.current > 0 && e.civilian?.state !== 'finished' && !e.corpse && !e.hidden && !e.infected?.hidden && !e.pendingAdmission;
+  return !!(e.survivor || e.infected || e.civilian || e.companion || e.escort) && e.health.current > 0 && e.civilian?.state !== 'finished' && !e.corpse && !e.hidden && !e.infected?.hidden && !e.pendingAdmission && e.passengerOf === undefined;
 }
 /** Passengers and clingers have an explicit owner. Cosmetics (dead bodies, debris) have no actor mask. */
 function attached(a: EntitySnapshot, id: number): boolean { return a.passengerOf === id || a.attachedTo === id || (a.id === 1 && !!a.hidden); }

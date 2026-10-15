@@ -10,7 +10,7 @@ export const meleeRing = 1.08;
 export const infectedContactDistance = (radius: number): number => meleeRing + Math.max(0, radius - .35);
 function spacingRadius(e: EntitySnapshot): number {
   if (!e.survivor && !e.companion && !e.escort && !e.civilian && !e.infected) return 0;
-  if (e.infectionRise || e.hidden || e.emerging || e.health.current <= 0 || e.attachedTo !== undefined || (e.infected && (e.infected.hidden || e.transform.y > 2)) || e.companion?.state === 'hide' || e.civilian?.state === 'down' || e.civilian?.state === 'rising') return 0;
+  if (e.infectionRise || e.hidden || e.emerging || e.health.current <= 0 || e.attachedTo !== undefined || e.passengerOf !== undefined || (e.infected && (e.infected.hidden || e.transform.y > 2)) || e.companion?.state === 'hide' || e.civilian?.state === 'down' || e.civilian?.state === 'rising') return 0;
   if (e.companion) return .9;
   if (e.civilian?.pet) return .5;
   return e.survivor || e.companion || e.escort || (e.civilian && e.civilian.state !== 'infected' && e.civilian.state !== 'finished') || e.infected ? e.combat?.radius ?? .35 : 0;
