@@ -48,6 +48,52 @@ function* transform(position: Float32Array, normal: Float32Array, matrix: Matrix
   }
 }
 type Part = { position: Float32Array; normal: Float32Array; color: Float32Array; palette: Float32Array; light: Float32Array; surface: Float32Array; window: Float32Array; windowUv: Float32Array; index: ArrayLike<number> | null };
+/** Packed GLBs merge furniture and masonry into material primitives. Keep connected boundary
+ * geometry (walls, floors, roof trim) in the shell; only enclosed components can be culled. */
+function* interiorParts(part: Part, footprint: Box3): Generator<void, [Part, boolean][]> {
+  const count = part.position.length / 3, parent = new Int32Array(count).fill(-1), welded = new Map<string, number>();
+  const source = part.index ?? Uint32Array.from({ length: count }, (_, i) => i);
+  const root = (i: number): number => { while (parent[i] !== i) { parent[i] = parent[parent[i]]; i = parent[i]; } return i; };
+  const join = (a: number, b: number) => { const ra = root(a), rb = root(b); if (ra !== rb) parent[rb] = ra; };
+  for (let k = 0; k < source.length; k++) {
+    const i = source[k];
+    if (parent[i] < 0) {
+      parent[i] = i;
+      const key = `${Math.round(part.position[i * 3] * 1000)},${Math.round(part.position[i * 3 + 1] * 1000)},${Math.round(part.position[i * 3 + 2] * 1000)}`;
+      const same = welded.get(key); if (same === undefined) welded.set(key, i); else join(i, same);
+    }
+    if (k % 3 === 2) { join(source[k - 2], source[k - 1]); join(source[k - 2], i); }
+    if (k % slice === slice - 1) yield;
+  }
+  const boxes = new Map<number, Box3>(), point = new Vector3();
+  for (let i = 0; i < count; i++) {
+    if (parent[i] >= 0) { const id = root(i); let box = boxes.get(id); if (!box) { box = new Box3(); boxes.set(id, box); } box.expandByPoint(point.fromArray(part.position, i * 3)); }
+    if (i % slice === slice - 1) yield;
+  }
+  // Insets protect both faces of perimeter masonry and thin floor/ceiling panels, including bevels.
+  const inner = footprint.clone(); inner.min.add(new Vector3(.3, .05, .3)); inner.max.sub(new Vector3(.3, .3, .3));
+  const enclosed = new Set([...boxes].filter(([, box]) => inner.containsBox(box)).map(([id]) => id));
+  const inside: number[] = [], outside: number[] = [];
+  for (let k = 0; k < source.length; k++) { (enclosed.has(root(source[k])) ? inside : outside).push(source[k]); if (k % slice === slice - 1) yield; }
+  const result: [Part, boolean][] = [];
+  for (const [indices, interior] of [[outside, false], [inside, true]] as const) {
+    if (!indices.length) continue;
+    // Compact the referenced vertices: material primitives often share one large position array.
+    const vertices = [...new Set(indices)], remap = new Int32Array(count), copy = { ...part };
+    for (let i = 0; i < vertices.length; i++) remap[vertices[i]] = i;
+    copy.index = Uint32Array.from(indices, i => remap[i]);
+    for (const [key, size] of [['position', 3], ['normal', 3], ['color', 3], ['palette', 1], ['light', 1], ['surface', 1], ['window', 1], ['windowUv', 2]] as const) {
+      const values = new Float32Array(vertices.length * size);
+      for (let i = 0; i < vertices.length; i++) {
+        for (let c = 0; c < size; c++) values[i * size + c] = part[key][vertices[i] * size + c];
+        if (i % slice === slice - 1) yield;
+      }
+      copy[key] = values;
+    }
+    result.push([copy, interior]);
+  }
+  return result;
+}
 /** BufferGeometryUtils.mergeGeometries for the batch attributes (same order, values and index type). */
 function* merge(parts: Part[]): Generator<void, BufferGeometry> {
   const geometry = new BufferGeometry(), indexed = parts.some(part => part.index);
@@ -101,6 +147,7 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
     if (index >= 0) for (const name of data.emissiveNodes ?? []) emissiveAnchors.set(name, index);
   });
   const world = source.userData.paletteWorld !== false;
+  const footprint = /^bld\./.test(source.userData.assetId ?? '') ? new Box3().setFromObject(source) : null;
   const buckets = new Map<number, Part[]>(), meshes: Mesh[] = [], split = source.userData.splitRoof === true;
   // Animated door leaves (src/data/buildingDoors.ts) stay separate meshes in their hinge frame, so the view can swing them.
   const doorNames: string[] = Array.isArray(source.userData.splitDoors) ? source.userData.splitDoors : [];
@@ -144,8 +191,9 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
       indices[i] = (quantize ? perVertex ? swatch(r, g, b) : constant : tokenIndex) - hydrantShift;
       if (i % slice === slice - 1) yield;
     }
+    let interior = false;
+    if (/^bld\./.test(source.userData.assetId ?? '')) for (let parent: Object3D | null = node; parent; parent = parent.parent) if (parent.name === 'interior') interior = true;
     const bucket = (emissive ? 1 : 0) + (roof ? 2 : 0) + (door >= 0 ? 4 * (door + 1) : 0);
-    if (!buckets.has(bucket)) buckets.set(bucket, []);
     // Delivery bundling combines material primitives under their semantic parent.
     // Match the authored parent + material reference through that hierarchy.
     let anchorIndex = -1;
@@ -164,11 +212,17 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
       for (let i = 0; i < count; i++) { windowUv[i * 2] = (positions.getComponent(i, horizontal) - box.min.getComponent(horizontal)) / Math.max(.01, box.max.getComponent(horizontal) - box.min.getComponent(horizontal)); windowUv[i * 2 + 1] = (positions.getY(i) - box.min.y) / Math.max(.01, box.max.y - box.min.y); if (i % slice === slice - 1) yield; }
     }
 
-    buckets.get(bucket)!.push({ position, normal, color: colors, palette: indices, light, window, windowUv, surface: new Float32Array(count).fill(material.userData.surfaceClass ?? 0), index: node.geometry.index ? node.geometry.index.array : null });
+    const part = { position, normal, color: colors, palette: indices, light, window, windowUv, surface: new Float32Array(count).fill(material.userData.surfaceClass ?? 0), index: node.geometry.index ? node.geometry.index.array : null };
+    const parts: [Part, boolean][] = interior && footprint ? yield* interiorParts(part, footprint) : [[part, false]];
+    for (const [geometry, inside] of parts) {
+      const key = bucket + (inside ? 65536 : 0);
+      if (!buckets.has(key)) buckets.set(key, []);
+      buckets.get(key)!.push(geometry);
+    }
   }
   const result = new Group();
   for (const [bucket, parts] of buckets) {
-    const emissive = (bucket & 1) === 1, isRoof = (bucket & 2) === 2, door = (bucket >> 2) - 1;
+    const emissive = (bucket & 1) === 1, isRoof = (bucket & 2) === 2, door = ((bucket & 65535) >> 2) - 1;
     // Keep shared vertices: expanding detailed meshes to triangle soup triples
     // the retained position/normal/color arrays. Normalize only mixed primitives.
     const geometry = yield* merge(parts);
@@ -204,6 +258,7 @@ function* steps(source: Object3D, lit: boolean, materials?: Materials, foliage =
     const material = staticBatchMaterial(materials, emissive, lit, anchorList.length > 0, hasSurface, hasWindows, world, foliage);
     const mesh = new Mesh(geometry, material); mesh.name = isRoof ? (emissive ? 'roof-light' : 'roof') : emissive ? 'window-light' : 'static-body';
     if (door >= 0) { mesh.userData.door = doorNames[door]; doorNodes[door]!.matrixWorld.decompose(mesh.position, mesh.quaternion, mesh.scale); }
+    if ((bucket & 65536) !== 0) mesh.userData.interior = true;
     mesh.castShadow = !emissive; mesh.receiveShadow = true; result.add(mesh);
   }
   return result;

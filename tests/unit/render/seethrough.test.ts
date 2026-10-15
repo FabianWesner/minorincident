@@ -9,6 +9,7 @@ import type { View } from '../../../src/render/View';
 
 const fixture = () => {
   const district = Object.assign(Object.create(DistrictView.prototype), {
+    interiorBuildings: [], interiorPose: { x: Infinity, y: Infinity, z: Infinity }, interiorRevision: 0, appliedInteriorRevision: -1, appliedInteriorCullOff: false,
     foliage: { update: vi.fn(() => seeThrough.center.value.set(-10, -10)), reveal: true }, updateRoofs: vi.fn(),
     holeTarget: new Vector3(), holeCorner: new Vector3(), subjectBox: new Box3(),
     cutPlacements: new Set(), lodBatches: [], subjectPoints: Array.from({ length: 9 }, () => new Vector3()),

@@ -1,0 +1,50 @@
+{
+  "name": "interior-cull-inside-l5",
+  "note": "PO 27 interior culling: closed shops skip stock; cut/occupied shops reveal stock in the same frame.",
+  "seed": 1,
+  "ground": "district",
+  "tier": 5,
+  "time": "L5",
+  "layout": {
+    "level": "L5",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        28.5,
+        -14
+      ],
+      [
+        128.5,
+        86
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        78.5,
+        36
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      78.5,
+      36
+    ],
+    "zoom": 1
+  },
+  "frames": 30,
+  "shots": [
+    0,
+    29
+  ],
+  "sheet": 10,
+  "expect": {
+    "consoleErrors": 0
+  }
+}

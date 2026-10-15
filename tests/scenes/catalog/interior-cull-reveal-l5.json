@@ -1,0 +1,89 @@
+{
+  "name": "interior-cull-reveal-l5",
+  "note": "PO 27 same-frame reveal: courier starts outside the closed shop, enters at frame 15 (stock must appear immediately), and returns outside at frame 30.",
+  "seed": 1,
+  "ground": "district",
+  "tier": 5,
+  "time": "L5",
+  "layout": {
+    "level": "L5",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        33.75,
+        -11.159999999999997
+      ],
+      [
+        133.75,
+        88.84
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        86,
+        42
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "frames": 45,
+  "shots": [
+    14,
+    15,
+    16,
+    29,
+    30,
+    31
+  ],
+  "sheet": 1,
+  "expect": {
+    "consoleErrors": 0
+  },
+  "script": [
+    {
+      "frame": 0,
+      "spawnActor": {
+        "id": "courier",
+        "kind": "courier",
+        "at": [
+          83.75,
+          38.84
+        ],
+        "state": "idle"
+      }
+    },
+    {
+      "frame": 15,
+      "spawnActor": {
+        "id": "courier",
+        "kind": "courier",
+        "at": [
+          78.5,
+          36
+        ],
+        "state": "idle"
+      }
+    },
+    {
+      "frame": 30,
+      "spawnActor": {
+        "id": "courier",
+        "kind": "courier",
+        "at": [
+          83.75,
+          38.84
+        ],
+        "state": "idle"
+      }
+    }
+  ]
+}

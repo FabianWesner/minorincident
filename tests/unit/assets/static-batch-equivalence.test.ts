@@ -53,6 +53,25 @@ function reference(source: Object3D, lit: boolean, materials?: Materials): Map<b
   });
   return buckets;
 }
+/** Exact submitted triangle attributes, independent of vertex compaction and interior draw partition. */
+function triangleAttributes(geometries: BufferGeometry[]): string[] {
+  const triangles: string[] = [], value = new Float32Array(1), bits = new Uint32Array(value.buffer);
+  for (const geometry of geometries) {
+    const count = geometry.index?.count ?? geometry.getAttribute('position').count;
+    for (let k = 0; k < count; k += 3) {
+      const face: number[] = [];
+      for (let corner = 0; corner < 3; corner++) {
+        const index = geometry.index?.getX(k + corner) ?? k + corner;
+        for (const name of ['position', 'normal', 'color', '_palette']) {
+          const attribute = geometry.getAttribute(name);
+          for (let c = 0; c < attribute.itemSize; c++) { value[0] = attribute.getComponent(index, c); face.push(bits[0]); }
+        }
+      }
+      triangles.push(face.join(','));
+    }
+  }
+  return triangles.sort();
+}
 test('optimized static batch attributes equal the reference loop @load', async () => {
   const materials = new Materials(new Lighting(new Scene()));
   const registry = new AssetRegistry(event => { throw new Error(JSON.stringify(event)); }, { load });
@@ -61,7 +80,18 @@ test('optimized static batch attributes equal the reference loop @load', async (
     source.userData.paletteHydrant = id === 'prop.fire-hydrant';
     const expected = reference(source, lit, materials);
     // The sync and the frame-sliced variants must both equal the original loop + mergeGeometries.
-    for (const batch of [staticBatch(source, lit, materials), await staticBatchAsync(source, lit, materials, () => Promise.resolve(), 0)]) for (const mesh of batch.children as Mesh[]) {
+    for (const batch of [staticBatch(source, lit, materials), await staticBatchAsync(source, lit, materials, () => Promise.resolve(), 0)]) {
+      if (id.startsWith('bld.')) {
+        // Buildings now have independently culled interior buckets. Every submitted face,
+        // winding and attribute bit must still equal the unpartitioned source reference.
+        for (const emissive of [false, true]) {
+          const actual = (batch.children as Mesh[]).filter(m => (m.name === 'window-light') === emissive).map(m => m.geometry);
+          expect(triangleAttributes(actual), `${id} ${lit} ${emissive} triangles`).toEqual(triangleAttributes(expected.get(emissive) ?? []));
+        }
+        for (const mesh of batch.children as Mesh[]) { mesh.geometry.dispose(); (mesh.material as Material).dispose(); }
+        continue;
+      }
+      for (const mesh of batch.children as Mesh[]) {
       const parts = expected.get(mesh.name === 'window-light')!;
       if (parts.some(g => g.index)) for (const g of parts) if (!g.index) g.setIndex(Array.from({ length: g.getAttribute('position').count }, (_, i) => i));
       const merged = mergeGeometries(parts)!;
@@ -70,6 +100,7 @@ test('optimized static batch attributes equal the reference loop @load', async (
       expect(Array.from(mesh.geometry.index?.array ?? []), `${id} index`).toEqual(Array.from(merged.index?.array ?? []));
       merged.computeBoundingSphere(); expect(mesh.geometry.boundingSphere!.center.distanceTo(merged.boundingSphere!.center)).toBeLessThan(1e-6); expect(mesh.geometry.boundingSphere!.radius).toBeCloseTo(merged.boundingSphere!.radius, 6);
       mesh.geometry.dispose(); (mesh.material as Material).dispose();
+      }
     }
   }
   await registry.dispose(); materials.dispose();
