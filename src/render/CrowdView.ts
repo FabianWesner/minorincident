@@ -79,6 +79,9 @@ export class CrowdView extends Group {
   private get corpseTicks(): number { return Infinity; }
   private readonly staticCorpses = new StaticCorpses();
   private readonly corpseGeometry = new Map<string, BufferGeometry>();
+  private entityRevision = -1;
+  private frozenRevision = -1;
+  private readonly figures: EntitySnapshot[] = [];
   private readonly corpseSpatial = new SpatialHash();
   private readonly corpseNeighbors: number[] = [];
   private readonly corpseQuery = { x: 0, z: 0, r: 1.25 };
@@ -245,7 +248,14 @@ export class CrowdView extends Group {
   async ready(): Promise<void> { await Promise.all(this.pending.values()); }
   update(view?: View, alpha = 1): void {
     this.deadFeet.clear(); this.staticCorpses.begin(id => this.world.entities.get(id));
-    for (const [id, pose] of this.corpses) if (!this.world.entities.get(id)?.infected || this.world.entities.get(id)!.health.current > 0 || this.world.tick - pose.deadAt > this.corpseTicks) { this.corpses.delete(id); this.corpseSpatial.delete(id); }
+    // Membership changes cover pooled ID reuse, checkpoint restore and streamed unload.
+    // Frozen figures stay in StaticCorpses; the animated passes need only the rest.
+    if (this.entityRevision !== this.world.entities.revision || this.frozenRevision !== this.staticCorpses.revision) {
+      this.figures.length = 0;
+      for (const e of this.world.entities.iterate()) if (!e.corpse || !this.staticCorpses.has(e.id)) this.figures.push(e);
+      for (const [id] of this.corpses) if (!this.world.entities.get(id)?.infected || this.world.entities.get(id)!.health.current > 0) { this.corpses.delete(id); this.corpseSpatial.delete(id); }
+      this.entityRevision = this.world.entities.revision; this.frozenRevision = this.staticCorpses.revision;
+    }
     for (const batch of this.batches.values()) { batch.count = 0; batch.probe.begin(); }
     this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60);
     for (const mesh of this.telegraphs) mesh.count = 0; this.shadows.count = 0; this.caps.count = 0;
@@ -257,7 +267,7 @@ export class CrowdView extends Group {
     const heroes = this.heroIds; this.previousHeroes.clear();
     for (const id of heroes) this.previousHeroes.add(id);
     heroes.clear(); this.nearest.length = 0; this.rolePixels.clear();
-    if (!this.low) for (const e of this.world.entities.iterate()) {
+    if (!this.low) for (const e of this.figures) {
       if (e.faction !== 'infected' && !e.civilian?.zooAnimal || !e.combat || e.hidden || e.infected?.hidden || e.archetype === 'infected.crow' || e.corpse || keepsLook(e)) continue;
       if (e.health.current <= 0 && this.world.tick - (e.infected?.deadAt ?? 0) >= this.corpseTicks) continue;
       const distance = Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z);
@@ -284,7 +294,8 @@ export class CrowdView extends Group {
     // dense mixed hordes use LOD1 instead of adding an extra LOD0 draw for every near model.
     const heroRoles = new Set<string>(), heroDrawBudget = Math.max(0, 30 - 4 - this.rolePixels.size);
     for (const e of this.nearest) if (heroRoles.has(e.role) || heroRoles.size < heroDrawBudget) { heroes.add(e.id); heroRoles.add(e.role); }
-    for (const e of this.world.entities.iterate()) {
+    for (const e of this.figures) {
+      if (e.health.current > 0 && this.corpses.delete(e.id)) this.corpseSpatial.delete(e.id);
       if (e.id === 1 || e.faction !== 'infected' && !e.civilian?.zooAnimal || !e.combat) continue;
       if (e.corpse && this.staticCorpses.has(e.id)) continue;
       const distance = Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z);

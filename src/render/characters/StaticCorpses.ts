@@ -11,6 +11,8 @@ interface Chunk { mesh: InstancedMesh; tint: InstancedBufferAttribute; overlay: 
 /** Frozen, baked death geometry in growing 128-body pages within 40 m cells. No per-frame pose
  * texture uploads, AI, physics or population cap for settled bodies. */
 export class StaticCorpses extends Group {
+  /** Frozen membership invalidates caller actor lists after placement, unload or restore. */
+  revision = 0;
   private readonly bodies = new Map<string, EntitySnapshot>();
   private readonly slots = new Map<string, { page: Chunk; index: number }>();
   private readonly moved = new Matrix4();
@@ -48,7 +50,7 @@ export class StaticCorpses extends Group {
   }
   place(e: EntitySnapshot, key: string, source: BufferGeometry, material: MeshLambertNodeMaterial, clip: CrowdClip, frame: number, instance: Matrix4, tint: Color, overlay: number[], instanceKey = String(e.id), hiddenParts: readonly string[] = [], look?: ReturnType<typeof resolveCrowdAppearance>): void {
     if (this.bodies.has(instanceKey)) return;
-    this.bodies.set(instanceKey, e);
+    this.bodies.set(instanceKey, e); this.revision++;
     // Keep distant bodies in separate bounds so ordinary frustum culling skips their geometry. 40 m cells (l4-collapse-2; was 16 m): every
     // page is its own InstancedMesh and three builds a node program per InstancedMesh (its uuid is in the cache key), so each new page
     // compiled mid-fight (~60 builds in the L4 war, the line-break hitches).
@@ -76,6 +78,7 @@ export class StaticCorpses extends Group {
   private drop(instanceKey: string): void {
     const slot = this.slots.get(instanceKey); this.bodies.delete(instanceKey); this.slots.delete(instanceKey);
     if (!slot) return;
+    this.revision++;
     const { page, index } = slot, mesh = page.mesh, last = mesh.count - 1;
     if (index !== last) {
       mesh.getMatrixAt(last, this.moved); mesh.setMatrixAt(index, this.moved);
@@ -151,6 +154,9 @@ export class StaticCorpses extends Group {
       mesh.instanceColor = new InstancedBufferAttribute(new Float32Array(128 * 3).fill(1), 3);
       if (staticInstanceAttributes(mesh)) geometry.dispose();
     }
+    // Placement lives in instance matrices. The page transform is permanently identity;
+    // avoid composing it again for every retained spatial/appearance page each frame.
+    mesh.matrixAutoUpdate = false;
     mesh.castShadow = false; mesh.receiveShadow = true; mesh.userData.preRenderSolo = true;
     const probe = new CrowdFigureProbe(); mesh.onAfterRender = () => probe.draw();
     const page = { mesh, tint: mesh.geometry.getAttribute('_variant') as InstancedBufferAttribute, overlay: mesh.geometry.getAttribute('_overlay') as InstancedBufferAttribute, probe, keys: [] as string[] }; pages.push(page); this.add(mesh);
@@ -158,6 +164,7 @@ export class StaticCorpses extends Group {
   }
   snapshot() { return { instances: this.bodies.size, draws: [...this.chunks.values()].reduce((n, pages) => n + pages.filter(page => page.mesh.count > 0).length, 0), figures: [...this.chunks.values()].flatMap(pages => pages.flatMap(page => page.probe.figures)) }; }
   reset(): void {
+    this.revision++;
     for (const pages of this.chunks.values()) for (const { mesh } of pages) { mesh.geometry.dispose(); mesh.dispose(); }
     for (const frozen of this.frozen.values()) frozen.geometry.dispose();
     for (const material of this.frozenMaterials.values()) material.dispose();
