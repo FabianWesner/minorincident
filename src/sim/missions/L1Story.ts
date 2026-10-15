@@ -59,7 +59,7 @@ export class L1Story {
   }
   /** Gives control back while the beat's actor finishes walking off (camera returns to follow). */
   private release(): void { this.world.storyLock = null; }
-  private pedestrian(at: { x: number; z: number }, model: string, role: string, tint: string): number {
+  private pedestrian(at: { x: number; z: number }, model: string, role: string, tint: string, range = 0): number {
     const outbreak = this.world.npcs?.civilians.outbreak; if (!outbreak) return 0;
     // Story actors appear from doorways/interiors that are off the walk grid: spawn on the nearest walkable cell, then place.
     const nav = this.world.infected?.nav, p = this.world.entities.get(1)!.transform;
@@ -70,10 +70,12 @@ export class L1Story {
     const e = this.world.entities.get(id)!, c = e.civilian!;
     c.ambient = false; c.pauseUntil = Number.MAX_SAFE_INTEGER; c.routine = 'staff'; c.state = 'calm';
     Object.assign(e.transform, { x: at.x, z: at.z }); this.world.spatial.set(id, at.x, at.z);
+    this.world.solids.admit(e, 'l1.story.spawn', range, false);
     return id;
   }
   private place(e: EntitySnapshot, x: number, z: number, face: { x: number; z: number }): void {
     e.transform.x = x; e.transform.z = z; e.transform.yaw = -Math.atan2(face.z - z, face.x - x); this.world.spatial.set(e.id, x, z);
+    if (!e.hidden || e.pendingAdmission) this.world.solids.admit(e, 'l1.story.walk', 0, false);
   }
   private present(e: EntitySnapshot | undefined, clip: string, prop?: CivilianProp): void {
     if (!e?.civilian) return;
@@ -153,7 +155,7 @@ export class L1Story {
     else if (t < gone) {
       l1.carrying = true; this.release();
       walkTo(length - (t - back) / walk * length, false); this.present(clerk, 'npc-walk');
-    } else { clerk.hidden = true; if (clerk.civilian) clerk.civilian.story = null; this.place(clerk, home.x, home.z, home); l1.clerkId = 0; l1.clerkRoute = null; this.finish(); }
+    } else { clerk.hidden = true; delete clerk.pendingAdmission; if (clerk.civilian) clerk.civilian.story = null; this.place(clerk, home.x, home.z, home); l1.clerkId = 0; l1.clerkRoute = null; this.finish(); }
   }
 
   /**
@@ -175,7 +177,7 @@ export class L1Story {
     const gone = !ff || ff.health.current <= 0 || !!ff.infected || !!ff.infection || !ff.civilian || ff.civilian.state === 'finished';
     if (gone && (!ff || world.tick >= (this.l1.firefighterNext ?? 0))) {
       // The colleague comes out of the bay (spawned at the completion spot inside, then walks to the post).
-      const id = this.pedestrian(ff ? trigger : waving, 'npc.firefighter-alive', 'firefighter', '#b5332b');
+      const id = this.pedestrian(ff ? trigger : waving, 'npc.firefighter-alive', 'firefighter', '#b5332b', 4);
       if (id) {
         const e = world.entities.get(id)!;
         e.civilian!.ally = { ...allyState('firefighter', waving, true), engaged: true };
