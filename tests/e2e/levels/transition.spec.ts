@@ -178,7 +178,7 @@ test('@transition selecting a production menu preload retains the card until the
   await page.getByTestId('character-female').click();
   await page.getByTestId('level-L1').click();
   await expect(page.getByTestId('level-transition')).toBeVisible();
-  await expect(page.getByTestId('transition-title')).toHaveText('Level 1 · Stop the Outbreak');
+  await expect(page.getByTestId('transition-title')).toHaveText('Level 1 · Special Delivery');
   const progress = await page.getByTestId('transition-progress').evaluate(element => new Promise<number[]>(resolve => {
     const values: number[] = [];
     const sample = () => { values.push((element as HTMLProgressElement).value); if ((element.closest('[data-testid=level-transition]') as HTMLElement).hidden) resolve(values); else requestAnimationFrame(sample); };

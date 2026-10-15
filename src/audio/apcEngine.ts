@@ -7,4 +7,4 @@ export const apcEngineStages = [
   { rate: .78, lowpass: 1900, roughness: .5, roughRate: .84 },
   { rate: .64, lowpass: 1100, roughness: .8, roughRate: .65 },
 ] as const;
-export const apcDamageCaptions = ['', 'Armor dented — engine straining', 'Glass cracked — engine running rough', 'Engine smoking — lights failing', 'Barely functional — heavy smoke, engine sputtering'] as const;
+export const apcDamageCaptions = ['', 'Armor dented, engine straining', 'Glass cracked, engine running rough', 'Engine smoking, lights failing', 'Barely functional: heavy smoke, engine sputtering'] as const;

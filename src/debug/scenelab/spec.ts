@@ -11,7 +11,7 @@ import type { AssetDef } from '../../assets/types';
  */
 export interface SceneSpec {
   /** Native campaign menu over the game camera; run with --query ui=1. */
-  menuScreen?: 'title' | 'levels';
+  menuScreen?: 'title' | 'levels' | 'credits';
   /** Production L4 convoy, population, braking and unload controller on an uncropped Fairhaven layout. */
   l4Convoy?: boolean | 'parked';
   /** Production L3 rendezvous, rescued group and full authored finale crowd. */

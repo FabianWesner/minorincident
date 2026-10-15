@@ -55,7 +55,7 @@ test('L3 defence waypoint @E21: game camera and explained destinations', async (
   });
   expect(fallbackMarker).toBe('l3-zone');
   expect(await page.evaluate(() => window.__SS__!.missions.state()!.marker)).toBe('l3-route');
-  await expect(page.locator('.hud-tracker')).toContainText('Reach the rendezvous ring inside the army checkpoint');
+  await expect(page.locator('.hud-tracker')).toContainText('Get inside the army checkpoint');
   await page.screenshot({ path: `${output}/after-fallback.png` });
   await bringGroup(page, l3Anchors['l3-zone']);
   await page.evaluate(async ([x, z]) => {
@@ -98,7 +98,7 @@ test('L3 real click into the finale finishes while the boom is occupied @E21 @E2
   }, { barrierX: l3.finale.barrierX, ring: l3Anchors['l3-zone'] });
   await bringGroup(page, l3Anchors['l3-zone']);
   expect(await page.evaluate(() => window.__SS__!.missions.state()!.l3!.crossedAt)).toBe(0);
-  await expect(page.locator('.hud-tracker')).toContainText('Reach the rendezvous ring inside the army checkpoint');
+  await expect(page.locator('.hud-tracker')).toContainText('Get inside the army checkpoint');
   await page.screenshot({ path: `${output}/after-compound-rendezvous.png` });
   const click = await page.evaluate(([x, z]) => window.__SS__!.input.project({ x, z }), l3Anchors['l3-zone']);
   await page.mouse.click(click.x, click.y);

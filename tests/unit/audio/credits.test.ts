@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { expect, test } from 'vitest';
 import { audioCues, lazyCategories } from '../../../src/data/audioCues';
 import { audioCredits, codeCredits } from '../../../src/data/credits';
+import { madeBy } from '../../../src/data/madeBy';
 import imports from '../../../assets/audio/imports.json';
 import { noticesWith, render } from '../../../tools/credits/generate';
 
@@ -45,4 +46,17 @@ test('@E16 every production dependency is listed with its locked permissive lice
     }
     for (const reference of ['Bruno Simon', 'Mesh2Motion'])
         expect(codeCredits.some(c => c.author.startsWith(reference)), reference).toBe(true);
+});
+
+test('credits open with the makers: Fabian Wesner (LinkedIn), every AI model, harness and tool', () => {
+    expect(madeBy.author).toMatchObject({ name: 'Fabian Wesner', url: 'https://www.linkedin.com/in/fabian-wesner/' });
+    const names = madeBy.groups.flatMap(g => g.names).join(' | ');
+    for (const name of ['Claude Opus 5.5', 'Claude Sonnet 5.5', 'Claude Haiku 5.5', 'Claude Fable 5.1', 'GPT-6.1 Sol', 'GPT-6 Luna', 'GPT-6 Astra', 'Claude Code', 'Codex CLI', 'codex-scheduler', 'Blender'])
+        expect(names, name).toContain(name);
+    // Both credit screens render the makers before the generated licence list.
+    for (const [file, then] of [['src/ui/GameUI.ts', "section('code'"], ['src/ui/CampaignUI.ts', 'Bruno Simon']] as const) {
+        const source = readFileSync(file, 'utf8'), first = source.indexOf('madeBy.headline');
+        expect(first, file).toBeGreaterThan(0);
+        expect(first, file).toBeLessThan(source.indexOf(then));
+    }
 });
