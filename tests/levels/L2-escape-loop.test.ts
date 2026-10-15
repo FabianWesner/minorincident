@@ -35,7 +35,23 @@ describe('L2 escape death loop', () => {
     for (let i = 0; i < 300; i++) { scrum(w, 6); w.entities.get(1)!.health.current = w.entities.get(1)!.health.max; w.update(); }
     expect(m.state.checkpoint, 'checkpoint while infected within 10 m').toBe('doors');
     // Calm: the pending checkpoint is taken.
-    for (const e of w.infected!.active) { e.transform.x += 60; w.spatial.set(e.id, e.transform.x, e.transform.z); }
+    const population = w.infected!.active.length, player = w.entities.get(1)!;
+    for (const e of w.infected!.active) {
+      let moved = false;
+      for (let bearing = 0; bearing < 8 && !moved; bearing++) {
+        const angle = bearing * Math.PI / 4;
+        moved = w.solids.relocate(e, { x: player.transform.x + Math.cos(angle) * 30, z: player.transform.z + Math.sin(angle) * 30, y: e.transform.y }, 'test.calm-relocation', 6);
+      }
+      expect(moved).toBe(true);
+      expect(Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z)).toBeGreaterThanOrEqual(10);
+    }
+    expect(w.infected!.active).toHaveLength(population);
+    // The final scrum tick may have dealt damage after its fixture heal. Gate
+    // health independently of crowd geometry, including the exact 70% boundary.
+    player.health.current = player.health.max * .69;
+    for (let i = 0; i < 40; i++) w.update();
+    expect(m.state.checkpoint).toBe('doors');
+    player.health.current = player.health.max * .7;
     for (let i = 0; i < 40 && m.state.checkpoint !== 'escape'; i++) w.update();
     expect(m.state.checkpoint).toBe('escape');
   }, 600_000);
