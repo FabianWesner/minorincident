@@ -394,7 +394,10 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
   const bounds: Point[] = [[x0, z0], [x1, z0], [x1, z1], [x0, z1], [x0, z0]];
   const courier = spec.actors?.find(a => a.kind === 'courier');
   // Without a courier the (hidden) player waits in a corner, away from the subject.
-  const playerStart: Point = courier?.at ? [courier.at[0], courier.at[1]] : [x1 - 2, z1 - 2];
+  // L2 fixtures admit their requested courier pose after mission setup. Start
+  // the district at its authored safe spawn before that admission can run.
+  const start = spec.l2Release && source?.anchors['player-start']?.position;
+  const playerStart: Point = start ? [start[0] + shift[0], start[2] + shift[1]] : courier?.at ? [courier.at[0], courier.at[1]] : [x1 - 2, z1 - 2];
   const district: DistrictId = spec.layout?.district ?? 'D-GROVE';
   const solid = kept.filter(p => assets.get(p.assetId)?.world?.solid);
   const layout: DistrictLayout = {

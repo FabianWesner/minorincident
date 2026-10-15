@@ -1,6 +1,6 @@
 {
   "name": "collision-l2-checkpoint-contact",
-  "note": "Production L2 south checkpoint closure, held after the real controller closes all gates. The panel joins the eastern fence post, closing the old .715 m jamb passage for .7 m bodies; its contact margin stays outside the unchanged checkpoint boundary. Inspect the closed stripes, both jambs and pursuers on both tiers/zooms/renderers.",
+  "note": "Production L2 south checkpoint closure, held after the real controller closes all gates. The panel joins the eastern fence post, closing the old .715 m jamb passage for .7 m bodies; its contact margin stays outside the unchanged checkpoint boundary. Inspect the closed stripes, both jambs and pursuers on both tiers/zooms/renderers. The two visible probes reuse living production pursuers, retaining their IDs and the full concurrency cap.",
   "seed": 1,
   "time": "L2",
   "ground": "district",
@@ -37,33 +37,5 @@
     "collisionPendingMax": 0,
     "bodyOverlapMaxCm": 2
   },
-  "size": 220,
-  "script": [
-    {
-      "frame": 1,
-      "spawnActor": {
-        "id": "jamb-probe",
-        "kind": "infected",
-        "archetype": "infected.runner",
-        "at": [
-          83.107,
-          37
-        ],
-        "state": "chase"
-      }
-    },
-    {
-      "frame": 1,
-      "spawnActor": {
-        "id": "panel-probe",
-        "kind": "infected",
-        "archetype": "infected.runner",
-        "at": [
-          81.9,
-          37
-        ],
-        "state": "chase"
-      }
-    }
-  ]
+  "size": 220
 }

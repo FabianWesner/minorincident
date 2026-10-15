@@ -1,4 +1,5 @@
 import { matchesBackend } from '../../../tools/scenelab/run';
+import { readSpec } from '../../../tools/scenelab/session';
 import { readdirSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import manifest from '../../../src/assets/manifest.json';
@@ -55,6 +56,15 @@ describe('Scene Lab spec', () => {
     expect(built.layout.anchors).toEqual(source.anchors);
     expect(built.layout.anchors['l2-street-edge-1']).toBeDefined();
     expect(built.layout.colliders).toEqual(source.colliders);
+  });
+  it('loads L2 bridge and closure fixtures from the authored safe start before courier admission', () => {
+    const [source] = levelTwoLayouts([grove]);
+    for (const name of ['collision-l2-bridge-arrivals', 'collision-l2-checkpoint-contact']) {
+      const spec = readSpec(`tests/scenes/catalog/${name}.json`);
+      const built = buildScene(spec, assets, source), start = source.anchors['player-start'].position;
+      expect(built.playerStart).toEqual([start[0], start[2]]);
+      expect(() => new DistrictWorld(built.composition, [built.layout], 1)).not.toThrow();
+    }
   });
   it('crops a shipped layout by bbox and asset filter, optionally recentred', () => {
     const spec: SceneSpec = { layout: { district: 'D-GROVE', bbox: [[0, 22], [5, 28]], assets: ['prop.flower-bed*', 'prop.picket-fence'], recenter: true } };
