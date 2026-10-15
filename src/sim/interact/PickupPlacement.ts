@@ -32,7 +32,7 @@ export function pickupPlacementClear(world: SimWorld, at: Vec2, radius = pickupF
     const d = worldAssets[e.archetype]?.dimensions;
     if (d && overlaps(at, { ...e.transform, length: d.x, width: d.z }, radius + .3)) return false;
   }
-  const level = world.districts?.composition.id;
+  const level = world.missions?.state.id ?? world.districts?.composition.id;
   if (level === 'L4') {
     if ([...l4Stops, ...l4Lane].some(h => overlaps(at, h, radius + .5))) return false;
     const fuel = worldAssets['veh.fuel-truck'].dimensions, tank = worldAssets['veh.tank'].dimensions, end = l4.tank.path.at(-1)!;
