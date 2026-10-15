@@ -263,7 +263,7 @@ export class PropSystem {
    * The authored home is outside this strip; returning a displaced prop there also repairs old checkpoints. */
   private clearGarageExit(item: PushProp): void {
     const districts = this.world.districts;
-    if (districts?.composition.id !== 'L1' || process.env.MI_NO_CLEAR) return;
+    if (districts?.composition.id !== 'L1') return;
     const district = districts.districts[0], door = district.layout.anchors['garage-door']?.position;
     if (!door) return;
     const x = door[0] + district.origin[0], z = door[2] + district.origin[1] - 2;
