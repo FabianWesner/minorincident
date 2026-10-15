@@ -20,7 +20,9 @@ const WALLS: Record<string, CoverWall> = {
   'door-loading': { x: -55.6, y: .9, z: -37.6, halfX: 4.3, halfY: .9, halfZ: .2 },
   'gate-main': { x: l2.checkpoint.gateX, y: .9, z: 30.1, halfX: .25, halfY: .9, halfZ: 5.6 },
   'gate-north': { x: 82, y: .9, z: 24.6, halfX: 3.1, halfY: .9, halfZ: .25 },
-  'gate-south': { x: 81.5, y: .9, z: 35.0, halfX: 1.25, halfY: .9, halfZ: .25 },
+  // Join the fence post at x=83.6. The old 0.715 m jamb gap admitted a .7 m
+  // body; keep its permitted 2 cm contact depth outside the checkpoint edge too.
+  'gate-south': { x: 81.9, y: .9, z: 35.05, halfX: 1.7, halfY: .9, halfZ: .25 },
 };
 const fresh = (): L2State => ({
   phase: 'calm', alarmAt: 0, departAt: 0, arrivedAt: 0, crewExitAt: 0, atDoorsAt: 0, doorsOpenAt: 0, radioAt: 0, crossedAt: 0, gateClosedAt: 0,

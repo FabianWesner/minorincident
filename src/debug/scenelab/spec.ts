@@ -11,7 +11,7 @@ import type { AssetDef } from '../../assets/types';
  */
 export interface SceneSpec {
   /** Production L2 market release, or its bridge arrival after 20 s of rescue simulation. */
-  l2Release?: boolean | 'bridge';
+  l2Release?: boolean | 'bridge' | 'checkpoint';
   /** Native campaign menu over the game camera; run with --query ui=1. */
   menuScreen?: 'title' | 'levels' | 'credits';
   /** Production L4 convoy, population, braking and unload controller on an uncropped Fairhaven layout. */

@@ -295,12 +295,20 @@ export class SceneLab {
       mission.begin();
       if (!world.tick) world.update(); // The production release clock uses zero for "not opened".
       mission.l2!.completed('doors');
-      if (spec.l2Release === 'bridge') {
+      if (spec.l2Release === 'bridge' || spec.l2Release === 'checkpoint') {
         this.teleport(world.entities.get(1)!, { x: -46.5, z: -39 });
         for (let i = 0; i < 20 * 60; i++) world.update();
       }
       const at = spec.actors?.find(a => a.kind === 'courier')?.at;
       if (at) this.teleport(world.entities.get(1)!, toPoint(at));
+      if (spec.l2Release === 'checkpoint') {
+        mission.l2!.advance();
+        for (let i = 0; i < 60 && !mission.state.l2!.gateClosedAt; i++) world.update();
+        if (!mission.state.l2!.gateClosedAt) throw new Error('L2 checkpoint fixture did not close its gates');
+        // Hold the completed physical closure for inspection, before the normal
+        // two-second handover ends this scene. Combat and contact keep running.
+        mission.state.l2!.phase = 'done';
+      }
     }
     if (spec.l3Rendezvous) {
       world.scenario = 'L3';
