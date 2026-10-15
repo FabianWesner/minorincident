@@ -49,6 +49,6 @@ export function cureFinaleText(mission: Mission | null): string | null {
   if (!state.states['charge-active']) return 'Activate the dispersal console';
   const at = def.anchors['cure-console'], player = world.entities.get(1)!;
   const progress = `${Math.floor(state.counters['charge-ticks'] / 60)}/60 s`;
-  if (at && Math.hypot(player.transform.x - at.x, player.transform.z - at.z) > cureChargeRadius) return `Return to dispersal console · Charge paused · ${progress}`;
+  if (at && Math.hypot(player.transform.x - at.x, player.transform.z - at.z) > cureChargeRadius) return `Back to the dispersal console · Charge paused · ${progress}`;
   return state.states['charge-ready'] ? 'Kill the Mega Alpha · Charge 60/60 s' : `Defend the dispersal console · Charge ${progress}`;
 }

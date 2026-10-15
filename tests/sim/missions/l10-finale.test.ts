@@ -48,7 +48,7 @@ test('T-E32-20/22 seed 327 install, pause, boundary, early rockets and explicit 
     press(); expect(m.state.counters['charge-ticks']).toBe(0);
     at(25); step(120); expect(m.state.counters['charge-ticks']).toBe(120);
     at(25.001); step(120); expect(m.state.counters['charge-ticks']).toBe(120);
-    expect(cureFinaleText(m)).toMatch(/Return.*paused.*2\/60/);
+    expect(cureFinaleText(m)).toMatch(/Back to.*paused.*2\/60/);
     // Menu/focus never call sim.update; rendering and querying state are clock-free.
     const tick = w.tick; for (let i = 0; i < 120; i++) w.getState(); expect(w.tick).toBe(tick);
     at(0); step(3479); expect(m.state.states['charge-ready']).toBe(false);

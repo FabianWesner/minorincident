@@ -3,7 +3,7 @@ import { dialogue } from '../data/dialogue';
 import { button, node } from './dom';
 import './ui.css';
 
-const titles = ['Stop the Outbreak', 'The Failed Rescue', 'The Police Collapse', 'The Safe City Falls', 'Aftermath', 'The Subway'];
+const titles = ['Special Delivery', 'The Failed Rescue', 'The Police Collapse', 'The Safe City Falls', 'Aftermath', 'The Subway'];
 /** Covers native scene teardown through the first full-size draw. Progress reports completed
  * loading stages, loader items and shader batches; it never advances on a timer. */
 export class LevelTransition {

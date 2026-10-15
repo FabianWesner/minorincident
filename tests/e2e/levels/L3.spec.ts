@@ -268,7 +268,7 @@ test.describe('L3 The Police Collapse in the browser', () => {
     }
     await expect(page.getByRole('heading', { name: 'Mission briefing' })).toBeVisible({ timeout: 120_000 });
     expect(await page.evaluate(() => window.__SS__!.getState().scenario)).toBe('L4');
-    await expect(page.locator('body')).not.toContainText(/Choose upgrades|Set up racks|Pick 2 of 3|Unlock reveal|Level complete/);
+    await expect(page.locator('body')).not.toContainText(/Choose upgrades|Set up racks|Pick 2 of 3|Unlock reveal|Well done, courier|Level complete/);
     const save = await page.evaluate(() => window.__SS__!.campaign.state());
     expect(save!.ownedActions).toEqual(expect.arrayContaining(['weapon.bat', 'weapon.fire-axe', 'weapon.handgun']));
     expect(save!.unlockedLevel).toBe(4);
