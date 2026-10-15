@@ -95,7 +95,9 @@ export class MissionUI {
       const timer = seconds === null ? '' : ` · ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
       this.text(this.tracker,`${l3EvacuationText(mission) ?? cureFinaleText(mission) ?? objective.text}${distance===null?'':` · ${Math.round(distance)}\u00a0m`}${timer}`);attribute(this.tracker,'data-objective',objective.id);attribute(this.tracker,'data-distance',distance===null?'':String(distance));
       if(this.active!==objective.id){this.active=objective.id;this.text(this.toast,`New objective: ${l3EvacuationText(mission) ?? cureFinaleText(mission) ?? objective.text}`);}
-      setHidden(this.toast,this.world.tick-state.steps[objective.id].started>=180);
+      const boundary = this.world.controls.blockedMove && this.world.controls.blockedMove.until > this.world.tick;
+      if (boundary) this.text(this.toast, 'MILITARY ZONE · Stay inside the perimeter');
+      setHidden(this.toast,!boundary && this.world.tick-state.steps[objective.id].started>=180);
       if(anchor){
         this.point.set(anchor.x,1.8,anchor.z).project(camera);
         const margin=42,cx=width/2,cy=height/2;

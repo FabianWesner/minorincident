@@ -1,0 +1,45 @@
+{
+  "success": true,
+  "passed": 5,
+  "failed": 0,
+  "suites": [
+    {
+      "name": "L4-refuge-visible.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "@E22 PO15 closed refuge doors keep the entire fleeing group visibly in the world, across L1\u2013L10",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "pickup-solids.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "@pickup-solids PO13 every campaign ground pickup clears walls, props, vehicle hulls and convoy stop poses",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "pickups.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E11-08 @E11 @E11-AC08 pickups apply exact effects once; health caps and objective items persist",
+          "status": "passed"
+        },
+        {
+          "title": "T-E11-08b @E11 @E11-AC08 full/unsupported pickups wait, dead players cannot collect; respawn keeps inventory",
+          "status": "passed"
+        },
+        {
+          "title": "T-E11-weapon-bridge @E11 @E11-AC08 full catalog pickups reuse E06 replacement and drop arming",
+          "status": "passed"
+        }
+      ]
+    }
+  ]
+}

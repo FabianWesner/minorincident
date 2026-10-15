@@ -1,3 +1,4 @@
+import { clearPickupPosition } from './PickupPlacement';
 import { action } from '../../data/actions/catalog';
 import type { Vec2 } from '../../input/InputFrame';
 import type { SimWorld } from '../world/SimWorld';
@@ -14,6 +15,7 @@ export class Pickups {
       if (!this.world.combat) throw new Error('Weapon pickups require combat');
       return this.world.combat.pickups.spawn(item!, pos);
     }
+    pos = clearPickupPosition(this.world, pos);
     const e = this.world.entities.create({ kind: 'pickup', archetype: `pickup.${kind}`, faction: 'environment', health: { current: 1, max: 1 }, transform: { ...pos, y: .3 + (this.world.districts?.pavingHeight(pos.x, pos.z) ?? 0), yaw: 0 }, pickup: { kind, item: item ?? null, radius: .9, collected: false } });
     this.world.spatial.set(e.id, pos.x, pos.z); return e.id;
   }
