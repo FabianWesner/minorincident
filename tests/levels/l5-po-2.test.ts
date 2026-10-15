@@ -9,7 +9,7 @@ test('PO #26 @E23 three followers at 99/60/30 percent: only the most injured res
   for (const e of [...w.infected!.active]) w.infected!.release(e);
   const group = loaded.mission.state.l5!.survivors.slice(0, 3).map((r, i) => {
     const e = w.entities.get(r.id)!; e.hidden = false; e.civilian!.survivor!.mode = 'follow'; r.status = 'following';
-    Object.assign(e.transform, { x: 8 + i, z: -39 }); w.spatial.set(e.id, e.transform.x, e.transform.z);
+    Object.assign(e.transform, { x: 8 + i, z: -39 + (i === 2 ? 0 : i === 0 ? 2 : -2) }); w.spatial.set(e.id, e.transform.x, e.transform.z);
     e.health.current = e.health.max * [.99, .6, .3][i]; return e;
   });
   const id = w.pickups!.spawn('medkit', { x: 5, z: -39 }), pack = w.entities.get(id)!;
@@ -20,9 +20,11 @@ test('PO #26 @E23 three followers at 99/60/30 percent: only the most injured res
   expect(w.pickups!.seekSurvivorMedkit(group[0])).toBe(false);
   expect(w.pickups!.seekSurvivorMedkit(group[1])).toBe(false);
   expect(pack.pickup).toMatchObject({ reservedFor: group[2].id, collected: false });
+  const leader = w.entities.get(1)!; Object.assign(leader.transform, { x: 13, z: -39 }); Object.assign(w.previousPlayer!, leader.transform);
+  w.physics.playerBody!.setTranslation(leader.transform, true); w.physics.playerBody!.setNextKinematicTranslation(leader.transform); w.spatial.set(1, 13, -39);
   const start = { ...group[2].transform };
   for (let tick = 0; tick < 300 && !(pack.pickup && 'kind' in pack.pickup && pack.pickup.collected); tick++) {
-    w.tick++; for (const e of group) w.pickups!.seekSurvivorMedkit(e);
+    w.update();
   }
   expect(pack.pickup).toMatchObject({ collected: true });
   expect(group[2].health.current).toBeCloseTo(58);
