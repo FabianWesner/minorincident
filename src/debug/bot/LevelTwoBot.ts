@@ -7,10 +7,12 @@ import { Walker } from './Walker';
 /** E20 section 8 bot profiles. `aggressive` stays at the rescue and fights; `idle` stands by the truck after arrival. */
 export type L2Profile = 'complete' | 'newbie' | 'no-axe' | 'aggressive' | 'idle';
 /** Escape route through the town and the way past the bridge cluster (forced-choice runs, AC13). */
-export type L2Opening = 'side' | 'alarm';
+export type L2Opening = 'side' | 'alarm' | 'direct';
 type P = { x: number; z: number };
 const dist = (a: P, b: P) => Math.hypot(a.x - b.x, a.z - b.z);
 export const l2Routes: Record<L2Opening, readonly P[]> = {
+  // PO #7 seed 1: the ordinary supermarket → Juniper → Elm → bridge walk, with no alarm detour.
+  direct: [{ x: -30.6, z: -31 }, { x: -30.6, z: 0 }, { x: -30.6, z: 30 }, { x: 10, z: 30 }, { x: 40, z: 30 }, { x: 60, z: 30 }, { x: 71, z: 31.5 }, { x: 78.6, z: 30 }],
   // Side path: Main Row west, Maple south, Elm to Juniper, alley-s east, the edge strip to the south gate of the checkpoint.
   side: [{ x: -50, z: -32 }, { x: -66, z: -31 }, { x: -66, z: -26 }, { x: -66, z: 2 }, { x: -66, z: 29.5 }, { x: -31, z: 30 }, { x: -30.6, z: 47.8 }, { x: 20, z: 48 }, { x: 60, z: 48 }, { x: 81.6, z: 48 }, { x: 81.8, z: 42 }, { x: 81.5, z: 36.8 }, { x: 81.4, z: 32.4 }],
   // Car alarm: Main Row east, Larch south to the parked car by the cluster, set it off, double back west along alley-r1 and take Elm Street to the main gate.

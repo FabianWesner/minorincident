@@ -373,23 +373,30 @@ export class LevelTwoRescue {
     o.turnNow(e);
     if (!e.infected) return 0;
     if (e.combat) e.combat.staggerUntil = world.tick + 30;
-    world.events.emit({ type: 'gate.changed', tick: world.tick, id: door.replace('refuge-door-', 'door-'), open: true });
+    if (door.startsWith('refuge-door-')) world.events.emit({ type: 'gate.changed', tick: world.tick, id: door.replace('refuge-door-', 'door-'), open: true });
     const brain = e.infected.l1;
     // Street population: home + leash only (no rush, which would start the panic flow). The ambush runs at the forecourt.
-    if (brain && home) { brain.homeX = home.x; brain.homeZ = home.z; brain.leashM = l2.escape.leashM; }
+    if (brain && home) {
+      brain.homeX = home.x; brain.homeZ = home.z; brain.leashM = l2.escape.leashM;
+      // Walk out of the door onto the authored street. A home alone only biases slow wandering
+      // and left most of the population behind buildings while the courier crossed empty roads.
+      ai.rush(id, home, world.tick + ticks(18));
+    }
     else ai.rush(id, toward, world.tick + ticks(12));
     return id;
   }
   /** Escape population and the bridge cluster: planned at the alarm, each member emerges once its door is out of view. */
   private spawnEscape(): void {
-    const s = this.s, doors = Object.keys(this.mission.def.anchors).filter(n => n.startsWith('refuge-door-'));
+    const s = this.s, doors = Object.keys(this.mission.def.anchors).filter(n => n.startsWith('refuge-door-') || n.startsWith('l2-street-edge-'));
+    // Recovering street infected keep their slots: get-ups must not exceed the finale's E18 cap.
+    this.world.infected!.director.strict = true;
     const forecourt = this.anchor('l2-forecourt'), market = this.anchor('l2-door-front');
     const near = (home: Point) => doors.map(d => ({ d, a: this.anchor(d) })).filter(({ a }) => Math.hypot(a.x - forecourt.x, a.z - forecourt.z) >= 42 && Math.hypot(a.x - market.x, a.z - market.z) >= 42)
       .sort((p, q) => Math.hypot(p.a.x - home.x, p.a.z - home.z) - Math.hypot(q.a.x - home.x, q.a.z - home.z));
     // Death-loop relief: a courier who keeps dying on the break-away meets a thinner street population.
     const scale = (this.world.infected!.director.tier === 'low' ? l2.escape.lowScale : 1) * (1 - this.relief());
     // The bridge cluster first: under the shared cap it must exist before the looser street groups.
-    const [cx, cz] = l2.cluster.home, home = { x: cx, z: cz }, list = near(home).slice(0, 4);
+    const [cx, cz] = l2.cluster.home, home = { x: cx, z: cz }, list = near(home).filter(e => e.d.startsWith('refuge-door-')).slice(0, 4);
     for (let i = 0; i < Math.ceil(l2.cluster.count * scale); i++) s.pending.push({ id: -2, door: list[i % list.length].d, at: 0, home });
     for (const [x, z, size] of l2.escape.groups) {
       const home = { x, z }, list = near(home).slice(0, 2);
@@ -473,6 +480,13 @@ export class LevelTwoRescue {
     }
     if (this.mercyDue) this.mercy();
     this.calmCheckpoint(player);
+    // The bridge receives a horde on arrival, even when the courier used the riverside bypass.
+    // A fixed event position draws the approach group; ordinary sight still chooses every human target.
+    const bridge = this.anchor('l2-gate');
+    if (s.radioAt && !s.clusterSpawned && Math.hypot(player.transform.x - bridge.x, player.transform.z - bridge.z) < l2.checkpoint.hordeTriggerM) {
+      s.clusterSpawned = true;
+      for (const id of s.clusterIds) world.infected!.rush(id, { x: l2.checkpoint.gateX - 3, z: 30 }, tick + ticks(l2.checkpoint.hordeRushS));
+    }
     this.checkpointGate(tick, player);
     // L2 infected (turned adults in the open) hit harder than L1's first, disoriented victims (section 5.1 tuning).
     if (tick % 15 === 0) for (const e of world.infected!.active) if (e.combat && e.health.current > 0 && e.combat.damageMultiplier === 1) e.combat.damageMultiplier = l2.infectedDamage;
