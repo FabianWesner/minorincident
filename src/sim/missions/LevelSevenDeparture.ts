@@ -91,7 +91,7 @@ export class LevelSevenDeparture {
     // Survivors already stepping through the door finish even if the player steps back.
     for (const id of Object.keys(s.entering).map(Number)) {
       const e = w.entities.get(id), t = (w.tick - s.entering[id]) / cfg.enterTicks;
-      if (!e || e.health.current <= 0 || e.infected || e.infection) { delete s.entering[id]; this.from.delete(id); continue; }
+      if (!e || e.health.current <= 0 || e.civilian?.state === 'finished' || e.infected || e.infection) { delete s.entering[id]; this.from.delete(id); continue; }
       const from = this.from.get(id) ?? e.transform, k = ease(Math.min(1, t));
       e.transform.x = from.x + (this.door.x - from.x) * k; e.transform.z = from.z + (this.door.z - from.z) * k;
       e.transform.yaw = Math.PI;
@@ -129,7 +129,7 @@ export class LevelSevenDeparture {
   private finish(): void {
     const w = this.world, s = this.state;
     s.phase = 'done';
-    const escaped = s.boarded.map(id => structuredClone(w.entities.get(id)!)).filter(e => e.health.current > 0 && !e.infected && !e.infection);
+    const escaped = s.boarded.map(id => structuredClone(w.entities.get(id)!)).filter(e => e.health.current > 0 && e.civilian?.state !== 'finished' && !e.infected && !e.infection);
     for (const e of escaped) { e.hidden = false; delete e.passengerOf; if (e.civilian) e.civilian.pauseUntil = 0; }
     const result: MissionResult = {
       time: w.tick / 60, kills: 0, knockdowns: 0, damage: 0, deaths: 0, rescued: escaped.length, optionalObjectives: [],
