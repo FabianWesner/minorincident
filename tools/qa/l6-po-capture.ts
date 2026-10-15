@@ -24,7 +24,7 @@ try {
           if (spot === 'gate') { a.missions.completeObjective('shelter'); a.missions.completeObjective('stop'); }
           const lamp = a.query({}).find(e => e.pickup && 'kind' in e.pickup && e.pickup.item === 'headlamp');
           if (lamp) { a.teleport(1, lamp.transform); a.input.set({ interact: true }); await a.step(24); a.input.set({ interact: false }); await a.step(2); }
-          a.teleport(1, { x: spot === 'gate' ? 91.3 : 0, z: spot === 'gate' ? 15 : -2 });
+          a.teleport(1, { x: spot === 'gate' ? 91.3 : 2, z: spot === 'gate' ? 15 : -2 });
           a.camera.follow(); await a.step(2); await a.screenshotReady();
         }, spot);
         for (const zoom of [.5, 1, 1.5]) {
