@@ -1,4 +1,5 @@
 import { levelFourLayouts } from '../../../src/levels/L4/layout';
+import { l4CellarDistance } from '../../../src/data/l4';
 import type { DistrictLayout } from '../../../src/levels/districts/types';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { boot, expect, test } from '../fixtures';
@@ -27,14 +28,16 @@ for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['hig
     await expect(page.getByTestId('mission-subtitle')).toContainText('Get to the cellar!');
     const arrow = page.getByTestId('mission-marker');
     await expect(arrow).toBeVisible(); await expect(arrow).toHaveAttribute('data-anchor', 'l4-cellar-door');
+    await expect(arrow).toHaveAttribute('data-guidance', 'street-route');
     await expect(arrow).toHaveAttribute('data-offscreen', 'true'); await expect(arrow).toHaveText('➜');
-    const proof = await page.evaluate(position => {
+    const next = { x: 0, z: 0 }; l4CellarDistance(await page.evaluate(() => window.__SS__!.getState().player!.transform), next);
+    const proof = await page.evaluate(({ position, next }) => {
       const a = window.__SS__!, anchor = { id: 'l4-cellar-door', position }, marker = a.getState().render.missionMarker!;
-      const ndc = a.camera.project(anchor.position[0], 1.8, anchor.position[2]), flip = ndc[2] > 1 ? -1 : 1;
+      const ndc = a.camera.project(next.x, 1.8, next.z), flip = ndc[2] > 1 ? -1 : 1;
       const expectedAngle = Math.atan2(-ndc[1] * innerHeight * flip, ndc[0] * innerWidth * flip);
       const arrow = document.querySelector<HTMLElement>('[data-testid=mission-marker]')!, rect = arrow.getBoundingClientRect();
       return { anchor, marker, angle: parseFloat(arrow.style.getPropertyValue('--direction')), expectedAngle, rect: { x: rect.x, y: rect.y, width: rect.width, height: rect.height }, backend: a.perf().backend, tier: a.perf().quality.tier };
-    }, cellar);
+    }, { position: cellar, next });
     expect(proof.backend).toBe(renderer); expect(proof.tier).toBe(quality);
     expect(proof.marker.visible).toBe(true);
     expect(proof.marker.position[0]).toBe(proof.anchor.position[0]); expect(proof.marker.position[2]).toBe(proof.anchor.position[2]);
@@ -45,6 +48,7 @@ for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['hig
     mkdirSync(out, { recursive: true }); await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: `${out}/plaza-arrow.png` });
     await page.evaluate(p => window.__SS__!.teleport('player', { x: p[0] - 1.5, z: p[2] + 1.5 }), proof.anchor.position); await step(90);
     await expect(arrow).toHaveAttribute('data-offscreen', 'false');
+    await expect(arrow).toHaveAttribute('data-guidance', 'destination');
     expect(await page.evaluate(() => window.__SS__!.getState().render.missionMarker!.visible)).toBe(true);
     await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: `${out}/cellar-beacon.png` });
     writeFileSync(`${out}/guidance.json`, JSON.stringify(proof, null, 2));
