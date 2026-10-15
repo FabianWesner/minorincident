@@ -21,7 +21,11 @@ The first scheduler note accidentally used a .60 m zebra radius; a second note c
 
 ## Validation and rejected trials
 
-`final.json` records the final source's full unit suite plus Alpha physical, Mega moves, explosions/smoke, rocket, registry reproductions and admission selection. Local static checks are recorded separately. The older compact JSON files describe intermediate uncommitted trials, not final-head evidence.
+[Final checks](final.json) apply to code commit `d8aac5606`: **1,579 passed, four failed, seven skipped** on Hetzner (621 s). The full unit subset was **1,498 passed, three failed, seven skipped**. Alpha physical **10/10**, Mega **16/16**, explosions/smoke **9/9**, rockets **6/6** and admission **36/36** pass. The three controlled registry reproductions (four cases including sedan/bus) pass; natural L4 hit its unchanged 180 s wall-clock timeout during this loaded run. The earlier intermediate special selection passed natural L4, but that is not final-source proof.
+
+The other timeout was the asset production validator's unchanged 300 s limit. The two functional unit failures were one placement-solid offender and `occluder-footprint`'s fake receiver lacking the set used by `DistrictView.huggedOccluder`. Those test files and `DistrictView.ts` match merged main; their baseline failure status has not been established. No baseline or threshold was changed.
+
+Local `npm run typecheck`, `npm run lint` and `git diff --check` pass. The older compact JSON files describe intermediate uncommitted trials, not final-head evidence. A final isolated rerun for both timeouts was requested, but all three runners were full with queued jobs. That queued attempt was cancelled at the explicit compatibility stop; **both timing results remain unverified**, and the full unit suite is not claimed green.
 
 The initial merged-source selection passed L2 repeated-death mercy. It retained L5 intruder progress, L6 siege (13.8667 s versus ≤12 s), encounter balance (10 HP versus ≤5), dog pin expiry and special failures. It also exposed an L6 complete timing miss (272.4167 s versus ≤270 s). L10 high arrival/release has not been rerun here.
 
