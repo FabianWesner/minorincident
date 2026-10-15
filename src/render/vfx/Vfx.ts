@@ -274,6 +274,7 @@ export class Vfx extends Group {
       if (event.style === 'roundhouse') this.waves.spawn(this.time, .32, event.position.x, .03, event.position.z, 0, 0, 0, (def?.roundhouse?.radius ?? 2.2) * 2, 1, 0xfff0ba, 1);
       if (def?.category === 'ranged') {
         this.gunshot(event.sourceId, event.direction, def.range, event.position);
+        if (event.sourceId === 1 && event.actionId === 'weapon.shotgun') this.targets.shake(this.flashReduction ? .025 : .1);
       }
     } else if (event.type === 'ally.attack' && event.from && event.to) {
       const dx = event.to.x - event.from.x, dz = event.to.z - event.from.z, distance = Math.hypot(dx, dz) || 1;

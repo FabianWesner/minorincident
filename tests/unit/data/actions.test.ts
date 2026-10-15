@@ -15,7 +15,11 @@ test('T-E06-01b @E06 @E06-AC01 rejects missing fields and malformed catalog exte
 
 test('T-E06-01c @E06 @E06-AC01 tuning survives schema limits at all tiers', () => {
   for (const def of Object.values(catalog)) {
-    expect(def.range).toBeLessThanOrEqual(40); expect(def.damage).toBeLessThanOrEqual(200); expect(def.tier).toBeLessThanOrEqual(2);
+    expect(def.range).toBeLessThanOrEqual(40);
+    // PO #37 pins the shell above the current 210 HP firefighter; other weapon ceilings retain their authored bound.
+    if (def.id === 'weapon.shotgun') expect(def.damage).toBe(240);
+    else expect(def.damage).toBeLessThanOrEqual(200);
+    expect(def.tier).toBeLessThanOrEqual(2);
     expect(def.windup + def.active + def.recovery).toBeLessThanOrEqual(1.5); expect(def.upgradeHooks.length).toBeGreaterThan(0);
   }
 });
