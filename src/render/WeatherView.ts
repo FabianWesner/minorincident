@@ -18,6 +18,8 @@ export const weatherSurface = {
   tracks: new DataTexture(new Uint8Array(TRACK_SIZE * TRACK_SIZE * 4), TRACK_SIZE, TRACK_SIZE, RGBAFormat, UnsignedByteType),
 };
 weatherSurface.tracks.needsUpdate = true;
+// World-space track coordinates are explicit; the UV transform stays identity.
+weatherSurface.tracks.matrixAutoUpdate = false;
 weatherSurface.tracks.minFilter = weatherSurface.tracks.magFilter = LinearFilter;
 export const trackMask = () => {
   const local = positionWorld.xz.sub(weatherSurface.trackCenter).div(TRACK_SPAN).add(.5);
