@@ -1,5 +1,6 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { expect, test } from 'vitest';
+import { survivor } from '../../src/data/survivor';
 import { l4 } from '../../src/data/l4';
 import { loadL4, runL4 } from '../../tools/sim-runner/l4Bots';
 
@@ -30,7 +31,14 @@ async function trace(tier: 'high' | 'low') {
       peak = Math.max(peak, w.infected!.director.count);
       return false;
     } });
-    const seconds = (end - start) / 60, report = { tier, seconds, metres, engaged: engaged.size, perMinute: engaged.size * 60 / seconds, bins15s: [...bins.values()].map(ids => ids.size), peak, outcome: run.outcome, deaths: run.deaths, totalSeconds: run.simSeconds, door: m.def.anchors['l4-cellar-door'] };
+    const route = l4.finale?.route ?? l4.director.escape.route, nav = w.infected!.nav;
+    let routeMetres = 0;
+    for (let i = 1; i < route.length; i++) {
+      const path: number[] = [], a = route[i - 1], b = route[i];
+      expect(nav.path(nav.nearestCell(a[0], a[1]), nav.nearestCell(b[0], b[1]), path, 400000)).toBe(true);
+      for (let k = 1; k < path.length; k++) routeMetres += Math.hypot(nav.x(path[k]) - nav.x(path[k - 1]), nav.z(path[k]) - nav.z(path[k - 1]));
+    }
+    const seconds = (end - start) / 60, report = { tier, seconds, metres, routeMetres, walkingSeconds: routeMetres / survivor.walkSpeed, engaged: engaged.size, perMinute: engaged.size * 60 / seconds, bins15s: [...bins.values()].map(ids => ids.size), peak, outcome: run.outcome, deaths: run.deaths, totalSeconds: run.simSeconds, door: m.def.anchors['l4-cellar-door'] };
     const dir = process.env.FINALE_REPORT_DIR ?? 'test-results/finale-stretches';
     mkdirSync(dir, { recursive: true });
     writeFileSync(`${dir}/l4-${tier}.json`, JSON.stringify(report, null, 2));
@@ -47,5 +55,13 @@ test('PO #17 @E22 the collapse walk has steady sight-driven action and preserves
     expect(r.peak).toBeLessThanOrEqual(l4.war.caps.infected[tier]);
     expect(r.perMinute).toBeGreaterThanOrEqual(tier === 'high' ? 8 : 5);
     expect(r.bins15s.filter(n => n > 0).length).toBeGreaterThanOrEqual(Math.ceil(r.bins15s.length * .7));
+  }
+}, 1_800_000);
+test('PO #17b @E22 the route to the farther cellar lasts two to three minutes through Fairhaven', async () => {
+  const results = [];
+  for (const tier of ['high', 'low'] as const) results.push(await measured(tier));
+  for (const r of results) {
+    expect(r.walkingSeconds).toBeGreaterThanOrEqual(120); expect(r.walkingSeconds).toBeLessThanOrEqual(180);
+    expect(r.routeMetres).toBeGreaterThanOrEqual(250);
   }
 }, 1_800_000);

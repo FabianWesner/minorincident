@@ -12,9 +12,9 @@ export type L4RouteChoice = 'auto' | 'harbor' | 'lakeshore';
 type P = { x: number; z: number };
 const dist = (a: P, b: P) => Math.hypot(a.x - b.x, a.z - b.z);
 const ROUTES: Record<'harbor' | 'lakeshore', P[]> = {
-  harbor: [{ x: -39.2, z: -36.4 }, { x: 24, z: -36.4 }, { x: 48.6, z: -30 }],
+  harbor: [{ x: -39.2, z: -36.4 }, { x: -64, z: -39.5 }, { x: -79, z: -40 }],
   // The escape street (l4-collapse-2): the horde leaves a gap on it at "Fall back!" (LevelFourWar.clearGap).
-  lakeshore: l4.director.escape.route.map(([x, z]) => ({ x, z })),
+  lakeshore: l4.finale.route.map(([x, z]) => ({ x, z })),
 };
 /** First leg to walk: the end of the route segment nearest the courier (no walking back into the ring after a respawn). */
 function joinLeg(legs: P[], p: P): number {

@@ -1,3 +1,4 @@
+import { moveFairhavenCellar } from '../fairhavenCellar';
 import { l4, l4FuelCrater, l4Anchors, l4Cars, l4ConvoyStations, l4Line, l4Route, l4RoutePose } from '../../data/l4';
 import subwayLayout from '../../../public/assets/layouts/D-SUBWAY.layout.json' with { type: 'json' };
 import { l5, l5Anchors, l5Survivors } from '../../data/l5';
@@ -111,6 +112,7 @@ export function l5Frontages(layout: DistrictLayout): { x: number; z: number; axi
 export function levelFiveLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
   return structuredClone(layouts).map(layout => {
     if (layout.district !== 'D-FAIR') return layout;
+    moveFairhavenCellar(layout);
     const door = layout.anchors['kessler-cellar-door'], inner = layout.anchors['cellar-interior'];
     for (const [name, [x, z]] of Object.entries(l5Anchors)) layout.anchors[name] = { position: [x, 0, z], yaw: 0 };
     for (const name of ['pair-plaza', 'pair-harbor-street', 'pair-kessler-lane']) layout.anchors[name] = { position: [l4Anchors[name][0], 0, l4Anchors[name][1]], yaw: 0 };
@@ -119,7 +121,12 @@ export function levelFiveLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     if (canopy) canopy.collisionId = 'l5.metro-ingress';
     if (canopy) layout.anchors['l5-metro-shutter'] = { position: [canopy.position[0], 1.2, canopy.position[2] + 2.43], yaw: 0 };
     if (metro) layout.anchors['pair-metro-entrance'] = { position: [metro.position[0], 0, metro.position[2]], yaw: 0 };
-    if (door) layout.anchors['l5-cellar-door'] = { position: [...door.position], yaw: 0 };
+    if (door) {
+      layout.anchors['l5-cellar-door'] = { position: [...door.position], yaw: 0 };
+      // L4's relocated entrance is also the L5 street exit, a step outside the visible door.
+      layout.anchors['l5-out'] = { position: [door.position[0], 0, door.position[2] + 1], yaw: -Math.PI / 2 };
+      layout.anchors['photo-l5-basement-exit'] = { position: [...layout.anchors['l5-out'].position], yaw: 0 };
+    }
     // The cellar yard (an island): the courier starts at the stair foot, the barred door is on the back wall (as in L4).
     if (inner) {
       const [cx, , cz] = inner.position;

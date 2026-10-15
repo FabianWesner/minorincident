@@ -198,6 +198,13 @@ export const l4 = {
     /** Soldiers pockets along both routes fight turned soldiers and infected (sim-light). */
     pockets: 2,
   },
+  /** PO #17b: the walk crosses Lakeshore, the unseen Metro Road blocks and Harbor Street to the far northwest refuge.
+   * The first legs reuse the existing break-away gap; both sidewalks remain open throughout. Running may shorten the walk.
+   */
+  finale: {
+    route: [[-12, 16], [-4, 16], [-4, 28], [-2, 41], [8, 43], [48.5, 43], [48.5, 20], [48.5, -15], [48.5, -37.4],
+      [20, -37.4], [-12, -37.4], [-44, -37.4], [-64, -39.5], [-79, -40], [-79.3, -45.2801]] as readonly P[],
+  },
   /** Beat 7: the cellar. After the door is barred the battle goes on above for at least this long. */
   cellar: { interactS: .6, barS: 1.0, battleAfterBarredS: 7 },
   medkits: { heal: 40, positions: [
@@ -389,4 +396,18 @@ export function l4ConvoyStations(length: number): { start: number[]; end: number
 /** Street of a world point on the L4 map (nearest of the five streets), for population, bots and dressing tests. */
 export function l4Edge(x: number, z: number): 'lakeshore' | 'harbor' | 'plaza' | 'east' | 'west' {
   return z > 30 ? 'lakeshore' : z < -30 ? 'harbor' : x > 5 ? 'east' : x < -40 ? 'west' : 'plaza';
+}
+
+/** Remaining distance along the marked street escape, including the walk from the courier to its nearest leg. */
+export function l4CellarDistance(p: { x: number; z: number }): number {
+  const route = l4.finale.route;
+  let nearest = Infinity, remaining = 0, tail = 0;
+  for (let i = route.length - 1; i > 0; i--) {
+    const [ax, az] = route[i - 1], [bx, bz] = route[i], dx = bx - ax, dz = bz - az, length = Math.hypot(dx, dz);
+    const t = Math.max(0, Math.min(1, ((p.x - ax) * dx + (p.z - az) * dz) / (length * length)));
+    const d = Math.hypot(p.x - ax - t * dx, p.z - az - t * dz);
+    if (d < nearest) { nearest = d; remaining = d + (1 - t) * length + tail; }
+    tail += length;
+  }
+  return remaining;
 }
