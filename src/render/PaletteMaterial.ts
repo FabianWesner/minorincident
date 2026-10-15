@@ -134,7 +134,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         // Preserve small coloured practical pools and emissive infected eyes.
         const accent = max(luminance(field).smoothstep(.15, .8), nodes?.glow ? luminance(nodes.glow).mul(this.emissivePower).smoothstep(.05, .15) : float(0));
         const colour = max(max(cone, courierGlow), accent);
-        const dark = mix(vec3(luminance(result)).mul(.38), result, colour);
+        const dark = mix(vec3(luminance(result)).mul(.38).add(.006), result, colour);
         result.assign(mix(result, dark, lighting.subwayDarkness));
       }
       result.addAssign(this.hitFlash);
