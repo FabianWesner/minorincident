@@ -7,7 +7,7 @@ const marginSteps = [0.002, 0.005, 0.01, 0.02, 0.04, 0.06, 0.08, 0.1];
 // L1's morning population has more than sixteen simultaneous route targets.
 // Retain those exact answers between ticks instead of evicting an entire round.
 const nearestMemoCapacity = 64;
-/** 0.5 m collider-baked district grid. Fixed workspaces serve budgeted A* and shared reverse flow fields. */
+/** Collider-baked district grid (0.5 m by default). Fixed workspaces serve budgeted A* and shared reverse flow fields. */
 export class NavGrid {
   readonly width: number;
   readonly depth: number;
@@ -40,7 +40,7 @@ export class NavGrid {
   }
   /** Clamp click destinations to the same inside face used by the player capsule. */
   clampPlayerTarget(point: { x: number; z: number }, radius: number): { x: number; z: number } {
-    const b = this.playerBounds, margin = radius + .25;
+    const b = this.playerBounds, margin = radius + .05;
     return b ? { x: Math.max(b.x0 + margin, Math.min(b.x1 - margin, point.x)), z: Math.max(b.z0 + margin, Math.min(b.z1 - margin, point.z)) } : point;
   }
   private playerWall(wall: Wall): Wall { return { ...wall, halfX: wall.playerHalfX ?? wall.halfX, halfZ: wall.playerHalfZ ?? wall.halfZ }; }
@@ -154,13 +154,13 @@ export class NavGrid {
   }
   /** The same walls, live blockers and mask baked for a wider body (E32 Mega Alpha); the caller forwards later blocker changes. */
   withClearance(clearance: number): NavGrid {
-    const grid = new NavGrid(this.ground, this.walls, clearance, this.center, this.mask);
+    const grid = new NavGrid(this.ground, this.walls, clearance, this.center, this.mask, this.cellSize);
     for (const [id, wall] of this.blockers) grid.setBlocker(id, wall, true);
     return grid;
   }
   /** E08 campaign tier swaps replace static walls, retaining the fixed search workspace. */
   prepare(walls: readonly Wall[]): Uint8Array {
-    return new NavGrid(this.ground, walls, this.clearance, this.center, this.mask).blocked;
+    return new NavGrid(this.ground, walls, this.clearance, this.center, this.mask, this.cellSize).blocked;
   }
   rebake(prepared?: Uint8Array): void {
     this.playerRoutes = null;

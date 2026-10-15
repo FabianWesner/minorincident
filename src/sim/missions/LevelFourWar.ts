@@ -349,7 +349,7 @@ export class LevelFourWar {
     if (this.fenceWorld !== physics.world) { this.fence = []; this.fenceWorld = physics.world; }
     const t = this.world.entities.get(1)!.transform, r = l4.perimeter;
     if (on && (t.x < r.x0 + .6 || t.x > r.x1 - .6 || t.z < r.z0 + .6 || t.z > r.z1 - .6)) return;
-    this.world.infected!.nav.setPlayerBounds(on ? l4.perimeter : null);
+    this.world.infected!.nav.setPlayerBounds(on ? { x0: r.x0 + .2, x1: r.x1 - .2, z0: r.z0 + .2, z1: r.z1 - .2 } : null);
     if (!on) { for (const h of this.fence) physics.removeBlocker(h); this.fence = []; return; }
     if (this.fence.length || !physics.playerBody) return;
     for (const wall of l4PerimeterWalls) this.fence.push(physics.addBlocker(wall));
