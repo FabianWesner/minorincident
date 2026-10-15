@@ -38,8 +38,8 @@ def up(r): return f'asetrate={int(48000 * r)},aresample=48000'
 # Active-part RMS targets in dBFS (build.ts `level`; the gentle compressor evens the crest first). Louder class = higher number.
 LEVEL = dict(melee=-19, handgun=-8, nail=-8, smg=-8, rifle=-8, mg=-8, hunting=-8, shotgun=-8, rocket=-8, minigun=-8, hmg=-8, throw=-21, thump=-18)
 # Pre-limiter boost in dB per cue: raises the body and tail against the transient (a gunshot's crest is ~25 dB) so the class gets its loudness inside the -4.4 dBFS sprite ceiling.
-BOOST = {'action.weapon.handgun': 22, 'action.weapon.pistol': 30, 'action.weapon.nail-gun': 12, 'action.weapon.firecracker-lure': 3, 'action.weapon.shotgun': 30, 'action.weapon.smg': 18, 'action.ability.turret': 18,
-         'action.weapon.assault-rifle': 22, 'action.weapon.hunting-rifle': 30, 'action.weapon.machine-gun': 24, 'action.weapon.army-mg': 24, 'action.weapon.rotary-minigun': 18, 'weapon.hmg': 28, 'action.weapon.rocket-launcher': 7}
+BOOST = {'action.weapon.handgun': 22, 'action.weapon.pistol': 30, 'action.weapon.nail-gun': 12, 'action.weapon.firecracker-lure': 3, 'action.weapon.shotgun': 30, 'action.weapon.smg': 22, 'action.ability.turret': 22,
+         'action.weapon.assault-rifle': 26, 'action.weapon.hunting-rifle': 30, 'action.weapon.machine-gun': 28, 'action.weapon.army-mg': 28, 'action.weapon.rotary-minigun': 22, 'weapon.hmg': 30, 'action.weapon.rocket-launcher': 7}
 def lim(g): return f'volume={g}dB,asoftclip=type=tanh'
 def fam(cue, items, level=None, n=4):
     """Four takes (cue, cue.v1..v3) from (source, start, filter) triples; fewer repeat cyclically."""
