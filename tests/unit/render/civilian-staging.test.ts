@@ -38,3 +38,16 @@ test.each(['high', 'low'] as const)('L1 %s stages later cast after Begin and war
     expect(batches).toHaveLength(l1CivilianModels.length * (tier === 'low' ? 2 : 3));
   } finally { crowd.dispose(); batch.mockRestore(); }
 });
+
+// Initial-camera hero discovery belongs to the staged L1 path. Other levels
+// keep their established load barrier instead of adding hero work before play.
+test.each(['L7', 'L8', 'L9', 'L10'])('%s keeps camera discovery out of its initial crowd load', async scenario => {
+  const batch = vi.spyOn(CivilianCrowd.prototype as unknown as { batch(): Group }, 'batch').mockImplementation(() => Object.assign(new Group(), { model: 'npc.civilian-man-a', lod: 'lod1', init: async () => {}, dispose: () => {} }));
+  const update = vi.spyOn(CivilianCrowd.prototype, 'update').mockImplementation(() => {});
+  const world = { scenario, entities: { iterate: () => [] } } as unknown as SimWorld;
+  const crowd = new CivilianCrowd(world);
+  try {
+    await crowd.init(new PerspectiveCamera());
+    expect(update).toHaveBeenCalledExactlyOnceWith(1, undefined);
+  } finally { crowd.dispose(); update.mockRestore(); batch.mockRestore(); }
+});
