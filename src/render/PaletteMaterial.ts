@@ -132,7 +132,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         const cone = facing.smoothstep(.78, .92).mul(reach.smoothstep(18, 14)).mul(lighting.headlampOn);
         const courierGlow = reach.smoothstep(2.4, .8);
         // Preserve small coloured practical pools and emissive infected eyes.
-        const accent = luminance(field).smoothstep(.15, .8);
+        const accent = max(luminance(field).smoothstep(.15, .8), nodes?.glow ? luminance(nodes.glow).mul(this.emissivePower).smoothstep(.05, .15) : float(0));
         const colour = max(max(cone, courierGlow), accent);
         const dark = mix(vec3(luminance(result)).mul(.38), result, colour);
         result.assign(mix(result, dark, lighting.subwayDarkness));

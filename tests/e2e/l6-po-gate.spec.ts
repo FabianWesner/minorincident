@@ -1,3 +1,4 @@
+import { mkdirSync } from 'node:fs';
 import { test, expect, boot } from './fixtures';
 for (const backend of ['webgl', 'webgpu']) for (const tier of ['high', 'low']) test(`@E24 PO34 service gate explains the crate task with one bar ${backend} ${tier}`, async ({ page }) => {
   test.setTimeout(300_000);
@@ -14,5 +15,7 @@ for (const backend of ['webgl', 'webgpu']) for (const tier of ['high', 'low']) t
   await expect(prompt.locator('[role="progressbar"]:visible')).toHaveCount(1);
   await expect(prompt.locator('[role="meter"]:visible')).toHaveCount(0);
   await expect(prompt).not.toContainText('coverage');
+  mkdirSync('test-results/l6-po/gates', { recursive: true });
+  await page.screenshot({ path: `test-results/l6-po/gates/${backend}-${tier}.png` });
   expect((await page.evaluate(() => window.__SS__!.getState().render.backend))).toBe(backend);
 });
