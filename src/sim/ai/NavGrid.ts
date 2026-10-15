@@ -402,6 +402,8 @@ export class NavGrid {
   private reachQueue: Int32Array | null = null;
   private reachSeen: Uint32Array | null = null;
   private reachStamp = 0;
+  private reachDistanceX: Float64Array | null = null;
+  private reachDistanceZ: Float64Array | null = null;
   private reachDepth: Int32Array | null = null;
   private readonly reach = { active: false, key: -1, from: -1, tx: 0, tz: 0, head: 0, tail: 0, best: -1, bestD: Infinity, far: -1, farD: Infinity, stamp: 0 };
   /** Player route (E19 QA1-02): a breadth-first flood from the player's cell (own workspace, never starved by
@@ -412,21 +414,36 @@ export class NavGrid {
     const count = this.width * this.depth, r = this.reach;
     this.reachParent ??= new Int32Array(count); this.reachQueue ??= new Int32Array(count); this.reachSeen ??= new Uint32Array(count); this.reachDepth ??= new Int32Array(count);
     const parent = this.reachParent, queue = this.reachQueue, seen = this.reachSeen, depth = this.reachDepth;
+    const distanceX = this.reachDistanceX ??= new Float64Array(this.width);
+    const distanceZ = this.reachDistanceZ ??= new Float64Array(this.depth);
     const key = this.cell(target.x, target.z);
     if (!r.active || r.key !== key) {
       if (from < 0 || this.blocked[from]) { r.active = false; result.length = 0; return false; }
       Object.assign(r, { active: true, key, from, head: 0, tail: 0, best: from, bestD: Infinity, far: -1, farD: Infinity, stamp: ++this.reachStamp,
         tx: (target.x - this.center.x + this.ground.width / 2) / this.cellSize - .5, tz: (target.z - this.center.z + this.ground.depth / 2) / this.cellSize - .5 });
       seen[from] = r.stamp; parent[from] = -1; depth[from] = 0; queue[r.tail++] = from;
+      for (let x = 0; x < this.width; x++) distanceX[x] = (x - r.tx) ** 2;
+      for (let z = 0; z < this.depth; z++) distanceZ[z] = (z - r.tz) ** 2;
     }
+    // A flood can visit the whole streamed window. The squared target offsets
+    // are separable and constant during it; compute them once per row/column,
+    // retaining exactly the old floating-point arithmetic and BFS tie order.
+    const width = this.width, lastRow = this.depth - 1, bounds = this.playerBounds;
     let steps = 0, done = false;
     while (r.head < r.tail) {
       if (steps++ >= budget) return false;
-      const cell = queue[r.head++], d = (cell % this.width - r.tx) ** 2 + (Math.floor(cell / this.width) - r.tz) ** 2;
+      const cell = queue[r.head++], x = cell % width, z = Math.floor(cell / width), d = distanceX[x] + distanceZ[z];
       if (d < r.bestD) { r.bestD = d; r.best = cell; }
       if (d < .5 && depth[cell] >= 4) { done = true; break; } // the click itself is reachable: no need to flood the district
       if (depth[cell] >= 8 && d < r.farD) { r.farD = d; r.far = cell; }
-      for (let k = 0; k < 4; k++) { const n = this.neighbor(cell, k); if (n >= 0 && !this.blocked[n] && seen[n] !== r.stamp && this.insidePlayerBounds(this.x(n), this.z(n), this.clearance)) { seen[n] = r.stamp; parent[n] = cell; depth[n] = depth[cell] + 1; queue[r.tail++] = n; } }
+      for (let k = 0; k < 4; k++) {
+        // Reuse the current coordinates for left/right/up/down. When there is
+        // no story perimeter, avoid converting every neighbour to world space.
+        const n = k === 0 ? x > 0 ? cell - 1 : -1 : k === 1 ? x + 1 < width ? cell + 1 : -1 : k === 2 ? z > 0 ? cell - width : -1 : z < lastRow ? cell + width : -1;
+        if (n >= 0 && !this.blocked[n] && seen[n] !== r.stamp && (!bounds || this.insidePlayerBounds(this.x(n), this.z(n), this.clearance))) {
+          seen[n] = r.stamp; parent[n] = cell; depth[n] = depth[cell] + 1; queue[r.tail++] = n;
+        }
+      }
     }
     void done;
     // Repeated clicks behind the same fence must still make progress: when the closest reachable spot is where
