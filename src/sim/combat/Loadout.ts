@@ -54,9 +54,10 @@ export class Loadout {
       }
     }
     if (frame.selectorActive && frame.selector) this.cycleActive(frame.selector, tick);
-    else if (frame.selector && tick >= side.swapUntil) {
-      const entries = this.orderedEntries(this.state.selectedSide), current = entries.findIndex(e => e.index === side.index);
-      side.index = entries[(current + frame.selector + entries.length) % entries.length].index; side.swapUntil = tick + 15;
+    else if (frame.selector && tick >= this.state[this.state.selectedSide].swapUntil) {
+      const cycling = this.state[this.state.selectedSide];
+      const entries = this.orderedEntries(this.state.selectedSide), current = entries.findIndex(e => e.index === cycling.index);
+      cycling.index = entries[(current + frame.selector + entries.length) % entries.length].index; cycling.swapUntil = tick + 15;
     }
   }
   /** Adds to selected rack; retained campaign pickups expand it, other full racks replace the current slot. */

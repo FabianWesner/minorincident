@@ -37,4 +37,9 @@ test('PO #14 @E03 one fixed weapon order drives active, rack, number and touch s
   // Retained pickups preserve their timers and join their fixed position immediately.
   combat.runner.loadout.collect('RIGHT', 'weapon.smg', true); step(w, 1);
   expect(combat.runner.loadout.activeEntries().map(e => e.id)).toEqual([...expected.slice(0, 4), 'weapon.smg', ...expected.slice(4)]);
+  // Number selection plus Q in one tick must cycle the newly selected rack only.
+  const restored = combat.runner.loadout, leftIndex = restored.state.LEFT.index;
+  restored.input({ ...emptyInput(), selectedSlot: { side: 'RIGHT', index: 3 }, orderedSelection: true, selector: 1 }, 1000);
+  expect(restored.state.LEFT.index).toBe(leftIndex);
+  expect(restored.current('RIGHT').id).toBe('weapon.handgun');
 });
