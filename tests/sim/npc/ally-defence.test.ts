@@ -44,6 +44,8 @@ describe('armed ally close hearing and self-defence @E21', () => {
   test.each(['officer', 'soldier', 'firefighter', 'civilian'] as const)('%s hears an infected behind at 1.8 m and attacks within 0.5 s; a wall blocks hearing', async role => {
     const w = await npcWorld();
     try {
+      // Keep the observer out of the ally's authored pose before radius-aware admission.
+      teleport(w, 4, 0);
       const id = w.npcs!.civilians.spawn('officer', { x: 0, z: 0 }), e = w.entities.get(id)!;
       const zid = w.infected!.spawn('infected.runner', { x: -1.8, z: 0 }), z = w.entities.get(zid)!;
       e.transform.yaw = 0;
