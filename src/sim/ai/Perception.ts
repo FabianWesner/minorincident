@@ -130,13 +130,6 @@ export class Perception {
       if (event.type === 'combat.attack' && event.sourceId === 1 && ['weapon.handgun', 'weapon.army-mg', 'weapon.shotgun', 'weapon.rocket-launcher'].includes(event.actionId)) this.shotUntil = world.tick + 60;
     });
   }
-  private hearingRadius(target: Vec2): number {
-    const player = this.world.entities.get(1);
-    if (!player || Math.hypot(target.x - player.transform.x, target.z - player.transform.z) > .1) return this.hearingM;
-    if (this.world.tick < this.shotUntil) return 12;
-    const v = player.survivor?.velocity;
-    return v && Math.hypot(v.x, v.z) > 3 ? 9 : this.hearingM;
-  }
   /** Clear line of sight between two ground points (static cover walls + active dynamic blockers). */
   lineOfSight(from: Vec2, to: Vec2): boolean {
     return (this.world.combat?.query.visible(from, to) ?? true) && this.los.clear(from, to);
@@ -164,7 +157,16 @@ export class Perception {
   }
   /** PO #25: nearby humans are smelled/heard through cover, independent of facing and sight. */
   hears(e: EntitySnapshot, target: Vec2): boolean {
-    return Math.hypot(target.x - e.transform.x, target.z - e.transform.z) <= this.hearingRadius(target);
+    const dx = target.x - e.transform.x, dz = target.z - e.transform.z, squared = dx * dx + dz * dz;
+    if (squared <= this.hearingM * this.hearingM) return true;
+    if (squared > 144) return false;
+    // Only the courier's running/shooting expands the radius. Keep the common
+    // six-metre query free of entity lookups and square roots in large hordes.
+    const player = this.world.entities.get(1);
+    if (!player || (target.x - player.transform.x) ** 2 + (target.z - player.transform.z) ** 2 > .01) return false;
+    if (this.world.tick < this.shotUntil) return true;
+    const v = player.survivor?.velocity;
+    return squared <= 81 && !!v && v.x * v.x + v.z * v.z > 9;
   }
   /** Detection of a new target by unchanged vision or close hearing. */
   notices(e: EntitySnapshot, target: Vec2): boolean {
