@@ -65,12 +65,14 @@ export async function renderAudio(request: AudioRenderRequest): Promise<AudioRen
         }
         return voice;
     };
+    // The reverb and occlusion measurements need a fixed anechoic impulse: the E05 test projectile keeps its short synthesized crack, whatever the real weapons sound like.
+    const probe = 'action.weapon.test-projectile';
     if (request.scenario === 'shot')
-        play('action.weapon.pistol', 0, { position: { x: 0, z: -2 }, zone: request.zone ?? 'street' });
+        play(probe, 0, { position: { x: 0, z: -2 }, zone: request.zone ?? 'street' });
     if (request.scenario === 'occlusion') {
         if (request.occluded)
             graph.map.buildings.push({ min: { x: -1, z: -1.5 }, max: { x: 1, z: -0.5 } });
-        play('action.weapon.pistol', 0, { position: { x: 0, z: -2 }, dry: true });
+        play(probe, 0, { position: { x: 0, z: -2 }, dry: true });
     }
     if (request.scenario === 'doppler') {
         const v = play('vehicle.engine-high', 0, { position: { x: -30, z: -4 }, velocity: { x: 15, z: 0 }, loop: true, dry: true })!;
@@ -241,7 +243,7 @@ export async function renderAudio(request: AudioRenderRequest): Promise<AudioRen
         }[] = [];
         for (let time = 0; time < 60; time += 0.4) {
             const at = time;
-            sequence.push({ time: at, run: () => play('action.weapon.pistol', at, { position: { x: 0, z: -2 }, dry: true }) });
+            sequence.push({ time: at, run: () => play(probe, at, { position: { x: 0, z: -2 }, dry: true }) }); // fixed synthesized gunfire: the mix gate measures the buses, ducking and dialogue, not the weapon assets (their loudness has its own gate)
             if (Math.round(at * 10) % 20 === 0)
                 sequence.push({ time: at, run: () => play('prop.metal', at, { position: { x: 3, z: -2 }, dry: true, gain: 0.4 }) });
         }
