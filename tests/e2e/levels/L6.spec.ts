@@ -45,7 +45,7 @@ test('T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes 
     else if(obs.friends.length&&obs.p.x>Math.min(...obs.friends.map(r=>r.at.x))+6){await step(12);continue;}
     if(obs.p.x>=246){target={x:273,z:obs.p.x<258?14.1:15};if(obs.p.x<249.1)target={x:250,z:14.1};}
     if(obs.p.x<25&&obs.p.z<14)target={x:6,z:obs.p.x<5.5?obs.p.z:15};
-    if(['shelter','first','fails'].includes(obs.s.phase))target={x:0,z:4};
+    if(['shelter','first','fails'].includes(obs.s.phase))target={x:0,z:-4};
     if(obs.close.length>=3){const cx=obs.close.reduce((n,e)=>n+e.x,0)/obs.close.length,cz=obs.close.reduce((n,e)=>n+e.z,0)/obs.close.length,scale=5/Math.max(.1,Math.hypot(obs.p.x-cx,obs.p.z-cz));target={x:obs.p.x+(obs.p.x-cx)*scale,z:obs.p.z+(obs.p.z-cz)*scale};}
     if(obs.lamp)target=obs.lamp;
     const dx=target.x-obs.p.x,dz=target.z-obs.p.z;
