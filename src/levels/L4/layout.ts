@@ -1,5 +1,5 @@
 import { freestanding, moveOffSolids } from '../placementClearance';
-import { l4, l4Anchors, l4Edges, l4Line } from '../../data/l4';
+import { l4, l4Anchors, l4CollapseGroups, l4Edges, l4Line } from '../../data/l4';
 import type { DistrictLayout, Placement } from '../districts/types';
 
 /** Kinds of the W0 "clean, intact, alive" dressing and the army's orderly reception (E22 section 5.2); counted by the static AC05 test. */
@@ -78,6 +78,7 @@ export function levelFourLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     if (layout.district !== 'D-FAIR') return layout;
     const door = layout.anchors['kessler-cellar-door'], inner = layout.anchors['cellar-interior'];
     for (const [name, [x, z]] of Object.entries(l4Anchors)) layout.anchors[name] = { position: [x, 0, z], yaw: 0 };
+    for (const [i, [x, z]] of l4CollapseGroups.entries()) layout.anchors[`l4-street-edge-${i}`] = { position: [x, 0, z], yaw: 0 };
     for (const entry of l4AlphaEmergence) {
       const [x, z] = entry.at ?? l4Edges.find(e => e.id === entry.edgeId)!.at;
       layout.anchors[entry.anchor] = { position: [x, 0, z], yaw: -Math.atan2(l4.map.centre.z - z, l4.map.centre.x - x) };
