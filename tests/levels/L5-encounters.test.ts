@@ -176,3 +176,57 @@ test('@E23 @E23-AC15 nearby infected do not stall ingress; the descending shutte
     expect(m.state.result!.survivors).toHaveLength(5);
   } finally { w.dispose(); }
 }, 120_000);
+
+test('@E23 @E23-AC15 the five survivors cross the Metro opening from the real-input group photo', async () => {
+  const { world: w, mission: m } = await loadL5(1);
+  try {
+    for (const e of [...w.infected!.active]) w.infected!.release(e);
+    m.completeObjective('emerge'); m.completeObjective('look');
+    const player = w.entities.get(1)!, door = m.def.anchors['l5-metro-shutter'];
+    Object.assign(player.transform, { x: door.x, z: door.z - 2 });
+    w.physics.playerBody!.setTranslation(player.transform, true);
+    w.physics.playerBody!.setNextKinematicTranslation(player.transform);
+    w.spatial.set(1, player.transform.x, player.transform.z);
+    // Positions observed while the real-input run waited at the stairs: no intruder
+    // or separation impulse should be needed to push a living person through.
+    const positions = [[37.19, -47.65], [37.19, -48.38], [37.98, -47.43], [37.72, -48.07], [38.38, -48.02]];
+    m.state.l5!.survivors.forEach((r, i) => {
+      const e = w.entities.get(r.id)!;
+      Object.assign(e.transform, { x: positions[i][0], z: positions[i][1] });
+      w.spatial.set(e.id, e.transform.x, e.transform.z);
+    });
+    for (let i = 0; i < 1200 && !m.state.l5!.doneAt; i++) w.update();
+    expect(m.state.l5!.shutterAt).toBeGreaterThan(0);
+    expect(m.state.result!.survivors).toHaveLength(5);
+  } finally { w.dispose(); }
+}, 120_000);
+
+test('@E23 @E23-AC11 @E23-AC15 a survivor turning during shutter closure cannot corrupt the L6 save', async () => {
+  const { world: w, mission: m } = await loadL5(1);
+  try {
+    for (const e of [...w.infected!.active]) w.infected!.release(e);
+    m.completeObjective('emerge'); m.completeObjective('look');
+    const door = m.def.anchors['l5-metro-shutter'], player = w.entities.get(1)!;
+    Object.assign(player.transform, { x: door.x, z: door.z - 4 });
+    w.physics.playerBody!.setTranslation(player.transform, true);
+    w.physics.playerBody!.setNextKinematicTranslation(player.transform);
+    w.spatial.set(1, player.transform.x, player.transform.z);
+    m.state.l5!.survivors.forEach((r, i) => {
+      const e = w.entities.get(r.id)!;
+      Object.assign(e.transform, { x: door.x + (i % 2 ? .4 : -.4), z: door.z - 1.4 - Math.floor(i / 2) });
+      w.spatial.set(e.id, e.transform.x, e.transform.z);
+    });
+    for (let i = 0; i < 600 && !m.state.l5!.shutterAt; i++) w.update();
+    expect(m.state.l5!.shutterAt).toBeGreaterThan(0);
+    const victim = w.entities.get(m.state.l5!.survivors[0].id)!;
+    w.npcs!.civilians.outbreak!.turnNow(victim);
+    // Include the existing five-second action run-out: the new infected is engaged.
+    for (let i = 0; i < 600 && m.state.phase === 'playing'; i++) w.update();
+    expect(m.state.phase).toBe('progression');
+    expect(m.state.l5!.survivors[0].status).toBe('turned');
+    expect(m.state.result!.survivors).not.toContain('dale');
+    const save = preset('L5-default'); completeCampaignLevel(save, 5, m.state.result!, w);
+    expect(validateSave(save)).toBe(true);
+    expect(decodeSave(JSON.stringify(save)).status).toBe('ok');
+  } finally { w.dispose(); }
+}, 120_000);

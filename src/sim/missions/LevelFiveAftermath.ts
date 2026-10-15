@@ -251,7 +251,7 @@ export class LevelFiveAftermath {
   private losses(): void {
     const { world } = this.mission, s = this.s, tick = world.tick;
     for (const r of s.survivors) {
-      if (r.status !== 'following' && r.status !== 'hidden') continue;
+      if (r.status !== 'following' && r.status !== 'hidden' && r.status !== 'sheltered') continue;
       const e = this.entity(r.id), c = e?.civilian;
       const turned = !!e && (!!e.infection || !!e.infected || c?.state === 'bitten' || c?.state === 'down' || c?.state === 'rising' || c?.state === 'infected');
       const dead = !e || e.health.current <= 0 || c?.state === 'finished';
@@ -388,6 +388,9 @@ export class LevelFiveAftermath {
   }
   /** The result: survivors that reached the station alive (keys, carried into L6) and their count as `rescued`. */
   result(): { survivors: string[]; stationOccupants: EntitySnapshot[]; rescuedSurvivors: EntitySnapshot[] } {
+    // A bite/turn can land during the closing animation, after the entry roster was
+    // marked sheltered. Reconcile the real people before committing the L6 save.
+    this.losses();
     const s = this.mission.state.l5, keys = s ? s.survivors.filter(r => r.status === 'sheltered').map(r => r.key) : [];
     this.mission.state.stats.rescued = keys.length;
     return { survivors: keys, rescuedSurvivors: s ? s.survivors.filter(r => r.status === 'sheltered').map(r => structuredClone(this.entity(r.id)!)) : [], stationOccupants: s ? s.stationIds.map(id => structuredClone(this.entity(id)!)) : [] };
