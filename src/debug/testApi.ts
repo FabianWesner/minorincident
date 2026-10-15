@@ -49,6 +49,8 @@ export interface SSTestApi {
   missions: ReturnType<typeof missionControls>;
   /** E08 authoring hooks use exactly the headless production NPC systems. */
   npcs: { civilian(role: string, pos: { x: number; z: number }, options?: Parameters<import('../sim/npc/Civilians').Civilians['spawn']>[2]): number; escort(pos: { x: number; z: number }, child?: boolean): number; grab(id: number, attackerId: number): boolean; courage(amount: number): void; quality(tier: 'high' | 'low'): void;
+    /** Fixture health, like teleport: prepares an injured/dead civilian without changing friendly-fire rules. */
+    health(id: number, current: number): void;
     /** L1 v2 (lane D): install the outbreak layer + morning population on the loaded D-GROVE; returns stats. */
     l1Outbreak(setup?: import('../sim/outbreak/install').L1OutbreakSetup): { civilians: number }; l1Stats(): Record<string, number> };
   ready: Promise<void>;
@@ -146,6 +148,11 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
     look: { get: () => structuredClone({ worldLook: game.view.look.values, palette: game.view.look.palette }), set: patch => game.view.setLook(patch), export: () => game.view.look.export(), reset: () => game.view.resetLook() },
     inspect: { enable: (...args) => game.inspect!.enable(...args), setCamera: pose => game.inspect!.setCamera(pose), follow: id => game.inspect!.follow(id), timeScale: x => game.inspect!.timeScale(x), anchors: () => game.inspect!.anchors(), state: () => game.inspect!.state(), jump: id => game.inspect!.jump(id), lod: mode => game.inspect!.lod(mode) },
     version: '1.12.0', ready, npcs: { civilian: (role, pos, opts) => game.world.npcs!.civilians.spawn(role, pos, opts), escort: (pos, child) => game.world.npcs!.escorts.spawn(pos, child), grab: (id, attacker) => game.world.npcs!.civilians.grab(id, attacker, true), courage: amount => { for (const e of game.world.entities.iterate()) if (e.companion) game.world.npcs!.companion.hit(e, amount); }, quality: tier => game.world.npcs!.setQuality(tier),
+      health: (id, current) => {
+        const e = game.world.entities.get(id);
+        if (!e?.civilian || !Number.isFinite(current) || current < 0 || current > e.health.max) throw new RangeError('Invalid civilian fixture health');
+        e.health.current = current;
+      },
       l1Outbreak: setup => { installL1Outbreak(game.world, setup); return { civilians: game.world.npcs!.civilians.outbreak!.liveCivilians() }; },
       l1Stats: () => ({ ...game.world.npcs?.civilians.outbreak?.stats, live: game.world.npcs?.civilians.outbreak?.liveCivilians() ?? 0 }) }, missions: { ...missionControls(game.world), load: (def) => { game.ui.reset(); missionControls(game.world).load(def); game.ui.loaded(); } },
     campaign: {state:()=>structuredClone(game.campaign),menu:()=>game.campaignUI.showMenu(game.saves.load()),save:()=>game.saveCampaign(),restore:save=>{if(!validateSave(save))throw new Error('Invalid campaign');game.campaign=structuredClone(save);game.applyCampaign();}},

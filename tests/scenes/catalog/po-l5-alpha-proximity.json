@@ -1,0 +1,42 @@
+{
+  "extends": "../../../specs/scenes/qa-l5-group.json",
+  "name": "po-l5-alpha-proximity",
+  "l5Aftermath": {
+    "found": [
+      "rosa",
+      "dale"
+    ],
+    "alphaAt": [
+      -52,
+      -12
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -56.77,
+        -10.76
+      ],
+      "yaw": 0,
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -56.77,
+      -10.76
+    ],
+    "zoom": 1
+  },
+  "layout": {
+    "level": "L5",
+    "district": "D-FAIR"
+  },
+  "frames": 90,
+  "note": "PO #25: Alpha notice/turn telegraph at the reported car position, with two following survivors.",
+  "size": 220,
+  "hud": true
+}

@@ -365,6 +365,11 @@ export class SceneLab {
       }
       for (const [i, r] of mission.state.l5!.survivors.filter(r => r.status === 'following').entries()) {
         const e = world.entities.get(r.id)!;
+        const hp = spec.l5Aftermath.health?.[r.key];
+        if (hp !== undefined) {
+          if (!Number.isFinite(hp) || hp < 0 || hp > e.health.max) throw new RangeError(`Invalid L5 fixture health for ${r.key}`);
+          e.health.current = hp;
+        }
         Object.assign(e.transform, { x: player.transform.x - (spec.l5Aftermath.alphaAt ? 4 : 2) - i, z: player.transform.z + (spec.l5Aftermath.alphaAt ? 2 : 0) }); world.spatial.set(e.id, e.transform.x, e.transform.z);
         this.actors.set(r.key, { id: r.key, kind: 'pedestrian', entity: r.id, spec: { id: r.key, kind: 'pedestrian' }, plan: null, track: [], lod: {}, drawn: 0, inView: 0, missed: 0, farClose: 0 });
       }

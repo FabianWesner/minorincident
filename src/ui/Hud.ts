@@ -44,8 +44,11 @@ export class Hud {
   private readonly homePin = this.pin('home', '⌂');
   /** E23: the direction of the sign of life the courier just heard (4 s), and the survivors counter beside the objective. */
   private readonly cuePin = this.pin('cue', '♪');
+  private readonly survivorVitals = node('div', 'survivor-vitals');
+  private readonly survivorCards = l5Survivors.map(def => ({ def, root: node('div', `survivor-${def.key}`), face: node('div', `survivor-face-${def.key}`), health: this.bar(`survivor-health-${def.key}`) }));
   private readonly survivorText = node('span', 'survivors-found');
   private readonly cueText = node('span', 'sign-of-life');
+  private readonly followerPins = l5Survivors.map(def => ({ key: def.key, pin: this.pin(`follower-${def.key}`) }));
   private readonly threats: HTMLSpanElement[] = [];
   private readonly tracker = node('div', 'objective-tracker');
   private readonly weapon = this.weaponIcon();
@@ -85,11 +88,21 @@ export class Hud {
     vitals.append(this.portrait, bars, this.weapon.root, this.corgiBadge);
     const companion = node('div', 'corgi-companion'); companion.className = 'hud-companion hud-panel';
     const face = node('div', 'corgi-portrait'); face.className = 'hud-portrait'; face.style.backgroundImage = 'url(/assets/ui/portrait-corgi.png)'; companion.append(face, this.companion);
+    this.survivorVitals.className = 'hud-survivor-vitals';
+    for (const card of this.survivorCards) {
+      card.root.className = 'hud-survivor-card hud-panel'; card.root.hidden = true;
+      card.face.className = 'hud-portrait'; card.face.style.backgroundImage = `url(/assets/ui/portrait-survivor-${['rosa', 'mia'].includes(card.def.key) ? 'f' : 'm'}.png)`;
+      card.face.setAttribute('aria-label', card.def.name); card.face.title = card.def.name;
+      card.root.append(card.face, node('span', `survivor-name-${card.def.key}`, card.def.name), card.health.root);
+      this.survivorVitals.append(card.root);
+    }
+    this.root.append(this.survivorVitals);
     this.map.className = 'hud-map'; this.map.setAttribute('aria-label', 'North-up minimap, range 30 meters');
     const north = node('span', 'minimap-north', 'N'); north.className = 'hud-map-n';
     this.cuePin.hidden = true; this.survivorText.hidden = this.cueText.hidden = true;
     this.routePin.style.background = '#64d9ee'; this.routePin.setAttribute('aria-label', 'Next turn on the cellar route');
     this.map.append(north, this.routePin, this.playerPin, this.objectivePin, this.homePin, this.cuePin);
+    for (const { key, pin } of this.followerPins) { pin.classList.add('hud-pin-follower'); pin.hidden = true; pin.setAttribute('aria-label', `${key}, rescued survivor`); this.map.append(pin); }
     // Allocated once; no entity snapshots, DOM creation, or pin lists per frame.
     for (let i = 0; i < 256; i++) { const pin = this.pin(`threat-${i}`); pin.classList.add('hud-pin-threat'); pin.hidden = true; this.threats.push(pin); this.map.append(pin); }
     this.tracker.className = 'hud-tracker hud-panel'; this.tracker.append(this.trackerText, this.survivorText, this.cueText);
@@ -320,14 +333,47 @@ export class Hud {
   }
   /** E23: "Survivors found n/5", the direction ping of a heard sign of life (4 s, clamped to the map edge) and the stand-still prompt next to a hiding place. */
   private updateSurvivors(mission: Mission | null | undefined, px: number, pz: number): void {
+    for (const { key, pin } of this.followerPins) {
+      const r = mission?.state.l5?.survivors.find(r => r.key === key), e = r && this.game.world.entities.get(r.id);
+      const alive = !!e && !e.hidden && !e.infection && e.health.current > 0 && (r?.status === 'following' || r?.status === 'sheltered');
+      setHidden(pin, !alive);
+      if (alive && e) { attribute(pin, 'data-entity-id', String(e.id)); this.place(pin, e.transform.x, e.transform.z, px, pz, true); }
+    }
+    for (const card of this.survivorCards) {
+      const r = mission?.state.l5?.survivors.find(r => r.key === card.def.key);
+      const e = r && this.game.world.entities.get(r.id);
+      const alive = !!e && !e.hidden && !e.infection && e.health.current > 0 && (r?.status === 'following' || r?.status === 'sheltered');
+      setHidden(card.root, !alive);
+      if (alive && e) {
+        const fraction = healthFraction(e.health.current, e.health.max);
+        style(card.health.fill, 'width', `${fraction * 100}%`);
+        text(card.health.label, `${Math.ceil(e.health.current)}/${e.health.max}`);
+        attribute(card.health.root, 'aria-valuenow', String(Math.round(fraction * 100)));
+        attribute(card.root, 'aria-label', `${card.def.name}, health ${Math.round(fraction * 100)}%`);
+      }
+    }
     const l5 = mission?.state.l5, show = !!mission && !!l5 && l5.phase !== 'cellar';
     setHidden(this.survivorText, !show);
     if (!show || !l5 || !mission) { setHidden(this.cueText, true); setHidden(this.cuePin, true); return; }
     text(this.survivorText, ` · Survivors found ${l5.found}/5`);
-    const tick = this.game.world.tick, cue = l5.cue && l5.cue.until > tick ? l5.cue : null;
-    setHidden(this.cuePin, !cue);
-    let cueLabel = cue ? ` · ${cue.text}` : '';
-    if (cue) this.place(this.cuePin, cue.x, cue.z, px, pz, true);
+    // Keep the next hiding place findable between sound pulses and after checkpoint restore.
+    // The street and live distance distinguish Sam's bus from the plaza wrecks.
+    let nearest: (typeof l5.survivors)[number] | undefined, distance = Infinity;
+    for (const r of l5.survivors) {
+      if (r.status !== 'hidden' || l5.phase !== 'search' && l5.phase !== 'metro') continue;
+      const ring = mission.def.anchors[`l5-ring-${r.key}`];
+      const d = Math.hypot(ring.x - px, ring.z - pz);
+      if (d < distance) { nearest = r; distance = d; }
+    }
+    setHidden(this.cuePin, !nearest);
+    let cueLabel = '';
+    if (nearest) {
+      const def = l5Survivors.find(s => s.key === nearest.key)!, ring = mission.def.anchors[`l5-ring-${nearest.key}`];
+      cueLabel = ` · Search ${def.place} · ${Math.ceil(distance)} m`;
+      attribute(this.cuePin, 'aria-label', `Search ${def.place}, ${Math.ceil(distance)} meters`);
+      attribute(this.cuePin, 'data-survivor', nearest.key);
+      this.place(this.cuePin, ring.x, ring.z, px, pz, true);
+    }
     for (const r of l5.survivors) {
       const ring = mission.def.anchors[`l5-ring-${r.key}`];
       if (r.status === 'hidden' && ring && Math.hypot(ring.x - px, ring.z - pz) <= ring.radius && (l5.phase === 'search' || l5.phase === 'metro')) cueLabel = ` · ${l5Survivors.find(s => s.key === r.key)!.prompt}`;

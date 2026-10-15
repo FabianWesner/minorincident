@@ -1010,6 +1010,11 @@ export class GameView implements Lifecycle {
         const door = l6Doors[entry.door];
         field.push(footprint({type:'point',color:entry.door%2?'light_neon_blue':'light_siren_red',intensity:2,range:2.3,flicker:'damaged',position:[door.x,2.4,door.z],direction:[0,-1,0]}));
       }
+      const sam = this.world.missions?.state.l5?.survivors.find(r => r.key === 'sam');
+      const bus = this.world.missions?.def.anchors['l5-ring-sam'];
+      if (sam?.status === 'hidden' && bus && this.world.tick % 90 < 45) {
+        field.push(footprint({ type: 'point', color: 'light_led_white', intensity: 8, range: 5, flicker: 'none', shadow: 'none', position: [bus.x, 1.2, bus.z], direction: [0, -1, 0] }));
+      }
       this.vehicles?.pushLights(field, aura);
       // Pickups keep a small cool glint pool so loot stays findable in the dark.
       for (const entity of this.world.entities.iterate()) if (entity.pickup && !entity.hidden && !('collected' in entity.pickup && entity.pickup.collected)) field.push(pickupLight(entity.transform.x, entity.transform.z));
