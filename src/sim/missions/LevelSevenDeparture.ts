@@ -71,7 +71,9 @@ export class LevelSevenDeparture {
     const c = e.civilian!, slot = c.survivor!.slot;
     c.state = 'calm'; c.story = null; c.survivor!.cover = false;
     const queue = { x: cfg.queue.x + Math.floor(slot / 3) % 3 * .9, z: cfg.queue.z + (slot % 3 - 1) * .8 };
-    const near = distance(e.transform, queue) <= 1.6;
+    // Admit when the full footprint reaches the queue, including when the
+    // courier is standing between its centre and the last waiting survivor.
+    const near = distance(e.transform, queue) <= 1.6 + (e.combat?.radius ?? .35);
     if (near && w.tick - s.lastEnterAt >= cfg.gapTicks) {
       e.passengerOf = s.busId;
       s.lastEnterAt = w.tick; s.entering[e.id] = w.tick; this.from.set(e.id, { x: e.transform.x, z: e.transform.z });
