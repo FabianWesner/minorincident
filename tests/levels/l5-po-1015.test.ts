@@ -1,3 +1,6 @@
+import { applyCampaign } from '../../src/sim/progression/apply';
+import { loadL4 } from '../../tools/sim-runner/l4Bots';
+import { completeCampaignLevel } from '../../src/sim/progression/carryover';
 import { l5MusicReady } from '../../src/data/musicBeats';
 import { afterEach, expect, test } from 'vitest';
 import { emptyInput } from '../../src/input/InputFrame';
@@ -113,4 +116,46 @@ test('PO #19c @E23 @E23-AC14 music follows the first find and survivor checkpoin
     mission.restore(id); expect(l5MusicReady(mission.state), id).toBe(true);
   }
   mission.restore('outside'); expect(l5MusicReady(mission.state)).toBe(false);
+}, 300_000);
+
+test('PO #18 @E23 @E23-AC16 every L5 safe-space exit returns to its entry door, faces out and rejects occupied exit spots', async () => {
+  const loaded = await loadL5(1); world = loaded.world;
+  const { mission } = loaded, w = world;
+  const doors = Object.entries(mission.def.anchors).filter(([name]) => name === 'l5-cellar-door');
+  expect(doors).toHaveLength(1); // Metro is a one-way level handover, not a re-enterable safe space.
+  for (const [, door] of doors) {
+    const entry = { x: door.x, z: door.z, yaw: door.yaw ?? -Math.PI / 2 };
+    // Reconstruct the PO's cellar checkpoint before pressing E at the brace.
+    mission.restore('start');
+    const blocker = w.infected!.spawn('infected.alpha', { x: entry.x + Math.cos(entry.yaw), z: entry.z - Math.sin(entry.yaw) });
+    const brace = mission.def.anchors['l5-brace'], player = w.entities.get(1)!;
+    Object.assign(player.transform, { x: brace.x, z: brace.z }); Object.assign(w.previousPlayer!, player.transform);
+    w.physics.playerBody!.setTranslation(player.transform, true); w.physics.playerBody!.setNextKinematicTranslation(player.transform);
+    for (let tick = 0; tick < 75 && mission.state.l5!.phase === 'cellar'; tick++) {
+      w.applyInput({ ...emptyInput(), interact: true }, 'keyboard'); w.update();
+    }
+    expect(mission.state.l5!.phase).not.toBe('cellar');
+    expect(distance(player.transform, entry)).toBeLessThanOrEqual(1.5);
+    expect(Math.cos(player.transform.yaw) * Math.cos(entry.yaw) + Math.sin(player.transform.yaw) * Math.sin(entry.yaw)).toBeGreaterThan(.99);
+    expect(w.infected!.nav.clear(player.transform.x, player.transform.z, .4)).toBe(true);
+    expect(distance(player.transform, w.entities.get(blocker)!.transform)).toBeGreaterThanOrEqual((w.entities.get(blocker)!.combat?.radius ?? .8) + .35);
+    mission.restore('outside'); expect(mission.state.l5!.phase).toBe('emerged');
+    expect(distance(w.entities.get(1)!.transform, entry)).toBeLessThanOrEqual(1.5);
+  }
+}, 300_000);
+
+test('PO #18 @E23 L4 records the doorway actually entered and carries it into L5', async () => {
+  const loaded = await loadL4(1); world = loaded.world;
+  const { mission } = loaded, w = world, save = w.progression!.campaign!;
+  const door = mission.def.anchors['l4-cellar-door'];
+  mission.l4!.completed('hide');
+  expect(save.shelterEntry).toEqual({ x: door.x, z: door.z, yaw: -Math.PI / 2 });
+  const carried = structuredClone(save); delete carried.shelterEntry;
+  completeCampaignLevel(carried, 4, mission.state.stats, w);
+  expect(carried.shelterEntry).toEqual(save.shelterEntry);
+  w.dispose();
+  const next = await loadL5(1); world = next.world;
+  applyCampaign(next.world, carried);
+  next.mission.completeObjective('emerge');
+  expect(distance(next.world.entities.get(1)!.transform, carried.shelterEntry!)).toBeLessThanOrEqual(1.5);
 }, 300_000);

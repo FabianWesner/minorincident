@@ -179,8 +179,25 @@ export class LevelFiveAftermath {
   private emerge(): void {
     const { world } = this.mission, s = this.s, tick = world.tick;
     if (s.phase !== 'cellar') return;
-    this.teleport(world.entities.get(1)!, this.anchor('l5-out'));
-    for (const e of world.entities.iterate()) if (e.companion) { const p = this.snap({ x: this.anchor('l5-out').x - 1.2, z: this.anchor('l5-out').z + .8 }, .4); Object.assign(e.transform, p); world.spatial.set(e.id, p.x, p.z); }
+    const door = world.progression?.campaign?.shelterEntry ?? this.anchor('l5-cellar-door');
+    const yaw = door.yaw ?? -Math.PI / 2, player = world.entities.get(1)!, radius = player.combat?.radius ?? .35;
+    let exit: Point | undefined;
+    // Admission uses the current navigation collision map and live infected bodies.
+    // Keep all candidates just outside the remembered doorway, within the PO's 1.5 m.
+    for (const offset of [0, -.35, .35, -.7, .7, -1.05, 1.05]) {
+      for (const step of [1, 1.25, 1.45]) {
+        const p = { x: door.x + Math.cos(yaw + offset) * step, z: door.z - Math.sin(yaw + offset) * step };
+        if (!world.infected!.nav.clear(p.x, p.z, radius) || !world.trapRescue!.reachable(p.x, p.z)) continue;
+        if (world.physics.world!.intersectionWithShape({ ...p, y: (world.districts?.groundHeight(p.x, p.z) ?? 0) + .725 }, { x: 0, y: 0, z: 0, w: 1 }, world.physics.playerCollider!.shape, undefined, undefined, world.physics.playerCollider!)) continue;
+        if (world.infected!.active.some(e => e.health.current > 0 && !e.hidden && dist(e.transform, p) < radius + (e.combat?.radius ?? .4) + .05)) continue;
+        exit = p; break;
+      }
+      if (exit) break;
+    }
+    if (!exit) return; // Retry admission on the next tick if the doorway is temporarily occupied.
+    player.transform.yaw = yaw;
+    this.teleport(player, exit);
+    for (const e of world.entities.iterate()) if (e.companion) { const p = this.snap({ x: exit.x - 1.2, z: exit.z + .8 }, .4); Object.assign(e.transform, p); world.spatial.set(e.id, p.x, p.z); }
     s.phase = 'emerged'; s.emergedAt = tick;
     if (!this.mission.state.states.emerged) this.mission.setState('emerged', true);
     world.events.emit({ type: 'l5.emerged', tick });
@@ -348,6 +365,7 @@ export class LevelFiveAftermath {
   update(): void {
     const { world, state } = this.mission, s = state.l5; if (!s || !world.infected) return;
     const tick = world.tick;
+    if (s.phase === 'cellar' && state.steps.emerge.status === 'completed') this.emerge();
     if (s.phase === 'emerged' && tick >= s.emergedAt + ticks(l5.emerge.objectiveAfterS)) this.startSearch();
     // No marker ever points at a survivor (or at the search area): only the cellar brace and the Metro entrance are marked.
     if (state.marker === 'l5-plaza') state.marker = null;
