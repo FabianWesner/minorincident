@@ -22,7 +22,9 @@ The retained calibration comparison includes every recorded result field with ex
 
 The broad snapshot launched before the final renderer fix completes with 2,796 passed, eight failed and nine skipped. Its exact failures are retained in `full-suite-summary.json`: high assault p95 4.026 ms vs 4 ms; high campus p95 6.818 ms vs 4 ms; full L10, carried-prop continuity and inventory-validation timeouts; L3 newbie five deaths vs at most two; L4 tank cadence 14.117 s vs 12.8 s; and the inherited shader-trace TypeScript error fixed in `62cc5f6b`. The final-source typecheck, lint and build pass. No broad-sweep green result is claimed.
 
-The full ordinary-input L10 route passes alone in 132.426 s against its unchanged 300 s deadline. Every recorded gameplay field equals the completed broad-run artifact: 1,570.017 gameplay seconds, zero deaths, 281 kills, 355 damage. See `full-route-recheck.json`; the paired calibration records remain the before/after optimization proof. Single-worker rechecks of the other failures reserve the existing runner slots, with all assertions and limits retained. Final unit validation follows those rechecks.
+The full ordinary-input L10 route passes alone in 132.426 s against its unchanged 300 s deadline. Every recorded gameplay field equals the completed broad-run artifact: 1,570.017 gameplay seconds, zero deaths, 281 kills, 355 damage. See `full-route-recheck.json`; the paired calibration records remain the before/after optimization proof. The isolated single-worker rechecks pass high assault (13.731 s; p95 2.843 ms), high campus (29.275 s), and asset validation (162.671 s), with all assertions and limits retained; see `rechecks-summary.json` and `assault-high-recheck.json`.
+
+L3 and L4 reproduce their exact gameplay failures in the isolated recheck. A same-revision control clears the reach memo before every request, forcing the original flood without changing production source or creating a baseline worktree. It reproduces exactly five L3 deaths and the 14.116667 s L4 interval too. Thus these two current-base failures persist without the optimization; no gameplay tuning was changed. The carried-prop continuity check passes in this control in 9.268 s against its unchanged 30 s deadline. See `cache-off-control-summary.json`, `reach-cache-off.ts`, and the extending Vitest config. This control uses one ordinary runner slot alongside the final unit job; it is a gameplay comparison, not a timing-budget acceptance run. Final unit validation is still running.
 
 ## Commands
 
@@ -32,6 +34,12 @@ Heavy work runs on Hetzner through the existing remote launcher and timing isola
 sh tools/remote/run.sh "$PWD" -- bash tools/remote/timing-isolated.sh node --import tsx docs/reports/astra-hitches/evidence/calibration.ts after
 python3 docs/reports/astra-hitches/evidence/equivalence.py
 sh tools/remote/run.sh "$PWD" --pull test-results/astra-hitches/full-suite.json -- bash tools/remote/timing-isolated.sh npx vitest run tests/unit tests/sim tests/levels --maxWorkers=4 --reporter=default --reporter=json --outputFile=test-results/astra-hitches/full-suite.json
+```
+
+The same-revision cache-disabled control uses:
+
+```sh
+MI_RUNNER_IP=94.130.181.173 sh tools/remote/run.sh "$PWD" --pull test-results/astra-hitches/cache-off-control.json -- npx vitest run tests/levels/L3.test.ts tests/levels/L4.test.ts tests/sim/l9-campaign-continuity.test.ts --config docs/reports/astra-hitches/evidence/cache-off.vitest.config.ts --maxWorkers=1 --reporter=json --outputFile=test-results/astra-hitches/cache-off-control.json -t 'T-E21-03 |T-E22-11 |T-E31-20-L1-prop '
 ```
 
 Browser runs use unique ports, headless native Chrome, a fresh build, the existing browser locks and `quiet-run.sh` for timing. Quiet batches are supervised with a 1,150-second process-group bound, including queue time, so they cannot hold reservations past 20 minutes. Failed admission is recorded as unmeasured, not as a passing gate.
