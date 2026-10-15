@@ -32,11 +32,11 @@ export function installPerformanceLevel(world: SimWorld, tier: QualityTier, name
   if (name === 'perf-l8-mixed-outbreak') { installZooOutbreak(world, tier); return; }
   if (name === 'perf-night-street') { installNightStreet(world); return; }
   const district = world.districts!.districts.find(d => d.id === (name === 'perf-l6-mainstreet' ? 'D-SUBWAY' : name === 'perf-l1-foliage-200' ? 'D-MAIN' : name === 'perf-l5-aftermath' ? 'D-FAIR' : 'D-EDGE'))!;
-  const shelter = name === 'perf-l6-mainstreet' ? district.layout.anchors['photo-l6-shelter-calm'].position : null;
+  const shelter = name === 'perf-l6-mainstreet' ? district.layout.anchors['player-start'].position : null;
   const origin = shelter ? [district.origin[0] + shelter[0], district.origin[1] + shelter[2]] : district.origin;
   const { min, max } = world.districts!.nav;
   const walls: NonNullable<ScenarioDefinition['walls']> = [];
-  for (const d of world.districts!.districts) for (const box of d.decay.colliders.map(c => c.aabb).concat(d.blockers)) walls.push({ x: (box.min[0] + box.max[0]) / 2 + d.origin[0], y: (box.min[1] + box.max[1]) / 2, z: (box.min[2] + box.max[2]) / 2 + d.origin[1], halfX: (box.max[0] - box.min[0]) / 2, halfY: (box.max[1] - box.min[1]) / 2, halfZ: (box.max[2] - box.min[2]) / 2 });
+  for (const d of world.districts!.districts) for (const box of d.decay.colliders.filter(c => !c.walkable).map(c => c.aabb).concat(d.blockers)) walls.push({ x: (box.min[0] + box.max[0]) / 2 + d.origin[0], y: (box.min[1] + box.max[1]) / 2, z: (box.min[2] + box.max[2]) / 2 + d.origin[1], halfX: (box.max[0] - box.min[0]) / 2, halfY: (box.max[1] - box.min[1]) / 2, halfZ: (box.max[2] - box.min[2]) / 2 });
   const alreadyUpdating = world.infected !== null;
   world.infected = new InfectedSystem(world, { ...arena, name, ground: { width: max[0] - min[0], depth: max[1] - min[1], center: { x: (min[0] + max[0]) / 2, z: (min[1] + max[1]) / 2 } }, walls });
   world.infected.director.tier = name === 'perf-l1-foliage-200' ? 'high' : tier;
