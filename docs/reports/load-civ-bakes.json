@@ -1,0 +1,312 @@
+{
+  "task": "load-civ-bakes",
+  "baselineCommit": "2db2bde9b",
+  "implementationHead": "313846c98",
+  "changes": [
+    "L1 initial camera and short-walk cast tiers only; remaining authored cast starts after Begin using existing worker queue",
+    "Existing worker source preparation for initial L1 cast instead of compressed pose atlases",
+    "Keep a finer resident tier until its coarser tier arrives; warm new play-time batches before publishing",
+    "Load selected courier/title cosmetic first and defer background music streams until play",
+    "Initial-camera hero discovery restricted to staged L1 after paired cold diagnostics exposed added work on other levels",
+    "Speculative L1 arms cosmetic preparation without loading a courier until selection; foreground handoff loads and warms the actual choice. Avoids an extra 642520-byte female rig on the male route."
+  ],
+  "download": {
+    "method": "Production title \u2192 character \u2192 L1 \u2192 Begin; browser-context requestfinished request.sizes().responseBodySize, including dedicated workers; raw preview transfer sizes; unchanged 15000000-byte budget",
+    "results": [
+      {
+        "variant": "female",
+        "quality": "high",
+        "renderer": "webgl",
+        "bodyBytes": 14797137,
+        "requests": 241
+      },
+      {
+        "variant": "female",
+        "quality": "high",
+        "renderer": "webgpu",
+        "bodyBytes": 14651813,
+        "requests": 239
+      },
+      {
+        "variant": "female",
+        "quality": "low",
+        "renderer": "webgl",
+        "bodyBytes": 14400905,
+        "requests": 241
+      },
+      {
+        "variant": "female",
+        "quality": "low",
+        "renderer": "webgpu",
+        "bodyBytes": 14255581,
+        "requests": 239
+      },
+      {
+        "variant": "male",
+        "quality": "high",
+        "renderer": "webgl",
+        "bodyBytes": 14873791,
+        "requests": 241
+      },
+      {
+        "variant": "male",
+        "quality": "high",
+        "renderer": "webgpu",
+        "bodyBytes": 14728467,
+        "requests": 239
+      },
+      {
+        "variant": "male",
+        "quality": "low",
+        "renderer": "webgl",
+        "bodyBytes": 14477559,
+        "requests": 241
+      },
+      {
+        "variant": "male",
+        "quality": "low",
+        "renderer": "webgpu",
+        "bodyBytes": 14332235,
+        "requests": 239
+      }
+    ],
+    "implementationHead": "313846c98",
+    "resultsCoverage": "female/male \u00d7 high/low \u00d7 WebGL/WebGPU, all eight pass"
+  },
+  "coldStartup": {
+    "status": "final paired all-level run and slower-level repeats running on 313846c98",
+    "method": "Paired baseline/candidate fresh HTTP contexts, alternating order, headless Metal WebGL2, page CDP 50Mbps/20ms; worker throttling unverified; shared driver caches; single diagnostic samples",
+    "results": [
+      {
+        "build": "baseline",
+        "level": "L1",
+        "titleMs": 3321.5,
+        "menuToPlayableMs": 9850.39999961853,
+        "bodyBytes": 40782144,
+        "errors": []
+      },
+      {
+        "build": "candidate",
+        "level": "L1",
+        "titleMs": 2183.2000007629395,
+        "menuToPlayableMs": 3156,
+        "bodyBytes": 14797099,
+        "errors": []
+      },
+      {
+        "build": "candidate",
+        "level": "L2",
+        "titleMs": 2177.300000190735,
+        "menuToPlayableMs": 7509.599999427795,
+        "bodyBytes": 43027304,
+        "errors": []
+      },
+      {
+        "build": "baseline",
+        "level": "L2",
+        "titleMs": 2174.5,
+        "menuToPlayableMs": 7425.800000190735,
+        "bodyBytes": 43311156,
+        "errors": []
+      },
+      {
+        "build": "baseline",
+        "level": "L3",
+        "titleMs": 2179.3999996185303,
+        "menuToPlayableMs": 7837.5,
+        "bodyBytes": 31969822,
+        "errors": []
+      },
+      {
+        "build": "candidate",
+        "level": "L3",
+        "titleMs": 2183.199999809265,
+        "menuToPlayableMs": 5638,
+        "bodyBytes": 31685972,
+        "errors": []
+      },
+      {
+        "build": "candidate",
+        "level": "L4",
+        "titleMs": 2175.699999809265,
+        "menuToPlayableMs": 6665.5,
+        "bodyBytes": 39719815,
+        "errors": []
+      },
+      {
+        "build": "baseline",
+        "level": "L4",
+        "titleMs": 2178.1000003814697,
+        "menuToPlayableMs": 7059.299999237061,
+        "bodyBytes": 40003665,
+        "errors": []
+      },
+      {
+        "build": "baseline",
+        "level": "L5",
+        "titleMs": 2181.7999992370605,
+        "menuToPlayableMs": 9716,
+        "bodyBytes": 57365355,
+        "errors": []
+      },
+      {
+        "build": "candidate",
+        "level": "L5",
+        "titleMs": 2192.6000003814697,
+        "menuToPlayableMs": 9721.900000572205,
+        "bodyBytes": 57081505,
+        "errors": []
+      },
+      {
+        "build": "candidate",
+        "level": "L6",
+        "titleMs": 2185.199999809265,
+        "menuToPlayableMs": 8968.599999427795,
+        "bodyBytes": 45523958,
+        "errors": []
+      },
+      {
+        "build": "baseline",
+        "level": "L6",
+        "titleMs": 2185.199999809265,
+        "menuToPlayableMs": 7487.800000190735,
+        "bodyBytes": 45807808,
+        "errors": []
+      },
+      {
+        "build": "baseline",
+        "level": "L7",
+        "titleMs": 2186.7000007629395,
+        "menuToPlayableMs": 4882.800000190735,
+        "bodyBytes": 35258493,
+        "errors": []
+      },
+      {
+        "build": "candidate",
+        "level": "L7",
+        "titleMs": 2188.9000005722046,
+        "menuToPlayableMs": 5199.60000038147,
+        "bodyBytes": 37860118,
+        "errors": []
+      },
+      {
+        "build": "candidate",
+        "level": "L8",
+        "error": "TimeoutError: locator.waitFor: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('pause-button') to be visible\u001b[22m\n\u001b[2m    356 \u00d7 locator resolved to hidden <button hidden=\"\" type=\"button\" aria-label=\"Pause\" data-testid=\"pause-button\">\u2026</button>\u001b[22m\n",
+        "errors": []
+      }
+    ]
+  },
+  "validation": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "build": "pass",
+    "crowdVisibleOutbreak": {
+      "webgl": {
+        "backend": "webgl",
+        "frames": 1200,
+        "ticks": 2400,
+        "samples": 3097,
+        "infectedSamples": 1884,
+        "missed": 0,
+        "misses": [],
+        "attacks": 5,
+        "turned": 11,
+        "kills": 18,
+        "doors": 1
+      },
+      "webgpu": {
+        "backend": "webgpu",
+        "frames": 1200,
+        "ticks": 2400,
+        "samples": 3097,
+        "infectedSamples": 1884,
+        "missed": 0,
+        "misses": [],
+        "attacks": 5,
+        "turned": 11,
+        "kills": 18,
+        "doors": 1
+      }
+    },
+    "remoteFinal": "running",
+    "sceneMatrix": {
+      "webgpuTouched": {
+        "passed": 80,
+        "total": 80,
+        "seconds": 300.225,
+        "filter": "ped-*,l10-lod-*",
+        "quality": [
+          "high",
+          "low"
+        ],
+        "zoom": [
+          1.5,
+          1,
+          0.5
+        ],
+        "failed": [],
+        "implementationHead": "d563fef95; rerun pending after narrowing initial-camera discovery to L1"
+      },
+      "webglTouched": "pending",
+      "remainingFullMatrix": "pending"
+    },
+    "targetedRemote": {
+      "passed": 13,
+      "failed": 0,
+      "files": 4,
+      "artifact": "test-results/load-civ-bakes/choice-final.json"
+    },
+    "notRunAsMonolithicCommand": {
+      "command": "npm run verify -- E18",
+      "reason": "Its E18 remote-sim split still starts local timing Vitest; user requires all heavy unit/sim/level runs on Hetzner. Components are recorded separately."
+    },
+    "browserPending": [
+      "WebGL pedestrian/LOD matrix",
+      "Full scene:matrix beyond the 80 touched WebGPU rows",
+      "Full deploy-gate browser list and remaining smoke projects",
+      "All-level cold comparison after narrowing early camera setup to staged L1"
+    ],
+    "browserFinal": {
+      "passed": 12,
+      "failed": 0,
+      "workers": 1,
+      "checks": "eight initial download cases, two crowd-visible-outbreak backends, two Chromium smoke tests",
+      "implementationHead": "313846c98"
+    }
+  },
+  "visualReview": [
+    {
+      "file": "test-results/load-civ-bakes/cold-all/candidate-L1-game-camera.png",
+      "observation": "Game camera: seated hat-wearing pedestrian holding a mug on the bench, female courier standing beside the curb, and corgi all fully drawn; intact clothing and limbs, no coarse placeholder visible."
+    },
+    {
+      "file": "test-results/load-civ-bakes/cold-all/candidate-L6-game-camera.png",
+      "observation": "Shelter game camera: player and civilian cast present; floor occlusion/dither clips portions of bodies. Baseline capture shows the same floor occlusion/dither; candidate corgi is lower in its sampled animation. Single startup frames are not proof of animation parity."
+    },
+    {
+      "files": [
+        "test-results/load-civ-bakes/matrix-webgpu-touched/ped-l1-staged-cast@high-z1/sheet.jpg",
+        "test-results/load-civ-bakes/matrix-webgpu-touched/ped-l1-staged-cast@high-z0.5/sheet.jpg",
+        "test-results/load-civ-bakes/matrix-webgpu-touched/ped-l1-staged-cast@low-z1/sheet.jpg",
+        "test-results/load-civ-bakes/matrix-webgpu-touched/ped-l1-staged-cast@low-z0.5/sheet.jpg"
+      ],
+      "observation": "Opened high and low game-camera sheets at zoom 1 and 0.5: distinct outfits, lab coats, guard helmet and firefighter helmet; intact hair, hands and legs across f0/f30/f60; close camera crops the outer cast naturally. Wide sheet shows all ten cast models present. No visible placeholder swap."
+    }
+  ],
+  "limits": [
+    "No new PreRenderer framework or warm-up batching changes for audit finding 2",
+    "No deploy or merge",
+    "Real devices and headed Chrome frame-time checks not performed in this headless-only job"
+  ],
+  "diskCleanup": {
+    "keptTemporaryBuild": "/tmp/load-civ-baseline-dist",
+    "removed": [
+      "/tmp/load-civ-bakes-dist-before-tiers",
+      "/tmp/load-civ-bakes-dist-pre-source",
+      "/tmp/load-civ-bakes-dist-source-first",
+      "/tmp/load-civ-baseline-2db2bde9b source archive"
+    ],
+    "freeGiBAfterCleanup": 12
+  }
+}
