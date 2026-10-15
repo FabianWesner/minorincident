@@ -23,33 +23,43 @@ export function sheetFrames(sheet: number, frames: number): number[] {
 /** Cut-pixel gate (PO 10-14): the frame as played against the same frame with the solid-occluder cut forced off. Pixels that differ outside the
  * hole disc around the courier are buildings or vehicles opened with nothing in the way; inside the disc a real occluder must differ. */
 export async function measureCut(session: SceneSession) {
-  await session.ready();
+  // The sim is paused, but presentation easing (gate hinges, ...) still moves a little with every redraw. Let it converge first so both captures
+  // show the same state and only the cut itself can differ.
+  for (let i = 0; i < 20; i++) await session.ready();
   const cut = PNG.sync.read(await session.page.screenshot({ type: 'png' }));
   const hole = await session.page.evaluate(() => window.__SCENE__!.cutProbe(true));
-  await session.step(1); await session.ready();
+  await session.ready();
   const full = PNG.sync.read(await session.page.screenshot({ type: 'png' }));
   await session.page.evaluate(() => window.__SCENE__!.cutProbe(false));
   if (!hole || cut.width !== full.width || cut.height !== full.height) return { outside: Infinity, inside: 0, strength: 0, cover: 0, occluder: '' };
-  const cx = hole.center[0] * cut.width, cy = hole.center[1] * cut.height, radius = hole.solidRadius * cut.height * (hole.cover > .5 ? 100 : 1);
+  const cx = hole.center[0] * cut.width, cy = hole.center[1] * cut.height, radius = hole.solidRadius * cut.height;
   let outside = 0, inside = 0;
   for (let y = 0; y < cut.height; y++) for (let x = 0; x < cut.width; x++) {
     const i = (y * cut.width + x) * 4;
     if (Math.abs(cut.data[i] - full.data[i]) + Math.abs(cut.data[i + 1] - full.data[i + 1]) + Math.abs(cut.data[i + 2] - full.data[i + 2]) < 36) continue;
-    if (Math.hypot(x - cx, y - cy) <= radius) inside++; else outside++;
+    // The dither rim reaches full opacity exactly at the radius: a pixel whose centre lies within 1.5 px (one diagonal) of it is the disc edge, not a stray cut.
+    if (Math.hypot(x + .5 - cx, y + .5 - cy) <= radius + 1.5) inside++; else outside++;
   }
   return { outside, inside, strength: hole.strength, cover: hole.cover, occluder: hole.occluder };
 }
 
-/** E32 close camera: courier visible share. Four redraws of the same frame (no sim step, so the boss hole's dither pattern is identical):
- * all / courier hidden give the courier's visible pixels; crowd hidden / both hidden give her unoccluded pixels; all vs crowd hidden gives the Mega's pixels. */
+/** E32 close camera: courier visible share. Five redraws of the same frame (no sim step, so the boss hole's dither pattern is identical):
+ * all / courier hidden give the courier's visible pixels; environment and crowd hidden / subject also hidden give her unoccluded pixels; all vs crowd hidden gives the Mega's pixels. */
 export async function measureCourierShare(session: SceneSession) {
   await session.ready();
-  const shot = async (courier: boolean, crowd: boolean) => { const d = await session.page.evaluate(([c, w]) => window.__SCENE__!.hideProbe(c, w), [courier, crowd] as [boolean, boolean]); await session.ready(); return { d, png: PNG.sync.read(await session.page.screenshot({ type: 'png' })) }; };
-  const all = await shot(false, false), noCourier = await shot(true, false), noCrowd = await shot(false, true), none = await shot(true, true);
+  const shot = async (courier: boolean, crowd: boolean, environment = false) => { const d = await session.page.evaluate(([c, w, e]) => window.__SCENE__!.hideProbe(c, w, e), [courier, crowd, environment] as [boolean, boolean, boolean]); await session.ready(); return { d, png: PNG.sync.read(await session.page.screenshot({ type: 'png' })) }; };
+  const all = await shot(false, false), noCourier = await shot(true, false), noCrowd = await shot(false, true), clear = await shot(false, true, true), none = await shot(true, true, true);
   await session.page.evaluate(() => window.__SCENE__!.hideProbe(false, false));
-  const diff = (a: PNG, b: PNG) => { let n = 0; for (let i = 0; i < a.data.length; i += 4) if (Math.abs(a.data[i] - b.data[i]) + Math.abs(a.data[i + 1] - b.data[i + 1]) + Math.abs(a.data[i + 2] - b.data[i + 2]) >= 36) n++; return n; };
-  const visible = diff(all.png, noCourier.png), reference = diff(noCrowd.png, none.png), mega = diff(all.png, noCrowd.png);
-  return { megaM: all.d, visible, reference, share: reference < 150 ? 1 : Math.min(1, visible / reference), megaPixels: mega, megaShare: mega / (all.png.width * all.png.height) };
+  const changed = (a: PNG, b: PNG, i: number) => Math.abs(a.data[i] - b.data[i]) + Math.abs(a.data[i + 1] - b.data[i + 1]) + Math.abs(a.data[i + 2] - b.data[i + 2]) >= 36;
+  const diff = (a: PNG, b: PNG) => { let n = 0; for (let i = 0; i < a.data.length; i += 4) if (changed(a, b, i)) n++; return n; };
+  // Count visible pixels only inside the unobstructed subject silhouette: ground shadows and HUD changes are not body pixels.
+  let visible = 0, reference = 0;
+  for (let i = 0; i < clear.png.data.length; i += 4) {
+    if (!changed(clear.png, none.png, i)) continue;
+    reference++; if (changed(all.png, noCourier.png, i)) visible++;
+  }
+  const mega = diff(all.png, noCrowd.png);
+  return { megaM: all.d, visible, reference, share: reference > 0 ? Math.min(1, visible / reference) : 0, megaPixels: mega, megaShare: mega / (all.png.width * all.png.height) };
 }
 
 export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOptions) {
@@ -70,8 +80,12 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   if (video) for (let f = 0; f <= video * 60; f += 3) stops.add(f);
   let frame = 0;
   const shares: ({ frame: number } & Awaited<ReturnType<typeof measureCourierShare>>)[] = [];
+  const cutExpected = spec.expect?.seeThroughCutPixelsMax !== undefined || spec.expect?.seeThroughCutInsideMin !== undefined || spec.expect?.seeThroughCutInsideMax !== undefined;
+  const cuts: ({ frame: number } & Awaited<ReturnType<typeof measureCut>>)[] = [];
   const contrast: { frame: number; result: ContrastResult }[] = [], measure = async (f: number) => {
-    if (spec.expect?.courierVisibleShareMin !== undefined || spec.expect?.megaVisibleShareMin !== undefined) shares.push({ frame: f, ...await measureCourierShare(session) }); if (!spec.contrast || f === 0) return; // frame 0: the follow camera has not settled on a driven vehicle yet
+    if (spec.expect?.courierVisibleShareMin !== undefined || spec.expect?.megaVisibleShareMin !== undefined) shares.push({ frame: f, ...await measureCourierShare(session) });
+    if (cutExpected) cuts.push({ frame: f, ...await measureCut(session) });
+    if (!spec.contrast || f === 0) return; // frame 0: the follow camera has not settled on a driven vehicle yet
     const result = await measureContrast(session.page, spec); if (result) contrast.push({ frame: f, result }); };
   const pixels: { frame: number; pixels: Awaited<ReturnType<typeof canvasFrame>> }[] = [];
   const edgeSamples: ({ frame: number } & Awaited<ReturnType<typeof canvasEdgeNoise>>)[] = [];
@@ -91,8 +105,7 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   if (jpegs.length) { const path = `${out}/video.webm`; encodeWebm(jpegs, path); written.push(path); }
   let sheetInfo: { path: string; cells: number; kb: number } | undefined;
   if (cells.length) { sheetInfo = await session.makeSheet(cells, `${out}/sheet.jpg`); written.push(sheetInfo.path); }
-  const cutExpected = spec.expect?.seeThroughCutPixelsMax !== undefined || spec.expect?.seeThroughCutInsideMin !== undefined;
-  const cutPixels = cutExpected ? await measureCut(session) : null;
+  const cutPixels = cuts.length ? { ...cuts[0], outside: Math.max(...cuts.map(c => c.outside)), inside: Math.min(...cuts.map(c => c.inside)), insideMax: Math.max(...cuts.map(c => c.inside)) } : null;
   const clipping = await session.clipping(), metrics = await session.metrics(), errors = session.errors.slice(errorsBefore);
   const actualTier = await session.page.evaluate(() => window.__SS__!.getState().render.quality);
   const result = evaluate(spec, metrics, clipping, errors);
@@ -132,12 +145,13 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
     else for (const name of ['navContrastMin', 'navContrastFloor', 'playerContrastMin', 'landmarkContrastMin']) { const i = result.checks.findIndex(c => c.name === name); if (i >= 0 && !contrast.length) result.checks.splice(i, 1); }
   }
   if (shares.length) {
-    const near = shares.filter(s => s.megaM <= 14), contact = shares.filter(s => s.megaM <= 6);
+    const near = spec.megaAlpha ? shares.filter(s => s.megaM <= 14) : shares, contact = shares.filter(s => s.megaM <= 6);
     if (spec.expect?.courierVisibleShareMin !== undefined) result.checks.push({ name: 'courierVisibleShare', pass: near.every(s => s.share >= spec.expect!.courierVisibleShareMin!), value: near.length ? Math.min(...near.map(s => +s.share.toFixed(3))) : 1, limit: spec.expect.courierVisibleShareMin });
     if (spec.expect?.megaVisibleShareMin !== undefined) result.checks.push({ name: 'megaVisibleShare', pass: contact.every(s => s.megaShare >= spec.expect!.megaVisibleShareMin!), value: contact.length ? Math.min(...contact.map(s => +s.megaShare.toFixed(4))) : 1, limit: spec.expect.megaVisibleShareMin });
-    result.checks.push({ name: 'courierShareSampledNearMega', pass: near.length > 0, value: near.length, limit: 1 });
+    result.checks.push({ name: spec.megaAlpha ? 'courierShareSampledNearMega' : 'courierShareSampled', pass: near.length > 0, value: near.length, limit: 1 });
   }
   if (cutPixels) {
+    if (spec.expect?.seeThroughCutInsideMax !== undefined) result.checks.push({ name: 'seeThroughCutPixelsInsideMax', pass: cutPixels.insideMax <= spec.expect.seeThroughCutInsideMax, value: cutPixels.insideMax, limit: spec.expect.seeThroughCutInsideMax });
     if (spec.expect?.seeThroughCutPixelsMax !== undefined) result.checks.push({ name: 'seeThroughCutPixelsOutside', pass: cutPixels.outside <= spec.expect.seeThroughCutPixelsMax, value: cutPixels.outside, limit: spec.expect.seeThroughCutPixelsMax });
     if (spec.expect?.seeThroughCutInsideMin !== undefined) result.checks.push({ name: 'seeThroughCutPixelsInside', pass: cutPixels.inside >= spec.expect.seeThroughCutInsideMin, value: cutPixels.inside, limit: spec.expect.seeThroughCutInsideMin });
   }
@@ -148,7 +162,7 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   result.checks.push({ name: 'requestedQuality', pass: actualTier === session.options.tier && metrics.quality === actualTier, value: Number(actualTier === session.options.tier && metrics.quality === actualTier), limit: 1 });
   result.pass = result.checks.every(c => c.pass);
   const timing = { openMs: o.openMs ?? 0, loadMs, runMs: Date.now() - t0 - loadMs, sceneMs: Date.now() - t0 };
-  writeJson(`${out}/metrics.json`, { spec: o.file, backend: metrics.backend, requestedBackend: session.options.backend, tier: session.options.tier, actualTier, frames: metrics.frame, timing, checks: result, seeThroughCut: cutPixels, courierShares: shares, pixels, edgeSamples, ring, contrast: contrast.map(c => ({ frame: c.frame, candidates: c.result.candidates, pairs: c.result.pairs, median: +c.result.median.toFixed(2), wcag05: +c.result.wcag.toFixed(2), min: +c.result.min.toFixed(2), routeL: +c.result.routeL.toFixed(4), vergeL: +c.result.vergeL.toFixed(4), player: c.result.player && +c.result.player.toFixed(2), landmarks: c.result.landmarks && +c.result.landmarks.toFixed(2) })), consoleErrors: errors, scene, metrics, clipping });
+  writeJson(`${out}/metrics.json`, { spec: o.file, backend: metrics.backend, requestedBackend: session.options.backend, tier: session.options.tier, actualTier, frames: metrics.frame, timing, checks: result, seeThroughCut: cutPixels, seeThroughCutSamples: cuts, courierShares: shares, pixels, edgeSamples, ring, contrast: contrast.map(c => ({ frame: c.frame, candidates: c.result.candidates, pairs: c.result.pairs, median: +c.result.median.toFixed(2), wcag05: +c.result.wcag.toFixed(2), min: +c.result.min.toFixed(2), routeL: +c.result.routeL.toFixed(4), vergeL: +c.result.vergeL.toFixed(4), player: c.result.player && +c.result.player.toFixed(2), landmarks: c.result.landmarks && +c.result.landmarks.toFixed(2) })), consoleErrors: errors, scene, metrics, clipping });
   written.push(`${out}/metrics.json`);
   return { name, pass: result.pass, checks: result.checks, backend: metrics.backend, actualTier, frames: metrics.frame, seconds: timing.sceneMs / 1000, failed: result.checks.filter(c => !c.pass), clipping: clipping.summary, sheet: sheetInfo?.path, sheetKb: sheetInfo?.kb, files: written, consoleErrors: errors };
 }
