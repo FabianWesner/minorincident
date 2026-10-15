@@ -141,8 +141,11 @@
     "four ally hearing cases and Alpha ground-slam observer placement (d89e64555)",
     "24-target rocket packing (055270a55)",
     "traffic stopping (22b9c334f)",
-    "calm checkpoint geometry and exact 69%/70% health gates (1c27597d2)"
+    "calm checkpoint geometry and exact 69%/70% health gates (1c27597d2)",
+    "L1 world-preserving respawn (dec44f800 / 9d6934be0)"
   ],
-  "remainingFromSelectedRun": 17,
-  "note": "This is a source-bounded triage list, not a merged final-suite result. Charge observer fixture now exposes its actual locked-path shortfall: x=11.4598 versus 12 at the unchanged deadline; test remains red."
+  "remainingFromSelectedRun": 16,
+  "note": "This is a source-bounded triage list, not a merged final-suite result. Charge observer fixture now exposes its actual locked-path shortfall: x=11.4598 versus 12 at the unchanged deadline; test remains red.",
+  "additionalPassingGate": "341dde08e: one unchanged 6m rocket clears 200 admitted full footprints in one blast tick; original 3m fixture remains unchanged.",
+  "additionalPerformanceBlocker": "Final relative 100-actor median p95 +9.87%, above the 5% limit."
 }
