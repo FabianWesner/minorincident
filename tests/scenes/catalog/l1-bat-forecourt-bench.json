@@ -1,0 +1,83 @@
+{
+  "seed": 1,
+  "ground": "district",
+  "time": "L1",
+  "layout": {
+    "level": "L1",
+    "district": "D-GROVE",
+    "bbox": [
+      [
+        -72,
+        -24
+      ],
+      [
+        72,
+        48
+      ]
+    ],
+    "anchors": [
+      "garage-door"
+    ]
+  },
+  "camera": {
+    "mode": "game",
+    "target": [
+      22.94,
+      35.6
+    ],
+    "zoom": 1
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        22.94,
+        35.6
+      ],
+      "look": {
+        "model": "female"
+      },
+      "loadout": [
+        "weapon.bat",
+        "weapon.fists"
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        24.4,
+        35.4
+      ]
+    }
+  ],
+  "frames": 90,
+  "shots": [
+    0,
+    89
+  ],
+  "sheet": 30,
+  "expect": {
+    "consoleErrors": 0,
+    "seeThroughLowPropsMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  },
+  "name": "l1-bat-forecourt-bench",
+  "note": "PO #3/#5: game camera at (22.94,35.60). Tip the shipped bench across the fence opening; production prop clearance returns it beside the road, keeping the exit open.",
+  "script": [
+    {
+      "frame": 10,
+      "effect": {
+        "moveProp": "prop.bench:1309",
+        "by": [
+          -7.2,
+          0.95
+        ],
+        "tip": true
+      }
+    }
+  ]
+}

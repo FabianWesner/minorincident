@@ -219,7 +219,7 @@ export class SceneLab {
       if (!item) throw new Error(`Rotation fixture needs a pushable id: ${prop.id}`);
       world.props!.place(item, { p: [...item.pose.p], q: prop.rotation });
     }
-    if (spec.layout?.level === 'L7' || spec.layout?.level === 'L3') world.scenario = spec.layout.level;
+    if (spec.layout?.level === 'L1' || spec.layout?.level === 'L7' || spec.layout?.level === 'L3') world.scenario = spec.layout.level;
     const outbreak = installL1Outbreak(world, { civilians: 0 });
     // Simulation ownership follows the authored actor/vehicle, independently of the shot camera.
     const focus = spec.actors?.find(a => a.kind === 'courier')?.at ?? spec.vehicles?.[0]?.at;
