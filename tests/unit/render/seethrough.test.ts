@@ -1,5 +1,8 @@
 import { expect, test, vi } from 'vitest';
-import { Box3, PerspectiveCamera, Vector3 } from 'three/webgpu';
+import { Box3, BoxGeometry, Mesh, MeshBasicNodeMaterial, PerspectiveCamera, Vector3 } from 'three/webgpu';
+import { VehicleView } from '../../../src/render/VehicleView';
+import { EntityAssets } from '../../../src/render/EntityAssets';
+import { l4 } from '../../../src/data/l4';
 import { DistrictView } from '../../../src/render/DistrictView';
 import { seeThrough } from '../../../src/render/SeeThrough';
 import type { View } from '../../../src/render/View';
@@ -39,4 +42,19 @@ test('the clear inner disc and depth include every corner of a whole ridden vehi
       expect(point.applyMatrix4(view.camera.matrixWorldInverse).z).toBeGreaterThan(seeThrough.depth.value);
     }
   }
+});
+
+test('passenger reveal follows the authoritative L2 truck and L4 bus instead of a nearby decoy', () => {
+  const geometry = new BoxGeometry(2, 2, 6), material = new MeshBasicNodeMaterial();
+  const model = new Mesh(geometry, material); model.position.x = 10;
+  const world = { vehicles: { active: null }, missions: { state: { l2: { seated: true, truckId: 7 }, l4: { seated: true, convoyIds: l4.convoy.vehicles.map((_, i) => 20 + i) } } } };
+  const vehicles = Object.assign(Object.create(VehicleView.prototype), { world, records: new Map([[7, { model }]]) }) as VehicleView;
+  const bus = world.missions.state.l4.convoyIds[l4.convoy.vehicles.findIndex(v => v.player)];
+  const entities = Object.assign(Object.create(EntityAssets.prototype), { world, records: new Map([[999, { model: new Mesh(geometry, material) }], [bus, { model }]]) }) as EntityAssets;
+  const bounds = new Box3();
+  expect(vehicles.playerBounds(bounds)).toBe(true); expect(bounds.getCenter(new Vector3()).x).toBe(10);
+  expect(entities.playerBounds(bounds)).toBe(true); expect(bounds.getCenter(new Vector3()).x).toBe(10);
+  world.missions.state.l2.seated = false; world.missions.state.l4.seated = false;
+  expect(vehicles.playerBounds(bounds)).toBe(false); expect(entities.playerBounds(bounds)).toBe(false);
+  geometry.dispose(); material.dispose();
 });
