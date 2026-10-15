@@ -7,7 +7,7 @@ import type { NavGrid } from '../ai/NavGrid';
 import type { Transform } from '../world/types';
 
 /** Soft crowd circles have no Rapier body. E07 supplies live transform references. */
-export interface CrowdObstacle { transform: { x: number; z: number }; radius: number }
+export interface CrowdObstacle { transform: { x: number; z: number; y?: number }; radius: number }
 /** Rapier sweep/slide with bounded acceleration. Intent runs before physics, pose after it (Bruno Player.js). */
 export class KinematicController {
   readonly response = motionResponse();
@@ -74,6 +74,8 @@ export class KinematicController {
     }
     let pushX = 0, pushZ = 0, overlaps = 0;
     if (enabled && !input.attackInPlace) for (const neighbor of this.crowd) {
+      // A crowd on the road below a bridge cannot press against the capsule on its deck.
+      if (neighbor.transform.y !== undefined && Math.abs(transform.y - neighbor.transform.y) >= survivor.height) continue;
       const dx = transform.x - neighbor.transform.x, dz = transform.z - neighbor.transform.z;
       const distance = Math.hypot(dx, dz), overlap = survivor.radius + neighbor.radius - distance;
       if (overlap > 0) { pushX += (distance > 0 ? dx / distance : x) * overlap; pushZ += (distance > 0 ? dz / distance : z) * overlap; overlaps++; }

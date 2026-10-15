@@ -42,5 +42,94 @@
   ],
   "frames": 300,
   "sheet": 25,
-  "trace": true
+  "trace": true,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -2,
+        0
+      ],
+      "yaw": 0,
+      "loadout": [
+        "weapon.bat",
+        "weapon.fists"
+      ]
+    },
+    {
+      "id": "officer-1",
+      "kind": "pedestrian",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.police-officer",
+        "tint": "#2f4858",
+        "role": "officer"
+      },
+      "state": {
+        "ally": {
+          "role": "officer"
+        }
+      }
+    },
+    {
+      "id": "officer-2",
+      "kind": "pedestrian",
+      "at": [
+        0,
+        -1.4
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.police-officer",
+        "tint": "#2f4858",
+        "role": "officer"
+      },
+      "state": {
+        "ally": {
+          "role": "officer"
+        }
+      }
+    },
+    {
+      "id": "officer-3",
+      "kind": "pedestrian",
+      "at": [
+        -0.4,
+        1.4
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "npc.police-officer",
+        "tint": "#2f4858",
+        "role": "officer"
+      },
+      "state": {
+        "ally": {
+          "role": "officer"
+        }
+      }
+    },
+    {
+      "id": "wave",
+      "kind": "infected",
+      "at": [
+        3,
+        0
+      ],
+      "count": 4,
+      "spread": 1,
+      "yaw": 180,
+      "state": "chase"
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  }
 }
