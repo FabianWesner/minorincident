@@ -7,10 +7,10 @@ const baseline = process.argv[2];
 if (!baseline) throw new Error('capture.ts <baseline commit>');
 const out = 'docs/reports/alpha-look/comparisons'; mkdirSync(out, { recursive: true });
 const spec = readSpec('tests/scenes/catalog/alpha-look-lineup.json');
-const original = new Map(['', '.lod1', '.lod2'].map(suffix => {
-  const path = `assets/models/inf.alpha${suffix}.glb`;
+const original = new Map(['inf.alpha', 'inf.mega-alpha'].flatMap(id => ['', '.lod1', '.lod2'].map(suffix => {
+  const path = `assets/models/${id}${suffix}.glb`;
   return [path, execFileSync('git', ['show', `${baseline}:public/${path}`])];
-}));
+})));
 const captures = new Map<string, Buffer>();
 try {
   for (const backend of ['webgl2', 'webgpu'] as const) for (const tier of ['high', 'low'] as const) for (const phase of ['before', 'after']) {
@@ -18,7 +18,7 @@ try {
     try {
       await session.open();
       if (phase === 'before') {
-        await session.page.route('**/assets/models/inf.alpha*.glb', route => {
+        await session.page.route('**/assets/models/inf.*alpha*.glb', route => {
           const path = new URL(route.request().url()).pathname.slice(1), body = original.get(path);
           return body ? route.fulfill({ body, contentType: 'model/gltf-binary' }) : route.continue();
         });

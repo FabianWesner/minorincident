@@ -1461,6 +1461,21 @@ export class SceneLab {
   }
   /** Courier-visible-share probe: redraw with the courier and/or the crowd (Mega included) hidden; returns the courier-to-Mega distance in metres (Infinity when none). */
   hideProbe(courier: boolean, crowd: boolean): number { return this.game.view.probeVisibility({ courier, crowd }); }
+  private megaProbeModels = new Map<number, string | undefined>();
+  /** Render a regular Alpha at each Mega's exact transform/pose, without advancing simulation.
+   * Preserve pursuit/pose; each asset keeps its normal material (Mega alone has the courier cutout). */
+  alphaReferenceProbe(enabled: boolean): void {
+    for (const e of this.world.entities.iterate()) if (e.infected?.pursuit) {
+      if (enabled) {
+        if (!this.megaProbeModels.has(e.id)) this.megaProbeModels.set(e.id, e.infected.model);
+        e.infected.model = 'inf.alpha';
+      } else if (this.megaProbeModels.has(e.id)) {
+        e.infected.model = this.megaProbeModels.get(e.id);
+        this.megaProbeModels.delete(e.id);
+      }
+    }
+    this.game.view.probeVisibility({ courier: false, crowd: false });
+  }
   /** Point-in-scene to client pixels (for cropping close-ups from a screenshot). */
   project(p: [number, number, number]): { x: number; y: number } { const q = this.game.view.project(...p); return { x: (q[0] + 1) / 2 * innerWidth, y: (1 - q[1]) / 2 * innerHeight }; }
 }

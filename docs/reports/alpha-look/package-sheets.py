@@ -3,7 +3,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw
 
 root = Path(__file__).parent
-for backend, before, after in [('webgl2', 'before/lods', 'final/lods'), ('webgpu', 'before/lods-webgpu', 'final/lods-webgpu')]:
+for backend, before, after in [(b, f'revision/before-lods-{b}', f'revision/after-lods-{b}') for b in ('webgl2', 'webgpu')]:
     a = Image.open(root / before / 'sheet-01.png').convert('RGB')
     b = Image.open(root / after / 'sheet-01.png').convert('RGB')
     sheet = Image.new('RGB', (a.width + b.width, max(a.height, b.height) + 30), '#17151b')

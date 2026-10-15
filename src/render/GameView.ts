@@ -681,7 +681,7 @@ export class GameView implements Lifecycle {
   }
   /** The boss hole opens while the Mega is within 14 m of the courier; it only drops boss fragments nearer the lens than her, inside a courier-sized disc. */
   private updateBossHole(player?: { x: number; z: number }): void {
-    const goal = player && this.megaDistance(player) < 14 ? .2 : 0;   // Alpha-sized boss: a partial hole is enough (PO 10-15)
+    const goal = player && this.megaDistance(player) < 14 ? .1 : 0;   // Compact PO 10-15 boss: retain its silhouette; the 60% courier pixel gate still applies.
     this.bossHole += (goal - this.bossHole) * .3; if (Math.abs(goal - this.bossHole) < .01) this.bossHole = goal;
     seeThrough.bossStrength.value = this.bossHole;
     const screenHeight = 2 * this.camera.position.distanceTo(this.view.focus) * Math.tan(this.camera.fov * Math.PI / 360);

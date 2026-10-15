@@ -1,4 +1,4 @@
-"""Mega Alpha (L10 final boss): the Alpha's rig and clip contract at about twice the Alpha's size.
+"""Mega Alpha (L10 final boss): the Alpha's rig and clip contract at the regular Alpha's height and footprint.
 Headless: python3 tools/blender/run.py assets/inf.mega-alpha/build.py --glb assets/inf.mega-alpha/model.glb
 Derived from the shipped worker like inf.alpha (same node names, identity rest rotations, hidden stump caps).
 LOD0 is the reshaped worker plus authored features (hunch mass, spine ridges, scars, big eyes, oversized right arm).
@@ -27,12 +27,12 @@ parts, objects, M = ns['parts'], ns['objects'], ns['M']
 bpy.context.view_layer.update()
 
 # ---- shape --------------------------------------------------------------------------------------------------------
-HEIGHT = 1.70          # PO 10-15: same height as the regular Alpha (inf.alpha uses 1.47); stronger through mass, not size
-BULK = 1.55            # extra breadth/depth over the Alpha's 1.14/1.22 proportions
+HEIGHT = 1.77          # Match the regular Alpha's packed height despite the deeper hunch.
+BULK = 1.03            # PO 10-15: width and depth must remain within 1.3x the regular Alpha.
 S = HEIGHT / 3.3       # authored absolute offsets below were sized for the old x3.3 body
 shape = Matrix.Diagonal(Vector((HEIGHT * 1.14 * BULK, HEIGHT * 1.22 * BULK, HEIGHT, 1)))
 LEAN = math.radians(14)  # hunch baked into the rest pose (rest rotations stay identity)
-ARM_SCALE = 1.5          # oversized right arm (character right = -Y)
+ARM_SCALE = 1.08          # oversized right arm (character right = -Y)
 TORSO_TREE = {'torso', 'head', 'backpackSocket', 'armL', 'foreArmL', 'handL', 'armR', 'foreArmR', 'handR'}
 ARM_TREE = {'armR', 'foreArmR', 'handR'}
 parents = {n: (o.parent.name if o.parent else None) for n, o in parts.items()}
@@ -57,7 +57,8 @@ def tf(owner):
         m = Matrix.Translation(HEAD_DROP) @ m
     if owner in ARM_TREE:
         m = armgrow @ m
-    return m
+    # Keep the forward hunch inside the same 1.3x depth limit as the arm span.
+    return Matrix.Diagonal(Vector((.84, 1, 1, 1))) @ m
 
 positions = {n: tf(n) @ base_pos[n] for n in parts}
 # The head is shrunk locally (a small head on the mass reads brutish).
@@ -95,8 +96,8 @@ for obj in caps:
     obj.matrix_parent_inverse = obj.parent.matrix_world.inverted()
     obj.matrix_basis = Matrix.Identity(4)
 
-# Second pass (PO review): high-contrast dusk palette. Dark brown skin, near-black rags, red muscle mass, white bone, bright blood.
-PAL = {'mass': ns['mat']('redDark', '9e2938', .6), 'skin': ns['mat']('leatherShadow', '7a4630', .74), 'cloth': M['uiDark'], 'blood': M['blood'], 'eye': M['eye'], 'bone': M['picketWhite']}
+# PO revision: bruised dark skin/muscle, near-black rags, bone armour and bright blood.
+PAL = {'mass': ns['mat']('vest', '752d39', .6), 'skin': ns['mat']('leather', '493128', .74), 'cloth': M['uiDark'], 'blood': M['blood'], 'eye': M['eye'], 'bone': M['picketWhite']}
 for owner, group in bodies.items():
     for obj in group:
         for i, material in enumerate(list(obj.data.materials)):
@@ -221,9 +222,9 @@ def features(detail):
     hump_c = Vector((torso_lo.x + .48 * td, 0, torso_hi.z - .30 * th))
     rx, ry, rz = .55 * td, .62 * tw, .34 * th
     put('torso', ellipsoid('hump', hump_c, (rx, ry, rz), PAL['mass'], seg + 2, rings + 1))
-    for name, side, grow in (('shoulderL', 'armL', 1.0), ('shoulderR', 'armR', 1.25)):
+    for name, side, grow in (('shoulderL', 'armL', 1.0), ('shoulderR', 'armR', 1.08)):
         sp = positions[side] + Vector((-.10 * S, 0, .02 * S * grow))
-        put('torso', ellipsoid(name, sp, (.80 * S * grow, .74 * S * grow, .62 * S * grow), PAL['mass'], seg + 2, rings + 1))
+        put('torso', ellipsoid(name, sp, (.58 * S * grow, .54 * S * grow, .50 * S * grow), PAL['mass'], seg + 2, rings + 1))
     # Exposed spine ridge: bone-white spikes riding the trapezius from the lower back up and over to the neck.
     count = 8
     for i in range(count):
@@ -246,7 +247,7 @@ def features(detail):
         d = (d - normal * d.dot(normal)).normalized()
         put('torso', slash('backScar%d' % i, hump_c + Vector((x, y, z)) + normal * .0, d, .34 * th, .07 * th, .05 * td, normal, PAL['cloth'], sides))
     # Armour-like bone plates over both shoulders and glowing red veins crawling over the chest and the hump.
-    for name, side, grow in (('plateL', 'armL', 1.0), ('plateR', 'armR', 1.25)):
+    for name, side, grow in (('plateL', 'armL', 1.0), ('plateR', 'armR', 1.08)):
         sp = positions[side] + Vector((-.06 * S, 0, .30 * S * grow))
         put('torso', ellipsoid(name, sp, (.50 * S * grow, .52 * S * grow, .17 * S * grow), PAL['bone'], seg + 2, rings))
     for i, (dy, dz, ang) in enumerate([(-.30, .78, .25), (.0, .72, -.25), (.30, .78, .3), (-.12, .40, .1), (.16, .36, -.15)]):
