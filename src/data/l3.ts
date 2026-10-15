@@ -100,14 +100,16 @@ export const l3 = {
       // Visible sidewalks on every avenue; 30-35 m between packs, plus relief after the larger clusters.
       ...([-100, -66, -32, 2, 36, 60, 88, 108, 122] as const).flatMap(x =>
         ([-28, 0, 28] as const).map(z => {
-          // The jam/bus passing line runs along the kerb: keep these two packs within walk-over reach on the sidewalk.
-          const offset = z === -28 ? x === 36 || x === 60 ? 4 : 4.4 : 3.4;
-          return [x === -100 && z === -28 ? x - 1 : x, z + ((x === -100 && z === -28) || (x === -66 && z === 0) || (x === 36 && z === 28) ? -1 : 1) * offset] as const;
+          // The jam/bus passing line runs along the kerb: keep packs within walk-over reach before the exposed queues.
+          const offset = z === -28 ? x === 36 || x === 60 || x === 88 ? 4 : 4.4 : 3.4;
+          const kitX = z === -28 && x === 2 ? -9 : z === -28 && x === 36 ? 29 : z === -28 && x === 88 ? 80 : x === -100 && z === -28 ? x - 1 : x;
+          if (z === -28 && x === 2) return [kitX, -23.6] as const;
+          return [kitX, z + ((x === -100 && z === -28) || (x === -66 && z === 0) || (x === 36 && z === 28) ? -1 : 1) * offset] as const;
         })),
       // The turn from the cross street into the Boulevard (real-input death loop, lane l3-finish).
-      [-13.75, -22.75],
+      [-13.75, -12],
       // Last street turn before the longer highway approach: recovery before the exposed ramp, not another attrition retry.
-      [131.75, -22.75], [149, 2.75], [178, -1.2], [201, -1.8],
+      [131.75, -6], [138.75, -.5], [162, -2.6], [201, -1.8],
     ] as readonly P[],
   },
   /** Multiplier on the infected hit (L1: 10 per hit, 0.9 s cycle): PO 10-09: was 1.8 (the L2 value), too punishing; 1.1 still hits harder than L1 but a straight-line player survives a few bites. */
