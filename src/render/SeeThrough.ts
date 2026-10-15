@@ -18,6 +18,10 @@ export const seeThrough = {
   cover: uniform(0).setGroup(renderGroup),
   /** World height of the courier's feet (the deck, stair or paving she stands on, 0 on the street). Solid occluders are only cut above it. */
   floor: uniform(0).setGroup(renderGroup),
+  /** Mega Alpha only (E32 close camera): 0..1 eased opening of a courier-sized hole in the boss while it stands between the lens and the courier. */
+  bossStrength: uniform(0).setGroup(renderGroup),
+  /** Boss hole radius in screen heights (the boss hole is about a courier wide, not a survivor group). */
+  bossRadius: uniform(.12).setGroup(renderGroup),
 };
 
 /** Placements lower than this never count as occluders (DistrictView's camera-to-courier tests) and are never cut.
@@ -36,6 +40,14 @@ export const seeThroughHole = (scale = 1, radius: Node<'float'> = seeThrough.rad
 export const seeThroughKeep = () => {
   // With `cover` the radius grows to 3 (beyond any screen corner from any centre): everything nearer than the courier opens.
   const hole = positionWorld.y.greaterThan(seeThrough.floor.add(.3)).select(mix(1, seeThroughHole(.85, mix(seeThrough.solidRadius, 3, seeThrough.cover), .75), seeThrough.strength), 1);
+  const noise = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
+  return hole.greaterThan(noise);
+};
+
+/** Mega Alpha dither (same noise as solid occluders): only boss fragments nearer the lens than the courier's far body point and inside a small
+ * disc around her are dropped, so a boss standing in front keeps its silhouette, arms and red eyes while the courier stays readable. */
+export const seeThroughKeepBoss = () => {
+  const hole = mix(1, seeThroughHole(1, seeThrough.bossRadius, .6), seeThrough.bossStrength);
   const noise = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
   return hole.greaterThan(noise);
 };
