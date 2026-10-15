@@ -1,0 +1,117 @@
+{
+  "extends": "../l5-encounters/metro-ingress.json",
+  "name": "collision-l5-metro-ingress",
+  "note": "Five living followers fill the left station lane from the back; the courier uses the right lane. Goals mirror the production ingress. Inspect both tiers and game zooms for distinct bodies and planted feet while the shutter closes.",
+  "script": [
+    {
+      "frame": 0,
+      "actor": "follower-0",
+      "do": {
+        "walk": [
+          [
+            37.3854,
+            -51.53
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 0,
+      "actor": "follower-1",
+      "do": {
+        "walk": [
+          [
+            37.3854,
+            -50.78
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 0,
+      "actor": "follower-2",
+      "do": {
+        "walk": [
+          [
+            37.3854,
+            -50.03
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 0,
+      "actor": "follower-3",
+      "do": {
+        "walk": [
+          [
+            37.3854,
+            -49.28
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 0,
+      "actor": "follower-4",
+      "do": {
+        "walk": [
+          [
+            37.3854,
+            -48.53
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 0,
+      "effect": {
+        "metroShutter": 0
+      }
+    },
+    {
+      "frame": 570,
+      "effect": {
+        "metroShutter": 0.5
+      }
+    },
+    {
+      "frame": 630,
+      "effect": {
+        "metroShutter": 1
+      }
+    }
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000,
+    "clippingMax": 0,
+    "collisionFailuresMax": 0,
+    "collisionPendingMax": 0,
+    "bodyOverlapMaxCm": 2,
+    "actorTravel": {
+      "follower-0": [
+        6,
+        100
+      ],
+      "follower-1": [
+        6,
+        100
+      ],
+      "follower-2": [
+        6,
+        100
+      ],
+      "follower-3": [
+        6,
+        100
+      ],
+      "follower-4": [
+        6,
+        100
+      ]
+    }
+  }
+}
