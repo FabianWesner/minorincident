@@ -44,7 +44,7 @@ export interface SceneSpec {
   /** Depth of field as in L1 (default true). */
   dof?: boolean;
   /** Copy placements from a shipped district layout. Positions stay in district coordinates unless `recenter`. */
-  layout?: { level?: 'L2' | 'L3' | 'L4' | 'L5' | 'L6' | 'L7'; district: DistrictId; bbox?: [Point, Point]; ids?: string[]; assets?: string[]; anchors?: string[]; recenter?: boolean };
+  layout?: { level?: 'L1' | 'L2' | 'L3' | 'L4' | 'L5' | 'L6' | 'L7'; district: DistrictId; bbox?: [Point, Point]; ids?: string[]; assets?: string[]; anchors?: string[]; recenter?: boolean };
   props?: PropSpec[];
   actors?: ActorSpec[];
   vehicles?: VehicleSpec[];
@@ -417,7 +417,7 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
   const gameplay: DistrictGameplay = { id: district, playerStart: { x: playerStart[0], z: playerStart[1] }, spawns: [], spawnVolumes: [], triggers: [], objectives: [], interactables: [], civilianRoutes: [], safePoints: [], photoSpots: [], decay: [] };
   gameplay.barricades = spec.barricadeSlots;
   const composition: LevelComposition = {
-    id: 'scene-lab', tier, timeOfDay: spec.time ?? 'L1', districts: [{ id: district, origin: [0, 0], gameplay }],
+    id: spec.layout?.level === 'L1' ? 'L1' : 'scene-lab', tier, timeOfDay: spec.time ?? 'L1', districts: [{ id: district, origin: [0, 0], gameplay }],
     scene: { glb: spec.ground === 'district', ground: spec.ground === 'asphalt' || spec.ground === 'sidewalk' ? spec.ground : 'grass', perimeter: false, courier: true },
   };
   return { composition, layout, placements: kept, center, playerStart };

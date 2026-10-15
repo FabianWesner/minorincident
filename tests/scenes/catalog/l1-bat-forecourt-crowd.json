@@ -1,0 +1,83 @@
+{
+  "seed": 1,
+  "ground": "district",
+  "time": "L1",
+  "layout": {
+    "level": "L1",
+    "district": "D-GROVE",
+    "bbox": [
+      [
+        -72,
+        -24
+      ],
+      [
+        72,
+        48
+      ]
+    ],
+    "anchors": [
+      "garage-door"
+    ]
+  },
+  "camera": {
+    "mode": "game",
+    "target": [
+      22.94,
+      35.6
+    ],
+    "zoom": 1
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        22.94,
+        35.6
+      ],
+      "look": {
+        "model": "female"
+      },
+      "loadout": [
+        "weapon.bat",
+        "weapon.fists"
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        24.4,
+        35.4
+      ]
+    },
+    {
+      "id": "horde",
+      "kind": "infected",
+      "at": [
+        16,
+        29
+      ],
+      "count": 28,
+      "spread": 10,
+      "state": "chase"
+    }
+  ],
+  "frames": 240,
+  "shots": [
+    0,
+    120,
+    239
+  ],
+  "sheet": 80,
+  "expect": {
+    "consoleErrors": 0,
+    "seeThroughLowPropsMax": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000
+  },
+  "name": "l1-bat-forecourt-crowd",
+  "note": "PO #4b: the shipped L1 forecourt admission steers a 28-infected population along the surrounding streets, with three courier pursuers at the apron. Same population at both tiers.",
+  "infectedCap": 60
+}
