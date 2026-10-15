@@ -26,7 +26,7 @@ test('T-E24-06 @E24 @E24-AC06 @E24-AC07 @E24-AC13 idle two breaches, bangs, imme
 test('T-E24-16 @E24 @E24-AC16 death restores all four checkpoint snapshots, outbreak, gates and power',async()=>{
   const l=await loadL6(4);world=l.world;const m=l.mission,w=world,evidence:Record<string,unknown>={};
   for(const id of l6.checkpoints){
-    if(id==='abandon'){m.completeObjective('shelter');m.completeObjective('stop');step(w,1);}
+    if(id==='abandon'){m.completeObjective('shelter');m.completeObjective('stop');step(w,32);m.checkpoint(id);} // Settle the staged arrivals, as the natural abandonment checkpoint does.
     if(id==='mid-tunnel'||id==='exit-platform')m.checkpoint(id);
     const state=structuredClone(m.state.l6!),positions=state.survivors.map(r=>({...w.entities.get(r.id)!.transform,id:r.id})),infected=w.infected!.active.map(e=>e.id);
     step(w,20);w.player!.damage(w.entities.get(1)!.health.max,w.tick);
