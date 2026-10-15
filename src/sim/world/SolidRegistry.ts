@@ -240,7 +240,12 @@ export class SolidRegistry {
   private publish(e: EntitySnapshot, ground = false): void {
     if (ground) groundAgent(this.world, e);
     this.world.spatial.set(e.id, e.transform.x, e.transform.z);
-    if (e.id === 1) { this.world.physics.playerBody?.setTranslation(e.transform, true); this.world.physics.playerBody?.setNextKinematicTranslation(e.transform); }
+    if (e.id === 1) {
+      const physics = this.world.physics;
+      physics.playerBody?.setTranslation(e.transform, true); physics.playerBody?.setNextKinematicTranslation(e.transform);
+      const collider = physics.playerCollider?.translation();
+      if (collider && (collider.x !== e.transform.x || collider.y !== e.transform.y || collider.z !== e.transform.z)) physics.world?.propagateModifiedBodyPositionsToColliders();
+    }
   }
   /** Last phase, after cleanup + .25. Projection is bounded; unresolved motion rolls back to a safe prior pose. */
   commit(): void {
