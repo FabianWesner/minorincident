@@ -185,7 +185,7 @@ test('@E23 @E23-AC15 the five survivors cross the Metro opening from the real-in
     // The lookout has left his post in the recorded real-input run. His body
     // must not be needed to push followers out of a doorway crowd jam.
     w.entities.delete(m.state.l5!.lookoutId); w.spatial.delete(m.state.l5!.lookoutId);
-    const player = w.entities.get(1)!, door = m.def.anchors['l5-metro-shutter'];
+    const player = w.entities.get(1)!;
     Object.assign(player.transform, { x: 37.78496170043945, z: -50.62974166870117 });
     w.physics.playerBody!.setTranslation(player.transform, true);
     w.physics.playerBody!.setNextKinematicTranslation(player.transform);
