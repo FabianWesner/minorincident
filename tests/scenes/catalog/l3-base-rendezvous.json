@@ -1,0 +1,60 @@
+{
+  "name": "l3-base-rendezvous",
+  "note": "PO 10b/11 seed 1: production rendezvous acknowledges arrival, green ring, objective countdown, boom lowers behind the rescued group; full crowd attacks outside the army perimeter while soldiers fire.",
+  "ground": "district",
+  "time": "L3",
+  "tier": 2,
+  "layout": {
+    "level": "L3",
+    "district": "D-CORRIDOR",
+    "bbox": [
+      [
+        -166,
+        -46
+      ],
+      [
+        248,
+        46
+      ]
+    ]
+  },
+  "l3Rendezvous": true,
+  "hud": true,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        225,
+        0
+      ]
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        219,
+        2
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      218,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 180,
+  "sheet": 45,
+  "shots": [
+    0,
+    45,
+    180
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  }
+}

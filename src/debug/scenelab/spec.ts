@@ -14,6 +14,8 @@ export interface SceneSpec {
   menuScreen?: 'title' | 'levels';
   /** Production L4 convoy, population, braking and unload controller on an uncropped Fairhaven layout. */
   l4Convoy?: boolean | 'parked';
+  /** Production L3 rendezvous, rescued group and full authored finale crowd. */
+  l3Rendezvous?: boolean;
   /** One R1–R6 production encounter, with the quality tier's authored crowd. */
   cureEncounter?: string;
   /** Production L10 graph/preset at a region checkpoint; fixture anchors stay on its existing slab. */
@@ -407,8 +409,8 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
     }
     layout.walkable.excluded = source.walkable.excluded.map(polygon => polygon.map(([x,z]) => [x+shift[0],z+shift[1]]));
   }
-  if (spec.l4Convoy && source) layout.colliders = structuredClone(source.colliders);
-  for (const name of spec.l4Convoy && source ? Object.keys(source.anchors) : spec.layout?.anchors ?? []) {
+  if ((spec.l4Convoy || spec.l3Rendezvous) && source) layout.colliders = structuredClone(source.colliders);
+  for (const name of (spec.l4Convoy || spec.l3Rendezvous) && source ? Object.keys(source.anchors) : spec.layout?.anchors ?? []) {
     const anchor = source?.anchors[name];
     if (!anchor) throw new Error(`Unknown layout anchor ${name}`);
     layout.anchors[name] = structuredClone(anchor);
