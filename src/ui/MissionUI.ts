@@ -101,7 +101,9 @@ export class MissionUI {
       if(this.active!==objective.id){this.active=objective.id;this.text(this.toast,`New objective: ${cureFinaleText(mission) ?? objective.text}`);}
       setHidden(this.toast,this.world.tick-state.steps[objective.id].started>=180);
       if(anchor){
-        this.point.set(anchor.x,1.8,anchor.z).project(camera);
+        const direction = this.routePin.hidden ? anchor : this.cellarTurn;
+        this.point.set(direction.x,1.8,direction.z).project(camera);
+        attribute(this.marker,'data-guidance',this.routePin.hidden?'destination':'street-route');
         const margin=42,cx=width/2,cy=height/2;
         let dx=this.point.x*cx,dy=-this.point.y*cy;
         if(this.point.z>1){dx=-dx;dy=-dy;}
