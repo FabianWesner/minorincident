@@ -15,7 +15,7 @@
       "kind": "courier",
       "at": [
         -45,
-        40.6
+        42.6
       ],
       "yaw": 90,
       "state": "idle"
@@ -28,8 +28,11 @@
   },
   "hud": true,
   "camera": {
-    "mode": "follow",
-    "actor": "courier",
+    "mode": "game",
+    "target": [
+      -45,
+      42.6
+    ],
     "zoom": 1
   }
 }

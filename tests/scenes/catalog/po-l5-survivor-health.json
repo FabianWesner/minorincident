@@ -1,7 +1,7 @@
 {
   "extends": "../../../specs/scenes/qa-l5-group.json",
   "name": "po-l5-survivor-health",
-  "note": "PO #26/#28: five production survivors with health cards/bars and green radar dots; Dale is hurt most and walks to the nearby authored medkit while Rosa waits.",
+  "note": "PO #26/#28: five production survivors with health cards/bars and green radar dots; Dale is hurt most beside the Harbor Street medkit.",
   "hud": true,
   "size": 220,
   "layout": {
@@ -26,7 +26,7 @@
       "id": "courier",
       "kind": "courier",
       "at": [
-        35,
+        -8,
         -37.2
       ],
       "state": "idle"
