@@ -118,7 +118,9 @@ test('T-E29-13-35 @E29-AC13 a full 35-person roster boards and every figure is a
   gather(w, incoming.map(e => e.id), -66);
   put(w, 1, boardingAnchor()!.x, boardingAnchor()!.z);
   for (let i = 0; i < 3000 && d.state.phase !== 'departing'; i++) step(w, 1);
-  expect(d.state.phase).toBe('departing');
+  expect(d.state.phase, JSON.stringify(incoming.filter(e => !d.state.boarded.includes(e.id)).map(e => {
+    const live = w.entities.get(e.id)!; return { id: e.id, at: live.transform, passengerOf: live.passengerOf, pending: live.pendingAdmission, entering: d.state.entering[e.id], path: live.civilian!.path, goal: live.civilian!.goal };
+  }))).toBe('departing');
   expect([...d.state.boarded].sort((a, b) => a - b)).toEqual(incoming.map(e => e.id));
   let done: { result: { escapedSurvivors: EntitySnapshot[] } } | null = null;
   w.events.on('level.completed', e => { if (e.type === 'level.completed') done = e as never; });

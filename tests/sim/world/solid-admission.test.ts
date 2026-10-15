@@ -112,6 +112,21 @@ test('checkpoint restore discards a deferred player mask from the discarded time
     tick(w, 2); expect(w.solids.clear(player.transform, .35, 1)).toBe(true);
   } finally { w.dispose(); }
 }, 120_000);
+test('a checkpoint containing a deferred player restores the inactive collider until admission', async () => {
+  const w = await loadLevel('L2', 1);
+  try {
+    const player = w.entities.get(1)!, at = { ...player.transform };
+    const tank = spawnSetPiece(w, 'veh.tank', at);
+    expect(w.solids.admit(player, 'test.pending-snapshot', 0, false)).toBe(false);
+    const checkpoint = w.missions!.def.checkpoints[0]; w.missions!.checkpoint(checkpoint);
+    expect(w.solids.relocate(player, at, 'test.leave-pending-snapshot', 8, false)).toBe(true);
+    expect(w.physics.playerCollider!.isEnabled()).toBe(true);
+    w.missions!.restore(checkpoint, true);
+    expect(player.pendingAdmission).toBeDefined(); expect(w.physics.playerCollider!.isEnabled()).toBe(false);
+    w.entities.get(tank.id)!.hidden = true; tick(w, 30);
+    expect(player.pendingAdmission).toBeUndefined(); expect(w.physics.playerCollider!.isEnabled()).toBe(true);
+  } finally { w.dispose(); }
+}, 120_000);
 test('guard audits a stationary actor when a tank moves over it and retains bounded diagnostics', async () => {
   const w = await arena();
   try {
