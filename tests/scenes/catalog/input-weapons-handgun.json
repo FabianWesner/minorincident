@@ -6,15 +6,72 @@
   "size": 35,
   "time": "L3",
   "actors": [
-    { "id": "courier", "kind": "courier", "at": [0, 0], "loadout": [["weapon.fire-axe", "weapon.bat", "weapon.fists"], ["weapon.handgun", "weapon.smg", "weapon.molotov"]] },
-    { "id": "target", "kind": "infected", "at": [7, 0], "archetype": "infected.dummy", "state": "idle" }
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "loadout": [
+        [
+          "weapon.fire-axe",
+          "weapon.bat",
+          "weapon.fists"
+        ],
+        [
+          "weapon.handgun",
+          "weapon.smg",
+          "weapon.molotov"
+        ]
+      ],
+      "look": {
+        "gearTier": 2,
+        "model": "female"
+      }
+    },
+    {
+      "id": "target",
+      "kind": "infected",
+      "at": [
+        7,
+        0
+      ],
+      "archetype": "infected.runner",
+      "state": "idle"
+    }
   ],
-  "camera": { "mode": "game", "target": "courier", "zoom": 1 },
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
   "frames": 90,
   "sheet": 15,
   "script": [
-    { "frame": 0, "actor": "courier", "do": { "select": "RIGHT", "index": 0 } },
-    { "frame": 30, "actor": "courier", "do": { "attack": "target", "side": "RIGHT", "seconds": 0.7, "inPlace": true } }
+    {
+      "frame": 0,
+      "actor": "courier",
+      "do": {
+        "select": "RIGHT",
+        "index": 0
+      }
+    },
+    {
+      "frame": 30,
+      "actor": "courier",
+      "do": {
+        "attack": "target",
+        "side": "RIGHT",
+        "seconds": 0.7,
+        "inPlace": true
+      }
+    }
   ],
-  "expect": { "consoleErrors": 0, "drawCallsMax": 300, "trianglesMax": 500000, "undrawnFramesMax": 0 }
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "undrawnFramesMax": 0
+  }
 }
