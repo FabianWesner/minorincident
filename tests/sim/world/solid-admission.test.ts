@@ -3,7 +3,7 @@ import { SimWorld } from '../../../src/sim/world/SimWorld';
 import { spawnSetPiece } from '../../../src/sim/missions/L4Spectacle';
 import { missionControls } from '../../../src/sim/missions/controls';
 import { respawnAtCheckpoint } from '../../../src/sim/missions/Respawn';
-import { vehicles } from '../../../src/data/vehicles';
+import { vehicles, vehicleDef } from '../../../src/data/vehicles';
 
 async function arena() { const w = new SimWorld(); await w.init(); w.loadScenario('horde-arena', 1); return w; }
 const tick = (w: SimWorld, n = 1) => { for (let i = 0; i < n; i++) w.update(); expect(w.solids.offenders).toEqual([]); };
@@ -55,5 +55,37 @@ test('guard audits a stationary actor when a tank moves over it and retains boun
     tick(w); tank.transform.x = 12; tick(w);
     expect(w.solids.clear(e.transform, e.combat!.radius, e.id)).toBe(true);
     expect(w.solids.snapshot().failures).toBe(0);
+  } finally { w.dispose(); }
+});
+
+test('vehicle exits wait for bodyless actors occupying both doors', async () => {
+  const w = await arena();
+  try {
+    const def = vehicleDef('vehicle.sedan'), id = w.vehicles!.spawn(def.id, { x: 12, z: 0 });
+    const player = w.entities.get(1)!;
+    Object.assign(player.transform, { x: 12 + def.doorX, z: def.width / 2 + .55 });
+    w.physics.playerBody!.setTranslation(player.transform, true); w.physics.playerBody!.setNextKinematicTranslation(player.transform);
+    w.setInput({ interact: true }); tick(w); w.clearInput(); tick(w, 60);
+    expect(w.vehicles!.active).toBe(id);
+    const car = w.vehicles!.cars.get(id)!, p = car.entity.transform;
+    const blockers = [-1, 1].map(side => w.entities.get(w.infected!.spawn('infected.alpha', { x: p.x + def.doorX, z: p.z + side * (def.width / 2 + .55) }, { state: 'idle' }))!);
+    expect(blockers.every(e => !e.pendingAdmission && !e.attachedTo)).toBe(true);
+    expect(w.vehicles!.exit()).toBe(false);
+    for (let i = 0; i < blockers.length; i++) expect(w.solids.relocate(blockers[i], { x: 20, z: i * 2, y: p.y }, 'test.clear-door')).toBe(true);
+    expect(w.vehicles!.exit()).toBe(true);
+    tick(w); expect(w.solids.clear(player.transform, .35, 1)).toBe(true);
+  } finally { w.dispose(); }
+});
+
+test('a deferred casualty leaves admission and follows normal death cleanup', async () => {
+  const w = await arena();
+  try {
+    spawnSetPiece(w, 'veh.tank', { x: 12, z: 0 });
+    const e = w.entities.get(w.infected!.spawn('infected.alpha', { x: 20, z: 0 }, { state: 'idle' }))!;
+    Object.assign(e.transform, { x: 12, z: 0 });
+    expect(w.solids.admit(e, 'test.blocked-casualty', 0)).toBe(false);
+    e.health.current = 0; tick(w, 2);
+    expect(e.pendingAdmission).toBeUndefined(); expect(w.solids.snapshot().pending).toBe(0);
+    expect(e.hidden).not.toBe(true);
   } finally { w.dispose(); }
 });
