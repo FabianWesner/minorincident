@@ -516,7 +516,7 @@ export class CivilianCrowd extends Group {
     // L4's fixed close cast uses the same loading barrier as L1/L6 preparation
     // in discover(); no first-use LOD0 bake/index/simplification during the war.
     if (this.world.scenario === 'L4') for (const model of [...l1Pedestrians.models, 'npc.national-guard']) this.loadHero(model);
-    loadMeasure('view:civilian-crowd', started); this.update(1, camera);
+    loadMeasure('view:civilian-crowd', started); this.update(1, this.staged ? camera : undefined);
   }
   update(alpha = 1, camera?: import('three').Camera, lodCamera = camera): void {
     this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.budgetNear(); this.discover(); this.selectHeroes(lodCamera); if (this.staged && camera && this.world.missions!.state.phase === 'briefing') this.stageInitial(); this.props.begin();
