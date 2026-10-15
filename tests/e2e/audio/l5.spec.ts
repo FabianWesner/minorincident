@@ -2,6 +2,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { boot, test, expect } from '../fixtures';
 import type { AudioRenderRequest } from '../../../src/debug/audioHarness';
 import { loudness } from '../../../tools/audio/measure';
+import { l4 } from '../../../src/data/l4';
 
 /** E23-AC14: the silent city. No music before the first find, no battle layer ever, and a mix at least 18 LU below the L4 war phase. */
 const root = 'test-results/epics/E23';
@@ -57,7 +58,8 @@ test('T-E23-14b @E23 @E23-AC14 the first 60 s of L5 measure at least 18 LU below
         const cues: NonNullable<AudioRenderRequest['cues']> = [];
         let firstTurn = -1, lineBreak = -1, tick = 0;
         let score: AudioRenderRequest['score'];
-        for (let i = 0; i < (level === 'L4' ? 2400 : 600); i++) {
+        let captureSteps = level === 'L4' ? 2400 : 600;
+        for (let i = 0; i < captureSteps; i++) {
             const frame = await page.evaluate(async () => {
                 const a = window.__SS__!; await a.step(6);
                 const state = a.getState(), p = state.player!.transform, audio = a.audio.snapshot();
@@ -67,7 +69,12 @@ test('T-E23-14b @E23 @E23-AC14 the first 60 s of L5 measure at least 18 LU below
                     score: audio.music.streamed.decks.find(d => d.state === 'combat') };
             });
             tick = frame.tick;
-            if (frame.first !== undefined) firstTurn = frame.first;
+            if (frame.first !== undefined && firstTurn < 0) {
+                firstTurn = frame.first;
+                // Keep the existing pre-turn setup guard, then record the complete current war.
+                // PO 10-12's collapse is ~190 s after the turn, beyond the old 240 s total cutoff.
+                captureSteps = i + Math.ceil(l4.lineBreak.defenseS * 60 / 6) + 1;
+            }
             if (frame.last !== undefined) lineBreak = frame.last;
             for (const c of frame.cues) cues.push({ ...c, time: c.tick / 60 });
             if (frame.score && firstTurn >= 0) score = { file: frame.score.file, gain: frame.score.gain };
@@ -75,7 +82,10 @@ test('T-E23-14b @E23 @E23-AC14 the first 60 s of L5 measure at least 18 LU below
             // Let native one-shot sources finish so capture uses the live voice limiter.
             await page.waitForTimeout(100);
         }
-        if (level === 'L4') { expect(firstTurn).toBeGreaterThan(0); expect(lineBreak).toBeGreaterThan(firstTurn); }
+        if (level === 'L4') {
+            expect(firstTurn).toBeGreaterThan(0); expect(lineBreak).toBeGreaterThan(firstTurn);
+            expect(lineBreak - firstTurn).toBeLessThanOrEqual(l4.lineBreak.defenseS * 60);
+        }
         const start = level === 'L4' ? firstTurn / 60 : 0, duration = level === 'L4' ? (lineBreak - firstTurn) / 60 : 60;
         const beds = cues.filter(c => c.cue.startsWith('bed.') && c.time < start).map(c => ({ ...c, time: 0 }));
         const windowCues = cues.filter(c => c.time >= start && c.time < start + duration).map(c => ({ ...c, time: c.time - start }));
