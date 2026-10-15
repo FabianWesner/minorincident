@@ -83,3 +83,25 @@ test('crowd footwork entering mid-run never produces a non-finite pose @E07', as
   palette.texture.dispose(); baked.geometry.dispose();
   expect(bad).toEqual([]);
 });
+
+test('phone crowd poses hold their planted world pose for one 30 Hz frame and refresh on a clip change @E18', async () => {
+  const bytes = readFileSync('public/assets/models/npc.civilian-man-a.glb');
+  const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+  const baked = bakeInfected(scene, [], false, civilianClips), palette = new CrowdPosePalette(baked.clip, 4);
+  const footwork = new CrowdFootwork(4), loco = new CrowdLocomotion(scene, baked.clip, footwork);
+  const present = (time: number, phase: number, x: number, clip: typeof civilianClips[number] = 'infected-lurch') => {
+    footwork.begin(time);
+    const frame = civilianClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
+    const root = new Matrix4().makeRotationY(.4).setPosition(x, 0, 0), blend = palette.sample(1, clip, frame, time);
+    const row = loco.present(1, palette, frame, blend, clip, phase, root, baked.strideScale, .5, time, true, { lurch: 1 }, undefined, true, 2);
+    return { root: [...root.elements], pose: palette.pose(row, ...blend) };
+  };
+  try {
+    const first = present(10, .3, 0), held = present(10 + 1 / 30, .34, .01);
+    expect(held.root).toEqual(first.root); expect(held.pose).toEqual(first.pose);
+    const next = present(10 + 2 / 30, .38, .02);
+    expect(next.root[12]).toBeCloseTo(.02); expect(next.pose).not.toEqual(first.pose);
+    const windup = present(10 + 2 / 30 + .005, .5, .021, 'windup');
+    expect(windup.root[12]).toBeCloseTo(.021); expect(windup.pose.every(Number.isFinite)).toBe(true);
+  } finally { palette.texture.dispose(); baked.geometry.dispose(); }
+});
