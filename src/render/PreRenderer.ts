@@ -1,5 +1,5 @@
 // Adapted from folio-2025 PreRenderer.js by Bruno Simon (MIT), commit 41046b5.
-import { InstancedMesh, Light, Matrix4, Mesh, Sprite, Vector2, Vector3, type Camera, type Object3D, type Scene, type DataTexture } from 'three/webgpu';
+import { InstancedMesh, Light, LineSegments, Matrix4, Mesh, Sprite, Vector2, Vector3, type Camera, type Object3D, type Scene, type DataTexture } from 'three/webgpu';
 import type { Renderer } from './Renderer';
 
 /** Warm hidden variants while loading. The real render pass also uploads buffers/textures
@@ -25,7 +25,7 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
       const matrices = object instanceof InstancedMesh ? Array.from({ length: Math.min(2, object.instanceMatrix.count) }, (_, i) => { const matrix = new Matrix4(); object.getMatrixAt(i, matrix); return matrix; }) : undefined;
       saved.push({ object, visible: object.visible, culled: object.frustumCulled, ...(object instanceof InstancedMesh ? { count: object.count, matrices } : {}) });
       object.visible = true;
-      if (object instanceof Mesh || object instanceof Sprite) object.frustumCulled = false;
+      if (object instanceof Mesh || object instanceof Sprite || object instanceof LineSegments) object.frustumCulled = false;
       if (object instanceof InstancedMesh) {
         // Metal can defer pipeline work until vertices actually cover pixels. Empty batches
         // at the origin are outside the loading camera: draw one representative in front of it.
@@ -40,7 +40,7 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
     // Each partition shows only its share of leaves while three collects that call's render list
     // (synchronously), so the lanes compile disjoint objects concurrently.
     const leaves: Object3D[] = [];
-    scene.traverse(object => { if (!object.userData.preventPreRender && (object instanceof Mesh || object instanceof Sprite)) leaves.push(object); });
+    scene.traverse(object => { if (!object.userData.preventPreRender && (object instanceof Mesh || object instanceof Sprite || object instanceof LineSegments)) leaves.push(object); });
     // Static batches share node graphs. Compile one representative of each exact
     // material/attribute/shadow/capacity variant; the draws below still upload and
     // execute every render object, including both instancing driver paths.
@@ -110,7 +110,7 @@ export async function preRender(renderer: Renderer, scene: Scene, camera: Camera
     // WebGPU pipelines are complete at creation (no lazy driver specialization): measured 0 new
     // pipelines but seconds of frame pacing in these solo draws, so they run on WebGL only.
     if (solo.length) {
-      for (const { object } of saved) if (object instanceof Mesh || object instanceof Sprite) object.visible = false;
+      for (const { object } of saved) if (object instanceof Mesh || object instanceof Sprite || object instanceof LineSegments) object.visible = false;
       // Sixty-four separated actors fit an 8x8 grid in the 128px target.
       // Each still executes the ordinary and instanced driver paths, but shares the GPU fence
       // and presented frame with its neighbors instead of paying two frames per actor.
