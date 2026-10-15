@@ -1,0 +1,25 @@
+import { afterEach, expect, test } from 'vitest';
+import { loadL5 } from '../../tools/sim-runner/l5Bots';
+import type { SimWorld } from '../../src/sim/world/SimWorld';
+let world: SimWorld | undefined;
+afterEach(() => { world?.dispose(); world = undefined; });
+test('PO #25 @E07 @E23 an Alpha 5 m from the courier behind cover turns, roars and engages without sight; regular infected hear too', async () => {
+  const loaded = await loadL5(1); world = loaded.world; const w = world;
+  loaded.mission.completeObjective('emerge'); for (let tick = 0; tick < 661; tick++) w.update();
+  const alpha = w.infected!.active.find(e => e.archetype === 'infected.alpha')!;
+  for (const e of [...w.infected!.active]) if (e !== alpha) w.infected!.release(e);
+  const player = w.entities.get(1)!;
+  Object.assign(player.transform, { x: -56.77, z: -10.76 }); Object.assign(w.previousPlayer!, player.transform);
+  w.physics.playerBody!.setTranslation(player.transform, true); w.physics.playerBody!.setNextKinematicTranslation(player.transform); w.spatial.set(1, player.transform.x, player.transform.z);
+  Object.assign(alpha.transform, { x: -52, z: -12, yaw: 0 }); w.spatial.set(alpha.id, -52, -12);
+  w.infected!.hearing.los.register({ id: 'po-car-cover', source: 'car', active: true, shape: { kind: 'aabb', min: { x: -55, z: -14 }, max: { x: -54, z: -9 } } });
+  expect(w.infected!.hearing.sees(alpha, player.transform)).toBe(false);
+  expect(w.infected!.hearing.hears(alpha, player.transform)).toBe(true);
+  const start = w.tick;
+  for (let tick = 0; tick < 120; tick++) w.update();
+  expect(w.events.events().some(e => e.type === 'ai.alerted' && e.tick > start && e.targetId === alpha.id && e.cause === 'hearing')).toBe(true);
+  expect(w.events.events().some(e => e.type === 'telegraph' && e.sourceId === alpha.id && e.special === 'alpha.roar')).toBe(true);
+  expect(Math.hypot(alpha.transform.x + 52, alpha.transform.z + 12)).toBeGreaterThan(.5);
+  const regular = w.infected!.spawn('infected.runner', alpha.transform);
+  expect(w.infected!.hearing.hears(w.entities.get(regular)!, player.transform)).toBe(true);
+}, 300_000);

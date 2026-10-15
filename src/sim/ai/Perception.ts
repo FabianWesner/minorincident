@@ -110,20 +110,33 @@ export class WorldHumans implements HumanTargetQuery {
 
 /**
  * L1 infected vision (specs/epic-19 section 5.2): a forward 90 degree cone, 16 m, blocked by the scene's full-height
- * cover walls and by registered dynamic blockers. A human within 2 m is heard from any side with
- * clear line of sight (PO 10-11). A chased
+ * cover walls and by registered dynamic blockers. A human within 6 m is heard from any side through cover
+ * (PO #25, 10-15); running and gunfire increase the courier's radius. A chased
  * target stays tracked within `chaseKeepM` in any direction, else in a wide 150 degree cone, while line of sight is clear.
  */
 export class Perception {
   humans: HumanTargetQuery;
   readonly los = new LosRegistry();
   readonly rangeM = l1v2.infected.visionRangeM;
-  readonly hearingM = 2;
+  readonly hearingM = 6;
+  private shotUntil = 0;
   /** Level pressure routing (L3 corridor): the courier counts this many metres farther than she is when choosing a new
    * target, so a nearby police line draws the crowd first. 0 everywhere else. */
   playerBiasM = 0;
   private readonly cosHalf = Math.cos(l1v2.infected.visionConeDeg / 2 * Math.PI / 180);
-  constructor(private readonly world: SimWorld) { this.humans = new WorldHumans(world); }
+  constructor(private readonly world: SimWorld) {
+    this.humans = new WorldHumans(world);
+    world.events.on('combat.attack', event => {
+      if (event.type === 'combat.attack' && event.sourceId === 1 && ['weapon.handgun', 'weapon.army-mg', 'weapon.shotgun', 'weapon.rocket-launcher'].includes(event.actionId)) this.shotUntil = world.tick + 60;
+    });
+  }
+  private hearingRadius(target: Vec2): number {
+    const player = this.world.entities.get(1);
+    if (!player || Math.hypot(target.x - player.transform.x, target.z - player.transform.z) > .1) return this.hearingM;
+    if (this.world.tick < this.shotUntil) return 12;
+    const v = player.survivor?.velocity;
+    return v && Math.hypot(v.x, v.z) > 3 ? 9 : this.hearingM;
+  }
   /** Clear line of sight between two ground points (static cover walls + active dynamic blockers). */
   lineOfSight(from: Vec2, to: Vec2): boolean {
     return (this.world.combat?.query.visible(from, to) ?? true) && this.los.clear(from, to);
@@ -143,14 +156,15 @@ export class Perception {
   private readonly trackCos = Math.cos(75 * Math.PI / 180);
   /** Keeps an already chased target: the wide tracking cone, or within `chaseKeepM` with line of sight. */
   tracks(e: EntitySnapshot, target: Vec2): boolean {
+    if (this.hears(e, target)) return true;
     const dx = target.x - e.transform.x, dz = target.z - e.transform.z, distance = Math.hypot(dx, dz);
     if (distance > this.rangeM * (this.world.weather?.modifiers.infectedSight ?? 1) * (this.world.lightPower?.sightMultiplier(target) ?? 1)) return false;
     const near = distance <= this.chaseKeepM || (dx * Math.cos(e.transform.yaw) - dz * Math.sin(e.transform.yaw)) / distance >= this.trackCos;
     return near && this.lineOfSight(e.transform, target);
   }
-  /** Close hearing ignores facing, but buildings and active LOS blockers still block it. */
+  /** PO #25: nearby humans are smelled/heard through cover, independent of facing and sight. */
   hears(e: EntitySnapshot, target: Vec2): boolean {
-    return Math.hypot(target.x - e.transform.x, target.z - e.transform.z) <= this.hearingM && this.lineOfSight(e.transform, target);
+    return Math.hypot(target.x - e.transform.x, target.z - e.transform.z) <= this.hearingRadius(target);
   }
   /** Detection of a new target by unchanged vision or close hearing. */
   notices(e: EntitySnapshot, target: Vec2): boolean {
@@ -159,7 +173,7 @@ export class Perception {
   /** Closest nearby human, using the same huntable target query as vision. */
   closestHeard(e: EntitySnapshot): HumanTarget | undefined {
     let best: HumanTarget | undefined, distance = Infinity;
-    for (const h of this.humans.within(e.transform, this.hearingM)) {
+    for (const h of this.humans.within(e.transform, 12)) {
       const d = Math.hypot(h.position.x - e.transform.x, h.position.z - e.transform.z);
       if (d < distance && this.hears(e, h.position)) { best = h; distance = d; }
     }
