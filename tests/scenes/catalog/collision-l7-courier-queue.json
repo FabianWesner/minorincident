@@ -1,0 +1,21 @@
+{
+  "extends": "../l7-departure/departure.json",
+  "name": "collision-l7-courier-queue",
+  "note": "Captured campaign queue blockage: slot 28 approaches directly through the stationary courier. Production boarding must take a clear local sidestep, retain the follower, and depart. Inspect the detour and bus entry on both tiers and game zooms.",
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [-69.62994384765625, 47.41989517211914], "state": "idle" },
+    { "id": "last-follower", "kind": "pedestrian", "at": [-68.94034510767726, 47.54581013477008], "look": { "model": "npc.civilian-man-b" }, "state": { "survivor": { "slot": 28 } } }
+  ],
+  "camera": { "mode": "game", "target": "courier", "zoom": 1 },
+  "frames": 900,
+  "sheet": 45,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "collisionFailuresMax": 0,
+    "collisionPendingMax": 0,
+    "bodyOverlapMaxCm": 2,
+    "actorMaxX": { "courier": [0, 45] }
+  }
+}

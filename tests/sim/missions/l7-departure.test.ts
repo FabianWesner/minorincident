@@ -142,3 +142,15 @@ test('a finished civilian retains its identity as a loss and never holds the boa
   expect(d.state.phase).toBe('departing'); expect(d.state.boarded).toEqual([]);
   expect(w.solids.snapshot().failures).toBe(0);
 });
+
+test('the last queue follower walks around a courier standing across its boarding approach', async () => {
+  const w = await load(), c = w.l7Encounters!, d = w.l7Departure!;
+  const last = c.state.roster[0]; last.injured = true;
+  for (const r of c.state.roster.slice(1)) w.entities.get(r.id)!.health.current = 0;
+  const e = w.entities.get(last.id)!; e.civilian!.survivor!.slot = 28;
+  put(w, 1, -69.62994384765625, 47.41989517211914);
+  put(w, e.id, -68.94034510767726, 47.54581013477008);
+  for (let i = 0; i < 1200 && d.state.phase !== 'departing'; i++) step(w, 1);
+  expect(d.state.boarded).toEqual([e.id]); expect(d.state.phase).toBe('departing');
+  expect(w.solids.snapshot()).toMatchObject({ failures: 0, pending: 0 });
+});
