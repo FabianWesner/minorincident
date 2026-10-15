@@ -1,3 +1,4 @@
+import { actorRadius } from '../world/SolidRegistry';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from './types';
@@ -38,10 +39,11 @@ export class Traffic {
   private blocked(e: EntitySnapshot, direction: Point, brakingDistance: number): number {
     let gap = Infinity;
     for (const pedestrian of this.world.entities.iterate()) {
-      if (pedestrian.hidden || (pedestrian.kind !== 'player' && !pedestrian.civilian && !pedestrian.escort)) continue;
+      if (pedestrian.hidden || (pedestrian.kind !== 'player' && !pedestrian.civilian && !pedestrian.escort && !pedestrian.companion) || Math.abs(pedestrian.transform.y - e.transform.y) >= 1.2) continue;
       const dx = pedestrian.transform.x - e.transform.x, dz = pedestrian.transform.z - e.transform.z;
       const along = dx * direction.x + dz * direction.z, across = Math.abs(dx * direction.z - dz * direction.x);
-      if (along > -2.35 && across < 1.2 && along < brakingDistance + 2.5) gap = Math.min(gap, along - 2.5);
+      const radius = actorRadius(pedestrian);
+      if (along > -2.35 - radius && across < 1.2 + radius && along < brakingDistance + 2.5 + radius) gap = Math.min(gap, along - 2.5 - radius);
     }
     return gap;
   }
