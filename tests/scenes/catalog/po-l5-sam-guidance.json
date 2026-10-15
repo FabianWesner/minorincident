@@ -1,0 +1,35 @@
+{
+  "extends": "../../../specs/scenes/qa-l5-hide-sam.json",
+  "name": "po-l5-sam-guidance",
+  "note": "PO #21b: game camera at Sam's reachable bus door on Lakeshore Avenue; check both quality tiers and zooms. Campaign input regression covers the persistent radar search ring.",
+  "l5Aftermath": {
+    "found": [
+      "rosa",
+      "dale",
+      "okafor"
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -45,
+        40.6
+      ],
+      "yaw": 90,
+      "state": "idle"
+    }
+  ],
+  "size": 220,
+  "layout": {
+    "level": "L5",
+    "district": "D-FAIR"
+  },
+  "hud": true,
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  }
+}

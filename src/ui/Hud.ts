@@ -356,10 +356,24 @@ export class Hud {
     setHidden(this.survivorText, !show);
     if (!show || !l5 || !mission) { setHidden(this.cueText, true); setHidden(this.cuePin, true); return; }
     text(this.survivorText, ` · Survivors found ${l5.found}/5`);
-    const tick = this.game.world.tick, cue = l5.cue && l5.cue.until > tick ? l5.cue : null;
-    setHidden(this.cuePin, !cue);
-    let cueLabel = cue ? ` · ${cue.text}` : '';
-    if (cue) this.place(this.cuePin, cue.x, cue.z, px, pz, true);
+    // Keep the next hiding place findable between sound pulses and after checkpoint restore.
+    // The street and live distance distinguish Sam's bus from the plaza wrecks.
+    let nearest: (typeof l5.survivors)[number] | undefined, distance = Infinity;
+    for (const r of l5.survivors) {
+      if (r.status !== 'hidden') continue;
+      const ring = mission.def.anchors[`l5-ring-${r.key}`];
+      const d = Math.hypot(ring.x - px, ring.z - pz);
+      if (d < distance) { nearest = r; distance = d; }
+    }
+    setHidden(this.cuePin, !nearest);
+    let cueLabel = '';
+    if (nearest) {
+      const def = l5Survivors.find(s => s.key === nearest.key)!, ring = mission.def.anchors[`l5-ring-${nearest.key}`];
+      cueLabel = ` · Search ${def.place} · ${Math.ceil(distance)} m`;
+      attribute(this.cuePin, 'aria-label', `Search ${def.place}, ${Math.ceil(distance)} meters`);
+      attribute(this.cuePin, 'data-survivor', nearest.key);
+      this.place(this.cuePin, ring.x, ring.z, px, pz, true);
+    }
     for (const r of l5.survivors) {
       const ring = mission.def.anchors[`l5-ring-${r.key}`];
       if (r.status === 'hidden' && ring && Math.hypot(ring.x - px, ring.z - pz) <= ring.radius && (l5.phase === 'search' || l5.phase === 'metro')) cueLabel = ` · ${l5Survivors.find(s => s.key === r.key)!.prompt}`;

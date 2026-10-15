@@ -65,7 +65,7 @@ const survivors: Omit<L5Survivor, 'outAt'>[] = [
   { key: 'mia', name: 'Mia', model: 'npc.mia.aftermath', role: 'shop clerk', place: 'the apartment stairwell above Harbor Street', cover: 'inside', hideAt: [-77.7, -49.2], ringAt: [-76.2, -44.4], prompt: "Hold still or press E: call up the stairwell",
     cue: { id: 'L5.cue.mia', text: 'A radio crackles above Harbor Street.' }, found: 'Is it over? Please say it\'s over. Take me with you.' },
   { key: 'sam', name: 'Sam', model: 'npc.sam.aftermath', role: 'hunter', place: 'a wrecked bus on Lakeshore Avenue', cover: 'behind', hideAt: [-45, 46.3], ringAt: [-45, 42.6], prompt: "Hold still or press E: pry open the bus door",
-    cue: { id: 'L5.cue.sam', text: 'A flashlight blinks inside a wrecked bus.' }, found: 'Thank God. I lost my rifle days ago. Take me with you.' },
+    cue: { id: 'L5.cue.sam', text: 'A flashlight blinks inside the wrecked bus on Lakeshore Avenue.' }, found: 'Thank God. I lost my rifle days ago. Take me with you.' },
 ];
 
 export const l5Survivors: readonly L5Survivor[] = survivors.map(s => ({ ...s, outAt: s.ringAt }));
