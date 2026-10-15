@@ -142,6 +142,7 @@ export class PropSystem {
     const player = this.world.entities.get(1)?.transform;
     let awake = 0;
     for (const item of this.items) {
+      this.clearGarageExit(item);
       item.awake = !item.fixed && !item.braced && item.body.isEnabled() && !item.body.isFixed() && !item.body.isSleeping();
       if (!item.awake) continue;
       awake++;
@@ -254,7 +255,28 @@ export class PropSystem {
     item.pose = { p: [...pose.p], q: [...pose.q] };
     item.body.setTranslation({ x: pose.p[0], y: pose.p[1], z: pose.p[2] }, false);
     item.body.setRotation({ x: pose.q[0], y: pose.q[1], z: pose.q[2], w: pose.q[3] }, false);
-    item.body.setLinvel({ x: 0, y: 0, z: 0 }, false); item.body.setAngvel({ x: 0, y: 0, z: 0 }, false); item.body.sleep(); item.awake = false; this.mirror(item);
+    item.body.setLinvel({ x: 0, y: 0, z: 0 }, false); item.body.setAngvel({ x: 0, y: 0, z: 0 }, false); item.body.sleep(); item.awake = false;
+    this.clearGarageExit(item); this.mirror(item);
+  }
+  /** PO #3/#5: furniture may tumble beside the garage, but the required fence opening stays clear.
+   * Check the rotated physics footprint, including saved poses, before publishing collision/navigation.
+   * The authored home is outside this strip; returning a displaced prop there also repairs old checkpoints. */
+  private clearGarageExit(item: PushProp): void {
+    const districts = this.world.districts;
+    if (districts?.composition.id !== 'L1') return;
+    const district = districts.districts[0], door = district.layout.anchors['garage-door']?.position;
+    if (!door) return;
+    const x = door[0] + district.origin[0], z = door[2] + district.origin[1] - 2;
+    const at = item.body.translation();
+    if (Math.abs(at.x - x) > item.radius + 2 || Math.abs(at.z - z) > item.radius + 3) return;
+    const box = propFootprint(item);
+    if (Math.abs(box.x - x) >= box.halfX + .8 || Math.abs(box.z - z) >= box.halfZ + 1.7) return;
+    const home = item.home;
+    item.body.setTranslation({ x: home.p[0], y: home.p[1], z: home.p[2] }, false);
+    item.body.setRotation({ x: home.q[0], y: home.q[1], z: home.q[2], w: home.q[3] }, false);
+    item.body.setLinvel({ x: 0, y: 0, z: 0 }, false); item.body.setAngvel({ x: 0, y: 0, z: 0 }, false);
+    item.body.sleep(); item.awake = false; this.mirror(item);
+    this.updateNavigation();
   }
   /** Displaced props only (home poses are implied by the layout), in placement order. */
   snapshot(): PropSnapshot {
