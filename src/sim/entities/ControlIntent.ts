@@ -23,10 +23,6 @@ export class ControlIntent {
       raw = { ...raw, left: side === 'LEFT' ? { ...raw.left } : { down: false, held: false, up: false }, right: side === 'RIGHT' ? { ...raw.left } : { down: false, held: false, up: false },
         ...(raw.attackTarget ? { attackTarget: { ...raw.attackTarget, side } } : {}) };
     }
-    if (raw.attackInPlace || Object.values(this.world.combat?.runner.running ?? {}).some(attack => attack.inPlace && this.world.tick < attack.endsAt)) {
-      this.reset(); this.world.player?.locomotion.reset();
-      return { ...raw, attackInPlace: true, move: { x: 0, z: 0 } };
-    }
     if (raw.cancelMove || Math.hypot(raw.move.x, raw.move.z) > 0 || raw.interact || (!raw.attackTarget && !raw.pointerGround && (raw.left.down || raw.right.down))) this.reset();
     if (this.world.vehicles?.active != null || player.health.current <= 0) { this.reset(); return raw; }
     if (raw.moveTarget) {
@@ -35,6 +31,15 @@ export class ControlIntent {
       const cell = nav?.nearestCell(click.x, click.z);
       const point = nav ? nav.clear(click.x, click.z, survivor.radius) ? [click.x, click.z] : cell !== undefined && cell >= 0 ? [nav.x(cell), nav.z(cell)] : this.world.districts?.nav.clamp([click.x, click.z]) : this.world.districts?.nav.clamp([click.x, click.z]);
       this.moveTarget = point ? { x: point[0], z: point[1] } : { x: click.x, z: click.z }; this.attack = null;
+    }
+    // A ground click during the planted swing is a queued move, never another in-place attack.
+    // Holding Shift still plants the courier; releasing it resumes the queued move when the swing ends.
+    if (raw.attackInPlace || Object.values(this.world.combat?.runner.running ?? {}).some(attack => attack.inPlace && this.world.tick < attack.endsAt)) {
+      if (raw.attackInPlace) this.reset();
+      else this.attack = null;
+      this.world.player?.locomotion.reset();
+      return { ...raw, attackInPlace: true, move: { x: 0, z: 0 },
+        left: raw.pointerGround ? { down: false, held: false, up: raw.left.up } : raw.left };
     }
     if (raw.attackTarget) {
       const runner = this.world.combat?.runner, running = runner?.running[raw.attackTarget.side], target = this.world.entities.get(raw.attackTarget.id);

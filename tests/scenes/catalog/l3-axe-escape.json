@@ -1,0 +1,17 @@
+{
+  "name": "l3-axe-escape",
+  "note": "Plant an axe swing, release the modifier and order movement during recovery. Review the strike-to-run transition and the open Boulevard lane at both quality tiers and zooms. The controls regression separately checks a single real ground-click frame cannot queue another attack.",
+  "ground": "district", "time": "L3", "tier": 2,
+  "layout": { "level": "L3", "district": "D-CORRIDOR", "bbox": [[10, -42], [55, -10]] },
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [23, -23.25], "loadout": ["weapon.fire-axe", "weapon.handgun"] },
+    { "id": "target", "kind": "infected", "at": [24.2, -23.25], "yaw": 180 }
+  ],
+  "script": [
+    { "frame": 1, "actor": "courier", "do": { "attack": "target", "seconds": 0.3, "inPlace": true } },
+    { "frame": 20, "actor": "courier", "do": { "moveTo": [40, -23.25], "pace": "run" } }
+  ],
+  "camera": { "mode": "game", "target": "courier", "zoom": 1 },
+  "frames": 240, "sheet": 40, "trace": true,
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}

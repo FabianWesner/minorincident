@@ -276,6 +276,9 @@ export class InputSystem implements Lifecycle {
     let best: EntitySnapshot | null = null, nearest = Infinity;
     for (const target of targets) {
       if (!clickable(target) || target.health.current <= 0) continue;
+      // Assist a near miss at the feet; clear ground elsewhere in the cone remains a move order.
+      // Otherwise a short escape click can attack an infected metres beyond the clicked point.
+      if (Math.hypot(target.transform.x - point.x, target.transform.z - point.z) > (target.combat?.radius ?? .4) + .3) continue;
       const dx = target.transform.x - player.x, dz = target.transform.z - player.z, distance = Math.hypot(dx, dz);
       if (distance > reach + .3 || distance < 1e-3 || (dx * cx + dz * cz) / (distance * click) < Math.cos(35 * Math.PI / 180)) continue;
       if (distance < nearest) { best = target; nearest = distance; }

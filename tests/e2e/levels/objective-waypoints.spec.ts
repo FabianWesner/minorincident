@@ -2,6 +2,7 @@ import type { Page } from '@playwright/test';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { test, expect, boot, testUrl } from '../fixtures';
 import { l3, l3Anchors } from '../../../src/data/l3';
+import { runOutRule } from '../../../src/sim/missions/Respawn';
 
 /** PO 2026-10-12: the rescue completes only with the whole following group (police squad and corgi) inside; shortcut setups bring them along. */
 const bringGroup = (page: Page, ring: readonly number[]) => page.evaluate(([rx, rz]) => {
@@ -115,7 +116,8 @@ test('L3 real click into the finale finishes while the boom is occupied @E21 @E2
   expect(blocker.transform.x).toBeGreaterThan(l3.finale.barrierX + 1);
   await page.evaluate(() => window.__SS__!.screenshotReady());
   await page.screenshot({ path: `${output}/after-finale-entry.png` });
-  await page.evaluate(() => window.__SS__!.step(90));
+  // The world is paused: a wall-clock wait cannot finish the PO's five-second combat outro.
+  await page.evaluate(ticks => window.__SS__!.step(ticks), Math.ceil((l3.finale.closeS + runOutRule.seconds) * 60) + 1);
   await page.waitForFunction(() => window.__SS__!.getState().scenario === 'L4', undefined, { timeout: 120_000 });
   await expect(page.getByRole('heading', { name: 'Mission briefing' })).toBeVisible();
   await page.evaluate(() => window.__SS__!.screenshotReady());

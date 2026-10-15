@@ -130,7 +130,7 @@ export type Action =
   /** Water a flower placement (id, or nearest asset id): stand within 0.5 m of its footprint, face it, pour (MorningRoutines/Population rule). */
   | { water: string; seconds?: number }
   | { routine: 'sit'|'treat'|'rest'|'talk'|'share' }
-  | { attack: string; seconds?: number; side?: 'LEFT' | 'RIGHT'; /** Simultaneous walking direction for firing-layer QA. */ move?: Point }
+  | { attack: string; seconds?: number; side?: 'LEFT' | 'RIGHT'; /** Courier holds the same planted-attack modifier as Shift. */ inPlace?: boolean; /** Simultaneous walking direction for firing-layer QA. */ move?: Point }
   /** Courier: ordinary pointer-target aim without held fire, for pose blending QA. */
   | { aim: string; seconds?: number; move?: Point }
   /** Courier: control the existing damage cheat for impact fixtures. */

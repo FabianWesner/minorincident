@@ -1,4 +1,5 @@
 import type { SimWorld } from '../world/SimWorld';
+import { l3 } from '../../data/l3';
 
 /**
  * The one respawn path of every level (PO 2026-10-13: "After dying at the house where I got the baseball stick, I re-spawn at a totally
@@ -44,6 +45,8 @@ function gatherAllies(world: SimWorld, at: Spot, escorts: boolean): void {
 function clearThreat(world: SimWorld, at: Spot): void {
   const ai = world.infected, r = respawnRule, tick = world.tick;
   if (!ai) return;
+  // Returning L3 crowds need time to stand without immediately reacquiring the just-respawned courier.
+  const delay = ticks(world.scenario === 'L3' ? l3.mercy.respawnDelayS : r.delayS);
   for (const e of ai.active) {
     const d = dist(e.transform, at);
     // E32 Mega Alpha: never pushed or blinded here; its pursuit seam already restored it ≥ respawnGapM away.
@@ -70,7 +73,7 @@ function clearThreat(world: SimWorld, at: Spot): void {
     const brain = e.infected.l1;
     if (brain) {
       if (brain.mode === 'chase' && brain.targetId === 1) { brain.mode = 'wander'; brain.targetId = 0; if (e.health.current > 0) e.infected.state = 'wander'; }
-      brain.ignoreId = 1; brain.ignoreUntil = tick + ticks(r.delayS);
+      brain.ignoreId = 1; brain.ignoreUntil = tick + delay;
       // A pushed body (or one whose goal is the respawn spot) forgets its walk goal: it kept walking to the old goal straight back across
       // the anchor (gate 10-13: four infected within 2-7 m of the bat pickup 3 s after the respawn). Free wanderers take the anchor as
       // home, so their next goals lead away from it; leashed street groups keep their block.
@@ -81,11 +84,11 @@ function clearThreat(world: SimWorld, at: Spot): void {
       }
       // A pushed body stands and looks around while it has lost her: a leashed street-group member otherwise walked straight home through
       // the cleared ring (gate 10-13: 8.8 m from the anchor 3 s after the respawn, on its way back to its block).
-      if (pushed) { brain.pauseUntil = Math.max(brain.pauseUntil, tick + ticks(r.delayS)); brain.looking = true; }
+      if (pushed) { brain.pauseUntil = Math.max(brain.pauseUntil, tick + delay); brain.looking = true; }
     } else {
       // Levels without the L1 brain: drop the target and path, and hold attacks for the same delay.
       if (e.infected.targetId === 1 || e.infected.heardTargetId === 1) { e.infected.targetId = 0; e.infected.heardTargetId = 0; if (e.health.current > 0) e.infected.state = 'idle'; }
-      e.infected.path.length = 0; e.infected.goal = -1; e.infected.cooldown = Math.max(e.infected.cooldown, tick + ticks(r.delayS));
+      e.infected.path.length = 0; e.infected.goal = -1; e.infected.cooldown = Math.max(e.infected.cooldown, tick + delay);
     }
   }
 }

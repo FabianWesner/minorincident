@@ -1,0 +1,16 @@
+{
+  "name": "l3-army-occupied-boom",
+  "note": "The production boom clears a healthy bystander's body and standing order before closing. A rescued officer continues inward behind the courier. Review body/arm clearance and the compound lane at both tiers and zooms.",
+  "ground": "district", "time": "L3", "tier": 2,
+  "layout": { "level": "L3", "district": "D-CORRIDOR", "bbox": [[204, -14], [236, 14]] },
+  "armyBoom": { "x": 213.1, "closed": false },
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [223, 0] },
+    { "id": "officer", "kind": "pedestrian", "at": [216.7, -1], "look": { "model": "npc.police-officer", "tint": "#2f4858", "role": "officer" },
+      "state": { "ally": { "role": "officer", "follow": "courier", "slot": 0 } } },
+    { "id": "bystander", "kind": "pedestrian", "at": [213.1, 0], "state": "idle" }
+  ],
+  "camera": { "mode": "game", "target": "courier", "zoom": 1 },
+  "frames": 180, "sheet": 60, "trace": true,
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}
