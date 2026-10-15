@@ -8,6 +8,7 @@ test('probe', async () => {
     if (s !== last) {
       last = s; const p = w.entities.get(1)!;
       const near = w.infected!.active.filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z) < 10).length;
+      if (w.tick % 6000 === 0 || (w.tick / 60) % 30 === 0) { const h: Record<string, number> = {}; for (const e of w.infected!.active) if (e.health.current > 0) { const k = Math.floor(e.transform.x / 20) * 20 + '/' + Math.floor(e.transform.z / 20) * 20; h[k] = (h[k] ?? 0) + 1; } console.log('PROBE hist', (w.tick / 60), JSON.stringify(h)); }
       console.log('PROBE', (w.tick / 60).toFixed(0), m.state.checkpoint, [...m.def.steps].find(x => m.state.steps[x.id].status === 'active')?.id, p.transform.x.toFixed(1), p.transform.z.toFixed(1), 'hp', p.health.current.toFixed(0), 'near10', near, 'deaths', m.state.stats.deaths);
     }
   } });
