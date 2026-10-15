@@ -1216,5 +1216,21 @@
     "webgpu-low-z1.jpg"
   ],
   "phoneTiming": "unmeasured: quiet admission unavailable",
-  "fullSuites": "queued on Hetzner; not a pass"
+  "fullSuites": "not run: Hetzner accepted job but remained queued; canceled at report close",
+  "validation": {
+    "build": "pass",
+    "typecheck": "pass",
+    "lint": "pass",
+    "focusedTests": {
+      "files": 2,
+      "uniqueTests": 12,
+      "status": "pass"
+    },
+    "placementGuardRerun": {
+      "tests": 2,
+      "status": "pass"
+    },
+    "nativePhoneTargets": "unmeasured",
+    "E18CompleteVerification": "not run"
+  }
 }
