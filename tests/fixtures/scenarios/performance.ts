@@ -48,6 +48,9 @@ export function installPerformanceLevel(world: SimWorld, tier: QualityTier, name
   Object.assign(player.transform, { x: origin[0], z: origin[1] });
   world.previousPlayer = { ...player.transform }; world.spatial.set(1, player.transform.x, player.transform.z); world.physics.playerBody!.setTranslation(player.transform, true);
   world.missions?.begin();
+  // Mission begin installs its campaign cap (L6: 60/30). This probe explicitly
+  // measures the E18 worst-cap population, 200/100, on the campaign geometry.
+  world.infected.director.levelCap = 200;
   if (name === 'perf-l1-foliage-200') {
     world.scenario = name;
     // Hold the stress load at V5: overlapping crowd capsules must not push the
