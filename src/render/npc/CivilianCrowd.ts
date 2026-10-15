@@ -323,7 +323,7 @@ class CivilianBatch extends Group {
     const { layers, style } = this.moves.sample(e, b.state, b.until, (windups.get(e.archetype) ?? .5), renderTick, presented.yaw, motion.speed, moving ? clip : undefined);
     const target = this.world.entities.get(b.heardTargetId || b.l1?.targetId || 1);
     const contact = !!target?.survivor && Math.hypot(presented.x - target.transform.x, presented.z - target.transform.z) < infectedContactDistance(e.combat!.radius) + .15 ||
-      !this.world.solids.clear(e.transform, e.combat!.radius + .6, e.id);
+      this.world.solids?.clear(e.transform, e.combat!.radius + .6, e.id) === false;
     if (contact) layers.lunge = Math.min(layers.lunge ?? 0, .04);
     this.transform.makeRotationY(presented.yaw + (still ? Math.sin(t * 1.7) * .14 + (Math.sin(t * 7.3) > .93 ? .18 : 0) : 0));
     if (b.state !== 'dead' && !heavy && still) {
