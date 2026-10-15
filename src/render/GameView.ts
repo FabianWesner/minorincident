@@ -462,7 +462,7 @@ export class GameView implements Lifecycle {
     if (this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.vehicles.ground = this.drawnGround; }
     if (this.world.vehicles?.bicycle.entity && this.materials) { this.bicycle = new BicycleView(this.world, this.materials); this.bicycle.ground = this.drawnGround; }
     const actions = this.actions;
-    return Promise.all([this.accessories.init(), this.npcs?.init(), this.entityAssets?.init(this.view), actions ? character.then(() => actions.init()) : undefined, this.crowd?.init(), this.interactions?.synchronize(), this.vehicles?.load(), this.bicycle?.load()]);
+    return Promise.all([this.accessories.init(), this.npcs?.init(this.camera), this.entityAssets?.init(this.view), actions ? character.then(() => actions.init()) : undefined, this.crowd?.init(), this.interactions?.synchronize(), this.vehicles?.load(), this.bicycle?.load()]);
   }
   /** Deferred L1 work: distant LOD0 and intermediate LOD1 on high, distant buildings' LOD1 on low,
    * nearest first, after the first playable frames. The load gate slices GLB parsing

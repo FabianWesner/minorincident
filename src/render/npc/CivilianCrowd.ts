@@ -1,7 +1,7 @@
 import { resolveCrowdAppearance, markCrowdAppearance, crowdShirt, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout } from '../characters/CrowdAppearance';
 import type { CrowdAccessories } from '../characters/CrowdAccessories';
 import { infectedContactDistance } from '../../sim/ai/CharacterSeparation';
-import { useBakedCivilianPose, canHoldCrowdPose } from '../lodPolicy';
+import { useBakedCivilianPose, canHoldCrowdPose, crowdLodPixels } from '../lodPolicy';
 import { CrowdVisibility } from '../CrowdVisibility';
 // E07 GPU rigid-part crowd path, adapted from Bruno InstancedGroup.js (MIT).
 import { StaticCorpses } from '../characters/StaticCorpses';
@@ -390,8 +390,10 @@ export class CivilianCrowd extends Group {
     super(); this.props = new RoutineProps(shading); this.add(this.props); this.shading=shading;
     // The L6 cast is fixed: bake it while briefing, before Mission.begin creates the people.
     const models=this.staged ? this.nearbyModels(32) : world.scenario==='L7'?[...new Set([...world.entities.iterate()].flatMap(e => { const model = crowdModelOf(e); return model ? [model] : []; }))]:world.scenario==='L6'?[...new Set([...l6CastModels,...l1Pedestrians.models])]:world.scenario==='L3'?l3CivilianModels:coreCivilianModels;
-    this.known.clear();for(const model of models)this.known.add(model);
-    this.batches=models.flatMap(model=>[this.batch(model,'lod1'),this.batch(model,'lod2')]);if (this.batches.length) this.add(...this.batches);
+    for (const model of models) { this.known.add(model); if (!this.staged) this.farModels.add(model); }
+    // Near tiers cover the spawn; init also prepares the far/hero bands selected
+    // by the actual camera. Other tiers join after Begin.
+    this.batches=models.flatMap(model=>this.staged ? [this.batch(model,'lod1')] : [this.batch(model,'lod1'),this.batch(model,'lod2')]);if (this.batches.length) this.add(...this.batches);
   }
   /** L1 has a long peaceful delivery route. Later lab/fire-station actors need not
    * consume the initial download; checkpoints already contain their live cast. */
@@ -436,6 +438,7 @@ export class CivilianCrowd extends Group {
   }
   private disposed = false;
   private readonly known = new Set<string>();
+  private readonly farModels = new Set<string>();
   /** Registers lod1/lod2 batches for model ids first seen on an entity (data-driven, once per id). */
   private discover(): void {
     // Campaign people spawn at Begin. Their close tiers must be ready before
@@ -462,16 +465,31 @@ export class CivilianCrowd extends Group {
       if (model) this.loadModel(model);
     }
   }
-  private loadModel(model: string): void {
-    if (this.known.has(model) || !model.startsWith('npc.')) return;
-    this.known.add(model);
-    const added = [this.batch(model, 'lod1'), this.batch(model, 'lod2')];
-    this.heroLoads.set('discover:' + model, Promise.all(added.map(b => b.init())).then(async () => { if (!this.disposed && this.staged && this.world.missions!.state.phase === 'playing') for (const batch of added) await this.warm?.(batch); if (this.disposed) { added.forEach(b => b.dispose()); return; } this.batches.push(...added); this.add(...added); }, () => {}));
+  private loadModel(model: string, far = !this.staged || this.world.missions!.state.phase === 'playing'): void {
+    if (!model.startsWith('npc.')) return;
+    const lods: ('lod1' | 'lod2')[] = [];
+    if (!this.known.has(model)) lods.push('lod1');
+    if (far && !this.farModels.has(model)) lods.push('lod2');
+    if (!lods.length) return;
+    this.known.add(model); if (far) this.farModels.add(model);
+    const added = lods.map(lod => this.batch(model, lod));
+    this.heroLoads.set(`discover:${model}:${lods.join(',')}`, Promise.all(added.map(b => b.init())).then(async () => { if (!this.disposed && this.staged && this.world.missions!.state.phase === 'playing') for (const batch of added) await this.warm?.(batch); if (this.disposed) { added.forEach(b => b.dispose()); return; } this.batches.push(...added); this.add(...added); }, () => {}));
   }
+
   /** Hero LOD0 batches still loading (screenshots and tests wait for them). */
   async ready(): Promise<void> { await Promise.all(this.heroLoads.values()); }
-  async init(): Promise<void> {
+  async init(camera?: import('three').Camera): Promise<void> {
     const started = performance.now();
+    if (this.staged && camera) {
+      // Portrait and wide views can start in the far band. Prepare the actual
+      // selected tiers too; deferring a tier must never hide a visible person.
+      this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900);
+      for (const e of this.world.entities.iterate()) {
+        const model = crowdModelOf(e); if (!model || !this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) continue;
+        this.loadModel(model, this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8) <= crowdLodPixels.enter);
+      }
+      this.selectHeroes(camera);
+    }
     if (!this.staged && /^L[1-6]$/.test(this.world.scenario ?? '')) for (const model of this.known) this.loadHero(model);
     await Promise.all(this.batches.map(b => b.init()));
     // L4's fixed close cast uses the same loading barrier as L1/L6 preparation
