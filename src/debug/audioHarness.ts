@@ -4,8 +4,9 @@ import { type AudioBus, audioCues, resolvedAudioCue, ambienceTiers, explosionBea
 import { dbGain, reverbPresets, type ReverbPreset } from '../audio/acoustics';
 import { wave } from '../audio/synthesis';
 import { MusicDirector } from '../audio/MusicDirector';
+import { l4 } from '../data/l4';
 export interface AudioRenderRequest {
-    scenario: 'shot' | 'occlusion' | 'doppler' | 'twist' | 'ambience' | 'duck' | 'audio-mix' | 'mono' | 'music' | 'l5-quiet' | 'cue-log';
+    scenario: 'shot' | 'occlusion' | 'doppler' | 'twist' | 'ambience' | 'duck' | 'audio-mix' | 'mono' | 'music' | 'l5-quiet' | 'cue-log' | 'l4-convoy-music';
     duration?: number;
     cues?: { cue: string; variant: string; time: number; gain: number; rate: number; lowpass?: number; position?: { x: number; y?: number; z: number } }[];
     score?: { file: string; gain: number };
@@ -19,6 +20,7 @@ export interface AudioRenderRequest {
     tier?: number;
     mono?: boolean;
     kind?: 'radio' | 'mega';
+    source?: 'radio' | 'score';
 }
 export interface AudioRenderResult {
     wav: string;
@@ -38,7 +40,7 @@ export interface AudioRenderResult {
 /** Query-gated offline acceptance harness. Calls the production graph and loads production sprite files.
  * Audio is returned as PCM WAV for independent Node/FFmpeg measurement, never scored against synthetic metadata. */
 export async function renderAudio(request: AudioRenderRequest): Promise<AudioRenderResult> {
-    const duration = request.scenario === 'cue-log' ? request.duration ?? 60 : request.scenario === 'audio-mix' || request.scenario === 'l5-quiet' ? 60 : request.scenario === 'twist' ? 5 : request.scenario === 'music' ? 14 : request.scenario === 'doppler' ? 4 : 3;
+    const duration = request.scenario === 'cue-log' ? request.duration ?? 60 : request.scenario === 'l4-convoy-music' ? 10 : request.scenario === 'audio-mix' || request.scenario === 'l5-quiet' ? 60 : request.scenario === 'twist' ? 5 : request.scenario === 'music' ? 14 : request.scenario === 'doppler' ? 4 : 3;
     const rate = 24000, context = new OfflineAudioContext(2, Math.ceil(duration * rate), rate), graph = new AudioGraph(context), registry = new AudioRegistry(context);
     const events: {
         cue: string;
@@ -47,6 +49,7 @@ export async function renderAudio(request: AudioRenderRequest): Promise<AudioRen
     graph.setWeather(request.weather ?? 'clear');
     let maxVoices = 0;
     let scoreVoices = 0;
+    let rendering: Promise<AudioBuffer> | undefined;
     await registry.prepare(request.level ?? 'L1');
     // Weapons, vehicles, dialogue and telegraphs are lazy banks in the live game; the offline render needs them up front.
     await registry.preloadLazy();
@@ -120,6 +123,32 @@ export async function renderAudio(request: AudioRenderRequest): Promise<AudioRen
         }
         transitions = music.transitions;
     }
+    if (request.scenario === 'l4-convoy-music') {
+        const sourceName = request.source === 'score' ? 'calm-L4' : 'calm-L1';
+        let recording: AudioBuffer | undefined;
+        for (const format of ['webm', 'm4a']) {
+            try {
+                const response = await fetch(`/assets/audio/score-${sourceName}.${format}`);
+                if (!response.ok) throw new Error(`Score request failed: ${response.status}`);
+                recording = await context.decodeAudioData(await response.arrayBuffer()); break;
+            } catch { /* Match the live stream's codec fallback. */ }
+        }
+        if (!recording) throw new Error(`Offline score could not decode: ${sourceName}`);
+        const source = context.createBufferSource(), trim = context.createGain();
+        source.buffer = recording; source.loop = true;
+        if (request.source === 'score') {
+            // Streamed deck at 0.5, trimmed to 0.3 while the convoy radio is playing.
+            trim.gain.value = 0.15;
+            source.connect(trim).connect(graph.buses.music);
+        } else {
+            const high = context.createBiquadFilter(), low = context.createBiquadFilter();
+            high.type = 'highpass'; high.frequency.value = 280;
+            low.type = 'lowpass'; low.frequency.value = l4.radio.cabHz;
+            trim.gain.value = l4.radio.gain;
+            source.connect(high).connect(low).connect(trim).connect(graph.buses.vehicles);
+        }
+        source.start(0); scoreVoices = 1;
+    }
     if (request.scenario === 'cue-log') {
         // Replay observed production cues in mission time, retaining sprite variation,
         // emitter gain/rate and listener-relative position rather than inventing a battle.
@@ -138,17 +167,37 @@ export async function renderAudio(request: AudioRenderRequest): Promise<AudioRen
             source.loop = true; trim.gain.value = request.score.gain;
             source.connect(trim).connect(graph.buses.music); source.start(0); scoreVoices = 1;
         }
-        for (const event of [...request.cues ?? []].sort((a, b) => a.time - b.time)) {
-            if (event.time < 0 || event.time >= duration) continue;
-            const variant = resolvedAudioCue(event.variant);
-            if (!variant) throw new Error(`Missing recorded cue variant: ${event.variant}`);
-            graph.retire(event.time);
-            const voice = graph.play({ ...variant, id: event.cue }, registry.buffers.get(variant.category)!, {
-                time: event.time, gain: event.gain / variant.gain, rate: event.rate, position: event.position, lowpass: event.lowpass,
-            });
-            if (voice) { events.push({ cue: event.cue, time: event.time }); maxVoices = Math.max(maxVoices, graph.active.size + scoreVoices); }
-            if (event.cue === 'dialogue.radio') graph.duck('radio', event.time, variant.duration);
-            if (event.cue === 'explosion.roar') graph.duck('mega', event.time, .8);
+        const cues = [...request.cues ?? []].sort((a, b) => a.time - b.time);
+        let next = 0;
+        const schedule = (until: number): void => {
+            while (next < cues.length && cues[next].time < until) {
+                const event = cues[next++];
+                if (event.time < 0 || event.time >= duration) continue;
+                const variant = resolvedAudioCue(event.variant);
+                if (!variant) throw new Error(`Missing recorded cue variant: ${event.variant}`);
+                graph.retire(event.time);
+                const voice = graph.play({ ...variant, id: event.cue }, registry.buffers.get(variant.category)!, {
+                    time: event.time, gain: event.gain / variant.gain, rate: event.rate, position: event.position, lowpass: event.lowpass,
+                });
+                if (voice) { events.push({ cue: event.cue, time: event.time }); maxVoices = Math.max(maxVoices, graph.active.size + scoreVoices); }
+                if (event.cue === 'dialogue.radio') graph.duck('radio', event.time, variant.duration);
+                if (event.cue === 'explosion.roar') graph.duck('mega', event.time, .8);
+            }
+        };
+        // Keep one continuous production graph, but let ended sources disconnect
+        // before scheduling the next window. A full L4 war has 15,000+ HRTF nodes;
+        // scheduling them all up front makes Chrome process future nodes for minutes.
+        const windowFrames = 128 * 1920, pauses: { time: number; ready: Promise<void> }[] = [];
+        for (let frame = windowFrames; frame < context.length; frame += windowFrames) {
+            const time = frame / rate;
+            pauses.push({ time, ready: context.suspend(time) });
+        }
+        schedule(windowFrames / rate + .1);
+        rendering = context.startRendering();
+        for (const pause of pauses) {
+            await pause.ready;
+            schedule(pause.time + windowFrames / rate + .1);
+            await context.resume();
         }
     }
     if (request.scenario === 'l5-quiet') {
@@ -208,7 +257,7 @@ export async function renderAudio(request: AudioRenderRequest): Promise<AudioRen
         for (const event of sequence)
             event.run();
     }
-    const buffer = await context.startRendering(), bytes = wave([buffer.getChannelData(0), buffer.getChannelData(1)], rate);
+    const buffer = await (rendering ?? context.startRendering()), bytes = wave([buffer.getChannelData(0), buffer.getChannelData(1)], rate);
     let binary = '';
     for (let i = 0; i < bytes.length; i += 16384)
         binary += String.fromCharCode(...bytes.subarray(i, i + 16384));

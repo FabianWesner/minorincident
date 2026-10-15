@@ -151,10 +151,10 @@ test('T-E17-height @E17-AC02 ordinary adults stay 1.75–1.85 m, Alpha stays 1.3
           expect(height, path).toBeGreaterThanOrEqual(worker.dimensions.y * 1.35);
           expect(height, path).toBeLessThanOrEqual(worker.dimensions.y * 1.5);
         } else if (def.id === 'inf.mega-alpha') {
-          // L10 final boss: about twice the Alpha (Alpha 1.45x worker x ~2 = 2.6-3.0x worker), measured at every LOD.
+          // L10 final boss (PO 10-15): same height as the Alpha, measured at every LOD (the Alpha's own band).
           const worker = manifest.find(asset => asset.id === 'inf.common-worker')!;
-          expect(height, path).toBeGreaterThanOrEqual(worker.dimensions.y * 2.6);
-          expect(height, path).toBeLessThanOrEqual(worker.dimensions.y * 3.0);
+          expect(height, path).toBeGreaterThanOrEqual(worker.dimensions.y * 1.35);
+          expect(height, path).toBeLessThanOrEqual(worker.dimensions.y * 1.5);
         } else if (def.id === 'inf.elephant') {
           // E07's zoo base has a 3 m animal silhouette; keep every human bound above/below exact.
           expect(height, path).toBeGreaterThanOrEqual(2.9);

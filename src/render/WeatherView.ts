@@ -18,6 +18,8 @@ export const weatherSurface = {
   tracks: new DataTexture(new Uint8Array(TRACK_SIZE * TRACK_SIZE * 4), TRACK_SIZE, TRACK_SIZE, RGBAFormat, UnsignedByteType),
 };
 weatherSurface.tracks.needsUpdate = true;
+// World-space track coordinates are explicit; the UV transform stays identity.
+weatherSurface.tracks.matrixAutoUpdate = false;
 weatherSurface.tracks.minFilter = weatherSurface.tracks.magFilter = LinearFilter;
 export const trackMask = () => {
   const local = positionWorld.xz.sub(weatherSurface.trackCenter).div(TRACK_SPAN).add(.5);
@@ -177,8 +179,8 @@ export class WeatherView extends Group {
       center.set(cx, cz);
       const data = weatherSurface.tracks.image.data as Uint8Array, rowSize = trackSize * 4;
       if (this.trackPrevious.length !== data.length) this.trackPrevious = new Uint8Array(data.length);
-      this.trackPrevious.set(data); this.trackNextRows.clear();
-      this.trackPixels = rasterFootprints(data, w.tracks, this.world.tick, cx, cz, this.trackNextRows);
+      this.trackNextRows.clear();
+      this.trackPixels = rasterFootprints(data, w.tracks, this.world.tick, cx, cz, this.trackNextRows, this.trackRows);
       // The old and new stamp rows cover every byte that can change, including
       // cleared/expired prints. Preserve the exact mask; do not resend 4 MiB for
       // an unchanged field or a few fading soles (WebGL command-buffer stalls).
@@ -186,6 +188,7 @@ export class WeatherView extends Group {
       for (const z of this.trackRows) {
         const start = z * rowSize, end = start + rowSize;
         for (let i = start; i < end; i++) if (data[i] !== this.trackPrevious[i]) { weatherSurface.tracks.addUpdateRange(start, rowSize); break; }
+        this.trackPrevious.set(data.subarray(start, end), start);
       }
       if (weatherSurface.tracks.updateRanges.length) weatherSurface.tracks.needsUpdate = true;
       const oldRows = this.trackRows; this.trackRows = this.trackNextRows; this.trackNextRows = oldRows;

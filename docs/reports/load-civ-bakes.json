@@ -1,0 +1,477 @@
+{
+  "task": "load-civ-bakes",
+  "baselineCommit": "2db2bde9b",
+  "implementationHead": "313846c98",
+  "changes": [
+    "L1 initial camera and short-walk cast tiers only; remaining authored cast starts after Begin using existing worker queue",
+    "Existing worker source preparation for initial L1 cast instead of compressed pose atlases",
+    "Keep a finer resident tier until its coarser tier arrives; warm new play-time batches before publishing",
+    "Load selected courier/title cosmetic first and defer background music streams until play",
+    "Initial-camera hero discovery restricted to staged L1 after paired cold diagnostics exposed added work on other levels",
+    "Speculative L1 arms cosmetic preparation without loading a courier until selection; foreground handoff loads and warms the actual choice. Avoids an extra 642520-byte female rig on the male route."
+  ],
+  "download": {
+    "method": "Production title \u2192 character \u2192 L1 \u2192 Begin; browser-context requestfinished request.sizes().responseBodySize, including dedicated workers; raw preview transfer sizes; unchanged 15000000-byte budget",
+    "results": [
+      {
+        "variant": "female",
+        "quality": "high",
+        "renderer": "webgl",
+        "bodyBytes": 14797137,
+        "requests": 241
+      },
+      {
+        "variant": "female",
+        "quality": "high",
+        "renderer": "webgpu",
+        "bodyBytes": 14651813,
+        "requests": 239
+      },
+      {
+        "variant": "female",
+        "quality": "low",
+        "renderer": "webgl",
+        "bodyBytes": 14400905,
+        "requests": 241
+      },
+      {
+        "variant": "female",
+        "quality": "low",
+        "renderer": "webgpu",
+        "bodyBytes": 14255581,
+        "requests": 239
+      },
+      {
+        "variant": "male",
+        "quality": "high",
+        "renderer": "webgl",
+        "bodyBytes": 14873791,
+        "requests": 241
+      },
+      {
+        "variant": "male",
+        "quality": "high",
+        "renderer": "webgpu",
+        "bodyBytes": 14728467,
+        "requests": 239
+      },
+      {
+        "variant": "male",
+        "quality": "low",
+        "renderer": "webgl",
+        "bodyBytes": 14477559,
+        "requests": 241
+      },
+      {
+        "variant": "male",
+        "quality": "low",
+        "renderer": "webgpu",
+        "bodyBytes": 14332235,
+        "requests": 239
+      }
+    ],
+    "implementationHead": "313846c98",
+    "resultsCoverage": "female/male \u00d7 high/low \u00d7 WebGL/WebGPU, all eight pass"
+  },
+  "coldStartup": {
+    "status": "Final-source cold timing unmeasured: quiet preflight never admitted; original wait ~31 minutes, stopped 2026-10-15 09:08 UTC. All owned browser locks released.",
+    "method": "Paired baseline/candidate fresh HTTP contexts, alternating order, headless Metal WebGL2, page CDP 50Mbps/20ms; worker throttling unverified; shared driver caches; single diagnostic samples",
+    "results": [
+      {
+        "build": "baseline",
+        "level": "L1",
+        "titleMs": 3321.5,
+        "menuToPlayableMs": 9850.39999961853,
+        "bodyBytes": 40782144,
+        "errors": []
+      },
+      {
+        "build": "candidate",
+        "level": "L1",
+        "titleMs": 2183.2000007629395,
+        "menuToPlayableMs": 3156,
+        "bodyBytes": 14797099,
+        "errors": []
+      },
+      {
+        "build": "candidate",
+        "level": "L2",
+        "titleMs": 2177.300000190735,
+        "menuToPlayableMs": 7509.599999427795,
+        "bodyBytes": 43027304,
+        "errors": []
+      },
+      {
+        "build": "baseline",
+        "level": "L2",
+        "titleMs": 2174.5,
+        "menuToPlayableMs": 7425.800000190735,
+        "bodyBytes": 43311156,
+        "errors": []
+      },
+      {
+        "build": "baseline",
+        "level": "L3",
+        "titleMs": 2179.3999996185303,
+        "menuToPlayableMs": 7837.5,
+        "bodyBytes": 31969822,
+        "errors": []
+      },
+      {
+        "build": "candidate",
+        "level": "L3",
+        "titleMs": 2183.199999809265,
+        "menuToPlayableMs": 5638,
+        "bodyBytes": 31685972,
+        "errors": []
+      },
+      {
+        "build": "candidate",
+        "level": "L4",
+        "titleMs": 2175.699999809265,
+        "menuToPlayableMs": 6665.5,
+        "bodyBytes": 39719815,
+        "errors": []
+      },
+      {
+        "build": "baseline",
+        "level": "L4",
+        "titleMs": 2178.1000003814697,
+        "menuToPlayableMs": 7059.299999237061,
+        "bodyBytes": 40003665,
+        "errors": []
+      },
+      {
+        "build": "baseline",
+        "level": "L5",
+        "titleMs": 2181.7999992370605,
+        "menuToPlayableMs": 9716,
+        "bodyBytes": 57365355,
+        "errors": []
+      },
+      {
+        "build": "candidate",
+        "level": "L5",
+        "titleMs": 2192.6000003814697,
+        "menuToPlayableMs": 9721.900000572205,
+        "bodyBytes": 57081505,
+        "errors": []
+      },
+      {
+        "build": "candidate",
+        "level": "L6",
+        "titleMs": 2185.199999809265,
+        "menuToPlayableMs": 8968.599999427795,
+        "bodyBytes": 45523958,
+        "errors": []
+      },
+      {
+        "build": "baseline",
+        "level": "L6",
+        "titleMs": 2185.199999809265,
+        "menuToPlayableMs": 7487.800000190735,
+        "bodyBytes": 45807808,
+        "errors": []
+      },
+      {
+        "build": "baseline",
+        "level": "L7",
+        "titleMs": 2186.7000007629395,
+        "menuToPlayableMs": 4882.800000190735,
+        "bodyBytes": 35258493,
+        "errors": []
+      },
+      {
+        "build": "candidate",
+        "level": "L7",
+        "titleMs": 2188.9000005722046,
+        "menuToPlayableMs": 5199.60000038147,
+        "bodyBytes": 37860118,
+        "errors": []
+      }
+    ],
+    "historicalImplementationHead": "d563fef95; not final source",
+    "historicalHarnessError": [
+      {
+        "build": "candidate",
+        "level": "L8",
+        "error": "TimeoutError: locator.waitFor: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('pause-button') to be visible\u001b[22m\n\u001b[2m    356 \u00d7 locator resolved to hidden <button hidden=\"\" type=\"button\" aria-label=\"Pause\" data-testid=\"pause-button\">\u2026</button>\u001b[22m\n",
+        "errors": [],
+        "explanation": "Harness incorrectly assumed L8 had no briefing card; fixed in the paired tool. This is not a game failure."
+      }
+    ],
+    "historicalScopeDiagnostic": {
+      "implementationHead": "d563fef95",
+      "stoppedReason": "Narrowed initial camera discovery to staged L1 after observing extra non-L1 loading work; these are not final-source comparisons.",
+      "results": [
+        {
+          "build": "baseline",
+          "level": "L8",
+          "titleMs": 2298.2000007629395,
+          "menuToPlayableMs": 6727.800000190735,
+          "bodyBytes": 44250673,
+          "errors": []
+        },
+        {
+          "build": "candidate",
+          "level": "L8",
+          "titleMs": 2180.5,
+          "menuToPlayableMs": 6824.199999809265,
+          "bodyBytes": 44251559,
+          "errors": []
+        },
+        {
+          "build": "candidate",
+          "level": "L9",
+          "titleMs": 2191.5,
+          "menuToPlayableMs": 9581.79999923706,
+          "bodyBytes": 44101026,
+          "errors": []
+        },
+        {
+          "build": "baseline",
+          "level": "L9",
+          "titleMs": 2179.2999992370605,
+          "menuToPlayableMs": 8616.699999809265,
+          "bodyBytes": 44100140,
+          "errors": []
+        },
+        {
+          "build": "baseline",
+          "level": "L10",
+          "titleMs": 2184.300000190735,
+          "menuToPlayableMs": 8984.400000572205,
+          "bodyBytes": 43842875,
+          "errors": []
+        },
+        {
+          "build": "candidate",
+          "level": "L10",
+          "titleMs": 2181.9000005722046,
+          "menuToPlayableMs": 8898.099999427795,
+          "bodyBytes": 43843761,
+          "errors": []
+        },
+        {
+          "build": "candidate",
+          "level": "L2",
+          "titleMs": 2176.8999996185303,
+          "menuToPlayableMs": 7242.200000762939,
+          "bodyBytes": 43027304,
+          "errors": []
+        },
+        {
+          "build": "baseline",
+          "level": "L2",
+          "titleMs": 2182,
+          "menuToPlayableMs": 7276.400000572205,
+          "bodyBytes": 43311156,
+          "errors": []
+        },
+        {
+          "build": "baseline",
+          "level": "L5",
+          "error": "Error: locator.waitFor: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for getByTestId('mission-button') to be visible\u001b[22m\n\u001b[2m    2 \u00d7 locator resolved to hidden <button type=\"button\" data-testid=\"mission-button\"></button>\u001b[22m\n\u001b[2m    5 \u00d7 locator resolved to hidden <button type=\"button\" data-testid=\"mission-button\">Begin mission</button>\u001b[22m\n",
+          "errors": []
+        }
+      ]
+    },
+    "reservation": {
+      "firstSlotAcquiredApproxUtc": "2026-10-15 08:55:50",
+      "releasedApproxUtc": "2026-10-15 09:08:10",
+      "heldMinutesApprox": 12.3,
+      "limitMinutes": 20,
+      "preflight": "No headless browser started; all slots held but load stayed above quiet-run threshold <3 (observed 3.36\u20138.46).",
+      "initialQueueStartApproxUtc": "2026-10-15 08:37:00",
+      "noFurtherBrowserWaits": true
+    }
+  },
+  "validation": {
+    "typecheck": "pass on final source",
+    "lint": "pass on final source",
+    "build": "pass",
+    "crowdVisibleOutbreak": {
+      "webgl": {
+        "backend": "webgl",
+        "frames": 1200,
+        "ticks": 2400,
+        "samples": 3097,
+        "infectedSamples": 1884,
+        "missed": 0,
+        "misses": [],
+        "attacks": 5,
+        "turned": 11,
+        "kills": 18,
+        "doors": 1
+      },
+      "webgpu": {
+        "backend": "webgpu",
+        "frames": 1200,
+        "ticks": 2400,
+        "samples": 3097,
+        "infectedSamples": 1884,
+        "missed": 0,
+        "misses": [],
+        "attacks": 5,
+        "turned": 11,
+        "kills": 18,
+        "doors": 1
+      }
+    },
+    "remoteFinal": {
+      "implementationHead": "d563fef95; later render scope/cosmetic changes covered by final targeted 13-test run",
+      "command": "sh tools/remote/run.sh \"$PWD\" --pull test-results/load-civ-bakes/vitest-final.json -- bash tools/remote/timing-isolated.sh npx vitest run tests/unit tests/sim tests/levels --maxWorkers=4 --reporter=default --reporter=json --outputFile=test-results/load-civ-bakes/vitest-final.json",
+      "passed": 2810,
+      "failed": 8,
+      "skipped": 9,
+      "groups": {
+        "sim": {
+          "passed": 1047,
+          "failed": 8
+        },
+        "unit": {
+          "passed": 1470,
+          "skipped": 7
+        },
+        "levels": {
+          "passed": 293,
+          "skipped": 2
+        }
+      },
+      "failures": [
+        {
+          "file": "tests/sim/levels/l10-arrival.test.ts",
+          "test": "T-E32-21-E3b @E32-AC21 seed-32 rocket checkpoint route arrival high",
+          "failure": "Error: Test timed out in 120000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."
+        },
+        {
+          "file": "tests/sim/levels/l10-assault.test.ts",
+          "test": "T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+          "failure": "AssertionError: expected 4.987724000005983 to be less than or equal to 4"
+        },
+        {
+          "file": "tests/sim/performance/l10-finale.test.ts",
+          "test": "T-E32-20-perf-200 @E32-AC20 @E32-AC31 @E18-AC02 full-cap active dispersal predicate",
+          "failure": "AssertionError: expected 4.312877000018489 to be less than or equal to 4"
+        },
+        {
+          "file": "tests/sim/performance/mega-moves.test.ts",
+          "test": "T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+          "failure": "AssertionError: expected 4.350739999965299 to be less than or equal to 4"
+        },
+        {
+          "file": "tests/sim/performance/zoo-s1.test.ts",
+          "test": "T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
+          "failure": "AssertionError: expected 4.295845000015106 to be less than or equal to 4"
+        },
+        {
+          "file": "tests/sim/performance/zoo-s2.test.ts",
+          "test": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+          "failure": "AssertionError: expected 4.7401060000411235 to be less than or equal to 4"
+        },
+        {
+          "file": "tests/sim/performance/zoo-s3.test.ts",
+          "test": "T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+          "failure": "AssertionError: expected 4.643532000016421 to be less than or equal to 4"
+        },
+        {
+          "file": "tests/sim/world/chunk-residency.test.ts",
+          "test": "T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95",
+          "failure": "AssertionError: expected 4.01799000002211 to be less than or equal to 4"
+        }
+      ],
+      "note": "Seven unchanged sim p95 tests exceed 4ms and one L10 high arrival test times out; do not claim all E18 performance gates pass."
+    },
+    "sceneMatrix": {
+      "webgpuTouched": {
+        "passed": 80,
+        "total": 80,
+        "seconds": 300.225,
+        "filter": "ped-*,l10-lod-*",
+        "quality": [
+          "high",
+          "low"
+        ],
+        "zoom": [
+          1.5,
+          1,
+          0.5
+        ],
+        "failed": [],
+        "implementationHead": "d563fef95; rerun pending after narrowing initial-camera discovery to L1"
+      },
+      "webglTouched": "unmeasured",
+      "remainingFullMatrix": "unmeasured",
+      "finalBuildRerun": "unmeasured; earlier touched WebGPU 80/80 remains historical evidence"
+    },
+    "targetedRemote": {
+      "passed": 13,
+      "failed": 0,
+      "files": 4,
+      "artifact": "test-results/load-civ-bakes/choice-final.json"
+    },
+    "notRunAsMonolithicCommand": {
+      "command": "npm run verify -- E18",
+      "reason": "Its E18 remote-sim split still starts local timing Vitest; user requires all heavy unit/sim/level runs on Hetzner. Components are recorded separately."
+    },
+    "browserFinal": {
+      "passed": 12,
+      "failed": 0,
+      "workers": 1,
+      "checks": "eight initial download cases, two crowd-visible-outbreak backends, two Chromium smoke tests",
+      "implementationHead": "313846c98"
+    },
+    "unitFinal": {
+      "implementationHead": "313846c98",
+      "passed": 1476,
+      "failed": 0,
+      "skipped": 7,
+      "runner": "91.98.11.241",
+      "durationSeconds": 220.02,
+      "command": "sh tools/remote/run.sh \"$PWD\" --pull test-results/load-civ-bakes/unit-final.json -- bash tools/remote/timing-isolated.sh npx vitest run tests/unit --maxWorkers=4 --reporter=default --reporter=json --outputFile=test-results/load-civ-bakes/unit-final.json"
+    },
+    "browserUnmeasured": [
+      "WebGL pedestrian/LOD matrix",
+      "Full scene:matrix beyond the 80 touched WebGPU rows",
+      "Full deploy-gate browser list and remaining smoke projects",
+      "All-level cold comparison after narrowing early camera setup to staged L1"
+    ],
+    "browserUnmeasuredReason": "Shared-machine quiet preflight did not admit within the original ~30-minute wait. Per task fairness rule, stopped browser waits and reported remaining gates."
+  },
+  "visualReview": [
+    {
+      "file": "test-results/load-civ-bakes/cold-all/candidate-L1-game-camera.png",
+      "observation": "Game camera: seated hat-wearing pedestrian holding a mug on the bench, female courier standing beside the curb, and corgi all fully drawn; intact clothing and limbs, no coarse placeholder visible."
+    },
+    {
+      "file": "test-results/load-civ-bakes/cold-all/candidate-L6-game-camera.png",
+      "observation": "Shelter game camera: player and civilian cast present; floor occlusion/dither clips portions of bodies. Baseline capture shows the same floor occlusion/dither; candidate corgi is lower in its sampled animation. Single startup frames are not proof of animation parity."
+    },
+    {
+      "files": [
+        "test-results/load-civ-bakes/matrix-webgpu-touched/ped-l1-staged-cast@high-z1/sheet.jpg",
+        "test-results/load-civ-bakes/matrix-webgpu-touched/ped-l1-staged-cast@high-z0.5/sheet.jpg",
+        "test-results/load-civ-bakes/matrix-webgpu-touched/ped-l1-staged-cast@low-z1/sheet.jpg",
+        "test-results/load-civ-bakes/matrix-webgpu-touched/ped-l1-staged-cast@low-z0.5/sheet.jpg"
+      ],
+      "observation": "Opened high and low game-camera sheets at zoom 1 and 0.5: distinct outfits, lab coats, guard helmet and firefighter helmet; intact hair, hands and legs across f0/f30/f60; close camera crops the outer cast naturally. Wide sheet shows all ten cast models present. No visible placeholder swap."
+    }
+  ],
+  "limits": [
+    "No new PreRenderer framework or warm-up batching changes for audit finding 2",
+    "No deploy or merge",
+    "Real devices and headed Chrome frame-time checks not performed in this headless-only job",
+    "Final all-level cold parity, final full scene:matrix, WebGL touched matrix and broad deploy-gate browser list remain unmeasured; do not treat this branch as fully QA green."
+  ],
+  "diskCleanup": {
+    "keptTemporaryBuild": "/tmp/load-civ-baseline-dist",
+    "removed": [
+      "/tmp/load-civ-bakes-dist-before-tiers",
+      "/tmp/load-civ-bakes-dist-pre-source",
+      "/tmp/load-civ-bakes-dist-source-first",
+      "/tmp/load-civ-baseline-2db2bde9b source archive"
+    ],
+    "freeGiBAfterCleanup": 12
+  },
+  "status": "Implementation and initial-download checks complete; remaining browser QA unmeasured after shared-machine wait limit. Full E18 performance gate is not green."
+}

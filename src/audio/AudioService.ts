@@ -13,7 +13,7 @@ import { MusicDirector, type MusicIntensity, type MusicTransition } from './Musi
 import { HordeClusters, type HordePoint } from './HordeClusters';
 import { AmbienceSchedule } from './AmbienceSchedule';
 import { StreamedMusic } from './StreamedMusic';
-import { storyMusic } from '../data/musicBeats';
+import { l5MusicReady, storyMusic } from '../data/musicBeats';
 import { isMusicThreat } from './MusicThreat';
 import { l1v2 } from '../data/l1v2';
 import { l5 } from '../data/l5';
@@ -121,7 +121,7 @@ export class AudioService implements Lifecycle {
     private externalIntensity: MusicIntensity | null = null;
     private vehicleSpeed = 0;
     private incident = false;
-    /** E23: the silent city. No music (score, stems, stingers) for the first `l5.audio.musicFromS` seconds of L5, then a sparse low drone: the calm score only, never a danger or battle layer. */
+    /** E23: ambience until the first survivor is found, then the existing calm recording. */
     private l5Music = false;
     private complete = false;
     private readonly captionElement = document.createElement('output');
@@ -388,6 +388,7 @@ export class AudioService implements Lifecycle {
         const t = options.time ?? this.context.currentTime, result = this.registry.get(id, t, `${id}:${sourceId ?? 0}`, options.loop);
         if (!result)
             return null;
+        if (this.level === 'L5' && result.cue.bus === 'music' && !l5MusicReady(this.world.missions?.state)) return null;
         if (result.cue.bus === 'gore' && this.settings.gore === 'Off')
             return null;
         const gain = (options.gain ?? 1) * result.gain * (result.cue.bus === 'gore' && this.settings.gore === 'Reduced' ? 0.4 : 1);
@@ -439,7 +440,7 @@ export class AudioService implements Lifecycle {
             const p = this.host.project(position);
             direction = p.x < 0.4 ? 'left' : p.x > 0.6 ? 'right' : p.y < 0.4 ? 'ahead' : 'behind';
         }
-        this.captions.push({ text: `[${text}${direction ? ` — ${direction}` : ''}]`, expires: this.context.currentTime + duration });
+        this.captions.push({ text: `[${text}${direction ? `, ${direction}` : ''}]`, expires: this.context.currentTime + duration });
         if (this.captions.length > 4)
             this.captions.shift();
         this.showCaptions();
@@ -502,7 +503,7 @@ export class AudioService implements Lifecycle {
         setTimeout(() => { if (generation === this.generation && !this.disposed) void this.registry.preloadLazy(); }, 300);
         if (this.hasScore && this.level !== 'L5') this.score.prepareDanger();
         if (this.hasScore && this.level !== 'L5') void this.score.transition('calm', this.musicEpoch, this.musicEpoch, this.music.bar);
-        // L5 has no stems: no layered music exists in the silent city (the calm score starts after 60 s, see l5Score).
+        // L5 has no stems: no layered music exists in the silent city (the calm score starts after the first find, see l5Score).
         for (const layer of this.level === 'L5' ? [] : musicLayers) {
             const v = this.play(`music.${this.level === 'L10' ? 'L6' : this.level}.${layer}`, { time: this.musicEpoch, gain: 0, rate: 1, loop: true });
             if (v)
@@ -511,15 +512,23 @@ export class AudioService implements Lifecycle {
         for (const bed of this.level === 'L6' ? ['hum'] : ambienceTiers[this.tier].beds)
             this.loop(`bed:${bed}`, `bed.${bed}`, { gain: this.tier === 5 ? dbGain(-16) : 1 });
     }
-    /** L5 music: silent until 60 s into the level, then the calm score alone (no layers, no danger music, no stems). */
+    /** L5 music follows saved survivor state, so retries and checkpoint restores obey the same rule. */
     private l5Score(): void {
         if (!this.started) return;
+        if (!l5MusicReady(this.world.missions?.state)) {
+            if (this.l5Music) {
+                this.score.reset();
+                for (const voice of this.graph.active.values()) if (audioCues[voice.cue]?.bus === 'music') voice.stop();
+            }
+            this.l5Music = false;
+            return;
+        }
         if (this.l5Music) { this.score.update(); return; }
-        const mission = this.world.missions?.state;
-        if (!mission || mission.phase !== 'playing' || mission.stats.time < l5.audio.musicFromS) return;
         this.l5Music = true;
-        if (this.hasScore) { this.score.prepareDanger(); void this.score.transition('calm', this.context.currentTime + 0.05, this.musicEpoch, this.music.bar); }
+        // An event cue must start now, rather than waiting for the next musical bar.
+        if (this.hasScore) void this.score.transition('calm', this.context.currentTime, this.musicEpoch, this.music.bar, true);
     }
+
     private musicIntensity(input: MusicIntensity): void {
         if (!this.started) return;
         if (this.level === 'L5') return;
@@ -621,7 +630,7 @@ export class AudioService implements Lifecycle {
             }
             const special = 'special' in event ? event.special : event.kind;
             const id = telegraphCues[special] ?? telegraphCues[entity?.archetype ?? ''] ?? telegraphCues[`infected.${special}`] ?? eventCues.telegraph;
-            if ('duration' in event && (special === 'alpha.charge' || special === 'alpha.ground-slam')) this.caption(special === 'alpha.charge' ? 'Alpha charging — clear the marked path' : 'Alpha ground slam — leave the marked circle', position, event.duration);
+            if ('duration' in event && (special === 'alpha.charge' || special === 'alpha.ground-slam')) this.caption(special === 'alpha.charge' ? 'Alpha charging: clear the marked path' : 'Alpha ground slam: leave the marked circle', position, event.duration);
             this.play(id, { position, offscreen: position ? this.host.offscreen(position) : false }, source);
             return;
         }

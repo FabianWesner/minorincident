@@ -11,9 +11,13 @@ import type { AssetDef } from '../../assets/types';
  */
 export interface SceneSpec {
   /** Native campaign menu over the game camera; run with --query ui=1. */
-  menuScreen?: 'title' | 'levels';
+  menuScreen?: 'title' | 'levels' | 'credits';
   /** Production L4 convoy, population, braking and unload controller on an uncropped Fairhaven layout. */
-  l4Convoy?: boolean | 'parked';
+  l4Convoy?: boolean | 'parked' | 'hold';
+  /** Production L3 rendezvous, rescued group and full authored finale crowd. */
+  l3Rendezvous?: boolean;
+  /** Production L5 discovery/follower controller, with named prior finds restored before the shot. */
+  l5Aftermath?: { found: string[]; alphaAt?: Point; metroIngress?: boolean };
   /** One R1–R6 production encounter, with the quality tier's authored crowd. */
   cureEncounter?: string;
   /** Production L10 graph/preset at a region checkpoint; fixture anchors stay on its existing slab. */
@@ -21,7 +25,8 @@ export interface SceneSpec {
   /** Use the production L7 formation for authored survivor actors, without starting the mission population. */
   l7Group?: boolean;
   /** With `l7Group`: the production L7 bus (set piece, blocker), boarding of the authored survivors and the departure shot. */
-  l7Departure?: boolean;
+  /** `follow` retains the game camera on the bus instead of the authored departure shot. */
+  l7Departure?: boolean | 'follow';
   /** Fixture-only eligibility overrides, restored after view initialization. */
   barArchetypes?: string[];
   /** High-tier fixture cap (low uses half), for E18 stress scenes; defaults to L1 caps. */
@@ -44,7 +49,7 @@ export interface SceneSpec {
   /** Depth of field as in L1 (default true). */
   dof?: boolean;
   /** Copy placements from a shipped district layout. Positions stay in district coordinates unless `recenter`. */
-  layout?: { level?: 'L2' | 'L3' | 'L4' | 'L5' | 'L6' | 'L7'; district: DistrictId; bbox?: [Point, Point]; ids?: string[]; assets?: string[]; anchors?: string[]; recenter?: boolean };
+  layout?: { level?: 'L1' | 'L2' | 'L3' | 'L4' | 'L5' | 'L6' | 'L7'; district: DistrictId; bbox?: [Point, Point]; ids?: string[]; assets?: string[]; anchors?: string[]; recenter?: boolean };
   props?: PropSpec[];
   actors?: ActorSpec[];
   vehicles?: VehicleSpec[];
@@ -158,7 +163,7 @@ export type Action =
    * visible infected, or (with `follow`) joins the courier's squad at the given slot (0-3), exactly as the L3 squad. */
   /** E21/E22 allied fighter. `weapon` selects the L4 v3 kit (soldier rifle, HMG crew, armed civilian pistol / hunting rifle / improvised melee); without it the L3 officer or soldier gun. */
   | { ally: { role?: 'officer' | 'soldier' | 'civilian' | 'firefighter'; follow?: string; slot?: number; weapon?: 'rifle' | 'hmg' | 'pistol' | 'hunting-rifle' | 'pipe' | 'bat' | 'crowbar' } }
-  /** E23 survivor (pedestrians only): follows the courier exactly as the L5 followers do (slot 0-4: behind her, alternating sides, 2-5 m; crouches while an infected is within 8 m). */
+  /** E23 survivor (pedestrians only): follows the courier exactly as the L5 followers do (slot 0-4: behind her, alternating sides, 2-5 m; briefly cowers then regroups when an infected is within 8 m). */
   | { survivor: { slot?: number } }
   /** Pedestrian: the L1 hand-over choreography (src/sim/missions/doorRoute.ts) - out of `building`'s street door (a
    * placement id or asset id), carrying the parcel to `meet` (a point, or an actor id: arm's length in front of it), a
@@ -272,6 +277,8 @@ export interface Expectations {
   clickMissMax?: number;
   drawCallsMax?: number;
   trianglesMax?: number;
+  /** Low-quality matrix ceiling when it differs from the high-quality ceiling (E18: 500k / 1.5M). */
+  trianglesMaxLow?: number;
   /** `emerge`: residents whose first drawn position is past the door threshold, or never drawn (they must be drawn first inside the building). */
   emergeOutsideMax?: number;
   /** Frames any actor drew its far LOD (lod2) within 14 m of the camera. */
@@ -412,8 +419,8 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
     }
     layout.walkable.excluded = source.walkable.excluded.map(polygon => polygon.map(([x,z]) => [x+shift[0],z+shift[1]]));
   }
-  if (spec.l4Convoy && source) layout.colliders = structuredClone(source.colliders);
-  for (const name of spec.l4Convoy && source ? Object.keys(source.anchors) : spec.layout?.anchors ?? []) {
+  if ((spec.l4Convoy || spec.l3Rendezvous) && source) layout.colliders = structuredClone(source.colliders);
+  for (const name of (spec.l4Convoy || spec.l3Rendezvous || spec.l5Aftermath) && source ? Object.keys(source.anchors) : spec.layout?.anchors ?? []) {
     const anchor = source?.anchors[name];
     if (!anchor) throw new Error(`Unknown layout anchor ${name}`);
     layout.anchors[name] = structuredClone(anchor);
@@ -422,7 +429,7 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
   const gameplay: DistrictGameplay = { id: district, playerStart: { x: playerStart[0], z: playerStart[1] }, spawns: [], spawnVolumes: [], triggers: [], objectives: [], interactables: [], civilianRoutes: [], safePoints: [], photoSpots: [], decay: [] };
   gameplay.barricades = spec.barricadeSlots;
   const composition: LevelComposition = {
-    id: 'scene-lab', tier, timeOfDay: spec.time ?? 'L1', districts: [{ id: district, origin: [0, 0], gameplay }],
+    id: spec.layout?.level === 'L1' ? 'L1' : 'scene-lab', tier, timeOfDay: spec.time ?? 'L1', districts: [{ id: district, origin: [0, 0], gameplay }],
     scene: { glb: spec.ground === 'district', ground: spec.ground === 'asphalt' || spec.ground === 'sidewalk' ? spec.ground : 'grass', perimeter: false, courier: true },
   };
   return { composition, layout, placements: kept, center, playerStart };

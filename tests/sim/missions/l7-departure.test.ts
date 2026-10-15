@@ -70,6 +70,20 @@ test('T-E29-13-board @E29-AC13 the complete living roster boards before the bus 
   step(w, 120); expect(d.state.phase).toBe('done');
 });
 
+test('T-E29-13-bite-loss @E29-AC13 fatal-bite bodies with positive HP never hold or board the bus', async () => {
+  const w = await load(), c = w.l7Encounters!, d = w.l7Departure!;
+  for (const r of c.state.roster) {
+    const e = w.entities.get(r.id)!; expect(e.health.current).toBeGreaterThan(0); e.civilian!.state = 'finished';
+  }
+  // A victim bitten during its door approach also leaves the entering queue.
+  d.state.entering[c.state.roster[0].id] = w.tick;
+  put(w, 1, boardingAnchor()!.x, boardingAnchor()!.z);
+  step(w, 1);
+  expect(c.state.roster.every(r => r.status === 'dead')).toBe(true);
+  expect(d.state.entering).toEqual({}); expect(d.state.boarded).toEqual([]);
+  expect(d.state.phase).toBe('departing');
+});
+
 test('T-E29-13-wait @E29-AC13 a straggler holds the bus; the player is never timed out', async () => {
   const w = await load(), c = w.l7Encounters!, d = w.l7Departure!, ids = c.state.roster.map(r => r.id);
   gather(w, ids.slice(0, 23));

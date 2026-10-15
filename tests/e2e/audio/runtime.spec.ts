@@ -247,7 +247,7 @@ test('T-E16-15 @E16 @E16-AC15 light-lab, prop-yard and blast-lab use real bus ev
 test('T-E16-17a @E16 @E16-AC17 captions show important direction cues and noise rings obey settings', async ({ page }) => {
     await start(page);
     await page.evaluate(() => { const a = window.__SS__!; a.settings.set({ captions: true, noiseRings: true }); a.audio.emit({ type: 'noise', tick: 0, sourceId: 100, position: { x: -12, y: 0.7, z: 12 }, kind: 'scream', actionId: 'infected.screamer', radius: 20, loudness: 1 }); a.audio.emit({ type: 'noise', tick: 0, sourceId: 1, actionId: 'weapon.pistol', kind: 'ranged', position: { x: 0, y: 0.7, z: 0 }, radius: 25, loudness: 1 }); });
-    await expect(page.locator('[data-audio-captions]')).toContainText('[Screamer shrieking — left]');
+    await expect(page.locator('[data-audio-captions]')).toContainText('[Screamer shrieking, left]');
     await expect(page.locator('[data-noise-ring]')).toBeVisible();
     // A short-range melee ring fits entirely on screen beside the pistol's 25m ring.
     await page.evaluate(() => window.__SS__!.audio.emit({ type: 'noise', tick: 0, sourceId: 1, actionId: 'weapon.fists', kind: 'melee', position: { x: 0, y: 0.7, z: 0 }, radius: 6, loudness: 1 }));

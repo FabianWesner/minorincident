@@ -59,7 +59,7 @@ export function campaignMission(id: MissionId, resolve: (district: DistrictId, a
       bat.onStart = [{ kind: 'marker', anchor: 'garage-door' }];
       bat.onComplete = [{ kind: 'grant', item: 'bat' }, { kind: 'checkpoint', id: 'bat' }];
       // PO: the courier walks into the bay herself; no cinematic, auto-walk or input lock.
-      const fire = reach('firestation', 'Go into the fire station', 'fire-bay-trigger');
+      const fire = reach('firestation', 'Get inside the fire station', 'fire-bay-trigger');
       fire.onStart = [{ kind: 'radio', id: 'L1.fire' }];
       fire.onComplete = [{ kind: 'state', key: 'safe', value: true }, { kind: 'gate', id: 'fire-shutter', open: false }];
       end = fire.id; break;
@@ -81,6 +81,6 @@ export function resolveCampaignMission(id: MissionId, world: DistrictWorld): Mis
   return campaignMission(id, (district, name) => {
     const d = world.districts.find(d => d.id === district), a = d?.layout.anchors[name];
     if (!d || !a) throw new Error(`Missing mission anchor: ${district}/${name}`);
-    return { x: a.position[0]+d.origin[0], z: a.position[2]+d.origin[1], radius: 2, ...a.position[1] ? { y: a.position[1] } : {} };
+    return { x: a.position[0]+d.origin[0], z: a.position[2]+d.origin[1], radius: 2, yaw: a.yaw, ...a.position[1] ? { y: a.position[1] } : {} };
   });
 }

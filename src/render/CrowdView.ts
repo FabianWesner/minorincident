@@ -3,6 +3,7 @@ import { megaAlpha } from '../data/megaAlpha';
 import { regularInfectedModels } from '../data/crowdAppearance';
 import { resolveCrowdAppearance, crowdAppearanceColor, crowdShirt, markCrowdAppearance, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout, crowdHeadwearVisibility } from './characters/CrowdAppearance';
 import type { CrowdAccessories } from './characters/CrowdAccessories';
+import { SpatialHash } from '../sim/spatial/SpatialHash';
 import { infectedContactDistance } from '../sim/ai/CharacterSeparation';
 import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 import { CrowdVisibility } from './CrowdVisibility';
@@ -78,6 +79,12 @@ export class CrowdView extends Group {
   private get corpseTicks(): number { return Infinity; }
   private readonly staticCorpses = new StaticCorpses();
   private readonly corpseGeometry = new Map<string, BufferGeometry>();
+  private entityRevision = -1;
+  private frozenRevision = -1;
+  private readonly figures: EntitySnapshot[] = [];
+  private readonly corpseSpatial = new SpatialHash();
+  private readonly corpseNeighbors: number[] = [];
+  private readonly corpseQuery = { x: 0, z: 0, r: 1.25 };
   private readonly corpses = new Map<number, { x: number; z: number; sourceX: number; sourceZ: number; deadAt: number }>();
   private readonly elephantArrowScale = new Matrix4().makeScale(1, 1, 3.5 / (1.1 * 1.8));
   private readonly physicalArrowTail = new Matrix4();
@@ -241,7 +248,14 @@ export class CrowdView extends Group {
   async ready(): Promise<void> { await Promise.all(this.pending.values()); }
   update(view?: View, alpha = 1): void {
     this.deadFeet.clear(); this.staticCorpses.begin(id => this.world.entities.get(id));
-    for (const [id, pose] of this.corpses) if (!this.world.entities.get(id)?.infected || this.world.entities.get(id)!.health.current > 0 || this.world.tick - pose.deadAt > this.corpseTicks) this.corpses.delete(id);
+    // Membership changes cover pooled ID reuse, checkpoint restore and streamed unload.
+    // Frozen figures stay in StaticCorpses; the animated passes need only the rest.
+    if (this.entityRevision !== this.world.entities.revision || this.frozenRevision !== this.staticCorpses.revision) {
+      this.figures.length = 0;
+      for (const e of this.world.entities.iterate()) if (!e.corpse || !this.staticCorpses.has(e.id)) this.figures.push(e);
+      for (const [id] of this.corpses) if (!this.world.entities.get(id)?.infected || this.world.entities.get(id)!.health.current > 0) { this.corpses.delete(id); this.corpseSpatial.delete(id); }
+      this.entityRevision = this.world.entities.revision; this.frozenRevision = this.staticCorpses.revision;
+    }
     for (const batch of this.batches.values()) { batch.count = 0; batch.probe.begin(); }
     this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60);
     for (const mesh of this.telegraphs) mesh.count = 0; this.shadows.count = 0; this.caps.count = 0;
@@ -253,7 +267,7 @@ export class CrowdView extends Group {
     const heroes = this.heroIds; this.previousHeroes.clear();
     for (const id of heroes) this.previousHeroes.add(id);
     heroes.clear(); this.nearest.length = 0; this.rolePixels.clear();
-    if (!this.low) for (const e of this.world.entities.iterate()) {
+    if (!this.low) for (const e of this.figures) {
       if (e.faction !== 'infected' && !e.civilian?.zooAnimal || !e.combat || e.hidden || e.infected?.hidden || e.archetype === 'infected.crow' || e.corpse || keepsLook(e)) continue;
       if (e.health.current <= 0 && this.world.tick - (e.infected?.deadAt ?? 0) >= this.corpseTicks) continue;
       const distance = Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z);
@@ -280,13 +294,14 @@ export class CrowdView extends Group {
     // dense mixed hordes use LOD1 instead of adding an extra LOD0 draw for every near model.
     const heroRoles = new Set<string>(), heroDrawBudget = Math.max(0, 30 - 4 - this.rolePixels.size);
     for (const e of this.nearest) if (heroRoles.has(e.role) || heroRoles.size < heroDrawBudget) { heroes.add(e.id); heroRoles.add(e.role); }
-    for (const e of this.world.entities.iterate()) {
+    for (const e of this.figures) {
+      if (e.health.current > 0 && this.corpses.delete(e.id)) this.corpseSpatial.delete(e.id);
       if (e.id === 1 || e.faction !== 'infected' && !e.civilian?.zooAnimal || !e.combat) continue;
+      if (e.corpse && this.staticCorpses.has(e.id)) continue;
       const distance = Math.hypot(e.transform.x - focus.x, e.transform.z - focus.z);
       if (e.hidden || e.infected?.hidden || !view && distance > this.cullDistance && !e.corpse || e.infected?.state === 'dead' && this.world.tick - e.infected.deadAt > this.corpseTicks) continue;
       // L1 v2: a pedestrian who turned keeps its own body and clothes (NpcView's civilian crowd); only the contact shadow is drawn here.
       if (keepsLook(e)) { if (!e.corpse && this.shadows.count < 350) { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); } continue; }
-      if (e.corpse && this.staticCorpses.has(e.id)) continue;
       const availableLod = this.low ? 'lod2' : 'lod1';
       const role = this.modelKey(e.civilian?.zooAnimal ? `healthy.${e.civilian.zooAnimal}` : e.archetype) ?? this.modelKey('infected.runner')!;
       const variant = e.infected?.model ?? e.infected?.variant;
@@ -446,13 +461,22 @@ export class CrowdView extends Group {
     const bx = -Math.cos(e.transform.yaw), bz = Math.sin(e.transform.yaw), nav = this.world.infected?.nav;
     // A body never lies half off the deck/ramp it died on: head and hips stay on the support the sim settled it on.
     const feet = e.transform.y - .7, districts = this.world.districts, level = (x: number, z: number) => !districts || Math.abs(districts.supportBelow(x, z, feet) - feet) <= .3;
-    const clear = (x: number, z: number) => level(x, z) && level(x + bx * .95, z + bz * .95) && !!nav?.clear(x, z, .6) && nav.clear(x + bx * .5, z + bz * .5, .3) && nav.clear(x + bx * .95, z + bz * .95, .25) && [...this.corpses].every(([id, p]) => id === e.id || Math.hypot(x - p.x, z - p.z) >= 1.25);
+    const separated = (x: number, z: number) => {
+      this.corpseQuery.x = x; this.corpseQuery.z = z;
+      this.corpseSpatial.query(this.corpseQuery, this.corpseNeighbors, false);
+      for (const id of this.corpseNeighbors) {
+        const p = this.corpses.get(id)!;
+        if (id !== e.id && Math.hypot(x - p.x, z - p.z) < 1.25) return false;
+      }
+      return true;
+    };
+    const clear = (x: number, z: number) => level(x, z) && level(x + bx * .95, z + bz * .95) && !!nav?.clear(x, z, .6) && nav.clear(x + bx * .5, z + bz * .5, .3) && nav.clear(x + bx * .95, z + bz * .95, .25) && separated(x, z);
     if (!clear(pose.x, pose.z)) search: for (const radius of [.7, 1.4, 2.1]) for (let i = 0; i < 8; i++) {
       const angle = e.transform.yaw + Math.PI / 2 + i * Math.PI / 4;
       const x = e.transform.x + Math.cos(angle) * radius, z = e.transform.z + Math.sin(angle) * radius;
       if (clear(x, z) && this.world.infected!.nav.visible(e.transform, { x, z }, .35)) { pose.x = x; pose.z = z; break search; }
     }
-    this.corpses.set(e.id, pose); return pose;
+    this.corpses.set(e.id, pose); this.corpseSpatial.set(e.id, pose.x, pose.z); return pose;
   }
   flash(id: number, strength: number): void {
     const e = this.world.entities.get(id); if (!e?.combat || e.faction !== 'infected') return;
@@ -483,6 +507,6 @@ export class CrowdView extends Group {
     this.corpseGeometry.clear();
     for (const batch of this.batches.values()) { batch.mesh.geometry.dispose(); (batch.mesh.material as MeshLambertNodeMaterial).dispose(); batch.mesh.dispose(); batch.texture.dispose(); }
     for (const mesh of [...this.telegraphs, this.shadows, this.caps]) { mesh.geometry.dispose(); (mesh.material as MeshBasicNodeMaterial).dispose(); mesh.dispose(); }
-    this.batches.clear(); this.corpses.clear(); this.clear(); void this.registry.dispose();
+    this.batches.clear(); this.corpses.clear(); this.corpseSpatial.reset(); this.clear(); void this.registry.dispose();
   }
 }

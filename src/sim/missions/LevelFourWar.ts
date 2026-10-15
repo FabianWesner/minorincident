@@ -1,5 +1,7 @@
+import { survivor } from '../../data/survivor';
+import { l4PerimeterWalls } from '../../data/l4Perimeter';
 import { Rng } from '../../core/Rng';
-import { l4, l4Anchors, l4Cars, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4Inside, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyGate, type L4Weapon } from '../../data/l4';
+import { l4, l4Anchors, l4Cars, l4CellarDistance, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4Inside, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyGate, type L4Weapon } from '../../data/l4';
 import { l4AlphaEmergence } from '../../levels/L4/layout';
 import { infectedDef } from '../../data/infected';
 import { Outbreak } from '../outbreak/Outbreak';
@@ -106,6 +108,7 @@ export class LevelFourWar {
     this.spawnMedkits();
     this.spectacle.spawnFuelTruck();
     this.clearance.install();
+    world.events.on('sim.tick', () => this.perimeterVaults(), 1.9);
     this.mission.radio('L4.briefing');
     // Gunfire is a loud event (E22 section 5): the player's machine gun 30 m, HMG 40 m, every other shot 20 m.
     world.events.on('combat.attack', e => { if (e.type === 'combat.attack' && e.sourceId === 1 && e.actionId === l4.machineGun.id) this.gunshot(1, e.position, 30); });
@@ -117,6 +120,8 @@ export class LevelFourWar {
     // Every knockdown or kill counts as a "kill" for the war balance (the infected recover: PO rule), credited to who dealt it.
     world.events.on('combat.kill', e => { if (e.type === 'combat.kill') this.killed(e.sourceId, e.targetId); });
     this.director.listen();
+    // Build the small-capsule route grid while loading, before the first click can hitch.
+    world.infected.nav.forPlayer(survivor.radius + .02, .25);
   }
   private spawnConvoy(): void {
     const { world } = this.mission, s = this.s;
@@ -304,7 +309,7 @@ export class LevelFourWar {
       // NPC routes use a .35 m capsule. Add the remaining posed-body radius
       // plus vehicle clearance, so their paths agree with the rendered-hull guard.
       const margin = .85;
-      const wall: CoverWall = { x: e.transform.x, y: .9, z: e.transform.z, halfX: (c * v.len + n * v.wid) / 2 + margin, halfY: .9, halfZ: (n * v.len + c * v.wid) / 2 + margin };
+      const wall: CoverWall = { x: e.transform.x, y: .9, z: e.transform.z, halfX: (c * v.len + n * v.wid) / 2 + margin, halfY: .9, halfZ: (n * v.len + c * v.wid) / 2 + margin, playerHalfX: (c * v.len + n * v.wid) / 2 + .3, playerHalfZ: (n * v.len + c * v.wid) / 2 + .3 };
       world.solids.aliasBlocker(NAV_CONVOY + i, e.id);
       world.events.emit({ type: 'world.blocker.changed', tick: world.tick, id: NAV_CONVOY + i, blocked, wall });
     }
@@ -350,15 +355,33 @@ export class LevelFourWar {
 
   // ---------------------------------------------------------------------------------------------------------- the perimeter (PO 10-13)
   private fence: number[] = [];
+  private fenceWorld: object | null = null;
   /** Courier-only camp perimeter: physics and player routes agree; NPC routes cross freely. */
   private perimeter(on: boolean): void {
     const physics = this.world.physics;
-    this.world.infected!.nav.setPlayerBounds(on ? l4.perimeter : null);
+    if (this.fenceWorld !== physics.world) { this.fence = []; this.fenceWorld = physics.world; }
+    const t = this.world.entities.get(1)!.transform, r = l4.perimeter;
+    if (on && (t.x < r.x0 + .6 || t.x > r.x1 - .6 || t.z < r.z0 + .6 || t.z > r.z1 - .6)) return;
+    this.world.infected!.nav.setPlayerBounds(on ? { x0: r.x0 + .2, x1: r.x1 - .2, z0: r.z0 + .2, z1: r.z1 - .2 } : null);
     if (!on) { for (const h of this.fence) physics.removeBlocker(h); this.fence = []; return; }
     if (this.fence.length || !physics.playerBody) return;
-    const p = l4.perimeter, cx = (p.x0 + p.x1) / 2, cz = (p.z0 + p.z1) / 2, hx = (p.x1 - p.x0) / 2 + .2, hz = (p.z1 - p.z0) / 2 + .2;
-    for (const w of [{ x: cx, z: p.z0, halfX: hx, halfZ: .2 }, { x: cx, z: p.z1, halfX: hx, halfZ: .2 }, { x: p.x0, z: cz, halfX: .2, halfZ: hz }, { x: p.x1, z: cz, halfX: .2, halfZ: hz }])
-      this.fence.push(physics.addBlocker({ ...w, y: 1, halfY: 1.2 }));
+    for (const wall of l4PerimeterWalls) this.fence.push(physics.addBlocker(wall));
+  }
+  private perimeterVaults(): void {
+    if (!this.fence.length) return;
+    const nav = this.world.infected!.nav;
+    for (const e of this.world.infected!.active) {
+      const brain = e.infected!;
+      if (brain.vault || e.health.current <= 0 || e.hidden || e.infectionRise || e.attachedTo !== undefined) continue;
+      const t = e.transform, r = l4.perimeter;
+      // Entering the camp: the low outer wall costs the same 1.2 s vault as a sandbag.
+      const side = t.x < r.x0 ? 2 : t.x > r.x1 ? 3 : t.z < r.z0 ? 0 : t.z > r.z1 ? 1 : -1;
+      if (side < 0) continue;
+      const wall = l4PerimeterWalls[side], alongX = side >= 2, axis = alongX ? 'x' : 'z', other = alongX ? 'z' : 'x';
+      if (Math.abs(t[axis] - wall[axis]) > 1 || Math.abs(t[other] - wall[other]) > (alongX ? wall.halfZ : wall.halfX)) continue;
+      const to = { x: t.x, z: t.z }; to[axis] = wall[axis] + (side === 0 || side === 2 ? 1 : -1) * 1;
+      if (nav.clear(to.x, to.z, e.combat?.radius ?? .35)) brain.vault = { started: this.world.tick, from: { x: t.x, z: t.z }, to, height: .8 };
+    }
   }
   private gateWalls(): CoverWall[] {
     return this.s.gateIds.map(id => this.world.entities.get(id)).filter((e): e is EntitySnapshot => !!e).map(e => ({ x: e.transform.x, y: .5, z: e.transform.z, halfX: .4, halfY: .5, halfZ: 1.5 }));
@@ -370,7 +393,7 @@ export class LevelFourWar {
   private closeGate(): void {
     const { world } = this, s = this.s, p = l4.perimeter;
     if (!s.gateIds.length) for (const z of l4ConvoyGate.z) s.gateIds.push(spawnSetPiece(world, p.barrier, { x: l4ConvoyGate.x, z, yaw: Math.PI / 2 }).id);
-    this.gateNav(true); this.perimeter(true);
+    this.gateNav(true);
   }
   private gateNav(blocked: boolean): void {
     for (const [k, wall] of this.gateWalls().entries()) this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: NAV_GATE + k, blocked, wall });
@@ -384,9 +407,13 @@ export class LevelFourWar {
   /** A soldier calls her back when she leans on the perimeter (at most every `barkEveryS`). */
   private perimeterBark(): void {
     const s = this.s, tick = this.world.tick, p = l4.perimeter, t = this.world.entities.get(1)!.transform;
-    if (!this.fence.length || tick < s.barkAt || t.x < p.x0 - 1 || t.x > p.x1 + 1 || t.z < p.z0 - 1 || t.z > p.z1 + 1) return;
+    if (!this.fence.length || t.x < p.x0 - 1 || t.x > p.x1 + 1 || t.z < p.z0 - 1 || t.z > p.z1 + 1) return;
     if (Math.min(t.x - p.x0, p.x1 - t.x, t.z - p.z0, p.z1 - t.z) > p.barkM && !this.clearance.overlaps(t, 1.35)) return;
-    s.barkAt = tick + ticks(p.barkEveryS); this.mission.radio('L4.perimeter');
+    const input = this.world.inputFrame.move;
+    const pushing = t.x - p.x0 < p.barkM && input.x < -.05 || p.x1 - t.x < p.barkM && input.x > .05 || t.z - p.z0 < p.barkM && input.z < -.05 || p.z1 - t.z < p.barkM && input.z > .05;
+    if (!pushing && !(this.world.controls.blockedMove && this.world.controls.blockedMove.until > tick)) return;
+    if (pushing) this.world.controls.boundaryFeedback(this.world.infected!.nav.clampPlayerTarget(t, .5));
+    if (tick >= s.barkAt) { s.barkAt = tick + ticks(p.barkEveryS); this.mission.radio('L4.perimeter'); }
   }
 
   // ---------------------------------------------------------------------------------------------------------- beats
@@ -441,6 +468,7 @@ export class LevelFourWar {
     // The alarm brings new infected out of camp buildings; the evacuees remain human.
     const first = { x: -25, z: -9 };
     const near = [...world.entities.iterate()].filter(e => this.human(e) && dist(e.transform, first) <= 10).length;
+    this.perimeter(true);
     s.turnAt = s.warAt = tick; s.phase = 'war'; s.waveAt = tick + ticks(l4.war.fromS);
     s.soldiersAtTurn = this.liveSoldiers().length; s.civiliansAtTurn = [...world.entities.iterate()].filter(e => this.human(e)).length;
     const ids: number[] = [];
@@ -469,7 +497,7 @@ export class LevelFourWar {
       if (soldier) ai.rush(id, soldier.transform, tick + ticks(12));
     }
     world.events.emit({ type: 'l4.firstTurn', tick, ids, humansNear: near });
-    this.mission.radio('L4.turn');
+    this.mission.radio('L4.perimeter-active');
     if (!this.mission.state.states.turned) this.mission.setState('turned', true);
     this.engageAll();
     this.toPosts();
@@ -510,9 +538,9 @@ export class LevelFourWar {
     return [...this.world.entities.iterate()].filter(e => !e.hidden && e.health.current > 0 && (e.infected || e.civilian)).length < cap - keep;
   }
   /** One infected out of view at `at`; `push` (the collapse director's pressure) may use the whole cap, waves only the stage's share. */
-  private emerge(at: Point, push = false): number {
+  private emerge(at: Point, push = false, headroom: number = l4.war.headroom): number {
     const { world } = this.mission, ai = world.infected!, o = this.outbreak();
-    const limit = Math.floor(ai.director.cap * (push ? 1 : this.director.aliveShare())) - ai.director.reserved - l4.war.headroom;
+    const limit = Math.floor(ai.director.cap * (push ? 1 : this.director.aliveShare())) - ai.director.reserved - headroom;
     if (!this.spawnRoom(ai.director.reserved) || ai.director.count >= limit || !ai.pool.length || this.inGap(at)) return 0;
     // Admit around the authored exit once, using exact hull/body clearance.
     // A coarse nav snap followed by admission displaced arrivals twice.
@@ -726,24 +754,62 @@ export class LevelFourWar {
     s.director.burnAt = near.length > 1 && s.burning.length < l4.collapse.burningCars ? this.world.tick + ticks(.7) : 0;
   }
   private populateCollapse(): void {
-    const s = this.s, doors = this.doors(), scale = this.low ? .5 : 1;
-    for (const [x, z, size] of l4CollapseGroups) {
-      const near = doors.filter(d => dist(d, { x, z }) < 14).sort((a, b) => dist(a, { x, z }) - dist(b, { x, z })).slice(0, 2);
-      if (!near.length) continue;
-      for (let i = 0; i < Math.ceil(size * scale); i++) s.pendingDoor.push({ id: 0, door: near[i % near.length].name, home: { x, z } });
+    const s = this.s, scale = this.low ? .5 : 1;
+    for (const [index, [x, z, size]] of l4CollapseGroups.entries()) {
+      // Street mouths are authored emergence points too. Lakeshore's middle blocks
+      // have no building door within 14 m, so the old door-only plan silently skipped them.
+      for (let i = 0; i < Math.ceil(size * scale); i++) s.pendingDoor.push({ id: 0, door: `l4-street-edge-${index}`, home: { x, z } });
     }
   }
   private emergeCollapse(): void {
     const { world } = this.mission, s = this.s, ai = world.infected!, p = world.entities.get(1)!.transform;
     if (world.tick % 10 !== 0) return;
+    const plaza = l4.map.plaza, onStreets = p.x < plaza.x0 || p.x > plaza.x1 || p.z < plaza.z0 || p.z > plaza.z1;
+    const remaining = l4CellarDistance(p), claimed = new Set(s.pendingDoor.filter(q => q.id > 0).map(q => q.id));
     let spawned = 0;
     for (const q of s.pendingDoor) {
       if (q.id !== 0 || spawned >= l4.collapse.pendingPerTick) continue;
+      // Reserve the later street groups until the courier has left the fallen plaza.
+      // Only the small egress pair can appear alongside the original protected way out.
+      const early = q.home.x === l4.collapse.egress[0] && q.home.z === l4.collapse.egress[1];
+      if (!onStreets && !early) continue;
+      // Harbor is close across the blocks but much farther along the street route.
+      // Keep its slots for the actual arrival instead of spending them beside the plaza.
+      const ahead = remaining - l4CellarDistance(q.home);
+      if (ahead > 42 || ahead < -20) continue;
       const a = this.anchor(q.door);
-      if (!ai.director.offscreen(a) || dist(a, p) < 24) continue;
-      const id = this.emerge(a); if (!id) { if (ai.director.count >= ai.director.cap) break; continue; }
+      if (dist(q.home, p) > 42 || !ai.director.offscreen(a) || dist(a, p) < 24) continue;
+      // After the war, the spare regular slots feed small street groups, still under the same cap.
+      const keep = early ? 0 : q.home.z > 30 ? 4 : q.home.x > 0 ? 2 : 0;
+      let id = this.emerge(a, false, keep), straggler = false;
+      if (!id && onStreets) {
+        // A full war population already contains the stragglers. Send nearby unseen
+        // regulars down the street on foot; retain their identity, HP and cap slots.
+        let nearest = 60;
+        for (const e of ai.active) {
+          const b = e.infected?.l1, d = dist(e.transform, q.home);
+          if (e.health.current <= 0 || e.archetype !== 'infected.runner' || !b || b.targetId === 1 || b.mode === 'bite' || e.infected!.state === 'attack' || claimed.has(e.id) || d >= nearest || dist(e.transform, p) < 24 || !ai.director.offscreen(e.transform)) continue;
+          nearest = d; id = e.id;
+        }
+        if (id) {
+          const b = world.entities.get(id)!.infected!.l1!; b.mode = 'wander'; b.targetId = 0;
+          straggler = ai.rush(id, q.home, world.tick + ticks(30));
+          if (!straggler) id = 0;
+        }
+      }
+      if (!id) continue;
       const e = world.entities.get(id)!, brain = e.infected!.l1; q.id = id; spawned++;
-      if (brain) { brain.homeX = q.home.x; brain.homeZ = q.home.z; brain.leashM = 12; }
+      claimed.add(id);
+      if (brain) {
+        brain.homeX = q.home.x; brain.homeZ = q.home.z; brain.leashM = 8;
+        // The small groups watch their incoming street before ordinary wandering resumes.
+        // Their human targets are acquired by the same sight/LOS rules as the outbreak.
+        if (!straggler) {
+          const yaw = early ? Math.PI : q.home.z < -30 ? 0 : q.home.z > 50 ? Math.PI * .75 : q.home.z > 30 ? Math.PI : -Math.PI / 2;
+          e.transform.yaw = brain.lookYaw = yaw; brain.looking = true;
+          brain.pauseUntil = world.tick + ticks(l4.collapse.streetLookS);
+        }
+      }
     }
     // Soldier pockets: three soldiers hold a street corner against a few infected (spawned out of view).
     for (const i of [...s.pockets]) {
@@ -762,6 +828,8 @@ export class LevelFourWar {
   private descend(): void {
     const { world } = this.mission, s = this.s, tick = world.tick, player = world.entities.get(1)!;
     if (s.phase === 'cellar' || s.phase === 'done') return;
+    const entry = this.anchor('l4-cellar-door');
+    if (world.progression?.campaign) world.progression.campaign.shelterEntry = { x: entry.x, z: entry.z, yaw: entry.yaw ?? l4.cellar.outwardYaw };
     s.phase = 'cellar'; s.descendAt = tick; s.soldiersAtCellar = this.liveSoldiers().length;
     const inn = this.anchor('l4-cellar-in');
     Object.assign(player.transform, { x: inn.x, z: inn.z });
@@ -821,7 +889,7 @@ export class LevelFourWar {
     const tick = world.tick;
     if (s.phase === 'convoy') this.ride();
     this.convoySound(tick);
-    if ((s.phase === 'plaza' || s.phase === 'war') && tick % 10 === 0) this.perimeterBark();
+    if (s.phase === 'war' && tick % 10 === 0) { if (!this.fence.length) this.perimeter(true); this.perimeterBark(); }
     if (s.phase === 'plaza') {
       if (tick === s.arrivedAt + ticks(l4.calm.welcomeAtS)) this.mission.radio('L4.welcome');
       if (tick >= s.turnDueAt) this.turn();
@@ -877,7 +945,7 @@ export class LevelFourWar {
     for (let i = 0; i < s.edgeNext.length; i++) if (s.edgeNext[i]) s.edgeNext[i] += delta;
     if (s.insideAt) s.insideAt += delta;
     const camp = s.phase === 'plaza' || s.phase === 'war';
-    this.gateNav(camp); this.perimeter(camp); this.gateOpenAt = 0;
+    this.gateNav(camp); this.perimeter(this.s.phase === 'war'); this.gateOpenAt = 0;
     if (!camp) for (const id of s.gateIds) { const e = this.world.entities.get(id); if (e) e.hidden = true; }
     this.world.infected!.director.reserved = l4.alphas.count[this.low ? 'low' : 'high'] - s.alphaIds.length;
     const fuel = this.world.entities.get(s.fuelId);

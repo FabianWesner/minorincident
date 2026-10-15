@@ -67,7 +67,7 @@ test('T-E32-12d @E32-AC12 shared stagger cooldown survives floor hits and checkp
 
 for (const move of Object.keys(megaAlpha.moves) as (keyof typeof megaAlpha.moves)[]) {
   test(`T-E32-11-${move} @E32-AC11 windup, damage, recovery, nonoverlap and activation cooldown`, async () => {
-    const { w, e, player } = await setup(0, move === 'alpha.charge' ? 6 : 1.8), tune = megaAlpha.moves[move];
+    const { w, e, player } = await setup(0, move === 'alpha.charge' ? 6 : 1.2), tune = megaAlpha.moves[move];
     expect(w.infected!.startSpecial(e.id, move, { id: 1, ...player.transform }, area)).toBe(true);
     const a = e.infected!.specialAttack!;
     expect(a.activeTick - a.startTick).toBe(tune.windup); expect(a.cooldownExpiry - a.activeTick).toBe(tune.cooldown);
@@ -94,7 +94,7 @@ for (const move of Object.keys(megaAlpha.moves) as (keyof typeof megaAlpha.moves
 }
 
 for (const death of [false, true]) test(`T-E32-11-grab-release-${death} @E32-AC11 stagger/death always releases grab`, async () => {
-  const { w, e, player } = await setup(0, 1.8);
+  const { w, e, player } = await setup(0, 1.2);
   w.infected!.startSpecial(e.id, 'alpha.grab-throw', { id: 1, ...player.transform }, area); step(w, 48);
   expect(player.survivor!.knockdown).toBeDefined();
   if (death) e.health.current = 300;

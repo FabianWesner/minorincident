@@ -170,3 +170,23 @@ test('covered hair in triangle soup removes complete triangles instead of shifti
     expect(geometry.getAttribute('position').count % 3).toBe(0);
   } finally { pool.dispose(); material.dispose(); source.dispose(); baked.geometry.dispose(); }
 });
+
+test('frozen membership revisions change only when an animated caller must rebuild its actor list', () => {
+  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial();
+  const e = { id: 1, corpse: true, transform: { x: 0, y: .7, z: 0, yaw: 0 } } as EntitySnapshot;
+  try {
+    const initial = pool.revision;
+    pool.place(e, 'runner', baked.geometry, material, baked.clip, 0, new Matrix4(), new Color('white'), [0, 0, 0]);
+    expect(pool.revision).toBeGreaterThan(initial);
+    const placed = pool.revision;
+    pool.begin(() => e); pool.begin(() => e);
+    expect(pool.revision).toBe(placed);
+    e.corpseThrown = true; e.transform.x = 5;
+    pool.begin(() => e);
+    expect(pool.drawn()[0].x).toBe(5); expect(pool.revision).toBe(placed);
+    e.hidden = true; pool.begin(() => e);
+    expect(pool.revision).toBeGreaterThan(placed); expect(pool.snapshot().instances).toBe(0);
+    const dropped = pool.revision; pool.reset(); expect(pool.revision).toBeGreaterThan(dropped);
+  } finally { pool.dispose(); material.dispose(); baked.geometry.dispose(); }
+});

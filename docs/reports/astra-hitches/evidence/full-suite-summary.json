@@ -1,0 +1,106 @@
+{
+  "note": "Broad Node snapshot launched before the final streamed-gun renderer fix; NavGrid optimization unchanged throughout. All original limits retained. Failures are retained and rechecked separately.",
+  "overall": {
+    "numPassedTests": 2796,
+    "numFailedTests": 8,
+    "numPendingTests": 9,
+    "numTotalTests": 2813,
+    "numPassedTestSuites": 491,
+    "numFailedTestSuites": 10,
+    "success": false
+  },
+  "areas": {
+    "sim": {
+      "passed": 1049,
+      "failed": 3
+    },
+    "unit": {
+      "passed": 1467,
+      "failed": 2,
+      "skipped": 7
+    },
+    "levels": {
+      "passed": 280,
+      "failed": 3,
+      "skipped": 2
+    }
+  },
+  "arrival": [
+    {
+      "test": "T-E32-21-E3b @E32-AC21 seed-32 rocket checkpoint route arrival high",
+      "status": "passed",
+      "durationMs": 39784.11301099992
+    },
+    {
+      "test": "T-E32-21-E3b @E32-AC21 seed-32 rocket checkpoint route arrival low",
+      "status": "passed",
+      "durationMs": 22571.93263699999
+    }
+  ],
+  "failures": [
+    {
+      "file": "tests/sim/levels/l10-assault.test.ts",
+      "test": "T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+      "durationMs": 16995.39444100001,
+      "messages": [
+        "AssertionError: expected 4.025783999997657 to be less than or equal to 4\n    at /srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/tests/sim/levels/l10-assault.test.ts:58:17\n    at file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "tests/levels/L10.test.ts",
+      "test": "T-E32-04-complete @E32-AC04 one seed completes the full L10 route with ordinary inputs and regional timing",
+      "durationMs": 342207.2369210003,
+      "messages": [
+        "Error: Test timed out in 300000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\n    at task (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2681:43)\n    at Object.<anonymous> (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2698:16)\n    at Object.<anonymous> (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2471:28)\n    at chain (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1859:14)\n    at /srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/tests/levels/L10.test.ts:5:1\n    at VitestModuleEvaluator._runInlinedModule (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/module-evaluator.js:261:4)\n    at VitestModuleRunner.directRequest (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vite/dist/node/module-runner.js:1284:61)\n    at VitestModuleRunner.cachedRequest (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vite/dist/node/module-runner.js:1180:76)\n    at VitestModuleRunner.import (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vite/dist/node/module-runner.js:1117:12)\n    at file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3448:5"
+      ]
+    },
+    {
+      "file": "tests/levels/L3.test.ts",
+      "test": "L3 The Police Collapse T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2",
+      "durationMs": 245562.05946100003,
+      "messages": [
+        "AssertionError: expected 5 to be less than or equal to 2\n    at /srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/tests/levels/L3.test.ts:60:45\n    at file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "tests/levels/L4.test.ts",
+      "test": "L4 The Safe City Falls T-E22-11 @E22 @E22-AC11 military spectacle: two HMG positions fire, trucks and an armoured vehicle stand in the plaza, the tank fires every 8-12 s away from the player and allies, the helicopter orbits and withdraws without landing",
+      "durationMs": 63043.28185999999,
+      "messages": [
+        "AssertionError: expected 14.116666666666667 to be less than or equal to 12.8\n    at /srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/tests/levels/L4.test.ts:245:152\n    at file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "tests/sim/l9-campaign-continuity.test.ts",
+      "test": "T-E31-20-L1-prop @E31-AC20 @E20-AC04 L1 carried bin cannot strand the seated L2 truck on its station apron",
+      "durationMs": 31623.505047000013,
+      "messages": [
+        "Error: Test timed out in 30000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\n    at task (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2681:43)\n    at Object.<anonymous> (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2698:16)\n    at Object.<anonymous> (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2471:28)\n    at chain (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1859:14)\n    at /srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/tests/sim/l9-campaign-continuity.test.ts:7:1\n    at VitestModuleEvaluator._runInlinedModule (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/module-evaluator.js:261:4)\n    at VitestModuleRunner.directRequest (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vite/dist/node/module-runner.js:1284:61)\n    at VitestModuleRunner.cachedRequest (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vite/dist/node/module-runner.js:1180:76)\n    at VitestModuleRunner.import (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vite/dist/node/module-runner.js:1117:12)\n    at file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3448:5"
+      ]
+    },
+    {
+      "file": "tests/unit/static.test.ts",
+      "test": "T-E01-01b @E01 @E01-AC01 typecheck, lint and build exit zero without warnings",
+      "durationMs": 92321.82699899981,
+      "messages": [
+        "AssertionError: \n> typecheck\n> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json\n\ntests/perf/l10-lod-residency.spec.ts(23,255): error TS2339: Property 'vertexShader' does not exist on type 'NodeBuilder'.\ntests/perf/l10-lod-residency.spec.ts(23,287): error TS2339: Property 'fragmentShader' does not exist on type 'NodeBuilder'.\n: expected 2 to be +0 // Object.is equality\n    at /srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/tests/unit/static.test.ts:12:35\n    at file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1628:35\n    at file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:26\n    at file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3321:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3316:10)\n    at file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3301:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3259:10)\n    at file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3882:64"
+      ]
+    },
+    {
+      "file": "tests/sim/levels/l10-campus-corridor.test.ts",
+      "test": "T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex",
+      "durationMs": 75765.25364500005,
+      "messages": [
+        "AssertionError: expected 6.818179999943823 to be less than or equal to 4\n    at /srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/tests/sim/levels/l10-campus-corridor.test.ts:59:89\n    at file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "tests/unit/assets/validate.test.ts",
+      "test": "T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts",
+      "durationMs": 302815.57689699996,
+      "messages": [
+        "Error: Test timed out in 300000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\n    at task (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2681:43)\n    at Object.<anonymous> (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2698:16)\n    at Object.<anonymous> (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2471:28)\n    at chain (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1859:14)\n    at /srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/tests/unit/assets/validate.test.ts:83:1\n    at VitestModuleEvaluator._runInlinedModule (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/module-evaluator.js:261:4)\n    at VitestModuleRunner.directRequest (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vite/dist/node/module-runner.js:1284:61)\n    at VitestModuleRunner.cachedRequest (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vite/dist/node/module-runner.js:1180:76)\n    at VitestModuleRunner.import (file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vite/dist/node/module-runner.js:1117:12)\n    at file:///srv/mi/jobs/astra-hitches-e80ed9-6402-1792046855/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3448:5"
+      ]
+    }
+  ]
+}

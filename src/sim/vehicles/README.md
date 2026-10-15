@@ -20,6 +20,11 @@ The payload keeps vehicle/occupant numeric IDs, vehicle HP, survivor health/iden
 weapon rack state and unlimited charges. The destination rebinds both the live combat
 loadout and physics driver. Tick deadlines shift to preserve remaining times in the new level.
 Vehicle snapshots/checkpoints own passenger lists and pending entry/exit progress.
+The protected corgi boards through the same passenger lifecycle in the L8 escape;
+departure waits for it without counting it in the rescued human roster. L9 restores
+incoming occupants before creating a standalone companion, avoiding duplicate IDs.
+L7's scripted bus keeps the corgi entity hidden aboard and carries its snapshot in
+`MissionResult.companion`; L8 reserves that ID before population setup and resumes follow.
 L9's durability and breakdown policy are added by L9-S1.
 
 L9 floor policy (L9-S5, PO 10-13): `Vehicles.setFloorPolicy(id)` marks the mission APC. Durability still clamps to 0, but the

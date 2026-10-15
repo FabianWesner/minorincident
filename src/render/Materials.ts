@@ -24,6 +24,8 @@ export class Materials {
       data.set([hex >> 16, hex >> 8 & 255, hex & 255, 255], (i + sheet * paletteTokens.length) * 4);
     });
     this.texture = new DataTexture(data, paletteTokens.length * 2, 1, RGBAFormat, UnsignedByteType);
+    // Every palette lookup supplies explicit coordinates into this fixed sheet.
+    this.texture.matrixAutoUpdate = false;
     this.texture.colorSpace = SRGBColorSpace; this.texture.minFilter = this.texture.magFilter = NearestFilter; this.texture.needsUpdate = true;
   }
   get lamps() { return this.lighting.lamps; }

@@ -1,0 +1,77 @@
+{
+  "name": "l5-po-alpha-follow",
+  "note": "PO #20b: survivor-1 restored, Alpha about 15 m from the courier; Rosa reacts briefly then regroups while the courier covers her with ordinary machine-gun input. Both start on the open street.",
+  "ground": "district",
+  "time": "L5",
+  "tier": 5,
+  "size": 220,
+  "layout": {
+    "level": "L5",
+    "district": "D-FAIR"
+  },
+  "l5Aftermath": {
+    "found": [
+      "rosa"
+    ],
+    "alphaAt": [
+      -5,
+      -39
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        10,
+        -41
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.army-mg"
+      ],
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 30,
+      "actor": "courier",
+      "do": {
+        "attack": "alpha",
+        "side": "RIGHT",
+        "seconds": 5
+      }
+    },
+    {
+      "frame": 360,
+      "actor": "courier",
+      "do": {
+        "moveTo": [
+          17,
+          -39
+        ],
+        "pace": "walk"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "rosa",
+    "zoom": 1
+  },
+  "hud": true,
+  "frames": 540,
+  "sheet": 45,
+  "shots": [
+    1,
+    60,
+    105,
+    240,
+    539
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  }
+}

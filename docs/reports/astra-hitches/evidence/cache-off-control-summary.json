@@ -1,0 +1,30 @@
+{
+  "note": "Same source revision; reach memo cleared before every request by reach-cache-off.ts. Original gameplay assertions and deadlines unchanged. One worker; ordinary remote slot alongside final unit job.",
+  "passed": 1,
+  "failed": 2,
+  "skipped": 42,
+  "rows": [
+    {
+      "test": "L3 The Police Collapse T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2",
+      "status": "failed",
+      "durationMs": 100927.89312299999,
+      "messages": [
+        "AssertionError: expected 5 to be less than or equal to 2\n    at /srv/mi/jobs/astra-hitches-e80ed9-71742-1792051421/tests/levels/L3.test.ts:60:45\n    at file:///srv/mi/jobs/astra-hitches-e80ed9-71742-1792051421/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "test": "L4 The Safe City Falls T-E22-11 @E22 @E22-AC11 military spectacle: two HMG positions fire, trucks and an armoured vehicle stand in the plaza, the tank fires every 8-12 s away from the player and allies, the helicopter orbits and withdraws without landing",
+      "status": "failed",
+      "durationMs": 23590.808719999997,
+      "messages": [
+        "AssertionError: expected 14.116666666666667 to be less than or equal to 12.8\n    at /srv/mi/jobs/astra-hitches-e80ed9-71742-1792051421/tests/levels/L4.test.ts:245:152\n    at file:///srv/mi/jobs/astra-hitches-e80ed9-71742-1792051421/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "test": "T-E31-20-L1-prop @E31-AC20 @E20-AC04 L1 carried bin cannot strand the seated L2 truck on its station apron",
+      "status": "passed",
+      "durationMs": 9268.159456000009,
+      "messages": []
+    }
+  ]
+}

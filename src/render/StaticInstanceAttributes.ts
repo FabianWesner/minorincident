@@ -11,6 +11,7 @@ export function staticInstanceAttributes(mesh: InstancedMesh): boolean {
   let material = materials.get(source);
   if (!material) {
     material = source.frozenCopy();
+    if (source.userData.seeThrough === true) material.seeThrough('placement');
     const previous = source.positionNode;
     material.positionNode = Fn(() => {
       const matrix = mat4(attribute('_placement0', 'vec4'), attribute('_placement1', 'vec4'), attribute('_placement2', 'vec4'), attribute('_placement3', 'vec4'));
@@ -29,7 +30,12 @@ export function staticInstanceAttributes(mesh: InstancedMesh): boolean {
   for (const [name, input] of Object.entries(original.attributes)) {
     if ('isInterleavedBufferAttribute' in input) {
       let data = buffers.get(input.data);
-      if (!data) { data = new InterleavedBuffer(input.data.array, input.data.stride).setUsage(input.data.usage); buffers.set(input.data, data); }
+      if (!data) {
+        data = input.data instanceof InstancedInterleavedBuffer
+          ? new InstancedInterleavedBuffer(input.data.array, input.data.stride, input.data.meshPerAttribute)
+          : new InterleavedBuffer(input.data.array, input.data.stride);
+        data.setUsage(input.data.usage); buffers.set(input.data, data);
+      }
       geometry.setAttribute(name, new InterleavedBufferAttribute(data, input.itemSize, input.offset, input.normalized));
     } else {
       const copy = input instanceof InstancedBufferAttribute ? new InstancedBufferAttribute(input.array, input.itemSize, input.normalized, input.meshPerAttribute) : new BufferAttribute(input.array, input.itemSize, input.normalized);

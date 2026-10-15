@@ -14,7 +14,7 @@ test('@E22 the line break immediately names and marks the cellar and retains its
   while (!m.state.l4!.turnAt) w.update();
   m.completeObjective('hold'); w.update();
   expect(m.state.l4!.phase).toBe('collapse');
-  expect(m.def.steps.find(s => s.id === 'hide')!.text).toBe('Run to the cellar');
+  expect(m.def.steps.find(s => s.id === 'hide')!.text).toBe('Run to the cellar via Lakeshore, Metro Road and Harbor Street');
   expect(m.state.steps.hide.status).toBe('active');
   expect(m.state.marker).toBe('l4-cellar-door');
   expect(w.events.events().some(e => e.type === 'dialogue.line' && e.id === 'L4.fallback' && e.text === dialogue['L4.fallback'])).toBe(true);

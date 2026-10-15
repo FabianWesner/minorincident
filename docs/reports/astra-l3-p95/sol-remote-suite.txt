@@ -1,0 +1,143 @@
+Command: sh tools/remote/run.sh "$PWD" -- npx vitest run tests/unit tests/sim tests/levels --maxWorkers=4
+
+9988ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 12 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   timing  tests/sim/levels/l10-arrival.test.ts > T-E32-21-E3b @E32-AC21 seed-32 rocket checkpoint route arrival high
+Error: Test timed out in 120000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/sim/levels/l10-arrival.test.ts:4:46
+      2| import { runFinaleCalibration } from '../../../tools/sim-runner/l10-fi…
+      3|
+      4| for (const tier of ['high', 'low'] as const) test(`T-E32-21-E3b @E32-A…
+       |                                              ^
+      5|   const result = await runFinaleCalibration(tier);
+      6|   expect(result.arrival).not.toBeNull();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/12]⎯
+
+ FAIL   timing  tests/sim/levels/l10-assault.test.ts > T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets
+AssertionError: expected 5.113794999982929 to be less than or equal to 4
+ ❯ tests/sim/levels/l10-assault.test.ts:58:17
+     56|     mkdirSync('test-results/epics/E32/E3', { recursive: true });
+     57|     writeFileSync(`test-results/epics/E32/E3/assault-${tier}.json`, JS…
+     58|     expect(p95).toBeLessThanOrEqual(tier === 'high' ? 4 : 6);
+       |                 ^
+     59|   } finally { w.dispose(); }
+     60| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/12]⎯
+
+ FAIL   timing  tests/sim/npc/campaign.test.ts > T-E08-11-high @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity
+AssertionError: L1 high: expected 4.402540000039153 to be less than or equal to 4
+ ❯ tests/sim/npc/campaign.test.ts:57:43
+     55|     times.sort((a, b) => a - b); const simMsP95 = times[Math.floor(tim…
+     56|     console.log(JSON.stringify({ level: `L${level}`, tier, simMsP95, b…
+     57|     expect(simMsP95, `L${level} ${tier}`).toBeLessThanOrEqual(tier ===…
+       |                                           ^
+     58|     metrics.push({ level: `L${level}`, tier, average, expected, simMsP…
+     59|   }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/12]⎯
+
+ FAIL   timing  tests/sim/performance/alpha-physical.test.ts > T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms
+AssertionError: expected 4.348805999965407 to be less than or equal to 4
+ ❯ tests/sim/performance/alpha-physical.test.ts:29:101
+     27|     const proof = { count, alphas: ids.length, minInfected, activation…
+     28|     mkdirSync('test-results/alpha-s2', { recursive: true }); writeFile…
+     29|     expect(activations).toBeGreaterThan(0); expect(minInfected).toBe(c…
+       |                                                                                                     ^
+     30|   } finally { w.dispose(); }
+     31| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/12]⎯
+
+ FAIL   timing  tests/sim/performance/alpha.test.ts > T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms
+AssertionError: expected 4.316426000033971 to be less than or equal to 4
+ ❯ tests/sim/performance/alpha.test.ts:29:61
+     27|     const proof = { count, alphas: ids.length, minInfected, cap: ai.di…
+     28|     mkdirSync('test-results/alpha-s1', { recursive: true }); writeFile…
+     29|     expect(minInfected).toBe(count); expect(proof.simMsP95).toBeLessTh…
+       |                                                             ^
+     30|   } finally { w.dispose(); }
+     31| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/12]⎯
+
+ FAIL   timing  tests/sim/performance/l10-finale.test.ts > T-E32-20-perf-200 @E32-AC20 @E32-AC31 @E18-AC02 full-cap active dispersal predicate
+AssertionError: expected 4.251702999987174 to be less than or equal to 4
+ ❯ tests/sim/performance/l10-finale.test.ts:30:23
+     28|     expect(proof.count).toBe(count); expect(proof.chargeTicks).toBe(36…
+     29|     expect(m.state.steps.hold.status).toBe('active'); expect(m.state.s…
+     30|     expect(proof.p95).toBeLessThanOrEqual(budget);
+       |                       ^
+     31|   } finally { w.dispose(); }
+     32| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/12]⎯
+
+ FAIL   timing  tests/sim/performance/mega-moves.test.ts > T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18
+AssertionError: expected 5.312190000026021 to be less than or equal to 4
+ ❯ tests/sim/performance/mega-moves.test.ts:24:104
+     22|     const proof = { count, activations, simMsP95: times[Math.ceil(time…
+     23|     mkdirSync('test-results/epics/E32', { recursive: true }); writeFil…
+     24|     expect(activations).toBeGreaterThan(0); expect(proof.infected).toB…
+       |                                                                                                        ^
+     25|   } finally { w.dispose(); }
+     26| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/12]⎯
+
+ FAIL   timing  tests/sim/performance/zoo-s2.test.ts > T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms
+AssertionError: expected 5.903818999999203 to be less than or equal to 4
+ ❯ tests/sim/performance/zoo-s2.test.ts:26:68
+     24|     const proof = { count, zoo: ids.length, activations, simMsP95: tim…
+     25|     mkdirSync('docs/reports/zoo-s2', { recursive: true }); writeFileSy…
+     26|     expect(activations).toBeGreaterThan(0); expect(proof.simMsP95).toB…
+       |                                                                    ^
+     27|   } finally { w.dispose(); }
+     28| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/12]⎯
+
+ FAIL   timing  tests/sim/world/chunk-residency.test.ts > T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95
+AssertionError: expected 4.386719000001904 to be less than or equal to 4
+ ❯ tests/sim/world/chunk-residency.test.ts:87:71
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/12]⎯
+
+ FAIL   functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2
+AssertionError: expected 5 to be less than or equal to 2
+ ❯ tests/levels/L3.test.ts:60:45
+     58|     const runs = await battery('newbie');
+     59|     expect(runs.filter(r => r.outcome === 'complete').length).toBeGrea…
+     60|     expect(median(runs.map(r => r.deaths))).toBeLessThanOrEqual(l3.bot…
+       |                                             ^
+     61|     const t = median(runs.filter(r => r.outcome === 'complete').map(r …
+     62|     expect(t).toBeGreaterThanOrEqual(l3.bots.newbieMedianS[0]); expect…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/12]⎯
+
+ FAIL   functional  tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-11 @E22 @E22-AC11 military spectacle: two HMG positions fire, trucks and an armoured vehicle stand in the plaza, the tank fires every 8-12 s away from the player and allies, the helicopter orbits and withdraws without landing
+AssertionError: expected 14.116666666666667 to be less than or equal to 12.8
+ ❯ tests/levels/L4.test.ts:245:152
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/12]⎯
+
+ FAIL   functional  tests/sim/levels/l10-campus-corridor.test.ts > T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex
+AssertionError: expected 6.259378999937326 to be less than or equal to 4
+ ❯ tests/sim/levels/l10-campus-corridor.test.ts:59:89
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/12]⎯
+
+
+ Test Files  12 failed | 414 passed | 3 skipped (429)
+      Tests  12 failed | 2789 passed | 9 skipped (2810)
+   Start at  06:48:37
+   Duration  3179.41s (tests 98%, import 2%, transform 1%)
+
+[remote] done exit=1 (runner 2.28.24.66, sync 20s, remote total 3186s)

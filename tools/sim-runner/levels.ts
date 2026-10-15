@@ -41,7 +41,7 @@ export async function loadLevel(level: RunnerLevel, seed: number, campaign?: Cam
   const world = new SimWorld();
   try {
     await world.init(); const composition = compositions[level];
-    world.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), seed, level === 'L2' ? campaign?.world?.L1 ?? null : null, level === 'L7' ? campaign?.results?.L6?.escapedSurvivors : level === 'L8' ? campaign?.results?.L7?.escapedSurvivors : undefined);
+    world.loadComposition(composition, composition.districts.map(d => JSON.parse(readFileSync(`public/assets/layouts/${d.id}.layout.json`, 'utf8'))), seed, level === 'L2' ? campaign?.world?.L1 ?? null : null, level === 'L7' ? campaign?.results?.L6?.escapedSurvivors : level === 'L8' ? campaign?.results?.L7?.escapedSurvivors : undefined, level === 'L8' ? campaign?.results?.L7?.companion : undefined);
     if(campaign)applyCampaign(world,campaign);
     if (!campaign && level === 'L10') applyCampaign(world, preset('L10-default'));
     if (!campaign && level === 'L8') applyCampaign(world, preset('L8-default'));

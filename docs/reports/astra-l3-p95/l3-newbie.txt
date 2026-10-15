@@ -1,0 +1,52 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/astra-l3-p95 -> 2.28.24.66:/srv/mi/ws/astra-l3-p95-1c30a5
+[remote] cache-gc deleted:none
+[remote] sync 22s, 11343 files; job /srv/mi/jobs/astra-l3-p95-1c30a5-23211-1792044962; queueing for a slot
+[runner] slot 1 acquired; load 5.28 5.19 4.60
+
+ RUN  v5.0.3 /srv/mi/jobs/astra-l3-p95-1c30a5-23211-1792044962
+
+ ❯  functional  tests/levels/L3.test.ts (21 tests | 1 failed | 20 skipped) 128837ms
+   ❯ L3 The Police Collapse (21)
+     ↓ T-E21-01 @E21 @E21-AC01 mission graph armory -> defend -> fallback -> army checkpoint is completable, no fail timer
+     ↓ T-E21-02 @E21 @E21-AC02 complete bot finishes single seed from L3-default (bat + axe), median time in band
+     × T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2 128831ms
+     ↓ T-E21-04 @E21 @E21-AC04 handgun: only at the armory (complete bot within 40 s), one target per shot, two hits per 40 HP, 22 m, no ammunition
+     ↓ T-E21-04b @E21 @E21-AC04 the complete bot has the handgun from the armory within 40 s of the start
+     ↓ T-E21-05 @E21 @E21-AC05 ranged before contact: handgun knockdowns at >= 5 m (PO 10-12 police -50 %), axe/bat at <= 2.5 m (median, complete runs)
+     ↓ T-E21-06 @E21 @E21-AC06 gunfire: non-chasing infected within 20 m reach the shot within 10 s and search; beyond 20 m or chasing unaffected; omniscience audit
+     ↓ T-E21-06b @E21 @E21-AC06 omniscience audit over single seed: sight-only alerts, emergence out of view
+     ↓ T-E21-07 @E21 @E21-AC07 station attack: 8-10 officers, three directions >= 60 degrees apart, an officer turns on single seed, first-of fallback, idle still falls back
+     ↓ T-E21-07d @E21 @E21-AC07 PO 10-12 the police lose without the courier: 50 % police guns, spread streams, police zombies from the station
+     ↓ T-E21-08 @E21 @E21-AC08 squad: at least 3 living officers join at the fallback on single seed; no immunity or scripted-survival flag
+     ↓ T-E21-09 @E21 @E21-AC09 squad feels strong first: officers >= 60 % of S1 knockdowns, S1 damage below one life (PO 10-12 police -50 %), near the courier, never teleports
+     ↓ T-E21-10 @E21 @E21-AC10 squad falls apart systemically: non-increasing medians, <= 2 at the checkpoint, all 4 on <= 15 %, a corridor turn on >= 50 %
+     ↓ T-E21-11 @E21 @E21-AC11 the single-seed complete route uses Oak and Boulevard around the wreck lines
+     ↓ T-E21-12 @E21 @E21-AC12 escalation: pre-populated 250/625/1000 (+-20 %), live infected near the courier rise S1 -> S3, caps never exceeded
+     ↓ T-E21-13 @E21 @E21-AC13 forward pressure: idling 20 s behind the furthest line starts emergences 15-35 m behind it, advancing stops them
+     ↓ T-E21-14 @E21 @E21-AC14 medkits: >= 2 per street, >= 7 total, +40 HP capped and consumed; newbie picks >= 2, < 10 % time below 20 % HP
+     ↓ T-E21-17 @E21 @E21-AC17 army checkpoint: >= 8 soldiers, the rendezvous ends the level straight into progression
+     ↓ T-E21-18 @E21 @E21-AC18 checkpoints armory, fallback, segment-2, segment-3 restore squad, outbreak layer and picked medkits
+     ↓ T-E21-bots @E21 evade-only never attacks and still reaches the army zone
+     ↓ T-E21-segments @E21 segment helper matches the corridor bounds
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2
+AssertionError: expected 5 to be less than or equal to 2
+ ❯ tests/levels/L3.test.ts:60:45
+     58|     const runs = await battery('newbie');
+     59|     expect(runs.filter(r => r.outcome === 'complete').length).toBeGrea…
+     60|     expect(median(runs.map(r => r.deaths))).toBeLessThanOrEqual(l3.bot…
+       |                                             ^
+     61|     const t = median(runs.filter(r => r.outcome === 'complete').map(r …
+     62|     expect(t).toBeGreaterThanOrEqual(l3.bots.newbieMedianS[0]); expect…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 20 skipped (21)
+   Start at  06:16:26
+   Duration  134.25s (tests 96%, transform 3%, import 1%)
+
+[remote] done exit=1 (runner 2.28.24.66, sync 22s, remote total 138s)

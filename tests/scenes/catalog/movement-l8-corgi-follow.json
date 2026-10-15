@@ -1,0 +1,78 @@
+{
+  "name": "movement-l8-corgi-follow",
+  "seed": 32,
+  "dof": false,
+  "ground": "district",
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 360,
+  "sheet": 45,
+  "expect": {
+    "consoleErrors": 0,
+    "corgiRunLagMaxM": 4,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "note": "Zoo on-foot corgi walk, run and turn. Campaign spawn/checkpoint/APC identity is asserted by zoo-companion.test.ts; scene uses the same Companion AI and zoo ground.",
+  "time": "L8-zoo",
+  "layout": {
+    "district": "D-ZOO",
+    "bbox": [
+      [
+        -25,
+        -20
+      ],
+      [
+        25,
+        20
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -8,
+        0
+      ],
+      "state": {
+        "walk": [
+          [
+            0,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        -10,
+        0
+      ]
+    }
+  ],
+  "script": [
+    {
+      "frame": 120,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            8,
+            0
+          ],
+          [
+            8,
+            -10
+          ]
+        ]
+      }
+    }
+  ]
+}

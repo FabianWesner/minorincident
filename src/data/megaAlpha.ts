@@ -8,7 +8,7 @@ import { survivor } from './survivor';
  * Distances in metres, times in seconds unless a name says ticks. Orchestrator defaults, changeable after measurement.
  */
 export const megaAlpha = {
-  /** It is an Alpha (shared E07 bar, resistance table and special scheduler) drawn with the ≈2× derived hero model. */
+  /** It is an Alpha (shared E07 bar, resistance table and special scheduler) drawn with the derived hero model: same height and footprint as the Alpha (PO 10-15), heavier and darker. */
   archetype: 'infected.alpha',
   asset: 'inf.mega-alpha',
   /** Cruise = 0.7 × the nominal uninjured run (survivor.speed), never a momentary walk/slow speed. */
@@ -22,16 +22,16 @@ export const megaAlpha = {
   staggerTicks: 30,
   staggerCooldownTicks: 120,
   recoveryTicks: 72,
-  /** Conservative animated arm envelope; specials never begin or travel inside solid cover. */
-  specialClearance: 3.4,
+  /** Conservative animated arm envelope (body 0.55 + oversized arm and fist reach; was 3.4 for the 2x body); specials never begin or travel inside solid cover. */
+  specialClearance: 2,
   moves: {
-    'alpha.charge': { windup: 48, cooldown: 360, damage: 25, radius: 1.5, range: 10, speed: survivor.speed * 1.6, activeTicks: 60 },
-    'alpha.ground-slam': { windup: 60, cooldown: 480, damage: 35, radius: 4 },
-    'alpha.grab-throw': { windup: 48, cooldown: 600, damage: 30, radius: 2, holdTicks: 60 },
+    'alpha.charge': { windup: 48, cooldown: 360, damage: 25, radius: 1, range: 10, speed: survivor.speed * 1.6, activeTicks: 60 },
+    'alpha.ground-slam': { windup: 60, cooldown: 480, damage: 35, radius: 3 },
+    'alpha.grab-throw': { windup: 48, cooldown: 600, damage: 30, radius: 1.5, holdTicks: 60 },
   },
-  /** Body, hit and nav footprint (≈ 2 × the Alpha's 0.55 m). Its own nav grid is baked at this clearance, so it plans only routes its
+  /** Body, hit and nav footprint (the Alpha's 0.55 m since PO 10-15; was 1.1 for the 2x body). Its own nav grid is baked at this clearance, so it plans only routes its
    * legs and shoulders fit through; on a grid larger than `ownGridMaxCells` it shares the 0.65 m crowd grid instead. */
-  radius: 1.1,
+  radius: .55,
   ownGridMaxCells: 2_000_000,
   /** Coarse route refresh: the "approximate" player position and the off-region advance run at 2 Hz. */
   routeTicks: 30,

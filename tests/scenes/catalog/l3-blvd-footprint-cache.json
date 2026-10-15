@@ -1,0 +1,5 @@
+{
+  "extends": "../../../specs/scenes/catalog/weather-ash.json",
+  "name": "l3-blvd-footprint-cache",
+  "note": "Footprint mask update regression: preserve every visible sole and paw print while rows clear, fade and recenter. Inspect the existing ash-weather walking scene at both quality tiers and game-camera zooms; the mask byte-equivalence regression verifies the sparse CPU update against a full raster."
+}

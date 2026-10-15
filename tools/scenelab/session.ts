@@ -224,7 +224,7 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   add('appearanceChangesMax', Math.max(0, ...(metrics.appearance ?? []).map(a => a.looks.length - 1)), e.appearanceChangesMax);
   for (const [name, value, minimum] of [['appearanceActorsMin', (metrics.appearance ?? []).length, e.appearanceActorsMin], ['appearanceCorpsesMin', (metrics.appearance ?? []).filter(a => a.corpseFrames > 0).length, e.appearanceCorpsesMin]] as const) if (minimum !== undefined) checks.push({ name, pass: value >= minimum, value, limit: minimum });
   add('drawCallsMax', metrics.perf.drawCalls.max ?? 0, e.drawCallsMax);
-  add('trianglesMax', metrics.perf.triangles.max ?? 0, e.trianglesMax);
+  add('trianglesMax', metrics.perf.triangles.max ?? 0, metrics.quality === 'low' ? e.trianglesMaxLow ?? e.trianglesMax : e.trianglesMax);
   const actors = Object.values(metrics.actors);
   add('emergeOutsideMax', actors.filter(a => a.emerge && (a.firstDrawn?.outM ?? 1) > .05).length, e.emergeOutsideMax);
   add('lodPlaceholderFramesMax', metrics.lodPlaceholders.frames, e.lodPlaceholderFramesMax);

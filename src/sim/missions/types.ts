@@ -7,7 +7,7 @@ import type { EntitySnapshot } from '../world/types';
 export const objectiveTypes = ['reach', 'interact', 'kill', 'killAll', 'survive', 'defend', 'escort', 'collect', 'drive', 'custom'] as const;
 export type ObjectiveType = typeof objectiveTypes[number];
 /** `y`: visible floor height for markers when the spot is raised (e.g. the Fire Station 3 bay floor); default street level. */
-export interface Anchor { x: number; z: number; radius: number; y?: number }
+export interface Anchor { x: number; z: number; radius: number; y?: number; yaw?: number }
 /** Triggers use fixed sim ticks. IDs reference the definition, never renderer objects. */
 export type Trigger =
   | { kind: 'start' }
@@ -88,6 +88,8 @@ export interface MissionResult {
   survivors?: string[];
   survivorsIn?: number;
   escapedSurvivors?: EntitySnapshot[];
+  /** Protected companion carried separately from the rescued human roster. */
+  companion?: EntitySnapshot;
   stationOccupants?: EntitySnapshot[];
   rescuedSurvivors?: EntitySnapshot[];
 }

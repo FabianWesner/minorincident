@@ -254,7 +254,7 @@ describe('L4 The Safe City Falls', () => {
     expect(s.lineCause).toBe('beats'); expect(r.breakAfterS).toBeGreaterThanOrEqual(armor.earliestS + l4.lineBreak.fallBackS - .2); expect(r.breakAfterS).toBeLessThanOrEqual(armor.dueS + l4.lineBreak.fallBackS + 1);
     const explosions = w.events.events().filter(e => e.type === 'explosion' && e.tick >= s.lineBreakAt).map(e => (e as { defId: string }).defId);
     expect(explosions).toEqual(expect.arrayContaining(['explosion.gas-pump', 'explosion.gas-canopy', 'explosion.gas-tanks']));
-    expect(l.mission.def.steps.find(x => x.id === 'hide')!.text).toBe('Run to the cellar');
+    expect(l.mission.def.steps.find(x => x.id === 'hide')!.text).toBe('Run to the cellar via Lakeshore, Metro Road and Harbor Street');
     expect(l.mission.state.steps.hide.status).toBe('active'); expect(s.heliPhase).toBe('gone');
     expect(l.mission.state.states['line-broken']).toBe(true);
     // Losing half a line's soldiers breaks it from its earliest beat on (not before): line 1 falls at 50 s instead of 62 s.
@@ -372,6 +372,7 @@ describe('L4 The Safe City Falls', () => {
     const l = await loadL4(2); world = l.world;
     const r = runL4(l.world, l.mission, 'evade-only', { seed: 2, maxSeconds: 700 });
     record('bot-evade-only', r);
+    if (r.outcome !== 'complete') console.log('L4 evade route blocked', { deaths: r.deathsAt, at: l.world.entities.get(1)!.transform, phase: l.mission.state.l4!.phase, checkpoint: l.mission.state.checkpoint });
     expect(r.kills).toBe(0); expect(r.knockdowns).toBe(0); expect(r.outcome).toBe('complete');
     const low = await loadL4(3, 'low');
     const rl = runL4(low.world, low.mission, 'complete', { seed: 3, maxSeconds: 700 }); low.world.dispose();

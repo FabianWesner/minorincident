@@ -116,12 +116,15 @@ test('T-E29-11-stragglers @E29-AC11 cross-city followers use staggered partial r
   searches.mockRestore();
 });
 test('T-E29-11-loss @E29-AC11 combat losses are logged without deleting the roster', async () => {
-  const w = await load(), c = w.l7Encounters!, [dead, turned] = c.state.roster;
+  const w = await load(), c = w.l7Encounters!, [dead, turned, bitten] = c.state.roster;
   w.entities.get(dead.id)!.health.current = 0;
+  // Fatal bites at the infected cap leave a finished body with positive HP.
+  const body = w.entities.get(bitten.id)!; body.civilian!.state = 'finished';
+  expect(body.health.current).toBeGreaterThan(0);
   w.npcs!.civilians.outbreak!.turnNow(w.entities.get(turned.id)!);
   c.update(); c.update();
-  expect(dead.status).toBe('dead'); expect(turned.status).toBe('turned'); expect(c.state.roster).toHaveLength(24);
-  expect(w.events.events().filter(e => e.type === 'mission.signal' && e.name.startsWith('l7.survivor-'))).toHaveLength(2);
+  expect(dead.status).toBe('dead'); expect(turned.status).toBe('turned'); expect(bitten.status).toBe('dead'); expect(c.state.roster).toHaveLength(24);
+  expect(w.events.events().filter(e => e.type === 'mission.signal' && e.name.startsWith('l7.survivor-'))).toHaveLength(3);
 });
 test('T-E29-12 @E29-AC12 rocket opening is traversed by a living follower while street infected remain', async () => {
   const seed = await load(), base = structuredClone(seed.entities.get(seed.l7Encounters!.state.roster[0].id)!); base.id = 40;

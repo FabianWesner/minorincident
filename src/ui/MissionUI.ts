@@ -1,4 +1,6 @@
+import { l3EvacuationText } from '../sim/missions/LevelThreeCollapse';
 import { cureFinaleText } from '../sim/missions/LevelTenFinale';
+import { l4CellarDistance } from '../data/l4';
 // Notification identity/text presentation adapted from Bruno Simon folio-2025
 // Notifications.js (MIT, 41046b5); sim tick deadlines replace wall-clock timers.
 import { Vector3 } from 'three';
@@ -9,6 +11,7 @@ import type { MissionResult } from '../sim/missions/types';
 import './mission.css';
 import { attribute, setHidden, style } from './dom';
 import { nextLevelAfter } from '../sim/progression/Campaign';
+import { checkpointName } from '../data/checkpointNames';
 
 /** Mission-only UI; progression choices and the full combat HUD remain E13/E14 consumers. */
 export class MissionUI {
@@ -23,8 +26,10 @@ export class MissionUI {
   private readonly detail = document.createElement('p');
   private readonly button = document.createElement('button');
   private readonly result = document.createElement('dl');
-  private readonly rows = new Map<keyof MissionResult, HTMLElement>();
+  private readonly rows = new Map<Exclude<keyof MissionResult, 'companion'>, HTMLElement>();
   private readonly pins = new Map<string, HTMLSpanElement>();
+  private readonly routePin = document.createElement('span');
+  private readonly cellarTurn = { x: 0, z: 0 };
   private readonly point = new Vector3();
   private displayedMission: Mission | null = null;
   private phase = '';
@@ -37,6 +42,7 @@ export class MissionUI {
     this.toast.className = 'mission-toast'; this.toast.setAttribute('aria-live','polite');
     this.marker.className = 'mission-marker'; this.marker.setAttribute('aria-label','Objective direction');
     this.map.className = 'mission-minimap'; this.map.setAttribute('aria-label','Objective minimap');
+    this.routePin.className = 'mission-map-pin'; this.routePin.dataset.testid = 'mission-route-pin'; this.routePin.setAttribute('aria-label', 'Next turn on the cellar route'); this.routePin.style.background = '#64d9ee'; this.routePin.hidden = true; this.map.append(this.routePin);
     this.panel.className = 'mission-panel'; this.panel.setAttribute('aria-label','Mission');
     this.button.type = 'button'; this.button.addEventListener('click',this.accept);
     for (const [key,label] of [['time','Time (seconds)'],['knockdowns','Knockdowns'],['kills','Kills'],['damage','Damage taken'],['deaths','Deaths'],['rescued','Survivors out'],['survivorsIn','Survivors in'],['optionalObjectives','Optional objectives'],['delivered','Delivery'],['infected','Infected now'],['turned','Pedestrians turned'],['escaped','Pedestrians escaped']] as const) {
@@ -74,28 +80,34 @@ export class MissionUI {
     setHidden(this.result,state.phase!=='result');
     if(this.phase!==state.phase){
       this.phase=state.phase;
-      const labels={briefing:['Mission briefing',mission.def.briefing,'Begin mission'],retry:['Mission failed',`${state.failure}. Retry from ${state.checkpoint??'level start'}.`,'Retry'],result:mission.def.l6?['Night. Still alive.',this.campaignSummary(),nextLevelAfter(6)?'Continue':'Credits']:mission.def.l1?['Delivery complete. Outbreak: not contained.','The fire station shutter holds, for now.','Continue']:['Level complete','Mission results','Continue'],progression:['Progression','Next: upgrades and loadout setup.',''],playing:['','',''],cinematic:['','','']};
+      const labels={briefing:['Mission briefing',mission.def.briefing,'Begin mission'],retry:['Mission failed',`${state.failure}. Retry from ${checkpointName(mission.def.id,state.checkpoint)}.`,'Retry'],result:mission.def.l6?['Night. Still alive.',this.campaignSummary(),nextLevelAfter(6)?'Continue':'Credits']:mission.def.l1?['Delivery complete. Outbreak: not contained.','The fire station shutter holds, for now.','Continue']:['Level complete','Mission results','Continue'],progression:['Progression','Next: upgrades and loadout setup.',''],playing:['','',''],cinematic:['','','']};
       const [title,detail,button]=labels[state.phase];this.text(this.heading,title);this.text(this.detail,detail);this.text(this.button,button);this.button.hidden=!button;
       if(!this.panel.hidden&&!this.button.hidden)this.button.focus({preventScroll:true});
     }
     if(state.result)for(const [key,element]of this.rows){
       const value=state.result[key],row=element.previousElementSibling as HTMLElement;
       row.hidden=element.hidden=value===undefined;
-      this.text(element,value===undefined?'':Array.isArray(value)?value.join(', ')||'None':typeof value==='boolean'?value?'✓':'—':String(Math.round(value*100)/100));
+      this.text(element,value===undefined?'':Array.isArray(value)?value.join(', ')||'None':typeof value==='boolean'?value?'✓':'✗':String(Math.round(value*100)/100));
     }
     const objective=mission.def.steps.find(s=>state.steps[s.id].status==='active');
     if (mission.def.l8 && playing && !objective) this.tracker.hidden = this.map.hidden = true;
     const anchor=state.marker?mission.def.anchors[state.marker]:undefined,player=this.world.entities.get(1);
+    const cellarDistance = playing && player && mission.def.l4 && state.l4?.phase === 'collapse' ? l4CellarDistance(player.transform, this.cellarTurn) : null;
+    setHidden(this.routePin, cellarDistance === null || !!anchor && Math.hypot(this.cellarTurn.x - anchor.x, this.cellarTurn.z - anchor.z) < 2);
     setHidden(this.marker,!playing||!anchor||!player);
     if(player&&objective&&playing){
-      const distance=anchor?Math.hypot(anchor.x-player.transform.x,anchor.z-player.transform.z):null;
+      const distance=cellarDistance ?? (anchor?Math.hypot(anchor.x-player.transform.x,anchor.z-player.transform.z):null);
       const seconds = state.deadlineTicks === null ? null : Math.ceil(state.deadlineTicks / 60);
       const timer = seconds === null ? '' : ` · ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
-      this.text(this.tracker,`${cureFinaleText(mission) ?? objective.text}${distance===null?'':` · ${Math.round(distance)}\u00a0m`}${timer}`);attribute(this.tracker,'data-objective',objective.id);attribute(this.tracker,'data-distance',distance===null?'':String(distance));
-      if(this.active!==objective.id){this.active=objective.id;this.text(this.toast,`New objective: ${cureFinaleText(mission) ?? objective.text}`);}
-      setHidden(this.toast,this.world.tick-state.steps[objective.id].started>=180);
+      this.text(this.tracker,`${l3EvacuationText(mission) ?? cureFinaleText(mission) ?? objective.text}${distance===null?'':` · ${Math.round(distance)}\u00a0m`}${timer}`);attribute(this.tracker,'data-objective',objective.id);attribute(this.tracker,'data-distance',distance===null?'':String(distance));
+      if(this.active!==objective.id){this.active=objective.id;this.text(this.toast,`New objective: ${l3EvacuationText(mission) ?? cureFinaleText(mission) ?? objective.text}`);}
+      const boundary = this.world.controls.blockedMove && this.world.controls.blockedMove.until > this.world.tick;
+      if (boundary) this.text(this.toast, 'MILITARY ZONE · Stay inside the perimeter');
+      setHidden(this.toast,!boundary && this.world.tick-state.steps[objective.id].started>=180);
       if(anchor){
-        this.point.set(anchor.x,1.8,anchor.z).project(camera);
+        const direction = this.routePin.hidden ? anchor : this.cellarTurn;
+        this.point.set(direction.x,1.8,direction.z).project(camera);
+        attribute(this.marker,'data-guidance',this.routePin.hidden?'destination':'street-route');
         const margin=42,cx=width/2,cy=height/2;
         let dx=this.point.x*cx,dy=-this.point.y*cy;
         if(this.point.z>1){dx=-dx;dy=-dy;}
@@ -107,6 +119,10 @@ export class MissionUI {
         this.marker.classList.toggle('offscreen',offscreen);
       }
       const extent=100;
+      if (!this.routePin.hidden) {
+        const dx=(this.cellarTurn.x-player.transform.x)/extent*40,dy=(this.cellarTurn.z-player.transform.z)/extent*40,scale=Math.min(1,40/Math.max(1,Math.hypot(dx,dy)));
+        style(this.routePin,'left',`${50+dx*scale}%`);style(this.routePin,'top',`${50+dy*scale}%`);
+      }
       for(const s of mission.def.steps){
         let pin=this.pins.get(s.id);if(!pin){pin=document.createElement('span');pin.className='mission-map-pin';pin.dataset.testid=`mission-pin-${s.id}`;pin.dataset.objective=s.id;this.map.append(pin);this.pins.set(s.id,pin);}
         setHidden(pin,state.steps[s.id].status!=='active'||s.waypoint===false||!anchor);if(pin.hidden)continue;const a=mission.def.anchors[mission.def.l3 && s.id === 'checkpoint' ? state.marker ?? s.anchor : s.anchor];
@@ -119,7 +135,7 @@ export class MissionUI {
       if(done)this.text(this.tracker,`✓ ${done.text}`);
     }
   }
-  reset(): void {this.displayedMission=null;this.root.hidden=true;this.phase=this.active='';for(const pin of this.pins.values())pin.remove();this.pins.clear();}
+  reset(): void {this.displayedMission=null;this.root.hidden=true;this.routePin.hidden=true;this.phase=this.active='';for(const pin of this.pins.values())pin.remove();this.pins.clear();}
   private campaignSummary():string {
     const result=this.world.missions?.state.result,previous=this.world.progression?.campaign?.results??{};
     const results={...previous,...(result?{L6:result}:{})},all=Object.values(results);

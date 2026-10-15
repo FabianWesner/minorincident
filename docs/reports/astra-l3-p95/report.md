@@ -1,0 +1,6 @@
+Status: BLOCKED: committed-state phone p95 is unmeasured; defence <=33.33 ms and overall E18 acceptance are not established.
+Source/profile: retained cf2ae8b20 camera/weather/pose-atlas optimizations; saved throttled profiles identify render submission/uniform updates as dominant; no further source change before the required baseline.
+Performance: historical camera/weather-only phone defence/horde/rescue 34.1/32.8/32.3 ms; current phone/high/low native timing unmeasured after 29m48s slot waiting; quiet requests exited 124 within the 20-minute batch cap.
+Visual QA: WebGL2 18/18 and WebGPU 18/18 pass at high/low, zoom 1.5/1/0.5; sheets inspected, eight camera/weather sheets byte-identical to baseline, bodies and return poses intact (8696a6de).
+Checks: build/typecheck/lint pass; unit 1466 pass/7 skip; full remote 2789 pass/12 fail/9 skip; isolated timing rerun 4 pass/5 fail; verify E21 static/build passed, duplicate Node phase cancelled while queued after its L3 gate failed in the full suite.
+Scope: actors/corpses, Allies.ts, L3 tuning, throttle and budgets unchanged; no staticCollision.ts churn, deployment or merge; inherited wall obstruction remains; removed ~394 MB generated outputs for disk space.

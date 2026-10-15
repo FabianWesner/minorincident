@@ -2,6 +2,7 @@ import { l7Contains } from '../../levels/L7/layout';
 import { SimPhase } from '../../core/EventBus';
 import { InfectedSystem } from '../ai/InfectedSystem';
 import { Combat } from '../combat/Combat';
+import type { EntitySnapshot } from '../world/types';
 import type { SimWorld } from '../world/SimWorld';
 import type { ScenarioDefinition } from '../../levels/loader';
 import { Npcs } from './Npcs';
@@ -9,7 +10,7 @@ import type { DistrictWorld } from '../world/DistrictWorld';
 import { inside } from '../../levels/districts/validate';
 import { isOutbreakDistrict } from '../../levels/districts/types';
 /** Minimal campaign integration: assemble navigation from the loaded, decayed district colliders. */
-export function installCampaignNpcs(world: SimWorld): void {
+export function installCampaignNpcs(world: SimWorld, carriedCompanion?: EntitySnapshot): void {
   const districts = world.districts!;
   // L1 v2 (D-GROVE): systems + corgi only; `installL1Outbreak` adds the pedestrians (lane D).
   // L2 also plays on D-GROVE: keep the level for the per-level density/cap tables (E08-AC11 fixture: L2 = 40).
@@ -19,7 +20,18 @@ export function installCampaignNpcs(world: SimWorld): void {
     world.npcs!.companion.spawn(); return;
   }
   if (districts.composition.id === 'L10') { installNpcSystems(world); world.combat!.setLoadout(['weapon.fire-axe'], ['weapon.fire-axe']); world.npcs!.companion.forceSafe = true; world.npcs!.companion.spawn(); return; }
-  if (districts.composition.id === 'L8' || districts.composition.id === 'L9') { installNpcSystems(world); return; }
+  if (districts.composition.id === 'L8' || districts.composition.id === 'L9') {
+    installNpcSystems(world); world.npcs!.companion.forceSafe = true;
+    // L9 restores its APC occupants first, then supplies a corgi for standalone starts.
+    if (districts.composition.id === 'L8') {
+      if (carriedCompanion?.companion) {
+        const corgi = structuredClone(carriedCompanion); delete corgi.passengerOf; corgi.hidden = false;
+        Object.assign(corgi.companion!, { state: 'follow', courage: 100, until: 0, barkAt: 0, hurtAt: 0 });
+        world.entities.replace(corgi); world.npcs!.companion.respawnNear();
+      } else world.npcs!.companion.spawn();
+    }
+    return;
+  }
   if (!/^L[1-6]$/.test(districts.composition.id)) return;
   installNpcSystems(world); const { min, max } = districts.nav;
   world.npcs!.configure(Number(districts.composition.id[1])); world.npcs!.companion.spawn();
@@ -79,6 +91,7 @@ export function rebuildNpcNavigation(world: SimWorld): void {
   if (!world.npcs || !world.infected || !world.districts) return;
   const walls = world.combat!.definition.walls!;
   walls.splice(0, walls.length, ...campaignWalls(world)); world.combat!.query.invalidate(); world.infected.nav.rebake(world.preparedNpcNavigation.get(world.districts.composition.tier));
+  if (world.infected.infectedNav !== world.infected.nav) world.infected.infectedNav.rebake(world.preparedNpcNavigation.get(world.districts.composition.tier));
   for (const e of world.entities.iterate()) {
     const brain = e.civilian ?? e.escort ?? e.companion ?? e.infected;
     if (brain) { brain.path.length = 0; brain.goal = -1; }

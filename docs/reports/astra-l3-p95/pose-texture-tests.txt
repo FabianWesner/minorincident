@@ -1,0 +1,17 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/astra-l3-p95 -> 94.130.181.173:/srv/mi/ws/astra-l3-p95-1c30a5
+[remote] cache-gc deleted:none
+[remote] sync 14s, 11345 files; job /srv/mi/jobs/astra-l3-p95-1c30a5-65509-1792045801; queueing for a slot
+[runner] slot 1 acquired; load 3.92 4.86 4.42
+
+ RUN  v5.0.3 /srv/mi/jobs/astra-l3-p95-1c30a5-65509-1792045801
+
+ ✓  functional  tests/unit/render/pose-texture.test.ts (2 tests) 15ms
+ ✓  functional  tests/unit/render/texture-ranges.test.ts (5 tests) 216ms
+ ✓  functional  tests/unit/render/civilian-material.test.ts (1 test) 43ms
+
+ Test Files  3 passed (3)
+      Tests  8 passed (8)
+   Start at  06:30:16
+   Duration  1.51s (import 40%, transform 40%, tests 18%, worker 1%)
+
+[remote] done exit=0 (runner 94.130.181.173, sync 14s, remote total 3s)

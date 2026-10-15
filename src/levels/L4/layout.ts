@@ -1,5 +1,6 @@
+import { moveFairhavenCellar } from '../fairhavenCellar';
 import { freestanding, moveOffSolids } from '../placementClearance';
-import { l4, l4Anchors, l4Edges, l4Line } from '../../data/l4';
+import { l4, l4Anchors, l4CollapseGroups, l4Edges, l4Line } from '../../data/l4';
 import type { DistrictLayout, Placement } from '../districts/types';
 
 /** Kinds of the W0 "clean, intact, alive" dressing and the army's orderly reception (E22 section 5.2); counted by the static AC05 test. */
@@ -27,7 +28,8 @@ export const l4Dressing: readonly L4Dressing[] = [
   // ---------------------------------------------------------------- army barriers at the street ends (a gap stays open): traffic is held by soldiers
   ...([[-81.2, -43.4, H], [-81.2, -42.1, H], [-81.2, -36.6, H], [-81.2, -35.2, H]] as const).map(([x, z, yaw]) => d('barrier', 'prop.jersey-barrier', x, z, { yaw })),
   ...([[81.2, -43.4, H], [81.2, -42.1, H], [81.2, -36.6, H], [81.2, -35.2, H], [81.2, 42.2, H], [81.2, 43.5, H], [81.2, 49.0, H], [81.2, 50.3, H]] as const).map(([x, z, yaw]) => d('barrier', 'prop.jersey-barrier', x, z, { yaw })),
-  d('sandbag', 'prop.sandbag-pallet', 79.4, -44.4, { yaw: H }), d('sandbag', 'prop.sandbag-pallet', -79.4, -44.4, { yaw: H }),
+  // Keep the relocated Harbor Street cellar doorway clear of the street-end pallet.
+  d('sandbag', 'prop.sandbag-pallet', 79.4, -44.4, { yaw: H }), d('sandbag', 'prop.sandbag-pallet', -79.4, -35.4, { yaw: H }),
   // ---------------------------------------------------------------- Fairhaven's own cars, parked in the lanes the convoy does not use (traffic held by soldiers)
   // (the six that the war sets alight are real vehicles spawned by the controller: l4Cars)
   ...([[-40, 43.3, 'veh.sedan-blue', 0], [24, 43.3, 'veh.sedan-white', .02], [44, 43.3, 'veh.sedan-green', 0],
@@ -76,8 +78,10 @@ export const l4BreakableLine = ([['north', 6], ['west', 13], ['south', 20]] as c
 export function levelFourLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
   return structuredClone(layouts).map(layout => {
     if (layout.district !== 'D-FAIR') return layout;
+    moveFairhavenCellar(layout);
     const door = layout.anchors['kessler-cellar-door'], inner = layout.anchors['cellar-interior'];
     for (const [name, [x, z]] of Object.entries(l4Anchors)) layout.anchors[name] = { position: [x, 0, z], yaw: 0 };
+    for (const [i, [x, z]] of l4CollapseGroups.entries()) layout.anchors[`l4-street-edge-${i}`] = { position: [x, 0, z], yaw: 0 };
     for (const entry of l4AlphaEmergence) {
       const [x, z] = entry.at ?? l4Edges.find(e => e.id === entry.edgeId)!.at;
       layout.anchors[entry.anchor] = { position: [x, 0, z], yaw: -Math.atan2(l4.map.centre.z - z, l4.map.centre.x - x) };
@@ -95,7 +99,7 @@ export function levelFourLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     }
     const metro = layout.anchors['metro-entrance'];
     if (metro) for (const name of ['photo-l4-metro-entrance-safe', 'pair-metro-entrance']) layout.anchors[name] = { position: [metro.position[0], 0, metro.position[2]], yaw: 0 };
-    if (door) layout.anchors['l4-cellar-door'] = { position: [...door.position], yaw: 0 };
+    if (door) layout.anchors['l4-cellar-door'] = { position: [...door.position], yaw: l4.cellar.outwardYaw };
     // The cellar yard: the player arrives at the stair foot, the brace socket is on the back wall (model local (-3.1, -0.4), yaw pi/2).
     if (inner) {
       const [cx, , cz] = inner.position;

@@ -45,7 +45,7 @@ export class Companion {
       let spot: { x: number; z: number } | null = null;
       for (const [dx, dz] of [[0, 2], [2, 0], [-2, 0], [0, -2], [1.4, 1.4], [-1.4, -1.4], [0, 1], [0, 0]]) if (nav.clear(player.x + dx, player.z + dz, .35)) { spot = { x: player.x + dx, z: player.z + dz }; break; }
       spot ??= { x: player.x, z: player.z };
-      this.world.solids.relocate(e, { ...spot, y: e.transform.y }, 'companion.respawn'); e.transform.yaw = -Math.atan2(player.z - spot.z, player.x - spot.x);
+      this.world.solids.relocate(e, { ...spot, y: .3 + (this.world.districts?.groundHeight(spot.x, spot.z) ?? 0) }, 'companion.respawn'); e.transform.yaw = -Math.atan2(player.z - spot.z, player.x - spot.x);
       delete e.locomotion; c.velocity = { x: 0, z: 0 }; c.path.length = 0; c.goal = -1; c.pathIndex = 0; c.following = false; c.pickup = null;
       if (e.motion) { e.motion.velocity.x = e.motion.velocity.z = 0; e.motion.speed = 0; e.motion.moving = false; }
       this.world.spatial.set(e.id, e.transform.x, e.transform.z);
@@ -55,14 +55,15 @@ export class Companion {
    * Recheck pending fetches too: healing or restoring a checkpoint can invalidate the target. */
   private canFetch(entity: EntitySnapshot | undefined, player: EntitySnapshot): boolean {
     const pickup = entity?.pickup;
-    if (this.safe || !pickup) return false;
+    if (this.safe || !pickup || Math.hypot(entity!.transform.x - player.transform.x, entity!.transform.z - player.transform.z) > 6) return false;
     if ('kind' in pickup) return !pickup.collected && !((pickup.kind === 'medkit' || pickup.kind === 'soda') && player.health.current >= player.health.max);
-    return pickup.armed;
+    return pickup.armed && !pickup.interactTicks && !pickup.retain;
   }
   update(): void {
     const player = this.world.entities.get(1)!, ai = this.world.infected!;
     for (const e of this.world.entities.iterate()) {
       const c = e.companion; if (e.passengerOf !== undefined) continue; if (!c) continue;
+      if (this.world.missions?.l8?.companion(e)) continue;
       if (!this.safe && c.state !== 'hide' && this.world.tick >= c.hurtAt) for (const enemy of ai.active) if (enemy.health.current > 0 && Math.hypot(enemy.transform.x - e.transform.x, enemy.transform.z - e.transform.z) < 1.2) { c.hurtAt = this.world.tick + 60; this.hit(e, infectedDef(enemy.archetype).damage); this.world.events.emit({ type: 'corgi.sound', tick: this.world.tick, sourceId: e.id, position: { ...e.transform }, kind: 'hurt' }); break; }
       if (c.state === 'hide') {
         // Hiding follows at the player's heels without collision; recovery uses sim time.
@@ -71,7 +72,7 @@ export class Companion {
         continue;
       }
       let pickup = c.pickup === null ? undefined : this.world.entities.get(c.pickup);
-      if (!this.canFetch(pickup, player)) { pickup = undefined; c.pickup = null; }
+      if (Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) > 6 || !this.canFetch(pickup, player)) { pickup = undefined; c.pickup = null; }
       if (!this.safe && !pickup && Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) < 4) {
         for (const candidate of this.world.entities.iterate()) if (this.canFetch(candidate, player) && Math.hypot(candidate.transform.x - player.transform.x, candidate.transform.z - player.transform.z) > 1 && Math.hypot(candidate.transform.x - player.transform.x, candidate.transform.z - player.transform.z) <= 6 && ai.nav.visible(e.transform, candidate.transform, .35)) { pickup = candidate; break; }
         c.pickup = pickup?.id ?? null;

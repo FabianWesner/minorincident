@@ -1,10 +1,17 @@
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { PNG } from 'pngjs';
 import type { Page } from '@playwright/test';
 import { test, expect, boot, testUrl } from '../fixtures';
+import { levelFourLayouts } from '../../../src/levels/L4/layout';
+import { levelFiveLayouts } from '../../../src/levels/L5/layout';
+import type { DistrictLayout } from '../../../src/levels/districts/types';
+
+const base = JSON.parse(readFileSync('public/assets/layouts/D-FAIR.layout.json', 'utf8')) as DistrictLayout;
+const door = levelFourLayouts([base])[0].anchors['l4-cellar-door'].position;
+const outside = levelFiveLayouts([base])[0].anchors['l5-out'].position;
 
 /** PO 2026-10-12: "The hidden is behind a building" / "This isn't a visibility problem. It's a positioning problem."
- * Real keyboard input: the courier walks Lakeshore Avenue to Kessler's cellar door, descends, walks to the brace (L4 end) and L5 starts in the
+ * Real keyboard input: the courier walks Harbor Street to Kessler's relocated cellar door, descends, walks to the brace (L4 end) and L5 starts in the
  * same cellar; the game camera (follow) must show the door, the yard and the objective ring without a building in front. Captures go to
  * test-results/epics/E22/cellar-position (the lane that wrote this looked at every one). */
 const output = 'test-results/epics/E22/cellar-position';
@@ -36,7 +43,7 @@ const hold = async (page: Page, key: string, until: () => Promise<boolean>) => {
 };
 
 test.describe('Kessler cellar position', () => {
-  test('T-E22-cellar-pos @E22 L4 end: Lakeshore pavement, door, descent, brace; L5 start in the same yard (game camera captures)', async ({ page }) => {
+  test('T-E22-cellar-pos @E22 L4 end: Harbor pavement, door, descent, brace; L5 start in the same yard (game camera captures)', async ({ page }) => {
     test.setTimeout(420_000); page.setDefaultTimeout(120_000); mkdirSync(output, { recursive: true });
     await boot(page, `${testUrl}&ui=1`);
     await page.evaluate(() => window.__SS__!.loadLevel('L4', { seed: 1, progression: 'L4-default' }));
@@ -48,13 +55,13 @@ test.describe('Kessler cellar position', () => {
       // The collapse director (PO 2026-10-12 design, approved "ok let's try that!") breaks the third line about 190 s after the turn (sim: turn 46 s, "Fall back!" 236 s after the gun): 350 s budget.
       a.teleport(1, { x: -21.5, z: 3 });
       for (let i = 0; i < 700 && !a.missions.state()!.l4!.lineBreakAt; i++) await a.step(30);
-      a.teleport(1, { x: 54, z: 41.2 }); a.camera.follow(); await a.step(5);
+      a.teleport(1, { x: -64, z: -44.2 }); a.camera.follow(); await a.step(5);
     });
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.steps.hide.status)).toBe('active');
     await page.evaluate(() => document.body.classList.add('ui-hidden'));
-    await shot(page, 'l4-01-lakeshore-approach');
-    await walk(page, ['d', 's'], p => p.x > 65.6);
-    expect((await pos(page)).x, 'reached the door ring').toBeGreaterThan(65);
+    await shot(page, 'l4-01-harbor-approach');
+    await walk(page, ['a', 'w'], p => p.x < door[0] + .5);
+    expect(Math.hypot((await pos(page)).x - door[0], (await pos(page)).z - door[2]), 'reached the door ring').toBeLessThan(1.4);
     await shot(page, 'l4-02-at-the-cellar-door');
     await hold(page, 'e', async () => (await page.evaluate(() => window.__SS__!.missions.state()!.l4!.phase)) === 'cellar');
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.l4!.phase)).toBe('cellar');
@@ -85,7 +92,7 @@ test.describe('Kessler cellar position', () => {
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.l5!.phase)).not.toBe('cellar');
     await page.evaluate(() => window.__SS__!.step(30));
     const out = await pos(page);
-    expect(Math.hypot(out.x - 67.2, out.z - 27.6), 'steps out on Kessler Lane (l5-out)').toBeLessThan(3);
-    await shot(page, 'l5-03-outside-on-kessler-lane');
+    expect(Math.hypot(out.x - outside[0], out.z - outside[2]), 'returns to the entry door (l5-out)').toBeLessThanOrEqual(1.5);
+    await shot(page, 'l5-03-outside-on-harbor-street');
   });
 });

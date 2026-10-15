@@ -20,9 +20,9 @@ const frameContent = (buf: Buffer) => {
 
 /** The cellar door is on the Lakeshore side of the store (PO 10-12: the camera must see it); the lane north of the store is still walked as the roof-hugging regression. */
 /** `maxDominant`: on Lakeshore the asphalt of the road is a legitimately large flat area (about 41% of the frame; the failure being guarded is a roof filling it, near 100%); the lane keeps the original 0.4. */
-const walks = [{ name: 'door', start: { x: 54, z: 41.2 }, maxDominant: .5 }, { name: 'lane', start: { x: 54, z: 27.5 }, maxDominant: .4 }] as const;
-for (const walk of walks) for (const renderer of ['webgl', 'webgpu'] as const) test(`T-E22-blank @E22 L4 the walk east along ${walk.name === 'door' ? "Lakeshore Avenue to Kessler's cellar door" : 'Kessler Lane north of the store'} never leaves the viewport one flat colour (${renderer})`, async ({ page }) => {
-  const tag = `${walk.name}-${renderer}`;
+const walks = [{ name: 'door', start: { x: 54, z: 41.2 }, maxDominant: .5 }, { name: 'lane', start: { x: 54, z: 27.5 }, maxDominant: .4 }, { name: 'harbor-door', start: { x: -64, z: -44.2 }, maxDominant: .5 }] as const;
+for (const walk of walks) for (const renderer of ['webgl', 'webgpu'] as const) test(`T-E22-blank @E22 L4 the walk along ${walk.name === 'harbor-door' ? 'Harbor Street to the relocated cellar' : walk.name === 'door' ? 'Lakeshore Avenue past the former cellar' : 'Kessler Lane north of the store'} never leaves the viewport one flat colour (${renderer})`, async ({ page }) => {
+  const tag = `${walk.name}-${renderer}`, west = walk.name === 'harbor-door', keys = west ? ['a', 'w'] : ['d', 's'];
   test.setTimeout(300_000); page.setDefaultTimeout(120_000); mkdirSync(output, { recursive: true });
   for (const file of readdirSync(output)) if (file.startsWith(`${tag}-`)) rmSync(`${output}/${file}`);
   if (renderer === 'webgpu') {
@@ -34,7 +34,8 @@ for (const walk of walks) for (const renderer of ['webgl', 'webgpu'] as const) t
   await page.evaluate(() => window.__SS__!.loadLevel('L4', { seed: 1, progression: 'L4-default' }));
   await page.evaluate(() => window.__SS__!.pause());
   await page.getByRole('button', { name: 'Begin mission' }).click();
-  const start = walk.start; // the layout's kessler-cellar-door is at (66.4, 40.7)
+  // Retain both original roof-band walks and add the relocated Harbor Street entrance.
+  const start = walk.start;
   await page.evaluate(async start => {
     const a = window.__SS__!; a.pause(); a.cheats.god(true);
     for (const id of ['ride', 'quartermaster']) { a.cheats.completeObjective(id); await a.step(30); }
@@ -47,8 +48,8 @@ for (const walk of walks) for (const renderer of ['webgl', 'webgpu'] as const) t
   }, start);
   // Face the walk direction first: after the war the courier faces wherever she last turned, and her turning arc from a standstill
   // carried her ~1 m north into the store's facade corner (gate 10-13: stuck at x 60.8, z 40.1). A few paused steps with the walk keys, then back to the start.
-  await page.keyboard.down('d'); await page.keyboard.down('s'); await page.evaluate(() => window.__SS__!.step(20));
-  await page.keyboard.up('d'); await page.keyboard.up('s');
+  for (const key of keys) await page.keyboard.down(key); await page.evaluate(() => window.__SS__!.step(20));
+  for (const key of keys) await page.keyboard.up(key);
   await page.evaluate(async start => { const a = window.__SS__!; await a.step(20); a.teleport(1, start); await a.step(5); }, start);
   expect(await page.evaluate(() => window.__SS__!.missions.state()!.steps.hide.status)).toBe('active');
   await page.evaluate(() => document.body.classList.add('ui-hidden'));
@@ -56,7 +57,7 @@ for (const walk of walks) for (const renderer of ['webgl', 'webgpu'] as const) t
   // Real input, real time: D+S is world east (+x) for the isometric follow camera; the courier runs
   // along the store's north side toward the cellar door.
   await page.evaluate(() => window.__SS__!.resume()); await page.waitForTimeout(400);
-  await page.keyboard.down('d'); await page.keyboard.down('s');
+  for (const key of keys) await page.keyboard.down(key);
   for (let i = 0; i < 40; i++) {
     const buf = await page.locator('canvas').first().screenshot();
     const state = await page.evaluate(() => {
@@ -65,16 +66,17 @@ for (const walk of walks) for (const renderer of ['webgl', 'webgpu'] as const) t
     });
     const content = frameContent(buf); frames.push({ ...state, ...content });
     if (i % 4 === 0 || content.dominant > .3 || content.sd < 25) writeFileSync(`${output}/${tag}-${String(i).padStart(2, '0')}-x${state.x.toFixed(1)}.png`, buf);
-    if (state.x > 66) break;
+    if (west ? state.x < -79 : state.x > 66) break;
   }
-  await page.keyboard.up('d'); await page.keyboard.up('s');
+  for (const key of keys) await page.keyboard.up(key);
   await page.evaluate(() => window.__SS__!.pause());
   writeFileSync(`${output}/${tag}.json`, JSON.stringify(frames, null, 1) + '\n');
   // The walk crossed the band where the roof hugged the lens (z 26-28.5 with the default zoom).
   // Before the fix the roof filled the frame for courier x 58-63 (camera 2.5-5 m above the pitched roof). The camera now follows the
   // player's y and the cutaway scales to the group, so the hugging span is wider and a real-time sample lands every ~1.7 m: count x 56-65 (>= 3 samples).
-  expect(frames.filter(f => f.x > 56 && f.x < 65).length, 'sampled the roof band').toBeGreaterThanOrEqual(3);
-  expect(frames.at(-1)!.x, 'walked east toward the door').toBeGreaterThan(66);
+  expect(frames.filter(f => west ? f.x < -68 && f.x > -78 : f.x > 56 && f.x < 65).length, 'sampled the roof band').toBeGreaterThanOrEqual(3);
+  if (west) expect(frames.at(-1)!.x, 'walked west toward the relocated door').toBeLessThan(-79);
+  else expect(frames.at(-1)!.x, 'walked east toward the original roof band').toBeGreaterThan(66);
   for (const f of frames) {
     expect(f.dominant, `one colour fills the frame at x=${f.x.toFixed(1)} z=${f.z.toFixed(1)} (${f.hits.join(',')})`).toBeLessThan(walk.maxDominant);
     expect(f.sd, `flat frame at x=${f.x.toFixed(1)} z=${f.z.toFixed(1)}`).toBeGreaterThan(20);

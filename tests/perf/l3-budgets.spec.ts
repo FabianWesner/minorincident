@@ -38,6 +38,18 @@ for (const profile of ['high', 'low', 'phone'] as const) test.describe(profile, 
       }
       a.pause(); (window as unknown as { l3Cpu: typeof cpu; l3Times: number[] }).l3Cpu = cpu; (window as unknown as { l3Times: number[] }).l3Times = times; return frames;
     }, { until, tail, diagnostic: process.env.L3_HITCH_PROFILE === '1' });
+    // Opt-in CPU samples from the same throttled phases as the frame budget.
+    const recordPhase = async (name: string, tail: number) => {
+      const profiler = process.env.L3_CPU_PROFILE === '1' ? await context.newCDPSession(page) : null;
+      if (profiler) { await profiler.send('Profiler.enable'); await profiler.send('Profiler.setSamplingInterval', { interval: 500 }); await profiler.send('Profiler.start'); }
+      try { return await record('true', tail); }
+      finally {
+        if (profiler) {
+          writeFileSync(`${dir}/${name}-${profile}.cpuprofile`, JSON.stringify((await profiler.send('Profiler.stop')).profile));
+          await profiler.detach();
+        }
+      }
+    };
     const percentile = (values: number[], fraction: number) => [...values].sort((a, b) => a - b)[Math.ceil(values.length * fraction) - 1];
     // The attack peak: the officers firing and >= 30 infected up (low: >= 15), at the game camera of l3-station-attack.
     await step(`window.__SS__.getState().ai.count >= ${tier === 'high' ? 30 : 15} || window.__SS__.missions.state().l3.fallbackAt > 0`, 400);
@@ -47,7 +59,7 @@ for (const profile of ['high', 'low', 'phone'] as const) test.describe(profile, 
     await page.locator('canvas').screenshot({ path: `${dir}/l3-station-attack-${profile}.png`, scale: 'css' });
     await page.evaluate(() => window.__SS__!.camera.follow());
     await page.evaluate(() => { const a=window.__SS__!;a.bot.stop();a.input.clear();const s=a.missions.state()!.l3!;a.step(Math.max(0,s.attackAt+40*60-a.getState().tick)); });
-    const attack = await record('true', 8_000);
+    const attack = await recordPhase('defence', 8_000);
     await page.evaluate(async () => window.__SS__!.screenshotReady());
     await page.locator('canvas').screenshot({path:`${dir}/l3-defence-dense-${profile}.png`,scale:'css'});
     await page.evaluate(() => window.__SS__!.bot.start('complete'));
@@ -77,13 +89,13 @@ for (const profile of ['high', 'low', 'phone'] as const) test.describe(profile, 
     const streetStatic = await page.evaluate(() => window.__SS__!.perf());
     const streetCounts = await page.evaluate(() => { const a = window.__SS__!, s = a.missions.state()!.l3!; return { infected: a.getState().ai!.count, spawned: s.segmentIds.flat().length + s.spillIds.length + s.pressureIds.length + (s.finaleIds?.length ?? 0) }; });
     await page.locator('canvas').screenshot({ path: `${dir}/l3-finale-${profile}.png`, scale: 'css' });
-    const street = await record('true', 8_000);
+    const street = await recordPhase('horde', 8_000);
     const hordeCpu = await page.evaluate(() => (window as unknown as { l3Cpu: {sim:number;alive:number;draws:number;triangles:number}[] }).l3Cpu);
     await page.evaluate(() => window.__SS__!.bot.start('complete'));
     await step('window.__SS__.getState().player.transform.x >= 219', 1600);
     await page.evaluate(async () => { const a=window.__SS__!;a.bot.stop();a.input.clear();a.camera.follow();await a.screenshotReady(); });
     await page.locator('canvas').screenshot({path:`${dir}/l3-rescue-${profile}.png`,scale:'css'});
-    const finale = await record('true', 10_000);
+    const finale = await recordPhase('rescue', 10_000);
     const finaleCpu = await page.evaluate(() => (window as unknown as {l3Cpu:{sim:number;alive:number;draws:number;triangles:number}[]}).l3Cpu);
     const phases = [ ['defence',attack,attackCpu], ['horde',street,hordeCpu], ['rescue',finale,finaleCpu] ] as const;
     const measurements = phases.map(([name,frames,cpu]) => ({ name, peakAlive:Math.max(...cpu.map(c=>c.alive)), frameP95:percentile(frames,.95), simP95:percentile(cpu.map(c=>c.sim),.95),drawCalls:Math.max(...cpu.map(c=>c.draws)),triangles:Math.max(...cpu.map(c=>c.triangles)) }));

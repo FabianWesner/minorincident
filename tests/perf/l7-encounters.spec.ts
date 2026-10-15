@@ -38,8 +38,10 @@ for (const tier of ['high', 'low'] as const) test(`T-E29-19-encounters @E29-AC19
     await heap.send('HeapProfiler.collectGarbage');
     await page.evaluate(() => new Promise(r => requestAnimationFrame(r)));
   }
-  result.heapMB = await page.evaluate(() => (window.__SS__!.perf().heapBytes ?? 0) / 1048576);
-  mkdirSync('test-results/epics/E29', { recursive: true }); writeFileSync(`test-results/epics/E29/encounters-perf-${tier}.json`, JSON.stringify(result, null, 2)); console.log(JSON.stringify(result));
+  // E18 budgets JS heap. Match the L8 gate: performance.memory also counts WASM/buffer backing stores.
+  const heapAudit = await heap.send('Runtime.getHeapUsage');
+  result.heapMB = heapAudit.usedSize / 1_000_000;
+  mkdirSync('test-results/epics/E29', { recursive: true }); writeFileSync(`test-results/epics/E29/encounters-perf-${tier}.json`, JSON.stringify({ ...result, heapAudit }, null, 2)); console.log(JSON.stringify({ ...result, heapAudit }));
   const low = tier === 'low';
   expect(result.initialRegulars).toBe(low ? 60 : 120); expect(result.initialAlphas).toBe(2); expect(result.followers).toBe(low ? 15 : 24);
   expect(result.peakInfected).toBe(low ? 100 : 200); expect(result.blasts).toBeGreaterThanOrEqual(6);

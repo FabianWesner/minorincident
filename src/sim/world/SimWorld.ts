@@ -272,10 +272,11 @@ export class SimWorld implements Lifecycle {
     this.events.emit({ tick: 0, type: 'scenario.loaded', name, seed });
   }
   /** E10 composition hook; missions/controllers continue to use their existing scenario lifecycle. */
-  loadComposition(composition:LevelComposition, layouts:DistrictLayout[], seed=1, aftermath:L1Aftermath|null=null, carriedSurvivors?: readonly EntitySnapshot[]):void {
+  loadComposition(composition:LevelComposition, layouts:DistrictLayout[], seed=1, aftermath:L1Aftermath|null=null, carriedSurvivors?: readonly EntitySnapshot[], carriedCompanion?: EntitySnapshot):void {
     const districts=new DistrictWorld(composition,composition.id==='L7'?levelSevenLayouts(layouts):composition.id==='L5'?levelFiveLayouts(layouts):composition.id==='L4'?levelFourLayouts(layouts):composition.id==='L3'?levelThreeLayouts(layouts):composition.id==='L2'?levelTwoLayouts(layouts,aftermath):layouts,seed);
     this.loadScenario('survivor',seed);
     if ((composition.id === 'L7' || composition.id === 'L8') && carriedSurvivors) this.entities.reserveIds(carriedSurvivors.map(e => e.id));
+    if (carriedCompanion) this.entities.reserveIds([carriedCompanion.id]);
     this.carriedSurvivors = carriedSurvivors;
     this.scenario=composition.id;this.districts=districts;this.aftermath=composition.id==='L2'?aftermath:null;this.weather = new WeatherSystem(this, seed);
     this.lightPower?.install(districts);
@@ -304,7 +305,7 @@ export class SimWorld implements Lifecycle {
     }
     for (const slot of campaignBarricadeSlots(districts)) this.barricades!.spawn(slot);
     for (const d of districts.districts) for (const slot of d.gameplay.barricades ?? []) this.barricades!.spawn({ ...slot, a: { x: slot.a.x + d.origin[0], z: slot.a.z + d.origin[1] }, b: { x: slot.b.x + d.origin[0], z: slot.b.z + d.origin[1] } });
-    installCampaignNpcs(this);
+    installCampaignNpcs(this, carriedCompanion);
     if (composition.id === 'L10') {
       const entrance = curePursuitRoute.nodes[0];
       installMegaPursuit(this, { route: curePursuitRoute, spawn: { x: entrance.x - 80, z: entrance.z } });
@@ -404,7 +405,7 @@ export class SimWorld implements Lifecycle {
     this.solids.wrote(entity, 'combat.knockback');
     const distance = this.combat!.query.clearDistance(entity.transform, direction, impulse + (entity.combat?.radius ?? 0.4));
     const move = Math.max(0, Math.min(impulse, distance - (entity.combat?.radius ?? 0.4)));
-    const nav = this.infected?.nav;
+    const nav = entity.infected ? this.infected?.infectedNav : this.infected?.nav;
     // Thin static colliders (picket fences, hedges) are on the walk grid, not in the combat wall query: knocked bodies
     // slide along them instead of passing through (PO #14).
     if (entity.id !== 1 && nav) nav.move(entity.transform, direction.x * move, direction.z * move, entity.combat?.radius ?? .3);
