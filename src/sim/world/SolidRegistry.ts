@@ -8,7 +8,7 @@ import type { EntitySnapshot, Transform } from './types';
 import { boxContact, type SolidBox, type Contact } from './SolidGeometry';
 
 type Point = { x: number; z: number; y: number };
-interface Hull { entity: EntitySnapshot; boxes: SolidBox[]; pose: Transform; dirty: boolean; quiet: number; nav?: SolidBox; navYaw?: number; navGrid?: import('../ai/NavGrid').NavGrid }
+interface Hull { entity: EntitySnapshot; boxes: SolidBox[]; pose: Transform; dirty: boolean; quiet: number; quietTick: number; nav?: SolidBox; navYaw?: number; navGrid?: import('../ai/NavGrid').NavGrid }
 export interface CollisionOffender { tick: number; actor: number; other: number | string; depth: number; inside: boolean; writer: string }
 const tolerance = .02, skin = .001;
 /** One physical footprint. Reach, crowd spacing and animation envelopes are owned by combat/presentation. */
@@ -73,7 +73,7 @@ export class SolidRegistry {
       boxes = shape.boxes.map(b => ({ x: (b.min[0] + b.max[0]) / 2, y: (b.min[1] + b.max[1]) / 2 - (e.traffic || e.convoy ? .5 : .7), z: (b.min[2] + b.max[2]) / 2, halfX: (b.max[0] - b.min[0]) / 2, halfY: (b.max[1] - b.min[1]) / 2, halfZ: (b.max[2] - b.min[2]) / 2 }));
     }
     for (const b of boxes) this.maxHull = Math.max(this.maxHull, Math.hypot(Math.abs(b.x) + b.halfX, Math.abs(b.z) + b.halfZ));
-    this.hulls.set(e.id, { entity: e, boxes, pose: { ...e.transform }, dirty: true, quiet: 0 });
+    this.hulls.set(e.id, { entity: e, boxes, pose: { ...e.transform }, dirty: true, quiet: 0, quietTick: this.world.tick });
     this.hullIndex.set(e.id, e.transform.x, e.transform.z);
   }
   private syncHulls(): boolean {
@@ -84,7 +84,9 @@ export class SolidRegistry {
       const e = this.world.entities.get(id), p = h.entity.transform;
       if (e !== h.entity || e.hidden) { this.parkedHull(h, false); this.hulls.delete(id); this.hullIndex.delete(id); changed = true; continue; }
       const stable = Math.hypot(h.pose.x - p.x, h.pose.z - p.z) < .01;
-      h.quiet = stable ? h.quiet + 1 : 0;
+      if (!stable) h.quiet = 0;
+      else if (h.quietTick !== this.world.tick) h.quiet++;
+      h.quietTick = this.world.tick;
       // Parked hulls participate in ordinary grid routes. Moving convoy/traffic still use their existing yielding/sweeps.
       if (e.vehicle || e.traffic || e.archetype === 'veh.tank') this.parkedHull(h, h.quiet >= 15 && (e.vehicle?.speed ?? e.traffic?.speed ?? 0) < .2);
       if (h.dirty || h.pose.x !== p.x || h.pose.z !== p.z || h.pose.y !== p.y || h.pose.yaw !== p.yaw) { this.hullIndex.set(id, p.x, p.z); Object.assign(h.pose, p); h.dirty = false; changed = true; this.changedHulls.add(id);
@@ -370,5 +372,5 @@ export class SolidRegistry {
     return { failures: this.failures, pending: pending.length, admitted: this.admitted, deferred: this.deferred,
       requests: pending.slice(0, 64).map(e => ({ id: e.id, archetype: e.archetype, ...e.pendingAdmission })), offenders: this.offenders.map(o => ({ ...o })) };
   }
-  reset(): void { this.bodies.length = this.moved.length = this.nearby.length = this.hullNeighbors.length = 0; this.changedActors.clear(); this.changedHulls.clear(); this.changedTick = -1; this.live.clear(); this.committing = false; this.blockerOwners.clear(); this.hulls.clear(); this.hullIndex.reset(); this.committed = new WeakMap(); this.proposed = new WeakMap(); this.validated = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = -1; this.nav = undefined; }
+  reset(): void { this.bodies.length = this.moved.length = this.nearby.length = this.hullNeighbors.length = 0; this.changedActors.clear(); this.changedHulls.clear(); this.changedTick = -1; this.rejected.clear(); this.unresolved.length = 0; this.live.clear(); this.committing = false; this.blockerOwners.clear(); this.hulls.clear(); this.hullIndex.reset(); this.committed = new WeakMap(); this.proposed = new WeakMap(); this.validated = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = -1; this.nav = undefined; }
 }

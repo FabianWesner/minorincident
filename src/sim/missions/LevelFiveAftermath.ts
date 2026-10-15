@@ -91,11 +91,12 @@ export class LevelFiveAftermath {
   private placeInCellar(): void {
     const { world } = this.mission, player = world.entities.get(1)!, inn = this.anchor('l5-cellar-in');
     this.teleport(player, inn);
-    for (const e of world.entities.iterate()) if (e.companion) { const p = this.snap({ x: inn.x + 1.2, z: inn.z - .6 }, e.combat?.radius ?? .4); Object.assign(e.transform, p); e.hidden = false; world.spatial.set(e.id, p.x, p.z); }
+    for (const e of world.entities.iterate()) if (e.companion) { const p = this.snap({ x: inn.x + 1.2, z: inn.z - .6 }, e.combat?.radius ?? .4); Object.assign(e.transform, p); e.hidden = false; world.solids.admit(e, 'l5.cellar.companion'); }
   }
   private teleport(player: EntitySnapshot, to: Point): void {
     const { world } = this.mission;
     Object.assign(player.transform, { x: to.x, z: to.z });
+    world.solids.admit(player, 'l5.teleport', 4, false);
     world.physics.playerBody!.setTranslation(player.transform, true); world.physics.playerBody!.setNextKinematicTranslation(player.transform);
     Object.assign(world.previousPlayer!, player.transform); world.spatial.set(1, to.x, to.z); world.player!.locomotion.reset(); world.player!.setCheckpoint(player.transform); world.clearInput();
   }
@@ -203,7 +204,7 @@ export class LevelFiveAftermath {
     const { world } = this.mission, s = this.s, tick = world.tick, e = this.entity(r.id), def = l5Survivors.find(d => d.key === r.key)!;
     if (!e?.civilian?.survivor || r.status !== 'hidden') return;
     const out = this.snap({ x: def.outAt[0], z: def.outAt[1] }, .4), c = e.civilian, sv = c.survivor!;
-    Object.assign(e.transform, out); e.hidden = false; world.spatial.set(e.id, out.x, out.z);
+    Object.assign(e.transform, out); e.hidden = false; world.solids.admit(e, 'l5.survivor.reveal');
     c.pauseUntil = 0; c.path.length = 0; c.goal = -1; c.schedule = this.hiddenSchedule(out); c.scheduleStep = 0; c.activityUntil = 0;
     sv.mode = 'follow'; sv.slot = s.found; sv.foundAt = tick; sv.waitAt = tick + ticks(l5.follow.waitEveryS);
     r.status = 'following'; r.foundAt = tick; r.hold = 0; s.found++;

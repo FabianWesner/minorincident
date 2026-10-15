@@ -5,6 +5,7 @@ import { missionControls } from '../../../src/sim/missions/controls';
 import { respawnAtCheckpoint } from '../../../src/sim/missions/Respawn';
 import { vehicles, vehicleDef } from '../../../src/data/vehicles';
 import { emergeResident, walkResidents, type HouseEmergence } from '../../../src/sim/outbreak/HouseEmergence';
+import { Outbreak } from '../../../src/sim/outbreak/Outbreak';
 
 async function arena() { const w = new SimWorld(); await w.init(); w.loadScenario('horde-arena', 1); return w; }
 const tick = (w: SimWorld, n = 1) => { for (let i = 0; i < n; i++) w.update(); expect(w.solids.offenders).toEqual([]); };
@@ -127,6 +128,7 @@ test('a clear formation can enter positions its neighbours vacate during the sam
 test('a wider house resident keeps its identity and walks clear of the pedestrian doorstep', async () => {
   const w = await arena();
   try {
+    w.npcs!.civilians.outbreak = new Outbreak(w, { refuges: [] });
     // The pedestrian's endpoint is just inside the Alpha's required wall clearance.
     w.events.emit({ type: 'world.blocker.changed', tick: w.tick, id: 987654, blocked: true,
       wall: { x: 11, z: 0, y: 1, halfX: 1, halfZ: 2, halfY: 1 } });
