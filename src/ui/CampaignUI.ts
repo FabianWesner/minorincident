@@ -82,13 +82,13 @@ export class CampaignUI {
   showRewards():void {
     const save=this.game.campaign!,p=save.pending!;
     if(p.phase==='unlock'){
-      this.screen('Unlock reveal');const text=document.createElement('p');text.textContent=`Level ${p.level} complete · Level ${save.unlockedLevel} unlocked · Racks ${rackSize(save.unlockedLevel)}/${rackSize(save.unlockedLevel)}`;this.content.append(text);
+      this.screen('Well done, courier');const text=document.createElement('p');text.textContent=`Level ${p.level} complete · Level ${save.unlockedLevel} unlocked · Racks ${rackSize(save.unlockedLevel)}/${rackSize(save.unlockedLevel)}`;this.content.append(text);
       {const unlocked=document.createElement('p');unlocked.textContent=save.ownedActions.map(label).join(' · ');this.content.append(unlocked);this.button('Choose upgrades',()=>{revealCards(save);this.save();this.picks=[];this.showRewards();});}
     }else if(p.phase==='cards'){
       this.screen('Pick 2 of 3 upgrades');const cards=document.createElement('div');cards.className='upgrade-cards';this.content.append(cards);
       const next=this.button('Set up racks',()=>{pickUpgrades(save,this.picks);this.save();this.game.applyCampaign();this.showRewards();});next.disabled=this.picks.length!==2;
       for(const id of p.cards){const d=upgrades[id],b=this.button(`${d.title} · Tier ${d.tier} · ${d.description}`,()=>{
-        if(this.picks.includes(id))this.picks=this.picks.filter(p=>p!==id);else if(this.picks.length<2)this.picks.push(id);else this.message.textContent='Pick exactly two cards. Deselect one to change your choice.';
+        if(this.picks.includes(id))this.picks=this.picks.filter(p=>p!==id);else if(this.picks.length<2)this.picks.push(id);else this.message.textContent='Two cards only. Deselect one to swap it.';
         b.setAttribute('aria-pressed',String(this.picks.includes(id)));next.disabled=this.picks.length!==2;
       },cards);b.dataset.upgrade=id;b.setAttribute('aria-pressed',String(this.picks.includes(id)));}
     }else{
