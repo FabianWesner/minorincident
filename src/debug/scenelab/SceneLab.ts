@@ -548,6 +548,11 @@ export class SceneLab {
     }
     if (actor.kind === 'animal') {
       if ('infect' in a) world.npcs!.civilians.outbreak!.infect(e, a.infect.by ? this.actors.get(a.infect.by)?.entity ?? 0 : 0);
+      // Pets on the shipped pet routine: walk (1.5 m/s) or run (jog routine, 2.5 m/s, trot) a waypoint loop, or flee (4.8 m/s).
+      else if (e.civilian?.pet && ('walk' in a || 'run' in a)) {
+        const c = e.civilian; c.owner = null; c.state = 'calm'; c.pauseUntil = 0; c.routine = 'run' in a ? 'jog' : 'pet';
+        c.waypoints = ('walk' in a ? a.walk : a.run).map(toPoint); c.waypoint = 0;
+      } else if (e.civilian?.pet && 'flee' in a) { const c = e.civilian; c.threat.x = a.flee[0]; c.threat.z = a.flee[1]; c.state = 'flee'; c.entered = world.tick; }
       return;
     }
     if (actor.kind === 'pedestrian') {
