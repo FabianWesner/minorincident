@@ -279,12 +279,14 @@ export class LevelFiveAftermath {
   ingress(e: EntitySnapshot): Point | null {
     if (!this.s.metroAt || this.s.phase !== 'metro' && this.s.phase !== 'shelter') return null;
     const door = this.anchor('l5-metro-shutter');
-    // The courier and waving lookout occupy the right lane. Fill the open left
-    // lane from the back, in arrival order: a late straggler must not pass through
-    // followers already standing inside the narrow ingress.
+    // Pass the courier and waving lookout on the left, then fill the two lanes
+    // from the back in arrival order. Distinct depths keep that order stable;
+    // a late straggler takes the remaining shallow slot.
     const ordered = this.following(true).sort((a, b) => a.e.transform.z - b.e.transform.z || a.e.id - b.e.id);
     const slot = Math.max(0, ordered.findIndex(f => f.e.id === e.id));
-    return { x: door.x - .4, z: door.z - 4.4 + slot * .75 };
+    const right = slot < 4 && slot % 2 === 0;
+    if (right && e.transform.z > door.z - 3.2) return { x: door.x - .4, z: door.z - 3.4 };
+    return { x: door.x + (right ? .4 : -.4), z: door.z - ([4.2, 4.05, 3.35, 3.2, 1.4][slot] ?? 1.4) };
   }
   private metro(): void {
     const { world } = this.mission, s = this.s, tick = world.tick, player = world.entities.get(1)!;
