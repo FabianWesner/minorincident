@@ -84,7 +84,11 @@ export class KinematicController {
       // Crowd resistance can consume at most 75% of forward intent. Static walls are swept AFTER this.
       if (magnitude > 0) {
         const forward = this.displacement.x * x + this.displacement.z * z;
-        const minimum = Math.max(survivor.minimumEscapeSpeed, Math.hypot(this.velocity.x, this.velocity.z) * 0.25) * FIXED_DT;
+        // Navigation feeds actual displacement back into its response. Taking a quarter of that
+        // already-slowed velocity compounds the resistance each tick, down to the escape crawl.
+        // Retain a quarter of the requested pace, bounded by the current acceleration ramp.
+        const pace = survivor.speed * this.speedScale * magnitude;
+        const minimum = Math.max(survivor.minimumEscapeSpeed, Math.min(Math.hypot(this.velocity.x, this.velocity.z), pace * .25)) * FIXED_DT;
         if (forward < minimum) { this.displacement.x += x * (minimum - forward); this.displacement.z += z * (minimum - forward); }
       }
     }
