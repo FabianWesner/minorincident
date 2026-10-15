@@ -1,3 +1,4 @@
+import { megaAlpha } from '../../data/megaAlpha';
 import { Group, type BufferGeometry, type Node } from 'three/webgpu';
 import { Rng } from '../../core/Rng';
 import { infectedDef } from '../../data/infected';
@@ -50,7 +51,7 @@ export class Vfx extends Group {
   readonly particles = new FxPool(2048, 'particle');
   readonly decals = new FxPool(600, 'ground', undefined, true);
   readonly surfaceSplats = new FxPool(64, 'wall', undefined, true);
-  readonly telegraphs = new FxPool(256, 'ground');
+  readonly telegraphs = new FxPool(256, 'ground', undefined, false, true);
   readonly waves = new FxPool(16, 'ground');
   readonly gibs: GibPool;
   readonly hitStop = new HitStop();
@@ -138,9 +139,10 @@ export class Vfx extends Group {
   }
   /** Exercise visible pooled geometry during loading; restore empty slots without sim events. */
   prewarm(x: number, z: number): () => void {
+    const visible = this.visible; this.visible = true; // Compile critical warnings even with optional VFX off.
     for (const pool of this.pools) pool.spawn(this.time, 1, x, pool.mode === 'particle' ? 1 : .03, z, 0, 0, 0, 2, 0, 0xffffff);
     this.blasts.prewarm(x, z);
-    return () => this.resetPools();
+    return () => { this.resetPools(); this.visible = visible; };
   }
   set(patch: VfxSettings): void {
     if (patch.gore !== undefined && !['Full', 'Reduced', 'Off'].includes(patch.gore)) throw new RangeError('Invalid gore setting');
@@ -151,6 +153,7 @@ export class Vfx extends Group {
     }
     if (patch.vfx !== undefined) this.enabled = patch.vfx;
     if (patch.flashReduction !== undefined) this.flashReduction = patch.flashReduction;
+    this.telegraphs.pulse.value = this.flashReduction ? 0 : 1;
     this.blasts.set(patch);
     if (patch.quality !== undefined && patch.quality !== this.quality) { this.quality = patch.quality; this.gibs.setQuality(this.quality); this.particles.reset(this.time); this.particles.budget = this.quality === 'low' ? 512 : 2048; this.particles.mesh.count = this.particles.budget; }
     if (patch.gore !== undefined && patch.gore !== this.gore) {
@@ -165,7 +168,7 @@ export class Vfx extends Group {
       this.resetPools(true); for (const landing of this.landings) landing.at = Infinity;
     } else this.targets.blood(this.gore === 'Off' ? 0 : this.coverage);
   }
-  private telegraphColor(kind: TelegraphKind): number { return this.colorblind ? kind === 'bloated' ? 0xffb347 : 0xffffff : kind === 'bloated' ? 0xffe45b : 0x59e8ff; }
+  private telegraphColor(kind: TelegraphKind): number { return this.colorblind ? kind === 'bloated' ? 0xffb347 : 0xffffff : kind === 'bloated' ? 0xff682d : 0xff4824; }
   private resetPools(preserveTelegraphs = false): void { this.blasts.reset(); for (const pool of this.pools) if (!preserveTelegraphs || pool !== this.telegraphs) pool.reset(this.time); this.gibs.reset(); if (!preserveTelegraphs) this.tells.clear(); this.hitCount = this.hitCursor = 0; }
   private pulse(id: number): void {
     let slot = 0;
@@ -230,7 +233,8 @@ export class Vfx extends Group {
       this.targets.vehicle?.(vehicle, this.enabled && this.gore !== 'Off');
     }
     if (event.type === 'explosion.slowmo') { this.blasts.slowmo(event); return; }
-    if (!this.enabled && !(event.type === 'telegraph' && 'move' in event && event.move) && event.type !== 'infected.special' && event.type !== 'attack.resolved') {
+    // Combat warnings remain visible when optional effects are disabled.
+    if (!this.enabled && event.type !== 'telegraph' && event.type !== 'infected.special' && event.type !== 'attack.resolved') {
       if (event.type === 'combat.attack' && actions[event.actionId]?.category === 'ranged') this.gunshot(event.sourceId, event.direction, actions[event.actionId].range, event.position);
       else if (event.type === 'ally.attack' && event.from && event.to) {
         const dx = event.to.x - event.from.x, dz = event.to.z - event.from.z, distance = Math.hypot(dx, dz) || 1;
@@ -297,13 +301,23 @@ export class Vfx extends Group {
       const source = event.sourceId !== undefined ? this.world.entities.get(event.sourceId) : undefined;
       const kind: TelegraphKind = source?.infected?.pursuit && 'move' in event && event.move === 'alpha.grab-throw' ? 'splash' : 'kind' in event ? event.kind : event.special === 'explode' ? 'bloated' : event.special === 'charge' || event.special === 'pin' || event.special === 'alpha.grab-throw' || event.special === 'gorilla.grab-throw' || event.special === 'elephant.charge' || event.special === 'zebra.stampede' ? 'charge' : event.special === 'aura' || event.special === 'alpha.roar' || event.special === 'gorilla.roar' || event.special === 'gorilla.pound' || event.special === 'flamingo.dive' ? 'splash' : 'lunge';
       const throwing = !source?.infected?.pursuit && 'move' in event && (event.move === 'alpha.grab-throw' || event.move === 'gorilla.grab-throw') && event.area && event.target;
-      const length = throwing ? Math.min(15, Math.hypot(event.target!.x - event.area!.x, event.target!.z - event.area!.z)) : 0;
-      const position = throwing ? { x: event.area!.x + event.area!.dx * length / 2, z: event.area!.z + event.area!.dz * length / 2 } : 'position' in event ? event.position : event.area ?? source?.transform;
+      const move = 'move' in event ? event.move : undefined;
+      const area = 'area' in event ? event.area : undefined;
+      const target = 'target' in event ? event.target : undefined;
+      const directional = throwing || move === 'alpha.charge' || move === 'elephant.charge' || move === 'zebra.stampede' || move === 'lion.pounce' || move === 'lion.flank';
+      const destination = source?.infected?.specialAttack?.destination;
+      const length = throwing ? Math.min(15, Math.hypot(target!.x - area!.x, target!.z - area!.z))
+        : directional && area ? source?.infected?.pursuit ? Math.min(megaAlpha.moves['alpha.charge'].range, megaAlpha.moves['alpha.charge'].speed)
+        : destination ? Math.hypot(destination.x - area.x, destination.z - area.z)
+        : move === 'elephant.charge' ? 16 : move === 'zebra.stampede' ? 15 : move === 'lion.pounce' ? Math.min(8, Math.hypot(target!.x - area.x, target!.z - area.z)) : 12 : 0;
+      const position = directional && area ? { x: area.x + area.dx * length / 2, z: area.z + area.dz * length / 2 } : 'position' in event ? event.position : area ?? source?.transform;
       if (!position) return;
-      const radius = throwing ? Math.max(1, length / 2) : 'radius' in event ? event.radius : event.area?.radius ?? (kind === 'bloated' || kind === 'splash' ? 3 : source ? Math.max(this.world.missions?.def.l1 ? 1 : 2, infectedDef(source.archetype).range) : 2);
-      const angle = 'move' in event && (event.move === 'elephant.swipe' || event.move === 'elephant.charge' || event.move === 'gorilla.grab-throw' || event.move === 'zebra.kick' || event.move === 'zebra.stampede') ? Math.atan2(event.area?.dz ?? 0, event.area?.dx ?? 1) : 'angle' in event ? event.angle : -Math.atan2(event.area?.dz ?? source?.infected?.dz ?? 0, event.area?.dx ?? source?.infected?.dx ?? 1);
-      const shape = 'move' in event && event.move === 'zebra.kick' ? 10 : 'move' in event && event.move === 'elephant.swipe' ? 9 : 'move' in event && (event.move === 'alpha.roar' || event.move === 'gorilla.roar') ? 8 : telegraphShapes[kind];
-      const slot = this.telegraphs.spawn(this.time, 1e9, position.x, 0.025, position.z, angle, 0, 0, radius * 2, shape, this.telegraphColor(kind), 0, throwing ? 1 / radius : kind === 'charge' ? 0.3 : 1, true);
+      const radius = directional ? Math.max(.1, length / 2) : 'radius' in event ? event.radius : area?.radius ?? (kind === 'bloated' || kind === 'splash' ? 3 : source ? Math.max(this.world.missions?.def.l1 ? 1 : 2, infectedDef(source.archetype).range) : 2);
+      const angle = area ? Math.atan2(area.dz, area.dx) : 'angle' in event ? event.angle : Math.atan2(source?.infected?.dz ?? 0, source?.infected?.dx ?? 1);
+      const shape = move === 'zebra.kick' ? 10 : move === 'elephant.swipe' ? 9 : move === 'alpha.ground-slam' || move === 'gorilla.pound' || source?.infected?.pursuit && move === 'alpha.grab-throw' ? 1 : move === 'alpha.roar' || move === 'gorilla.roar' ? 8 : directional ? 2 : telegraphShapes[kind];
+      const width = throwing ? 2 : move === 'elephant.charge' ? 3.5 : move === 'zebra.stampede' ? 1.5 : (area?.radius ?? 1) * 2;
+      const ground = this.world.districts?.groundHeight(position.x, position.z) ?? 0;
+      const slot = this.telegraphs.spawn(this.time, 1e9, position.x, ground + .065, position.z, angle, 'duration' in event ? event.duration : .6, 0, radius * 2, shape, this.telegraphColor(kind), 0, directional ? width / (radius * 2) : kind === 'charge' ? .3 : 1, true);
       if (slot < 0) return;
       this.visible = true;
       this.tells.set(event.attackId, { slot, kind, spawned: this.time, ...(event.sourceId !== undefined ? { sourceId: event.sourceId } : {}) });
