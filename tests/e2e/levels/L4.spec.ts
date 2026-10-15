@@ -44,9 +44,23 @@ function helpers(page: Page) {
   const go = async (target: P, stop = 1.2, done?: () => Promise<boolean>, range = 2.6) => {
     const click = async () => {
       const start = (await player()).transform, m = await mission();
-      // A collapse respawn rejoins the escape street before continuing the current leg.
-      const goal = m.l4?.phase === 'collapse' && start.x < -12 && target.z >= 28 ? { x: -4, z: 3 }
-        : m.l4?.phase === 'collapse' && start.z < 28 && target.z >= 43 && start.x < 14 ? { x: -4, z: 28 } : target;
+      // After a collapse respawn, resume the authored street route. The extended
+      // north/west legs must not click diagonally through the fallen camp.
+      let goal = target;
+      if (m.l4?.phase === 'collapse') {
+        const route = l4.finale.route, end = route.findIndex(([x, z]) => Math.hypot(x - target.x, z - target.z) < .1);
+        let nearest = Infinity;
+        for (let i = 1; i <= end; i++) {
+          const [ax, az] = route[i - 1], [bx, bz] = route[i], dx = bx - ax, dz = bz - az;
+          const t = Math.max(0, Math.min(1, ((start.x - ax) * dx + (start.z - az) * dz) / (dx * dx + dz * dz)));
+          const distance = Math.hypot(start.x - ax - dx * t, start.z - az - dz * t);
+          if (distance >= nearest) continue;
+          nearest = distance;
+          const next = Math.hypot(start.x - bx, start.z - bz) <= stop && i < end ? route[i + 1] : route[i];
+          goal = { x: next[0], z: next[1] };
+        }
+        if (end >= 0 && start.x < -12 && start.z > l4.map.plaza.z0 && start.z < l4.map.plaza.z1) goal = { x: -4, z: 3 };
+      }
       await page.evaluate(({ start, target }) => {
         const a = window.__SS__!, x = (start.x + target.x) / 2, z = (start.z + target.z) / 2, r = Math.max(22, Math.hypot(target.x - start.x, target.z - start.z) + 12);
         a.camera.cinematic({ position: [x + r, r * 1.2, z + r], target: [x, 0, z] }, true);

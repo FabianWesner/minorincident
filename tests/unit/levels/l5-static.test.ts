@@ -131,6 +131,13 @@ describe('L5 static', () => {
 
   test('T-E23-08a @E23 @E23-AC08 five hiding places >= 25 m apart, at least 4 inside or behind buildings (hidden from every street), each ring reachable, no objective marker on a survivor', () => {
     expect(l5Survivors.map(s => s.key)).toEqual(['dale', 'rosa', 'okafor', 'mia', 'sam']);
+    // The hardware/apartment swap must not leave Mia in the hardware cellar.
+    const mia = l5Survivors.find(s => s.key === 'mia')!;
+    const apartment = layout.placements.find(p => p.id === 'bld.apartment-block-a:220')!;
+    expect(mia.hideAt[0]).toBeCloseTo(apartment.position[0]);
+    expect(mia.hideAt[1]).toBeGreaterThan(apartment.visualAabb.min[2]);
+    expect(mia.hideAt[1]).toBeLessThan(apartment.visualAabb.max[2]);
+    expect(dist(mia.ringAt, at('l5-out'))).toBeGreaterThan(l5.survivors.reachM);
     const spots = l5Survivors.map(s => s.hideAt as Point);
     for (let i = 0; i < spots.length; i++) for (let j = i + 1; j < spots.length; j++) expect(dist(spots[i], spots[j]), `${l5Survivors[i].key}-${l5Survivors[j].key}`).toBeGreaterThanOrEqual(25);
     const walls = solid.filter(c => c.aabb.max[1] > 1.2).map(c => c.aabb);

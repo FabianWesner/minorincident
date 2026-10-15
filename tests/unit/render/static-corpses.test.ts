@@ -1,4 +1,4 @@
-import { Color, Frustum, InstancedBufferAttribute, InstancedMesh, Matrix4, MeshLambertNodeMaterial, OrthographicCamera, PerspectiveCamera, Scene, Vector3 } from 'three/webgpu';
+import { BufferAttribute, Color, Frustum, InstancedBufferAttribute, InstancedMesh, Matrix4, MeshLambertNodeMaterial, OrthographicCamera, PerspectiveCamera, Scene, Vector3 } from 'three/webgpu';
 import { vec3 } from 'three/tsl';
 import { expect, test, vi } from 'vitest';
 // @ts-expect-error Three's internal module has no declaration
@@ -189,4 +189,24 @@ test('frozen membership revisions change only when an animated caller must rebui
     expect(pool.revision).toBeGreaterThan(placed); expect(pool.snapshot().instances).toBe(0);
     const dropped = pool.revision; pool.reset(); expect(pool.revision).toBeGreaterThan(dropped);
   } finally { pool.dispose(); material.dispose(); baked.geometry.dispose(); }
+});
+
+
+test('@E18 frozen corpses retain xyz normals after backend vec4 padding', () => {
+  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const source = baked.geometry.getAttribute('normal'), padded = new Float32Array(source.count * 4);
+  for (let i = 0; i < source.count; i++) { padded[i * 4] = source.getX(i); padded[i * 4 + 1] = source.getY(i); padded[i * 4 + 2] = source.getZ(i); }
+  baked.geometry.setAttribute('normal', new BufferAttribute(padded, 4));
+  const expected = new Float32Array(source.count * 3), matrix = new Matrix4(), point = new Vector3(), parts = baked.geometry.getAttribute('_parts');
+  for (let i = 0; i < source.count; i++) {
+    matrix.fromArray(baked.clip.matrices, parts.getX(i) * 16);
+    point.set(source.getX(i), source.getY(i), source.getZ(i)).transformDirection(matrix).toArray(expected, i * 3);
+  }
+  const pool = new StaticCorpses(), material = new MeshLambertNodeMaterial();
+  try {
+    pool.place({ id: 1 } as EntitySnapshot, 'runner', baked.geometry, material, baked.clip, 0, new Matrix4(), new Color('white'), [0, 0, 0]);
+    const geometry = (pool.children[0] as InstancedMesh).geometry, normal = geometry.getAttribute('normal');
+    expect(normal.itemSize).toBe(3); expect(normal.count).toBe(geometry.getAttribute('position').count);
+    expect(normal.array).toEqual(expected);
+  } finally { pool.dispose(); baked.geometry.dispose(); material.dispose(); }
 });

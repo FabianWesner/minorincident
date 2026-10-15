@@ -1,0 +1,2789 @@
+{
+  "method": "Full Hetzner unit/level/sim run, followed by complete touched files on newer source snapshots. Latest complete file result supersedes the earlier file. No thresholds changed.",
+  "runs": [
+    {
+      "name": "all",
+      "passed": 1920,
+      "failed": 4,
+      "skipped": 9,
+      "start": 1792083062460
+    },
+    {
+      "name": "final-touched",
+      "passed": 1742,
+      "failed": 2,
+      "skipped": 9,
+      "start": 1792084525232
+    },
+    {
+      "name": "last-fixes",
+      "passed": 20,
+      "failed": 2,
+      "skipped": 0,
+      "start": 1792085360070
+    },
+    {
+      "name": "camera-final",
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0,
+      "start": 1792085580870
+    },
+    {
+      "name": "sim-final",
+      "passed": 73,
+      "failed": 0,
+      "skipped": 0,
+      "start": 1792085629598
+    },
+    {
+      "name": "pressure-final",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "start": 1792085683913
+    },
+    {
+      "name": "final-levels",
+      "passed": 103,
+      "failed": 0,
+      "skipped": 2,
+      "start": 1792085664144
+    },
+    {
+      "name": "corpse-units",
+      "passed": 23,
+      "failed": 0,
+      "skipped": 0,
+      "start": 1792089455111
+    }
+  ],
+  "latest": {
+    "unit": {
+      "files": 263,
+      "tests": {
+        "passed": 1514,
+        "skipped": 7
+      }
+    },
+    "levels": {
+      "files": 53,
+      "tests": {
+        "passed": 313,
+        "skipped": 2
+      }
+    },
+    "sim": {
+      "files": 22,
+      "tests": {
+        "passed": 107
+      }
+    }
+  },
+  "files": {
+    "tests/sim/npc/campaign.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 5
+      },
+      "failures": []
+    },
+    "tests/unit/progression/perf.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/levels/L1.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 19
+      },
+      "failures": []
+    },
+    "tests/levels/L10-campaign.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/levels/L10.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/levels/L2-boarding.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/levels/L2-escape-loop.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/levels/L2-finale-pressure.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/levels/L2.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 16
+      },
+      "failures": []
+    },
+    "tests/levels/L3-bridge.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/levels/L3-follow.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 28
+      },
+      "failures": []
+    },
+    "tests/levels/L3-route.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/levels/L3.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 21
+      },
+      "failures": []
+    },
+    "tests/levels/L4-barricade-prompts.test.ts": {
+      "source": "final-levels",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/levels/L4-battlefield-lifecycle.test.ts": {
+      "source": "final-levels",
+      "status": "passed",
+      "counts": {
+        "passed": 6
+      },
+      "failures": []
+    },
+    "tests/levels/L4-botprobe.test.ts": {
+      "source": "final-levels",
+      "status": "passed",
+      "counts": {
+        "skipped": 1
+      },
+      "failures": []
+    },
+    "tests/levels/L4-collapse.test.ts": {
+      "source": "final-levels",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/levels/L4-convoy.test.ts": {
+      "source": "final-levels",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/levels/L4-finale-pressure.test.ts": {
+      "source": "final-levels",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/levels/L4-guidance.test.ts": {
+      "source": "final-levels",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/levels/L4-movement.test.ts": {
+      "source": "final-levels",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/levels/L4-perimeter.test.ts": {
+      "source": "final-levels",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/levels/L4-po-round.test.ts": {
+      "source": "final-levels",
+      "status": "passed",
+      "counts": {
+        "passed": 5
+      },
+      "failures": []
+    },
+    "tests/levels/L4-probe.test.ts": {
+      "source": "final-levels",
+      "status": "passed",
+      "counts": {
+        "skipped": 1
+      },
+      "failures": []
+    },
+    "tests/levels/L4-refuge-visible.test.ts": {
+      "source": "final-levels",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/levels/L4-respawn.test.ts": {
+      "source": "final-levels",
+      "status": "passed",
+      "counts": {
+        "passed": 6
+      },
+      "failures": []
+    },
+    "tests/levels/L4.test.ts": {
+      "source": "final-levels",
+      "status": "passed",
+      "counts": {
+        "passed": 23
+      },
+      "failures": []
+    },
+    "tests/levels/L5-encounters.test.ts": {
+      "source": "final-levels",
+      "status": "passed",
+      "counts": {
+        "passed": 9
+      },
+      "failures": []
+    },
+    "tests/levels/L5.test.ts": {
+      "source": "final-levels",
+      "status": "passed",
+      "counts": {
+        "passed": 15
+      },
+      "failures": []
+    },
+    "tests/levels/L6-campaign.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/levels/L6.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 11
+      },
+      "failures": []
+    },
+    "tests/levels/L8.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 8
+      },
+      "failures": []
+    },
+    "tests/levels/L9-campaign.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/levels/ally-combat-feel.test.ts": {
+      "source": "final-levels",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/levels/camera-sightline.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 6
+      },
+      "failures": []
+    },
+    "tests/levels/continuity.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/levels/corpse-grounding.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/levels/l1-bench-exit.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/levels/l1-firefighter.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/levels/l1-forecourt.test.ts": {
+      "source": "last-fixes",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/levels/l1-medkits.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/levels/l1-ride-input.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 10
+      },
+      "failures": []
+    },
+    "tests/levels/l2-start.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 7
+      },
+      "failures": []
+    },
+    "tests/levels/l4-convoy-people.test.ts": {
+      "source": "final-levels",
+      "status": "passed",
+      "counts": {
+        "passed": 10
+      },
+      "failures": []
+    },
+    "tests/levels/l5-district.test.ts": {
+      "source": "final-levels",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/levels/l5-po-1015.test.ts": {
+      "source": "final-levels",
+      "status": "passed",
+      "counts": {
+        "passed": 7
+      },
+      "failures": []
+    },
+    "tests/levels/pickup-grounding.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 9
+      },
+      "failures": []
+    },
+    "tests/levels/pickup-solids.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/levels/respawn-all-levels.test.ts": {
+      "source": "sim-final",
+      "status": "passed",
+      "counts": {
+        "passed": 17
+      },
+      "failures": []
+    },
+    "tests/levels/respawn-checkpoint.test.ts": {
+      "source": "last-fixes",
+      "status": "passed",
+      "counts": {
+        "passed": 6
+      },
+      "failures": []
+    },
+    "tests/levels/ring-clearance.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/levels/run-out.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/levels/story-bots.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 5
+      },
+      "failures": []
+    },
+    "tests/levels/story-protection.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 6
+      },
+      "failures": []
+    },
+    "tests/levels/trap-pockets.test.ts": {
+      "source": "all",
+      "status": "passed",
+      "counts": {
+        "passed": 6
+      },
+      "failures": []
+    },
+    "tests/unit/e2e-error-guard.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/health-bars.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/import-graph.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/l5-shotgun.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/physics-metadata.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/physics-preparation.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/physics-prop-contract.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/setup.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/static.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/stride-scale.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/survivor.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/traceability.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/ui-dom.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/ui-settings.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/ui-telegraphs.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/vehicles.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/sim/combat/l5-shotgun-click.test.ts": {
+      "source": "sim-final",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/sim/combat/l5-shotgun.test.ts": {
+      "source": "sim-final",
+      "status": "passed",
+      "counts": {
+        "passed": 6
+      },
+      "failures": []
+    },
+    "tests/sim/ai/infected-stuck-l2.test.ts": {
+      "source": "sim-final",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/sim/ai/navigation.test.ts": {
+      "source": "sim-final",
+      "status": "passed",
+      "counts": {
+        "passed": 14
+      },
+      "failures": []
+    },
+    "tests/sim/missions/l2-reporting.test.ts": {
+      "source": "sim-final",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/sim/npc/activity-anchors.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/sim/npc/ally-defence.test.ts": {
+      "source": "sim-final",
+      "status": "passed",
+      "counts": {
+        "passed": 12
+      },
+      "failures": []
+    },
+    "tests/sim/npc/civilians.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 7
+      },
+      "failures": []
+    },
+    "tests/sim/npc/fetch-leash.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 6
+      },
+      "failures": []
+    },
+    "tests/sim/npc/followers.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 8
+      },
+      "failures": []
+    },
+    "tests/sim/npc/integration.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/sim/npc/l1-civilians.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 7
+      },
+      "failures": []
+    },
+    "tests/sim/npc/l1-motion-clips.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/sim/npc/l4-systems.test.ts": {
+      "source": "sim-final",
+      "status": "passed",
+      "counts": {
+        "passed": 12
+      },
+      "failures": []
+    },
+    "tests/sim/npc/medkit-fetch.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 5
+      },
+      "failures": []
+    },
+    "tests/sim/npc/permanence.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/sim/npc/pet-height.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/sim/npc/seat-follow.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/sim/npc/traffic.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/sim/npc/unreachable.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/sim/npc/zoo-companion.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 5
+      },
+      "failures": []
+    },
+    "tests/unit/assets/accessories.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/assets/alpha.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/assets/army-boom.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/assets/authored-lods.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/assets/build.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 5
+      },
+      "failures": []
+    },
+    "tests/unit/assets/bus-hero.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 6
+      },
+      "failures": []
+    },
+    "tests/unit/assets/civilian-bake-build.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 72
+      },
+      "failures": []
+    },
+    "tests/unit/assets/civilian-bake-worker.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 6
+      },
+      "failures": []
+    },
+    "tests/unit/assets/civilian-bake.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 6
+      },
+      "failures": []
+    },
+    "tests/unit/assets/commerce-pack.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/assets/courier-bike.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/assets/crowd.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/assets/cure-kits.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 46
+      },
+      "failures": []
+    },
+    "tests/unit/assets/delivery.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 7
+      },
+      "failures": []
+    },
+    "tests/unit/assets/dispersal-kit.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 30
+      },
+      "failures": []
+    },
+    "tests/unit/assets/elephant.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/assets/gun-pose.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 11
+      },
+      "failures": []
+    },
+    "tests/unit/assets/living-adults.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/assets/load-pipeline.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 8
+      },
+      "failures": []
+    },
+    "tests/unit/assets/lod-fidelity.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 236
+      },
+      "failures": []
+    },
+    "tests/unit/assets/long-gun-aim.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 8
+      },
+      "failures": []
+    },
+    "tests/unit/assets/long-gun-hold.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 5
+      },
+      "failures": []
+    },
+    "tests/unit/assets/mega-alpha-dog.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 8
+      },
+      "failures": []
+    },
+    "tests/unit/assets/optimize.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 12
+      },
+      "failures": []
+    },
+    "tests/unit/assets/png-pixels.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/assets/prefetch-worker.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/assets/production-gates.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/assets/references.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/assets/registry.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 5
+      },
+      "failures": []
+    },
+    "tests/unit/assets/runtime-integration.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 6
+      },
+      "failures": []
+    },
+    "tests/unit/assets/static-bakes.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 141
+      },
+      "failures": []
+    },
+    "tests/unit/assets/static-batch-equivalence.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/assets/static-collision.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/assets/validate.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 17
+      },
+      "failures": []
+    },
+    "tests/unit/assets/window-glow-lod.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/assets/zebra.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/combat/elevated-melee.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/combat/events.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/combat/gun-raise.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 5
+      },
+      "failures": []
+    },
+    "tests/unit/combat/loadout.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/combat/minigun.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 5
+      },
+      "failures": []
+    },
+    "tests/unit/audio/acoustics.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/audio/ambience-guard.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/audio/assets.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/audio/base-alarm.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/audio/credits.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/audio/danger.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/audio/fight-music.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/audio/l1-arc.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/audio/l4-radio-mix.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/audio/levelSoundtracks.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/audio/mega-presentation.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 5
+      },
+      "failures": []
+    },
+    "tests/unit/audio/music-beats.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/audio/noise.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/audio/pickup-fanfare.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 5
+      },
+      "failures": []
+    },
+    "tests/unit/audio/policies.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 6
+      },
+      "failures": []
+    },
+    "tests/unit/audio/registry.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/audio/streaming.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/core/foundation.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 6
+      },
+      "failures": []
+    },
+    "tests/unit/data/action-assets.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/data/actions.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/data/checkpoint-names.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/data/explosions.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/data/l10-finale-anchors.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 6
+      },
+      "failures": []
+    },
+    "tests/unit/data/l2-glass.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/data/player-text-dashes.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/input/bindings.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/input/buttons.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/input/click-pick.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/input/rack-selection.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 5
+      },
+      "failures": []
+    },
+    "tests/unit/input/raised-floor.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/input/walk.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/input/wheel.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/layouts/build.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/layouts/clipping.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/layouts/crossval.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/layouts/d-grove-scaffold.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/layouts/d-grove.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 11
+      },
+      "failures": []
+    },
+    "tests/unit/layouts/districts.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/layouts/visual-bounds.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/layouts/w6.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/missions/dialogue.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/missions/house-emergence.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/missions/marker-anchor.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/missions/schema.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/motionlab/motion.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/motionlab/skin.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/motionlab/stage1.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/performance/assets.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/performance/deviceEvidence.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/performance/event-bus-cache.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/performance/gibs.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/performance/hit-query-grid.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/performance/human-query.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/performance/layouts.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/performance/nav-bake.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 6
+      },
+      "failures": []
+    },
+    "tests/unit/performance/nav-capsule-corners.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/performance/nav-reach-equivalence.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 7
+      },
+      "failures": []
+    },
+    "tests/unit/performance/nav-visibility.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 7
+      },
+      "failures": []
+    },
+    "tests/unit/performance/quality.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/performance/spatial-contact-cache.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/progression/aftermath.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/progression/campaign.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 14
+      },
+      "failures": []
+    },
+    "tests/unit/progression/cure.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/progression/next-level.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 7
+      },
+      "failures": []
+    },
+    "tests/unit/sim/police-range.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 18
+      },
+      "failures": []
+    },
+    "tests/unit/telemetry/client.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 12
+      },
+      "failures": []
+    },
+    "tests/unit/telemetry/codec.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 8
+      },
+      "failures": []
+    },
+    "tests/unit/telemetry/functions.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 10
+      },
+      "failures": []
+    },
+    "tests/unit/render/apc-damage.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/render/appearance-stable.test.ts": {
+      "source": "corpse-units",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/render/authored-animation.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 17
+      },
+      "failures": []
+    },
+    "tests/unit/render/camera-jitter.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/render/car-transition.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/catalog-motion.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 6
+      },
+      "failures": []
+    },
+    "tests/unit/render/character-loading.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/render/civilian-grip.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 8
+      },
+      "failures": []
+    },
+    "tests/unit/render/civilian-material.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/civilian-residency.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/civilian-staging.test.ts": {
+      "source": "corpse-units",
+      "status": "passed",
+      "counts": {
+        "passed": 6
+      },
+      "failures": []
+    },
+    "tests/unit/render/corgi-feet.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 5
+      },
+      "failures": []
+    },
+    "tests/unit/render/corgi-scale.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/corpse-placement.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/render/courier-rig-v2.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 11
+      },
+      "failures": []
+    },
+    "tests/unit/render/crowd-appearance.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 8
+      },
+      "failures": []
+    },
+    "tests/unit/render/crowd-arm-matrices.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/crowd-baked-pose.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/render/crowd-feet.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/render/crowd-footwork.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/render/crowd-gun-matrices.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/render/crowd-layer-matrices.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/crowd-lod-geometry.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/render/crowd-models.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/render/crowd-parent-inverses.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/crowd-register.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 5
+      },
+      "failures": []
+    },
+    "tests/unit/render/crowd-sink.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 7
+      },
+      "failures": []
+    },
+    "tests/unit/render/crowd-store-matrices.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/crowd-topology.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/crowd-visibility.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/render/cure-animal-death.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 6
+      },
+      "failures": []
+    },
+    "tests/unit/render/e25-hero.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/render/e25-lighting.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 6
+      },
+      "failures": []
+    },
+    "tests/unit/render/e25-visibility.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/render/e25-windows.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 5
+      },
+      "failures": []
+    },
+    "tests/unit/render/e27-blasts.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/render/environment-lifetime.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/figure-height.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 6
+      },
+      "failures": []
+    },
+    "tests/unit/render/foliage.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/render/footprint-uploads.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/footprints.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 5
+      },
+      "failures": []
+    },
+    "tests/unit/render/forecourt-seethrough.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/ground-field-cache.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/render/ik-matrix-reuse.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/infected-bake.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 5
+      },
+      "failures": []
+    },
+    "tests/unit/render/inspection-camera.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/render/interaction-marker.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/l1-grade.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/render/l1-infection-overlay.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/l1-look.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/render/l10-lod-prefetch.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/render/l3-boom.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/l6-power.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/l7-memory.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/render/l7-perf.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/render/lod-policy.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 9
+      },
+      "failures": []
+    },
+    "tests/unit/render/lod-pop-gate.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/lod-residency.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/look-patch.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 14
+      },
+      "failures": []
+    },
+    "tests/unit/render/material-variants.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/render/mounted-gun-warmup.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/render/nested-scene-matrices.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/render/npc.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 8
+      },
+      "failures": []
+    },
+    "tests/unit/render/occluder-footprint.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/render/overlay.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/palette-cache-key.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/render/palette.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/render/perimeter-posts.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/pose-texture.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/render/post-fx-streaming.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/render/pre-render.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 17
+      },
+      "failures": []
+    },
+    "tests/unit/render/rig-translation-matrices.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/rocket-corpses.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/roof-cutaway.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 5
+      },
+      "failures": []
+    },
+    "tests/unit/render/roundhouse-pose.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/scripted-wheels.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/render/seethrough.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/render/sit-pose.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/render/skin-pilot.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 18
+      },
+      "failures": []
+    },
+    "tests/unit/render/startup-background.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/render/static-corpses.test.ts": {
+      "source": "corpse-units",
+      "status": "passed",
+      "counts": {
+        "passed": 11
+      },
+      "failures": []
+    },
+    "tests/unit/render/static-instance-attributes.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/terrain-streaming.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 8
+      },
+      "failures": []
+    },
+    "tests/unit/render/texture-ranges.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 5
+      },
+      "failures": []
+    },
+    "tests/unit/render/texture-upload.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/render/transport.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/render/vehicle-glass.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 6
+      },
+      "failures": []
+    },
+    "tests/unit/render/vehicle-matrix-reuse.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/vehicle-occupant-matrices.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/view-uniform-groups.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/view.test.ts": {
+      "source": "sim-final",
+      "status": "passed",
+      "counts": {
+        "passed": 9
+      },
+      "failures": []
+    },
+    "tests/unit/render/weather-materials.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/tooling/e2e-lock.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "skipped": 7
+      },
+      "failures": []
+    },
+    "tests/unit/tooling/headless-only.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/tooling/l10-q2-scene-catalog.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 6
+      },
+      "failures": []
+    },
+    "tests/unit/tooling/l10-scene-catalog.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 7
+      },
+      "failures": []
+    },
+    "tests/unit/tooling/l9-vehicle-camera.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/tooling/night-read.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/tooling/prop-penetration.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/tooling/scenelab.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 12
+      },
+      "failures": []
+    },
+    "tests/unit/tooling/seethrough-probe.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/vfx/cure-mist.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/vfx/events.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/vfx/integration.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 5
+      },
+      "failures": []
+    },
+    "tests/unit/vfx/lab-accident.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/vfx/pools.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/vfx/tracers.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 5
+      },
+      "failures": []
+    },
+    "tests/unit/vfx/zoo-s2.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 9
+      },
+      "failures": []
+    },
+    "tests/unit/vfx/zoo-s3.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/tools/remote-cache-gc.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/levels/building-shells.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 5
+      },
+      "failures": []
+    },
+    "tests/unit/levels/campaign-nav-preparation.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 9
+      },
+      "failures": []
+    },
+    "tests/unit/levels/continuity.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 5
+      },
+      "failures": []
+    },
+    "tests/unit/levels/decoration-surface.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 14
+      },
+      "failures": []
+    },
+    "tests/unit/levels/l10-alpha-contracts.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/levels/l10-arena.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/levels/l10-campus-corridor.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/levels/l10-district.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/levels/l10-platform-supports.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/levels/l2-roads.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/levels/l2-static.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/levels/l3-static.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 8
+      },
+      "failures": []
+    },
+    "tests/unit/levels/l4-static.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 11
+      },
+      "failures": []
+    },
+    "tests/unit/levels/l4-vehicle-solids.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/levels/l5-footprints.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/levels/l5-shutter.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/levels/l5-static.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 9
+      },
+      "failures": []
+    },
+    "tests/unit/levels/l6-static.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 2
+      },
+      "failures": []
+    },
+    "tests/unit/levels/l7-district.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 6
+      },
+      "failures": []
+    },
+    "tests/unit/levels/l8-district.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 6
+      },
+      "failures": []
+    },
+    "tests/unit/levels/l8-variants.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/levels/l9-district.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    },
+    "tests/unit/levels/layout-overlap.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 8
+      },
+      "failures": []
+    },
+    "tests/unit/levels/no-placeholder-assets.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 5
+      },
+      "failures": []
+    },
+    "tests/unit/levels/placement-clearance-cache.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 3
+      },
+      "failures": []
+    },
+    "tests/unit/levels/placement-solids.test.ts": {
+      "source": "final-touched",
+      "status": "passed",
+      "counts": {
+        "passed": 1
+      },
+      "failures": []
+    },
+    "tests/unit/render/civilian-corpse-prewarm.test.ts": {
+      "source": "corpse-units",
+      "status": "passed",
+      "counts": {
+        "passed": 4
+      },
+      "failures": []
+    }
+  }
+}

@@ -13,6 +13,8 @@ afterEach(() => { world?.dispose(); world = undefined; });
 
 test('T-E19-firefighter @E19 the firefighter waits at the bay from the start of the objective, infected attack him, he survives a late arrival', async () => {
   const { world: w, mission } = await loadL1(1); world = w;
+  // This fixture pressures the firefighter while the spectator courier waits at the garage.
+  w.combat!.damage.god = true;
   for (let guard = 0; guard < 8 && mission.state.steps.firestation.status !== 'active'; guard++) { mission.setState('exited', true); w.update(); mission.completeObjective(); w.update(); }
   expect(mission.state.steps.firestation.status).toBe('active');
   for (let i = 0; i < 240 && mission.state.l1!.beat; i++) w.update();

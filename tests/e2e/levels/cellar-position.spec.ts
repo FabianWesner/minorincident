@@ -55,7 +55,8 @@ test.describe('Kessler cellar position', () => {
       // The collapse director (PO 2026-10-12 design, approved "ok let's try that!") breaks the third line about 190 s after the turn (sim: turn 46 s, "Fall back!" 236 s after the gun): 350 s budget.
       a.teleport(1, { x: -21.5, z: 3 });
       for (let i = 0; i < 700 && !a.missions.state()!.l4!.lineBreakAt; i++) await a.step(30);
-      a.teleport(1, { x: -64, z: -44.2 }); a.camera.follow(); await a.step(5);
+      // Settle the production follow rig after this fixture's cross-map teleport.
+      a.teleport(1, { x: -64, z: -44.2 }); a.camera.follow(); await a.step(120);
     });
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.steps.hide.status)).toBe('active');
     await page.evaluate(() => document.body.classList.add('ui-hidden'));

@@ -1,6 +1,6 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { afterEach, describe, expect, test } from 'vitest';
-import { l4, l4Anchors, l4Edges, l4Emergence, l4Inside, l4Route, l4ConvoyStations } from '../../src/data/l4';
+import { l4, l4Anchors, l4Edges, l4Emergence, l4Inside, l4CollapseGroups, l4Route, l4ConvoyStations } from '../../src/data/l4';
 import { l4AlphaEmergence, l4BreakableLine } from '../../src/levels/L4/layout';
 import { completeCampaignLevel } from '../../src/sim/progression/carryover';
 import { preset } from '../../src/sim/progression/Campaign';
@@ -416,7 +416,8 @@ describe('L4 The Safe City Falls', () => {
       expect(s.soldierIds).toHaveLength(l4.calm.soldiers[tier]);
     }
     expect(s.alphaIds).toHaveLength(l4.alphas.count[tier]); expect(known.size).toBe(l4.alphas.count[tier]);
-    expect(w.infected!.director.reserved).toBe(0);
+    // All Alpha slots are spent; the authored collapse streets still own their share of the same cap.
+    expect(w.infected!.director.reserved).toBe(l4CollapseGroups.reduce((sum, group) => sum + Math.ceil((group[3] ?? 0) * (tier === 'low' ? .5 : 1)), 0));
   }, HEAVY);
 
   test('T-E22-13-authored-gap @E22 @E22-AC12 @E22-AC13 the authored line replaces static pallets and breaks through logged Alpha HP damage', async () => {
