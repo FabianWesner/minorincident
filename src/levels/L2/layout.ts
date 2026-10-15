@@ -106,6 +106,12 @@ const looseProp = (assetId: string) => assetId.startsWith('prop.') && !assetId.i
 /** The supermarket (Grove Market) replaces the eastern Main Row shop: its open east and south sides are the front and loading doors. */
 const MARKET: Placement = { id: 'l2-market', assetId: 'bld.supermarket', position: [-55.6, 0, -42.2], yaw: 0, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: false, lightGroup: 'block-2', visualAabb: { min: [-59.8, 0, -46.7], max: [-51.4, 3.5, -37.7] } };
 
+/** The market's front (east wall, facing +X) and loading (south wall, facing +Z) doors: glazed double doors the mission opens (PO 10-15 "no visible door"). */
+const MARKET_DOORS: Placement[] = ([['l2-market-door-front', -51.35, -42.2, 0], ['l2-market-door-loading', -55.6, -37.65, -Math.PI / 2]] as const).map(([id, x, z, yaw]) => ({
+  id, assetId: 'kit.market-doors', position: [x, 0, z], yaw, scale: [1, 1, 1], minTier: 0, maxTier: 5, allowRoad: false, lightGroup: 'block-2',
+  visualAabb: { min: [x - 1.4, 0, z - 1.4], max: [x + 1.4, 2.9, z + 1.4] },
+}));
+
 /**
  * L2 copy of the D-GROVE layout (same town as L1, a few hours later): authored L2 anchors, the market, the W1 dressing,
  * the checkpoint at the east end of Elm Street, and no courier bicycle. Feeds collision, navigation and rendering alike.
@@ -146,7 +152,7 @@ export function levelTwoLayouts(layouts: DistrictLayout[], aftermath: L1Aftermat
       // Compound colliders are rebuilt from this placement by DistrictWorld.
       layout.colliders = layout.colliders.filter(c => c.id !== cornerLamp.id);
     }
-    layout.placements.push(MARKET);
+    layout.placements.push(MARKET, ...MARKET_DOORS);
     // Placement rule (PO 10-09 "barricades through fence", a car with a lamp post through its bonnet): dressing never cuts into a
     // fence, wall, building, mailbox, hydrant, lamp, tree, bench or another prop and stays out of gardens. A dressing piece that
     // does is moved to the nearest clear spot (vehicles first slide along their own axis, so a "crashed" car stops with its
