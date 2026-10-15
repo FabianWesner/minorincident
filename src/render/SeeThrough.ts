@@ -26,6 +26,9 @@ export const seeThrough = {
  * PO 2026-10-13 "Bank isn't fully rendered": at zoom 0.66 the group-sized solid hole spans most of the frame, and a
  * bench nearer the camera than the courier lost everything above 0.3 m (planks, back) while a building occluded her. */
 export const occluderMinHeight = 1.1;
+/** LOD0 carries detail (lids, handles) the lower LODs lack, so a prop just under the limit at LOD1 (the height DistrictView classifies by) can draw a few cm above it at LOD0.
+ * Every LOD of such a prop must stay uncut, else the hero batch carries the cut material the classification says it never has (forecourt recycling bin, 1.1165 m at LOD0). */
+export const lodHeightSlack = 1.1;
 
 /** Soft circular mask around the courier: 0 at the centre, 1 outside the radius and behind the courier. */
 export const seeThroughHole = (scale = 1, radius: Node<'float'> = seeThrough.radius, inner = .55) => positionView.z.greaterThan(seeThrough.depth).select(

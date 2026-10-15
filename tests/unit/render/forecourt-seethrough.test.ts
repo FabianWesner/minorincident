@@ -48,6 +48,7 @@ test('PO #3 only the garage between camera and courier dissolves; its batched ne
       expect('isInstancedInterleavedBuffer' in mask.data).toBe(true);
     } finally { windows.dispose(); }
     expect(isUncutProp('prop.recycling-bin', 1), 'short drawn LODs stay whole even when the manifest is taller').toBe(true);
+    expect(isUncutProp('prop.recycling-bin', 1.1165), 'LOD0 detail a few cm above the limit stays whole too').toBe(true);
     expect(isUncutProp('bld.garage-detached', 1)).toBe(false);
   } finally { hero.dispose(); near.dispose(); far.dispose(); geometry.dispose(); materials.dispose(); lighting.dispose(); }
 });
