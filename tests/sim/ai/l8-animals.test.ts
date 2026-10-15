@@ -1,3 +1,4 @@
+import type { CoverWall } from '../../../src/sim/combat/HitQuery';
 import { expect, test } from 'vitest';
 import { Outbreak } from '../../../src/sim/outbreak/Outbreak';
 import { WorldHumans } from '../../../src/sim/ai/Perception';
@@ -72,7 +73,7 @@ test('T-E30-08-targets @E30-AC08 civilian/soldier/staff/animal bites use local p
     expect(w.events.events().find(ev => ev.type === 'outbreak.bite' && ev.targetId === id), JSON.stringify({ category, victim: w.entities.get(id), biter: attacker.infected?.l1, events: w.events.events().filter(ev => ev.type === 'civilian.grabbed' || ev.type === 'civilian.saved') })).toMatchObject({ sourceId: attacker.id });
   }
 });
-test('T-E30-09-rescue @E30-AC09 @E30-AC10 rescuing the grab prevents conversion; solid walls block animal acquisition/bites', async () => {
+test('T-E30-09-rescue @E30-AC09 @E30-AC10 rescuing the grab prevents conversion; nearby animals are heard through solid walls but cannot be bitten through them', async () => {
   const w = await fixture(), o = w.npcs!.civilians.outbreak!;
   const id = w.npcs!.civilians.spawn('lion', { x: 0, z: 0 }, { zooAnimal: 'lion', waypoints: [{ x: 0, z: 0 }] });
   const e = w.entities.get(id)!, attacker = spawn(w, 'runner', -1.2, 0, 'idle'); attacker.transform.yaw = 0;
@@ -86,7 +87,12 @@ test('T-E30-09-rescue @E30-AC09 @E30-AC10 rescuing the grab prevents conversion;
   const blocked = spawn(w, 'runner', -1.2, 0, 'idle');
   o.humans.invalidate();
   w.infected!.l1!.los.register({ id: 'wall', source: 'building', active: true, shape: { kind: 'aabb', min: { x: -.6, z: -20 }, max: { x: -.5, z: 20 } } });
-  expect(w.infected!.l1!.closest(blocked, 0)).toBeUndefined(); step(w, 120);
+  const wall: CoverWall = { x: -.55, y: 1.5, z: 0, halfX: .05, halfY: 1.5, halfZ: 20 };
+  (w.combat!.query.walls as CoverWall[]).push(wall);
+  w.events.emit({ type: 'world.blocker.changed', tick: w.tick, id: 990_125, wall, blocked: true });
+  expect(w.infected!.l1!.closest(blocked, 0)?.id).toBe(id);
+  expect(w.infected!.l1!.lineOfSight(blocked.transform, e.transform)).toBe(false);
+  step(w, 120);
   expect(e.infection).toBeUndefined();
 });
 test('T-E30-17-animal @E30-AC17 serialized bitten state resumes remaining timer once; duplicate bite does not restart it', async () => {
