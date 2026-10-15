@@ -72,12 +72,11 @@ export const l5Survivors: readonly L5Survivor[] = survivors.map(s => ({ ...s, ou
 
 /** Named world points authored into the L5 layout copy (the cellar anchors come from the layout's own cellar placement). */
 export const l5Anchors: Record<string, P> = {
-  // The courier steps out on Kessler Lane (behind the store; the cellar door the L4 courier used is on its Lakeshore side). Stepping out in front of that
-  // door instead was tried: it starts next to Rosa, 10 m from the first survivor, and the bot follow share drops to 0.72-0.78 (gate 0.8).
-  'l5-out': [67.2, 27.6],
+  // Replaced from the actual shared entry door by levelFiveLayouts.
+  'l5-out': [66.4, 41.74],
   'l5-plaza': [-17, 3],
   'l5-metro-foot': [38.1854, -50.6],
-  'photo-l5-basement-exit': [67.2, 27.6], 'photo-l5-sign-of-life': [-45, 42.4], 'photo-l5-group-of-five': [10, -39], 'photo-l5-metro-shelter': [40.7854, -60.4], 'photo-l5-metro-doors': [37.7854, -48.5],
+  'photo-l5-basement-exit': [66.4, 41.74], 'photo-l5-sign-of-life': [-45, 42.4], 'photo-l5-group-of-five': [10, -39], 'photo-l5-metro-shelter': [40.7854, -60.4], 'photo-l5-metro-doors': [37.7854, -48.5],
 };
 /** Photo spots (section 6): the four L4 pair cameras (same anchors and framing) plus the L5 ones. */
 export const l5PhotoSpots: readonly (readonly [string, readonly [number, number, number]])[] = [
