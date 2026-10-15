@@ -23,11 +23,12 @@ Sources are recorded because the broad runs preceded later focused fixes. Passin
 | Check | Result and boundary |
 | --- | --- |
 | Four audit reproductions, five cases, unmodified `d9743890d` source | All five fail, including natural L4 tank/Alpha contact. |
-| Final contact/admission/reproduction/convoy/boarding/traffic selection | **59/59 pass** at `2aeda4f07`, including natural L4 through tick 15700, courier/corgi eight-attacker cases, blocked admission/restore, collider publication, changed radii and original convoy/boarding/traffic assertions. |
-| Legacy L4 owner isolation | Additional focused check passes: the seated courier exempts her own bus and still rejects a tank. Together these are **60 distinct passing checks**. |
-| Full unit suite | **1,463 passed, zero failed, seven skipped**. Latest full snapshot precedes the final rollback-bucket, boarding and publication refinements; their focused runs are recorded separately. |
+| Final contact/admission/reproduction/convoy/boarding/traffic selection | **61/61 pass** at `441ce629f`, including natural L4 through tick 15700, courier/corgi eight-attacker cases, blocked admission/restore, collider publication, changed radii and original convoy/boarding/traffic assertions. |
+| Legacy L4 owner isolation | Additional focused check passes: the seated courier exempts her own bus and still rejects a tank. The final 61-check selection includes this owner test and a hidden/reappearing bus regression outside the explicit clinger exemption. |
+| Final L1–L10 stationary guard check | **10/10 pass** at `441ce629f`, 300 ticks per level including five full audits; no offenders. |
+| Full unit suite | **1,463 passed, zero failed, seven skipped**. Fresh full run at `a234ffe62` includes the final rollback-bucket, boarding and publication refinements plus the subsequently reverted hull-discovery cache. The final uncached source has its 61/61 focused rerun. |
 | Full sim/level sweep at `e6a2c6aac` | 1,346 passed, 45 failed, two skipped. Later focused fixes supersede parts of this result. |
-| Rerun of failing files at `2de827be6` | 118 passed, 25 failed. Nine failures subsequently pass focused reruns; **16 remain unresolved from that selection**. [Exact list and sources](remaining-gates.json). |
+| Rerun of failing files at `2de827be6` | 118 passed, 25 failed. Nine failures subsequently pass focused reruns. A final-head selected rerun confirms **all 16 remaining cases still fail** (one other selected case passes; 75 cases filtered out). [Exact list and sources](remaining-gates.json). |
 | Matching unmodified-source selection | 140 passed; one L10 high-arrival test timed out at its unchanged 120 s wall-clock limit. This selection excludes the two zoo timing cases. |
 | L1–L10 three-seed completion battery | Zero invariant failures in all 30 runs; 29 complete. Its L7 seed-2 failure was subsequently fixed and rerun successfully (579.22 s, zero failures/pending). L8 retained 1/1/2 authored tunnel arrivals. |
 | Real campaign handover chain | The actual completed L1–L6 save was replayed through L7–L10 after the queue fix. **All ten levels complete, zero deaths and zero invariant failures in every report**. The single-process full test previously stalled; the successful prefix/tail replay is recorded explicitly. |
@@ -53,7 +54,7 @@ Final three-pair measurement source: `9d6934be0`; baseline: unmodified `d9743890
 | 200 | 1.791121 ms | 1.643316 ms | −8.25% | pass |
 | 100 | .921470 ms | 1.012389 ms | **+9.87%** | **fail** |
 
-Every changed sample retains the full visible population with zero invariant failures/pending. The separate mixed-special 200-actor probe is also **red: 4.951107 ms p95 against 4 ms**; its 100-actor 6 ms gate passes. A broader special-contact cache trial was slower and was reverted. [All three pairs](sim-performance-final.json) retain the variation; earlier passing single-pair results are historical evidence.
+Every changed sample retains the full visible population with zero invariant failures/pending. The separate mixed-special 200-actor probe is also **red: 4.951107 ms p95 against 4 ms**; its 100-actor 6 ms gate passes. A broader special-contact cache trial was slower and was reverted. A subsequent hull-discovery revision cache also failed to improve the budget: +3.59% at 200 actors and +18.31% at 100 over three pairs; it was reverted while retaining its visibility regression. [All cache-trial measurements](hull-cache-trial.json). [All three pairs](sim-performance-final.json) retain the variation; earlier passing single-pair results are historical evidence. A final ordinary-crowd retry-threshold probe was cancelled before measurement when the second timing slot was unavailable; no production change was kept.
 
 ## Browser evidence and unmeasured final work
 

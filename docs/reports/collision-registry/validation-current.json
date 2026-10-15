@@ -212,153 +212,13 @@
       "simMsP95": 1
     }
   ],
-  "latestFocused": [
-    {
-      "check": "single-owner-regressions",
-      "passed": 8,
-      "failed": 1,
-      "skipped": 68,
-      "note": "Its one L4 alarm-location failure passes the subsequent alarm-exit-regression run."
-    },
-    {
-      "check": "alarm-exit-regression",
-      "passed": 1,
-      "failed": 0,
-      "skipped": 22
-    },
-    {
-      "check": "arrival-courier",
-      "passed": 1,
-      "failed": 0,
-      "skipped": 14
-    },
-    {
-      "check": "shared-fight-trial",
-      "passed": 2,
-      "failed": 0,
-      "skipped": 17
-    },
-    {
-      "check": "station-leg-clearance",
-      "passed": 2,
-      "failed": 0,
-      "skipped": 13
-    },
-    {
-      "check": "unit-head",
-      "passed": 1463,
-      "failed": 0,
-      "skipped": 7
-    },
-    {
-      "check": "final-contact-regressions",
-      "passed": 35,
-      "failed": 0,
-      "skipped": 0
-    },
-    {
-      "check": "convoy-posed-regressions",
-      "passed": 10,
-      "failed": 0,
-      "skipped": 0
-    },
-    {
-      "check": "vehicle-ram-regressions",
-      "passed": 4,
-      "failed": 0,
-      "skipped": 21
-    },
-    {
-      "check": "observer-fixtures",
-      "passed": 5,
-      "failed": 0,
-      "skipped": 15
-    },
-    {
-      "check": "rocket-24",
-      "passed": 1,
-      "failed": 0,
-      "skipped": 5
-    },
-    {
-      "check": "contact-final-head",
-      "passed": 46,
-      "failed": 0,
-      "skipped": 0
-    },
-    {
-      "check": "player-contact-final",
-      "passed": 47,
-      "failed": 0,
-      "skipped": 0
-    },
-    {
-      "check": "l7-roster-final",
-      "passed": 7,
-      "failed": 0,
-      "skipped": 0
-    },
-    {
-      "check": "traffic-footprints",
-      "passed": 2,
-      "failed": 0,
-      "skipped": 0
-    },
-    {
-      "check": "calm-health-boundary",
-      "passed": 1,
-      "failed": 0,
-      "skipped": 1
-    },
-    {
-      "check": "unit-final-head",
-      "passed": 1463,
-      "failed": 0,
-      "skipped": 7
-    },
-    {
-      "check": "contact-published-final",
-      "passed": 58,
-      "failed": 0,
-      "skipped": 0
-    },
-    {
-      "check": "explicit-passenger-final",
-      "passed": 59,
-      "failed": 0,
-      "skipped": 0
-    },
-    {
-      "check": "legacy-owner",
-      "passed": 1,
-      "failed": 0,
-      "skipped": 34
-    },
-    {
-      "check": "rollback-radius-change",
-      "passed": 3,
-      "failed": 0,
-      "skipped": 30
-    },
-    {
-      "check": "l7-stalled-queue",
-      "passed": 8,
-      "failed": 0,
-      "skipped": 0
-    },
-    {
-      "check": "respawn-world-final",
-      "passed": 1,
-      "failed": 0,
-      "skipped": 18
-    },
-    {
-      "check": "rocket-solid-200-final",
-      "passed": 1,
-      "failed": 0,
-      "skipped": 6
-    }
-  ],
+  "latestFocused": {
+    "source": "441ce629f",
+    "artifact": "test-results/collision-s1/contacts-final-commit.json",
+    "passed": 61,
+    "failed": 0,
+    "productionSourceIdenticalTo": "341dde08e"
+  },
   "campaignThreeSeeds": {
     "source": "e9e36b938/fd1303095",
     "completed": 29,
@@ -1097,10 +957,58 @@
     "allBudgetsPass": false
   },
   "finalLocalChecks": {
-    "codeSource": "341dde08e",
+    "codeSource": "441ce629f",
+    "productionSourceIdenticalTo": "341dde08e",
     "typecheck": "pass",
     "lint": "pass",
     "build": "pass"
   },
-  "admissionCounterNote": "admitted counts successful API calls, including repeated scripted placements; unique population/spawn counts are checked separately."
+  "admissionCounterNote": "admitted counts successful API calls, including repeated scripted placements; unique population/spawn counts are checked separately.",
+  "finalSelectedRegressions": {
+    "source": "341dde08e; production source unchanged at441ce629f",
+    "passed": 1,
+    "failed": 16,
+    "filteredOut": 75,
+    "artifact": "test-results/collision-s1/open-gates-final-head.json"
+  },
+  "revertedHullCacheTrial": {
+    "source": "a234ffe62",
+    "revertedAt": "441ce629f",
+    "200MedianChangePercent": 3.5948388164136924,
+    "100MedianChangePercent": 18.30611909780604,
+    "artifact": "hull-cache-trial.json"
+  },
+  "finalLevelGuards": {
+    "source": "441ce629f",
+    "passed": 10,
+    "failed": 0,
+    "ticksPerLevel": 300,
+    "artifact": "test-results/collision-s1/level-guards-final.json",
+    "levels": [
+      "L1",
+      "L2",
+      "L3",
+      "L4",
+      "L5",
+      "L6",
+      "L8",
+      "L9",
+      "L10",
+      "L7"
+    ]
+  },
+  "latestFullUnit": {
+    "source": "a234ffe62",
+    "passed": 1463,
+    "failed": 0,
+    "skipped": 7,
+    "artifact": "test-results/collision-s1/unit-hull-revision-final.json",
+    "note": "Includes final contact/collider/queue changes and the hull revision cache subsequently reverted at441ce629f. Original full-unit snapshot and final61-contact selection independently cover the uncached source."
+  },
+  "unmeasuredCrowdCacheProbe": {
+    "source": "441ce629f in private remote copy only",
+    "status": "cancelled before measurement; second timing slot unavailable",
+    "productionChanged": false,
+    "temporaryHelpersRemoved": true
+  }
 }
