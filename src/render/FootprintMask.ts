@@ -68,9 +68,12 @@ function trackStamp(t: Track, size: number, texel: number, cx: number, cz: numbe
 
 /** Two height layers share the previous field's 4 MiB budget (RGBA8 instead of R32F).
  * The camera window is bounded, so prints cannot tile into other streets. */
-export function rasterFootprints(data: Uint8Array, tracks: WeatherSystem['tracks'], tick: number, centerX: number, centerZ: number, touchedRows?: Set<number>): number {
-  data.fill(0);
+export function rasterFootprints(data: Uint8Array, tracks: WeatherSystem['tracks'], tick: number, centerX: number, centerZ: number, touchedRows?: Set<number>, previousRows?: ReadonlySet<number>): number {
   const size = Math.sqrt(data.length / 4), texel = TRACK_SPAN / size;
+  // The live view knows every row written last time, including zero-alpha height
+  // bytes. Clear exactly those rows; standalone callers still clear the full field.
+  if (previousRows) for (const z of previousRows) data.fill(0, z * size * 4, (z + 1) * size * 4);
+  else data.fill(0);
   const markedRows = touchedRows ? new Uint8Array(size) : undefined;
   let pixels = 0;
   for (const t of tracks) {

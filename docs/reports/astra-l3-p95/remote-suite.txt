@@ -1,0 +1,41 @@
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   timing  tests/sim/levels/l10-arrival.test.ts > T-E32-21-E3b @E32-AC21 seed-32 rocket checkpoint route arrival high
+Error: Test timed out in 120000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/sim/levels/l10-arrival.test.ts:4:46
+      2| import { runFinaleCalibration } from '../../../tools/sim-runner/l10-fi…
+      3|
+      4| for (const tier of ['high', 'low'] as const) test(`T-E32-21-E3b @E32-A…
+       |                                              ^
+      5|   const result = await runFinaleCalibration(tier);
+      6|   expect(result.arrival).not.toBeNull();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL   functional  tests/levels/L3.test.ts > L3 The Police Collapse > T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2
+AssertionError: expected 5 to be less than or equal to 2
+ ❯ tests/levels/L3.test.ts:60:45
+     58|     const runs = await battery('newbie');
+     59|     expect(runs.filter(r => r.outcome === 'complete').length).toBeGrea…
+     60|     expect(median(runs.map(r => r.deaths))).toBeLessThanOrEqual(l3.bot…
+       |                                             ^
+     61|     const t = median(runs.filter(r => r.outcome === 'complete').map(r …
+     62|     expect(t).toBeGreaterThanOrEqual(l3.bots.newbieMedianS[0]); expect…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL   functional  tests/levels/L4.test.ts > L4 The Safe City Falls > T-E22-11 @E22 @E22-AC11 military spectacle: two HMG positions fire, trucks and an armoured vehicle stand in the plaza, the tank fires every 8-12 s away from the player and allies, the helicopter orbits and withdraws without landing
+AssertionError: expected 14.116666666666667 to be less than or equal to 12.8
+ ❯ tests/levels/L4.test.ts:245:152
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  3 failed | 422 passed | 3 skipped (428)
+      Tests  3 failed | 2797 passed | 9 skipped (2809)
+   Start at  05:51:22
+   Duration  2660.75s (tests 98%, import 2%)
+
+[remote] done exit=1 (runner 94.130.181.173, sync 15s, remote total 2664s)
