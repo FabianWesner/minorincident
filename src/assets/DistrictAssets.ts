@@ -24,9 +24,9 @@ import { decodeStaticBake } from './staticBakeData';
 import { decompressCivilianBake } from './civilianBakeData';
 import { openFireStationBays } from './fireStationBays';
 import { vehicleDecayFallback } from './vehicleDecay';
-import { occluderMinHeight } from '../render/SeeThrough';
+import { lodHeightSlack, occluderMinHeight } from '../render/SeeThrough';
 /** Props lower than an occluder keep every fragment while the courier see-through hole is open. */
-export const isUncutProp = (id: string, drawnHeight = Infinity): boolean => worldAssets[id]?.category === 'prop' && !worldAssets[id].foliage && Math.min(worldAssets[id].dimensions.y, drawnHeight) < occluderMinHeight;
+export const isUncutProp = (id: string, drawnHeight = Infinity): boolean => worldAssets[id]?.category === 'prop' && !worldAssets[id].foliage && Math.min(worldAssets[id].dimensions.y, drawnHeight) < occluderMinHeight * lodHeightSlack;
 /** Deduplicated runtime URLs for the placement tiers requested by HTTP prefetch. */
 export function districtAssetUrls(id: string, definition: (id: string) => import('./types').AssetDef, lods: ('lod1' | 'lod2')[] = ['lod1', 'lod2'], decay?: string): string[] {
   const def = definition(productionIds[id] ?? id);
