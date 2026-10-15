@@ -1,5 +1,5 @@
 import { Rng } from '../../core/Rng';
-import { l4, l4Anchors, l4Cars, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4Inside, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyGate, type L4Weapon } from '../../data/l4';
+import { l4, l4Anchors, l4Cars, l4CellarDistance, l4CollapseGroups, l4Crowd, l4Edges, l4Emergence, l4Inside, l4Pockets, l4Posts, l4Route, l4RoutePose, l4ConvoyStations, l4ConvoyGate, type L4Weapon } from '../../data/l4';
 import { l4AlphaEmergence } from '../../levels/L4/layout';
 import { infectedDef } from '../../data/infected';
 import { Outbreak } from '../outbreak/Outbreak';
@@ -655,11 +655,7 @@ export class LevelFourWar {
   }
   /** Distance to the escape street (the polyline from the ring's east side to Kessler's door). */
   private escapeDistance(p: Point): number {
-    // The original gap protects the whole first break-away beat. After six seconds it
-    // protects only the way out of the plaza, leaving the later streets active.
-    const full = l4.director.escape.route;
-    const r = this.s.phase === 'collapse' && this.world.tick - this.s.lineBreakAt > ticks(6) ? full.slice(0, 4) : full;
-    let best = Infinity;
+    const r = l4.director.escape.route; let best = Infinity;
     for (let i = 1; i < r.length; i++) {
       const [ax, az] = r[i - 1], [bx, bz] = r[i], dx = bx - ax, dz = bz - az, t = Math.max(0, Math.min(1, ((p.x - ax) * dx + (p.z - az) * dz) / (dx * dx + dz * dz)));
       best = Math.min(best, Math.hypot(p.x - ax - dx * t, p.z - az - dz * t));
@@ -720,19 +716,51 @@ export class LevelFourWar {
   private emergeCollapse(): void {
     const { world } = this.mission, s = this.s, ai = world.infected!, p = world.entities.get(1)!.transform;
     if (world.tick % 10 !== 0) return;
+    const plaza = l4.map.plaza, onStreets = p.x < plaza.x0 || p.x > plaza.x1 || p.z < plaza.z0 || p.z > plaza.z1;
+    const remaining = l4CellarDistance(p), claimed = new Set(s.pendingDoor.filter(q => q.id > 0).map(q => q.id));
     let spawned = 0;
     for (const q of s.pendingDoor) {
       if (q.id !== 0 || spawned >= l4.collapse.pendingPerTick) continue;
+      // Reserve the later street groups until the courier has left the fallen plaza.
+      // Only the small egress pair can appear alongside the original protected way out.
+      const early = q.home.x === l4.collapse.egress[0] && q.home.z === l4.collapse.egress[1];
+      if (!onStreets && !early) continue;
+      // Harbor is close across the blocks but much farther along the street route.
+      // Keep its slots for the actual arrival instead of spending them beside the plaza.
+      const ahead = remaining - l4CellarDistance(q.home);
+      if (ahead > 42 || ahead < -20) continue;
       const a = this.anchor(q.door);
       if (dist(q.home, p) > 42 || !ai.director.offscreen(a) || dist(a, p) < 24) continue;
       // After the war, the spare regular slots feed small street groups, still under the same cap.
-      const keep = q.home.z > 30 ? 8 : q.home.x > 0 ? 4 : 0;
-      const id = this.emerge(a, false, keep); if (!id) { if (ai.director.count >= ai.director.cap) break; continue; }
+      const keep = early ? 0 : q.home.z > 30 ? 4 : q.home.x > 0 ? 2 : 0;
+      let id = this.emerge(a, false, keep), straggler = false;
+      if (!id && onStreets) {
+        // A full war population already contains the stragglers. Send nearby unseen
+        // regulars down the street on foot; retain their identity, HP and cap slots.
+        let nearest = 60;
+        for (const e of ai.active) {
+          const b = e.infected?.l1, d = dist(e.transform, q.home);
+          if (e.health.current <= 0 || e.archetype !== 'infected.runner' || !b || b.targetId === 1 || b.mode === 'bite' || e.infected!.state === 'attack' || claimed.has(e.id) || d >= nearest || dist(e.transform, p) < 24 || !ai.director.offscreen(e.transform)) continue;
+          nearest = d; id = e.id;
+        }
+        if (id) {
+          const b = world.entities.get(id)!.infected!.l1!; b.mode = 'wander'; b.targetId = 0;
+          straggler = ai.rush(id, q.home, world.tick + ticks(30));
+          if (!straggler) id = 0;
+        }
+      }
+      if (!id) continue;
       const e = world.entities.get(id)!, brain = e.infected!.l1; q.id = id; spawned++;
+      claimed.add(id);
       if (brain) {
         brain.homeX = q.home.x; brain.homeZ = q.home.z; brain.leashM = 8;
-        // Door exits feed their street corner instead of drifting behind its buildings.
-        ai.rush(id, q.home, world.tick + ticks(18));
+        // The small groups watch their incoming street before ordinary wandering resumes.
+        // Their human targets are acquired by the same sight/LOS rules as the outbreak.
+        if (!straggler) {
+          const yaw = early ? Math.PI : q.home.z < -30 ? 0 : q.home.z > 50 ? Math.PI * .75 : q.home.z > 30 ? Math.PI : -Math.PI / 2;
+          e.transform.yaw = brain.lookYaw = yaw; brain.looking = true;
+          brain.pauseUntil = world.tick + ticks(l4.collapse.streetLookS);
+        }
       }
     }
     // Soldier pockets: three soldiers hold a street corner against a few infected (spawned out of view).

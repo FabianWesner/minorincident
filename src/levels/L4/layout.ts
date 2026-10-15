@@ -28,7 +28,8 @@ export const l4Dressing: readonly L4Dressing[] = [
   // ---------------------------------------------------------------- army barriers at the street ends (a gap stays open): traffic is held by soldiers
   ...([[-81.2, -43.4, H], [-81.2, -42.1, H], [-81.2, -36.6, H], [-81.2, -35.2, H]] as const).map(([x, z, yaw]) => d('barrier', 'prop.jersey-barrier', x, z, { yaw })),
   ...([[81.2, -43.4, H], [81.2, -42.1, H], [81.2, -36.6, H], [81.2, -35.2, H], [81.2, 42.2, H], [81.2, 43.5, H], [81.2, 49.0, H], [81.2, 50.3, H]] as const).map(([x, z, yaw]) => d('barrier', 'prop.jersey-barrier', x, z, { yaw })),
-  d('sandbag', 'prop.sandbag-pallet', 79.4, -44.4, { yaw: H }), d('sandbag', 'prop.sandbag-pallet', -79.4, -44.4, { yaw: H }),
+  // Keep the relocated Harbor Street cellar doorway clear of the street-end pallet.
+  d('sandbag', 'prop.sandbag-pallet', 79.4, -44.4, { yaw: H }), d('sandbag', 'prop.sandbag-pallet', -79.4, -35.4, { yaw: H }),
   // ---------------------------------------------------------------- Fairhaven's own cars, parked in the lanes the convoy does not use (traffic held by soldiers)
   // (the six that the war sets alight are real vehicles spawned by the controller: l4Cars)
   ...([[-40, 43.3, 'veh.sedan-blue', 0], [24, 43.3, 'veh.sedan-white', .02], [44, 43.3, 'veh.sedan-green', 0],

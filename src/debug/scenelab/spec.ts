@@ -267,6 +267,8 @@ export interface Expectations {
   clickMissMax?: number;
   drawCallsMax?: number;
   trianglesMax?: number;
+  /** Low-quality matrix ceiling when it differs from the high-quality ceiling (E18: 500k / 1.5M). */
+  trianglesMaxLow?: number;
   /** `emerge`: residents whose first drawn position is past the door threshold, or never drawn (they must be drawn first inside the building). */
   emergeOutsideMax?: number;
   /** Frames any actor drew its far LOD (lod2) within 14 m of the camera. */
