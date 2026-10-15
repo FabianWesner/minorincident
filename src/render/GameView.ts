@@ -1,3 +1,4 @@
+import { l6Doors, l6Entries } from '../data/l6';
 import { MilitaryPerimeter } from './MilitaryPerimeter';
 import { l3, l3AttackView } from '../data/l3';
 import { epiloguePull } from '../sim/missions/LevelTenEpilogue';
@@ -967,6 +968,10 @@ export class GameView implements Lifecycle {
         const yaw=this.world.entities.get(1)!.transform.yaw;
         flashlight = footprint({type:'spot',color:'light_led_white',intensity:9,range:18,angle:48,flicker:'none',shadow:'hero',position:[hero.x,hero.y+1,hero.z],direction:[Math.cos(yaw),-.3,-Math.sin(yaw)]});
         field.push(flashlight);
+      }
+      if (metro && lighting.preset === 'L6-subway') for (const entry of l6Entries) {
+        const door = l6Doors[entry.door];
+        field.push(footprint({type:'point',color:entry.door%2?'light_neon_blue':'light_siren_red',intensity:2,range:2.3,flicker:'damaged',position:[door.x,2.4,door.z],direction:[0,-1,0]}));
       }
       this.vehicles?.pushLights(field, aura);
       // Pickups keep a small cool glint pool so loot stays findable in the dark.
