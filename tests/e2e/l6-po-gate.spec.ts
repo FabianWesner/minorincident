@@ -1,5 +1,5 @@
 import { test, expect, boot } from './fixtures';
-for (const backend of ['webgl', 'webgpu']) for (const tier of ['high', 'low']) test(`PO34 service gate explains the crate task with one bar ${backend} ${tier}`, async ({ page }) => {
+for (const backend of ['webgl', 'webgpu']) for (const tier of ['high', 'low']) test(`@E24 PO34 service gate explains the crate task with one bar ${backend} ${tier}`, async ({ page }) => {
   test.setTimeout(300_000);
   await boot(page, `/?test=1&renderer=${backend}&quality=${tier}&audio=muted&dpr=1`);
   await page.evaluate(async () => {

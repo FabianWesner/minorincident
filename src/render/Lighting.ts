@@ -138,14 +138,14 @@ export class Lighting {
   }
   setQuality(tier: QualityTier): void {
     this.quality = tier; this.field.setQuality(tier);
-    this.spot.castShadow = !(this.preset === 'L6-subway' && tier === 'low');
+    this.spot.castShadow = !((this.preset === 'L6-subway' || this.preset === 'L6') && tier === 'low');
     const size = qualityBudgets[tier].shadowSize;
     if (this.sun.shadow.mapSize.x === size) return;
     this.sun.shadow.map?.dispose(); this.sun.shadow.map = null; this.sun.shadow.mapSize.set(size, size); this.sun.shadow.needsUpdate = true;
   }
   set(name: TimeOfDay): void {
     if (!(name in timeOfDay)) throw new Error(`Unknown time-of-day preset: ${name}`);
-    this.spot.castShadow = !(name === 'L6-subway' && this.quality === 'low');
+    this.spot.castShadow = !((name === 'L6-subway' || name === 'L6') && this.quality === 'low');
     this.promoted = null; this.promotedAt = -Infinity; this.heroLight = null; this.promotionChanges = 0; this.heroTime = -1; this.spot.visible = false; this.sun.visible = true;
     this.worldPaletteEnabled.value = Number(name === 'L1');
     this.preset = name; const p = timeOfDay[name];
