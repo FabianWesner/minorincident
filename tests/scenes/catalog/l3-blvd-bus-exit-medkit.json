@@ -1,0 +1,92 @@
+{
+  "name": "l3-blvd-bus-exit-medkit",
+  "note": "The existing bus-exit pack is on the kerb passing line before the exposed end of the bus queue. Production walk-over test verifies +40 HP.",
+  "ground": "district",
+  "time": "L3",
+  "tier": 2,
+  "layout": {
+    "level": "L3",
+    "district": "D-CORRIDOR",
+    "bbox": [
+      [
+        68,
+        -42
+      ],
+      [
+        96,
+        -10
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        76,
+        -24.75
+      ],
+      "god": false,
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.handgun"
+      ]
+    }
+  ],
+  "script": [
+    {
+      "frame": 1,
+      "actor": "courier",
+      "do": {
+        "hit": {
+          "amount": 80
+        }
+      }
+    },
+    {
+      "frame": 1,
+      "effect": {
+        "pickup": "medkit",
+        "at": [
+          80,
+          -24
+        ]
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "courier",
+      "do": {
+        "moveTo": [
+          84,
+          -24.75
+        ],
+        "pace": "run"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "frames": 300,
+  "sheet": 50,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "actorHealth": {
+      "courier": [
+        60,
+        100
+      ]
+    },
+    "actorTravel": {
+      "courier": [
+        5,
+        10
+      ]
+    }
+  }
+}

@@ -1,16 +1,102 @@
 {
   "name": "l3-blvd-medkit-passage",
   "note": "The existing medkits beside the jam and bus sit on the inner sidewalk edge, within walk-over reach of the kerb passing line. Review both pickups on paving, the courier passing the wrecks and the disappearance of collected packs. The production L3-follow regression checks the actual authored medkits and +40 HP pickups; this isolated view uses the same pickup meshes and collection system.",
-  "ground":"district","time":"L3","tier":2,
-  "layout":{"level":"L3","district":"D-CORRIDOR","bbox":[[24,-42],[76,-10]]},
-  "actors":[{"id":"courier","kind":"courier","at":[32,-24.75],"god":false,"loadout":["weapon.fire-axe","weapon.handgun"]}],
-  "script":[
-    {"frame":1,"actor":"courier","do":{"hit":{"amount":80}}},
-    {"frame":1,"effect":{"pickup":"medkit","at":[36,-24]}},
-    {"frame":1,"effect":{"pickup":"medkit","at":[60,-24]}},
-    {"frame":1,"actor":"courier","do":{"moveTo":[65,-24.75],"pace":"run"}}
+  "ground": "district",
+  "time": "L3",
+  "tier": 2,
+  "layout": {
+    "level": "L3",
+    "district": "D-CORRIDOR",
+    "bbox": [
+      [
+        24,
+        -42
+      ],
+      [
+        76,
+        -10
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        25,
+        -24.75
+      ],
+      "god": false,
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.handgun"
+      ]
+    }
   ],
-  "camera":{"mode":"game","target":"courier","zoom":1},
-  "frames":600,"sheet":75,"trace":true,
-  "expect":{"consoleErrors":0,"undrawnFramesMax":0,"actorHealth":{"courier":[95,100]},"actorTravel":{"courier":[28,40]}}
+  "script": [
+    {
+      "frame": 1,
+      "actor": "courier",
+      "do": {
+        "hit": {
+          "amount": 80
+        }
+      }
+    },
+    {
+      "frame": 1,
+      "effect": {
+        "pickup": "medkit",
+        "at": [
+          29,
+          -24
+        ]
+      }
+    },
+    {
+      "frame": 1,
+      "effect": {
+        "pickup": "medkit",
+        "at": [
+          60,
+          -24
+        ]
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "courier",
+      "do": {
+        "moveTo": [
+          65,
+          -24.75
+        ],
+        "pace": "run"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "frames": 600,
+  "sheet": 75,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "actorHealth": {
+      "courier": [
+        95,
+        100
+      ]
+    },
+    "actorTravel": {
+      "courier": [
+        28,
+        40
+      ]
+    }
+  }
 }
