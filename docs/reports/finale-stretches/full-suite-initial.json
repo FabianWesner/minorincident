@@ -1,0 +1,128 @@
+{
+  "passed": 2794,
+  "failed": 24,
+  "pending": 9,
+  "note": "Initial implementation snapshot, before the focused fixes; timing shared with another remote job. Final focused reruns are separate.",
+  "failures": [
+    {
+      "file": "sim/ai/director.test.ts",
+      "test": "T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget",
+      "error": "AssertionError: expected 6.200110999983735 to be less than or equal to 4"
+    },
+    {
+      "file": "sim/levels/l10-arrival.test.ts",
+      "test": "T-E32-21-E3b @E32-AC21 seed-32 rocket checkpoint route arrival high",
+      "error": "Error: Test timed out in 120000ms."
+    },
+    {
+      "file": "sim/levels/l10-assault.test.ts",
+      "test": "T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+      "error": "AssertionError: expected 10.17055799998343 to be less than or equal to 4"
+    },
+    {
+      "file": "sim/npc/campaign.test.ts",
+      "test": "T-E08-11-high @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity",
+      "error": "AssertionError: L1 high: expected 4.785187000001315 to be less than or equal to 4"
+    },
+    {
+      "file": "sim/performance/alpha-physical.test.ts",
+      "test": "T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms",
+      "error": "AssertionError: expected 5.561653999960981 to be less than or equal to 4"
+    },
+    {
+      "file": "sim/performance/alpha-support.test.ts",
+      "test": "T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms",
+      "error": "AssertionError: expected 9.780469999997877 to be less than or equal to 4"
+    },
+    {
+      "file": "sim/performance/alpha.test.ts",
+      "test": "T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms",
+      "error": "AssertionError: expected 7.9890749999322 to be less than or equal to 4"
+    },
+    {
+      "file": "sim/performance/horde.test.ts",
+      "test": "T-E18-02-200 @E18-AC02 @perf Node sim p95 200 living infected <= 4ms",
+      "error": "AssertionError: expected 7.799416000023484 to be less than or equal to 4"
+    },
+    {
+      "file": "sim/performance/l10-finale.test.ts",
+      "test": "T-E32-20-perf-200 @E32-AC20 @E32-AC31 @E18-AC02 full-cap active dispersal predicate",
+      "error": "AssertionError: expected 6.807308999937959 to be less than or equal to 4"
+    },
+    {
+      "file": "sim/performance/mega-audio.test.ts",
+      "test": "T-E32-13-perf-200 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling",
+      "error": "AssertionError: expected 7.0098730000900105 to be less than or equal to 4"
+    },
+    {
+      "file": "sim/performance/mega-moves.test.ts",
+      "test": "T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+      "error": "AssertionError: expected 9.760963000007905 to be less than or equal to 4"
+    },
+    {
+      "file": "sim/performance/zoo-s1.test.ts",
+      "test": "T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
+      "error": "AssertionError: expected 6.346219000057317 to be less than or equal to 4"
+    },
+    {
+      "file": "sim/performance/zoo-s2.test.ts",
+      "test": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+      "error": "AssertionError: expected 8.831646000035107 to be less than or equal to 4"
+    },
+    {
+      "file": "sim/performance/zoo-s3.test.ts",
+      "test": "T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+      "error": "AssertionError: expected 8.090656999964267 to be less than or equal to 4"
+    },
+    {
+      "file": "sim/world/chunk-residency.test.ts",
+      "test": "T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95",
+      "error": "AssertionError: expected 7.118989000009606 to be less than or equal to 4"
+    },
+    {
+      "file": "levels/L10-campaign.test.ts",
+      "test": "T-E32-32 @E32-AC32 continuous seed 1 L1 through L10 reaches credits with real campaign handovers",
+      "error": "AssertionError: {\"level\":\"L7\",\"policy\":\"complete\",\"seed\":1,\"completed\":false,\"time\":1200,\"deaths\":0,\"kills\":0,\"damageTaken\":0,\"failures\":{\"tick-budget\":1},\"objectiveTimeline\":[],\"furthestObjective\":\"bus-departure\",\"activeObjectives\":[],\"outcome\":\"tick-budget\",\"blocker\":{\"objective\":\"bus-departure\",\"detail\":\"{\\\"phase\\\":\\\"waiting\\\",\\\"hp\\\":100,\\\"roster\\\":[{\\\"id\\\":117,\\\"key\\\":\\\"shelter-0\\\",\\\"injured\\\":true,\\\"status\\\":\\\"following\\\",\\\"passed\\\":false,\\\"at\\\":{\\\"x\\\":90.33804658237436,\\\"z\\\":12.90086615315"
+    },
+    {
+      "file": "levels/L2-escape-loop.test.ts",
+      "test": "L2 escape death loop a courier who dies twice at the same checkpoint respawns with fewer infected within 25 m (the shared respawn already pushes them out of 9 m)",
+      "error": "AssertionError: expected 5 to be less than or equal to 4"
+    },
+    {
+      "file": "levels/L2.test.ts",
+      "test": "L2 The Failed Rescue T-E20-14 @E20 @E20-AC14 checkpoint: line composition, gate closes <= 1.5 s behind the courier, nothing crosses after, straight on to L3",
+      "error": "AssertionError: expected 1 to be +0 // Object.is equality"
+    },
+    {
+      "file": "levels/L2.test.ts",
+      "test": "L2 The Failed Rescue T-E20-17 @E20 @E20-AC17 checkpoints doors, escape and cluster restore entities, outbreak, crew, gates and weapons",
+      "error": "AssertionError: expected 'done' to be 'checkpoint' // Object.is equality"
+    },
+    {
+      "file": "levels/L4-finale-pressure.test.ts",
+      "test": "PO #17 @E22 the collapse walk has steady sight-driven action and preserves the newbie death limit and E18 cap",
+      "error": "AssertionError: expected 6 to be less than or equal to 2"
+    },
+    {
+      "file": "levels/L9-campaign.test.ts",
+      "test": "T-E31-20 @E31-AC20 continuous seed 1 L1 through L9 commits real campaign handovers and the axe reset",
+      "error": "AssertionError: {\"level\":\"L7\",\"policy\":\"complete\",\"seed\":1,\"completed\":false,\"time\":1200,\"deaths\":0,\"kills\":0,\"damageTaken\":0,\"failures\":{\"tick-budget\":1},\"objectiveTimeline\":[],\"furthestObjective\":\"bus-departure\",\"activeObjectives\":[],\"outcome\":\"tick-budget\",\"blocker\":{\"objective\":\"bus-departure\",\"detail\":\"{\\\"phase\\\":\\\"waiting\\\",\\\"hp\\\":100,\\\"roster\\\":[{\\\"id\\\":117,\\\"key\\\":\\\"shelter-0\\\",\\\"injured\\\":true,\\\"status\\\":\\\"following\\\",\\\"passed\\\":false,\\\"at\\\":{\\\"x\\\":90.33804658237436,\\\"z\\\":12.90086615315"
+    },
+    {
+      "file": "unit/levels/l4-static.test.ts",
+      "test": "L4 static T-E22-01a @E22 @E22-AC01 two routes from the plaza to Kessler's cellar door (Harbor Street and Lakeshore), each walkable with the other closed",
+      "error": "AssertionError: expected false to be true // Object.is equality"
+    },
+    {
+      "file": "unit/levels/l4-static.test.ts",
+      "test": "L4 static T-E22-nav @E22 every refuge door is reachable from the convoy start and the cellar yard is the only island",
+      "error": "AssertionError: expected [ [ -79.29999999999998, -45.2801 ] ] to deeply equal []"
+    },
+    {
+      "file": "unit/levels/l5-static.test.ts",
+      "test": "L5 static T-E23-05a @E23 @E23-AC05 same city: every L4 placement keeps its transform, the road graph is identical and every hero building footprint has IoU >= 0.9 with L4",
+      "error": "AssertionError: expected [ 'bld.apartment-block-b:217', \u2026(1) ] to deeply equal []"
+    }
+  ]
+}

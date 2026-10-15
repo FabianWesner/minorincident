@@ -1,0 +1,60 @@
+{
+  "passed": 196,
+  "failed": 1,
+  "failures": [
+    {
+      "test": "T-E32-21-E3b @E32-AC21 seed-32 rocket checkpoint route arrival high",
+      "error": "Error: Test timed out in 120000ms."
+    }
+  ],
+  "levelSamples": [
+    {
+      "level": "L2",
+      "tier": "high",
+      "simMsP95": 0.9320580000057817,
+      "budget": 4
+    },
+    {
+      "level": "L3",
+      "tier": "high",
+      "simMsP95": 0.8065540000097826,
+      "budget": 4
+    },
+    {
+      "level": "L4",
+      "tier": "high",
+      "simMsP95": 0.4184759999625385,
+      "budget": 4
+    },
+    {
+      "level": "L5",
+      "tier": "high",
+      "simMsP95": 0.3581329999724403,
+      "budget": 4
+    },
+    {
+      "level": "L2",
+      "tier": "low",
+      "simMsP95": 0.8497539999661967,
+      "budget": 6
+    },
+    {
+      "level": "L3",
+      "tier": "low",
+      "simMsP95": 0.8055529999546707,
+      "budget": 6
+    },
+    {
+      "level": "L4",
+      "tier": "low",
+      "simMsP95": 0.3114340000320226,
+      "budget": 6
+    },
+    {
+      "level": "L5",
+      "tier": "low",
+      "simMsP95": 0.34444600000279024,
+      "budget": 6
+    }
+  ]
+}

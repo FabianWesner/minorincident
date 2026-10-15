@@ -1,0 +1,19 @@
+{
+  "poTests": 4,
+  "poFailBefore": 4,
+  "poPassAfter": 4,
+  "staticTestsPassed": 20,
+  "retryTestsPassed": 2,
+  "retryDensity": [
+    22,
+    15,
+    8,
+    1
+  ],
+  "l4LegacyPassed": 3,
+  "l2LegacyPassed": 3,
+  "notes": [
+    "The accepted focused run was 25/26; the remaining retry-density failure was corrected and its 2-test file passes.",
+    "The legacy evade timeout was corrected by advancing a reached waypoint before dodge planning; all three final L4 legacy tests pass."
+  ]
+}
