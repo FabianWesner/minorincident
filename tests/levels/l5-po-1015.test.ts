@@ -5,6 +5,7 @@ import { l5MusicReady } from '../../src/data/musicBeats';
 import { afterEach, expect, test } from 'vitest';
 import { emptyInput } from '../../src/input/InputFrame';
 import { l5, l5Survivors } from '../../src/data/l5';
+import { LevelFiveBot } from '../../src/debug/bot/LevelFiveBot';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
 import { loadL5, runL5 } from '../../tools/sim-runner/l5Bots';
 
@@ -15,7 +16,18 @@ const distance = (a: { x: number; z: number }, b: { x: number; z: number }) => M
 test('PO #21 @E23 @E23-AC08 @E23-AC09 survivor-2 restore: walking to the sound reveals survivors 3, 4 and 5, then reaches the ending', async () => {
   const loaded = await loadL5(1); world = loaded.world;
   const { mission } = loaded, w = world;
-  runL5(w, mission, 'complete', { stopWhen: m => m.state.checkpoint === 'survivor-2' });
+  runL5(w, mission, 'complete', { stopWhen: m => m.state.l5!.phase === 'search' });
+  // The current cheapest bot tour finds Dale second. Recreate the PO/scene checkpoint
+  // with Rosa and Sam found instead, using ordinary navigation and interaction.
+  for (const key of ['rosa', 'sam']) {
+    const ring = mission.def.anchors[`l5-ring-${key}`], protector = new LevelFiveBot(w, 'complete');
+    for (let tick = 0; tick < 180 * 60 && mission.state.l5!.survivors.find(r => r.key === key)!.status === 'hidden'; tick++) {
+      const input = protector.sample();
+      w.applyInput(input.attackTarget ? input : { ...emptyInput(), moveTarget: { x: ring.x, z: ring.z }, walk: true, interact: distance(w.entities.get(1)!.transform, ring) <= l5.survivors.reachM }, 'keyboard'); w.update();
+    }
+    expect(mission.state.l5!.survivors.find(r => r.key === key)!.status).toBe('following');
+  }
+  expect(mission.state.l5!.found).toBe(2);
   expect(mission.state.checkpoint).toBe('survivor-2');
   mission.restore('survivor-2');
   const cues = new Map<string, { x: number; z: number }>();
@@ -23,9 +35,18 @@ test('PO #21 @E23 @E23-AC08 @E23-AC09 survivor-2 restore: walking to the sound r
   // Follow the emitted position with the ordinary navigation input; no ring-coordinate shortcut.
   // The protector bot handles threats and the trip between hearing ranges.
   for (const count of [3, 4, 5]) {
-    const result = runL5(w, mission, 'complete', { maxSeconds: 240, stopWhen: m => m.state.l5!.found >= count || [...cues.keys()].some(key => m.state.l5!.survivors.find(r => r.key === key)?.status === 'hidden') });
-    void result;
-    const hidden = mission.state.l5!.survivors.find(r => r.status === 'hidden' && cues.has(r.key));
+    if (count === 3) {
+      expect(mission.state.l5!.survivors.find(r => r.key === 'dale')!.status).toBe('hidden');
+      const protector = new LevelFiveBot(w, 'complete');
+      // Approach the PO's reported bus position, then follow Dale's emitted sound.
+      // Keep the real protector's combat input while supplying this ordinary walk destination.
+      for (let tick = 0; tick < 120 * 60 && !cues.has('dale'); tick++) {
+        const input = protector.sample();
+        w.applyInput(input.attackTarget ? input : { ...emptyInput(), moveTarget: { x: -8.25, z: .74 } }, 'keyboard'); w.update();
+      }
+      expect(mission.state.l5!.found).toBe(2);
+    } else runL5(w, mission, 'complete', { maxSeconds: 240, stopWhen: m => m.state.l5!.found >= count || [...cues.keys()].some(key => m.state.l5!.survivors.find(r => r.key === key)?.status === 'hidden') });
+    const hidden = mission.state.l5!.survivors.find(r => r.status === 'hidden' && cues.has(r.key) && (count !== 3 || r.key === 'dale'));
     expect(hidden, `heard survivor ${count}`).toBeDefined();
     const sound = cues.get(hidden!.key)!;
     const ring = mission.def.anchors[`l5-ring-${hidden!.key}`];
