@@ -17,7 +17,7 @@ export interface SceneSpec {
   /** Production L3 rendezvous, rescued group and full authored finale crowd. */
   l3Rendezvous?: boolean;
   /** Production L5 discovery/follower controller, with named prior finds restored before the shot. */
-  l5Aftermath?: { found: string[]; alphaAt?: Point; metroIngress?: boolean };
+  l5Aftermath?: { found: string[]; /** Initial HP for injured-follower/medicine QA. */ health?: Record<string, number>; alphaAt?: Point; metroIngress?: boolean };
   /** One R1–R6 production encounter, with the quality tier's authored crowd. */
   cureEncounter?: string;
   /** Production L10 graph/preset at a region checkpoint; fixture anchors stay on its existing slab. */
