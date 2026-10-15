@@ -1,3 +1,4 @@
+import { SolidRegistry } from './SolidRegistry';
 import { finaleGunPlacement } from '../../data/minigun';
 import { curePursuitRoute } from '../../levels/L10/district';
 import { installMegaPursuit } from '../ai/MegaPursuit';
@@ -59,6 +60,7 @@ export class SimWorld implements Lifecycle {
   /** Explicit inspection courier option; false for every normal game and bot run. */
   inspectionGhost = false;
   readonly physics = new Physics();
+  readonly solids = new SolidRegistry(this);
   readonly events = new EventBus<GameEvent>();
   readonly entities = new EntityStore();
   readonly spatial = new SpatialHash();
@@ -216,7 +218,7 @@ export class SimWorld implements Lifecycle {
     this.events.on('sim.tick', () => {
       const body = this.physics.playerBody!;
       const player = this.entities.get(1)!;
-      if (this.vehicles?.active != null || this.mountedGun?.mounted) return;
+      if (player.pendingAdmission || this.vehicles?.active != null || this.mountedGun?.mounted) return;
       if (this.player) { Object.assign(this.previousPlayer!, player.transform); this.player.locomotion.speedScale = this.player.progressionSpeed * (this.props?.pushSpeed(this.effectiveInput) ?? 1) * (this.vehicles?.bicycle.speedScale ?? 1) * (this.weather?.modifiers.playerSpeed ?? 1) * Status.speed(player) * (this.combat?.effects.speedMultiplier ?? 1) * (this.infected?.playerSpeedScale() ?? 1) * (player.speedBuff && this.tick < player.speedBuff.until ? player.speedBuff.multiplier : 1); this.player.prePhysics(this.effectiveInput, this.tick, !Status.stunned(player, this.tick) && !(this.infected?.playerPinned() ?? false)); return; }
       this.previousPlayer = { ...player.transform };
       // Deliberately only a cube input fixture, no survivor controller (E04).
@@ -260,6 +262,7 @@ export class SimWorld implements Lifecycle {
       Object.assign(this.entities.get(1)!.transform, p);
       this.spatial.set(1, p.x, p.z);
     }, SimPhase.cleanup);
+    this.events.on('sim.tick', () => this.solids.commit(), SimPhase.cleanup + .5);
     installVfxScenario(this); installBlastScenario(this);
     if (name === 'perf-horde-200' || name === 'perf-horde-100') {
       this.infected!.director.tier = name === 'perf-horde-100' ? 'low' : 'high'; populateHorde(this, name === 'perf-horde-100' ? 100 : 200);
@@ -383,7 +386,7 @@ export class SimWorld implements Lifecycle {
   getState(): GameStateSnapshot {
     const entities = this.query({});
     const controls = this.controls.snapshot();
-    return { ...(this.chunks ? { chunks: this.chunks.snapshot(), chunkResidency: this.chunks.stats() } : {}), ...(this.missions?.l9 ? { l9: structuredClone(this.missions.l9.state) } : {}), ...(this.missions?.l8 ? { l8: structuredClone(this.missions.l8.state) } : {}), ...(this.l7Encounters ? { l7: structuredClone(this.l7Encounters.state) } : {}), ...(this.l7Departure ? { l7Departure: structuredClone(this.l7Departure.state) } : {}), ...(this.megaPursuit ? { megaPursuit: this.megaPursuit.snapshot() } : {}), weather: this.weather?.snapshot() ?? null, ...(controls ? { controls } : {}), ...(this.infected ? { ai: structuredClone(this.infected.snapshot()) } : {}), ...(entities.some(e => e.interactable || e.hazard || (e.pickup && 'kind' in e.pickup) || e.destructible) ? { interactions: { activeId: this.interactables?.activeId ?? null, debris: this.hazards?.debris.snapshot() ?? [], hazards: this.hazards?.snapshot() ?? null } } : {}), ...(this.combat ? { combat: structuredClone(this.combat.snapshot()) } : {}), ...(this.props?.items.length ? { props: this.props.snapshot() } : {}), tick: this.tick, input: { scheme: this.scheme, frame: structuredClone(this.input) }, seed: this.seed, scenario: this.scenario, player: this.getEntity(1), entities, mission: structuredClone(this.mission), progression: structuredClone(this.progression), rng: this.rng ? [this.rng.snapshot()] : [], perf: { entities: this.entities.size, bodies: this.physics.bodyCount, colliders: this.physics.colliderCount, listeners: this.events.listenerCount } };
+    return { collision: this.solids.snapshot(), ...(this.chunks ? { chunks: this.chunks.snapshot(), chunkResidency: this.chunks.stats() } : {}), ...(this.missions?.l9 ? { l9: structuredClone(this.missions.l9.state) } : {}), ...(this.missions?.l8 ? { l8: structuredClone(this.missions.l8.state) } : {}), ...(this.l7Encounters ? { l7: structuredClone(this.l7Encounters.state) } : {}), ...(this.l7Departure ? { l7Departure: structuredClone(this.l7Departure.state) } : {}), ...(this.megaPursuit ? { megaPursuit: this.megaPursuit.snapshot() } : {}), weather: this.weather?.snapshot() ?? null, ...(controls ? { controls } : {}), ...(this.infected ? { ai: structuredClone(this.infected.snapshot()) } : {}), ...(entities.some(e => e.interactable || e.hazard || (e.pickup && 'kind' in e.pickup) || e.destructible) ? { interactions: { activeId: this.interactables?.activeId ?? null, debris: this.hazards?.debris.snapshot() ?? [], hazards: this.hazards?.snapshot() ?? null } } : {}), ...(this.combat ? { combat: structuredClone(this.combat.snapshot()) } : {}), ...(this.props?.items.length ? { props: this.props.snapshot() } : {}), tick: this.tick, input: { scheme: this.scheme, frame: structuredClone(this.input) }, seed: this.seed, scenario: this.scenario, player: this.getEntity(1), entities, mission: structuredClone(this.mission), progression: structuredClone(this.progression), rng: this.rng ? [this.rng.snapshot()] : [], perf: { entities: this.entities.size, bodies: this.physics.bodyCount, colliders: this.physics.colliderCount, listeners: this.events.listenerCount } };
   }
   spawnDummy(archetype: string, pos: { x: number; z: number }, opts: { hp?: number; armor?: number; yaw?: number; shield?: boolean; faction?: string; radius?: number; reactive?: boolean; ramDamage?: number } = {}): number {
     if (!this.combat) throw new Error('Load combat-arena before spawning dummies');
@@ -401,12 +404,13 @@ export class SimWorld implements Lifecycle {
     const nav = this.infected?.nav;
     // Thin static colliders (picket fences, hedges) are on the walk grid, not in the combat wall query: knocked bodies
     // slide along them instead of passing through (PO #14).
-    if (entity.id !== 1 && nav) nav.move(entity.transform, direction.x * move, direction.z * move, Math.min(.3, entity.combat?.radius ?? .3));
+    if (entity.id !== 1 && nav) nav.move(entity.transform, direction.x * move, direction.z * move, entity.combat?.radius ?? .3);
     else { entity.transform.x += direction.x * move; entity.transform.z += direction.z * move; }
     this.spatial.set(entity.id, entity.transform.x, entity.transform.z);
     if (entity.id === 1) this.physics.playerBody!.setTranslation(entity.transform, true);
   }
   reset(): void {
+    this.solids.reset();
     this.chunks?.dispose(); this.chunks = null;
     this.inspectionGhost = false; this.weather = null; this.lightPower = null;
     this.vehicles?.dispose(); this.vehicles = null;

@@ -187,6 +187,9 @@ export type CameraSpec =
   | { mode: 'follow'; actor: string; zoom?: number };
 /** Optional pass/fail gates; the runner exits non-zero when one fails. */
 export interface Expectations {
+  /** Numerical committed-body invariant, independent of camera/mesh clipping. */
+  collisionFailuresMax?: number;
+  collisionPendingMax?: number;
   /** Trace the submitted appearance through LOD/pose/frozen-corpse transitions. */
   appearanceChangesMax?: number;
   appearanceActorsMin?: number;

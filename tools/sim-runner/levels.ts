@@ -25,6 +25,7 @@ export type RunnerLevel = MissionId | 'L7';
 export type CompletionPolicy = 'complete' | 'newbie';
 /** Same contract for individual levels and the fast completion battery. Times are simulation seconds. */
 export interface LevelReport {
+  collision?: ReturnType<SimWorld['solids']['snapshot']>;
   level: RunnerLevel; policy: CompletionPolicy; seed: number; completed: boolean;
   timerRemaining?: number; runovers?: number; smashed?: number; maxConcurrentInfected?: number;
   regions?: CureRegionTiming[];
@@ -196,7 +197,11 @@ export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, see
       if(level==='L5')campaign.survivors=[...mission.state.result?.survivors??[]];
     }
     return report;
-  } finally { world.dispose(); }
+  } finally {
+    report.collision = world.solids.snapshot();
+    if (report.collision.failures || report.collision.pending) report.failures['collision-invariant'] = report.collision.failures + report.collision.pending;
+    world.dispose();
+  }
 }
 
 /** L7 deliberately has no mission graph: use its real pickup, encounter group and bus completion event. */

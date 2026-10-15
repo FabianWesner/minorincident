@@ -157,6 +157,7 @@ export class InfectedSystem {
         this.active.filter(e => e.health.current > 0 && !e.hidden && !e.infected?.hidden).map(e => ({ model: e.infected!.model ?? e.infected!.variant, x: e.transform.x, z: e.transform.z })), position, entity.id);
     }
     this.active.push(entity); this.world.spatial.set(entity.id, position.x, position.z); this.counters.reused++;
+    this.world.solids.admit(entity, 'infected.spawn', 4, !opts.offNav);
     return entity.id;
   }
   release(entity: EntitySnapshot): void {
@@ -190,6 +191,7 @@ export class InfectedSystem {
     if (this.active.length > 20) this.navigation.flow(courier.transform, 1500);
     this.crowd.length = 0;
     for (const e of this.active) {
+      if (e.pendingAdmission) continue;
       if (this.world.npcs?.civilians.holds(e.id)) { e.combat!.attacking = false; continue; }
       const b = e.infected!; if (e.health.current <= 0) { this.dead(e); continue; }
       if (e.infectionRise && this.world.tick < e.infectionRise.until) { e.combat!.attacking = false; continue; }

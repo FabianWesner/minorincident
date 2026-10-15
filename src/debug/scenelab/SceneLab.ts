@@ -1,3 +1,4 @@
+import { spawnSetPiece } from '../../sim/missions/L4Spectacle';
 import { cure, curePursuitRoute } from '../../levels/L10/district';
 import { cureEncounters, cureEncounterSlots, cureEncounterSpot } from '../../levels/L10/encounters';
 import { cureReached } from '../../sim/missions/CureFront';
@@ -481,7 +482,7 @@ export class SceneLab {
     return ids;
   }
   private teleport(e: EntitySnapshot, p: { x: number; z: number }): void {
-    e.transform.x = p.x; e.transform.z = p.z; e.transform.y=(this.world.districts?.groundHeight(p.x,p.z)??0)+(e.companion ? .305 : .705); this.world.spatial.set(e.id, p.x, p.z);
+    this.world.solids.relocate(e, { ...p, y: (this.world.districts?.groundHeight(p.x,p.z)??0)+(e.companion ? .305 : .705) }, 'scene.teleport');
     if (e.id === 1) { this.world.physics.playerBody!.setTranslation(e.transform, true); this.world.physics.playerBody!.setNextKinematicTranslation(e.transform); this.world.player!.setCheckpoint(e.transform); }
   }
   private stand(at: { x: number; z: number }, yaw: number): CivilianActivity {
@@ -491,6 +492,7 @@ export class SceneLab {
     const world = this.world, yaw = rad(yawDeg);
     let entity: number;
     if (asset === 'vehicle.bicycle') entity = world.vehicles!.bicycle.spawn(toPoint(at), -yaw);
+    else if (asset.startsWith('veh.')) entity = spawnSetPiece(world, asset, { ...toPoint(at), yaw }).id;
     else if (asset === 'traffic') entity = world.npcs!.traffic.spawn([toPoint(at), ...(path ?? []).map(toPoint)], panic);
     else {
       entity = world.vehicles!.spawn(asset, toPoint(at), yaw);
@@ -1388,7 +1390,7 @@ export class SceneLab {
     }).map(f => f.appearance!))]));
     const clipping = this.staticSets ? await this.clipping() : null;
     const bodies = [...this.bodies.values()].sort((x, y) => y.depthCm - x.depthCm);
-    return { armyBoom: this.boom ? { closedAt: this.boomClosedAt, closed: !!this.spec?.armyBoom?.closed || !!this.boomClosedAt } : null, scene: this.spec?.name ?? null, frame: this.frame, tick: this.world.tick, backend: this.game.view.renderer.selectedBackend, quality: this.game.quality.tier,
+    return { collision: this.world.solids.snapshot(), armyBoom: this.boom ? { closedAt: this.boomClosedAt, closed: !!this.spec?.armyBoom?.closed || !!this.boomClosedAt } : null, scene: this.spec?.name ?? null, frame: this.frame, tick: this.world.tick, backend: this.game.view.renderer.selectedBackend, quality: this.game.quality.tier,
       convoyOverlapFrames: this.convoyOverlapFrames,
       propPenetration: { samples: this.propPenetrationSamples, framesMax: Math.max(0, ...[...this.propPenetration.values()].map(m => m.max)), pairs: [...this.propPenetration.values()] },
       props: { sinkMaxCm: this.propSinkMaxCm, samples: this.propGroundSamples, gaps: this.game.view.labProbes().districts?.propGroundGaps() ?? [] },
