@@ -1,0 +1,78 @@
+{
+  "name": "movement-l7-rocket-follow",
+  "seed": 32,
+  "dof": false,
+  "ground": "district",
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 360,
+  "sheet": 45,
+  "expect": {
+    "consoleErrors": 0,
+    "corgiRunLagMaxM": 4,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "note": "Authored retained interaction rocket stays behind as courier runs away and turns; corgi follows. Ordinary drops and leash cancellation are covered by fetch-leash.test.ts.",
+  "time": "L6",
+  "tier": 6,
+  "layout": {
+    "level": "L7",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        250,
+        0
+      ],
+      [
+        310,
+        35
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        276,
+        15
+      ],
+      "state": {
+        "run": [
+          [
+            256,
+            15
+          ],
+          [
+            256,
+            30
+          ]
+        ]
+      }
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        274,
+        15
+      ]
+    }
+  ],
+  "script": [
+    {
+      "frame": 0,
+      "effect": {
+        "weaponPickup": "weapon.rocket-launcher",
+        "at": [
+          276,
+          19
+        ]
+      }
+    }
+  ]
+}

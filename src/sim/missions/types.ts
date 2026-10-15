@@ -88,6 +88,8 @@ export interface MissionResult {
   survivors?: string[];
   survivorsIn?: number;
   escapedSurvivors?: EntitySnapshot[];
+  /** Protected companion carried separately from the rescued human roster. */
+  companion?: EntitySnapshot;
   stationOccupants?: EntitySnapshot[];
   rescuedSurvivors?: EntitySnapshot[];
 }

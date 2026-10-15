@@ -28,7 +28,7 @@ export function applyCampaign(world:SimWorld,save:CampaignSave):void {
   if(!world.player)throw new Error('Progression needs a survivor');
   if (world.scenario === 'L10' && save.crossingHandover?.corgi && world.npcs) {
     for (const e of [...world.entities.iterate()]) if (e.companion) { world.entities.remove(e.id); world.spatial.delete(e.id); }
-    const corgi = structuredClone(save.crossingHandover.corgi); delete corgi.passengerOf;
+    const corgi = structuredClone(save.crossingHandover.corgi); delete corgi.passengerOf; corgi.hidden = false;
     Object.assign(corgi.companion!, { state: 'follow', courage: 100, until: 0, barkAt: 0, hurtAt: 0 });
     world.entities.reserveIds([corgi.id]); world.entities.replace(corgi);
     world.npcs.companion.forceSafe = true; world.npcs.companion.respawnNear();

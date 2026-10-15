@@ -1,5 +1,5 @@
 import { modelLod } from './lodPolicy';
-import { Group, Mesh, type Object3D, type BufferGeometry, type Material } from 'three/webgpu';
+import { Box3, Group, Mesh, Vector3, type Object3D, type BufferGeometry, type Material } from 'three/webgpu';
 import { AssetRegistry } from '../assets/registry';
 import { staticBatch } from '../assets/staticBatch';
 import manifest from '../assets/manifest.json' with { type: 'json' };
@@ -20,13 +20,13 @@ const actorAssets: Record<string, string> = {
   'vehicle.fire-engine': 'veh.fire-engine', 'defend.convoy': 'veh.military-truck', 'defend.heli': 'veh.helicopter',
 };
 /** Last two tick poses of a scripted rigid actor; the drawn pose lerps between them like the camera does (a moving L4 convoy bus judders against the interpolated camera otherwise). */
-interface Pose { tick: number; px: number; py: number; pz: number; pyaw: number; x: number; y: number; z: number; yaw: number }
+interface Pose { tick: number; px: number; py: number; pz: number; pyaw: number; x: number; y: number; z: number; yaw: number; distance: number; pdistance: number; steer: number }
 /** Presentation of authored mission actors and the cosmetic corgi companion.
  * Async loads participate in screenshotReady; no visual transform changes the sim. */
 export class EntityAssets extends Group {
   private readonly logs: { id: string; reason: string }[] = [];
   private readonly registry: AssetRegistry;
-  private readonly records = new Map<number, { model: Object3D; lod: AssetQuality; pose?: Pose }>();
+  private readonly records = new Map<number, { model: Object3D; lod: AssetQuality; pose?: Pose; wheels: { node: Object3D; radius: number; spin: number; steer: number; front: boolean }[] }>();
   private view?: View;
   private readonly prototypes = new Map<string, Promise<Group>>();
   private readonly geometries = new Set<BufferGeometry>();
@@ -48,7 +48,12 @@ export class EntityAssets extends Group {
       // Authored mission actors currently move as rigid objects; preserve their
       // production swatches with two draws instead of one draw per Blender part.
       // The helicopter keeps its rotor nodes (spun every frame, update); its <= 8 draws are cheap enough unmerged.
+      // Reuse the hinge batching path: one palette batch per wheel, plus the rigid body/glow.
+      const wheelNames = /^veh\.(evac-bus|school-bus)$/.test(id) ? ['wheelFL', 'wheelFR', 'wheelRL', 'wheelRR'].filter(name => source.getObjectByName(name)) : [];
+      source.userData.splitDoors = wheelNames;
+      const radii = new Map(wheelNames.map(name => [name, new Box3().setFromObject(source.getObjectByName(name)!).getSize(new Vector3()).y / 2]));
       const model = id === 'veh.helicopter-military' ? source as Group : staticBatch(source, true, this.shading); model.userData = { ...source.userData };
+      model.traverse(node => { const name = node.userData.door as string | undefined; if (name && radii.has(name)) { node.name = name; node.userData.wheelRadius = radii.get(name); } });
       model.traverse(node => { if (node instanceof Mesh) { this.geometries.add(node.geometry); this.materials.add(node.material as Material); } });
       return model;
     }));
@@ -71,7 +76,9 @@ export class EntityAssets extends Group {
       const load = this.actorModel(id, lod).then(model => {
         if (!this.disposed && this.world.entities.get(entity.id)) {
           // An LOD swap keeps the interpolation history (a fresh record restarted at the tick pose: a one-frame snap per swap).
-          const previous = this.records.get(entity.id); previous?.model.removeFromParent(); this.records.set(entity.id, { model, lod, pose: previous?.pose });
+          const previous = this.records.get(entity.id); previous?.model.removeFromParent(); const wheels: { node: Object3D; radius: number; spin: number; steer: number; front: boolean }[] = [];
+          model.traverse(node => { if (node.userData.wheelRadius) { node.rotation.order = 'YXZ'; wheels.push({ node, radius: node.userData.wheelRadius, spin: node.rotation.z, steer: node.rotation.y, front: node.name.startsWith('wheelF') }); } });
+          this.records.set(entity.id, { model, lod, pose: previous?.pose, wheels });
           model.position.set(entity.transform.x, entity.kind === 'obstacle' ? 0 : Math.max(0, entity.transform.y - .7), entity.transform.z);
           model.rotation.y = entity.transform.yaw;
           // Phone tier: flat scripted dressing (glass shards, craters) never casts a shadow.
@@ -91,7 +98,7 @@ export class EntityAssets extends Group {
       if (!entity) { model.removeFromParent(); this.records.delete(id); continue; }
       const t = entity.transform, flat = entity.kind === 'obstacle';
       let pose = rec.pose;
-      if (!pose) pose = rec.pose = { tick: this.world.tick, px: t.x, py: t.y, pz: t.z, pyaw: t.yaw, x: t.x, y: t.y, z: t.z, yaw: t.yaw };
+      if (!pose) pose = rec.pose = { tick: this.world.tick, px: t.x, py: t.y, pz: t.z, pyaw: t.yaw, x: t.x, y: t.y, z: t.z, yaw: t.yaw, distance: 0, pdistance: 0, steer: 0 };
       else if (pose.tick !== this.world.tick) {
         // A jump (checkpoint restore, teleport) must not smear across the map.
         const jump = this.world.tick < pose.tick || Math.hypot(t.x - pose.x, t.z - pose.z) > 6;
@@ -100,6 +107,11 @@ export class EntityAssets extends Group {
         // against the camera alternately and vibrates.
         const k = Math.max(1, this.world.tick - pose.tick), back = (from: number, to: number) => to - (to - from) / k;
         const dyaw = Math.atan2(Math.sin(t.yaw - pose.yaw), Math.cos(t.yaw - pose.yaw));
+        const dx = t.x - pose.x, dz = t.z - pose.z;
+        const travelled = jump ? 0 : Math.hypot(dx, dz) * (dx * Math.cos(t.yaw) - dz * Math.sin(t.yaw) < 0 ? -1 : 1);
+        const distance = pose.distance + travelled;
+        pose.steer = Math.abs(travelled) > .01 ? Math.max(-.5, Math.min(.5, Math.atan(5.35 * dyaw / travelled))) : 0;
+        pose.pdistance = jump ? distance : back(pose.distance, distance); pose.distance = distance;
         Object.assign(pose, { tick: this.world.tick, px: jump ? t.x : back(pose.x, t.x), py: jump ? t.y : back(pose.y, t.y), pz: jump ? t.z : back(pose.z, t.z), pyaw: jump ? t.yaw : t.yaw - dyaw / k, x: t.x, y: t.y, z: t.z, yaw: t.yaw });
       }
       const a = Math.max(0, Math.min(1, alpha));
@@ -108,6 +120,8 @@ export class EntityAssets extends Group {
       model.rotation.y = pose.pyaw + Math.atan2(Math.sin(pose.yaw - pose.pyaw), Math.cos(pose.yaw - pose.pyaw)) * a; model.visible = !entity.hidden && (entity.kind !== 'obstacle' || entity.health.current > 0);
       // Phone tier: scripted set pieces (L4 convoy, tank, glass) beyond the light/camera reach are not drawn at all.
       if (this.low && entity.kind === 'setpiece' && model.visible) { const t = this.view?.cameraTarget ?? player0; if (t && Math.hypot(entity.transform.x - t.x, entity.transform.z - t.z) > 48) model.visible = false; }
+      const distance = pose.pdistance + (pose.distance - pose.pdistance) * a;
+      for (const wheel of rec.wheels) { wheel.node.rotation.z = wheel.spin - distance / wheel.radius; wheel.node.rotation.y = wheel.steer + (wheel.front ? pose.steer : 0); }
       const main = model.getObjectByName('mainRotor'), tail = model.getObjectByName('tailRotor');
       if (main) main.rotation.y = this.world.tick * .62;
       if (tail) tail.rotation.z = this.world.tick * .83;
@@ -120,7 +134,7 @@ export class EntityAssets extends Group {
       this.companion.rotation.y = yaw; this.companion.visible = !player.hidden;
     }
   }
-  getState() { return { companion: this.companion?.userData.placeholder ? 'placeholder' : 'glb', actors: [...this.records].map(([id, { model, lod }]) => ({ id, lod, position: model.position.toArray(), yaw: model.rotation.y, source: model.userData.placeholder ? 'placeholder' : 'glb' })), placeholders: this.logs }; }
+  getState() { return { companion: this.companion?.userData.placeholder ? 'placeholder' : 'glb', actors: [...this.records].map(([id, { model, lod, wheels }]) => ({ id, lod, position: model.position.toArray(), yaw: model.rotation.y, wheels: wheels.map(w => ({ name: w.node.name, spin: w.node.rotation.z, steer: w.node.rotation.y })), source: model.userData.placeholder ? 'placeholder' : 'glb' })), placeholders: this.logs }; }
   dispose(): void { this.disposed = true; this.clear(); this.records.clear();
     for (const geometry of this.geometries) geometry.dispose(); for (const material of this.materials) material.dispose();
     this.geometries.clear(); this.materials.clear(); this.prototypes.clear(); void this.registry.dispose(); }
