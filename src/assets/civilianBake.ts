@@ -1,7 +1,7 @@
 import type { PreparedCivilian } from '../render/npc/prepareCivilianGeometry';
 import { decodeCivilianBake } from './civilianBakeData';
 export const civilianBakeStats = { workers: 0, submitted: 0, completed: 0, prebuilt: 0, failed: 0 };
-type Job = { id: number; model: string; lod: string; resolve: (value: PreparedCivilian | undefined) => void };
+type Job = { id: number; model: string; lod: string; source: boolean; resolve: (value: PreparedCivilian | undefined) => void };
 const queue: Job[] = [], workers: { worker: Worker; job?: Job }[] = [];
 let sequence = 0, unavailable = false, idle: ReturnType<typeof setTimeout> | undefined;
 function drain(): void {
@@ -36,13 +36,13 @@ function drain(): void {
     // CDP's page CPU throttle does not cover worker threads. The diagnostic
     // phone run scales preparation time; the worker excludes HTTP wait time.
     const cpuRate = Number(new URLSearchParams(location.search).get('workerCpu') ?? 1);
-    slot.worker.postMessage({ id: slot.job.id, model: slot.job.model, lod: slot.job.lod, cpuRate: Number.isFinite(cpuRate) ? Math.max(1, cpuRate) : 1 });
+    slot.worker.postMessage({ id: slot.job.id, model: slot.job.model, lod: slot.job.lod, source: slot.job.source, cpuRate: Number.isFinite(cpuRate) ? Math.max(1, cpuRate) : 1 });
   }
   if (!queue.length && workers.every(slot => !slot.job)) idle = setTimeout(() => { for (const slot of workers.splice(0)) slot.worker.terminate(); }, 250);
 }
 /** Worker failure keeps the same loading-phase preparation as the fallback. */
-export function loadCivilianBake(model: string, lod: string): Promise<PreparedCivilian | undefined> {
+export function loadCivilianBake(model: string, lod: string, source = false): Promise<PreparedCivilian | undefined> {
   if (typeof Worker === 'undefined' || unavailable) return Promise.resolve(undefined);
   civilianBakeStats.submitted++;
-  return new Promise(resolve => { queue.push({ id: ++sequence, model, lod, resolve }); drain(); });
+  return new Promise(resolve => { queue.push({ id: ++sequence, model, lod, source, resolve }); drain(); });
 }
