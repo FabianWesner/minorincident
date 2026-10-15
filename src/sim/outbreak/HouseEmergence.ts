@@ -2,6 +2,7 @@ import type { SimWorld } from '../world/SimWorld';
 import type { DistrictLayout } from '../../levels/districts/types';
 import { buildingDoors, doorwayOf } from '../../data/buildingDoors';
 import type { PedestrianOptions } from './Outbreak';
+import { actorRadius } from '../world/SolidRegistry';
 
 /**
  * Residents coming out of a house's front door (L1 beat 9, PO rule 2026-10-07: "10 ... come out of the house ... No
@@ -172,11 +173,25 @@ export function walkResidents(world: SimWorld, house: HouseEmergence, tick: numb
       if (d > 1e-6) { p.x += dx / d * m; p.z += dz / d * m; p.yaw = -Math.atan2(dz, dx); }
       p.y = .7 + (world.districts?.groundHeight(p.x, p.z) ?? 0); world.spatial.set(e.id, p.x, p.z);
       if (d <= step) w.leg++;
+    } else if (e.pendingAdmission && !world.solids.clear(p, actorRadius(e), e.id, false)) {
+      // The authored route was baked for a pedestrian. A wider resident keeps
+      // walking along its final leg until its whole footprint clears the gate.
+      // Body congestion waits at that exit instead of skipping an encounter.
+      const from = house.route.length > 1 ? house.route[house.route.length - 2] : [house.sx, house.sz];
+      const last = house.route[house.route.length - 1];
+      const dx = last ? last[0] - from[0] : house.nx, dz = last ? last[1] - from[1] : house.nz;
+      const d = Math.hypot(dx, dz) || 1;
+      p.x += dx / d * step; p.z += dz / d * step;
+      p.y = .7 + (world.districts?.groundHeight(p.x, p.z) ?? 0);
+      world.spatial.set(e.id, p.x, p.z);
     }
     if (e.combat) e.combat.staggerUntil = Math.max(e.combat.staggerUntil ?? 0, tick + 2);
     // Released at the end of the walk only, never inside the house (the AI would snap the body onto the nearest nav cell).
     const outside = (p.x - house.x) * house.nx + (p.z - house.z) * house.nz > 0;
-    if (w.leg >= house.route.length || (outside && tick >= w.until)) { walking.splice(i, 1); e.emerging = undefined; if (e.combat) e.combat.staggerUntil = tick; done.push(w.id); }
+    if (w.leg >= house.route.length || (outside && tick >= w.until)) {
+      if (e.pendingAdmission && !world.solids.admit(e, 'house.exit', 0, false)) continue;
+      walking.splice(i, 1); e.emerging = undefined; if (e.combat) e.combat.staggerUntil = tick; done.push(w.id);
+    }
   }
   return done;
 }
