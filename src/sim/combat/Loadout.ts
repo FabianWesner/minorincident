@@ -1,3 +1,4 @@
+import { compareWeapons } from '../../data/weaponOrder';
 import { action } from '../../data/actions/catalog';
 import { ticks, type ActionDef, type Side } from '../../data/actions/schema';
 import type { InputFrame, Vec2 } from '../../input/InputFrame';
@@ -13,6 +14,10 @@ export class Loadout {
     const side = (rack: string[]): SideState => ({ rack: rack.map(id=>slot(id,this.definition)), index: 0, aim: { x: 1, z: 0 }, aimPoint: null, swapUntil: 0 });
     this.state = { selectedSide: 'LEFT', LEFT: side(left), RIGHT: side(right) };
   }
+  /** Presentation order leaves slot storage, checkpoint indices and cooldowns intact. */
+  orderedEntries(side: Side): { side: Side; index: number; id: string }[] {
+    return this.state[side].rack.map((slot, index) => ({ side, index, id: slot.id })).sort((a, b) => compareWeapons(a.id, b.id));
+  }
   /** Ordered carried actions for mouse selection; kick is part of unarmed, not a slot. */
   activeEntries(): { side: Side; index: number; id: string }[] {
     const seen = new Set<string>();
@@ -20,7 +25,7 @@ export class Loadout {
       const id = slot.id === 'weapon.kick' ? 'weapon.fists' : slot.id;
       if (seen.has(id)) return [];
       seen.add(id); return [{ side, index, id }];
-    })).sort((a, b) => Number(b.id === 'weapon.fists') - Number(a.id === 'weapon.fists'));
+    })).sort((a, b) => compareWeapons(a.id, b.id));
   }
   cycleActive(direction: number, tick: number): void {
     const entries = this.activeEntries(), side = this.state.selectedSide, state = this.state[side];
@@ -40,7 +45,7 @@ export class Loadout {
       if (frame.aimPoint) { side.aimPoint ??= { x: 0, z: 0 }; side.aimPoint.x = frame.aimPoint.x; side.aimPoint.z = frame.aimPoint.z; }
       else side.aimPoint = null;
     }
-    const choice = frame.selectedSlot ?? (frame.selectedActiveSlot !== undefined && Number.isInteger(frame.selectedActiveSlot) && frame.selectedActiveSlot >= 0 ? this.activeEntries()[frame.selectedActiveSlot] : undefined);
+    const choice = (frame.selectedSlot && frame.orderedSelection ? this.orderedEntries(frame.selectedSlot.side)[frame.selectedSlot.index] : frame.selectedSlot) ?? (frame.selectedActiveSlot !== undefined && Number.isInteger(frame.selectedActiveSlot) && frame.selectedActiveSlot >= 0 ? this.activeEntries()[frame.selectedActiveSlot] : undefined);
     if (choice) {
       const rack = this.state[choice.side];
       if (Number.isInteger(choice.index) && choice.index >= 0 && choice.index < rack.rack.length && tick >= rack.swapUntil) {
@@ -49,8 +54,10 @@ export class Loadout {
       }
     }
     if (frame.selectorActive && frame.selector) this.cycleActive(frame.selector, tick);
-    else if (frame.selector && tick >= side.swapUntil) {
-      side.index = (side.index + frame.selector + side.rack.length) % side.rack.length; side.swapUntil = tick + 15;
+    else if (frame.selector && tick >= this.state[this.state.selectedSide].swapUntil) {
+      const cycling = this.state[this.state.selectedSide];
+      const entries = this.orderedEntries(this.state.selectedSide), current = entries.findIndex(e => e.index === cycling.index);
+      cycling.index = entries[(current + frame.selector + entries.length) % entries.length].index; cycling.swapUntil = tick + 15;
     }
   }
   /** Adds to selected rack; retained campaign pickups expand it, other full racks replace the current slot. */
