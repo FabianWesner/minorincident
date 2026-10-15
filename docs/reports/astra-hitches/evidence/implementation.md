@@ -2,9 +2,11 @@
 
 ## White shader
 
-The original `lod-standins/evidence/cold-shader-diagnostic.json` recorded a late white mesh program. The retained fresh baseline `shader-before/webgl-low-z1.json` identifies the hierarchy `mesh_0/body/root/Scene/Group/Scene`, material `pal_picketWhite`, opaque, double-sided, vertex colours, without cast/receive shadow. This matches the mounted minigun body, but several other assets use the same hierarchy; exact attribution needs the ancestor's asset ID. The driver-cached baseline had a 9.8 ms maximum but still built the program during the walk, so it does not reproduce the original 198.8 ms compile cost.
+The original `lod-standins/evidence/cold-shader-diagnostic.json` recorded a late white mesh program. Ancestor attribution now confirms `wpn.minigun-mounted`: hierarchy `mesh_0/body/root/Scene/Group/Scene`, material `pal_picketWhite`, opaque, double-sided, vertex colours, without cast/receive shadow. The driver-cached baseline had a 9.8 ms maximum but still built the program during the walk, so it does not reproduce the original 198.8 ms compile cost.
 
-The mounted gun previously entered the scene through `update()` / `screenshotReady()`, after `GameView.load()` had finished warm-up. The first attempted fix loads and poses it before the existing full warm-up. However, the retained `shader-first-fix` results still show a late white-body build at tick 461 in both WebGL zoom-1 cases and WebGPU high zoom 1. Low WebGL zoom 1 is fast (9.6 ms maximum) but this attempt is not accepted as a fix. The first-play regression records late program builds and asset IDs, captures the game camera, and applies the existing 50 ms desktop hitch ceiling to low as well as high.
+The first attempted fix loads and poses a resident gun before the full level warm-up, but the retained `shader-first-fix` results still show a late body build at tick 461. The continuation's `load-residency-webgl-low-z1.json` explains why: the reconstructed ready checkpoint finishes with the courier at x=547, the gun nonresident and its view absent. The regression then teleports to R7. The gun therefore arrives through streaming after the level warm-up. There are zero gun node builds before the walk, and the late program uses the ordinary directional/hemisphere light list. A proposed hero-light initialization change was removed when the authored data and trace did not support it.
+
+The final implementation passes the existing `GameView.warmHidden` callback into `MountedGunView`. Its ready promise now waits for the detached model's HDR/MSAA program compilation before assigning or exposing the model. This reuses the district streaming compile path and also covers ordinary arrival from R1 without fetching an R7 weapon at level start. Disposal is checked before and after asynchronous preparation. The two focused unit cases hold compilation pending and verify that the gun stays hidden, then either becomes drawable or stays retired after disposal. The browser regression records load residency and warm/late builds, captures the game camera, and retains the 50 ms hitch ceiling at both qualities. Browser acceptance of this final change is pending admission; the earlier failing runs are diagnostic evidence only.
 
 ## Arrival simulation
 
@@ -14,7 +16,7 @@ A first attempt to precompute axis distances and simplify neighbor iteration did
 
 `nav-reach-equivalence.test.ts` compares paths against an independent BFS oracle and checks budget call counts, fractional targets, moved-player continuation, result mutation, and all topology invalidation paths. No gameplay rules or test deadlines changed.
 
-The retained calibration comparison includes every recorded result field with exact equality and matching SHA-256 hashes. Baseline timings include V8 sampling overhead; final timings do not. The target is independently met by the original E3b tests in the broad sweep (high 32.279 s, low 17.521 s).
+The retained calibration comparison includes every recorded result field with exact equality and matching SHA-256 hashes. Baseline timings include V8 sampling overhead; final timings do not. The target is independently met by the original E3b tests in the earlier broad sweep (high 32.279 s, low 17.521 s), and again in the continuation sweep (high 39.784 s, low 22.572 s), without raising their deadline.
 
 ## Commands
 
