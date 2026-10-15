@@ -491,5 +491,5 @@ export class Mission {
     } else this.emit({ type: 'checkpoint.restored', id });
     this.world.solids.restore();
   }
-  dispose(): void { this.stops.forEach(stop => stop()); for(const handle of this.gateHandles.values()) {const collider=this.world.physics.world?.getCollider(handle);if(collider)this.world.physics.world!.removeCollider(collider,true);} this.gateHandles.clear(); }
+  dispose(): void { this.l2?.dispose(); this.stops.forEach(stop => stop()); for(const handle of this.gateHandles.values()) {const collider=this.world.physics.world?.getCollider(handle);if(collider)this.world.physics.world!.removeCollider(collider,true);} this.gateHandles.clear(); }
 }
