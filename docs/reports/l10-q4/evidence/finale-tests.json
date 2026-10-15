@@ -1,0 +1,292 @@
+{
+  "success": true,
+  "numTotalTests": 47,
+  "numPassedTests": 47,
+  "numFailedTests": 0,
+  "numPendingTests": 0,
+  "startTime": 1792034673916,
+  "tests": [
+    {
+      "file": "sim/levels/l10-arrival.test.ts",
+      "name": "T-E32-21-E3b @E32-AC21 seed-32 rocket checkpoint route arrival high",
+      "status": "passed",
+      "duration": 111410.164177
+    },
+    {
+      "file": "sim/levels/l10-arrival.test.ts",
+      "name": "T-E32-21-E3b @E32-AC21 seed-32 rocket checkpoint route arrival low",
+      "status": "passed",
+      "duration": 38938.15025799998
+    },
+    {
+      "file": "sim/levels/l10-assault.test.ts",
+      "name": "T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+      "status": "passed",
+      "duration": 12776.836885
+    },
+    {
+      "file": "sim/levels/l10-assault.test.ts",
+      "name": "T-E32-21-E3-low @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+      "status": "passed",
+      "duration": 11158.668049
+    },
+    {
+      "file": "sim/levels/l10-assault.test.ts",
+      "name": "T-E32-21-E3-overlap-high @E32-AC06 @E32-AC21 full cap defers assault, dead bodies survive replenishment and revisit",
+      "status": "passed",
+      "duration": 9139.845951000003
+    },
+    {
+      "file": "sim/levels/l10-assault.test.ts",
+      "name": "T-E32-21-E3-overlap-low @E32-AC06 @E32-AC21 full cap defers assault, dead bodies survive replenishment and revisit",
+      "status": "passed",
+      "duration": 7932.409038999998
+    },
+    {
+      "file": "sim/levels/l10-assault.test.ts",
+      "name": "T-E32-10-E3 @E32-AC10 production composition introduces one reserved pursuer behind R1",
+      "status": "passed",
+      "duration": 6866.390529999997
+    },
+    {
+      "file": "sim/combat/mounted-gun.test.ts",
+      "name": "T-E32-18f @E32-AC18 interact next to the gun mounts, interact again leaves in one tick with the rocket launcher ready",
+      "status": "passed",
+      "duration": 228.49675900000148
+    },
+    {
+      "file": "sim/combat/mounted-gun.test.ts",
+      "name": "T-E32-18g @E32-AC18 too far cannot mount; a deck gun lifts the gunner to the deck and a dismount stays on it",
+      "status": "passed",
+      "duration": 16.487656000012066
+    },
+    {
+      "file": "sim/combat/mounted-gun.test.ts",
+      "name": "T-E32-18h @E32-AC18 spin-up first, then an ordinary infected (40 HP) falls within 0.25 s of landed fire; no carried weapon fires",
+      "status": "passed",
+      "duration": 41.501696999999695
+    },
+    {
+      "file": "sim/combat/mounted-gun.test.ts",
+      "name": "T-E32-18i @E32-AC18 a regular Alpha (200 HP) falls to landed fire in at most 4 s, inside the heat budget",
+      "status": "passed",
+      "duration": 54.675642999995034
+    },
+    {
+      "file": "sim/combat/mounted-gun.test.ts",
+      "name": "T-E32-19-remount @E32-AC19 heat persists through dismount and remount, locks at 100%, a checkpoint restores it",
+      "status": "passed",
+      "duration": 96.76720000000205
+    },
+    {
+      "file": "sim/combat/mounted-gun.test.ts",
+      "name": "T-E32-18k @E32-AC18 choosing a weapon slot leaves the gun at once; dying drops the player off it",
+      "status": "passed",
+      "duration": 15.685880999983056
+    },
+    {
+      "file": "sim/combat/mounted-gun.test.ts",
+      "name": "T-E32-18l @E32-AC18 minigun-only against the Mega Alpha never takes it below 90%, whatever the heat cycles",
+      "status": "passed",
+      "duration": 189.83152499998687
+    },
+    {
+      "file": "sim/levels/l10-arena.test.ts",
+      "name": "T-E32-17-D4-play @E32-AC17 @E32-AC18 walk from the R7 checkpoint to console, climb stairs and mount the shipped gun",
+      "status": "passed",
+      "duration": 4180.149092999985
+    },
+    {
+      "file": "sim/missions/l10-cure-front.test.ts",
+      "name": "T-E32-23-S8 @E32-AC23 explicit expanding front kills every infected species, downed and remaining Mega; no recovery or conversion",
+      "status": "passed",
+      "duration": 914.7771920000087
+    },
+    {
+      "file": "sim/missions/l10-cure-front.test.ts",
+      "name": "T-E32-23-exclusions-S8 @E32-AC23 healthy people/animals, player and corgi excluded; particles/quality never decide death",
+      "status": "passed",
+      "duration": 78.00933000000077
+    },
+    {
+      "file": "sim/missions/l10-cure-front.test.ts",
+      "name": "T-E32-24/25-once-S8 @E32-AC24 @E32-AC25 release/retry/load permanent, campaign cleared once, approaching attacks/spawners suppressed",
+      "status": "passed",
+      "duration": 57.67648900000495
+    },
+    {
+      "file": "sim/missions/l10-cure-front.test.ts",
+      "name": "T-E32-24-unloaded-S8 @E32-AC24 sleeping infected die in snapshots and survive five revisits without loading regions",
+      "status": "passed",
+      "duration": 4830.711396999977
+    },
+    {
+      "file": "sim/missions/l10-cure-front.test.ts",
+      "name": "T-E32-24-zoo-S8 @E32-AC24 cleared campaign kills subsequently visited zoo infected without harming healthy animals",
+      "status": "passed",
+      "duration": 9.123488999990514
+    },
+    {
+      "file": "sim/missions/l10-cure-front.test.ts",
+      "name": "T-E32-23-front-S8 @E32-AC23 route branch delay and boundary use authoritative metre distance",
+      "status": "passed",
+      "duration": 0.3317090000200551
+    },
+    {
+      "file": "sim/missions/l10-cure-front.test.ts",
+      "name": "T-E32-23-flag-S8 @E32-AC23 infected flag governs future types and retained civilian appearances",
+      "status": "passed",
+      "duration": 40.40982100000838
+    },
+    {
+      "file": "sim/missions/l10-cure-front.test.ts",
+      "name": "T-E32-24-fresh-clock-S8 @E32-AC24 early fall resumes on a fresh clock without replaying death/release",
+      "status": "passed",
+      "duration": 28.018676000006963
+    },
+    {
+      "file": "sim/missions/l10-cure-front.test.ts",
+      "name": "T-E32-25-pending-S8 @E32-AC25 pending lion pins and civilian grabs cannot continue beyond release before mist contact",
+      "status": "passed",
+      "duration": 20.979155000008177
+    },
+    {
+      "file": "sim/missions/l10-epilogue.test.ts",
+      "name": "T-E32-25/26-S9 @E32-AC25 @E32-AC26 150 s playable reversal, last 36 s eased pull retains walk/run; title then credits and once-only victory",
+      "status": "passed",
+      "duration": 1805.4101260000025
+    },
+    {
+      "file": "sim/missions/l10-epilogue.test.ts",
+      "name": "T-E32-26-resume-S9 @E32-AC26 fresh-clock save/load at mid-pull, title, credits and completed ending never replays combat or victory",
+      "status": "passed",
+      "duration": 305.47593700001016
+    },
+    {
+      "file": "sim/missions/l10-epilogue.test.ts",
+      "name": "T-E32-25-cast-S9 @E32-AC25 @E32-AC31 production safe anchors emerge and bounded approaches collapse on both E18 tiers",
+      "status": "passed",
+      "duration": 9397.910166999995
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-22 truth table installed=false charge=false dead=false @E32-AC22",
+      "status": "passed",
+      "duration": 243.7211590000079
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-22 truth table installed=false charge=false dead=true @E32-AC22",
+      "status": "passed",
+      "duration": 12.958662999997614
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-22 truth table installed=false charge=true dead=false @E32-AC22",
+      "status": "passed",
+      "duration": 10.581207999988692
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-22 truth table installed=false charge=true dead=true @E32-AC22",
+      "status": "passed",
+      "duration": 11.364449000015156
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-22 truth table installed=true charge=false dead=false @E32-AC22",
+      "status": "passed",
+      "duration": 12.546042999980273
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-22 truth table installed=true charge=false dead=true @E32-AC22",
+      "status": "passed",
+      "duration": 11.676651999994647
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-22 truth table installed=true charge=true dead=false @E32-AC22",
+      "status": "passed",
+      "duration": 12.863956999994116
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-22 truth table installed=true charge=true dead=true @E32-AC22",
+      "status": "passed",
+      "duration": 33.020166000002064
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-20/22 seed 327 install, pause, boundary, early rockets and explicit once-only release @E32-AC17 @E32-AC20 @E32-AC22",
+      "status": "passed",
+      "duration": 601.2267419999989
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-20/27 death restores ready boss/enemy/heat and zero charge; live save resumes exactly @E32-AC20 @E32-AC27",
+      "status": "passed",
+      "duration": 98.61121999999159
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-16/27 pre-S7 save migration retains its reached cure checkpoint @E32-AC16 @E32-AC27",
+      "status": "passed",
+      "duration": 18.231930000009015
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-22 living boss blocks at 60 s; held input cannot release after its death @E32-AC22",
+      "status": "passed",
+      "duration": 441.06291099998634
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-20 early kill captured at ready remains dead after death @E32-AC20 @E32-AC22",
+      "status": "passed",
+      "duration": 20.55161799999769
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-20 live save resumes accrued charge and captured living boss exactly @E32-AC20 @E32-AC27",
+      "status": "passed",
+      "duration": 23.748400999989826
+    },
+    {
+      "file": "unit/combat/minigun.test.ts",
+      "name": "T-E32-18a @E32-AC18 spin-up comes before the first round, then 20 rounds/s",
+      "status": "passed",
+      "duration": 6.716580000007525
+    },
+    {
+      "file": "unit/combat/minigun.test.ts",
+      "name": "T-E32-19-heat @E32-AC19 heat rises 12.5%/s and locks the gun at 100% after 8 s of fire",
+      "status": "passed",
+      "duration": 9.322228999983054
+    },
+    {
+      "file": "unit/combat/minigun.test.ts",
+      "name": "T-E32-19-cooling @E32-AC19 cooling starts 0.5 s after the last round at 20%/s; unlock only below 40%",
+      "status": "passed",
+      "duration": 1.186762000026647
+    },
+    {
+      "file": "unit/combat/minigun.test.ts",
+      "name": "T-E32-19-tapping @E32-AC19 tapping the trigger cannot shed heat inside the 0.5 s delay",
+      "status": "passed",
+      "duration": 0.4839919999940321
+    },
+    {
+      "file": "unit/combat/minigun.test.ts",
+      "name": "T-E32-19-snapshot @E32-AC19 snapshot keeps heat and lock, barrels start still after a reload",
+      "status": "passed",
+      "duration": 6.745083000016166
+    },
+    {
+      "file": "unit/levels/l10-arena.test.ts",
+      "name": "T-E32-17-D4 @E32-AC03 @E32-AC17 R7 route, installation and three dodge lanes connect to the console",
+      "status": "passed",
+      "duration": 3672.061251999985
+    }
+  ]
+}

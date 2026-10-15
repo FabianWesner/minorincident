@@ -28,6 +28,8 @@ export interface LevelReport {
   level: RunnerLevel; policy: CompletionPolicy; seed: number; completed: boolean;
   timerRemaining?: number; runovers?: number; smashed?: number; maxConcurrentInfected?: number;
   regions?: CureRegionTiming[];
+  /** Whole-run count: the bounded event log can evict release before credits finish. */
+  cureReleases?: number;
   time: number; deaths: number; kills: number; damageTaken: number;
   failures: Record<string, number>; objectiveTimeline: { id: string; t: number }[];
   furthestObjective: string | null; activeObjectives: string[];
@@ -67,6 +69,12 @@ export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, see
     if (level === 'L7') return runSeven(world, report, maxSeconds, onComplete);
     const mission = world.missions!, walker = new Walker(), rng = new Rng(seed, `campaign-${policy}`);
     const stops = [world.events.on('mission.failed', e => { if (e.type === 'mission.failed') report.failures[e.reason] = (report.failures[e.reason] ?? 0) + 1; }), world.events.on('player.died', () => { report.failures['player-died'] = (report.failures['player-died'] ?? 0) + 1; }), world.events.on('objective.completed', e => { if (e.type === 'objective.completed') report.objectiveTimeline.push({ id: e.id, t: world.tick / 60 }); })];
+    if (level === 'L10') {
+      report.cureReleases = 0;
+      stops.push(world.events.on('mission.signal', e => {
+        if (e.type === 'mission.signal' && e.name === 'cure-released') report.cureReleases!++;
+      }));
+    }
     if (level === 'L1') {
       const l1 = runL1(world, mission, policy, { seed, maxSeconds });
       report.outcome = l1.outcome === 'complete' ? 'complete' : 'tick-budget';
