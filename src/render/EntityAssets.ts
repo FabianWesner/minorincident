@@ -1,3 +1,4 @@
+import { PaletteMaterial } from './PaletteMaterial';
 import { modelLod } from './lodPolicy';
 import { Box3, Group, Mesh, Vector3, type Object3D, type BufferGeometry, type Material } from 'three/webgpu';
 import { AssetRegistry } from '../assets/registry';
@@ -26,7 +27,7 @@ interface Pose { tick: number; px: number; py: number; pz: number; pyaw: number;
 export class EntityAssets extends Group {
   private readonly logs: { id: string; reason: string }[] = [];
   private readonly registry: AssetRegistry;
-  private readonly records = new Map<number, { model: Object3D; lod: AssetQuality; pose?: Pose; wheels: { node: Object3D; radius: number; spin: number; steer: number; front: boolean }[] }>();
+  private readonly records = new Map<number, { model: Object3D; lod: AssetQuality; reveal: PaletteMaterial[]; pose?: Pose; wheels: { node: Object3D; radius: number; spin: number; steer: number; front: boolean }[] }>();
   private view?: View;
   private readonly prototypes = new Map<string, Promise<Group>>();
   private readonly geometries = new Set<BufferGeometry>();
@@ -78,7 +79,18 @@ export class EntityAssets extends Group {
           // An LOD swap keeps the interpolation history (a fresh record restarted at the tick pose: a one-frame snap per swap).
           const previous = this.records.get(entity.id); previous?.model.removeFromParent(); const wheels: { node: Object3D; radius: number; spin: number; steer: number; front: boolean }[] = [];
           model.traverse(node => { if (node.userData.wheelRadius) { node.rotation.order = 'YXZ'; wheels.push({ node, radius: node.userData.wheelRadius, spin: node.rotation.z, steer: node.rotation.y, front: node.name.startsWith('wheelF') }); } });
-          this.records.set(entity.id, { model, lod, pose: previous?.pose, wheels });
+          const reveal: PaletteMaterial[] = [], copies = new Map<PaletteMaterial, PaletteMaterial>();
+          if (!/^(npc|char)\./.test(id)) model.traverse(node => {
+            if (!(node instanceof Mesh)) return;
+            const cut = (material: Material) => {
+              if (!(material instanceof PaletteMaterial)) return material;
+              let copy = copies.get(material);
+              if (!copy) { copy = material.frozenCopy().seeThrough(); copies.set(material, copy); reveal.push(copy); this.materials.add(copy); }
+              return copy;
+            };
+            node.material = Array.isArray(node.material) ? node.material.map(cut) : cut(node.material);
+          });
+          this.records.set(entity.id, { model, lod, reveal, pose: previous?.pose, wheels });
           model.position.set(entity.transform.x, entity.kind === 'obstacle' ? 0 : Math.max(0, entity.transform.y - .7), entity.transform.z);
           model.rotation.y = entity.transform.yaw;
           // Phone tier: flat scripted dressing (glass shards, craters) never casts a shadow.
@@ -93,7 +105,9 @@ export class EntityAssets extends Group {
   update(alpha = 1): void {
     void this.ready();
     const player0 = this.world.entities.get(1)?.transform;
+    const ridden = this.playerVehicle();
     for (const [id, rec] of this.records) {
+      for (const material of rec.reveal) material.seeThrough(id !== ridden);
       const model = rec.model, entity = this.world.entities.get(id);
       if (!entity) { model.removeFromParent(); this.records.delete(id); continue; }
       const t = entity.transform, flat = entity.kind === 'obstacle';
@@ -133,6 +147,23 @@ export class EntityAssets extends Group {
       this.companion.position.set(player.transform.x - Math.cos(yaw) * 1.1 + Math.sin(yaw) * .7, Math.max(0, player.transform.y - .7), player.transform.z + Math.sin(yaw) * 1.1 + Math.cos(yaw) * .7);
       this.companion.rotation.y = yaw; this.companion.visible = !player.hidden;
     }
+  }
+  /** Scripted passenger rides use the nearest authored transport, as the mission seats do. */
+  private playerVehicle(): number | undefined {
+    if (!this.world.missions?.state.l2?.seated && !this.world.missions?.state.l4?.seated) return;
+    const player = this.world.entities.get(1); if (!player) return;
+    let nearest: number | undefined, distance = 12;
+    for (const [id] of this.records) {
+      const entity = this.world.entities.get(id); if (!entity || !(actorAssets[entity.archetype] ?? entity.archetype).startsWith('veh.')) continue;
+      const d = Math.hypot(entity.transform.x - player.transform.x, entity.transform.z - player.transform.z);
+      if (d < distance) { distance = d; nearest = id; }
+    }
+    return nearest;
+  }
+  playerBounds(out: Box3): boolean {
+    const id = this.playerVehicle(), record = id === undefined ? undefined : this.records.get(id);
+    if (!record) return false;
+    out.setFromObject(record.model); return !out.isEmpty();
   }
   getState() { return { companion: this.companion?.userData.placeholder ? 'placeholder' : 'glb', actors: [...this.records].map(([id, { model, lod, wheels }]) => ({ id, lod, position: model.position.toArray(), yaw: model.rotation.y, wheels: wheels.map(w => ({ name: w.node.name, spin: w.node.rotation.z, steer: w.node.rotation.y })), source: model.userData.placeholder ? 'placeholder' : 'glb' })), placeholders: this.logs }; }
   dispose(): void { this.disposed = true; this.clear(); this.records.clear();
