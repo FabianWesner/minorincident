@@ -434,11 +434,11 @@ export class LevelFourWar {
     s.soldiersAtTurn = this.liveSoldiers().length; s.civiliansAtTurn = [...world.entities.iterate()].filter(e => this.human(e)).length;
     const ids: number[] = [];
     const courier = world.entities.get(1)!.transform, ai = world.infected!;
-    const entries = l4Inside.map((at, k) => ({ at: this.snap({ x: at[0], z: at[1] }, .45), origin: l4Emergence.length + k }))
+    const entries = l4Inside.map((at, k) => ({ at: { x: at[0], z: at[1] }, origin: l4Emergence.length + k }))
       .filter(({ at }) => dist(at, courier) >= l4.war.inside.minM && (ai.director.offscreen(at) || ai.director.occluded(at)));
     // A wide camera may see every camp door. Keep the alarm pressure by using the street mouths instead.
     if (entries.length * l4.war.group[1] < this.alarmInfected()) {
-      entries.push(...l4Emergence.map((entry, k) => ({ at: this.snap({ x: entry.at[0], z: entry.at[1] }, .45), origin: k, edge: entry.edge, door: entry.door }))
+      entries.push(...l4Emergence.map((entry, k) => ({ at: { x: entry.at[0], z: entry.at[1] }, origin: k, edge: entry.edge, door: entry.door }))
         .filter(({ at, edge, door }) => edge < l4Edges.length - 1 && dist(at, courier) >= (door ? l4.war.inside.minM : 30) && (ai.director.offscreen(at) || door && ai.director.occluded(at))));
     }
     // Nearby concealed exits reach the camp first; distant street mouths must not consume the whole alarm allocation.
@@ -498,7 +498,9 @@ export class LevelFourWar {
     const { world } = this.mission, ai = world.infected!, o = this.outbreak();
     const limit = Math.floor(ai.director.cap * (push ? 1 : this.director.aliveShare())) - ai.director.reserved - l4.war.headroom;
     if (!this.spawnRoom(ai.director.reserved) || ai.director.count >= limit || !ai.pool.length || this.inGap(at)) return 0;
-    const out = this.snap(at, .45), id = o.spawnPedestrian(out), e = world.entities.get(id)!;
+    // Admit around the authored exit once, using exact hull/body clearance.
+    // A coarse nav snap followed by admission displaced arrivals twice.
+    const id = o.spawnPedestrian(at), e = world.entities.get(id)!;
     o.turnNow(e);
     if (!e.infected) return 0;
     if (e.combat) e.combat.staggerUntil = world.tick + 30;

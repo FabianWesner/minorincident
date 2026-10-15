@@ -288,6 +288,23 @@ test('a wider house resident keeps its identity and walks clear of the pedestria
   } finally { w.dispose(); }
 });
 
+test('same-id conversion keeps a legal circular pose beside a conservative route corner', async () => {
+  const w = await arena();
+  try {
+    const o = w.npcs!.civilians.outbreak = new Outbreak(w, { refuges: [] });
+    w.infected!.nav.setBlocker(987654, { x: 12, z: 0, y: .7, halfX: 1, halfZ: 1, halfY: .7 }, true);
+    const at = { x: 10.7518, z: 1.2482 }, id = o.spawnPedestrian(at), e = w.entities.get(id)!;
+    expect(w.infected!.nav.clear(at.x, at.z, .4)).toBe(false);
+    expect(w.solids.clear(e.transform, .35, id)).toBe(true);
+    o.turnNow(e);
+    expect(w.entities.get(id)).toBe(e);
+    expect(e.transform.x).toBe(at.x); expect(e.transform.z).toBe(at.z);
+    expect(e.infected).toBeDefined(); expect(w.infected!.director.count).toBe(1);
+    w.tick++; w.solids.commit();
+    expect(w.solids.snapshot()).toMatchObject({ failures: 0, pending: 0 });
+  } finally { w.dispose(); }
+});
+
 test.each(['classic', 'L1'] as const)('courier and corgi remain outside eight %s attackers through windup and knockback', async brain => {
   const w = await arena();
   try {
