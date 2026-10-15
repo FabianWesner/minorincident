@@ -262,7 +262,7 @@ export class SimWorld implements Lifecycle {
       Object.assign(this.entities.get(1)!.transform, p);
       this.spatial.set(1, p.x, p.z);
     }, SimPhase.cleanup);
-    this.events.on('sim.tick', () => this.solids.commit(), SimPhase.cleanup + .5);
+    this.events.on('sim.tick', () => this.solids.commit(), SimPhase.cleanup + .75);
     installVfxScenario(this); installBlastScenario(this);
     if (name === 'perf-horde-200' || name === 'perf-horde-100') {
       this.infected!.director.tier = name === 'perf-horde-100' ? 'low' : 'high'; populateHorde(this, name === 'perf-horde-100' ? 100 : 200);

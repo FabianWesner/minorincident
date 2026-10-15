@@ -1,3 +1,4 @@
+import { actorRadius } from '../world/SolidRegistry';
 import { storyProtected } from '../npc/storyProtection';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
@@ -7,7 +8,7 @@ import { SimPhase } from '../../core/EventBus';
 /** Human-sized infected contact spacing; larger bodies reserve their extra radius as well. */
 export const meleeRing = 1.08;
 export const infectedContactDistance = (radius: number): number => meleeRing + Math.max(0, radius - .35);
-function radius(e: EntitySnapshot): number {
+function spacingRadius(e: EntitySnapshot): number {
   if (!e.survivor && !e.companion && !e.escort && !e.civilian && !e.infected) return 0;
   if (e.infectionRise || e.hidden || e.emerging || e.health.current <= 0 || e.attachedTo !== undefined || (e.infected && (e.infected.hidden || e.transform.y > 2)) || e.companion?.state === 'hide' || e.civilian?.state === 'down' || e.civilian?.state === 'rising') return 0;
   if (e.companion) return .9;
@@ -15,7 +16,8 @@ function radius(e: EntitySnapshot): number {
   return e.survivor || e.companion || e.escort || (e.civilian && e.civilian.state !== 'infected' && e.civilian.state !== 'finished') || e.infected ? e.combat?.radius ?? .35 : 0;
 }
 type Body = { entity: EntitySnapshot; radius: number; extra: number; contact: number; category: number; infected: boolean; courier: boolean; crowd: boolean; l1: boolean; fixed: boolean; charge: boolean; passiveCompanion: boolean };
-/** Resolve body circles against the same static geometry as steering, after physics.
+/** Combat/presentation spacing is wider than the physical footprint for companions and pets.
+ * Resolve body circles against the same static geometry as steering, after physics.
  * The survivor stays authoritative in Rapier; AI yields to it, including during
  * attack windups. Stable ID order resolves exact coincidence deterministically. */
 export function installCharacterSeparation(world: SimWorld): void {
@@ -38,7 +40,7 @@ export function installCharacterSeparation(world: SimWorld): void {
     for (const id of radiusIds) radii[id] = undefined; radiusIds.length = 0;
     let bodyCount = 0, maximumRadius = 0;
     for (const e of world.entities.iterate()) {
-      const r = radius(e); if (!r) continue;
+      const r = spacingRadius(e); if (!r) continue;
       let body = records.get(e);
       if (!body) { body = { entity: e, radius: r, extra: 0, contact: 0, category: 0, infected: false, courier: false, crowd: false, l1: false, fixed: false, charge: false, passiveCompanion: false }; records.set(e, body); }
       else body.radius = r;
@@ -88,7 +90,7 @@ export function installCharacterSeparation(world: SimWorld): void {
       // A protected story actor holding a post is authoritative like the courier;
       // crowd overlap cannot push the invitation away from its interaction. Damage may still shove it.
       const angle = e.id * 2.399963, scale = neighbor.fixed ? 1 : .5;
-      nav.move(e.transform, (distance ? dx / distance : Math.cos(angle)) * overlap * scale, (distance ? dz / distance : Math.sin(angle)) * overlap * scale, r);
+      nav.move(e.transform, (distance ? dx / distance : Math.cos(angle)) * overlap * scale, (distance ? dz / distance : Math.sin(angle)) * overlap * scale, actorRadius(e));
     };
     for (let pass = 0; pass < 3; pass++) for (const body of bodies) {
       const { entity: e, radius: r } = body; active = body;
