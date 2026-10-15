@@ -85,7 +85,8 @@ export class GameView implements Lifecycle {
   /** Scene Lab courier-visibility probe: hide the courier and/or every crowd figure (including the Mega) for one screenshot. */
   private readonly revealSubject = new Box3();
   private readonly revealVehicle = new Box3();
-  private probeHide = { courier: false, crowd: false };
+  private probeVisibilityPending = false;
+  private probeHide = { courier: false, crowd: false, environment: false };
   private readonly storyFocus = new Vector3();
   private readonly storyOffset = new Vector3();
   readonly view = new View();
@@ -696,15 +697,7 @@ export class GameView implements Lifecycle {
   }
   /** Scene Lab: hide the courier / the crowd (Mega included) and redraw, for the courier-visible-share probe. */
   probeVisibility(hide: { courier: boolean; crowd: boolean; environment?: boolean }): number {
-    this.probeHide = { courier: hide.courier, crowd: hide.crowd }; this.update(1);
-    // The reference removes every possible foreground solid, including static kits and parked cars.
-    if (this.districts) this.districts.visible = !hide.environment;
-    if (this.npcs) this.npcs.visible = !hide.environment;
-    if (this.interactions) this.interactions.visible = !hide.environment;
-    if (this.fixtureProps) this.fixtureProps.visible = !hide.environment;
-    if (this.bicycle) this.bicycle.visible = !((this.world.entities.get(1) as { riding?: number } | undefined)?.riding !== undefined ? hide.courier : hide.environment);
-    this.vehicles?.probeVisibility(hide.courier, !!hide.environment);
-    this.entityAssets?.probeVisibility(hide.courier, !!hide.environment);
+    this.probeHide = { ...hide, environment: hide.environment ?? false }; this.probeVisibilityPending = true; this.update(1);
     const player = this.world.entities.get(1); return player ? this.megaDistance(player.transform) : Infinity;
   }
   /** Project a world point to viewport-normalized coordinates, for masks and input integration. */
@@ -881,6 +874,17 @@ export class GameView implements Lifecycle {
     this.renderer.beginProfile(this.camera);
     const renderStart = profileStart ? performance.now() : 0;
     if (profileStart) this.updateCpuMs = renderStart - profileStart;
+    if (this.probeVisibilityPending || this.probeHide.courier || this.probeHide.crowd || this.probeHide.environment) {
+      // The reference removes every possible foreground solid, including static kits and parked cars.
+      if (this.districts) this.districts.visible = !this.probeHide.environment;
+      if (this.npcs) this.npcs.visible = !this.probeHide.environment;
+      if (this.interactions) this.interactions.visible = !this.probeHide.environment;
+      if (this.fixtureProps) this.fixtureProps.visible = !this.probeHide.environment;
+      if (this.bicycle) this.bicycle.visible = !((this.world.entities.get(1) as { riding?: number } | undefined)?.riding !== undefined ? this.probeHide.courier : this.probeHide.environment);
+      this.vehicles?.probeVisibility(this.probeHide.courier, !!this.probeHide.environment);
+      this.entityAssets?.probeVisibility(this.probeHide.courier, !!this.probeHide.environment);
+      this.probeVisibilityPending = false;
+    }
     if (this.weatherProbeAsset) {
       const saved = new Map<Mesh, boolean>(), background = this.scene.background, backgroundNode = this.scene.backgroundNode;
       this.scene.background = new Color(0); this.scene.backgroundNode = null;
