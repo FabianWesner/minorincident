@@ -1,0 +1,72 @@
+{
+  "name": "l4-hold-perimeter",
+  "seed": 1,
+  "l4Convoy": "hold",
+  "time": "L4",
+  "ground": "district",
+  "layout": {
+    "level": "L4",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        -90,
+        -85
+      ],
+      [
+        90,
+        70
+      ]
+    ]
+  },
+  "camera": {
+    "mode": "game",
+    "target": [
+      -11.21,
+      0,
+      21.95
+    ]
+  },
+  "frames": 90,
+  "sheet": 30,
+  "note": "PO16b reported south boundary: continuous low military barriers, wire and yellow MILITARY ZONE signs match the player collider. Infected use the existing 72-tick vault.",
+  "expect": {
+    "consoleErrors": 0
+  },
+  "script": [
+    {
+      "frame": 0,
+      "spawnActor": {
+        "id": "courier",
+        "kind": "courier",
+        "at": [
+          -11.21,
+          21.1
+        ],
+        "loadout": [
+          "weapon.army-mg",
+          "weapon.fire-axe"
+        ],
+        "state": {
+          "moveTo": [
+            -11.21,
+            28
+          ],
+          "pace": "run"
+        }
+      }
+    },
+    {
+      "frame": 1,
+      "spawnActor": {
+        "id": "climber",
+        "kind": "infected",
+        "archetype": "infected.alpha",
+        "at": [
+          -8.4,
+          19
+        ],
+        "state": "chase"
+      }
+    }
+  ]
+}

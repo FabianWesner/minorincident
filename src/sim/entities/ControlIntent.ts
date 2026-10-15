@@ -7,15 +7,20 @@ import type { SimWorld } from '../world/SimWorld';
 /** Persistent click commands resolve in the sim, against live target positions and weapon range. */
 export class ControlIntent {
   moveTarget: Vec2 | null = null;
+  /** A rejected boundary command stays visible briefly even after arrival. */
+  blockedMove: { point: Vec2; until: number } | null = null;
+  boundaryFeedback(point: Vec2): void { this.blockedMove = { point: { ...point }, until: this.world.tick + 180 }; }
   private readonly route = { path: [] as number[], goal: -1, pathIndex: 0 };
   private readonly waypoint = { x: 0, z: 0 };
   private attack: { id: number; side: 'LEFT' | 'RIGHT'; started: boolean; mouseAttack?: boolean; until?: number; ground?: boolean } | null = null;
   /** The infected the current click command attacks (melee resolves it first, so a downed target takes the ground hit). */
   get targetId(): number | null { return this.attack?.id ?? null; }
+  private get nav() { const nav = this.world.infected?.nav; return this.world.missions?.state.l4 ? nav?.forPlayer(survivor.radius + .02, .25) : nav; }
+  private get routeClearance(): number { return survivor.radius + (this.world.missions?.state.l4 ? .02 : .1); }
   constructor(private readonly world: SimWorld) {}
   snapshot() { return this.moveTarget || this.attack ? structuredClone({ moveTarget: this.moveTarget, attack: this.attack }) : null; }
   attacked(side: 'LEFT' | 'RIGHT'): void { if (this.attack?.side === side) this.attack.started = true; }
-  reset(): void { this.route.path.length = 0; this.route.goal = -1; this.moveTarget = null; this.attack = null; }
+  reset(clearFeedback = true): void { if (clearFeedback) this.blockedMove = null; this.route.path.length = 0; this.route.goal = -1; this.moveTarget = null; this.attack = null; }
   resolve(raw: InputFrame): InputFrame {
     const player = this.world.entities.get(1)!;
     if ((raw.mouseAttack || raw.activeAttack) && player.weapons && !raw.pointerGround) {
@@ -23,11 +28,14 @@ export class ControlIntent {
       raw = { ...raw, left: side === 'LEFT' ? { ...raw.left } : { down: false, held: false, up: false }, right: side === 'RIGHT' ? { ...raw.left } : { down: false, held: false, up: false },
         ...(raw.attackTarget ? { attackTarget: { ...raw.attackTarget, side } } : {}) };
     }
-    if (raw.cancelMove || Math.hypot(raw.move.x, raw.move.z) > 0 || raw.interact || (!raw.attackTarget && !raw.pointerGround && (raw.left.down || raw.right.down))) this.reset();
-    if (this.world.vehicles?.active != null || player.health.current <= 0) { this.reset(); return raw; }
+    if (raw.cancelMove || Math.hypot(raw.move.x, raw.move.z) > 0 || raw.interact || (!raw.attackTarget && !raw.pointerGround && (raw.left.down || raw.right.down))) this.reset(false);
+    if (this.world.vehicles?.active != null || player.health.current <= 0) { this.reset(false); return raw; }
     if (raw.moveTarget) {
-      const click = this.world.missions?.interactSnap(raw.moveTarget) ?? raw.moveTarget;
-      const nav = this.world.infected?.nav;
+      const requested = this.world.missions?.interactSnap(raw.moveTarget) ?? raw.moveTarget;
+      const nav = this.nav;
+      const click = nav?.clampPlayerTarget(requested, this.routeClearance) ?? requested;
+      if (click.x !== requested.x || click.z !== requested.z) this.boundaryFeedback(click);
+      else this.blockedMove = null;
       const cell = nav?.nearestCell(click.x, click.z);
       const point = nav ? nav.clear(click.x, click.z, survivor.radius) ? [click.x, click.z] : cell !== undefined && cell >= 0 ? [nav.x(cell), nav.z(cell)] : this.world.districts?.nav.clamp([click.x, click.z]) : this.world.districts?.nav.clamp([click.x, click.z]);
       this.moveTarget = point ? { x: point[0], z: point[1] } : { x: click.x, z: click.z }; this.attack = null;
@@ -35,7 +43,7 @@ export class ControlIntent {
     // A ground click during the planted swing is a queued move, never another in-place attack.
     // Holding Shift still plants the courier; releasing it resumes the queued move when the swing ends.
     if (raw.attackInPlace || Object.values(this.world.combat?.runner.running ?? {}).some(attack => attack.inPlace && this.world.tick < attack.endsAt)) {
-      if (raw.attackInPlace) this.reset();
+      if (raw.attackInPlace) this.reset(false);
       else this.attack = null;
       this.world.player?.locomotion.reset();
       return { ...raw, attackInPlace: true, move: { x: 0, z: 0 },
@@ -111,12 +119,12 @@ export class ControlIntent {
     return frame;
   }
   private walk(frame: InputFrame, target: Vec2, remaining: number): void {
-    const p = this.world.entities.get(1)!.transform, nav = this.world.infected?.nav;
+    const p = this.world.entities.get(1)!.transform, nav = this.nav;
     if (this.world.player) this.world.player.locomotion.navigationGrid = nav ?? null;
     // Leave room for the capsule's acceleration while turning a pulled corner.
     // The player's own route floods the district in 3000-cell slices (< 1 ms/tick even at 4x CPU throttle) and
     // falls back to the closest reachable cell when a click lands in a fenced yard (QA1-02).
-    if (nav && !nav.steer(p, target, this.route, survivor.radius + .1, this.waypoint, 3000, true)) {
+    if (nav && !nav.steer(p, target, this.route, this.routeClearance, this.waypoint, 3000, true)) {
       // While the route flood is still running (a few ticks at most), head straight for the click; the corner
       // clearance below keeps that from walking into walls. Without a walkable start, reconnect from its centre.
       const cell = nav.nearestCell(p.x, p.z);
@@ -125,7 +133,7 @@ export class ControlIntent {
     }
     // Arrived as close as the fences allow (fallback route end): stop instead of re-searching every tick.
     const last = this.route.path[this.route.path.length - 1];
-    if (nav && last !== undefined && this.route.pathIndex >= this.route.path.length - 1 && nav.nearestCell(target.x, target.z) !== last && Math.hypot(p.x - nav.x(last), p.z - nav.z(last)) < .3) {
+    if (nav && !nav.visible(p, target, this.routeClearance) && last !== undefined && this.route.pathIndex >= this.route.path.length - 1 && nav.nearestCell(target.x, target.z) !== last && Math.hypot(p.x - nav.x(last), p.z - nav.z(last)) < .3) {
       frame.move.x = frame.move.z = 0; if (this.moveTarget === target) this.moveTarget = null; return;
     }
     const destination = nav ? this.waypoint : target, dx = destination.x - p.x, dz = destination.z - p.z, distance = Math.hypot(dx, dz);

@@ -13,7 +13,7 @@ export interface SceneSpec {
   /** Native campaign menu over the game camera; run with --query ui=1. */
   menuScreen?: 'title' | 'levels' | 'credits';
   /** Production L4 convoy, population, braking and unload controller on an uncropped Fairhaven layout. */
-  l4Convoy?: boolean | 'parked';
+  l4Convoy?: boolean | 'parked' | 'hold';
   /** Production L3 rendezvous, rescued group and full authored finale crowd. */
   l3Rendezvous?: boolean;
   /** One R1–R6 production encounter, with the quality tier's authored crowd. */

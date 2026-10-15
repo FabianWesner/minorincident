@@ -32,6 +32,7 @@ export const dialogue: Record<string, string> = {
   'L4.welcome': 'Welcome to Fairhaven. Please proceed to registration.',
   'L4.quartermaster': 'Over here, courier. Take a machine gun, plenty of ammunition. Short bursts, and stay with the line.',
   'L4.gun': 'It is yours. Plenty of ammunition. Short bursts.',
+  'L4.perimeter-active': 'Military perimeter secured. Stay behind the barriers. Infected can climb them!',
   'L4.perimeter': 'Courier! Stay inside the perimeter. Nobody leaves the camp.',
   'L4.turn': 'Man down! He’s… he’s turning! Get back, get back!',
   'L4.war': 'Contact! All sides! Hold the plaza!',
