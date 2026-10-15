@@ -689,7 +689,7 @@ export class GameView implements Lifecycle {
   /** The boss hole opens while the Mega is within 14 m of the courier; it only drops boss fragments nearer the lens than her, inside a courier-sized disc. */
   private updateBossHole(player?: { x: number; z: number }): void {
     const goal = player && this.megaDistance(player) < 14 ? 1 : 0;
-    this.bossHole += (goal - this.bossHole) * .3; if (Math.abs(goal - this.bossHole) < .01) this.bossHole = goal;
+    this.bossHole = goal;
     seeThrough.bossStrength.value = this.bossHole;
     const screenHeight = 2 * this.camera.position.distanceTo(this.view.focus) * Math.tan(this.camera.fov * Math.PI / 360);
     seeThrough.bossRadius.value = Math.min(.3, Math.max(.1, 2.8 / screenHeight));
@@ -697,6 +697,14 @@ export class GameView implements Lifecycle {
   /** Scene Lab: hide the courier / the crowd (Mega included) and redraw, for the courier-visible-share probe. */
   probeVisibility(hide: { courier: boolean; crowd: boolean }): number {
     this.probeHide = { ...hide }; this.update(1);
+    // The reference removes every possible foreground solid, including static kits and parked cars.
+    if (this.districts) this.districts.visible = !hide.crowd;
+    if (this.npcs) this.npcs.visible = !hide.crowd;
+    if (this.interactions) this.interactions.visible = !hide.crowd;
+    if (this.fixtureProps) this.fixtureProps.visible = !hide.crowd;
+    if (this.bicycle) this.bicycle.visible = !((this.world.entities.get(1) as { riding?: number } | undefined)?.riding !== undefined ? hide.courier : hide.crowd);
+    this.vehicles?.probeVisibility(hide.courier, hide.crowd);
+    this.entityAssets?.probeVisibility(hide.courier, hide.crowd);
     const player = this.world.entities.get(1); return player ? this.megaDistance(player.transform) : Infinity;
   }
   /** Project a world point to viewport-normalized coordinates, for masks and input integration. */
@@ -853,7 +861,7 @@ export class GameView implements Lifecycle {
       const feet = current.y - .7;
       this.revealSubject.min.set(current.x - .55, feet, current.z - .55);
       this.revealSubject.max.set(current.x + .55, feet + 1.9, current.z + .55);
-      if (riding !== undefined && this.bicycle) this.revealSubject.union(this.revealVehicle.setFromObject(this.bicycle));
+      if ((this.world.entities.get(1) as { riding?: number } | undefined)?.riding !== undefined && this.bicycle) this.revealSubject.union(this.revealVehicle.setFromObject(this.bicycle));
       if (this.vehicles?.playerBounds(this.revealVehicle) || this.entityAssets?.playerBounds(this.revealVehicle)) this.revealSubject.union(this.revealVehicle);
       subject = this.revealSubject;
     }

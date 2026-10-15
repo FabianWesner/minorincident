@@ -160,6 +160,10 @@ export class EntityAssets extends Group {
     }
     return nearest;
   }
+  probeVisibility(courier: boolean, environment: boolean): void {
+    const ridden = this.playerVehicle();
+    for (const [id, record] of this.records) if (this.world.entities.get(id)?.hidden !== true) record.model.visible = !(id === ridden ? courier : environment);
+  }
   playerBounds(out: Box3): boolean {
     const id = this.playerVehicle(), record = id === undefined ? undefined : this.records.get(id);
     if (!record) return false;

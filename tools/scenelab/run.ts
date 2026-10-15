@@ -26,11 +26,11 @@ export async function measureCut(session: SceneSession) {
   await session.ready();
   const cut = PNG.sync.read(await session.page.screenshot({ type: 'png' }));
   const hole = await session.page.evaluate(() => window.__SCENE__!.cutProbe(true));
-  await session.step(1); await session.ready();
+  await session.ready();
   const full = PNG.sync.read(await session.page.screenshot({ type: 'png' }));
   await session.page.evaluate(() => window.__SCENE__!.cutProbe(false));
   if (!hole || cut.width !== full.width || cut.height !== full.height) return { outside: Infinity, inside: 0, strength: 0, cover: 0, occluder: '' };
-  const cx = hole.center[0] * cut.width, cy = hole.center[1] * cut.height, radius = hole.solidRadius * cut.height * (hole.cover > .5 ? 100 : 1);
+  const cx = hole.center[0] * cut.width, cy = hole.center[1] * cut.height, radius = hole.solidRadius * cut.height;
   let outside = 0, inside = 0;
   for (let y = 0; y < cut.height; y++) for (let x = 0; x < cut.width; x++) {
     const i = (y * cut.width + x) * 4;
@@ -49,7 +49,7 @@ export async function measureCourierShare(session: SceneSession) {
   await session.page.evaluate(() => window.__SCENE__!.hideProbe(false, false));
   const diff = (a: PNG, b: PNG) => { let n = 0; for (let i = 0; i < a.data.length; i += 4) if (Math.abs(a.data[i] - b.data[i]) + Math.abs(a.data[i + 1] - b.data[i + 1]) + Math.abs(a.data[i + 2] - b.data[i + 2]) >= 36) n++; return n; };
   const visible = diff(all.png, noCourier.png), reference = diff(noCrowd.png, none.png), mega = diff(all.png, noCrowd.png);
-  return { megaM: all.d, visible, reference, share: reference < 150 ? 1 : Math.min(1, visible / reference), megaPixels: mega, megaShare: mega / (all.png.width * all.png.height) };
+  return { megaM: all.d, visible, reference, share: reference > 0 ? Math.min(1, visible / reference) : 0, megaPixels: mega, megaShare: mega / (all.png.width * all.png.height) };
 }
 
 export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOptions) {
@@ -132,10 +132,10 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
     else for (const name of ['navContrastMin', 'navContrastFloor', 'playerContrastMin', 'landmarkContrastMin']) { const i = result.checks.findIndex(c => c.name === name); if (i >= 0 && !contrast.length) result.checks.splice(i, 1); }
   }
   if (shares.length) {
-    const near = shares.filter(s => s.megaM <= 14), contact = shares.filter(s => s.megaM <= 6);
+    const near = spec.megaAlpha ? shares.filter(s => s.megaM <= 14) : shares, contact = shares.filter(s => s.megaM <= 6);
     if (spec.expect?.courierVisibleShareMin !== undefined) result.checks.push({ name: 'courierVisibleShare', pass: near.every(s => s.share >= spec.expect!.courierVisibleShareMin!), value: near.length ? Math.min(...near.map(s => +s.share.toFixed(3))) : 1, limit: spec.expect.courierVisibleShareMin });
     if (spec.expect?.megaVisibleShareMin !== undefined) result.checks.push({ name: 'megaVisibleShare', pass: contact.every(s => s.megaShare >= spec.expect!.megaVisibleShareMin!), value: contact.length ? Math.min(...contact.map(s => +s.megaShare.toFixed(4))) : 1, limit: spec.expect.megaVisibleShareMin });
-    result.checks.push({ name: 'courierShareSampledNearMega', pass: near.length > 0, value: near.length, limit: 1 });
+    result.checks.push({ name: spec.megaAlpha ? 'courierShareSampledNearMega' : 'courierShareSampled', pass: near.length > 0, value: near.length, limit: 1 });
   }
   if (cutPixels) {
     if (spec.expect?.seeThroughCutPixelsMax !== undefined) result.checks.push({ name: 'seeThroughCutPixelsOutside', pass: cutPixels.outside <= spec.expect.seeThroughCutPixelsMax, value: cutPixels.outside, limit: spec.expect.seeThroughCutPixelsMax });
