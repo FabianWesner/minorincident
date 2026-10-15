@@ -1,3 +1,4 @@
+import { clearPickupPosition } from '../interact/PickupPlacement';
 import { action } from '../../data/actions/catalog';
 import type { InputFrame, Vec2 } from '../../input/InputFrame';
 import type { SimWorld } from '../world/SimWorld';
@@ -7,6 +8,7 @@ export class Pickups {
   spawn(actionId: string, position: Vec2, dropped = false, options: { retain?: boolean; interactTicks?: number; surfaceY?: number } = {}): number {
     action(actionId);
     if (!Number.isFinite(position.x) || !Number.isFinite(position.z)) throw new RangeError('Invalid pickup position');
+    if (!dropped && options.surfaceY === undefined) position = clearPickupPosition(this.world, position);
     const entity = this.world.entities.create({ kind: 'pickup', archetype: actionId, faction: 'neutral', health: { current: 1, max: 1 }, transform: { x: position.x, y: (options.surfaceY ?? 0) + 0.15, z: position.z, yaw: 0 }, pickup: { actionId, armed: !dropped, ...options } });
     this.world.spatial.set(entity.id, position.x, position.z); return entity.id;
   }
