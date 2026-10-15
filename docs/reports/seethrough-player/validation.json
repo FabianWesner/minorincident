@@ -1,0 +1,136 @@
+{
+  "fullRun": {
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit tests/sim tests/levels --maxWorkers=4",
+    "runner": "2.28.24.66",
+    "result": "failed",
+    "files": {
+      "passed": 421,
+      "failed": 15,
+      "skipped": 3,
+      "total": 439
+    },
+    "tests": {
+      "passed": 2830,
+      "failed": 15,
+      "skipped": 9,
+      "total": 2854
+    },
+    "failures": [
+      {
+        "test": "FAIL   timing  tests/sim/levels/l10-assault.test.ts > T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+        "error": "AssertionError: expected 4.253052000014577 to be less than or equal to 4",
+        "observedMs": 4.253052000014577,
+        "budgetMs": 4.0
+      },
+      {
+        "test": "FAIL   timing  tests/sim/performance/alpha-physical.test.ts > T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms",
+        "error": "AssertionError: expected 6.877793999970891 to be less than or equal to 4",
+        "observedMs": 6.877793999970891,
+        "budgetMs": 4.0
+      },
+      {
+        "test": "FAIL   timing  tests/sim/performance/alpha-support.test.ts > T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms",
+        "error": "AssertionError: expected 7.688475999981165 to be less than or equal to 4",
+        "observedMs": 7.688475999981165,
+        "budgetMs": 4.0
+      },
+      {
+        "test": "FAIL   timing  tests/sim/performance/alpha.test.ts > T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms",
+        "error": "AssertionError: expected 7.491573999985121 to be less than or equal to 4",
+        "observedMs": 7.491573999985121,
+        "budgetMs": 4.0
+      },
+      {
+        "test": "FAIL   timing  tests/sim/performance/horde.test.ts > T-E18-02-200 @E18-AC02 @perf Node sim p95 200 living infected <= 4ms",
+        "error": "AssertionError: expected 5.926274999976158 to be less than or equal to 4",
+        "observedMs": 5.926274999976158,
+        "budgetMs": 4.0
+      },
+      {
+        "test": "FAIL   timing  tests/sim/performance/l10-finale.test.ts > T-E32-20-perf-200 @E32-AC20 @E32-AC31 @E18-AC02 full-cap active dispersal predicate",
+        "error": "AssertionError: expected 9.584800999960862 to be less than or equal to 4",
+        "observedMs": 9.584800999960862,
+        "budgetMs": 4.0
+      },
+      {
+        "test": "FAIL   timing  tests/sim/performance/mega-audio.test.ts > T-E32-13-perf-200 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling",
+        "error": "AssertionError: expected 6.377939000027254 to be less than or equal to 4",
+        "observedMs": 6.377939000027254,
+        "budgetMs": 4.0
+      },
+      {
+        "test": "FAIL   timing  tests/sim/performance/mega-moves.test.ts > T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+        "error": "AssertionError: expected 9.628162999986671 to be less than or equal to 4",
+        "observedMs": 9.628162999986671,
+        "budgetMs": 4.0
+      },
+      {
+        "test": "FAIL   timing  tests/sim/performance/zoo-s1.test.ts > T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
+        "error": "AssertionError: expected 6.9239509999752045 to be less than or equal to 4",
+        "observedMs": 6.9239509999752045,
+        "budgetMs": 4.0
+      },
+      {
+        "test": "FAIL   timing  tests/sim/performance/zoo-s2.test.ts > T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+        "error": "AssertionError: expected 9.370656999992207 to be less than or equal to 4",
+        "observedMs": 9.370656999992207,
+        "budgetMs": 4.0
+      },
+      {
+        "test": "FAIL   timing  tests/sim/performance/zoo-s3.test.ts > T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+        "error": "AssertionError: expected 9.237384999985807 to be less than or equal to 4",
+        "observedMs": 9.237384999985807,
+        "budgetMs": 4.0
+      },
+      {
+        "test": "FAIL   timing  tests/sim/world/chunk-residency.test.ts > T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95",
+        "error": "AssertionError: expected 4.10361799999373 to be less than or equal to 4",
+        "observedMs": 4.10361799999373,
+        "budgetMs": 4.0
+      },
+      {
+        "test": "FAIL   functional  tests/levels/L10.test.ts > T-E32-04-complete @E32-AC04 one seed completes the full L10 route with ordinary inputs and regional timing",
+        "error": "Error: Test timed out in 300000ms."
+      },
+      {
+        "test": "FAIL   functional  tests/unit/static.test.ts > T-E01-01b @E01 @E01-AC01 typecheck, lint and build exit zero without warnings",
+        "error": "Error: Test timed out in 180000ms."
+      },
+      {
+        "test": "FAIL   functional  tests/sim/levels/l10-campus-corridor.test.ts > T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex",
+        "error": "AssertionError: expected 6.907928999979049 to be less than or equal to 4",
+        "observedMs": 6.907928999979049,
+        "budgetMs": 4.0
+      }
+    ],
+    "snapshotNote": "The full run predates the final passenger-ID and foliage alignment fixes. Sim source was unchanged; final reveal tests cover both later fixes."
+  },
+  "directChecks": {
+    "typecheck": "passed",
+    "lint": "passed",
+    "productionBuild": "passed"
+  },
+  "initialFocused": {
+    "files": 5,
+    "tests": 10,
+    "result": "passed"
+  },
+  "finalFocused": {
+    "command": "npx vitest run tests/unit/render/seethrough.test.ts --project=functional --maxWorkers=1",
+    "location": "Mac, one worker, one focused file",
+    "result": "passed",
+    "files": 1,
+    "tests": 4,
+    "durationSeconds": 0.787
+  },
+  "isolation": "Isolated timing and harness reruns cancelled after >30 minutes waiting for both slots. Another active lane held the second slot. E18 budgets are not certified.",
+  "l10CompletionArtifact": {
+    "completed": true,
+    "deaths": 0,
+    "regions": 7,
+    "maxConcurrentInfected": 168,
+    "allCompletionAssertionsSatisfied": true,
+    "harnessTimedOutMs": 300000
+  },
+  "runtimeHead": "30951c31e"
+}

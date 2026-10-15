@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { Plane, Ray, Vector3 } from 'three';
+import { Box3, Plane, Ray, Vector3 } from 'three';
 import { View, zoomLimits } from '../../../src/render/View';
 
 test('T-E02-12 @E02 @E02-AC12 shake is bounded and respects the setting immediately', () => {
@@ -108,5 +108,36 @@ test('T-E32-26-camera-S9 @E32-AC26 epilogue pull widens the follow rig while whe
     expect(view.getState().zoom).toBe(1); expect(view.radius).toBeCloseTo(base * 4);
     view.resize(width, height); expect(view.radius).toBeCloseTo(base * 4);
     view.reset({ x: 0, z: 0 }); expect(view.radius).toBeCloseTo(base);
+  }
+});
+
+// The relocated Harbor cellar puts the zoom-1 lens inside the opposite apartment.
+test('@E22 @E23 the Fairhaven follow lens stays outside the opposite building at the cellar exit', () => {
+  const view = new View(), player = { x: -79.3, y: .85, z: -44.2801 };
+  const building = new Box3(new Vector3(-73.1002, 0, -34.3001), new Vector3(-62.8, 12.85, -21.6999));
+  view.cameraSolids.push(building); view.reset(player);
+  expect(building.containsPoint(view.camera.position)).toBe(false);
+  expect(view.camera.position.distanceTo(view.focus)).toBeLessThan(view.radius);
+  expect(view.playerZoom).toBe(1);
+  expect(view.camera.position.toArray()).toEqual(view.simCamera.position.toArray());
+  view.zoom(Math.log(.5), true);
+  for (let i = 0; i < 120; i++) view.update(player, 1 / 60);
+  expect(building.containsPoint(view.camera.position)).toBe(false);
+  expect(view.camera.position.distanceTo(view.focus)).toBeCloseTo(view.radius, 3);
+  view.cameraSolids.length = 0; view.reset(player);
+  expect(view.camera.position.distanceTo(view.focus)).toBeCloseTo(view.radius, 6);
+});
+
+test('@E22 camera clearance beside the moved Lakeshore apartment preserves framing throughout the lane', () => {
+  const building = new Box3(new Vector3(61.28, 0, 30.2599), new Vector3(73.88, 17.76, 40.2201));
+  for (const x of [57, 59.1, 61, 64, 67]) {
+    const view = new View(), player = { x, y: .85, z: 27.5 };
+    view.cameraSolids.push(building); view.reset(player);
+    expect(building.containsPoint(view.camera.position)).toBe(false);
+    expect(view.camera.position.distanceTo(view.focus)).toBeGreaterThanOrEqual(19 * zoomLimits[0] - 1e-9);
+    const ray = new Ray(view.focus.clone(), view.camera.position.clone().sub(view.focus).normalize());
+    const hit = ray.intersectBox(building, new Vector3());
+    expect(hit === null || hit.distanceTo(view.focus) > view.camera.position.distanceTo(view.focus)).toBe(true);
+    expect(view.camera.position.toArray()).toEqual(view.simCamera.position.toArray());
   }
 });

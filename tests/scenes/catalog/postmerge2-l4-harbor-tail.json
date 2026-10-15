@@ -1,0 +1,60 @@
+{
+  "extends": "l4-finale-cellar.json",
+  "name": "postmerge2-l4-harbor-tail",
+  "note": "The extended collapse has an unseen group on the last Harbor block before the cellar, within the original character cap.",
+  "layout": {
+    "level": "L4",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        -85,
+        -59
+      ],
+      [
+        -48,
+        -29
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -70,
+        -39.5
+      ],
+      "loadout": [
+        "weapon.army-mg",
+        "weapon.fire-axe"
+      ],
+      "state": {
+        "moveTo": [
+          -79,
+          -39.5
+        ],
+        "pace": "walk"
+      }
+    },
+    {
+      "id": "tail-1",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -84,
+        -39.5
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "tail-2",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -82.8,
+        -38.5
+      ],
+      "yaw": 0
+    }
+  ]
+}

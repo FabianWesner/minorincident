@@ -1,0 +1,13 @@
+{
+  "name": "seethrough-door-gate-original",
+  "extends": "../../../specs/scenes/catalog/door-gate-lockin.json",
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 30,
+    "clippingMax": 0,
+    "courierVisibleShareMin": 0.6,
+    "seeThroughCutPixelsMax": 0
+  },
+  "sheet": 30
+}

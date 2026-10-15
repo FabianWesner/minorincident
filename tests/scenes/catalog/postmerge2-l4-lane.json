@@ -1,0 +1,39 @@
+{
+  "name": "postmerge2-l4-lane",
+  "extends": "l4-finale-cellar.json",
+  "note": "Follow lens remains in front of the relocated tall Lakeshore apartment throughout the original roof-band walk.",
+  "layout": {
+    "level": "L4",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        45,
+        20
+      ],
+      [
+        83,
+        48
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        64,
+        27.5
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 30,
+  "shots": [
+    29
+  ]
+}

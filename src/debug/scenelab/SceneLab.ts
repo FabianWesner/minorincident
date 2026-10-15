@@ -113,7 +113,7 @@ export class SceneLab {
   /** Small hand props (mug, phone) per actor: lowest drawn prop centre between hip (0) and shoulders (1), and the straightest
    * right arm (shoulder-wrist distance over arm length), per LOD band. PO 10-13 "Coffee cup still wrong" (seated, low tier). */
   /** Frames the solid-occluder courier hole was open, its largest radius and low props drawn with a cut material. */
-  private seeThroughOpen = { frames: 0, solidRadiusMax: 0, occluders: [] as string[], cutLowProps: [] as string[] };
+  private seeThroughOpen = { frames: 0, solidRadiusMax: 0, occluders: [] as string[], cutLowProps: [] as string[], cutPlacements: [] as string[] };
   private holds = new Map<string, { prop: string; samples: number; heightMin: number; heightFrame: number; straightMax: number; straightFrame: number; lods: Record<string, number> }>();
   private companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 };
   /** Hand-over choreographies in progress (actor id -> route, start frame, pause). */
@@ -180,7 +180,7 @@ export class SceneLab {
     this.propSinkMaxCm = 0; this.propGroundSamples = 0; this.propPenetration.clear(); this.propPenetrationSamples = 0; this.propPenetrationTick = -1;
     this.cureStats = null;
     this.vehicleMotion.clear(); this.pursuit.clear(); this.mega = null; this.gunStats = null; this.attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1, hull: 0, hullHits: 0 };
-    this.spec = structuredClone(spec); this.companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 }; this.frame = 0; this.heldPropSamples = 0; this.heldPropClips.clear(); this.holds.clear(); this.seeThroughOpen = { frames: 0, solidRadiusMax: 0, occluders: [], cutLowProps: [] }; this.gunBodyHits.clear(); this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.metroClosed = 0; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0; this.placeholders = { frames: 0, firstFrame: -1, assets: new Set() };
+    this.spec = structuredClone(spec); this.companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 }; this.frame = 0; this.heldPropSamples = 0; this.heldPropClips.clear(); this.holds.clear(); this.seeThroughOpen = { frames: 0, solidRadiusMax: 0, occluders: [], cutLowProps: [], cutPlacements: [] }; this.gunBodyHits.clear(); this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.metroClosed = 0; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0; this.placeholders = { frames: 0, firstFrame: -1, assets: new Set() };
     const built = this.built = buildScene(spec, assets, source);
     this.game.view.labProbes().districts?.setDispersalActive(!!spec.dispersal?.active);
     if (spec.armyBoom && !spec.armyBoom.closed) for (const p of built.layout.placements) if (p.assetId === 'kit.army-checkpoint') p.boomOpen = true;
@@ -811,6 +811,15 @@ export class SceneLab {
       view.follow(); view.zoom(Math.log((c.zoom ?? 1) / view.getState().targetZoom), true);
       return;
     }
+    // Courier follow scenes use the production rig, including narrow-street lens
+    // clearance. A fixed preset can put the catalog camera inside a building.
+    if (c.mode === 'follow' && this.actors.get(c.actor)?.entity === 1) {
+      const rig = this.game.view.view;
+      rig.follow();
+      const zoom = c.zoom ?? 1, current = rig.getState().targetZoom;
+      if (Math.abs(current - zoom) > 1e-6) rig.zoom(Math.log(zoom / current), true);
+      return;
+    }
     // E32 close camera: Mega fixtures run the real follow rig (boss pull-back, player zoom), not a fixed preset.
     if (this.spec?.megaAlpha && c.mode === 'game' && c.target === 'courier') {
       const rig = this.game.view.view;
@@ -1143,6 +1152,7 @@ export class SceneLab {
     if (audit) {
       if (audit.strength > .5) { this.seeThroughOpen.frames++; if (audit.occluder && !this.seeThroughOpen.occluders.includes(audit.occluder)) this.seeThroughOpen.occluders.push(audit.occluder); this.seeThroughOpen.solidRadiusMax = Math.max(this.seeThroughOpen.solidRadiusMax, +audit.solidRadius.toFixed(3)); }
       this.seeThroughOpen.cutLowProps = [...new Set([...this.seeThroughOpen.cutLowProps, ...audit.cutLowProps])];
+      this.seeThroughOpen.cutPlacements = [...new Set([...this.seeThroughOpen.cutPlacements, ...audit.cutPlacements])];
     }
     const sim: Record<string, number> = {}, drawn: Record<string, number> = {};
     const clip = this.frame % 3 === 0 && this.staticSets;
@@ -1528,7 +1538,7 @@ export class SceneLab {
     return audit && { center: audit.center, solidRadius: audit.solidRadius, strength: audit.strength, cover: audit.cover, occluder: audit.occluder };
   }
   /** Courier-visible-share probe: redraw with the courier and/or the crowd (Mega included) hidden; returns the courier-to-Mega distance in metres (Infinity when none). */
-  hideProbe(courier: boolean, crowd: boolean): number { return this.game.view.probeVisibility({ courier, crowd }); }
+  hideProbe(courier: boolean, crowd: boolean, environment = false): number { return this.game.view.probeVisibility({ courier, crowd, environment }); }
   /** Point-in-scene to client pixels (for cropping close-ups from a screenshot). */
   project(p: [number, number, number]): { x: number; y: number } { const q = this.game.view.project(...p); return { x: (q[0] + 1) / 2 * innerWidth, y: (1 - q[1]) / 2 * innerHeight }; }
 }

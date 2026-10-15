@@ -1,4 +1,5 @@
 import { expect, test } from 'vitest';
+import { respawnAtCheckpoint, respawnRule } from '../../src/sim/missions/Respawn';
 import { forecourt } from '../fixtures/l1Forecourt';
 
 test.each(['high', 'low'] as const)('PO #3/#4b @E19 %s: 28 living infected, bounded forecourt attackers and bike reachable within 20 s', async tier => {
@@ -41,5 +42,31 @@ test.each(['high', 'low'] as const)('PO #3/#4b @E19 %s: 28 living infected, boun
     expect(w.entities.get(1)!.health.current).toBeGreaterThan(0);
     expect(ids.filter(id => w.entities.get(id)!.health.current > 0)).toHaveLength(28);
     console.log('PO bike escape seconds', (w.tick - begin) / 60);
+  } finally { w.dispose(); }
+}, 120000);
+
+test('@E19 the forecourt preserves respawn clearance while other humans are visible', async () => {
+  const { w, mission } = await forecourt();
+  try {
+    for (const e of [...w.infected!.active]) w.infected!.release(e);
+    for (const e of w.entities.iterate()) if (e.civilian) e.hidden = true;
+    mission.state.l1!.house = { door: 0, house: '', x: 0, z: 0, nx: 0, nz: 1, floor: [], sx: 0, sz: 0, route: [], ox: 0, oz: 0, next: 0, ids: [] };
+    mission.state.l1!.streetGroups = [];
+    const at = { ...w.entities.get(1)!.transform }, nav = w.infected!.nav;
+    const cell = nav.nearestCell(20, 26);
+    const id = w.infected!.spawn('infected.runner', { x: nav.x(cell), z: nav.z(cell) });
+    const civilian = nav.nearestCell(18, 32);
+    const human = w.npcs!.civilians.outbreak!.spawnPedestrian({ x: nav.x(civilian), z: nav.z(civilian) });
+    respawnAtCheckpoint(w, at);
+    const enemy = w.entities.get(id)!, target = w.entities.get(human)!.transform;
+    enemy.transform.yaw = -Math.atan2(target.z - enemy.transform.z, target.x - enemy.transform.x);
+    const pause = enemy.infected!.l1!.pauseUntil;
+    expect(pause).toBeGreaterThanOrEqual(w.tick + respawnRule.delayS * 60);
+    for (let i = 0; i < 3 * 60; i++) {
+      w.update();
+      const e = w.entities.get(id)!;
+      expect(e.infected!.l1!.pauseUntil).toBeGreaterThanOrEqual(pause);
+      expect(Math.hypot(e.transform.x - at.x, e.transform.z - at.z)).toBeGreaterThanOrEqual(respawnRule.clearM - .5);
+    }
   } finally { w.dispose(); }
 }, 120000);

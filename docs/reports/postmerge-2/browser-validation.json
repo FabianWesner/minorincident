@@ -1,0 +1,732 @@
+{
+  "method": "Complete browser gate plus corrected-driver reruns; latest case result supersedes the earlier case. Original command outcomes remain in runs.",
+  "runs": [
+    {
+      "name": "full-gate",
+      "stats": {
+        "startTime": "2026-10-15T17:54:47.370Z",
+        "duration": 833437.6490000001,
+        "expected": 98,
+        "skipped": 0,
+        "unexpected": 1,
+        "flaky": 1
+      }
+    },
+    {
+      "name": "corrected-drivers",
+      "stats": {
+        "startTime": "2026-10-15T18:16:32.975Z",
+        "duration": 125648.514,
+        "expected": 3,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    }
+  ],
+  "latest": {
+    "expected": 100
+  },
+  "cases": {
+    "chromium/e2e/audio/smoke.spec.ts/S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/audio/smoke.spec.ts/T-E16-18 @E16 @E16-AC18 @E16-AC17 @mobile first real gesture unlocks; haptics/settings and freeze/interrupted suspend": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/crowd-visible-outbreak.spec.ts/T-E07-crowd-visible-outbreak-webgl @E07 every on-screen living infected and pedestrian is drawn through an L1 outbreak fight (webgl)": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/crowd-visible-outbreak.spec.ts/T-E07-crowd-visible-outbreak-webgpu @E07 every on-screen living infected and pedestrian is drawn through an L1 outbreak fight (webgpu)": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/input-mouse.spec.ts/T-E03-01 @E03 @E03-AC01 cursor aims without moving": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/input-mouse.spec.ts/T-E03-02 @E03 @E03-AC02 mouse buttons preserve down held up and prevent context menus": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/input-mouse.spec.ts/T-E03-03 @E03 @E03-AC03 @E02-AC03 wheel zooms smoothly and never cycles weapons": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/input-mouse.spec.ts/T-E03-12 @E03 @E03-AC12 middle-click F and E interact without browser autoscroll": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/input-mouse.spec.ts/T-E03-14 @E03 @E03-AC14 click ground walks, retargets, stops and held ground follows cursor": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/input-mouse.spec.ts/T-E03-ground-escape @E03 @E21 clear ground near a melee target stays movement; a near miss at its feet still targets it": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/input-mouse.spec.ts/T-E03-15-left @E03 @E03-AC15 target click approaches then attacks left": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/input-mouse.spec.ts/T-E03-16 @E03 @E03-AC16 Shift LMB distant ground swings stationary and cancels destination": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/input-mouse.spec.ts/T-E03-17 @E03 @E03-AC17 RMB and Q cycle carried actions without attacking": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/input-mouse.spec.ts/T-E03-12-car @E03 @E03-AC12 middle-click near car immediately enters; F exits": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/input-mouse.spec.ts/T-E03-15-held @E03 @E03-AC15 held LMB target repeats and target death stops approach": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/input-mouse.spec.ts/T-E03-17-pending @E03 @E03-AC15 @E03-AC17 Q during target command waits for swap then attacks once": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/input-mouse.spec.ts/T-E03-15-live @E03 @E03-AC15 real LMB follows a moving infected and attacks it": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/input-mouse.spec.ts/T-E03-chord @E03 @E03-AC02 @E03-AC13 releasing LMB before RMB clears both independently": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/input-mouse.spec.ts/@E03-AC05 @E03-AC17 M1-05 numbers and HUD clicks select either rack; Shift never attacks": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/input-mouse.spec.ts/PO #14 active numbers, Q, RMB and HUD follow weapon order after unordered pickups": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/cellar-position.spec.ts/T-E22-cellar-pos @E22 L4 end: Harbor pavement, door, descent, brace; L5 start in the same yard (game camera captures)": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/cellar-position.spec.ts/T-E23-cellar-pos @E23 L5 start: the courier stands in the cellar yard under the game camera, the brace is reachable by keyboard and unbarring steps out on Kessler Lane": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/L1.spec.ts/T-E19-unlock @E19 result screen, real click on Continue: straight to the next level, no upgrade/rack screens (PO decision 2026-10-07)": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/L1.spec.ts/T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/L1.spec.ts/T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/L2.spec.ts/T-E20-18 @E20 @E20-AC18 @E20-AC16 @E20-AC19 real-input playthrough from the station to the closing gate, photo spots for the vision review": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/L2.spec.ts/T-E20-14b @E20 @E20-AC14 campaign: the gate closes, no reward screen, L3 loads with the carried loadout": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-barricade-prompts.spec.ts/@E22 no army-line rebuild prompts webgl high zoom 1": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-barricade-prompts.spec.ts/@E22 no army-line rebuild prompts webgl high zoom 0.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-barricade-prompts.spec.ts/@E22 no army-line rebuild prompts webgl low zoom 1": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-barricade-prompts.spec.ts/@E22 no army-line rebuild prompts webgl low zoom 0.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-barricade-prompts.spec.ts/@E22 no army-line rebuild prompts webgpu high zoom 1": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-barricade-prompts.spec.ts/@E22 no army-line rebuild prompts webgpu high zoom 0.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-barricade-prompts.spec.ts/@E22 no army-line rebuild prompts webgpu low zoom 1": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-barricade-prompts.spec.ts/@E22 no army-line rebuild prompts webgpu low zoom 0.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-blank-viewport.spec.ts/T-E22-blank @E22 L4 the walk along Lakeshore Avenue past the former cellar never leaves the viewport one flat colour (webgl)": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-blank-viewport.spec.ts/T-E22-blank @E22 L4 the walk along Lakeshore Avenue past the former cellar never leaves the viewport one flat colour (webgpu)": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-blank-viewport.spec.ts/T-E22-blank @E22 L4 the walk along Kessler Lane north of the store never leaves the viewport one flat colour (webgl)": {
+      "source": "corrected-drivers",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-blank-viewport.spec.ts/T-E22-blank @E22 L4 the walk along Kessler Lane north of the store never leaves the viewport one flat colour (webgpu)": {
+      "source": "corrected-drivers",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-blank-viewport.spec.ts/T-E22-blank @E22 L4 the walk along Harbor Street to the relocated cellar never leaves the viewport one flat colour (webgl)": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-blank-viewport.spec.ts/T-E22-blank @E22 L4 the walk along Harbor Street to the relocated cellar never leaves the viewport one flat colour (webgpu)": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-cellar-guidance.spec.ts/@E22 line-broken cellar guidance webgl high zoom 1": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-cellar-guidance.spec.ts/@E22 line-broken cellar guidance webgl high zoom 0.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-cellar-guidance.spec.ts/@E22 line-broken cellar guidance webgl low zoom 1": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-cellar-guidance.spec.ts/@E22 line-broken cellar guidance webgl low zoom 0.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-cellar-guidance.spec.ts/@E22 line-broken cellar guidance webgpu high zoom 1": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-cellar-guidance.spec.ts/@E22 line-broken cellar guidance webgpu high zoom 0.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-cellar-guidance.spec.ts/@E22 line-broken cellar guidance webgpu low zoom 1": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-cellar-guidance.spec.ts/@E22 line-broken cellar guidance webgpu low zoom 0.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-plaza-movement.spec.ts/@E22 L4 plaza: mouse WASD stick webgl high zoom 1": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-plaza-movement.spec.ts/@E22 L4 war: mouse WASD stick webgl high zoom 1": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-plaza-movement.spec.ts/@E22 L4 respawn: mouse WASD stick webgl high zoom 1": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-plaza-movement.spec.ts/@E22 L4 plaza: mouse WASD stick webgl high zoom 0.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-plaza-movement.spec.ts/@E22 L4 war: mouse WASD stick webgl high zoom 0.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-plaza-movement.spec.ts/@E22 L4 respawn: mouse WASD stick webgl high zoom 0.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-plaza-movement.spec.ts/@E22 L4 plaza: mouse WASD stick webgl low zoom 1": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-plaza-movement.spec.ts/@E22 L4 war: mouse WASD stick webgl low zoom 1": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-plaza-movement.spec.ts/@E22 L4 respawn: mouse WASD stick webgl low zoom 1": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-plaza-movement.spec.ts/@E22 L4 plaza: mouse WASD stick webgl low zoom 0.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-plaza-movement.spec.ts/@E22 L4 war: mouse WASD stick webgl low zoom 0.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-plaza-movement.spec.ts/@E22 L4 respawn: mouse WASD stick webgl low zoom 0.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-plaza-movement.spec.ts/@E22 L4 plaza: mouse WASD stick webgpu high zoom 1": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-plaza-movement.spec.ts/@E22 L4 war: mouse WASD stick webgpu high zoom 1": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-plaza-movement.spec.ts/@E22 L4 respawn: mouse WASD stick webgpu high zoom 1": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-plaza-movement.spec.ts/@E22 L4 plaza: mouse WASD stick webgpu high zoom 0.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-plaza-movement.spec.ts/@E22 L4 war: mouse WASD stick webgpu high zoom 0.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-plaza-movement.spec.ts/@E22 L4 respawn: mouse WASD stick webgpu high zoom 0.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-plaza-movement.spec.ts/@E22 L4 plaza: mouse WASD stick webgpu low zoom 1": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-plaza-movement.spec.ts/@E22 L4 war: mouse WASD stick webgpu low zoom 1": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-plaza-movement.spec.ts/@E22 L4 respawn: mouse WASD stick webgpu low zoom 1": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-plaza-movement.spec.ts/@E22 L4 plaza: mouse WASD stick webgpu low zoom 0.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-plaza-movement.spec.ts/@E22 L4 war: mouse WASD stick webgpu low zoom 0.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-plaza-movement.spec.ts/@E22 L4 respawn: mouse WASD stick webgpu low zoom 0.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-po-round.spec.ts/webgl high zoom 1": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-po-round.spec.ts/webgl high zoom 0.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-po-round.spec.ts/webgl high zoom 1.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-po-round.spec.ts/webgl low zoom 1": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-po-round.spec.ts/webgl low zoom 0.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-po-round.spec.ts/webgl low zoom 1.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-po-round.spec.ts/webgpu high zoom 1": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-po-round.spec.ts/webgpu high zoom 1.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-po-round.spec.ts/webgpu low zoom 1": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/l4-po-round.spec.ts/webgpu low zoom 1.5": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/L4.spec.ts/T-E22-alarm @E22 @E22-AC07 real-input alarm has living visible infected within 10 seconds": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/L4.spec.ts/T-E22-18 @E22 @E22-AC18 @E22-AC19 real-input playthrough: convoy, quartermaster, the turn, the war, the line break, Kessler Lane, the barred cellar door; photo spots and pair cameras": {
+      "source": "corrected-drivers",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/L4.spec.ts/T-E22-15b @E22 @E22-AC15 campaign: the barred cellar door loads L5 with the carried loadout and no reward screen": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/L4.spec.ts/T-E22-19 @E22 @E22-AC20 pedestrians, soldiers and infected are drawn on screen in L4 (webgl), not only their props": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/levels/L4.spec.ts/T-E22-19 @E22 @E22-AC20 pedestrians, soldiers and infected are drawn on screen in L4 (webgpu), not only their props": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/menu-10-levels.spec.ts/ten level menu high @menu-10-levels": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/menu-10-levels.spec.ts/ten level menu low @menu-10-levels": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/menu-10-levels.spec.ts/L9 saved crossing row resumes and can restart @menu-10-levels": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/respawn-bat.spec.ts/E19 @E19 respawn after the bat: real-click pickup, die at the house with infected around, respawn on the pickup with the bat equipped": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/smoke.spec.ts/S-01 @smoke foundation boots, ready resolves and a screenshot is available": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/smoke.spec.ts/S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/webgpu-canvas.spec.ts/T-E02-webgpu-canvas @smoke @E02 WebGPU high mega health bars preserve the game frame at both zoom limits": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/webgpu-canvas.spec.ts/T-E02-webgpu-game-canvas @smoke @E02 WebGPU high L1 L4 L8 game cameras render at both zoom limits": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/webgpu-canvas.spec.ts/T-E02-webgpu-canvas @smoke @E02 WebGPU low mega health bars preserve the game frame at both zoom limits": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/e2e/webgpu-canvas.spec.ts/T-E02-webgpu-game-canvas @smoke @E02 WebGPU low L1 L4 L8 game cameras render at both zoom limits": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/visual/e27-smoke.spec.ts/T-E27-11 @E27 @E27-AC11 a night fire lights the lower column orange and a police strobe lights its smoke": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    },
+    "chromium/visual/e27-smoke.spec.ts/T-E27-12 @E27 @E27-AC12 smoke covering the player retains a 2:1 silhouette at night": {
+      "source": "full-gate",
+      "status": "expected",
+      "attempts": [
+        "passed"
+      ]
+    }
+  }
+}

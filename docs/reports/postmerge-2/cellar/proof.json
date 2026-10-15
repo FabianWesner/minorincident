@@ -1,0 +1,2658 @@
+[
+  {
+    "file": "docs/reports/postmerge-2/cellar/webgl2-high-z1.jpg",
+    "dominantShare": 0.30059678819444446,
+    "backend": "webgl",
+    "tier": "high",
+    "player": {
+      "kind": "player",
+      "archetype": "player.survivor",
+      "transform": {
+        "x": -79.30000305175781,
+        "y": 0.8500000238418579,
+        "z": -44.28010177612305,
+        "yaw": -1.5707963267948966
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "faction": "survivor",
+      "id": 1,
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": -1
+      },
+      "survivor": {
+        "variant": "female",
+        "gearTier": 3,
+        "animation": "idle",
+        "animationTick": 0,
+        "velocity": {
+          "x": 0,
+          "z": 0
+        },
+        "grounded": false,
+        "invulnerableUntil": 0,
+        "checkpoint": {
+          "x": -79.29999999999998,
+          "y": 0.705,
+          "z": -44.2801,
+          "yaw": -1.5707963267948966
+        },
+        "diedAt": null
+      },
+      "weapons": {
+        "selectedSide": "RIGHT",
+        "LEFT": {
+          "rack": [
+            {
+              "id": "weapon.fire-axe",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.bat",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            }
+          ],
+          "index": 0,
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "aimPoint": null,
+          "swapUntil": 0
+        },
+        "RIGHT": {
+          "rack": [
+            {
+              "id": "weapon.army-mg",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.handgun",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.kick",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            }
+          ],
+          "index": 0,
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "aimPoint": null,
+          "swapUntil": 0
+        }
+      },
+      "combat": {
+        "radius": 0.3,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      }
+    },
+    "camera": {
+      "zoom": 1,
+      "targetZoom": 1,
+      "zoomLimits": [
+        0.5,
+        1.5
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 19,
+      "focus": [
+        -79.30000304961074,
+        0.12999998045103434,
+        -44.280101775583084
+      ],
+      "target": [
+        -79.30000304961074,
+        0.12999998045103434,
+        -44.280101775583084
+      ],
+      "position": [
+        -69.54882583515473,
+        10.149200945446566,
+        -34.52892456112708
+      ],
+      "spot": null
+    },
+    "mission": {
+      "phase": "emerged",
+      "startAt": 0,
+      "emergedAt": 0,
+      "searchAt": 0,
+      "accountedAt": 0,
+      "metroAt": 0,
+      "shutterAt": 0,
+      "doneAt": 0,
+      "survivors": [
+        {
+          "key": "dale",
+          "id": 20,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "rosa",
+          "id": 21,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "okafor",
+          "id": 22,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "mia",
+          "id": 23,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "sam",
+          "id": 24,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        }
+      ],
+      "found": 0,
+      "lookoutId": 25,
+      "stationIds": [
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140
+      ],
+      "infectedIds": [
+        76,
+        78,
+        80,
+        82,
+        84,
+        86,
+        88,
+        89,
+        91,
+        93,
+        95,
+        96,
+        98,
+        100,
+        102,
+        104,
+        106,
+        108
+      ],
+      "medkitIds": [
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116
+      ],
+      "corpseIds": [
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62
+      ],
+      "fireIds": [
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75
+      ],
+      "gloom": 1,
+      "cue": null,
+      "lastShot": {},
+      "waitedAt": 0,
+      "infectedMax": 18,
+      "deadAtMetro": 0
+    },
+    "draws": 179,
+    "triangles": 262961
+  },
+  {
+    "file": "docs/reports/postmerge-2/cellar/webgl2-high-z0.5.jpg",
+    "dominantShare": 0.1934299045138889,
+    "backend": "webgl",
+    "tier": "high",
+    "player": {
+      "kind": "player",
+      "archetype": "player.survivor",
+      "transform": {
+        "x": -79.30000305175781,
+        "y": 0.8500000238418579,
+        "z": -44.28010177612305,
+        "yaw": -1.5707963267948966
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "faction": "survivor",
+      "id": 1,
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": -1
+      },
+      "survivor": {
+        "variant": "female",
+        "gearTier": 3,
+        "animation": "idle",
+        "animationTick": 0,
+        "velocity": {
+          "x": 0,
+          "z": 0
+        },
+        "grounded": false,
+        "invulnerableUntil": 0,
+        "checkpoint": {
+          "x": -79.29999999999998,
+          "y": 0.705,
+          "z": -44.2801,
+          "yaw": -1.5707963267948966
+        },
+        "diedAt": null
+      },
+      "weapons": {
+        "selectedSide": "RIGHT",
+        "LEFT": {
+          "rack": [
+            {
+              "id": "weapon.fire-axe",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.bat",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            }
+          ],
+          "index": 0,
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "aimPoint": null,
+          "swapUntil": 0
+        },
+        "RIGHT": {
+          "rack": [
+            {
+              "id": "weapon.army-mg",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.handgun",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.kick",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            }
+          ],
+          "index": 0,
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "aimPoint": null,
+          "swapUntil": 0
+        }
+      },
+      "combat": {
+        "radius": 0.3,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      }
+    },
+    "camera": {
+      "zoom": 0.5,
+      "targetZoom": 0.5,
+      "zoomLimits": [
+        0.5,
+        1.5
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 9.5,
+      "focus": [
+        -79.30000305174336,
+        0.13000002168155603,
+        -44.280101776119416
+      ],
+      "target": [
+        -79.30000305174336,
+        0.13000002168155603,
+        -44.280101776119416
+      ],
+      "position": [
+        -73.89325043329437,
+        5.767734694916013,
+        -38.873349157670425
+      ],
+      "spot": null
+    },
+    "mission": {
+      "phase": "emerged",
+      "startAt": 0,
+      "emergedAt": 0,
+      "searchAt": 0,
+      "accountedAt": 0,
+      "metroAt": 0,
+      "shutterAt": 0,
+      "doneAt": 0,
+      "survivors": [
+        {
+          "key": "dale",
+          "id": 20,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "rosa",
+          "id": 21,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "okafor",
+          "id": 22,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "mia",
+          "id": 23,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "sam",
+          "id": 24,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        }
+      ],
+      "found": 0,
+      "lookoutId": 25,
+      "stationIds": [
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140
+      ],
+      "infectedIds": [
+        76,
+        78,
+        80,
+        82,
+        84,
+        86,
+        88,
+        89,
+        91,
+        93,
+        95,
+        96,
+        98,
+        100,
+        102,
+        104,
+        106,
+        108
+      ],
+      "medkitIds": [
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116
+      ],
+      "corpseIds": [
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62
+      ],
+      "fireIds": [
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75
+      ],
+      "gloom": 1,
+      "cue": null,
+      "lastShot": {},
+      "waitedAt": 0,
+      "infectedMax": 18,
+      "deadAtMetro": 0
+    },
+    "draws": 176,
+    "triangles": 223763
+  },
+  {
+    "file": "docs/reports/postmerge-2/cellar/webgl2-low-z1.jpg",
+    "dominantShare": 0.3349826388888889,
+    "backend": "webgl",
+    "tier": "low",
+    "player": {
+      "kind": "player",
+      "archetype": "player.survivor",
+      "transform": {
+        "x": -79.30000305175781,
+        "y": 0.8500000238418579,
+        "z": -44.28010177612305,
+        "yaw": -1.5707963267948966
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "faction": "survivor",
+      "id": 1,
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": -1
+      },
+      "survivor": {
+        "variant": "female",
+        "gearTier": 3,
+        "animation": "idle",
+        "animationTick": 0,
+        "velocity": {
+          "x": 0,
+          "z": 0
+        },
+        "grounded": false,
+        "invulnerableUntil": 0,
+        "checkpoint": {
+          "x": -79.29999999999998,
+          "y": 0.705,
+          "z": -44.2801,
+          "yaw": -1.5707963267948966
+        },
+        "diedAt": null
+      },
+      "weapons": {
+        "selectedSide": "RIGHT",
+        "LEFT": {
+          "rack": [
+            {
+              "id": "weapon.fire-axe",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.bat",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            }
+          ],
+          "index": 0,
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "aimPoint": null,
+          "swapUntil": 0
+        },
+        "RIGHT": {
+          "rack": [
+            {
+              "id": "weapon.army-mg",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.handgun",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.kick",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            }
+          ],
+          "index": 0,
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "aimPoint": null,
+          "swapUntil": 0
+        }
+      },
+      "combat": {
+        "radius": 0.3,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      }
+    },
+    "camera": {
+      "zoom": 1,
+      "targetZoom": 1,
+      "zoomLimits": [
+        0.5,
+        1.5
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 19,
+      "focus": [
+        -79.30000304961074,
+        0.12999998045103434,
+        -44.280101775583084
+      ],
+      "target": [
+        -79.30000304961074,
+        0.12999998045103434,
+        -44.280101775583084
+      ],
+      "position": [
+        -69.54882583515473,
+        10.149200945446566,
+        -34.52892456112708
+      ],
+      "spot": null
+    },
+    "mission": {
+      "phase": "emerged",
+      "startAt": 0,
+      "emergedAt": 0,
+      "searchAt": 0,
+      "accountedAt": 0,
+      "metroAt": 0,
+      "shutterAt": 0,
+      "doneAt": 0,
+      "survivors": [
+        {
+          "key": "dale",
+          "id": 20,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "rosa",
+          "id": 21,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "okafor",
+          "id": 22,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "mia",
+          "id": 23,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "sam",
+          "id": 24,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        }
+      ],
+      "found": 0,
+      "lookoutId": 25,
+      "stationIds": [
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140
+      ],
+      "infectedIds": [
+        76,
+        78,
+        80,
+        82,
+        84,
+        86,
+        88,
+        89,
+        91,
+        93,
+        95,
+        96,
+        98,
+        100,
+        102,
+        104,
+        106,
+        108
+      ],
+      "medkitIds": [
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116
+      ],
+      "corpseIds": [
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62
+      ],
+      "fireIds": [
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75
+      ],
+      "gloom": 1,
+      "cue": null,
+      "lastShot": {},
+      "waitedAt": 0,
+      "infectedMax": 18,
+      "deadAtMetro": 0
+    },
+    "draws": 170,
+    "triangles": 178893
+  },
+  {
+    "file": "docs/reports/postmerge-2/cellar/webgl2-low-z0.5.jpg",
+    "dominantShare": 0.221044921875,
+    "backend": "webgl",
+    "tier": "low",
+    "player": {
+      "kind": "player",
+      "archetype": "player.survivor",
+      "transform": {
+        "x": -79.30000305175781,
+        "y": 0.8500000238418579,
+        "z": -44.28010177612305,
+        "yaw": -1.5707963267948966
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "faction": "survivor",
+      "id": 1,
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": -1
+      },
+      "survivor": {
+        "variant": "female",
+        "gearTier": 3,
+        "animation": "idle",
+        "animationTick": 0,
+        "velocity": {
+          "x": 0,
+          "z": 0
+        },
+        "grounded": false,
+        "invulnerableUntil": 0,
+        "checkpoint": {
+          "x": -79.29999999999998,
+          "y": 0.705,
+          "z": -44.2801,
+          "yaw": -1.5707963267948966
+        },
+        "diedAt": null
+      },
+      "weapons": {
+        "selectedSide": "RIGHT",
+        "LEFT": {
+          "rack": [
+            {
+              "id": "weapon.fire-axe",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.bat",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            }
+          ],
+          "index": 0,
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "aimPoint": null,
+          "swapUntil": 0
+        },
+        "RIGHT": {
+          "rack": [
+            {
+              "id": "weapon.army-mg",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.handgun",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.kick",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            }
+          ],
+          "index": 0,
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "aimPoint": null,
+          "swapUntil": 0
+        }
+      },
+      "combat": {
+        "radius": 0.3,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      }
+    },
+    "camera": {
+      "zoom": 0.5,
+      "targetZoom": 0.5,
+      "zoomLimits": [
+        0.5,
+        1.5
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 9.5,
+      "focus": [
+        -79.30000305174336,
+        0.13000002168155603,
+        -44.280101776119416
+      ],
+      "target": [
+        -79.30000305174336,
+        0.13000002168155603,
+        -44.280101776119416
+      ],
+      "position": [
+        -73.89325043329437,
+        5.767734694916013,
+        -38.873349157670425
+      ],
+      "spot": null
+    },
+    "mission": {
+      "phase": "emerged",
+      "startAt": 0,
+      "emergedAt": 0,
+      "searchAt": 0,
+      "accountedAt": 0,
+      "metroAt": 0,
+      "shutterAt": 0,
+      "doneAt": 0,
+      "survivors": [
+        {
+          "key": "dale",
+          "id": 20,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "rosa",
+          "id": 21,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "okafor",
+          "id": 22,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "mia",
+          "id": 23,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "sam",
+          "id": 24,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        }
+      ],
+      "found": 0,
+      "lookoutId": 25,
+      "stationIds": [
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140
+      ],
+      "infectedIds": [
+        76,
+        78,
+        80,
+        82,
+        84,
+        86,
+        88,
+        89,
+        91,
+        93,
+        95,
+        96,
+        98,
+        100,
+        102,
+        104,
+        106,
+        108
+      ],
+      "medkitIds": [
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116
+      ],
+      "corpseIds": [
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62
+      ],
+      "fireIds": [
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75
+      ],
+      "gloom": 1,
+      "cue": null,
+      "lastShot": {},
+      "waitedAt": 0,
+      "infectedMax": 18,
+      "deadAtMetro": 0
+    },
+    "draws": 167,
+    "triangles": 173605
+  },
+  {
+    "file": "docs/reports/postmerge-2/cellar/webgpu-high-z1.jpg",
+    "dominantShare": 0.3006781684027778,
+    "backend": "webgpu",
+    "tier": "high",
+    "player": {
+      "kind": "player",
+      "archetype": "player.survivor",
+      "transform": {
+        "x": -79.30000305175781,
+        "y": 0.8500000238418579,
+        "z": -44.28010177612305,
+        "yaw": -1.5707963267948966
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "faction": "survivor",
+      "id": 1,
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": -1
+      },
+      "survivor": {
+        "variant": "female",
+        "gearTier": 3,
+        "animation": "idle",
+        "animationTick": 0,
+        "velocity": {
+          "x": 0,
+          "z": 0
+        },
+        "grounded": false,
+        "invulnerableUntil": 0,
+        "checkpoint": {
+          "x": -79.29999999999998,
+          "y": 0.705,
+          "z": -44.2801,
+          "yaw": -1.5707963267948966
+        },
+        "diedAt": null
+      },
+      "weapons": {
+        "selectedSide": "RIGHT",
+        "LEFT": {
+          "rack": [
+            {
+              "id": "weapon.fire-axe",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.bat",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            }
+          ],
+          "index": 0,
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "aimPoint": null,
+          "swapUntil": 0
+        },
+        "RIGHT": {
+          "rack": [
+            {
+              "id": "weapon.army-mg",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.handgun",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.kick",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            }
+          ],
+          "index": 0,
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "aimPoint": null,
+          "swapUntil": 0
+        }
+      },
+      "combat": {
+        "radius": 0.3,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      }
+    },
+    "camera": {
+      "zoom": 1,
+      "targetZoom": 1,
+      "zoomLimits": [
+        0.5,
+        1.5
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 19,
+      "focus": [
+        -79.30000304961074,
+        0.12999998045103434,
+        -44.280101775583084
+      ],
+      "target": [
+        -79.30000304961074,
+        0.12999998045103434,
+        -44.280101775583084
+      ],
+      "position": [
+        -69.54882583515473,
+        10.149200945446566,
+        -34.52892456112708
+      ],
+      "spot": null
+    },
+    "mission": {
+      "phase": "emerged",
+      "startAt": 0,
+      "emergedAt": 0,
+      "searchAt": 0,
+      "accountedAt": 0,
+      "metroAt": 0,
+      "shutterAt": 0,
+      "doneAt": 0,
+      "survivors": [
+        {
+          "key": "dale",
+          "id": 20,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "rosa",
+          "id": 21,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "okafor",
+          "id": 22,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "mia",
+          "id": 23,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "sam",
+          "id": 24,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        }
+      ],
+      "found": 0,
+      "lookoutId": 25,
+      "stationIds": [
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140
+      ],
+      "infectedIds": [
+        76,
+        78,
+        80,
+        82,
+        84,
+        86,
+        88,
+        89,
+        91,
+        93,
+        95,
+        96,
+        98,
+        100,
+        102,
+        104,
+        106,
+        108
+      ],
+      "medkitIds": [
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116
+      ],
+      "corpseIds": [
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62
+      ],
+      "fireIds": [
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75
+      ],
+      "gloom": 1,
+      "cue": null,
+      "lastShot": {},
+      "waitedAt": 0,
+      "infectedMax": 18,
+      "deadAtMetro": 0
+    },
+    "draws": 179,
+    "triangles": 262961
+  },
+  {
+    "file": "docs/reports/postmerge-2/cellar/webgpu-high-z0.5.jpg",
+    "dominantShare": 0.1934787326388889,
+    "backend": "webgpu",
+    "tier": "high",
+    "player": {
+      "kind": "player",
+      "archetype": "player.survivor",
+      "transform": {
+        "x": -79.30000305175781,
+        "y": 0.8500000238418579,
+        "z": -44.28010177612305,
+        "yaw": -1.5707963267948966
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "faction": "survivor",
+      "id": 1,
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": -1
+      },
+      "survivor": {
+        "variant": "female",
+        "gearTier": 3,
+        "animation": "idle",
+        "animationTick": 0,
+        "velocity": {
+          "x": 0,
+          "z": 0
+        },
+        "grounded": false,
+        "invulnerableUntil": 0,
+        "checkpoint": {
+          "x": -79.29999999999998,
+          "y": 0.705,
+          "z": -44.2801,
+          "yaw": -1.5707963267948966
+        },
+        "diedAt": null
+      },
+      "weapons": {
+        "selectedSide": "RIGHT",
+        "LEFT": {
+          "rack": [
+            {
+              "id": "weapon.fire-axe",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.bat",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            }
+          ],
+          "index": 0,
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "aimPoint": null,
+          "swapUntil": 0
+        },
+        "RIGHT": {
+          "rack": [
+            {
+              "id": "weapon.army-mg",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.handgun",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.kick",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            }
+          ],
+          "index": 0,
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "aimPoint": null,
+          "swapUntil": 0
+        }
+      },
+      "combat": {
+        "radius": 0.3,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      }
+    },
+    "camera": {
+      "zoom": 0.5,
+      "targetZoom": 0.5,
+      "zoomLimits": [
+        0.5,
+        1.5
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 9.5,
+      "focus": [
+        -79.30000305174336,
+        0.13000002168155603,
+        -44.280101776119416
+      ],
+      "target": [
+        -79.30000305174336,
+        0.13000002168155603,
+        -44.280101776119416
+      ],
+      "position": [
+        -73.89325043329437,
+        5.767734694916013,
+        -38.873349157670425
+      ],
+      "spot": null
+    },
+    "mission": {
+      "phase": "emerged",
+      "startAt": 0,
+      "emergedAt": 0,
+      "searchAt": 0,
+      "accountedAt": 0,
+      "metroAt": 0,
+      "shutterAt": 0,
+      "doneAt": 0,
+      "survivors": [
+        {
+          "key": "dale",
+          "id": 20,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "rosa",
+          "id": 21,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "okafor",
+          "id": 22,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "mia",
+          "id": 23,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "sam",
+          "id": 24,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        }
+      ],
+      "found": 0,
+      "lookoutId": 25,
+      "stationIds": [
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140
+      ],
+      "infectedIds": [
+        76,
+        78,
+        80,
+        82,
+        84,
+        86,
+        88,
+        89,
+        91,
+        93,
+        95,
+        96,
+        98,
+        100,
+        102,
+        104,
+        106,
+        108
+      ],
+      "medkitIds": [
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116
+      ],
+      "corpseIds": [
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62
+      ],
+      "fireIds": [
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75
+      ],
+      "gloom": 1,
+      "cue": null,
+      "lastShot": {},
+      "waitedAt": 0,
+      "infectedMax": 18,
+      "deadAtMetro": 0
+    },
+    "draws": 176,
+    "triangles": 223763
+  },
+  {
+    "file": "docs/reports/postmerge-2/cellar/webgpu-low-z1.jpg",
+    "dominantShare": 0.33505859375,
+    "backend": "webgpu",
+    "tier": "low",
+    "player": {
+      "kind": "player",
+      "archetype": "player.survivor",
+      "transform": {
+        "x": -79.30000305175781,
+        "y": 0.8500000238418579,
+        "z": -44.28010177612305,
+        "yaw": -1.5707963267948966
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "faction": "survivor",
+      "id": 1,
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": -1
+      },
+      "survivor": {
+        "variant": "female",
+        "gearTier": 3,
+        "animation": "idle",
+        "animationTick": 0,
+        "velocity": {
+          "x": 0,
+          "z": 0
+        },
+        "grounded": false,
+        "invulnerableUntil": 0,
+        "checkpoint": {
+          "x": -79.29999999999998,
+          "y": 0.705,
+          "z": -44.2801,
+          "yaw": -1.5707963267948966
+        },
+        "diedAt": null
+      },
+      "weapons": {
+        "selectedSide": "RIGHT",
+        "LEFT": {
+          "rack": [
+            {
+              "id": "weapon.fire-axe",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.bat",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            }
+          ],
+          "index": 0,
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "aimPoint": null,
+          "swapUntil": 0
+        },
+        "RIGHT": {
+          "rack": [
+            {
+              "id": "weapon.army-mg",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.handgun",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.kick",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            }
+          ],
+          "index": 0,
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "aimPoint": null,
+          "swapUntil": 0
+        }
+      },
+      "combat": {
+        "radius": 0.3,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      }
+    },
+    "camera": {
+      "zoom": 1,
+      "targetZoom": 1,
+      "zoomLimits": [
+        0.5,
+        1.5
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 19,
+      "focus": [
+        -79.30000304961074,
+        0.12999998045103434,
+        -44.280101775583084
+      ],
+      "target": [
+        -79.30000304961074,
+        0.12999998045103434,
+        -44.280101775583084
+      ],
+      "position": [
+        -69.54882583515473,
+        10.149200945446566,
+        -34.52892456112708
+      ],
+      "spot": null
+    },
+    "mission": {
+      "phase": "emerged",
+      "startAt": 0,
+      "emergedAt": 0,
+      "searchAt": 0,
+      "accountedAt": 0,
+      "metroAt": 0,
+      "shutterAt": 0,
+      "doneAt": 0,
+      "survivors": [
+        {
+          "key": "dale",
+          "id": 20,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "rosa",
+          "id": 21,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "okafor",
+          "id": 22,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "mia",
+          "id": 23,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "sam",
+          "id": 24,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        }
+      ],
+      "found": 0,
+      "lookoutId": 25,
+      "stationIds": [
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140
+      ],
+      "infectedIds": [
+        76,
+        78,
+        80,
+        82,
+        84,
+        86,
+        88,
+        89,
+        91,
+        93,
+        95,
+        96,
+        98,
+        100,
+        102,
+        104,
+        106,
+        108
+      ],
+      "medkitIds": [
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116
+      ],
+      "corpseIds": [
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62
+      ],
+      "fireIds": [
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75
+      ],
+      "gloom": 1,
+      "cue": null,
+      "lastShot": {},
+      "waitedAt": 0,
+      "infectedMax": 18,
+      "deadAtMetro": 0
+    },
+    "draws": 170,
+    "triangles": 178893
+  },
+  {
+    "file": "docs/reports/postmerge-2/cellar/webgpu-low-z0.5.jpg",
+    "dominantShare": 0.22115885416666667,
+    "backend": "webgpu",
+    "tier": "low",
+    "player": {
+      "kind": "player",
+      "archetype": "player.survivor",
+      "transform": {
+        "x": -79.30000305175781,
+        "y": 0.8500000238418579,
+        "z": -44.28010177612305,
+        "yaw": -1.5707963267948966
+      },
+      "health": {
+        "current": 100,
+        "max": 100
+      },
+      "faction": "survivor",
+      "id": 1,
+      "locomotion": {
+        "vx": 0,
+        "vz": 0,
+        "ax": 0,
+        "az": 0,
+        "omega": 0,
+        "updatedAt": -1
+      },
+      "survivor": {
+        "variant": "female",
+        "gearTier": 3,
+        "animation": "idle",
+        "animationTick": 0,
+        "velocity": {
+          "x": 0,
+          "z": 0
+        },
+        "grounded": false,
+        "invulnerableUntil": 0,
+        "checkpoint": {
+          "x": -79.29999999999998,
+          "y": 0.705,
+          "z": -44.2801,
+          "yaw": -1.5707963267948966
+        },
+        "diedAt": null
+      },
+      "weapons": {
+        "selectedSide": "RIGHT",
+        "LEFT": {
+          "rack": [
+            {
+              "id": "weapon.fire-axe",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.bat",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            }
+          ],
+          "index": 0,
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "aimPoint": null,
+          "swapUntil": 0
+        },
+        "RIGHT": {
+          "rack": [
+            {
+              "id": "weapon.army-mg",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.handgun",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            },
+            {
+              "id": "weapon.kick",
+              "magazine": 0,
+              "reserve": "infinite",
+              "charges": 0,
+              "nextCharge": 0,
+              "reloadUntil": 0,
+              "readyAt": 0
+            }
+          ],
+          "index": 0,
+          "aim": {
+            "x": 1,
+            "z": 0
+          },
+          "aimPoint": null,
+          "swapUntil": 0
+        }
+      },
+      "combat": {
+        "radius": 0.3,
+        "armor": 0,
+        "shield": false,
+        "staggerUntil": 0,
+        "attacking": false,
+        "damageMultiplier": 1,
+        "statuses": []
+      }
+    },
+    "camera": {
+      "zoom": 0.5,
+      "targetZoom": 0.5,
+      "zoomLimits": [
+        0.5,
+        1.5
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 9.5,
+      "focus": [
+        -79.30000305174336,
+        0.13000002168155603,
+        -44.280101776119416
+      ],
+      "target": [
+        -79.30000305174336,
+        0.13000002168155603,
+        -44.280101776119416
+      ],
+      "position": [
+        -73.89325043329437,
+        5.767734694916013,
+        -38.873349157670425
+      ],
+      "spot": null
+    },
+    "mission": {
+      "phase": "emerged",
+      "startAt": 0,
+      "emergedAt": 0,
+      "searchAt": 0,
+      "accountedAt": 0,
+      "metroAt": 0,
+      "shutterAt": 0,
+      "doneAt": 0,
+      "survivors": [
+        {
+          "key": "dale",
+          "id": 20,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "rosa",
+          "id": 21,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "okafor",
+          "id": 22,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "mia",
+          "id": 23,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        },
+        {
+          "key": "sam",
+          "id": 24,
+          "status": "hidden",
+          "foundAt": 0,
+          "cueAt": 0,
+          "lostAt": 0,
+          "hold": 0
+        }
+      ],
+      "found": 0,
+      "lookoutId": 25,
+      "stationIds": [
+        117,
+        118,
+        119,
+        120,
+        121,
+        122,
+        123,
+        124,
+        125,
+        126,
+        127,
+        128,
+        129,
+        130,
+        131,
+        132,
+        133,
+        134,
+        135,
+        136,
+        137,
+        138,
+        139,
+        140
+      ],
+      "infectedIds": [
+        76,
+        78,
+        80,
+        82,
+        84,
+        86,
+        88,
+        89,
+        91,
+        93,
+        95,
+        96,
+        98,
+        100,
+        102,
+        104,
+        106,
+        108
+      ],
+      "medkitIds": [
+        110,
+        111,
+        112,
+        113,
+        114,
+        115,
+        116
+      ],
+      "corpseIds": [
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62
+      ],
+      "fireIds": [
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75
+      ],
+      "gloom": 1,
+      "cue": null,
+      "lastShot": {},
+      "waitedAt": 0,
+      "infectedMax": 18,
+      "deadAtMetro": 0
+    },
+    "draws": 167,
+    "triangles": 173605
+  }
+]
