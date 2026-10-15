@@ -99,6 +99,7 @@ export function respawnAtCheckpoint(world: SimWorld, anchor: Spot, worldKept = t
     gatherAllies(world, anchor, worldKept); return;
   }
   Object.assign(player.transform, at);
+  world.solids.relocate(player, at, 'checkpoint.respawn', 0, false);
   world.physics.playerBody!.setTranslation(player.transform, true);
   world.previousPlayer = { ...player.transform }; world.spatial.set(1, at.x, at.z);
   if (player.survivor) player.survivor.invulnerableUntil = world.tick + ticks(respawnRule.graceS);

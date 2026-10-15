@@ -439,8 +439,11 @@ export class Mission {
     for (const [actor, entityId] of Object.entries(this.state.actors)) if (this.deadBosses.has(actor)) { const entity = entities.find(e => e.id === entityId); if (entity) entity.health.current = 0; }
     // Keep Player's live object because its controller holds that reference.
     const player = this.world.entities.get(1)!;
+    const pendingCollider = player.pendingAdmission?.colliderEnabled;
+    delete player.pendingAdmission; delete player.hidden; delete player.passengerOf; delete player.attachedTo;
     delete player.weapons; delete player.inventory;
     Object.assign(player, entities[0]); player.health.current = player.health.max; player.survivor!.diedAt = null;
+    if (!player.pendingAdmission && pendingCollider !== undefined) this.world.physics.playerCollider!.setEnabled(pendingCollider);
     for (const entity of entities) if (entity.light && entity.light.startedAt >= 0) entity.light.startedAt += delta;
     for (const entity of entities) if (entity.vehicle) { if (entity.vehicle.explodeAt !== null) entity.vehicle.explodeAt += delta; if (entity.vehicle.recoveringUntil) entity.vehicle.recoveringUntil += delta; }
     if (!this.world.npcs && this.world.infected) { this.world.infected.pool.push(...this.world.infected.active); this.world.infected.active.length=0; }
