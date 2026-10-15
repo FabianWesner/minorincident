@@ -7,14 +7,14 @@ const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds.splice(0)) w.dispose(); });
 for (const tier of ['high', 'low'] as const) test(`@E30 @E31 corgi follows in zoo and survives APC handover/checkpoint: ${tier}`, async () => {
   const w = await loadLevel('L8', 32); worlds.push(w); w.npcs!.setQuality(tier); w.combat!.damage.god = true;
-  const dog = [...w.entities.iterate()].find(e => e.companion)!;
+  let dog = [...w.entities.iterate()].find(e => e.companion)!;
   expect(dog).toBeDefined(); expect(w.npcs!.companion.safe).toBe(true);
   const start = { ...dog.transform }, p = w.entities.get(1)!;
   teleport(w, p.transform.x + 8, p.transform.z); step(w, 180);
   expect(Math.hypot(dog.transform.x - start.x, dog.transform.z - start.z)).toBeGreaterThan(3);
   expect(Math.hypot(dog.transform.x - p.transform.x, dog.transform.z - p.transform.z)).toBeLessThan(4);
   w.missions!.checkpoint('sanctuary'); w.missions!.restore('sanctuary');
-  expect(w.entities.get(dog.id)?.companion).toBeDefined();
+  expect(w.entities.get(dog.id)?.companion).toBeDefined(); dog = w.entities.get(dog.id)!;
   const zoo = w.missions!.l8!, car = w.vehicles!.cars.get(zoo.state.carId)!;
   zoo.state.breachedAt = w.tick || 1;
   teleport(w, zoo.door().x, zoo.door().z);
@@ -28,4 +28,16 @@ for (const tier of ['high', 'low'] as const) test(`@E30 @E31 corgi follows in zo
   expect(next.entities.get(dog.id)?.passengerOf).toBe(car.entity.id);
   expect(next.entities.get(dog.id)?.health.current).toBe(100);
   next.missions!.restore('crossing-start'); expect(next.entities.get(dog.id)?.companion).toBeDefined();
+});
+test('@E29 @E30 bus passenger keeps the same corgi identity at zoo arrival', async () => {
+  const source = await loadLevel('L7', 32); worlds.push(source);
+  const dog = [...source.entities.iterate()].find(e => e.companion)!;
+  dog.hidden = true; dog.passengerOf = source.l7Departure!.state.busId;
+  const save = preset('L8-default');
+  save.results = { L7: { time: 1, kills: 0, knockdowns: 0, damage: 0, deaths: 0, rescued: 0, optionalObjectives: [], escapedSurvivors: [], companion: structuredClone(dog) } };
+  const next = await loadLevel('L8', 32, save); worlds.push(next);
+  const arrived = next.entities.get(dog.id)!;
+  expect(arrived.companion).toBeDefined(); expect(arrived.hidden).toBe(false); expect(arrived.passengerOf).toBeUndefined();
+  expect([...next.entities.iterate()].filter(e => e.companion)).toHaveLength(1);
+  expect(Math.hypot(arrived.transform.x - next.entities.get(1)!.transform.x, arrived.transform.z - next.entities.get(1)!.transform.z)).toBeLessThan(3);
 });

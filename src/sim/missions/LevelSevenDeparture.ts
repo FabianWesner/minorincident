@@ -133,6 +133,7 @@ export class LevelSevenDeparture {
     for (const e of escaped) { e.hidden = false; delete e.passengerOf; if (e.civilian) e.civilian.pauseUntil = 0; }
     const result: MissionResult = {
       time: w.tick / 60, kills: 0, knockdowns: 0, damage: 0, deaths: 0, rescued: escaped.length, optionalObjectives: [],
+      companion: structuredClone([...w.entities.iterate()].find(e => e.companion)),
       survivors: escaped.map(e => e.civilian?.survivor?.key ?? `survivor-${e.id}`), escapedSurvivors: escaped,
     };
     w.events.emit({ type: 'level.completed', tick: w.tick, id: 'L7', result });
