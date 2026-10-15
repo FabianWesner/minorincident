@@ -76,9 +76,11 @@ export const weaponSlices: Readonly<Record<string, readonly [duration: number, a
     'weapon.knife': [0.24, 0.025], 'weapon.nail-bat': [0.24, 0.025], 'weapon.shovel': [0.3, 0.025], 'weapon.police-baton': [0.24, 0.025], 'weapon.fire-axe': [0.32, 0.025], 'weapon.katana': [0.24, 0.025],
     'ability.ground-slam': [0.45, 0.1],
 };
+/** Runtime gain per class (offline loudness order, see docs/reports/weapon-audio): melee swings sit 3+ LU below the quietest firearm, the shotgun and rocket are the loudest. The E05 test fixture keeps 0.8 (E16 probes). */
+const weaponGain = (id: string, category: string, curated: boolean): number => category === 'melee' ? 0.5 : !curated || (category !== 'ranged' && id !== 'ability.turret') ? 0.8 : /shotgun|rocket/.test(id) ? 0.8 : 1;
 for (const def of [...Object.values(catalog), ...Object.values(mountedActions), ...balanceActions.filter(d => !(d.id in catalog))]) {
     const slice = weaponSlices[def.id];
-    cue(`action.${def.id}`, 'weapons', def.category === 'ranged' ? 'shot' : 'noise', slice?.[0] ?? (def.category === 'ranged' ? 0.16 : 0.24), 150, { gain: 0.8, antiSpam: slice?.[1] ?? 0.025, ...(def.category === 'ranged' ? { rateSpread: 0.04 } : {}) });
+    cue(`action.${def.id}`, 'weapons', def.category === 'ranged' ? 'shot' : 'noise', slice?.[0] ?? (def.category === 'ranged' ? 0.16 : 0.24), 150, { gain: weaponGain(def.id, def.category, !!slice), antiSpam: slice?.[1] ?? 0.025, ...(def.category === 'ranged' ? { rateSpread: 0.04 } : {}) });
 }
 for (const env of ['street', 'interior', 'open'])
     cue(`tail.${env}`, 'weapons', 'noise', env === 'interior' ? 0.65 : 0.25, 500, { gain: env === 'interior' ? 0.5 : 0.35, rateSpread: 0.02 });
@@ -89,7 +91,7 @@ cue('weapon.dry', 'weapons', 'step', 0.2, 1000, { gain: 0.5 });
 /** Shotgun pump/rack after each shell, 0.45 s behind the shot. */
 cue('weapon.pump', 'weapons', 'step', 0.47, 700, { gain: 0.6, antiSpam: 0.2 });
 /** Mounted heavy gun (HMG, door gun): deeper than the army MG. */
-cue('weapon.hmg', 'weapons', 'shot', 0.55, 90, { gain: 0.85, antiSpam: 0.03, rateSpread: 0.03 });
+cue('weapon.hmg', 'weapons', 'shot', 0.55, 90, { gain: 1, antiSpam: 0.03, rateSpread: 0.03 });
 /** Minigun barrel whir: looped, pitched and levelled by the AudioService from the live spin (0 -> 1), so spin-up and spin-down follow the gun. */
 cue('weapon.minigun-whir', 'weapons', 'noise', 0.48, 120, { gain: 0.5, loop: true, antiSpam: 0, rateSpread: 0 });
 export const surfaces: readonly Surface[] = ['asphalt', 'sidewalk', 'grass', 'wood', 'gravel', 'tile', 'metal', 'glass', 'water', 'blood'];

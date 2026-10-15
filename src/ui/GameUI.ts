@@ -7,7 +7,7 @@ import { defaultBindings, type Action } from '../data/bindings';
 import { Hud } from './Hud';
 import { button, node, setHidden } from './dom';
 import { Settings, type UISettings } from './Settings';
-import { audioCredits, codeCredits, originalCredit, type Credit } from '../data/credits';
+import { audioCredits, codeCredits, technologyCredits, toolchainCredits, originalCredit, type Credit } from '../data/credits';
 import { madeBy } from '../data/madeBy';
 import './ui.css';
 
@@ -155,6 +155,8 @@ export class GameUI {
       });
     };
     section('code', 'Code libraries and technology', codeCredits);
+    section('toolchain', 'Build and test toolchain', toolchainCredits, 'Used to build and test the game; none of it is shipped to players unless listed above.');
+    section('technology', 'Other technology and services', technologyCredits);
     section('audio', 'Music, sound and voices', audioCredits, 'Recordings edited for the game: excerpts, EQ, pitch, fades, compression, loudness normalization and encoding.');
     section('original', 'Original work', [originalCredit]);
     credits.append(list);
