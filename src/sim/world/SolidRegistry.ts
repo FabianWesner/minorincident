@@ -35,6 +35,8 @@ export class SolidRegistry {
   private readonly blockerOwners = new Map<string, number>();
   private readonly hulls = new Map<number, Hull>();
   private readonly hullIndex = new SpatialHash();
+  private readonly query = { x: 0, z: 0, r: 0 };
+  private readonly correction = { x: 0, y: 0, z: 0 };
   private committed = new WeakMap<EntitySnapshot, Transform>();
   private writers = new WeakMap<EntitySnapshot, string>();
   private proposed = new WeakMap<EntitySnapshot, Transform>();
@@ -159,12 +161,13 @@ export class SolidRegistry {
   /** Radius and height aware occupancy, shared by spawn, checkpoint, relocation and exits. */
   clear(at: Point, radius: number, ignoreId?: number, bodies = true, limit = skin): boolean {
     this.bodyConflict = false;
-    if (![at.x, at.y, at.z, radius].every(Number.isFinite) || radius <= 0) return false;
+    if (!Number.isFinite(at.x) || !Number.isFinite(at.y) || !Number.isFinite(at.z) || !Number.isFinite(radius) || radius <= 0) return false;
     let clear = true; const e = ignoreId === undefined ? undefined : this.world.entities.get(ignoreId);
     if (e && this.world.missions?.l4?.clearOfConvoy(at, e, radius) === false) return false;
     this.solids(at, radius, e, b => { const c = boxContact(b, at.x, at.z, radius, this.contact); if (c.inside || c.depth > limit) clear = false; });
     if (!clear || !bodies) return clear;
-    this.world.spatial.query({ x: at.x, z: at.z, r: radius + this.maxActor }, this.nearby, false);
+    this.query.x = at.x; this.query.z = at.z; this.query.r = radius + this.maxActor;
+    this.world.spatial.query(this.query, this.nearby, false);
     for (const id of this.nearby) {
       const other = this.committing ? this.live.get(id) : this.world.entities.get(id);
       if (id === ignoreId || !other || !this.committing && !actor(other) || pairExempt(e, other) || !layers(at, other.transform)) continue;
@@ -172,6 +175,40 @@ export class SolidRegistry {
       if (dx * dx + dz * dz < reach * reach) { this.bodyConflict = true; this.bodyConflictId = id; return false; }
     }
     return true;
+  }
+  /** Swept footprint against the registry's compound boxes and living bodies.
+   * A charge may push a contacted body; an obstructed push stops the mover. */
+  sweep(e: EntitySnapshot, direction: { x: number; z: number }, distance: number, radius = actorRadius(e), push = false, bodies = true): number {
+    this.syncHulls();
+    const p = e.transform, q = this.world.combat!.query;
+    this.solids(p, radius + distance, e, box => {
+      const c = Math.cos(box.yaw ?? 0), s = Math.sin(box.yaw ?? 0);
+      const dx = p.x - box.x, dz = p.z - box.z;
+      distance = Math.min(distance, q.wallDistance({ x: 0, z: 0, y: box.y, halfX: box.halfX, halfZ: box.halfZ, halfY: box.halfY },
+        { x: dx * c - dz * s, z: dx * s + dz * c, y: p.y },
+        { x: direction.x * c - direction.z * s, z: direction.x * s + direction.z * c }, distance, radius));
+    });
+    if (!bodies) return distance;
+    const neighbors: number[] = [];
+    this.world.spatial.query({ x: p.x, z: p.z, r: distance + radius + this.maxActor }, neighbors, false);
+    for (const id of neighbors) {
+      const other = this.world.entities.get(id);
+      if (!other || other === e || !actor(other) || pairExempt(e, other) || !layers(p, other.transform)) continue;
+      const t = other.transform, dx = t.x - p.x, dz = t.z - p.z;
+      const along = dx * direction.x + dz * direction.z, lateral = dx * direction.z - dz * direction.x;
+      const reach = actorRadius(e) + actorRadius(other), side2 = lateral * lateral;
+      if (side2 >= reach * reach || along < 0) continue;
+      const entry = Math.max(0, along - Math.sqrt(reach * reach - side2));
+      if (entry >= distance) continue;
+      if (push) {
+        const x = p.x + direction.x * distance, z = p.z + direction.z * distance;
+        const ox = t.x - x, oz = t.z - z, length = Math.hypot(ox, oz);
+        const to = { x: x + (length ? ox / length : direction.x) * (reach + skin), z: z + (length ? oz / length : direction.z) * (reach + skin), y: t.y };
+        if (this.relocate(other, to, 'special.swept-contact', 0, false)) continue;
+      }
+      distance = Math.max(0, entry - skin);
+    }
+    return distance;
   }
   /** Bounded nearest-first search. null means retain the request; never accept the blocked anchor. */
   find(at: Point, radius: number, ignoreId?: number, range = 4, navigation = true): Point | null {
@@ -392,7 +429,7 @@ export class SolidRegistry {
             if (squared >= (reach - tolerance) ** 2) continue;
             const d = Math.sqrt(squared), depth = reach - d;
             const nx = d ? dx / d : Math.cos(e.id * 2.399963), nz = d ? dz / d : Math.sin(e.id * 2.399963);
-            const to = { x: p.x + nx * (depth + skin), z: p.z + nz * (depth + skin), y: p.y };
+            const to = this.correction; to.x = p.x + nx * (depth + skin); to.z = p.z + nz * (depth + skin); to.y = p.y;
             if (!this.clear(to, radius, e.id, false)) continue;
             p.x = to.x; p.z = to.z; moved = true;
           }
@@ -433,7 +470,7 @@ export class SolidRegistry {
     if (full) for (const e of this.bodies) if (actor(e)) this.auditActor(e);
     for (const e of this.bodies) if (actor(e)) {
       const old = this.committed.get(e);
-      if (old) Object.assign(old, e.transform); else this.committed.set(e, { ...e.transform });
+      if (old) { const p = e.transform; old.x = p.x; old.y = p.y; old.z = p.z; old.yaw = p.yaw; } else this.committed.set(e, { ...e.transform });
       const proof = this.validated.get(e);
       if (proof) { proof.tick = this.world.tick; proof.radius = actorRadius(e); proof.exemption = exemption(e); }
       else this.validated.set(e, { tick: this.world.tick, radius: actorRadius(e), exemption: exemption(e), blocked: 0, blocker: 0, crowded: false, crowdUntil: 0 });

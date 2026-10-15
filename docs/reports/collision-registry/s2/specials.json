@@ -1,0 +1,18 @@
+{
+  "passed": 89,
+  "failed": 3,
+  "failures": [
+    {
+      "name": "T-E07-16 @E07 @E07-AC16 four dogs flank from at least two directions and telegraph 0.6 s knockdown pounces",
+      "failure": "AssertionError: expected true to be false // Object.is equality"
+    },
+    {
+      "name": "T-E07-19-zebra-stampede @E07-AC19 existing 2-4 zebras, locked 10m/s, 15m, 1.5m sweep and one hit per zebra",
+      "failure": "AssertionError: expected 100 to be 50 // Object.is equality"
+    },
+    {
+      "name": "T-E07-19-zebra-stampede-player @E07-AC19 every distinct zebra deals 25HP even inside the ordinary hurt grace window",
+      "failure": "AssertionError: expected 75 to be 50 // Object.is equality"
+    }
+  ]
+}

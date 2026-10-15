@@ -1,5 +1,7 @@
 # Collision registry — S and vehicle/admission M1
 
+**S2 continuation:** [changes, fresh checks and numerical zebra blocker](s2/README.md). The deploy gate remains red.
+
 Source decision: `epics-pipeline/reports/astra-collision/README.md`; PO 2026-10-15:
 “We always havbe the problem that objects are overlapping, but shouldn't happen by design (eg alphas locked in a tank)”.
 The courier/corgi and APC contact additions follow the L1–L4 and L5–L9 visual audits.

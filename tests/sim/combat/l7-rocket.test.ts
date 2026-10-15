@@ -48,16 +48,13 @@ test('T-E29-05 @E29-AC05 600 rockets have no reload/empty/charges and exactly 75
   expect(w.combat!.runner.loadout.current('LEFT')).toMatchObject({ magazine: 0, reloadUntil: 0, charges: 0, nextCharge: 0 });
 });
 
-for (const count of [24, 200]) test(`T-E29-06-${count} @E29-AC06 one real projectile permanently clears ${count} infected in its blast tick`, async () => {
+for (const count of [24]) test(`T-E29-06-${count} @E29-AC06 one real projectile permanently clears ${count} infected in its blast tick`, async () => {
   const w = await rocket(); w.infected!.director.levelCap = 200;
-  // Twenty-four full bodies fit in the blast's forward half-disk, without the
-  // old overlapping ring. The 200-body packing precondition remains explicit.
-  const targets = count === 24 ? Array.from({ length: count }, (_, i) => {
+  // Twenty-four full bodies fit in the blast's forward half-disk.
+  const targets = Array.from({ length: count }, (_, i) => {
     const row = i % 7, z = row ? Math.ceil(row / 2) * .7 * (row % 2 ? -1 : 1) : 0;
     return frozen(w, 8 + Math.floor(i / 7) * .7, z);
-  }) : [frozen(w, 8, 0), ...Array.from({ length: count - 1 }, (_, i) => {
-    const angle = i * 2 * Math.PI / (count - 1); return frozen(w, 9.5 + Math.cos(angle) * 1.4, Math.sin(angle) * 1.4);
-  })];
+  });
   if (count === 24) {
     expect(w.solids.snapshot().pending).toBe(0);
     for (let i = 0; i < targets.length; i++) for (let j = i + 1; j < targets.length; j++)
@@ -91,7 +88,11 @@ test('T-E29-07-rocket @E29-AC07 shared Alpha takes two center rocket blasts', as
   step(w, 75); fire(w); step(w, 40); expect(alpha.health.current).toBe(0); expect(downed(alpha)).toBe(false);
 });
 
-test('T-E29-06-200-solid-ring @E29-AC06 one real rocket clears 200 admitted full footprints inside its unchanged blast', async () => {
+// Corrected 200-body fixture (PO 2026-10-15): radius-.35 bodies require at least
+// 72.6 m² at the permitted .02 m penetration; a 3 m disk encloses only 35 m².
+// Use the existing 6 m blast and admitted packing, preserving visibility, one
+// projectile, blast-tick permanent kills, recovery and no-living-body assertions.
+test('T-E29-06-200 @E29-AC06 one real rocket clears 200 admitted full footprints inside its unchanged blast', async () => {
   const w = await rocket(); w.infected!.director.levelCap = 200;
   const candidates: { x: number; z: number }[] = [];
   for (let row = -9; row <= 9; row++) for (let col = -9; col <= 9; col++) {
