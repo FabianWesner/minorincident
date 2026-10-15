@@ -18,7 +18,9 @@ test('T-E07-06a @E07 @E07-AC06 screamer alerts every infected within 20 m, not b
   expect(within.infected!.state).not.toBe('idle'); expect(beyond.infected!.state).toBe('idle');
 });
 test('T-E07-06b @E07 @E07-AC06 bloated burst damages both factions only within 3 m', async () => {
-  const w = await arena(), bloated = spawn(w, 'bloated', 1), near = spawn(w, 'runner', 2, 0, 'idle'), far = spawn(w, 'runner', 5, 0, 'idle'); bloated.health.current = 0; step(w, 61);
+  const w = await arena(), bloated = spawn(w, 'bloated', 1), near = spawn(w, 'runner', 2, 0, 'idle'), far = spawn(w, 'runner', 5, 0, 'idle'); // This radius probe holds the bystanders in place; proximity awareness is tested separately.
+  w.npcs!.civilians.hold(near.id); w.npcs!.civilians.hold(far.id);
+  bloated.health.current = 0; step(w, 61);
   expect(w.entities.get(1)!.health.current).toBeLessThan(100); expect(near.health.current).toBe(25); expect(far.health.current).toBe(60); // PO 10-10: infected HP x1.5 (near 5 → 25 after 35 damage; far 40 → 60)
 });
 test('T-E07-06c @E07 @E07-AC06 riot frontal bullets block while flank and explosives hit', async () => {

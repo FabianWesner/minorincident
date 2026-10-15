@@ -88,8 +88,8 @@ export function runL2(world: SimWorld, mission: Mission, profile: L2Profile, opt
       if (e.type !== 'ai.alerted' || e.sourceId !== 1) return;
       if (e.cause !== 'sight' && e.cause !== 'hearing') { audit.nonSightAlerts++; return; }
       const infected = world.entities.get(e.targetId), player = world.entities.get(1)!;
-      if (e.cause === 'hearing' && infected && Math.hypot(infected.transform.x - player.transform.x, infected.transform.z - player.transform.z) > 2) audit.nonSightAlerts++;
-      if (infected && world.infected!.l1 && !world.infected!.l1.lineOfSight(infected.transform, player.transform)) audit.sightViolations++;
+      if (e.cause === 'hearing' && infected && !world.infected!.hearing.hears(infected, player.transform)) audit.nonSightAlerts++;
+      if (e.cause === 'sight' && infected && world.infected!.l1 && !world.infected!.l1.lineOfSight(infected.transform, player.transform)) audit.sightViolations++;
     }),
   ];
   for (const type of ['combat.attack', 'combat.hit', 'combat.kill'] as const) offs.push(world.events.on(type, () => { if (!mission.state.l2!.alarmAt || world.tick < mission.state.l2!.alarmAt) calm.combatEvents++; }));

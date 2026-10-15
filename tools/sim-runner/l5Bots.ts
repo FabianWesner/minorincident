@@ -48,8 +48,8 @@ export function runL5(world: SimWorld, mission: Mission, profile: L5Profile, opt
       if (e.type !== 'ai.alerted' || e.sourceId !== 1) return;
       if (e.cause !== 'sight' && e.cause !== 'hearing') { audit.nonSightAlerts++; return; }
       const infected = world.entities.get(e.targetId), player = world.entities.get(1)!;
-      if (e.cause === 'hearing' && infected && Math.hypot(infected.transform.x - player.transform.x, infected.transform.z - player.transform.z) > 2) audit.nonSightAlerts++;
-      if (infected && world.infected!.l1 && !world.infected!.l1.lineOfSight(infected.transform, player.transform)) audit.sightViolations++;
+      if (e.cause === 'hearing' && infected && !world.infected!.hearing.hears(infected, player.transform)) audit.nonSightAlerts++;
+      if (e.cause === 'sight' && infected && world.infected!.l1 && !world.infected!.l1.lineOfSight(infected.transform, player.transform)) audit.sightViolations++;
     }),
     world.events.on('l5.found', e => { if (e.type === 'l5.found') found.push({ key: e.key, t: (e.tick - start) / 60 }); }),
     world.events.on('l5.lost', e => { if (e.type === 'l5.lost') lost.push({ key: e.key, cause: e.cause, t: (e.tick - start) / 60 }); }),

@@ -8,6 +8,7 @@ import type { SimWorld } from '../sim/world/SimWorld';
 import { pickBodies } from './characters/PickBodies';
 
 export function barEligible(e: EntitySnapshot, player: { x: number; z: number }, bar: boolean): boolean {
+  if (e.civilian?.survivor?.mode === 'follow') return !e.hidden && !e.infection && e.health.current > 0 && !e.corpse;
   return bar && e.faction === 'infected' && !!e.infected && !e.hidden && !e.infected.hidden && !e.corpse &&
     !(e.infected.state === 'dead' && e.infected.recoverAt < 0) &&
     (e.health.current < e.health.max || Math.hypot(e.transform.x - player.x, e.transform.z - player.z) <= 15);

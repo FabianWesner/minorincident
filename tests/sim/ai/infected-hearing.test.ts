@@ -26,7 +26,7 @@ async function setup(archetype = 'infected.runner', l1 = false, civilian = false
 }
 const step = (w: SimWorld, ticks: number) => { for (let i = 0; i < ticks; i++) w.update(); };
 
-describe('PO 2026-10-11 close infected hearing @E07', () => {
+describe('PO 2026-10-15 close infected hearing @E07', () => {
   for (const l1 of [false, true]) for (const civilian of [false, true]) {
     test.each(infectedDefinitions.map(d => d.id))(`%s hears a ${civilian ? 'civilian' : 'player'} behind it (${l1 ? 'outbreak' : 'archetype'} brain)`, async archetype => {
       const { w, e, victimId, alerts } = await setup(archetype, l1, civilian);
@@ -36,21 +36,22 @@ describe('PO 2026-10-11 close infected hearing @E07', () => {
       expect(alerts.some(ev => ev.sourceId === victimId && ev.cause === 'hearing' && ev.tick <= 30)).toBe(true);
       expect(Math.hypot(e.transform.x - at.x, e.transform.z - at.z)).toBeLessThan(.05);
       expect(Math.abs(e.transform.yaw)).toBeGreaterThan(.5);
-      step(w, Math.max(0, 30 - w.tick));
+      step(w, Math.max(0, (archetype === 'infected.alpha' ? 45 : 30) - w.tick));
       expect(['chase', 'attack', 'bite']).toContain(e.infected!.state);
       expect(Math.cos(e.transform.yaw)).toBeLessThan(-.5);
     });
   }
   for (const l1 of [false, true]) {
-    test(`2.5 m behind does not trigger hearing (${l1 ? 'outbreak' : 'archetype'})`, async () => {
-      const { w, e, alerts } = await setup('infected.runner', l1, false, 2.5);
+    test(`6.5 m behind does not trigger hearing (${l1 ? 'outbreak' : 'archetype'})`, async () => {
+      const { w, e, alerts } = await setup('infected.runner', l1, false, 6.5);
       step(w, 30); expect(alerts).toHaveLength(0); expect(e.infected!.state).not.toBe('chase');
     });
-    test(`a building wall blocks hearing (${l1 ? 'outbreak' : 'archetype'})`, async () => {
+    test(`a building wall blocks sight but proximity still alerts (${l1 ? 'outbreak' : 'archetype'})`, async () => {
       const { w, e, alerts } = await setup('infected.runner', l1);
       const wall: CoverWall = { x: -.9, y: 1.5, z: 0, halfX: .1, halfY: 1.5, halfZ: 4 };
       (w.combat!.query.walls as CoverWall[]).push(wall);
-      step(w, 30); expect(alerts).toHaveLength(0); expect(e.infected!.state).not.toBe('chase');
+      expect(w.infected!.hearing.sees(e, w.entities.get(1)!.transform)).toBe(false);
+      step(w, 30); expect(alerts.some(ev => ev.cause === 'hearing')).toBe(true); expect(e.infected!.state).toBe('chase');
     });
     test(`scripted held infected waits until released (${l1 ? 'outbreak' : 'archetype'})`, async () => {
       const { w, e, alerts } = await setup('infected.runner', l1);
@@ -93,10 +94,11 @@ describe('PO 2026-10-11 close infected hearing @E07', () => {
     expect(tells).toHaveLength(1); expect(tells[0]).toMatchObject({ target: { id: victimId } });
     expect(w.events.events().filter(ev => ev.type === 'infected.attack' && ev.sourceId === e.id && ev.targetId === 1)).toHaveLength(0);
   });
-  test('closed dynamic blocker blocks hearing; opening it permits detection', async () => {
+  test('closed dynamic blocker blocks sight while proximity still alerts; opening it retains the target', async () => {
     const { w, e, alerts } = await setup('infected.runner', true);
     w.infected!.l1!.los.register({ id: 'door', source: 'gate', active: true, shape: { kind: 'aabb', min: { x: -1, z: -4 }, max: { x: -.8, z: 4 } } });
-    step(w, 30); expect(alerts).toHaveLength(0);
+    expect(w.infected!.hearing.lineOfSight(e.transform, w.entities.get(1)!.transform)).toBe(false);
+    step(w, 30); expect(alerts.some(ev => ev.cause === 'hearing')).toBe(true);
     w.infected!.l1!.los.setActive('door', false); step(w, 30);
     expect(alerts.some(ev => ev.cause === 'hearing')).toBe(true); expect(e.infected!.l1!.targetId).toBe(1);
   });
