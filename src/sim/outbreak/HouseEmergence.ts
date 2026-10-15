@@ -135,6 +135,7 @@ export function emergeResident(world: SimWorld, house: HouseEmergence, tick: num
   // the nearest nav cell and reset its height): the scripted walk owns the body until the doorstep.
   if (e.combat) e.combat.staggerUntil = tick + 2;
   e.emerging = true;
+  world.solids.admit(e, 'house.emergence', 0, false);
   world.openDoor(doorId(house), { x: house.x, z: house.z, nx: house.nx, nz: house.nz }, tick);
   (house.walking ??= []).push({ id, until, leg: -1, ...(opts.lateral ? { lane: opts.lateral } : {}) });
   house.ids.push(id);

@@ -34,9 +34,9 @@ export class Civilians {
     const nav = this.world.infected!.nav;
     const animal = options.zooAnimal ? infectedDef(`infected.${options.zooAnimal}`) : undefined;
     if (animal && !this.outbreak) throw new Error('Zoo animals require the same-id outbreak lifecycle');
-    if (!nav.clear(position.x, position.z, animal?.radius ?? .35)) throw new RangeError('Civilian spawn outside navigation');
+    if (![position.x, position.z].every(Number.isFinite) || nav.cell(position.x, position.z) < 0) throw new RangeError('Civilian spawn outside navigation');
     const waypoints = options.waypoints ?? [position, { x: position.x + 3, z: position.z }, { x: position.x + 3, z: position.z + 3 }, { x: position.x, z: position.z + 3 }];
-    if (!waypoints.length || !waypoints.every(p => Number.isFinite(p.x) && Number.isFinite(p.z) && nav.clear(p.x, p.z, animal?.radius ?? .35))) throw new RangeError('Invalid civilian routine');
+    if (!waypoints.length || !waypoints.every(p => Number.isFinite(p.x) && Number.isFinite(p.z) && nav.cell(p.x, p.z) >= 0)) throw new RangeError('Invalid civilian routine');
     const civilian: Civilian = { zooAnimal: options.zooAnimal, state: 'calm', ambient: options.ambient ?? false, adult: !options.child, pet: options.pet ?? null, owner: options.owner ?? null, model: animal ? `amb.${options.zooAnimal}` : options.child ? 'npc.civilian-kid' : options.model ?? ['npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-elderly'][this.world.entities.size % 5], variant: animal ? animal.asset : options.pet ? `inf.${options.pet === 'dog' ? 'dog-retriever' : 'cat-tabby'}` : def.variant,
       panicReaction: options.panicReaction, schedule: options.schedule ? structuredClone(options.schedule) : undefined, scheduleStep: 0, activityUntil: 0, activityStarted: 0, lastTravelProgress: this.world.tick,
       routine: animal ? 'zoo' : options.pet ? 'pet' : options.child ? 'protected' : def.routine, waypoints: structuredClone(waypoints), waypoint: 1 % waypoints.length, pauseUntil: 0,

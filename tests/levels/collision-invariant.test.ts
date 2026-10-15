@@ -3,7 +3,7 @@ import { loadLevel } from '../../tools/sim-runner/levels';
 import { missionIds } from '../../src/levels/missions';
 
 /** Every shipped composition runs the same final contact guard as Scene Lab. No camera/quality exemption. */
-test.each(missionIds)('%s: committed actor occupancy stays valid, including stationary full audits', async level => {
+test.each([...missionIds, 'L7'] as const)('%s: committed actor occupancy stays valid, including stationary full audits', async level => {
   const w = await loadLevel(level, 1);
   try {
     for (let tick = 0; tick < 300; tick++) {
