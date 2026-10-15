@@ -142,7 +142,7 @@ describe('L5 Aftermath', () => {
     place(w, 1, 47, 8); step(w, 5 * 60); expect(cues).toEqual([]);
     step(w, 6 * 60); expect(m.state.l5!.phase).toBe('search');
     for (const s of l5Survivors) {
-      const hide = at(w, `l5-hide-${s.key}`);
+      const hide = at(w, `l5-ring-${s.key}`);
       // 32 m away: silent. 22 m away: the cue arrives (position + text) and the HUD ping is armed for 4 s.
       // The 32 m probe must stand where a goal is reachable: from an enclosed pocket (east of Dale's hide) the TrapRescue
       // safety net would rightly move the courier back onto the route, inside the cue radius.
