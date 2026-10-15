@@ -291,6 +291,31 @@ export class SceneLab {
       }
       for (const [i, id] of mission.state.l4!.convoyIds.entries()) this.vehicles.set(`convoy-${i}`, id);
     }
+    if (spec.l5Aftermath) {
+      world.scenario = 'L5';
+      applyCampaign(world, preset('L5-default'));
+      const mission = world.loadMission(resolveCampaignMission('L5', world.districts!));
+      mission.begin(); mission.completeObjective('emerge'); mission.l5!.advance();
+      // Fixture setup uses the shipped discovery interaction, then restores its checkpoint.
+      for (const key of spec.l5Aftermath.found) {
+        const ring = mission.def.anchors[`l5-ring-${key}`];
+        if (!ring) throw new Error(`Unknown L5 survivor ${key}`);
+        Object.assign(player.transform, ring); world.physics.playerBody!.setTranslation(player.transform, true);
+        for (let tick = 0; tick < 61; tick++) world.update();
+      }
+      if (spec.l5Aftermath.found.length) mission.restore(`survivor-${spec.l5Aftermath.found.length}`);
+      // Isolate discovery and fear from unrelated infected elsewhere in Fairhaven.
+      for (const infected of [...world.infected!.active]) world.infected!.release(infected);
+      if (courier?.at) {
+        Object.assign(player.transform, { x: courier.at[0], z: courier.at[1] });
+        world.physics.playerBody!.setTranslation(player.transform, true); world.physics.playerBody!.setNextKinematicTranslation(player.transform);
+        Object.assign(world.previousPlayer!, player.transform); world.spatial.set(1, player.transform.x, player.transform.z);
+      }
+      for (const [i, r] of mission.state.l5!.survivors.filter(r => r.status === 'following').entries()) {
+        const e = world.entities.get(r.id)!;
+        Object.assign(e.transform, { x: player.transform.x - 2 - i, z: player.transform.z }); world.spatial.set(e.id, e.transform.x, e.transform.z);
+      }
+    }
     if (spec.crossingCrash) {
       const def = levelNineMission((_district, name) => {
         const a = world.districts!.districts[0].layout.anchors[name];

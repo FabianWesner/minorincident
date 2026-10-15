@@ -200,9 +200,9 @@ export class LevelFiveAftermath {
     this.checkAccounted();
   }
   private find(r: L5State['survivors'][number]): void {
-    const { world } = this.mission, s = this.s, tick = world.tick, e = this.entity(r.id), def = l5Survivors.find(d => d.key === r.key)!;
+    const { world } = this.mission, s = this.s, tick = world.tick, e = this.entity(r.id);
     if (!e?.civilian?.survivor || r.status !== 'hidden') return;
-    const out = this.snap({ x: def.outAt[0], z: def.outAt[1] }, .4), c = e.civilian, sv = c.survivor!;
+    const out = this.snap(this.anchor(`l5-ring-${r.key}`), .4), c = e.civilian, sv = c.survivor!;
     Object.assign(e.transform, out); e.hidden = false; world.spatial.set(e.id, out.x, out.z);
     c.pauseUntil = 0; c.path.length = 0; c.goal = -1; c.schedule = this.hiddenSchedule(out); c.scheduleStep = 0; c.activityUntil = 0;
     sv.mode = 'follow'; sv.slot = s.found; sv.foundAt = tick; sv.waitAt = tick + ticks(l5.follow.waitEveryS);
@@ -253,13 +253,13 @@ export class LevelFiveAftermath {
     if (player.health.current <= 0 || s.phase !== 'search' && s.phase !== 'metro') return;
     for (const r of s.survivors) {
       if (r.status !== 'hidden') continue;
-      const def = l5Survivors.find(d => d.key === r.key)!, hide = this.anchor(`l5-hide-${r.key}`), ring = this.anchor(`l5-ring-${r.key}`);
-      const d = dist(player.transform, hide);
+      const def = l5Survivors.find(d => d.key === r.key)!, ring = this.anchor(`l5-ring-${r.key}`);
+      const d = dist(player.transform, ring);
       // Sign of life: audible (position + subtitle) within 25 m, never beyond.
       if (d <= l5.survivors.cueRangeM && tick >= r.cueAt) {
         r.cueAt = tick + ticks(l5.survivors.cueEveryS);
-        s.cue = { key: r.key, x: hide.x, z: hide.z, until: tick + ticks(l5.survivors.pingS), text: dialogue[def.cue.id] };
-        world.events.emit({ type: 'l5.cue', tick, key: r.key, position: { x: hide.x, z: hide.z }, text: dialogue[def.cue.id], distance: d });
+        s.cue = { key: r.key, x: ring.x, z: ring.z, until: tick + ticks(l5.survivors.pingS), text: dialogue[def.cue.id] };
+        world.events.emit({ type: 'l5.cue', tick, key: r.key, position: { x: ring.x, z: ring.z }, text: dialogue[def.cue.id], distance: d });
       }
       // Standing next to the spot for 1.0 s (or pressing E there) brings them out.
       if (dist(player.transform, ring) <= l5.survivors.reachM) {
