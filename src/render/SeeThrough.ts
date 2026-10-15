@@ -12,8 +12,7 @@ export const seeThrough = {
   solidRadius: uniform(.17).setGroup(renderGroup),
   /** Solid reveal is immediate, including the first presented frame. */
   strength: uniform(0).setGroup(renderGroup),
-  /** 0..1 eased: a solid occluder hugs the camera (e.g. the camera above a pitched roof), so its cut widens past
-   * the screen edges. A courier-sized hole in a roof 3 m from the lens left the frame one flat colour (L4 blank viewport). */
+  /** Legacy diagnostic: reveal stays bounded, including when the camera is inside a roof. */
   cover: uniform(0).setGroup(renderGroup),
   /** World height of the courier's feet (the deck, stair or paving she stands on, 0 on the street). Solid occluders are only cut above it. */
   floor: uniform(0).setGroup(renderGroup),
@@ -34,7 +33,7 @@ export const seeThroughHole = (scale = 1, radius: Node<'float'> = seeThrough.rad
 
 /** Solid occluders use a slightly tighter circle than leaf crowns: a lamp post beside the courier stays whole.
  * They dissolve with an ordered (interleaved gradient noise) dither instead of blending, so
- * they stay opaque, depth-writing and in their batch. Fragments below 0.3 m above the courier's feet (ground, kerbs, lawns, and the deck or stair she stands on) are kept:
+ * they stay opaque, depth-writing and in their batch. Fragments below 0.08 m above the courier's feet (ground, kerbs, lawns, and the deck or stair she stands on) are kept:
  * PO 10-14 (minigun deck): the cut dissolved a jagged hole in the floor under the gunner. */
 export const seeThroughKeep = () => {
   const hole = positionWorld.y.greaterThan(seeThrough.floor.add(.08)).select(mix(1, seeThroughHole(1, seeThrough.solidRadius, .85), seeThrough.strength), 1);

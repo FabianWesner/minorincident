@@ -337,6 +337,10 @@ export class VehicleView extends Group {
   private readonly spot = new Vector3();
   private wheelSpot(node: Object3D): [number, number] { this.spot.setFromMatrixPosition(node.matrixWorld); return [this.spot.x, this.spot.z]; }
   /** Wheel nodes per vehicle entity (Scene Lab tyre-vs-ground probe). */
+  /** Same-frame Scene Lab visibility probe; retain the player vehicle in the unobstructed reference. */
+  probeVisibility(courier: boolean, environment: boolean): void {
+    for (const [id, record] of this.records) record.parent.visible = !(this.world.vehicles?.active === id ? courier : environment);
+  }
   /** Complete drawn chassis, including wheels, for the player's bounded reveal. */
   playerBounds(out: Box3): boolean {
     const record = this.records.get(this.world.vehicles?.active ?? -1);
