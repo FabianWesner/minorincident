@@ -37,6 +37,7 @@ export class SolidRegistry {
   private readonly hullIndex = new SpatialHash();
   private committed = new WeakMap<EntitySnapshot, Transform>();
   private writers = new WeakMap<EntitySnapshot, string>();
+  private proposed = new WeakMap<EntitySnapshot, Transform>();
   private readonly nearby: number[] = [];
   private readonly hullNeighbors: number[] = [];
   private readonly bodies: EntitySnapshot[] = [];
@@ -222,24 +223,28 @@ export class SolidRegistry {
       const old = this.committed.get(e), p = e.transform;
       if (full || this.changedActors.has(e.id) || !old || old.x !== p.x || old.z !== p.z || old.y !== p.y) this.moved.push(e);
     }
+    // Reserve prior committed positions before accepting any proposed motion. A later actor
+    // cannot consume an earlier actor's rollback position. New admissions reserve only after motion.
     for (const e of this.moved) {
-      const radius = actorRadius(e), p = e.transform, old = this.committed.get(e);
-      // Locomotion and impulses already sweep through NavGrid/Rapier. Validate their final footprint here,
-      // including scripted relocations whose source and destination are intentionally disconnected.
-      const beforeX = p.x, beforeZ = p.z;
-      for (let pass = 0; pass < 8; pass++) {
-        let moved = false;
-        this.solids(p, radius, e, b => {
-          const c = boxContact(b, p.x, p.z, radius, this.contact);
-          if (c.depth > skin) { p.x += c.nx * (c.depth + skin); p.z += c.nz * (c.depth + skin); moved = true; }
-        });
-        if (!moved) break;
-      }
-      this.publish(e, p.x !== beforeX || p.z !== beforeZ);
-      if (!this.clear(p, radius, e.id, true, tolerance)) {
-        // Exact circle projection handles residual crowd contacts without running a placement search for every chaser.
-        for (let pass = 0; pass < 8; pass++) {
+      let proposed = this.proposed.get(e);
+      if (proposed) Object.assign(proposed, e.transform);
+      else { proposed = { ...e.transform }; this.proposed.set(e, proposed); }
+      const old = this.committed.get(e);
+      if (old) { Object.assign(e.transform, old); this.publish(e); }
+      else this.world.spatial.delete(e.id);
+    }
+    for (const admission of [false, true]) for (const e of this.moved) {
+      const old = this.committed.get(e); if (!old !== admission) continue;
+      const radius = actorRadius(e), p = e.transform, proposed = this.proposed.get(e)!;
+      Object.assign(p, proposed);
+      let valid = this.clear(p, radius, e.id, true, tolerance);
+      if (!valid) {
+        for (let pass = 0; pass < 4; pass++) {
           let moved = false;
+          this.solids(p, radius, e, b => {
+            const c = boxContact(b, p.x, p.z, radius, this.contact);
+            if (c.depth > skin) { p.x += c.nx * (c.depth + skin); p.z += c.nz * (c.depth + skin); moved = true; }
+          });
           this.world.spatial.query({ x: p.x, z: p.z, r: radius + this.maxActor }, this.nearby, false);
           for (const id of this.nearby) {
             const other = this.world.entities.get(id);
@@ -253,17 +258,24 @@ export class SolidRegistry {
           }
           if (!moved) break;
         }
-        this.publish(e, true);
+        groundAgent(this.world, e);
+        valid = this.clear(p, radius, e.id, true, tolerance);
+        if (!valid) {
+          const to = old && this.clear(old, radius, e.id, true, tolerance) ? old : this.find(proposed, radius, e.id, 4, false);
+          if (to) { Object.assign(p, to); valid = true; }
+          else if (!old) {
+            e.pendingAdmission = { ...proposed, writer: this.writers.get(e) ?? 'tick.admission', hidden: e.hidden, range: 4, navigation: false };
+            e.hidden = true; this.world.spatial.delete(e.id); this.deferred++; continue;
+          }
+        }
       }
-      if (!this.clear(p, radius, e.id, true, tolerance)) {
-        // Only bodies still in contact pay for bounded placement; ordinary motion keeps its exact result.
-        const to = this.find(p, radius, e.id, 2, false) ?? (old && this.clear(old, radius, e.id) ? old : null);
-        if (to) { Object.assign(p, to); this.publish(e, true); }
-      }
+      this.publish(e);
+      // This is the moved/new guard: each accepted position was checked against all reserved
+      // bodies and solids. Full audits independently check the complete index once per second.
+      if (!valid) this.auditActor(e);
     }
-    // Audit every moved/new actor, and every actor once a second. Keep a bounded diagnostic ring.
-    for (const e of full ? this.bodies : this.moved) this.auditActor(e);
-    for (const e of this.bodies) {
+    if (full) for (const e of this.bodies) if (actor(e)) this.auditActor(e);
+    for (const e of this.bodies) if (actor(e)) {
       const old = this.committed.get(e);
       if (old) Object.assign(old, e.transform); else this.committed.set(e, { ...e.transform });
     }
@@ -288,5 +300,5 @@ export class SolidRegistry {
     }
   }
   snapshot() { return { failures: this.failures, pending: this.world.entities.values().filter(e => e.pendingAdmission).length, admitted: this.admitted, deferred: this.deferred, offenders: this.offenders.map(o => ({ ...o })) }; }
-  reset(): void { this.bodies.length = this.moved.length = this.nearby.length = this.hullNeighbors.length = 0; this.changedActors.clear(); this.blockerOwners.clear(); this.hulls.clear(); this.hullIndex.reset(); this.committed = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = -1; this.nav = undefined; }
+  reset(): void { this.bodies.length = this.moved.length = this.nearby.length = this.hullNeighbors.length = 0; this.changedActors.clear(); this.blockerOwners.clear(); this.hulls.clear(); this.hullIndex.reset(); this.committed = new WeakMap(); this.proposed = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = -1; this.nav = undefined; }
 }
