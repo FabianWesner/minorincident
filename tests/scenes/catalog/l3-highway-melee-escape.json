@@ -1,0 +1,95 @@
+{
+  "name": "l3-highway-melee-escape",
+  "note": "A live-damage axe strike on the elevated highway: the courier and infected share the deck. Review the axe contact, grounded retained body, hit reaction and move away. The deck must not block the swing from a fictitious ground-height origin. The height regression also proves the deck and vertical cover still block strikes between floors.",
+  "ground": "district",
+  "time": "L3",
+  "tier": 2,
+  "layout": {
+    "level": "L3",
+    "district": "D-CORRIDOR",
+    "bbox": [
+      [
+        158,
+        -12
+      ],
+      [
+        190,
+        12
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        168.75,
+        -0.75
+      ],
+      "god": false,
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.handgun"
+      ]
+    },
+    {
+      "id": "target",
+      "kind": "infected",
+      "at": [
+        170,
+        -0.75
+      ],
+      "yaw": 180
+    }
+  ],
+  "script": [
+    {
+      "frame": 10,
+      "actor": "courier",
+      "do": {
+        "attack": "target",
+        "seconds": 0.8,
+        "inPlace": true
+      }
+    },
+    {
+      "frame": 80,
+      "actor": "courier",
+      "do": {
+        "moveTo": [
+          180,
+          -0.75
+        ],
+        "pace": "run"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 240,
+  "sheet": 30,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "actorHealth": {
+      "courier": [
+        1,
+        100
+      ],
+      "target": [
+        0,
+        0
+      ]
+    },
+    "actorTravel": {
+      "courier": [
+        8,
+        20
+      ]
+    }
+  }
+}

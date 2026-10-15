@@ -134,7 +134,7 @@ export class HitQuery {
     }
     return true;
   }
-  private readonly eye = { x: 0, z: 0 };
+  private readonly eye = { x: 0, y: .7, z: 0 };
   /** `ground`: a downed infected the swing was aimed at (a click on it); other downed bodies are never struck. */
   melee(sourceId: number, origin: Vec2, aim: Vec2, range: number, arc: number, maxTargets: number, civilianGag = false, ground?: number): readonly EntitySnapshot[] {
     this.hits.length = 0;
@@ -146,7 +146,7 @@ export class HitQuery {
       // Line of sight starts a little ahead of the attacker: standing against (or inside) a prop must not
       // swallow strikes at a target on its far side (QA2-01); walls between the two still block.
       const lead = distance > 1e-6 ? Math.min(.45, distance * .5) / distance : 0;
-      this.eye.x = origin.x + dx * lead; this.eye.z = origin.z + dz * lead;
+      this.eye.x = origin.x + dx * lead; this.eye.y = (origin as RayPoint).y ?? .7; this.eye.z = origin.z + dz * lead;
       if ((!distance || (dx * aim.x + dz * aim.z) / distance >= limit - 1e-6) && this.visible(this.eye, target.transform, target.id)) this.hits.push(target);
       if (this.hits.length === maxTargets) break;
     }
