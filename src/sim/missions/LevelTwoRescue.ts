@@ -682,8 +682,15 @@ export class LevelTwoRescue {
     const { world } = this.mission, s = this.s, ai = world.infected, frac = this.relief();
     if (frac <= 0 || !ai) return;
     const p = world.entities.get(1)!.transform;
+    const distance = (e: EntitySnapshot) => Math.hypot(e.transform.x - p.x, e.transform.z - p.z);
     const thin = <T>(items: T[], remove: (item: T) => void) => items.forEach((item, i) => { if (Math.floor((i + 1) * frac) > Math.floor(i * frac)) remove(item); });
-    thin([...ai.active].filter(e => e.health.current > 0 && Math.hypot(e.transform.x - p.x, e.transform.z - p.z) < l2.mercy.nearM).sort((a, b) => a.id - b.id), e => ai.release(e));
+    // Recovering bodies keep cap slots too. Remove the closest share so repeated
+    // retries open breathing room instead of leaving a dense inner ring by ID order.
+    const nearby = [...ai.active].filter(e => (e.health.current > 0 || s.escapeSpawned && (e.infected?.recoverAt ?? -1) >= 0) && distance(e) < l2.mercy.nearM);
+    if (s.escapeSpawned) {
+      nearby.sort((a, b) => distance(a) - distance(b) || a.id - b.id);
+      for (const e of nearby.slice(0, Math.floor(nearby.length * frac))) ai.release(e);
+    } else thin(nearby.sort((a, b) => a.id - b.id), e => ai.release(e));
     // The doors ambush still waiting behind its doors thins too.
     thin(s.ambush.filter(a => !a.id), a => { a.id = -1; });
   }
