@@ -15,7 +15,7 @@ function spacingRadius(e: EntitySnapshot): number {
   if (e.civilian?.pet) return .5;
   return e.survivor || e.companion || e.escort || (e.civilian && e.civilian.state !== 'infected' && e.civilian.state !== 'finished') || e.infected ? e.combat?.radius ?? .35 : 0;
 }
-type Body = { entity: EntitySnapshot; radius: number; extra: number; contact: number; category: number; infected: boolean; courier: boolean; crowd: boolean; l1: boolean; fixed: boolean; charge: boolean; passiveCompanion: boolean };
+type Body = { entity: EntitySnapshot; radius: number; extra: number; contact: number; category: number; infected: boolean; courier: boolean; crowd: boolean; hullContact: boolean; l1: boolean; fixed: boolean; charge: boolean; passiveCompanion: boolean };
 /** Combat/presentation spacing is wider than the physical footprint for companions and pets.
  * Resolve body circles against the same static geometry as steering, after physics.
  * The survivor stays authoritative in Rapier; AI yields to it, including during
@@ -29,7 +29,7 @@ export function installCharacterSeparation(world: SimWorld): void {
     if (!active || !maximum) return false;
     const p = active.entity.transform, r = active.radius;
     const dx = Math.max(x - p.x, 0, p.x - x - 4), dz = Math.max(z - p.z, 0, p.z - z - 4);
-    const reach = Math.max(r + maximum + .3, meleeRing) + Math.max(0, r - .35, maximum - .35);
+    const reach = Math.max(r + maximum + (active.hullContact ? .45 : .3), meleeRing) + Math.max(0, r - .35, maximum - .35);
     return dx * dx + dz * dz < reach * reach;
   } };
   const settled = new WeakMap<EntitySnapshot, { district: NonNullable<SimWorld['districts']>; x: number; z: number; y: number }>();
@@ -39,15 +39,17 @@ export function installCharacterSeparation(world: SimWorld): void {
     // Reuse the numeric-ID lookup without clearing sparse carried-survivor ID ranges.
     for (const id of radiusIds) radii[id] = undefined; radiusIds.length = 0;
     let bodyCount = 0, maximumRadius = 0;
+    const drivenHull = world.vehicles?.active == null ? undefined : world.vehicles.cars.get(world.vehicles.active)?.physics;
     for (const e of world.entities.iterate()) {
       const r = spacingRadius(e); if (!r) continue;
       let body = records.get(e);
-      if (!body) { body = { entity: e, radius: r, extra: 0, contact: 0, category: 0, infected: false, courier: false, crowd: false, l1: false, fixed: false, charge: false, passiveCompanion: false }; records.set(e, body); }
+      if (!body) { body = { entity: e, radius: r, extra: 0, contact: 0, category: 0, infected: false, courier: false, crowd: false, hullContact: false, l1: false, fixed: false, charge: false, passiveCompanion: false }; records.set(e, body); }
       else body.radius = r;
       body.extra = Math.max(0, r - .35); body.contact = infectedContactDistance(r);
       // These contact flags cannot change during the separation phase; cache them once per body.
       body.infected = !!e.infected; body.courier = !!e.survivor; body.l1 = !!e.infected?.l1;
       body.crowd = !!e.infected && (!!e.combat?.attacking || e.infected.state === 'chase');
+      body.hullContact = !!drivenHull && body.infected && drivenHull.hullDistance(e.transform.x, e.transform.z) < 3;
       body.passiveCompanion = !!e.companion && !e.companion.following && e.companion.state === 'follow';
       body.fixed = !!(e.infected?.pursuit && e.infected.specialAttack) || body.courier || !!(e.civilian?.ally?.hold && storyProtected(world, e)) || e.civilian?.state === 'grabbed' || body.passiveCompanion;
       const attack = e.infected?.specialAttack;
@@ -62,7 +64,7 @@ export function installCharacterSeparation(world: SimWorld): void {
     categories.length = 0;
     for (const id of radiusIds) {
       const body = radii[id]!;
-      let category = categories.findIndex(c => c.radius === body.radius && c.infected === body.infected && c.courier === body.courier && c.crowd === body.crowd && c.l1 === body.l1);
+      let category = categories.findIndex(c => c.radius === body.radius && c.infected === body.infected && c.courier === body.courier && c.crowd === body.crowd && c.hullContact === body.hullContact && c.l1 === body.l1);
       if (category < 0) { category = categories.length; categories.push(body); }
       body.category = category;
     }
@@ -74,7 +76,7 @@ export function installCharacterSeparation(world: SimWorld): void {
         const courier = body.courier || neighbor.courier;
         const contact = infected === 1 ? (body.infected ? body.contact : neighbor.contact) : 0;
         const combatCrowd = infected === 2 && ((body.l1 && neighbor.l1) || body.crowd || neighbor.crowd);
-        const gap = infected === 1 ? Math.max(.015, courier ? contact - r - otherRadius : Math.min(.3, 1.05 - r - otherRadius)) : combatCrowd ? .22 + Math.max(body.extra, neighbor.extra) : .015;
+        const gap = infected === 1 ? Math.max(.015, courier ? contact - r - otherRadius : Math.min(.3, 1.05 - r - otherRadius)) : combatCrowd ? (body.hullContact || neighbor.hullContact ? .4 : .22) + Math.max(body.extra, neighbor.extra) : .015;
         row[j] = r + otherRadius + gap;
       }
     }
@@ -92,14 +94,22 @@ export function installCharacterSeparation(world: SimWorld): void {
       const angle = e.id * 2.399963, scale = neighbor.fixed ? 1 : .5;
       nav.move(e.transform, (distance ? dx / distance : Math.cos(angle)) * overlap * scale, (distance ? dz / distance : Math.sin(angle)) * overlap * scale, actorRadius(e));
     };
-    // One soft spacing pass supplies intent; the registry then commits hard footprints against
-    // reserved valid positions. Repeating soft pushes here duplicates that final contact work.
-    for (const body of bodies) {
+    // One ordinary soft pass; a second local pass keeps leaning hull attackers'
+    // upper bodies apart while the registry commits their physical footprints.
+    for (let pass = 0; pass < 2; pass++) for (const body of bodies) {
+      if (pass && !body.hullContact) continue;
       const { entity: e, radius: r } = body; active = body;
       query.x = e.transform.x; query.z = e.transform.z; query.r = r + maximumRadius + Math.max(.45, .22 + maximumRadius - .35); // covers the largest gap below
       // Consume the same unsorted bucket order directly; nav.move does not mutate the spatial index.
       world.spatial.query(query, neighbors, false, visit, contacts);
       if (e.transform.x !== query.x || e.transform.z !== query.z) { world.spatial.set(e.id, e.transform.x, e.transform.z); world.solids.wrote(e, 'cleanup.separation'); }
+    }
+    // Hull strikes have 1.5 m of authored reach. Reserve room for their forward
+    // attack pose without changing that hit reach or the physical footprint.
+    if (drivenHull) for (const body of bodies) if (body.hullContact && !body.charge) {
+      const e = body.entity, x = e.transform.x, z = e.transform.z;
+      drivenHull.separateHull(e.transform, body.radius + .45);
+      if (x !== e.transform.x || z !== e.transform.z) { world.spatial.set(e.id, e.transform.x, e.transform.z); world.solids.wrote(e, 'cleanup.hull-stance'); }
     }
     // Separation changes only X/Z. Ground once at the final position, rather
     // than sampling every pass and leaving the last push's support stale.

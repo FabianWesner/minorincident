@@ -153,6 +153,36 @@ test('a stationary revived actor is admitted again after its attachment exemptio
   } finally { w.dispose(); }
 });
 
+test('an explicit actor attachment alone exempts contact with its owner', async () => {
+  const w = await arena();
+  try {
+    const player = w.entities.get(1)!;
+    const e = w.entities.get(w.infected!.spawn('infected.runner', { x: 12, z: 0 }, { state: 'idle' }))!;
+    e.attachedTo = player.id; Object.assign(e.transform, player.transform); tick(w);
+    expect(Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z)).toBeLessThan(.02);
+    delete e.attachedTo; tick(w);
+    expect(Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z)).toBeGreaterThanOrEqual(.68);
+    expect(w.solids.failures).toBe(0);
+  } finally { w.dispose(); }
+});
+
+test('an attack windup faces its victim without residual steering rotating it into a neighbour', async () => {
+  const w = await arena();
+  try {
+    const player = w.entities.get(1)!;
+    const e = w.entities.get(w.infected!.spawn('infected.runner', { x: player.transform.x + 5, z: player.transform.z }, { state: 'chase' }))!;
+    tick(w); expect(e.locomotion).toBeDefined();
+    expect(w.solids.relocate(e, { x: player.transform.x + 1.2, y: player.transform.y, z: player.transform.z }, 'test.attack-start')).toBe(true);
+    Object.assign(e.locomotion!, { vx: 0, vz: 4, omega: 3 });
+    tick(w); expect(e.infected!.state).toBe('attack');
+    const yaw = e.transform.yaw;
+    expect(Math.abs(Math.atan2(Math.sin(yaw - Math.PI), Math.cos(yaw - Math.PI)))).toBeLessThan(.02);
+    while (w.tick + 1 < e.infected!.until) {
+      tick(w); expect(e.transform.yaw).toBeCloseTo(yaw, 5);
+    }
+  } finally { w.dispose(); }
+});
+
 test('a clear formation can enter positions its neighbours vacate during the same tick', async () => {
   const w = await arena();
   try {
