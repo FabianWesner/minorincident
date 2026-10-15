@@ -2,6 +2,7 @@ import type { Game } from '../Game';
 import { revealCards,pickUpgrades,finishRewards,rackSize,nextLevelAfter,lastLevel,powerScore,type CampaignSave,type Level } from '../sim/progression/Campaign';
 import { SAVE_ERROR,type SaveResult } from '../sim/progression/Save';
 import { upgrades } from '../data/upgrades';
+import { madeBy } from '../data/madeBy';
 import './campaign.css';
 const label=(id:string)=>id.split('.').at(-1)!.replaceAll('-',' ');
 /** Campaign-only screens. E12 retains briefing/results and E14 retains the gameplay HUD. */
@@ -69,7 +70,8 @@ export class CampaignUI {
   /** The end of the campaign: shown after the last level (L10) and whenever the next level is not built yet. */
   credits(save:CampaignSave, ending = false):void {
     clearTimeout(this.creditsTimer);
-    this.screen('Credits');const credits=document.createElement('p');credits.textContent='Minor Incident — A community still alive. Built with Three.js and Rapier. Technology reference: Bruno Simon (MIT).';credits.className='credits-roll';this.content.append(credits);
+    this.screen('Credits');const credits=document.createElement('div');credits.className='credits-roll';this.content.append(credits);
+    for(const line of ['Minor Incident',madeBy.headline,`${madeBy.author.name}: ${madeBy.author.role.toLowerCase()}`,...madeBy.groups.map(g=>`${g.heading}: ${g.names.join(', ')}`),'Built with three.js and Rapier. Technology reference: Bruno Simon (MIT).',madeBy.thanks]){const p=document.createElement('p');p.textContent=line;credits.append(p);}
     if (ending) { credits.style.animationPlayState = 'paused'; credits.style.animationDelay = `-${(this.game.world.missions?.state.epilogue?.phaseTicks ?? 0) / 60}s`; }
     else this.creditsTimer=setTimeout(()=>{if(!this.root.hidden)this.showMenu({status:'ok',save});},12000);
     const back = this.button(ending ? 'Skip / Main menu' : 'Main menu',()=>{
@@ -85,7 +87,7 @@ export class CampaignUI {
     }else if(p.phase==='cards'){
       this.screen('Pick 2 of 3 upgrades');const cards=document.createElement('div');cards.className='upgrade-cards';this.content.append(cards);
       const next=this.button('Set up racks',()=>{pickUpgrades(save,this.picks);this.save();this.game.applyCampaign();this.showRewards();});next.disabled=this.picks.length!==2;
-      for(const id of p.cards){const d=upgrades[id],b=this.button(`${d.title} · Tier ${d.tier} — ${d.description}`,()=>{
+      for(const id of p.cards){const d=upgrades[id],b=this.button(`${d.title} · Tier ${d.tier} · ${d.description}`,()=>{
         if(this.picks.includes(id))this.picks=this.picks.filter(p=>p!==id);else if(this.picks.length<2)this.picks.push(id);else this.message.textContent='Pick exactly two cards. Deselect one to change your choice.';
         b.setAttribute('aria-pressed',String(this.picks.includes(id)));next.disabled=this.picks.length!==2;
       },cards);b.dataset.upgrade=id;b.setAttribute('aria-pressed',String(this.picks.includes(id)));}
