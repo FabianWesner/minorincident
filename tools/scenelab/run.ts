@@ -47,8 +47,15 @@ export async function measureCourierShare(session: SceneSession) {
   const shot = async (courier: boolean, crowd: boolean, environment = false) => { const d = await session.page.evaluate(([c, w, e]) => window.__SCENE__!.hideProbe(c, w, e), [courier, crowd, environment] as [boolean, boolean, boolean]); await session.ready(); return { d, png: PNG.sync.read(await session.page.screenshot({ type: 'png' })) }; };
   const all = await shot(false, false), noCourier = await shot(true, false), noCrowd = await shot(false, true), clear = await shot(false, true, true), none = await shot(true, true, true);
   await session.page.evaluate(() => window.__SCENE__!.hideProbe(false, false));
-  const diff = (a: PNG, b: PNG) => { let n = 0; for (let i = 0; i < a.data.length; i += 4) if (Math.abs(a.data[i] - b.data[i]) + Math.abs(a.data[i + 1] - b.data[i + 1]) + Math.abs(a.data[i + 2] - b.data[i + 2]) >= 36) n++; return n; };
-  const visible = diff(all.png, noCourier.png), reference = diff(clear.png, none.png), mega = diff(all.png, noCrowd.png);
+  const changed = (a: PNG, b: PNG, i: number) => Math.abs(a.data[i] - b.data[i]) + Math.abs(a.data[i + 1] - b.data[i + 1]) + Math.abs(a.data[i + 2] - b.data[i + 2]) >= 36;
+  const diff = (a: PNG, b: PNG) => { let n = 0; for (let i = 0; i < a.data.length; i += 4) if (changed(a, b, i)) n++; return n; };
+  // Count visible pixels only inside the unobstructed subject silhouette: ground shadows and HUD changes are not body pixels.
+  let visible = 0, reference = 0;
+  for (let i = 0; i < clear.png.data.length; i += 4) {
+    if (!changed(clear.png, none.png, i)) continue;
+    reference++; if (changed(all.png, noCourier.png, i)) visible++;
+  }
+  const mega = diff(all.png, noCrowd.png);
   return { megaM: all.d, visible, reference, share: reference > 0 ? Math.min(1, visible / reference) : 0, megaPixels: mega, megaShare: mega / (all.png.width * all.png.height) };
 }
 
