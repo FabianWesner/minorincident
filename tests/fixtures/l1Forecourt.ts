@@ -15,7 +15,7 @@ export async function forecourt() {
   // PO #3: checkpoint bat, tick 15574, standing inside the fence, bike outside.
   teleport(w, 22.94, 35.60);
   const bike = w.vehicles!.bicycle.entity!;
-  Object.assign(bike.transform, { x: 24.8, z: 33.7, yaw: 0 });
+  Object.assign(bike.transform, { x: 24.8, z: 32.9, yaw: 0 });
   w.vehicles!.bicycle.postPhysics();
   return { w, mission, bike };
 }
