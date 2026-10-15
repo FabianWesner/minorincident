@@ -121,6 +121,30 @@ def tunnel(s):
     s.physics()
 
 
+def track(s):
+    """12 m open track module: the tunnel's track (bed, ballast, rails, clamps, sleepers) without walls or roof.
+
+    Same numbers as tunnel() above and placed like its modules (y 0.35, 12 m apart along X, on the tunnel line z), so the
+    station platform track and the tunnel track are one kit. The bed reaches down to the ground (module z -0.35) so no gap
+    shows under it; its collider top (0.2) is a walkable support like the tunnel's.
+    """
+    structure(s, 'trackBed', (0, 0, -.075), (12, 7.6, .55))
+    s.box('ballast', (0, 0, .225), (12, 3.1, .05), DARK)
+    for y in (-.72, .72):
+        for z, w, h in ((.39, .20, .06), (.48, .07, .16), (.59, .13, .06)):
+            s.box('rail', (0, y, z), (12, w, h), METAL, bevel=.01)
+    count = (24, 20, 16)[s.lod]
+    for i in range(count):
+        x = -5.75 + i * 11.5 / (count - 1)
+        s.box('sleeper', (x, 0, .31), (.24, 2.45, .14), 'woodWarm', bevel=.025)
+        if s.lod < 2:
+            for y in (-.72, .72):
+                s.box('railClamp', (x, y, .39), (.3, .3, .07), DARK, d=1)
+    for x in (-6, 6):
+        port(s, 'track' + ('Start' if x < 0 else 'End') + 'Socket', (x, 0, .25), 6.9, moduleLength=12)
+    s.physics()
+
+
 def corridor(s):
     """10 m service bay. A 2.2 m aisle links two actual room portals."""
     anchor(s,'interior',(0,0,.2),cutaway=True)

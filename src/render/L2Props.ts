@@ -33,8 +33,6 @@ export class L2Props extends Group {
   /** Per gate: open and closed offsets of its panel. */
   private readonly gates: { open: [number, number]; closed: [number, number] }[] = [];
   private readonly axe = new Group();
-  /** Grove Market storefront walls (the interior model is open to the camera on its east and south sides): sliding doors hide once the doors open. */
-  private readonly marketDoors: Mesh[] = [];
   private readonly brickMat = new MeshBasicNodeMaterial({ color: '#d9a17f' });
   private readonly shopGlass = new MeshBasicNodeMaterial({ color: '#a9d4e6', transparent: true, opacity: .22, depthWrite: false });
   /** PO 10-13: the required axe gets one marker on the item itself, a pulsing warm backplate; the objective arrow and the single stand ring come from ObjectiveMarker. */
@@ -81,19 +79,19 @@ export class L2Props extends Group {
     this.add(this.glint);
     this.add(this.axe);
     // Grove Market outer walls on the two sides the model leaves open: brick bulkhead, glass above, lintel, a doorway with glass doors.
-    const wallPiece = (mat: MeshBasicNodeMaterial, x: number, y: number, z: number, sx: number, sy: number, sz: number, door = false) => {
-      const m = new Mesh(this.box, mat); m.scale.set(sx, sy, sz); m.position.set(x, y, z); this.add(m); if (door) this.marketDoors.push(m);
+    const wallPiece = (mat: MeshBasicNodeMaterial, x: number, y: number, z: number, sx: number, sy: number, sz: number) => {
+      const m = new Mesh(this.box, mat); m.scale.set(sx, sy, sz); m.position.set(x, y, z); this.add(m);
     };
     const storefront = (along: 'z' | 'x', fixed: number, from: number, to: number, doorAt: number) => {
-      const d = .2, w = 2.6, pos = (a: number, y: number, len: number, h: number, mat: MeshBasicNodeMaterial, door = false) =>
-        along === 'z' ? wallPiece(mat, fixed, y, a, d, h, len, door) : wallPiece(mat, a, y, fixed, len, h, d, door);
+      const d = .2, w = 2.6, pos = (a: number, y: number, len: number, h: number, mat: MeshBasicNodeMaterial) =>
+        along === 'z' ? wallPiece(mat, fixed, y, a, d, h, len) : wallPiece(mat, a, y, fixed, len, h, d);
       for (const [a0, a1] of [[from, doorAt - w / 2], [doorAt + w / 2, to]] as const) {
         const len = a1 - a0, mid = (a0 + a1) / 2, n = Math.max(1, Math.round(len / 2.2));
         pos(mid, .5, len, 1, this.brickMat); pos(mid, 2.05, len, 2.1, this.shopGlass);
         for (let k = 0; k <= n; k++) pos(a0 + (len * k) / n, 1.6, .1, 3.2, this.frame);
       }
       pos((from + to) / 2, 3.3, to - from, .3, this.brickMat);
-      pos(doorAt, 1.5, w - .1, 2.9, this.shopGlass, true); pos(doorAt - w / 2 + .05, 1.5, .1, 2.9, this.frame, true); pos(doorAt + w / 2 - .05, 1.5, .1, 2.9, this.frame, true);
+      // The doorway itself is kit.market-doors (frame and two glazed leaves, a layout placement posed by DistrictView.marketDoors).
     };
     storefront('z', -51.35, -46.7, -37.7, -42.2); storefront('x', -37.65, -59.9, -51.35, -55.6);
     // Checkpoint gates: striped panels (stripes relative to the panel centre), moved between open and closed.
@@ -150,8 +148,6 @@ export class L2Props extends Group {
     const hint = this.world.missions?.state.steps.axe?.status === 'active' && !s.axe;
     this.glint.visible = hint;
     if (hint) { const pulse = Math.sin(tick * .1); this.glint.children[0].scale.set(.05, 1.75 + .1 * pulse, 1.95 + .1 * pulse); }
-    const doorsClosed = s.doorsOpenAt === 0;
-    for (const m of this.marketDoors) m.visible = doorsClosed;
     const closing = s.crossedAt > 0 ? Math.min(1, (tick - s.crossedAt) / 36) : 0;
     for (const { mesh, boxes } of this.stripes) this.place(mesh, boxes, b => { const g = this.gates[b.gate!]; return [g.open[0] + (g.closed[0] - g.open[0]) * closing, g.open[1] + (g.closed[1] - g.open[1]) * closing]; });
   }

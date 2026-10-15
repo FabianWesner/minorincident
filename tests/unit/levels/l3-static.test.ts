@@ -183,3 +183,18 @@ test('T-E21-12b @E21 @E21-AC12 five times every L3 encounter with E18 concurrent
   expect(l3.officers.gun).toEqual({ damage: 15, shotS: 1 / 1.5, rangeM: 22, nearM: 15, hitNear: .6, hitFar: .25 });
   expect(l3.soldiers.count).toBe(8); expect(l3.soldiers.hp).toBe(150);
 });
+
+test('PO 10-15 "The bridge is on the air": the river bridge deck is flush with the street, not hanging above the bank (ground gap)', () => {
+  // The model's deck top is 3.18 m above its own base (assets/bld.river-bridge/notes.md: deck top 3.18). Its placement must put
+  // that deck at the street the player walks on: asphalt top 0.05 m, pavement 0.13 m. A 3 m high deck with no ramp was the bug.
+  const DECK_TOP = 3.18, bridges = base.placements.filter(p => p.assetId === 'bld.river-bridge');
+  expect(bridges.length).toBeGreaterThan(0);
+  for (const b of bridges) {
+    const deck = DECK_TOP * b.scale[1] + b.position[1];
+    expect(deck, `${b.id} deck top ${deck.toFixed(2)} m against the street`).toBeGreaterThanOrEqual(.05);
+    expect(deck, `${b.id} deck top ${deck.toFixed(2)} m against the street`).toBeLessThanOrEqual(.25);
+    // And the street really runs through it: an asphalt road surface covers the deck footprint along Commerce Street.
+    const covers = (s: { polygon: number[][] }) => Math.min(...s.polygon.map(q => q[0])) <= b.position[0] && Math.max(...s.polygon.map(q => q[0])) >= b.position[0] && Math.min(...s.polygon.map(q => q[1])) <= b.position[2] && Math.max(...s.polygon.map(q => q[1])) >= b.position[2];
+    expect(base.surfaces.some(s => s.surface === 'asphalt' && covers(s))).toBe(true);
+  }
+});
