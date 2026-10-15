@@ -1,0 +1,13 @@
+{
+  "extends": "../../../specs/scenes/catalog/fight-fists-vs3.json",
+  "name": "collision-fight-fists-vs3",
+  "note": "Collision regression: production scene, courier/corgi and vehicle footprints commit with <= 2 cm penetration. Attack reach and authored actions retained. Inspect animation silhouettes separately.",
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "bodyOverlapMaxCm": 2,
+    "footSinkMaxCm": 1,
+    "collisionFailuresMax": 0,
+    "collisionPendingMax": 0
+  }
+}

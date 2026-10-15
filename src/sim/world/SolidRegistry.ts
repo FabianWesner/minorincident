@@ -44,6 +44,8 @@ export class SolidRegistry {
   private readonly hullNeighbors: number[] = [];
   private readonly bodies: EntitySnapshot[] = [];
   private readonly moved: EntitySnapshot[] = [];
+  private readonly rejected = new Set<number>();
+  private readonly unresolved: EntitySnapshot[] = [];
   private readonly live = new Map<number, EntitySnapshot>();
   private committing = false;
   private readonly contact: Contact = { depth: 0, nx: 0, nz: 0, inside: false };
@@ -186,9 +188,12 @@ export class SolidRegistry {
     const to = this.find(e.transform, actorRadius(e), e.id, range, navigation);
     if (!to) {
       if (!e.pendingAdmission) { e.pendingAdmission = { ...e.transform, writer, hidden: e.hidden, range, navigation }; this.deferred++; }
+      else Object.assign(e.pendingAdmission, e.transform, { writer, range, navigation });
       e.hidden = true; this.world.spatial.delete(e.id); return false;
     }
-    Object.assign(e.transform, to); delete e.pendingAdmission;
+    Object.assign(e.transform, to);
+    if (e.pendingAdmission) e.hidden = e.pendingAdmission.hidden;
+    delete e.pendingAdmission;
     this.publish(e, true); this.admitted++; return true;
   }
   relocate(e: EntitySnapshot, at: Point, writer: string, range = 1.5, navigation = true): boolean {
@@ -250,23 +255,37 @@ export class SolidRegistry {
     this.committing = true;
     // Accept a mutually clear set of simultaneous proposals atomically. A coherent formation
     // must be able to enter positions its neighbours vacate during this same tick.
-    let simultaneous = true;
-    for (const e of this.moved) if (!this.clear(e.transform, actorRadius(e), e.id, true, tolerance)) { simultaneous = false; break; }
-    if (simultaneous) {
-      for (const e of this.moved) if (e.id === 1) this.publish(e);
-      this.finish(full); return;
-    }
-    // Reserve prior committed positions before accepting any proposed motion. A later actor
-    // cannot consume an earlier actor's rollback position. New admissions reserve only after motion.
-    for (const e of this.moved) {
+    this.rejected.clear(); this.unresolved.length = 0;
+    const reject = (e: EntitySnapshot) => {
+      if (this.rejected.has(e.id)) return;
+      this.rejected.add(e.id); this.unresolved.push(e);
       let proposed = this.proposed.get(e);
       if (proposed) Object.assign(proposed, e.transform);
       else { proposed = { ...e.transform }; this.proposed.set(e, proposed); }
-      const old = this.committed.get(e);
-      if (old) { Object.assign(e.transform, old); this.publish(e); }
-      else this.world.spatial.delete(e.id);
+    };
+    for (const e of this.moved) if (!this.clear(e.transform, actorRadius(e), e.id, true, tolerance)) reject(e);
+    if (!this.unresolved.length) {
+      for (const e of this.moved) if (e.id === 1) this.publish(e);
+      this.finish(full); return;
     }
-    for (const admission of [false, true]) for (const e of this.moved) {
+    // Reserve rollback positions only for the conflicting component. Propagate a
+    // reservation to proposals it intersects; unrelated clear formations keep moving.
+    for (let i = 0; i < this.unresolved.length; i++) {
+      const e = this.unresolved[i];
+      const old = this.committed.get(e);
+      if (!old) { this.world.spatial.delete(e.id); continue; }
+      Object.assign(e.transform, old); this.publish(e);
+      const radius = actorRadius(e);
+      this.world.spatial.query({ x: old.x, z: old.z, r: radius + this.maxActor }, this.nearby, false);
+      for (const id of this.nearby) {
+        const other = this.live.get(id);
+        if (!other || id === e.id || this.rejected.has(id) || pairExempt(e, other) || !layers(old, other.transform)) continue;
+        const dx = old.x - other.transform.x, dz = old.z - other.transform.z;
+        if (dx * dx + dz * dz < (radius + actorRadius(other) - tolerance) ** 2) reject(other);
+      }
+    }
+    for (const e of this.moved) if (!this.rejected.has(e.id) && e.id === 1) this.publish(e);
+    for (const admission of [false, true]) for (const e of this.unresolved) {
       const old = this.committed.get(e); if (!old !== admission) continue;
       const radius = actorRadius(e), p = e.transform, proposed = this.proposed.get(e)!;
       Object.assign(p, proposed);

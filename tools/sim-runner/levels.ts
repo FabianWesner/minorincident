@@ -226,12 +226,12 @@ function runSeven(world: SimWorld, report: LevelReport, maxSeconds: number, onCo
       const p = world.entities.get(1)!, f = emptyInput();
       if (p.health.current <= 0) { report.deaths++; report.outcome = 'mission-failed'; break; }
       if (!world.storyLock) {
-        const pickup = [...world.entities.iterate()].find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === l7Rocket.action);
+        const pickup = world.l7Encounters!.state.started ? undefined : [...world.entities.iterate()].find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === l7Rocket.action);
         if (!pickup && waypoint < route.length - 1 && distance(p.transform, route[waypoint]) < 2) waypoint++;
         const goal = pickup?.transform ?? route[waypoint];
         report.furthestObjective = pickup ? 'rocket-pickup' : 'bus-departure';
         f.move = walker.step(world, goal, pickup ? .5 : 1, `${report.furthestObjective}-${waypoint}`) ?? f.move;
-        if (pickup && distance(p.transform, goal) < 1.5) f.interact = true;
+        if (pickup && distance(p.transform, goal) < 1.45) { f.move = { x: 0, z: 0 }; f.interact = true; }
         const rack = p.weapons!.RIGHT.rack, rocket = rack.findIndex(s => s.id === l7Rocket.action);
         if (rocket >= 0) f.selectedSlot = { side: 'RIGHT', index: rocket };
         const enemies = world.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !e.emerging && !e.infectionRise && distance(e.transform, p.transform) < 24 && world.infected!.nav.visible(p.transform, e.transform, 0)).sort((a,b) => distance(a.transform, p.transform) - distance(b.transform, p.transform));

@@ -1,0 +1,15 @@
+{
+  "extends": "../../../specs/scenes/catalog/qa-l9-surrounded-floor.json",
+  "name": "collision-qa-l9-surrounded-floor",
+  "note": "Collision regression: production scene, courier/corgi and vehicle footprints commit with <= 2 cm penetration. Attack reach and authored actions retained. Inspect animation silhouettes separately.",
+  "expect": {
+    "consoleErrors": 0,
+    "clippingMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "hullWindupsMin": 12,
+    "collisionFailuresMax": 0,
+    "collisionPendingMax": 0,
+    "bodyOverlapMaxCm": 2
+  }
+}

@@ -4,6 +4,7 @@ import { spawnSetPiece } from '../../../src/sim/missions/L4Spectacle';
 import { missionControls } from '../../../src/sim/missions/controls';
 import { respawnAtCheckpoint } from '../../../src/sim/missions/Respawn';
 import { vehicles, vehicleDef } from '../../../src/data/vehicles';
+import { emergeResident, walkResidents, type HouseEmergence } from '../../../src/sim/outbreak/HouseEmergence';
 
 async function arena() { const w = new SimWorld(); await w.init(); w.loadScenario('horde-arena', 1); return w; }
 const tick = (w: SimWorld, n = 1) => { for (let i = 0; i < n; i++) w.update(); expect(w.solids.offenders).toEqual([]); };
@@ -110,11 +111,49 @@ test('a clear formation can enter positions its neighbours vacate during the sam
   try {
     const bodies = [12, 12.716].map(x => w.entities.get(w.infected!.spawn('infected.runner', { x, z: 0 }, { state: 'idle' }))!);
     for (const e of bodies) e.combat!.staggerUntil = 600;
+    // An unrelated blocked transaction must not freeze this clear formation.
+    const blocked = w.entities.get(w.infected!.spawn('infected.runner', { x: 25, z: 0 }, { state: 'idle' }))!;
+    blocked.combat!.staggerUntil = 600;
+    const tank = spawnSetPiece(w, 'veh.tank', { x: 30, z: 0 });
     tick(w);
     const starts = bodies.map(e => e.transform.x);
     for (const e of bodies) e.transform.x += .2;
+    Object.assign(blocked.transform, tank.transform);
     tick(w);
     for (let i=0;i<bodies.length;i++) expect(bodies[i].transform.x).toBeCloseTo(starts[i] + .2, 5);
+  } finally { w.dispose(); }
+});
+
+test('a wider house resident keeps its identity and walks clear of the pedestrian doorstep', async () => {
+  const w = await arena();
+  try {
+    // The pedestrian's endpoint is just inside the Alpha's required wall clearance.
+    w.events.emit({ type: 'world.blocker.changed', tick: w.tick, id: 987654, blocked: true,
+      wall: { x: 11, z: 0, y: 1, halfX: 1, halfZ: 2, halfY: 1 } });
+    const house: HouseEmergence = { door: 0, house: 'test-door', x: 11, z: 0, nx: 1, nz: 0, floor: [], sx: 12.35, sz: 0, ox: 12.35, oz: 0, route: [], next: 0, ids: [] };
+    const id = emergeResident(w, house, w.tick, { archetype: 'infected.alpha' });
+    const e = w.entities.get(id)!;
+    expect(e.pendingAdmission).toBeDefined();
+    for (let i = 0; i < 300 && house.walking?.length; i++) { walkResidents(w, house, w.tick); tick(w); }
+    expect(house.walking).toHaveLength(0); expect(e.pendingAdmission).toBeUndefined();
+    expect(e.hidden).not.toBe(true); expect(e.transform.x).toBeGreaterThanOrEqual(12.549);
+    expect(w.infected!.director.count).toBe(1); expect(w.entities.get(id)).toBe(e);
+  } finally { w.dispose(); }
+});
+
+test('courier and corgi remain outside eight attackers through windup and knockback', async () => {
+  const w = await arena();
+  try {
+    w.combat!.damage.god = true;
+    const player = w.entities.get(1)!, dog = w.entities.get(w.npcs!.companion.spawn())!;
+    const ids = Array.from({ length: 8 }, (_, i) => w.infected!.spawn('infected.runner', { x: player.transform.x + Math.cos(i * Math.PI / 4) * 3, z: player.transform.z + Math.sin(i * Math.PI / 4) * 3 }, { state: 'chase' }));
+    tick(w, 300);
+    Object.assign(dog.transform, player.transform);
+    Object.assign(w.entities.get(ids[0])!.transform, player.transform);
+    tick(w);
+    for (const e of [player, dog]) expect(w.solids.clear(e.transform, .35, e.id, true, .02)).toBe(true);
+    expect(ids.every(id => !w.entities.get(id)!.pendingAdmission)).toBe(true);
+    expect(w.infected!.director.count).toBe(8);
   } finally { w.dispose(); }
 });
 
