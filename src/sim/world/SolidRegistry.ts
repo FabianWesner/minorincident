@@ -39,7 +39,7 @@ export class SolidRegistry {
   private committed = new WeakMap<EntitySnapshot, Transform>();
   private writers = new WeakMap<EntitySnapshot, string>();
   private proposed = new WeakMap<EntitySnapshot, Transform>();
-  private validated = new WeakMap<EntitySnapshot, { tick: number; radius: number; exemption: number | string | undefined; blocked: number }>();
+  private validated = new WeakMap<EntitySnapshot, { tick: number; radius: number; exemption: number | string | undefined; blocked: number; crowded: boolean; crowdUntil: number }>();
   private readonly nearby: number[] = [];
   private readonly hullNeighbors: number[] = [];
   private readonly bodies: EntitySnapshot[] = [];
@@ -308,10 +308,21 @@ export class SolidRegistry {
       if (valid) { const proof = this.validated.get(e); if (proof) proof.blocked = 0; }
       if (!valid) {
         const proof = this.validated.get(e);
-        const crowded = this.bodyConflict && this.nearby.length >= 12;
-        if (crowded && e.infected && !e.infected.specialAttack && proof && proof.blocked < 9 && old && !this.failures && !staticChanged && !this.changedActors.has(e.id) && proof?.tick === this.world.tick - 1 && proof.radius === radius && proof.exemption === exemption(e)) {
+        let crowded = false;
+        if (this.bodyConflict && e.infected && proof) {
+          if (proof.crowdUntil <= this.world.tick) {
+            // The contact query has a one-body reach: twelve nonpenetrating
+            // centres cannot fit there. Count the local crowd in a 2 m ring.
+            this.world.spatial.query({ x: p.x, z: p.z, r: Math.max(2, radius + this.maxActor) }, this.nearby, false);
+            proof.crowded = this.nearby.length >= 8; proof.crowdUntil = this.world.tick + 30;
+          }
+          crowded = proof.crowded;
+        }
+        if (crowded && e.infected && !e.infected.specialAttack && proof && (this.world.tick + e.id) % 10 !== 0 && old && !this.failures && !staticChanged && !this.changedActors.has(e.id) && proof.tick === this.world.tick - 1 && proof.radius === radius && proof.exemption === exemption(e)) {
           // Every earlier transaction respected this reserved pose. With the same solid geometry,
           // footprint and attachment mask, rejecting motion needs no second contact search.
+          // Stagger the one-in-ten projection retries by actor ID, avoiding a
+          // synchronized repair frame that dominates the E18 p95 window.
           proof.blocked++; Object.assign(p, old); this.publish(e); continue;
         }
         if (proof) proof.blocked = 0;
@@ -361,7 +372,7 @@ export class SolidRegistry {
       if (old) Object.assign(old, e.transform); else this.committed.set(e, { ...e.transform });
       const proof = this.validated.get(e);
       if (proof) { proof.tick = this.world.tick; proof.radius = actorRadius(e); proof.exemption = exemption(e); }
-      else this.validated.set(e, { tick: this.world.tick, radius: actorRadius(e), exemption: exemption(e), blocked: 0 });
+      else this.validated.set(e, { tick: this.world.tick, radius: actorRadius(e), exemption: exemption(e), blocked: 0, crowded: false, crowdUntil: 0 });
     }
     this.committing = false;
   }
