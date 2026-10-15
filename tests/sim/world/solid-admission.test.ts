@@ -104,3 +104,16 @@ test('a stationary revived actor is admitted again after its attachment exemptio
     expect(e.hidden).not.toBe(true); expect(e.pendingAdmission).toBeUndefined();
   } finally { w.dispose(); }
 });
+
+test('a clear formation can enter positions its neighbours vacate during the same tick', async () => {
+  const w = await arena();
+  try {
+    const bodies = [12, 12.716].map(x => w.entities.get(w.infected!.spawn('infected.runner', { x, z: 0 }, { state: 'idle' }))!);
+    for (const e of bodies) e.combat!.staggerUntil = 600;
+    tick(w);
+    const starts = bodies.map(e => e.transform.x);
+    for (const e of bodies) e.transform.x += .2;
+    tick(w);
+    for (let i=0;i<bodies.length;i++) expect(bodies[i].transform.x).toBeCloseTo(starts[i] + .2, 5);
+  } finally { w.dispose(); }
+});
