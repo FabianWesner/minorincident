@@ -33,6 +33,25 @@ describe('L3 squad and checkpoint', () => {
     expect(counts[1].inside).toBe(Math.ceil(counts[0].inside * .5));
     expect(counts[1].outside).toEqual(counts[0].outside);
   }, 120_000);
+  test('@E21 a distant failed encounter keeps retry pursuit relief until the courier approaches, retaining every actor', async () => {
+    const { world: w, mission: m } = await loadL3(1);
+    try {
+      const s = m.state.l3!, api = missionControls(w);
+      s.phase = 'corridor'; s.fallbackAt = 1; s.pending = []; s.waves = []; s.populated = [true, true, true];
+      api.teleport('player', { x: -110, z: 0 }); m.checkpoint('fallback');
+      api.teleport('player', { x: -20, z: -23 }); w.events.emit({ type: 'player.died', tick: w.tick, id: 1 });
+      api.teleport('player', { x: -110, z: 0 });
+      const id = w.infected!.spawn('infected.runner', { x: -22, z: -28 }), actor = w.entities.get(id)!;
+      m.l3!.restore(0); m.l3!.update();
+      const health = actor.health.current;
+      w.tick += (l3.mercy.respawnDelayS + 1) * 60; m.l3!.update();
+      expect(w.entities.get(id)).toBe(actor); expect(actor.health.current).toBe(health);
+      expect(actor.infected!.l1!.ignoreUntil).toBe(w.tick + l3.mercy.respawnDelayS * 60);
+      const until = actor.infected!.l1!.ignoreUntil;
+      api.teleport('player', { x: -49, z: -23 }); w.tick += 60; m.l3!.update();
+      expect(actor.infected!.l1!.ignoreUntil).toBe(until); // The ordinary 20-second clock now runs out.
+    } finally { w.dispose(); }
+  }, 120_000);
   test('@E21 a returning body keeps its timer and the L3 pursuit delay when it gets up after respawn', async () => {
     const { world: w, mission: m } = await loadL3(1);
     try {
@@ -206,10 +225,10 @@ describe('L3 squad and checkpoint', () => {
   test('@E21 the Boulevard wreck passing line collects its existing sidewalk medkits', async () => {
     const { world: w, mission: m } = await loadL3(1);
     try {
-      missionControls(w).teleport('player', { x: 32, z: -24.75 });
+      missionControls(w).teleport('player', { x: 25, z: -24.75 });
       const player = w.entities.get(1)!;
       player.health.current = 20;
-      const ids = l3.medkits.positions.flatMap(([x, z], i) => (x === 36 || x === 60) && z < -20 ? [m.state.l3!.medkitIds[i]] : []);
+      const ids = l3.medkits.positions.flatMap(([x, z], i) => (x === 29 || x === 60) && z < -20 ? [m.state.l3!.medkitIds[i]] : []);
       for (let tick = 0; tick < 1200 && player.transform.x < 64; tick++) {
         w.applyInput({ ...emptyInput(), moveTarget: { x: 65, z: -24.75 }, navigation: true }, 'mouse-only'); w.update();
       }
@@ -221,9 +240,12 @@ describe('L3 squad and checkpoint', () => {
   }, 120_000);
 
   test.each([
-    { name: 'first Boulevard turn', from: [-13.75, -18], to: [-13.75, -22.75], kit: [-13.75, -22.75] },
-    { name: 'last street turn', from: [128, -22.75], to: [131.75, -22.75], kit: [131.75, -22.75] },
-    { name: 'entry ramp', from: [146.75, 2.75], to: [151.75, 2.75], kit: [149, 2.75] },
+    { name: 'first Boulevard turn', from: [-13.75, -8], to: [-13.75, -18], kit: [-13.75, -12] },
+    { name: 'Boulevard corner', from: [-13.75, -22.75], to: [0, -22.75], kit: [-9, -23.6] },
+    { name: 'last street turn', from: [131.75, -12], to: [131.75, -2.75], kit: [131.75, -6] },
+    { name: 'bus passing-line end', from: [76, -24.75], to: [84, -24.75], kit: [80, -24] },
+    { name: 'entry ramp', from: [131.75, -2.75], to: [149.25, 2.75], kit: [138.75, -.5] },
+    { name: 'upper ramp', from: [160.25, -2.75], to: [166.75, -2.25], kit: [162, -2.6] },
     { name: 'exit ramp', from: [197.75, -2.75], to: [205.25, -.75], kit: [201, -1.8] },
   ])('@E21 the $name medkit is collected on the walking line', async ({ from, to, kit }) => {
     const { world: w, mission: m } = await loadL3(1);

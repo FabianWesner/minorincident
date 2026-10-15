@@ -1,6 +1,6 @@
-Fixes: restored the connected Boulevard detour with existing cover and finished police sidesteps after their target disappears.
-Route: moved the existing sandbag pallet to (4,-23.6), before the next cross-link and clear of the later burning cruiser/bus passages; the unchanged full route test passes.
-Allies: finish an existing move to cover inside the follower band; retreat and regroup orders retain priority, with no weapon or damage changes.
-Validation: exact deploy-blocker files pass together on Hetzner: 2 files, 3/3 tests; typecheck/lint pass; no threshold or test-route changes.
-Metrics: L3 stillness 0.201449→0.102719 (<0.2), five-second mobility 0.985158; L4 feel also passes; new lost-target regressions 2/2 pass.
-Remaining lane work: merged Boulevard baseline is 9 deaths; candidate survival, phone timing and final visual matrix remain in progress; no merge or deployment.
+Deploy blockers: e13e9972 is independently ready to merge; all requested L3*/L4*, ally-feel and regression checks passed on Hetzner (128 pass, 2 existing probe skips).
+Boulevard: fresh main-based build passes the unchanged T-E21-19 real-input route with 2 deaths (limit 5); prior recovery-only candidates measured 9 then 7.
+Fix: carry the existing pursuit delay to the distant failed encounter and its later arrivals; align existing recovery packs with passing lines; actor identity, health, corpse recovery and other levels remain intact.
+Validation: final-source bot/tank/ally-feel spot checks 5/5, retry/recovery checks 3/3, typecheck/lint/fresh build green; full requested L3*/L4*/ally-feel/ally-defence rerun: 119 pass, 2 existing probe skips, zero failures.
+QA: Scene Lab catalog fixtures added for the changed recovery and retained-body case; WebGPU matrix 48/48 passed; inspected game-camera sheets show pickup collection, grounded turns and retained bodies; original travel bounds are preserved in the final fixtures; final WebGL and original-travel-bound fixture rechecks remain unmeasured: queued runs were cancelled at 06:10 UTC at the three-hour lane bound; the final-source two-worker full browser file is also unmeasured.
+Scope: gameplay only; phone p95 belongs to astra-l3-p95; no render/perf edits in this follow-up, no threshold changes, no deployment or merge.

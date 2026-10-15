@@ -1,0 +1,92 @@
+{
+  "name": "l3-highway-upper-medkit",
+  "note": "The existing upper-deck pack lies on the narrow walking line at the start of the deck. Production walk-over test verifies +40 HP.",
+  "ground": "district",
+  "time": "L3",
+  "tier": 2,
+  "layout": {
+    "level": "L3",
+    "district": "D-CORRIDOR",
+    "bbox": [
+      [
+        154,
+        -12
+      ],
+      [
+        176,
+        12
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        160.25,
+        -2.75
+      ],
+      "god": false,
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.handgun"
+      ]
+    }
+  ],
+  "script": [
+    {
+      "frame": 1,
+      "actor": "courier",
+      "do": {
+        "hit": {
+          "amount": 80
+        }
+      }
+    },
+    {
+      "frame": 1,
+      "effect": {
+        "pickup": "medkit",
+        "at": [
+          162,
+          -2.6
+        ]
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "courier",
+      "do": {
+        "moveTo": [
+          166.75,
+          -2.25
+        ],
+        "pace": "run"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 240,
+  "sheet": 30,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "actorHealth": {
+      "courier": [
+        60,
+        100
+      ]
+    },
+    "actorTravel": {
+      "courier": [
+        3,
+        8
+      ]
+    }
+  }
+}
