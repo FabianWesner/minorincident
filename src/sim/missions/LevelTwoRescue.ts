@@ -378,9 +378,15 @@ export class LevelTwoRescue {
     // Street population: home + leash only (no rush, which would start the panic flow). The ambush runs at the forecourt.
     if (brain && home) {
       brain.homeX = home.x; brain.homeZ = home.z; brain.leashM = l2.escape.leashM;
-      // Walk out of the door onto the authored street. A home alone only biases slow wandering
-      // and left most of the population behind buildings while the courier crossed empty roads.
-      ai.rush(id, home, world.tick + ticks(18));
+      if (door.startsWith('l2-street-edge-')) {
+        // Watch the incoming street; perception still chooses the closest visible human.
+        const yaw = home.x === -30 || home.x === -64 ? Math.PI / 2 : Math.PI;
+        e.transform.yaw = brain.lookYaw = yaw; brain.looking = true;
+        brain.pauseUntil = world.tick + ticks(l2.escape.streetLookS);
+      } else {
+        // Door exits walk onto their street instead of drifting behind the buildings.
+        ai.rush(id, home, world.tick + ticks(18));
+      }
     }
     else ai.rush(id, toward, world.tick + ticks(12));
     return id;
@@ -395,11 +401,15 @@ export class LevelTwoRescue {
       .sort((p, q) => Math.hypot(p.a.x - home.x, p.a.z - home.z) - Math.hypot(q.a.x - home.x, q.a.z - home.z));
     // Death-loop relief: a courier who keeps dying on the break-away meets a thinner street population.
     const scale = (this.world.infected!.director.tier === 'low' ? l2.escape.lowScale : 1) * (1 - this.relief());
-    // The bridge cluster first: under the shared cap it must exist before the looser street groups.
+    // The phone cap reserves two street beats before the bridge; desktop has room for the full cluster first.
+    const cluster: Pending[] = [];
     const [cx, cz] = l2.cluster.home, home = { x: cx, z: cz }, list = near(home).filter(e => e.d.startsWith('refuge-door-')).slice(0, 4);
-    for (let i = 0; i < Math.ceil(l2.cluster.count * scale); i++) s.pending.push({ id: -2, door: list[i % list.length].d, at: 0, home });
-    for (const [x, z, size] of l2.escape.groups) {
-      const home = { x, z }, list = near(home).slice(0, 2);
+    for (let i = 0; i < Math.ceil(l2.cluster.count * scale); i++) cluster.push({ id: -2, door: list[i % list.length].d, at: 0, home });
+    const low = this.world.infected!.director.tier === 'low';
+    if (!low) s.pending.push(...cluster);
+    for (const [index, [x, z, size]] of l2.escape.groups.entries()) {
+      if (index === 2 && low) s.pending.push(...cluster);
+      const home = { x, z }, list = near(home).slice(0, 1);
       for (let i = 0; i < Math.ceil(size * scale); i++) s.pending.push({ id: 0, door: list[i % list.length].d, at: 0, home });
     }
     s.escapeSpawned = true; this.emergePending(true);
@@ -485,7 +495,7 @@ export class LevelTwoRescue {
     const bridge = this.anchor('l2-gate');
     if (s.radioAt && !s.clusterSpawned && Math.hypot(player.transform.x - bridge.x, player.transform.z - bridge.z) < l2.checkpoint.hordeTriggerM) {
       s.clusterSpawned = true;
-      for (const id of s.clusterIds) world.infected!.rush(id, { x: l2.checkpoint.gateX - 3, z: 30 }, tick + ticks(l2.checkpoint.hordeRushS));
+      for (const id of s.clusterIds) world.infected!.rush(id, { x: l2.checkpoint.gateX - 8, z: 30 }, tick + ticks(l2.checkpoint.hordeRushS));
     }
     this.checkpointGate(tick, player);
     // L2 infected (turned adults in the open) hit harder than L1's first, disoriented victims (section 5.1 tuning).
@@ -685,6 +695,7 @@ export class LevelTwoRescue {
   /** Checkpoint restore: shift the timeline, re-seat or re-park the truck, rebuild the walls from state. */
   restore(delta: number): void {
     const s = this.mission.state.l2; if (!s) return;
+    this.world.infected!.director.strict = !!s.escapeSpawned;
     this.mercyDue = true; { const id = this.mission.state.checkpoint ?? 'start'; this.respawns[id] = (this.respawns[id] ?? 0) + 1; }
     for (const key of ['alarmAt', 'departAt', 'arrivedAt', 'crewExitAt', 'atDoorsAt', 'doorsOpenAt', 'radioAt', 'crossedAt', 'gateClosedAt'] as const) if (s[key]) s[key] += delta;
     for (const a of s.ambush) if (a.at) a.at += delta;
