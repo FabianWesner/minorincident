@@ -5,7 +5,7 @@ import { sharedUniformGroup, Fn, If, Discard, attribute, float, max, vec3, mix, 
 import { paletteTokens, type PaletteToken } from '../data/palette';
 import type { Lighting } from './Lighting';
 import { surfaceDetail } from './SurfaceDetail';
-import { seeThroughKeep } from './SeeThrough';
+import { seeThroughKeep, seeThroughKeepBoss } from './SeeThrough';
 import { hashArray, hashString } from 'three/src/nodes/core/NodeUtils.js';
 
 /** Palette-sampled Lambert node material with Bruno's captured drop-shadow, core shade and terrain bounce. */
@@ -162,15 +162,15 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
     let output = this._outputs.get(mode);
     if (!output) {
       const base = this.outputFor(mode);
-      output = this.userData.seeThrough ? Fn(() => { Discard(seeThroughKeep().not()); return base; })() : base;
+      output = this.userData.seeThrough ? Fn(() => { Discard((this.userData.seeThrough === 'boss' ? seeThroughKeepBoss() : seeThroughKeep()).not()); return base; })() : base;
       this._outputs.set(mode, output);
     }
     this.outputNode = output; this.needsUpdate = true;
   }
   /** Keep the see-through wrapper on every weather graph; shadow casters remain whole. */
-  seeThrough(enabled = true): this {
-    if (!!this.userData.seeThrough === enabled) return this;
-    this.userData.seeThrough = enabled; this._outputs.clear();
+  seeThrough(enabled: boolean | 'boss' = true): this {
+    if (this.userData.seeThrough === (enabled || undefined)) return this;
+    this.userData.seeThrough = enabled || undefined; this._outputs.clear();
     const mode = this.weatherMode; this.weatherMode = -1; this.setWeatherMode(mode);
     return this;
   }
