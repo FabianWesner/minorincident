@@ -101,3 +101,8 @@ Guard: `tests/unit/data/player-text-dashes.test.ts` fails on any em dash or spac
 - Mission retry text shows the raw checkpoint id ("Retry from cure-research."): changing it needs a lookup table (logic), out of scope for a text-only lane.
 - Controls guide and input hints: dense but they are a reference card, not prose; key names already consistent (LMB/RMB/MMB, WASD, F / E, Q).
 - Credits licence rows and THIRD_PARTY_NOTICES.md: generated, unchanged (the notices file is a repository document, not in-game text).
+## Visual check (Scene Lab, 960x540, high/low, zoom 0.5/1/1.5, WebGL2 and WebGPU)
+
+- `ui-menu-credits` (new, in `scene:matrix`): Made by headline, Fabian Wesner linked with his role, Anthropic models, OpenAI models, harnesses and tools sit above "Code libraries and technology"; the Back button stays clear.
+- `qa-l10-title-credits`: five-second "Minor Incident / The outbreak is over." title, then the centred roll (title, headline, role, models by maker, harnesses, tools, three.js/Rapier/Bruno Simon, thank-you) fades in above "Skip / Main menu" with no overlap after the compaction fix.
+- `l10-e2-terminal` (now in `scene:matrix`): HUD objective "Play the research recording", then the research subtitle panel and the new objective "Pack the cure canister · 6 m" in the tracker.
