@@ -7,10 +7,18 @@ test('T-E18-03 @E18-AC03 @perf production initial network payload <=15MB gzip th
     if (!collecting || !request.url().startsWith('http')) return;
     requests.push((async () => ({ url: new URL(request.url()).pathname, bodyBytes: (await request.sizes()).responseBodySize }))());
   });
-  await page.goto('/?test=1&renderer=webgl&quality=high&audio=muted');
-  await page.waitForFunction(() => Boolean(window.__SS__));
-  const event = await page.evaluate(async () => { const a = window.__SS__!; await a.ready; await a.loadLevel('L1'); await a.screenshotReady(); a.missions.begin(); a.pause(); return a.events().find(e => e.type === 'level.started'); });
-  collecting = false; expect(event).toMatchObject({ type: 'level.started', id: 'L1' });
+  // Use the shipped title/character/level flow: test=1 boots an empty world and
+  // skips speculative loading, hiding genuine startup traffic from this budget.
+  await page.goto('/?testApi=1&renderer=webgl&quality=high');
+  await page.getByTestId('start-game').click();
+  await page.getByTestId('character-female').click();
+  await page.getByTestId('level-L1').click();
+  await expect(page.getByTestId('mission-button')).toBeVisible({ timeout: 120_000 });
+  await page.evaluate(() => window.__SS__!.screenshotReady());
+  collecting = false;
+  await page.getByTestId('mission-button').click();
+  const event = await page.evaluate(() => { const a = window.__SS__!; a.pause(); return a.events().find(e => e.type === 'level.started'); });
+  expect(event).toMatchObject({ type: 'level.started', id: 'L1' });
   const files = await Promise.all(requests), bodyBytes = files.reduce((n, f) => n + f.bodyBytes, 0);
   mkdirSync('test-results/epics/E18', { recursive: true }); writeFileSync('test-results/epics/E18/download.json', JSON.stringify({ frontier: event, measurement: 'browser-context requestfinished including dedicated workers; encoded HTTP responseBodySize before level.started', bodyBytes, files }, null, 2));
   expect(files.some(f => f.url.endsWith('.glb'))).toBe(true); expect(files.some(f => /rapier-.*\.js$/.test(f.url))).toBe(true);

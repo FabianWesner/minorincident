@@ -57,8 +57,8 @@ export class NpcView extends Group {
     this.add(root);
     return () => root.removeFromParent();
   }
-  async init(): Promise<void> {
-    await this.civilians.init(); const loaded = await this.registry.loadAsset('char.corgi', 'lod1');
+  async init(camera?: import('three').Camera): Promise<void> {
+    await this.civilians.init(camera); const loaded = await this.registry.loadAsset('char.corgi', 'lod1');
     this.dog = loaded.userData.placeholder ? createCorgiPlaceholder() : loaded as Group; this.dogSource = loaded.userData.placeholder ? 'placeholder' : 'glb'; if (loaded.userData.placeholder) this.placeholders.push(this.dog);
     await Promise.all([...new Set([...this.world.entities.iterate()].flatMap(e => e.civilian?.pet === 'dog' ? [e.civilian.model ?? 'amb.dog'] : []))].map(model => this.loadPet(model)));
     await this.loadHuman('npc.civilian-man-a');

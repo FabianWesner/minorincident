@@ -22,14 +22,14 @@ test.each(['high', 'low'] as const)('L1 %s stages later cast after Begin and war
   try {
     const discover = () => (crowd as unknown as { discover(): void }).discover();
     discover();
-    expect(batches.map(b => `${b.model}:${b.lod}`)).toEqual(['npc.civilian-man-a:lod1', 'npc.civilian-man-a:lod2']);
+    expect(batches.map(b => `${b.model}:${b.lod}`)).toEqual(['npc.civilian-man-a:lod1']);
     world.missions.state.phase = 'playing';
     discover(); await crowd.ready();
     for (const model of l1CivilianModels) {
       expect(batches.filter(b => b.model === model).map(b => b.lod).sort()).toEqual(tier === 'low' ? ['lod1', 'lod2'] : ['lod0', 'lod1', 'lod2']);
     }
     expect(batches.some(b => b.model === 'npc.police-officer' || b.model === 'npc.national-guard')).toBe(false);
-    expect(warm).toHaveBeenCalledTimes(batches.length - 2);
+    expect(warm).toHaveBeenCalledTimes(batches.length - 1);
     for (const b of batches) expect(b.parent).toBe(crowd);
     discover(); await crowd.ready();
     expect(batches).toHaveLength(l1CivilianModels.length * (tier === 'low' ? 2 : 3));
