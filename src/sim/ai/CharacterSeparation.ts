@@ -57,7 +57,7 @@ export function installCharacterSeparation(world: SimWorld): void {
       bodies[bodyCount++] = body;
     }
     bodies.length = bodyCount; contacts.epoch++;
-    // Contact geometry depends only on radius/brain flags, which are fixed for these three passes.
+    // Contact geometry depends only on radius/brain flags, which are fixed for this spacing pass.
     // Compute each distinct ordered pair once, retaining the exact original arithmetic.
     categories.length = 0;
     for (const id of radiusIds) {
@@ -92,7 +92,9 @@ export function installCharacterSeparation(world: SimWorld): void {
       const angle = e.id * 2.399963, scale = neighbor.fixed ? 1 : .5;
       nav.move(e.transform, (distance ? dx / distance : Math.cos(angle)) * overlap * scale, (distance ? dz / distance : Math.sin(angle)) * overlap * scale, actorRadius(e));
     };
-    for (let pass = 0; pass < 3; pass++) for (const body of bodies) {
+    // One soft spacing pass supplies intent; the registry then commits hard footprints against
+    // reserved valid positions. Repeating soft pushes here duplicates that final contact work.
+    for (const body of bodies) {
       const { entity: e, radius: r } = body; active = body;
       query.x = e.transform.x; query.z = e.transform.z; query.r = r + maximumRadius + Math.max(.45, .22 + maximumRadius - .35); // covers the largest gap below
       // Consume the same unsorted bucket order directly; nav.move does not mutate the spatial index.
