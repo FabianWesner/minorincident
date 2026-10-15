@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
 import { CrowdView } from '../../../src/render/CrowdView';
 import { SpatialHash } from '../../../src/sim/spatial/SpatialHash';
 import type { EntitySnapshot } from '../../../src/sim/world/types';
@@ -35,5 +35,8 @@ test('permanent separated corpses query local neighbors instead of copying every
   // Isolate neighbor work from nav/support: exact separation remains 1.25 m.
   for (let id = 1; id <= 2000; id++) { const p = { x: id * 5, z: -id * 5, sourceX: id * 5, sourceZ: -id * 5, deadAt: 1 }; f.corpses.set(id, p); f.spatial.set(id, p.x, p.z); }
   expect(f.spatial.query({ x: 5000, z: -5000, r: 1.25 })).toEqual([1000]);
-  expect(f.corpses.size).toBe(2000);
+  const iterate = vi.spyOn(f.corpses, Symbol.iterator);
+  expect(f.place(body(2001, 0, 0), 2)).toMatchObject({ x: 0, z: 0 });
+  expect(iterate).not.toHaveBeenCalled();
+  expect(f.corpses.size).toBe(2001);
 });
