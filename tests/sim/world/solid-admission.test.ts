@@ -7,6 +7,7 @@ import { vehicles, vehicleDef } from '../../../src/data/vehicles';
 import { emergeResident, walkResidents, type HouseEmergence } from '../../../src/sim/outbreak/HouseEmergence';
 import { Outbreak } from '../../../src/sim/outbreak/Outbreak';
 import { loadLevel } from '../../../tools/sim-runner/levels';
+import { SimPhase } from '../../../src/core/EventBus';
 
 async function arena() { const w = new SimWorld(); await w.init(); w.loadScenario('horde-arena', 1); return w; }
 const tick = (w: SimWorld, n = 1) => { for (let i = 0; i < n; i++) w.update(); expect(w.solids.offenders).toEqual([]); };
@@ -81,6 +82,20 @@ test('a safe explicit relocation releases an earlier deferred checkpoint request
     expect(w.physics.playerCollider!.isEnabled()).toBe(true);
     tick(w, 35); expect(player.transform.x).toBeCloseTo(20);
     expect(w.solids.snapshot().pending).toBe(0);
+  } finally { w.dispose(); }
+});
+test('a circular admission beside a box corner can walk away at its full radius', async () => {
+  const w = await arena();
+  try {
+    w.infected!.nav.setBlocker(987650, { x: 12, z: 0, y: .7, halfX: 1, halfZ: 1, halfY: .7 }, true);
+    const e = w.entities.get(w.infected!.spawn('infected.runner', { x: 8, z: 0 }, { state: 'idle' }))!;
+    expect(w.solids.relocate(e, { x: 10.7518, z: 1.2482, y: .7 }, 'test.corner', 0, false)).toBe(true);
+    expect(w.infected!.nav.clear(e.transform.x, e.transform.z, .35)).toBe(false);
+    expect(w.solids.clear(e.transform, .35, e.id)).toBe(true);
+    w.events.on('sim.tick', () => { w.npcs!.move(e, { x: 9, z: 1.2482 }, 2, e.infected!); }, SimPhase.ai + .25);
+    tick(w, 60);
+    expect(e.transform.x).toBeLessThan(10.2);
+    expect(e.combat!.radius).toBe(.35); expect(w.solids.clear(e.transform, .35, e.id)).toBe(true);
   } finally { w.dispose(); }
 });
 test('checkpoint restore discards a deferred player mask from the discarded timeline', async () => {
