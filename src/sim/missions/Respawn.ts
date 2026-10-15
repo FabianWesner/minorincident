@@ -14,9 +14,9 @@ type Spot = { x: number; z: number };
 const dist = (a: Spot, b: Spot) => Math.hypot(a.x - b.x, a.z - b.z);
 
 /** The anchor itself when the player fits there, else the nearest clear spot within `snapM` (never farther). */
-function snap(world: SimWorld, anchor: Spot): Spot | null {
+function snap(world: SimWorld, anchor: Spot): (Spot & { y: number }) | null {
   const player = world.entities.get(1)!;
-  return world.solids.find({ ...anchor, y: player.transform.y }, .35, 1, respawnRule.snapM);
+  return world.solids.find({ ...anchor, y: player.survivor?.checkpoint.y ?? player.transform.y }, .35, 1, respawnRule.snapM);
 }
 
 /** Companion and escorts come back beside the courier (the companion has its own settle logic; escorts stand up and follow). */
@@ -91,10 +91,14 @@ export function respawnAtCheckpoint(world: SimWorld, anchor: Spot, worldKept = t
   const player = world.entities.get(1)!;
   if (world.missions?.state.checkpoint !== 'cure-disperse-ready') clearThreat(world, anchor);
   const at = snap(world, anchor);
+  if (player.survivor) player.survivor.invulnerableUntil = world.tick + ticks(respawnRule.graceS);
   if (!at) {
-    Object.assign(player.transform, anchor); world.solids.admit(player, 'checkpoint.respawn', respawnRule.snapM); return;
+    Object.assign(player.transform, anchor, { y: player.survivor?.checkpoint.y ?? player.transform.y });
+    world.solids.admit(player, 'checkpoint.respawn', respawnRule.snapM);
+    if (player.pendingAdmission) player.pendingAdmission.graceTicks = ticks(respawnRule.graceS);
+    gatherAllies(world, anchor, worldKept); return;
   }
-  player.transform.x = at.x; player.transform.z = at.z;
+  Object.assign(player.transform, at);
   world.physics.playerBody!.setTranslation(player.transform, true);
   world.previousPlayer = { ...player.transform }; world.spatial.set(1, at.x, at.z);
   if (player.survivor) player.survivor.invulnerableUntil = world.tick + ticks(respawnRule.graceS);
