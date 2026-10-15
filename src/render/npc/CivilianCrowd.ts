@@ -386,7 +386,7 @@ export class CivilianCrowd extends Group {
     this.ranked.sort((a, b) => b.score - a.score || a.id - b.id);
     for (let i = CivilianCrowd.lowNearBudget; i < this.ranked.length; i++) demoted.add(this.ranked[i].id);
   }
-  constructor(private readonly world: SimWorld, shading?: Materials, private readonly accessories?: CrowdAccessories) {
+  constructor(private readonly world: SimWorld, shading?: Materials, private readonly accessories?: CrowdAccessories, private readonly warm?: (batch: Group) => Promise<void>) {
     super(); this.props = new RoutineProps(shading); this.add(this.props); this.shading=shading;
     // The L6 cast is fixed: bake it while briefing, before Mission.begin creates the people.
     const models=this.staged ? this.nearbyModels(32) : world.scenario==='L7'?[...new Set([...world.entities.iterate()].flatMap(e => { const model = crowdModelOf(e); return model ? [model] : []; }))]:world.scenario==='L6'?[...new Set([...l6CastModels,...l1Pedestrians.models])]:world.scenario==='L3'?l3CivilianModels:coreCivilianModels;
@@ -432,7 +432,7 @@ export class CivilianCrowd extends Group {
   private loadHero(model: string): void {
     if (this.low || this.heroLoads.has(model)) return;
     const hero = this.batch(model, 'lod0');
-    this.heroLoads.set(model, hero.init().then(() => { if (this.disposed) { hero.dispose(); return; } this.batches.push(hero); this.add(hero); this.visibility.heroModels.add(model); }, () => {}));
+    this.heroLoads.set(model, hero.init().then(async () => { if (!this.disposed && this.staged && this.world.missions!.state.phase === 'playing') await this.warm?.(hero); if (this.disposed) { hero.dispose(); return; } this.batches.push(hero); this.add(hero); this.visibility.heroModels.add(model); }, () => {}));
   }
   private disposed = false;
   private readonly known = new Set<string>();
@@ -466,7 +466,7 @@ export class CivilianCrowd extends Group {
     if (this.known.has(model) || !model.startsWith('npc.')) return;
     this.known.add(model);
     const added = [this.batch(model, 'lod1'), this.batch(model, 'lod2')];
-    this.heroLoads.set('discover:' + model, Promise.all(added.map(b => b.init())).then(() => { if (this.disposed) { added.forEach(b => b.dispose()); return; } this.batches.push(...added); this.add(...added); }, () => {}));
+    this.heroLoads.set('discover:' + model, Promise.all(added.map(b => b.init())).then(async () => { if (!this.disposed && this.staged && this.world.missions!.state.phase === 'playing') for (const batch of added) await this.warm?.(batch); if (this.disposed) { added.forEach(b => b.dispose()); return; } this.batches.push(...added); this.add(...added); }, () => {}));
   }
   /** Hero LOD0 batches still loading (screenshots and tests wait for them). */
   async ready(): Promise<void> { await Promise.all(this.heroLoads.values()); }

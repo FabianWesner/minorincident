@@ -453,7 +453,7 @@ export class GameView implements Lifecycle {
   }
   private startActors(character: Promise<unknown>): Promise<unknown> {
     this.accessories = new CrowdAccessories(this.materials!); this.scene.add(this.accessories);
-    if (this.world.npcs && this.materials) { this.npcs = new NpcView(this.world, this.materials, this.accessories); this.npcs.setQuality(this.quality); }
+    if (this.world.npcs && this.materials) { this.npcs = new NpcView(this.world, this.materials, this.accessories, batch => this.warmHidden(batch)); this.npcs.setQuality(this.quality); }
     if (this.character) this.entityAssets = new EntityAssets(this.world, this.quality === 'low', this.materials!);
     if (this.world.combat && this.character) { this.actions = new ActionView(this.world, this.character, this.materials!, this.renderer); this.actions.ground = this.drawnGround; this.actions.showCone = this.params.has('debug') || this.params.get('aimcone') === '1'; }
     if (this.character && this.world.combat) { this.crowd = new CrowdView(this.world, this.quality === 'low', this.materials!, this.accessories); this.healthBars = new HealthBars(this.world); this.barScene.add(this.healthBars); }
@@ -533,7 +533,7 @@ export class GameView implements Lifecycle {
   /** Seconds of running play since the level loaded (menus/briefing/pause excluded). */
   private playSeconds = 0;
   /** Network-only extras wait until the first playable frames have been presented. */
-  get backgroundReady(): boolean { return this.params.get('test') === '1' || !this.warming && !this.background && this.playSeconds > .25; }
+  get backgroundReady(): boolean { return this.world.missions?.state.phase !== 'briefing' && (this.params.get('test') === '1' || !this.warming && !this.background && this.playSeconds > .25); }
   /** L10's required tiers must swap within its two-second walking prefetch horizon.
    * Other levels retain their startup admission; all swaps use the load gate. */
   private async swapSlot(): Promise<void> {
