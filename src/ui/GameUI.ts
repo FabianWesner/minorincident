@@ -8,6 +8,7 @@ import { Hud } from './Hud';
 import { button, node, setHidden } from './dom';
 import { Settings, type UISettings } from './Settings';
 import { audioCredits, codeCredits, originalCredit, type Credit } from '../data/credits';
+import { madeBy } from '../data/madeBy';
 import './ui.css';
 
 const levelTitles = ['Stop the Outbreak', 'Get Them Out', 'Reach the Safe Zone', 'Open the Escape Route', 'Hold the Line', 'Get Out', 'Cross the Ruined City', 'Escape the Zoo', 'Make the Crossing', 'Deliver the Cure'];
@@ -125,17 +126,27 @@ export class GameUI {
     const confirmText = node('span', 'restart-confirm-text', ''); confirmText.id = 'restart-confirm-text';
     confirm.append(confirmText, button('restart-confirm-yes', 'Restart', () => { void this.restart(); }), button('restart-confirm-cancel', 'Cancel', () => this.cancelRestart()));
     pause.append(confirm);
-    const credits = this.panel('credits', 'Credits & Licenses', 'Minor Incident · Every third-party library, recording and technology reference, with its license.');
+    const credits = this.panel('credits', 'Credits & Licenses', 'Who made Minor Incident, and every library, recording and reference it uses, with its license.');
     // Generated from package.json and the audio ledger (tools/credits/generate.ts), so the list stays complete.
     const list = node('div', 'credits-list'); list.className = 'credits-list';
     list.tabIndex = 0; list.setAttribute('role', 'region'); list.setAttribute('aria-label', 'Credits and licenses');
     const link = (id: string, label: string, href: string) => { const a = node('a', id, label); a.href = href; a.target = '_blank'; a.rel = 'noopener'; return a; };
+    // Hand-authored makers first (PO 10-15), then the generated licence list, unchanged.
+    list.append(node('h2', 'credits-made-heading', madeBy.headline));
+    const author = node('p', 'credits-made-author'); author.className = 'credit-row';
+    author.append(link('credits-made-author-link', madeBy.author.name, madeBy.author.url), ' · ', madeBy.author.role);
+    list.append(author);
+    for (const group of madeBy.groups) {
+      const row = node('p', `credits-made-${group.id}`); row.className = 'credit-row';
+      row.append(node('strong', `credits-made-${group.id}-heading`, group.heading), node('small', `credits-made-${group.id}-names`, group.names.join(' · ')));
+      list.append(row);
+    }
     const section = (id: string, heading: string, entries: readonly Credit[], note?: string) => {
       list.append(node('h2', `credits-${id}-heading`, heading));
       if (note) list.append(node('p', `credits-${id}-note`, note));
       entries.forEach((credit, i) => {
         const row = node('p', `credits-${id}-${i}`); row.className = 'credit-row';
-        row.append(credit.url ? link(`credits-${id}-${i}-source`, credit.title, credit.url) : credit.title, ' — ',
+        row.append(credit.url ? link(`credits-${id}-${i}-source`, credit.title, credit.url) : credit.title, ' by ',
           credit.authorUrl ? link(`credits-${id}-${i}-author`, credit.author, credit.authorUrl) : credit.author, ' · ',
           link(`credits-${id}-${i}-license`, credit.license, credit.licenseUrl));
         if (credit.detail) row.append(node('small', `credits-${id}-${i}-detail`, credit.detail));
