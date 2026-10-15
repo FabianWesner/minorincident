@@ -229,7 +229,70 @@
         "doors": 1
       }
     },
-    "remoteFinal": "running",
+    "remoteFinal": {
+      "implementationHead": "d563fef95; later render scope/cosmetic changes covered by final targeted 13-test run",
+      "command": "sh tools/remote/run.sh \"$PWD\" --pull test-results/load-civ-bakes/vitest-final.json -- bash tools/remote/timing-isolated.sh npx vitest run tests/unit tests/sim tests/levels --maxWorkers=4 --reporter=default --reporter=json --outputFile=test-results/load-civ-bakes/vitest-final.json",
+      "passed": 2810,
+      "failed": 8,
+      "skipped": 9,
+      "groups": {
+        "sim": {
+          "passed": 1047,
+          "failed": 8
+        },
+        "unit": {
+          "passed": 1470,
+          "skipped": 7
+        },
+        "levels": {
+          "passed": 293,
+          "skipped": 2
+        }
+      },
+      "failures": [
+        {
+          "file": "tests/sim/levels/l10-arrival.test.ts",
+          "test": "T-E32-21-E3b @E32-AC21 seed-32 rocket checkpoint route arrival high",
+          "failure": "Error: Test timed out in 120000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\"."
+        },
+        {
+          "file": "tests/sim/levels/l10-assault.test.ts",
+          "test": "T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+          "failure": "AssertionError: expected 4.987724000005983 to be less than or equal to 4"
+        },
+        {
+          "file": "tests/sim/performance/l10-finale.test.ts",
+          "test": "T-E32-20-perf-200 @E32-AC20 @E32-AC31 @E18-AC02 full-cap active dispersal predicate",
+          "failure": "AssertionError: expected 4.312877000018489 to be less than or equal to 4"
+        },
+        {
+          "file": "tests/sim/performance/mega-moves.test.ts",
+          "test": "T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+          "failure": "AssertionError: expected 4.350739999965299 to be less than or equal to 4"
+        },
+        {
+          "file": "tests/sim/performance/zoo-s1.test.ts",
+          "test": "T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
+          "failure": "AssertionError: expected 4.295845000015106 to be less than or equal to 4"
+        },
+        {
+          "file": "tests/sim/performance/zoo-s2.test.ts",
+          "test": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+          "failure": "AssertionError: expected 4.7401060000411235 to be less than or equal to 4"
+        },
+        {
+          "file": "tests/sim/performance/zoo-s3.test.ts",
+          "test": "T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+          "failure": "AssertionError: expected 4.643532000016421 to be less than or equal to 4"
+        },
+        {
+          "file": "tests/sim/world/chunk-residency.test.ts",
+          "test": "T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95",
+          "failure": "AssertionError: expected 4.01799000002211 to be less than or equal to 4"
+        }
+      ],
+      "note": "Seven unchanged sim p95 tests exceed 4ms and one L10 high arrival test times out; do not claim all E18 performance gates pass."
+    },
     "sceneMatrix": {
       "webgpuTouched": {
         "passed": 80,
