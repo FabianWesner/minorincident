@@ -1,0 +1,65 @@
+{
+  "name": "courier-gear-tier2-male",
+  "note": "PO 10-15 #9c: courier tier-2 gear (male) walk, run, 180 turn; no cubes, floating or clipping pieces.",
+  "ground": "asphalt",
+  "size": 30,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -5,
+        0
+      ],
+      "yaw": 0,
+      "look": {
+        "gearTier": 2,
+        "model": "male"
+      },
+      "state": {
+        "walk": [
+          [
+            1,
+            0
+          ]
+        ]
+      }
+    }
+  ],
+  "script": [
+    {
+      "frame": 150,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            7,
+            0
+          ],
+          [
+            -4,
+            0
+          ]
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 420,
+  "shots": [
+    40,
+    120,
+    220,
+    330,
+    420
+  ],
+  "sheet": 5,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  }
+}
