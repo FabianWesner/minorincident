@@ -1222,7 +1222,7 @@ export class InfectedSystem {
     if (a.stage !== 'active') return;
     if (a.grabReleaseTick === undefined) {
       const target = this.world.entities.get(a.target.id);
-      if (!target || !this.physicalHuman(target) || Math.hypot(target.transform.x - e.transform.x, target.transform.z - e.transform.z) > 2 || !this.world.combat!.query.visible(e.transform, target.transform) || !this.physicalPropVisible(e.transform, target.transform)) { this.finishSpecial(e.id); return; }
+      if (!target || !this.physicalHuman(target) || Math.hypot(target.transform.x - e.transform.x, target.transform.z - e.transform.z) > megaAlpha.moves['alpha.grab-throw'].radius || !this.world.combat!.query.visible(e.transform, target.transform) || !this.physicalPropVisible(e.transform, target.transform)) { this.finishSpecial(e.id); return; }
       this.physicalHit(e, target, megaAlpha.moves['alpha.grab-throw'].damage);
       a.grabbedId = target.id; a.grabReleaseTick = tick + megaAlpha.moves['alpha.grab-throw'].holdTicks;
       if (target.survivor) target.survivor.knockdown = { started: tick, until: a.grabReleaseTick };

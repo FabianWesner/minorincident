@@ -80,7 +80,6 @@ export class GameView implements Lifecycle {
   private storyFraming = false;
   private l5StationView = false;
   private l3AttackScale = 1;
-  private bossPull = 0;
   private bossHole = 0;
   /** Scene Lab courier-visibility probe: hide the courier and/or every crowd figure (including the Mega) for one screenshot. */
   private probeHide = { courier: false, crowd: false };
@@ -581,10 +580,6 @@ export class GameView implements Lifecycle {
       // Brief l3-polish: the station attack pulls back (eased) so the streams at the gates are on screen while the courier holds the yard.
       this.l3AttackScale += ((rescue ? 3.3 : l3AttackView(this.world) ? l3.attack.viewScale : 1) - this.l3AttackScale) * (1 - Math.exp(-4 * seconds));
       this.view.encounterScale = this.world.scenario === 'L3' ? this.l3AttackScale : 1;
-      // E32 close camera: while the living Mega Alpha is within 30 m the rig eases out (full at 20 m) so the boss never fills the frame over
-      // the courier. The multiplier keeps the player's zoom: at least 1.3x, and at least a 1.15 default-radius framing for close zooms.
-      this.bossPull += ((this.megaDistance(player.transform) < 30 ? Math.min(1, (30 - this.megaDistance(player.transform)) / 10) : 0) - this.bossPull) * (1 - Math.exp(-3 * seconds));
-      this.view.bossScale = 1 + this.bossPull * (Math.max(1.3, 1.15 / this.view.playerZoom) - 1);
       const ending = this.world.missions?.state.epilogue;
       const pull = ending ? epiloguePull(this.world.missions!.state.counters['epilogue-ticks']) : 0;
       this.view.epilogueScale = 1 + 6 * pull;
@@ -686,7 +681,7 @@ export class GameView implements Lifecycle {
   }
   /** The boss hole opens while the Mega is within 14 m of the courier; it only drops boss fragments nearer the lens than her, inside a courier-sized disc. */
   private updateBossHole(player?: { x: number; z: number }): void {
-    const goal = player && this.megaDistance(player) < 14 ? 1 : 0;
+    const goal = player && this.megaDistance(player) < 14 ? .2 : 0;   // Alpha-sized boss: a partial hole is enough (PO 10-15)
     this.bossHole += (goal - this.bossHole) * .3; if (Math.abs(goal - this.bossHole) < .01) this.bossHole = goal;
     seeThrough.bossStrength.value = this.bossHole;
     const screenHeight = 2 * this.camera.position.distanceTo(this.view.focus) * Math.tan(this.camera.fov * Math.PI / 360);
