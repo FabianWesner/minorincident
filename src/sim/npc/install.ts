@@ -64,7 +64,12 @@ export function installNpcSystems(world: SimWorld): void {
 function campaignWalls(world: SimWorld, districts: DistrictWorld = world.districts!): NonNullable<ScenarioDefinition['walls']> {
   const walls: NonNullable<ScenarioDefinition['walls']> = [];
   for (const d of districts.districts) for (const c of d.decay.colliders.filter(c => !c.walkable).map(c => c.aabb).concat(d.blockers)) {
-    walls.push({ ...(c.navBlocker ? {navBlocker:true} : {}), x: (c.min[0] + c.max[0]) / 2 + d.origin[0], z: (c.min[2] + c.max[2]) / 2 + d.origin[1], y: (c.min[1] + c.max[1]) / 2, halfX: (c.max[0] - c.min[0]) / 2, halfZ: (c.max[2] - c.min[2]) / 2, halfY: (c.max[1] - c.min[1]) / 2 });
+    const x = (c.min[0] + c.max[0]) / 2 + d.origin[0], z = (c.min[2] + c.max[2]) / 2 + d.origin[1];
+    // Raised roads retain their wrecks as route obstacles. The ordinary ground
+    // height cutoff would otherwise steer followers straight into those hulls.
+    const floor = c.min[1] >= 1.8 ? districts.groundHeight(x, z) : 0;
+    const raised = floor > 1.8 && c.min[1] < floor + 1.8 && c.max[1] > floor + .05;
+    walls.push({ ...(c.navBlocker || raised ? {navBlocker:true} : {}), x, z, y: (c.min[1] + c.max[1]) / 2, halfX: (c.max[0] - c.min[0]) / 2, halfZ: (c.max[2] - c.min[2]) / 2, halfY: (c.max[1] - c.min[1]) / 2 });
   }
   for (const c of districts.boundaries) walls.push({ ...(c.navBlocker ? {navBlocker:true} : {}), x: (c.min[0] + c.max[0]) / 2, z: (c.min[2] + c.max[2]) / 2, y: .525, halfX: (c.max[0] - c.min[0]) / 2, halfZ: (c.max[2] - c.min[2]) / 2, halfY: .525 });
   return walls;

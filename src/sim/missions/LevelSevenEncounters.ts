@@ -52,7 +52,7 @@ export class LevelSevenEncounters {
       const key = c.survivor?.key ?? `shelter-${slot}`;
       c.survivor = { key, mode: 'follow', slot, leader: 1, cover: false, waitAt: 0, foundAt: w.tick };
       this.state.roster.push({ id: e.id, key, injured: (c.l1?.walkSpeed ?? 2.2) <= 1.4, status: 'following', passed: false });
-      w.spatial.set(e.id, at.x, at.z);
+      w.solids.admit(e, 'l7.roster.arrival');
     }
   }
   private clearPoint(at: Point, radius: number): Point {

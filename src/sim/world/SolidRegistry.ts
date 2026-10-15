@@ -167,7 +167,7 @@ export class SolidRegistry {
         let changed = false;
         this.solids(projected, radius, e, box => {
           const c = boxContact(box, projected.x, projected.z, radius, this.contact);
-          if (c.depth > skin) { projected.x += c.nx * (c.depth + skin); projected.z += c.nz * (c.depth + skin); changed = true; }
+          if (c.depth > skin) { projected.x += c.nx * c.depth; projected.z += c.nz * c.depth; changed = true; }
         });
         if (!changed) break;
       }
@@ -184,17 +184,18 @@ export class SolidRegistry {
   }
   /** Preserve identity/counts when no safe spot is available; AI cannot move a pending actor. */
   admit(e: EntitySnapshot, writer: string, range = 4, navigation = true): boolean {
+    const hidden = e.pendingAdmission && e.hidden === true ? e.pendingAdmission.hidden : e.hidden;
     this.maxActor = Math.max(this.maxActor, actorRadius(e));
     this.committed.delete(e); this.validated.delete(e);
     this.syncHulls(); this.writers.set(e, writer);
     const to = this.find(e.transform, actorRadius(e), e.id, range, navigation);
     if (!to) {
       if (!e.pendingAdmission) { e.pendingAdmission = { ...e.transform, writer, hidden: e.hidden, range, navigation }; this.deferred++; }
-      else Object.assign(e.pendingAdmission, e.transform, { writer, range, navigation });
+      else Object.assign(e.pendingAdmission, e.transform, { writer, range, navigation, hidden });
       e.hidden = true; this.world.spatial.delete(e.id); return false;
     }
     Object.assign(e.transform, to);
-    if (e.pendingAdmission) e.hidden = e.pendingAdmission.hidden;
+    if (e.pendingAdmission) e.hidden = hidden;
     delete e.pendingAdmission;
     this.publish(e, true); this.admitted++; return true;
   }
@@ -294,7 +295,7 @@ export class SolidRegistry {
       let valid = this.clear(p, radius, e.id, true, tolerance);
       if (!valid) {
         const proof = this.validated.get(e);
-        if (old && !this.failures && !staticChanged && !this.changedActors.has(e.id) && proof?.tick === this.world.tick - 1 && proof.radius === radius && proof.exemption === exemption(e)) {
+        if (e.infected && !e.infected.specialAttack && old && !this.failures && !staticChanged && !this.changedActors.has(e.id) && proof?.tick === this.world.tick - 1 && proof.radius === radius && proof.exemption === exemption(e)) {
           // Every earlier transaction respected this reserved pose. With the same solid geometry,
           // footprint and attachment mask, rejecting motion needs no second contact search.
           Object.assign(p, old); this.publish(e); continue;
@@ -303,7 +304,7 @@ export class SolidRegistry {
           let moved = false;
           this.solids(p, radius, e, b => {
             const c = boxContact(b, p.x, p.z, radius, this.contact);
-            if (c.depth > skin) { p.x += c.nx * (c.depth + skin); p.z += c.nz * (c.depth + skin); moved = true; }
+            if (c.depth > skin) { p.x += c.nx * c.depth; p.z += c.nz * c.depth; moved = true; }
           });
           this.world.spatial.query({ x: p.x, z: p.z, r: radius + this.maxActor }, this.nearby, false);
           for (const id of this.nearby) {

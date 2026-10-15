@@ -129,7 +129,7 @@ test('T-E29-12 @E29-AC12 rocket opening is traversed by a living follower while 
   c.start(); ai.director.update(); c.update();
   expect(c.state.finalReady).toBe(true);
   const follower = w.entities.get(base.id)!;
-  Object.assign(follower.transform, { x: -53, z: 46, y: .7 }); w.spatial.set(follower.id, -53, 46);
+  Object.assign(follower.transform, { x: -53, z: 46, y: .7 }); expect(w.solids.admit(follower, 'test.l7.follower')).toBe(true);
   // Keep this deterministic blast/path fixture in place; ordinary AI remains covered by production movement tests.
   for (const e of ai.active) { e.combat!.staggerUntil = 10000; e.infected!.until = 10000; }
   teleport(w, -79, 46); w.entities.get(1)!.transform.yaw = Math.PI;
