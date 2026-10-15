@@ -70,6 +70,20 @@ test('a deferred checkpoint keeps its requested pose and restores collider and g
     expect(w.solids.clear(player.transform, .35, 1)).toBe(true);
   } finally { w.dispose(); }
 });
+test('repeating a blocked checkpoint request does not turn its hidden courier into a passenger', async () => {
+  const w = await arena();
+  try {
+    spawnSetPiece(w, 'veh.tank', { x: 12, z: 0 });
+    const player = w.entities.get(1)!;
+    respawnAtCheckpoint(w, { x: 12, z: 0 });
+    expect(player.pendingAdmission).toBeDefined();
+    respawnAtCheckpoint(w, { x: 12, z: 0 });
+    expect(player.pendingAdmission).toBeDefined();
+    expect(w.physics.playerCollider!.isEnabled()).toBe(false);
+    tick(w, 35);
+    expect(player.pendingAdmission).toBeDefined(); expect(w.solids.snapshot().failures).toBe(0);
+  } finally { w.dispose(); }
+});
 test('a safe explicit relocation releases an earlier deferred checkpoint request', async () => {
   const w = await arena();
   try {

@@ -19,7 +19,7 @@ function actor(e: EntitySnapshot): boolean {
   return !!(e.survivor || e.infected || e.civilian || e.companion || e.escort) && e.health.current > 0 && e.civilian?.state !== 'finished' && !e.corpse && !e.hidden && !e.infected?.hidden && !e.pendingAdmission && e.passengerOf === undefined;
 }
 /** Passengers and clingers have an explicit owner. Cosmetics (dead bodies, debris) have no actor mask. */
-function attached(a: EntitySnapshot, id: number): boolean { return a.passengerOf === id || a.attachedTo === id || (a.id === 1 && !!a.hidden); }
+function attached(a: EntitySnapshot, id: number): boolean { return a.passengerOf === id || a.attachedTo === id || (a.id === 1 && !!a.hidden && !a.pendingAdmission); }
 function pairExempt(a: EntitySnapshot | undefined, b: EntitySnapshot): boolean {
   return !!a && (a.passengerOf !== undefined && a.passengerOf === b.passengerOf || a.attachedTo === b.id || b.attachedTo === a.id || a.attachedTo !== undefined && a.attachedTo === b.attachedTo);
 }
