@@ -95,7 +95,7 @@ export function levelFourLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
     }
     const metro = layout.anchors['metro-entrance'];
     if (metro) for (const name of ['photo-l4-metro-entrance-safe', 'pair-metro-entrance']) layout.anchors[name] = { position: [metro.position[0], 0, metro.position[2]], yaw: 0 };
-    if (door) layout.anchors['l4-cellar-door'] = { position: [...door.position], yaw: 0 };
+    if (door) layout.anchors['l4-cellar-door'] = { position: [...door.position], yaw: l4.cellar.outwardYaw };
     // The cellar yard: the player arrives at the stair foot, the brace socket is on the back wall (model local (-3.1, -0.4), yaw pi/2).
     if (inner) {
       const [cx, , cz] = inner.position;

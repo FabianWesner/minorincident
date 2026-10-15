@@ -47,6 +47,7 @@ export async function renderAudio(request: AudioRenderRequest): Promise<AudioRen
     graph.setWeather(request.weather ?? 'clear');
     let maxVoices = 0;
     let scoreVoices = 0;
+    let rendering: Promise<AudioBuffer> | undefined;
     await registry.prepare(request.level ?? 'L1');
     // Weapons, vehicles, dialogue and telegraphs are lazy banks in the live game; the offline render needs them up front.
     await registry.preloadLazy();
@@ -138,17 +139,37 @@ export async function renderAudio(request: AudioRenderRequest): Promise<AudioRen
             source.loop = true; trim.gain.value = request.score.gain;
             source.connect(trim).connect(graph.buses.music); source.start(0); scoreVoices = 1;
         }
-        for (const event of [...request.cues ?? []].sort((a, b) => a.time - b.time)) {
-            if (event.time < 0 || event.time >= duration) continue;
-            const variant = resolvedAudioCue(event.variant);
-            if (!variant) throw new Error(`Missing recorded cue variant: ${event.variant}`);
-            graph.retire(event.time);
-            const voice = graph.play({ ...variant, id: event.cue }, registry.buffers.get(variant.category)!, {
-                time: event.time, gain: event.gain / variant.gain, rate: event.rate, position: event.position, lowpass: event.lowpass,
-            });
-            if (voice) { events.push({ cue: event.cue, time: event.time }); maxVoices = Math.max(maxVoices, graph.active.size + scoreVoices); }
-            if (event.cue === 'dialogue.radio') graph.duck('radio', event.time, variant.duration);
-            if (event.cue === 'explosion.roar') graph.duck('mega', event.time, .8);
+        const cues = [...request.cues ?? []].sort((a, b) => a.time - b.time);
+        let next = 0;
+        const schedule = (until: number): void => {
+            while (next < cues.length && cues[next].time < until) {
+                const event = cues[next++];
+                if (event.time < 0 || event.time >= duration) continue;
+                const variant = resolvedAudioCue(event.variant);
+                if (!variant) throw new Error(`Missing recorded cue variant: ${event.variant}`);
+                graph.retire(event.time);
+                const voice = graph.play({ ...variant, id: event.cue }, registry.buffers.get(variant.category)!, {
+                    time: event.time, gain: event.gain / variant.gain, rate: event.rate, position: event.position, lowpass: event.lowpass,
+                });
+                if (voice) { events.push({ cue: event.cue, time: event.time }); maxVoices = Math.max(maxVoices, graph.active.size + scoreVoices); }
+                if (event.cue === 'dialogue.radio') graph.duck('radio', event.time, variant.duration);
+                if (event.cue === 'explosion.roar') graph.duck('mega', event.time, .8);
+            }
+        };
+        // Keep one continuous production graph, but let ended sources disconnect
+        // before scheduling the next window. A full L4 war has 15,000+ HRTF nodes;
+        // scheduling them all up front makes Chrome process future nodes for minutes.
+        const windowFrames = 128 * 1920, pauses: { time: number; ready: Promise<void> }[] = [];
+        for (let frame = windowFrames; frame < context.length; frame += windowFrames) {
+            const time = frame / rate;
+            pauses.push({ time, ready: context.suspend(time) });
+        }
+        schedule(windowFrames / rate + .1);
+        rendering = context.startRendering();
+        for (const pause of pauses) {
+            await pause.ready;
+            schedule(pause.time + windowFrames / rate + .1);
+            await context.resume();
         }
     }
     if (request.scenario === 'l5-quiet') {
@@ -208,7 +229,7 @@ export async function renderAudio(request: AudioRenderRequest): Promise<AudioRen
         for (const event of sequence)
             event.run();
     }
-    const buffer = await context.startRendering(), bytes = wave([buffer.getChannelData(0), buffer.getChannelData(1)], rate);
+    const buffer = await (rendering ?? context.startRendering()), bytes = wave([buffer.getChannelData(0), buffer.getChannelData(1)], rate);
     let binary = '';
     for (let i = 0; i < bytes.length; i += 16384)
         binary += String.fromCharCode(...bytes.subarray(i, i + 16384));

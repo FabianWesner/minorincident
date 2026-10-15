@@ -85,7 +85,7 @@ test.describe('Kessler cellar position', () => {
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.l5!.phase)).not.toBe('cellar');
     await page.evaluate(() => window.__SS__!.step(30));
     const out = await pos(page);
-    expect(Math.hypot(out.x - 67.2, out.z - 27.6), 'steps out on Kessler Lane (l5-out)').toBeLessThan(3);
+    expect(Math.hypot(out.x - 66.4, out.z - 40.74), 'returns to the entry door').toBeLessThanOrEqual(1.5);
     await shot(page, 'l5-03-outside-on-kessler-lane');
   });
 });

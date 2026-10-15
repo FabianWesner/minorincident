@@ -24,3 +24,8 @@ export function storyMusic(level: string, mission?: MissionState): { beat: strin
     }
     return { beat, minimum: beats?.[beat] ?? 0 };
 }
+
+/** L5's first found survivor unlocks its existing recording, including checkpoint restores. */
+export function l5MusicReady(mission?: MissionState): boolean {
+    return mission?.id === 'L5' && (mission.l5?.found ?? 0) > 0;
+}

@@ -742,6 +742,8 @@ export class LevelFourWar {
   private descend(): void {
     const { world } = this.mission, s = this.s, tick = world.tick, player = world.entities.get(1)!;
     if (s.phase === 'cellar' || s.phase === 'done') return;
+    const entry = this.anchor('l4-cellar-door');
+    if (world.progression?.campaign) world.progression.campaign.shelterEntry = { x: entry.x, z: entry.z, yaw: entry.yaw ?? l4.cellar.outwardYaw };
     s.phase = 'cellar'; s.descendAt = tick; s.soldiersAtCellar = this.liveSoldiers().length;
     const inn = this.anchor('l4-cellar-in');
     Object.assign(player.transform, { x: inn.x, z: inn.z });

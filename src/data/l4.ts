@@ -199,7 +199,7 @@ export const l4 = {
     pockets: 2,
   },
   /** Beat 7: the cellar. After the door is barred the battle goes on above for at least this long. */
-  cellar: { interactS: .6, barS: 1.0, battleAfterBarredS: 7 },
+  cellar: { outwardYaw: -Math.PI / 2, interactS: .6, barS: 1.0, battleAfterBarredS: 7 },
   medkits: { heal: 40, positions: [
     [-30.5, -2], [-22, 15], [-16, -11], [-26, 24], [-40.5, 8],                         // plaza ring and west
     [-56, 18], [-44, -37.5], [-4, -37.2], [30, -37.2], [52.5, -2], [60, 22], [58, 43],   // both routes to Kessler Lane
