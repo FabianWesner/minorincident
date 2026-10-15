@@ -129,9 +129,10 @@ export class VehicleView extends Group {
     const feedback = this.feedbackEvents.get(id); if (feedback) this.feedback(feedback, this.bloodEnabled);
   }
   update(alpha: number): void {
+    const ridden = this.playerVehicle();
     for (const [id, car] of this.world.vehicles!.cars) {
       const record = this.records.get(id);
-      if (record) for (const material of record.paint) if (material instanceof PaletteMaterial) material.seeThrough(this.world.vehicles!.active !== id);
+      if (record) for (const material of record.paint) if (material instanceof PaletteMaterial) material.seeThrough(ridden !== id);
       const distance = Math.hypot(car.entity.transform.x - this.view.cameraTarget.x, car.entity.transform.z - this.view.cameraTarget.z);
       const lod = modelLod(distance, record?.lod, this.low);
       const decay = car.entity.vehicle!.decay;
@@ -337,13 +338,17 @@ export class VehicleView extends Group {
   private readonly spot = new Vector3();
   private wheelSpot(node: Object3D): [number, number] { this.spot.setFromMatrixPosition(node.matrixWorld); return [this.spot.x, this.spot.z]; }
   /** Wheel nodes per vehicle entity (Scene Lab tyre-vs-ground probe). */
+  private playerVehicle(): number | undefined {
+    const rescue = this.world.missions?.state.l2;
+    return this.world.vehicles?.active ?? (rescue?.seated ? rescue.truckId : undefined);
+  }
   /** Same-frame Scene Lab visibility probe; retain the player vehicle in the unobstructed reference. */
   probeVisibility(courier: boolean, environment: boolean): void {
-    for (const [id, record] of this.records) record.parent.visible = !(this.world.vehicles?.active === id ? courier : environment);
+    for (const [id, record] of this.records) record.parent.visible = !(this.playerVehicle() === id ? courier : environment);
   }
   /** Complete drawn chassis, including wheels, for the player's bounded reveal. */
   playerBounds(out: Box3): boolean {
-    const record = this.records.get(this.world.vehicles?.active ?? -1);
+    const record = this.records.get(this.playerVehicle() ?? -1);
     if (!record) return false;
     out.setFromObject(record.model); return !out.isEmpty();
   }

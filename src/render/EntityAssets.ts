@@ -1,3 +1,4 @@
+import { l4 } from '../data/l4';
 import { PaletteMaterial } from './PaletteMaterial';
 import { modelLod } from './lodPolicy';
 import { Box3, Group, Mesh, Vector3, type Object3D, type BufferGeometry, type Material } from 'three/webgpu';
@@ -149,17 +150,10 @@ export class EntityAssets extends Group {
       this.companion.rotation.y = yaw; this.companion.visible = !player.hidden;
     }
   }
-  /** Scripted passenger rides use the nearest authored transport, as the mission seats do. */
+  /** Use the mission's passenger bus ID even when another convoy vehicle is closer to the rider. */
   private playerVehicle(): number | undefined {
-    if (!this.world.missions?.state.l2?.seated && !this.world.missions?.state.l4?.seated) return;
-    const player = this.world.entities.get(1); if (!player) return;
-    let nearest: number | undefined, distance = 12;
-    for (const [id] of this.records) {
-      const entity = this.world.entities.get(id); if (!entity || !(actorAssets[entity.archetype] ?? entity.archetype).startsWith('veh.')) continue;
-      const d = Math.hypot(entity.transform.x - player.transform.x, entity.transform.z - player.transform.z);
-      if (d < distance) { distance = d; nearest = id; }
-    }
-    return nearest;
+    const state = this.world.missions?.state.l4;
+    return state?.seated ? state.convoyIds[l4.convoy.vehicles.findIndex(v => v.player)] : undefined;
   }
   probeVisibility(courier: boolean, environment: boolean): void {
     const ridden = this.playerVehicle();
