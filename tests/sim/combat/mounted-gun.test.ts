@@ -21,7 +21,7 @@ function press(w: SimWorld) { w.clearInput(); w.setInput({ interact: true }); st
 function trigger(w: SimWorld, aim = { x: 1, z: 0 }) { w.setInput({ aim, left: { down: true, held: true, up: false } }); }
 const count = (w: SimWorld) => w.events.events().filter(e => e.type === 'combat.attack').length;
 
-test('T-E32-18f interact next to the gun mounts, interact again leaves in one tick with the rocket launcher ready', async () => {
+test('T-E32-18f @E32-AC18 interact next to the gun mounts, interact again leaves in one tick with the rocket launcher ready', async () => {
   const { w, gun } = await manned();
   equip(w, ['weapon.handgun'], ['weapon.rocket-launcher']);
   expect(gun.canMount()).toBe(true);
@@ -40,7 +40,7 @@ test('T-E32-18f interact next to the gun mounts, interact again leaves in one ti
   expect(p.transform.x).toBeLessThan(-2.2);
 });
 
-test('T-E32-18g too far cannot mount; a deck gun lifts the gunner to the deck and a dismount stays on it', async () => {
+test('T-E32-18g @E32-AC18 too far cannot mount; a deck gun lifts the gunner to the deck and a dismount stays on it', async () => {
   const { w, gun } = await manned();
   teleport(w, -6, 4); press(w); expect(gun.mounted).toBe(false);
   const deck = await manned(3); press(deck.w); expect(deck.gun.mounted).toBe(true);
@@ -52,7 +52,7 @@ test('T-E32-18g too far cannot mount; a deck gun lifts the gunner to the deck an
   const below = await manned(3); teleport(below.w, -1.2, 4, .705); press(below.w); expect(below.gun.mounted).toBe(false);
 });
 
-test('T-E32-18h spin-up first, then an ordinary infected (40 HP) falls within 0.25 s of landed fire; no carried weapon fires', async () => {
+test('T-E32-18h @E32-AC18 spin-up first, then an ordinary infected (40 HP) falls within 0.25 s of landed fire; no carried weapon fires', async () => {
   const { w, gun } = await manned();
   equip(w, ['weapon.handgun'], ['weapon.rocket-launcher']);
   const ids = [dummy(w, 12, 4, 40), dummy(w, 14, 4, 40)];
@@ -70,7 +70,7 @@ test('T-E32-18h spin-up first, then an ordinary infected (40 HP) falls within 0.
   expect(gun.heat).toBeGreaterThan(0);
 });
 
-test('T-E32-18i a regular Alpha (200 HP) falls to landed fire in at most 4 s, inside the heat budget', async () => {
+test('T-E32-18i @E32-AC18 a regular Alpha (200 HP) falls to landed fire in at most 4 s, inside the heat budget', async () => {
   const { w, gun } = await manned();
   const id = w.spawnDummy('infected.alpha', { x: 15, z: 4 }, { hp: 200 }), e = w.entities.get(id)!;
   press(w); trigger(w);
@@ -81,7 +81,7 @@ test('T-E32-18i a regular Alpha (200 HP) falls to landed fire in at most 4 s, in
   expect(gun.locked).toBe(false);
 });
 
-test('T-E32-18j heat persists through dismount and remount, locks at 100%, a checkpoint restores it', async () => {
+test('T-E32-19-remount @E32-AC19 heat persists through dismount and remount, locks at 100%, a checkpoint restores it', async () => {
   const { w, gun } = await manned();
   press(w); trigger(w); step(w, 4 * 60); w.clearInput();
   const hot = gun.heat; expect(hot).toBeGreaterThan(.35);
@@ -97,7 +97,7 @@ test('T-E32-18j heat persists through dismount and remount, locks at 100%, a che
   expect(gun.mounted).toBe(false); expect(gun.heat).toBeCloseTo(hot, 1); expect(gun.locked).toBe(false);
 });
 
-test('T-E32-18k choosing a weapon slot leaves the gun at once; dying drops the player off it', async () => {
+test('T-E32-18k @E32-AC18 choosing a weapon slot leaves the gun at once; dying drops the player off it', async () => {
   const { w, gun } = await manned();
   equip(w, ['weapon.handgun', 'weapon.bat'], ['weapon.rocket-launcher']);
   press(w); expect(gun.mounted).toBe(true);
@@ -109,7 +109,7 @@ test('T-E32-18k choosing a weapon slot leaves the gun at once; dying drops the p
   expect(gun.mounted).toBe(false);
 });
 
-test('T-E32-18l minigun-only against the Mega Alpha never takes it below 90%, whatever the heat cycles', async () => {
+test('T-E32-18l @E32-AC18 minigun-only against the Mega Alpha never takes it below 90%, whatever the heat cycles', async () => {
   const { w } = await manned();
   const id = w.spawnDummy('infected.alpha', { x: 10, z: 4 }, { hp: megaAlpha.hp }), e = w.entities.get(id)!;
   e.infected = { ...(e.infected ?? {}), pursuit: true, variant: megaAlpha.asset } as NonNullable<typeof e.infected>;
