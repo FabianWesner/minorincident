@@ -1,0 +1,11 @@
+{
+  "name": "l3-blvd-wreck-passage",
+  "note": "The same sandbags, wrecked bus and police car leave space along Boulevard's north sidewalk. Follow the courier past all three in the production game camera; inspect high/low at both zooms. The unchanged real-input playthrough supplies the crowd and survival gate.",
+  "ground": "district", "time": "L3", "tier": 2,
+  "layout": { "level": "L3", "district": "D-CORRIDOR", "bbox": [[22, -42], [95, -10]] },
+  "actors": [{ "id": "courier", "kind": "courier", "at": [29.25, -23.25], "loadout": ["weapon.fire-axe", "weapon.handgun"] }],
+  "script": [{ "frame": 1, "actor": "courier", "do": { "moveTo": [86, -23.25], "pace": "run" } }],
+  "camera": { "mode": "game", "target": "courier", "zoom": 1 },
+  "frames": 840, "sheet": 140, "trace": true,
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}

@@ -19,7 +19,7 @@ const DIRS: readonly Dir[] = ['river', 'blvd', 'oak', 'commerce'];
 /** Where each attack direction runs at: outside the river-path gate, the north-east and the south-east gate, the east gate, and
  * (police zombies out of the station door) the line's back. */
 const RUSH: Record<Dir, Point> = { river: { x: -150, z: -4 }, blvd: { x: -136, z: -1 }, oak: { x: -136, z: 1 }, commerce: { x: -129, z: 0 }, station: { x: -133, z: 0 } };
-/** PO 2026-10-12: police and army guns at 50 % in L3 (never the courier's). */
+/** PO 2026-10-12: police guns at 50 % in L3 (never the courier's). */
 const weak = <G extends { damage: number }>(gun: G): G => ({ ...gun, damage: gun.damage * l3.allyDamageScale });
 /** The yard gates the remaining officers pull shut behind the squad (east = Commerce, the side gates and the river gate). */
 export const L3_GATES: Record<string, CoverWall> = {
@@ -336,11 +336,13 @@ export class LevelThreeCollapse {
       if (e.infection) continue;
       const a = e.civilian.ally;
       if (!a?.follow) continue;
+      if (a.gun) a.gun.hitNear = s.segment < 1 ? l3.officers.squad.s1HitNear : l3.officers.squad.gun.hitNear;
       // The courier moving on is a regroup order. Do not strand a living officer at his last fight.
       if (player.transform.x > l3.finale.passX && e.transform.x < l3.map.zoneX + 1) {
         a.engaged = false;
-        // Once the boom has closed behind the courier, the compound is unreachable: regroup in front of the boom instead.
-        a.run = { x: s.barrierClosedAt ? l3.finale.barrierX - 3 : l3.map.zoneX + 3, z: (a.follow.slot % 2 ? 1 : -1) * .8 };
+        // Closure waits for this officer to be inside. Keep regrouping into the compound afterwards too:
+        // sending him west of the closed arm reopens it on the next tick and cancels the rendezvous.
+        a.run = { x: l3.map.zoneX + 3, z: (a.follow.slot % 2 ? 1 : -1) * .8 };
         continue;
       }
       const far = dist(e.transform, player.transform) > a.follow.maxM;
@@ -662,7 +664,7 @@ export class LevelThreeCollapse {
   private mercy(): void {
     this.mercyDue = false;
     const { world } = this.mission, s = this.s, ai = world.infected;
-    // Relief scales with deaths at one checkpoint: the first respawn thins what is still to come, the living crowd from the next.
+    // Restore the first retry intact; repeated deaths ease the standing crowd. Downed bodies keep their timers/slots.
     const frac = this.mercyFraction(), live = this.mercyFraction(1); if (frac <= 0 || !ai || (s.phase !== 'corridor' && s.phase !== 'fallback')) return;
     // The window starts behindM behind the respawn (a crowd standing on the checkpoint, real-input run 10-12) and reaches 30 m past where the courier last died: a respawn far behind the death spot (the yard fallback
     // checkpoint) must still thin the pack that keeps killing her (real-input runs died 11x at the Boulevard corner).

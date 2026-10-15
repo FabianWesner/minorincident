@@ -113,6 +113,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
       // Soldiers concentrate on visible Alphas within their firing range; other allies keep the rescue priority.
       let best: EntitySnapshot | undefined, score = Infinity;
       const fx = Math.cos(e.transform.yaw), fz = -Math.sin(e.transform.yaw);
+      const compound = world.missions?.def.l3 && a.role === 'soldier';
       for (const o of ai.active) {
         if (o.health.current <= 0 || o.hidden || o.infected?.hidden || o.infectionRise || !policeCanEngage(o)) continue;
         const dx = o.transform.x - e.transform.x, dz = o.transform.z - e.transform.z, d = Math.hypot(dx, dz);
@@ -124,7 +125,10 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
         const current = o.id === a.targetId;
         if (!current && d > 1.2 && (dx * fx + dz * fz) / d < half && !shooter && !heard(o)) continue;
         if (!visible(e.transform, o.transform, o.id)) continue;
-        const s = d - (o.infected?.l1?.mode === 'bite' ? 8 : 0) - (current ? 1.5 : 0);
+        // The L3 line protects the resting compound: a breach or a body getting up inside takes precedence over the
+        // next outside pursuer. Visibility, cover, range and friendly-fire clearance still apply.
+        const breach = compound && o.transform.x >= l3.map.zoneX;
+        const s = d - (o.infected?.l1?.mode === 'bite' ? 8 : 0) - (current ? 1.5 : 0) - (breach ? l3.soldiers.coverM : 0);
         const alpha = a.role === 'soldier' && o.archetype === 'infected.alpha';
         const bestAlpha = a.role === 'soldier' && best?.archetype === 'infected.alpha';
         if ((alpha && !bestAlpha) || (alpha === bestAlpha && s < score)) { score = s; best = o; }
