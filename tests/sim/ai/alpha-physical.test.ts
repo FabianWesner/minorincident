@@ -53,7 +53,8 @@ test('T-E07-06-charge-wall @E07-AC06 intact solid wall stops body and shields hu
 });
 
 test('T-E07-06-ground-slam @E07-AC05 @E07-AC06 exact 4m boundary, wall occlusion, 25 damage and 72 ticks, no windup effects', async () => {
-  const w = await arena(), e = spawn(w, 'alpha', 0, 0, 'idle'); teleport(w, 20);
+  const w = await arena(); teleport(w, 20);
+  const e = spawn(w, 'alpha', 0, 0, 'idle');
   const inside = human(w, 0, 4), outside = human(w, 0, -4.001), soldier = human(w, -3, 0, true), behind = human(w, 3, 0);
   (w.combat!.query.walls as { x: number; z: number; y: number; halfX: number; halfY: number; halfZ: number }[]).push({ x: 1.5, z: 0, y: 1, halfX: .2, halfY: 1, halfZ: 1 });
   const a = start(w, e, 'alpha.ground-slam');
