@@ -243,7 +243,7 @@ export async function renderAudio(request: AudioRenderRequest): Promise<AudioRen
         }[] = [];
         for (let time = 0; time < 60; time += 0.4) {
             const at = time;
-            sequence.push({ time: at, run: () => play('action.weapon.pistol', at, { position: { x: 0, z: -2 }, dry: true }) });
+            sequence.push({ time: at, run: () => play(probe, at, { position: { x: 0, z: -2 }, dry: true }) }); // fixed synthesized gunfire: the mix gate measures the buses, ducking and dialogue, not the weapon assets (their loudness has its own gate)
             if (Math.round(at * 10) % 20 === 0)
                 sequence.push({ time: at, run: () => play('prop.metal', at, { position: { x: 3, z: -2 }, dry: true, gain: 0.4 }) });
         }

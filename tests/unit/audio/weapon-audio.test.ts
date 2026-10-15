@@ -7,7 +7,7 @@ import { audioCues, audioVariationPools, noiseCues, weaponSlices } from '../../.
 import { catalog, balanceActions, mountedActions } from '../../../src/data/actions/catalog';
 import imports from '../../../assets/audio/imports.json';
 import { audioCredits } from '../../../src/data/credits';
-import { measureCue, weaponClasses } from '../../../tools/audio/weapon-loudness';
+import { measureCue, measureWeapons, weaponClasses } from '../../../tools/audio/weapon-loudness';
 
 /** PO bug 36 (10-15): "For all weapons make sure we use proper sounds". Every catalogued weapon id has a recorded cue with takes. */
 const everyAction = { ...Object.fromEntries(balanceActions.map(a => [a.id, a])), ...catalog, ...mountedActions };
@@ -75,3 +75,28 @@ test.skipIf(!ffmpeg)('offline loudness: shotgun >= 4 LU above the handgun, every
     }
     finally { rmSync(dir, { recursive: true, force: true }); }
 }, 120_000);
+
+/** Orchestrator 10-15: "a firearm must never be quieter than a punch": melee < handgun class < smg/rifle < machine-gun < shotgun ~ rocket, on the loudness the player hears (sprite LUFS + cue gain). */
+test.skipIf(!ffmpeg)('class loudness order, firearms never quieter than a punch, and no over-driven class', () => {
+    const rows = measureWeapons();
+    type Row = (typeof rows)[number];
+    const mean = (f: (r: Row) => boolean, v: (r: Row) => number = r => r.played) => { const s = rows.filter(f); return s.reduce((a, r) => a + v(r), 0) / s.length; };
+    const cls = (...c: string[]) => (r: Row) => c.includes(r.cls);
+    const melee = mean(cls('melee')), handgun = mean(cls('handgun')), smgRifle = mean(cls('smg', 'rifle')), mg = mean(cls('machine-gun')), shotgun = mean(cls('shotgun')), rocket = mean(cls('rocket'));
+    expect(handgun - melee, 'handgun vs melee').toBeGreaterThanOrEqual(3);
+    expect(smgRifle, 'smg/rifle above handgun').toBeGreaterThan(handgun);
+    expect(mg, 'machine gun above smg/rifle').toBeGreaterThan(smgRifle);
+    expect(shotgun, 'shotgun above machine gun').toBeGreaterThan(mg);
+    expect(shotgun - handgun, 'shotgun vs handgun').toBeGreaterThanOrEqual(4);
+    expect(Math.abs(rocket - shotgun), 'rocket ~ shotgun').toBeLessThanOrEqual(3);
+    const fists = mean(r => r.id === 'action.weapon.fists');
+    for (const r of rows.filter(x => ['handgun', 'smg', 'rifle', 'machine-gun', 'shotgun', 'rocket'].includes(x.cls)))
+        expect(r.played - fists, `${r.id} vs a punch`).toBeGreaterThanOrEqual(3);
+    // Over-drive guard: the saturation must leave a real crest factor and next to no samples stuck at the peak.
+    for (const c of ['handgun', 'smg', 'rifle', 'machine-gun', 'shotgun'] as const) {
+        expect(mean(cls(c), r => r.crest), `${c} crest`).toBeGreaterThanOrEqual(12);
+        expect(mean(cls(c), r => r.clip), `${c} clip density`).toBeLessThanOrEqual(0.02);
+    }
+    expect(mean(cls('rocket'), r => r.crest), 'rocket crest (the Residue boom is dense at the source)').toBeGreaterThanOrEqual(8);
+    for (const r of rows) expect(r.truePeak, r.id).toBeLessThanOrEqual(-1);
+}, 180_000);
