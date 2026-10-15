@@ -1,0 +1,93 @@
+{
+  "baselineSource": "d9743890d unmodified src, current measurement harness",
+  "changedSource": "a9ea26f10 plus 9257f65a9 and b79dff6d6",
+  "runner": "Hetzner isolated paired process, no concurrent own jobs during samples",
+  "warmup": 120,
+  "measuredTicks": 3600,
+  "samples": [
+    {
+      "actors": 200,
+      "baseline": {
+        "outcome": "tick-budget",
+        "scenario": "perf-horde-200",
+        "seed": 1,
+        "warmup": 120,
+        "ticks": 3600,
+        "minInfected": 200,
+        "minVisibleInfected": 200,
+        "collision": null,
+        "cap": 200,
+        "simMsP50": 1.271060000000034,
+        "simMsP95": 1.8621020000000499,
+        "simMsMax": 3.155283999999938,
+        "maxConcurrentInfected": 200
+      },
+      "changed": {
+        "outcome": "tick-budget",
+        "scenario": "perf-horde-200",
+        "seed": 1,
+        "warmup": 120,
+        "ticks": 3600,
+        "minInfected": 200,
+        "minVisibleInfected": 200,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 200,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        },
+        "cap": 200,
+        "simMsP50": 1.2498099999997976,
+        "simMsP95": 1.929828999999927,
+        "simMsMax": 3.129113999999845,
+        "maxConcurrentInfected": 200
+      },
+      "p95ChangePercent": 3.637126215420805,
+      "withinFivePercent": true
+    },
+    {
+      "actors": 100,
+      "baseline": {
+        "outcome": "tick-budget",
+        "scenario": "perf-horde-100",
+        "seed": 1,
+        "warmup": 120,
+        "ticks": 3600,
+        "minInfected": 100,
+        "minVisibleInfected": 100,
+        "collision": null,
+        "cap": 100,
+        "simMsP50": 0.6350840000000062,
+        "simMsP95": 1.0826080000001639,
+        "simMsMax": 4.443064000000049,
+        "maxConcurrentInfected": 100
+      },
+      "changed": {
+        "outcome": "tick-budget",
+        "scenario": "perf-horde-100",
+        "seed": 1,
+        "warmup": 120,
+        "ticks": 3600,
+        "minInfected": 100,
+        "minVisibleInfected": 100,
+        "collision": {
+          "failures": 0,
+          "pending": 0,
+          "admitted": 100,
+          "deferred": 0,
+          "requests": [],
+          "offenders": []
+        },
+        "cap": 100,
+        "simMsP50": 0.6755800000000818,
+        "simMsP95": 1.1323299999999108,
+        "simMsMax": 2.902231000000029,
+        "maxConcurrentInfected": 100
+      },
+      "p95ChangePercent": 4.5927981318944155,
+      "withinFivePercent": true
+    }
+  ]
+}
