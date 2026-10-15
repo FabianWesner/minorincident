@@ -191,7 +191,7 @@ export class InfectedSystem {
     if (this.active.length > 20) this.navigation.flow(courier.transform, 1500);
     this.crowd.length = 0;
     for (const e of this.active) {
-      if (e.pendingAdmission) continue;
+      if (e.pendingAdmission && e.health.current > 0) continue;
       this.world.solids.wrote(e, 'infected.update');
       if (this.world.npcs?.civilians.holds(e.id)) { e.combat!.attacking = false; continue; }
       const b = e.infected!; if (e.health.current <= 0) { this.dead(e); continue; }

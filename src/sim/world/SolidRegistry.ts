@@ -171,6 +171,7 @@ export class SolidRegistry {
   /** Preserve identity/counts when no safe spot is available; AI cannot move a pending actor. */
   admit(e: EntitySnapshot, writer: string, range = 4, navigation = true): boolean {
     this.maxActor = Math.max(this.maxActor, actorRadius(e));
+    this.committed.delete(e);
     this.syncHulls(); this.writers.set(e, writer);
     const to = this.find(e.transform, actorRadius(e), e.id, range, navigation);
     if (!to) {
@@ -204,6 +205,7 @@ export class SolidRegistry {
     this.nav = nav; this.navRevision = nav?.revision ?? -1;
     this.bodies.length = this.moved.length = 0;
     for (const e of this.world.entities.iterate()) {
+      if (e.pendingAdmission && e.health.current <= 0) { e.hidden = e.pendingAdmission.hidden; delete e.pendingAdmission; }
       if (e.pendingAdmission) {
         const pending = e.pendingAdmission, p = e.transform;
         const scripted = pending.x !== p.x || pending.z !== p.z || pending.y !== p.y;
