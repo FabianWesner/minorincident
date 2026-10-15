@@ -103,7 +103,7 @@ export class LevelSevenEncounters {
     for (const r of s.roster) {
       const e = w.entities.get(r.id);
       if (r.status !== 'following') continue;
-      if (!e || e.health.current <= 0) r.status = 'dead';
+      if (!e || e.health.current <= 0 || e.civilian?.state === 'finished') r.status = 'dead';
       else if (e.infected || e.infection) r.status = 'turned';
       else if (e.transform.x <= l7Encounters.passage.x && Math.abs(e.transform.z - l7Encounters.passage.z) < 7) r.passed = true;
       if (r.status !== 'following') w.events.emit({ type: 'mission.signal', tick: w.tick, name: `l7.survivor-${r.status}`, actorId: r.id });

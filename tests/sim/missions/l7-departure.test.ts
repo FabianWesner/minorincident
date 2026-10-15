@@ -127,3 +127,18 @@ test('T-E29-13-35 @E29-AC13 a full 35-person roster boards and every figure is a
   step(w, 600);
   expect(done!.result.escapedSurvivors.map(e => [e.id, e.health.current]).sort((a, b) => a[0] - b[0])).toEqual(incoming.map(e => [e.id, e.health.current]));
 });
+
+test('a finished civilian retains its identity as a loss and never holds the boarding roster', async () => {
+  const w = await load(), c = w.l7Encounters!, d = w.l7Departure!;
+  const ids = c.state.roster.map(r => r.id), victim = w.entities.get(ids[0])!;
+  for (const id of ids.slice(1)) w.entities.get(id)!.health.current = 0;
+  // The outbreak finish lifecycle preserves positive civilian HP, as in L6.
+  victim.civilian!.state = 'finished';
+  expect(victim.health.current).toBeGreaterThan(0);
+  put(w, 1, boardingAnchor()!.x, boardingAnchor()!.z); step(w, 3);
+  expect(c.state.roster).toHaveLength(ids.length);
+  expect(c.state.roster.every(r => r.status === 'dead')).toBe(true);
+  expect(ids.every(id => w.entities.get(id))).toBe(true);
+  expect(d.state.phase).toBe('departing'); expect(d.state.boarded).toEqual([]);
+  expect(w.solids.snapshot().failures).toBe(0);
+});
