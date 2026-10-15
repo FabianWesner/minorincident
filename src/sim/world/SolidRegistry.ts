@@ -21,7 +21,7 @@ function actor(e: EntitySnapshot): boolean {
 /** Passengers and clingers have an explicit owner. Cosmetics (dead bodies, debris) have no actor mask. */
 function attached(a: EntitySnapshot, id: number): boolean { return a.passengerOf === id || a.attachedTo === id || (a.id === 1 && !!a.hidden); }
 function pairExempt(a: EntitySnapshot | undefined, b: EntitySnapshot): boolean {
-  return !!a && a.passengerOf !== undefined && a.passengerOf === b.passengerOf;
+  return !!a && (a.passengerOf !== undefined && a.passengerOf === b.passengerOf || a.attachedTo === b.id || b.attachedTo === a.id || a.attachedTo !== undefined && a.attachedTo === b.attachedTo);
 }
 function layers(a: Point, b: Point): boolean { return Math.abs(a.y - b.y) < 1.2; }
 function exemption(e: EntitySnapshot): number | string | undefined { return e.passengerOf ?? e.attachedTo ?? e.civilian?.schedule?.[e.civilian.scheduleStep ?? 0]?.seatProp; }

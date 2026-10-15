@@ -450,6 +450,7 @@ export class InfectedSystem {
     b.activeUntil = b.until + (b.special === 'lunge' ? 20 : 120);
     const player = this.victim(e); const dx = player.transform.x - e.transform.x, dz = player.transform.z - e.transform.z, distance = Math.hypot(dx, dz);
     b.dx = distance ? dx / distance : 1; b.dz = distance ? dz / distance : 0;
+    if (distance > .001) e.transform.yaw = -Math.atan2(dz, dx);
     this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: b.attackId, special: b.special, duration: def.windup });
   }
   private revivable(e: EntitySnapshot): EntitySnapshot | undefined {
