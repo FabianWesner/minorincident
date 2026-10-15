@@ -29,8 +29,8 @@ export class LevelSixSubway {
     all.forEach((key,i)=>{
       const injured=key!=='rosa'&&i>0&&i%5===0, routine=key==='rosa'?'treat':i===3&&keys.includes('rosa')?'talk':i===0?'guard':(['sit','talk','treat','rest','share'] as const)[(i-1)%5];
       const pair = routine==='treat' ? Math.min(all.length-1, i+2) : i;
-      const base=pair>0&&pair%5===0?{x:18+Math.floor(pair/10)*2,z:pair%10===0?16:13.6}:{x:-8+(pair%8)*2.3,z:-3+Math.floor(pair/8)*2.5};
-      const at=this.snap(key==='rosa'?{x:16.9,z:13.6}:routine==='treat'?{x:base.x-1.1,z:base.z}:base);
+      const base=pair>0&&pair%5===0?{x:18+Math.floor(pair/10)*2,z:pair%10===0?8:5.6}:{x:-8+(pair%8)*2.3,z:-11+Math.floor(pair/8)*2.5};
+      const at=this.snap(key==='rosa'?{x:16.9,z:5.6}:routine==='treat'?{x:base.x-1.1,z:base.z}:base);
       const previous=l5Survivors.find(s=>s.key===key);
       const model=i===0?'npc.marcus.aftermath':previous?.model??(injured?'npc.shelter-survivor.bandaged':routine==='rest'?'npc.shelter-survivor.lying':routine==='sit'?'npc.shelter-survivor.sitting':i%2?'npc.civilian-man-b.aftermath':'npc.civilian-woman-b.aftermath');
       const resident = carried?.[i] ?? w.progression?.campaign?.rescuedSurvivors?.find(e=>e.civilian?.survivor?.key===key);

@@ -17965,6 +17965,98 @@
     }
   },
   {
+    "id": "kit.metro-track",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/kit.metro-track/build.py",
+    "sourceGlb": "assets/kit.metro-track/model.glb",
+    "glb": "public/assets/models/kit.metro-track.glb",
+    "sourceForward": "+X",
+    "dimensions": {
+      "x": 12.0,
+      "y": 0.97,
+      "z": 7.6,
+      "tolerance": 0.03
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root"
+    ],
+    "animatedNodes": [],
+    "sockets": [
+      "trackStartSocket",
+      "trackEndSocket"
+    ],
+    "budget": {
+      "triangles": 8000,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 800
+    },
+    "lods": {
+      "lod1": "public/assets/models/kit.metro-track.lod1.glb",
+      "lod2": "public/assets/models/kit.metro-track.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 4000,
+      "lod2": 2000
+    },
+    "decayVariants": [],
+    "world": {
+      "token": "sidewalk",
+      "solid": true
+    }
+  },
+  {
+    "id": "kit.market-doors",
+    "category": "building",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/kit.market-doors/build.py",
+    "sourceGlb": "assets/kit.market-doors/model.glb",
+    "glb": "public/assets/models/kit.market-doors.glb",
+    "sourceForward": "+X",
+    "dimensions": {
+      "x": 0.34,
+      "y": 2.9,
+      "z": 2.6,
+      "tolerance": 0.03
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "marketLeafL",
+      "marketLeafR"
+    ],
+    "animatedNodes": [
+      "marketLeafL",
+      "marketLeafR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 4000,
+      "materials": 8,
+      "drawCalls": 8,
+      "fileKB": 400
+    },
+    "lods": {
+      "lod1": "public/assets/models/kit.market-doors.lod1.glb",
+      "lod2": "public/assets/models/kit.market-doors.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 2000,
+      "lod2": 1000
+    },
+    "decayVariants": []
+  },
+  {
     "id": "kit.maintenance-corridor",
     "category": "building",
     "status": "integrated",
