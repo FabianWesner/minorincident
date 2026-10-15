@@ -396,3 +396,28 @@ test('a stationary footprint change revalidates contact with its stationary neig
     expect(w.solids.snapshot()).toMatchObject({ failures: 0, pending: 0 });
   } finally { w.dispose(); }
 });
+
+test('a hidden courier without a passenger owner still needs clear hull admission', async () => {
+  const w = await arena();
+  try {
+    const car = w.vehicles!.spawn('vehicle.school-bus', { x: 12, z: 0 });
+    const player = w.entities.get(1)!; player.hidden = true; Object.assign(player.transform, w.entities.get(car)!.transform);
+    expect(w.solids.admit(player, 'test.hidden-unowned', 0, false)).toBe(false);
+    expect(player.pendingAdmission).toBeDefined(); expect(w.physics.playerCollider!.isEnabled()).toBe(false);
+    tick(w, 35); expect(player.pendingAdmission).toBeDefined();
+    expect(w.solids.snapshot().failures).toBe(0);
+  } finally { w.dispose(); }
+});
+
+test('the legacy L4 seated courier exempts only its explicit convoy bus', async () => {
+  const w = await loadLevel('L4', 1);
+  try {
+    const player = w.entities.get(1)!, bus = w.missions!.l4!.passengerHull(player);
+    expect(player.hidden).toBe(true); expect(bus).toBeDefined();
+    expect(w.solids.clear(player.transform, .35, 1)).toBe(true);
+    const tank = spawnSetPiece(w, 'veh.tank', { x: player.transform.x, z: player.transform.z + 20 });
+    Object.assign(player.transform, tank.transform);
+    expect(w.missions!.l4!.passengerHull(player)).toBe(bus);
+    expect(w.solids.clear(player.transform, .35, 1)).toBe(false);
+  } finally { w.dispose(); }
+}, 120_000);

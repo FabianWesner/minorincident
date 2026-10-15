@@ -19,7 +19,6 @@ function actor(e: EntitySnapshot): boolean {
   return !!(e.survivor || e.infected || e.civilian || e.companion || e.escort) && e.health.current > 0 && e.civilian?.state !== 'finished' && !e.corpse && !e.hidden && !e.infected?.hidden && !e.pendingAdmission && e.passengerOf === undefined;
 }
 /** Passengers and clingers have an explicit owner. Cosmetics (dead bodies, debris) have no actor mask. */
-function attached(a: EntitySnapshot, id: number): boolean { return a.passengerOf === id || a.attachedTo === id || (a.id === 1 && !!a.hidden && !a.pendingAdmission); }
 function pairExempt(a: EntitySnapshot | undefined, b: EntitySnapshot): boolean {
   return !!a && (a.passengerOf !== undefined && a.passengerOf === b.passengerOf || a.attachedTo === b.id || b.attachedTo === a.id || a.attachedTo !== undefined && a.attachedTo === b.attachedTo);
 }
@@ -145,10 +144,11 @@ export class SolidRegistry {
       if (box.y + box.halfY > at.y - .65 + .05 && box.y - box.halfY < at.y + .65) visit(box, id);
     });
     if (!this.hulls.size) return;
+    const passenger = owner ?? (e?.hidden ? this.world.missions?.l4?.passengerHull(e) : undefined);
     this.hullIndex.query({ x: at.x, z: at.z, r: this.maxHull + radius }, this.hullNeighbors, false);
     const worldBox: SolidBox = { x: 0, y: 0, z: 0, halfX: 0, halfZ: 0, halfY: 0 };
     for (const id of this.hullNeighbors) {
-      const h = this.hulls.get(id); if (!h || h.entity.hidden || e && at === e.transform && attached(e, id)) continue;
+      const h = this.hulls.get(id); if (!h || h.entity.hidden || e && at === e.transform && passenger === id) continue;
       const p = h.entity.transform, c = Math.cos(p.yaw), s = Math.sin(p.yaw);
       for (const b of h.boxes) {
         Object.assign(worldBox, b, { x: p.x + c * b.x + s * b.z, z: p.z - s * b.x + c * b.z, y: p.y + b.y, yaw: p.yaw });
