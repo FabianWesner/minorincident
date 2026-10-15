@@ -74,7 +74,7 @@
     "resultsCoverage": "female/male \u00d7 high/low \u00d7 WebGL/WebGPU, all eight pass"
   },
   "coldStartup": {
-    "status": "final paired all-level run and slower-level repeats running on 313846c98",
+    "status": "Final-source cold timing unmeasured: quiet preflight never admitted; original wait ~31 minutes, stopped 2026-10-15 09:08 UTC. All owned browser locks released.",
     "method": "Paired baseline/candidate fresh HTTP contexts, alternating order, headless Metal WebGL2, page CDP 50Mbps/20ms; worker throttling unverified; shared driver caches; single diagnostic samples",
     "results": [
       {
@@ -188,18 +188,107 @@
         "menuToPlayableMs": 5199.60000038147,
         "bodyBytes": 37860118,
         "errors": []
-      },
+      }
+    ],
+    "historicalImplementationHead": "d563fef95; not final source",
+    "historicalHarnessError": [
       {
         "build": "candidate",
         "level": "L8",
         "error": "TimeoutError: locator.waitFor: Timeout 180000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByTestId('pause-button') to be visible\u001b[22m\n\u001b[2m    356 \u00d7 locator resolved to hidden <button hidden=\"\" type=\"button\" aria-label=\"Pause\" data-testid=\"pause-button\">\u2026</button>\u001b[22m\n",
-        "errors": []
+        "errors": [],
+        "explanation": "Harness incorrectly assumed L8 had no briefing card; fixed in the paired tool. This is not a game failure."
       }
-    ]
+    ],
+    "historicalScopeDiagnostic": {
+      "implementationHead": "d563fef95",
+      "stoppedReason": "Narrowed initial camera discovery to staged L1 after observing extra non-L1 loading work; these are not final-source comparisons.",
+      "results": [
+        {
+          "build": "baseline",
+          "level": "L8",
+          "titleMs": 2298.2000007629395,
+          "menuToPlayableMs": 6727.800000190735,
+          "bodyBytes": 44250673,
+          "errors": []
+        },
+        {
+          "build": "candidate",
+          "level": "L8",
+          "titleMs": 2180.5,
+          "menuToPlayableMs": 6824.199999809265,
+          "bodyBytes": 44251559,
+          "errors": []
+        },
+        {
+          "build": "candidate",
+          "level": "L9",
+          "titleMs": 2191.5,
+          "menuToPlayableMs": 9581.79999923706,
+          "bodyBytes": 44101026,
+          "errors": []
+        },
+        {
+          "build": "baseline",
+          "level": "L9",
+          "titleMs": 2179.2999992370605,
+          "menuToPlayableMs": 8616.699999809265,
+          "bodyBytes": 44100140,
+          "errors": []
+        },
+        {
+          "build": "baseline",
+          "level": "L10",
+          "titleMs": 2184.300000190735,
+          "menuToPlayableMs": 8984.400000572205,
+          "bodyBytes": 43842875,
+          "errors": []
+        },
+        {
+          "build": "candidate",
+          "level": "L10",
+          "titleMs": 2181.9000005722046,
+          "menuToPlayableMs": 8898.099999427795,
+          "bodyBytes": 43843761,
+          "errors": []
+        },
+        {
+          "build": "candidate",
+          "level": "L2",
+          "titleMs": 2176.8999996185303,
+          "menuToPlayableMs": 7242.200000762939,
+          "bodyBytes": 43027304,
+          "errors": []
+        },
+        {
+          "build": "baseline",
+          "level": "L2",
+          "titleMs": 2182,
+          "menuToPlayableMs": 7276.400000572205,
+          "bodyBytes": 43311156,
+          "errors": []
+        },
+        {
+          "build": "baseline",
+          "level": "L5",
+          "error": "Error: locator.waitFor: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for getByTestId('mission-button') to be visible\u001b[22m\n\u001b[2m    2 \u00d7 locator resolved to hidden <button type=\"button\" data-testid=\"mission-button\"></button>\u001b[22m\n\u001b[2m    5 \u00d7 locator resolved to hidden <button type=\"button\" data-testid=\"mission-button\">Begin mission</button>\u001b[22m\n",
+          "errors": []
+        }
+      ]
+    },
+    "reservation": {
+      "firstSlotAcquiredApproxUtc": "2026-10-15 08:55:50",
+      "releasedApproxUtc": "2026-10-15 09:08:10",
+      "heldMinutesApprox": 12.3,
+      "limitMinutes": 20,
+      "preflight": "No headless browser started; all slots held but load stayed above quiet-run threshold <3 (observed 3.36\u20138.46).",
+      "initialQueueStartApproxUtc": "2026-10-15 08:37:00",
+      "noFurtherBrowserWaits": true
+    }
   },
   "validation": {
-    "typecheck": "pass",
-    "lint": "pass",
+    "typecheck": "pass on final source",
+    "lint": "pass on final source",
     "build": "pass",
     "crowdVisibleOutbreak": {
       "webgl": {
@@ -311,8 +400,9 @@
         "failed": [],
         "implementationHead": "d563fef95; rerun pending after narrowing initial-camera discovery to L1"
       },
-      "webglTouched": "pending",
-      "remainingFullMatrix": "pending"
+      "webglTouched": "unmeasured",
+      "remainingFullMatrix": "unmeasured",
+      "finalBuildRerun": "unmeasured; earlier touched WebGPU 80/80 remains historical evidence"
     },
     "targetedRemote": {
       "passed": 13,
@@ -324,12 +414,6 @@
       "command": "npm run verify -- E18",
       "reason": "Its E18 remote-sim split still starts local timing Vitest; user requires all heavy unit/sim/level runs on Hetzner. Components are recorded separately."
     },
-    "browserPending": [
-      "WebGL pedestrian/LOD matrix",
-      "Full scene:matrix beyond the 80 touched WebGPU rows",
-      "Full deploy-gate browser list and remaining smoke projects",
-      "All-level cold comparison after narrowing early camera setup to staged L1"
-    ],
     "browserFinal": {
       "passed": 12,
       "failed": 0,
@@ -345,7 +429,14 @@
       "runner": "91.98.11.241",
       "durationSeconds": 220.02,
       "command": "sh tools/remote/run.sh \"$PWD\" --pull test-results/load-civ-bakes/unit-final.json -- bash tools/remote/timing-isolated.sh npx vitest run tests/unit --maxWorkers=4 --reporter=default --reporter=json --outputFile=test-results/load-civ-bakes/unit-final.json"
-    }
+    },
+    "browserUnmeasured": [
+      "WebGL pedestrian/LOD matrix",
+      "Full scene:matrix beyond the 80 touched WebGPU rows",
+      "Full deploy-gate browser list and remaining smoke projects",
+      "All-level cold comparison after narrowing early camera setup to staged L1"
+    ],
+    "browserUnmeasuredReason": "Shared-machine quiet preflight did not admit within the original ~30-minute wait. Per task fairness rule, stopped browser waits and reported remaining gates."
   },
   "visualReview": [
     {
@@ -369,7 +460,8 @@
   "limits": [
     "No new PreRenderer framework or warm-up batching changes for audit finding 2",
     "No deploy or merge",
-    "Real devices and headed Chrome frame-time checks not performed in this headless-only job"
+    "Real devices and headed Chrome frame-time checks not performed in this headless-only job",
+    "Final all-level cold parity, final full scene:matrix, WebGL touched matrix and broad deploy-gate browser list remain unmeasured; do not treat this branch as fully QA green."
   ],
   "diskCleanup": {
     "keptTemporaryBuild": "/tmp/load-civ-baseline-dist",
@@ -380,5 +472,6 @@
       "/tmp/load-civ-baseline-2db2bde9b source archive"
     ],
     "freeGiBAfterCleanup": 12
-  }
+  },
+  "status": "Implementation and initial-download checks complete; remaining browser QA unmeasured after shared-machine wait limit. Full E18 performance gate is not green."
 }
