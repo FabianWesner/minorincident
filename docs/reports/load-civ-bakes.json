@@ -336,6 +336,15 @@
       "workers": 1,
       "checks": "eight initial download cases, two crowd-visible-outbreak backends, two Chromium smoke tests",
       "implementationHead": "313846c98"
+    },
+    "unitFinal": {
+      "implementationHead": "313846c98",
+      "passed": 1476,
+      "failed": 0,
+      "skipped": 7,
+      "runner": "91.98.11.241",
+      "durationSeconds": 220.02,
+      "command": "sh tools/remote/run.sh \"$PWD\" --pull test-results/load-civ-bakes/unit-final.json -- bash tools/remote/timing-isolated.sh npx vitest run tests/unit --maxWorkers=4 --reporter=default --reporter=json --outputFile=test-results/load-civ-bakes/unit-final.json"
     }
   },
   "visualReview": [
