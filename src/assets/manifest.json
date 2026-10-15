@@ -23520,16 +23520,16 @@
   },
   {
     "id": "acc.headlamp",
-    "category": "prop",
+    "category": "accessory",
     "status": "integrated",
     "tier": "side",
     "script": "assets/acc.headlamp/build.py",
     "glb": "public/assets/models/acc.headlamp.glb",
     "dimensions": {
-      "x": 0.535,
-      "y": 0.195,
+      "x": 0.515,
+      "y": 0.1675,
       "z": 0.48,
-      "tolerance": 0.1
+      "tolerance": 0.03
     },
     "forward": "+X",
     "requiredNodes": [
@@ -23550,6 +23550,16 @@
       "lamp_lens"
     ],
     "animatedNodes": [],
-    "sockets": []
+    "sockets": [],
+    "sourceGlb": "assets/acc.headlamp/model.glb",
+    "sourceScale": 1,
+    "lods": {
+      "lod1": "public/assets/models/acc.headlamp.lod1.glb",
+      "lod2": "public/assets/models/acc.headlamp.lod2.glb"
+    },
+    "authoredLodTriangles": {
+      "lod1": 80,
+      "lod2": 80
+    }
   }
 ]

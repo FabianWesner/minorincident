@@ -179,7 +179,7 @@ export class CharacterView extends Group {
       }
       let headlamp: Group | undefined;
       if (lamp) {
-        headlamp = (await loader.loadAsync('/assets/models/acc.headlamp.glb')).scene;
+        headlamp = (await loader.loadAsync(`/assets/models/acc.headlamp${low ? '.lod1' : ''}.glb`)).scene;
         headlamp.name = 'courier-headlamp'; headlamp.visible = false;
         // The couriers' authored caps sit above the head pivot (different heights).
         headlamp.position.set(variant === 'female' ? .08 : .04, variant === 'female' ? .3 : .19, 0);
