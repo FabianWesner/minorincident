@@ -2,7 +2,7 @@ import { groundAgent } from '../locomotion/AgentMotion';
 import { staticCollision } from '../../assets/staticCollision';
 import { vehicleDef } from '../../data/vehicles';
 import { survivor } from '../../data/survivor';
-import { SpatialHash } from '../spatial/SpatialHash';
+import { SpatialHash, type ContactCells } from '../spatial/SpatialHash';
 import type { SimWorld } from './SimWorld';
 import type { EntitySnapshot, Transform } from './types';
 import { boxContact, type SolidBox, type Contact } from './SolidGeometry';
@@ -46,6 +46,19 @@ export class SolidRegistry {
   private readonly moved: EntitySnapshot[] = [];
   private readonly rejected = new Set<number>();
   private readonly bodyRejections = new Map<number, number>();
+  private readonly movedIds = new Set<number>();
+  private rollbackX = 0;
+  private rollbackZ = 0;
+  private rollbackRadius = 0;
+  private readonly rollbackCells: ContactCells = { epoch: 0, radius: id => {
+    const e = this.live.get(id);
+    return e && this.movedIds.has(id) && !this.rejected.has(id) ? actorRadius(e) : 0;
+  }, intersects: (maximum, x, z) => {
+    if (!maximum) return false;
+    const dx = Math.max(x - this.rollbackX, 0, this.rollbackX - x - 4), dz = Math.max(z - this.rollbackZ, 0, this.rollbackZ - z - 4);
+    return dx * dx + dz * dz <= (this.rollbackRadius + maximum) ** 2;
+  } };
+
   private readonly unresolved: EntitySnapshot[] = [];
   private readonly live = new Map<number, EntitySnapshot>();
   private committing = false;
@@ -301,6 +314,8 @@ export class SolidRegistry {
       for (const e of this.moved) if (e.id === 1) this.publish(e);
       this.finish(full); return;
     }
+    this.movedIds.clear(); for (const e of this.moved) this.movedIds.add(e.id);
+    this.rollbackCells.epoch++;
     // Reserve rollback positions only for the conflicting component. Propagate a
     // reservation to proposals it intersects; unrelated clear formations keep moving.
     for (let i = 0; i < this.unresolved.length; i++) {
@@ -308,11 +323,15 @@ export class SolidRegistry {
       const old = this.committed.get(e);
       if (!old) { this.world.spatial.delete(e.id); continue; }
       Object.assign(e.transform, old); this.publish(e);
-      const radius = actorRadius(e);
-      this.world.spatial.query({ x: old.x, z: old.z, r: radius + this.maxActor }, this.nearby, false);
+      const radius = actorRadius(e), proof = this.validated.get(e);
+      // An unchanged body cannot intersect this same valid pose from last tick.
+      // Reuse the hash's cell bounds to visit only unreserved moving proposals.
+      const stable = proof?.tick === this.world.tick - 1 && proof.radius === radius && proof.exemption === exemption(e);
+      this.rollbackX = old.x; this.rollbackZ = old.z; this.rollbackRadius = radius;
+      this.world.spatial.query({ x: old.x, z: old.z, r: radius + this.maxActor }, this.nearby, false, undefined, stable ? this.rollbackCells : undefined);
       for (const id of this.nearby) {
         const other = this.live.get(id);
-        if (!other || id === e.id || this.rejected.has(id) || pairExempt(e, other) || !layers(old, other.transform)) continue;
+        if (!other || id === e.id || this.rejected.has(id) || stable && !this.movedIds.has(id) || pairExempt(e, other) || !layers(old, other.transform)) continue;
         const dx = old.x - other.transform.x, dz = old.z - other.transform.z;
         if (dx * dx + dz * dz < (radius + actorRadius(other) - tolerance) ** 2) reject(other);
       }
