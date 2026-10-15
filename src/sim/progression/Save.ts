@@ -121,6 +121,7 @@ export function validateSave(raw:unknown):raw is CampaignSave {
   if(save.l9Crash!==undefined&&!validCrash(save.l9Crash))return false;
   if(save.transport!==undefined&&!validTransport(save.transport))return false;
   if(save.world!==undefined&&(!record(save.world)||Object.keys(save.world).some(k=>k!=='L1'&&k!=='infectionCleared')||save.world.L1!==undefined&&!validAftermath(save.world.L1)))return false;
+  if(save.shelterEntry!==undefined&&(!save.shelterEntry||![save.shelterEntry.x,save.shelterEntry.z,save.shelterEntry.yaw].every(Number.isFinite)))return false;
   if(save.stationOccupants!==undefined&&(!Array.isArray(save.stationOccupants)||save.stationOccupants.length<20||save.stationOccupants.length>30||!save.stationOccupants.every(validCivilian)||new Set(save.stationOccupants.map(e=>e.id)).size!==save.stationOccupants.length))return false;
   if(save.survivors!==undefined&&(!strings(save.survivors)||save.survivors.some(k=>!['dale','rosa','okafor','mia','sam'].includes(k))))return false;
   if(save.rescuedSurvivors!==undefined){
