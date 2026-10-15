@@ -20,7 +20,7 @@ This report is in progress; passing subsets do **not** establish a green deploy 
 | Check | Source | Result |
 | --- | --- | --- |
 | Four audit reproductions, five cases | unmodified source plus regression tests (`d9743890d`) | All five fail, including the natural L4 tank/Alpha case. |
-| Same reproductions through L4 tick 15700 | earlier registry snapshots, including `45cdd3e04` | All five pass; no actor lost. |
+| Same reproductions through L4 tick 15700 | current density/contact snapshot before `57cb0e8aa` | All five pass; all 33 admission/contact/regression tests pass. No actor lost. |
 | L1–L10 opening 300-tick invariant battery | `45cdd3e04` | All ten pass. |
 | Fresh full unit suite | `fcabb2f79` | 1,463 passed, zero failed, seven skipped. The three earlier failures also pass their focused rerun. |
 | L1–L10 campaign completion | latest completion battery before `cb4783d1f` | 10/10 complete; zero penetration invariant failures in every level. L8 retains three pending authored tunnel arrivals; all other levels have none. |
@@ -29,15 +29,19 @@ This report is in progress; passing subsets do **not** establish a green deploy 
 | Native GPU desktop/horde and bus rides | preceding frozen build | Desktop/horde budgets pass and all 17 ride configurations pass. Both emulated mobile L6 probes fail during fixture setup; mission initialization cap fix committed, measurements pending. Physical-device/manual checks remain skipped. |
 | Full unit/sim/level sweep | `45cdd3e04` | 2727 passed, 114 failed, 9 skipped. Later movement/admission fixes require a new full result. |
 | APC healthy/floor, WebGL, high/low, zoom 1.5/1/.5 | attack-facing preview | 12/12 pass, zero physical failures/pending; torso and attack-arm penetration gates ≤2 cm. [Rows](apc-gates.json). |
-| Courier/corgi with eight real attackers; Butcher game camera | preceding frozen high/WebGL preview | Both numeric gates pass; broader final matrix pending. |
+| WebGL collision/combat/vehicle matrix | `e6a2c6aac` frozen build | 100/106 pass. Every requested combat/APC/eight-attacker/get-up row passes, both tiers and zoom 1.5/1/.5. Six L5 ingress rows fail the unchanged stair-clearance gate; a 5 cm lane correction awaits browser rerun. [Rows](webgl-gates.json). |
+| Weather/checkpoint replay and L6 stress fixture | `7350c7990` | 43/43 pass; the L6 fixture retains 100 visible infected, zero failures/pending. |
+| Five-seed pursuit arrival train | `1cc2f375f` | Original finite-arrival, deterministic repeat and ≥2 s spread assertions pass after synchronizing the scripted and physical courier. |
 | Isolated Node E18, 200 actors | `45cdd3e04` | p95 1.264 ms vs 1.707 ms baseline (−26%); 200 retained, zero failures/pending. |
 | Isolated Node E18, 100 actors | `45cdd3e04` | p95 .808 ms vs .968 ms baseline (−17%); 100 retained, zero failures/pending. [Earlier measurement](sim-performance-earlier.json). |
 
-The final source still needs its queued full sim/level suite, final backend matrices and isolated performance comparison. The latest L1 complete-bot timing test exceeds its unchanged 180 s limit; a paired source-only baseline run is queued. [Compact completed evidence](validation-current.json). Existing scene expectations are retained; the added contact gates tighten overlap to 2 cm. The new eight-runner fixture uses the production 60 HP toughness-adjusted value.
+The final source still needs its queued full sim/level suite, final backend matrices and isolated performance comparison. The last completed paired comparison (before the latest contact-witness optimization) was **+13.1%** at 200 and **+18.7%** at 100, above the requested 5% limit despite retaining every actor with zero failures/pending. The L1 complete-bot timing test exceeds its unchanged 180 s limit: paired unmodified source finishes in 121.9 s/zero deaths, the one-pass branch in 297.4 s/six deaths. Restoring authored L1 spacing improves that variant to 271.1 s but remains red. Traces show repeated crowd fights and deaths. Attack damage/reach, encounter counts and bot policies are unchanged. [Compact completed evidence](validation-current.json). Existing scene expectations are retained; the added contact gates tighten overlap to 2 cm. The new eight-runner fixture uses the production 60 HP toughness-adjusted value.
 
 ### Game-camera inspection
 
 Opened both [high](apc-high-z1.jpg) and [low](apc-low-z1.jpg) APC contact sheets. The four attackers remain visibly outside the side panels, with distinct heads and feet during approach and windup. Headlights illuminate the dry ground and the courier remains seated. Cyan attack wedges appear at the authored attack beats. These are visual observations in addition to numeric contact gates.
+
+Also opened the latest [eight-attacker/corgi game camera](courier-corgi-high-z1.jpg), [close Butcher game camera](butcher-high-close.jpg), and [low-tier damaged APC](apc-floor-low-z1.jpg) sheets. The corgi remains outside the attack cluster; separate heads and feet remain visible, although the isometric projection is crowded. The close Butcher sequence keeps the forearm alongside the courier’s torso/backpack silhouette while cyan attack wedges overlap the image plane. The numeric forearm gate uses a torso/backpack capsule envelope, not an exact mesh intersection proof. The damaged APC retains four attackers outside the hull with lit ground beneath the headlights. The get-up close view originally cropped the courier; its camera now follows her and awaits capture rerun.
 
 ### Compatibility issues requiring an explicit scope decision
 
