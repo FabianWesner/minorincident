@@ -74,6 +74,7 @@ export function rebuildNpcNavigation(world: SimWorld): void {
   if (!world.npcs || !world.infected || !world.districts) return;
   const walls = world.combat!.definition.walls!;
   walls.splice(0, walls.length, ...campaignWalls(world)); world.combat!.query.invalidate(); world.infected.nav.rebake(world.preparedNpcNavigation.get(world.districts.composition.tier));
+  if (world.infected.infectedNav !== world.infected.nav) world.infected.infectedNav.rebake(world.preparedNpcNavigation.get(world.districts.composition.tier));
   for (const e of world.entities.iterate()) {
     const brain = e.civilian ?? e.escort ?? e.companion ?? e.infected;
     if (brain) { brain.path.length = 0; brain.goal = -1; }

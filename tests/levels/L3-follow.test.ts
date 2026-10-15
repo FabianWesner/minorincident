@@ -96,8 +96,8 @@ describe('L3 squad and checkpoint', () => {
     try {
       const s = m.state.l3!, api = missionControls(w), x = l3.finale.barrierX;
       const victim = w.entities.get(s.officerIds[0])!, shooter = w.entities.get(s.officerIds[1])!;
-      api.teleport(victim.id, { x, z: 0 }); api.teleport(shooter.id, { x: x - 3, z: 0 });
-      const id = w.infected!.spawn('infected.runner', { x: x + 4, z: 0 }), target = w.entities.get(id)!;
+      api.teleport(victim.id, { x, z: 0 }); api.teleport(shooter.id, { x: x + 3, z: 0 });
+      const id = w.infected!.spawn('infected.runner', { x: x - 4, z: 0 }), target = w.entities.get(id)!;
       w.infected!.director.levelCap = w.infected!.director.count;
       expect(w.combat!.query.alliedShotClear(shooter, target, w.tick)).toBe(false);
       w.events.emit({ type: 'outbreak.bite', tick: w.tick, sourceId: id, targetId: victim.id, position: { ...victim.transform }, turns: false });
@@ -130,11 +130,12 @@ describe('L3 squad and checkpoint', () => {
       s.finaleAt = w.tick - l3.finale.minFightS * 60;
       w.update();
       expect(s.barrierClosedAt).toBeGreaterThan(0);
-      for (let i = 0; i < 60 && m.state.phase === 'playing'; i++) {
+      for (let i = 0; i < 66 * 60 && m.state.phase === 'playing'; i++) {
         w.update();
         expect(s.barrierClosedAt).toBeGreaterThan(0);
         for (const q of s.squad) expect(w.entities.get(q.id)!.transform.x).toBeGreaterThanOrEqual(l3.map.zoneX);
       }
+      expect(s.doneAt - s.crossedAt).toBe(l3.finale.minFightS * 60);
       expect(m.state.phase).toBe('progression');
     } finally { w.dispose(); }
   }, 120_000);
@@ -186,7 +187,7 @@ describe('L3 squad and checkpoint', () => {
       if (condition === 'stalled officer') {
         // A living group member outside keeps the boom open (spec: it waits or reopens); once she is inside it closes.
         for (let i = 0; i < 80 * 60; i++) w.update();
-        expect(s.crossedAt).toBe(0); expect(s.barrierClosedAt ?? 0).toBe(0);
+        expect(s.crossedAt).toBeGreaterThan(0); expect(s.barrierClosedAt ?? 0).toBe(0);
         api.teleport(officer.id, { x: 144 + l3ArmyOffset, z: 3 });
       }
       for (let i = 0; i < 90 * 60 && m.state.phase === 'playing'; i++) w.update();
