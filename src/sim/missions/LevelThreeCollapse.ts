@@ -477,6 +477,7 @@ export class LevelThreeCollapse {
       if (q.kind === 'spill') s.spillIds.push(id);
       else if (q.kind === 'pressure') s.pressureIds.push(id);
       else s.segmentIds[q.segment].push(id);
+      this.delayRetryPursuit(e, q.home.x);
       if (spawned >= allowance) break;
     }
   }
@@ -521,6 +522,12 @@ export class LevelThreeCollapse {
     const { world, state } = this.mission, s = state.l3; if (!s) return;
     if (this.mercyDue) this.mercy();
     const tick = world.tick, player = world.entities.get(1)!;
+    // The failed encounter can be a long detour from its checkpoint. Start its
+    // existing pursuit delay on approach, rather than consuming it on the return walk.
+    if ((s.phase === 'corridor' || s.phase === 'fallback') && player.transform.x < this.retryApproachX && tick % 30 === 0 && this.retryIgnoreUntil > 0) {
+      this.retryIgnoreUntil = tick + ticks(l3.mercy.respawnDelayS);
+      for (const e of world.infected!.active) this.delayRetryPursuit(e);
+    }
     if (s.phase === 'yard') {
       if (tick === ticks(l3.armory.briefingAtS)) this.mission.radio('L3.sergeant');
       if ((s.handgunAt && tick - s.handgunAt >= ticks(l3.armory.attackAfterS)) || tick >= ticks(l3.armory.attackLatestS)) this.startAttack();
@@ -678,6 +685,16 @@ export class LevelThreeCollapse {
       return Math.floor(i * f) === before;
     });
   }
+  private retryApproachX = Infinity;
+  private retryEndX = -Infinity;
+  private retryIgnoreUntil = 0;
+  /** Keep the existing retry delay on the distant failed encounter, including its later arrivals. */
+  private delayRetryPursuit(e: EntitySnapshot, x = e.transform.x): void {
+    const b = e.infected?.l1;
+    if (!b || e.corpse || e.health.current <= 0 && e.infected!.recoverAt < 0 || x < this.retryApproachX || x > this.retryEndX || this.world.tick >= this.retryIgnoreUntil) return;
+    b.ignoreId = 1; b.ignoreUntil = Math.max(b.ignoreUntil, this.retryIgnoreUntil);
+    if (b.targetId === 1 && b.mode === 'chase') { b.targetId = 0; b.mode = 'wander'; if (e.health.current > 0) e.infected!.state = 'wander'; }
+  }
   private mercy(): void {
     this.mercyDue = false;
     const { world } = this.mission, s = this.s, ai = world.infected;
@@ -687,12 +704,18 @@ export class LevelThreeCollapse {
     // checkpoint) must still thin the pack that keeps killing her (real-input runs died 11x at the Boulevard corner).
     const p = world.entities.get(1)!.transform, [, b] = l3.mercy.aheadM, reach = Math.max(b, this.lastDeathX - p.x + 30), ahead = (x: number) => x > p.x - l3.mercy.behindM && x < p.x + reach;
     this.mercyFrom = p.x - l3.mercy.behindM; this.mercyTo = p.x + reach;
+    if (this.lastDeathX - p.x > 30) {
+      this.retryApproachX = this.lastDeathX - 30; this.retryEndX = this.lastDeathX + 30;
+      this.retryIgnoreUntil = world.tick + ticks(l3.mercy.respawnDelayS);
+      for (const e of ai.active) this.delayRetryPursuit(e);
+    }
     const thinBy = <T>(f: number, items: T[], remove: (item: T) => void) => items.forEach((item, i) => { if (Math.floor((i + 1) * f) > Math.floor(i * f)) remove(item); });
     if (live > 0) thinBy(live, [...ai.active].filter(e => e.health.current > 0 && ahead(e.transform.x)).sort((x, y) => x.id - y.id), e => ai.release(e));
     s.pending = this.easePending(s.pending as Pending[]);
   }
   restore(delta: number): void {
     const s = this.mission.state.l3; if (!s) return;
+    this.retryApproachX = Infinity; this.retryEndX = -Infinity; this.retryIgnoreUntil = 0;
     this.mercyDue = true; { const id = this.mission.state.checkpoint ?? 'start'; this.respawns[id] = (this.respawns[id] ?? 0) + 1; }
     for (const key of ['handgunAt', 'attackAt', 'fallbackAt', 'crossedAt', 'doneAt', 'furthestAt', 'pressureAt', 'finaleAt', 'finaleNextAt', 'stagedAt', 'surgeAt'] as const) if (s[key]) s[key] += delta;
     for (const w of s.waves) if (w.at) w.at += delta;
