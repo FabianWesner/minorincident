@@ -170,10 +170,13 @@ export class InfectedSystem {
         this.active.filter(e => e.health.current > 0 && !e.hidden && !e.infected?.hidden).map(e => ({ model: e.infected!.model ?? e.infected!.variant, x: e.transform.x, z: e.transform.z })), position, entity.id);
     }
     this.active.push(entity); this.world.spatial.set(entity.id, position.x, position.z); this.counters.reused++;
+    const requestedX = entity.transform.x, requestedZ = entity.transform.z;
     this.world.solids.admit(entity, 'infected.spawn', 4, !opts.offNav);
-    // An authored chasing spawn must acquire from its admitted pose before its
-    // idle look-around can turn it away. Sight/cover still decide acquisition.
-    if (opts.state === 'chase' && entity.infected!.l1 && !entity.pendingAdmission) this.perceive(entity, entity.infected!, entity.infected!.l1);
+    // A displaced chasing spawn reacquires from its admitted pose before its
+    // idle look-around turns it away. Unshifted spawns retain normal perception
+    // timing, allowing their caller to finish setting their facing/intent.
+    if (opts.state === 'chase' && entity.infected!.l1 && !entity.pendingAdmission &&
+        (entity.transform.x !== requestedX || entity.transform.z !== requestedZ)) this.perceive(entity, entity.infected!, entity.infected!.l1);
     return entity.id;
   }
   release(entity: EntitySnapshot): void {

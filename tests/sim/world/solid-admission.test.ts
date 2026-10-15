@@ -12,6 +12,40 @@ import { SimPhase } from '../../../src/core/EventBus';
 async function arena() { const w = new SimWorld(); await w.init(); w.loadScenario('horde-arena', 1); return w; }
 const tick = (w: SimWorld, n = 1) => { for (let i = 0; i < n; i++) w.update(); expect(w.solids.offenders).toEqual([]); };
 
+test('contact repair respects infected-only exclusions while humans retain admission', async () => {
+  const w = await arena();
+  try {
+    w.infected!.excludeInfected([{ x: 12, z: 12, y: .7, halfX: 1, halfZ: 2, halfY: 2, navBlocker: true }]);
+    const player = w.entities.get(1)!;
+    expect(w.solids.relocate(player, { x: 12, z: 12, y: .7 }, 'test.human-exclusion', 0)).toBe(true);
+    const e = w.entities.get(w.infected!.spawn('infected.runner', { x: 10.5, z: 12 }))!;
+    e.combat!.staggerUntil = 600; tick(w);
+    e.transform.x = 12; // A scripted or contact correction must not bypass the infected mask.
+    tick(w);
+    // The contact contract permits 2 cm penetration; navigation's zero-depth
+    // query must use that same margin (plus the audit's floating-point epsilon).
+    expect(w.infected!.infectedNav.clear(e.transform.x, e.transform.z, .33 - 1e-6, true)).toBe(true);
+    expect(Math.abs(e.transform.x - 12)).toBeGreaterThanOrEqual(1.33);
+    expect(player.transform.x).toBe(12);
+    expect(w.solids.snapshot().failures).toBe(0);
+  } finally { w.dispose(); }
+});
+
+test('body congestion cannot admit an actor through a thin wall', async () => {
+  const w = await arena();
+  try {
+    expect(w.solids.relocate(w.entities.get(1)!, { x: 12, z: 12, y: .7 }, 'test.clear-door')).toBe(true);
+    w.infected!.nav.setBlocker(987654, { x: 0, z: 0, y: .7, halfX: .05, halfZ: 10, halfY: 2 }, true);
+    const big = w.entities.get(w.infected!.spawn('infected.elephant', { x: -1.3, z: 0 }))!;
+    big.combat!.staggerUntil = 600;
+    const e = w.entities.get(w.infected!.spawn('infected.runner', { x: -.41, z: 0 }))!;
+    e.combat!.staggerUntil = 600;
+    expect(e.pendingAdmission).toBeUndefined();
+    expect(e.transform.x + e.combat!.radius).toBeLessThanOrEqual(-.049);
+    tick(w);
+  } finally { w.dispose(); }
+});
+
 test.each(vehicles.map(v => v.id))('all moving and parked vehicle hulls use the contact commit: %s', async def => {
   const w = await arena();
   try {
@@ -315,6 +349,24 @@ test('a wider house resident keeps its identity and walks clear of the pedestria
     expect(house.walking).toHaveLength(0); expect(e.pendingAdmission).toBeUndefined();
     expect(e.hidden).not.toBe(true); expect(e.transform.x).toBeGreaterThanOrEqual(12.549);
     expect(w.infected!.director.count).toBe(1); expect(w.entities.get(id)).toBe(e);
+  } finally { w.dispose(); }
+});
+
+test('a queued house resident can leave a body-blocked doorstep without crossing its wall', async () => {
+  const w = await arena();
+  try {
+    w.npcs!.civilians.outbreak = new Outbreak(w, { refuges: [] });
+    w.events.emit({ type: 'world.blocker.changed', tick: w.tick, id: 987654, blocked: true,
+      wall: { x: 11, z: 0, y: 1, halfX: 1, halfZ: 2, halfY: 1 } });
+    const blocker = w.entities.get(w.infected!.spawn('infected.runner', { x: 13, z: 0 }))!;
+    blocker.combat!.staggerUntil = 600;
+    const house: HouseEmergence = { door: 0, house: 'crowded-door', x: 11, z: 0, nx: 1, nz: 0, floor: [], sx: 12.35, sz: 0, ox: 12.35, oz: 0, route: [], next: 0, ids: [] };
+    const id = emergeResident(w, house, w.tick, { archetype: 'infected.runner' });
+    const e = w.entities.get(id)!;
+    for (let i = 0; i < 240 && house.walking?.length; i++) { walkResidents(w, house, w.tick); tick(w); }
+    expect(house.walking).toHaveLength(0); expect(e.pendingAdmission).toBeUndefined();
+    expect(e.hidden).not.toBe(true); expect(e.transform.x).toBeGreaterThanOrEqual(12.349);
+    expect(w.infected!.director.count).toBe(2); expect(w.entities.get(id)).toBe(e);
   } finally { w.dispose(); }
 });
 

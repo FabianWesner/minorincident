@@ -527,8 +527,19 @@ export class LevelTwoRescue {
     for (; s.released < due; s.released++) {
       const i = s.released, id = s.trappedIds[i], e = this.world.entities.get(id); if (!e?.civilian) continue;
       const front = i % 2 === 0, k = Math.floor(i / 2) % 5;
-      const at = this.snap(front ? { x: -50.4, z: -44 + k * .9 } : { x: -57.4 + k * .9, z: -36.8 }, .35);
+      const at = front ? { x: -50.4, z: -44 + k * .9 } : { x: -57.4 + k * .9, z: -36.8 };
+      // Search outwards from this door. An unconstrained nearest-point search
+      // may choose the market interior when the doorstep is crowded.
+      for (let d = 0; d <= 4; d += .25) {
+        const x = at.x + (front ? d : 0), z = at.z + (front ? 0 : d);
+        const y = .7 + (this.world.districts?.groundHeight(x, z) ?? 0);
+        if (this.world.solids.clear({ x, y, z }, .35, id)) { at.x = x; at.z = z; break; }
+      }
       Object.assign(e.transform, at); e.transform.yaw = front ? 0 : -Math.PI / 2; e.hidden = false; this.world.spatial.set(id, at.x, at.z);
+      e.transform.y = .7 + (this.world.districts?.groundHeight(at.x, at.z) ?? 0);
+      // This is a release through the door, rather than motion from the old
+      // glass pose. Admit it so congestion cannot roll the civilian back inside.
+      this.world.solids.admit(e, 'l2.rescue.release', 0);
       const c = e.civilian; c.pauseUntil = tick; c.scheduleStep = 0; c.activityUntil = 0; c.story = null;
       if (c.l1) c.l1.walkSpeed = c.l1.fleeSpeed * (.85 + hash(id * 3 + this.world.seed) * .15);
       // A fan away from the door (front: east, loading: south), each person its own heading and distance.

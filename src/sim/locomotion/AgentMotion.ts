@@ -15,7 +15,7 @@ export function moveAgent(e: EntitySnapshot, vx: number, vz: number, nav: NavGri
   else { const speed = Status.speed(e); respond(state, vx * speed, vz * speed); }
   state.updatedAt = tick;
   const x = e.transform.x, z = e.transform.z;
-  if (state.vx !== 0 || state.vz !== 0) nav.move(e.transform, state.vx * FIXED_DT, state.vz * FIXED_DT, radius, true);
+  if (state.vx !== 0 || state.vz !== 0) nav.move(e.transform, state.vx * FIXED_DT, state.vz * FIXED_DT, radius);
   const territory = e.infected?.territory;
   if (territory && Math.hypot(e.transform.x - territory.x, e.transform.z - territory.z) > territory.radius &&
       Math.hypot(e.transform.x - territory.x, e.transform.z - territory.z) > Math.hypot(x - territory.x, z - territory.z)) {

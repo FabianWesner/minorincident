@@ -1,6 +1,6 @@
 {
   "name": "collision-l6-stair-contact",
-  "note": "Production L6 exit stairs with the courier, corgi and two standing pedestrians. Final courier contact corrections use the existing Rapier capsule sweep. Inspect ascent, separate bodies and planted feet on both tiers and game zooms; the courier must reach the top without crossing a riser or falling beneath the deck. The subway is authored at W0 only; requesting W5 asks for layout GLBs that do not exist.",
+  "note": "Production L6 exit stairs with the courier, corgi and two standing pedestrians. Final courier contact corrections use the existing Rapier capsule sweep. Inspect ascent, separate bodies and planted feet on both tiers and game zooms; the courier must reach the top without crossing a riser or falling beneath the deck. The subway is authored at W0 only; requesting W5 asks for layout GLBs that do not exist. The follow rig tracks the raised feet and uses production camera clearance; a ground-level fixed focus clipped the stair at zoom 0.5.",
   "seed": 1,
   "ground": "district",
   "time": "L6",
@@ -79,8 +79,8 @@
     }
   ],
   "camera": {
-    "mode": "game",
-    "target": "courier",
+    "mode": "follow",
+    "actor": "courier",
     "zoom": 1
   },
   "frames": 600,

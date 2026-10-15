@@ -288,6 +288,15 @@ export class SceneLab {
         e.infected!.state = 'chase';
       }
     });
+    if (spec.l2Release) {
+      world.scenario = 'L2'; applyCampaign(world, preset('L2-default'));
+      const mission = world.loadMission(resolveCampaignMission('L2', world.districts!));
+      mission.begin();
+      if (!world.tick) world.update(); // The production release clock uses zero for "not opened".
+      mission.l2!.completed('doors');
+      const at = spec.actors?.find(a => a.kind === 'courier')?.at;
+      if (at) this.teleport(world.entities.get(1)!, toPoint(at));
+    }
     if (spec.l3Rendezvous) {
       world.scenario = 'L3';
       world.infected!.excludeInfected(l3BaseCollision);
