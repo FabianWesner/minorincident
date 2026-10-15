@@ -451,7 +451,7 @@ export class GameView implements Lifecycle {
     const gun = this.world.mountedGun;
     // The finale gun follows the existing predictive chunk ring; R1 does not fetch an R7 weapon mesh.
     if (!gun || (this.world.chunks && !this.world.chunks.resident(gun.placement.x, gun.placement.z))) { if (this.mountedGunView) { this.mountedGunView.dispose(); this.mountedGunView = null; } return undefined; }
-    if (!this.mountedGunView && this.materials) { this.mountedGunView = new MountedGunView(this.world, this.quality === 'low', this.materials, this.renderer); this.scene.add(this.mountedGunView); }
+    if (!this.mountedGunView && this.materials) { this.mountedGunView = new MountedGunView(this.world, this.quality === 'low', this.materials, this.renderer, model => this.warmHidden(model)); this.scene.add(this.mountedGunView); }
     this.mountedGunView?.update();
     return this.mountedGunView?.ready();
   }
