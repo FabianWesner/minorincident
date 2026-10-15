@@ -747,8 +747,10 @@ export class InfectedSystem {
     if (!garage || this.forecourtPursuers.has(e.id) || Math.hypot(e.transform.x - garage.x, e.transform.z - garage.z) >= l1v2.forecourt.divertRadiusM) return false;
     // Keep systemic street fights. Only courier pursuit and approaches into the small apron are rerouted.
     if (brain.targetId > 1 && (brain.mode === 'chase' || brain.mode === 'bite') && Math.hypot(e.transform.x - garage.x, e.transform.z - garage.z) > l1v2.forecourt.playerRadiusM) return false;
-    const groups = l1v2.street.groups.filter(([x, z]) => Math.hypot(x - garage.x, z - garage.z) > 14);
-    const [x, z] = groups[e.id % groups.length], cell = this.nav.nearestCell(x, z, e.combat!.radius);
+    // Hold the excess at the edge of the forecourt on their own side: sending them to the street groups put the whole pack on
+    // the courier's route to the fire station (complete bot: 16 deaths, 464 s). They resume normal pursuit once she leaves.
+    const dx = e.transform.x - garage.x, dz = e.transform.z - garage.z, d = Math.hypot(dx, dz) || 1, hold = Math.max(d, l1v2.forecourt.holdM);
+    const cell = this.nav.nearestCell(garage.x + dx / d * hold, garage.z + dz / d * hold, e.combat!.radius);
     if (cell < 0) return false;
     brain.targetId = 0; brain.cueUntil = 0; brain.biteTargetId = 0;
     brain.mode = 'attracted'; brain.goalX = this.nav.x(cell); brain.goalZ = this.nav.z(cell); brain.hasGoal = true;
