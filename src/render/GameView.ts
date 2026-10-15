@@ -25,7 +25,7 @@ import { ActionView } from './ActionView';
 import type { SurvivorState } from '../data/survivor';
 import { CharacterView } from './characters/CharacterView';
 import { useSkinnedCourier } from './characters/RiderContacts';
-import { BoxGeometry, Color, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, Scene, MeshLambertNodeMaterial, MeshStandardMaterial, type Material } from 'three/webgpu';
+import { Box3, BoxGeometry, Color, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, Scene, MeshLambertNodeMaterial, MeshStandardMaterial, type Material } from 'three/webgpu';
 import type { Lifecycle } from '../core/Lifecycle';
 import { lerp } from '../core/maths';
 import type { SimWorld } from '../sim/world/SimWorld';
@@ -83,6 +83,8 @@ export class GameView implements Lifecycle {
   private bossPull = 0;
   private bossHole = 0;
   /** Scene Lab courier-visibility probe: hide the courier and/or every crowd figure (including the Mega) for one screenshot. */
+  private readonly revealSubject = new Box3();
+  private readonly revealVehicle = new Box3();
   private probeHide = { courier: false, crowd: false };
   private readonly storyFocus = new Vector3();
   private readonly storyOffset = new Vector3();
@@ -846,7 +848,16 @@ export class GameView implements Lifecycle {
     this.districts?.cull(this.view, this.quality);
     const locked = this.world.controls.snapshot()?.attack;
     const lockedEntity = locked ? this.world.entities.get(locked.id) : undefined;
-    this.districts?.updateFoliage(this.view, current, lockedEntity && lockedEntity.health.current > 0 ? lockedEntity.transform : undefined);
+    let subject: Box3 | undefined;
+    if (current) {
+      const feet = current.y - .7;
+      this.revealSubject.min.set(current.x - .55, feet, current.z - .55);
+      this.revealSubject.max.set(current.x + .55, feet + 1.9, current.z + .55);
+      if (riding !== undefined && this.bicycle) this.revealSubject.union(this.revealVehicle.setFromObject(this.bicycle));
+      if (this.vehicles?.playerBounds(this.revealVehicle) || this.entityAssets?.playerBounds(this.revealVehicle)) this.revealSubject.union(this.revealVehicle);
+      subject = this.revealSubject;
+    }
+    this.districts?.updateFoliage(this.view, current, lockedEntity && lockedEntity.health.current > 0 ? lockedEntity.transform : undefined, subject);
     this.updateBossHole(current);
     this.healthBars?.update(this.camera, this.view.viewportHeight * this.camera.aspect, this.view.viewportHeight, this.barOccluded);
     if (this.world.missions?.state.l3) {
