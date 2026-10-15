@@ -396,7 +396,7 @@ export class GameView implements Lifecycle {
       const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
       const unwarm = this.labWindows?.prewarmWindows();
       const restore = this.vfx?.prewarm(focus.x, focus.z); this.labAccident?.prewarm();
-      const prepare = () => preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress, this.background, this.world.scenario === 'L3');
+      const prepare = () => preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress, this.background, this.world.scenario === 'L3' || this.world.scenario === 'L6');
       try {
         // Execute the shared shader's fire branch and its HDR field pass while
         // loading. The final full-size draw also executes the daylight branch.
@@ -407,6 +407,14 @@ export class GameView implements Lifecycle {
             await prepare();
           } finally { pulse.remove(); this.lighting.applyLook(); }
         } else await prepare();
+        // L6's scream changes from the shelter lights to the courier spot. Warm both
+        // light lists in the actual HDR target before the loading card is dismissed.
+        if (this.world.scenario === 'L6' && this.lighting) {
+          const spot = this.lighting.spot, sun = this.lighting.sun;
+          const wasSpot = spot.visible, wasSun = sun.visible;
+          try { spot.visible = true; sun.visible = false; await prepare(); }
+          finally { spot.visible = wasSpot; sun.visible = wasSun; }
+        }
         // The temporary fire pulse above has now been removed. Execute the
         // daylight graph too, while the rigid prototype still covers pixels;
         // removing it first leaves a hiding corgi cold until its arrival.
