@@ -5,7 +5,7 @@ import type { AssetDef } from '../../../src/assets/types';
 import { assetIO } from '../../../tools/assets/io';
 import { requiredLods, triangleCount } from '../../../tools/assets/delivery';
 
-const accessories = (manifest as AssetDef[]).filter(def => def.category === 'accessory');
+const accessories = (manifest as AssetDef[]).filter(def => def.category === 'accessory' && def.accessory !== undefined);
 const hats = ['baseball-cap', 'beanie', 'sun-hat', 'hard-hat', 'flat-cap', 'bucket-hat'].map(name => `acc.hat-${name}`);
 const hair = ['short-crop', 'ponytail', 'bun', 'afro', 'side-part', 'long-straight'].map(name => `acc.hair-${name}`);
 const bases = ['npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-elderly', 'npc.civilian-kid'];
@@ -46,4 +46,9 @@ test('accessory GLBs stay within 150/80 triangles, one neutral material, mesh be
     }
     expect(existsSync(def.glb.replace('.glb', '.lod2.glb')), `${def.id} has no LOD2 file`).toBe(false);
   }
+});
+
+test('PO31 @E24 courier headlamp stays outside the crowd pool and retains all three authored tiers',async()=>{
+  const def=(manifest as AssetDef[]).find(a=>a.id==='acc.headlamp')!;expect(def.accessory).toBeUndefined();expect(accessories).not.toContain(def);const io=await assetIO();
+  for(const [path,cap]of [[def.glb,800],[def.lods!.lod1!,80],[def.lods!.lod2!,80]] as const){const document=await io.read(path);expect(triangleCount(document)).toBeLessThanOrEqual(cap);expect(document.getRoot().listMaterials()).toHaveLength(4);for(const name of def.requiredNodes)expect(document.getRoot().listNodes().some(n=>n.getName()===name)).toBe(true);}
 });

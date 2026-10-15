@@ -16,6 +16,8 @@ export interface SceneSpec {
   l4Convoy?: boolean | 'parked' | 'hold';
   /** Production L3 rendezvous, rescued group and full authored finale crowd. */
   l3Rendezvous?: boolean;
+  /** Production L6 shelter and gate with the collected equipment. */
+  l6Subway?: 'pickup' | 'lamp' | 'gate' | 'entry';
   /** Production L5 discovery/follower controller, with named prior finds restored before the shot. */
   l5Aftermath?: { found: string[]; alphaAt?: Point; metroIngress?: boolean };
   /** One R1–R6 production encounter, with the quality tier's authored crowd. */
@@ -86,6 +88,8 @@ export interface SceneSpec {
   /** Exercise the shipped checkpoint closure rule with the scene's courier and live officer followers. */
   crossingCrash?: { health: number; /** Keep the departure anchor and adopt the authored APC for full-route probes. */ driveFromStart?: boolean; handover?: boolean };
   armyBoom?: { x: number; z?: number; closed?: boolean };
+  /** L2 Grove Market doors (kit.market-doors) with the layout `level: 'L2'`: closed, open, or opening at `openAtFrame`. */
+  marketDoors?: { open?: boolean; openAtFrame?: number };
   /** L10 dispersal kit rotors/wheels: idle (default) or running at full rate. */
   dispersal?: { active?: boolean };
   /** L10 mounted rotary minigun (the shipped MountedGun, drawn by MountedGunView; do not also place `wpn.minigun-mounted` as a prop): `at` is
@@ -379,7 +383,7 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
   }
   // Recentering moves the crop (and its bbox) so its centre lands on the origin.
   const shift: Point = spec.layout?.recenter && bbox ? [-(bbox[0][0] + bbox[1][0]) / 2, -(bbox[0][1] + bbox[1][1]) / 2] : [0, 0];
-  for (const p of kept) { p.position[0] += shift[0]; p.position[2] += shift[1]; for (const k of ['min', 'max'] as const) { p.visualAabb[k][0] += shift[0]; p.visualAabb[k][2] += shift[1]; } if (!(p.assetId === 'kit.highway-onramp' && p.lightGroup === 'l3-highway')) p.lightGroup = labLightGroup; }
+  for (const p of kept) { p.position[0] += shift[0]; p.position[2] += shift[1]; for (const k of ['min', 'max'] as const) { p.visualAabb[k][0] += shift[0]; p.visualAabb[k][2] += shift[1]; } if (!spec.l6Subway && !(p.assetId === 'kit.highway-onramp' && p.lightGroup === 'l3-highway')) p.lightGroup = labLightGroup; }
   spec.props?.forEach((prop, i) => kept.push(placementFor(prop, i, assets)));
   const center: Point = bbox && !spec.layout?.recenter ? [(bbox[0][0] + bbox[1][0]) / 2, (bbox[0][1] + bbox[1][1]) / 2] : [0, 0];
   const halfX = bbox ? Math.abs(bbox[1][0] - bbox[0][0]) / 2 + 8 : (spec.size ?? 40) / 2, halfZ = bbox ? Math.abs(bbox[1][1] - bbox[0][1]) / 2 + 8 : (spec.size ?? 40) / 2;
@@ -418,8 +422,9 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
     }
     layout.walkable.excluded = source.walkable.excluded.map(polygon => polygon.map(([x,z]) => [x+shift[0],z+shift[1]]));
   }
-  if ((spec.l4Convoy || spec.l3Rendezvous) && source) layout.colliders = structuredClone(source.colliders);
-  for (const name of (spec.l4Convoy || spec.l3Rendezvous || spec.l5Aftermath) && source ? Object.keys(source.anchors) : spec.layout?.anchors ?? []) {
+  if ((spec.l4Convoy || spec.l3Rendezvous || spec.l6Subway) && source) layout.colliders = structuredClone(source.colliders);
+  if (spec.l6Subway && source) layout.lightGroups = structuredClone(source.lightGroups);
+  for (const name of (spec.l4Convoy || spec.l3Rendezvous || spec.l5Aftermath || spec.l6Subway) && source ? Object.keys(source.anchors) : spec.layout?.anchors ?? []) {
     const anchor = source?.anchors[name];
     if (!anchor) throw new Error(`Unknown layout anchor ${name}`);
     layout.anchors[name] = structuredClone(anchor);

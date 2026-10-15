@@ -1,0 +1,15 @@
+{
+ "name": "l2-market-doors",
+ "note": "PO 10-15 'L2: FFs open the doors, but there is no visible door' (Grove Market, east front door and south loading door). The doors start closed (frame, two glazed leaves, push bars) and swing 100 degrees outward from frame 60 (what the firefighter beat triggers; the game drives it from the mission state, so it stays open after the checkpoint and on restore). Look for: real door leaves and frames in the closed state, leaves clear of the wall and of each other when open, no leaf inside the doorway, nothing floating off the wall.",
+ "seed": 1,
+ "time": "L2",
+ "tier": 1,
+ "ground": "district",
+ "layout": { "district": "D-GROVE", "level": "L2", "bbox": [[-62, -50], [-44, -34]] },
+ "actors": [{ "id": "courier", "kind": "courier", "at": [-48.2, -40.0] }],
+ "marketDoors": { "openAtFrame": 60 },
+ "camera": { "mode": "game", "target": [-52.5, -41], "zoom": 1 },
+ "frames": 150,
+ "sheet": 10,
+ "expect": { "consoleErrors": 0 }
+}

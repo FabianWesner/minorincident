@@ -24,6 +24,7 @@ export class Pickups {
     for (const e of this.world.entities.iterate()) {
       const p = e.pickup;
       if (!p || !('kind' in p) || p.collected || (player.transform.x - e.transform.x) ** 2 + (player.transform.z - e.transform.z) ** 2 > p.radius ** 2) continue;
+      if (p.kind === 'item' && p.item === 'headlamp' && !e.interactable?.completed) continue;
       if (p.kind === 'medkit' || p.kind === 'soda') {
         if (player.health.current >= player.health.max) continue;
         player.health.current = Math.min(player.health.max, player.health.current + (p.amount ?? player.health.max * (p.kind === 'medkit' ? .5 : .15)));

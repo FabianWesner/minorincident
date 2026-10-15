@@ -125,6 +125,7 @@ export class Interactables {
       if ((!c.instant || c.kind === 'barricade') && (Math.hypot(input.move.x, input.move.z) > .05 || Math.hypot(p.survivor?.velocity.x ?? 0, p.survivor?.velocity.z ?? 0) > .1)) { c.progress = Math.max(0, c.progress - 2 / (c.holdTime * 60)); continue; }
       c.hint = c.barricaded ? 'barricaded' : c.key && !p.inventory?.includes(c.key) ? 'locked' : c.requires.some(id => !p.inventory?.includes(id)) ? 'missing item' : c.kind === 'generator' && c.fuel <= 0 ? 'fuel' : '';
       if (c.hint || c.interruptedAt === this.world.tick) continue;
+      if (e.archetype === 'pickup.headlamp' && !input.interact) { c.progress = 0; continue; }
       c.progress = input.interact && c.instant ? 1 : Math.min(1, c.progress + 1 / (c.holdTime * 60));
       if (c.progress >= 1 - 1e-9) this.complete(e.id);
     }

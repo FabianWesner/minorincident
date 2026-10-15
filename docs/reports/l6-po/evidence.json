@@ -1,0 +1,1056 @@
+{
+  "sourceCommit": "4845b2c7e735e629fb2ab04a4c7e107d34456585",
+  "layoutControl": "666479d02",
+  "pressureDefinition": "Distinct living visible infected entering 12m of courier while tunnel x=30..246, divided by minutes in that section.",
+  "pressure-before": [
+    {
+      "tier": "high",
+      "outcome": "complete",
+      "seed": 1,
+      "profile": "complete",
+      "simSeconds": 257.96666666666664,
+      "deaths": 0,
+      "rescued": 26,
+      "total": 29,
+      "peak": 60,
+      "routeSeconds": 157.63333333333333,
+      "engagements": 11,
+      "engagingPerMinute": 4.186931698033411,
+      "perMinute": {
+        "0": 1,
+        "1": 4,
+        "2": 6
+      }
+    },
+    {
+      "tier": "low",
+      "outcome": "complete",
+      "seed": 1,
+      "profile": "complete",
+      "simSeconds": 253.3,
+      "deaths": 0,
+      "rescued": 15,
+      "total": 20,
+      "peak": 30,
+      "routeSeconds": 154.38333333333333,
+      "engagements": 1,
+      "engagingPerMinute": 0.388642988232754,
+      "perMinute": {
+        "0": 1
+      }
+    }
+  ],
+  "pressure-after": [
+    {
+      "tier": "high",
+      "outcome": "complete",
+      "seed": 1,
+      "profile": "complete",
+      "simSeconds": 259.2,
+      "deaths": 0,
+      "rescued": 26,
+      "total": 29,
+      "peak": 40,
+      "routeSeconds": 155.41666666666666,
+      "engagements": 18,
+      "engagingPerMinute": 6.949061662198392,
+      "perMinute": {
+        "0": 4,
+        "1": 4,
+        "2": 10
+      }
+    },
+    {
+      "tier": "low",
+      "outcome": "complete",
+      "seed": 1,
+      "profile": "complete",
+      "simSeconds": 259.95,
+      "deaths": 0,
+      "rescued": 14,
+      "total": 20,
+      "peak": 30,
+      "routeSeconds": 156,
+      "engagements": 13,
+      "engagingPerMinute": 5,
+      "perMinute": {
+        "0": 4,
+        "1": 5,
+        "2": 4
+      }
+    }
+  ],
+  "novice": {
+    "outcome": "complete",
+    "seed": 1,
+    "profile": "newbie",
+    "simSeconds": 261.8,
+    "deaths": 0,
+    "rescued": 12,
+    "total": 29,
+    "peak": 54
+  },
+  "matrix": {
+    "webgl": {
+      "passed": 24,
+      "total": 24,
+      "rows": [
+        {
+          "name": "qa-l6-po-entry@high-z0.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high"
+        },
+        {
+          "name": "qa-l6-po-entry@high-z1",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high"
+        },
+        {
+          "name": "qa-l6-po-entry@high-z1.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high"
+        },
+        {
+          "name": "qa-l6-po-entry@low-z0.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "low",
+          "actualTier": "low"
+        },
+        {
+          "name": "qa-l6-po-entry@low-z1",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "low",
+          "actualTier": "low"
+        },
+        {
+          "name": "qa-l6-po-entry@low-z1.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "low",
+          "actualTier": "low"
+        },
+        {
+          "name": "qa-l6-po-gate@high-z0.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high"
+        },
+        {
+          "name": "qa-l6-po-gate@high-z1",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high"
+        },
+        {
+          "name": "qa-l6-po-gate@high-z1.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high"
+        },
+        {
+          "name": "qa-l6-po-gate@low-z0.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "low",
+          "actualTier": "low"
+        },
+        {
+          "name": "qa-l6-po-gate@low-z1",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "low",
+          "actualTier": "low"
+        },
+        {
+          "name": "qa-l6-po-gate@low-z1.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "low",
+          "actualTier": "low"
+        },
+        {
+          "name": "qa-l6-po-headlamp@high-z0.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high"
+        },
+        {
+          "name": "qa-l6-po-headlamp@high-z1",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high"
+        },
+        {
+          "name": "qa-l6-po-headlamp@high-z1.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high"
+        },
+        {
+          "name": "qa-l6-po-headlamp@low-z0.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "low",
+          "actualTier": "low"
+        },
+        {
+          "name": "qa-l6-po-headlamp@low-z1",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "low",
+          "actualTier": "low"
+        },
+        {
+          "name": "qa-l6-po-headlamp@low-z1.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "low",
+          "actualTier": "low"
+        },
+        {
+          "name": "qa-l6-po-pickup@high-z0.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high"
+        },
+        {
+          "name": "qa-l6-po-pickup@high-z1",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high"
+        },
+        {
+          "name": "qa-l6-po-pickup@high-z1.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high"
+        },
+        {
+          "name": "qa-l6-po-pickup@low-z0.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "low",
+          "actualTier": "low"
+        },
+        {
+          "name": "qa-l6-po-pickup@low-z1",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "low",
+          "actualTier": "low"
+        },
+        {
+          "name": "qa-l6-po-pickup@low-z1.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "low",
+          "actualTier": "low"
+        }
+      ]
+    },
+    "webgpu": {
+      "passed": 24,
+      "total": 24,
+      "rows": [
+        {
+          "name": "qa-l6-po-entry@high-z0.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high"
+        },
+        {
+          "name": "qa-l6-po-entry@high-z1",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high"
+        },
+        {
+          "name": "qa-l6-po-entry@high-z1.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high"
+        },
+        {
+          "name": "qa-l6-po-entry@low-z0.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "low",
+          "actualTier": "low"
+        },
+        {
+          "name": "qa-l6-po-entry@low-z1",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "low",
+          "actualTier": "low"
+        },
+        {
+          "name": "qa-l6-po-entry@low-z1.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "low",
+          "actualTier": "low"
+        },
+        {
+          "name": "qa-l6-po-gate@high-z0.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high"
+        },
+        {
+          "name": "qa-l6-po-gate@high-z1",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high"
+        },
+        {
+          "name": "qa-l6-po-gate@high-z1.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high"
+        },
+        {
+          "name": "qa-l6-po-gate@low-z0.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "low",
+          "actualTier": "low"
+        },
+        {
+          "name": "qa-l6-po-gate@low-z1",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "low",
+          "actualTier": "low"
+        },
+        {
+          "name": "qa-l6-po-gate@low-z1.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "low",
+          "actualTier": "low"
+        },
+        {
+          "name": "qa-l6-po-headlamp@high-z0.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high"
+        },
+        {
+          "name": "qa-l6-po-headlamp@high-z1",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high"
+        },
+        {
+          "name": "qa-l6-po-headlamp@high-z1.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high"
+        },
+        {
+          "name": "qa-l6-po-headlamp@low-z0.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "low",
+          "actualTier": "low"
+        },
+        {
+          "name": "qa-l6-po-headlamp@low-z1",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "low",
+          "actualTier": "low"
+        },
+        {
+          "name": "qa-l6-po-headlamp@low-z1.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "low",
+          "actualTier": "low"
+        },
+        {
+          "name": "qa-l6-po-pickup@high-z0.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high"
+        },
+        {
+          "name": "qa-l6-po-pickup@high-z1",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high"
+        },
+        {
+          "name": "qa-l6-po-pickup@high-z1.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "high",
+          "actualTier": "high"
+        },
+        {
+          "name": "qa-l6-po-pickup@low-z0.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "low",
+          "actualTier": "low"
+        },
+        {
+          "name": "qa-l6-po-pickup@low-z1",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "low",
+          "actualTier": "low"
+        },
+        {
+          "name": "qa-l6-po-pickup@low-z1.5",
+          "pass": true,
+          "errors": 0,
+          "requestedTier": "low",
+          "actualTier": "low"
+        }
+      ]
+    }
+  },
+  "actualGameCaptures": [
+    {
+      "name": "webgl2-high-shelter-z0.5",
+      "actualBackend": "webgl",
+      "actualTier": "high",
+      "zoom": 0.5,
+      "errors": 0
+    },
+    {
+      "name": "webgl2-high-shelter-z1",
+      "actualBackend": "webgl",
+      "actualTier": "high",
+      "zoom": 1,
+      "errors": 0
+    },
+    {
+      "name": "webgl2-high-shelter-z1.5",
+      "actualBackend": "webgl",
+      "actualTier": "high",
+      "zoom": 1.5,
+      "errors": 0
+    },
+    {
+      "name": "webgl2-high-gate-z0.5",
+      "actualBackend": "webgl",
+      "actualTier": "high",
+      "zoom": 0.5,
+      "errors": 0
+    },
+    {
+      "name": "webgl2-high-gate-z1",
+      "actualBackend": "webgl",
+      "actualTier": "high",
+      "zoom": 1,
+      "errors": 0
+    },
+    {
+      "name": "webgl2-high-gate-z1.5",
+      "actualBackend": "webgl",
+      "actualTier": "high",
+      "zoom": 1.5,
+      "errors": 0
+    },
+    {
+      "name": "webgl2-low-shelter-z0.5",
+      "actualBackend": "webgl",
+      "actualTier": "low",
+      "zoom": 0.5,
+      "errors": 0
+    },
+    {
+      "name": "webgl2-low-shelter-z1",
+      "actualBackend": "webgl",
+      "actualTier": "low",
+      "zoom": 1,
+      "errors": 0
+    },
+    {
+      "name": "webgl2-low-shelter-z1.5",
+      "actualBackend": "webgl",
+      "actualTier": "low",
+      "zoom": 1.5,
+      "errors": 0
+    },
+    {
+      "name": "webgl2-low-gate-z0.5",
+      "actualBackend": "webgl",
+      "actualTier": "low",
+      "zoom": 0.5,
+      "errors": 0
+    },
+    {
+      "name": "webgl2-low-gate-z1",
+      "actualBackend": "webgl",
+      "actualTier": "low",
+      "zoom": 1,
+      "errors": 0
+    },
+    {
+      "name": "webgl2-low-gate-z1.5",
+      "actualBackend": "webgl",
+      "actualTier": "low",
+      "zoom": 1.5,
+      "errors": 0
+    },
+    {
+      "name": "webgpu-high-shelter-z0.5",
+      "actualBackend": "webgpu",
+      "actualTier": "high",
+      "zoom": 0.5,
+      "errors": 0
+    },
+    {
+      "name": "webgpu-high-shelter-z1",
+      "actualBackend": "webgpu",
+      "actualTier": "high",
+      "zoom": 1,
+      "errors": 0
+    },
+    {
+      "name": "webgpu-high-shelter-z1.5",
+      "actualBackend": "webgpu",
+      "actualTier": "high",
+      "zoom": 1.5,
+      "errors": 0
+    },
+    {
+      "name": "webgpu-high-gate-z0.5",
+      "actualBackend": "webgpu",
+      "actualTier": "high",
+      "zoom": 0.5,
+      "errors": 0
+    },
+    {
+      "name": "webgpu-high-gate-z1",
+      "actualBackend": "webgpu",
+      "actualTier": "high",
+      "zoom": 1,
+      "errors": 0
+    },
+    {
+      "name": "webgpu-high-gate-z1.5",
+      "actualBackend": "webgpu",
+      "actualTier": "high",
+      "zoom": 1.5,
+      "errors": 0
+    },
+    {
+      "name": "webgpu-low-shelter-z0.5",
+      "actualBackend": "webgpu",
+      "actualTier": "low",
+      "zoom": 0.5,
+      "errors": 0
+    },
+    {
+      "name": "webgpu-low-shelter-z1",
+      "actualBackend": "webgpu",
+      "actualTier": "low",
+      "zoom": 1,
+      "errors": 0
+    },
+    {
+      "name": "webgpu-low-shelter-z1.5",
+      "actualBackend": "webgpu",
+      "actualTier": "low",
+      "zoom": 1.5,
+      "errors": 0
+    },
+    {
+      "name": "webgpu-low-gate-z0.5",
+      "actualBackend": "webgpu",
+      "actualTier": "low",
+      "zoom": 0.5,
+      "errors": 0
+    },
+    {
+      "name": "webgpu-low-gate-z1",
+      "actualBackend": "webgpu",
+      "actualTier": "low",
+      "zoom": 1,
+      "errors": 0
+    },
+    {
+      "name": "webgpu-low-gate-z1.5",
+      "actualBackend": "webgpu",
+      "actualTier": "low",
+      "zoom": 1.5,
+      "errors": 0
+    }
+  ],
+  "memory": {
+    "lane-high": {
+      "loads": [
+        {
+          "id": "L1",
+          "heapMB": 79.192112,
+          "geometries": 526,
+          "textures": 53
+        },
+        {
+          "id": "L6",
+          "heapMB": 67.436928,
+          "geometries": 292,
+          "textures": 90
+        },
+        {
+          "id": "L1",
+          "heapMB": 90.043456,
+          "geometries": 520,
+          "textures": 54
+        },
+        {
+          "id": "L6",
+          "heapMB": 75.818368,
+          "geometries": 300,
+          "textures": 90
+        },
+        {
+          "id": "L1",
+          "heapMB": 95.805624,
+          "geometries": 528,
+          "textures": 54
+        }
+      ],
+      "heapGrowthPercent": 20.978745963991962
+    },
+    "lane-low": {
+      "loads": [
+        {
+          "id": "L1",
+          "heapMB": 67.616784,
+          "geometries": 515,
+          "textures": 41
+        },
+        {
+          "id": "L6",
+          "heapMB": 60.71998,
+          "geometries": 267,
+          "textures": 66
+        },
+        {
+          "id": "L1",
+          "heapMB": 79.675944,
+          "geometries": 509,
+          "textures": 42
+        },
+        {
+          "id": "L6",
+          "heapMB": 69.018888,
+          "geometries": 275,
+          "textures": 66
+        },
+        {
+          "id": "L1",
+          "heapMB": 85.177152,
+          "geometries": 517,
+          "textures": 42
+        }
+      ],
+      "heapGrowthPercent": 25.970427697359867
+    },
+    "control-assets-layout-high": {
+      "loads": [
+        {
+          "id": "L1",
+          "heapMB": 79.048536,
+          "geometries": 526,
+          "textures": 53
+        },
+        {
+          "id": "L6",
+          "heapMB": 61.11982,
+          "geometries": 303,
+          "textures": 87
+        },
+        {
+          "id": "L1",
+          "heapMB": 84.839912,
+          "geometries": 512,
+          "textures": 54
+        },
+        {
+          "id": "L6",
+          "heapMB": 64.813904,
+          "geometries": 303,
+          "textures": 87
+        },
+        {
+          "id": "L1",
+          "heapMB": 86.032184,
+          "geometries": 512,
+          "textures": 54
+        }
+      ],
+      "heapGrowthPercent": 8.834632939944642
+    },
+    "control-assets-layout-low": {
+      "loads": [
+        {
+          "id": "L1",
+          "heapMB": 67.479448,
+          "geometries": 515,
+          "textures": 41
+        },
+        {
+          "id": "L6",
+          "heapMB": 56.101232,
+          "geometries": 278,
+          "textures": 65
+        },
+        {
+          "id": "L1",
+          "heapMB": 74.685188,
+          "geometries": 501,
+          "textures": 42
+        },
+        {
+          "id": "L6",
+          "heapMB": 59.886032,
+          "geometries": 278,
+          "textures": 65
+        },
+        {
+          "id": "L1",
+          "heapMB": 75.79448,
+          "geometries": 501,
+          "textures": 42
+        }
+      ],
+      "heapGrowthPercent": 12.322317752213973
+    }
+  },
+  "validation": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "build": "pass",
+    "fullUnit": {
+      "passed": 1514,
+      "skipped": 7,
+      "failed": 1,
+      "failure": "Unchanged L4 l4-sandbag-66 / prop.privacy-fence:147/geometry-0 overlap"
+    },
+    "alignedL6Sim": {
+      "passed": 30
+    },
+    "gateCases": 4,
+    "smokeCases": 16,
+    "finalVerify": {
+      "exitCode": 1,
+      "remotePassed": 33,
+      "browserPassed": 39,
+      "browserFailed": 1,
+      "failure": "Keyboard/mouse escort remains playing after 3500 iterations; focused rerun also fails after defence-point alignment."
+    },
+    "finalNative": {
+      "passed": 12,
+      "failed": 0
+    }
+  },
+  "realInputFailure": {
+    "iteration": 3400,
+    "tick": 57602,
+    "phase": "playing",
+    "leaderX": 26.20333333333306,
+    "player": {
+      "x": 3.9449000358581543,
+      "y": 1.3200000524520874,
+      "z": -10.35539722442627,
+      "yaw": 1.570092458683775e-16
+    },
+    "stats": {
+      "time": 960.0333333333333,
+      "kills": 0,
+      "knockdowns": 91,
+      "damage": 3950.1333333333314,
+      "deaths": 37,
+      "rescued": 17,
+      "optionalObjectives": []
+    },
+    "note": "Progress sample at iteration 3400; test finishes at 3500 and expects result phase."
+  },
+  "scream": {
+    "webgl-high-debugfalse": [
+      {
+        "beat": "breach1At",
+        "max": 12.699999999999818,
+        "backend": "webgl"
+      },
+      {
+        "beat": "breach2At",
+        "max": 17.199999999999818,
+        "backend": "webgl"
+      },
+      {
+        "beat": "abandon",
+        "max": 6.800000000001091,
+        "backend": "webgl"
+      }
+    ],
+    "webgl-high-debugtrue": [
+      {
+        "beat": "breach1At",
+        "max": 11.5,
+        "backend": "webgl"
+      },
+      {
+        "beat": "breach2At",
+        "max": 18.199999999999818,
+        "backend": "webgl"
+      },
+      {
+        "beat": "abandon",
+        "max": 6.900000000000546,
+        "backend": "webgl"
+      }
+    ],
+    "webgl-low-debugfalse": [
+      {
+        "beat": "breach1At",
+        "max": 11.199999999999818,
+        "backend": "webgl"
+      },
+      {
+        "beat": "breach2At",
+        "max": 15.300000000000182,
+        "backend": "webgl"
+      },
+      {
+        "beat": "abandon",
+        "max": 6.100000000000364,
+        "backend": "webgl"
+      }
+    ],
+    "webgl-low-debugtrue": [
+      {
+        "beat": "breach1At",
+        "max": 11.5,
+        "backend": "webgl"
+      },
+      {
+        "beat": "breach2At",
+        "max": 16.600000000000364,
+        "backend": "webgl"
+      },
+      {
+        "beat": "abandon",
+        "max": 6.200000000000728,
+        "backend": "webgl"
+      }
+    ],
+    "webgpu-high-debugfalse": [
+      {
+        "beat": "breach1At",
+        "max": 11.699999999999818,
+        "backend": "webgpu"
+      },
+      {
+        "beat": "breach2At",
+        "max": 15.5,
+        "backend": "webgpu"
+      },
+      {
+        "beat": "abandon",
+        "max": 5.399999999999636,
+        "backend": "webgpu"
+      }
+    ],
+    "webgpu-high-debugtrue": [
+      {
+        "beat": "breach1At",
+        "max": 10.799999999999272,
+        "backend": "webgpu"
+      },
+      {
+        "beat": "breach2At",
+        "max": 15.599999999999454,
+        "backend": "webgpu"
+      },
+      {
+        "beat": "abandon",
+        "max": 5.699999999998909,
+        "backend": "webgpu"
+      }
+    ],
+    "webgpu-low-debugfalse": [
+      {
+        "beat": "breach1At",
+        "max": 10.899999999999636,
+        "backend": "webgpu"
+      },
+      {
+        "beat": "breach2At",
+        "max": 14.700000000000728,
+        "backend": "webgpu"
+      },
+      {
+        "beat": "abandon",
+        "max": 5.199999999999818,
+        "backend": "webgpu"
+      }
+    ],
+    "webgpu-low-debugtrue": [
+      {
+        "beat": "breach1At",
+        "max": 10.199999999999818,
+        "backend": "webgpu"
+      },
+      {
+        "beat": "breach2At",
+        "max": 14.800000000000182,
+        "backend": "webgpu"
+      },
+      {
+        "beat": "abandon",
+        "max": 5.600000000000364,
+        "backend": "webgpu"
+      }
+    ]
+  },
+  "finalNative": {
+    "passed": 12,
+    "screamBeats": 24,
+    "screamMaxMs": {
+      "high": 18.199999999999818,
+      "low": 16.600000000000364
+    },
+    "stress": {
+      "high": {
+        "tier": "high",
+        "p50": 4.800000000001091,
+        "p95": 6.5,
+        "max": 41.30000000000109,
+        "survivors": 28,
+        "infected": 40,
+        "drawCalls": 126,
+        "triangles": 419033,
+        "lighting": {
+          "lightFieldMs": 0.09999942779541016,
+          "lightPools": 21,
+          "lightCandidates": 21,
+          "shadowMaps": 1,
+          "heroLights": 1,
+          "heroShadow": 1,
+          "preset": "L6-subway"
+        }
+      },
+      "low": {
+        "tier": "low",
+        "p50": 10.200000000000728,
+        "p95": 13.600000000002183,
+        "max": 67.90000000000146,
+        "survivors": 25,
+        "infected": 30,
+        "drawCalls": 73,
+        "triangles": 90605,
+        "lighting": {
+          "lightFieldMs": 1,
+          "lightPools": 16,
+          "lightCandidates": 16,
+          "shadowMaps": 0,
+          "heroLights": 1,
+          "heroShadow": 0,
+          "preset": "L6-subway"
+        }
+      }
+    },
+    "transitions": {
+      "high": [
+        {
+          "beat": "breach2",
+          "max": 14.899999999999636
+        },
+        {
+          "beat": "abandon",
+          "max": 9.899999999999636
+        }
+      ],
+      "low": [
+        {
+          "beat": "breach2",
+          "max": 33.100000000000364
+        },
+        {
+          "beat": "abandon",
+          "max": 35.400000000001455
+        }
+      ]
+    }
+  },
+  "quietConditions": {
+    "at": "2026-10-15T18:13:40.447Z",
+    "load": [
+      2.451171875,
+      4.568359375,
+      5.76171875
+    ],
+    "otherHeadlessChrome": 0,
+    "localVitest": 0,
+    "browserSlots": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "command": [
+      "npx",
+      "playwright",
+      "test",
+      "tests/perf/l6-budgets.spec.ts",
+      "tests/perf/l6-po-scream.spec.ts",
+      "--project=chromium",
+      "--workers=1"
+    ]
+  },
+  "independentLowStress": {
+    "tier": "low",
+    "p50": 11.099999999998545,
+    "p95": 15.30000000000291,
+    "max": 66.89999999999782,
+    "survivors": 25,
+    "infected": 30,
+    "drawCalls": 73,
+    "triangles": 90605,
+    "lighting": {
+      "lightFieldMs": 1,
+      "lightPools": 16,
+      "lightCandidates": 16,
+      "shadowMaps": 0,
+      "heroLights": 1,
+      "heroShadow": 0,
+      "preset": "L6-subway"
+    }
+  }
+}

@@ -67,3 +67,21 @@ test('T-E20-01 @E20 L2 starts where L1 ends: the station frame is the D-GROVE Fi
   // Neither south perimeter canopy may screen the left bay's highlighted axe rack.
   expect(layout.placements.filter(p => p.assetId.startsWith('prop.street-tree') && p.position[2] > 48 && p.position[0] >= -80 && p.position[0] <= -72)).toHaveLength(0);
 });
+
+test('T-E20-doors @E20 PO 10-15 "no visible door": Grove Market has real glazed door leaves at its front and loading doorways, no collider of their own', () => {
+  const [layout] = levelTwoLayouts([grove]);
+  const doors = layout.placements.filter(p => p.assetId === 'kit.market-doors');
+  expect(doors.map(d => d.id).sort()).toEqual(['l2-market-door-front', 'l2-market-door-loading']);
+  // Centred on the sim's door anchors (LevelTwoRescue door walls), facing out: +X on the east wall, +Z on the south wall.
+  const front = doors.find(d => d.id === 'l2-market-door-front')!, loading = doors.find(d => d.id === 'l2-market-door-loading')!;
+  expect(Math.hypot(front.position[0] - l2Anchors['l2-door-front'][0], front.position[2] - l2Anchors['l2-door-front'][1])).toBeLessThan(.7);
+  expect(Math.hypot(loading.position[0] - l2Anchors['l2-door-loading'][0], loading.position[2] - l2Anchors['l2-door-loading'][1])).toBeLessThan(.5);
+  expect([Math.cos(front.yaw), -Math.sin(front.yaw)].map(v => Math.round(v) + 0)).toEqual([1, 0]);
+  expect([Math.cos(loading.yaw), -Math.sin(loading.yaw)].map(v => Math.round(v) + 0)).toEqual([0, 1]);
+  // Two swinging leaves per door, separate hinge nodes the view poses; the bake never gives the kit a collider (the mission's door walls are the only one).
+  const def = (JSON.parse(readFileSync('src/assets/manifest.json', 'utf8')) as { id: string; animatedNodes?: string[]; requiredNodes?: string[] }[]).find(a => a.id === 'kit.market-doors')!;
+  expect(def.animatedNodes).toEqual(['marketLeafL', 'marketLeafR']);
+  expect(def.requiredNodes).toEqual(expect.arrayContaining(def.animatedNodes!));
+  expect(readFileSync('src/assets/staticCollision.ts', 'utf8')).not.toContain('"kit.market-doors"');
+  expect(readFileSync('tools/assets/bake-static-collision.ts', 'utf8')).toContain("a.id !== 'kit.market-doors'");
+});

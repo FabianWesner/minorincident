@@ -1,0 +1,53 @@
+{
+  "name": "qa-l6-po-headlamp",
+  "l6Subway": "lamp",
+  "time": "L6-subway",
+  "dof": false,
+  "hud": true,
+  "ground": "district",
+  "layout": {
+    "level": "L6",
+    "district": "D-SUBWAY",
+    "bbox": [
+      [
+        -32,
+        -30
+      ],
+      [
+        288,
+        32
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        2,
+        -2
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.army-mg"
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      2,
+      -2
+    ],
+    "zoom": 1
+  },
+  "frames": 30,
+  "shots": [
+    1,
+    29
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  }
+}
