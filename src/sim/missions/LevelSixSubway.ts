@@ -140,16 +140,16 @@ export class LevelSixSubway {
       if(e.transform.x>=263){r.status='out';e.civilian!.survivor!.mode='hidden';e.hidden=true;w.spatial.delete(e.id);}
     }
     // Telegraph a fixed entrance before the courier reaches it. Two arrivals only,
-    // half a second apart, from the side/ahead; never fill both escape lanes.
+    // six seconds apart, from the side/ahead; never fill both escape lanes.
     for(const entry of s.entries??[]){
       const door=l6Doors[entry.door];
       if(!entry.warnedAt&&p.x>=door.x-26&&p.x<door.x+8){entry.warnedAt=t;entry.nextAt=t+120;w.events.emit({type:'l6.bang',tick:t,breach:entry.door+1,position:door});}
       if(entry.warnedAt&&entry.remaining&&t>=entry.nextAt){
-        if(this.spawn(1,[entry.door],4)){entry.remaining--;entry.nextAt=t+30;}
+        if(this.spawn(1,[entry.door],4)){entry.remaining--;entry.nextAt=t+360;}
         else entry.nextAt=t+15;
       }
     }
-    if(t>=s.nextWave){s.nextWave=t+600;const sides=l6Doors.map((d,i)=>({d,i})).filter(({d,i})=>i>1&&d.x>tail-35&&d.x<s.leaderX+35).map(x=>x.i);this.spawn(2,[...(tail<80?[0,1]:[]),...sides].length?[...(tail<80?[0,1]:[]),...sides]:[0,1],3);}
+    if(t>=s.nextWave){s.nextWave=t+600;const sides=l6Doors.map((d,i)=>({d,i})).filter(({d,i})=>i>1&&d.x>tail-35&&d.x<s.leaderX+35).map(x=>x.i);this.spawn(1,[...(tail<80?[0,1]:[]),...sides].length?[...(tail<80?[0,1]:[]),...sides]:[0,1],3);}
     if(!s.pushHintShown&&w.props?.items.some(q=>q.assetId==='prop.crates'&&q.awake&&distance(p,{x:q.pose.p[0],z:q.pose.p[2]})<2)){s.pushHintShown=true;this.say(1,'Push the glowing crates onto the line, then press E to brace the gate.');}
     for(const gate of s.gates){const e=w.entities.get(gate.id)!;const crossed=live.every(r=>w.entities.get(r.id)!.transform.x>gate.x+2),near=distance(p,{x:gate.x+1.4,z:15})<1.7;
       e.interactable!.label=gate.closedAt?'Brace service gate':'Close service gate';e.interactable!.enabled=false;
