@@ -36,6 +36,9 @@ export class LevelNineCrash {
       const car = w.entities.get(id)!;
       car.vehicle!.driver = 1; w.vehicles!.rebuild(); this.state.carId = id;
     }
+    // Restore occupants before spawning: their IDs belong to the incoming transport.
+    const corgi = w.npcs!.companion.spawn();
+    if (!payload) w.vehicles!.boardPassenger(this.state.carId, corgi);
     w.vehicles!.setFloorPolicy(this.state.carId);
     const saved = w.progression?.campaign?.l9Crash;
     if (saved) {
