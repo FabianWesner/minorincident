@@ -134,9 +134,19 @@ export class LevelEightZoo {
     this.state.startedAt = this.w.tick - 3600; this.update();
     return !!this.mission.state.states.breached;
   }
+  /** Shared follow AI yields to the transport approach only during the escape. */
+  companion(e: EntitySnapshot): boolean {
+    if (!this.state.breachedAt) return false;
+    const w = this.w, door = this.door();
+    if (w.vehicles!.active !== this.state.carId && distance(w.entities.get(1)!.transform, door) >= 12) return false;
+    if (distance(e.transform, door) < .7) w.vehicles!.boardPassenger(this.state.carId, e.id);
+    else w.npcs!.move(e, door, 8, e.companion!, .2);
+    return true;
+  }
   /** Newly rescued zoo residents also belong to the complete living group. */
   roster(): number[] {
     const ids = [...new Set([...this.state.roster, ...[...this.w.entities.iterate()].filter(e => e.civilian?.survivor?.mode === 'follow' && !e.civilian.zooAnimal).map(e => e.id)])];
+    ids.push(...[...this.w.entities.iterate()].filter(e => e.companion).map(e => e.id));
     return ids.filter(id => { const e = this.w.entities.get(id); return e && e.health.current > 0 && !e.infected && e.civilian?.state !== 'finished'; });
   }
   follower(e: EntitySnapshot): boolean {
@@ -158,7 +168,7 @@ export class LevelEightZoo {
   result() {
     const transport = this.transferOrNull();
     if (!transport) return { rescued: 0, survivors: [], escapedSurvivors: [] };
-    const escaped = transport.occupants.filter(e => e.id !== 1);
+    const escaped = transport.occupants.filter(e => e.id !== 1 && !e.companion);
     if (this.w.progression?.campaign) this.w.progression.campaign.transport = transport;
     return { rescued: escaped.length, survivors: escaped.map(e => e.civilian?.survivor?.key ?? `survivor-${e.id}`), escapedSurvivors: escaped };
   }

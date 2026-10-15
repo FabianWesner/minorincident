@@ -55,14 +55,15 @@ export class Companion {
    * Recheck pending fetches too: healing or restoring a checkpoint can invalidate the target. */
   private canFetch(entity: EntitySnapshot | undefined, player: EntitySnapshot): boolean {
     const pickup = entity?.pickup;
-    if (this.safe || !pickup) return false;
+    if (this.safe || !pickup || Math.hypot(entity!.transform.x - player.transform.x, entity!.transform.z - player.transform.z) > 6) return false;
     if ('kind' in pickup) return !pickup.collected && !((pickup.kind === 'medkit' || pickup.kind === 'soda') && player.health.current >= player.health.max);
-    return pickup.armed;
+    return pickup.armed && !pickup.interactTicks && !pickup.retain;
   }
   update(): void {
     const player = this.world.entities.get(1)!, ai = this.world.infected!;
     for (const e of this.world.entities.iterate()) {
       const c = e.companion; if (e.passengerOf !== undefined) continue; if (!c) continue;
+      if (this.world.missions?.l8?.companion(e)) continue;
       if (!this.safe && c.state !== 'hide' && this.world.tick >= c.hurtAt) for (const enemy of ai.active) if (enemy.health.current > 0 && Math.hypot(enemy.transform.x - e.transform.x, enemy.transform.z - e.transform.z) < 1.2) { c.hurtAt = this.world.tick + 60; this.hit(e, infectedDef(enemy.archetype).damage); this.world.events.emit({ type: 'corgi.sound', tick: this.world.tick, sourceId: e.id, position: { ...e.transform }, kind: 'hurt' }); break; }
       if (c.state === 'hide') {
         // Hiding follows at the player's heels without collision; recovery uses sim time.
@@ -71,7 +72,7 @@ export class Companion {
         continue;
       }
       let pickup = c.pickup === null ? undefined : this.world.entities.get(c.pickup);
-      if (!this.canFetch(pickup, player)) { pickup = undefined; c.pickup = null; }
+      if (Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) > 6 || !this.canFetch(pickup, player)) { pickup = undefined; c.pickup = null; }
       if (!this.safe && !pickup && Math.hypot(e.transform.x - player.transform.x, e.transform.z - player.transform.z) < 4) {
         for (const candidate of this.world.entities.iterate()) if (this.canFetch(candidate, player) && Math.hypot(candidate.transform.x - player.transform.x, candidate.transform.z - player.transform.z) > 1 && Math.hypot(candidate.transform.x - player.transform.x, candidate.transform.z - player.transform.z) <= 6 && ai.nav.visible(e.transform, candidate.transform, .35)) { pickup = candidate; break; }
         c.pickup = pickup?.id ?? null;
