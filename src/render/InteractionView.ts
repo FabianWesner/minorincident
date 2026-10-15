@@ -25,6 +25,7 @@ const assetIds: Record<string, string> = {
 export function isMissionInteraction(world: SimWorld, entity: EntitySnapshot): boolean {
   const mission = world.missions;
   if (!mission || mission.state.phase !== 'playing') return false;
+  if (entity.archetype === 'pickup.headlamp') return !!entity.pickup && 'collected' in entity.pickup && !entity.pickup.collected;
   return mission.def.steps.some(step => {
     const axeRack = step.id === 'axe' && step.complete.kind === 'interact' && step.complete.anchor === 'l2-axe-rack';
     if ((step.optional && !axeRack) || mission.state.steps[step.id]?.status !== 'active' || step.complete.kind !== 'interact') return false;
@@ -319,7 +320,7 @@ export class InteractionView extends Group {
     this.panel.hidden = !inRange;
     if (ringTarget) {
       const c = ringTarget.interactable!;
-      this.ring.position.set(ringTarget.transform.x, .05, ringTarget.transform.z); this.ring.scale.setScalar(c.radius);
+      this.ring.position.set(ringTarget.transform.x, (this.world.districts?.pavingHeight(ringTarget.transform.x, ringTarget.transform.z) ?? 0) + .05, ringTarget.transform.z); this.ring.scale.setScalar(c.radius);
       this.fillGeometry.setDrawRange(0, Math.round(c.progress * 64) * 6);
     }
     if (selected && inRange) {

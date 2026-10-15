@@ -1,7 +1,7 @@
 import { expect, test } from 'vitest';
 import { loadL6 } from '../../tools/sim-runner/l6Bots';
 import { l6Doors, l6Entries } from '../../src/data/l6';
-test('PO35 tunnel entries telegraph, alternate sides, and stagger small groups ahead of the courier', async () => {
+test('@E24 PO35 tunnel entries telegraph, alternate sides, and stagger small groups ahead of the courier', async () => {
   const { world: w, mission: m } = await loadL6();
   try {
     w.combat!.damage.god = true; m.completeObjective('shelter'); m.completeObjective('stop');

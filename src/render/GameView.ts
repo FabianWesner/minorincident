@@ -955,6 +955,7 @@ export class GameView implements Lifecycle {
     if (this.world.lightPower) lighting.field.syncPower(id => this.world.lightPower!.isOn(id));
     let flashlight: ReturnType<typeof footprint> | null = null;
     const field = lighting.field, hero = this.character?.visible && this.world.entities.get(1) ? this.character.position : null;
+    lighting.subwayDarkness.value = metro || lighting.preset === 'L6-subway' ? 1 : 0;
     this.character?.showHeadlamp(!!metro?.flashlight);
     lighting.headlampOn.value = metro?.flashlight ? 1 : 0;
     const headlampYaw = this.world.entities.get(1)?.transform.yaw ?? 0;

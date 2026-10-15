@@ -78,6 +78,7 @@ for(const [name,spot] of [['l6-shelter-fails',{x:0,z:4}],['l6-tunnel-retreat',{x
   const setup=await page.evaluate(async spot=>{
     const a=window.__SS__!;
     await a.loadLevel('L6',{seed:1,progression:'L6-default'});a.pause();a.missions.begin();a.cheats.god(true);
+    const lamp=a.query({}).find(e=>e.archetype==='pickup.headlamp')!;a.teleport(1,lamp.transform);a.input.set({interact:true});await a.step(24);a.input.clear();
     a.cheats.completeObjective('shelter');a.cheats.completeObjective('stop');a.teleport(1,spot);
     a.camera.cinematic({position:[spot.x+20,25,spot.z+20],target:[spot.x-3,0,spot.z]},true);
     await a.step(30);
