@@ -8,7 +8,7 @@ import { node, text, setHidden, attribute } from './dom';
 export const onboardingKey = 'minor-incident.onboarding.v1';
 const lessons = ['move', 'evade', 'interact', 'pickup', 'attack', 'selector', 'second-side', 'vehicle'] as const;
 type Lesson = typeof lessons[number];
-const descriptions: Record<Lesson, string> = { move: 'Move toward your objective', evade: 'Keep moving to evade infected', interact: 'Stand in the ring to interact', pickup: 'Walk over the weapon to pick it up', attack: 'Attack with your active weapon', selector: 'Cycle the selected rack', 'second-side': 'Try another carried action', vehicle: 'Stand by the door to enter' };
+const descriptions: Record<Lesson, string> = { move: 'Move toward your objective', evade: 'Infected nearby. Keep moving', interact: 'Stand in the ring to interact', pickup: 'Walk over the weapon to pick it up', attack: 'Attack with your active weapon', selector: 'Switch to your next weapon', 'second-side': 'Try your other weapon', vehicle: 'Stand by the door to enter' };
 export class Onboarding {
   readonly element = node('div', 'onboarding-prompt');
   private readonly seen = new Set<Lesson>();
@@ -44,7 +44,7 @@ export class Onboarding {
   }
   private glyph(lesson: Lesson, scheme: Scheme): string {
     if (scheme === 'touch') return lesson === 'move' || lesson === 'evade' ? '◉ Stick' : ['attack', 'second-side'].includes(lesson) ? lesson === 'attack' ? '☝ LEFT' : '☝ RIGHT' : lesson === 'selector' ? 'Swipe up LEFT / RIGHT' : 'ACTION / Stand';
-    if (scheme === 'mouse-only' || scheme === 'mouse-keyboard') return lesson === 'move' || lesson === 'evade' ? scheme === 'mouse-only' ? 'Click to move' : 'WASD / Click to move' : lesson === 'attack' ? 'LMB attack · Shift+LMB in place' : lesson === 'second-side' ? 'RMB cycle · LMB attack' : lesson === 'selector' ? 'RMB / Q · switch weapons' : 'Stand / F / MMB';
+    if (scheme === 'mouse-only' || scheme === 'mouse-keyboard') return lesson === 'move' || lesson === 'evade' ? scheme === 'mouse-only' ? 'Click to move' : 'WASD / Click to move' : lesson === 'attack' ? 'LMB attack · Shift+LMB in place' : lesson === 'second-side' ? 'RMB cycle · LMB attack' : lesson === 'selector' ? 'RMB / Q' : 'Stand / F / MMB';
     return lesson === 'move' || lesson === 'evade' ? this.bindings.keyLabel('moveUp') + this.bindings.keyLabel('moveLeft') + this.bindings.keyLabel('moveDown') + this.bindings.keyLabel('moveRight') : this.bindings.keyLabel(lesson === 'attack' ? 'left' : lesson === 'second-side' ? 'right' : lesson === 'selector' ? 'selector' : 'interact');
   }
   /** Prime native font fallback/text shaping without selecting or consuming a lesson. */

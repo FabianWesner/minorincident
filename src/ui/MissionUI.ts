@@ -81,7 +81,7 @@ export class MissionUI {
     if(state.result)for(const [key,element]of this.rows){
       const value=state.result[key],row=element.previousElementSibling as HTMLElement;
       row.hidden=element.hidden=value===undefined;
-      this.text(element,value===undefined?'':Array.isArray(value)?value.join(', ')||'None':typeof value==='boolean'?value?'✓':'—':String(Math.round(value*100)/100));
+      this.text(element,value===undefined?'':Array.isArray(value)?value.join(', ')||'None':typeof value==='boolean'?value?'✓':'✗':String(Math.round(value*100)/100));
     }
     const objective=mission.def.steps.find(s=>state.steps[s.id].status==='active');
     if (mission.def.l8 && playing && !objective) this.tracker.hidden = this.map.hidden = true;

@@ -11,7 +11,7 @@ import { audioCredits, codeCredits, originalCredit, type Credit } from '../data/
 import { madeBy } from '../data/madeBy';
 import './ui.css';
 
-const levelTitles = ['Stop the Outbreak', 'Get Them Out', 'Reach the Safe Zone', 'Open the Escape Route', 'Hold the Line', 'Get Out', 'Cross the Ruined City', 'Escape the Zoo', 'Make the Crossing', 'Deliver the Cure'];
+const levelTitles = ['Special Delivery', 'The Failed Rescue', 'The Police Collapse', 'The Safe City Falls', 'Aftermath', 'The Subway', 'The Ruined City', 'The Zoo', 'The Crossing', 'The Cure'];
 const resumeLevel = (save: CampaignSave | null): number | null => save?.cureResume ? 10 : save?.l9Crash && !save.crossingHandover ? 9 : null;
 
 type Screen = 'title' | 'character' | 'levels' | 'pause' | 'settings' | 'credits' | 'upgrades' | 'rack' | 'loading' | null;
@@ -379,11 +379,11 @@ export class GameUI {
       `Level: ${mission?.def.id ?? world.scenario ?? 'unknown'} · Seed: ${seed}`,
       `Step: ${active ? `${active.id} · ${active.text}` : 'none'} · Checkpoint: ${mission?.state.checkpoint ?? 'none'}`,
       `Sim: tick ${world.tick} · ${(world.tick / 60).toFixed(1)} s elapsed`,
-      `Player (x, z, y): ${player ? `${player.transform.x.toFixed(2)}, ${player.transform.z.toFixed(2)}, ${player.transform.y.toFixed(2)}` : 'unavailable'} · yaw ${player?.transform.yaw.toFixed(3) ?? '—'} rad`,
+      `Player (x, z, y): ${player ? `${player.transform.x.toFixed(2)}, ${player.transform.z.toFixed(2)}, ${player.transform.y.toFixed(2)}` : 'unavailable'} · yaw ${player?.transform.yaw.toFixed(3) ?? 'n/a'} rad`,
       `District: ${district} · Nearest: ${closest ? `${closest.id} (${closest.distance.toFixed(1)} m)` : 'none within 10 m'}`,
-      `Vehicle: ${driving ? 'driving' : bike?.mounted ? 'on bike' : 'on foot'}${player?.riding ? ` · entity ${player.riding}` : ''} · HP ${player ? `${player.health.current}/${player.health.max}` : '—'}`,
+      `Vehicle: ${driving ? 'driving' : bike?.mounted ? 'on bike' : 'on foot'}${player?.riding ? ` · entity ${player.riding}` : ''} · HP ${player ? `${player.health.current}/${player.health.max}` : 'n/a'}`,
       `Loadout: ${loadout || 'empty'} · Camera: ${this.game.view.view.getState().spot ?? 'follow'} / zoom ${this.game.view.view.getState().zoom.toFixed(2)}`,
-      `Backend: ${this.game.view.renderer.selectedBackend} · Quality: ${this.game.quality.tier} · FPS (2 s avg): ${this.fpsSamples.length ? (this.fpsSamples.reduce((sum, sample) => sum + sample.fps, 0) / this.fpsSamples.length).toFixed(1) : '—'}`,
+      `Backend: ${this.game.view.renderer.selectedBackend} · Quality: ${this.game.quality.tier} · FPS (2 s avg): ${this.fpsSamples.length ? (this.fpsSamples.reduce((sum, sample) => sum + sample.fps, 0) / this.fpsSamples.length).toFixed(1) : 'n/a'}`,
       `Entities: pedestrians ${entities.filter(e => e.civilian && e.health.current > 0 && !e.infected).length} · infected alive ${infected.filter(e => e.health.current > 0 && e.infected!.recoverAt < 0).length} · downed ${infected.filter(e => e.health.current > 0 && e.infected!.recoverAt >= 0).length} · corpses ${entities.filter(e => e.corpse || e.infected?.state === 'dead').length}`,
       `Build: ${typeof __BUILD_COMMIT__ === 'undefined' ? 'unknown' : __BUILD_COMMIT__}`,
     ];
