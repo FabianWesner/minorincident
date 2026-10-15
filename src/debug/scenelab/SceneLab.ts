@@ -290,10 +290,15 @@ export class SceneLab {
     });
     if (spec.l2Release) {
       world.scenario = 'L2'; applyCampaign(world, preset('L2-default'));
+      world.infected!.director.setTier(this.game.quality.tier);
       const mission = world.loadMission(resolveCampaignMission('L2', world.districts!));
       mission.begin();
       if (!world.tick) world.update(); // The production release clock uses zero for "not opened".
       mission.l2!.completed('doors');
+      if (spec.l2Release === 'bridge') {
+        this.teleport(world.entities.get(1)!, { x: -46.5, z: -39 });
+        for (let i = 0; i < 20 * 60; i++) world.update();
+      }
       const at = spec.actors?.find(a => a.kind === 'courier')?.at;
       if (at) this.teleport(world.entities.get(1)!, toPoint(at));
     }

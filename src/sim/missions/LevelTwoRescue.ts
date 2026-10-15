@@ -13,6 +13,7 @@ import type { CoverWall } from '../combat/HitQuery';
 
 const TICKS = 60, ticks = (s: number) => Math.round(s * TICKS);
 const NAV_TRUCK = 900_201;
+const arrivalHomes = [l2.cluster.home, ...l2.escape.groups.slice(0, 2)];
 /** Market openings (front east, loading south) and the checkpoint entrances (main gate, north and south side gates). */
 const WALLS: Record<string, CoverWall> = {
   'door-front': { x: -51.3, y: .9, z: -42.2, halfX: .2, halfY: .9, halfZ: 4.6 },
@@ -48,12 +49,33 @@ const SHOUTS: readonly (readonly ['arrived' | 'exit' | 'doors', number, 'crew' |
  */
 export class LevelTwoRescue {
   private readonly walls = new Map<string, number>();
+  private reservedArrivals = 0;
   private driver: L2TruckDrive | null = null;
   private route: { pts: Point[]; cum: number[]; length: number } | null = null;
   constructor(private readonly mission: Mission) { mission.world.infectedMeleeHits = l2.infectedMeleeHits; }
   private get s(): L2State { return this.mission.state.l2!; }
   private get world() { return this.mission.world; }
   private anchor(name: string) { return this.mission.def.anchors[name]; }
+  /** The phone cap must leave room for the authored bridge cluster and its two
+   * preceding street beats. Bite conversions use the director's existing budget. */
+  private reserveArrivals(): void {
+    const ai = this.world.infected!;
+    let count = 0;
+    if (ai.director.tier === 'low') {
+      if (!this.s.escapeSpawned) {
+        const scale = l2.escape.lowScale * (1 - this.relief());
+        count = Math.ceil(l2.cluster.count * scale) + l2.escape.groups.slice(0, 2).reduce((n, g) => n + Math.ceil(g[2] * scale), 0);
+      } else for (const q of this.s.pending) {
+        if ((q.id === 0 || q.id === -2) && arrivalHomes.some(p => p[0] === q.home.x && p[1] === q.home.z)) count++;
+      }
+    }
+    ai.director.reserved += count - this.reservedArrivals;
+    this.reservedArrivals = count;
+  }
+  dispose(): void {
+    if (this.world.infected) this.world.infected.director.reserved -= this.reservedArrivals;
+    this.reservedArrivals = 0;
+  }
   /** Nearest point with `r` clearance (ring search, 0.5 m steps up to 6 m). */
   private snap(p: Point, r = .4): Point {
     const nav = this.world.infected!.nav;
@@ -75,6 +97,7 @@ export class LevelTwoRescue {
     const outbreak = world.npcs.civilians.outbreak ?? new Outbreak(world, { refuges: edges, tier });
     world.npcs.civilians.outbreak = outbreak;
     world.infected.director.levelCap = l2.escape.caps.high;
+    this.reserveArrivals();
     world.npcs.setAmbient(0);
     // L2-default progression: the bat from L1 is in hand (a campaign load has already applied its racks).
     if (!world.progression || !world.entities.get(1)!.weapons) world.combat?.setLoadout(['weapon.bat'], ['weapon.fists']);
@@ -413,7 +436,7 @@ export class LevelTwoRescue {
       const home = { x, z }, list = near(home).slice(0, 1);
       for (let i = 0; i < Math.ceil(size * scale); i++) s.pending.push({ id: 0, door: list[i % list.length].d, at: 0, home });
     }
-    s.escapeSpawned = true; this.emergePending(true);
+    s.escapeSpawned = true; this.reserveArrivals(); this.emergePending(true);
   }
   private emergePending(all = false): void {
     const { world } = this.mission, s = this.s, ai = world.infected!, p = world.entities.get(1)!.transform;
@@ -428,12 +451,14 @@ export class LevelTwoRescue {
       const e = world.entities.get(id)!; q.id = id; q.at = world.tick; q.x = e.transform.x; q.z = e.transform.z; q.seen = !ai.director.offscreen(e.transform); spawned++;
       (cluster ? s.clusterIds : s.escapeIds).push(id);
     }
+    this.reserveArrivals();
   }
 
   // ---------------------------------------------------------------------------------------------------------- tick
   update(): void {
     const { world, state } = this.mission, s = state.l2; if (!s) return;
     const tick = world.tick, player = world.entities.get(1)!;
+    if (!s.escapeSpawned) this.reserveArrivals();
     if (s.phase === 'calm') {
       if (tick === this.mission.state.steps.axe.started + ticks(8)) this.mission.radio('L2.captain');
       return;
@@ -714,6 +739,7 @@ export class LevelTwoRescue {
   /** Checkpoint restore: shift the timeline, re-seat or re-park the truck, rebuild the walls from state. */
   restore(delta: number): void {
     const s = this.mission.state.l2; if (!s) return;
+    this.reserveArrivals();
     this.world.infected!.director.strict = !!s.escapeSpawned;
     this.mercyDue = true; { const id = this.mission.state.checkpoint ?? 'start'; this.respawns[id] = (this.respawns[id] ?? 0) + 1; }
     for (const key of ['alarmAt', 'departAt', 'arrivedAt', 'crewExitAt', 'atDoorsAt', 'doorsOpenAt', 'radioAt', 'crossedAt', 'gateClosedAt'] as const) if (s[key]) s[key] += delta;
