@@ -425,8 +425,8 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
     }
     layout.walkable.excluded = source.walkable.excluded.map(polygon => polygon.map(([x,z]) => [x+shift[0],z+shift[1]]));
   }
-  if ((spec.l4Convoy || spec.l3Rendezvous) && source) layout.colliders = structuredClone(source.colliders);
-  for (const name of (spec.l4Convoy || spec.l3Rendezvous || spec.l5Aftermath) && source ? Object.keys(source.anchors) : spec.layout?.anchors ?? []) {
+  if ((spec.l2Release || spec.l4Convoy || spec.l3Rendezvous) && source) layout.colliders = structuredClone(source.colliders);
+  for (const name of (spec.l2Release || spec.l4Convoy || spec.l3Rendezvous || spec.l5Aftermath) && source ? Object.keys(source.anchors) : spec.layout?.anchors ?? []) {
     const anchor = source?.anchors[name];
     if (!anchor) throw new Error(`Unknown layout anchor ${name}`);
     layout.anchors[name] = structuredClone(anchor);
