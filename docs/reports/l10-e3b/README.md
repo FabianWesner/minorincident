@@ -1,5 +1,7 @@
 # L10-E3b — Mega arrival pacing
 
+> Follow-up: [L10 Mega cruise correction](../l10-mega-speed/README.md) removes this lane's 2× catch-up under E32-AC10 priority. The rocket-checkpoint arrival is now 143.15 s high / 141.97 s low at cruise, with the existing late-arrival release gate. The measurements below describe the original E3b implementation.
+
 The seed-32 rocket-checkpoint calibration reaches the arena **30.12 s high / 30.08 s low** after charge activation (previous E3 report: 179.1 s). Both runs retain boss ID 9 and release with zero deaths. This lane measures arrival pacing; the existing remaining-route duration diagnostic is not an acceptance gate for this work.
 
 D-CURE's existing pursuit route now authors pressure from the R6 entrance through R7. Beyond 120 m from the courier, coarse movement follows those same reachable links continuously, bounded at 6.3 m/s (twice cruise), tapering as the gap closes. Detailed movement resumes before visible close contact at the existing 3.15 m/s cruise. There is no scheduled boss replacement, position assignment, extra wait, HP change or damage change. The production composition consumes the same route data; Scene Lab can select it with `megaAlpha.route: "cure"`.

@@ -1,5 +1,7 @@
 # L10-Q3 sim regression
 
+> Follow-up: [L10 Mega cruise correction](../l10-mega-speed/README.md) resolves the production R6 speed finding below: the unchanged audit now passes at 3.15 m/s on both tiers. The measurements in this Q3 report describe its original snapshot.
+
 Scope: E32-AC01–16/27/28. Production gameplay and pacing are unchanged. Seed 32 is the sole full L10 completion seed; no battery. All heavy Vitest work runs through `tools/remote/run.sh` on Hetzner (at most four workers). Native browser checks use a fresh production build and private ports 34931–34933, headless Metal, one worker.
 
 **AC signoff remains open:** the production R6 pressure audit fails E32-AC10 (6.3 m/s versus 3.15 m/s); E32-AC04 calibrated newbie 45–50 min timing is unverified. Both are reported below without pursuit/pacing changes.

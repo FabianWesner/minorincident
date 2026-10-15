@@ -1,0 +1,27 @@
+{
+  "name": "l10-mega-speed-r6",
+  "note": "Same Mega crosses the open eastern verge from the existing northern R6 rubble breach at cruise, then resumes detailed steering before reaching the courier. Production route; game camera, distance ring, both quality tiers.",
+  "seed": 32,
+  "ground": "district",
+  "time": "L10-night",
+  "dof": false,
+  "layout": { "district": "D-CURE", "bbox": [[3277, -135], [3747, 145]] },
+  "actors": [{ "id": "courier", "kind": "courier", "at": [3697, -25], "yaw": 210 }],
+  "megaAlpha": { "id": "mega", "at": [3317, 95], "route": "cure" },
+  "camera": { "mode": "game", "target": "courier", "zoom": 1 },
+  "hud": true,
+  "megaHud": true,
+  "frames": 7800,
+  "sheet": 600,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "lodPlaceholderFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "megaCoarseFramesMin": 30,
+    "megaDetailedFramesMin": 30,
+    "megaCruiseErrorMax": 0.02,
+    "megaStepMaxM": 0.25
+  }
+}
