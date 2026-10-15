@@ -38,6 +38,7 @@ import { Lighting } from './Lighting';
 import { Materials } from './Materials';
 import { Lookdev } from './Lookdev';
 import { Occlusion } from './Occlusion';
+import { seeThrough } from './SeeThrough';
 import { PostFx } from './PostFx';
 import { photoSpots } from '../../tests/fixtures/scenarios/lookdev';
 import type { TimeOfDay } from '../data/timeOfDay';
@@ -79,6 +80,7 @@ export class GameView implements Lifecycle {
   private storyFraming = false;
   private l5StationView = false;
   private l3AttackScale = 1;
+  private bossHole = 0;
   /** Scene Lab courier-visibility probe: hide the courier and/or every crowd figure (including the Mega) for one screenshot. */
   private probeHide = { courier: false, crowd: false };
   private readonly storyFocus = new Vector3();
@@ -673,6 +675,14 @@ export class GameView implements Lifecycle {
     for (const e of this.world.entities.iterate()) if (e.infected?.pursuit && !e.hidden && e.health.current > 0) best = Math.min(best, Math.hypot(e.transform.x - at.x, e.transform.z - at.z));
     return best;
   }
+  /** The boss hole opens while the Mega is within 14 m of the courier; it only drops boss fragments nearer the lens than her, inside a courier-sized disc. */
+  private updateBossHole(player?: { x: number; z: number }): void {
+    const goal = player && this.megaDistance(player) < 14 ? .2 : 0;   // Alpha-sized boss: a partial hole is enough (PO 10-15)
+    this.bossHole += (goal - this.bossHole) * .3; if (Math.abs(goal - this.bossHole) < .01) this.bossHole = goal;
+    seeThrough.bossStrength.value = this.bossHole;
+    const screenHeight = 2 * this.camera.position.distanceTo(this.view.focus) * Math.tan(this.camera.fov * Math.PI / 360);
+    seeThrough.bossRadius.value = Math.min(.3, Math.max(.1, 2.8 / screenHeight));
+  }
   /** Scene Lab: hide the courier / the crowd (Mega included) and redraw, for the courier-visible-share probe. */
   probeVisibility(hide: { courier: boolean; crowd: boolean }): number {
     this.probeHide = { ...hide }; this.update(1);
@@ -828,6 +838,7 @@ export class GameView implements Lifecycle {
     const locked = this.world.controls.snapshot()?.attack;
     const lockedEntity = locked ? this.world.entities.get(locked.id) : undefined;
     this.districts?.updateFoliage(this.view, current, lockedEntity && lockedEntity.health.current > 0 ? lockedEntity.transform : undefined);
+    this.updateBossHole(current);
     this.healthBars?.update(this.camera, this.view.viewportHeight * this.camera.aspect, this.view.viewportHeight, this.barOccluded);
     if (this.world.missions?.state.l3) {
       const at = this.world.missions.state.l3.barrierClosedAt;

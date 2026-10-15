@@ -28,11 +28,11 @@ bpy.context.view_layer.update()
 
 # ---- shape --------------------------------------------------------------------------------------------------------
 HEIGHT = 1.70          # PO 10-15: same height as the regular Alpha (inf.alpha uses 1.47); stronger through mass, not size
-BULK = 1.16            # extra breadth/depth over the Alpha's 1.14/1.22 proportions
+BULK = 1.55            # extra breadth/depth over the Alpha's 1.14/1.22 proportions
 S = HEIGHT / 3.3       # authored absolute offsets below were sized for the old x3.3 body
 shape = Matrix.Diagonal(Vector((HEIGHT * 1.14 * BULK, HEIGHT * 1.22 * BULK, HEIGHT, 1)))
 LEAN = math.radians(14)  # hunch baked into the rest pose (rest rotations stay identity)
-ARM_SCALE = 1.3          # oversized right arm (character right = -Y)
+ARM_SCALE = 1.5          # oversized right arm (character right = -Y)
 TORSO_TREE = {'torso', 'head', 'backpackSocket', 'armL', 'foreArmL', 'handL', 'armR', 'foreArmR', 'handR'}
 ARM_TREE = {'armR', 'foreArmR', 'handR'}
 parents = {n: (o.parent.name if o.parent else None) for n, o in parts.items()}
@@ -96,7 +96,7 @@ for obj in caps:
     obj.matrix_basis = Matrix.Identity(4)
 
 # Second pass (PO review): high-contrast dusk palette. Dark brown skin, near-black rags, red muscle mass, white bone, bright blood.
-PAL = {'mass': ns['mat']('redDark', '5e1822', .6), 'skin': ns['mat']('leatherShadow', '4d2e22', .74), 'cloth': M['uiDark'], 'blood': M['blood'], 'eye': M['eye'], 'bone': M['picketWhite']}
+PAL = {'mass': ns['mat']('redDark', '9e2938', .6), 'skin': ns['mat']('leatherShadow', '7a4630', .74), 'cloth': M['uiDark'], 'blood': M['blood'], 'eye': M['eye'], 'bone': M['picketWhite']}
 for owner, group in bodies.items():
     for obj in group:
         for i, material in enumerate(list(obj.data.materials)):
@@ -219,11 +219,11 @@ def features(detail):
     # Hunch as muscle: a wide trapezius ramp from the back of the neck over both shoulders, with a heavy shoulder mass on
     # each side (the right one bigger, matching the oversized arm), so the silhouette reads as hulking shoulders.
     hump_c = Vector((torso_lo.x + .48 * td, 0, torso_hi.z - .30 * th))
-    rx, ry, rz = .50 * td, .56 * tw, .30 * th
+    rx, ry, rz = .55 * td, .62 * tw, .34 * th
     put('torso', ellipsoid('hump', hump_c, (rx, ry, rz), PAL['mass'], seg + 2, rings + 1))
     for name, side, grow in (('shoulderL', 'armL', 1.0), ('shoulderR', 'armR', 1.25)):
         sp = positions[side] + Vector((-.10 * S, 0, .02 * S * grow))
-        put('torso', ellipsoid(name, sp, (.66 * S * grow, .62 * S * grow, .52 * S * grow), PAL['mass'], seg + 2, rings + 1))
+        put('torso', ellipsoid(name, sp, (.80 * S * grow, .74 * S * grow, .62 * S * grow), PAL['mass'], seg + 2, rings + 1))
     # Exposed spine ridge: bone-white spikes riding the trapezius from the lower back up and over to the neck.
     count = 8
     for i in range(count):
