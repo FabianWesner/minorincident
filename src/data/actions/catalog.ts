@@ -34,7 +34,8 @@ export const catalog: Readonly<Record<string, ActionDef>> = Object.fromEntries((
   // Its own id: 'weapon.pistol' stays the E05 magazine-and-reload reference gun (fixtures, tests); the campaign carries this one.
   fixtures['weapon.pistol'],
   { ...fixtures['weapon.pistol'], id: 'weapon.handgun', range: 22, fireRate: 3, magazine: 0, reloadTime: 0, upgradeHooks: ['damage', 'spread'] },
-  { ...gun('shotgun', 150, 18, 2, 6, 2, 12), pellets: 8, distanceFalloff: { start: 4, end: 12, minimum: 0.1 }, maxTargets: 8, knockback: 0, stagger: 0.3 },
+  // PO #37: a centred shell kills a 210 HP firefighter through 8 m; 300 HP Alphas take two close shells.
+  { ...gun('shotgun', 240, 18, 2, 6, 2, 4), pellets: 8, distanceFalloff: { start: 8, end: 10, minimum: 0.1 }, maxTargets: 8, knockback: 1.8, stagger: 0.65 },
   { ...gun('nail-gun', 14, 18, 6, 24, 1.6, 1), projectile: { speed: 60, gravity: 0, pierce: 0 } },
   gun('smg', 18, 20, 8, 30, 1.5, 2),
   { ...gun('hunting-rifle', 90, 32, 1, 5, 2.4, 0), tier: 1 },
