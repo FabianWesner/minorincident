@@ -70,6 +70,8 @@ export class InfectedSystem {
   private l3HumanSpawns = 0;
   private budget = 0;
   private routes = 0;
+  private readonly forecourtPursuers = new Set<number>();
+  private forecourt: { x: number; z: number } | null = null;
   private readonly lureTarget = { x: 0, z: 0 };
   private readonly waypoint = { x: 0, z: 0 };
   constructor(readonly world: SimWorld, definition: ScenarioDefinition, mask: NavGrid['mask'] = null) {
@@ -186,6 +188,7 @@ export class InfectedSystem {
   update(): void {
     if (this.world.progression?.campaign?.world?.infectionCleared && this.world.scenario !== 'L10' && this.world.missions?.state.id !== 'L10') for (const e of this.active) this.world.combat?.damage.cure(e);
     const courier = this.world.entities.get(1)!; this.budget = 2000; this.routes = 0; this.director.update();
+    this.prepareForecourt(courier.transform);
     this.barricades.length = 0; for (const e of this.world.entities.iterate()) if (e.kind === 'barricade' && e.health.current > 0) this.barricades.push(e);
     if (this.active.length > 20) this.navigation.flow(courier.transform, 1500);
     this.crowd.length = 0;
@@ -679,6 +682,7 @@ export class InfectedSystem {
       if (b.state === 'attack') { b.state = 'chase'; e.combat!.attacking = false; }
       return;
     }
+    if (this.divertFromForecourt(e, b, brain)) return;
     if (b.state === 'attack') {
       const serviceGate = this.world.entities.get(b.targetId)?.archetype === 'l6.service-gate';
       if (tick >= b.until && (this.struck = 0, this.resolve(e))) {
@@ -712,6 +716,36 @@ export class InfectedSystem {
     else if (brain.mode === 'search') this.searchL1(e, b, brain);
     else this.wanderL1(e, b, brain);
     this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+  }
+  /** Local arrival admission, recomputed from live positions (also after checkpoint restore).
+   * Everywhere beyond the garage the same infected resume their normal pursuit and combat. */
+  private prepareForecourt(player: { x: number; z: number }): void {
+    this.forecourt = null; this.forecourtPursuers.clear();
+    if (this.world.scenario !== 'L1') return;
+    const district = this.world.districts?.districts[0], anchor = district?.layout.anchors['garage-door']?.position;
+    if (!district || !anchor) return;
+    const garage = { x: anchor[0] + district.origin[0], z: anchor[2] + district.origin[1] };
+    if (Math.hypot(player.x - garage.x, player.z - garage.z) > l1v2.forecourt.playerRadiusM) return;
+    this.forecourt = garage;
+    const nearby = this.active.filter(e => e.health.current > 0 && e.infected?.l1 && !e.emerging && !e.infectionRise && Math.hypot(e.transform.x - garage.x, e.transform.z - garage.z) < l1v2.forecourt.divertRadiusM);
+    nearby.sort((a, b) => Math.hypot(a.transform.x - player.x, a.transform.z - player.z) - Math.hypot(b.transform.x - player.x, b.transform.z - player.z) || a.id - b.id);
+    for (const e of nearby.slice(0, l1v2.forecourt.maxPursuers)) this.forecourtPursuers.add(e.id);
+  }
+  private divertFromForecourt(e: EntitySnapshot, b: InfectedState, brain: L1Brain): boolean {
+    const garage = this.forecourt;
+    if (!garage || this.forecourtPursuers.has(e.id) || Math.hypot(e.transform.x - garage.x, e.transform.z - garage.z) >= l1v2.forecourt.divertRadiusM) return false;
+    // Keep systemic street fights. Only courier pursuit and approaches into the small apron are rerouted.
+    if (brain.targetId > 1 && (brain.mode === 'chase' || brain.mode === 'bite') && Math.hypot(e.transform.x - garage.x, e.transform.z - garage.z) > l1v2.forecourt.playerRadiusM) return false;
+    const groups = l1v2.street.groups.filter(([x, z]) => Math.hypot(x - garage.x, z - garage.z) > 14);
+    const [x, z] = groups[e.id % groups.length], cell = this.nav.nearestCell(x, z, e.combat!.radius);
+    if (cell < 0) return false;
+    brain.targetId = 0; brain.cueUntil = 0; brain.biteTargetId = 0;
+    brain.mode = 'attracted'; brain.goalX = this.nav.x(cell); brain.goalZ = this.nav.z(cell); brain.hasGoal = true;
+    brain.search.until = this.world.tick + 60; brain.looking = false; brain.pauseUntil = 0;
+    b.state = 'attracted'; b.targetId = 0; b.grabUntil = 0; e.combat!.attacking = false;
+    this.steerL1(e, brain, { x: brain.goalX, z: brain.goalZ }, brain.runSpeed);
+    this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+    return true;
   }
   /** Re-evaluates the closest visible human (0.25 s cadence); losing every human while chasing starts a search. */
   private perceive(e: EntitySnapshot, b: InfectedState, brain: L1Brain): void {
