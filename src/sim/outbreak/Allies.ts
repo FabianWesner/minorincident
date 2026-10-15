@@ -200,9 +200,14 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
     }
   }
   // Losing a target must not cancel a move to cover halfway through the step.
-  // Finish inside the follower band too; catching up and retreat orders keep priority.
-  const inFormation = !follower || !breakout && dist(e.transform, leader!.transform) >= a.follow!.minM && dist(e.transform, leader!.transform) <= a.follow!.maxM;
-  if (shooter && a.step && !a.run && inFormation && c.state !== 'grabbed') {
+  // A walking leader takes priority over the old firing position, including inside
+  // the follow band. Finish a stationary formation's step without delaying regrouping.
+  const leaderMoving = follower && Math.hypot(leader!.survivor?.velocity.x ?? 0, leader!.survivor?.velocity.z ?? 0) > .5;
+  const inFormation = !follower || !breakout && !leaderMoving && dist(e.transform, leader!.transform) >= a.follow!.minM && dist(e.transform, leader!.transform) <= a.follow!.maxM;
+  // Once the retreat reaches the streets, targetless officers regroup rather
+  // than finishing the station's old firing position. Other levels keep their orders.
+  const stationFight = !world.missions || !!world.missions.def.l3 && world.missions.state.l3?.phase !== 'corridor';
+  if (shooter && a.role === 'officer' && stationFight && a.step && !a.run && inFormation && c.state !== 'grabbed') {
     if (tick >= a.step.until || dist(e.transform, a.step) <= .15) a.step = undefined;
     else { npcs.move(e, a.step, tacticFor(a).stepMs, c, .1); return true; }
   }
