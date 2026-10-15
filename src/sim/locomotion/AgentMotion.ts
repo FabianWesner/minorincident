@@ -43,7 +43,7 @@ export function groundAgent(world: SimWorld, e: EntitySnapshot): void {
 function actor(e: EntitySnapshot): boolean { return !e.corpse && !!(e.infected || e.civilian || e.companion || e.escort); }
 // Corgi hiding still follows at the survivor's heels; it must retain its response.
 function forced(e: EntitySnapshot, tick: number, world: SimWorld): boolean {
-  return !!(world.npcs?.civilians.holds(e.id) || e.hidden || e.health.current <= 0 || e.attachedTo !== undefined || e.passengerOf !== undefined || (e.infectionRise && tick < e.infectionRise.until) || e.infected?.hidden || e.infected?.perched || e.infected?.state === 'attack' || (e.infected && e.infected.grabUntil > tick) || (e.combat && e.combat.staggerUntil > tick) || ['grabbed','down','rising','finished','infected'].includes(e.civilian?.state ?? '') || (e.civilian && e.civilian.knockedUntil > tick) || ['downed','dead'].includes(e.escort?.state ?? ''));
+  return !!(world.npcs?.civilians.holds(e.id) || e.hidden || e.health.current <= 0 || e.attachedTo !== undefined || e.passengerOf !== undefined || (e.infectionRise && tick < e.infectionRise.until) || e.infected?.hidden || e.infected?.perched || (e.infected && e.infected.grabUntil > tick) || (e.combat && e.combat.staggerUntil > tick) || ['grabbed','down','rising','finished','infected'].includes(e.civilian?.state ?? '') || (e.civilian && e.civilian.knockedUntil > tick) || ['downed','dead'].includes(e.escort?.state ?? ''));
 }
 /** Runs once per world. Brakes actors whose behaviour supplies no movement this
  * tick, then publishes post-separation/grounding displacement for every figure. */
@@ -59,7 +59,11 @@ export function installAgentMotion(world: SimWorld): void {
   world.events.on('sim.tick', () => {
     const nav = world.infected!.nav;
     for (const e of world.entities.iterate()) if (actor(e) && !forced(e, world.tick, world) && e.locomotion && e.locomotion.updatedAt !== world.tick) {
+      const yaw = e.transform.yaw;
       moveAgent(e, 0, 0, e.infected ? world.infected!.infectedNav : nav, world.tick); world.spatial.set(e.id, e.transform.x, e.transform.z);
+      // Braking retains the authored approach distance. The windup owns facing,
+      // so residual steering must not turn the strike away from its victim.
+      if (e.infected?.state === 'attack') e.transform.yaw = yaw;
     }
   }, SimPhase.missions + .5);
   world.events.on('sim.tick', () => {

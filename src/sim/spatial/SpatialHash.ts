@@ -9,7 +9,9 @@ export class SpatialHash {
   private readonly free: Position[] = [];
   private readonly positions = new Map<number, Position>();
   set(id: number, x: number, z: number): void {
-    const previous = this.positions.get(id), cellX = Math.floor(x / 4), cellZ = Math.floor(z / 4);
+    const previous = this.positions.get(id);
+    if (previous && previous.x === x && previous.z === z) return;
+    const cellX = Math.floor(x / 4), cellZ = Math.floor(z / 4);
     if (previous && previous.cellX === cellX && previous.cellZ === cellZ) { previous.x = x; previous.z = z; return; }
     if (previous) this.removeFromCell(previous);
     const position = previous ?? this.free.pop() ?? { id, x, z, cellX, cellZ, slot: 0 };

@@ -52,7 +52,7 @@ export class SolidRegistry {
   private rollbackZ = 0;
   private rollbackRadius = 0;
   private readonly rollbackCells: ContactCells = { epoch: 0, radius: id => {
-    const e = this.live.get(id);
+    const e = this.live[id];
     return e && this.movedIds.has(id) && !this.rejected.has(id) ? actorRadius(e) : 0;
   }, intersects: (maximum, x, z) => {
     if (!maximum) return false;
@@ -61,7 +61,7 @@ export class SolidRegistry {
   } };
 
   private readonly unresolved: EntitySnapshot[] = [];
-  private readonly live = new Map<number, EntitySnapshot>();
+  private readonly live: (EntitySnapshot | undefined)[] = [];
   private committing = false;
   private bodyConflict = false;
   private bodyConflictId = 0;
@@ -169,7 +169,7 @@ export class SolidRegistry {
     this.query.x = at.x; this.query.z = at.z; this.query.r = radius + this.maxActor;
     this.world.spatial.query(this.query, this.nearby, false);
     for (const id of this.nearby) {
-      const other = this.committing ? this.live.get(id) : this.world.entities.get(id);
+      const other = this.committing ? this.live[id] : this.world.entities.get(id);
       if (id === ignoreId || !other || !this.committing && !actor(other) || pairExempt(e, other) || !layers(at, other.transform)) continue;
       const dx = at.x - other.transform.x, dz = at.z - other.transform.z, reach = radius + actorRadius(other) - limit;
       if (dx * dx + dz * dz < reach * reach) { this.bodyConflict = true; this.bodyConflictId = id; return false; }
@@ -300,7 +300,8 @@ export class SolidRegistry {
     const staticChanged = nav !== this.nav || nav?.revision !== this.navRevision;
     const full = this.world.tick % 60 === 0 || staticChanged;
     this.nav = nav; this.navRevision = nav?.revision ?? -1;
-    this.bodies.length = this.moved.length = 0; this.live.clear();
+    for (const e of this.bodies) this.live[e.id] = undefined;
+    this.bodies.length = this.moved.length = 0;
     for (const e of this.world.entities.iterate()) {
       if (e.pendingAdmission && e.health.current <= 0) this.releasePending(e);
       if (e.pendingAdmission) {
@@ -317,7 +318,7 @@ export class SolidRegistry {
       }
       if (!actor(e)) continue;
       const radius = actorRadius(e);
-      this.maxActor = Math.max(this.maxActor, radius); this.bodies.push(e); this.live.set(e.id, e);
+      this.maxActor = Math.max(this.maxActor, radius); this.bodies.push(e); this.live[e.id] = e;
       this.world.spatial.set(e.id, e.transform.x, e.transform.z);
     }
     // Scripted writers and revived actors may not have updated the shared index. Changed
@@ -347,7 +348,7 @@ export class SolidRegistry {
       else { proposed = { ...e.transform }; this.proposed.set(e, proposed); }
     };
     for (const e of this.moved) {
-      const proof = this.validated.get(e), blocker = this.live.get(proof?.blocker ?? 0), p = e.transform, radius = actorRadius(e);
+      const proof = this.validated.get(e), blocker = this.live[proof?.blocker ?? 0], p = e.transform, radius = actorRadius(e);
       // A previous contact is only a witness: retest its actual proposed pose,
       // current footprint, layer and attachment mask before rejecting movement.
       // If it has cleared, the normal registry query still checks every solid.
@@ -382,7 +383,7 @@ export class SolidRegistry {
       this.rollbackX = old.x; this.rollbackZ = old.z; this.rollbackRadius = radius;
       this.world.spatial.query({ x: old.x, z: old.z, r: radius + this.maxActor }, this.nearby, false, undefined, stable ? this.rollbackCells : undefined);
       for (const id of this.nearby) {
-        const other = this.live.get(id);
+        const other = this.live[id];
         if (!other || id === e.id || this.rejected.has(id) || stable && !this.movedIds.has(id) || pairExempt(e, other) || !layers(old, other.transform)) continue;
         const dx = old.x - other.transform.x, dz = old.z - other.transform.z;
         if (dx * dx + dz * dz < (radius + actorRadius(other) - tolerance) ** 2) reject(other);
@@ -395,7 +396,7 @@ export class SolidRegistry {
       const proof = this.validated.get(e);
       const mayHold = !!(e.infected && !e.infected.specialAttack && proof && (this.world.tick + e.id) % 10 !== 0 && old && !this.failures && !staticChanged && !this.changedActors.has(e.id) && proof.tick === this.world.tick - 1 && proof.radius === radius && proof.exemption === exemption(e));
       if (mayHold && proof!.crowded && proof!.crowdUntil > this.world.tick) {
-        const blocker = this.live.get(this.bodyRejections.get(e.id) ?? 0);
+        const blocker = this.live[this.bodyRejections.get(e.id) ?? 0];
         // Reuse the actual failed contact only while it still blocks this proposal
         // after rollback. A neighbour that vacated it must still permit movement.
         if (blocker && layers(proposed, blocker.transform) &&
@@ -433,7 +434,7 @@ export class SolidRegistry {
           });
           this.world.spatial.query({ x: p.x, z: p.z, r: radius + this.maxActor }, this.nearby, false);
           for (const id of this.nearby) {
-            const other = this.live.get(id);
+            const other = this.live[id];
             if (id === e.id || !other || pairExempt(e, other) || !layers(p, other.transform)) continue;
             const dx = p.x - other.transform.x, dz = p.z - other.transform.z, squared = dx * dx + dz * dz, reach = radius + actorRadius(other);
             if (squared >= (reach - tolerance) ** 2) continue;
@@ -465,7 +466,7 @@ export class SolidRegistry {
           else if (!old) {
             e.pendingAdmission = { ...proposed, writer: this.writers.get(e) ?? 'tick.admission', hidden: e.hidden, range: 4, navigation: false };
             if (e.id === 1) { e.pendingAdmission.colliderEnabled = this.world.physics.playerCollider?.isEnabled(); this.world.physics.playerCollider?.setEnabled(false); }
-            e.hidden = true; this.world.spatial.delete(e.id); this.live.delete(e.id); this.deferred++; continue;
+            e.hidden = true; this.world.spatial.delete(e.id); this.live[e.id] = undefined; this.deferred++; continue;
           }
         }
       }
@@ -511,5 +512,5 @@ export class SolidRegistry {
     return { failures: this.failures, pending: pending.length, admitted: this.admitted, deferred: this.deferred,
       requests: pending.slice(0, 64).map(e => ({ id: e.id, archetype: e.archetype, ...e.pendingAdmission })), offenders: this.offenders.map(o => ({ ...o })) };
   }
-  reset(): void { this.bodies.length = this.moved.length = this.nearby.length = this.hullNeighbors.length = 0; this.changedActors.clear(); this.changedHulls.clear(); this.changedTick = -1; this.rejected.clear(); this.bodyRejections.clear(); this.unresolved.length = 0; this.live.clear(); this.committing = false; this.blockerOwners.clear(); this.hulls.clear(); this.hullIndex.reset(); this.committed = new WeakMap(); this.proposed = new WeakMap(); this.validated = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = -1; this.nav = undefined; }
+  reset(): void { this.bodies.length = this.moved.length = this.nearby.length = this.hullNeighbors.length = 0; this.changedActors.clear(); this.changedHulls.clear(); this.changedTick = -1; this.rejected.clear(); this.bodyRejections.clear(); this.unresolved.length = 0; this.live.length = 0; this.committing = false; this.blockerOwners.clear(); this.hulls.clear(); this.hullIndex.reset(); this.committed = new WeakMap(); this.proposed = new WeakMap(); this.validated = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = -1; this.nav = undefined; }
 }

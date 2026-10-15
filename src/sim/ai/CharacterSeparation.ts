@@ -13,6 +13,7 @@ function spacingRadius(e: EntitySnapshot, world: SimWorld): number {
   if (e.infectionRise || e.hidden || e.emerging || e.health.current <= 0 || e.attachedTo !== undefined || e.passengerOf !== undefined || (e.infected && (e.infected.hidden || e.transform.y > 2)) || e.companion?.state === 'hide' || e.civilian?.state === 'down' || e.civilian?.state === 'rising') return 0;
   if (e.companion) return world.missions?.state.l5?.metroAt ? .2 : .9;
   if (e.civilian?.pet) return .5;
+  if (e.survivor) return actorRadius(e);
   return e.survivor || e.companion || e.escort || (e.civilian && e.civilian.state !== 'infected' && e.civilian.state !== 'finished') || e.infected ? e.combat?.radius ?? .35 : 0;
 }
 type Body = { entity: EntitySnapshot; radius: number; extra: number; contact: number; category: number; infected: boolean; courier: boolean; crowd: boolean; hullContact: boolean; l1: boolean; fixed: boolean; charge: boolean; passiveCompanion: boolean };
@@ -39,6 +40,9 @@ export function installCharacterSeparation(world: SimWorld): void {
     // Reuse the numeric-ID lookup without clearing sparse carried-survivor ID ranges.
     for (const id of radiusIds) radii[id] = undefined; radiusIds.length = 0;
     let bodyCount = 0, maximumRadius = 0;
+    // The stationary courier may yield to her own followers at the Metro mouth.
+    // Otherwise her solid body seals the only route around a stationary intruder.
+    const yieldCourier = !!world.missions?.state.l5?.metroAt && !world.inputFrame.move.x && !world.inputFrame.move.z && !world.inputFrame.moveTarget && !world.inputFrame.attackTarget;
     const drivenHull = world.vehicles?.active == null ? undefined : world.vehicles.cars.get(world.vehicles.active)?.physics;
     for (const e of world.entities.iterate()) {
       const r = spacingRadius(e, world); if (!r) continue;
@@ -51,11 +55,11 @@ export function installCharacterSeparation(world: SimWorld): void {
       body.crowd = !!e.infected && (!!e.combat?.attacking || e.infected.state === 'chase');
       body.hullContact = !!drivenHull && drivenHull.speed < .2 && body.infected && drivenHull.hullDistance(e.transform.x, e.transform.z) < 3;
       body.passiveCompanion = !!e.companion && !e.companion.following && e.companion.state === 'follow';
-      body.fixed = !!(e.infected?.pursuit && e.infected.specialAttack) || body.courier || !!(e.civilian?.ally?.hold && storyProtected(world, e)) || e.civilian?.state === 'grabbed' || body.passiveCompanion;
+      body.fixed = !!(e.infected?.pursuit && e.infected.specialAttack) || body.courier && !yieldCourier || !!(e.civilian?.ally?.hold && storyProtected(world, e)) || e.civilian?.state === 'grabbed' || body.passiveCompanion;
       const attack = e.infected?.specialAttack;
       body.charge = !!attack && attack.stage === 'active' && (attack.move === 'alpha.charge' || attack.move === 'elephant.charge' || attack.move === 'zebra.stampede');
       radii[e.id] = body; radiusIds.push(e.id); maximumRadius = Math.max(maximumRadius, r);
-      if ((e.infected?.specialAttack && (e.infected.pursuit || e.infected.specialAttack.stage !== 'recovery') && e.infected.specialAttack.move !== 'lion.flank') || e.survivor || e.civilian?.state === 'grabbed' || (e.civilian?.ally?.hold && storyProtected(world, e))) continue;
+      if ((e.infected?.specialAttack && (e.infected.pursuit || e.infected.specialAttack.stage !== 'recovery') && e.infected.specialAttack.move !== 'lion.flank') || e.survivor && !yieldCourier || e.civilian?.state === 'grabbed' || (e.civilian?.ally?.hold && storyProtected(world, e))) continue;
       bodies[bodyCount++] = body;
     }
     bodies.length = bodyCount; contacts.epoch++;
@@ -84,6 +88,7 @@ export function installCharacterSeparation(world: SimWorld): void {
       const body = active!, { entity: e } = body;
       const neighbor = radii[id]; if (!neighbor || neighbor.entity === e) return;
       const other = neighbor.entity;
+      if (body.courier && !other.civilian?.survivor) return;
       const dx = e.transform.x - other.transform.x, dz = e.transform.z - other.transform.z, squared = dx * dx + dz * dz;
       const reach = reaches[body.category][neighbor.category];
       if (squared >= reach * reach || neighbor.charge || (body.passiveCompanion && !neighbor.courier)) return;
