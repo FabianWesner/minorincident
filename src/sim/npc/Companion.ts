@@ -45,7 +45,7 @@ export class Companion {
       let spot: { x: number; z: number } | null = null;
       for (const [dx, dz] of [[0, 2], [2, 0], [-2, 0], [0, -2], [1.4, 1.4], [-1.4, -1.4], [0, 1], [0, 0]]) if (nav.clear(player.x + dx, player.z + dz, .35)) { spot = { x: player.x + dx, z: player.z + dz }; break; }
       spot ??= { x: player.x, z: player.z };
-      e.transform.x = spot.x; e.transform.z = spot.z; e.transform.yaw = -Math.atan2(player.z - spot.z, player.x - spot.x);
+      e.transform.x = spot.x; e.transform.z = spot.z; e.transform.y = .3 + (this.world.districts?.groundHeight(spot.x, spot.z) ?? 0); e.transform.yaw = -Math.atan2(player.z - spot.z, player.x - spot.x);
       delete e.locomotion; c.velocity = { x: 0, z: 0 }; c.path.length = 0; c.goal = -1; c.pathIndex = 0; c.following = false; c.pickup = null;
       if (e.motion) { e.motion.velocity.x = e.motion.velocity.z = 0; e.motion.speed = 0; e.motion.moving = false; }
       this.world.spatial.set(e.id, e.transform.x, e.transform.z);

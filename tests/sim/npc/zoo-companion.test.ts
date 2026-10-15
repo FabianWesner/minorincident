@@ -38,6 +38,7 @@ test('@E29 @E30 bus passenger keeps the same corgi identity at zoo arrival', asy
   const next = await loadLevel('L8', 32, save); worlds.push(next);
   const arrived = next.entities.get(dog.id)!;
   expect(arrived.companion).toBeDefined(); expect(arrived.hidden).toBe(false); expect(arrived.passengerOf).toBeUndefined();
+  expect(arrived.transform.y).toBeCloseTo(.3 + next.districts!.groundHeight(arrived.transform.x, arrived.transform.z));
   expect([...next.entities.iterate()].filter(e => e.companion)).toHaveLength(1);
   expect(Math.hypot(arrived.transform.x - next.entities.get(1)!.transform.x, arrived.transform.z - next.entities.get(1)!.transform.z)).toBeLessThan(3);
 });
