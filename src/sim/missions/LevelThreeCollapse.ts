@@ -620,8 +620,8 @@ export class LevelThreeCollapse {
     // After minFightS with the group inside, the staged column holds outside reach so the line clears and the boom can close.
     if (!(inside && w.tick - s.finaleAt! >= ticks(f.minFightS))) this.surge();
     if (s.barrierClosedAt && !inside) { s.barrierClosedAt = 0; this.barrier(false); w.events.emit({ type: 'gate.changed', tick: w.tick, id: 'l3-army-boom', open: true }); }
-    // The rescue fight lasts until every pack arrived or minFightS passed (60-90 s); the weaker army (PO 10-12) cannot hold an open boom longer.
-    const arrived = w.tick - s.finaleAt! >= ticks(f.minFightS) || f.packs.every(([, count], i) => (s.finalePacks![i] ?? 0) >= Math.ceil(count * (1 - this.mercyFraction())));
+    // PO 10-15: acknowledge the ring and close behind the group immediately; hold the evacuation minute inside.
+    const arrived = !!s.crossedAt || this.inZone(p) || w.tick - s.finaleAt! >= ticks(f.minFightS) || f.packs.every(([, count], i) => (s.finalePacks![i] ?? 0) >= Math.ceil(count * (1 - this.mercyFraction())));
     if (!s.barrierClosedAt && inside && arrived && (this.boom.ready(group) || (this.boom.clearBystanders(group), this.boom.ready(group)))) {
       s.barrierClosedAt = w.tick; this.barrier(true);
       w.events.emit({ type: 'gate.changed', tick: w.tick, id: 'l3-army-boom', open: false });
@@ -642,13 +642,12 @@ export class LevelThreeCollapse {
   private inZone(p: Point): boolean { const ring = this.anchor('l3-zone'); return dist(p, ring) <= ring.radius; }
   private zone(tick: number, player: EntitySnapshot): void {
     const s = this.s;
-    if (s.crossedAt && !s.barrierClosedAt) s.crossedAt = 0;
-    if (!s.crossedAt && s.barrierClosedAt && player.health.current > 0 && this.inZone(player.transform)) {
+    if (!s.crossedAt && player.health.current > 0 && this.inZone(player.transform)) {
       s.crossedAt = tick; s.segmentSquad[2] ??= s.squad.length;
       this.world.events.emit({ type: 'l3.crossed', tick }); this.mission.radio('L3.army');
     }
-    // The safe rendezvous completes after the whole group has passed the boom.
-    if (s.crossedAt && !s.doneAt && tick - s.crossedAt >= ticks(l3.finale.closeS)) { s.doneAt = tick; s.phase = 'done'; if (!this.mission.state.states.crossed) this.mission.setState('crossed', true); }
+    // The countdown begins at arrival, independently of the horde and group stragglers.
+    if (s.crossedAt && !s.doneAt && s.barrierClosedAt && tick - s.crossedAt >= ticks(l3.finale.minFightS)) { s.doneAt = tick; s.phase = 'done'; if (!this.mission.state.states.crossed) this.mission.setState('crossed', true); }
     // Arrival is already achieved; closing the boom must not leave a waypoint under the courier.
     if (s.crossedAt && (this.mission.state.marker === 'l3-zone' || this.mission.state.marker === 'l3-route')) this.mission.state.marker = null;
   }
@@ -735,4 +734,12 @@ export class LevelThreeCollapse {
       if (s.gatesClosedAt) this.wall(id, true); else this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: 900_400 + Object.keys(L3_GATES).indexOf(id), blocked: false, wall: L3_GATES[id] });
     }
   }
+}
+
+/** Persistent arrival feedback, shared by both objective HUDs. Time is simulation time. */
+export function l3EvacuationText(mission: Mission | null | undefined): string | null {
+  const s = mission?.state.l3;
+  if (!s?.crossedAt || s.doneAt) return null;
+  const seconds = Math.max(0, Math.ceil(l3.finale.minFightS - (mission!.world.tick - s.crossedAt) / TICKS));
+  return seconds > 0 ? `Checkpoint reached · Evacuation in ${seconds} s` : 'Checkpoint reached · Waiting for the rescued group';
 }
