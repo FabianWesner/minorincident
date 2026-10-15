@@ -235,7 +235,7 @@ test('@E03-AC05 @E03-AC17 M1-05 numbers and HUD clicks select either rack; Shift
 });
 
 test('PO #14 active numbers, Q, RMB and HUD follow weapon order after unordered pickups', async ({ page }) => {
-  await arena(page);
+  await hudStart(page);
   await page.evaluate(() => window.__SS__!.setLoadout(['weapon.fire-axe', 'weapon.bat', 'weapon.fists'], ['ability.corgi-lure', 'weapon.molotov', 'weapon.handgun']));
   await page.mouse.move(800, 450);
   const active = () => page.evaluate(() => { const w = window.__SS__!.getState().player!.weapons!; return w[w.selectedSide].rack[w[w.selectedSide].index].id; });
