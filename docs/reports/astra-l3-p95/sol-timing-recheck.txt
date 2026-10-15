@@ -1,0 +1,82 @@
+Focused rerun of the nine failing timing-project cases, maxWorkers=1 through tools/remote/timing-isolated.sh. Both runner slots held throughout the timing project; full command is in continuation.md.
+
+[runner] waiting for both slots to isolate wall-clock timing
+[runner] both slots held for the timing project
+   × T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95 5611ms
+   × T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets 17573ms
+   ✓ T-E08-11-high @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity 43706ms
+   × T-E32-20-perf-200 @E32-AC20 @E32-AC31 @E18-AC02 full-cap active dispersal predicate 10719ms
+   ✓ T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms 1991ms
+   ✓ T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms 2174ms
+   × T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms 2463ms
+   ✓ T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18 2726ms
+   × T-E32-21-E3b @E32-AC21 seed-32 rocket checkpoint route arrival high 147559ms
+[runner] functional phase reached; extra slot released
+
+pped)
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 5 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   timing  tests/sim/levels/l10-arrival.test.ts > T-E32-21-E3b @E32-AC21 seed-32 rocket checkpoint route arrival high
+Error: Test timed out in 120000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".
+ ❯ tests/sim/levels/l10-arrival.test.ts:4:46
+      2| import { runFinaleCalibration } from '../../../tools/sim-runner/l10-fi…
+      3|
+      4| for (const tier of ['high', 'low'] as const) test(`T-E32-21-E3b @E32-A…
+       |                                              ^
+      5|   const result = await runFinaleCalibration(tier);
+      6|   expect(result.arrival).not.toBeNull();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯
+
+ FAIL   timing  tests/sim/levels/l10-assault.test.ts > T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets
+AssertionError: expected 4.489783000000898 to be less than or equal to 4
+ ❯ tests/sim/levels/l10-assault.test.ts:58:17
+     56|     mkdirSync('test-results/epics/E32/E3', { recursive: true });
+     57|     writeFileSync(`test-results/epics/E32/E3/assault-${tier}.json`, JS…
+     58|     expect(p95).toBeLessThanOrEqual(tier === 'high' ? 4 : 6);
+       |                 ^
+     59|   } finally { w.dispose(); }
+     60| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯
+
+ FAIL   timing  tests/sim/performance/l10-finale.test.ts > T-E32-20-perf-200 @E32-AC20 @E32-AC31 @E18-AC02 full-cap active dispersal predicate
+AssertionError: expected 4.183783999993466 to be less than or equal to 4
+ ❯ tests/sim/performance/l10-finale.test.ts:30:23
+     28|     expect(proof.count).toBe(count); expect(proof.chargeTicks).toBe(36…
+     29|     expect(m.state.steps.hold.status).toBe('active'); expect(m.state.s…
+     30|     expect(proof.p95).toBeLessThanOrEqual(budget);
+       |                       ^
+     31|   } finally { w.dispose(); }
+     32| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/5]⎯
+
+ FAIL   timing  tests/sim/performance/zoo-s2.test.ts > T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms
+AssertionError: expected 4.608768000005512 to be less than or equal to 4
+ ❯ tests/sim/performance/zoo-s2.test.ts:26:68
+     24|     const proof = { count, zoo: ids.length, activations, simMsP95: tim…
+     25|     mkdirSync('docs/reports/zoo-s2', { recursive: true }); writeFileSy…
+     26|     expect(activations).toBeGreaterThan(0); expect(proof.simMsP95).toB…
+       |                                                                    ^
+     27|   } finally { w.dispose(); }
+     28| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/5]⎯
+
+ FAIL   timing  tests/sim/world/chunk-residency.test.ts > T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95
+AssertionError: expected 4.466647999999623 to be less than or equal to 4
+ ❯ tests/sim/world/chunk-residency.test.ts:87:71
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/5]⎯
+
+
+ Test Files  5 failed | 4 passed | 420 skipped (429)
+      Tests  5 failed | 4 passed | 2801 skipped (2810)
+   Start at  07:41:38
+   Duration  437.02s (tests 63%, import 29%, transform 7%, worker 1%)
+
+[remote] done exit=1 (runner 2.28.24.66, sync 41s, remote total 1365s)
