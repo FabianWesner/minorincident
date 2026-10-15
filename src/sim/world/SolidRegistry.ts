@@ -7,7 +7,7 @@ import type { EntitySnapshot, Transform } from './types';
 import { boxContact, type SolidBox, type Contact } from './SolidGeometry';
 
 type Point = { x: number; z: number; y: number };
-interface Hull { entity: EntitySnapshot; boxes: SolidBox[]; pose: Transform; dirty: boolean; quiet: number; nav?: SolidBox; navYaw?: number }
+interface Hull { entity: EntitySnapshot; boxes: SolidBox[]; pose: Transform; dirty: boolean; quiet: number; nav?: SolidBox; navYaw?: number; navGrid?: import('../ai/NavGrid').NavGrid }
 export interface CollisionOffender { tick: number; actor: number; other: number | string; depth: number; inside: boolean; writer: string }
 const tolerance = .02, skin = .001;
 /** One physical footprint. Reach, crowd spacing and animation envelopes are owned by combat/presentation. */
@@ -50,7 +50,9 @@ export class SolidRegistry {
 
   /** Vehicles, ambient traffic, convoy and setpieces all register by stable entity ID, including on restore. */
   register(e: EntitySnapshot): void {
-    if (e.hidden || this.hulls.get(e.id)?.entity === e) return;
+    const previous = this.hulls.get(e.id);
+    if (e.hidden || previous?.entity === e) return;
+    if (previous) this.parkedHull(previous, false);
     let boxes: SolidBox[];
     if (e.vehicle) {
       const def = vehicleDef(e.archetype);
@@ -83,7 +85,7 @@ export class SolidRegistry {
   private parkedHull(h: Hull, blocked: boolean): void {
     const e = h.entity, id = -e.id, p = e.transform, nav = this.world.infected?.nav;
     if (!nav || !blocked && !h.nav) return;
-    if (blocked && h.nav && Math.hypot(h.nav.x - p.x, h.nav.z - p.z) < .25 && Math.abs((h.navYaw ?? 0) - p.yaw) < .1) return;
+    if (blocked && h.nav && h.navGrid === nav && Math.hypot(h.nav.x - p.x, h.nav.z - p.z) < .25 && Math.abs((h.navYaw ?? 0) - p.yaw) < .1) return;
     let wall = h.nav;
     if (blocked) {
       const c = Math.cos(p.yaw), s = Math.sin(p.yaw);
@@ -95,8 +97,8 @@ export class SolidRegistry {
         y0 = Math.min(y0, p.y + b.y - b.halfY); y1 = Math.max(y1, p.y + b.y + b.halfY);
       }
       wall = { x: (x0+x1)/2, z: (z0+z1)/2, y: (y0+y1)/2, halfX: (x1-x0)/2, halfZ: (z1-z0)/2, halfY: (y1-y0)/2 };
-      h.nav = wall; h.navYaw = p.yaw; this.aliasBlocker(id, e.id);
-    } else { delete h.nav; delete h.navYaw; }
+      h.nav = wall; h.navYaw = p.yaw; h.navGrid = nav; this.aliasBlocker(id, e.id);
+    } else { delete h.nav; delete h.navYaw; delete h.navGrid; }
     this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id, blocked, wall: wall! });
   }
   /** A parked nav blocker and its registered hull are one solid for explicit passenger relationships. */
@@ -110,8 +112,8 @@ export class SolidRegistry {
       const hullOwner = this.blockerOwners.get(id);
       if (hullOwner !== undefined && this.hulls.has(hullOwner)) return;
       if (at === e?.transform && (owner !== undefined && this.blockerOwners.get(id) === owner || seatOwner !== undefined && id === `blocker:${seatOwner}`)) return;
-      // Support below the feet is walkable; navigation-only walls explicitly reserve the ground layer.
-      if ((box.navBlocker && at.y < 1.8) || box.y + box.halfY > at.y - .65 + .05 && box.y - box.halfY < at.y + .65) visit(box, id);
+      // Support below the feet is walkable; contact only joins overlapping height layers.
+      if (box.y + box.halfY > at.y - .65 + .05 && box.y - box.halfY < at.y + .65) visit(box, id);
     });
     if (!this.hulls.size) return;
     this.hullIndex.query({ x: at.x, z: at.z, r: this.maxHull + radius }, this.hullNeighbors, false);
