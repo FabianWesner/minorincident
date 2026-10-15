@@ -39,7 +39,7 @@ export class SolidRegistry {
   private committed = new WeakMap<EntitySnapshot, Transform>();
   private writers = new WeakMap<EntitySnapshot, string>();
   private proposed = new WeakMap<EntitySnapshot, Transform>();
-  private validated = new WeakMap<EntitySnapshot, { tick: number; radius: number; exemption: number | string | undefined; blocked: number; crowded: boolean; crowdUntil: number }>();
+  private validated = new WeakMap<EntitySnapshot, { tick: number; radius: number; exemption: number | string | undefined; blocked: number; blocker: number; crowded: boolean; crowdUntil: number }>();
   private readonly nearby: number[] = [];
   private readonly hullNeighbors: number[] = [];
   private readonly bodies: EntitySnapshot[] = [];
@@ -280,9 +280,21 @@ export class SolidRegistry {
       if (proposed) Object.assign(proposed, e.transform);
       else { proposed = { ...e.transform }; this.proposed.set(e, proposed); }
     };
-    for (const e of this.moved) if (!this.clear(e.transform, actorRadius(e), e.id, true, tolerance)) {
-      if (this.bodyConflict) this.bodyRejections.set(e.id, this.bodyConflictId);
-      reject(e);
+    for (const e of this.moved) {
+      const proof = this.validated.get(e), blocker = this.live.get(proof?.blocker ?? 0), p = e.transform, radius = actorRadius(e);
+      // A previous contact is only a witness: retest its actual proposed pose,
+      // current footprint, layer and attachment mask before rejecting movement.
+      // If it has cleared, the normal registry query still checks every solid.
+      if (blocker && !pairExempt(e, blocker) && layers(p, blocker.transform) &&
+          (p.x - blocker.transform.x) ** 2 + (p.z - blocker.transform.z) ** 2 < (radius + actorRadius(blocker) - tolerance) ** 2) {
+        this.bodyRejections.set(e.id, blocker.id); reject(e);
+      } else if (!this.clear(p, radius, e.id, true, tolerance)) {
+        if (this.bodyConflict) {
+          this.bodyRejections.set(e.id, this.bodyConflictId);
+          if (proof) proof.blocker = this.bodyConflictId;
+        }
+        reject(e);
+      }
     }
     if (!this.unresolved.length) {
       for (const e of this.moved) if (e.id === 1) this.publish(e);
@@ -387,7 +399,7 @@ export class SolidRegistry {
       if (old) Object.assign(old, e.transform); else this.committed.set(e, { ...e.transform });
       const proof = this.validated.get(e);
       if (proof) { proof.tick = this.world.tick; proof.radius = actorRadius(e); proof.exemption = exemption(e); }
-      else this.validated.set(e, { tick: this.world.tick, radius: actorRadius(e), exemption: exemption(e), blocked: 0, crowded: false, crowdUntil: 0 });
+      else this.validated.set(e, { tick: this.world.tick, radius: actorRadius(e), exemption: exemption(e), blocked: 0, blocker: 0, crowded: false, crowdUntil: 0 });
     }
     this.committing = false;
   }
