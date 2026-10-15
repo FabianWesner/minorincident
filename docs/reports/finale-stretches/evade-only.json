@@ -1,0 +1,154 @@
+{
+  "profile": "evade-only",
+  "route": "auto",
+  "seed": 2,
+  "outcome": "complete",
+  "simSeconds": 370.68333333333334,
+  "deaths": 6,
+  "kills": 0,
+  "knockdowns": 0,
+  "damage": 812.0333333333332,
+  "timeline": [
+    {
+      "type": "l4.convoyArrived",
+      "t": 30.483333333333334
+    },
+    {
+      "type": "objective:ride",
+      "t": 30.483333333333334
+    },
+    {
+      "type": "l4.gun",
+      "t": 32.81666666666667
+    },
+    {
+      "type": "objective:quartermaster",
+      "t": 32.81666666666667
+    },
+    {
+      "type": "l4.firstTurn",
+      "t": 75.78333333333333
+    },
+    {
+      "type": "l4.lineBreaks",
+      "t": 253.83333333333334
+    },
+    {
+      "type": "objective:hold",
+      "t": 253.83333333333334
+    },
+    {
+      "type": "l4.heliWithdrawn",
+      "t": 260.8333333333333
+    },
+    {
+      "type": "l4.descended",
+      "t": 362.43333333333334
+    },
+    {
+      "type": "objective:hide",
+      "t": 362.43333333333334
+    },
+    {
+      "type": "l4.doorBarred",
+      "t": 363.68333333333334
+    },
+    {
+      "type": "objective:bar",
+      "t": 363.68333333333334
+    },
+    {
+      "type": "objective:wait",
+      "t": 370.68333333333334
+    }
+  ],
+  "rideS": 30.483333333333334,
+  "controlBackS": 0,
+  "gunS": 32.81666666666667,
+  "turnAfterGunS": 42.96666666666667,
+  "turnAfterArrivalS": 45.3,
+  "humansNear": 14,
+  "turnedIds": [
+    145,
+    147,
+    149,
+    151,
+    153,
+    155,
+    157,
+    159,
+    161,
+    163,
+    165,
+    167,
+    169,
+    171,
+    173,
+    175,
+    177,
+    179
+  ],
+  "turnedWithin30": 8,
+  "maxConcurrent": 120,
+  "maxCharacters": 123,
+  "infectedAtT30": 7,
+  "infectedAtBreak": 107,
+  "killsAtBreak": 653,
+  "soldiersAtTurn": 20,
+  "soldiersAtBreak": 1,
+  "soldiersAtCellar": 1,
+  "civiliansAtTurn": 85,
+  "breakCause": "beats",
+  "breakAfterS": 178.05,
+  "shots": {
+    "tank": [
+      7178,
+      7879,
+      8391,
+      9097,
+      9615,
+      10198,
+      10839,
+      11608,
+      12158,
+      12740,
+      13472,
+      13996,
+      15230
+    ],
+    "heliBursts": 225,
+    "hmgBursts": 36
+  },
+  "kills_": {
+    "player": 0,
+    "soldiers": 402,
+    "armedCivilians": 162,
+    "unarmedCivilians": 0,
+    "heli": 20,
+    "tank": 63,
+    "other": 6
+  },
+  "damageLive": {
+    "fires": 48,
+    "burning": 3,
+    "glass": 14,
+    "scorch": 18
+  },
+  "edges": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "deathsAt": [
+    "181s@-15,-11/war",
+    "200s@-14,-1/war",
+    "217s@-10,-6/war",
+    "234s@-10,-7/war",
+    "251s@-10,-7/war",
+    "333s@-82,-41/collapse"
+  ],
+  "battleAfterBarred": 5
+}
