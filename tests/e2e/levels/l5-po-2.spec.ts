@@ -1,3 +1,4 @@
+import { writeFileSync } from 'node:fs';
 import { test, expect, boot } from '../fixtures';
 test.use({ launchOptions: { args: ['--use-angle=metal', '--ignore-gpu-blocklist', '--enable-gpu', '--enable-unsafe-webgpu'] } });
 
@@ -38,6 +39,7 @@ test('PO #21b @E23 survivor-3: ordinary clicks lead from the wrong plaza bus to 
   await page.keyboard.down('e'); await page.evaluate(async () => { await window.__SS__!.step(70); await window.__SS__!.screenshotReady(); }); await page.keyboard.up('e');
   expect(await page.evaluate(() => window.__SS__!.missions.state()!.l5!.survivors.find(r => r.key === 'sam')!.status)).toBe('following');
   await page.screenshot({ path: 'test-results/l5-po-2/sam-rescued.png' });
+  writeFileSync('test-results/l5-po-2/sam-proof.json', JSON.stringify(await page.evaluate(() => ({ player: window.__SS__!.getEntity(1)!.transform, mission: window.__SS__!.missions.state()!.l5 })), null, 2));
   // Continue to the fifth survivor using the same ordinary click destinations, then E at the stairwell.
   for (const target of [{ x: -56, z: 22 }, { x: -56, z: -34 }, { x: -76.2, z: -44.4 }]) {
     for (let attempt = 0; attempt < 25; attempt++) {

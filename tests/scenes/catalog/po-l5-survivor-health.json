@@ -15,7 +15,11 @@
       "okafor",
       "mia",
       "sam"
-    ]
+    ],
+    "health": {
+      "dale": 18,
+      "rosa": 36
+    }
   },
   "actors": [
     {
@@ -39,25 +43,5 @@
     1,
     60,
     119
-  ],
-  "script": [
-    {
-      "frame": 1,
-      "actor": "dale",
-      "do": {
-        "hit": {
-          "amount": 42
-        }
-      }
-    },
-    {
-      "frame": 1,
-      "actor": "rosa",
-      "do": {
-        "hit": {
-          "amount": 24
-        }
-      }
-    }
   ]
 }

@@ -17,23 +17,27 @@ for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['hig
     const ids = await page.evaluate(async () => {
       const a = window.__SS__!; a.cheats.killAll(); a.teleport(1, { x: 10, z: -39 });
       const ids = a.missions.state()!.l5!.survivors.filter(r => r.status === 'following').map(r => r.id);
-      ids.forEach((id, i) => { a.teleport(id, { x: 9 + i * 2, z: -38 }); a.interact.hit(id, i ? 42 : 24, 'explosive'); });
+      ids.forEach((id, i) => { a.teleport(id, { x: 9 + i * 2, z: -38 }); a.npcs.health(id, i ? 18 : 36); });
       a.camera.follow(); await a.step(90); await a.screenshotReady(); return ids;
     });
     for (let i = 0; i < 20 && Math.abs(await page.evaluate(() => window.__SS__!.getState().render.camera.targetZoom as number) - zoom) > .02; i++) { await page.mouse.move(800, 450); await page.mouse.wheel(0, -120); await page.evaluate(() => window.__SS__!.step(2)); }
-    await page.evaluate(() => window.__SS__!.screenshotReady());
+    await page.evaluate(async () => { await window.__SS__!.step(60); await window.__SS__!.screenshotReady(); });
+    expect(await page.evaluate(() => window.__SS__!.getState().render.camera.zoom as number)).toBeCloseTo(zoom, 2);
     expect(await page.evaluate(() => window.__SS__!.perf().backend)).toBe(renderer);
     expect(await page.evaluate(() => window.__SS__!.perf().quality.tier)).toBe(quality);
     await expect(page.locator('.hud-pin-follower:visible')).toHaveCount(2);
     await expect(page.locator('.hud-survivor-card:visible')).toHaveCount(2);
-    expect(await page.evaluate(ids => window.__SS__!.getState().render.healthBars!.bars.filter(b => ids.includes(b.id)).length, ids)).toBe(2);
+    const fractions = await page.evaluate(ids => ids.map(id => window.__SS__!.getState().render.healthBars!.bars.find(b => b.id === id)?.fraction), ids);
+    expect(fractions).toEqual([.6, .3]);
+    await expect(page.getByTestId('survivor-dale').getByRole('meter')).toHaveAttribute('aria-valuenow', '60');
+    await expect(page.getByTestId('survivor-rosa').getByRole('meter')).toHaveAttribute('aria-valuenow', '30');
     await page.screenshot({ path: `test-results/l5-po-2/health-radar-${renderer}-${quality}-z${zoom}.png` });
     const dot = page.locator(`.hud-pin-follower[data-entity-id="${ids[0]}"]`);
     const before = await dot.getAttribute('data-world-x');
     await page.evaluate(async id => { const a = window.__SS__!; a.teleport(id, { x: -28, z: -39 }); await a.step(1); await a.screenshotReady(); }, ids[0]);
     await expect(dot).toHaveAttribute('data-clamped', 'true');
     expect(await dot.getAttribute('data-world-x')).not.toBe(before);
-    await page.evaluate(async id => { const a = window.__SS__!; a.interact.hit(id, 1000, 'explosive'); await a.step(2); await a.screenshotReady(); }, ids[0]);
+    await page.evaluate(async id => { const a = window.__SS__!; a.npcs.health(id, 0); await a.step(2); await a.screenshotReady(); }, ids[0]);
     await expect(page.locator('.hud-pin-follower:visible')).toHaveCount(1);
     await expect(page.locator('.hud-survivor-card:visible')).toHaveCount(1);
   });
