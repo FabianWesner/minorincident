@@ -889,7 +889,7 @@ export class DistrictView extends Group {
   /** Set while the level is playable: prepares a streamed batch's GPU programs and buffers
    * off-screen before replacing its temporary lower-detail batch. */
   warmHero: ((batch: InstancedGroup) => Promise<void>) | null = null;
-  /** Set with warmHero: resolves when a swap may happen (after the first seconds of play, one per frame). */
+  /** Set with warmHero: resolves when a warmed tier may swap through the load gate. */
   swapSlot: (() => Promise<void>) | null = null;
   /** Baked layout transforms are immutable after attachment. Visibility and
    * material cutaways remain live, but rendering need not revisit every child matrix. */

@@ -1,0 +1,90 @@
+{
+  "name": "l10-lod-complex-seam",
+  "note": "Production R6/R7 seam: ordinary forward/reverse running across x=3697; game camera, continuous terrain and no selected-tier LOD stand-ins.",
+  "seed": 32,
+  "ground": "district",
+  "time": "L10-night",
+  "dof": false,
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        3640,
+        -80
+      ],
+      [
+        3750,
+        35
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        3660,
+        -25
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "frames": 2100,
+  "sheet": 200,
+  "clipping": {
+    "ignoreFoliage": true
+  },
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "lodPlaceholderFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "actorTravel": {
+      "courier": [
+        125,
+        150
+      ]
+    },
+    "actorMaxX": {
+      "courier": [
+        3728,
+        3731
+      ]
+    }
+  },
+  "script": [
+    {
+      "frame": 0,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            3730,
+            -25
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 1100,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            3660,
+            -25
+          ]
+        ]
+      }
+    }
+  ]
+}

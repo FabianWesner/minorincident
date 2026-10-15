@@ -1,0 +1,90 @@
+{
+  "name": "l10-lod-console-approach",
+  "note": "Production R7 console approach and retreat across its LOD1/LOD0 boundary, keeping the console and platform in the game camera. Every drawn selected tier must be resident; the longer charge-radius walk remains in qa-l10-charge-radius.",
+  "seed": 32,
+  "ground": "district",
+  "time": "L10-night",
+  "dof": false,
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        3935,
+        -85
+      ],
+      [
+        4055,
+        35
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        3992,
+        -27
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "frames": 260,
+  "sheet": 40,
+  "clipping": {
+    "ignoreFoliage": true
+  },
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "lodPlaceholderFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "actorTravel": {
+      "courier": [
+        12,
+        15
+      ]
+    },
+    "actorMaxX": {
+      "courier": [
+        3998,
+        4000
+      ]
+    }
+  },
+  "script": [
+    {
+      "frame": 0,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            3999,
+            -27
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 120,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            3992,
+            -27
+          ]
+        ]
+      }
+    }
+  ]
+}

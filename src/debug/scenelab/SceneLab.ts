@@ -739,6 +739,11 @@ export class SceneLab {
   /** Advance N fixed ticks (sim + render), recording metrics every frame. */
   async step(frames = 1): Promise<number> {
     for (let i = 0; i < frames; i++) {
+      // Fixed stepping can consume the two-second walking horizon in one browser task.
+      // Let the previous frame's LOD requests finish before advancing again, as they
+      // can at game speed. This never repairs or discards a frame already drawn:
+      // missing prefetch still fails the zero-stand-in gate on its first visible tick.
+      await this.game.view.labProbes().districts?.ready();
       for (const s of this.spec?.script ?? []) if (s.frame === this.frame) {
         if ('actor' in s) this.command(s.actor, s.do);
         else if ('spawnActor' in s) this.spawnActor(s.spawnActor);
