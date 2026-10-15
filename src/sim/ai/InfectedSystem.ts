@@ -370,7 +370,7 @@ export class InfectedSystem {
         if (b.special === 'pounce' && b.pack && (!packReady || distance > 4)) {
           const angle = b.packIndex * Math.PI / 2; this.waypoint.x = player.transform.x + Math.cos(angle) * 3; this.waypoint.z = player.transform.z + Math.sin(angle) * 3;
           this.seek(e, this.waypoint);
-        } else this.seek(e, player.transform); this.separate(e); this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+        } else this.seek(e, player.transform); this.world.spatial.set(e.id, e.transform.x, e.transform.z);
       }
     }
     // Once the death/explosion animation settles, keep a static identity record
@@ -1390,13 +1390,5 @@ export class InfectedSystem {
     const remaining = x === target.x && z === target.z ? distance - e.combat!.radius - 0.36 : distance;
     if (remaining < 0.02) return;
     const speed = Math.min((specialSpeed ?? b.speed) * (b.roar && this.world.tick < b.roar.until ? (b.roar.speedUntil === undefined || this.world.tick < b.roar.speedUntil ? b.roar.speedScale ?? 1.25 : 1) : 1), remaining * (specialSpeed === undefined ? 2 : 60)); moveAgent(e, dx / distance * speed, dz / distance * speed, this.nav, this.world.tick, e.combat!.radius, specialSpeed !== undefined);
-  }
-  private separate(e: EntitySnapshot): void {
-    this.query.x = e.transform.x; this.query.z = e.transform.z; this.query.r = e.combat!.radius + 0.7; this.world.spatial.query(this.query, this.neighbors, false);
-    for (const id of this.neighbors) {
-      const other = this.world.entities.get(id); if (!other || other === e || !other.infected || other.health.current <= 0) continue;
-      const dx = e.transform.x - other.transform.x, dz = e.transform.z - other.transform.z, squared = dx * dx + dz * dz, radius = e.combat!.radius + other.combat!.radius;
-      if (squared < radius * radius) { const distance = Math.sqrt(squared), amount = Math.min(0.08, (radius - distance) * 0.5); const angle = (e.id * 2.399963); this.nav.move(e.transform, (distance ? dx / distance : Math.cos(angle)) * amount, (distance ? dz / distance : Math.sin(angle)) * amount, e.combat!.radius); }
-    }
   }
 }

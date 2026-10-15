@@ -24,6 +24,7 @@ function pairExempt(a: EntitySnapshot | undefined, b: EntitySnapshot): boolean {
   return !!a && a.passengerOf !== undefined && a.passengerOf === b.passengerOf;
 }
 function layers(a: Point, b: Point): boolean { return Math.abs(a.y - b.y) < 1.2; }
+function exemption(e: EntitySnapshot): number | string | undefined { return e.passengerOf ?? e.attachedTo ?? e.civilian?.schedule?.[e.civilian.scheduleStep ?? 0]?.seatProp; }
 
 /** Simulation contact/admission owner. Static queries extend NavGrid's existing compound bake;
  * dynamic hulls use the existing SpatialHash and the APC's exact circle/OBB projection. */
@@ -38,6 +39,7 @@ export class SolidRegistry {
   private committed = new WeakMap<EntitySnapshot, Transform>();
   private writers = new WeakMap<EntitySnapshot, string>();
   private proposed = new WeakMap<EntitySnapshot, Transform>();
+  private validated = new WeakMap<EntitySnapshot, { tick: number; radius: number; exemption: number | string | undefined }>();
   private readonly nearby: number[] = [];
   private readonly hullNeighbors: number[] = [];
   private readonly bodies: EntitySnapshot[] = [];
@@ -48,6 +50,7 @@ export class SolidRegistry {
   private maxHull = 0;
   private maxActor: number = survivor.radius;
   private readonly changedActors = new Set<number>();
+  private changedTick = -1;
   private navRevision = -1;
   private nav: import('../ai/NavGrid').NavGrid | undefined;
   constructor(private readonly world: SimWorld) {}
@@ -71,7 +74,8 @@ export class SolidRegistry {
     this.hullIndex.set(e.id, e.transform.x, e.transform.z);
   }
   private syncHulls(): boolean {
-    let changed = false; this.changedActors.clear();
+    let changed = false;
+    if (this.changedTick !== this.world.tick) { this.changedActors.clear(); this.changedTick = this.world.tick; }
     for (const e of this.world.entities.iterate()) if (e.vehicle || e.traffic || e.convoy || e.kind === 'setpiece') this.register(e);
     for (const [id, h] of this.hulls) {
       const e = this.world.entities.get(id), p = h.entity.transform;
@@ -176,7 +180,7 @@ export class SolidRegistry {
   /** Preserve identity/counts when no safe spot is available; AI cannot move a pending actor. */
   admit(e: EntitySnapshot, writer: string, range = 4, navigation = true): boolean {
     this.maxActor = Math.max(this.maxActor, actorRadius(e));
-    this.committed.delete(e);
+    this.committed.delete(e); this.validated.delete(e);
     this.syncHulls(); this.writers.set(e, writer);
     const to = this.find(e.transform, actorRadius(e), e.id, range, navigation);
     if (!to) {
@@ -189,13 +193,13 @@ export class SolidRegistry {
   relocate(e: EntitySnapshot, at: Point, writer: string, range = 1.5, navigation = true): boolean {
     this.syncHulls(); const to = this.find(at, actorRadius(e), e.id, range, navigation);
     if (!to) return false;
-    Object.assign(e.transform, to); this.writers.set(e, writer); this.publish(e, true); this.committed.set(e, { ...e.transform }); return true;
+    Object.assign(e.transform, to); this.writers.set(e, writer); this.publish(e, true); this.committed.set(e, { ...e.transform }); this.validated.delete(e); return true;
   }
   /** A successful explicit relocation starts a new motion transaction. */
   wrote(e: EntitySnapshot, writer: string): void { this.writers.set(e, writer); }
-  remember(e: EntitySnapshot, writer: string): void { this.committed.set(e, { ...e.transform }); this.writers.set(e, writer); }
+  remember(e: EntitySnapshot, writer: string): void { this.committed.set(e, { ...e.transform }); this.validated.delete(e); this.writers.set(e, writer); }
   restore(): void {
-    this.committed = new WeakMap();
+    this.committed = new WeakMap(); this.validated = new WeakMap();
     for (const e of this.world.entities.iterate()) if (actor(e)) this.writers.set(e, 'checkpoint.restore');
     this.commit();
   }
@@ -207,7 +211,8 @@ export class SolidRegistry {
   /** Last phase, after cleanup + .25. Projection is bounded; unresolved motion rolls back to a safe prior pose. */
   commit(): void {
     this.syncHulls(); const nav = this.world.infected?.nav;
-    const full = this.world.tick % 60 === 0 || nav !== this.nav || nav?.revision !== this.navRevision;
+    const staticChanged = nav !== this.nav || nav?.revision !== this.navRevision;
+    const full = this.world.tick % 60 === 0 || staticChanged;
     this.nav = nav; this.navRevision = nav?.revision ?? -1;
     this.bodies.length = this.moved.length = 0; this.live.clear();
     for (const e of this.world.entities.iterate()) {
@@ -243,6 +248,12 @@ export class SolidRegistry {
       Object.assign(p, proposed);
       let valid = this.clear(p, radius, e.id, true, tolerance);
       if (!valid) {
+        const proof = this.validated.get(e);
+        if (old && !this.failures && !staticChanged && !this.changedActors.has(e.id) && proof?.tick === this.world.tick - 1 && proof.radius === radius && proof.exemption === exemption(e)) {
+          // Every earlier transaction respected this reserved pose. With the same solid geometry,
+          // footprint and attachment mask, rejecting motion needs no second contact search.
+          Object.assign(p, old); this.publish(e); continue;
+        }
         for (let pass = 0; pass < 4; pass++) {
           let moved = false;
           this.solids(p, radius, e, b => {
@@ -283,6 +294,9 @@ export class SolidRegistry {
     for (const e of this.bodies) if (actor(e)) {
       const old = this.committed.get(e);
       if (old) Object.assign(old, e.transform); else this.committed.set(e, { ...e.transform });
+      const proof = this.validated.get(e);
+      if (proof) { proof.tick = this.world.tick; proof.radius = actorRadius(e); proof.exemption = exemption(e); }
+      else this.validated.set(e, { tick: this.world.tick, radius: actorRadius(e), exemption: exemption(e) });
     }
     this.committing = false;
   }
@@ -306,5 +320,5 @@ export class SolidRegistry {
     }
   }
   snapshot() { return { failures: this.failures, pending: this.world.entities.values().filter(e => e.pendingAdmission).length, admitted: this.admitted, deferred: this.deferred, offenders: this.offenders.map(o => ({ ...o })) }; }
-  reset(): void { this.bodies.length = this.moved.length = this.nearby.length = this.hullNeighbors.length = 0; this.changedActors.clear(); this.live.clear(); this.committing = false; this.blockerOwners.clear(); this.hulls.clear(); this.hullIndex.reset(); this.committed = new WeakMap(); this.proposed = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = -1; this.nav = undefined; }
+  reset(): void { this.bodies.length = this.moved.length = this.nearby.length = this.hullNeighbors.length = 0; this.changedActors.clear(); this.changedTick = -1; this.live.clear(); this.committing = false; this.blockerOwners.clear(); this.hulls.clear(); this.hullIndex.reset(); this.committed = new WeakMap(); this.proposed = new WeakMap(); this.validated = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = -1; this.nav = undefined; }
 }
