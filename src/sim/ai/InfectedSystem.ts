@@ -747,18 +747,18 @@ export class InfectedSystem {
     if (!garage || this.forecourtPursuers.has(e.id) || Math.hypot(e.transform.x - garage.x, e.transform.z - garage.z) >= l1v2.forecourt.divertRadiusM) return false;
     // Keep systemic street fights. Only courier pursuit and approaches into the small apron are rerouted.
     if (brain.targetId > 1 && (brain.mode === 'chase' || brain.mode === 'bite') && Math.hypot(e.transform.x - garage.x, e.transform.z - garage.z) > l1v2.forecourt.playerRadiusM) return false;
-    // Hold the excess at the edge of the forecourt on their own side: sending them to the street groups put the whole pack on
-    // the courier's route to the fire station (complete bot: 16 deaths, 464 s). They resume normal pursuit once she leaves.
-    const dx = e.transform.x - garage.x, dz = e.transform.z - garage.z, d = Math.hypot(dx, dz) || 1, hold = Math.max(d, l1v2.forecourt.holdM);
-    const cell = this.nav.nearestCell(garage.x + dx / d * hold, garage.z + dz / d * hold, e.combat!.radius);
-    if (cell < 0) return false;
-    brain.targetId = 0; brain.cueUntil = 0; brain.biteTargetId = 0;
-    brain.mode = 'attracted'; brain.goalX = this.nav.x(cell); brain.goalZ = this.nav.z(cell); brain.hasGoal = true;
-    brain.search.until = this.world.tick + 60; brain.looking = false; brain.pauseUntil = 0;
-    b.state = 'attracted'; b.targetId = 0; b.grabUntil = 0; e.combat!.attacking = false;
-    this.steerL1(e, brain, { x: brain.goalX, z: brain.goalZ }, brain.runSpeed);
-    this.world.spatial.set(e.id, e.transform.x, e.transform.z);
-    return true;
+    // The excess lose her while she is at the bat (the shared respawn does the same): they stay in their street behaviour instead of
+    // gathering on the apron, and notice her normally once she walks out (a hold ring or a diversion to the street groups put the
+    // whole pack on her route to the fire station: complete bot 16 deaths, 464 s).
+    const tick = this.world.tick;
+    brain.ignoreId = 1; brain.ignoreUntil = tick + 90;
+    if (brain.mode !== 'wander') {
+      brain.targetId = 0; brain.cueUntil = 0; brain.biteTargetId = 0; brain.hasGoal = false;
+      brain.mode = 'wander'; brain.looking = true; brain.pauseUntil = tick + 90;
+      if (!brain.leashM) { brain.homeX = e.transform.x; brain.homeZ = e.transform.z; }
+      b.state = 'wander'; b.targetId = 0; b.grabUntil = 0; e.combat!.attacking = false;
+    }
+    return false;
   }
   /** Re-evaluates the closest visible human (0.25 s cadence); losing every human while chasing starts a search. */
   private perceive(e: EntitySnapshot, b: InfectedState, brain: L1Brain): void {
