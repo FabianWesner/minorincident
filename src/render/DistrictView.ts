@@ -48,7 +48,7 @@ import { AmbientLife } from './AmbientLife';
 import { Foliage } from './Foliage';
 import { GroundField } from './GroundField';
 import { pickLod, propLod, initialDistrictLods, lodPolicy, type Lod } from './lodPolicy';
-import { occluderMinHeight, seeThrough } from './SeeThrough';
+import { occluderMinHeight, projectReveal, seeThrough } from './SeeThrough';
 import { stripStrayDecorations } from './decorationFilter';
 import type { PaletteToken } from '../data/palette';
 import { layoutTerrainChunks, terrainPrefetchSeconds } from '../sim/world/TerrainChunks';
@@ -492,18 +492,7 @@ export class DistrictView extends Group {
     if (!player || !this.foliage.reveal || this.seeThroughOff) { this.updateCutPlacements(); return; }
     const feet = player.y - .7;
     const box = subject ?? this.subjectBox.set(this.holeTarget.set(player.x - .55, feet, player.z - .55), this.holeCorner.set(player.x + .55, feet + 1.9, player.z + .55));
-    seeThrough.floor.value = box.min.y;
-    let left = Infinity, right = -Infinity, top = Infinity, bottom = -Infinity, depth = Infinity;
-    for (const x of [box.min.x, box.max.x]) for (const y of [box.min.y, box.max.y]) for (const z of [box.min.z, box.max.z]) {
-      this.holeCorner.set(x, y, z).applyMatrix4(view.camera.matrixWorldInverse); depth = Math.min(depth, this.holeCorner.z);
-      this.holeCorner.set(x, y, z).project(view.camera);
-      const u = this.holeCorner.x * .5 + .5, v = .5 - this.holeCorner.y * .5;
-      left = Math.min(left, u); right = Math.max(right, u); top = Math.min(top, v); bottom = Math.max(bottom, v);
-    }
-    seeThrough.center.value.set((left + right) / 2, (top + bottom) / 2);
-    // The fully clear inner disc encloses the entire projected subject; a narrow dither rim softens its edge.
-    seeThrough.solidRadius.value = Math.hypot((right - left) * view.camera.aspect, bottom - top) / 2 / .85;
-    seeThrough.depth.value = depth - .05;
+    projectReveal(view.camera, box);
     if (this.seeThroughReference) { this.updateCutPlacements(true); seeThrough.solidRadius.value = 3; seeThrough.strength.value = 1; return; }
     // Only the placements that actually sit between the lens and some part of the subject (courier or whole player vehicle) are eligible for the cut.
     this.occludedSubject(view, box);

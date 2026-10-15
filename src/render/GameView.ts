@@ -38,7 +38,7 @@ import { Lighting } from './Lighting';
 import { Materials } from './Materials';
 import { Lookdev } from './Lookdev';
 import { Occlusion } from './Occlusion';
-import { seeThrough } from './SeeThrough';
+import { projectReveal, seeThrough } from './SeeThrough';
 import { PostFx } from './PostFx';
 import { photoSpots } from '../../tests/fixtures/scenarios/lookdev';
 import type { TimeOfDay } from '../data/timeOfDay';

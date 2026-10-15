@@ -1,4 +1,4 @@
-import { Vector2, type Node } from 'three/webgpu';
+import { Vector2, Vector3, type Box3, type Camera, type Node } from 'three/webgpu';
 import { dot, fract, mix, positionView, positionWorld, screenCoordinate, screenSize, screenUV, smoothstep, uniform, renderGroup, vec2 } from 'three/tsl';
 
 /** One player see-through hole shared by every occluder (leaf crowns, buildings, roofs, poles, props).
@@ -49,3 +49,20 @@ export const seeThroughKeepBoss = () => {
   const noise = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
   return hole.greaterThan(noise);
 };
+
+const revealCorner = new Vector3();
+/** Project the subject (courier or whole player vehicle) into the shared hole uniforms: the fully clear inner disc encloses every corner, depth is its nearest point.
+ * Also used by scenes without a DistrictView, so Scene Lab asset-only scenes reveal the courier the same way. */
+export function projectReveal(camera: Camera & { aspect: number }, box: Box3): void {
+  seeThrough.floor.value = box.min.y;
+  let left = Infinity, right = -Infinity, top = Infinity, bottom = -Infinity, depth = Infinity;
+  for (const x of [box.min.x, box.max.x]) for (const y of [box.min.y, box.max.y]) for (const z of [box.min.z, box.max.z]) {
+    revealCorner.set(x, y, z).applyMatrix4(camera.matrixWorldInverse); depth = Math.min(depth, revealCorner.z);
+    revealCorner.set(x, y, z).project(camera);
+    const u = revealCorner.x * .5 + .5, v = .5 - revealCorner.y * .5;
+    left = Math.min(left, u); right = Math.max(right, u); top = Math.min(top, v); bottom = Math.max(bottom, v);
+  }
+  seeThrough.center.value.set((left + right) / 2, (top + bottom) / 2);
+  seeThrough.solidRadius.value = Math.hypot((right - left) * camera.aspect, bottom - top) / 2 / .85;
+  seeThrough.depth.value = depth - .05;
+}
