@@ -1,0 +1,142 @@
+{
+  "name": "l4-refuge-shelter",
+  "seed": 1,
+  "time": "L4",
+  "ground": "district",
+  "layout": {
+    "level": "L4",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        -90,
+        -85
+      ],
+      [
+        90,
+        70
+      ]
+    ],
+    "anchors": [
+      "refuge-door-13"
+    ]
+  },
+  "actors": [
+    {
+      "id": "civilian-0",
+      "kind": "pedestrian",
+      "at": [
+        -32,
+        -1.5
+      ],
+      "state": {
+        "flee": [
+          -18,
+          -2.7
+        ]
+      }
+    },
+    {
+      "id": "civilian-1",
+      "kind": "pedestrian",
+      "at": [
+        -31,
+        -2.0
+      ],
+      "state": {
+        "flee": [
+          -18,
+          -2.7
+        ]
+      }
+    },
+    {
+      "id": "civilian-2",
+      "kind": "pedestrian",
+      "at": [
+        -32,
+        -2.5
+      ],
+      "state": {
+        "flee": [
+          -18,
+          -2.7
+        ]
+      }
+    },
+    {
+      "id": "civilian-3",
+      "kind": "pedestrian",
+      "at": [
+        -31,
+        -3.0
+      ],
+      "state": {
+        "flee": [
+          -18,
+          -2.7
+        ]
+      }
+    },
+    {
+      "id": "civilian-4",
+      "kind": "pedestrian",
+      "at": [
+        -32,
+        -3.5
+      ],
+      "state": {
+        "flee": [
+          -18,
+          -2.7
+        ]
+      }
+    },
+    {
+      "id": "civilian-5",
+      "kind": "pedestrian",
+      "at": [
+        -31,
+        -4.0
+      ],
+      "state": {
+        "flee": [
+          -18,
+          -2.7
+        ]
+      }
+    },
+    {
+      "id": "soldier",
+      "kind": "pedestrian",
+      "look": {
+        "model": "npc.national-guard",
+        "role": "soldier"
+      },
+      "at": [
+        -31,
+        -5.2
+      ],
+      "state": {
+        "flee": [
+          -18,
+          -2.7
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -32,
+      0,
+      -2.7
+    ]
+  },
+  "frames": 240,
+  "sheet": 60,
+  "note": "PO15 actual refuge-door-13. Six civilians and a soldier run to separate exterior gathering spots, remain visible and cower outside the closed arched door.",
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  }
+}
