@@ -17,7 +17,8 @@ test('T-E23-14a @E23 @E23-AC14 PO #19c zero music before survivor 1, current rec
     await page.evaluate(async () => {
         const a = window.__SS__!;
         await a.loadLevel('L5', { seed: 1, progression: 'L5-default' }); a.pause(); a.missions.begin(); await a.audio.unlock();
-        a.cheats.completeObjective('emerge'); a.survivor.damage(85); await a.step(120 * 60);
+        a.cheats.completeObjective('emerge');
+        const health = a.getState().player!.health; a.survivor.damage(health.current - health.max * .15); await a.step(120 * 60);
     });
     const before = await page.evaluate(() => window.__SS__!.audio.snapshot());
     expect(before.music.streamed.decks.filter(d => !d.paused)).toEqual([]);
