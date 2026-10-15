@@ -189,7 +189,16 @@ export function walkResidents(world: SimWorld, house: HouseEmergence, tick: numb
     // Released at the end of the walk only, never inside the house (the AI would snap the body onto the nearest nav cell).
     const outside = (p.x - house.x) * house.nx + (p.z - house.z) * house.nz > 0;
     if (w.leg >= house.route.length || (outside && tick >= w.until)) {
-      if (e.pendingAdmission && !world.solids.admit(e, 'house.exit', 0, false)) continue;
+      if (e.pendingAdmission) {
+        const radius = actorRadius(e);
+        // A queued resident has finished walking. Body congestion at this one
+        // endpoint must not hide the whole queue indefinitely. Use the normal
+        // bounded admission search once geometry clears: the blocking body may
+        // be larger than this resident. Admission stays connected
+        // to this side of the doorway and retains every encounter.
+        const range = world.solids.clear(p, radius, e.id, false) ? 4 : 0;
+        if (!world.solids.admit(e, 'house.exit', range, false)) continue;
+      }
       walking.splice(i, 1); e.emerging = undefined; if (e.combat) e.combat.staggerUntil = tick; done.push(w.id);
     }
   }

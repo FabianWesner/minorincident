@@ -316,7 +316,9 @@ export class NavGrid {
   }
   /** Sweeps movement in subcell increments; axis fallback slides around collider corners. */
   move(position: { x: number; z: number }, dx: number, dz: number, radius: number, capsule = false): void {
-    const count = Math.max(1, Math.ceil(Math.hypot(dx, dz) / 0.2)); dx /= count; dz /= count;
+    // This square is strictly inside the 0.2 m step circle. Its common small
+    // moves have exactly one substep, without a hypotenuse calculation.
+    const count = Math.abs(dx) <= .125 && Math.abs(dz) <= .125 ? 1 : Math.max(1, Math.ceil(Math.hypot(dx, dz) / 0.2)); dx /= count; dz /= count;
     // Rapier contact or crowd pushes can leave a body inside the grid's conservative margin.
     // Recover enough clearance to slide out instead of rejecting every step along the face.
     // Checked only once a step is refused, so free movement costs nothing extra.

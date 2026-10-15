@@ -20,15 +20,32 @@ test.each([2, 4])('%d m cells retain exact circle queries across negative cell e
 
 // The bucket-order test for phone-perf's filtered contact buckets was dropped with that SpatialHash rewrite (main's contact cells only bound cells;
 // callers filter radii). The simulation-equivalence test below covers both.
-test('contact cache preserves full horde simulation state against unfiltered spatial queries', async () => {
+test.each([false, true])('contact cache preserves horde state against unfiltered queries (mixed zoo: %s)', async mixed => {
   const { SimWorld } = await import('../../../src/sim/world/SimWorld');
   const actual = new SimWorld(), reference = new SimWorld();
   try {
     await actual.init(); await reference.init();
-    const query = reference.spatial.query;
-    reference.spatial.query = function (within, result, sorted, visit) { return query.call(this, within, result, sorted, visit); };
-    actual.loadScenario('perf-horde-100', 2); reference.loadScenario('perf-horde-100', 2);
+    const contactIndex = (reference.solids as unknown as { bodyIndex: SpatialHash }).bodyIndex;
+    for (const index of [reference.spatial, contactIndex]) {
+      const query = index.query;
+      index.query = function (within, result, sorted, visit) { return query.call(this, within, result, sorted, visit); };
+    }
+    const specials: { world: typeof actual; ids: number[] }[] = [];
+    for (const world of [actual, reference]) {
+      world.loadScenario(mixed ? 'perf-horde-200' : 'perf-horde-100', 2);
+      if (mixed) {
+        const ids = world.infected!.active.slice(0, 20).map((old, i) => {
+          const at = { x: old.transform.x, z: old.transform.z }; world.infected!.release(old);
+          return world.infected!.spawn(i % 2 ? 'infected.gorilla' : 'infected.elephant', at, { state: 'chase' });
+        });
+        specials.push({ world, ids });
+      }
+    }
     for (let tick = 1; tick <= 300; tick++) {
+      if (tick % 90 === 1) for (const { world, ids } of specials) for (const [i, id] of ids.entries()) {
+        const e = world.entities.get(id)!, p = world.entities.get(1)!;
+        world.infected!.startSpecial(id, i % 2 ? 'gorilla.grab-throw' : 'elephant.charge', { id: 1, x: p.transform.x, z: p.transform.z }, { x: e.transform.x, z: e.transform.z, radius: 1, dx: 1, dz: 0 });
+      }
       actual.update(); reference.update();
       if (tick % 60 === 0) expect(actual.getState()).toEqual(reference.getState());
     }

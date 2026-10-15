@@ -10,6 +10,8 @@ import type { AssetDef } from '../../assets/types';
  * the same convention as layout placements (a yaw-0 prop faces its authored forward, an actor at yaw 0 faces +X).
  */
 export interface SceneSpec {
+  /** Production L2 market controller at the opening of both rescue doors. */
+  l2Release?: boolean;
   /** Native campaign menu over the game camera; run with --query ui=1. */
   menuScreen?: 'title' | 'levels' | 'credits';
   /** Production L4 convoy, population, braking and unload controller on an uncropped Fairhaven layout. */

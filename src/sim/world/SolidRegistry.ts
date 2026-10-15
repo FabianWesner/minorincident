@@ -8,6 +8,7 @@ import type { EntitySnapshot, Transform } from './types';
 import { boxContact, type SolidBox, type Contact } from './SolidGeometry';
 
 type Point = { x: number; z: number; y: number };
+interface BodyProof { tick: number; radius: number; exemption: number | string | undefined; blocked: number; blocker: number; crowded: boolean; crowdUntil: number }
 interface Hull { entity: EntitySnapshot; boxes: SolidBox[]; pose: Transform; dirty: boolean; quiet: number; quietTick: number; nav?: SolidBox; navYaw?: number; navGrid?: import('../ai/NavGrid').NavGrid }
 export interface CollisionOffender { tick: number; actor: number; other: number | string; depth: number; inside: boolean; writer: string }
 const tolerance = .02, skin = .001;
@@ -20,7 +21,9 @@ function actor(e: EntitySnapshot): boolean {
 }
 /** Passengers and clingers have an explicit owner. Cosmetics (dead bodies, debris) have no actor mask. */
 function pairExempt(a: EntitySnapshot | undefined, b: EntitySnapshot): boolean {
-  return !!a && (a.passengerOf !== undefined && a.passengerOf === b.passengerOf || a.attachedTo === b.id || b.attachedTo === a.id || a.attachedTo !== undefined && a.attachedTo === b.attachedTo);
+  if (!a) return false;
+  const passenger = a.passengerOf, owner = a.attachedTo, other = b.attachedTo;
+  return passenger !== undefined && passenger === b.passengerOf || owner !== undefined && (owner === b.id || owner === other) || other !== undefined && other === a.id;
 }
 function layers(a: Point, b: Point): boolean { return Math.abs(a.y - b.y) < 1.2; }
 function exemption(e: EntitySnapshot): number | string | undefined { return e.passengerOf ?? e.attachedTo ?? e.civilian?.schedule?.[e.civilian.scheduleStep ?? 0]?.seatProp; }
@@ -44,21 +47,26 @@ export class SolidRegistry {
   private committed = new WeakMap<EntitySnapshot, Transform>();
   private writers = new WeakMap<EntitySnapshot, string>();
   private proposed = new WeakMap<EntitySnapshot, Transform>();
-  private validated = new WeakMap<EntitySnapshot, { tick: number; radius: number; exemption: number | string | undefined; blocked: number; blocker: number; crowded: boolean; crowdUntil: number }>();
+  private validated = new WeakMap<EntitySnapshot, BodyProof>();
   private readonly nearby: number[] = [];
   private readonly hullNeighbors: number[] = [];
   private readonly bodies: EntitySnapshot[] = [];
-  private readonly bodyIds: number[] = [];
+  private bodyIds: number[] = [];
+  private previousBodyIds: number[] = [];
+  private readonly committedPoses: (Transform | undefined)[] = [];
+  private readonly proposalPoints: (Transform | undefined)[] = [];
+  private readonly contactProofs: (BodyProof | undefined)[] = [];
+  private readonly bodyRadii: number[] = [];
   private readonly moved: EntitySnapshot[] = [];
-  private readonly rejected = new Set<number>();
-  private readonly bodyRejections = new Map<number, number>();
-  private readonly movedIds = new Set<number>();
+  private readonly rejected: boolean[] = [];
+  private readonly bodyRejections: number[] = [];
+  private readonly movedIds: boolean[] = [];
   private rollbackX = 0;
   private rollbackZ = 0;
   private rollbackRadius = 0;
   private readonly rollbackCells: ContactCells = { epoch: 0, radius: id => {
     const e = this.live[id];
-    return e && this.movedIds.has(id) && !this.rejected.has(id) ? actorRadius(e) : 0;
+    return e && this.movedIds[id] && !this.rejected[id] ? this.bodyRadii[id] : 0;
   }, intersects: (maximum, x, z) => {
     if (!maximum) return false;
     const dx = Math.max(x - this.rollbackX, 0, this.rollbackX - x - 2), dz = Math.max(z - this.rollbackZ, 0, this.rollbackZ - z - 2);
@@ -78,19 +86,28 @@ export class SolidRegistry {
   private readonly visitClear = (id: number): boolean => {
     const other = this.committing ? this.live[id] : this.world.entities.get(id);
     if (id === this.clearId || !other || !this.committing && !actor(other) || pairExempt(this.clearEntity, other) || !layers(this.clearPoint, other.transform)) return true;
-    const dx = this.clearPoint.x - other.transform.x, dz = this.clearPoint.z - other.transform.z, reach = this.clearRadius + actorRadius(other) - this.clearLimit;
+    const dx = this.clearPoint.x - other.transform.x, dz = this.clearPoint.z - other.transform.z, reach = this.clearRadius + (this.committing ? this.bodyRadii[id] : actorRadius(other)) - this.clearLimit;
     if (dx * dx + dz * dz >= reach * reach) return true;
     this.bodyConflict = true; this.bodyConflictId = id; return false;
   };
+  private readonly occupancyCells: ContactCells = { epoch: 0, radius: id => {
+    return this.live[id] ? this.bodyRadii[id] : 0;
+  }, intersects: (maximum, x, z) => {
+    if (!maximum) return false;
+    const p = this.clearPoint, dx = Math.max(x - p.x, 0, p.x - x - 2), dz = Math.max(z - p.z, 0, p.z - z - 2);
+    return dx * dx + dz * dz <= (this.clearRadius + maximum - this.clearLimit) ** 2;
+  } };
   private readonly contact: Contact = { depth: 0, nx: 0, nz: 0, inside: false };
   private maxHull = 0;
   private maxActor: number = survivor.radius;
-  private hasSolids(): boolean { return this.hulls.size > 0 || this.world.infected?.nav.hasSolids === true; }
+  private hasSolids(): boolean { return this.hulls.size > 0 || this.world.infected?.infectedNav.hasSolids === true; }
   private readonly changedActors = new Set<number>();
   private readonly changedHulls = new Set<number>();
   private changedTick = -1;
   private navRevision = -1;
   private nav: import('../ai/NavGrid').NavGrid | undefined;
+  private infectedNavRevision = -1;
+  private infectedNav: import('../ai/NavGrid').NavGrid | undefined;
   constructor(private readonly world: SimWorld) {}
 
   /** Vehicles, ambient traffic, convoy and setpieces all register by stable entity ID, including on restore. */
@@ -161,7 +178,8 @@ export class SolidRegistry {
     const owner = e?.passengerOf ?? e?.attachedTo;
     const activity = e?.civilian?.schedule?.[e.civilian.scheduleStep ?? 0];
     const seatOwner = activity?.seatProp ? this.world.props?.items.find(p => p.id === activity.seatProp)?.entityId : undefined;
-    this.world.infected?.nav.visitSolids(at.x, at.z, radius, (box, id) => {
+    const nav = e?.infected ? this.world.infected?.infectedNav : this.world.infected?.nav;
+    nav?.visitSolids(at.x, at.z, radius, (box, id) => {
       // Navigation uses an AABB for the route bake; exact contact uses its canonical OBB below.
       const hullOwner = this.blockerOwners.get(id);
       if (hullOwner !== undefined && this.hulls.has(hullOwner)) return;
@@ -192,21 +210,33 @@ export class SolidRegistry {
     if (!clear || !bodies) return clear;
     this.query.x = at.x; this.query.z = at.z; this.query.r = radius + this.maxActor;
     this.clearPoint = at; this.clearEntity = e; this.clearId = ignoreId; this.clearRadius = radius; this.clearLimit = limit;
-    (this.committing ? this.bodyIndex : this.world.spatial).query(this.query, this.nearby, false, this.visitClear);
+    // A few large zoo bodies widen the search for every ordinary actor. Use
+    // exact conservative cell bounds only where that radius disparity pays off.
+    (this.committing ? this.bodyIndex : this.world.spatial).query(this.query, this.nearby, false, this.visitClear,
+      this.committing && this.maxActor > radius * 2 ? this.occupancyCells : undefined);
     return !this.bodyConflict;
   }
-  /** Swept footprint against the registry's compound boxes and living bodies.
-   * A charge may push a contacted body; an obstructed push stops the mover. */
-  sweep(e: EntitySnapshot, direction: { x: number; z: number }, distance: number, radius = actorRadius(e), push: boolean | 'side' = false, bodies = true, contact?: (other: EntitySnapshot) => void): number {
-    this.syncHulls();
-    const p = e.transform, q = this.world.combat!.query;
+  /** Shared static sweep for special movement and connected admission searches. */
+  private sweepSolids(p: Point, radius: number, e: EntitySnapshot | undefined, direction: { x: number; z: number }, distance: number): number {
+    const q = this.world.combat!.query;
     this.solids(p, radius + distance, e, box => {
+      const contact = boxContact(box, p.x, p.z, radius, this.contact);
+      // A clear/touching circle may leave or slide along this convex wall.
+      // The expanded-box ray otherwise reports an immediate zero-length hit.
+      if (!contact.inside && contact.depth <= skin && contact.nx * direction.x + contact.nz * direction.z >= 0) return;
       const c = Math.cos(box.yaw ?? 0), s = Math.sin(box.yaw ?? 0);
       const dx = p.x - box.x, dz = p.z - box.z;
       distance = Math.min(distance, q.wallDistance({ x: 0, z: 0, y: box.y, halfX: box.halfX, halfZ: box.halfZ, halfY: box.halfY },
         { x: dx * c - dz * s, z: dx * s + dz * c, y: p.y },
         { x: direction.x * c - direction.z * s, z: direction.x * s + direction.z * c }, distance, radius));
     });
+    return distance;
+  }
+  /** A charge may push a contacted body; an obstructed push stops the mover. */
+  sweep(e: EntitySnapshot, direction: { x: number; z: number }, distance: number, radius = actorRadius(e), push: boolean | 'side' = false, bodies = true, contact?: (other: EntitySnapshot) => void): number {
+    this.syncHulls();
+    const p = e.transform;
+    distance = this.sweepSolids(p, radius, e, direction, distance);
     if (!bodies) return distance;
     const neighbors: number[] = [];
     this.world.spatial.query({ x: p.x, z: p.z, r: distance + radius + this.maxActor + (contact ? tolerance : 0) }, neighbors, false);
@@ -241,12 +271,26 @@ export class SolidRegistry {
   }
   /** Bounded nearest-first search. null means retain the request; never accept the blocked anchor. */
   find(at: Point, radius: number, ignoreId?: number, range = 4, navigation = true): Point | null {
-    const nav = this.world.infected?.nav;
-    const fits = (p: Point) => (!navigation || !nav || nav.contains(p.x, p.z, radius)) && this.clear(p, radius, ignoreId);
+    const nav = this.world.infected?.nav, e = ignoreId === undefined ? undefined : this.world.entities.get(ignoreId);
+    let connected = false;
+    const direction = { x: 0, z: 0 };
+    const fits = (p: Point) => {
+      if (navigation && nav && !nav.contains(p.x, p.z, radius) || !this.clear(p, radius, ignoreId)) return false;
+      if (!connected || p === at) return true;
+      const dx = p.x - at.x, dz = p.z - at.z, distance = Math.hypot(dx, dz);
+      if (!distance) return true;
+      direction.x = dx / distance; direction.z = dz / distance;
+      return this.sweepSolids(at, radius, e, direction, distance) >= distance - 1e-6;
+    };
     if (fits(at)) return { ...at };
+    if (range <= 0) return null;
+    // Congestion may displace a spawn within its walkable region, but cannot
+    // teleport it through a wall. An anchor actually inside a solid still needs
+    // nearest-outside admission (for example, an Alpha requested in a tank).
+    connected = this.clear(at, radius, ignoreId, false, 0);
     // Use the exact APC projection before quantized search rings, retaining near-contact ram/door distances.
     if (range > 0) {
-      const projected = { ...at }, e = ignoreId === undefined ? undefined : this.world.entities.get(ignoreId);
+      const projected = { ...at };
       for (let pass = 0; pass < 8; pass++) {
         let changed = false;
         this.solids(projected, radius, e, box => {
@@ -318,14 +362,14 @@ export class SolidRegistry {
   }
   /** Last phase, after cleanup + .25. Projection is bounded; unresolved motion rolls back to a safe prior pose. */
   commit(): void {
-    this.syncHulls(); const nav = this.world.infected?.nav;
-    const staticChanged = nav !== this.nav || nav?.revision !== this.navRevision;
+    this.syncHulls(); const nav = this.world.infected?.nav, infectedNav = this.world.infected?.infectedNav;
+    const staticChanged = nav !== this.nav || nav?.revision !== this.navRevision || infectedNav !== this.infectedNav || infectedNav?.revision !== this.infectedNavRevision;
     const full = this.world.tick % 60 === 0 || staticChanged;
     this.nav = nav; this.navRevision = nav?.revision ?? -1;
-    for (const id of this.bodyIds) {
-      this.live[id] = undefined;
-      const e = this.world.entities.get(id);
-      if (!e || !actor(e)) this.bodyIndex.delete(id);
+    this.infectedNav = infectedNav; this.infectedNavRevision = infectedNav?.revision ?? -1;
+    const previous = this.bodyIds; this.bodyIds = this.previousBodyIds; this.previousBodyIds = previous;
+    for (const id of previous) {
+      this.live[id] = undefined; this.committedPoses[id] = this.proposalPoints[id] = undefined; this.contactProofs[id] = undefined; this.bodyRadii[id] = 0; this.rejected[id] = this.movedIds[id] = false; this.bodyRejections[id] = 0;
     }
     this.bodyIds.length = 0;
     this.bodies.length = this.moved.length = 0;
@@ -345,11 +389,15 @@ export class SolidRegistry {
       }
       if (!actor(e)) continue;
       const radius = actorRadius(e);
+      // Shapes and eligibility are stable during this final transaction. Reuse
+      // their snapshot in the correction loops; full audits still read actors.
+      this.bodyRadii[e.id] = radius; this.committedPoses[e.id] = this.committed.get(e); this.contactProofs[e.id] = this.validated.get(e);
       this.maxActor = Math.max(this.maxActor, radius); this.bodies.push(e); this.live[e.id] = e;
       this.bodyIds.push(e.id);
       this.bodyIndex.set(e.id, e.transform.x, e.transform.z);
       this.world.spatial.set(e.id, e.transform.x, e.transform.z);
     }
+    for (const id of previous) if (!this.live[id]) this.bodyIndex.delete(id);
     // Scripted writers and revived actors may not have updated the shared index. Changed
     // hulls inspect the complete current actor index before selecting the tick's guard set.
     for (const id of this.changedHulls) {
@@ -358,35 +406,36 @@ export class SolidRegistry {
       for (const actorId of this.nearby) this.changedActors.add(actorId);
     }
     for (const e of this.bodies) {
-      const radius = actorRadius(e), old = this.committed.get(e), p = e.transform;
+      const radius = this.bodyRadii[e.id], old = this.committedPoses[e.id], p = e.transform;
       if (full || this.changedActors.has(e.id) || !old || old.x !== p.x || old.z !== p.z || old.y !== p.y) this.moved.push(e);
       else {
-        const proof = this.validated.get(e);
+        const proof = this.contactProofs[e.id];
         if (!proof || proof.tick !== this.world.tick - 1 || proof.radius !== radius || proof.exemption !== exemption(e)) this.moved.push(e);
       }
     }
-    this.committing = true;
+    this.committing = true; this.occupancyCells.epoch++;
     // Accept a mutually clear set of simultaneous proposals atomically. A coherent formation
     // must be able to enter positions its neighbours vacate during this same tick.
-    this.rejected.clear(); this.bodyRejections.clear(); this.unresolved.length = 0;
+    this.unresolved.length = 0;
     const reject = (e: EntitySnapshot) => {
-      if (this.rejected.has(e.id)) return;
-      this.rejected.add(e.id); this.unresolved.push(e);
+      if (this.rejected[e.id]) return;
+      this.rejected[e.id] = true; this.unresolved.push(e);
       let proposed = this.proposed.get(e);
       if (proposed) Object.assign(proposed, e.transform);
       else { proposed = { ...e.transform }; this.proposed.set(e, proposed); }
+      this.proposalPoints[e.id] = proposed;
     };
     for (const e of this.moved) {
-      const proof = this.validated.get(e), blocker = this.live[proof?.blocker ?? 0], p = e.transform, radius = actorRadius(e);
+      const proof = this.contactProofs[e.id], blocker = this.live[proof?.blocker ?? 0], p = e.transform, radius = this.bodyRadii[e.id];
       // A previous contact is only a witness: retest its actual proposed pose,
       // current footprint, layer and attachment mask before rejecting movement.
       // If it has cleared, the normal registry query still checks every solid.
       if (blocker && !pairExempt(e, blocker) && layers(p, blocker.transform) &&
-          (p.x - blocker.transform.x) ** 2 + (p.z - blocker.transform.z) ** 2 < (radius + actorRadius(blocker) - tolerance) ** 2) {
-        this.bodyRejections.set(e.id, blocker.id); reject(e);
+          (p.x - blocker.transform.x) ** 2 + (p.z - blocker.transform.z) ** 2 < (radius + this.bodyRadii[blocker.id] - tolerance) ** 2) {
+        this.bodyRejections[e.id] = blocker.id; reject(e);
       } else if (!this.clear(p, radius, e.id, true, tolerance)) {
         if (this.bodyConflict) {
-          this.bodyRejections.set(e.id, this.bodyConflictId);
+          this.bodyRejections[e.id] = this.bodyConflictId;
           if (proof) proof.blocker = this.bodyConflictId;
         }
         reject(e);
@@ -396,16 +445,16 @@ export class SolidRegistry {
       for (const e of this.moved) if (e.id === 1) this.publish(e);
       this.finish(full); return;
     }
-    this.movedIds.clear(); for (const e of this.moved) this.movedIds.add(e.id);
+    for (const e of this.moved) this.movedIds[e.id] = true;
     this.rollbackCells.epoch++;
     // Reserve rollback positions only for the conflicting component. Propagate a
     // reservation to proposals it intersects; unrelated clear formations keep moving.
     for (let i = 0; i < this.unresolved.length; i++) {
       const e = this.unresolved[i];
-      const old = this.committed.get(e);
+      const old = this.committedPoses[e.id];
       if (!old) { this.world.spatial.delete(e.id); this.bodyIndex.delete(e.id); continue; }
       Object.assign(e.transform, old); this.publish(e);
-      const radius = actorRadius(e), proof = this.validated.get(e);
+      const radius = this.bodyRadii[e.id], proof = this.contactProofs[e.id];
       // An unchanged body cannot intersect this same valid pose from last tick.
       // Reuse the hash's cell bounds to visit only unreserved moving proposals.
       const stable = proof?.tick === this.world.tick - 1 && proof.radius === radius && proof.exemption === exemption(e);
@@ -413,28 +462,36 @@ export class SolidRegistry {
       this.bodyIndex.query({ x: old.x, z: old.z, r: radius + this.maxActor }, this.nearby, false, undefined, stable ? this.rollbackCells : undefined);
       for (const id of this.nearby) {
         const other = this.live[id];
-        if (!other || id === e.id || this.rejected.has(id) || stable && !this.movedIds.has(id) || pairExempt(e, other) || !layers(old, other.transform)) continue;
+        if (!other || id === e.id || this.rejected[id] || stable && !this.movedIds[id] || pairExempt(e, other) || !layers(old, other.transform)) continue;
         const dx = old.x - other.transform.x, dz = old.z - other.transform.z;
-        if (dx * dx + dz * dz < (radius + actorRadius(other) - tolerance) ** 2) reject(other);
+        if (dx * dx + dz * dz < (radius + this.bodyRadii[other.id] - tolerance) ** 2) reject(other);
       }
     }
-    for (const e of this.moved) if (!this.rejected.has(e.id) && e.id === 1) this.publish(e);
+    for (const e of this.moved) if (!this.rejected[e.id] && e.id === 1) this.publish(e);
     for (const admission of [false, true]) for (const e of this.unresolved) {
-      const old = this.committed.get(e); if (!old !== admission) continue;
-      const radius = actorRadius(e), p = e.transform, proposed = this.proposed.get(e)!;
-      const proof = this.validated.get(e);
+      const old = this.committedPoses[e.id]; if (!old !== admission) continue;
+      const radius = this.bodyRadii[e.id], p = e.transform, proposed = this.proposalPoints[e.id]!;
+      const proof = this.contactProofs[e.id];
       const mayHold = !!(e.infected && !e.infected.specialAttack && proof && (this.world.tick + e.id) % 10 !== 0 && old && !this.failures && !staticChanged && !this.changedActors.has(e.id) && proof.tick === this.world.tick - 1 && proof.radius === radius && proof.exemption === exemption(e));
       if (mayHold && proof!.crowded && proof!.crowdUntil > this.world.tick) {
-        const blocker = this.live[this.bodyRejections.get(e.id) ?? 0];
+        const blocker = this.live[this.bodyRejections[e.id] ?? 0];
         // Reuse the actual failed contact only while it still blocks this proposal
         // after rollback. A neighbour that vacated it must still permit movement.
         if (blocker && layers(proposed, blocker.transform) &&
-            (proposed.x - blocker.transform.x) ** 2 + (proposed.z - blocker.transform.z) ** 2 < (radius + actorRadius(blocker) - tolerance) ** 2) {
+            (proposed.x - blocker.transform.x) ** 2 + (proposed.z - blocker.transform.z) ** 2 < (radius + this.bodyRadii[blocker.id] - tolerance) ** 2) {
           proof!.blocked++; continue; // The previous valid pose is already reserved and published.
         }
       }
       Object.assign(p, proposed);
-      let valid = this.clear(p, radius, e.id, true, tolerance);
+      const blocker = this.live[this.bodyRejections[e.id] ?? 0];
+      const blocked = blocker && !pairExempt(e, blocker) && layers(p, blocker.transform) &&
+        (p.x - blocker.transform.x) ** 2 + (p.z - blocker.transform.z) ** 2 < (radius + this.bodyRadii[blocker.id] - tolerance) ** 2;
+      let valid = false;
+      // A still-overlapping witness proves this proposal fails its body query.
+      // Check solids first, preserving the original static/body classification;
+      // projection and the retry cadence below remain exactly the same.
+      if (blocked && this.clear(p, radius, e.id, false, tolerance)) { this.bodyConflict = true; this.bodyConflictId = blocker.id; }
+      else valid = this.clear(p, radius, e.id, true, tolerance);
       if (valid && proof) proof.blocked = 0;
       if (!valid) {
         let crowded = false;
@@ -468,7 +525,7 @@ export class SolidRegistry {
           for (const id of this.nearby) {
             const other = this.live[id];
             if (id === e.id || !other || pairExempt(e, other) || !layers(p, other.transform)) continue;
-            const dx = p.x - other.transform.x, dz = p.z - other.transform.z, squared = dx * dx + dz * dz, reach = radius + actorRadius(other);
+            const dx = p.x - other.transform.x, dz = p.z - other.transform.z, squared = dx * dx + dz * dz, reach = radius + this.bodyRadii[other.id];
             if (squared >= (reach - tolerance) ** 2) continue;
             const d = Math.sqrt(squared), depth = reach - d;
             const nx = d ? dx / d : Math.cos(e.id * 2.399963), nz = d ? dz / d : Math.sin(e.id * 2.399963);
@@ -515,13 +572,15 @@ export class SolidRegistry {
     this.finish(full);
   }
   private finish(full: boolean): void {
-    if (full) for (const e of this.bodies) if (actor(e)) this.auditActor(e);
-    for (const e of this.bodies) if (actor(e)) {
-      const old = this.committed.get(e);
+    // The live roster already owns eligibility. Only a deferred admission can
+    // leave it during this transaction; no damage or cleanup runs inside commit.
+    if (full) for (const e of this.bodies) if (this.live[e.id] === e) this.auditActor(e);
+    for (const e of this.bodies) if (this.live[e.id] === e) {
+      const old = this.committedPoses[e.id];
       if (old) { const p = e.transform; old.x = p.x; old.y = p.y; old.z = p.z; old.yaw = p.yaw; } else this.committed.set(e, { ...e.transform });
-      const proof = this.validated.get(e);
-      if (proof) { proof.tick = this.world.tick; proof.radius = actorRadius(e); proof.exemption = exemption(e); }
-      else this.validated.set(e, { tick: this.world.tick, radius: actorRadius(e), exemption: exemption(e), blocked: 0, blocker: 0, crowded: false, crowdUntil: 0 });
+      const proof = this.contactProofs[e.id];
+      if (proof) { proof.tick = this.world.tick; proof.radius = this.bodyRadii[e.id]; proof.exemption = exemption(e); }
+      else this.validated.set(e, { tick: this.world.tick, radius: this.bodyRadii[e.id], exemption: exemption(e), blocked: 0, blocker: 0, crowded: false, crowdUntil: 0 });
     }
     this.committing = false;
   }
@@ -549,5 +608,5 @@ export class SolidRegistry {
     return { failures: this.failures, pending: pending.length, admitted: this.admitted, deferred: this.deferred,
       requests: pending.slice(0, 64).map(e => ({ id: e.id, archetype: e.archetype, ...e.pendingAdmission })), offenders: this.offenders.map(o => ({ ...o })) };
   }
-  reset(): void { this.bodyIds.length = this.bodies.length = this.moved.length = this.nearby.length = this.hullNeighbors.length = 0; this.changedActors.clear(); this.changedHulls.clear(); this.changedTick = -1; this.rejected.clear(); this.bodyRejections.clear(); this.unresolved.length = 0; this.live.length = 0; this.committing = false; this.blockerOwners.clear(); this.hulls.clear(); this.hullRevision = -1; this.hullCandidates.length = 0; this.hullIndex.reset(); this.bodyIndex.reset(); this.committed = new WeakMap(); this.proposed = new WeakMap(); this.validated = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = -1; this.nav = undefined; }
+  reset(): void { this.previousBodyIds.length = this.bodyIds.length = this.bodies.length = this.moved.length = this.nearby.length = this.hullNeighbors.length = 0; this.changedActors.clear(); this.changedHulls.clear(); this.changedTick = -1; this.rejected.length = this.bodyRejections.length = this.movedIds.length = 0; this.unresolved.length = 0; this.live.length = this.committedPoses.length = this.proposalPoints.length = this.contactProofs.length = this.bodyRadii.length = 0; this.committing = false; this.blockerOwners.clear(); this.hulls.clear(); this.hullRevision = -1; this.hullCandidates.length = 0; this.hullIndex.reset(); this.bodyIndex.reset(); this.committed = new WeakMap(); this.proposed = new WeakMap(); this.validated = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = this.infectedNavRevision = -1; this.nav = this.infectedNav = undefined; }
 }
