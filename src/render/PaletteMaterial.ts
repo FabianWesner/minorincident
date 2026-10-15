@@ -162,13 +162,13 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
     let output = this._outputs.get(mode);
     if (!output) {
       const base = this.outputFor(mode);
-      output = this.userData.seeThrough ? Fn(() => { Discard((this.userData.seeThrough === 'boss' ? seeThroughKeepBoss() : seeThroughKeep()).not()); return base; })() : base;
+      output = this.userData.seeThrough ? Fn(() => { Discard((this.userData.seeThrough === 'boss' ? seeThroughKeepBoss() : seeThroughKeep(this.userData.seeThrough === 'placement' ? attribute('_occluder', 'float') : undefined)).not()); return base; })() : base;
       this._outputs.set(mode, output);
     }
     this.outputNode = output; this.needsUpdate = true;
   }
   /** Keep the see-through wrapper on every weather graph; shadow casters remain whole. */
-  seeThrough(enabled: boolean | 'boss' = true): this {
+  seeThrough(enabled: boolean | 'boss' | 'placement' = true): this {
     if ((this.userData.seeThrough ?? false) === enabled) return this;
     this.userData.seeThrough = enabled; this._outputs.clear();
     const mode = this.weatherMode; this.weatherMode = -1; this.setWeatherMode(mode);
