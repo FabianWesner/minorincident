@@ -856,6 +856,7 @@ export class GameView implements Lifecycle {
     this.districts?.cull(this.view, this.quality);
     const locked = this.world.controls.snapshot()?.attack;
     const lockedEntity = locked ? this.world.entities.get(locked.id) : undefined;
+    if (this.districts) this.districts.interactionOccluded = !!current && !!this.interactions?.occludesPlayer(this.camera, current);
     this.districts?.updateFoliage(this.view, current, lockedEntity && lockedEntity.health.current > 0 ? lockedEntity.transform : undefined);
     this.updateBossHole(current);
     this.healthBars?.update(this.camera, this.view.viewportHeight * this.camera.aspect, this.view.viewportHeight, this.barOccluded);

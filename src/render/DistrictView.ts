@@ -480,6 +480,7 @@ export class DistrictView extends Group {
     });
   }
   setFoliageReveal(enabled: boolean): void { this.foliage.reveal = enabled; }
+  interactionOccluded = false;
   updateFoliage(view: View, player?: { x: number; y: number; z: number }, target?: { x: number; y: number; z: number }): void {
     this.foliage.update(view, player, target); if (player) this.updateRoofs(player);
     // Solid occluders open the shared hole only while one of them is on the camera-to-courier ray.
@@ -500,7 +501,7 @@ export class DistrictView extends Group {
     this.occluderId = hugged ? 'hugged' : '';
     const occluded = Boolean(player && this.foliage.reveal && this.occluded(view, player));
     this.updateCutPlacements();
-    const goal = hugged || occluded ? 1 : 0;
+    const goal = hugged || occluded || this.interactionOccluded ? 1 : 0;
     const blend = 1 - Math.exp(-(hugged ? 40 : 10) * this.frameSeconds);
     seeThrough.strength.value += (goal - seeThrough.strength.value) * blend;
     if (Math.abs(goal - seeThrough.strength.value) < .002) seeThrough.strength.value = goal;
