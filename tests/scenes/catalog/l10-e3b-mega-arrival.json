@@ -8,8 +8,8 @@
     "target": "courier",
     "zoom": 1
   },
-  "frames": 4200,
-  "sheet": 600,
+  "frames": 6000,
+  "sheet": 750,
   "expect": {
     "consoleErrors": 0,
     "undrawnFramesMax": 0,
@@ -18,10 +18,13 @@
     "trianglesMax": 500000,
     "megaCoarseFramesMin": 30,
     "megaDetailedFramesMin": 30,
+    "megaCruiseErrorMax": 0.02,
     "megaStepMaxM": 0.25
   },
   "name": "l10-e3b-mega-arrival",
-  "note": "Persistent hunter advances continuously on the authored R7 approach; offscreen catch-up ends 120 m away, followed by cruise into the game camera and hold zone. No boss replacement. Isolated arrival fixture; the existing E3 assault performance suite covers the full mixed crowd.",
+  "note": "Persistent hunter advances at 0.7× nominal run along the connected R7 approach and into the game camera. Charge reaches 60 s before arrival; release stays gated on the living boss. Isolated arrival fixture; E3 assault performance covers the full mixed crowd.",
+  "hud": true,
+  "megaHud": true,
   "layout": {
     "district": "D-CURE",
     "bbox": [
