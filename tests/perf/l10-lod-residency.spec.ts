@@ -1,5 +1,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { test, expect, boot } from '../e2e/fixtures';
+import type { Renderer } from '../../src/render/Renderer';
+import type { Object3D, Mesh } from 'three/webgpu';
 import type { Game } from '../../src/Game';
 
 test.use({ channel: 'chrome', headless: true, trace: 'off', launchOptions: { args: ['--use-angle=metal', '--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--disable-frame-rate-limit', '--disable-gpu-vsync'] } });
@@ -20,7 +22,17 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
       const game = (window.__SCENE__ as unknown as { game: Game }).game;
       (game.view as unknown as { params: URLSearchParams }).params.delete('test');
       const district = game.view.labProbes().districts!;
-      const renderer = (game.view as unknown as { renderer: { nodeBuildMaterials: Record<string, number> } }).renderer;
+      const renderer = (game.view as unknown as { renderer: Renderer }).renderer;
+      const builds: unknown[] = [];
+      const onBuild = renderer.debug.onNodeBuilderCreated;
+      renderer.debug.onNodeBuilderCreated = (builder, object) => {
+        onBuild?.(builder, object);
+        const draw = object as unknown as { object: Mesh; material: Mesh['material'] };
+        const path: string[] = [];
+        for (let o: Object3D | null = draw.object; o; o = o.parent) path.push(o.name || o.type);
+        const material = Array.isArray(draw.material) ? draw.material[0] : draw.material;
+        builds.push({ tick: a.tick(), path, material: material.name, transparent: material.transparent, side: material.side, castShadow: draw.object.castShadow, receiveShadow: draw.object.receiveShadow, attributes: Object.keys(draw.object.geometry?.attributes ?? {}) });
+      };
       const frames: number[] = [], sims: number[] = [], bad: unknown[] = [], hitches: unknown[] = [];
       const p95 = (v: number[]) => v.sort((x, y) => x - y)[Math.ceil(v.length * .95) - 1];
       let last = 0, draws = 0, triangles = 0, resident = 0, infected = 0;
@@ -38,7 +50,8 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
         resident = Math.max(resident, p.terrain?.resident ?? 0); infected = Math.max(infected, p.infected?.count ?? 0);
       }
       a.pause(); a.input.clear(); const state = a.getState();
-      return { frameP95: p95(frames), frameMax: Math.max(...frames), simP95: p95(sims), frames: frames.length, hitches, badFrames: bad.length, first: bad.slice(0, 3), draws, triangles, resident, infected, x: state.player!.transform.x, cameraZoom: state.render.camera.zoom, quality: a.perf().quality.tier, backend: a.perf().backend };
+      renderer.debug.onNodeBuilderCreated = onBuild;
+      return { builds, frameP95: p95(frames), frameMax: Math.max(...frames), simP95: p95(sims), frames: frames.length, hitches, badFrames: bad.length, first: bad.slice(0, 3), draws, triangles, resident, infected, x: state.player!.transform.x, cameraZoom: state.render.camera.zoom, quality: a.perf().quality.tier, backend: a.perf().backend };
     });
     const cdp = await context.newCDPSession(page); await cdp.send('HeapProfiler.collectGarbage'); const heap = await cdp.send('Runtime.getHeapUsage');
     const heapMB = heap.usedSize / 1e6;
