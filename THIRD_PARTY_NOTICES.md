@@ -209,6 +209,9 @@ Every recording below was modified for the game: excerpts, EQ, pitch, fades, com
 - Aggressive NPC sounds — mujtaba-io. Source: https://opengameart.org/content/aggressive-npc-sounds-hey-i-will-kill-you. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: hey_aggressive_mujtaba.wav.
 - Voice Effects Zombie-Skeleton-Monster Human Male — ArcadeParty. Source: https://opengameart.org/content/zombie-skeleton-monster-voice-effects. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: zombieDeath1.wav, zombieDeath2.wav, zombieDeath3.wav, zombieDeath4.wav, zombieYell2.wav, zombieYell4.wav, zombieYell7.wav, zombieYell9.wav.
 - 8 wet squish/slurp impacts — Independent.nu. Source: https://opengameart.org/content/8-wet-squish-slurp-impacts. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: impactsplat03.mp3.flac, impactsplat07.mp3.flac.
+- The Free Firearm Sound Library — Ben Jaszczak, Brian Nelson, Kevin Heras, Matthew Nanney (OGA: bart). Source: https://opengameart.org/content/the-free-firearm-sound-library. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: A_42P.wav, C_28P.wav, D_32P.wav, G_31P.wav, H_21P.wav, K_17P.wav, K_22P.wav, O_21P.wav, P_30P.wav, R_35P.wav, T_27P.wav, V_27P.wav, W_29P.wav, X_39P.wav.
+- gun reload sounds — SpringySpringo. Source: https://opengameart.org/content/gun-reload-sounds. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: assaultriflereload1_0.wav, gunreload1.wav, shotguncock_0.wav.
+- Residue SFX — FacadeGaikan. Source: https://opengameart.org/content/residue-sfx. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: boom.ogg, emptyclip.wav, ventilator.wav.
 
 ## Original work
 

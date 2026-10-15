@@ -711,6 +711,53 @@ export const audioCredits: readonly Credit[] = [
             "impactsplat03.mp3.flac",
             "impactsplat07.mp3.flac"
         ]
+    },
+    {
+        "title": "The Free Firearm Sound Library",
+        "author": "Ben Jaszczak, Brian Nelson, Kevin Heras, Matthew Nanney (OGA: bart)",
+        "url": "https://opengameart.org/content/the-free-firearm-sound-library",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "files": [
+            "A_42P.wav",
+            "C_28P.wav",
+            "D_32P.wav",
+            "G_31P.wav",
+            "H_21P.wav",
+            "K_17P.wav",
+            "K_22P.wav",
+            "O_21P.wav",
+            "P_30P.wav",
+            "R_35P.wav",
+            "T_27P.wav",
+            "V_27P.wav",
+            "W_29P.wav",
+            "X_39P.wav"
+        ]
+    },
+    {
+        "title": "gun reload sounds",
+        "author": "SpringySpringo",
+        "url": "https://opengameart.org/content/gun-reload-sounds",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "files": [
+            "assaultriflereload1_0.wav",
+            "gunreload1.wav",
+            "shotguncock_0.wav"
+        ]
+    },
+    {
+        "title": "Residue SFX",
+        "author": "FacadeGaikan",
+        "url": "https://opengameart.org/content/residue-sfx",
+        "license": "CC0",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "files": [
+            "boom.ogg",
+            "emptyclip.wav",
+            "ventilator.wav"
+        ]
     }
 ];
 export const originalCredit: Credit = {
