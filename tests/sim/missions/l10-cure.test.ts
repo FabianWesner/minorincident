@@ -90,3 +90,23 @@ test('T-E32-16-before-exit @E32-AC16 death before the exit returns the sole cani
     }
   } finally { w.dispose(); }
 });
+
+test('T-E32-16-speed @E32-AC16 carried cure leaves both weapon racks and running speed unchanged', async () => {
+  const sample = async (checkpoint: string) => {
+    const w = new SimWorld(); await w.init(); w.loadScenario('mega-course'); applyCampaign(w, preset('L10-default'));
+    try {
+      const m = w.loadMission(levelTenMission(() => ({ x: 0, z: 0, radius: 2 })));
+      m.begin(); m.loadCheckpoint(checkpoint);
+      const racks = structuredClone(w.entities.get(1)!.weapons);
+      w.setInput({ move: { x: 1, z: 0 } });
+      for (let tick = 0; tick < 60; tick++) w.update();
+      const start = w.entities.get(1)!.transform.x;
+      for (let tick = 0; tick < 60; tick++) w.update();
+      return { racks, metres: w.entities.get(1)!.transform.x - start, carried: !!m.state.states['cure-carried'], items: [...m.state.items] };
+    } finally { w.dispose(); }
+  };
+  const before = await sample('cure-research-entry'), after = await sample('cure-research');
+  expect(before.carried).toBe(false); expect(after.carried).toBe(true); expect(after.items).toEqual(['cure-canister']);
+  for (const side of ['LEFT', 'RIGHT'] as const) expect(after.racks![side].rack.map(s => s.id)).toEqual(before.racks![side].rack.map(s => s.id));
+  expect(after.metres).toBeCloseTo(before.metres, 4);
+});

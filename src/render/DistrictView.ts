@@ -51,7 +51,7 @@ import { pickLod, propLod, initialDistrictLods, lodPolicy, type Lod } from './lo
 import { occluderMinHeight, seeThrough } from './SeeThrough';
 import { stripStrayDecorations } from './decorationFilter';
 import type { PaletteToken } from '../data/palette';
-import { layoutTerrainChunks } from '../sim/world/TerrainChunks';
+import { layoutTerrainChunks, terrainPrefetchSeconds } from '../sim/world/TerrainChunks';
 import { TerrainView } from './TerrainView';
 import { batchPerimeterPosts } from './PerimeterPosts';
 
@@ -719,8 +719,10 @@ export class DistrictView extends Group {
       }
     }
   }
+  private lodPrefetchMetres = 0;
   /** Static matrices are repartitioned only when the camera moves; far props use LOD2. */
   updateLods(view: View, velocity: { x: number; z: number } = { x: 0, z: 0 }): void {
+    this.lodPrefetchMetres = Math.hypot(velocity.x, velocity.z) * terrainPrefetchSeconds;
     if (this.terrain) {
       this.terrain.warm = this.warmHero; this.terrain.swap = this.swapSlot;
       this.terrain.update([view.cameraTarget.x, view.cameraTarget.z], [velocity.x, velocity.z]);
@@ -761,15 +763,27 @@ export class DistrictView extends Group {
     const { hero, near, far, refs, origin, height, radius } = entry;
     const selectedRefs = new Map([[hero, [] as Object3D[]], [near, [] as Object3D[]], [far, [] as Object3D[]]]);
     const foliage = (!!worldAssets[entry.id].foliage || /^prop\.(tree|bush|hedge)/.test(entry.id));
+    let prefetchNear = false, prefetchHero = false;
     for (const [index, ref] of refs.entries()) {
       if (entry.id === 'prop.cure-canister-pedestal' && this.cureCollected) continue;
       if (foliage && index >= Math.ceil(refs.length * this.materials.look.values.foliageDensity)) continue;
       const x = ref.position.x + origin[0], z = ref.position.z + origin[1];
       this.bounds.center.set(x, ref.position.y + height * ref.scale.y / 2, z); this.bounds.radius = radius * Math.max(ref.scale.x, ref.scale.y, ref.scale.z);
-      if (!this.frustum.intersectsSphere(this.bounds)) continue;
       const distance = view.inspectionPose && !view.inspectionGameLod ? view.camera.position.distanceTo(this.bounds.center) : Math.hypot(x - view.cameraTarget.x, z - view.cameraTarget.z);
       // Bound detail by distance and projected size; preserve the independent low-tier policy.
-      const detailDistance = distance / (worldAssets[entry.id].category === 'prop' ? Math.min(1, radius / 5) : 1);
+      const prop = worldAssets[entry.id].category === 'prop', factor = prop ? Math.min(1, radius / 5) : 1;
+      const detailDistance = distance / factor;
+      // Warm only tiers reachable within the shared two-second travel horizon, before
+      // frustum entry or a band promotion can draw a coarser stand-in. Low props stay LOD2.
+      const policy = entry.id === 'prop.privacy-fence' ? privacyFenceLodPolicy : lodPolicy;
+      if (this.lodPrefetchMetres > 0) {
+        if (this.low) prefetchNear ||= !prop && !heavyOnLow(entry.id) && distance <= 16 + this.lodPrefetchMetres;
+        else {
+          prefetchNear ||= distance <= policy.lod2From * factor + this.lodPrefetchMetres;
+          prefetchHero ||= distance <= policy.lod1From * factor + this.lodPrefetchMetres;
+        }
+      }
+      if (!this.frustum.intersectsSphere(this.bounds)) continue;
       let band = this.low ? (distance > 16 || worldAssets[entry.id].category === 'prop' || heavyOnLow(entry.id) ? 'lod2' : 'lod1') : pickLod(detailDistance, entry.bands[index], entry.id === 'prop.privacy-fence' ? privacyFenceLodPolicy : undefined);
       if (!this.low && !foliage && worldAssets[entry.id].category === 'prop') {
         const size = worldAssets[entry.id].dimensions;
@@ -803,10 +817,10 @@ export class DistrictView extends Group {
     }
     // A placement in view whose LOD1 has not arrived is drawn from the LOD2 placeholder: fetch the tier now (the background prepare()
     // walks the level nearest-first from the spawn and can be far behind a fast walker). Props never draw LOD1 on the low tier.
-    if ((near.references.length || hero.references.length && !this.low) && !entry.nearLoaded && !this.pending.has(entry)) {
+    if ((prefetchNear || near.references.length || hero.references.length && !this.low) && !entry.nearLoaded && !this.pending.has(entry)) {
       this.pending.set(entry, this.loadHero(entry, 'lod1').finally(() => this.pending.delete(entry)));
     }
-    if (hero.references.length && !entry.loaded && !this.pending.has(entry)) {
+    if ((prefetchHero || hero.references.length) && !entry.loaded && !this.pending.has(entry)) {
       this.pending.set(entry, this.loadHero(entry).finally(() => this.pending.delete(entry)));
     }
   }
