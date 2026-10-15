@@ -1,5 +1,5 @@
 import { spinNodes } from "../data/spinNodes";
-import { Group, Mesh, Object3D, Vector3, type BufferGeometry, type WebGPURenderer, type Material } from "three/webgpu";
+import { Box3, Group, Mesh, Object3D, Vector3, type BufferGeometry, type WebGPURenderer, type Material } from "three/webgpu";
 import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
 import { KTX2Loader } from "three/addons/loaders/KTX2Loader.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
@@ -26,7 +26,7 @@ import { openFireStationBays } from './fireStationBays';
 import { vehicleDecayFallback } from './vehicleDecay';
 import { occluderMinHeight } from '../render/SeeThrough';
 /** Props lower than an occluder keep every fragment while the courier see-through hole is open. */
-export const isUncutProp = (id: string): boolean => worldAssets[id]?.category === 'prop' && !worldAssets[id].foliage && worldAssets[id].dimensions.y < occluderMinHeight;
+export const isUncutProp = (id: string, drawnHeight = Infinity): boolean => worldAssets[id]?.category === 'prop' && !worldAssets[id].foliage && Math.min(worldAssets[id].dimensions.y, drawnHeight) < occluderMinHeight;
 /** Deduplicated runtime URLs for the placement tiers requested by HTTP prefetch. */
 export function districtAssetUrls(id: string, definition: (id: string) => import('./types').AssetDef, lods: ('lod1' | 'lod2')[] = ['lod1', 'lod2'], decay?: string): string[] {
   const def = definition(productionIds[id] ?? id);
@@ -229,7 +229,7 @@ export class DistrictAssets {
     }
     // Furniture lower than an occluder (benches, hydrants, beds, low fences) is never cut by the courier hole: it cannot hide her,
     // and the group-sized hole at close zoom otherwise dissolved everything above 0.3 m (PO 10-13 bench without planks).
-    const solid = isUncutProp(id);
+    const solid = isUncutProp(id, new Box3().setFromObject(root).getSize(new Vector3()).y);
     root.traverse(node => { if (node instanceof Mesh) {
       // A shut metro leaf must read as a solid barrier even with the courier behind it.
       if (node.material instanceof PaletteMaterial) {
