@@ -37,6 +37,7 @@ export class InputSystem implements Lifecycle {
   setDriving(on: boolean): void { if (on !== this.drivingContext) { this.drivingContext = on; this.touch.setDriving(on); } }
   private readonly left = new Buttons();
   private readonly right = new Buttons();
+  private readonly space = new Buttons();
   private readonly active = new Set<Action>();
   private readonly heldTokens = new Map<string, Action>();
   private readonly selectors: { direction: -1 | 1; side?: 'LEFT' | 'RIGHT'; active?: boolean }[] = [];
@@ -155,6 +156,7 @@ export class InputSystem implements Lifecycle {
     else if (held && code === 'Mouse2') { this.selectors.push({ direction: 1, active: true }); this.heldTokens.set(code, action); return; }
     else if (held && (action.startsWith('move') || action === 'left' || action === 'right' || action === 'interact')) { this.cancelMove = true; if (!action.startsWith('move')) this.pointerGround = false; }
     if (held) this.heldTokens.set(code, action); else this.heldTokens.delete(code);
+    if (code === 'Space' && action === 'left') this.space.set(code, held);
     if (action === 'left') this.left.set(code, held);
     else if (action === 'right') this.right.set(code, held);
     else if (held && action === 'selector') { this.selectors.push({ direction: 1, active: this.scheme.startsWith('mouse') }); }
@@ -184,7 +186,7 @@ export class InputSystem implements Lifecycle {
     if (this.recorder.playing) return this.recorder.next() ?? this.frameNeutral();
     if (this.injected) { this.recorder.capture(this.injected); this.tap?.(this.injected, this.scheme); return this.injected; }
     const frame = this.frame;
-    frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.walk; if (this.active.has('walk')) frame.walk = true; delete frame.aimPoint; delete frame.moveTarget; delete frame.attackTarget; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot; delete frame.selectedActiveSlot; delete frame.pointerTarget; delete frame.mouseAttack; delete frame.attackInPlace; delete frame.selectorActive;
+    frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.walk; if (this.active.has('walk')) frame.walk = true; delete frame.aimPoint; delete frame.moveTarget; delete frame.attackTarget; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot; delete frame.selectedActiveSlot; delete frame.pointerTarget; delete frame.mouseAttack; delete frame.activeAttack; delete frame.attackInPlace; delete frame.selectorActive;
     frame.cancelMove = this.cancelMove; this.cancelMove = false;
     const x = this.axis('moveRight', 'moveLeft'), y = this.axis('moveDown', 'moveUp');
     const driveX = this.drivingContext && this.aiming() ? this.axis('aimRight', 'aimLeft') : x;
@@ -226,6 +228,8 @@ export class InputSystem implements Lifecycle {
       frame.aim = this.aim; frame.aimSource = this.touchFire ?? 'touch'; this.touchFire = null;
     }
     frame.left = this.left.sample(); frame.right = this.right.sample();
+    const space = this.space.sample();
+    if (space.down || space.held || space.up) frame.activeAttack = true;
     const candidates = this.clicks.length ? Array.from(targets) : null;
     for (const click of this.clicks) {
       const point = this.cursor.project(click.x, click.y);
@@ -298,7 +302,7 @@ export class InputSystem implements Lifecycle {
     } else if (++this.walkHintTicks >= 300 || frame.walk) { this.walkHint.hidden = true; this.walkHintDone = true; }
   }
   private frameNeutral(): InputFrame {
-    const frame = this.frame; frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.walk; delete frame.aimPoint; delete frame.drive; delete frame.brake; delete frame.moveTarget; delete frame.attackTarget; delete frame.cancelMove; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot; delete frame.selectedActiveSlot; delete frame.pointerTarget; delete frame.mouseAttack; delete frame.attackInPlace; delete frame.selectorActive;
+    const frame = this.frame; frame.move.x = 0; frame.move.z = 0; frame.aim = null; frame.aimSource = null; delete frame.walk; delete frame.aimPoint; delete frame.drive; delete frame.brake; delete frame.moveTarget; delete frame.attackTarget; delete frame.cancelMove; delete frame.pointerGround; delete frame.selectorSide; delete frame.selectedSlot; delete frame.selectedActiveSlot; delete frame.pointerTarget; delete frame.mouseAttack; delete frame.activeAttack; delete frame.attackInPlace; delete frame.selectorActive;
     frame.left.down = frame.left.held = frame.left.up = false; frame.right.down = frame.right.held = frame.right.up = false;
     frame.selector = 0; frame.interact = false; frame.pause = false; return frame;
   }
@@ -308,12 +312,12 @@ export class InputSystem implements Lifecycle {
   private readonly visibility = (): void => { if (document.hidden) this.release(); };
   readonly release = (): void => {
     this.releasing = true; this.keyboard.release(); this.pointer.release(); this.releasing = false;
-    this.touch.release(); this.wheel.reset(); this.touchFire = null; this.left.release(); this.right.release(); this.active.clear(); this.heldTokens.clear();
+    this.touch.release(); this.wheel.reset(); this.touchFire = null; this.left.release(); this.right.release(); this.space.release(); this.active.clear(); this.heldTokens.clear();
     this.clicks.length = 0; this.cancelMove = true; this.pointerGround = false; this.selectedSlot = undefined; this.selectedActiveSlot = undefined;
     this.pointerTarget = false; this.selectors.length = 0; this.interact = false; this.pause = false;
   };
   update(): void { /* Input is sampled in the fixed input phase, not the render update. */ }
-  reset(preserveRelease = false): void { this.setDriving(false); this.release(); this.left.reset(preserveRelease); this.right.reset(preserveRelease); this.injected = null; this.recorder.reset(); this.aimAngle = 0; this.manualAim = false; this.setScheme(navigator.maxTouchPoints > 0 ? 'touch' : 'mouse-only'); this.frameNeutral(); }
+  reset(preserveRelease = false): void { this.setDriving(false); this.release(); this.left.reset(preserveRelease); this.right.reset(preserveRelease); this.space.reset(preserveRelease); this.injected = null; this.recorder.reset(); this.aimAngle = 0; this.manualAim = false; this.setScheme(navigator.maxTouchPoints > 0 ? 'touch' : 'mouse-only'); this.frameNeutral(); }
   dispose(): void {
     this.reset(); this.keyboard.dispose(); this.pointer.dispose(); this.wheel.dispose(); this.touch.dispose();
     window.removeEventListener('blur', this.release); window.removeEventListener('pagehide', this.release); document.removeEventListener('visibilitychange', this.visibility);

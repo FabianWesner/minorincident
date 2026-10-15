@@ -94,3 +94,15 @@ test('T-E03-05-assist @E03 @E03-AC05 keyboard WASD J K Q F with nearest infected
   expect(await page.evaluate(() => window.__SS__!.getState().player!.weapons!.RIGHT.index)).toBe(1);
   await page.keyboard.press('f'); expect((await tick(page)).interact).toBe(true);
 });
+
+test('PO #9 Space fires the selected RIGHT handgun after the armory', async ({ page }) => {
+  await boot(page);
+  await page.evaluate(async () => {
+    const a = window.__SS__!; await a.loadScenario('combat-arena'); a.pause();
+    a.setLoadout(['weapon.bat', 'weapon.fire-axe'], ['weapon.handgun']);
+    a.input.set({ selectedSlot: { side: 'RIGHT', index: 0 } }); await a.step(20); a.input.clear();
+  });
+  await page.keyboard.press('Space'); await tick(page, 15);
+  const attacks = await page.evaluate(() => window.__SS__!.events().filter(e => e.type === 'combat.attack'));
+  expect(attacks.at(-1)).toMatchObject({ actionId: 'weapon.handgun', side: 'RIGHT' });
+});
