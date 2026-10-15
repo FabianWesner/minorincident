@@ -38,9 +38,15 @@ export class CrowdVisibility {
   /** E18 far-crowd budget: figures beyond the per-frame near-detail budget draw the far LOD2 (picked by the owner). */
   readonly demoted = new Set<number>();
   readonly heroModels = new Set<string>();
+  /** Civilian streaming may retain a finer resident tier while its coarser band
+   * prepares. Never replace a requested tier with a coarser stand-in. */
+  readonly resident = new Map<string, Set<'lod0' | 'lod1' | 'lod2'>>();
   /** The detail band of a figure: a hero with its LOD0 loaded draws lod0, everyone else the pixel band. */
   band(id: number, pixels: number, model: string): 'lod0' | 'lod1' | 'lod2' {
     const band = this.demoted.has(id) ? 'lod2' : this.lod(id, pixels);
-    return band === 'lod1' && this.heroes.has(id) && this.heroModels.has(model) ? 'lod0' : band;
+    const requested = band === 'lod1' && this.heroes.has(id) && this.heroModels.has(model) ? 'lod0' : band;
+    const ready = this.resident.get(model);
+    if (!ready || ready.has(requested)) return requested;
+    return requested === 'lod2' && ready.has('lod1') ? 'lod1' : ready.has('lod0') ? 'lod0' : requested;
   }
 }

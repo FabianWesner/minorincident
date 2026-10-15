@@ -252,7 +252,7 @@ export class GameView implements Lifecycle {
       // with the level (sharing its prototypes) and are warmed below; their LOD0 streams later.
       const variants = this.world.scenario === 'L1' ? [...this.world.preparedDistricts.values()].filter(prepared => prepared !== this.world.districts).map(prepared => new DistrictView(prepared, this.materials!, shared.registry, shared.phase, shared.grassMaterial, this.quality === 'low', instanceCapacity)) : [];
       // E19: Level 1 is played as the courier (white cap, orange tee, teal bag); same rig/animations.
-      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2', 'L3', 'L4', 'L5', 'L6'].includes(this.world.districts.composition.id) || this.world.districts.composition.scene?.courier ? 'courier' : 'survivor', useSkinnedCourier(this.params), this.world.missions?.state?.id === 'L10');
+      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2', 'L3', 'L4', 'L5', 'L6'].includes(this.world.districts.composition.id) || this.world.districts.composition.scene?.courier ? 'courier' : 'survivor', useSkinnedCourier(this.params), this.world.missions?.state?.id === 'L10', this.world.scenario === 'L1' ? player?.survivor?.variant : undefined);
       // Actor models download and bake while the district loads (they do not depend on it).
       actors = this.startActors(character); actors.catch(() => {}); // a district failure must not leave it unhandled
       const initialFocus = grove || this.world.districts.districts.some(d => !!d.layout.terrainChunks?.length) ? this.view.cameraTarget : undefined;
@@ -288,7 +288,7 @@ export class GameView implements Lifecycle {
         this.lookdev = new Lookdev(this.materials, this.occlusion, false); this.scene.add(this.lookdev);
         this.postFx = new PostFx(this.renderer, this.scene, this.camera, this.quality, this.look);
       }
-      this.character = new CharacterView(); await this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low'); this.scene.add(this.character);
+      this.character = new CharacterView(); await this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', 'survivor', false, false, this.world.scenario === 'survivor' ? player?.survivor?.variant : undefined); this.scene.add(this.character);
     } else if (this.world.scenario === 'lookdev') {
       this.renderer.shadowMap.enabled = true;
       this.lighting = new Lighting(this.scene, this.look, this.renderer, this.environment ??= new Environment(this.renderer)); this.materials = new Materials(this.lighting);
@@ -493,12 +493,12 @@ export class GameView implements Lifecycle {
    * three collects the render list synchronously, then compiles and uploads asynchronously, yielding
    * between objects. The batch joins the scene afterwards. */
   private async warmHidden(batch: import('three/webgpu').Object3D): Promise<void> {
-    const parent = this.districts ?? this.scene, saved: [import('three/webgpu').Object3D, boolean][] = [];
+    const previousParent = batch.parent, parent = this.districts ?? this.scene, saved: [import('three/webgpu').Object3D, boolean][] = [];
     batch.traverse(object => { saved.push([object, object.frustumCulled]); object.frustumCulled = false; });
     parent.add(batch); batch.updateMatrixWorld(true);
     let compiling: Promise<void>;
     try { compiling = this.postFx ? this.postFx.compile(undefined, batch) : this.renderer.compileAsync(batch, this.camera, this.scene); }
-    finally { parent.remove(batch); for (const [object, culled] of saved) object.frustumCulled = culled; }
+    finally { parent.remove(batch); previousParent?.add(batch); for (const [object, culled] of saved) object.frustumCulled = culled; }
     await compiling;
   }
   /** A prepared decay swap retains characters, crowd pools, GPU programs, camera and audio. */
@@ -960,8 +960,13 @@ export class GameView implements Lifecycle {
     field.update(this.view.focus.x, this.view.focus.z, this.world.tick / 60);
     field.render(this.renderer);
   }
+  async prepareCharacterVariant(): Promise<void> {
+    const variant = this.world.entities.get(1)?.survivor?.variant;
+    if (variant && this.character && await this.character.readyVariant(variant)) await this.warmHidden(this.character);
+  }
   async ready(): Promise<void> {
     await this.warming;
+    await this.prepareCharacterVariant();
     // Once a test has begun the mission, snapshots/heap checks settle the same streamed
     // residency on every load. A briefing snapshot waits only for its visible assets.
     if (this.params.get('test') === '1' && this.world.missions?.state.phase !== 'briefing') await this.preparation;

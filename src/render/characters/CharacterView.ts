@@ -54,9 +54,20 @@ export class CharacterView extends Group {
   get skinActive(): boolean { return this.riders.has(this.variant); }
   /** Held gear remains stowed until the hands have released the bicycle. */
   get rideWeight(): number { return this.characters.get(this.variant)?.animator.rideWeight ?? 0; }
-  async init(materials: Materials, bloodFeedback = false, low = false, outfit: 'survivor' | 'courier' = 'survivor', skin = false, cure = false): Promise<void> {
+  private prepareVariant?: (variant: SurvivorVariant) => Promise<void>;
+  private readonly variantLoads = new Map<SurvivorVariant, Promise<void>>();
+  /** A menu selection can change while L1 is loading behind it. Join preparation
+   * before revealing that choice, without downloading both cosmetics at boot. */
+  async readyVariant(variant: SurvivorVariant): Promise<boolean> {
+    if (this.characters.has(variant)) return false;
+    if (!this.variantLoads.has(variant)) this.variantLoads.set(variant, this.prepareVariant?.(variant) ?? Promise.resolve());
+    await this.variantLoads.get(variant); return true;
+  }
+  async init(materials: Materials, bloodFeedback = false, low = false, outfit: 'survivor' | 'courier' = 'survivor', skin = false, cure = false, selected?: SurvivorVariant): Promise<void> {
+    this.prepareVariant = variant => this.init(materials, bloodFeedback, low, outfit, skin, cure, variant);
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
-    for (const variant of ['female', 'male'] as const) {
+    for (const variant of selected ? [selected] : ['female', 'male'] as const) {
+      if (this.characters.has(variant)) continue;
       const id = `char.${outfit}-${variant}`, def = (manifest as AssetDef[]).find(asset => asset.id === id);
       let isSkin = false;
       const character = await loadCharacter(variant, async () => {
@@ -154,7 +165,7 @@ export class CharacterView extends Group {
       const living = animator.bones ? new CourierLiving(character.rig, animator.bones, variant === 'female' ? 1 : 2) : undefined;
       this.characters.set(variant, { ...character, assetId: isSkin ? `${id}.skin` : id, animator, living, gear, cure: canister, aim: new GunAim(character.rig.armR, character.rig.foreArmR, character.rig.handR, character.rig.torso, [character.rig.armL, character.rig.foreArmL, character.rig.handL], [character.rig.weaponSocketR, character.rig.weaponSocketL], character.rig.head), sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
     }
-    this.makeParcel(materials);
+    if (!this.parcel) this.makeParcel(materials);
   }
   update(pose: SurvivorState, tick: number, alpha: number, ride?: RidePose): void {
     const started = performance.now();
@@ -335,5 +346,5 @@ export class CharacterView extends Group {
     return { visible: this.visible, cureVisible: character?.cure?.visible ?? false, supportHandGap: character?.aim.contactGap ?? 0, gunPose: character ? Object.fromEntries(['armR', 'foreArmR', 'handR', 'armL', 'foreArmL', 'handL', 'weaponSocketL', 'weaponSocketR', 'torso', 'head'].map(name => [name, character.rig[name as keyof LoadedCharacter['rig']].getWorldPosition(new Vector3()).toArray()])) : null, modelId: character?.assetId, position: this.position.toArray(), orientation: this.quaternion.toArray(), yaw: this.facing, pelvis: character?.rig.hip.getWorldPosition(this.scratchA).toArray() ?? null, head: character?.rig.head.getWorldPosition(this.scratchA).toArray() ?? null, feet: character ? [character.rig.footL.getWorldPosition(this.scratchA).toArray(), character.rig.footR.getWorldPosition(this.scratchA).toArray()] : null, bloodCoverage: this.bloodMaterials[0]?.bloodCoverage.value ?? 0, variant: this.variant, gearTier: this.tier, animation: character?.animator.state, clip: character?.animator.clip, missingClips: character?.animator.missingClips ?? 0,
       evaluations: character?.animator.evaluations ?? 0, skinned: this.skinActive, cpuMs: this.cpuMs, rideWeight: character?.animator.rideWeight ?? 0, sources: [...this.characters].map(([variant, c]) => ({ variant, source: c.source, reason: c.reason })) };
   }
-  dispose(): void { for (const character of this.characters.values()) disposeCharacter(character.model); this.parcel?.traverse(node => { if (node instanceof Mesh) node.geometry.dispose(); }); this.parcel = null; this.characters.clear(); this.riders.clear(); this.bloodMaterials.length = 0; this.clear(); }
+  dispose(): void { for (const character of this.characters.values()) disposeCharacter(character.model); this.parcel?.traverse(node => { if (node instanceof Mesh) node.geometry.dispose(); }); this.parcel = null; this.characters.clear(); this.variantLoads.clear(); this.prepareVariant = undefined; this.riders.clear(); this.bloodMaterials.length = 0; this.clear(); }
 }

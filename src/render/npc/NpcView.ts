@@ -61,7 +61,7 @@ export class NpcView extends Group {
     await this.civilians.init(camera); const loaded = await this.registry.loadAsset('char.corgi', 'lod1');
     this.dog = loaded.userData.placeholder ? createCorgiPlaceholder() : loaded as Group; this.dogSource = loaded.userData.placeholder ? 'placeholder' : 'glb'; if (loaded.userData.placeholder) this.placeholders.push(this.dog);
     await Promise.all([...new Set([...this.world.entities.iterate()].flatMap(e => e.civilian?.pet === 'dog' ? [e.civilian.model ?? 'amb.dog'] : []))].map(model => this.loadPet(model)));
-    await this.loadHuman('npc.civilian-man-a');
+    if (this.world.scenario !== 'L1' || [...this.world.entities.iterate()].some(e => e.escort && !e.escort.child)) await this.loadHuman('npc.civilian-man-a');
     this.child = await this.registry.loadAsset('npc.brother', 'lod1') as Group;
     fitCivilianHeight(this.child, 'npc.brother');
     this.child.traverse(node => { if (node instanceof Mesh) node.castShadow = node.receiveShadow = true; });
@@ -127,6 +127,7 @@ export class NpcView extends Group {
       if (e.escort && !e.escort.child && !this.humans.has(model)) void this.loadHuman(model);
       if (e.civilian?.pet === 'dog' && !this.pets.has(model)) { this.loadPet(model); continue; }
       const prototype = e.civilian?.pet === 'dog' ? this.pets.get(model)! : e.escort ? e.escort.child ? this.child : this.humans.get(model) ?? this.humans.get('npc.civilian-man-a')! : this.dog;
+      if (!prototype) continue;
       const drawnModel = e.civilian?.pet === 'dog' ? model : prototype.userData.assetId ?? model;
       let hero = this.heroes.get(e.id);
       if (hero && hero.model !== drawnModel) { this.remove(hero.root); hero.humanAnimator?.dispose(); hero.badge?.remove(); this.heroes.delete(e.id); hero = undefined; }
