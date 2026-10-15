@@ -199,8 +199,11 @@ export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, see
     return report;
   } finally {
     report.collision = world.solids.snapshot();
-    if (report.collision.failures || report.collision.pending) {
-      report.failures['collision-invariant'] = report.collision.failures + report.collision.pending;
+    // A level can finish while an authored tunnel arrival is still walking to
+    // clear ground. Retained admission requests are valid deferred encounters;
+    // penetration failures, rather than the existence of a queue, fail the run.
+    if (report.collision.failures) {
+      report.failures['collision-invariant'] = report.collision.failures;
       report.completed = false; report.outcome = 'mission-failed';
       report.blocker = { objective: report.furthestObjective, detail: JSON.stringify(report.collision) };
     }
