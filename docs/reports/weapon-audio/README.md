@@ -46,23 +46,21 @@ Honest caveat: an agent cannot listen. The notes below come from the source desc
 
 ## Loudness (offline, FFmpeg EBU R128 on the shipped weapons.webm slices, padded to 1 s of silence each side)
 
-"played" adds the cue's runtime gain (0.8 for weapons, 0.5 for reload, 0.6 for the pump). True peak is measured on the decoded Opus slice.
+"played" adds the cue's runtime gain (1.0 for handgun, SMG, rifle, MG and HMG cues; 0.8 for shotgun, rocket and throwables; 0.5 for melee swings and reloads; 0.6 for the pump). True peak is measured on the decoded Opus slice.
 
-| class | cues | mean LUFS (sprite) | mean LUFS (played) | worst true peak dBTP |
-| --- | --- | --- | --- | --- |
-| melee | 29 | -28.6 | -30.6 | -5.2 |
-| handgun | 16 | -30.1 | -32.0 | -4.3 |
-| smg | 8 | -29.7 | -31.6 | -4.6 |
-| rifle | 8 | -29.2 | -31.1 | -4.9 |
-| machine-gun | 8 | -28.0 | -30.0 | -4.2 |
-| shotgun | 4 | -22.6 | -24.5 | -4.4 |
-| rocket | 4 | -22.2 | -24.1 | -4.8 |
-| minigun | 4 | -29.1 | -31.1 | -4.8 |
-| throw | 20 | -29.2 | -31.2 | -5.7 |
-| mounted (HMG) | 4 | -28.2 | -29.6 | -5.1 |
-| reload / pump | 6 | -26.5 | -31.5 | -5.6 |
+| class | cues | mean LUFS (sprite) | mean LUFS (played) | worst true peak dBTP | mean crest dB |
+| --- | --- | --- | --- | --- | --- |
+| melee | 29 | -28.6 | -34.6 | -5.2 | 11.5 |
+| handgun class (handgun, pistol) | 8 | -29.2 | -29.2 | -4.9 | 17.3 |
+| smg (smg, turret, nail gun, firecracker) | 16 | -27.7 | -28.2 | -4.3 | 14.8 |
+| rifle (assault, hunting) | 8 | -28.4 | -28.4 | -5.2 | 16.2 |
+| machine-gun (MG, army MG, minigun, HMG) | 16 | -27.2 | -27.2 | -3.6 | 14.8 |
+| shotgun | 4 | -22.6 | -24.5 | -4.4 | 13.6 |
+| rocket | 4 | -23.6 | -25.5 | -4.5 | 10.1 |
+| throw | 20 | -29.2 | -31.2 | -5.7 | 12.2 |
+| reload / pump | 6 | -26.5 | -31.5 | -5.6 | 15.5 |
 
-Handgun cue `action.weapon.handgun` -33.9 LUFS vs shotgun -22.2: 11.7 LU (gate: >= 4 LU). No weapon cue above -4.2 dBTP (gate: <= -1 dBTP). Per-cue table: `npx tsx tools/audio/weapon-loudness.ts`.
+Tested order: melee < handgun class (5.4 LU above melee, gate 3) < smg/rifle < machine-gun < shotgun (4.7 LU above the handgun class, gate 4) ~ rocket (within 3 LU); every firearm take is at least 3 LU above a punch; class crest at least 12 dB (rocket 10.1: the Residue boom is dense at the source), clip density at most 2%; no weapon cue above -3.6 dBTP (gate -1). Per-cue table: `npx tsx tools/audio/weapon-loudness.ts`.
 
 ## Tests
 
