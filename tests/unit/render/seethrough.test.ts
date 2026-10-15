@@ -9,7 +9,7 @@ import type { View } from '../../../src/render/View';
 
 const fixture = () => {
   const district = Object.assign(Object.create(DistrictView.prototype), {
-    foliage: { update: vi.fn(), reveal: true }, updateRoofs: vi.fn(),
+    foliage: { update: vi.fn(() => seeThrough.center.value.set(-10, -10)), reveal: true }, updateRoofs: vi.fn(),
     holeTarget: new Vector3(), holeCorner: new Vector3(), subjectBox: new Box3(),
   }) as DistrictView;
   const camera = new PerspectiveCamera(35, 16 / 9, .1, 1000);
@@ -57,4 +57,12 @@ test('passenger reveal follows the authoritative L2 truck and L4 bus instead of 
   world.missions.state.l2.seated = false; world.missions.state.l4.seated = false;
   expect(vehicles.playerBounds(bounds)).toBe(false); expect(entities.playerBounds(bounds)).toBe(false);
   geometry.dispose(); material.dispose();
+});
+
+test('disabling foliage reveal keeps the shared hole off screen instead of reprojecting it onto the player', () => {
+  const { district, view } = fixture();
+  district.updateFoliage(view, { x: 0, y: .7, z: 0 });
+  district.setFoliageReveal(false);
+  district.updateFoliage(view, { x: 0, y: .7, z: 0 });
+  expect(seeThrough.center.value.toArray()).toEqual([-10, -10]); expect(seeThrough.strength.value).toBe(0);
 });

@@ -8,13 +8,13 @@ export const seeThrough = {
   /** View-space z of the courier's farthest body point; only fragments nearer the camera are cut. */
   depth: uniform(0).setGroup(renderGroup),
   radius: uniform(.1).setGroup(renderGroup),
-  /** Hole radius for solid occluders (screen-height units): covers the whole survivor group or the player's vehicle, even behind a tall block. */
+  /** Hole radius for solid occluders (screen-height units): covers the courier or the complete player vehicle. */
   solidRadius: uniform(.17).setGroup(renderGroup),
   /** Solid reveal is immediate, including the first presented frame. */
   strength: uniform(0).setGroup(renderGroup),
   /** Legacy diagnostic: reveal stays bounded, including when the camera is inside a roof. */
   cover: uniform(0).setGroup(renderGroup),
-  /** World height of the courier's feet (the deck, stair or paving she stands on, 0 on the street). Solid occluders are only cut above it. */
+  /** World height of the subject's lowest point (feet or tyres). Solid occluders retain the support surface below it. */
   floor: uniform(0).setGroup(renderGroup),
   /** Mega Alpha only (E32 close camera): 0..1 eased opening of a courier-sized hole in the boss while it stands between the lens and the courier. */
   bossStrength: uniform(0).setGroup(renderGroup),

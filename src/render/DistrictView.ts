@@ -488,7 +488,7 @@ export class DistrictView extends Group {
     // Open immediately at spawn, teleport and checkpoint restore; never widen to the screen edges.
     seeThrough.strength.value = player && this.foliage.reveal && !this.seeThroughOff ? 1 : 0;
     this.occluderId = '';
-    if (!player) return;
+    if (!player || !this.foliage.reveal) return;
     const feet = player.y - .7;
     const box = subject ?? this.subjectBox.set(this.holeTarget.set(player.x - .55, feet, player.z - .55), this.holeCorner.set(player.x + .55, feet + 1.9, player.z + .55));
     seeThrough.floor.value = box.min.y;
@@ -555,7 +555,7 @@ export class DistrictView extends Group {
   /** Scene Lab: solid occluders never open (the uncut picture the cut-pixel gate diffs against). */
   seeThroughOff = false;
   private frameSeconds = 0;
-  /** Scene Lab: the placement that currently opens the hole (`hugged` when one fills the lens). */
+  /** Legacy footprint-probe diagnostic; rendering now tests foreground fragments directly. */
   occluderId = '';
   private readonly holeTarget = new Vector3();
   private readonly holeCorner = new Vector3();
