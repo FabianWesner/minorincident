@@ -19,7 +19,7 @@ test('PO #21b @E23 survivor-3: ordinary clicks lead from the wrong plaza bus to 
     const def = l5Survivors.find(s => s.key === key)!;
     await page.evaluate(async at => { const a = window.__SS__!; a.teleport(1, { x: at[0], z: at[1] }); await a.step(65); }, def.ringAt);
   }
-  await page.evaluate(async () => { const a = window.__SS__!; a.missions.restore('survivor-3'); a.teleport(1, { x: -9.96, z: 4.55 }); a.camera.follow(); a.input.clear(); await a.step(90); await a.screenshotReady(); });
+  await page.evaluate(async () => { const a = window.__SS__!; a.missions.restore('survivor-3'); a.teleport(1, { x: -9.96, z: 4.55 }); a.cheats.god(false); a.survivor.damage(Math.max(0, a.getEntity(1)!.health.current - 22)); a.cheats.god(true); a.camera.follow(); a.input.clear(); await a.step(90); await a.screenshotReady(); });
   await expect(page.locator('[data-testid="minimap-cue"]')).toHaveAttribute('data-survivor', 'sam');
   await expect(page.locator('[data-testid="sign-of-life"]')).toContainText('Lakeshore Avenue');
   await page.screenshot({ path: 'test-results/l5-po-2/wrong-bus-guidance.png' });

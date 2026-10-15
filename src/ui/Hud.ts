@@ -360,7 +360,7 @@ export class Hud {
     // The street and live distance distinguish Sam's bus from the plaza wrecks.
     let nearest: (typeof l5.survivors)[number] | undefined, distance = Infinity;
     for (const r of l5.survivors) {
-      if (r.status !== 'hidden') continue;
+      if (r.status !== 'hidden' || l5.phase !== 'search' && l5.phase !== 'metro') continue;
       const ring = mission.def.anchors[`l5-ring-${r.key}`];
       const d = Math.hypot(ring.x - px, ring.z - pz);
       if (d < distance) { nearest = r; distance = d; }
