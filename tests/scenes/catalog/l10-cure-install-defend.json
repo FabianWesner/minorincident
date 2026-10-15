@@ -195,10 +195,38 @@
     830,
     1290
   ],
-  "sheet": 6,
+  "sheet": 130,
   "expect": {
     "consoleErrors": 0,
-    "lodPlaceholderFramesMax": 0
+    "lodPlaceholderFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "cure": {
+      "chargeTicks": [
+        500,
+        1100
+      ],
+      "outsideFrames": [
+        200,
+        650
+      ],
+      "outsideAdvance": [
+        0,
+        0
+      ],
+      "insideFrames": [
+        500,
+        1100
+      ],
+      "releaseCount": [
+        0,
+        0
+      ],
+      "insideMisses": [
+        0,
+        0
+      ]
+    }
   },
   "hud": true,
   "megaHud": true,

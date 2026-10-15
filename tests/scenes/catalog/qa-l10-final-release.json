@@ -1,0 +1,114 @@
+{
+  "seed": 32,
+  "ground": "asphalt",
+  "time": "L4",
+  "size": 100,
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "hud": true,
+  "cureProgression": {
+    "checkpoint": "cure-disperse-ready",
+    "anchors": {
+      "cure-console": [
+        0,
+        0
+      ],
+      "cure-disperse-ready": [
+        0,
+        0
+      ]
+    },
+    "releaseReady": true
+  },
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "lodPlaceholderFramesMax": 0,
+    "cure": {
+      "chargeTicks": [
+        3600,
+        3600
+      ],
+      "releaseCount": [
+        1,
+        1
+      ],
+      "radius": [
+        25,
+        30
+      ],
+      "fanFrames": [
+        80,
+        180
+      ],
+      "healthyDamage": [
+        0,
+        0
+      ],
+      "lateDeaths": [
+        0,
+        0
+      ],
+      "mistPuffs": [
+        10,
+        400
+      ],
+      "smokeOverBudget": [
+        0,
+        0
+      ]
+    }
+  },
+  "name": "qa-l10-final-release",
+  "note": "Explicit release interaction at a precharged installed console, repeated presses never emit a second release. Reuses the S8 all-species mist fixture for kill/control coverage.",
+  "frames": 180,
+  "sheet": 30,
+  "props": [
+    {
+      "id": "fan",
+      "asset": "kit.dispersal-fan-housing",
+      "at": [
+        10,
+        -12
+      ]
+    }
+  ],
+  "script": [
+    {
+      "frame": 20,
+      "actor": "courier",
+      "do": {
+        "interact": true
+      }
+    },
+    {
+      "frame": 60,
+      "actor": "courier",
+      "do": {
+        "interact": true
+      }
+    },
+    {
+      "frame": 100,
+      "actor": "courier",
+      "do": {
+        "interact": true
+      }
+    }
+  ]
+}

@@ -23,12 +23,54 @@
     "yaw": 0
   },
   "time": "L10-night",
-  "frames": 2160,
+  "frames": 2200,
   "expect": {
     "consoleErrors": 0,
     "drawCallsMax": 300,
     "trianglesMax": 500000,
-    "lodPlaceholderFramesMax": 0
+    "lodPlaceholderFramesMax": 0,
+    "cure": {
+      "playableTravel": [
+        4,
+        20
+      ],
+      "survivors": [
+        3,
+        6
+      ],
+      "radius": [
+        1500,
+        1510
+      ],
+      "titleFrames": [
+        1,
+        60
+      ],
+      "pullScale": [
+        6.9,
+        7.1
+      ],
+      "fanFrames": [
+        2000,
+        2200
+      ],
+      "healthyDamage": [
+        0,
+        0
+      ],
+      "lateDeaths": [
+        0,
+        0
+      ],
+      "mistPuffs": [
+        10,
+        400
+      ],
+      "smokeOverBudget": [
+        0,
+        0
+      ]
+    }
   },
   "name": "qa-l10-epilogue",
   "note": "Production R7 game camera, last 36 s of the 150 s playable epilogue. Smooth expanding follow rig preserves input and player wheel zoom. Survivors walk from the existing refuge, pale cure mist fills the complex/coarse horizon, corpses remain. Review frames at 114/126/138/150 s in both tiers and zooms on both backends.",
@@ -85,5 +127,6 @@
         "pace": "walk"
       }
     }
-  ]
+  ],
+  "hud": true
 }
