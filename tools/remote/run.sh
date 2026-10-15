@@ -66,10 +66,11 @@ skip_dirs = ("test-results/", "initial-drafts/", "experiment/", "references/", "
 with_ = [w.strip("/") + "/" for w in os.environ.get("MI_WITH", "").split("\n") if w.strip()]
 def keep(f):
     if any(f.startswith(w) or f == w[:-1] for w in with_): return True
-    if f.startswith(skip_dirs): return False
+    if f.startswith(skip_dirs) or (f + "/") in skip_dirs: return False
     if f.startswith("assets/") and f.rsplit(".", 1)[-1] in ("blend", "wav", "ogg", "mp3", "webm", "mp4"): return False
     return True
-out = sorted(f for f in files if keep(f) and os.path.lexists(os.path.join(wt, f)))
+# Dangling symlinks (e.g. a removed sibling checkout) would make rsync fail.
+out = sorted(f for f in files if keep(f) and os.path.exists(os.path.join(wt, f)))
 sys.stdout.buffer.write(b"".join(f.encode("utf-8", "surrogateescape") + b"\0" for f in out))
 PY
 [ -s "$LIST" ] || { echo "run.sh: empty file list" >&2; exit 70; }
