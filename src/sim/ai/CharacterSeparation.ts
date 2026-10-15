@@ -92,7 +92,7 @@ export function installCharacterSeparation(world: SimWorld): void {
       // A protected story actor holding a post is authoritative like the courier;
       // crowd overlap cannot push the invitation away from its interaction. Damage may still shove it.
       const angle = e.id * 2.399963, scale = neighbor.fixed ? 1 : .5;
-      nav.move(e.transform, (distance ? dx / distance : Math.cos(angle)) * overlap * scale, (distance ? dz / distance : Math.sin(angle)) * overlap * scale, actorRadius(e));
+      nav.move(e.transform, (distance ? dx / distance : Math.cos(angle)) * overlap * scale, (distance ? dz / distance : Math.sin(angle)) * overlap * scale, actorRadius(e), true);
     };
     // One ordinary soft pass; a second local pass keeps leaning hull attackers'
     // upper bodies apart while the registry commits their physical footprints.
