@@ -15,7 +15,7 @@ function spacingRadius(e: EntitySnapshot): number {
   if (e.civilian?.pet) return .5;
   return e.survivor || e.companion || e.escort || (e.civilian && e.civilian.state !== 'infected' && e.civilian.state !== 'finished') || e.infected ? e.combat?.radius ?? .35 : 0;
 }
-type Body = { entity: EntitySnapshot; radius: number; extra: number; contact: number; category: number; infected: boolean; courier: boolean; crowd: boolean; hullContact: boolean; l1: boolean; fixed: boolean; charge: boolean; passiveCompanion: boolean };
+type Body = { entity: EntitySnapshot; radius: number; extra: number; contact: number; category: number; infected: boolean; courier: boolean; crowd: boolean; hullContact: boolean; courierContact: boolean; l1: boolean; fixed: boolean; charge: boolean; passiveCompanion: boolean };
 /** Combat/presentation spacing is wider than the physical footprint for companions and pets.
  * Resolve body circles against the same static geometry as steering, after physics.
  * The survivor stays authoritative in Rapier; AI yields to it, including during
@@ -40,16 +40,18 @@ export function installCharacterSeparation(world: SimWorld): void {
     for (const id of radiusIds) radii[id] = undefined; radiusIds.length = 0;
     let bodyCount = 0, maximumRadius = 0;
     const drivenHull = world.vehicles?.active == null ? undefined : world.vehicles.cars.get(world.vehicles.active)?.physics;
+    const courier = world.entities.get(1), freeCourier = courier && !courier.hidden && !courier.pendingAdmission;
     for (const e of world.entities.iterate()) {
       const r = spacingRadius(e); if (!r) continue;
       let body = records.get(e);
-      if (!body) { body = { entity: e, radius: r, extra: 0, contact: 0, category: 0, infected: false, courier: false, crowd: false, hullContact: false, l1: false, fixed: false, charge: false, passiveCompanion: false }; records.set(e, body); }
+      if (!body) { body = { entity: e, radius: r, extra: 0, contact: 0, category: 0, infected: false, courier: false, crowd: false, hullContact: false, courierContact: false, l1: false, fixed: false, charge: false, passiveCompanion: false }; records.set(e, body); }
       else body.radius = r;
       body.extra = Math.max(0, r - .35); body.contact = infectedContactDistance(r);
       // These contact flags cannot change during the separation phase; cache them once per body.
       body.infected = !!e.infected; body.courier = !!e.survivor; body.l1 = !!e.infected?.l1;
       body.crowd = !!e.infected && (!!e.combat?.attacking || e.infected.state === 'chase');
       body.hullContact = !!drivenHull && body.infected && drivenHull.hullDistance(e.transform.x, e.transform.z) < 3;
+      body.courierContact = !!freeCourier && body.infected && Math.hypot(e.transform.x - courier.transform.x, e.transform.z - courier.transform.z) < 2;
       body.passiveCompanion = !!e.companion && !e.companion.following && e.companion.state === 'follow';
       body.fixed = !!(e.infected?.pursuit && e.infected.specialAttack) || body.courier || !!(e.civilian?.ally?.hold && storyProtected(world, e)) || e.civilian?.state === 'grabbed' || body.passiveCompanion;
       const attack = e.infected?.specialAttack;
@@ -95,9 +97,10 @@ export function installCharacterSeparation(world: SimWorld): void {
       nav.move(e.transform, (distance ? dx / distance : Math.cos(angle)) * overlap * scale, (distance ? dz / distance : Math.sin(angle)) * overlap * scale, actorRadius(e), true);
     };
     // Keep the existing three friendly-NPC spacing passes through narrow queues.
-    // Infected need one soft pass (two at a driven hull) before the hard commit.
+    // Nearby infected also yield to the courier's resolved movement; distant
+    // infected need one soft pass (two at a driven hull) before the hard commit.
     for (let pass = 0; pass < 3; pass++) for (const body of bodies) {
-      if (pass && body.infected && (!body.hullContact || pass > 1)) continue;
+      if (pass && body.infected && !body.courierContact && (!body.hullContact || pass > 1)) continue;
       const { entity: e, radius: r } = body; active = body;
       query.x = e.transform.x; query.z = e.transform.z; query.r = r + maximumRadius + Math.max(.45, .22 + maximumRadius - .35); // covers the largest gap below
       // Consume the same unsorted bucket order directly; nav.move does not mutate the spatial index.
