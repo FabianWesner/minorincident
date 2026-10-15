@@ -264,7 +264,9 @@ export class CrowdLocomotion {
     const previous = this.heldPoses.get(id);
     const a = instance.elements, b = previous?.instance.elements;
     const barelyMoved = cadence > 1 && b && (a[12] - b[12]) ** 2 + (a[13] - b[13]) ** 2 + (a[14] - b[14]) ** 2 <= .05 ** 2;
-    if (procedural && cadence > 1 && barelyMoved && previous && previous.clip === clip && time > previous.time && time - previous.time < 1 / 40 && step % cadence !== id % cadence) {
+    // A 25 ms age limit disabled the phone's existing alternate-frame reuse at 30 Hz.
+    // Retain one phone frame while the full world pose moves at most five centimetres.
+    if (procedural && cadence > 1 && barelyMoved && previous && previous.clip === clip && time > previous.time && time - previous.time < 1 / 20 && step % cadence !== id % cadence) {
       // Hold the complete world pose, so even between solves a planted foot cannot slide with the root.
       const contacts = this.footwork.states.get(id);
       if (contacts && this.footwork.admit(id)) contacts.active = step;

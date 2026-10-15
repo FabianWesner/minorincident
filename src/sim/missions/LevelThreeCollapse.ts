@@ -399,6 +399,7 @@ export class LevelThreeCollapse {
   private populate(segment: number): void {
     const s = this.s; if (s.populated[segment]) return;
     s.populated[segment] = true;
+    const planned: Pending[] = [];
     const doors = this.doors(), scale = this.world.infected!.director.tier === 'low' ? .5 : 1;
     for (const [x, street, size] of l3.density.groups[segment]) {
       const home = this.snap({ x, z: l3.map.streets[street] + (street === 'blvd' ? 0 : 0) }, .5);
@@ -410,9 +411,12 @@ export class LevelThreeCollapse {
         const cluster = Math.floor(i / clusterSize) % offsets.length;
         const spread = cluster === 0 ? home : this.snap({ x: this.clearMouth(home.x + offsets[cluster], street), z: home.z + (i % clusterSize - (clusterSize - 1) / 2) * 1.3 }, .5);
         const near = doors.filter(d => l3Street(d.z) === street).sort((a, b) => dist(a, spread) - dist(b, spread)).slice(0, 2);
-        s.pending.push({ id: 0, door: near[i % near.length].name, home: spread, segment, at: 0, streetExtra: cluster > 0 });
+        planned.push({ id: 0, door: near[i % near.length].name, home: spread, segment, at: 0, streetExtra: cluster > 0 });
       }
     }
+    // A distant checkpoint may not have populated this segment yet. Its later arrivals
+    // need the same retry relief as the entries already queued when the courier respawned.
+    s.pending.push(...this.easePending(planned));
     if (segment === 2) this.planHorde();
   }
   /**
@@ -429,7 +433,7 @@ export class LevelThreeCollapse {
       for (let i = 0; i < 5 * Math.ceil(h.packSize / 5 * scale); i++) packs.push({ id: 0, door: near[i % near.length].name, home, segment: 2, at: 0, horde: true });
     }
     // The authored horde must arrive during the chase, ahead of optional street residents.
-    s.pending.unshift(...packs);
+    s.pending.unshift(...this.easePending(packs));
   }
   /** Pursuers follow the authored on-ramp legs; a single distant goal starves budgeted crowd routing. */
   private rushPursuer(id: number, home?: Point): void {
@@ -653,6 +657,8 @@ export class LevelThreeCollapse {
   /** Death-loop relief (data: `l3.mercy`), applied on the first tick after a respawn. */
   private mercyDue = false;
   private lastDeathX = -Infinity;
+  private mercyFrom = Infinity;
+  private mercyTo = -Infinity;
   /** Side-street spills used before the last death (kept through the checkpoint restore). */
   private spentSpills: L3State['spills'] = {};
   /** Respawns per checkpoint (a death loop is several deaths at the same checkpoint, not the level's death total). */
@@ -660,6 +666,17 @@ export class LevelThreeCollapse {
   private mercyFraction(later = 0): number {
     const m = l3.mercy;
     return Math.max(0, Math.min(m.maxFrac, m.stepFrac * ((this.respawns[this.mission.state.checkpoint ?? 'start'] ?? 0) - m.fromDeaths - later + 1)));
+  }
+  /** Apply relief once to a new queue, or to the restored queue. Running IDs and entries outside its window stay intact. */
+  private easePending(entries: Pending[]): Pending[] {
+    const f = this.mercyFraction();
+    if (f <= 0 || (this.s.phase !== 'corridor' && this.s.phase !== 'fallback')) return entries;
+    let i = 0;
+    return entries.filter(q => {
+      if (q.id !== 0 || q.home.x <= this.mercyFrom || q.home.x >= this.mercyTo) return true;
+      const before = Math.floor(i++ * f);
+      return Math.floor(i * f) === before;
+    });
   }
   private mercy(): void {
     this.mercyDue = false;
@@ -669,10 +686,10 @@ export class LevelThreeCollapse {
     // The window starts behindM behind the respawn (a crowd standing on the checkpoint, real-input run 10-12) and reaches 30 m past where the courier last died: a respawn far behind the death spot (the yard fallback
     // checkpoint) must still thin the pack that keeps killing her (real-input runs died 11x at the Boulevard corner).
     const p = world.entities.get(1)!.transform, [, b] = l3.mercy.aheadM, reach = Math.max(b, this.lastDeathX - p.x + 30), ahead = (x: number) => x > p.x - l3.mercy.behindM && x < p.x + reach;
+    this.mercyFrom = p.x - l3.mercy.behindM; this.mercyTo = p.x + reach;
     const thinBy = <T>(f: number, items: T[], remove: (item: T) => void) => items.forEach((item, i) => { if (Math.floor((i + 1) * f) > Math.floor(i * f)) remove(item); });
     if (live > 0) thinBy(live, [...ai.active].filter(e => e.health.current > 0 && ahead(e.transform.x)).sort((x, y) => x.id - y.id), e => ai.release(e));
-    const waiting = (s.pending as Pending[]).filter(q => q.id === 0 && ahead(q.home.x));
-    thinBy(frac, waiting, q => { s.pending.splice(s.pending.indexOf(q), 1); });
+    s.pending = this.easePending(s.pending as Pending[]);
   }
   restore(delta: number): void {
     const s = this.mission.state.l3; if (!s) return;
