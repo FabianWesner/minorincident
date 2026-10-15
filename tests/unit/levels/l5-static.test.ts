@@ -62,7 +62,7 @@ describe('L5 static', () => {
     expect(layout.roads).toEqual(l4Layout.roads); expect(layout.bounds).toEqual(l4Layout.bounds); expect(layout.district).toBe('D-FAIR');
     const mine = new Map(layout.placements.map(p => [p.id, p]));
     const missing: string[] = [];
-    for (const p of base.placements) {
+    for (const p of l4Layout.placements.filter(p => !p.id.startsWith('l4-'))) {
       const q = mine.get(p.id);
       if (!q || q.assetId !== p.assetId || q.position.some((v, i) => v !== p.position[i]) || q.yaw !== p.yaw || q.scale.some((v, i) => v !== p.scale[i])) missing.push(p.id);
     }

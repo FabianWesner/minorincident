@@ -47,6 +47,7 @@ describe('L2 escape death loop', () => {
     expect(m.state.checkpoint).toBe('escape');
     const counts: number[] = [];
     for (let death = 1; death <= 4; death++) { die(w, m, 'escape'); counts.push(near(w, 25)); }
+    console.log('L2 retry density', { initialScrum: n, countsWithin25m: counts });
     // Death 1 respawns into the full scrum; from the 2nd respawn on it thins, step by step.
     expect(counts[0]).toBeGreaterThanOrEqual(n - 2);
     expect(counts[1]).toBeLessThan(counts[0]);

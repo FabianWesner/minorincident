@@ -81,10 +81,11 @@ export const l2 = {
   escape: {
     /** Group homes of the wandering infected (x, z, size); spawned at emergence doors when the escape starts. */
     groups: [
-      [-46, 2, 5], [-12, 2, 4], [30, 2, 4], [-12, -12, 3], [32, -12, 3], [-46, 12, 2], [-10, 12, 2], [70, -20, 2], [-82, 10, 1],
+      [-30, 8, 4], [-30, 22, 4], [4, 30, 4], [-64, 8, 4], [-64, 25, 4], [4, 48, 4], [48, 48, 4], [40, -31, 4],
     ] as readonly (readonly [number, number, number])[],
+    /** Both street routes carry small groups; the central junctions remain open for breaking away. */
     /** People still out on the streets (from the alarm on), kept away from the bridge cluster. */
-    leashM: 6, civilians: [[-30, 0], [-45, 30], [5, -31], [-80, -20], [-64, -22], [14, 15], [-20, -15], [40, -20], [0, 20], [20, -14]] as readonly P[],
+    leashM: 6, streetLookS: 15, civilians: [[-30, 0], [-45, 30], [5, -31], [-80, -20], [-64, -22], [14, 15], [-20, -15], [40, -20], [0, 20], [20, -14]] as readonly P[],
     caps: { high: 60, low: 30 },
     /** Low tier (phone): ambush, street groups and cluster are halved with the cap. */
     lowScale: .5,
@@ -97,7 +98,9 @@ export const l2 = {
   checkpoint: { gateX: 76, gateZ: [24.6, 35.6] as P, closeWithinS: 1.5, holdS: 2, officers: 4, civilians: 8, policeVehicles: 3, shootM: 15, coverM: 20,
     /** PO 2026-10-08: the officers visibly fire (allied fighters v2 handguns: seeded hit chance, muzzle flash, tracer); hits knock
      * infected down per the recover rule, only the closed gate stops them. Shots are loud events (E21 gunfire rule). */
-    gun: { damage: 20, shotS: .6, rangeM: 22, nearM: 12, hitNear: .7, hitFar: .3 }, lineM: 10, gunfireM: 20, gunfireHoldS: 6, gunfireGapS: .5 },
+    gun: { damage: 20, shotS: .6, rangeM: 22, nearM: 12, hitNear: .7, hitFar: .3 }, lineM: 10, gunfireM: 20, gunfireHoldS: 6, gunfireGapS: .5,
+    /** Arrival draws the approach horde to the fixed police line, with the riverside bypass still open. */
+    hordeTriggerM: 22, hordeRushS: 18 },
   /** Multiplier on the infected hit (L1: 10 per hit, 0.9 s cycle). Starting tuning for the 'fight everything' failure. */
   infectedDamage: 1.8,
   /**
@@ -136,6 +139,7 @@ export const l2Truck = truck;
 export const axeStandX = 2.85;
 /** Named world points authored into the L2 layout copy (resolved through the ordinary mission anchor lookup). */
 export const l2Anchors: Record<string, P> = {
+  ...Object.fromEntries(l2.escape.groups.map(([x, z], i) => [`l2-street-edge-${i + 1}`, [x, z] as P])),
   'l2-start': stationPoint(3.8, 2.7),   // on the apron in front of the left bay, clear of the centre pier and its bollards
   // Stand-to-interact point of the axe rack on the solid wall left of the left bay (z 5.0), 1.05 m out from the facade (see L2Props); the old spot hung on the centre pier in the bay opening.
   'l2-axe-rack': stationPoint(axeStandX, 5.0),

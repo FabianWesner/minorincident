@@ -1,3 +1,4 @@
+import { moveFairhavenCellar } from '../fairhavenCellar';
 import { l4, l4FuelCrater, l4Anchors, l4Cars, l4ConvoyStations, l4Line, l4Route, l4RoutePose } from '../../data/l4';
 import subwayLayout from '../../../public/assets/layouts/D-SUBWAY.layout.json' with { type: 'json' };
 import { l5, l5Anchors, l5Survivors } from '../../data/l5';
@@ -111,6 +112,7 @@ export function l5Frontages(layout: DistrictLayout): { x: number; z: number; axi
 export function levelFiveLayouts(layouts: DistrictLayout[]): DistrictLayout[] {
   return structuredClone(layouts).map(layout => {
     if (layout.district !== 'D-FAIR') return layout;
+    moveFairhavenCellar(layout);
     const door = layout.anchors['kessler-cellar-door'], inner = layout.anchors['cellar-interior'];
     for (const [name, [x, z]] of Object.entries(l5Anchors)) layout.anchors[name] = { position: [x, 0, z], yaw: 0 };
     for (const name of ['pair-plaza', 'pair-harbor-street', 'pair-kessler-lane']) layout.anchors[name] = { position: [l4Anchors[name][0], 0, l4Anchors[name][1]], yaw: 0 };

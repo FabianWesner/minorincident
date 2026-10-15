@@ -1,5 +1,6 @@
 import { l3EvacuationText } from '../sim/missions/LevelThreeCollapse';
 import { l5Survivors } from '../data/l5';
+import { l4CellarDistance } from '../data/l4';
 import { cureFinaleText } from '../sim/missions/LevelTenFinale';
 import { isMega } from '../data/megaPresentation';
 import { MegaRing } from './MegaRing';
@@ -38,6 +39,8 @@ export class Hud {
   private readonly megaRing = new MegaRing(this.map);
   private readonly playerPin = this.pin('player', '▲');
   private readonly objectivePin = this.pin('objective');
+  private readonly routePin = this.pin('route', '◆');
+  private readonly cellarTurn = { x: 0, z: 0 };
   private readonly homePin = this.pin('home', '⌂');
   /** E23: the direction of the sign of life the courier just heard (4 s), and the survivors counter beside the objective. */
   private readonly cuePin = this.pin('cue', '♪');
@@ -85,7 +88,8 @@ export class Hud {
     this.map.className = 'hud-map'; this.map.setAttribute('aria-label', 'North-up minimap, range 30 meters');
     const north = node('span', 'minimap-north', 'N'); north.className = 'hud-map-n';
     this.cuePin.hidden = true; this.survivorText.hidden = this.cueText.hidden = true;
-    this.map.append(north, this.playerPin, this.objectivePin, this.homePin, this.cuePin);
+    this.routePin.style.background = '#64d9ee'; this.routePin.setAttribute('aria-label', 'Next turn on the cellar route');
+    this.map.append(north, this.routePin, this.playerPin, this.objectivePin, this.homePin, this.cuePin);
     // Allocated once; no entity snapshots, DOM creation, or pin lists per frame.
     for (let i = 0; i < 256; i++) { const pin = this.pin(`threat-${i}`); pin.classList.add('hud-pin-threat'); pin.hidden = true; this.threats.push(pin); this.map.append(pin); }
     this.tracker.className = 'hud-tracker hud-panel'; this.tracker.append(this.trackerText, this.survivorText, this.cueText);
@@ -243,6 +247,9 @@ export class Hud {
     attribute(this.corgiBadge, 'data-state', corgi ? corgi.hidden ? 'hiding' : 'following' : 'awaiting-rescue');
     this.place(this.playerPin, px, pz, px, pz); style(this.playerPin, 'rotate', `${-player.transform.yaw + Math.PI / 2}rad`);
     const anchor = markerAnchor(mission);
+    const cellarDistance = mission?.def.l4 && mission.state.l4?.phase === 'collapse' ? l4CellarDistance({ x: px, z: pz }, this.cellarTurn) : null;
+    setHidden(this.routePin, cellarDistance === null || !!anchor && Math.hypot(this.cellarTurn.x - anchor.x, this.cellarTurn.z - anchor.z) < 2);
+    if (cellarDistance !== null) this.place(this.routePin, this.cellarTurn.x, this.cellarTurn.z, px, pz, true);
     setHidden(this.objectivePin, !anchor);
     if (anchor) this.place(this.objectivePin, anchor.x, anchor.z, px, pz, true);
     const home = mission?.def.anchors.home ?? player.survivor?.checkpoint;
@@ -253,7 +260,7 @@ export class Hud {
     setHidden(this.tracker, !objective && !done); if (done) text(this.trackerText, `✓ ${done.text}`);
     const remaining = mission?.def.id === 'L3' && mission.state.deadlineTicks !== null ? Math.ceil(mission.state.deadlineTicks / 60) : null;
     const deadline = remaining === null ? '' : `Gates close in ${Math.floor(remaining / 60)}:${String(remaining % 60).padStart(2, '0')} · `;
-    if (objective) text(this.trackerText, `${deadline}${l3EvacuationText(mission) ?? cureFinaleText(mission) ?? objective.text}${anchor ? ` · ${Math.round(Math.hypot(anchor.x - px, anchor.z - pz))}\u00a0m` : ''}`);
+    if (objective) text(this.trackerText, `${deadline}${l3EvacuationText(mission) ?? cureFinaleText(mission) ?? objective.text}${anchor ? ` · ${Math.round(cellarDistance ?? Math.hypot(anchor.x - px, anchor.z - pz))}\u00a0m` : ''}`);
     const finaleStep = mission?.def.id === 'L10' ? mission.interactStepInRange() : null;
     const finaleAction = !!finaleStep && ['install', 'hold', 'release'].includes(finaleStep.id);
     setHidden(this.finaleAction, !finaleAction);

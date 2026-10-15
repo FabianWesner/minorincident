@@ -1,0 +1,38 @@
+{
+  "stats": {
+    "startTime": "2026-10-15T10:56:31.434Z",
+    "duration": 793068.069,
+    "expected": 94,
+    "skipped": 0,
+    "unexpected": 5,
+    "flaky": 0
+  },
+  "failures": [
+    {
+      "test": "T-E22-cellar-pos @E22 L4 end: Lakeshore pavement, door, descent, brace; L5 start in the same yard (game camera captures)",
+      "status": "unexpected",
+      "error": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m\"c\u001b[7me\u001b[27mlla\u001b[7mr\u001b[27m\"\u001b[39m\nReceived: \u001b[31m\"c\u001b[7mo\u001b[27mlla\u001b[7mpse\u001b[27m\"\u001b[39m"
+    },
+    {
+      "test": "T-E23-cellar-pos @E23 L5 start: the courier stands in the cellar yard under the game camera, the brace is reachable by keyboard and unbarring steps out on Kessler Lane",
+      "status": "unexpected",
+      "error": "Error: steps out on Kessler Lane (l5-out)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m3\u001b[39m\nReceived:   \u001b[31m163.18394506050788\u001b[39m"
+    },
+    {
+      "test": "T-E22-blank @E22 L4 the walk along Harbor Street to the relocated cellar never leaves the viewport one flat colour (webgl)",
+      "status": "unexpected",
+      "error": "Error: walked west toward the relocated door\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThan\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: < \u001b[32m-79\u001b[39m\nReceived:   \u001b[31m-76.0770034790039\u001b[39m"
+    },
+    {
+      "test": "T-E22-blank @E22 L4 the walk along Harbor Street to the relocated cellar never leaves the viewport one flat colour (webgpu)",
+      "status": "unexpected",
+      "error": "Error: sampled the roof band\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeGreaterThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: >= \u001b[32m3\u001b[39m\nReceived:    \u001b[31m2\u001b[39m"
+    },
+    {
+      "test": "@E22 L4 respawn: mouse WASD stick webgpu high zoom 1",
+      "status": "unexpected",
+      "error": "Error: {\"point\":{\"x\":-27.269213562373096,\"z\":3.269213562373095},\"screen\":{\"x\":469.06788828227957,\"y\":360},\"input\":{\"move\":{\"x\":0,\"z\":0},\"aim\":{\"x\":-0.7071067811865367,\"z\":0.7071067811865582},\"aimSource\":\"pointer\",\"left\":{\"down\":true,\"held\":false,\"up\":true},\"right\":{\"down\":false,\"held\":false,\"up\":false},\"selector\":0,\"interact\":false,\"pause\":false,\"cancelMove\":true,\"drive\":{\"throttle\":0,\"steer\":0},\"brake\":false,\"aimPoint\":{\"x\":-27.26921345209462,\"z\":3.269213452094661},\"mouseAttack\":true,\"attackTarget\":{\"id\":155,\"side\":\"LEFT\"},\"pointerTarget\":true},\"picks\":[{\"id\":155,\"score\":0.8795645364174937,\"depth\":17.400189447526074,\"drawn\":true}]}\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeDefined\u001b[2m()\u001b[22m\n\nReceived: \u001b[31mundefined\u001b[39m"
+    }
+  ],
+  "note": "Fresh build 8; four entrance checks are rerun after updated coordinates and curb clearance. The remaining movement check clicked a visible infected."
+}
