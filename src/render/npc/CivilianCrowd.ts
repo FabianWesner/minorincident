@@ -1,7 +1,7 @@
 import { resolveCrowdAppearance, markCrowdAppearance, crowdShirt, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout } from '../characters/CrowdAppearance';
 import type { CrowdAccessories } from '../characters/CrowdAccessories';
 import { infectedContactDistance } from '../../sim/ai/CharacterSeparation';
-import { useBakedCivilianPose, canHoldCrowdPose, crowdLodPixels } from '../lodPolicy';
+import { useBakedCivilianPose, canHoldCrowdPose } from '../lodPolicy';
 import { CrowdVisibility } from '../CrowdVisibility';
 // E07 GPU rigid-part crowd path, adapted from Bruno InstancedGroup.js (MIT).
 import { StaticCorpses } from '../characters/StaticCorpses';
@@ -393,11 +393,11 @@ export class CivilianCrowd extends Group {
   constructor(private readonly world: SimWorld, shading?: Materials, private readonly accessories?: CrowdAccessories, private readonly warm?: (batch: Group) => Promise<void>) {
     super(); this.props = new RoutineProps(shading); this.add(this.props); this.shading=shading;
     // The L6 cast is fixed: bake it while briefing, before Mission.begin creates the people.
-    const models=this.staged ? this.nearbyModels(32) : world.scenario==='L7'?[...new Set([...world.entities.iterate()].flatMap(e => { const model = crowdModelOf(e); return model ? [model] : []; }))]:world.scenario==='L6'?[...new Set([...l6CastModels,...l1Pedestrians.models])]:world.scenario==='L3'?l3CivilianModels:coreCivilianModels;
+    const models=this.staged ? [] : world.scenario==='L7'?[...new Set([...world.entities.iterate()].flatMap(e => { const model = crowdModelOf(e); return model ? [model] : []; }))]:world.scenario==='L6'?[...new Set([...l6CastModels,...l1Pedestrians.models])]:world.scenario==='L3'?l3CivilianModels:coreCivilianModels;
     for (const model of models) { this.known.add(model); if (!this.staged) this.farModels.add(model); }
-    // Near tiers cover the spawn; init also prepares the far/hero bands selected
-    // by the actual camera. Other tiers join after Begin.
-    this.batches=models.flatMap(model=>this.staged ? [this.batch(model,'lod1')] : [this.batch(model,'lod1'),this.batch(model,'lod2')]);if (this.batches.length) this.add(...this.batches);
+    // L1's initial camera chooses its exact tiers in init; other casts retain
+    // their authored loading barrier, including people created at Begin.
+    this.batches=models.flatMap(model=>[this.batch(model,'lod1'),this.batch(model,'lod2')]);if (this.batches.length) this.add(...this.batches);
   }
   /** L1 has a long peaceful delivery route. Later lab/fire-station actors need not
    * consume the initial download; checkpoints already contain their live cast. */
@@ -438,7 +438,7 @@ export class CivilianCrowd extends Group {
   private loadHero(model: string): void {
     if (this.low || this.heroLoads.has(model)) return;
     const hero = this.batch(model, 'lod0');
-    this.heroLoads.set(model, hero.init().then(async () => { if (!this.disposed && this.staged && this.world.missions!.state.phase === 'playing') await this.warm?.(hero); if (this.disposed) { hero.dispose(); return; } this.batches.push(hero); this.add(hero); this.visibility.heroModels.add(model); }, () => {}));
+    this.heroLoads.set(model, hero.init().then(async () => { if (!this.disposed && this.staged && this.world.missions!.state.phase === 'playing') await this.warm?.(hero); if (this.disposed) { hero.dispose(); return; } this.batches.push(hero); this.add(hero); this.resident(model, 'lod0'); this.visibility.heroModels.add(model); }, () => {}));
   }
   private disposed = false;
   private readonly known = new Set<string>();
@@ -453,7 +453,8 @@ export class CivilianCrowd extends Group {
     // covers models not represented by an entity until a story beat creates them.
     if (this.staged) {
       const playing = this.world.missions!.state.phase === 'playing';
-      const models = playing ? new Set([...l1CivilianModels, ...this.nearbyModels(64)]) : this.nearbyModels(32);
+      if (!playing) return;
+      const models = new Set([...l1CivilianModels, ...this.nearbyModels(64)]);
       for (const model of models) {
         this.loadModel(model);
         if (playing) this.loadHero(model);
@@ -470,15 +471,35 @@ export class CivilianCrowd extends Group {
       if (model) this.loadModel(model);
     }
   }
-  private loadModel(model: string, far = !this.staged || this.world.missions!.state.phase === 'playing'): void {
-    if (!model.startsWith('npc.')) return;
-    const lods: ('lod1' | 'lod2')[] = [];
-    if (!this.known.has(model)) lods.push('lod1');
-    if (far && !this.farModels.has(model)) lods.push('lod2');
-    if (!lods.length) return;
-    this.known.add(model); if (far) this.farModels.add(model);
-    const added = lods.map(lod => this.batch(model, lod));
-    this.heroLoads.set(`discover:${model}:${lods.join(',')}`, Promise.all(added.map(b => b.init())).then(async () => { if (!this.disposed && this.staged && this.world.missions!.state.phase === 'playing') for (const batch of added) await this.warm?.(batch); if (this.disposed) { added.forEach(b => b.dispose()); return; } this.batches.push(...added); this.add(...added); }, () => {}));
+  private resident(model: string, lod: 'lod0' | 'lod1' | 'lod2'): void {
+    let tiers = this.visibility.resident.get(model); if (!tiers) this.visibility.resident.set(model, tiers = new Set());
+    tiers.add(lod);
+  }
+  private loadModel(model: string): void { this.loadTier(model, 'lod1'); this.loadTier(model, 'lod2'); }
+  private loadTier(model: string, lod: 'lod1' | 'lod2'): void {
+    const known = lod === 'lod1' ? this.known : this.farModels;
+    if (!model.startsWith('npc.') || known.has(model)) return;
+    known.add(model);
+    const batch = this.batch(model, lod);
+    this.heroLoads.set(`discover:${model}:${lod}`, batch.init().then(async () => {
+      if (!this.disposed && this.staged && this.world.missions!.state.phase === 'playing') await this.warm?.(batch);
+      if (this.disposed) { batch.dispose(); return; }
+      this.batches.push(batch); this.add(batch); this.resident(model, lod);
+    }, () => {}));
+  }
+  /** Visible detail plus people within a short walk of the spawn. The remaining
+   * common tiers start first in the after-Begin queue, ahead of story actors. */
+  private stageInitial(): void {
+    const player = this.world.entities.get(1)?.transform;
+    for (const e of this.world.entities.iterate()) {
+      const model = crowdModelOf(e); if (!model || e.hidden || e.infected?.hidden) continue;
+      const visible = this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8);
+      const imminent = player && Math.hypot(e.transform.x - player.x, e.transform.z - player.z) <= 8;
+      if (!visible && !imminent) continue;
+      if (visible && this.visibility.heroes.has(e.id)) { this.loadHero(model); continue; }
+      const pixels = this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8);
+      this.loadTier(model, visible ? this.visibility.lod(e.id, pixels) : 'lod1');
+    }
   }
 
   /** Hero LOD0 batches still loading (screenshots and tests wait for them). */
@@ -486,24 +507,19 @@ export class CivilianCrowd extends Group {
   async init(camera?: import('three').Camera): Promise<void> {
     const started = performance.now();
     if (this.staged && camera) {
-      // Portrait and wide views can start in the far band. Prepare the actual
-      // selected tiers too; deferring a tier must never hide a visible person.
       this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900);
-      for (const e of this.world.entities.iterate()) {
-        const model = crowdModelOf(e); if (!model || !this.visibility.visible(e.transform.x, e.transform.y + .2, e.transform.z, 1.8)) continue;
-        this.loadModel(model, this.visibility.pixels(e.transform.x, e.transform.y, e.transform.z, e.civilian?.adult === false ? 1.3 : 1.8) <= crowdLodPixels.enter);
-      }
-      this.selectHeroes(camera);
+      this.selectHeroes(camera); this.stageInitial();
+      await this.ready();
     }
     if (!this.staged && /^L[1-6]$/.test(this.world.scenario ?? '')) for (const model of this.known) this.loadHero(model);
-    await Promise.all(this.batches.map(b => b.init()));
+    if (!this.staged) await Promise.all(this.batches.map(async b => { await b.init(); this.resident(b.model, b.lod); }));
     // L4's fixed close cast uses the same loading barrier as L1/L6 preparation
     // in discover(); no first-use LOD0 bake/index/simplification during the war.
     if (this.world.scenario === 'L4') for (const model of [...l1Pedestrians.models, 'npc.national-guard']) this.loadHero(model);
-    loadMeasure('view:civilian-crowd', started); this.update();
+    loadMeasure('view:civilian-crowd', started); this.update(1, camera);
   }
   update(alpha = 1, camera?: import('three').Camera, lodCamera = camera): void {
-    this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.budgetNear(); this.discover(); this.selectHeroes(lodCamera); this.props.begin();
+    this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60); this.visibility.begin(camera, typeof innerHeight === 'number' ? innerHeight : 900, lodCamera); this.budgetNear(); this.discover(); this.selectHeroes(lodCamera); if (this.staged && camera && this.world.missions!.state.phase === 'briefing') this.stageInitial(); this.props.begin();
     for (const [id, pose] of this.props.aiming) if (pose.until < this.world.tick || !this.world.entities.get(id)) this.props.aiming.delete(id);
     {
       // Each human belongs to one model (every scenario: the L3/L4 5x hordes made the per-batch full scan the view cost). All its LOD batches share this frame's
