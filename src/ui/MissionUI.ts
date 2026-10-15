@@ -23,7 +23,7 @@ export class MissionUI {
   private readonly detail = document.createElement('p');
   private readonly button = document.createElement('button');
   private readonly result = document.createElement('dl');
-  private readonly rows = new Map<keyof MissionResult, HTMLElement>();
+  private readonly rows = new Map<Exclude<keyof MissionResult, 'companion'>, HTMLElement>();
   private readonly pins = new Map<string, HTMLSpanElement>();
   private readonly point = new Vector3();
   private displayedMission: Mission | null = null;
