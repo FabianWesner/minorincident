@@ -399,7 +399,7 @@ export class SimWorld implements Lifecycle {
   knockback(entity: EntitySnapshot, direction: { x: number; z: number }, impulse: number): void {
     const distance = this.combat!.query.clearDistance(entity.transform, direction, impulse + (entity.combat?.radius ?? 0.4));
     const move = Math.max(0, Math.min(impulse, distance - (entity.combat?.radius ?? 0.4)));
-    const nav = this.infected?.nav;
+    const nav = entity.infected ? this.infected?.infectedNav : this.infected?.nav;
     // Thin static colliders (picket fences, hedges) are on the walk grid, not in the combat wall query: knocked bodies
     // slide along them instead of passing through (PO #14).
     if (entity.id !== 1 && nav) nav.move(entity.transform, direction.x * move, direction.z * move, Math.min(.3, entity.combat?.radius ?? .3));

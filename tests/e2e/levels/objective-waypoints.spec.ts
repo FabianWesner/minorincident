@@ -71,6 +71,8 @@ test('L3 defence waypoint @E21: game camera and explained destinations', async (
   const arrived = await page.evaluate(() => window.__SS__!.missions.state()!);
   expect(arrived.l3!.crossedAt).toBeGreaterThan(0);
   expect(arrived.marker).toBeNull();
+  await expect(page.locator('.hud-tracker')).toContainText('Checkpoint reached');
+  await expect(page.locator('.hud-tracker')).toContainText('Evacuation in');
   await page.screenshot({ path: `${output}/after-arrival.png` });
 });
 
@@ -117,7 +119,7 @@ test('L3 real click into the finale finishes while the boom is occupied @E21 @E2
   await page.evaluate(() => window.__SS__!.screenshotReady());
   await page.screenshot({ path: `${output}/after-finale-entry.png` });
   // The world is paused: a wall-clock wait cannot finish the PO's five-second combat outro.
-  await page.evaluate(ticks => window.__SS__!.step(ticks), Math.ceil((l3.finale.closeS + runOutRule.seconds) * 60) + 1);
+  await page.evaluate(ticks => window.__SS__!.step(ticks), Math.ceil((l3.finale.minFightS + runOutRule.seconds) * 60) + 1);
   await page.waitForFunction(() => window.__SS__!.getState().scenario === 'L4', undefined, { timeout: 120_000 });
   await expect(page.getByRole('heading', { name: 'Mission briefing' })).toBeVisible();
   await page.evaluate(() => window.__SS__!.screenshotReady());

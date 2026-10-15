@@ -1,3 +1,4 @@
+import { l3EvacuationText } from '../sim/missions/LevelThreeCollapse';
 import { cureFinaleText } from '../sim/missions/LevelTenFinale';
 // Notification identity/text presentation adapted from Bruno Simon folio-2025
 // Notifications.js (MIT, 41046b5); sim tick deadlines replace wall-clock timers.
@@ -91,8 +92,8 @@ export class MissionUI {
       const distance=anchor?Math.hypot(anchor.x-player.transform.x,anchor.z-player.transform.z):null;
       const seconds = state.deadlineTicks === null ? null : Math.ceil(state.deadlineTicks / 60);
       const timer = seconds === null ? '' : ` · ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
-      this.text(this.tracker,`${cureFinaleText(mission) ?? objective.text}${distance===null?'':` · ${Math.round(distance)}\u00a0m`}${timer}`);attribute(this.tracker,'data-objective',objective.id);attribute(this.tracker,'data-distance',distance===null?'':String(distance));
-      if(this.active!==objective.id){this.active=objective.id;this.text(this.toast,`New objective: ${cureFinaleText(mission) ?? objective.text}`);}
+      this.text(this.tracker,`${l3EvacuationText(mission) ?? cureFinaleText(mission) ?? objective.text}${distance===null?'':` · ${Math.round(distance)}\u00a0m`}${timer}`);attribute(this.tracker,'data-objective',objective.id);attribute(this.tracker,'data-distance',distance===null?'':String(distance));
+      if(this.active!==objective.id){this.active=objective.id;this.text(this.toast,`New objective: ${l3EvacuationText(mission) ?? cureFinaleText(mission) ?? objective.text}`);}
       setHidden(this.toast,this.world.tick-state.steps[objective.id].started>=180);
       if(anchor){
         this.point.set(anchor.x,1.8,anchor.z).project(camera);

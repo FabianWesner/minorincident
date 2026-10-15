@@ -54,7 +54,7 @@ export function installAgentMotion(world: SimWorld): void {
   world.events.on('sim.tick', () => {
     const nav = world.infected!.nav;
     for (const e of world.entities.iterate()) if (actor(e) && !forced(e, world.tick, world) && e.locomotion && e.locomotion.updatedAt !== world.tick) {
-      moveAgent(e, 0, 0, nav, world.tick); world.spatial.set(e.id, e.transform.x, e.transform.z);
+      moveAgent(e, 0, 0, e.infected ? world.infected!.infectedNav : nav, world.tick); world.spatial.set(e.id, e.transform.x, e.transform.z);
     }
   }, SimPhase.missions + .5);
   world.events.on('sim.tick', () => {

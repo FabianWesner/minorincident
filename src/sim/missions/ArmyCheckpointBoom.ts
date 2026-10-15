@@ -16,7 +16,7 @@ export class ArmyCheckpointBoom {
   /** Wait for every surviving human; do not drop the arm onto any body. */
   ready(ids: readonly number[]): boolean {
     if (!ids.every(id => { const e = this.world.entities.get(id); return !e || e.health.current <= 0 || !!e.infection || e.transform.x > this.wall.x + 1.1; })) return false;
-    return ![...this.world.entities.iterate()].some(e => e.health.current > 0 && Math.abs(e.transform.x - this.wall.x) < .6 && Math.abs(e.transform.z - this.wall.z) < 2.2);
+    return ![...this.world.entities.iterate()].some(e => !e.infected && e.health.current > 0 && Math.abs(e.transform.x - this.wall.x) < .6 && Math.abs(e.transform.z - this.wall.z) < 2.2);
   }
   /**
    * A stray civilian standing in the arm's path must not hold the rescue open for ever (completion now waits for the closure):

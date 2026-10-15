@@ -1,3 +1,6 @@
+import { l3, l3Anchors } from '../../data/l3';
+import { l3BaseCollision } from '../../levels/L3/collision';
+import { missionControls } from '../../sim/missions/controls';
 import { cure, curePursuitRoute } from '../../levels/L10/district';
 import { cureEncounters, cureEncounterSlots, cureEncounterSpot } from '../../levels/L10/encounters';
 import { cureReached } from '../../sim/missions/CureFront';
@@ -35,7 +38,6 @@ import { seatAnchor } from '../../sim/npc/seats';
 import { allyState } from '../../sim/outbreak/Allies';
 import { infectedDef, type InfectedDef } from '../../data/infected';
 import { l4 } from '../../data/l4';
-import { l3 } from '../../data/l3';
 import { cameraFraming } from '../../data/cameraFraming';
 import { levelThreeLayouts } from '../../levels/L3/layout';
 import { levelFourLayouts } from '../../levels/L4/layout';
@@ -283,6 +285,27 @@ export class SceneLab {
         e.infected!.state = 'chase';
       }
     });
+    if (spec.l3Rendezvous) {
+      world.scenario = 'L3';
+      world.infected!.excludeInfected(l3BaseCollision);
+      applyCampaign(world, preset('L3-default'));
+      const mission = world.loadMission(resolveCampaignMission('L3', world.districts!));
+      mission.begin(); mission.completeObjective('armory'); mission.completeObjective('defend');
+      const state = mission.state.l3!, api = missionControls(world);
+      state.pending = []; state.waves = []; state.populated = [true, true, true];
+      state.finalePacks = l3.finale.packs.map(p => p[1]);
+      for (const id of state.officerIds) api.teleport(id, { x: l3.map.zoneX + 3, z: 3 });
+      for (const e of world.entities.iterate()) if (e.companion) api.teleport(e.id, { x: l3.map.zoneX + 3, z: 2 });
+      api.teleport('player', { x: l3Anchors['l3-zone'][0], z: 0 });
+      const ai = world.infected!, cap = ai.director.cap;
+      for (let x = l3.finale.barrierX - .8; x > l3.finale.barrierX - 30 && ai.director.count < cap; x -= .8) {
+        for (let z = -9; z <= 9 && ai.director.count < cap; z += .8) {
+          if (!ai.infectedNav.clear(x, z, .35)) continue;
+          const id = ai.spawn('infected.runner', { x, z });
+          ai.rush(id, { x: l3.finale.barrierX + 2, z: 0 }, world.tick + 121 * 60);
+        }
+      }
+    }
     if (spec.l4Convoy) {
       applyCampaign(world, preset('L4-default'));
       const mission = world.loadMission(resolveCampaignMission('L4', world.districts!));
