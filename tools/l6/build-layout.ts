@@ -28,8 +28,6 @@ const place = (assetId: string, x: number, z: number, y=0, yaw=0, lightGroup='me
   return p;
 };
 place('int.metro-station',0,SZ);
-// One continuous track: the tunnel's own track kit, placed like its modules (y .35, 12 m apart) along the station's whole length.
-for(const x of [-24,-12,0,12,24]) place('kit.metro-track',x,15,.35);
 for(let i=0;i<18;i++) place('kit.metro-tunnel',36+i*12,15,.35);
 for(const x of [54,126,198]) place('kit.maintenance-corridor',x,6.2,.4,Math.PI/2);
 for(const x of [78,174]) place('kit.maintenance-corridor',x,23.8,.4,-Math.PI/2);
@@ -53,6 +51,9 @@ for(const x of [-12,0,12]) place('prop.emergency-light',x,8.8+SZ,3.2,Math.PI/2,'
 for(const x of l6.gates) for(const z of [12.65,17.35]) place('prop.jersey-barrier',x,z,.6,Math.PI/2);
 for(let x=42;x<246;x+=24) if(!l6.gates.some(g=>g===x)) place('prop.jersey-barrier',x,((x-42)/24)%2?17.35:12.65,.6,Math.PI/2);
 for(const x of l6.gates) for(const z of [13.1,16.9]) place('prop.crates',x-3,z,.6,0,'self');
+// Appended last so the ids of every other placement stay (placement-solids baseline keys on them).
+// One continuous track: the tunnel's own track kit, placed like its modules (y .35, 12 m apart) along the station's whole length.
+for(const x of [-24,-12,0,12,24]) place('kit.metro-track',x,15,.35);
 const anchor=(name:string,x:number,z:number,y=.6)=>{layout.anchors[name]={position:[x,y,z],yaw:0};};
 anchor('player-start',3,8+SZ);anchor('maintenance-a',-10,-10+SZ);anchor('maintenance-b',10,-10+SZ);anchor('tunnel-start',30,15);anchor('mid-tunnel',150,15);anchor('exit-platform',242,15);anchor('night-exit',273,15,3.9);
 for(const [i,p] of l6Doors.entries())anchor(`service-${i}`,p.x,p.z);
