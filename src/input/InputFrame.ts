@@ -31,6 +31,8 @@ export interface InputFrame {
   /** Mouse-mode number keys address the same carried list as RMB. */
   selectedActiveSlot?: number;
   selectedSlot?: { side: 'LEFT' | 'RIGHT'; index: number };
+  /** Device number keys address the ordered rack; saved/test commands retain physical indices. */
+  orderedSelection?: boolean;
   selectorSide?: 'LEFT' | 'RIGHT';
   /** Resolved click navigation requests the bounded locomotion response. */
   navigation?: boolean;
