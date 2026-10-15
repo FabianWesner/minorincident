@@ -388,6 +388,7 @@ export class AudioService implements Lifecycle {
         const t = options.time ?? this.context.currentTime, result = this.registry.get(id, t, `${id}:${sourceId ?? 0}`, options.loop);
         if (!result)
             return null;
+        if (this.level === 'L5' && result.cue.bus === 'music' && !l5MusicReady(this.world.missions?.state)) return null;
         if (result.cue.bus === 'gore' && this.settings.gore === 'Off')
             return null;
         const gain = (options.gain ?? 1) * result.gain * (result.cue.bus === 'gore' && this.settings.gore === 'Reduced' ? 0.4 : 1);
@@ -515,7 +516,10 @@ export class AudioService implements Lifecycle {
     private l5Score(): void {
         if (!this.started) return;
         if (!l5MusicReady(this.world.missions?.state)) {
-            if (this.l5Music) this.score.reset();
+            if (this.l5Music) {
+                this.score.reset();
+                for (const voice of this.graph.active.values()) if (audioCues[voice.cue]?.bus === 'music') voice.stop();
+            }
             this.l5Music = false;
             return;
         }
