@@ -448,6 +448,11 @@ export class LevelFourWar {
       const { at, origin } = entries[Math.floor(n / l4.war.group[1])];
       const id = this.emerge({ x: at.x + (n % 3 - 1) * .8, z: at.z + Math.floor(n % l4.war.group[1] / 3) * .8 }, true);
       if (!id) break;
+      const arrival = world.entities.get(id)!;
+      // Keep every alarm identity at its authored exit. A crowded/parked hull
+      // can defer an arrival here instead of displacing it beyond that mouth.
+      Object.assign(arrival.transform, at);
+      world.solids.admit(arrival, 'l4.alarm.exit', 1.9);
       ids.push(id); s.emergedIds.push(id); s.origin[id] = origin;
       const soldier = this.liveSoldiers().sort((a, b) => dist(a.transform, at) - dist(b.transform, at))[0];
       if (soldier) ai.rush(id, soldier.transform, tick + ticks(12));
