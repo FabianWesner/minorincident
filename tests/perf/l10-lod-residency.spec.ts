@@ -9,6 +9,20 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
   test(`T-E32-28-residency @E32-AC28 @perf first-play R7 LOD residency ${backend} ${quality} z${zoom}`, async ({ page, context }) => {
     test.setTimeout(120_000);
     await boot(page, `/?test=1&scenelab=1${backend === 'webgl' ? '&renderer=webgl' : ''}&quality=${quality}&audio=muted&dpr=1&profile=1&loadProfile=1`);
+    await page.evaluate(() => {
+      const game = (window.__SCENE__ as unknown as { game: Game }).game;
+      const renderer = (game.view as unknown as { renderer: Renderer }).renderer;
+      const trace = window as unknown as { gunWarmBuilds: unknown[] }; trace.gunWarmBuilds = [];
+      const previous = renderer.debug.onNodeBuilderCreated;
+      renderer.debug.onNodeBuilderCreated = (builder, object) => {
+        previous?.(builder, object);
+        const draw = object as unknown as { object: Mesh; material: Mesh['material']; context: { id: number } };
+        let asset: string | undefined;
+        for (let o: Object3D | null = draw.object; o; o = o.parent) asset ??= o.userData.assetId;
+        const material = Array.isArray(draw.material) ? draw.material[0] : draw.material;
+        if (asset === 'wpn.minigun-mounted' && material.name === 'pal_picketWhite') trace.gunWarmBuilds.push({ tick: game.world.tick, object: draw.object.uuid, material: material.uuid, version: material.version, context: draw.context.id, vertex: builder.vertexShader, fragment: builder.fragmentShader });
+      };
+    });
     await page.evaluate(async () => {
       const a = window.__SS__!;
       await a.loadLevel('L10', { seed: 32, checkpoint: 'cure-disperse-ready' }); a.pause(); a.cheats.god(true);
@@ -33,6 +47,9 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
         const material = Array.isArray(draw.material) ? draw.material[0] : draw.material;
         builds.push({ tick: a.tick(), path, asset, material: material.name, transparent: material.transparent, side: material.side, castShadow: draw.object.castShadow, receiveShadow: draw.object.receiveShadow, attributes: Object.keys(draw.object.geometry?.attributes ?? {}) });
       };
+      const warmBuilds = [...(window as unknown as { gunWarmBuilds: unknown[] }).gunWarmBuilds];
+      const gunView = (game.view as unknown as { mountedGunView?: Object3D }).mountedGunView;
+      const gunBefore = { present: !!gunView, children: gunView?.children.length, resident: game.world.mountedGun && game.world.chunks?.resident(game.world.mountedGun.placement.x, game.world.mountedGun.placement.z) };
       const frames: number[] = [], sims: number[] = [], bad: unknown[] = [], hitches: unknown[] = [];
       const p95 = (v: number[]) => v.sort((x, y) => x - y)[Math.ceil(v.length * .95) - 1];
       let last = 0, draws = 0, triangles = 0, resident = 0, infected = 0;
@@ -51,7 +68,7 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
       }
       a.pause(); a.input.clear(); const state = a.getState();
       renderer.debug.onNodeBuilderCreated = onBuild;
-      return { builds, frameP95: p95(frames), frameMax: Math.max(...frames), simP95: p95(sims), frames: frames.length, hitches, badFrames: bad.length, first: bad.slice(0, 3), draws, triangles, resident, infected, x: state.player!.transform.x, cameraZoom: state.render.camera.zoom, quality: a.perf().quality.tier, backend: a.perf().backend };
+      return { builds, warmBuilds, gunBefore, gunAllBuilds: (window as unknown as { gunWarmBuilds: unknown[] }).gunWarmBuilds, frameP95: p95(frames), frameMax: Math.max(...frames), simP95: p95(sims), frames: frames.length, hitches, badFrames: bad.length, first: bad.slice(0, 3), draws, triangles, resident, infected, x: state.player!.transform.x, cameraZoom: state.render.camera.zoom, quality: a.perf().quality.tier, backend: a.perf().backend };
     });
     const cdp = await context.newCDPSession(page); await cdp.send('HeapProfiler.collectGarbage'); const heap = await cdp.send('Runtime.getHeapUsage');
     const heapMB = heap.usedSize / 1e6;
