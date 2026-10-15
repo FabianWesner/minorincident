@@ -1,0 +1,148 @@
+{
+  "source": "2de827be6",
+  "selectedCurrent": {
+    "passed": 118,
+    "failed": 25
+  },
+  "selectedUnmodifiedSource": {
+    "source": "d9743890d",
+    "passed": 140,
+    "failed": 1,
+    "note": "L10 high arrival timed out at its unchanged 120s wall-clock limit. The baseline run excludes the two zoo timing cases."
+  },
+  "failedCases": [
+    {
+      "test": "T-E32-21-E3b @E32-AC21 seed-32 rocket checkpoint route arrival high",
+      "file": "sim/levels/l10-arrival.test.ts",
+      "failure": "AssertionError: expected false to be true // Object.is equality"
+    },
+    {
+      "test": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+      "file": "sim/performance/zoo-s2.test.ts",
+      "failure": "AssertionError: expected 7.991262000000461 to be less than or equal to 4"
+    },
+    {
+      "test": "L1 v2 mission T-E19-respawn-world @E19 PO rule: a death after the bat keeps the world (corpses, infected, pedestrians, props, objectives, bat)",
+      "file": "levels/L1.test.ts",
+      "failure": "AssertionError: expected [ { id: 1000000000, \u2026(5) }, \u2026(690) ] to deeply equal [ { id: 1000000000, \u2026(5) }, \u2026(690) ]"
+    },
+    {
+      "test": "L2 escape death loop the escape checkpoint waits for a calm moment (nothing within 10 m, health >= 70 %)",
+      "file": "levels/L2-escape-loop.test.ts",
+      "failure": "AssertionError: expected 'doors' to be 'escape' // Object.is equality"
+    },
+    {
+      "test": "L2 escape death loop a courier who dies twice at the same checkpoint respawns with fewer infected within 25 m (the shared respawn already pushes them out of 9 m)",
+      "file": "levels/L2-escape-loop.test.ts",
+      "failure": "AssertionError: expected 5 to be less than or equal to 4"
+    },
+    {
+      "test": "@E23 @E23-AC15 nearby infected do not stall ingress; the descending shutter sweeps intruders out and blocks return",
+      "file": "levels/L5-encounters.test.ts",
+      "failure": "AssertionError: expected 0 to be greater than 0"
+    },
+    {
+      "test": "T-E24-11-siege @E24 @E24-AC11 five real infected break the closed service gate in 8-12 seconds",
+      "file": "levels/L6.test.ts",
+      "failure": "AssertionError: expected 13.866666666666667 to be less than or equal to 12"
+    },
+    {
+      "test": "T-E27-08 @E27 @E27-AC08 infected inside a 6 m smoke cloud lose their target within 0.5 s, wander, and the cloud ends at 12 s",
+      "file": "sim/explosions.test.ts",
+      "failure": "AssertionError: infected 2: expected undefined to be defined"
+    },
+    {
+      "test": "T-E07-06-charge @E07-AC05 @E07-AC06 locked 9m/s, 12m sweep, once per human, windup and 72 tick knockdown",
+      "file": "sim/ai/alpha-physical.test.ts",
+      "failure": "AssertionError: expected { x: 1, z: +0, radius: 1, dx: 1, \u2026(1) } to deeply equal { Object (x, z, ...) }"
+    },
+    {
+      "test": "T-E07-06-ground-slam @E07-AC05 @E07-AC06 exact 4m boundary, wall occlusion, 25 damage and 72 ticks, no windup effects",
+      "file": "sim/ai/alpha-physical.test.ts",
+      "failure": "AssertionError: expected 100 to be 75 // Object.is equality"
+    },
+    {
+      "test": "T-E07-16 @E07 @E07-AC16 four dogs flank from at least two directions and telegraph 0.6 s knockdown pounces",
+      "file": "sim/ai/animals.test.ts",
+      "failure": "AssertionError: expected true to be false // Object.is equality"
+    },
+    {
+      "test": "T-E32-11-alpha.charge @E32-AC11 windup, damage, recovery, nonoverlap and activation cooldown",
+      "file": "sim/ai/mega-moves.test.ts",
+      "failure": "AssertionError: expected 'active' to be 'recovery' // Object.is equality"
+    },
+    {
+      "test": "T-E32-11-dodge-alpha.charge @E32-AC11 move only inside 12m, windup allows a safe dodge",
+      "file": "sim/ai/mega-moves.test.ts",
+      "failure": "AssertionError: expected true to be false // Object.is equality"
+    },
+    {
+      "test": "T-E32-11-dodge-alpha.ground-slam @E32-AC11 move only inside 12m, windup allows a safe dodge",
+      "file": "sim/ai/mega-moves.test.ts",
+      "failure": "AssertionError: expected true to be false // Object.is equality"
+    },
+    {
+      "test": "T-E32-11-dodge-alpha.grab-throw @E32-AC11 move only inside 12m, windup allows a safe dodge",
+      "file": "sim/ai/mega-moves.test.ts",
+      "failure": "AssertionError: expected true to be false // Object.is equality"
+    },
+    {
+      "test": "T-E07-19-zebra-stampede @E07-AC19 existing 2-4 zebras, locked 10m/s, 15m, 1.5m sweep and one hit per zebra",
+      "file": "sim/ai/zoo-s3.test.ts",
+      "failure": "AssertionError: expected 4.747904568818772 to be close to 15, received difference is 10.252095431181228, but expected 0.005"
+    },
+    {
+      "test": "T-E07-19-zebra-stampede-player @E07-AC19 every distinct zebra deals 25HP even inside the ordinary hurt grace window",
+      "file": "sim/ai/zoo-s3.test.ts",
+      "failure": "AssertionError: expected 75 to be 50 // Object.is equality"
+    },
+    {
+      "test": "T-E05-encounter @E05 @E19 efficient clicker HP lost per encounter: one infected <= 5 HP (bat and unarmed), two/three with the bat <= 15/30",
+      "file": "sim/combat/encounter-balance.test.ts",
+      "failure": "AssertionError: hold weapon.bat 1v1: expected 10 to be less than or equal to 5"
+    },
+    {
+      "test": "T-E29-06-24 @E29-AC06 one real projectile permanently clears 24 infected in its blast tick",
+      "file": "sim/combat/l7-rocket.test.ts",
+      "failure": "AssertionError: expected false to be true // Object.is equality"
+    },
+    {
+      "test": "T-E29-06-200 @E29-AC06 one real projectile permanently clears 200 infected in its blast tick",
+      "file": "sim/combat/l7-rocket.test.ts",
+      "failure": "AssertionError: expected false to be true // Object.is equality"
+    },
+    {
+      "test": "armed ally close hearing and self-defence @E21 officer hears an infected behind at 1.8 m and attacks within 0.5 s; a wall blocks hearing",
+      "file": "sim/npc/ally-defence.test.ts",
+      "failure": "AssertionError: expected -1.3683333333333332 to be +0 // Object.is equality"
+    },
+    {
+      "test": "armed ally close hearing and self-defence @E21 soldier hears an infected behind at 1.8 m and attacks within 0.5 s; a wall blocks hearing",
+      "file": "sim/npc/ally-defence.test.ts",
+      "failure": "AssertionError: expected -1.3683333333333332 to be +0 // Object.is equality"
+    },
+    {
+      "test": "armed ally close hearing and self-defence @E21 firefighter hears an infected behind at 1.8 m and attacks within 0.5 s; a wall blocks hearing",
+      "file": "sim/npc/ally-defence.test.ts",
+      "failure": "AssertionError: expected -1.3683333333333332 to be +0 // Object.is equality"
+    },
+    {
+      "test": "armed ally close hearing and self-defence @E21 civilian hears an infected behind at 1.8 m and attacks within 0.5 s; a wall blocks hearing",
+      "file": "sim/npc/ally-defence.test.ts",
+      "failure": "AssertionError: expected -1.3683333333333332 to be +0 // Object.is equality"
+    },
+    {
+      "test": "T-E08-09 @E08 @E08-AC09 braking cars stop for player/civilian and cannot overlap crossing walkers",
+      "file": "sim/npc/traffic.test.ts",
+      "failure": "AssertionError: expected false to be true // Object.is equality"
+    }
+  ],
+  "laterFixed": [
+    "four ally hearing cases and Alpha ground-slam observer placement (d89e64555)",
+    "24-target rocket packing (055270a55)",
+    "traffic stopping (22b9c334f)",
+    "calm checkpoint geometry and exact 69%/70% health gates (1c27597d2)"
+  ],
+  "remainingFromSelectedRun": 17,
+  "note": "This is a source-bounded triage list, not a merged final-suite result. Charge observer fixture now exposes its actual locked-path shortfall: x=11.4598 versus 12 at the unchanged deadline; test remains red."
+}
