@@ -1,0 +1,40 @@
+{
+  "success": false,
+  "numTotalTests": 1336,
+  "numPassedTests": 1332,
+  "numFailedTests": 2,
+  "numPendingTests": 2,
+  "startTime": 1792036659722,
+  "command": [
+    "npx",
+    "vitest",
+    "run",
+    "tests/sim",
+    "tests/levels",
+    "--maxWorkers=4"
+  ],
+  "isolation": "Both existing runner slots held for the entire command via ordered flock; no assertions, budgets or deadlines changed.",
+  "failures": [
+    {
+      "file": "levels/L3-route.test.ts",
+      "name": "@E21 @E21-route L3 wreck lines close both sidewalks for player and NPCs; the connected detour crosses Oak, Boulevard and the elevated highway",
+      "duration": 2893.3438040001784,
+      "messages": [
+        "AssertionError: expected false to be true // Object.is equality\n    at /srv/mi/jobs/l10-q4-72e09c-81934-1792035548/tests/levels/L3-route.test.ts:38:44\n    at file:///srv/mi/jobs/l10-q4-72e09c-81934-1792035548/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "levels/ally-combat-feel.test.ts",
+      "name": "ally combat feel L3 station attack: the police move and fight in view of the idle courier",
+      "duration": 5703.93622799986,
+      "messages": [
+        "AssertionError: expected 0.20144927536231885 to be less than 0.2\n    at feel (/srv/mi/jobs/l10-q4-72e09c-81934-1792035548/tests/levels/ally-combat-feel.test.ts:93:20)\n    at /srv/mi/jobs/l10-q4-72e09c-81934-1792035548/tests/levels/ally-combat-feel.test.ts:119:5\n    at file:///srv/mi/jobs/l10-q4-72e09c-81934-1792035548/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    }
+  ],
+  "e32": {
+    "passed": 125,
+    "failed": 0,
+    "skipped": 0
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "success": false,
+  "numTotalTests": 1336,
+  "numPassedTests": 1325,
+  "numFailedTests": 9,
+  "numPendingTests": 2,
+  "startTime": 1792034806914,
+  "failures": [
+    {
+      "file": "sim/ai/director.test.ts",
+      "name": "T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget",
+      "duration": 1966.8044939999818,
+      "messages": [
+        "AssertionError: expected 4.127130000008037 to be less than or equal to 4\n    at /srv/mi/jobs/l10-q4-72e09c-60747-1792034783/tests/sim/ai/director.test.ts:44:520\n    at file:///srv/mi/jobs/l10-q4-72e09c-60747-1792034783/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "sim/levels/l10-arrival.test.ts",
+      "name": "T-E32-21-E3b @E32-AC21 seed-32 rocket checkpoint route arrival high",
+      "duration": 146297.72713400004,
+      "messages": [
+        "Error: Test timed out in 120000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\n    at task (file:///srv/mi/jobs/l10-q4-72e09c-60747-1792034783/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2681:43)\n    at Object.<anonymous> (file:///srv/mi/jobs/l10-q4-72e09c-60747-1792034783/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2698:16)\n    at Object.<anonymous> (file:///srv/mi/jobs/l10-q4-72e09c-60747-1792034783/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2471:28)\n    at chain (file:///srv/mi/jobs/l10-q4-72e09c-60747-1792034783/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1859:14)\n    at /srv/mi/jobs/l10-q4-72e09c-60747-1792034783/tests/sim/levels/l10-arrival.test.ts:4:46\n    at VitestModuleEvaluator._runInlinedModule (file:///srv/mi/jobs/l10-q4-72e09c-60747-1792034783/node_modules/vitest/dist/module-evaluator.js:261:4)\n    at VitestModuleRunner.directRequest (file:///srv/mi/jobs/l10-q4-72e09c-60747-1792034783/node_modules/vite/dist/node/module-runner.js:1284:61)\n    at VitestModuleRunner.cachedRequest (file:///srv/mi/jobs/l10-q4-72e09c-60747-1792034783/node_modules/vite/dist/node/module-runner.js:1180:76)\n    at VitestModuleRunner.import (file:///srv/mi/jobs/l10-q4-72e09c-60747-1792034783/node_modules/vite/dist/node/module-runner.js:1117:12)\n    at file:///srv/mi/jobs/l10-q4-72e09c-60747-1792034783/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3448:5"
+      ]
+    },
+    {
+      "file": "sim/levels/l10-assault.test.ts",
+      "name": "T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+      "duration": 16413.824277000007,
+      "messages": [
+        "AssertionError: expected 4.067326999997022 to be less than or equal to 4\n    at /srv/mi/jobs/l10-q4-72e09c-60747-1792034783/tests/sim/levels/l10-assault.test.ts:58:17\n    at file:///srv/mi/jobs/l10-q4-72e09c-60747-1792034783/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "sim/performance/mega-audio.test.ts",
+      "name": "T-E32-13-perf-200 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling",
+      "duration": 7383.644683999999,
+      "messages": [
+        "AssertionError: expected 4.255330999963917 to be less than or equal to 4\n    at /srv/mi/jobs/l10-q4-72e09c-60747-1792034783/tests/sim/performance/mega-audio.test.ts:14:94\n    at file:///srv/mi/jobs/l10-q4-72e09c-60747-1792034783/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "sim/performance/mega-moves.test.ts",
+      "name": "T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+      "duration": 3009.2964090000023,
+      "messages": [
+        "AssertionError: expected 4.541792000003625 to be less than or equal to 4\n    at /srv/mi/jobs/l10-q4-72e09c-60747-1792034783/tests/sim/performance/mega-moves.test.ts:24:104\n    at file:///srv/mi/jobs/l10-q4-72e09c-60747-1792034783/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "sim/performance/zoo-s2.test.ts",
+      "name": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+      "duration": 2572.469161999994,
+      "messages": [
+        "AssertionError: expected 4.3870000000461005 to be less than or equal to 4\n    at /srv/mi/jobs/l10-q4-72e09c-60747-1792034783/tests/sim/performance/zoo-s2.test.ts:26:68\n    at file:///srv/mi/jobs/l10-q4-72e09c-60747-1792034783/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "sim/performance/zoo-s3.test.ts",
+      "name": "T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+      "duration": 2395.466316999984,
+      "messages": [
+        "AssertionError: expected 4.377200999995694 to be less than or equal to 4\n    at /srv/mi/jobs/l10-q4-72e09c-60747-1792034783/tests/sim/performance/zoo-s3.test.ts:26:68\n    at file:///srv/mi/jobs/l10-q4-72e09c-60747-1792034783/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "levels/L3-route.test.ts",
+      "name": "@E21 @E21-route L3 wreck lines close both sidewalks for player and NPCs; the connected detour crosses Oak, Boulevard and the elevated highway",
+      "duration": 3413.967718999833,
+      "messages": [
+        "AssertionError: expected false to be true // Object.is equality\n    at /srv/mi/jobs/l10-q4-72e09c-60747-1792034783/tests/levels/L3-route.test.ts:38:44\n    at file:///srv/mi/jobs/l10-q4-72e09c-60747-1792034783/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "levels/ally-combat-feel.test.ts",
+      "name": "ally combat feel L3 station attack: the police move and fight in view of the idle courier",
+      "duration": 6685.650917999912,
+      "messages": [
+        "AssertionError: expected 0.20144927536231885 to be less than 0.2\n    at feel (/srv/mi/jobs/l10-q4-72e09c-60747-1792034783/tests/levels/ally-combat-feel.test.ts:93:20)\n    at /srv/mi/jobs/l10-q4-72e09c-60747-1792034783/tests/levels/ally-combat-feel.test.ts:119:5\n    at file:///srv/mi/jobs/l10-q4-72e09c-60747-1792034783/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    }
+  ]
+}
