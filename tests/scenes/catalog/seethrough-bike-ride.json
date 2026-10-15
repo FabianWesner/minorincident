@@ -1,0 +1,11 @@
+{
+  "name": "seethrough-bike-ride",
+  "extends": "../../../specs/scenes/catalog/bike-ride.json",
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "courierVisibleShareMin": 0.6,
+    "seeThroughCutPixelsMax": 0
+  },
+  "sheet": 30
+}

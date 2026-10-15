@@ -1,0 +1,900 @@
+{
+  "rows": [
+    {
+      "name": "l3-highway-melee-escape",
+      "backend": "webgl",
+      "quality": "high",
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "health.courier.min",
+            "pass": true,
+            "value": 100,
+            "limit": 1
+          },
+          {
+            "name": "health.courier.max",
+            "pass": true,
+            "value": 100,
+            "limit": 100
+          },
+          {
+            "name": "health.target.min",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "health.target.max",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "travelM.courier.min",
+            "pass": true,
+            "value": 10.283233642578125,
+            "limit": 8
+          },
+          {
+            "name": "travelM.courier.max",
+            "pass": true,
+            "value": 10.283233642578125,
+            "limit": 20
+          },
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "undrawnFramesMax",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "courierVisibleShare",
+            "pass": true,
+            "value": 0.784,
+            "limit": 0.6
+          },
+          {
+            "name": "courierShareSampled",
+            "pass": true,
+            "value": 9,
+            "limit": 1
+          },
+          {
+            "name": "seeThroughCutPixelsOutside",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "canvas.f0.varianceMin",
+            "pass": true,
+            "value": 2201.686391100764,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f0.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f30.varianceMin",
+            "pass": true,
+            "value": 2202.427080608566,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f30.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f60.varianceMin",
+            "pass": true,
+            "value": 2194.710834721016,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f60.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f90.varianceMin",
+            "pass": true,
+            "value": 2189.3048031173166,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f90.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f120.varianceMin",
+            "pass": true,
+            "value": 2195.0592423008566,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f120.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f150.varianceMin",
+            "pass": true,
+            "value": 2381.142593908786,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f150.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f180.varianceMin",
+            "pass": true,
+            "value": 2685.747967848718,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f180.variedTilesMin",
+            "pass": true,
+            "value": 63,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f210.varianceMin",
+            "pass": true,
+            "value": 2524.1295556927143,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f210.variedTilesMin",
+            "pass": true,
+            "value": 62,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f240.varianceMin",
+            "pass": true,
+            "value": 2243.196549003518,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f240.variedTilesMin",
+            "pass": true,
+            "value": 62,
+            "limit": 8
+          },
+          {
+            "name": "requestedBackend",
+            "pass": true,
+            "value": 1,
+            "limit": 1
+          },
+          {
+            "name": "requestedQuality",
+            "pass": true,
+            "value": 1,
+            "limit": 1
+          }
+        ]
+      },
+      "shares": [
+        {
+          "frame": 0,
+          "megaM": null,
+          "visible": 2882,
+          "reference": 2987,
+          "share": 0.9648476732507533,
+          "megaPixels": 56,
+          "megaShare": 0.0001080246913580247
+        },
+        {
+          "frame": 30,
+          "megaM": null,
+          "visible": 3092,
+          "reference": 3235,
+          "share": 0.9557959814528594,
+          "megaPixels": 6,
+          "megaShare": 1.1574074074074073e-05
+        },
+        {
+          "frame": 60,
+          "megaM": null,
+          "visible": 3108,
+          "reference": 3212,
+          "share": 0.9676214196762142,
+          "megaPixels": 0,
+          "megaShare": 0
+        },
+        {
+          "frame": 90,
+          "megaM": null,
+          "visible": 2781,
+          "reference": 2877,
+          "share": 0.9666319082377477,
+          "megaPixels": 3,
+          "megaShare": 5.787037037037037e-06
+        },
+        {
+          "frame": 120,
+          "megaM": null,
+          "visible": 2336,
+          "reference": 2980,
+          "share": 0.7838926174496644,
+          "megaPixels": 0,
+          "megaShare": 0
+        },
+        {
+          "frame": 150,
+          "megaM": null,
+          "visible": 2602,
+          "reference": 2767,
+          "share": 0.9403686302855078,
+          "megaPixels": 0,
+          "megaShare": 0
+        },
+        {
+          "frame": 180,
+          "megaM": null,
+          "visible": 2660,
+          "reference": 2963,
+          "share": 0.8977387782652717,
+          "megaPixels": 0,
+          "megaShare": 0
+        },
+        {
+          "frame": 210,
+          "megaM": null,
+          "visible": 2641,
+          "reference": 2757,
+          "share": 0.9579252811026479,
+          "megaPixels": 0,
+          "megaShare": 0
+        },
+        {
+          "frame": 240,
+          "megaM": null,
+          "visible": 2752,
+          "reference": 2873,
+          "share": 0.9578837452140619,
+          "megaPixels": 0,
+          "megaShare": 0
+        }
+      ],
+      "cut": {
+        "outside": 0,
+        "inside": 2405,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      "note": "Reviewed game-camera contact sheet.",
+      "zoom": 1
+    },
+    {
+      "name": "seethrough-building-first-frame",
+      "backend": "webgl",
+      "quality": "high",
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "seeThroughOpenFrames",
+            "pass": true,
+            "value": 60,
+            "limit": 40
+          },
+          {
+            "name": "courierVisibleShare",
+            "pass": true,
+            "value": 0.913,
+            "limit": 0.6
+          },
+          {
+            "name": "courierShareSampled",
+            "pass": true,
+            "value": 4,
+            "limit": 1
+          },
+          {
+            "name": "seeThroughCutPixelsOutside",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "seeThroughCutPixelsInside",
+            "pass": true,
+            "value": 14200,
+            "limit": 500
+          },
+          {
+            "name": "canvas.f0.varianceMin",
+            "pass": true,
+            "value": 2075.0860748410314,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f0.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f20.varianceMin",
+            "pass": true,
+            "value": 2072.455530723507,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f20.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f40.varianceMin",
+            "pass": true,
+            "value": 2072.4607416744325,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f40.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f60.varianceMin",
+            "pass": true,
+            "value": 2072.680244807727,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f60.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "requestedBackend",
+            "pass": true,
+            "value": 1,
+            "limit": 1
+          },
+          {
+            "name": "requestedQuality",
+            "pass": true,
+            "value": 1,
+            "limit": 1
+          }
+        ]
+      },
+      "shares": [
+        {
+          "frame": 0,
+          "megaM": null,
+          "visible": 1471,
+          "reference": 1521,
+          "share": 0.9671268902038133,
+          "megaPixels": 0,
+          "megaShare": 0
+        },
+        {
+          "frame": 20,
+          "megaM": null,
+          "visible": 1481,
+          "reference": 1623,
+          "share": 0.9125077017868145,
+          "megaPixels": 0,
+          "megaShare": 0
+        },
+        {
+          "frame": 40,
+          "megaM": null,
+          "visible": 1420,
+          "reference": 1553,
+          "share": 0.9143593045717965,
+          "megaPixels": 0,
+          "megaShare": 0
+        },
+        {
+          "frame": 60,
+          "megaM": null,
+          "visible": 1409,
+          "reference": 1540,
+          "share": 0.9149350649350649,
+          "megaPixels": 0,
+          "megaShare": 0
+        }
+      ],
+      "cut": {
+        "outside": 0,
+        "inside": 14200,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      "note": "Reviewed game-camera contact sheet.",
+      "zoom": 1.5
+    },
+    {
+      "name": "seethrough-door-gate",
+      "backend": "webgl",
+      "quality": "high",
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "clipping",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "undrawnFramesMax",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "drawCallsMax",
+            "pass": true,
+            "value": 15,
+            "limit": 30
+          },
+          {
+            "name": "courierVisibleShare",
+            "pass": true,
+            "value": 0.975,
+            "limit": 0.6
+          },
+          {
+            "name": "courierShareSampled",
+            "pass": true,
+            "value": 10,
+            "limit": 1
+          },
+          {
+            "name": "seeThroughCutPixelsOutside",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "canvas.f0.varianceMin",
+            "pass": true,
+            "value": 372.9884193462967,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f0.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f30.varianceMin",
+            "pass": true,
+            "value": 368.1959259516407,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f30.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f60.varianceMin",
+            "pass": true,
+            "value": 376.5685263731539,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f60.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f90.varianceMin",
+            "pass": true,
+            "value": 361.3262799166587,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f90.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f120.varianceMin",
+            "pass": true,
+            "value": 355.600724865948,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f120.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f150.varianceMin",
+            "pass": true,
+            "value": 353.8130626486054,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f150.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f180.varianceMin",
+            "pass": true,
+            "value": 350.99101438179787,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f180.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f210.varianceMin",
+            "pass": true,
+            "value": 360.68994901439874,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f210.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f240.varianceMin",
+            "pass": true,
+            "value": 362.89605391469377,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f240.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f250.varianceMin",
+            "pass": true,
+            "value": 365.3082562936688,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f250.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "requestedBackend",
+            "pass": true,
+            "value": 1,
+            "limit": 1
+          },
+          {
+            "name": "requestedQuality",
+            "pass": true,
+            "value": 1,
+            "limit": 1
+          }
+        ]
+      },
+      "shares": [
+        {
+          "frame": 0,
+          "megaM": null,
+          "visible": 2888,
+          "reference": 2962,
+          "share": 0.975016880486158,
+          "megaPixels": 954,
+          "megaShare": 0.0018402777777777777
+        },
+        {
+          "frame": 30,
+          "megaM": null,
+          "visible": 2908,
+          "reference": 2958,
+          "share": 0.9830966869506423,
+          "megaPixels": 2,
+          "megaShare": 3.858024691358025e-06
+        },
+        {
+          "frame": 60,
+          "megaM": null,
+          "visible": 2908,
+          "reference": 2984,
+          "share": 0.9745308310991957,
+          "megaPixels": 2,
+          "megaShare": 3.858024691358025e-06
+        },
+        {
+          "frame": 90,
+          "megaM": null,
+          "visible": 2570,
+          "reference": 2604,
+          "share": 0.9869431643625192,
+          "megaPixels": 0,
+          "megaShare": 0
+        },
+        {
+          "frame": 120,
+          "megaM": null,
+          "visible": 2476,
+          "reference": 2537,
+          "share": 0.9759558533701221,
+          "megaPixels": 0,
+          "megaShare": 0
+        },
+        {
+          "frame": 150,
+          "megaM": null,
+          "visible": 2536,
+          "reference": 2580,
+          "share": 0.9829457364341085,
+          "megaPixels": 1,
+          "megaShare": 1.9290123456790124e-06
+        },
+        {
+          "frame": 180,
+          "megaM": null,
+          "visible": 2530,
+          "reference": 2594,
+          "share": 0.9753276792598303,
+          "megaPixels": 2,
+          "megaShare": 3.858024691358025e-06
+        },
+        {
+          "frame": 210,
+          "megaM": null,
+          "visible": 2801,
+          "reference": 2841,
+          "share": 0.9859204505455825,
+          "megaPixels": 0,
+          "megaShare": 0
+        },
+        {
+          "frame": 240,
+          "megaM": null,
+          "visible": 2313,
+          "reference": 2337,
+          "share": 0.9897304236200257,
+          "megaPixels": 0,
+          "megaShare": 0
+        },
+        {
+          "frame": 250,
+          "megaM": null,
+          "visible": 2334,
+          "reference": 2366,
+          "share": 0.9864750633981403,
+          "megaPixels": 0,
+          "megaShare": 0
+        }
+      ],
+      "cut": {
+        "outside": 0,
+        "inside": 5784,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      "note": "Reviewed game-camera contact sheet.",
+      "zoom": 1
+    },
+    {
+      "name": "seethrough-not-in-the-way",
+      "backend": "webgl",
+      "quality": "high",
+      "checks": {
+        "pass": true,
+        "checks": [
+          {
+            "name": "consoleErrors",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "drawCallsMax",
+            "pass": true,
+            "value": 13,
+            "limit": 300
+          },
+          {
+            "name": "trianglesMax",
+            "pass": true,
+            "value": 58956,
+            "limit": 500000
+          },
+          {
+            "name": "courierVisibleShare",
+            "pass": true,
+            "value": 0.987,
+            "limit": 0.6
+          },
+          {
+            "name": "courierShareSampled",
+            "pass": true,
+            "value": 4,
+            "limit": 1
+          },
+          {
+            "name": "seeThroughCutPixelsInsideMax",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "seeThroughCutPixelsOutside",
+            "pass": true,
+            "value": 0,
+            "limit": 0
+          },
+          {
+            "name": "canvas.f0.varianceMin",
+            "pass": true,
+            "value": 170.38510889559257,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f0.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f10.varianceMin",
+            "pass": true,
+            "value": 169.04818345949025,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f10.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f20.varianceMin",
+            "pass": true,
+            "value": 169.86245665771276,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f20.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "canvas.f30.varianceMin",
+            "pass": true,
+            "value": 168.9959680496031,
+            "limit": 1
+          },
+          {
+            "name": "canvas.f30.variedTilesMin",
+            "pass": true,
+            "value": 64,
+            "limit": 8
+          },
+          {
+            "name": "requestedBackend",
+            "pass": true,
+            "value": 1,
+            "limit": 1
+          },
+          {
+            "name": "requestedQuality",
+            "pass": true,
+            "value": 1,
+            "limit": 1
+          }
+        ]
+      },
+      "shares": [
+        {
+          "frame": 0,
+          "megaM": null,
+          "visible": 2878,
+          "reference": 2915,
+          "share": 0.9873070325900515,
+          "megaPixels": 0,
+          "megaShare": 0
+        },
+        {
+          "frame": 10,
+          "megaM": null,
+          "visible": 2894,
+          "reference": 2930,
+          "share": 0.9877133105802047,
+          "megaPixels": 0,
+          "megaShare": 0
+        },
+        {
+          "frame": 20,
+          "megaM": null,
+          "visible": 2884,
+          "reference": 2922,
+          "share": 0.9869952087611226,
+          "megaPixels": 0,
+          "megaShare": 0
+        },
+        {
+          "frame": 30,
+          "megaM": null,
+          "visible": 2884,
+          "reference": 2914,
+          "share": 0.9897048730267674,
+          "megaPixels": 0,
+          "megaShare": 0
+        }
+      ],
+      "cut": {
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": ""
+      },
+      "note": "House moved from [8,-8] to [5,-5] after this pilot so it is clearly visible; final pose is unmeasured.",
+      "zoom": 1
+    }
+  ],
+  "unmeasured": [
+    "Full high/low x zoom 0.5/1/1.5 scene matrix",
+    "WebGPU",
+    "Repositioned beside-house scene",
+    "Browser smoke and verify",
+    "Native E18 frame timing"
+  ],
+  "browserQueueStoppedUtc": "2026-10-15T09:45:18Z",
+  "reason": "30-minute cumulative browser-slot wait limit",
+  "cutSampling": "Pilot compares cut pixels at the final frame; the per-sheet-frame cut gate was added after the pilot. Courier visibility includes frame zero.",
+  "revisionNote": "These pilots predate the final passenger-ID and foliage alignment fixes; the final production build has not received a new browser capture."
+}
