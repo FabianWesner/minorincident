@@ -380,3 +380,18 @@ test('courier contact projection sweeps the existing capsule instead of crossing
     expect(w.solids.snapshot()).toMatchObject({ failures: 0, pending: 0 });
   } finally { w.dispose(); }
 });
+
+test('a stationary footprint change revalidates contact with its stationary neighbour', async () => {
+  const w = await arena();
+  try {
+    const alpha = w.entities.get(w.infected!.spawn('infected.alpha', { x: 12, z: 0 }, { state: 'idle' }))!;
+    const neighbour = w.entities.get(w.infected!.spawn('infected.runner', { x: 13.2, z: 0 }, { state: 'idle' }))!;
+    w.tick++; w.solids.commit();
+    alpha.combat!.radius = 1.1;
+    w.tick++; w.solids.commit();
+    for (const e of [alpha, neighbour]) expect(w.solids.clear(e.transform, e.combat!.radius, e.id, true, .02)).toBe(true);
+    expect(alpha.combat!.radius).toBe(1.1); expect(neighbour.health.current).toBe(60);
+    expect(w.infected!.director.count).toBe(2);
+    expect(w.solids.snapshot()).toMatchObject({ failures: 0, pending: 0 });
+  } finally { w.dispose(); }
+});
