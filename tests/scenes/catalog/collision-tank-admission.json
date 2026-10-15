@@ -1,6 +1,6 @@
 {
   "name": "collision-tank-admission",
-  "note": "Production radius-aware admission from the centre of the tank. The Alpha must stand outside the hull, alive and visible. Inspect the feet/chassis boundary at both game zooms.",
+  "note": "Production radius-aware admission from the centre of the tank. The Alpha must stand outside the hull, alive and visible. Inspect the feet/chassis boundary at both game zooms. Follow the Alpha so the close game camera retains its feet as it leaves the chassis.",
   "seed": 1,
   "ground": "asphalt",
   "size": 80,
@@ -39,10 +39,7 @@
   ],
   "camera": {
     "mode": "game",
-    "target": [
-      0,
-      0
-    ],
+    "target": "alpha",
     "zoom": 1
   },
   "frames": 120,

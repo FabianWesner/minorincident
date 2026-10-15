@@ -171,6 +171,9 @@ export class InfectedSystem {
     }
     this.active.push(entity); this.world.spatial.set(entity.id, position.x, position.z); this.counters.reused++;
     this.world.solids.admit(entity, 'infected.spawn', 4, !opts.offNav);
+    // An authored chasing spawn must acquire from its admitted pose before its
+    // idle look-around can turn it away. Sight/cover still decide acquisition.
+    if (opts.state === 'chase' && entity.infected!.l1 && !entity.pendingAdmission) this.perceive(entity, entity.infected!, entity.infected!.l1);
     return entity.id;
   }
   release(entity: EntitySnapshot): void {
@@ -516,7 +519,8 @@ export class InfectedSystem {
         const turn = Math.atan2(b.dx * tz - b.dz * tx, b.dx * tx + b.dz * tz), a = Math.atan2(b.dz, b.dx) + Math.max(-7 / 60, Math.min(7 / 60, turn));
         b.dx = Math.cos(a); b.dz = Math.sin(a);
       }
-      const step = Math.min(Math.max(0, distance - this.strikeRange(e, player)), this.l3Speed(e, b.special === 'charge' ? 8 : b.special === 'cling' ? 6 : b.special === 'pin' ? 7.5 : 7) / 60);
+      let step = Math.min(Math.max(0, distance - this.strikeRange(e, player)), this.l3Speed(e, b.special === 'charge' ? 8 : b.special === 'cling' ? 6 : b.special === 'pin' ? 7.5 : 7) / 60);
+      if (b.special === 'pounce' || b.special === 'pin') step = this.world.solids.sweep(e, { x: b.dx, z: b.dz }, step);
       if (b.special === 'cling') e.transform.y = 0.7 + Math.sin(Math.min(1, (this.world.tick - b.until) / 60) * Math.PI) * 1.5;
       // Authored leap/charge timing is a combat impulse, like knockback.
       moveAgent(e, b.dx * step * 60, b.dz * step * 60, this.infectedNav, this.world.tick, e.combat!.radius, true); this.world.spatial.set(e.id, e.transform.x, e.transform.z);
