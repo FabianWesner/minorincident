@@ -239,6 +239,8 @@ export interface Expectations {
   footJitterRunMax?: number;
   /** Deepest torso/neck/head interpenetration between two living, standing actors, in cm (`metrics.bodies`; 2 cm slack). */
   bodyOverlapMaxCm?: number;
+  /** Attacker forearms against the courier's torso/backpack envelope; hands may make contact. */
+  attackBodyOverlapMaxCm?: number;
   /** Corgi trunk/head against the courier's drawn body, including both legs. */
   corgiCourierOverlapMaxCm?: number;
   /** Greatest trailing distance along the running courier's velocity (speed > 2.5 m/s). */

@@ -52,7 +52,7 @@ export class LevelEightZoo {
       if (e.combat) { e.combat.staggerUntil = 0; e.combat.attacking = false; delete e.combat.reaction; }
       if (c.ally) { c.ally.post = null; c.ally.hold = false; delete c.ally.follow; }
       c.survivor = { key: c.survivor?.key ?? `zoo-carried-${i}`, slot: i, leader: 1, mode: 'follow', cover: false, waitAt: 0, foundAt: w.tick };
-      s.roster.push(e.id); w.spatial.set(e.id, at.x, at.z);
+      s.roster.push(e.id); w.solids.admit(e, 'l8.roster.arrival');
     }
     const centres: Point[] = [{ x: -60, z: 0 }, { x: 60, z: 0 }, { x: -30, z: -64 }, { x: -45, z: 64 }, { x: 24, z: 64 }];
     for (let i = 0; i < 30; i++) {

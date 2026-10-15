@@ -55,7 +55,7 @@ function clearThreat(world: SimWorld, at: Spot): void {
         for (let m = r.clearM; m <= r.clearM + 6; m += 1) {
           const to = { x: at.x + (dx * c - dz * s) * m, z: at.z + (dx * s + dz * c) * m };
           if (!ai.nav.clear(to.x, to.z, e.combat?.radius ?? .45) || !world.solids.clear({ ...to, y: e.transform.y }, e.combat?.radius ?? .45, e.id)) continue;
-          Object.assign(e.transform, to); world.spatial.set(e.id, to.x, to.z);
+          Object.assign(e.transform, to); world.solids.remember(e, 'checkpoint.threat.clear'); world.spatial.set(e.id, to.x, to.z);
           if (e.locomotion) e.locomotion.vx = e.locomotion.vz = 0;
           moved = true; break;
         }

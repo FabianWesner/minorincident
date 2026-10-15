@@ -20,7 +20,7 @@ async function load(roster?: EntitySnapshot[], tier: 'high' | 'low' = 'high') {
 }
 const step = (w: SimWorld, n: number) => { for (let i = 0; i < n; i++) w.update(); };
 function put(w: SimWorld, id: number, x: number, z: number) {
-  const e = w.entities.get(id)!; Object.assign(e.transform, { x, z, y: w.districts!.groundHeight(x, z) + .7 }); w.spatial.set(id, x, z);
+  const e = w.entities.get(id)!; Object.assign(e.transform, { x, z, y: w.districts!.groundHeight(x, z) + .7 }); expect(w.solids.admit(e, 'test.l7.put', 4, false)).toBe(true);
   if (id === 1) { w.physics.playerBody!.setTranslation(e.transform, true); w.physics.playerBody!.setNextKinematicTranslation(e.transform); }
 }
 /** Survivors a few metres east of the bus, on free cells of the corridor lane. */

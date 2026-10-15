@@ -104,6 +104,7 @@ export class SceneLab {
   private hits = new Map<string, Hit>();
   /** Actor pairs whose torsos/heads interpenetrate (worst depth, frame, sampled-frame count). */
   private bodies = new Map<string, { a: string; b: string; depthCm: number; frame: number; count: number }>();
+  private attackOverlap = { depthCm: 0, frame: 0, actor: '' };
   private readonly gunBodyHits = new Map<string, Hit>();
   private heldPropSamples = 0;
   private heldPropClips = new Map<string, StaticClip & { actor: string; frame: number }>();
@@ -145,6 +146,7 @@ export class SceneLab {
   private readonly barOverrides = new Map<InfectedDef, boolean | undefined>();
   async load(spec: SceneSpec) {
     this.specials = [];
+    this.attackOverlap = { depthCm: 0, frame: 0, actor: '' };
     this.convoyOverlapFrames = 0;
     if (spec.cureEncounter) {
       const group = cureEncounters.find(g => g.id === spec.cureEncounter);
@@ -1059,6 +1061,8 @@ export class SceneLab {
     const clip = this.frame % 3 === 0 && this.staticSets;
     const torsos: { id: string; bones: Bone[] }[] = [];
     let courierBody: Bone[] | undefined;
+    let courierTorso: Bone[] | undefined;
+    const attackerArms: { id: string; bones: Bone[] }[] = [];
     const dogBodies: Bone[][] = [];
     if (this.frame % 3 === 0) for (const contact of probes.heldProps) {
       const actor = [...this.actors.values()].find(a => a.entity === contact.entity);
@@ -1103,6 +1107,8 @@ export class SceneLab {
           joints = Object.fromEntries((['hip', 'head', 'armL', 'armR', 'foreArmL', 'foreArmR', 'handL', 'handR', 'legL', 'legR', 'shinL', 'shinR', 'footL', 'footR'] as const).map(n => [n, node(n)!.getWorldPosition(this.point).toArray()]));
           forward = [Math.cos(c.getState().yaw), 0, -Math.sin(c.getState().yaw)]; clipName = c.getState().clip;
           if (visible && !(clipName && unplantedClips.test(clipName))) courierBody = this.bones(joints, joints.armL.map((v, i) => (v + joints!.armR[i]) / 2));
+          if (courierBody) courierTorso = courierBody.filter(b => b.name === 'spine' || b.name === 'neck').map(b => ({ ...b,
+            a: b.a.map((v, i) => v - forward[i] * .08) as Vec3, b: b.b.map((v, i) => v - forward[i] * .08) as Vec3, radius: b.name === 'spine' ? .18 : b.radius }));
         }
       } else if (actor.kind === 'corgi' || actor.kind === 'animal' && !!e?.civilian?.pet) {
         const root = probes.npcs?.heroRoot(actor.entity); visible = !!root?.visible; label = probes.npcs?.heroClip(actor.entity);
@@ -1140,6 +1146,7 @@ export class SceneLab {
       const motion = e?.motion?.speed ?? Math.hypot(e?.survivor?.velocity?.x ?? 0, e?.survivor?.velocity?.z ?? 0);
       actor.track.push({ frame: this.frame, ...(this.spec?.trace && visible && figures.get(actor.entity)?.appearance ? { appearance: figures.get(actor.entity)!.appearance, corpse: !!e?.corpse } : {}), floor: e ? this.world.districts?.pavingHeight(e.transform.x, e.transform.z) ?? 0 : undefined, clip: clipName ?? (e?.civilian?.state === 'calm' && e.civilian.schedule?.[e.civilian.scheduleStep ?? 0]?.activity === 'sit' && e.civilian.activityUntil ? 'sit' : undefined), feet, speed: motion, ...(label ? { label } : {}), ...(this.spec?.trace && e ? { at: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)] } : {}), torsoPitchDeg: joints?.hip && shoulders ? torsoPitch(joints.hip, shoulders, forward) : undefined });
       if (this.frame % 3 === 0 && joints?.hip && joints.head && shoulders && visible && e && e.health.current > 0 && !(clipName && unplantedClips.test(clipName))) {
+        if (e.infected && e.attachedTo === undefined) attackerArms.push({ id: actor.id, bones: this.bones(joints, shoulders).filter(b => b.name.startsWith('foreArm')) });
         // Torso, neck and the (chibi) head above its pivot: body-vs-body contact between actors (crowding, melee rings).
         const head = joints.head, top: Vec3 = [head[0], head[1] + .2, head[2]];
         torsos.push({ id: actor.id, bones: [{ name: 'spine', a: joints.hip as Vec3, b: shoulders as Vec3, radius: .1 }, { name: 'neck', a: shoulders as Vec3, b: head as Vec3, radius: .06 }, { name: 'head', a: head as Vec3, b: top, radius: .11 }] });
@@ -1173,6 +1180,10 @@ export class SceneLab {
       this.companion.samples++;
       const depth = bodyOverlap(courierBody, body) * 100;
       if (depth > this.companion.overlapMaxCm) { this.companion.overlapMaxCm = depth; this.companion.overlapFrame = this.frame; }
+    }
+    if (courierTorso) for (const arm of attackerArms) {
+      const depthCm = bodyOverlap(courierTorso, arm.bones) * 100;
+      if (depthCm > this.attackOverlap.depthCm) this.attackOverlap = { depthCm, frame: this.frame, actor: arm.id };
     }
     for (const [id, entity] of this.vehicles) {
       const e = this.world.entities.get(entity), motion = this.vehicleMotion.get(id); if (!e || !motion) continue;
@@ -1394,7 +1405,7 @@ export class SceneLab {
       convoyOverlapFrames: this.convoyOverlapFrames,
       propPenetration: { samples: this.propPenetrationSamples, framesMax: Math.max(0, ...[...this.propPenetration.values()].map(m => m.max)), pairs: [...this.propPenetration.values()] },
       props: { sinkMaxCm: this.propSinkMaxCm, samples: this.propGroundSamples, gaps: this.game.view.labProbes().districts?.propGroundGaps() ?? [] },
-      bodies, wheels: Object.fromEntries([...new Set([...this.wheels.values()].map(w => w.vehicle))].map(id => [id, [...this.wheels.values()].filter(w => w.vehicle === id).map(w => { const h = this.hubs.get(`${w.vehicle}|${w.wheel}`); return { ...w, hubSpikeCm: h?.spikeCm ?? 0, hubSpikeFrame: h?.spikeFrame ?? 0, hubStepCm: h?.stepCm ?? 0, hubStepFrame: h?.stepFrame ?? 0 }; })])), ...(this.spec?.trace ? { vehicleTrack: Object.fromEntries(this.vehicleTrack), wheelTrack: Object.fromEntries(this.wheelTrack) } : {}),
+      bodies, attackOverlap: { ...this.attackOverlap }, wheels: Object.fromEntries([...new Set([...this.wheels.values()].map(w => w.vehicle))].map(id => [id, [...this.wheels.values()].filter(w => w.vehicle === id).map(w => { const h = this.hubs.get(`${w.vehicle}|${w.wheel}`); return { ...w, hubSpikeCm: h?.spikeCm ?? 0, hubSpikeFrame: h?.spikeFrame ?? 0, hubStepCm: h?.stepCm ?? 0, hubStepFrame: h?.stepFrame ?? 0 }; })])), ...(this.spec?.trace ? { vehicleTrack: Object.fromEntries(this.vehicleTrack), wheelTrack: Object.fromEntries(this.wheelTrack) } : {}),
       lodPlaceholders: { frames: this.placeholders.frames, firstFrame: this.placeholders.firstFrame, assets: [...this.placeholders.assets].sort() },
       perf: { drawCalls: band(p => p.drawCalls), triangles: band(p => p.triangles), shadowDrawCalls: band(p => p.shadowDrawCalls), shadowTriangles: band(p => p.shadowTriangles), stepMs: band(p => p.stepMs),
         lastFrame: this.perf.at(-1) ?? null, note: 'view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time' },

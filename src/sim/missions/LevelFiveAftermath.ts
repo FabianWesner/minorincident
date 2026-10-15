@@ -98,7 +98,7 @@ export class LevelFiveAftermath {
     Object.assign(player.transform, { x: to.x, z: to.z });
     world.solids.admit(player, 'l5.teleport', 4, false);
     world.physics.playerBody!.setTranslation(player.transform, true); world.physics.playerBody!.setNextKinematicTranslation(player.transform);
-    Object.assign(world.previousPlayer!, player.transform); world.spatial.set(1, to.x, to.z); world.player!.locomotion.reset(); world.player!.setCheckpoint(player.transform); world.clearInput();
+    Object.assign(world.previousPlayer!, player.transform); world.spatial.set(1, player.transform.x, player.transform.z); world.player!.locomotion.reset(); world.player!.setCheckpoint(player.transform); world.clearInput();
   }
   private hiddenSchedule(p: Point) { return [{ activity: 'look' as const, anchor: 'l5/hidden', target: p, facing: { x: p.x, z: p.z + 5 }, ticks: 60 * 60 * 6 }]; }
   private spawnSurvivors(): void {
@@ -181,7 +181,7 @@ export class LevelFiveAftermath {
     const { world } = this.mission, s = this.s, tick = world.tick;
     if (s.phase !== 'cellar') return;
     this.teleport(world.entities.get(1)!, this.anchor('l5-out'));
-    for (const e of world.entities.iterate()) if (e.companion) { const p = this.snap({ x: this.anchor('l5-out').x - 1.2, z: this.anchor('l5-out').z + .8 }, .4); Object.assign(e.transform, p); world.spatial.set(e.id, p.x, p.z); }
+    for (const e of world.entities.iterate()) if (e.companion) { const p = this.snap({ x: this.anchor('l5-out').x - 1.2, z: this.anchor('l5-out').z + .8 }, .4); Object.assign(e.transform, p); world.solids.admit(e, 'l5.emerge.companion'); }
     s.phase = 'emerged'; s.emergedAt = tick;
     if (!this.mission.state.states.emerged) this.mission.setState('emerged', true);
     world.events.emit({ type: 'l5.emerged', tick });

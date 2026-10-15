@@ -528,6 +528,7 @@ export class Outbreak {
     // Lane C's L1 brain already gave it the tier run speed; without it (tests, old levels) use the tier base +/- jitter.
     if (!c.zooAnimal && !e.infected!.l1) e.infected!.speed = l1v2.speedTiers[inf.tier].baseMs * (1 + (this.rng.next() * 2 - 1) * l1v2.speedTiers.jitter);
     delete e.civilian; delete e.infection; delete e.motion; if (c.zooAnimal) delete e.locomotion;
+    this.world.solids.admit(e, 'outbreak.rise');
     this.humans.invalidate();
     for (const pet of this.world.entities.iterate()) if (pet.civilian?.owner === e.id) pet.civilian.owner = null;
     this.world.spatial.set(e.id, e.transform.x, e.transform.z);
