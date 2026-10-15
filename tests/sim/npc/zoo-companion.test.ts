@@ -3,6 +3,7 @@ import { loadLevel } from '../../../tools/sim-runner/levels';
 import type { SimWorld } from '../../../src/sim/world/SimWorld';
 import { preset } from '../../../src/sim/progression/Campaign';
 import { step, teleport } from './helpers';
+import { installPerformanceLevel } from '../../fixtures/scenarios/performance';
 const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds.splice(0)) w.dispose(); });
 for (const tier of ['high', 'low'] as const) test(`@E30 @E31 corgi follows in zoo and survives APC handover/checkpoint: ${tier}`, async () => {
@@ -49,4 +50,14 @@ test('@E31 standalone crossing start keeps the protected corgi aboard the APC', 
   step(w, 90);
   expect(w.entities.get(dog.id)?.hidden).toBe(true);
   expect(w.entities.get(dog.id)?.health.current).toBe(100);
+});
+test('@E30 zoo stress photo spot keeps the corgi with the courier and the full infected cap', async () => {
+  const w = await loadLevel('L8', 32); worlds.push(w);
+  const dog = [...w.entities.iterate()].find(e => e.companion)!;
+  installPerformanceLevel(w, 'low', 'perf-l8-mixed-outbreak');
+  const p = w.entities.get(1)!;
+  expect(w.infected!.director.count).toBe(100);
+  expect(w.entities.get(dog.id)?.hidden).not.toBe(true);
+  expect(Math.hypot(dog.transform.x - p.transform.x, dog.transform.z - p.transform.z)).toBeLessThan(3);
+  expect(dog.transform.y).toBeCloseTo(.3 + w.districts!.groundHeight(dog.transform.x, dog.transform.z));
 });
