@@ -106,7 +106,9 @@ test('checkpoint restore discards a deferred player mask from the discarded time
     Object.assign(player.transform, tank.transform);
     expect(w.solids.admit(player, 'test.blocked-restore', 0, false)).toBe(false);
     expect(w.physics.playerCollider!.isEnabled()).toBe(false);
+    w.missions!.state.runOutUntil = w.tick + 300;
     w.missions!.restore('start', true);
+    expect(w.missions!.state.runOutUntil).toBeUndefined();
     expect(player.pendingAdmission).toBeUndefined(); expect(player.hidden).not.toBe(true);
     expect(w.physics.playerCollider!.isEnabled()).toBe(true);
     tick(w, 2); expect(w.solids.clear(player.transform, .35, 1)).toBe(true);

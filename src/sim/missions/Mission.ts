@@ -424,6 +424,10 @@ export class Mission {
     const checkpoint = this.checkpoints.get(id); if (!checkpoint) throw new Error(`Unknown checkpoint: ${id}`);
     const timeout = this.state.failure === 'timeout';
     const stats = this.state.stats, bosses=this.state.killedBosses, delta = this.world.tick - checkpoint.tick;
+    // Optional fields absent from the snapshot belong to the discarded timeline
+    // too (notably run-out, which otherwise prevents a fresh graph walk).
+    const previous = this.state as unknown as Record<string, unknown>;
+    for (const key of Object.keys(previous)) if (!(key in checkpoint.state)) delete previous[key];
     Object.assign(this.state, structuredClone(checkpoint.state)); this.state.stats = stats; this.state.killedBosses=bosses; this.state.failure = null; this.state.phase = 'playing'; this.state.cinematic = null; this.state.result = null;
     if (timeout && this.state.deadlineTicks !== null) this.state.deadlineTicks += Math.ceil((this.def.deadline?.retryGraceSeconds ?? 0) * 60);
     this.finishApplied = false; this.pendingCheckpoints.length=0; this.markerObjective=this.def.steps.find(s=>this.state.steps[s.id].status==='active')?.id??null; this.pendingMarker=null;
