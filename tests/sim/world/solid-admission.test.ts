@@ -76,7 +76,7 @@ test('a safe explicit relocation releases an earlier deferred checkpoint request
     const player = w.entities.get(1)!;
     respawnAtCheckpoint(w, { x: 12, z: 0 });
     expect(player.pendingAdmission).toBeDefined();
-    expect(w.solids.relocate(player, { x: 20, z: 6 }, 'test.safe-relocation')).toBe(true);
+    expect(w.solids.relocate(player, { x: 20, z: 6, y: player.transform.y }, 'test.safe-relocation')).toBe(true);
     expect(player.pendingAdmission).toBeUndefined(); expect(player.hidden).not.toBe(true);
     expect(w.physics.playerCollider!.isEnabled()).toBe(true);
     tick(w, 35); expect(player.transform.x).toBeCloseTo(20);
