@@ -7,7 +7,7 @@ import type { EntitySnapshot, Transform } from './types';
 import { boxContact, type SolidBox, type Contact } from './SolidGeometry';
 
 type Point = { x: number; z: number; y: number };
-interface Hull { entity: EntitySnapshot; boxes: SolidBox[]; pose: Transform }
+interface Hull { entity: EntitySnapshot; boxes: SolidBox[]; pose: Transform; dirty: boolean }
 export interface CollisionOffender { tick: number; actor: number; other: number | string; depth: number; inside: boolean; writer: string }
 const tolerance = .02, skin = .001;
 /** One physical footprint. Reach, crowd spacing and animation envelopes are owned by combat/presentation. */
@@ -41,7 +41,7 @@ export class SolidRegistry {
   private readonly moved: EntitySnapshot[] = [];
   private readonly contact: Contact = { depth: 0, nx: 0, nz: 0, inside: false };
   private maxHull = 0;
-  private maxActor = 2;
+  private maxActor = survivor.radius;
   private readonly changedActors = new Set<number>();
   private navRevision = -1;
   private nav: import('../ai/NavGrid').NavGrid | undefined;
@@ -60,7 +60,7 @@ export class SolidRegistry {
       boxes = shape.boxes.map(b => ({ x: (b.min[0] + b.max[0]) / 2, y: (b.min[1] + b.max[1]) / 2 - (e.traffic || e.convoy ? .5 : .7), z: (b.min[2] + b.max[2]) / 2, halfX: (b.max[0] - b.min[0]) / 2, halfY: (b.max[1] - b.min[1]) / 2, halfZ: (b.max[2] - b.min[2]) / 2 }));
     }
     for (const b of boxes) this.maxHull = Math.max(this.maxHull, Math.hypot(Math.abs(b.x) + b.halfX, Math.abs(b.z) + b.halfZ));
-    this.hulls.set(e.id, { entity: e, boxes, pose: { ...e.transform } });
+    this.hulls.set(e.id, { entity: e, boxes, pose: { ...e.transform }, dirty: true });
     this.hullIndex.set(e.id, e.transform.x, e.transform.z);
   }
   private syncHulls(): boolean {
@@ -69,8 +69,8 @@ export class SolidRegistry {
     for (const [id, h] of this.hulls) {
       const e = this.world.entities.get(id), p = h.entity.transform;
       if (e !== h.entity || e.hidden) { this.hulls.delete(id); this.hullIndex.delete(id); changed = true; continue; }
-      if (h.pose.x !== p.x || h.pose.z !== p.z || h.pose.y !== p.y || h.pose.yaw !== p.yaw) { this.hullIndex.set(id, p.x, p.z); Object.assign(h.pose, p); changed = true;
-        this.world.spatial.query({ x: p.x, z: p.z, r: this.maxHull + this.maxActor }, this.nearby);
+      if (h.dirty || h.pose.x !== p.x || h.pose.z !== p.z || h.pose.y !== p.y || h.pose.yaw !== p.yaw) { this.hullIndex.set(id, p.x, p.z); Object.assign(h.pose, p); h.dirty = false; changed = true;
+        this.world.spatial.query({ x: p.x, z: p.z, r: this.maxHull + this.maxActor }, this.nearby, false);
         for (const actorId of this.nearby) this.changedActors.add(actorId); }
     }
     return changed;
@@ -80,7 +80,7 @@ export class SolidRegistry {
       // Support below the feet is walkable; navigation-only walls explicitly reserve the ground layer.
       if ((box.navBlocker && at.y < 1.8) || box.y + box.halfY > at.y - .65 + .05 && box.y - box.halfY < at.y + .65) visit(box, id);
     });
-    this.hullIndex.query({ x: at.x, z: at.z, r: this.maxHull + radius }, this.hullNeighbors);
+    this.hullIndex.query({ x: at.x, z: at.z, r: this.maxHull + radius }, this.hullNeighbors, false);
     const worldBox: SolidBox = { x: 0, y: 0, z: 0, halfX: 0, halfZ: 0, halfY: 0 };
     for (const id of this.hullNeighbors) {
       const h = this.hulls.get(id); if (!h || h.entity.hidden || e && at === e.transform && attached(e, id)) continue;
@@ -97,7 +97,7 @@ export class SolidRegistry {
     let clear = true; const e = ignoreId === undefined ? undefined : this.world.entities.get(ignoreId);
     this.solids(at, radius, e, b => { const c = boxContact(b, at.x, at.z, radius, this.contact); if (c.inside || c.depth > limit) clear = false; });
     if (!clear || !bodies) return clear;
-    this.world.spatial.query({ x: at.x, z: at.z, r: radius + this.maxActor }, this.nearby);
+    this.world.spatial.query({ x: at.x, z: at.z, r: radius + this.maxActor }, this.nearby, false);
     for (const id of this.nearby) {
       const other = this.world.entities.get(id);
       if (id === ignoreId || !other || !actor(other) || pairExempt(e, other) || !layers(at, other.transform)) continue;
@@ -121,6 +121,7 @@ export class SolidRegistry {
   }
   /** Preserve identity/counts when no safe spot is available; AI cannot move a pending actor. */
   admit(e: EntitySnapshot, writer: string, range = 4, navigation = true): boolean {
+    this.maxActor = Math.max(this.maxActor, actorRadius(e));
     this.syncHulls(); this.writers.set(e, writer);
     const to = this.find(e.transform, actorRadius(e), e.id, range, navigation);
     if (!to) {
@@ -168,11 +169,8 @@ export class SolidRegistry {
     }
     for (const e of this.moved) {
       const radius = actorRadius(e), p = e.transform, old = this.committed.get(e);
-      // Actor motion is swept using full physical radius. Scripted relocations explicitly use admission.
-      if (nav && old && Math.hypot(p.x - old.x, p.z - old.z) > .2 && layers(p, old) && this.clear(old, radius, e.id, false) && !nav?.visible(old, p, radius)) {
-        const dx = p.x - old.x, dz = p.z - old.z;
-        Object.assign(p, old); nav?.move(p, dx, dz, radius, true);
-      }
+      // Locomotion and impulses already sweep through NavGrid/Rapier. Validate their final footprint here,
+      // including scripted relocations whose source and destination are intentionally disconnected.
       for (let pass = 0; pass < 8; pass++) {
         let moved = false;
         this.solids(p, radius, e, b => {
@@ -186,7 +184,7 @@ export class SolidRegistry {
         // Exact circle projection handles residual crowd contacts without running a placement search for every chaser.
         for (let pass = 0; pass < 8; pass++) {
           let moved = false;
-          this.world.spatial.query({ x: p.x, z: p.z, r: radius + this.maxActor }, this.nearby);
+          this.world.spatial.query({ x: p.x, z: p.z, r: radius + this.maxActor }, this.nearby, false);
           for (const id of this.nearby) {
             const other = this.world.entities.get(id);
             if (id === e.id || !other || !actor(other) || pairExempt(e, other) || !layers(p, other.transform)) continue;
@@ -225,7 +223,7 @@ export class SolidRegistry {
       const c = boxContact(b, p.x, p.z, radius, this.contact);
       if (c.inside || c.depth > tolerance + 1e-6) this.record(e, id, c.depth, c.inside);
     });
-    this.world.spatial.query({ x: p.x, z: p.z, r: radius + this.maxActor }, this.nearby);
+    this.world.spatial.query({ x: p.x, z: p.z, r: radius + this.maxActor }, this.nearby, false);
     for (const id of this.nearby) {
       const other = this.world.entities.get(id);
       if (id === e.id || !other || !actor(other) || pairExempt(e, other) || !layers(p, other.transform)) continue;
@@ -233,6 +231,6 @@ export class SolidRegistry {
       if (depth > tolerance + 1e-6) this.record(e, id, depth, false);
     }
   }
-  snapshot() { return { failures: this.failures, pending: this.bodies.length ? this.world.entities.values().filter(e => e.pendingAdmission).length : 0, admitted: this.admitted, deferred: this.deferred, offenders: this.offenders.map(o => ({ ...o })) }; }
-  reset(): void { this.hulls.clear(); this.hullIndex.reset(); this.committed = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.navRevision = -1; this.nav = undefined; }
+  snapshot() { return { failures: this.failures, pending: this.world.entities.values().filter(e => e.pendingAdmission).length, admitted: this.admitted, deferred: this.deferred, offenders: this.offenders.map(o => ({ ...o })) }; }
+  reset(): void { this.hulls.clear(); this.hullIndex.reset(); this.committed = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = -1; this.nav = undefined; }
 }

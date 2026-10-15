@@ -199,7 +199,11 @@ export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, see
     return report;
   } finally {
     report.collision = world.solids.snapshot();
-    if (report.collision.failures || report.collision.pending) report.failures['collision-invariant'] = report.collision.failures + report.collision.pending;
+    if (report.collision.failures || report.collision.pending) {
+      report.failures['collision-invariant'] = report.collision.failures + report.collision.pending;
+      report.completed = false; report.outcome = 'mission-failed';
+      report.blocker = { objective: report.furthestObjective, detail: JSON.stringify(report.collision) };
+    }
     world.dispose();
   }
 }

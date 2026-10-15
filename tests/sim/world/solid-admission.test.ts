@@ -13,7 +13,9 @@ test.each(vehicles.map(v => v.id))('all moving and parked vehicle hulls use the 
   try {
     const id = w.vehicles!.spawn(def, { x: 12, z: 0 }, .63), car = w.vehicles!.cars.get(id)!;
     const e = w.entities.get(w.infected!.spawn('infected.alpha', { x: 12, z: 4 }, { state: 'idle' }))!;
-    tick(w); Object.assign(e.transform, car.entity.transform); tick(w);
+    tick(w);
+    const p = car.entity.transform, along = car.physics.def.length / 2 - .1;
+    Object.assign(e.transform, { x: p.x + Math.cos(p.yaw) * along, z: p.z - Math.sin(p.yaw) * along }); tick(w);
     expect(car.physics.hullDistance(e.transform.x, e.transform.z)).toBeGreaterThanOrEqual(e.combat!.radius - .02);
     expect(e.health.current).toBe(300); expect(w.solids.snapshot().pending).toBe(0);
   } finally { w.dispose(); }
