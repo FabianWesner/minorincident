@@ -19,12 +19,12 @@ import { l1Pedestrians, coreCivilianModels, l3CivilianModels } from '../../data/
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { framesPerClip, civilianClips } from '../characters/bakeInfected';
 import { loadGate } from '../../assets/loadGate';
-import { RoutineProps } from './RoutineProps';
+import { RoutineProps, cupSocket } from './RoutineProps';
 import { uprightHand } from './civilianGrip';
 import type { CivilianProp } from '../../sim/npc/types';
 /** E22 weapons carried by soldiers and armed civilians: drawn at the hand whatever the routine or fight clip is. */
 /** Prop offsets from the hand (RoutineProps shapes): mug body centre, phone. */
-const cupSocket: [number, number, number] = [.035, -.11, .125], phoneSocket: [number, number, number] = [.08, -.03, 0];
+const phoneSocket: [number, number, number] = [.08, -.03, 0];
 const weaponProps = new Set<string>(['rifle', 'pistol', 'hunting-rifle', 'pipe', 'bat', 'crowbar']);
 import type { CrowdClip } from '../../assets/crowd';
 import { CrowdPosePalette } from '../characters/CrowdPosePalette';

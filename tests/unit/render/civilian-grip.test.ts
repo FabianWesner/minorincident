@@ -8,7 +8,7 @@ import { expect, test } from 'vitest';
 import { bakeInfected, civilianClips, framesPerClip } from '../../../src/render/characters/bakeInfected';
 import { CrowdGunAim } from '../../../src/render/characters/GunAim';
 import { handTriangles, prepareGrip, removeAuthoredCane, gripReach, uprightHand } from '../../../src/render/npc/civilianGrip';
-import { RoutineProps } from '../../../src/render/npc/RoutineProps';
+import { RoutineProps, cupSocket } from '../../../src/render/npc/RoutineProps';
 import { boxOf, staticClipping, type TriangleSet } from '../../../src/debug/scenelab/geometry';
 import type { CivilianProp } from '../../../src/sim/npc/types';
 
@@ -52,7 +52,7 @@ for (const model of ['man-a', 'woman-b', 'elderly']) test(`@E08 ${model} holds t
   if (model === 'elderly') removeAuthoredCane(scene);
   const baked = bakeInfected(scene, [], false, civilianClips);
   const parts = baked.clip.parts, part = (name: string) => parts.indexOf(name), count = parts.length;
-  const aim = new CrowdGunAim(scene, parts), cupSocket: [number, number, number] = [.035, -.11, .125];
+  const aim = new CrowdGunAim(scene, parts);
   const frame = civilianClips.indexOf('npc-carry') * framesPerClip + 3;
   const position = (pose: Float32Array, name: string) => new Vector3().setFromMatrixPosition(new Matrix4().fromArray(pose, part(name) * 16));
   for (const sip of [0, 1]) {
@@ -77,6 +77,12 @@ for (const model of ['man-a', 'woman-b', 'elderly']) test(`@E08 ${model} holds t
     // The handle (top bar, prop-local) lies in the palm: within 10 cm of the wrist joint.
     const handle = new Vector3(.035, -.045, 0).applyMatrix4(m);
     expect(handle.distanceTo(wrist), `${model} handle away from the hand`).toBeLessThanOrEqual(.1);
+    // PO 10-15 "still wrong": the mug body is inboard of the right hand (+Z is the figure's right) and the handle loop outboard,
+    // so the fingers pass through the handle and the hand is beside the mug, not hidden behind it.
+    const body = new Vector3(...cupSocket).applyMatrix4(m), loop = new Vector3(.035, -.1075, .065).applyMatrix4(m);
+    expect(body.z, `${model} mug body inboard of the hand`).toBeLessThan(wrist.z - .08);
+    expect(loop.z, `${model} handle loop outboard of the hand`).toBeGreaterThan(wrist.z);
+    expect(body.z, `${model} mug in front of the right chest, not beyond the shoulder`).toBeLessThan(shoulder.z);
     props.dispose();
   }
   baked.geometry.dispose();
