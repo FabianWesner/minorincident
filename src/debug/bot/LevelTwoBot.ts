@@ -100,7 +100,7 @@ export class LevelTwoBot {
     if (!leaving) { if (near[0] && !skip) strike(near[0]); else go(a['l2-forecourt'], 2.5, 'cover'); return frame; }
     // Use a nearby health pickup while disengaging, before the next fight.
     if (this.profile === 'complete' && player.health.current < 70) {
-      const kit = [...w.entities.iterate()].filter(e => !e.hidden && e.pickup && 'kind' in e.pickup && (e.pickup.kind === 'medkit' || e.pickup.kind === 'soda') && dist(p, e.transform) <= 16)
+      const kit = [...w.entities.iterate()].filter(e => !e.hidden && e.pickup && 'kind' in e.pickup && !e.pickup.collected && (e.pickup.kind === 'medkit' || e.pickup.kind === 'soda') && dist(p, e.transform) <= 16)
         .sort((a, b) => dist(p, a.transform) - dist(p, b.transform))[0];
       if (kit) { go(kit.transform, .1, `heal-${kit.id}`); return frame; }
     }

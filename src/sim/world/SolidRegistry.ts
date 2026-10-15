@@ -201,14 +201,19 @@ export class SolidRegistry {
       }
     }
   }
+  private clearStatics(at: Point, radius: number, e: EntitySnapshot | undefined, limit: number): boolean {
+    let clear = true;
+    this.solids(at, radius, e, b => { const c = boxContact(b, at.x, at.z, radius, this.contact); if (c.inside || c.depth > limit) clear = false; });
+    return clear;
+  }
   /** Radius and height aware occupancy, shared by spawn, checkpoint, relocation and exits. */
   clear(at: Point, radius: number, ignoreId?: number, bodies = true, limit = skin): boolean {
     this.bodyConflict = false;
     if (!Number.isFinite(at.x) || !Number.isFinite(at.y) || !Number.isFinite(at.z) || !Number.isFinite(radius) || radius <= 0) return false;
-    let clear = true; const e = ignoreId === undefined ? undefined : this.world.entities.get(ignoreId);
+    const e = ignoreId === undefined ? undefined : this.world.entities.get(ignoreId);
     if (e && this.world.missions?.l4?.clearOfConvoy(at, e, radius) === false) return false;
-    if (this.hasSolids()) this.solids(at, radius, e, b => { const c = boxContact(b, at.x, at.z, radius, this.contact); if (c.inside || c.depth > limit) clear = false; });
-    if (!clear || !bodies) return clear;
+    if (this.hasSolids() && !this.clearStatics(at, radius, e, limit)) return false;
+    if (!bodies) return true;
     this.query.x = at.x; this.query.z = at.z; this.query.r = radius + this.maxActor;
     this.clearPoint = at; this.clearEntity = e; this.clearId = ignoreId; this.clearRadius = radius; this.clearLimit = limit;
     // A few large zoo bodies widen the search for every ordinary actor. Use
