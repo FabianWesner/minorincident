@@ -1,4 +1,5 @@
 import { l3EvacuationText } from '../sim/missions/LevelThreeCollapse';
+import { l5Survivors } from '../data/l5';
 import { cureFinaleText } from '../sim/missions/LevelTenFinale';
 import { isMega } from '../data/megaPresentation';
 import { MegaRing } from './MegaRing';
@@ -322,7 +323,7 @@ export class Hud {
     if (cue) this.place(this.cuePin, cue.x, cue.z, px, pz, true);
     for (const r of l5.survivors) {
       const ring = mission.def.anchors[`l5-ring-${r.key}`];
-      if (r.status === 'hidden' && ring && Math.hypot(ring.x - px, ring.z - pz) <= ring.radius && (l5.phase === 'search' || l5.phase === 'metro')) cueLabel = ' · Hold still or press E: someone is here';
+      if (r.status === 'hidden' && ring && Math.hypot(ring.x - px, ring.z - pz) <= ring.radius && (l5.phase === 'search' || l5.phase === 'metro')) cueLabel = ` · ${l5Survivors.find(s => s.key === r.key)!.prompt}`;
     }
     setHidden(this.cueText, !cueLabel); if (cueLabel) text(this.cueText, cueLabel);
   }

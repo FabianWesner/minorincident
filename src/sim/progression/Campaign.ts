@@ -13,6 +13,8 @@ export interface CampaignSave {
   usage:Record<string,number>;
   /** E23 handover to L6: the survivors (keys) that reached the Metro station alive. */
   survivors?:string[];
+  /** Actual safe-space doorway used in L4, with the outward heading for the L5 return. */
+  shelterEntry?: { x: number; z: number; yaw: number };
   /** L8/E31: the same unarmed APC and its complete living roster, retained across handover/save. */
   /** L9 authored crash resume payload; the S7 handover clears this after committing L10. */
   l9Crash?: ReturnType<import('../missions/LevelNineCrash').LevelNineCrash['save']>;
