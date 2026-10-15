@@ -14,6 +14,8 @@ export interface InputFrame {
   moveTarget?: Vec2;
   /** Mouse LMB fires the active carried action; Shift locks feet for the swing. */
   mouseAttack?: boolean;
+  /** Space attacks the currently selected carried weapon, independent of its rack. */
+  activeAttack?: boolean;
   attackInPlace?: boolean;
   /** RMB/Q cycle the carried actions across racks, deduplicating unarmed. */
   selectorActive?: boolean;
