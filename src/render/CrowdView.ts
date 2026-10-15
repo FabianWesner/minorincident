@@ -373,7 +373,7 @@ export class CrowdView extends Group {
         // inside the reserved contact space; distant windups retain their full coil and extension.
         const target = this.world.entities.get(e.infected?.heardTargetId || e.infected?.l1?.targetId || 1);
         if (target?.survivor && Math.hypot(x - target.transform.x, z - target.transform.z) < infectedContactDistance(e.combat!.radius) + .15) layers.lunge = Math.min(layers.lunge ?? 0, .04);
-        if (!heavy && !specialAttack && b.state !== 'dead' && !this.world.solids.clear(e.transform, e.combat!.radius + .6, e.id)) {
+        if (!heavy && !specialAttack && b.state !== 'dead' && this.world.solids?.clear(e.transform, e.combat!.radius + .6, e.id) === false) {
           // Keep the baked attack hunch over its planted feet at a hull, wall or body.
           // Combat reach is unchanged; only the added forward body throw yields.
           layers.lunge = Math.min(layers.lunge ?? 0, 0); layers.lean = -.25; layers.lurch = 0;
