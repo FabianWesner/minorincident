@@ -1,0 +1,43 @@
+{
+  "name": "qa-l6-po-pickup",
+  "l6Subway": "pickup",
+  "time": "L6-subway",
+  "dof": false,
+  "hud": true,
+  "ground": "district",
+  "layout": {
+    "level": "L6",
+    "district": "D-SUBWAY"
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        2,
+        6
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.army-mg"
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      2,
+      6
+    ],
+    "zoom": 1
+  },
+  "frames": 30,
+  "shots": [
+    1,
+    29
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  }
+}

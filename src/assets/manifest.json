@@ -23517,5 +23517,39 @@
       "token": "picketWhite",
       "solid": true
     }
+  },
+  {
+    "id": "acc.headlamp",
+    "category": "prop",
+    "status": "integrated",
+    "tier": "side",
+    "script": "assets/acc.headlamp/build.py",
+    "glb": "public/assets/models/acc.headlamp.glb",
+    "dimensions": {
+      "x": 0.535,
+      "y": 0.195,
+      "z": 0.48,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "requiredNodes": [
+      "cap",
+      "brim",
+      "band",
+      "lamp_housing",
+      "lamp_lens"
+    ],
+    "budget": {
+      "triangles": 800,
+      "materials": 4,
+      "fileKB": 100,
+      "drawCalls": 5
+    },
+    "decayVariants": [],
+    "frontNodes": [
+      "lamp_lens"
+    ],
+    "animatedNodes": [],
+    "sockets": []
   }
 ]

@@ -18,7 +18,7 @@ import { LimbIK } from './LimbIK';
 import { RiderContacts } from './RiderContacts';
 import { CourierLiving } from './CourierRig';
 
-type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { assetId: string; animator: KeyframeAnimator; living?: CourierLiving; gear: Group[]; cure?: Group; aim: GunAim; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
+type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { assetId: string; animator: KeyframeAnimator; living?: CourierLiving; gear: Group[]; headlamp?: Group; cure?: Group; aim: GunAim; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
 /** Hero hierarchy presentation. Cosmetic variants share identical sim state and attachment rules. */
 const gearCache = new Map<string, Promise<Group | undefined>>();
 /** Shared tier-2 gear GLB (shin guards, elbow pads, holster); a missing file leaves the tier without gear instead of failing the character. */
@@ -72,8 +72,8 @@ export class CharacterView extends Group {
     if (!this.variantLoads.has(variant)) this.variantLoads.set(variant, this.prepareVariant?.(variant) ?? Promise.resolve());
     await this.variantLoads.get(variant); return true;
   }
-  async init(materials: Materials, bloodFeedback = false, low = false, outfit: 'survivor' | 'courier' = 'survivor', skin = false, cure = false, selected?: SurvivorVariant | null): Promise<void> {
-    this.prepareVariant = variant => this.init(materials, bloodFeedback, low, outfit, skin, cure, variant);
+  async init(materials: Materials, bloodFeedback = false, low = false, outfit: 'survivor' | 'courier' = 'survivor', skin = false, cure = false, selected?: SurvivorVariant | null, lamp = false): Promise<void> {
+    this.prepareVariant = variant => this.init(materials, bloodFeedback, low, outfit, skin, cure, variant, lamp);
     const loader = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder);
     // null arms later preparation while a speculative L1 awaits the menu choice.
     for (const variant of selected === null ? [] : selected ? [selected] : ['female', 'male'] as const) {
@@ -177,9 +177,20 @@ export class CharacterView extends Group {
         character.rig.backpackSocket.add(canister);
         canister.traverse(node => { if (node instanceof Mesh) node.castShadow = true; });
       }
+      let headlamp: Group | undefined;
+      if (lamp) {
+        headlamp = (await loader.loadAsync('/assets/models/acc.headlamp.glb')).scene;
+        headlamp.name = 'courier-headlamp'; headlamp.visible = false;
+        headlamp.traverse(node => { if (node instanceof Mesh) {
+          const source = node.material as import('three').MeshStandardMaterial;
+          node.material = materials.fromColor(`headlamp:${source.name}`, source.color, source.name.startsWith('emi_') ? .8 : 0);
+          node.material.userData.sharedPalette = true; source.dispose(); node.castShadow = true;
+        } });
+        character.rig.head.add(headlamp);
+      }
       const animator = new KeyframeAnimator(character.rig, pilot ? skinClips : undefined);
       const living = animator.bones ? new CourierLiving(character.rig, animator.bones, variant === 'female' ? 1 : 2) : undefined;
-      this.characters.set(variant, { ...character, assetId: isSkin ? `${id}.skin` : id, animator, living, gear, cure: canister, aim: new GunAim(character.rig.armR, character.rig.foreArmR, character.rig.handR, character.rig.torso, [character.rig.armL, character.rig.foreArmL, character.rig.handL], [character.rig.weaponSocketR, character.rig.weaponSocketL], character.rig.head), sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
+      this.characters.set(variant, { ...character, assetId: isSkin ? `${id}.skin` : id, animator, living, gear, headlamp, cure: canister, aim: new GunAim(character.rig.armR, character.rig.foreArmR, character.rig.handR, character.rig.torso, [character.rig.armL, character.rig.foreArmL, character.rig.handL], [character.rig.weaponSocketR, character.rig.weaponSocketL], character.rig.head), sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
     }
     if (!this.parcel) this.makeParcel(materials);
   }
@@ -207,6 +218,9 @@ export class CharacterView extends Group {
     if (this.characters.get(pose.variant)?.animator.evaluations !== before) this.cpuMs = performance.now() - started;
   }
   /** Mission inventory is authoritative through death, save/load and installation. */
+  showHeadlamp(carried: boolean): void {
+    for (const character of this.characters.values()) if (character.headlamp) character.headlamp.visible = carried;
+  }
   showCure(carried: boolean): void {
     for (const character of this.characters.values()) if (character.cure) character.cure.visible = carried;
   }

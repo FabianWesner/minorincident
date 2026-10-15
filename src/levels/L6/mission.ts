@@ -3,8 +3,8 @@ import type { Anchor, MissionDef } from '../../sim/missions/types';
 import type { DistrictId } from '../districts/types';
 export function levelSixMission(resolve: (district: DistrictId, name: string) => Anchor): MissionDef {
   const def: MissionDef = {
-    id: 'L6', l6: true, briefing: 'Lakeshore shelter. Rest, share water, and let the medic dress the injured. Marcus watches the sealed stair.',
-    anchors: {}, actors: {}, groups: {}, gates: {}, items: [], states: ['breached', 'abandoned', 'platform', 'exited'], counters: [],
+    id: 'L6', l6: true, briefing: 'Lakeshore shelter. Rest, share water, and let the medic dress the injured. Pick up the headlamp by the lantern. Marcus watches the sealed stair.',
+    anchors: {}, actors: {}, groups: {}, gates: {}, items: ['headlamp'], states: ['breached', 'abandoned', 'platform', 'exited'], counters: [],
     checkpoints: [...l6.checkpoints], cinematics: {}, steps: [], finish: ['exit'], onStart: [], onComplete: [{ kind: 'cinematic', id: 'night' }],
   };
   for (const name of ['player-start', 'maintenance-a', 'maintenance-b', 'tunnel-start', 'mid-tunnel', 'exit-platform', 'night-exit', ...l6PhotoSpots.map(([n]) => `photo-${n}`)]) def.anchors[name] = resolve('D-SUBWAY', name);

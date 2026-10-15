@@ -253,7 +253,7 @@ export class GameView implements Lifecycle {
       // with the level (sharing its prototypes) and are warmed below; their LOD0 streams later.
       const variants = this.world.scenario === 'L1' ? [...this.world.preparedDistricts.values()].filter(prepared => prepared !== this.world.districts).map(prepared => new DistrictView(prepared, this.materials!, shared.registry, shared.phase, shared.grassMaterial, this.quality === 'low', instanceCapacity)) : [];
       // E19: Level 1 is played as the courier (white cap, orange tee, teal bag); same rig/animations.
-      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2', 'L3', 'L4', 'L5', 'L6'].includes(this.world.districts.composition.id) || this.world.districts.composition.scene?.courier ? 'courier' : 'survivor', useSkinnedCourier(this.params), this.world.missions?.state?.id === 'L10', this.world.scenario === 'L1' ? this.missionHidden ? null : player?.survivor?.variant : undefined);
+      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2', 'L3', 'L4', 'L5', 'L6'].includes(this.world.districts.composition.id) || this.world.districts.composition.scene?.courier ? 'courier' : 'survivor', useSkinnedCourier(this.params), this.world.missions?.state?.id === 'L10', this.world.scenario === 'L1' ? this.missionHidden ? null : player?.survivor?.variant : undefined, this.world.scenario === 'L6');
       // Actor models download and bake while the district loads (they do not depend on it).
       actors = this.startActors(character); actors.catch(() => {}); // a district failure must not leave it unhandled
       const initialFocus = grove || this.world.districts.districts.some(d => !!d.layout.terrainChunks?.length) ? this.view.cameraTarget : undefined;
@@ -941,7 +941,7 @@ export class GameView implements Lifecycle {
   /** E25 lighting-pass counters for perf(): light-field CPU ms and pools, shadow maps, the promoted hero shadow light. */
   lightingPerf() {
     const field = this.lighting?.field.snapshot();
-    return field ? { lightFieldMs: field.ms, lightPools: field.drawn, lightCandidates: field.candidates, shadowMaps: this.renderer.shadowMap.enabled ? Number(this.lighting!.sun.visible && this.lighting!.sun.castShadow) + Number(this.lighting!.spot.visible && this.lighting!.spot.castShadow) : 0, heroLights: Number(this.lighting!.spot.visible), heroShadow: (this.lighting?.fieldShadow.value ?? 0) > .5 ? 1 : 0, preset: this.lighting!.preset } : null;
+    return field ? { lightFieldMs: field.ms, lightPools: field.drawn, lightCandidates: field.candidates, shadowMaps: this.renderer.shadowMap.enabled ? Number(this.lighting!.sun.visible && this.lighting!.sun.castShadow) + Number(this.lighting!.spot.visible && this.lighting!.spot.castShadow) : 0, heroLights: Number(this.lighting!.spot.visible), heroShadow: Number(this.lighting!.spot.visible && this.lighting!.spot.castShadow), preset: this.lighting!.preset } : null;
   }
   /** E25 light field of the loaded scene (E27 transients hook in here). */
   get lightField() { return this.lighting?.field ?? null; }
@@ -953,6 +953,10 @@ export class GameView implements Lifecycle {
     if (this.world.lightPower) lighting.field.syncPower(id => this.world.lightPower!.isOn(id));
     let flashlight: ReturnType<typeof footprint> | null = null;
     const field = lighting.field, hero = this.character?.visible && this.world.entities.get(1) ? this.character.position : null;
+    this.character?.showHeadlamp(!!metro?.flashlight);
+    lighting.headlampOn.value = metro?.flashlight ? 1 : 0;
+    const headlampYaw = this.world.entities.get(1)?.transform.yaw ?? 0;
+    lighting.headlampAim.value.set(Math.cos(headlampYaw), -Math.sin(headlampYaw));
     if (hero) lighting.hero.value.copy(hero); else lighting.hero.value.set(0, -100, 0);
     lighting.setPlayerSmoke(!!hero && (this.world.combat?.effects.inSmoke(hero) ?? false));
     if (field.active) {
@@ -965,7 +969,7 @@ export class GameView implements Lifecycle {
       }
       this.vehicles?.pushLights(field, aura);
       // Pickups keep a small cool glint pool so loot stays findable in the dark.
-      for (const entity of this.world.entities.iterate()) if (entity.pickup && !entity.hidden) field.push(pickupLight(entity.transform.x, entity.transform.z));
+      for (const entity of this.world.entities.iterate()) if (entity.pickup && !entity.hidden && !('collected' in entity.pickup && entity.pickup.collected)) field.push(pickupLight(entity.transform.x, entity.transform.z));
     }
     lighting.setHeroLight(hero && field.active ? flashlight ?? field.heroAt(hero.x, hero.z) : null, hero ?? this.view.focus, this.world.tick / 60);
     // Low W6 keeps the palette moon shade and contact shadows; a promoted fire

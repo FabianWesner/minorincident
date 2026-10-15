@@ -285,6 +285,26 @@ export class SceneLab {
         e.infected!.state = 'chase';
       }
     });
+    if (spec.l6Subway) {
+      world.scenario = 'L6'; applyCampaign(world, preset('L6-default'));
+      const mission = world.loadMission(resolveCampaignMission('L6', world.districts!)); mission.begin();
+      if (spec.l6Subway !== 'pickup') {
+        const lamp = world.entities.values().find(e => e.archetype === 'pickup.headlamp')!;
+        lamp.interactable!.completed = true; Object.assign(player.transform, lamp.transform);
+        world.physics.playerBody!.setTranslation(player.transform, true); world.update(); world.update();
+      }
+      if (spec.l6Subway === 'gate' || spec.l6Subway === 'entry') {
+        mission.completeObjective('shelter'); mission.completeObjective('stop');
+        for (const r of mission.state.l6!.survivors) {
+          const e = world.entities.get(r.id)!; e.transform.x = 99 + r.hold; e.transform.z = 15;
+        }
+        mission.state.l6!.leaderX = 105; mission.state.l6!.leaderZ = 15;
+      }
+      if (courier?.at) {
+        Object.assign(player.transform, { x: courier.at[0], y: 1.3, z: courier.at[1] });
+        world.physics.playerBody!.setTranslation(player.transform, true); world.spatial.set(1, player.transform.x, player.transform.z);
+      }
+    }
     if (spec.l3Rendezvous) {
       world.scenario = 'L3';
       world.infected!.excludeInfected(l3BaseCollision);
