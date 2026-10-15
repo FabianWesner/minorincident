@@ -162,7 +162,7 @@ describe('L5 Aftermath', () => {
     const l = await loadL5(1); world = l.world; const w = l.world, m = l.mission, s = m.state.l5!;
     m.completeObjective('emerge'); w.combat!.damage.god = true; step(w, 11 * 60);
     expect(s.found).toBe(0);
-    // 0.9 s next to the spot finds nobody; 1.0 s does (and standing 2 m away never does).
+    // 0.9 s next to the spot finds nobody; 1.0 s does (and standing 4 m away never does).
     const ring = at(w, 'l5-ring-rosa');
     place(w, 1, ring.x + 4, ring.z); step(w, 120); expect(s.found).toBe(0);
     place(w, 1, ring.x, ring.z); step(w, 50); expect(s.found).toBe(0); step(w, 15); expect(s.found).toBe(1);
