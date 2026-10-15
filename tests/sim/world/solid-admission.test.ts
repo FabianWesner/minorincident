@@ -6,6 +6,7 @@ import { respawnAtCheckpoint } from '../../../src/sim/missions/Respawn';
 import { vehicles, vehicleDef } from '../../../src/data/vehicles';
 import { emergeResident, walkResidents, type HouseEmergence } from '../../../src/sim/outbreak/HouseEmergence';
 import { Outbreak } from '../../../src/sim/outbreak/Outbreak';
+import { loadLevel } from '../../../tools/sim-runner/levels';
 
 async function arena() { const w = new SimWorld(); await w.init(); w.loadScenario('horde-arena', 1); return w; }
 const tick = (w: SimWorld, n = 1) => { for (let i = 0; i < n; i++) w.update(); expect(w.solids.offenders).toEqual([]); };
@@ -68,6 +69,34 @@ test('a deferred checkpoint keeps its requested pose and restores collider and g
     expect(w.solids.clear(player.transform, .35, 1)).toBe(true);
   } finally { w.dispose(); }
 });
+test('a safe explicit relocation releases an earlier deferred checkpoint request', async () => {
+  const w = await arena();
+  try {
+    spawnSetPiece(w, 'veh.tank', { x: 12, z: 0 });
+    const player = w.entities.get(1)!;
+    respawnAtCheckpoint(w, { x: 12, z: 0 });
+    expect(player.pendingAdmission).toBeDefined();
+    expect(w.solids.relocate(player, { x: 20, z: 6 }, 'test.safe-relocation')).toBe(true);
+    expect(player.pendingAdmission).toBeUndefined(); expect(player.hidden).not.toBe(true);
+    expect(w.physics.playerCollider!.isEnabled()).toBe(true);
+    tick(w, 35); expect(player.transform.x).toBeCloseTo(20);
+    expect(w.solids.snapshot().pending).toBe(0);
+  } finally { w.dispose(); }
+});
+test('checkpoint restore discards a deferred player mask from the discarded timeline', async () => {
+  const w = await loadLevel('L2', 1);
+  try {
+    const player = w.entities.get(1)!, at = { ...player.transform };
+    const tank = spawnSetPiece(w, 'veh.tank', { x: at.x + 30, z: at.z });
+    Object.assign(player.transform, tank.transform);
+    expect(w.solids.admit(player, 'test.blocked-restore', 0, false)).toBe(false);
+    expect(w.physics.playerCollider!.isEnabled()).toBe(false);
+    w.missions!.restore('start', true);
+    expect(player.pendingAdmission).toBeUndefined(); expect(player.hidden).not.toBe(true);
+    expect(w.physics.playerCollider!.isEnabled()).toBe(true);
+    tick(w, 2); expect(w.solids.clear(player.transform, .35, 1)).toBe(true);
+  } finally { w.dispose(); }
+}, 120_000);
 test('guard audits a stationary actor when a tank moves over it and retains bounded diagnostics', async () => {
   const w = await arena();
   try {

@@ -211,7 +211,7 @@ export class SolidRegistry {
   relocate(e: EntitySnapshot, at: Point, writer: string, range = 1.5, navigation = true): boolean {
     this.syncHulls(); const to = this.find(at, actorRadius(e), e.id, range, navigation);
     if (!to) return false;
-    Object.assign(e.transform, to); this.writers.set(e, writer); this.publish(e, true); this.committed.set(e, { ...e.transform }); this.validated.delete(e); return true;
+    Object.assign(e.transform, to); this.releasePending(e); this.writers.set(e, writer); this.publish(e, true); this.committed.set(e, { ...e.transform }); this.validated.delete(e); return true;
   }
   /** A successful explicit relocation starts a new motion transaction. */
   wrote(e: EntitySnapshot, writer: string): void { this.writers.set(e, writer); }
