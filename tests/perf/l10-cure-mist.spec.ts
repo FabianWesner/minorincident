@@ -13,17 +13,19 @@ for (const tier of ['high', 'low'] as const) for (const zoom of [1, .5]) test(`T
   await page.waitForFunction(() => !!window.__SCENE__);
   const initial = await page.evaluate(async ({ spec, cap }) => {
     const a = window.__SS__!, lab = window.__SCENE__!; await lab.load(spec);
-    const existing = a.getState().entities.filter(e => e.infected).length;
-    for (let i = 0; i < cap - existing; i++) { const angle = i * 2.399963, radius = 16 + (i % 5) * 3; a.spawn('infected.runner', { x: Math.cos(angle) * radius, z: Math.sin(angle) * radius }, { state: 'chase' }); }
+    // Fill the director to its cap: a crow flock weighs 0.25 per bird, so entity count != cap weight (L10-Q2 mist adds one).
+    let full = false;
+    for (let i = 0; i < cap && !full; i++) { const angle = i * 2.399963, radius = 16 + (i % 5) * 3; try { a.spawn('infected.runner', { x: Math.cos(angle) * radius, z: Math.sin(angle) * radius }, { state: 'chase' }); } catch (e) { if (String(e).includes('concurrency cap')) full = true; else throw e; } }
     await a.audio.unlock();
     await lab.step(300); await a.screenshotReady();
     const state = a.getState(), audio = a.audio.snapshot();
-    return { state, audio, fan: a.audio.emitters().filter(v => v.cue === 'generator.idle'), perf: a.perf() };
+    return { full, state, audio, fan: a.audio.emitters().filter(v => v.cue === 'generator.idle'), perf: a.perf() };
   }, { spec, cap: tier === 'high' ? 200 : 100 });
   expect((initial.state.mission as MissionState).states['cure-released']).toBe(true);
   expect((initial.state.mission as MissionState).cureFront!.radius).toBeGreaterThan(40);
   expect(initial.fan).toHaveLength(1); expect(initial.fan[0].loop).toBe(true);
-  expect(initial.state.entities.filter(e => e.infected)).toHaveLength(tier === 'high' ? 200 : 100);
+  expect(initial.full, 'mist runs at the full infected cap').toBe(true);
+  expect(initial.state.entities.filter(e => e.infected).length).toBeGreaterThan(tier === 'high' ? 180 : 80);
   expect(initial.state.entities.filter(e => e.infected).every(e => e.health.current === 0)).toBe(true);
   expect(initial.state.player!.health.current).toBeGreaterThan(0);
   const timing = await page.evaluate(async () => {
