@@ -38,7 +38,7 @@ export class LevelNineCrash {
     }
     // Restore occupants before spawning: their IDs belong to the incoming transport.
     const corgi = w.npcs!.companion.spawn();
-    if (!payload) {
+    if (!payload?.occupants.some(e => e.companion)) {
       const car = w.vehicles!.cars.get(this.state.carId)!, t = car.entity.transform, def = car.physics.def, z = def.width / 2 + .55;
       const dog = w.entities.get(corgi)!;
       Object.assign(dog.transform, { x: t.x + Math.cos(t.yaw) * def.doorX + Math.sin(t.yaw) * z, z: t.z - Math.sin(t.yaw) * def.doorX + Math.cos(t.yaw) * z });
