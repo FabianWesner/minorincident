@@ -1,0 +1,16 @@
+{
+  "name":"l3-blvd-last-turn-medkit",
+  "note":"A recovery medkit marks the final street turn before the extended highway approach. Review the visible pack on the cross-street sidewalk, its collection and the courier turning toward the ramp. Production pickup amounts and the unchanged survival gate are covered in Node and the real-input route.",
+  "ground":"district","time":"L3","tier":2,
+  "layout":{"level":"L3","district":"D-CORRIDOR","bbox":[[118,-38],[155,12]]},
+  "actors":[{"id":"courier","kind":"courier","at":[128,-22.75],"god":false,"loadout":["weapon.fire-axe","weapon.handgun"]}],
+  "script":[
+    {"frame":1,"actor":"courier","do":{"hit":{"amount":80}}},
+    {"frame":1,"effect":{"pickup":"medkit","at":[131.75,-22.75]}},
+    {"frame":1,"actor":"courier","do":{"moveTo":[131.75,-22.75],"pace":"run"}},
+    {"frame":100,"actor":"courier","do":{"moveTo":[131.75,-2.75],"pace":"run"}}
+  ],
+  "camera":{"mode":"follow","actor":"courier","zoom":1},
+  "frames":420,"sheet":60,"trace":true,
+  "expect":{"consoleErrors":0,"undrawnFramesMax":0,"actorHealth":{"courier":[60,100]},"actorTravel":{"courier":[18,28]}}
+}

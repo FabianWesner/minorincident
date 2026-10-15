@@ -108,6 +108,18 @@ test.each([false, true])('T-E04-07b @E04 @E21 sustained crowd contact retains a 
   }
 });
 
+test.each([false, true])('@E21 crowd on another floor cannot slow navigation (navigation=%s)', async navigation => {
+  const w = await setup(), clear = await setup(), p = w.player!.entity.transform;
+  const blocker = { transform: { x: p.x + .4, y: p.y - 3, z: p.z }, radius: .4 };
+  w.player!.locomotion.crowd = [blocker]; w.setInput({ move: { x: 1, z: 0 }, navigation });
+  clear.setInput({ move: { x: 1, z: 0 }, navigation });
+  for (let tick = 0; tick < 120; tick++) {
+    blocker.transform.x = p.x + .4; blocker.transform.z = p.z; blocker.transform.y = p.y - 3;
+    w.update(); clear.update();
+    expect(w.player!.locomotion.displacement.x).toBeCloseTo(clear.player!.locomotion.displacement.x, 10);
+  }
+});
+
 test('T-E04-perf @E04 fixed-step survivor reference scenario stays below 4ms p95 with twelve crowd circles', async () => {
   const w = await setup(); w.player!.locomotion.crowd = Array.from({ length: 12 }, (_, i) => ({ transform: { x: Math.cos(i) * 0.85, z: Math.sin(i) * 0.85 }, radius: 0.4 }));
   const times: number[] = []; w.setInput({ move: { x: 1, z: 0 } }); step(w, 120);

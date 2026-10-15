@@ -1,4 +1,4 @@
-import { describe, expect, test } from 'vitest';
+import { describe, expect, test, vi } from 'vitest';
 import { allyState, updateAlly } from '../../../src/sim/outbreak/Allies';
 import { Perception } from '../../../src/sim/ai/Perception';
 import { l3 } from '../../../src/data/l3';
@@ -21,6 +21,23 @@ describe('armed ally close hearing and self-defence @E21', () => {
       expect(a.targetId).toBe(0);
       expect(e.transform.z).toBeGreaterThan(.75);
       expect(w.events.events().filter(event => event.type === 'ally.attack' && event.sourceId === id)).toEqual([]);
+    } finally { w.dispose(); }
+  });
+
+  test('a walking leader takes priority over a lost-target sidestep inside the follow band', async () => {
+    const w = await npcWorld();
+    try {
+      teleport(w, 5, 0);
+      w.entities.get(1)!.survivor!.velocity.x = 1;
+      const id = w.npcs!.civilians.spawn('officer', { x: 0, z: 0 }), e = w.entities.get(id)!;
+      e.civilian!.ally = { ...allyState('officer', { x: 0, z: 0 }, true), engaged: true,
+        gun: { ...l3.officers.gun }, step: { x: 0, z: 1.4, until: w.tick + 60 },
+        follow: { targetId: 1, slot: 0, minM: 3, maxM: 6, engageM: 18, leashM: 8, moveMs: 6.2 },
+      };
+      const move = vi.spyOn(w.npcs!, 'move');
+      for (let i = 0; i < 40; i++) { w.tick++; updateAlly(w, e, () => true); }
+      expect(e.transform.x).toBeGreaterThan(.2);
+      expect(move.mock.calls[0][1].z).toBeLessThan(0); // Formation slot, opposite the old sidestep.
     } finally { w.dispose(); }
   });
 

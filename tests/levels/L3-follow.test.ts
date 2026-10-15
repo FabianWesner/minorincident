@@ -203,6 +203,43 @@ describe('L3 squad and checkpoint', () => {
       for (const id of living) expect(w.entities.get(id)!.civilian!.ally!.follow?.targetId).toBe(1);
     } finally { w.dispose(); }
   }, 120_000);
+  test('@E21 the Boulevard wreck passing line collects its existing sidewalk medkits', async () => {
+    const { world: w, mission: m } = await loadL3(1);
+    try {
+      missionControls(w).teleport('player', { x: 32, z: -24.75 });
+      const player = w.entities.get(1)!;
+      player.health.current = 20;
+      const ids = l3.medkits.positions.flatMap(([x, z], i) => (x === 36 || x === 60) && z < -20 ? [m.state.l3!.medkitIds[i]] : []);
+      for (let tick = 0; tick < 1200 && player.transform.x < 64; tick++) {
+        w.applyInput({ ...emptyInput(), moveTarget: { x: 65, z: -24.75 }, navigation: true }, 'mouse-only'); w.update();
+      }
+      expect(player.transform.x).toBeGreaterThan(64);
+      expect(ids).toHaveLength(2);
+      for (const id of ids) expect(w.events.events().some(e => e.type === 'pickup.collected' && 'id' in e && e.id === id)).toBe(true);
+      expect(player.health.current).toBeGreaterThanOrEqual(95);
+    } finally { w.dispose(); }
+  }, 120_000);
+
+  test.each([
+    { name: 'first Boulevard turn', from: [-13.75, -18], to: [-13.75, -22.75], kit: [-13.75, -22.75] },
+    { name: 'last street turn', from: [128, -22.75], to: [131.75, -22.75], kit: [131.75, -22.75] },
+    { name: 'entry ramp', from: [146.75, 2.75], to: [151.75, 2.75], kit: [149, 2.75] },
+    { name: 'exit ramp', from: [197.75, -2.75], to: [205.25, -.75], kit: [201, -1.8] },
+  ])('@E21 the $name medkit is collected on the walking line', async ({ from, to, kit }) => {
+    const { world: w, mission: m } = await loadL3(1);
+    try {
+      missionControls(w).teleport('player', { x: from[0], z: from[1] });
+      const player = w.entities.get(1)!;
+      player.health.current = 20;
+      const id = m.state.l3!.medkitIds[l3.medkits.positions.findIndex(([x, z]) => x === kit[0] && z === kit[1])];
+      for (let tick = 0; tick < 600 && Math.hypot(player.transform.x - to[0], player.transform.z - to[1]) > .5; tick++) {
+        w.applyInput({ ...emptyInput(), moveTarget: { x: to[0], z: to[1] }, navigation: true }, 'mouse-only'); w.update();
+      }
+      expect(w.events.events().some(e => e.type === 'pickup.collected' && 'id' in e && e.id === id)).toBe(true);
+      expect(player.health.current).toBeGreaterThanOrEqual(60);
+    } finally { w.dispose(); }
+  }, 120_000);
+
   test('all three routes have sidewalk med packs within 40 m and reachable from the street', async () => {
     const { world: w, mission: m } = await loadL3(1);
     try {
