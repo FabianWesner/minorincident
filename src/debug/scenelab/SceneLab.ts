@@ -1,5 +1,6 @@
 import { cure, curePursuitRoute } from '../../levels/L10/district';
 import { cureEncounters, cureEncounterSlots, cureEncounterSpot } from '../../levels/L10/encounters';
+import { cureReached } from '../../sim/missions/CureFront';
 import { levelTenMission } from '../../levels/L10/mission';
 import { resolveCampaignMission } from '../../levels/missions';
 import { convoyFootprint, convoyOverlaps } from '../../sim/missions/L4ConvoyClearance';
@@ -67,7 +68,7 @@ type Plan =
   | { type: 'drive'; throttle: number; steer: number; until: number }
   | { type: 'interact' }
   | { type: 'gun'; at: Point | string | null; until: number };
-interface LabActor { id: string; kind: ActorSpec['kind']; entity: number; spec: ActorSpec; plan: Plan | null; track: MotionFrame[]; lod: Record<string, number>; drawn: number; /** Frames the living actor was inside the camera frustum, and how many of those it was not drawn. */ inView: number; missed: number; sole?: number;
+interface LabActor { distanceM?: number; lastAt?: { x: number; z: number }; maxX?: number; id: string; kind: ActorSpec['kind']; entity: number; spec: ActorSpec; plan: Plan | null; track: MotionFrame[]; lod: Record<string, number>; drawn: number; /** Frames the living actor was inside the camera frustum, and how many of those it was not drawn. */ inView: number; missed: number; sole?: number;
   /** First drawn frame and sim position; for `emerge` residents also how far past the door threshold (m, + = outside). */
   first?: { frame: number; at: [number, number]; outM?: number };
   /** Frames drawn with the far LOD (lod2) within `closeLodM` of the camera. */
@@ -153,7 +154,7 @@ export class SceneLab {
     }
     if (!spec.megaHud) {
       delete this.game.ui.hud.root.dataset.sceneHud;
-      if (this.spec?.megaHud && !this.game.ui.enabled) this.game.ui.hud.root.remove();
+      if ((this.spec?.hud || this.spec?.megaHud) && !this.game.ui.enabled) this.game.ui.hud.root.remove();
     }
     const errors = validateSpec(spec, assets);
     if (errors.length) throw new Error(`Invalid scene spec:\n${errors.join('\n')}`);
@@ -170,6 +171,7 @@ export class SceneLab {
       if (spec.layout.district === 'D-FAIR') source = (spec.layout.level === 'L7' ? levelSevenLayouts : spec.layout.level === 'L5' ? levelFiveLayouts : levelFourLayouts)([source])[0];
     }
     this.propSinkMaxCm = 0; this.propGroundSamples = 0; this.propPenetration.clear(); this.propPenetrationSamples = 0; this.propPenetrationTick = -1;
+    this.cureStats = null;
     this.vehicleMotion.clear(); this.pursuit.clear(); this.mega = null; this.gunStats = null; this.attacks = { courier: 0, swings: 0, firstFrame: -1, bites: 0, firstBiteFrame: -1, hull: 0, hullHits: 0 };
     this.spec = structuredClone(spec); this.companion = { overlapMaxCm: 0, overlapFrame: 0, runLagMaxM: 0, runLagFrame: 0, samples: 0, runningSamples: 0 }; this.frame = 0; this.heldPropSamples = 0; this.heldPropClips.clear(); this.holds.clear(); this.seeThroughOpen = { frames: 0, solidRadiusMax: 0, occluders: [], cutLowProps: [] }; this.gunBodyHits.clear(); this.actors.clear(); this.vehicles.clear(); this.perf = []; this.hits.clear(); this.bodies.clear(); this.vehicleTrack.clear(); this.handovers.clear(); this.doors.clear(); this.wheels.clear(); this.wheelTrack.clear(); this.hubs.clear(); this.bike = { inViewFrames: 0, missedFrames: 0, offFrames: 0, maxOffsetCm: 0, firstMissedFrame: -1 }; this.groundMeshes = null; this.staticSets = null; this.metroClosed = 0; this.staticClips = null; this.visible = null; this.log.length = 0; this.clicks.length = 0; this.placeholders = { frames: 0, firstFrame: -1, assets: new Set() };
     const built = this.built = buildScene(spec, assets, source);
@@ -191,7 +193,7 @@ export class SceneLab {
     if (this.boom) this.game.view.labProbes().districts?.updateArmyBoom(spec.armyBoom?.closed ? 0 : 1);
     // Prop triangles for the per-frame bone checks (LOD0 GLBs, cached by the registry across loads).
     await Promise.all([this.game.screenshotReady(), this.prepareClipping()]);
-    if (spec.megaHud) {
+    if (spec.hud || spec.megaHud) {
       document.body.dataset.uiScreen = 'game';
       this.game.ui.hud.root.dataset.sceneHud = '';
       document.querySelector('#game')!.append(this.game.ui.hud.root);
@@ -322,7 +324,7 @@ export class SceneLab {
     if (spec.minigun) {
       const a = spec.minigun.at, three = a.length === 3;
       world.installMountedGun({ x: a[0], z: three ? a[2] : a[1], y: three ? a[1] : 0, yaw: spec.minigun.yaw ?? 0 });
-      this.gunStats = { rounds: 0, heatPeak: 0, lockedFrames: 0, mountedFrames: 0, firstRoundFrame: -1, dismountTicks: [], feetMin: Infinity };
+      this.gunStats = { hudFrames: 0, hudHeatErrorMax: 0, rounds: 0, heatPeak: 0, lockedFrames: 0, mountedFrames: 0, firstRoundFrame: -1, dismountTicks: [], feetMin: Infinity };
       world.events.on('combat.attack', ev => { if (ev.type === 'combat.attack' && ev.actionId === 'weapon.rotary-minigun' && this.gunStats) { this.gunStats.rounds++; if (this.gunStats.firstRoundFrame < 0) this.gunStats.firstRoundFrame = this.frame; } });
     }
     if (spec.megaAlpha) {
@@ -333,17 +335,26 @@ export class SceneLab {
       this.mega = { last: null, speeds: [], stepMaxM: 0, stepFrame: -1, modes: {}, samples: [], stuckLevelMax: 0, distanceMinM: Infinity };
     }
     if (spec.cureProgression) {
+      this.cureStats = { mistPuffs: 0, smokeOverBudget: 0, healthyDamage: 0, lateDeaths: 0, insideMisses: 0, health: {}, chargeTicks: 0, insideFrames: 0, boundaryFrames: 0, outsideFrames: 0, outsideAdvance: 0, releaseCount: 0, radius: 0, titleFrames: 0, creditsFrames: 0, playableTravel: 0, survivors: 0, fanFrames: 0, pullScale: 1, last: null, samples: [] };
+      world.events.on('mission.signal', event => { if (event.type === 'mission.signal' && event.name === 'cure-released' && this.cureStats) this.cureStats.releaseCount++; });
       const save = preset('L10-default');
       const model = spec.actors?.find(actor => actor.kind === 'courier')?.look?.model;
       if (model === 'male' || model === 'female') save.character = model;
       applyCampaign(world, save);
+      this.game.campaign = save;
       const at = { ...world.entities.get(1)!.transform };
       const mission = world.loadMission(levelTenMission(name => {
         const anchor = spec.cureProgression?.anchors?.[name] ?? (spec.cureProgression?.authored ? cure.anchors[name] : undefined);
         return anchor ? { x: anchor[0], z: anchor[1], radius: 2 } : !spec.cureProgression?.checkpoint && name !== 'cure-crash' ? undefined : { x: at.x, z: at.z, radius: 2 };
       }));
       mission.begin();
-      if (spec.cureProgression.checkpoint) mission.loadCheckpoint(spec.cureProgression.checkpoint);
+      if (spec.cureProgression.checkpoint) {
+        mission.loadCheckpoint(spec.cureProgression.checkpoint);
+        // Reconstructing a later checkpoint replays its prior radio action at tick zero.
+        // Its recording has already finished in the real route; keep the finale HUD readable.
+        if (mission.state.steps.research.status === 'completed') mission.state.subtitle = null;
+      }
+      if (spec.cureProgression.chargeActive) mission.state.states['charge-active'] = true;
       if (spec.cureProgression.releaseReady) {
         mission.state.states['charge-active'] = mission.state.states['charge-ready'] = mission.state.states['mega-dead'] = true;
         mission.state.counters['charge-ticks'] = 3600;
@@ -746,7 +757,8 @@ export class SceneLab {
       const stepMs = performance.now() - start, info = this.game.view.renderer.info.render, profile = Object.entries(this.game.view.renderer.profile ?? {});
       const view = profile.filter(([k]) => k !== 'shadows'), shadow = profile.find(([k]) => k === 'shadows')?.[1];
       this.perf.push(profile.length ? { drawCalls: view.reduce((n, [, v]) => n + v.drawCalls, 0), triangles: view.reduce((n, [, v]) => n + v.triangles, 0), shadowDrawCalls: shadow?.drawCalls ?? 0, shadowTriangles: shadow?.triangles ?? 0, stepMs, categories: Object.fromEntries(profile.map(([k, v]) => [k, v.drawCalls])) } : { drawCalls: info.drawCalls, triangles: info.triangles, shadowDrawCalls: 0, shadowTriangles: 0, stepMs, categories: {} });
-      if (this.spec?.megaHud) this.game.ui.hud.update();
+      if (this.spec?.hud || this.spec?.megaHud) this.game.ui.hud.update();
+      if (this.spec?.cureProgression) this.game.campaignUI.update();
       this.frame++;
       this.sample();
       const standIns = this.game.view.labProbes().districts?.placeholderDraws() ?? [];
@@ -938,9 +950,56 @@ export class SceneLab {
   /** E32-AC10 Mega Alpha pursuit probe: speed in detailed mode, largest resident step (no teleport), modes, distance every 0.5 s. */
   private mega: { last: { x: number; z: number; mode: string } | null; speeds: number[]; stepMaxM: number; stepFrame: number; modes: Record<string, number>; samples: { frame: number; d: number; mode: string; band: string | null }[]; stuckLevelMax: number; distanceMinM: number } | null = null;
   /** L10-S6 mounted minigun probe (`metrics.minigun`). */
-  private gunStats: { rounds: number; heatPeak: number; lockedFrames: number; mountedFrames: number; firstRoundFrame: number; dismountTicks: number[]; /** Lowest courier feet height from the first mount on (a dismount that drops her off the deck shows here). */ feetMin: number } | null = null;
+  private gunStats: { hudFrames: number; hudHeatErrorMax: number; rounds: number; heatPeak: number; lockedFrames: number; mountedFrames: number; firstRoundFrame: number; dismountTicks: number[]; /** Lowest courier feet height from the first mount on (a dismount that drops her off the deck shows here). */ feetMin: number } | null = null;
+  private cureStats: {
+    mistPuffs: number; smokeOverBudget: number; healthyDamage: number; lateDeaths: number; insideMisses: number; health: Record<string, number>;
+    chargeTicks: number; insideFrames: number; boundaryFrames: number; outsideFrames: number; outsideAdvance: number;
+    releaseCount: number; radius: number; titleFrames: number; creditsFrames: number; playableTravel: number;
+    survivors: number; fanFrames: number; pullScale: number;
+    last: { x: number; z: number; charge: number; angles: Record<string, number> } | null;
+    samples: { frame: number; charge: number; distance: number; radius: number; phase: string | null; fanLevel: number }[];
+  } | null = null;
+  private sampleCure(): void {
+    const stats = this.cureStats, mission = this.world.missions, player = this.world.entities.get(1);
+    if (!stats || !mission || !player) return;
+    const state = mission.state, console = mission.def.anchors['cure-console'];
+    const distance = console ? Math.hypot(player.transform.x - console.x, player.transform.z - console.z) : Infinity;
+    const charge = state.counters['charge-ticks'] ?? 0, phase = state.epilogue?.phase ?? null;
+    if (state.states['charge-active'] && !state.states['cure-released']) {
+      if (distance <= 25) {
+        stats.insideFrames++;
+        if (stats.last && stats.last.charge > 0 && stats.last.charge < 3600 && state.steps.hold.status === 'active' && charge !== stats.last.charge + 1) stats.insideMisses++;
+      } else { stats.outsideFrames++; stats.outsideAdvance += Math.max(0, charge - (stats.last?.charge ?? charge)); }
+      if (Math.abs(distance - 25) <= .15) stats.boundaryFrames++;
+    }
+    for (const actor of this.actors.values()) {
+      const e = this.world.entities.get(actor.entity); if (!e) continue;
+      if (actor.kind !== 'infected') {
+        stats.health[actor.id] ??= e.health.current;
+        stats.healthyDamage = Math.max(stats.healthyDamage, stats.health[actor.id] - e.health.current);
+      } else if (state.cureFront && cureReached(state.cureFront, e.transform) && e.health.current > 0) stats.lateDeaths++;
+    }
+    if (phase === 'title' && !this.game.campaignUI.root.hidden && this.game.campaignUI.root.querySelector('[data-testid=epilogue-title]')?.textContent === 'Minor Incident') stats.titleFrames++;
+    if (phase === 'credits' && !this.game.campaignUI.root.hidden && this.game.campaignUI.root.querySelector('.credits-roll')) stats.creditsFrames++;
+    if (phase === 'playable' && stats.last) stats.playableTravel += Math.hypot(player.transform.x - stats.last.x, player.transform.z - stats.last.z);
+    const puffs = this.game.view.effectPerf()?.blasts.puffs ?? 0;
+    if (state.cureFront) stats.mistPuffs = Math.max(stats.mistPuffs, puffs);
+    if (puffs > (this.game.quality.tier === 'low' ? 120 : 400)) stats.smokeOverBudget++;
+    const fan = this.game.view.labProbes().districts?.dispersalProbe();
+    if (fan?.active && stats.last && Object.entries(fan.angles).some(([key, angle]) => key.includes('fan') && angle !== stats.last!.angles[key])) stats.fanFrames++;
+    stats.chargeTicks = charge; stats.radius = state.cureFront?.radius ?? 0; stats.survivors = state.epilogue?.survivors.length ?? 0;
+    stats.pullScale = this.game.view.view.epilogueScale;
+    if (this.frame % 60 === 0) stats.samples.push({ frame: this.frame, charge, distance, radius: stats.radius, phase, fanLevel: fan?.level ?? 0 });
+    stats.last = { x: player.transform.x, z: player.transform.z, charge, angles: fan?.angles ?? {} };
+  }
   private sampleGun(): void {
     const g = this.world.mountedGun, s = this.gunStats; if (!g || !s) return;
+    if (g.mounted && this.spec?.hud) {
+      const root = this.game.ui.hud.root, bar = root.querySelector<HTMLElement>('[data-testid=heat-bar]');
+      if (root.isConnected && bar && bar.getBoundingClientRect().width > 0 && getComputedStyle(bar).visibility === 'visible' && !bar.closest('[hidden]')) {
+        s.hudFrames++; s.hudHeatErrorMax = Math.max(s.hudHeatErrorMax, Math.abs(Number(bar.getAttribute('aria-valuenow')) - g.heat * 100));
+      }
+    }
     s.heatPeak = Math.max(s.heatPeak, g.heat); if (g.locked) s.lockedFrames++; if (g.mounted) s.mountedFrames++;
     if (s.mountedFrames > 0) s.feetMin = Math.min(s.feetMin, (this.world.entities.get(1)?.transform.y ?? .7) - .7);
   }
@@ -970,7 +1029,7 @@ export class SceneLab {
     if (convoy && [...this.world.entities.iterate()].some(e => !e.hidden && !e.corpse && e.health.current > 0 && (e.civilian || e.infected || e.companion || e.escort || e.id === 1) && convoy.some((id, i) => {
       const v = this.world.entities.get(id); return !!v && convoyOverlaps(v.transform, i, e.transform, convoyFootprint(e));
     }))) this.convoyOverlapFrames++;
-    this.sampleMega(); this.sampleGun();
+    this.sampleMega(); this.sampleGun(); this.sampleCure();
     this.recordPropPenetration();
     const probes = this.game.view.labProbes(), figures = new Map(this.game.view.crowdFigures().map(f => [f.id, f]));
     const audit = probes.districts?.seeThroughAudit();
@@ -1008,6 +1067,10 @@ export class SceneLab {
     }
     for (const actor of this.actors.values()) {
       const e = this.world.entities.get(actor.entity);
+      if (e) {
+        actor.distanceM = (actor.distanceM ?? 0) + (actor.lastAt ? Math.hypot(e.transform.x - actor.lastAt.x, e.transform.z - actor.lastAt.z) : 0);
+        actor.lastAt = { x: e.transform.x, z: e.transform.z }; actor.maxX = Math.max(actor.maxX ?? -Infinity, e.transform.x);
+      }
       if (e && actor.kind === 'infected') this.samplePursuit(actor, e);
       sim[actor.kind] = (sim[actor.kind] ?? 0) + (e && !e.hidden && e.health.current > 0 ? 1 : 0);
       let feet: FootSample[] = [], joints: Record<string, number[]> | null = null, forward: number[] = [1, 0, 0], lod = 'lod0', visible = false, clipName: string | undefined, label: string | undefined;
@@ -1300,7 +1363,7 @@ export class SceneLab {
     const q = (a: number[], p: number) => a.length ? Math.round(a.slice().sort((x, y) => x - y)[Math.floor((a.length - 1) * p)] * 100) / 100 : null;
     const band = (pick: (p: SceneLab['perf'][number]) => number) => { const a = this.perf.map(pick); return { p50: q(a, .5), p95: q(a, .95), max: q(a, 1) }; };
     const actors = Object.fromEntries([...this.actors.values()].map(a => { const e = this.world.entities.get(a.entity); return [a.id, { kind: a.kind, entity: a.entity, position: e ? [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)] : null, yawDeg: e ? +(e.transform.yaw * 180 / Math.PI).toFixed(1) : null,
-      state: e?.civilian?.state ?? e?.infected?.state ?? e?.companion?.state ?? (a.kind === 'courier' ? e?.survivor?.animation : undefined) ?? null, health: e?.health.current ?? null, drawnFrames: a.drawn, inViewFrames: a.inView, missedInViewFrames: a.missed, lod: a.lod, firstDrawn: a.first ?? null, farLodCloseFrames: a.farClose, ...(a.emerge ? { emerge: true } : {}), motion: summarizeMotion(a.track), ...(this.spec?.trace ? { track: a.track.map(f => ({ ...f, feet: f.feet.map(c => ({ heel: c.heel.map(v => +v.toFixed(3)), toe: c.toe.map(v => +v.toFixed(3)) })) })) } : {}) }]; }));
+      travelM: a.distanceM ?? 0, maxX: a.maxX ?? null, state: e?.civilian?.state ?? e?.infected?.state ?? e?.companion?.state ?? (a.kind === 'courier' ? e?.survivor?.animation : undefined) ?? null, health: e?.health.current ?? null, drawnFrames: a.drawn, inViewFrames: a.inView, missedInViewFrames: a.missed, lod: a.lod, firstDrawn: a.first ?? null, farLodCloseFrames: a.farClose, ...(a.emerge ? { emerge: true } : {}), motion: summarizeMotion(a.track), ...(this.spec?.trace ? { track: a.track.map(f => ({ ...f, feet: f.feet.map(c => ({ heel: c.heel.map(v => +v.toFixed(3)), toe: c.toe.map(v => +v.toFixed(3)) })) })) } : {}) }]; }));
     const appearance = [...this.actors.values()].map(a => ({ actor: a.id, looks: [...new Set(a.track.flatMap(f => f.appearance ? [f.appearance.key] : []))], corpseFrames: a.track.filter(f => f.appearance && f.corpse).length })).filter(a => a.looks.length);
     const visibleLooks = this.game.view.crowdFigures().filter(f => f.drawn && f.appearance && !this.world.entities.get(f.id)?.corpse && (this.world.entities.get(f.id)?.health.current ?? 0) > 0).sort((a,b) => a.id-b.id);
     const variety = Object.fromEntries((['infected', 'pedestrian'] as const).map(kind => [kind, crowdVariety(visibleLooks.filter(f => {
@@ -1320,7 +1383,7 @@ export class SceneLab {
       vehicles: Object.fromEntries([...this.vehicles].map(([id, entity]) => { const e = this.world.entities.get(entity); return [id, e ? { entity, position: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)], yawDeg: +(e.transform.yaw * 180 / Math.PI).toFixed(1), yawRateMaxDegS: this.vehicleMotion.get(id)?.yawRateMaxDegS ?? 0, bodyOverlaps: this.vehicleMotion.get(id)?.overlaps ?? 0, tiltMaxDeg: this.vehicleMotion.get(id)?.tiltMaxDeg ?? 0, tiltFrame: this.vehicleMotion.get(id)?.tiltFrame ?? -1, slipMaxDeg: this.vehicleMotion.get(id)?.slipMaxDeg ?? 0, slipFrame: this.vehicleMotion.get(id)?.slipFrame ?? -1, driven: this.world.vehicles!.active === entity, headlightsDarkFrames: this.vehicleMotion.get(id)?.darkFrames ?? 0, firstDarkFrame: this.vehicleMotion.get(id)?.firstDarkFrame ?? -1, rideRemainingM: this.vehicleMotion.get(id)?.ride ? l2TruckPath.at(-1)!.s - this.vehicleMotion.get(id)!.ride!.rideS : null, health: Math.round(e.health.current), decay: e.vehicle?.decay ?? null, speed: +(e.vehicle?.speed ?? e.traffic?.speed ?? 0).toFixed(2) } : null]; })),
       grounding: this.grounding(),
       pursuit: { actors: Object.fromEntries([...this.pursuit].map(([id, p]) => [id, { stuckRunMax: p.stuckRunMax, stuckFrame: p.stuckFrame, lostNearFrames: p.lostNearFrames, overshootMaxM: +p.overshootMaxM.toFixed(2) }])), courierSwings: this.attacks.swings, courierAttacks: this.attacks.courier, hullWindups: this.attacks.hull, hullHits: this.attacks.hullHits, firstAttackFrame: this.attacks.firstFrame, bites: this.attacks.bites, firstBiteFrame: this.attacks.firstBiteFrame },
-      megaAlpha: this.megaReport(), minigun: this.gunReport(), specials: this.specials,
+      cure: this.cureStats ? { ...this.cureStats, last: undefined, health: undefined } : null, megaAlpha: this.megaReport(), minigun: this.gunReport(), specials: this.specials,
       heldProps: { samples: this.heldPropSamples, intersections: this.heldPropClips.size, holds: Object.fromEntries(this.holds) }, seeThrough: { ...this.seeThroughOpen }, appearance, companion: { ...this.companion }, bike: { ...this.bike }, variety, actors, clicks: this.clickReport(), visibility: this.visible, lods: this.lods(), clipping: clipping?.summary ?? null,
       emergence: this.emergence ? { building: this.emergence.house, door: { x: +this.emergence.x.toFixed(3), z: +this.emergence.z.toFixed(3), nx: this.emergence.nx, nz: this.emergence.nz }, release: [+this.emergence.ox.toFixed(3), +this.emergence.oz.toFixed(3)], residents: this.emergence.ids.length, doorOpenedFrame: this.emergence.openFrame } : null,
       doors: Object.fromEntries([...this.doors].map(([id, d]) => [id, { closedFrames: d.closedFrames, firstClosedFrame: d.firstClosedFrame, inDoorwayFrames: d.inDoorwayFrames, maxOpen: +d.maxOpen.toFixed(2) }])), log: [...this.log] };

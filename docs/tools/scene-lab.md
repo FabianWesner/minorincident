@@ -563,3 +563,34 @@ two Alphas, rocket clearance and six followers at one fixed game camera. The
 production population controller lives on `world.l7Encounters`; its copied state
 is exposed as `__SS__.getState().l7`. The existing checkpoint seams retain its
 roster, pending director requests, emergence audit and passage state.
+
+## L10 finale catalog
+
+`scene:matrix` also includes the existing `l10-minigun-heat`,
+`l10-cure-install-defend`, `l10-cure-mist`, `qa-l10-epilogue` and
+`l10-region-seam` fixtures, plus `qa-l10-charge-radius`,
+`qa-l10-final-release` and `qa-l10-title-credits`. These reuse the S6–S9
+fixtures and production mission/rotation nodes. Q1's threat and region entries
+remain in the filter.
+
+`expect.cure` gives closed numeric ranges on `metrics.cure`: charge ticks,
+inside/boundary/outside frame counts, incorrect charge increments, release event
+count, front radius, late infected deaths, damage to healthy controls, survivor
+count, movement during the playable phase, active fan frames, pull scale and
+visible title/credits frames and shared smoke-pool occupancy/cap violations. Boundary coverage samples within 15 cm of 25 m;
+charge eligibility itself uses the exact production 25 m radius. The report
+retains one release-relative timeline sample per second. `expect.actorHealth`
+gates each named infected species and control separately; a missing actor or
+probe fails the gate. Mist includes all five infected zoo species, dog/cat/crow, Alpha
+and runners, with courier/corgi/healthy civilian/healthy zebra controls.
+
+Run the deliberately broken variants with
+`SCENE_SERVER=preview SCENE_PORT=<private-port> E2E_UNITS=1 sh tools/e2e-lock.sh npx tsx tools/scenelab/l10-q2-negative.ts webgpu`
+(or `webgl2`). The runner succeeds only when missing release and missing charge
+activation produce their expected gate failures. Negative specs live outside
+the catalog. Ending fixtures attach the normal campaign presentation, so title
+and credits gates require their actual UI to be visible.
+
+Trailing `--backend` / `--filter` options override the matrix script defaults.
+
+Evidence and remaining acceptance work: `docs/reports/l10-q2/README.md`.

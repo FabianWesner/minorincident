@@ -1,6 +1,6 @@
 {
   "name": "l10-cure-mist",
-  "note": "Explicit release of the precharged installed console. Pale cyan mist expands through runners, dogs, Alpha and infected zoo animals; all collapse and remain on the ground. Courier, healthy civilians and corgi remain standing. Shared smoke pool, no added particle/voice cap. Review high/low, game camera zoom 1 and 0.5 on both backends.",
+  "note": "Explicit release of the precharged installed console. Pale cyan mist expands through runners, dogs, Alpha and infected zoo animals; all collapse and remain on the ground. Courier, healthy civilians and corgi remain standing. Shared smoke pool, no added particle/voice cap. Review high/low, game camera zoom 1 and 0.5 on both backends. All five zoo species are explicit named health gates; healthy zebra joins the civilian, courier and corgi controls. Fan rotation is sampled from rendered rotation-node batches. Existing infected cat/crow species are included too.",
   "seed": 32,
   "ground": "asphalt",
   "time": "L4",
@@ -163,6 +163,66 @@
         2
       ],
       "state": "chase"
+    },
+    {
+      "id": "lion",
+      "kind": "infected",
+      "archetype": "infected.lion",
+      "at": [
+        10,
+        -8
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "gorilla",
+      "kind": "infected",
+      "archetype": "infected.gorilla",
+      "at": [
+        -10,
+        -8
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "flamingo",
+      "kind": "infected",
+      "archetype": "infected.flamingo",
+      "at": [
+        10,
+        10
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "healthy-zebra",
+      "kind": "animal",
+      "species": "zebra",
+      "at": [
+        -8,
+        8
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "cat",
+      "kind": "infected",
+      "archetype": "infected.cat",
+      "at": [
+        12,
+        6
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "crow",
+      "kind": "infected",
+      "archetype": "infected.crow",
+      "at": [
+        -12,
+        -6
+      ],
+      "state": "idle"
     }
   ],
   "cureProgression": {
@@ -211,6 +271,114 @@
     "drawCallsMax": 300,
     "trianglesMax": 500000,
     "groundingCorpsesMin": 6,
-    "groundingMaxCm": 2
+    "groundingMaxCm": 2,
+    "actorHealth": {
+      "courier": [
+        1,
+        1000
+      ],
+      "corgi": [
+        1,
+        1000
+      ],
+      "healthy": [
+        1,
+        1000
+      ],
+      "alpha": [
+        0,
+        0
+      ],
+      "elephant": [
+        0,
+        0
+      ],
+      "zebra": [
+        0,
+        0
+      ],
+      "runner-0": [
+        0,
+        0
+      ],
+      "runner-1": [
+        0,
+        0
+      ],
+      "runner-2": [
+        0,
+        0
+      ],
+      "runner-3": [
+        0,
+        0
+      ],
+      "runner-4": [
+        0,
+        0
+      ],
+      "runner-5": [
+        0,
+        0
+      ],
+      "dog": [
+        0,
+        0
+      ],
+      "lion": [
+        0,
+        0
+      ],
+      "gorilla": [
+        0,
+        0
+      ],
+      "flamingo": [
+        0,
+        0
+      ],
+      "healthy-zebra": [
+        1,
+        1000
+      ],
+      "cat": [
+        0,
+        0
+      ],
+      "crow": [
+        0,
+        0
+      ]
+    },
+    "cure": {
+      "releaseCount": [
+        1,
+        1
+      ],
+      "radius": [
+        70,
+        80
+      ],
+      "fanFrames": [
+        200,
+        480
+      ],
+      "healthyDamage": [
+        0,
+        0
+      ],
+      "lateDeaths": [
+        0,
+        0
+      ],
+      "mistPuffs": [
+        10,
+        400
+      ],
+      "smokeOverBudget": [
+        0,
+        0
+      ]
+    }
   }
 }

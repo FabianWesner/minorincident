@@ -163,6 +163,15 @@ export const writeJson = (path: string, data: unknown) => { mkdirSync(dirname(pa
 export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSession['metrics']>>, clipping: Awaited<ReturnType<SceneSession['clipping']>>, errors: string[]) {
   const e = spec.expect ?? {}, checks: { name: string; pass: boolean; value: number; limit: number }[] = [];
   const add = (name: string, value: number, limit: number | undefined) => { if (limit !== undefined) checks.push({ name, pass: value <= limit, value, limit }); };
+  for (const [name, range] of Object.entries(e.cure ?? {})) {
+    const value = metrics.cure?.[name as keyof NonNullable<typeof metrics.cure>];
+    const numeric = typeof value === 'number' ? value : NaN;
+    checks.push({ name: `cure.${name}.min`, pass: numeric >= range[0], value: numeric, limit: range[0] }, { name: `cure.${name}.max`, pass: numeric <= range[1], value: numeric, limit: range[1] });
+  }
+  for (const [field, ranges] of [['health', e.actorHealth], ['travelM', e.actorTravel], ['maxX', e.actorMaxX]] as const) for (const [actor, range] of Object.entries(ranges ?? {})) {
+    const value = metrics.actors[actor]?.[field] ?? NaN;
+    checks.push({ name: `${field}.${actor}.min`, pass: value >= range[0], value, limit: range[0] }, { name: `${field}.${actor}.max`, pass: value <= range[1], value, limit: range[1] });
+  }
   add('propPenetrationFramesMax', metrics.propPenetration.framesMax, e.propPenetrationFramesMax);
   add('convoyOverlapFramesMax', metrics.convoyOverlapFrames, e.convoyOverlapFramesMax);
   add('consoleErrors', errors.length, e.consoleErrors ?? 0);
@@ -191,6 +200,10 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   atLeast('courierHpMin', Object.values(metrics.actors).find(a => a.kind === 'courier')?.health ?? 0, e.courierHpMin);
   atLeast('megaCoarseFramesMin', metrics.megaAlpha?.modes.coarse ?? 0, e.megaCoarseFramesMin);
   atLeast('megaDetailedFramesMin', metrics.megaAlpha?.modes.detailed ?? 0, e.megaDetailedFramesMin);
+  if (spec.minigun && spec.hud && (metrics.minigun?.mountedFrames ?? 0) > 0) {
+    atLeast('minigunHudMountedFrames', metrics.minigun?.hudFrames ?? 0, metrics.minigun!.mountedFrames);
+    add('minigunHudHeatErrorMax', metrics.minigun?.hudHeatErrorMax ?? Infinity, 1);
+  }
   atLeast('minigunRoundsMin', metrics.minigun?.rounds ?? 0, e.minigunRoundsMin); atLeast('minigunHeatPeakMin', metrics.minigun?.heatPeak ?? 0, e.minigunHeatPeakMin);
   atLeast('minigunLockedFramesMin', metrics.minigun?.lockedFrames ?? 0, e.minigunLockedFramesMin); atLeast('minigunMountedFramesMin', metrics.minigun?.mountedFrames ?? 0, e.minigunMountedFramesMin); atLeast('minigunFeetMin', metrics.minigun?.feetMin ?? -1, e.minigunFeetMin);
   if (e.groundingMaxCm !== undefined) add('groundingMaxCm', Math.max(metrics.grounding?.corpseOffMaxCm ?? Infinity, metrics.grounding?.pickupOffMaxCm ?? Infinity), e.groundingMaxCm);
