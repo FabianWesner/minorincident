@@ -43,7 +43,8 @@ export const l3Dressing: readonly L3Dressing[] = [
   d('police-vehicle', 'blvd', 'veh.police-sedan', 34, -29.6, { yaw: PI + .4, decay: 'wrecked' }),
   d('fighting', 'blvd', 'prop.sandbag-pallet', -100, -23.6), d('fighting', 'blvd', 'prop.sandbag-pallet', -98.4, -23.6, { yaw: .2 }),
   d('fighting', 'blvd', 'prop.barricade', -102.6, -24.0, { yaw: H }), d('fighting', 'blvd', 'prop.tear-gas-canister', -96.6, -25.2),
-  d('fighting', 'blvd', 'wpn.police-baton', -97.4, -24.4, { yaw: .7 }), d('fighting', 'blvd', 'prop.sandbag-pallet', 38.0, -32.5, { yaw: -.3 }),
+  // Cover at the jam turns the detour into the avenue before the next cross-link, clear of the cruiser and bus passages.
+  d('fighting', 'blvd', 'wpn.police-baton', -97.4, -24.4, { yaw: .7 }), d('fighting', 'blvd', 'prop.sandbag-pallet', 4.0, -23.6, { yaw: -.3 }),
   d('fighting', 'blvd', 'prop.traffic-cone', -94.0, -26.0), d('fighting', 'blvd', 'prop.traffic-cone', 37.0, -25.4),
   corpse('blvd', -99.2, -26.6, 'npc.police-officer', 1.2), corpse('blvd', -74, -24.4, 'npc.civilian-man-a', 2.6), corpse('blvd', 8.6, -23.6, 'npc.civilian-woman-b', .4), corpse('blvd', 70, -31.8, 'npc.civilian-man-b', 4.1),
   d('blood', 'blvd', 'decal.blood-pool', -99.6, -25.8), d('blood', 'blvd', 'decal.blood-trail', 9.4, -24.0, { yaw: 1.1 }),
