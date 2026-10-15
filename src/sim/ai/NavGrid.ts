@@ -113,7 +113,7 @@ export class NavGrid {
     if (!this.buckets.size && !this.blockers.size) return true;
     const cellX = Math.floor(x / 4), cellZ = Math.floor(z / 4);
     const walls = this.buckets.get(cellX)?.get(cellZ);
-    if (walls) for (const w of walls) if (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
+    if (walls) for (const w of walls) if ((w.navBlocker || w.y - w.halfY < 1.8 && w.y + w.halfY > .05) && (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius)) return false;
     const blockers = this.blockerBuckets.get(cellX)?.get(cellZ);
     if (blockers) for (const [id, w] of blockers) if (id !== ignoreBlocker && (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius)) return false;
     return true;
@@ -131,7 +131,7 @@ export class NavGrid {
   visitSolids(x: number, z: number, radius: number, visit: (wall: Wall, id: string) => void): void {
     const reach = Math.max(0, radius - 2), seen = reach ? new Set<Wall>() : null;
     for (let cx = Math.floor((x - reach) / 4); cx <= Math.floor((x + reach) / 4); cx++) for (let cz = Math.floor((z - reach) / 4); cz <= Math.floor((z + reach) / 4); cz++) {
-      for (const w of this.buckets.get(cx)?.get(cz) ?? []) if (!seen?.has(w)) { seen?.add(w); visit(w, `static:${w.entityId ?? this.wallIds.get(w)}`); }
+      for (const w of this.buckets.get(cx)?.get(cz) ?? []) if (!seen?.has(w)) { seen?.add(w); visit(w, `static:${this.wallIds.get(w)}`); }
       for (const [id, w] of this.blockerBuckets.get(cx)?.get(cz) ?? []) if (!seen?.has(w)) { seen?.add(w); visit(w, `blocker:${id}`); }
     }
   }
@@ -140,7 +140,7 @@ export class NavGrid {
     this.revision++;
     this.walls.forEach((wall, i) => this.wallIds.set(wall, i));
     this.buckets.clear();
-    for (const wall of this.walls.filter(w => w.navBlocker || (w.y - w.halfY < 1.8 && w.y + w.halfY > .05))) for (let z = Math.floor((wall.z - wall.halfZ - 2) / 4); z <= Math.floor((wall.z + wall.halfZ + 2) / 4); z++) for (let x = Math.floor((wall.x - wall.halfX - 2) / 4); x <= Math.floor((wall.x + wall.halfX + 2) / 4); x++) {
+    for (const wall of this.walls) for (let z = Math.floor((wall.z - wall.halfZ - 2) / 4); z <= Math.floor((wall.z + wall.halfZ + 2) / 4); z++) for (let x = Math.floor((wall.x - wall.halfX - 2) / 4); x <= Math.floor((wall.x + wall.halfX + 2) / 4); x++) {
       let column = this.buckets.get(x);
       if (!column) this.buckets.set(x, column = new Map());
       let bucket = column.get(z);
@@ -231,7 +231,7 @@ export class NavGrid {
     const divisor = Math.max(1, steps);
     const walls = new Set<Wall>();
     const collect = (x: number, z: number) => {
-      const bucket = this.buckets.get(x)?.get(z); if (bucket) for (const wall of bucket) walls.add(wall);
+      const bucket = this.buckets.get(x)?.get(z); if (bucket) for (const wall of bucket) if (wall.navBlocker || wall.y - wall.halfY < 1.8 && wall.y + wall.halfY > .05) walls.add(wall);
       const blockers = this.blockerBuckets.get(x)?.get(z); if (blockers) for (const wall of blockers.values()) walls.add(wall);
     };
     if (!this.mask) {

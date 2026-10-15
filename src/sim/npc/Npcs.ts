@@ -64,6 +64,7 @@ export class Npcs {
   }
   moveStep(e: EntitySnapshot, dx: number, dz: number): void {
     if (e.passengerOf !== undefined || e.pendingAdmission) return;
+    this.world.solids.wrote(e, 'npc.move');
     const x = e.transform.x, z = e.transform.z;
     moveAgent(e, dx * 60, dz * 60, this.world.infected!.nav, this.world.tick, e.civilian?.zooAnimal ? e.combat!.radius : .35);
     if ((e.civilian || e.escort) && this.traffic.overlaps(e.transform)) { e.transform.x = x; e.transform.z = z; }
