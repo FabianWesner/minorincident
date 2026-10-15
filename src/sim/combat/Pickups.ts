@@ -8,7 +8,11 @@ export class Pickups {
   spawn(actionId: string, position: Vec2, dropped = false, options: { retain?: boolean; interactTicks?: number; surfaceY?: number } = {}): number {
     action(actionId);
     if (!Number.isFinite(position.x) || !Number.isFinite(position.z)) throw new RangeError('Invalid pickup position');
-    if (!dropped && options.surfaceY === undefined) position = clearPickupPosition(this.world, position);
+    const support = this.world.districts?.groundHeight(position.x, position.z) ?? 0;
+    if (!dropped && (options.surfaceY === undefined || Math.abs(options.surfaceY - support) < .05)) {
+      position = clearPickupPosition(this.world, position);
+      options = { ...options, surfaceY: this.world.districts?.groundHeight(position.x, position.z) ?? 0 };
+    }
     const entity = this.world.entities.create({ kind: 'pickup', archetype: actionId, faction: 'neutral', health: { current: 1, max: 1 }, transform: { x: position.x, y: (options.surfaceY ?? 0) + 0.15, z: position.z, yaw: 0 }, pickup: { actionId, armed: !dropped, ...options } });
     this.world.spatial.set(entity.id, position.x, position.z); return entity.id;
   }
