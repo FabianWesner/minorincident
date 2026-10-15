@@ -357,7 +357,8 @@ export class Vehicles {
       if (target.kind !== 'infected' || target.hidden || target.infected?.hidden || (target.health.current <= 0 && (target.infected?.recoverAt ?? -1) < 0)) continue;
       const distance = car.physics.hullDistance(target.transform.x, target.transform.z), radius = target.combat?.radius ?? .4;
       let contact = ledger.infected[id];
-      if (distance <= radius) {
+      // Shared hull admission leaves a millimetre of skin at an exact contact.
+      if (distance <= radius + .002) {
         contact ??= ledger.infected[id] = { contactId: null, separatedAt: null, windupAt: null, attackId: null, cooldownUntil: 0 };
         contact.separatedAt = null;
         if (contact.contactId === null) {
