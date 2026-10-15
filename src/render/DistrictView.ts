@@ -506,7 +506,7 @@ export class DistrictView extends Group {
     seeThrough.depth.value = depth - .05;
     if (this.seeThroughReference) { this.updateCutPlacements(true); seeThrough.solidRadius.value = 3; seeThrough.strength.value = 1; return; }
     // Only the placements that actually sit between the lens and some part of the subject (courier or whole player vehicle) are eligible for the cut.
-    this.occluded(view, box);
+    this.occludedSubject(view, box);
     this.updateCutPlacements();
   }
   // Legacy footprint probes remain available for diagnostics; they no longer control reveal.
@@ -580,13 +580,21 @@ export class DistrictView extends Group {
   private readonly holeCorner = new Vector3();
   private readonly subjectBox = new Box3();
   private readonly subjectPoints = Array.from({ length: 9 }, () => new Vector3());
-  /** Segments from the camera to the centre and corners of the subject (courier or whole player vehicle) against conservative upright boxes of the tall instanced placements nearby.
+  /** Segment (camera to chest) against conservative upright boxes of the tall instanced placements nearby. */
+  private occluded(view: View, player: { x: number; y: number; z: number }): boolean {
+    return this.cutBlockers(view, player, [this.subjectPoints[0].set(player.x, player.y + .2, player.z)], 1);
+  }
+  /** Segments from the camera to the centre and corners of the subject (courier or whole player vehicle) against the same boxes.
    * Every placement hit by any segment is marked for the per-placement cut; the rest stay opaque. */
-  private occluded(view: View, subject: Box3): boolean {
-    const o = view.camera.position, points = this.subjectPoints, player = subject.getCenter(this.holeTarget);
+  private occludedSubject(view: View, subject: Box3): boolean {
+    const points = this.subjectPoints, centre = subject.getCenter(this.holeTarget);
     let n = 0;
-    points[n++].copy(player);
+    points[n++].copy(centre);
     for (const x of [subject.min.x, subject.max.x]) for (const y of [subject.min.y, subject.max.y]) for (const z of [subject.min.z, subject.max.z]) points[n++].set(x, y, z);
+    return this.cutBlockers(view, centre, points, n);
+  }
+  private cutBlockers(view: View, player: { x: number; z: number }, points: Vector3[], count: number): boolean {
+    const o = view.camera.position;
     let blocked = false;
     for (const entry of this.lodBatches) {
       if (entry.height < occluderMinHeight || worldAssets[entry.id].foliage) continue;
@@ -600,8 +608,8 @@ export class DistrictView extends Group {
         // Slab test in the placement's local frame (oriented footprint, real height).
         const ox = o.x - x, oz = o.z - z, sx = ref.scale.x, sz = ref.scale.z;
         const lox = (ox * c - oz * sn) / sx, loz = (ox * sn + oz * c) / sz;
-        for (const point of points) {
-          const dx = point.x - o.x, dy = point.y - o.y, dz = point.z - o.z, ldx = (dx * c - dz * sn) / sx, ldz = (dx * sn + dz * c) / sz;
+        for (let i = 0; i < count; i++) {
+          const point = points[i], dx = point.x - o.x, dy = point.y - o.y, dz = point.z - o.z, ldx = (dx * c - dz * sn) / sx, ldz = (dx * sn + dz * c) / sz;
           let enter = 0, exit = 1;
           for (let axis = 0; axis < 3; axis++) {
             const origin = axis === 0 ? lox : axis === 1 ? o.y : loz;

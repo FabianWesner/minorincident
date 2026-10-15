@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { BoxGeometry, BufferAttribute, Mesh, Object3D, PerspectiveCamera, Scene, Vector3, type InterleavedBufferAttribute } from 'three/webgpu';
+import { Box3, BoxGeometry, BufferAttribute, Mesh, Object3D, PerspectiveCamera, Scene, Vector3, type InterleavedBufferAttribute } from 'three/webgpu';
 import { DistrictView } from '../../../src/render/DistrictView';
 import { InstancedGroup } from '../../../src/render/InstancedGroup';
 import { Lighting } from '../../../src/render/Lighting';
@@ -20,7 +20,8 @@ test('PO #3 only the garage between camera and courier dissolves; its batched ne
   const view = Object.assign(Object.create(DistrictView.prototype), {
     cutPlacements: new Set<Object3D>(), occluderId: '',
     foliage: { update() {}, reveal: true }, updateRoofs() {}, frameSeconds: 1,
-    lensRay: new Vector3(), lensPoint: new Vector3(), holeTarget: new Vector3(),
+    lensRay: new Vector3(), lensPoint: new Vector3(), holeTarget: new Vector3(), holeCorner: new Vector3(), subjectBox: new Box3(),
+    subjectPoints: Array.from({ length: 9 }, () => new Vector3()),
     lodBatches: [{ id: 'bld.garage-detached', height: 8, half: 1, origin: [0, 0], foot: { cx: 0, cz: 0, hx: 1, hz: 1 }, refs, hero, near, far }],
   }) as DistrictView;
   try {

@@ -11,6 +11,7 @@ const fixture = () => {
   const district = Object.assign(Object.create(DistrictView.prototype), {
     foliage: { update: vi.fn(() => seeThrough.center.value.set(-10, -10)), reveal: true }, updateRoofs: vi.fn(),
     holeTarget: new Vector3(), holeCorner: new Vector3(), subjectBox: new Box3(),
+    cutPlacements: new Set(), lodBatches: [], subjectPoints: Array.from({ length: 9 }, () => new Vector3()),
   }) as DistrictView;
   const camera = new PerspectiveCamera(35, 16 / 9, .1, 1000);
   camera.position.set(8, 12, 8); camera.lookAt(0, 0, 0); camera.updateMatrixWorld();
