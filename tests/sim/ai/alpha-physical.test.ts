@@ -21,8 +21,8 @@ function human(w: Awaited<ReturnType<typeof arena>>, x: number, z: number, soldi
 }
 
 test('T-E07-06-charge @E07-AC05 @E07-AC06 locked 9m/s, 12m sweep, once per human, windup and 72 tick knockdown', async () => {
-  const w = await arena(), e = spawn(w, 'alpha', 0, 0, 'idle');
-  const player = w.entities.get(1)!; teleport(w, 5);
+  const w = await arena(); teleport(w, 5);
+  const e = spawn(w, 'alpha', 0, 0, 'idle'), player = w.entities.get(1)!;
   const inside = human(w, 3, 1), outside = human(w, 6, 1.001), soldier = human(w, 7, -.9, true);
   const a = start(w, e, 'alpha.charge');
   expect(a.area).toEqual({ x: 0, z: 0, radius: 1, dx: 1, dz: 0 });
