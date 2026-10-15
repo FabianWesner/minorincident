@@ -20,7 +20,11 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
         let asset: string | undefined;
         for (let o: Object3D | null = draw.object; o; o = o.parent) asset ??= o.userData.assetId;
         const material = Array.isArray(draw.material) ? draw.material[0] : draw.material;
-        if (asset === 'wpn.minigun-mounted' && material.name === 'pal_picketWhite') trace.gunWarmBuilds.push({ tick: game.world.tick, object: draw.object.uuid, material: material.uuid, version: material.version, context: draw.context.id, vertex: builder.vertexShader, fragment: builder.fragmentShader });
+        if (asset === 'wpn.minigun-mounted' && material.name === 'pal_picketWhite') {
+          const lights: string[] = [];
+          game.view.scene.traverseVisible(o => { if ('isLight' in o) lights.push(o.type); });
+          trace.gunWarmBuilds.push({ tick: game.world.tick, object: draw.object.uuid, material: material.uuid, version: material.version, context: draw.context.id, key: material.customProgramCacheKey(), lights });
+        }
       };
     });
     await page.evaluate(async () => {
