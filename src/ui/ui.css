@@ -289,3 +289,11 @@ body.ui-hidden [data-testid=home-button]{display:none!important}
  .full-ui[data-ui-screen=title] .menu-title button{min-height:48px}
  .full-ui[data-ui-screen=title] [data-testid=detail-title]{font-size:12px;letter-spacing:.5px}
 }
+
+.hud-survivor-vitals{position:absolute;left:24px;top:200px;display:flex;flex-direction:column;gap:4px;pointer-events:none}
+.hud-survivor-card{display:grid;grid-template-columns:28px 90px;gap:2px 6px;padding:4px 8px;font-size:12px}
+.hud-survivor-card .hud-portrait{grid-row:span 2;width:28px;height:32px;background-size:cover}
+.hud-survivor-card .hud-bar{width:90px;height:16px}
+.hud-survivor-card .hud-bar-label{font-size:10px;line-height:12px;inset:0}
+@media(max-width:600px),(max-height:600px){.hud-survivor-vitals{left:12px;top:140px;gap:2px}.hud-survivor-card{padding:2px 5px;font-size:10px;grid-template-columns:20px 65px}.hud-survivor-card .hud-portrait{width:20px;height:26px}.hud-survivor-card .hud-bar{width:65px}}
+
