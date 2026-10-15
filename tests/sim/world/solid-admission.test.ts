@@ -376,6 +376,7 @@ test('courier contact projection sweeps the existing capsule instead of crossing
     player.transform.x = 12;
     w.tick++; w.solids.commit();
     expect(player.transform.x).toBeLessThanOrEqual(11.57);
+    expect(w.physics.playerCollider!.translation().x).toBeCloseTo(player.transform.x, 6);
     expect(w.solids.clear(player.transform, .35, 1, true, .02)).toBe(true);
     expect(w.solids.snapshot()).toMatchObject({ failures: 0, pending: 0 });
   } finally { w.dispose(); }
