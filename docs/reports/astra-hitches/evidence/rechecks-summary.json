@@ -1,0 +1,39 @@
+{
+  "note": "Single worker, both runner slots held, unchanged deadlines and assertions.",
+  "rows": [
+    {
+      "test": "T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+      "status": "passed",
+      "durationMs": 13731.417956000001,
+      "messages": []
+    },
+    {
+      "test": "L3 The Police Collapse T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2",
+      "status": "failed",
+      "durationMs": 96224.578826,
+      "messages": [
+        "AssertionError: expected 5 to be less than or equal to 2\n    at /srv/mi/jobs/astra-hitches-e80ed9-99469-1792050114/tests/levels/L3.test.ts:60:45\n    at file:///srv/mi/jobs/astra-hitches-e80ed9-99469-1792050114/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "test": "L4 The Safe City Falls T-E22-11 @E22 @E22-AC11 military spectacle: two HMG positions fire, trucks and an armoured vehicle stand in the plaza, the tank fires every 8-12 s away from the player and allies, the helicopter orbits and withdraws without landing",
+      "status": "failed",
+      "durationMs": 22014.366514,
+      "messages": [
+        "AssertionError: expected 14.116666666666667 to be less than or equal to 12.8\n    at /srv/mi/jobs/astra-hitches-e80ed9-99469-1792050114/tests/levels/L4.test.ts:245:152\n    at file:///srv/mi/jobs/astra-hitches-e80ed9-99469-1792050114/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "test": "T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex",
+      "status": "passed",
+      "durationMs": 29274.72604400001,
+      "messages": []
+    },
+    {
+      "test": "T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts",
+      "status": "passed",
+      "durationMs": 162670.794798,
+      "messages": []
+    }
+  ]
+}
