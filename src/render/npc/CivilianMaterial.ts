@@ -1,10 +1,10 @@
 import { crowdAppearanceColor, crowdSkinColor, crowdHeadwearVisibility } from '../characters/CrowdAppearance';
 import { DoubleSide, FrontSide, MeshLambertNodeMaterial, type DataTexture } from 'three/webgpu';
-import { attribute, mat4, mix, normalGeometry, positionGeometry, vec3, vec4, cameraViewMatrix, luminance, time, sin, cos, texture } from 'three/tsl';
-import { crowdBlendedMatrix } from '../../assets/crowd';
+import { attribute, mat4, mix, normalGeometry, positionGeometry, vec3, vec4, cameraViewMatrix, luminance, time, sin, cos } from 'three/tsl';
+import { crowdBlendedMatrix, poseTexture } from '../../assets/crowd';
 import type { Materials } from '../Materials';
 
-type Entry = { material: MeshLambertNodeMaterial; pose: ReturnType<typeof texture>; uses: number };
+type Entry = { material: MeshLambertNodeMaterial; pose: ReturnType<typeof poseTexture>; uses: number };
 const caches = new WeakMap<Materials, Map<string, Entry>>();
 /** One graph per side/hand layout. Each draw binds its own immutable geometry,
  * current pose texture, transforms, tint and infection attributes. */
@@ -14,7 +14,7 @@ export function civilianMaterial(shading: Materials | undefined, doubleSided: bo
   const key = `${doubleSided}:${handIndex}`;
   let entry = cache.get(key);
   if (!entry) {
-    const pose = texture(initialTexture);
+    const pose = poseTexture(initialTexture);
     const parts = attribute('_parts', 'vec4'), variant = attribute('_variant', 'vec4');
     // overlay.y >= 2 flags a pedestrian who is turning (eye glow = y - 2); y in 0..1 is the plain eye glow.
     const overlay = attribute('_overlay', 'vec4'), grip = overlay.z.lessThan(0).select(1, 0), dirt = overlay.z.max(0), turning = overlay.y.greaterThan(1.5).select(1, 0), eyeGlow = overlay.y.sub(turning.mul(2)), eye = parts.z, mark = parts.w.mod(4), vein = mark.equal(1).select(1, 0), blood = mark.equal(2).select(1, 0), socket = mark.equal(3).select(1, 0), decay = overlay.x;

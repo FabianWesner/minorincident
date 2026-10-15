@@ -10,7 +10,7 @@ import { rasterFootprints, TRACK_LIFETIME } from '../../../src/render/FootprintM
 import { installTextureRanges } from '../../../src/render/TextureRanges';
 
 test('partial track uploads reproduce every mask byte through fading, recentering, clearing and expiry', () => {
-  for (const [scenario, tier] of [['L5', 'high'], ['L7', 'low']] as const) {
+  for (const [scenario, tier] of [['L5', 'high'], ['L7', 'low'], ['L3', 'low']] as const) {
     const world = { scenario, tick: 0, entities: { get: () => undefined }, events: { on: () => () => {} } } as unknown as SimWorld;
     world.weather = new WeatherSystem(world, 2);
     const lighting = new Lighting(new Scene()), weather = new WeatherView(world, lighting), view = new View();
