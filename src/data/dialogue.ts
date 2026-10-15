@@ -56,7 +56,7 @@ export const dialogue: Record<string, string> = {
   'L5.cue.rosa': 'Knocking from inside the pharmacy.',
   'L5.cue.okafor': 'A voice, softly praying, from the church.',
   'L5.cue.mia': 'A radio crackles above Harbor Street.',
-  'L5.cue.sam': 'A flashlight blinks inside a wrecked bus.',
+  'L5.cue.sam': 'A flashlight blinks inside the wrecked bus on Lakeshore Avenue.',
   'L5.found.dale': 'Dale: You… you’re real. Take me with you.',
   'L5.found.rosa': 'Rosa: You’re real. I have not seen anyone in hours. Take me with you.',
   'L5.found.okafor': 'Mr. Okafor: Bless you, child. Please, take me with you.',
