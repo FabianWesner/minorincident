@@ -2,9 +2,9 @@
 
 ## White shader
 
-The original `lod-standins/evidence/cold-shader-diagnostic.json` recorded a late white mesh program. The retained fresh baseline `shader-before/webgl-low-z1.json` identifies the hierarchy `mesh_0/body/root/Scene/Group/Scene`, material `pal_picketWhite`, opaque, double-sided, vertex colours, without cast/receive shadow. This matches the mounted minigun body. The driver-cached baseline had a 9.8 ms maximum but still built the program during the walk, so it does not reproduce the original 198.8 ms compile cost.
+The original `lod-standins/evidence/cold-shader-diagnostic.json` recorded a late white mesh program. The retained fresh baseline `shader-before/webgl-low-z1.json` identifies the hierarchy `mesh_0/body/root/Scene/Group/Scene`, material `pal_picketWhite`, opaque, double-sided, vertex colours, without cast/receive shadow. This matches the mounted minigun body, but several other assets use the same hierarchy; exact attribution needs the ancestor's asset ID. The driver-cached baseline had a 9.8 ms maximum but still built the program during the walk, so it does not reproduce the original 198.8 ms compile cost.
 
-The mounted gun previously entered the scene through `update()` / `screenshotReady()`, after `GameView.load()` had finished warm-up. Loading and posing it before the existing full warm-up makes its actual material/geometry combination participate. The first-play regression now records late program builds, rejects a late white gun-body build, captures the game camera, and applies the existing 50 ms desktop hitch ceiling to low as well as high.
+The mounted gun previously entered the scene through `update()` / `screenshotReady()`, after `GameView.load()` had finished warm-up. The first attempted fix loads and poses it before the existing full warm-up. However, the retained `shader-first-fix` results still show a late white-body build at tick 461 in both WebGL zoom-1 cases and WebGPU high zoom 1. Low WebGL zoom 1 is fast (9.6 ms maximum) but this attempt is not accepted as a fix. The first-play regression records late program builds and asset IDs, captures the game camera, and applies the existing 50 ms desktop hitch ceiling to low as well as high.
 
 ## Arrival simulation
 

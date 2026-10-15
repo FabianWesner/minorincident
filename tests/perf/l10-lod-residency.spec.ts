@@ -23,15 +23,15 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
       (game.view as unknown as { params: URLSearchParams }).params.delete('test');
       const district = game.view.labProbes().districts!;
       const renderer = (game.view as unknown as { renderer: Renderer }).renderer;
-      const builds: { tick: number; path: string[]; material: string; transparent: boolean; side: number; castShadow: boolean; receiveShadow: boolean; attributes: string[] }[] = [];
+      const builds: { tick: number; path: string[]; asset?: string; material: string; transparent: boolean; side: number; castShadow: boolean; receiveShadow: boolean; attributes: string[] }[] = [];
       const onBuild = renderer.debug.onNodeBuilderCreated;
       renderer.debug.onNodeBuilderCreated = (builder, object) => {
         onBuild?.(builder, object);
         const draw = object as unknown as { object: Mesh; material: Mesh['material'] };
-        const path: string[] = [];
-        for (let o: Object3D | null = draw.object; o; o = o.parent) path.push(o.name || o.type);
+        const path: string[] = []; let asset: string | undefined;
+        for (let o: Object3D | null = draw.object; o; o = o.parent) { path.push(o.name || o.type); asset ??= o.userData.assetId; }
         const material = Array.isArray(draw.material) ? draw.material[0] : draw.material;
-        builds.push({ tick: a.tick(), path, material: material.name, transparent: material.transparent, side: material.side, castShadow: draw.object.castShadow, receiveShadow: draw.object.receiveShadow, attributes: Object.keys(draw.object.geometry?.attributes ?? {}) });
+        builds.push({ tick: a.tick(), path, asset, material: material.name, transparent: material.transparent, side: material.side, castShadow: draw.object.castShadow, receiveShadow: draw.object.receiveShadow, attributes: Object.keys(draw.object.geometry?.attributes ?? {}) });
       };
       const frames: number[] = [], sims: number[] = [], bad: unknown[] = [], hitches: unknown[] = [];
       const p95 = (v: number[]) => v.sort((x, y) => x - y)[Math.ceil(v.length * .95) - 1];
