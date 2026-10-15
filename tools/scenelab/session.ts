@@ -181,6 +181,7 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   // A gate on an empty set fails: the mug or phone must actually be drawn in a hand.
   if (e.heldPropHoldMin !== undefined) { const value = holds.length ? Math.min(...holds.map(h => h.heightMin)) : -1; checks.push({ name: 'heldPropHold', pass: value >= e.heldPropHoldMin, value, limit: e.heldPropHoldMin }); }
   if (e.heldPropArmStraightMax !== undefined) { const value = holds.length ? Math.max(...holds.map(h => h.straightMax)) : Infinity; checks.push({ name: 'heldPropArmStraight', pass: value <= e.heldPropArmStraightMax, value, limit: e.heldPropArmStraightMax }); }
+  if (e.seeThroughNeverCut) for (const prefix of e.seeThroughNeverCut) { const hit = (metrics.seeThrough?.cutPlacements ?? []).filter(id => id.startsWith(prefix)); checks.push({ name: `seeThroughNeverCut:${prefix}`, pass: hit.length === 0, value: hit.length, limit: 0 }); }
   add('seeThroughLowProps', metrics.seeThrough?.cutLowProps.length ?? 0, e.seeThroughLowPropsMax);
   if (e.seeThroughOpenFramesMin !== undefined) checks.push({ name: 'seeThroughOpenFrames', pass: (metrics.seeThrough?.frames ?? 0) >= e.seeThroughOpenFramesMin, value: metrics.seeThrough?.frames ?? 0, limit: e.seeThroughOpenFramesMin });
   if (e.heldPropSamplesMin !== undefined) checks.push({ name: 'heldPropSamples', pass: metrics.heldProps.samples >= e.heldPropSamplesMin, value: metrics.heldProps.samples, limit: e.heldPropSamplesMin });
