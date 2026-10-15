@@ -1,3 +1,4 @@
+import { l3EvacuationText } from '../sim/missions/LevelThreeCollapse';
 import { cureFinaleText } from '../sim/missions/LevelTenFinale';
 import { isMega } from '../data/megaPresentation';
 import { MegaRing } from './MegaRing';
@@ -251,7 +252,7 @@ export class Hud {
     setHidden(this.tracker, !objective && !done); if (done) text(this.trackerText, `✓ ${done.text}`);
     const remaining = mission?.def.id === 'L3' && mission.state.deadlineTicks !== null ? Math.ceil(mission.state.deadlineTicks / 60) : null;
     const deadline = remaining === null ? '' : `Gates close in ${Math.floor(remaining / 60)}:${String(remaining % 60).padStart(2, '0')} · `;
-    if (objective) text(this.trackerText, `${deadline}${cureFinaleText(mission) ?? objective.text}${anchor ? ` · ${Math.round(Math.hypot(anchor.x - px, anchor.z - pz))}\u00a0m` : ''}`);
+    if (objective) text(this.trackerText, `${deadline}${l3EvacuationText(mission) ?? cureFinaleText(mission) ?? objective.text}${anchor ? ` · ${Math.round(Math.hypot(anchor.x - px, anchor.z - pz))}\u00a0m` : ''}`);
     const finaleStep = mission?.def.id === 'L10' ? mission.interactStepInRange() : null;
     const finaleAction = !!finaleStep && ['install', 'hold', 'release'].includes(finaleStep.id);
     setHidden(this.finaleAction, !finaleAction);

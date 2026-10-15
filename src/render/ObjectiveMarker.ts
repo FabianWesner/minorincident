@@ -7,6 +7,6 @@ export class ObjectiveMarker extends Group {
   private readonly ring = new Mesh(new TorusGeometry(0.6,0.05,6,24),this.material);
   private readonly arrow = new Mesh(new ConeGeometry(0.25,0.5,4),this.material);
   constructor(private readonly world: SimWorld){super();this.ring.rotation.x=Math.PI/2;this.ring.position.y=0.08;this.arrow.rotation.z=Math.PI;this.arrow.position.y=2;this.add(this.ring,this.arrow);}
-  update():void{const mission=this.world.missions,anchor=markerAnchor(mission);this.visible=mission?.state.phase==='playing'&&!!anchor;if(anchor)this.position.set(anchor.x,anchor.y??0,anchor.z);}
+  update():void{const mission=this.world.missions,reached=!!mission?.state.l3?.crossedAt,anchor=reached?mission!.def.anchors['l3-zone']:markerAnchor(mission);this.material.color.set(reached?'#71e8a3':'#ffcf77');this.arrow.visible=!reached;this.visible=mission?.state.phase==='playing'&&!!anchor;if(anchor)this.position.set(anchor.x,anchor.y??0,anchor.z);}
   dispose():void{this.ring.geometry.dispose();this.arrow.geometry.dispose();this.material.dispose();this.clear();}
 }

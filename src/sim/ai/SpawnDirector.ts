@@ -105,7 +105,7 @@ export class SpawnDirector {
   safe(id: string, position: { x: number; z: number }, perched?: boolean): boolean {
     const target = this.ai.perchFor(id, position, perched) ?? position;
     const player = this.ai.world.entities.get(1)!;
-    return Math.hypot(target.x - player.transform.x, target.z - player.transform.z) >= 18 && this.offscreen(target) && this.ai.nav.clear(target.x, target.z, infectedDef(id).radius);
+    return Math.hypot(target.x - player.transform.x, target.z - player.transform.z) >= 18 && this.offscreen(target) && this.ai.infectedNav.clear(target.x, target.z, infectedDef(id).radius);
   }
   request(archetype: string, position: { x: number; z: number }, options: InfectedSpawn = {}): void {
     infectedDef(archetype);
@@ -130,7 +130,7 @@ export class SpawnDirector {
     let count = this.count;
     for (let i = 0; i < this.queue.length;) {
       const request = this.queue[i], weight = request.archetype === 'infected.crow' ? (request.options.birds ?? 20) * 0.25 : 1;
-      if (count + weight > this.cap - this.reserved - this.pendingTurns || !(request.turning ? this.ai.nav.clear(request.position.x, request.position.z, infectedDef(request.archetype).radius) : this.safe(request.archetype, request.position, request.options.perched)) || !this.ai.pool.length) { i++; continue; }
+      if (count + weight > this.cap - this.reserved - this.pendingTurns || !(request.turning ? this.ai.infectedNav.clear(request.position.x, request.position.z, infectedDef(request.archetype).radius) : this.safe(request.archetype, request.position, request.options.perched)) || !this.ai.pool.length) { i++; continue; }
       if (request.archetype === 'infected.alpha' && request.options.cureRegion && cureRegularAlphaCount(cureAlphaPopulation(this.ai.world), request.options.cureRegion) >= cureAlphaCap(request.options.cureRegion, this.tier)) { i++; continue; }
       const id = this.ai.spawn(request.archetype, request.position, request.options);
       if (request.migration) {
@@ -187,7 +187,7 @@ export class SpawnDirector {
     // Follow the moving spline target without a permanent acceleration lag.
     const vx = tx / length * feedforward + dx * 3, vz = tz / length * feedforward + dz * 3;
     const scale = Math.min(1, m.speed * 1.5 / (Math.hypot(vx, vz) || 1));
-    moveAgent(e, vx * scale, vz * scale, this.ai.nav, this.ai.world.tick); this.ai.world.spatial.set(e.id, e.transform.x, e.transform.z);
+    moveAgent(e, vx * scale, vz * scale, this.ai.infectedNav, this.ai.world.tick); this.ai.world.spatial.set(e.id, e.transform.x, e.transform.z);
     if (elapsed >= m.expectedSeconds) { e.infected!.state = 'wander'; e.infected!.until = this.ai.world.tick + 600; e.infected!.dx = Math.cos(angle); e.infected!.dz = Math.sin(angle); m.arrived++; this.migrationByEntity.delete(e.id); }
   }
 }
