@@ -1,0 +1,39 @@
+{
+  "success": true,
+  "passed": 5,
+  "failed": 0,
+  "suites": [
+    {
+      "name": "L4-movement.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "@E22 L4 plaza permits mouse and direct movement on open plaza tiles",
+          "status": "passed"
+        },
+        {
+          "title": "@E22 L4 war permits mouse and direct movement on open plaza tiles",
+          "status": "passed"
+        },
+        {
+          "title": "@E22 L4 respawn permits mouse and direct movement on open plaza tiles",
+          "status": "passed"
+        },
+        {
+          "title": "@E22 a real L4 armory-table corner cannot trap an outward click",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "L4-perimeter.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "@E22 PO16b visible perimeter holds courier at the reported south edge, infected vault it; one-metre plaza gate",
+          "status": "passed"
+        }
+      ]
+    }
+  ]
+}

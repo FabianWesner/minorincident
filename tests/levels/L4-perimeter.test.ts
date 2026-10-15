@@ -24,10 +24,10 @@ function plazaGrid(w: SimWorld, phase: string): void {
   // This gate is for invisible static blockers; visible, moving people are tested by crowd suites.
   w.player!.locomotion.crowd = [];
   let sampled = 0;
-  for (let x = -34; x <= -11; x++) for (let z = -16; z <= 21; z++) {
+  for (let x = Math.ceil(l4.perimeter.x0 + .6); x <= Math.floor(l4.perimeter.x1 - .6); x++) for (let z = Math.ceil(l4.perimeter.z0 + .6); z <= Math.floor(l4.perimeter.z1 - .6); z++) {
     const target = { x, z };
     if (!nav.clear(x, z, .37)) continue;
-    const from = Array.from({length:32},(_,i)=>({x:x+Math.cos(i*Math.PI/16)*.75,z:z+Math.sin(i*Math.PI/16)*.75})).find(p => nav.clear(p.x,p.z,.37) && nav.visible(p,target,.37));
+    const from = Array.from({length:32},(_,i)=>({x:x+Math.cos(i*Math.PI/16)*.75,z:z+Math.sin(i*Math.PI/16)*.75})).find(p => nav.clampPlayerTarget(p,.35).x === p.x && nav.clampPlayerTarget(p,.35).z === p.z && nav.clear(p.x,p.z,.37) && nav.visible(p,target,.37));
     if (!from) { failures.push(`${phase} no open approach ${x},${z}`); continue; }
     const route = { path: [] as number[], goal: -1, pathIndex: 0 }, point = { x: 0, z: 0 };
     const found = nav.steer(centre, target, route, .37, point, 100000, true);
@@ -44,6 +44,7 @@ function plazaGrid(w: SimWorld, phase: string): void {
     }
     sampled++;
   }
+  console.info(JSON.stringify({ gate: 'l4-plaza-1m', phase, sampled, failures: failures.length }));
   expect(sampled, phase).toBeGreaterThan(450);
   expect(failures.slice(0, 30), `${failures.length}/${sampled} ${phase} grid failures`).toEqual([]);
   place(w, pose); player.hidden = hidden; w.physics.playerCollider!.setEnabled(!hidden);
