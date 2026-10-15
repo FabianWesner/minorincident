@@ -57,6 +57,17 @@ for (const walk of walks) for (const renderer of ['webgl', 'webgpu'] as const) t
   // Real input, real time: D+S is world east (+x) for the isometric follow camera; the courier runs
   // along the store's north side toward the cellar door.
   await page.evaluate(() => window.__SS__!.resume()); await page.waitForTimeout(400);
+  // Stop at the authored sample endpoint in the browser. A slow screenshot RPC
+  // otherwise lets held keys carry her several metres past the roof band before
+  // the driver can release them, measuring unrelated flat road beyond the walk.
+  await page.evaluate(west => {
+    const stopAtEnd = () => {
+      const a = window.__SS__!, x = a.getState().player!.transform.x;
+      if (west ? x < -79 : x > 66) a.pause();
+      else requestAnimationFrame(stopAtEnd);
+    };
+    requestAnimationFrame(stopAtEnd);
+  }, west);
   for (const key of keys) await page.keyboard.down(key);
   for (let i = 0; i < 40; i++) {
     const buf = await page.locator('canvas').first().screenshot();

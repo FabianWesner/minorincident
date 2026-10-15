@@ -1,0 +1,28 @@
+{
+  "diagnostic": "CDP CPU profile at 4x CPU throttle; original timing limits retained",
+  "frameMaxMs": 202.60000000000582,
+  "frameIndex": 34,
+  "precedingFrameCpu": {
+    "tick": 11415,
+    "sim": 3.3999996185302734,
+    "simFrame": 6.799999237060547,
+    "ticks": 2,
+    "update": 140.9000005722046,
+    "render": 52.39999961853027
+  },
+  "sampleWindowMs": [
+    1350,
+    1750
+  ],
+  "createPageInclusiveSampleMs": 101.931,
+  "stack": [
+    "GameView.update",
+    "NpcView.update",
+    "CivilianCrowd.update",
+    "CivilianBatch.place",
+    "StaticCorpses.place",
+    "StaticCorpses.createPage"
+  ],
+  "cause": "L4 low freezes LOD2 corpses, while its initializer prepared only LOD1. The first actual frozen page performed pose baking and shader setup during combat.",
+  "repair": "Use CivilianBatch.corpseLod for prewarming, as the existing L7 path already did."
+}

@@ -61,6 +61,11 @@ export class BicycleView extends Group {
     document.querySelector('#game')?.append(this.prompt);
     this.registry = new AssetRegistry(() => {}, { materials });
   }
+  /** Ridden bike geometry, excluding the parked interaction glint. */
+  playerBounds(out: Box3): boolean {
+    if (!this.rig) return false;
+    out.setFromObject(this.rig.lean); return !out.isEmpty();
+  }
   async load(): Promise<void> { await this.build(); this.update(); }
   private async build(): Promise<void> {
     if (this.rig || this.loading) return; this.loading = true;

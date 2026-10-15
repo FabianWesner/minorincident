@@ -1,5 +1,5 @@
 import { writeCrowdAppearance, renderedCrowdLook, resolveCrowdAppearance } from './CrowdAppearance';
-import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial, Vector3 } from 'three/webgpu';
+import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial } from 'three/webgpu';
 import type { CrowdClip } from '../../assets/crowd';
 import type { EntitySnapshot } from '../../sim/world/types';
 import { CrowdFigureProbe } from './CrowdFigureProbe';
@@ -19,8 +19,6 @@ export class StaticCorpses extends Group {
   private readonly chunks = new Map<string, Chunk[]>();
   private readonly frozen = new Map<string, { geometry: BufferGeometry; material: MeshLambertNodeMaterial }>();
   private readonly frozenMaterials = new Map<string, MeshLambertNodeMaterial>();
-  private readonly partMatrix = new Matrix4();
-  private readonly point = new Vector3();
   has(id: number): boolean { return this.bodies.has(String(id)); }
   /** Scene Lab probe: where each frozen body is drawn (matrix translation = the figure's feet). */
   drawn(): { id: number; x: number; y: number; z: number }[] {
@@ -107,27 +105,41 @@ export class StaticCorpses extends Group {
       const visible = (i: number) => !hidden.has(parts.getX(i)) && !(hidesHair && (parts.getY(i) === -2 || parts.getW(i) >= 4));
       // Colour tags may differ at vertices of one triangle. Keep whole triangles
       // in triangle soup; indexed geometry is filtered through its index below.
-      const kept = source.index ? Array.from({ length: parts.count }, (_, i) => i).filter(visible)
-        : Array.from({ length: Math.floor(parts.count / 3) }, (_, triangle) => triangle * 3).flatMap(i => [i, i + 1, i + 2].every(visible) ? [i, i + 1, i + 2] : []);
+      const kept: number[] = [];
+      if (source.index) { for (let i = 0; i < parts.count; i++) if (visible(i)) kept.push(i); }
+      else for (let i = 0; i + 2 < parts.count; i += 3) if (visible(i) && visible(i + 1) && visible(i + 2)) kept.push(i, i + 1, i + 2);
+      const matrices = clip.matrices, frameOffset = Math.floor(frame) * clip.parts.length * 16;
       for (const name of ['position', 'normal', 'color', '_parts']) {
-        const original = source.getAttribute(name), data = new Float32Array(kept.length * original.itemSize);
-        for (const [output, i] of kept.entries()) {
+        const original = source.getAttribute(name);
+        // GPU backends may pad normals to vec4. Frozen geometry retains the
+        // semantic xyz layout warmed before combat, including accessory pages.
+        const size = name === 'position' || name === 'normal' ? 3 : original.itemSize;
+        const data = new Float32Array(kept.length * size);
+        for (let output = 0; output < kept.length; output++) {
+          const i = kept[output];
           if (name === 'position' || name === 'normal') {
-            this.partMatrix.fromArray(clip.matrices, (Math.floor(frame) * clip.parts.length + parts.getX(i)) * 16);
-            this.point.fromBufferAttribute(original, i);
-            if (name === 'position') this.point.applyMatrix4(this.partMatrix); else this.point.transformDirection(this.partMatrix);
-            this.point.toArray(data, output * 3);
-          } else for (let c = 0; c < original.itemSize; c++) data[output * original.itemSize + c] = original.getComponent(i, c);
+            const m = frameOffset + parts.getX(i) * 16, x = original.getX(i), y = original.getY(i), z = original.getZ(i);
+            let nx = matrices[m] * x + matrices[m + 4] * y + matrices[m + 8] * z;
+            let ny = matrices[m + 1] * x + matrices[m + 5] * y + matrices[m + 9] * z;
+            let nz = matrices[m + 2] * x + matrices[m + 6] * y + matrices[m + 10] * z;
+            let scale: number;
+            if (name === 'position') {
+              nx += matrices[m + 12]; ny += matrices[m + 13]; nz += matrices[m + 14];
+              scale = 1 / (matrices[m + 3] * x + matrices[m + 7] * y + matrices[m + 11] * z + matrices[m + 15]);
+            } else scale = 1 / (Math.sqrt(nx * nx + ny * ny + nz * nz) || 1);
+            data[output * 3] = nx * scale; data[output * 3 + 1] = ny * scale; data[output * 3 + 2] = nz * scale;
+          } else for (let c = 0; c < size; c++) data[output * size + c] = original.getComponent(i, c);
         }
-        geometry.setAttribute(name, new BufferAttribute(data, original.itemSize));
+        geometry.setAttribute(name, new BufferAttribute(data, size));
       }
       // The shared crowd geometry is indexed: keep triangles whose vertices all survive, renumbered.
       const index = source.getIndex();
       if (index) {
-        const renumber = new Map(kept.map((old, i) => [old, i])), triangles: number[] = [];
+        const renumber = new Int32Array(parts.count).fill(-1), triangles: number[] = [];
+        for (let i = 0; i < kept.length; i++) renumber[kept[i]] = i;
         for (let i = 0; i < index.count; i += 3) {
-          const a = renumber.get(index.getX(i)), b = renumber.get(index.getX(i + 1)), c = renumber.get(index.getX(i + 2));
-          if (a !== undefined && b !== undefined && c !== undefined) triangles.push(a, b, c);
+          const a = renumber[index.getX(i)], b = renumber[index.getX(i + 1)], c = renumber[index.getX(i + 2)];
+          if (a >= 0 && b >= 0 && c >= 0) triangles.push(a, b, c);
         }
         geometry.setIndex(kept.length > 65535 ? new Uint32BufferAttribute(triangles, 1) : new Uint16BufferAttribute(triangles, 1));
       }

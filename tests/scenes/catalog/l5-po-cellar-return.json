@@ -1,10 +1,43 @@
 {
-  "name": "l5-po-cellar-return", "note": "PO #18: returning from the cellar uses the shared entry door on Lakeshore Avenue, facing outward.",
-  "ground": "district", "time": "L5", "tier": 5, "size": 220,
-  "layout": { "level": "L5", "district": "D-FAIR" },
-  "l5Aftermath": { "found": [] },
-  "actors": [{ "id": "courier", "kind": "courier", "at": [66.4, 41.74], "yaw": -90, "state": "idle", "loadout": ["weapon.fire-axe", "weapon.army-mg"] }],
-  "camera": { "mode": "follow", "actor": "courier", "zoom": 1 },
-  "hud": true, "frames": 90, "sheet": 15,
-  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+  "name": "l5-po-cellar-return",
+  "note": "PO #18/#17b: shared relocated Harbor Street cellar exit, facing outward; Mia uses another Harbor apartment.",
+  "ground": "district",
+  "time": "L5",
+  "tier": 5,
+  "size": 220,
+  "layout": {
+    "level": "L5",
+    "district": "D-FAIR"
+  },
+  "l5Aftermath": {
+    "found": []
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -79.3,
+        -44.2801
+      ],
+      "yaw": -90,
+      "state": "idle",
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.army-mg"
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "hud": true,
+  "frames": 90,
+  "sheet": 15,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  }
 }

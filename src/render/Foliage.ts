@@ -85,8 +85,9 @@ export class Foliage extends Group {
     const wind = foliageWind(this.phase).mul(this.materials.look.nodes.windStrength).mul(weatherSurface.windStrength), gust = varying(wind);
     const leaf = texture(this.sdf, rotateUV(uv(), gust.mul(.12), vec2(.5))).r;
     const aspect = vec2(screenSize.x.div(screenSize.y), 1);
-    const hole = (center: typeof this.player, depth: typeof this.playerDepth) => positionView.z.greaterThan(depth).select(smoothstep(this.holeRadius.mul(.55), this.holeRadius, screenUV.sub(center).mul(aspect).length()), 1);
-    material.opacityNode = leaf.mul(min(hole(this.player, this.playerDepth), hole(this.target, this.targetDepth)));
+    const hole = (center: typeof this.player, depth: typeof this.playerDepth, radius = this.holeRadius, inner = .55) => positionView.z.greaterThan(depth).select(smoothstep(radius.mul(inner), radius, screenUV.sub(center).mul(aspect).length()), 1);
+    // The player and ridden vehicle use the same bounded clear region through leaves and solid geometry.
+    material.opacityNode = leaf.mul(min(hole(this.player, this.playerDepth, seeThrough.solidRadius, .85), hole(this.target, this.targetDepth)));
     material.maskShadowNode = leaf.greaterThan(.5);
     material.alphaTest = .5; material.alphaToCoverage = !this.low; material.side = DoubleSide; material.transparent = false;
     material.positionNode = positionLocal.add(vec3(wind.mul(.035), 0, wind.mul(.02)).mul(attribute('leafWeight', 'float')));
