@@ -34,7 +34,7 @@ export class NavGrid {
   private playerBounds: { x0: number; x1: number; z0: number; z1: number } | null = null;
   /** Story perimeters constrain player routes without closing the battle to infected or soldiers. */
   setPlayerBounds(bounds: NavGrid['playerBounds']): void {
-    this.playerBounds = bounds; this.reach.active = false;
+    this.playerBounds = bounds; this.reach.active = false; this.reachMemo = null;
   }
   private insidePlayerBounds(x: number, z: number, radius: number): boolean {
     const b = this.playerBounds;
@@ -145,6 +145,7 @@ export class NavGrid {
     return new NavGrid(this.ground, walls, this.clearance, this.center, this.mask).blocked;
   }
   rebake(prepared?: Uint8Array): void {
+    this.reachMemo = null;
     this.indexWalls();
     this.nearestBlockers.clear();
     for (const [id, wall] of this.blockers) this.nearestBlockers.set(id, { x: wall.x, z: wall.z, halfX: wall.halfX, halfZ: wall.halfZ });
@@ -162,6 +163,7 @@ export class NavGrid {
   }
   /** E11 doors and broken props invalidate only their affected cells and cached searches. */
   setBlocker(id: number, wall: Wall, blocked: boolean): void {
+    this.reachMemo = null;
     const previousBounds = this.nearestBlockers.get(id);
     if (previousBounds) this.indexBlocker(id, previousBounds);
     if (blocked) { this.blockers.set(id, wall); this.indexBlocker(id, wall, wall); } else this.blockers.delete(id);
@@ -402,8 +404,7 @@ export class NavGrid {
   private reachQueue: Int32Array | null = null;
   private reachSeen: Uint32Array | null = null;
   private reachStamp = 0;
-  private reachDistanceX: Float64Array | null = null;
-  private reachDistanceZ: Float64Array | null = null;
+  private reachMemo: { from: number; x: number; z: number; path: number[] } | null = null;
   private reachDepth: Int32Array | null = null;
   private readonly reach = { active: false, key: -1, from: -1, tx: 0, tz: 0, head: 0, tail: 0, best: -1, bestD: Infinity, far: -1, farD: Infinity, stamp: 0 };
   /** Player route (E19 QA1-02): a breadth-first flood from the player's cell (own workspace, never starved by
@@ -411,39 +412,32 @@ export class NavGrid {
    * district flood on desktop otherwise). The goal is the reachable cell closest to the click (the click when
    * reachable; early exit). Returns true with `result` filled when done, false while still flooding. */
   reachPath(from: number, target: { x: number; z: number }, result: number[], budget = Infinity): boolean {
+    // Bots can request the same unreachable destination every tick from the
+    // same start cell. Reuse that exact completed answer until topology changes.
+    // Budgeted player searches still expand on their original tick schedule.
+    const cacheable = budget === Infinity && !this.reach.active, memo = this.reachMemo;
+    if (cacheable && memo && memo.from === from && memo.x === target.x && memo.z === target.z) {
+      result.length = 0; for (const cell of memo.path) result.push(cell);
+      return true;
+    }
     const count = this.width * this.depth, r = this.reach;
     this.reachParent ??= new Int32Array(count); this.reachQueue ??= new Int32Array(count); this.reachSeen ??= new Uint32Array(count); this.reachDepth ??= new Int32Array(count);
     const parent = this.reachParent, queue = this.reachQueue, seen = this.reachSeen, depth = this.reachDepth;
-    const distanceX = this.reachDistanceX ??= new Float64Array(this.width);
-    const distanceZ = this.reachDistanceZ ??= new Float64Array(this.depth);
     const key = this.cell(target.x, target.z);
     if (!r.active || r.key !== key) {
       if (from < 0 || this.blocked[from]) { r.active = false; result.length = 0; return false; }
       Object.assign(r, { active: true, key, from, head: 0, tail: 0, best: from, bestD: Infinity, far: -1, farD: Infinity, stamp: ++this.reachStamp,
         tx: (target.x - this.center.x + this.ground.width / 2) / this.cellSize - .5, tz: (target.z - this.center.z + this.ground.depth / 2) / this.cellSize - .5 });
       seen[from] = r.stamp; parent[from] = -1; depth[from] = 0; queue[r.tail++] = from;
-      for (let x = 0; x < this.width; x++) distanceX[x] = (x - r.tx) ** 2;
-      for (let z = 0; z < this.depth; z++) distanceZ[z] = (z - r.tz) ** 2;
     }
-    // A flood can visit the whole streamed window. The squared target offsets
-    // are separable and constant during it; compute them once per row/column,
-    // retaining exactly the old floating-point arithmetic and BFS tie order.
-    const width = this.width, lastRow = this.depth - 1, bounds = this.playerBounds;
     let steps = 0, done = false;
     while (r.head < r.tail) {
       if (steps++ >= budget) return false;
-      const cell = queue[r.head++], x = cell % width, z = Math.floor(cell / width), d = distanceX[x] + distanceZ[z];
+      const cell = queue[r.head++], d = (cell % this.width - r.tx) ** 2 + (Math.floor(cell / this.width) - r.tz) ** 2;
       if (d < r.bestD) { r.bestD = d; r.best = cell; }
       if (d < .5 && depth[cell] >= 4) { done = true; break; } // the click itself is reachable: no need to flood the district
       if (depth[cell] >= 8 && d < r.farD) { r.farD = d; r.far = cell; }
-      for (let k = 0; k < 4; k++) {
-        // Reuse the current coordinates for left/right/up/down. When there is
-        // no story perimeter, avoid converting every neighbour to world space.
-        const n = k === 0 ? x > 0 ? cell - 1 : -1 : k === 1 ? x + 1 < width ? cell + 1 : -1 : k === 2 ? z > 0 ? cell - width : -1 : z < lastRow ? cell + width : -1;
-        if (n >= 0 && !this.blocked[n] && seen[n] !== r.stamp && (!bounds || this.insidePlayerBounds(this.x(n), this.z(n), this.clearance))) {
-          seen[n] = r.stamp; parent[n] = cell; depth[n] = depth[cell] + 1; queue[r.tail++] = n;
-        }
-      }
+      for (let k = 0; k < 4; k++) { const n = this.neighbor(cell, k); if (n >= 0 && !this.blocked[n] && seen[n] !== r.stamp && this.insidePlayerBounds(this.x(n), this.z(n), this.clearance)) { seen[n] = r.stamp; parent[n] = cell; depth[n] = depth[cell] + 1; queue[r.tail++] = n; } }
     }
     void done;
     // Repeated clicks behind the same fence must still make progress: when the closest reachable spot is where
@@ -456,6 +450,7 @@ export class NavGrid {
     result.reverse(); r.active = false; r.key = -1;
     // The route begins at the flood's start cell (the player may have moved a few cells while it ran).
     if (r.from !== from && r.from >= 0) result.unshift(r.from);
+    if (cacheable) this.reachMemo = { from, x: target.x, z: target.z, path: result.slice() };
     return true;
   }
   /** Cells the current (or last finished) A* search expanded in total, across resumed calls. */

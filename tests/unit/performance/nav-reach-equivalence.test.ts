@@ -66,3 +66,45 @@ test('@E18 resumed reach flood retains its original target and prepends its star
   expect(grid.reachPath(from + 1, { x: 4.2, z: 4.2 }, path)).toBe(true);
   expect(path).toEqual([from, ...expected.path]);
 });
+
+test('@E32 repeated unbudgeted floods reuse only exact answers and copy the returned path', () => {
+  const wall = { x: 1, z: 0, y: 1, halfX: .2, halfY: 1, halfZ: 6 };
+  const grid = new NavGrid({ width: 24, depth: 18 }, [wall]), from = grid.cell(-3, 0), target = { x: 1, z: 0 }, path: number[] = [];
+  const expected = reference(grid, from, target, null).path;
+  const state = grid as unknown as { reachStamp: number };
+  expect(grid.reachPath(from, target, path)).toBe(true);
+  const stamp = state.reachStamp;
+  for (let i = 0; i < 5; i++) {
+    path.length = 0; path.push(-999);
+    expect(grid.reachPath(from, target, path)).toBe(true); expect(path).toEqual(expected);
+    expect(state.reachStamp).toBe(stamp);
+  }
+  // Fractional targets within the same cell are different completed requests.
+  const shifted = { x: 1.01, z: .01 };
+  expect(grid.reachPath(from, shifted, path)).toBe(true);
+  expect(path).toEqual(reference(grid, from, shifted, null).path); expect(state.reachStamp).toBe(stamp + 1);
+  // An existing memo must not make a finite-budget request finish early.
+  expect(grid.reachPath(from, shifted, path, 1)).toBe(false);
+  expect(grid.reachPath(from, shifted, path)).toBe(true);
+  expect(path).toEqual(reference(grid, from, shifted, null).path);
+});
+
+test('@E32 exact flood memo invalidates for blocker edits, perimeter changes, rebakes and recentering', () => {
+  const wall = { x: 0, z: 0, y: 1, halfX: .2, halfY: 1, halfZ: 3 };
+  const walls: typeof wall[] = [], grid = new NavGrid({ width: 24, depth: 18 }, walls);
+  const from = grid.cell(-5, 0), target = { x: 5, z: 0 }, path: number[] = [];
+  let bounds: Bounds = null;
+  const check = () => {
+    const expected = reference(grid, from, target, bounds).path;
+    expect(grid.reachPath(from, target, path)).toBe(true); expect(path).toEqual(expected);
+    path.length = 0; expect(grid.reachPath(from, target, path)).toBe(true); expect(path).toEqual(expected);
+  };
+  check();
+  grid.setBlocker(7, wall, true); check();
+  wall.z = 5; grid.setBlocker(7, wall, true); check();
+  grid.setBlocker(7, wall, false); check();
+  bounds = { x0: -10, x1: 1, z0: -7, z1: 7 }; grid.setPlayerBounds(bounds); check();
+  bounds = null; grid.setPlayerBounds(null); check();
+  walls.push({ ...wall, z: 0 }); grid.rebake(); check();
+  grid.recenter({ x: 3, z: 2 }); check();
+});
