@@ -6,6 +6,24 @@ import { loadL3 } from '../../../tools/sim-runner/l3Bots';
 import { npcWorld, teleport } from './helpers';
 
 describe('armed ally close hearing and self-defence @E21', () => {
+  test.each([false, true])('an officer finishes moving to cover after losing its target (follower=%s)', async follower => {
+    const w = await npcWorld();
+    try {
+      teleport(w, 4, 0);
+      const id = w.npcs!.civilians.spawn('officer', { x: 0, z: 0 }), e = w.entities.get(id)!;
+      const target = w.infected!.spawn('infected.runner', { x: 10, z: 0 });
+      w.entities.get(target)!.health.current = 0;
+      const a = e.civilian!.ally = { ...allyState('officer', { x: 0, z: 0 }, true), engaged: true, targetId: target,
+        gun: { ...l3.officers.gun }, step: { x: 0, z: 1.4, until: w.tick + 60 },
+        ...(follower ? { follow: { targetId: 1, slot: 0, minM: 3, maxM: 6, engageM: 18, leashM: 8, moveMs: 6.2 } } : {}),
+      };
+      for (let i = 0; i < 40; i++) { w.tick++; updateAlly(w, e, () => true); }
+      expect(a.targetId).toBe(0);
+      expect(e.transform.z).toBeGreaterThan(.75);
+      expect(w.events.events().filter(event => event.type === 'ally.attack' && event.sourceId === id)).toEqual([]);
+    } finally { w.dispose(); }
+  });
+
   test.each(['officer', 'soldier', 'firefighter', 'civilian'] as const)('%s hears an infected behind at 1.8 m and attacks within 0.5 s; a wall blocks hearing', async role => {
     const w = await npcWorld();
     try {

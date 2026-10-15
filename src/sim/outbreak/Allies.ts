@@ -199,6 +199,13 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
       return true;
     }
   }
+  // Losing a target must not cancel a move to cover halfway through the step.
+  // Finish inside the follower band too; catching up and retreat orders keep priority.
+  const inFormation = !follower || !breakout && dist(e.transform, leader!.transform) >= a.follow!.minM && dist(e.transform, leader!.transform) <= a.follow!.maxM;
+  if (shooter && a.step && !a.run && inFormation && c.state !== 'grabbed') {
+    if (tick >= a.step.until || dist(e.transform, a.step) <= .15) a.step = undefined;
+    else { npcs.move(e, a.step, tacticFor(a).stepMs, c, .1); return true; }
+  }
   if (a.run) {
     if (Math.hypot(a.run.x - e.transform.x, a.run.z - e.transform.z) <= .35) { a.run = null; return true; }
     npcs.move(e, a.run, a.runSpeed, c, .25, runBudget); return true;
