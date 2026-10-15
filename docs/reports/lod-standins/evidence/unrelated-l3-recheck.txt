@@ -1,0 +1,35 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/lod-standins -> 91.98.11.241:/srv/mi/ws/lod-standins-a20dbf
+[remote] cache-gc deleted:none
+[remote] sync 18s, 11200 files; job /srv/mi/jobs/lod-standins-a20dbf-22472-1792027051; queueing for a slot
+[runner] slot 0 acquired; load 1.02 1.95 2.23
+
+ RUN  v5.0.3 /srv/mi/jobs/lod-standins-a20dbf-22472-1792027051
+
+ ❯  functional  tests/levels/ally-combat-feel.test.ts (2 tests | 1 failed | 1 skipped) 5329ms
+   ❯ ally combat feel (2)
+     ↓ L4 war: soldiers and armed civilians keep moving, never fire off screen, and the queue breaks up
+     × L3 station attack: the police move and fight in view of the idle courier 5327ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/levels/ally-combat-feel.test.ts > ally combat feel > L3 station attack: the police move and fight in view of the idle courier
+AssertionError: expected 0.20144927536231885 to be less than 0.2
+ ❯ feel tests/levels/ally-combat-feel.test.ts:93:20
+     91|   expect(m.fighters).toBeGreaterThanOrEqual(4);
+     92|   expect(m.moved5).toBeGreaterThanOrEqual(.7);
+     93|   expect(m.still2).toBeLessThan(.2);
+       |                    ^
+     94|   expect(m.offscreenShots).toBe(0);
+     95| }
+ ❯ tests/levels/ally-combat-feel.test.ts:119:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 1 skipped (2)
+   Start at  01:17:50
+   Duration  8.14s (tests 67%, transform 28%, import 6%)
+
+[remote] pulled test-results/epics/E22/ally-feel-l3.json
+[remote] done exit=1 (runner 91.98.11.241, sync 18s, remote total 9s)
