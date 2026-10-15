@@ -159,3 +159,25 @@ test('PO #18 @E23 L4 records the doorway actually entered and carries it into L5
   next.mission.completeObjective('emerge');
   expect(distance(next.world.entities.get(1)!.transform, carried.shelterEntry!)).toBeLessThanOrEqual(1.5);
 }, 300_000);
+
+test('PO #20b @E23 @E23-AC07 a visible player at 15 m is acquired beyond the former Alpha territory', async () => {
+  const loaded = await loadL5(1); world = loaded.world;
+  const { mission } = loaded, w = world;
+  runL5(w, mission, 'complete', { stopWhen: m => m.state.checkpoint === 'survivor-1' });
+  mission.restore('survivor-1');
+  const alpha = w.infected!.active.find(e => e.archetype === 'infected.alpha')!;
+  for (const e of [...w.infected!.active]) if (e.id !== alpha.id) w.infected!.release(e);
+  const player = w.entities.get(1)!;
+  Object.assign(player.transform, { x: 10, z: -39 }); Object.assign(w.previousPlayer!, player.transform);
+  w.physics.playerBody!.setTranslation(player.transform, true); w.physics.playerBody!.setNextKinematicTranslation(player.transform); w.spatial.set(1, 10, -39);
+  const follower = w.entities.get(mission.state.l5!.survivors.find(r => r.status === 'following')!.id)!;
+  Object.assign(follower.transform, { x: 13, z: -39 }); w.spatial.set(follower.id, 13, -39);
+  Object.assign(alpha.transform, { x: -5, z: -39, yaw: 0 }); w.spatial.set(alpha.id, -5, -39);
+  if (alpha.infected!.territory) Object.assign(alpha.infected!.territory, { x: -5, z: -39 });
+  const sight = { range: w.infected!.hearing.rangeM, weather: w.weather?.modifiers.infectedSight, light: w.lightPower?.sightMultiplier(player.transform), cone: w.infected!.hearing.inCone(alpha, player.transform), los: w.infected!.hearing.lineOfSight(alpha.transform, player.transform), health: alpha.health.current, state: alpha.infected!.state, yaw: alpha.transform.yaw };
+  let acquired = false;
+  w.events.on('ai.alerted', e => { if (e.type === 'ai.alerted' && e.targetId === alpha.id && e.sourceId === 1) acquired = true; });
+  for (let tick = 0; tick < 180; tick++) w.update();
+  expect(acquired, JSON.stringify(sight)).toBe(true);
+  expect(distance(alpha.transform, { x: -5, z: -39 })).toBeGreaterThan(1);
+}, 300_000);
