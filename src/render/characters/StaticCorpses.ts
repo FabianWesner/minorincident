@@ -35,17 +35,19 @@ export class StaticCorpses extends Group {
     for (const [key, body] of this.bodies) {
       const current = get(body.id);
       if (current && current !== body) { this.reset(); gone = null; break; }
-      if (!current || current.hidden) (gone ??= []).push(key);
-    }
-    if (gone) for (const key of gone) this.drop(key);
-    for (const [id, body] of this.bodies) if (body.corpseThrown) {
-      const slot = this.slots.get(id)!;
-      slot.page.mesh.getMatrixAt(slot.index, this.moved);
-      if (this.moved.elements[12] !== body.transform.x || this.moved.elements[13] !== body.transform.y - .7 || this.moved.elements[14] !== body.transform.z) {
-        this.moved.setPosition(body.transform.x, body.transform.y - .7, body.transform.z);
-        slot.page.mesh.setMatrixAt(slot.index, this.moved); slot.page.mesh.instanceMatrix.needsUpdate = true; slot.page.mesh.computeBoundingSphere();
+      if (!current || current.hidden) { (gone ??= []).push(key); continue; }
+      // Only thrown bodies change their instance matrix. Handle them during the
+      // lifecycle pass instead of walking every permanent body a second time.
+      if (body.corpseThrown) {
+        const slot = this.slots.get(key)!;
+        slot.page.mesh.getMatrixAt(slot.index, this.moved);
+        if (this.moved.elements[12] !== body.transform.x || this.moved.elements[13] !== body.transform.y - .7 || this.moved.elements[14] !== body.transform.z) {
+          this.moved.setPosition(body.transform.x, body.transform.y - .7, body.transform.z);
+          slot.page.mesh.setMatrixAt(slot.index, this.moved); slot.page.mesh.instanceMatrix.needsUpdate = true; slot.page.mesh.computeBoundingSphere();
+        }
       }
     }
+    if (gone) for (const key of gone) this.drop(key);
     for (const pages of this.chunks.values()) for (const page of pages) for (const figure of page.probe.figures) figure.drawn = false;
   }
   place(e: EntitySnapshot, key: string, source: BufferGeometry, material: MeshLambertNodeMaterial, clip: CrowdClip, frame: number, instance: Matrix4, tint: Color, overlay: number[], instanceKey = String(e.id), hiddenParts: readonly string[] = [], look?: ReturnType<typeof resolveCrowdAppearance>): void {
