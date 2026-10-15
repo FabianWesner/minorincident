@@ -95,7 +95,7 @@ export function installCharacterSeparation(world: SimWorld): void {
       query.x = e.transform.x; query.z = e.transform.z; query.r = r + maximumRadius + Math.max(.45, .22 + maximumRadius - .35); // covers the largest gap below
       // Consume the same unsorted bucket order directly; nav.move does not mutate the spatial index.
       world.spatial.query(query, neighbors, false, visit, contacts);
-      if (e.transform.x !== query.x || e.transform.z !== query.z) world.spatial.set(e.id, e.transform.x, e.transform.z);
+      if (e.transform.x !== query.x || e.transform.z !== query.z) { world.spatial.set(e.id, e.transform.x, e.transform.z); world.solids.wrote(e, 'cleanup.separation'); }
     }
     // Separation changes only X/Z. Ground once at the final position, rather
     // than sampling every pass and leaving the last push's support stale.

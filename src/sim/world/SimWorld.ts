@@ -399,6 +399,7 @@ export class SimWorld implements Lifecycle {
   }
   /** E05 impulse is the authored displacement in metres, swept against full cover. */
   knockback(entity: EntitySnapshot, direction: { x: number; z: number }, impulse: number): void {
+    this.solids.wrote(entity, 'combat.knockback');
     const distance = this.combat!.query.clearDistance(entity.transform, direction, impulse + (entity.combat?.radius ?? 0.4));
     const move = Math.max(0, Math.min(impulse, distance - (entity.combat?.radius ?? 0.4)));
     const nav = this.infected?.nav;

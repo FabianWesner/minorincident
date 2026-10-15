@@ -18,7 +18,7 @@ function actor(e: EntitySnapshot): boolean {
   return !!(e.survivor || e.infected || e.civilian || e.companion || e.escort) && e.health.current > 0 && !e.corpse && !e.hidden && !e.infected?.hidden && !e.pendingAdmission;
 }
 /** Passengers and clingers have an explicit owner. Cosmetics (dead bodies, debris) have no actor mask. */
-function attached(a: EntitySnapshot, id: number): boolean { return a.passengerOf === id || a.attachedTo === id || (a.id === 1 && a.hidden); }
+function attached(a: EntitySnapshot, id: number): boolean { return a.passengerOf === id || a.attachedTo === id || (a.id === 1 && !!a.hidden); }
 function pairExempt(a: EntitySnapshot | undefined, b: EntitySnapshot): boolean {
   return !!a && a.passengerOf !== undefined && a.passengerOf === b.passengerOf;
 }
@@ -42,6 +42,7 @@ export class SolidRegistry {
   private readonly contact: Contact = { depth: 0, nx: 0, nz: 0, inside: false };
   private maxHull = 0;
   private maxActor = 2;
+  private readonly changedActors = new Set<number>();
   private navRevision = -1;
   private nav: import('../ai/NavGrid').NavGrid | undefined;
   constructor(private readonly world: SimWorld) {}
@@ -63,12 +64,14 @@ export class SolidRegistry {
     this.hullIndex.set(e.id, e.transform.x, e.transform.z);
   }
   private syncHulls(): boolean {
-    let changed = false;
+    let changed = false; this.changedActors.clear();
     for (const e of this.world.entities.iterate()) if (e.vehicle || e.traffic || e.convoy || e.kind === 'setpiece') this.register(e);
     for (const [id, h] of this.hulls) {
       const e = this.world.entities.get(id), p = h.entity.transform;
       if (e !== h.entity || e.hidden) { this.hulls.delete(id); this.hullIndex.delete(id); changed = true; continue; }
-      if (h.pose.x !== p.x || h.pose.z !== p.z || h.pose.y !== p.y || h.pose.yaw !== p.yaw) { this.hullIndex.set(id, p.x, p.z); Object.assign(h.pose, p); changed = true; }
+      if (h.pose.x !== p.x || h.pose.z !== p.z || h.pose.y !== p.y || h.pose.yaw !== p.yaw) { this.hullIndex.set(id, p.x, p.z); Object.assign(h.pose, p); changed = true;
+        this.world.spatial.query({ x: p.x, z: p.z, r: this.maxHull + this.maxActor }, this.nearby);
+        for (const actorId of this.nearby) this.changedActors.add(actorId); }
     }
     return changed;
   }
@@ -89,16 +92,16 @@ export class SolidRegistry {
     }
   }
   /** Radius and height aware occupancy, shared by spawn, checkpoint, relocation and exits. */
-  clear(at: Point, radius: number, ignoreId?: number, bodies = true): boolean {
+  clear(at: Point, radius: number, ignoreId?: number, bodies = true, limit = skin): boolean {
     if (![at.x, at.y, at.z, radius].every(Number.isFinite) || radius <= 0) return false;
     let clear = true; const e = ignoreId === undefined ? undefined : this.world.entities.get(ignoreId);
-    this.solids(at, radius, e, b => { if (boxContact(b, at.x, at.z, radius, this.contact).depth > skin) clear = false; });
+    this.solids(at, radius, e, b => { const c = boxContact(b, at.x, at.z, radius, this.contact); if (c.inside || c.depth > limit) clear = false; });
     if (!clear || !bodies) return clear;
     this.world.spatial.query({ x: at.x, z: at.z, r: radius + this.maxActor }, this.nearby);
     for (const id of this.nearby) {
       const other = this.world.entities.get(id);
       if (id === ignoreId || !other || !actor(other) || pairExempt(e, other) || !layers(at, other.transform)) continue;
-      if (Math.hypot(at.x - other.transform.x, at.z - other.transform.z) < radius + actorRadius(other) - skin) return false;
+      if (Math.hypot(at.x - other.transform.x, at.z - other.transform.z) < radius + actorRadius(other) - limit) return false;
     }
     return true;
   }
@@ -133,6 +136,7 @@ export class SolidRegistry {
     Object.assign(e.transform, to); this.writers.set(e, writer); this.publish(e); this.committed.set(e, { ...e.transform }); return true;
   }
   /** A successful explicit relocation starts a new motion transaction. */
+  wrote(e: EntitySnapshot, writer: string): void { this.writers.set(e, writer); }
   remember(e: EntitySnapshot, writer: string): void { this.committed.set(e, { ...e.transform }); this.writers.set(e, writer); }
   restore(): void {
     this.committed = new WeakMap();
@@ -145,12 +149,13 @@ export class SolidRegistry {
   }
   /** Last phase, after cleanup + .25. Projection is bounded; unresolved motion rolls back to a safe prior pose. */
   commit(): void {
-    const hullChanged = this.syncHulls(), nav = this.world.infected?.nav;
-    const full = this.world.tick % 60 === 0 || hullChanged || nav !== this.nav || nav?.revision !== this.navRevision;
+    this.syncHulls(); const nav = this.world.infected?.nav;
+    const full = this.world.tick % 60 === 0 || nav !== this.nav || nav?.revision !== this.navRevision;
     this.nav = nav; this.navRevision = nav?.revision ?? -1;
     this.bodies.length = this.moved.length = 0;
     for (const e of this.world.entities.iterate()) {
       if (e.pendingAdmission) {
+        if (this.world.tick % 30 !== e.id % 30) { e.hidden = true; this.world.spatial.delete(e.id); continue; }
         const pending = e.pendingAdmission;
         const to = this.find(pending, actorRadius(e), e.id);
         if (to) { Object.assign(e.transform, to); e.hidden = pending.hidden; delete e.pendingAdmission; this.admitted++; this.publish(e); }
@@ -159,12 +164,12 @@ export class SolidRegistry {
       if (!actor(e)) continue;
       this.maxActor = Math.max(this.maxActor, actorRadius(e)); this.bodies.push(e);
       const old = this.committed.get(e), p = e.transform;
-      if (full || !old || old.x !== p.x || old.z !== p.z || old.y !== p.y) this.moved.push(e);
+      if (full || this.changedActors.has(e.id) || !old || old.x !== p.x || old.z !== p.z || old.y !== p.y) this.moved.push(e);
     }
     for (const e of this.moved) {
       const radius = actorRadius(e), p = e.transform, old = this.committed.get(e);
       // Actor motion is swept using full physical radius. Scripted relocations explicitly use admission.
-      if (nav && old && layers(p, old) && this.clear(old, radius, e.id, false) && !nav?.visible(old, p, radius)) {
+      if (nav && old && Math.hypot(p.x - old.x, p.z - old.z) > .2 && layers(p, old) && this.clear(old, radius, e.id, false) && !nav?.visible(old, p, radius)) {
         const dx = p.x - old.x, dz = p.z - old.z;
         Object.assign(p, old); nav?.move(p, dx, dz, radius, true);
       }
@@ -177,7 +182,26 @@ export class SolidRegistry {
         if (!moved) break;
       }
       this.publish(e);
-      if (!this.clear(p, radius, e.id)) {
+      if (!this.clear(p, radius, e.id, true, tolerance)) {
+        // Exact circle projection handles residual crowd contacts without running a placement search for every chaser.
+        for (let pass = 0; pass < 8; pass++) {
+          let moved = false;
+          this.world.spatial.query({ x: p.x, z: p.z, r: radius + this.maxActor }, this.nearby);
+          for (const id of this.nearby) {
+            const other = this.world.entities.get(id);
+            if (id === e.id || !other || !actor(other) || pairExempt(e, other) || !layers(p, other.transform)) continue;
+            const dx = p.x - other.transform.x, dz = p.z - other.transform.z, d = Math.hypot(dx, dz), depth = radius + actorRadius(other) - d;
+            if (depth <= tolerance) continue;
+            const nx = d ? dx / d : Math.cos(e.id * 2.399963), nz = d ? dz / d : Math.sin(e.id * 2.399963);
+            const to = { x: p.x + nx * (depth + skin), z: p.z + nz * (depth + skin), y: p.y };
+            if (!this.clear(to, radius, e.id, false)) continue;
+            p.x = to.x; p.z = to.z; moved = true;
+          }
+          if (!moved) break;
+        }
+        this.publish(e);
+      }
+      if (!this.clear(p, radius, e.id, true, tolerance)) {
         // Only bodies still in contact pay for bounded placement; ordinary motion keeps its exact result.
         const to = this.find(p, radius, e.id, 2, false) ?? (old && this.clear(old, radius, e.id) ? old : null);
         if (to) { Object.assign(p, to); this.publish(e); }

@@ -192,6 +192,7 @@ export class InfectedSystem {
     this.crowd.length = 0;
     for (const e of this.active) {
       if (e.pendingAdmission) continue;
+      this.world.solids.wrote(e, 'infected.update');
       if (this.world.npcs?.civilians.holds(e.id)) { e.combat!.attacking = false; continue; }
       const b = e.infected!; if (e.health.current <= 0) { this.dead(e); continue; }
       if (e.infectionRise && this.world.tick < e.infectionRise.until) { e.combat!.attacking = false; continue; }
