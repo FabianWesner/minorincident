@@ -480,34 +480,36 @@ export class DistrictView extends Group {
     });
   }
   setFoliageReveal(enabled: boolean): void { this.foliage.reveal = enabled; }
-  updateFoliage(view: View, player?: { x: number; y: number; z: number }, target?: { x: number; y: number; z: number }): void {
+  updateFoliage(view: View, player?: { x: number; y: number; z: number }, target?: { x: number; y: number; z: number }, subject?: Box3): void {
     this.foliage.update(view, player, target); if (player) this.updateRoofs(player);
-    // Solid occluders open the shared hole only while one of them is on the camera-to-courier ray.
-    // PO 10-12 (L4 convoy ride): a ~1.7 m hole left the vehicle and group hidden behind a tall apartment block. The solid-occluder hole now
-    // covers the group's real extent in screen units (about 2.8 m on foot, a vehicle length while driving) and the depth gate reaches the far end.
     seeThrough.floor.value = player ? Math.max(0, player.y - .7) : 0;
-    if (player) {
-      const distance = view.camera.position.distanceTo(this.holeTarget.set(player.x, player.y, player.z)), screenHeight = 2 * distance * Math.tan(view.camera.fov * Math.PI / 360);
-      const extent = (view.driving ? 9 : 4.5) * (view.camera.aspect < 1 ? 1.25 : 1);
-      seeThrough.solidRadius.value = Math.min(.7, Math.max(seeThrough.radius.value, extent / screenHeight));
-      // Test reference: every solid occluder nearer than the player is cut, i.e. the unobstructed picture the 80 % visibility check compares against.
-      if (this.seeThroughReference) { this.updateCutPlacements(true); seeThrough.solidRadius.value = 3; seeThrough.strength.value = 1; return; }
-      if (view.driving && this.foliage.reveal) seeThrough.depth.value -= 3;
-    }
-    if (this.seeThroughOff) { this.cutPlacements.clear(); this.updateCutPlacements(); seeThrough.strength.value = 0; seeThrough.cover.value = 0; return; }
+    seeThrough.cover.value = 0;
+    // The shader tests actual foreground fragments, including gates and car roofs that a chest ray misses.
+    // Open immediately at spawn, teleport and checkpoint restore; never widen to the screen edges.
+    seeThrough.strength.value = player && this.foliage.reveal && !this.seeThroughOff ? 1 : 0;
+    this.occluderId = '';
     this.cutPlacements.clear();
-    const hugged = Boolean(player && this.foliage.reveal && this.huggedOccluder(view));
-    this.occluderId = hugged ? 'hugged' : '';
-    const occluded = Boolean(player && this.foliage.reveal && this.occluded(view, player));
+    if (!player || !this.foliage.reveal || this.seeThroughOff) { this.updateCutPlacements(); return; }
+    const feet = player.y - .7;
+    const box = subject ?? this.subjectBox.set(this.holeTarget.set(player.x - .55, feet, player.z - .55), this.holeCorner.set(player.x + .55, feet + 1.9, player.z + .55));
+    seeThrough.floor.value = box.min.y;
+    let left = Infinity, right = -Infinity, top = Infinity, bottom = -Infinity, depth = Infinity;
+    for (const x of [box.min.x, box.max.x]) for (const y of [box.min.y, box.max.y]) for (const z of [box.min.z, box.max.z]) {
+      this.holeCorner.set(x, y, z).applyMatrix4(view.camera.matrixWorldInverse); depth = Math.min(depth, this.holeCorner.z);
+      this.holeCorner.set(x, y, z).project(view.camera);
+      const u = this.holeCorner.x * .5 + .5, v = .5 - this.holeCorner.y * .5;
+      left = Math.min(left, u); right = Math.max(right, u); top = Math.min(top, v); bottom = Math.max(bottom, v);
+    }
+    seeThrough.center.value.set((left + right) / 2, (top + bottom) / 2);
+    // The fully clear inner disc encloses the entire projected subject; a narrow dither rim softens its edge.
+    seeThrough.solidRadius.value = Math.hypot((right - left) * view.camera.aspect, bottom - top) / 2 / .85;
+    seeThrough.depth.value = depth - .05;
+    if (this.seeThroughReference) { this.updateCutPlacements(true); seeThrough.solidRadius.value = 3; seeThrough.strength.value = 1; return; }
+    // Only the placements that actually sit between the lens and some part of the subject (courier or whole player vehicle) are eligible for the cut.
+    this.occluded(view, box);
     this.updateCutPlacements();
-    const goal = hugged || occluded ? 1 : 0;
-    const blend = 1 - Math.exp(-(hugged ? 40 : 10) * this.frameSeconds);
-    seeThrough.strength.value += (goal - seeThrough.strength.value) * blend;
-    if (Math.abs(goal - seeThrough.strength.value) < .002) seeThrough.strength.value = goal;
-    // Opens fast (a roof filling the frame must not linger while the cut eases open, esp. on slow frames), closes at the ordinary rate.
-    seeThrough.cover.value += (+hugged - seeThrough.cover.value) * blend;
-    if (Math.abs(+hugged - seeThrough.cover.value) < .002) seeThrough.cover.value = +hugged;
   }
+  // Legacy footprint probes remain available for diagnostics; they no longer control reveal.
   /** How far in front of the lens a solid occluder counts as filling the view. Measured at L4 Kessler's Hardware
    * (PO 2026-10-12 blank viewport): the 35° follow camera saw its pitched roof 2.5-6 m away in every screen quarter. */
   static readonly hugDistance = 8;
@@ -572,12 +574,19 @@ export class DistrictView extends Group {
   /** Scene Lab: solid occluders never open (the uncut picture the cut-pixel gate diffs against). */
   seeThroughOff = false;
   private frameSeconds = 0;
-  /** Scene Lab: the placement that currently opens the hole (`hugged` when one fills the lens). */
+  /** Legacy footprint-probe diagnostic; rendering now tests foreground fragments directly. */
   occluderId = '';
   private readonly holeTarget = new Vector3();
-  /** Segment (camera to chest) against conservative upright boxes of the tall instanced placements nearby. */
-  private occluded(view: View, player: { x: number; y: number; z: number }): boolean {
-    const o = view.camera.position, dx = player.x - o.x, dy = player.y + .2 - o.y, dz = player.z - o.z;
+  private readonly holeCorner = new Vector3();
+  private readonly subjectBox = new Box3();
+  private readonly subjectPoints = Array.from({ length: 9 }, () => new Vector3());
+  /** Segments from the camera to the centre and corners of the subject (courier or whole player vehicle) against conservative upright boxes of the tall instanced placements nearby.
+   * Every placement hit by any segment is marked for the per-placement cut; the rest stay opaque. */
+  private occluded(view: View, subject: Box3): boolean {
+    const o = view.camera.position, points = this.subjectPoints, player = subject.getCenter(this.holeTarget);
+    let n = 0;
+    points[n++].copy(player);
+    for (const x of [subject.min.x, subject.max.x]) for (const y of [subject.min.y, subject.max.y]) for (const z of [subject.min.z, subject.max.z]) points[n++].set(x, y, z);
     let blocked = false;
     for (const entry of this.lodBatches) {
       if (entry.height < occluderMinHeight || worldAssets[entry.id].foliage) continue;
@@ -590,19 +599,22 @@ export class DistrictView extends Group {
         if (Math.abs(x - player.x) > 24 || Math.abs(z - player.z) > 24) continue;
         // Slab test in the placement's local frame (oriented footprint, real height).
         const ox = o.x - x, oz = o.z - z, sx = ref.scale.x, sz = ref.scale.z;
-        const lox = (ox * c - oz * sn) / sx, loz = (ox * sn + oz * c) / sz, ldx = (dx * c - dz * sn) / sx, ldz = (dx * sn + dz * c) / sz;
-        let enter = 0, exit = 1;
-        for (let axis = 0; axis < 3; axis++) {
-          const origin = axis === 0 ? lox : axis === 1 ? o.y : loz;
-          const delta = axis === 0 ? ldx : axis === 1 ? dy : ldz;
-          const min = axis === 0 ? -entry.foot.hx : axis === 1 ? ref.position.y : -entry.foot.hz;
-          const max = axis === 0 ? entry.foot.hx : axis === 1 ? ref.position.y + entry.height * ref.scale.y : entry.foot.hz;
-          if (Math.abs(delta) < 1e-6) { if (origin < min || origin > max) { exit = -1; break; } continue; }
-          const a = (min - origin) / delta, b = (max - origin) / delta;
-          enter = Math.max(enter, Math.min(a, b)); exit = Math.min(exit, Math.max(a, b));
-          if (enter > exit) break;
+        const lox = (ox * c - oz * sn) / sx, loz = (ox * sn + oz * c) / sz;
+        for (const point of points) {
+          const dx = point.x - o.x, dy = point.y - o.y, dz = point.z - o.z, ldx = (dx * c - dz * sn) / sx, ldz = (dx * sn + dz * c) / sz;
+          let enter = 0, exit = 1;
+          for (let axis = 0; axis < 3; axis++) {
+            const origin = axis === 0 ? lox : axis === 1 ? o.y : loz;
+            const delta = axis === 0 ? ldx : axis === 1 ? dy : ldz;
+            const min = axis === 0 ? -entry.foot.hx : axis === 1 ? ref.position.y : -entry.foot.hz;
+            const max = axis === 0 ? entry.foot.hx : axis === 1 ? ref.position.y + entry.height * ref.scale.y : entry.foot.hz;
+            if (Math.abs(delta) < 1e-6) { if (origin < min || origin > max) { exit = -1; break; } continue; }
+            const a = (min - origin) / delta, b = (max - origin) / delta;
+            enter = Math.max(enter, Math.min(a, b)); exit = Math.min(exit, Math.max(a, b));
+            if (enter > exit) break;
+          }
+          if (enter <= exit && enter < .98) { this.cutPlacements.add(ref); this.occluderId = `${entry.id}@${(x).toFixed(1)},${(z).toFixed(1)}`; blocked = true; break; }
         }
-        if (enter <= exit && enter < .98) { this.cutPlacements.add(ref); this.occluderId = `${entry.id}@${(x).toFixed(1)},${(z).toFixed(1)}`; blocked = true; }
       }
     }
     return blocked;

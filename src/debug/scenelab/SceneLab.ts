@@ -1460,7 +1460,7 @@ export class SceneLab {
     return audit && { center: audit.center, solidRadius: audit.solidRadius, strength: audit.strength, cover: audit.cover, occluder: audit.occluder };
   }
   /** Courier-visible-share probe: redraw with the courier and/or the crowd (Mega included) hidden; returns the courier-to-Mega distance in metres (Infinity when none). */
-  hideProbe(courier: boolean, crowd: boolean): number { return this.game.view.probeVisibility({ courier, crowd }); }
+  hideProbe(courier: boolean, crowd: boolean, environment = false): number { return this.game.view.probeVisibility({ courier, crowd, environment }); }
   /** Point-in-scene to client pixels (for cropping close-ups from a screenshot). */
   project(p: [number, number, number]): { x: number; y: number } { const q = this.game.view.project(...p); return { x: (q[0] + 1) / 2 * innerWidth, y: (1 - q[1]) / 2 * innerHeight }; }
 }
