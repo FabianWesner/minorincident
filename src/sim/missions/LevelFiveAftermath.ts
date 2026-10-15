@@ -154,7 +154,8 @@ export class LevelFiveAftermath {
       const id = alpha ? ai.spawn('infected.alpha', at) : o.spawnPedestrian(at), e = this.entity(id)!;
       if (!alpha) o.turnNow(e);
       if (!e.infected) continue;
-      // Alphas use sight and engage normally; only ambient wanderers are leashed.
+      // Keep the town encounter bounded without cancelling targets inside normal sight.
+      if (alpha) e.infected.territory = { x: at.x, z: at.z, radius: Math.max(l5.infected.leashM, ai.hearing.rangeM) };
       const brain = e.infected.l1; if (brain) { brain.homeX = g.at[0]; brain.homeZ = g.at[1]; brain.leashM = l5.infected.leashM; }
       if (e.combat) e.combat.damageMultiplier = l5.infected.damage;
       s.infectedIds.push(id); left--;
