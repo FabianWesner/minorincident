@@ -1,0 +1,23 @@
+{
+  "name": "l10-mega-close-contact",
+  "note": "E32 close camera: the living Mega Alpha closes from 9 m and fights at contact range while the game camera follows the courier (no scripted special: its own pursuit and close attacks). The courier must stay visible (own unoccluded pixels) and the Mega must still read as a threat at every zoom.",
+  "seed": 10,
+  "ground": "asphalt",
+  "size": 50,
+  "time": "L10-night",
+  "dof": false,
+  "megaAlpha": { "id": "mega", "at": [-9, 0] },
+  "actors": [{ "id": "courier", "kind": "courier", "at": [0, 0], "yaw": 210, "god": true, "state": "idle" }],
+  "camera": { "mode": "game", "target": "courier", "zoom": 1 },
+  "hud": true,
+  "frames": 540,
+  "sheet": 40,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "courierVisibleShareMin": 0.6,
+    "megaVisibleShareMin": 0.015
+  }
+}

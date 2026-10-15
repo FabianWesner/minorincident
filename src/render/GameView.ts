@@ -38,6 +38,7 @@ import { Lighting } from './Lighting';
 import { Materials } from './Materials';
 import { Lookdev } from './Lookdev';
 import { Occlusion } from './Occlusion';
+import { seeThrough } from './SeeThrough';
 import { PostFx } from './PostFx';
 import { photoSpots } from '../../tests/fixtures/scenarios/lookdev';
 import type { TimeOfDay } from '../data/timeOfDay';
@@ -79,6 +80,10 @@ export class GameView implements Lifecycle {
   private storyFraming = false;
   private l5StationView = false;
   private l3AttackScale = 1;
+  private bossPull = 0;
+  private bossHole = 0;
+  /** Scene Lab courier-visibility probe: hide the courier and/or every crowd figure (including the Mega) for one screenshot. */
+  private probeHide = { courier: false, crowd: false };
   private readonly storyFocus = new Vector3();
   private readonly storyOffset = new Vector3();
   readonly view = new View();
@@ -572,6 +577,10 @@ export class GameView implements Lifecycle {
       // Brief l3-polish: the station attack pulls back (eased) so the streams at the gates are on screen while the courier holds the yard.
       this.l3AttackScale += ((rescue ? 3.3 : l3AttackView(this.world) ? l3.attack.viewScale : 1) - this.l3AttackScale) * (1 - Math.exp(-4 * seconds));
       this.view.encounterScale = this.world.scenario === 'L3' ? this.l3AttackScale : 1;
+      // E32 close camera: while the living Mega Alpha is within 30 m the rig eases out (full at 20 m) so the boss never fills the frame over
+      // the courier. The multiplier keeps the player's zoom: at least 1.3x, and at least a 1.15 default-radius framing for close zooms.
+      this.bossPull += ((this.megaDistance(player.transform) < 30 ? Math.min(1, (30 - this.megaDistance(player.transform)) / 10) : 0) - this.bossPull) * (1 - Math.exp(-3 * seconds));
+      this.view.bossScale = 1 + this.bossPull * (Math.max(1.3, 1.15 / this.view.playerZoom) - 1);
       const ending = this.world.missions?.state.epilogue;
       const pull = ending ? epiloguePull(this.world.missions!.state.counters['epilogue-ticks']) : 0;
       this.view.epilogueScale = 1 + 6 * pull;
@@ -664,6 +673,25 @@ export class GameView implements Lifecycle {
     if(patch.foliageVisible!==undefined)this.districts?.setFoliageVisible(patch.foliageVisible);
     if (patch.idPass !== undefined) this.idPass = patch.idPass;
     this.update(1);
+  }
+  /** Distance (m) from a point to the nearest living Mega Alpha (pursuit infected), Infinity when none. */
+  private megaDistance(at: { x: number; z: number }): number {
+    let best = Infinity;
+    for (const e of this.world.entities.iterate()) if (e.infected?.pursuit && !e.hidden && e.health.current > 0) best = Math.min(best, Math.hypot(e.transform.x - at.x, e.transform.z - at.z));
+    return best;
+  }
+  /** The boss hole opens while the Mega is within 14 m of the courier; it only drops boss fragments nearer the lens than her, inside a courier-sized disc. */
+  private updateBossHole(player?: { x: number; z: number }): void {
+    const goal = player && this.megaDistance(player) < 14 ? 1 : 0;
+    this.bossHole += (goal - this.bossHole) * .3; if (Math.abs(goal - this.bossHole) < .01) this.bossHole = goal;
+    seeThrough.bossStrength.value = this.bossHole;
+    const screenHeight = 2 * this.camera.position.distanceTo(this.view.focus) * Math.tan(this.camera.fov * Math.PI / 360);
+    seeThrough.bossRadius.value = Math.min(.3, Math.max(.1, 2.8 / screenHeight));
+  }
+  /** Scene Lab: hide the courier / the crowd (Mega included) and redraw, for the courier-visible-share probe. */
+  probeVisibility(hide: { courier: boolean; crowd: boolean }): number {
+    this.probeHide = { ...hide }; this.update(1);
+    const player = this.world.entities.get(1); return player ? this.megaDistance(player.transform) : Infinity;
   }
   /** Project a world point to viewport-normalized coordinates, for masks and input integration. */
   project(x: number, y: number, z: number): number[] { return this.projection.set(x, y, z).project(this.camera).toArray(); }
@@ -791,7 +819,8 @@ export class GameView implements Lifecycle {
       this.playerPosition.copy(this.lookdev.player.position);
       this.occlusion.update(this.camera, this.playerPosition, 0, this.lookdev.playerMeshes);
     }
-    if (this.character) this.character.visible = carPose ? carPose.visible : !this.world.entities.get(1)?.hidden;
+    if (this.character) this.character.visible = !this.probeHide.courier && (carPose ? carPose.visible : !this.world.entities.get(1)?.hidden);
+    if (this.crowd) this.crowd.visible = !this.probeHide.crowd;
     if (!this.vehicles && this.world.vehicles?.cars.size && this.materials) { this.vehicles = new VehicleView(this.world, this.materials, this.view, this.quality === 'low'); this.vehicles.ground = this.drawnGround; this.scene.add(this.vehicles); }
     this.vehicles?.update(alpha); this.l2Props?.update(); this.l3Props?.update();
     if (this.actions) this.actions.visible = !this.world.entities.get(1)?.hidden;
@@ -814,6 +843,7 @@ export class GameView implements Lifecycle {
     const locked = this.world.controls.snapshot()?.attack;
     const lockedEntity = locked ? this.world.entities.get(locked.id) : undefined;
     this.districts?.updateFoliage(this.view, current, lockedEntity && lockedEntity.health.current > 0 ? lockedEntity.transform : undefined);
+    this.updateBossHole(current);
     this.healthBars?.update(this.camera, this.view.viewportHeight * this.camera.aspect, this.view.viewportHeight, this.barOccluded);
     if (this.world.missions?.state.l3) {
       const at = this.world.missions.state.l3.barrierClosedAt;

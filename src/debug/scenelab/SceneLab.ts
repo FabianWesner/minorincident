@@ -720,6 +720,14 @@ export class SceneLab {
       view.follow(); view.zoom(Math.log((c.zoom ?? 1) / view.getState().targetZoom), true);
       return;
     }
+    // E32 close camera: Mega fixtures run the real follow rig (boss pull-back, player zoom), not a fixed preset.
+    if (this.spec?.megaAlpha && c.mode === 'game' && c.target === 'courier') {
+      const rig = this.game.view.view;
+      if (rig.getState().spot !== null) rig.follow();
+      const zoom = c.zoom ?? 1, current = rig.getState().targetZoom;
+      if (Math.abs(current - zoom) > 1e-6) rig.zoom(Math.log(zoom / current), true);
+      return;
+    }
     const view = this.game.view.view, spherical = (target: [number, number, number], radius: number, polar: number, azimuth: number) => {
       const s = Math.sin(polar) * radius;
       view.preset('scene-lab', { target, position: [target[0] + s * Math.sin(azimuth), target[1] + Math.cos(polar) * radius, target[2] + s * Math.cos(azimuth)] });
@@ -1419,6 +1427,8 @@ export class SceneLab {
     this.game.view.settings({ seeThroughOff: off });
     return audit && { center: audit.center, solidRadius: audit.solidRadius, strength: audit.strength, cover: audit.cover, occluder: audit.occluder };
   }
+  /** Courier-visible-share probe: redraw with the courier and/or the crowd (Mega included) hidden; returns the courier-to-Mega distance in metres (Infinity when none). */
+  hideProbe(courier: boolean, crowd: boolean): number { return this.game.view.probeVisibility({ courier, crowd }); }
   /** Point-in-scene to client pixels (for cropping close-ups from a screenshot). */
   project(p: [number, number, number]): { x: number; y: number } { const q = this.game.view.project(...p); return { x: (q[0] + 1) / 2 * innerWidth, y: (1 - q[1]) / 2 * innerHeight }; }
 }

@@ -40,6 +40,18 @@ export async function measureCut(session: SceneSession) {
   return { outside, inside, strength: hole.strength, cover: hole.cover, occluder: hole.occluder };
 }
 
+/** E32 close camera: courier visible share. Four redraws of the same frame (no sim step, so the boss hole's dither pattern is identical):
+ * all / courier hidden give the courier's visible pixels; crowd hidden / both hidden give her unoccluded pixels; all vs crowd hidden gives the Mega's pixels. */
+export async function measureCourierShare(session: SceneSession) {
+  await session.ready();
+  const shot = async (courier: boolean, crowd: boolean) => { const d = await session.page.evaluate(([c, w]) => window.__SCENE__!.hideProbe(c, w), [courier, crowd] as [boolean, boolean]); await session.ready(); return { d, png: PNG.sync.read(await session.page.screenshot({ type: 'png' })) }; };
+  const all = await shot(false, false), noCourier = await shot(true, false), noCrowd = await shot(false, true), none = await shot(true, true);
+  await session.page.evaluate(() => window.__SCENE__!.hideProbe(false, false));
+  const diff = (a: PNG, b: PNG) => { let n = 0; for (let i = 0; i < a.data.length; i += 4) if (Math.abs(a.data[i] - b.data[i]) + Math.abs(a.data[i + 1] - b.data[i + 1]) + Math.abs(a.data[i + 2] - b.data[i + 2]) >= 36) n++; return n; };
+  const visible = diff(all.png, noCourier.png), reference = diff(noCrowd.png, none.png), mega = diff(all.png, noCrowd.png);
+  return { megaM: all.d, visible, reference, share: reference < 150 ? 1 : Math.min(1, visible / reference), megaPixels: mega, megaShare: mega / (all.png.width * all.png.height) };
+}
+
 export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOptions) {
   const name = spec.name ?? (o.file ? basename(o.file, '.json') : 'scene'), out = o.out;
   const video = o.video ?? spec.video ?? 0, sheet = o.sheet ?? spec.sheet ?? 0;
@@ -57,7 +69,9 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   const stops = new Set([...shots, ...sheetAt]);
   if (video) for (let f = 0; f <= video * 60; f += 3) stops.add(f);
   let frame = 0;
-  const contrast: { frame: number; result: ContrastResult }[] = [], measure = async (f: number) => { if (!spec.contrast || f === 0) return; // frame 0: the follow camera has not settled on a driven vehicle yet
+  const shares: ({ frame: number } & Awaited<ReturnType<typeof measureCourierShare>>)[] = [];
+  const contrast: { frame: number; result: ContrastResult }[] = [], measure = async (f: number) => {
+    if (spec.expect?.courierVisibleShareMin !== undefined || spec.expect?.megaVisibleShareMin !== undefined) shares.push({ frame: f, ...await measureCourierShare(session) }); if (!spec.contrast || f === 0) return; // frame 0: the follow camera has not settled on a driven vehicle yet
     const result = await measureContrast(session.page, spec); if (result) contrast.push({ frame: f, result }); };
   const pixels: { frame: number; pixels: Awaited<ReturnType<typeof canvasFrame>> }[] = [];
   const edgeSamples: ({ frame: number } & Awaited<ReturnType<typeof canvasEdgeNoise>>)[] = [];
@@ -117,6 +131,12 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
     if ((spec.camera as { zoom?: number } | undefined)?.zoom === undefined || (spec.camera as { zoom: number }).zoom >= 1) result.checks.push({ name: 'contrastSampled', pass: contrast.length > 0, value: contrast.length, limit: 1 });
     else for (const name of ['navContrastMin', 'navContrastFloor', 'playerContrastMin', 'landmarkContrastMin']) { const i = result.checks.findIndex(c => c.name === name); if (i >= 0 && !contrast.length) result.checks.splice(i, 1); }
   }
+  if (shares.length) {
+    const near = shares.filter(s => s.megaM <= 14), contact = shares.filter(s => s.megaM <= 6);
+    if (spec.expect?.courierVisibleShareMin !== undefined) result.checks.push({ name: 'courierVisibleShare', pass: near.every(s => s.share >= spec.expect!.courierVisibleShareMin!), value: near.length ? Math.min(...near.map(s => +s.share.toFixed(3))) : 1, limit: spec.expect.courierVisibleShareMin });
+    if (spec.expect?.megaVisibleShareMin !== undefined) result.checks.push({ name: 'megaVisibleShare', pass: contact.every(s => s.megaShare >= spec.expect!.megaVisibleShareMin!), value: contact.length ? Math.min(...contact.map(s => +s.megaShare.toFixed(4))) : 1, limit: spec.expect.megaVisibleShareMin });
+    result.checks.push({ name: 'courierShareSampledNearMega', pass: near.length > 0, value: near.length, limit: 1 });
+  }
   if (cutPixels) {
     if (spec.expect?.seeThroughCutPixelsMax !== undefined) result.checks.push({ name: 'seeThroughCutPixelsOutside', pass: cutPixels.outside <= spec.expect.seeThroughCutPixelsMax, value: cutPixels.outside, limit: spec.expect.seeThroughCutPixelsMax });
     if (spec.expect?.seeThroughCutInsideMin !== undefined) result.checks.push({ name: 'seeThroughCutPixelsInside', pass: cutPixels.inside >= spec.expect.seeThroughCutInsideMin, value: cutPixels.inside, limit: spec.expect.seeThroughCutInsideMin });
@@ -128,7 +148,7 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   result.checks.push({ name: 'requestedQuality', pass: actualTier === session.options.tier && metrics.quality === actualTier, value: Number(actualTier === session.options.tier && metrics.quality === actualTier), limit: 1 });
   result.pass = result.checks.every(c => c.pass);
   const timing = { openMs: o.openMs ?? 0, loadMs, runMs: Date.now() - t0 - loadMs, sceneMs: Date.now() - t0 };
-  writeJson(`${out}/metrics.json`, { spec: o.file, backend: metrics.backend, requestedBackend: session.options.backend, tier: session.options.tier, actualTier, frames: metrics.frame, timing, checks: result, seeThroughCut: cutPixels, pixels, edgeSamples, ring, contrast: contrast.map(c => ({ frame: c.frame, candidates: c.result.candidates, pairs: c.result.pairs, median: +c.result.median.toFixed(2), wcag05: +c.result.wcag.toFixed(2), min: +c.result.min.toFixed(2), routeL: +c.result.routeL.toFixed(4), vergeL: +c.result.vergeL.toFixed(4), player: c.result.player && +c.result.player.toFixed(2), landmarks: c.result.landmarks && +c.result.landmarks.toFixed(2) })), consoleErrors: errors, scene, metrics, clipping });
+  writeJson(`${out}/metrics.json`, { spec: o.file, backend: metrics.backend, requestedBackend: session.options.backend, tier: session.options.tier, actualTier, frames: metrics.frame, timing, checks: result, seeThroughCut: cutPixels, courierShares: shares, pixels, edgeSamples, ring, contrast: contrast.map(c => ({ frame: c.frame, candidates: c.result.candidates, pairs: c.result.pairs, median: +c.result.median.toFixed(2), wcag05: +c.result.wcag.toFixed(2), min: +c.result.min.toFixed(2), routeL: +c.result.routeL.toFixed(4), vergeL: +c.result.vergeL.toFixed(4), player: c.result.player && +c.result.player.toFixed(2), landmarks: c.result.landmarks && +c.result.landmarks.toFixed(2) })), consoleErrors: errors, scene, metrics, clipping });
   written.push(`${out}/metrics.json`);
   return { name, pass: result.pass, checks: result.checks, backend: metrics.backend, actualTier, frames: metrics.frame, seconds: timing.sceneMs / 1000, failed: result.checks.filter(c => !c.pass), clipping: clipping.summary, sheet: sheetInfo?.path, sheetKb: sheetInfo?.kb, files: written, consoleErrors: errors };
 }

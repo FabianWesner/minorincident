@@ -223,6 +223,10 @@ export interface Expectations {
   seeThroughCutPixelsMax?: number;
   /** Minimum differing pixels inside the hole disc: a real occluder must still be cut. */
   seeThroughCutInsideMin?: number;
+  /** E32 close camera: while the Mega Alpha is within 14 m, the share of the courier's own screen pixels still visible (frame with the courier vs without her, crowd hidden as reference) on every sheet frame. */
+  courierVisibleShareMin?: number;
+  /** E32 close camera: while the Mega Alpha is within 6 m, its visible pixels (frame vs frame without the crowd) must stay at least this share of the viewport, so it still reads as a threat. */
+  megaVisibleShareMin?: number;
   /** Placement pairs whose LOD0 meshes cut through each other (`clipping.static` only; bone hits not counted). */
   staticOverlapMax?: number;
   footSlideMaxCm?: number;
