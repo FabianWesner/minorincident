@@ -145,6 +145,8 @@ export class SceneLab {
   async load(spec: SceneSpec) {
     this.specials = [];
     this.convoyOverlapFrames = 0;
+    // A scene that set a campaign must not leak it into the next scene: a later pickup save would write it against another world.
+    this.game.campaign = null;
     if (spec.cureEncounter) {
       const group = cureEncounters.find(g => g.id === spec.cureEncounter);
       if (!group) throw new Error(`Unknown cure encounter: ${spec.cureEncounter}`);
