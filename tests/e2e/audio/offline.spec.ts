@@ -41,6 +41,16 @@ test('T-E16-08 @E16 @E16-AC08 15m/s pass-by has a measured 6–12% pitch drop', 
     expect(drop).toBeGreaterThanOrEqual(0.06);
     expect(drop).toBeLessThanOrEqual(0.12);
 });
+test('T-E22-convoy-music @E22 convoy radio loudness matches or exceeds L4 calm score without clipping', async ({ page }) => {
+    await boot(page);
+    const radio = await render(page, { scenario: 'l4-convoy-music', source: 'radio' }, 'l4-convoy-radio');
+    const score = await render(page, { scenario: 'l4-convoy-music', source: 'score' }, 'l4-convoy-score');
+    const measuredRadio = loudness(radio.path), measuredScore = loudness(score.path);
+    artifact('l4-convoy-music', { radio: measuredRadio, score: measuredScore, radioOverScoreDb: measuredRadio.lufs - measuredScore.lufs });
+    expect(measuredRadio.lufs).toBeGreaterThanOrEqual(measuredScore.lufs);
+    expect(measuredRadio.truePeak).toBeLessThan(-1);
+    expect(measuredScore.truePeak).toBeLessThan(-1);
+});
 test('T-E16-11 @E16 @E16-AC11 each twist gives one second below −50dBFS then a stinger; L6 dawn reprise', async ({ page }) => {
     await boot(page);
     const rows = [];
