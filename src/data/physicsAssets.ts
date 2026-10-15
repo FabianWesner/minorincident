@@ -6549,6 +6549,55 @@ export default {
     "source": "public/assets/models/kit.metro-tunnel.glb",
     "hash": "45b70a84728a1d50979f0318ddc6b8b6a8a3fa24042d2c62a34c02015ffc112e"
   },
+  "kit.metro-track": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      0.13500000536441803,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.stone-heavy",
+    "boxes": [
+      {
+        "min": [
+          -6,
+          -0.35000000298023226,
+          -3.8
+        ],
+        "max": [
+          6,
+          0.19999999701976778,
+          3.8
+        ]
+      }
+    ],
+    "source": "public/assets/models/kit.metro-track.glb",
+    "hash": "9ac275582878c1f1295aca79392fc72ca1ebf99aa4c46841599f13d02edde261"
+  },
+  "kit.market-doors": {
+    "class": "fixed",
+    "mass": 0,
+    "friction": 0.8,
+    "restitution": 0.05,
+    "centerOfMass": [
+      0,
+      1.4500000476837158,
+      0
+    ],
+    "pushable": false,
+    "kickable": false,
+    "flammable": false,
+    "sounds": "prop.stone-heavy",
+    "boxes": [],
+    "source": "public/assets/models/kit.market-doors.glb",
+    "hash": "dc4c7cb70ca77fa3165e0fb0473386774a201a6570880f5f7704170f2603ba86"
+  },
   "kit.maintenance-corridor": {
     "class": "fixed",
     "mass": 0,
@@ -7345,7 +7394,7 @@ export default {
       }
     ],
     "source": "public/assets/models/int.metro-station.glb",
-    "hash": "3f23fc07d37a4a67b36679d938a9c24b0279471adf2a82b190aa221a3d3b94d1"
+    "hash": "139046a930a3ac01763d1c89f4bfe4b6183fbf71115e61bac4b98322b463ab24"
   },
   "kit.zoo-tunnel-mouth": {
     "class": "fixed",

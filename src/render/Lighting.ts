@@ -75,6 +75,10 @@ export class Lighting {
   private readonly promotionTarget = new Vector3();
   private quality: QualityTier = 'high';
   /** Night readability (specs/06 §2): the player's feet (xyz) for the hero rim, and the preset rim weight. */
+  /** L6 darkness is part of the existing palette output, never an extra pass. */
+  readonly subwayDarkness = uniform(0).setGroup(renderGroup);
+  readonly headlampOn = uniform(0).setGroup(renderGroup);
+  readonly headlampAim = uniform(new Vector2(1, 0)).setGroup(renderGroup);
   readonly hero = uniform(new Vector3(0, -100, 0));
   readonly rim = uniform(0);
   readonly rimColor = uniform(new Color('#b9c6ff'));
@@ -134,12 +138,14 @@ export class Lighting {
   }
   setQuality(tier: QualityTier): void {
     this.quality = tier; this.field.setQuality(tier);
+    this.spot.castShadow = !((this.preset === 'L6-subway' || this.preset === 'L6') && tier === 'low');
     const size = qualityBudgets[tier].shadowSize;
     if (this.sun.shadow.mapSize.x === size) return;
     this.sun.shadow.map?.dispose(); this.sun.shadow.map = null; this.sun.shadow.mapSize.set(size, size); this.sun.shadow.needsUpdate = true;
   }
   set(name: TimeOfDay): void {
     if (!(name in timeOfDay)) throw new Error(`Unknown time-of-day preset: ${name}`);
+    this.spot.castShadow = !((name === 'L6-subway' || name === 'L6') && this.quality === 'low');
     this.promoted = null; this.promotedAt = -Infinity; this.heroLight = null; this.promotionChanges = 0; this.heroTime = -1; this.spot.visible = false; this.sun.visible = true;
     this.worldPaletteEnabled.value = Number(name === 'L1');
     this.preset = name; const p = timeOfDay[name];
@@ -152,6 +158,7 @@ export class Lighting {
     if (this.scene.background instanceof Color) this.scene.background.set(p.sky); else this.scene.background = new Color(p.sky);
     if (this.scene.fog instanceof Fog) { this.scene.fog.color.set(p.fog); this.scene.fog.near = p.fogNear; this.scene.fog.far = p.fogFar; }
     else this.scene.fog = new Fog(p.fog, p.fogNear, p.fogFar);
+    this.subwayDarkness.value = name === 'L6-subway' ? 1 : 0;
     this.applyLook();
   }
   /** The L5 gloom ramp (quantised to 0.5 % so a slow fade does not re-apply the look every frame). */
@@ -252,7 +259,7 @@ export class Lighting {
   /** Includes live fog ranges so viewport changes can be checked without shader inspection. */
   getState() {
     const p = timeOfDay[this.preset];
-    return { promotionBlend: Math.min(1, Math.max(0, (this.heroTime - this.promotedAt) / .3)), heroLight: this.heroLight, lamps: this.lamps.snapshot(), heroLights: Number(this.spot.visible), heroShadowMaps: Number(this.spot.visible), promotionChanges: this.promotionChanges, practicalEffects: this.practicalEffects.snapshot(), shadowSize: this.sun.shadow.mapSize.x, preset: this.preset, sunDirection: this.direction.value.toArray(), sunColor: `#${this.color.value.getHexString()}`, sky: (this.look.has('sky') || this.preset === 'L1') ? this.look.values.sky : p.sky, fog: `#${this.fogColor.value.getHexString()}`, fogNear: this.fogNear.value, fogFar: this.fogFar.value, intensity: this.intensity.value, shadowColor: this.shadow.value.getHexString(), coreShadowEdges: [this.coreShadowEdgeHigh.value, this.coreShadowEdgeLow.value], shadowRadius: this.sun.shadow.radius, normalBias: this.sun.shadow.normalBias, shadowArea: this.sun.shadow.camera.right, fogColors: [`#${this.fogA.value.getHexString()}`, `#${this.fogB.value.getHexString()}`], rim: this.rim.value, fieldShadow: this.fieldShadow.value, shadowDirection: this.shadowDirection.toArray(), lightField: this.field.snapshot() };
+    return { promotionBlend: Math.min(1, Math.max(0, (this.heroTime - this.promotedAt) / .3)), heroLight: this.heroLight, lamps: this.lamps.snapshot(), heroLights: Number(this.spot.visible), heroShadowMaps: Number(this.spot.visible && this.spot.castShadow), promotionChanges: this.promotionChanges, practicalEffects: this.practicalEffects.snapshot(), shadowSize: this.sun.shadow.mapSize.x, preset: this.preset, sunDirection: this.direction.value.toArray(), sunColor: `#${this.color.value.getHexString()}`, sky: (this.look.has('sky') || this.preset === 'L1') ? this.look.values.sky : p.sky, fog: `#${this.fogColor.value.getHexString()}`, fogNear: this.fogNear.value, fogFar: this.fogFar.value, intensity: this.intensity.value, shadowColor: this.shadow.value.getHexString(), coreShadowEdges: [this.coreShadowEdgeHigh.value, this.coreShadowEdgeLow.value], shadowRadius: this.sun.shadow.radius, normalBias: this.sun.shadow.normalBias, shadowArea: this.sun.shadow.camera.right, fogColors: [`#${this.fogA.value.getHexString()}`, `#${this.fogB.value.getHexString()}`], rim: this.rim.value, fieldShadow: this.fieldShadow.value, shadowDirection: this.shadowDirection.toArray(), lightField: this.field.snapshot() };
   }
   dispose(): void { this.scene.remove(this.sun, this.sun.target, this.hemisphere); this.sun.dispose(); if (!this.sharedEnvironment) this.environment?.dispose(); this.fallbackEnvironment.dispose(); this.field.dispose(); this.lamps.dispose(); this.practicalEffects.dispose(); this.scene.remove(this.spot, this.spot.target, this.practicalEffects); this.spot.dispose(); this.scene.backgroundNode = null; }
 }

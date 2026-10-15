@@ -1,0 +1,71 @@
+{
+  "name": "qa-l6-po-entry",
+  "l6Subway": "entry",
+  "time": "L6-subway",
+  "dof": false,
+  "hud": true,
+  "ground": "district",
+  "layout": {
+    "level": "L6",
+    "district": "D-SUBWAY",
+    "bbox": [
+      [
+        -32,
+        -30
+      ],
+      [
+        288,
+        32
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        76,
+        15
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.army-mg"
+      ]
+    },
+    {
+      "id": "arrival-a",
+      "kind": "infected",
+      "at": [
+        78,
+        17
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "arrival-b",
+      "kind": "infected",
+      "at": [
+        79,
+        17
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      77,
+      15
+    ],
+    "zoom": 1
+  },
+  "frames": 30,
+  "shots": [
+    1,
+    29
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  }
+}

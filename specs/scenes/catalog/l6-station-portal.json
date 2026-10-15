@@ -1,0 +1,12 @@
+{
+ "name": "l6-station-portal",
+ "note": "PO 10-15 'L6 - Tracks are disconnected' (L6 seed 1, shelter step, player (29.29, 17.19) at the platform end by the tunnel portal). Look for: ONE continuous track from the station through the portal, the same rails, sleepers and ballast, no step or sideways jog at x=30, no dark flat slab or gap at the platform edge. tests/unit/levels/l6-static.test.ts guards the rail seams within 2 cm.",
+ "seed": 1,
+ "time": "L6-subway",
+ "ground": "district",
+ "layout": { "district": "D-SUBWAY", "bbox": [[-34, -14], [66, 26]] },
+ "actors": [{ "id": "courier", "kind": "courier", "at": [29.29, 17.19] }],
+ "camera": { "mode": "game", "target": [29.3, 15.5], "zoom": 1 },
+ "frames": 30,
+ "expect": { "consoleErrors": 0 }
+}

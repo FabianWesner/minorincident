@@ -195,6 +195,7 @@ export class SceneLab {
     this.camera = spec.camera ?? { mode: 'game', target: built.center };
     this.applyCamera();
     if (this.boom) this.game.view.labProbes().districts?.updateArmyBoom(spec.armyBoom?.closed ? 0 : 1);
+    if (spec.marketDoors) this.game.view.labProbes().districts?.marketDoors(!!spec.marketDoors.open && spec.marketDoors.openAtFrame === undefined, true);
     // Prop triangles for the per-frame bone checks (LOD0 GLBs, cached by the registry across loads).
     await Promise.all([this.game.screenshotReady(), this.prepareClipping()]);
     if (spec.hud || spec.megaHud) {
@@ -285,6 +286,26 @@ export class SceneLab {
         e.infected!.state = 'chase';
       }
     });
+    if (spec.l6Subway) {
+      world.scenario = 'L6'; applyCampaign(world, preset('L6-default'));
+      const mission = world.loadMission(resolveCampaignMission('L6', world.districts!)); mission.begin();
+      if (spec.l6Subway !== 'pickup') {
+        const lamp = world.entities.values().find(e => e.archetype === 'pickup.headlamp')!;
+        lamp.interactable!.completed = true; Object.assign(player.transform, lamp.transform);
+        world.physics.playerBody!.setTranslation(player.transform, true); world.update(); world.update();
+      }
+      if (spec.l6Subway === 'gate' || spec.l6Subway === 'entry') {
+        mission.completeObjective('shelter'); mission.completeObjective('stop');
+        for (const r of mission.state.l6!.survivors) {
+          const e = world.entities.get(r.id)!; e.transform.x = 99 + r.hold; e.transform.z = 15;
+        }
+        mission.state.l6!.leaderX = 105; mission.state.l6!.leaderZ = 15;
+      }
+      if (courier?.at) {
+        Object.assign(player.transform, { x: courier.at[0], y: 1.3, z: courier.at[1] });
+        world.physics.playerBody!.setTranslation(player.transform, true); world.spatial.set(1, player.transform.x, player.transform.z);
+      }
+    }
     if (spec.l3Rendezvous) {
       world.scenario = 'L3';
       world.infected!.excludeInfected(l3BaseCollision);
@@ -863,6 +884,7 @@ export class SceneLab {
       const start = performance.now();
       this.nextRenderFrame();
       if (this.boom) this.game.view.labProbes().districts?.updateArmyBoom(this.spec?.armyBoom?.closed ? 0 : this.boomClosedAt ? Math.max(0, 1 - (this.world.tick - this.boomClosedAt) / 42) : 1);
+      if (this.spec?.marketDoors) this.game.view.labProbes().districts?.marketDoors(!!this.spec.marketDoors.open || (this.spec.marketDoors.openAtFrame !== undefined && this.frame >= this.spec.marketDoors.openAtFrame));
       this.game.view.frame(1 / 60); await this.game.step(1);
       // `?profile` (set by the runner) attributes every submitted draw, including the PostFx scene pass and shadows.
       const stepMs = performance.now() - start, info = this.game.view.renderer.info.render, profile = Object.entries(this.game.view.renderer.profile ?? {});
@@ -1485,7 +1507,7 @@ export class SceneLab {
     }).map(f => f.appearance!))]));
     const clipping = this.staticSets ? await this.clipping() : null;
     const bodies = [...this.bodies.values()].sort((x, y) => y.depthCm - x.depthCm);
-    return { armyBoom: this.boom ? { closedAt: this.boomClosedAt, closed: !!this.spec?.armyBoom?.closed || !!this.boomClosedAt } : null, scene: this.spec?.name ?? null, frame: this.frame, tick: this.world.tick, backend: this.game.view.renderer.selectedBackend, quality: this.game.quality.tier,
+    return { marketDoors: this.spec?.marketDoors ? { openness: this.game.view.labProbes().districts?.marketDoorOpenness() ?? null, posed: this.game.view.labProbes().districts?.marketDoorPlacements() ?? [] } : null, armyBoom: this.boom ? { closedAt: this.boomClosedAt, closed: !!this.spec?.armyBoom?.closed || !!this.boomClosedAt } : null, scene: this.spec?.name ?? null, frame: this.frame, tick: this.world.tick, backend: this.game.view.renderer.selectedBackend, quality: this.game.quality.tier,
       convoyOverlapFrames: this.convoyOverlapFrames,
       propPenetration: { samples: this.propPenetrationSamples, framesMax: Math.max(0, ...[...this.propPenetration.values()].map(m => m.max)), pairs: [...this.propPenetration.values()] },
       props: { sinkMaxCm: this.propSinkMaxCm, samples: this.propGroundSamples, gaps: this.game.view.labProbes().districts?.propGroundGaps() ?? [] },
