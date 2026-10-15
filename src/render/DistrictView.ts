@@ -491,13 +491,16 @@ export class DistrictView extends Group {
       const extent = (view.driving ? 9 : 4.5) * (view.camera.aspect < 1 ? 1.25 : 1);
       seeThrough.solidRadius.value = Math.min(.7, Math.max(seeThrough.radius.value, extent / screenHeight));
       // Test reference: every solid occluder nearer than the player is cut, i.e. the unobstructed picture the 80 % visibility check compares against.
-      if (this.seeThroughReference) { seeThrough.solidRadius.value = 3; seeThrough.strength.value = 1; return; }
+      if (this.seeThroughReference) { this.updateCutPlacements(true); seeThrough.solidRadius.value = 3; seeThrough.strength.value = 1; return; }
       if (view.driving && this.foliage.reveal) seeThrough.depth.value -= 3;
     }
-    if (this.seeThroughOff) { seeThrough.strength.value = 0; seeThrough.cover.value = 0; return; }
+    if (this.seeThroughOff) { this.cutPlacements.clear(); this.updateCutPlacements(); seeThrough.strength.value = 0; seeThrough.cover.value = 0; return; }
+    this.cutPlacements.clear();
     const hugged = Boolean(player && this.foliage.reveal && this.huggedOccluder(view));
     this.occluderId = hugged ? 'hugged' : '';
-    const goal = player && this.foliage.reveal && (hugged || this.occluded(view, player)) ? 1 : 0;
+    const occluded = Boolean(player && this.foliage.reveal && this.occluded(view, player));
+    this.updateCutPlacements();
+    const goal = hugged || occluded ? 1 : 0;
     seeThrough.strength.value += (goal - seeThrough.strength.value) * (1 - Math.exp(-(hugged ? 40 : 10) * this.frameSeconds));
     if (Math.abs(goal - seeThrough.strength.value) < .002) seeThrough.strength.value = goal;
     // Opens fast (a roof filling the frame must not linger while the cut eases open, esp. on slow frames), closes at the ordinary rate.
@@ -509,6 +512,17 @@ export class DistrictView extends Group {
   static readonly hugDistance = 8;
   private readonly lensRay = new Vector3();
   private readonly lensPoint = new Vector3();
+  private readonly cutPlacements = new Set<Object3D>();
+  private updateCutPlacements(all = false): void {
+    for (const entry of this.lodBatches) {
+      if (entry.height < occluderMinHeight || worldAssets[entry.id].foliage) continue;
+      for (const ref of entry.refs) {
+        const enabled = all || this.cutPlacements.has(ref);
+        if (ref.userData.occluder === enabled) continue;
+        entry.hero.seeThrough(enabled, ref); entry.near.seeThrough(enabled, ref); entry.far.seeThrough(enabled, ref);
+      }
+    }
+  }
   /** Local frame of a placement's real footprint (yaw only): `[cos, sin, centre x, centre z]` on the district plane. */
   private static footFrame(entry: LodBatch, ref: Object3D): [number, number, number, number] {
     const yaw = 2 * Math.atan2(ref.quaternion.y, ref.quaternion.w), c = Math.cos(yaw), s = Math.sin(yaw), { cx, cz } = entry.foot;
@@ -532,14 +546,18 @@ export class DistrictView extends Group {
     }
     if (!near.length) return false;
     let blocked = 0;
+    const hits = new Set<Object3D>();
     for (const [sx, sy] of [[0, 0], [-.5, -.5], [.5, -.5], [-.5, .5], [.5, .5]]) {
       this.lensRay.set(sx, sy, .5).unproject(camera).sub(o).normalize();
       for (let d = 1; d <= DistrictView.hugDistance; d++) {
         const p = this.lensPoint.copy(o).addScaledVector(this.lensRay, d);
-        if (near.some(b => p.y > b.y0 + .3 && p.y < b.y1 && DistrictView.insideFootprint(b.entry, b.ref, p.x, p.z))) { blocked++; break; }
+        let hit = false;
+        for (const b of near) if (p.y > b.y0 + .3 && p.y < b.y1 && DistrictView.insideFootprint(b.entry, b.ref, p.x, p.z)) { hits.add(b.ref); hit = true; }
+        if (hit) { blocked++; break; }
       }
     }
     // Most of the frame, not a wall at one edge: a street corner keeps its ordinary courier-sized hole.
+    if (blocked >= 3) for (const ref of hits) this.cutPlacements.add(ref);
     return blocked >= 3;
   }
   /** Debug/test: open the see-through hole across the whole screen (reference frame for visibility checks). */
@@ -553,6 +571,7 @@ export class DistrictView extends Group {
   /** Segment (camera to chest) against conservative upright boxes of the tall instanced placements nearby. */
   private occluded(view: View, player: { x: number; y: number; z: number }): boolean {
     const o = view.camera.position, dx = player.x - o.x, dy = player.y + .2 - o.y, dz = player.z - o.z;
+    let blocked = false;
     for (const entry of this.lodBatches) {
       if (entry.height < occluderMinHeight || worldAssets[entry.id].foliage) continue;
       for (const ref of entry.refs) {
@@ -568,10 +587,10 @@ export class DistrictView extends Group {
           enter = Math.max(enter, Math.min(a, b)); exit = Math.min(exit, Math.max(a, b));
           if (enter > exit) break;
         }
-        if (enter <= exit && enter < .98) { this.occluderId = `${entry.id}@${(x).toFixed(1)},${(z).toFixed(1)}`; return true; }
+        if (enter <= exit && enter < .98) { this.cutPlacements.add(ref); this.occluderId = `${entry.id}@${(x).toFixed(1)},${(z).toFixed(1)}`; blocked = true; }
       }
     }
-    return false;
+    return blocked;
   }
   private readonly barRay = new Raycaster();
   private readonly barBox = new Box3();
