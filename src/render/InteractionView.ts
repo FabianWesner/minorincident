@@ -2,7 +2,7 @@
 // highlighted active point above geometry, range-based reveal, separate presentation state.
 import { PaletteMaterial } from './PaletteMaterial';
 import { modelLod } from './lodPolicy';
-import { BoxGeometry, EdgesGeometry, LineBasicNodeMaterial, LineSegments, ConeGeometry, Raycaster, CylinderGeometry, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, SphereGeometry, Vector3, type Camera, type Object3D, type BufferGeometry, type Material } from 'three/webgpu';
+import { BoxGeometry, EdgesGeometry, LineBasicNodeMaterial, LineSegments, ConeGeometry, CylinderGeometry, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, SphereGeometry, Vector3, type Camera, type Object3D, type BufferGeometry, type Material } from 'three/webgpu';
 import { uv, vec4 } from 'three/tsl';
 import type { View } from './View';
 import type { AssetQuality } from '../assets/types';
@@ -74,8 +74,6 @@ export class InteractionView extends Group {
   private readonly gateGuides: { x: number; line: Mesh }[] = [];
   private readonly arrowGeometry = new ConeGeometry(.18, .45, 4);
   private readonly crateArrow = new Mesh(this.arrowGeometry, this.teal);
-  private readonly occlusionRay = new Raycaster();
-  private readonly rayTarget = new Vector3();
   private disposed = false;
   constructor(private readonly world: SimWorld, private readonly materials: Materials, private readonly view: View, private readonly low = false) {
     super(); this.registry = new AssetRegistry(() => {}, { materials: materials }); this.name = 'interactions';
@@ -279,17 +277,6 @@ export class InteractionView extends Group {
   }
   private prepareGate(model: Object3D): void {
     model.traverse(node => { if (node instanceof Mesh) for (const material of Array.isArray(node.material) ? node.material : [node.material]) if (material instanceof PaletteMaterial) material.seeThrough(); });
-  }
-  /** Dynamic service gates join the district's camera-to-courier occluders. */
-  occludesPlayer(camera: Camera, player: { x: number; y: number; z: number }): boolean {
-    this.rayTarget.set(player.x, player.y + .35, player.z).sub(camera.position);
-    this.occlusionRay.set(camera.position, this.rayTarget.clone().normalize()); this.occlusionRay.far = this.rayTarget.length();
-    for (const gate of this.world.missions?.state.l6?.gates ?? []) {
-      const object = this.objects.get(gate.id); if (!object || Math.abs(gate.x - player.x) > 10) continue;
-      object.updateWorldMatrix(true, true);
-      if (this.occlusionRay.intersectObject(object, true).length) return true;
-    }
-    return false;
   }
   private updateGateGuides(): void {
     const player = this.world.entities.get(1), state = this.world.missions?.state.l6;
