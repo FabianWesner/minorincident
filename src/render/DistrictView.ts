@@ -1,7 +1,11 @@
+import { worldTiers } from '../levels/districts/types';
 // Assembly/reference pattern adapted from folio-2025 World.js / References.js (Bruno Simon, MIT).
 import {
   BoxGeometry,
   PlaneGeometry,
+  Path,
+  Shape,
+  ShapeGeometry,
   Sprite,
   SpriteMaterial,
   Box3,
@@ -11,6 +15,10 @@ import {
   Frustum,
   Matrix4,
   Sphere,
+  Raycaster,
+  type Intersection,
+  type PerspectiveCamera,
+  Vector2,
   Vector3,
   InstancedMesh,
   Mesh,
@@ -24,11 +32,12 @@ import { attribute, luminance, uniform } from 'three/tsl';
 import type { DistrictWorld } from "../sim/world/DistrictWorld";
 import type { PushProp } from "../sim/interact/PropSystem";
 import { ROOFED, type DistrictAssets } from "../assets/DistrictAssets";
+import { spinNodes } from "../data/spinNodes";
 import { buildingDoors, doorwayOf, doorZone, doorSwingS } from "../data/buildingDoors";
 import type { Materials } from "./Materials";
 import { anchorsFor, placedLightId } from '../data/placedLights';
 import { worldAssets } from "../assets/worldDefinitions";
-import manifest from "../assets/manifest.json";
+import manifest from "../assets/manifest.json" with { type: 'json' };
 import type { AssetDef } from "../assets/types";
 import { InstancedGroup } from "./InstancedGroup";
 import { Grass, windPhase } from "./Grass";
@@ -39,8 +48,12 @@ import { AmbientLife } from './AmbientLife';
 import { Foliage } from './Foliage';
 import { GroundField } from './GroundField';
 import { pickLod, propLod, initialDistrictLods, lodPolicy, type Lod } from './lodPolicy';
-import { seeThrough } from './SeeThrough';
+import { occluderMinHeight, seeThrough } from './SeeThrough';
+import { stripStrayDecorations } from './decorationFilter';
 import type { PaletteToken } from '../data/palette';
+import { layoutTerrainChunks, terrainPrefetchSeconds } from '../sim/world/TerrainChunks';
+import { TerrainView } from './TerrainView';
+import { batchPerimeterPosts } from './PerimeterPosts';
 
 const crownTokens = new Map<string, [PaletteToken, PaletteToken]>(Object.values(worldAssets).flatMap(asset => asset.foliage ? [[asset.foliage.colors.join(':'), asset.foliage.tokens ?? ['foliageDark', 'foliageLight']]] : []));
 // Repeated fence panels dominated V1 (109k faces in each view/shadow pass).
@@ -50,12 +63,13 @@ const privacyFenceLodPolicy = { lod1From: 6, lod2From: 45, hysteresis: 2 };
  * even up close; the E20 rescue peak at the Grove Market otherwise spends ~100 k of the 500 k phone budget on one building. */
 const heavyOnLow = (id: string) => ((worldAssets[id] as { authoredLodTriangles?: { lod1?: number } }).authoredLodTriangles?.lod1 ?? 0) >= 50_000;
 
-interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; id: string; decay?: string; lit: boolean; loaded: boolean; nearLoaded: boolean; farLoaded: boolean; bands: (Lod | undefined)[] }
+interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; /** Local footprint of LOD0 (centre offset and half extents): occluder tests use the real oriented box, not the longest side squared. */ foot: { cx: number; cz: number; hx: number; hz: number }; id: string; decay?: string; lit: boolean; loaded: boolean; nearLoaded: boolean; farLoaded: boolean; heroShown: Lod; bands: (Lod | undefined)[] }
 /** Shared static instances; detailed prototypes stream only into the close view. */
 export class DistrictView extends Group {
   readonly spots = new Map<string, CameraPose>();
   readonly batches: InstancedGroup[] = [];
   private readonly dressingBatches: InstancedGroup[] = [];
+  private readonly dressingEntries: { batch: InstancedGroup; refs: Object3D[]; origin: [number, number]; center: Vector3; radius: number }[] = [];
   readonly windows: Mesh[] = [];
   private readonly machineGuns: { root: Object3D; gun: Object3D; muzzle: Object3D }[] = [];
   /** HMG nests retain their authored gun/muzzle hierarchy so shots rotate the
@@ -88,7 +102,14 @@ export class DistrictView extends Group {
   private readonly districtRoots: { root: Group; bounds: Box3 }[] = [];
   /** The drawn ground (baked roads, paving, lawns) for tyre contacts: see GroundField. */
   readonly ground = new GroundField();
+  private terrain?: TerrainView;
+  private terrainHorizon?: Group;
+  terrainState() { return this.terrain?.snapshot() ?? null; }
+  /** Borrowed geometry/materials: the caller warms and detaches this copy. */
+  horizonForWarmup(): Group | null { return this.terrainHorizon?.clone(true) ?? null; }
+  private readonly mergedLayout: Mesh[] = [];
   private readonly ownedGeometry: BufferGeometry[] = [];
+  private readonly perimeterPosts: InstancedMesh[] = [];
   private readonly ownedMaterials: Material[] = [];
   private readonly windowMask = new MeshBasicNodeMaterial({ color: "#ffffff" });
   private readonly black = new MeshBasicNodeMaterial({ color: "#000000" });
@@ -106,6 +127,8 @@ export class DistrictView extends Group {
     private readonly instanceCapacity?: number,
   ) {
     super();
+    // The hole is module-global: a previous district (scene) must not leave it half open.
+    seeThrough.strength.value = 0; seeThrough.cover.value = 0;
     this.name = "sunset-grove"; this.matrixAutoUpdate = false;
     this.foliage = new Foliage(materials, phase); this.add(this.foliage); this.foliage.setQuality(low);
   }
@@ -113,7 +136,16 @@ export class DistrictView extends Group {
     this.phase.value = 0;
     if (this.world.composition.id === 'L1') { this.ambient = new AmbientLife(this.materials); this.add(this.ambient); }
     // Backdrop reaches beyond the camera far plane; it is scenery outside the bounded town.
-    const terrain = new PlaneGeometry(2400, 2400);
+    // D-CROSSING (L9-A2): the collapsed-road gully (x 508..524, z -90..90, floor 5.5 m down) must not be covered by it.
+    const gully = this.world.composition.districts.find(d => d.id === 'D-CROSSING');
+    let terrain: BufferGeometry = new PlaneGeometry(2400, 2400);
+    if (gully) {
+      const outer = new Shape([new Vector2(-1200, -1200), new Vector2(1200, -1200), new Vector2(1200, 1200), new Vector2(-1200, 1200)]);
+      const [x0, x1, z0, z1] = [508 + gully.origin[0], 524 + gully.origin[0], -90 + gully.origin[1], 90 + gully.origin[1]];
+      // The mesh is rotated -90 degrees about X, which maps shape y to world -z.
+      outer.holes.push(new Path([new Vector2(x0, -z1), new Vector2(x0, -z0), new Vector2(x1, -z0), new Vector2(x1, -z1)]));
+      terrain = new ShapeGeometry(outer);
+    }
     this.ownedGeometry.push(terrain);
     const backdrop = new Mesh(terrain, this.materials.get('grass'));
     backdrop.rotation.x = -Math.PI / 2; backdrop.position.y = -.12; backdrop.receiveShadow = true;
@@ -132,12 +164,18 @@ export class DistrictView extends Group {
         slab.updateMatrixWorld(true); this.ground.add(slab);
       }
     }
+    const posts: [number, number, number][] = [];
     for (const fence of lab && !lab.perimeter ? [] : this.world.boundaries) {
       const x = (fence.min[0] + fence.max[0]) / 2, z = (fence.min[2] + fence.max[2]) / 2;
       const width = fence.max[0] - fence.min[0], depth = fence.max[2] - fence.min[2];
       for (const y of [.35, .8]) this.box(perimeter, 'picketWhite', [width, .15, depth], [x, y, z]);
       const length = Math.max(width, depth), count = Math.ceil(length / 2);
-      for (let i = 0; i <= count; i++) this.box(perimeter, 'woodWarm', [.16, 1.05, .16], [width > depth ? fence.min[0] + length * i / count : x, .525, depth > width ? fence.min[2] + length * i / count : z], false);
+      for (let i = 0; i <= count; i++) posts.push([width > depth ? fence.min[0] + length * i / count : x, .525, depth > width ? fence.min[2] + length * i / count : z]);
+    }
+    if (posts.length) {
+      const geometry = new BoxGeometry(.16, 1.05, .16); this.ownedGeometry.push(geometry);
+      this.perimeterPosts.push(...batchPerimeterPosts(posts, geometry, this.materials.get('woodWarm')));
+      perimeter.add(...this.perimeterPosts);
     }
     // Placement asset ids are known from the layout JSON: start their downloads now instead of
     // after each multi-megabyte layout GLB has arrived and been parsed.
@@ -146,11 +184,11 @@ export class DistrictView extends Group {
       if (p.minTier > this.world.composition.tier || p.maxTier < this.world.composition.tier) continue;
       const distance = focus ? Math.hypot(p.position[0] + d.origin[0] - focus.x, p.position[2] + d.origin[1] - focus.z) : 0;
       const lods = initialLods.get(p.assetId) ?? new Set<Lod>();
-      for (const lod of initialDistrictLods(this.low, worldAssets[p.assetId]?.category === 'prop', distance, focus !== undefined, heroAtSpawn)) lods.add(lod);
+      for (const lod of initialDistrictLods(this.low, worldAssets[p.assetId]?.category === 'prop', distance, focus !== undefined)) lods.add(lod);
       initialLods.set(p.assetId, lods);
       // These tiers are required by prepare() before revealing phone/L6 play.
       // Start their decode beside the layout GLB, rather than after it finishes.
-      if (this.low && worldAssets[p.assetId]?.category !== 'prop') this.registry.prefetch(p.assetId, 'lod1', p.decay);
+      if (this.low && worldAssets[p.assetId]?.category !== 'prop' && (this.world.composition.id !== 'L7' || distance <= 16)) this.registry.prefetch(p.assetId, 'lod1', p.decay);
       if (this.world.composition.id === 'L6' && !this.low) {
         this.registry.prefetch(p.assetId, 'lod0', p.decay);
         this.registry.prefetch(p.assetId, 'lod1', p.decay);
@@ -171,9 +209,10 @@ export class DistrictView extends Group {
           new Vector3(d.origin[0] + Math.max(...d.layout.bounds.map(p => p[0])), Math.max(0, ...d.layout.placements.map(p => p.visualAabb.max[1])) + 2, d.origin[1] + Math.max(...d.layout.bounds.map(p => p[1]))),
         ) });
         const scenes = lab && !lab.glb ? [] : await Promise.all(
-          Array.from({ length: this.world.composition.tier + 1 }, (_, tier) =>
+          // Preserve legacy W0–W5 loading; W6 geometry is opt-in by an authored layer.
+          worldTiers.filter(tier => tier <= this.world.composition.tier && tier <= Math.max(5, ...d.layout.layers.map(layer => layer.tier))).map(tier =>
             this.registry.glb(
-              `/assets/layouts/${d.id}.${tier === 0 ? "base" : `w${tier}`}.glb`,
+              `/assets/layouts/${d.id}.${tier === 0 ? d.layout.terrainChunks?.length ? 'horizon' : 'base' : `w${tier}`}.glb`,
             ),
           ),
         );
@@ -181,14 +220,38 @@ export class DistrictView extends Group {
           const clone = scene.clone(true);
           // Baked layout nodes never move; avoid recomposing every hidden placement marker each frame.
           clone.traverse(o => { o.updateMatrix(); o.matrixAutoUpdate = false; });
+          // PO 2026-10-12: the Grove back alleys were baked in the near-black UI token and read as a hole in the ground next to the
+          // fences (shadowed they went pure black). Draw that ground like asphalt; the baked GLB stays unchanged.
+          if (d.id === 'D-GROVE') {
+            const alley = this.materials.world('asphalt').seeThrough();
+            clone.traverse(o => { if (o instanceof Mesh && typeof o.userData.assetId !== 'string' && (o.material as { token?: string }).token === 'uiDark') o.material = alley; });
+          }
           clone.traverse((o) => {
             if (d.decay.removed.includes(o.name)) o.visible = false;
           });
+          // PO 10-13 "Flowers growing on stone": baked daisies on paths/paving are dropped (shared soil rule with the sim).
+          stripStrayDecorations(clone, d.layout);
+          this.stripLayoutMarkers(clone);
           root.add(clone);
+          if (d.layout.terrainChunks?.length) this.terrainHorizon = clone;
         }
         // Base paving (tier 0): roads top out at 5 cm, road paint and kerbs above them; decay-removed nodes are not ground.
         root.updateMatrixWorld(true);
-        root.children.at(-scenes.length)?.traverse(o => { if (o instanceof Mesh && !(o instanceof InstancedMesh) && o.visible && typeof o.userData.assetId !== 'string') this.ground.add(o); });
+        for (const groundLayer of root.children.slice(-scenes.length)) {
+          groundLayer.traverse(o => {
+            if (o instanceof Mesh && !(o instanceof InstancedMesh) && o.visible && typeof o.userData.assetId !== 'string') { this.ground.add(o); this.mergedLayout.push(o); }
+            // Baked ground and placement markers are static in every tier.
+            // Their world transforms were composed above; camera frames need no recomposition.
+            o.matrixWorldAutoUpdate = false;
+          });
+          this.freezeLayout(groundLayer);
+        }
+        if (d.layout.terrainChunks?.length && scenes.length) {
+          this.terrain = new TerrainView(layoutTerrainChunks(d.layout, d.origin), d.layout.terrainChunks[0].size, id => `/assets/layouts/${d.id}.chunks/${id}.glb`, this.registry, this.low ? 'low' : 'high');
+          this.add(this.terrain);
+          this.terrain.update(focus ? [focus.x, focus.z] : this.world.playerStart);
+          await this.terrain.ready();
+        }
         const references = new Map<string, Object3D[]>();
         const crowns = new Map<string, Object3D[]>();
         const base = scenes[0];
@@ -220,10 +283,10 @@ export class DistrictView extends Group {
         });
         // L2/L3 author their dressing (and L3 its per-placement decay variants) in the loaded layout copy. Their
         // references must use those placements, rather than the unchanged baked GLB empties.
-        if (this.world.composition.id === 'L6' || this.world.composition.id === 'L5' || this.world.composition.id === 'L4' || this.world.composition.id === 'L3' || this.world.composition.id === 'L2' || lab) {
+        if (d.layout.terrainChunks?.length || this.world.composition.id === 'L7' || this.world.composition.id === 'L6' || this.world.composition.id === 'L5' || this.world.composition.id === 'L4' || this.world.composition.id === 'L3' || this.world.composition.id === 'L2' || lab) {
           references.clear();
           // Scene Lab and L2: crowns follow kept placements, including station canopy clearance.
-          if (lab || this.world.composition.id === 'L2') {
+          if (d.layout.terrainChunks?.length || lab || this.world.composition.id === 'L2') {
             crowns.clear();
             for (const p of d.decay.placements) for (const crown of worldAssets[p.assetId]?.foliage?.crowns ?? []) {
               const key = worldAssets[p.assetId].foliage!.colors.join(':'), ref = new Object3D();
@@ -261,7 +324,11 @@ export class DistrictView extends Group {
             if (!worldAssets[id]) {
               // Non-world dressing (decals, kits, emergency vehicles) has no LOD bands: the low tier takes its LOD2 when authored.
               const prototype = await this.registry.asset(id, power === 'true', this.low ? 'lod2' : 'lod0', decay);
-              const batch = new InstancedGroup(prototype, refs); this.dressingBatches.push(batch); root.add(batch); return;
+              const batch = new InstancedGroup(prototype, refs.slice(), this.instanceCapacity ?? refs.length);
+              if (this.low && ['L3', 'L7'].includes(this.world.composition.id)) batch.traverse(node => { if (node instanceof Mesh) node.castShadow = false; });
+              const bounds = new Box3().setFromObject(prototype).getBoundingSphere(new Sphere());
+              this.dressingEntries.push({ batch, refs, origin: d.origin, center: bounds.center, radius: bounds.radius });
+              this.dressingBatches.push(batch); root.add(batch); this.freezeBatch(batch); return;
             }
             const nearLoaded = initialLods.get(id)?.has('lod1') ?? true;
             const farLoaded = initialLods.get(id)?.has('lod2') ?? true;
@@ -278,11 +345,11 @@ export class DistrictView extends Group {
               if (triangles > 30000) for (const batch of [hero, near]) batch.traverse(node => { if (node instanceof Mesh) node.castShadow = false; });
             }
             for (const batch of [hero, near, far]) {
-              batch.name = `inst:${id}`; this.batches.push(batch); root.add(batch);
+              batch.name = `inst:${id}`; this.batches.push(batch); root.add(batch); this.freezeBatch(batch);
               batch.traverse(o => { if (o instanceof Mesh && o.name === 'window-light') this.windows.push(o); });
             }
-            const dimensions = new Box3().setFromObject(prototypes[0]).getSize(new Vector3());
-            this.lodBatches.push({ hero, near, far, refs, id, decay, lit: power === 'true', loaded: false, nearLoaded, farLoaded, bands: [], origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55, half: Math.max(dimensions.x, dimensions.z) / 2 });
+            const footBox = new Box3().setFromObject(prototypes[0]), dimensions = footBox.getSize(new Vector3()), footCenter = footBox.getCenter(new Vector3());
+            this.lodBatches.push({ foot: { cx: footCenter.x, cz: footCenter.z, hx: dimensions.x / 2, hz: dimensions.z / 2 }, hero, near, far, refs, id, decay, lit: power === 'true', loaded: false, nearLoaded, farLoaded, heroShown: nearLoaded ? 'lod1' : 'lod2', bands: [], origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55, half: Math.max(dimensions.x, dimensions.z) / 2 });
           }),
         );
         // Dynamic nav-blockers use the same positions/extents as their Rapier colliders.
@@ -310,7 +377,7 @@ export class DistrictView extends Group {
               0,
               p[1] + d.origin[1],
             ];
-          for (let tier = 0; tier <= 5; tier++)
+          for (const tier of worldTiers)
             this.spots.set(`${d.id}/W${tier}/${spot.name}`, {
               target,
               position: [
@@ -354,7 +421,7 @@ export class DistrictView extends Group {
   }
 
   /** Drawn ground at a world point (null outside the baked district ground). */
-  groundAt(x: number, z: number): number | null { return this.ground.height(x, z); }
+  groundAt(x: number, z: number): number | null { return this.terrain?.height(x, z) ?? this.ground.height(x, z); }
   private restOnGround(ref: Object3D, id: string, origin: [number, number]): void {
     const size = (manifest as AssetDef[]).find(a => a.id === id)?.dimensions; if (!size || ref.position.y > .01 || /^veh\.(train|helicopter)/.test(id)) return;
     const hx = size.x * ref.scale.x * .32, hz = size.z * ref.scale.z * .4, c = Math.cos(ref.rotation.y), s = Math.sin(ref.rotation.y);
@@ -397,9 +464,15 @@ export class DistrictView extends Group {
   }
   setQuality(tier: 'high' | 'low'): void {
     if (this.low !== (tier === 'low')) { this.low = tier === 'low'; this.cameraPosition = [Infinity, Infinity, Infinity]; }
+    this.terrain?.setQuality(tier);
     for (const grass of this.grass) grass.setQuality(tier === 'low', tier === 'low' ? this.materials.look.values.grassDensityLow : this.materials.look.values.grassDensity);
     this.foliage.setQuality(tier === 'low');
     this.ambient?.setQuality(tier === 'low');
+    // L3's merged rail/fence slabs span the district. Keep their visible art, without a second low-tier shadow submission.
+    if (this.world.composition.id === 'L3') for (const mesh of this.mergedLayout) {
+      mesh.userData.qualityCastShadow ??= mesh.castShadow;
+      mesh.castShadow = tier === 'high' && mesh.userData.qualityCastShadow;
+    }
     // Measured L6 cost: many small prop meshes render again into the sun shadow map.
     // Low preserves building/vehicle/hero shadows and omits detailed prop shadow casters.
     for (const batch of this.batches) if (worldAssets[batch.name.slice(5)].category === 'prop') batch.traverse(node => {
@@ -410,28 +483,136 @@ export class DistrictView extends Group {
   updateFoliage(view: View, player?: { x: number; y: number; z: number }, target?: { x: number; y: number; z: number }): void {
     this.foliage.update(view, player, target); if (player) this.updateRoofs(player);
     // Solid occluders open the shared hole only while one of them is on the camera-to-courier ray.
-    const goal = player && this.foliage.reveal && this.occluded(view, player) ? 1 : 0;
-    seeThrough.strength.value += (goal - seeThrough.strength.value) * (1 - Math.exp(-10 * this.frameSeconds));
+    // PO 10-12 (L4 convoy ride): a ~1.7 m hole left the vehicle and group hidden behind a tall apartment block. The solid-occluder hole now
+    // covers the group's real extent in screen units (about 2.8 m on foot, a vehicle length while driving) and the depth gate reaches the far end.
+    seeThrough.floor.value = player ? Math.max(0, player.y - .7) : 0;
+    if (player) {
+      const distance = view.camera.position.distanceTo(this.holeTarget.set(player.x, player.y, player.z)), screenHeight = 2 * distance * Math.tan(view.camera.fov * Math.PI / 360);
+      const extent = (view.driving ? 9 : 4.5) * (view.camera.aspect < 1 ? 1.25 : 1);
+      seeThrough.solidRadius.value = Math.min(.7, Math.max(seeThrough.radius.value, extent / screenHeight));
+      // Test reference: every solid occluder nearer than the player is cut, i.e. the unobstructed picture the 80 % visibility check compares against.
+      if (this.seeThroughReference) { seeThrough.solidRadius.value = 3; seeThrough.strength.value = 1; return; }
+      if (view.driving && this.foliage.reveal) seeThrough.depth.value -= 3;
+    }
+    if (this.seeThroughOff) { seeThrough.strength.value = 0; seeThrough.cover.value = 0; return; }
+    const hugged = Boolean(player && this.foliage.reveal && this.huggedOccluder(view));
+    this.occluderId = hugged ? 'hugged' : '';
+    const goal = player && this.foliage.reveal && (hugged || this.occluded(view, player)) ? 1 : 0;
+    const blend = 1 - Math.exp(-(hugged ? 40 : 10) * this.frameSeconds);
+    seeThrough.strength.value += (goal - seeThrough.strength.value) * blend;
     if (Math.abs(goal - seeThrough.strength.value) < .002) seeThrough.strength.value = goal;
+    // Opens fast (a roof filling the frame must not linger while the cut eases open, esp. on slow frames), closes at the ordinary rate.
+    seeThrough.cover.value += (+hugged - seeThrough.cover.value) * blend;
+    if (Math.abs(+hugged - seeThrough.cover.value) < .002) seeThrough.cover.value = +hugged;
   }
+  /** How far in front of the lens a solid occluder counts as filling the view. Measured at L4 Kessler's Hardware
+   * (PO 2026-10-12 blank viewport): the 35° follow camera saw its pitched roof 2.5-6 m away in every screen quarter. */
+  static readonly hugDistance = 8;
+  private readonly lensRay = new Vector3();
+  private readonly lensPoint = new Vector3();
+  private static readonly footFrames = new WeakMap<Object3D, { entry: LodBatch; px: number; pz: number; qy: number; qw: number; sx: number; sz: number; frame: [number, number, number, number] }>();
+  /** Local frame of a placement's real footprint (yaw only): `[cos, sin, centre x, centre z]` on the district plane. */
+  private static footFrame(entry: LodBatch, ref: Object3D): [number, number, number, number] {
+    const cached = this.footFrames.get(ref);
+    // Placement geometry is static; pushed props invalidate by their actual transform.
+    // Reuse the frame across the camera ray and all forty lens samples.
+    if (cached && cached.entry === entry && cached.px === ref.position.x && cached.pz === ref.position.z && cached.qy === ref.quaternion.y && cached.qw === ref.quaternion.w && cached.sx === ref.scale.x && cached.sz === ref.scale.z) return cached.frame;
+    const yaw = 2 * Math.atan2(ref.quaternion.y, ref.quaternion.w), c = Math.cos(yaw), s = Math.sin(yaw), { cx, cz } = entry.foot;
+    const frame: [number, number, number, number] = [c, s, ref.position.x + entry.origin[0] + cx * ref.scale.x * c + cz * ref.scale.z * s, ref.position.z + entry.origin[1] - cx * ref.scale.x * s + cz * ref.scale.z * c];
+    this.footFrames.set(ref, { entry, px: ref.position.x, pz: ref.position.z, qy: ref.quaternion.y, qw: ref.quaternion.w, sx: ref.scale.x, sz: ref.scale.z, frame });
+    return frame;
+  }
+  /** A tall solid placement sits right in front of the lens: points 1..hugDistance m along the centre and
+   * the four quarter-screen rays (at least three of the five) fall inside its conservative upright box. */
+  private huggedOccluder(view: View): boolean {
+    const camera = view.camera, o = camera.position, near: { frame: [number, number, number, number]; sx: number; sz: number; hx: number; hz: number; y0: number; y1: number }[] = [];
+    for (const entry of this.lodBatches) {
+      if (entry.height < occluderMinHeight || worldAssets[entry.id].foliage) continue;
+      for (const ref of entry.refs) {
+        const x = ref.position.x + entry.origin[0], z = ref.position.z + entry.origin[1], half = entry.half * Math.max(ref.scale.x, ref.scale.z);
+        if (Math.abs(x - o.x) < half + DistrictView.hugDistance && Math.abs(z - o.z) < half + DistrictView.hugDistance) near.push({ frame: DistrictView.footFrame(entry, ref), sx: ref.scale.x, sz: ref.scale.z, hx: entry.foot.hx, hz: entry.foot.hz, y0: ref.position.y, y1: ref.position.y + entry.height * ref.scale.y });
+      }
+    }
+    if (!near.length) return false;
+    let blocked = 0;
+    for (const [sx, sy] of [[0, 0], [-.5, -.5], [.5, -.5], [-.5, .5], [.5, .5]]) {
+      this.lensRay.set(sx, sy, .5).unproject(camera).sub(o).normalize();
+      for (let d = 1; d <= DistrictView.hugDistance; d++) {
+        const p = this.lensPoint.copy(o).addScaledVector(this.lensRay, d);
+        if (near.some(b => {
+          if (p.y <= b.y0 + .3 || p.y >= b.y1) return false;
+          const [c, s, x, z] = b.frame, dx = p.x - x, dz = p.z - z;
+          return Math.abs((dx * c - dz * s) / b.sx) < b.hx && Math.abs((dx * s + dz * c) / b.sz) < b.hz;
+        })) { blocked++; break; }
+      }
+    }
+    // Most of the frame, not a wall at one edge: a street corner keeps its ordinary courier-sized hole.
+    return blocked >= 3;
+  }
+  /** Debug/test: open the see-through hole across the whole screen (reference frame for visibility checks). */
+  seeThroughReference = false;
+  /** Scene Lab: solid occluders never open (the uncut picture the cut-pixel gate diffs against). */
+  seeThroughOff = false;
   private frameSeconds = 0;
+  /** Scene Lab: the placement that currently opens the hole (`hugged` when one fills the lens). */
+  occluderId = '';
+  private readonly holeTarget = new Vector3();
   /** Segment (camera to chest) against conservative upright boxes of the tall instanced placements nearby. */
   private occluded(view: View, player: { x: number; y: number; z: number }): boolean {
     const o = view.camera.position, dx = player.x - o.x, dy = player.y + .2 - o.y, dz = player.z - o.z;
     for (const entry of this.lodBatches) {
-      if (entry.height < 1.1 || worldAssets[entry.id].foliage) continue;
+      if (entry.height < occluderMinHeight || worldAssets[entry.id].foliage) continue;
       for (const ref of entry.refs) {
-        const x = ref.position.x + entry.origin[0], z = ref.position.z + entry.origin[1];
+        // Reject distant placements before deriving their oriented centre. Include the
+        // entire centre offset so this preserves the exact 24 m test below at every yaw.
+        const offset = Math.abs(entry.foot.cx * ref.scale.x) + Math.abs(entry.foot.cz * ref.scale.z);
+        if (Math.abs(ref.position.x + entry.origin[0] - player.x) > 24 + offset || Math.abs(ref.position.z + entry.origin[1] - player.z) > 24 + offset) continue;
+        const [c, sn, x, z] = DistrictView.footFrame(entry, ref);
         if (Math.abs(x - player.x) > 24 || Math.abs(z - player.z) > 24) continue;
-        const half = entry.half * Math.max(ref.scale.x, ref.scale.z);
+        // Slab test in the placement's local frame (oriented footprint, real height).
+        const ox = o.x - x, oz = o.z - z, sx = ref.scale.x, sz = ref.scale.z;
+        const lox = (ox * c - oz * sn) / sx, loz = (ox * sn + oz * c) / sz, ldx = (dx * c - dz * sn) / sx, ldz = (dx * sn + dz * c) / sz;
         let enter = 0, exit = 1;
-        for (const [origin, delta, min, max] of [[o.x, dx, x - half, x + half], [o.y, dy, ref.position.y, ref.position.y + entry.height * ref.scale.y], [o.z, dz, z - half, z + half]]) {
+        for (let axis = 0; axis < 3; axis++) {
+          const origin = axis === 0 ? lox : axis === 1 ? o.y : loz;
+          const delta = axis === 0 ? ldx : axis === 1 ? dy : ldz;
+          const min = axis === 0 ? -entry.foot.hx : axis === 1 ? ref.position.y : -entry.foot.hz;
+          const max = axis === 0 ? entry.foot.hx : axis === 1 ? ref.position.y + entry.height * ref.scale.y : entry.foot.hz;
           if (Math.abs(delta) < 1e-6) { if (origin < min || origin > max) { exit = -1; break; } continue; }
           const a = (min - origin) / delta, b = (max - origin) / delta;
           enter = Math.max(enter, Math.min(a, b)); exit = Math.min(exit, Math.max(a, b));
           if (enter > exit) break;
         }
-        if (enter <= exit && enter < .98) return true;
+        if (enter <= exit && enter < .98) { this.occluderId = `${entry.id}@${(x).toFixed(1)},${(z).toFixed(1)}`; return true; }
+      }
+    }
+    return false;
+  }
+  private readonly barRay = new Raycaster();
+  private readonly barBox = new Box3();
+  private readonly barHit = new Vector3();
+  private readonly barHits: Intersection[] = [];
+  private readonly barChecked = new Set<InstancedGroup>();
+  /** Enemy bars test drawn solid geometry: navigation boxes intentionally omit roofs and upper walls. */
+  occludesBar(camera: PerspectiveCamera, target: Vector3): boolean {
+    this.barRay.set(camera.position, this.barHit.copy(target).sub(camera.position).normalize());
+    this.barRay.far = camera.position.distanceTo(target) - .01;
+    this.barChecked.clear();
+    for (const entry of this.lodBatches) {
+      if (entry.height < occluderMinHeight || worldAssets[entry.id].foliage || !worldAssets[entry.id].world.solid) continue;
+      for (let i = 0; i < entry.refs.length; i++) {
+        const ref = entry.refs[i], band = entry.bands[i];
+        if (band === undefined || ref.userData.propEnabled === false) continue;
+        const x = ref.position.x + entry.origin[0], z = ref.position.z + entry.origin[1];
+        const half = entry.half * Math.max(ref.scale.x, ref.scale.z);
+        this.barBox.min.set(x - half, ref.position.y, z - half);
+        this.barBox.max.set(x + half, ref.position.y + entry.height * ref.scale.y, z + half);
+        if (!this.barRay.ray.intersectBox(this.barBox, this.barHit) || this.barHit.distanceTo(camera.position) > this.barRay.far) continue;
+        const batch = band === 'lod0' ? entry.hero : band === 'lod1' ? entry.near : entry.far;
+        if (this.barChecked.has(batch)) continue;
+        this.barChecked.add(batch); this.barHits.length = 0;
+        this.barRay.intersectObject(batch, true, this.barHits);
+        if (this.barHits.length) return true;
       }
     }
     return false;
@@ -443,16 +624,21 @@ export class DistrictView extends Group {
       if (!ROOFED.has(entry.id)) continue;
       const { x, y, z } = worldAssets[entry.id].dimensions;
       for (const ref of entry.refs) {
-        ref.updateWorldMatrix(true, false);
-        ref.worldToLocal(this.roofPoint.set(player.x - entry.origin[0], player.y ?? 0, player.z - entry.origin[1]));
-        const inside = Math.abs(this.roofPoint.x) < x / 2 - .2 && Math.abs(this.roofPoint.z) < z / 2 - .2 && this.roofPoint.y >= -.1 && this.roofPoint.y < y;
+        // Reject distant roofs before updating/inverting their placement matrices.
+        // This sphere conservatively encloses the occupied prism at any yaw/scale.
+        const radius = Math.hypot(x / 2, y, z / 2) * Math.max(ref.scale.x, ref.scale.y, ref.scale.z);
+        let inside = false;
+        if (Math.hypot(player.x - entry.origin[0] - ref.position.x, player.z - entry.origin[1] - ref.position.z) <= radius) {
+          ref.worldToLocal(this.roofPoint.set(player.x - entry.origin[0], player.y ?? 0, player.z - entry.origin[1]));
+          inside = Math.abs(this.roofPoint.x) < x / 2 - .2 && Math.abs(this.roofPoint.z) < z / 2 - .2 && this.roofPoint.y >= -.1 && this.roofPoint.y < y;
+        }
         if (Boolean(ref.userData.roofHidden) === inside) continue;
         for (const group of [entry.hero, entry.near, entry.far]) group.roofVisible(!inside, ref);
       }
     }
   }
   /** Door openness (0 closed .. 1 open) per doored placement, eased toward its target. */
-  private readonly doorOpen = new Map<Object3D, { entry: LodBatch; k: number; applied: number }>();
+  private readonly doorOpen = new Map<Object3D, { entry: LodBatch; k: number; applied: number; way: ReturnType<typeof doorwayOf> }>();
   /**
    * Buildings with animated street doors (src/data/buildingDoors.ts) swing their leaves open while someone stands in or
    * walks up to the doorway (PO 2026-10-08: "door stays closed while the person goes out and in") and close behind them.
@@ -467,8 +653,13 @@ export class DistrictView extends Group {
     for (const entry of doored) {
       const def = buildingDoors[entry.id];
       for (const ref of entry.refs) {
-        let state = this.doorOpen.get(ref); if (!state) this.doorOpen.set(ref, state = { entry, k: 0, applied: -1 });
-        const way = doorwayOf({ assetId: entry.id, position: [ref.position.x, ref.position.y, ref.position.z], yaw: 2 * Math.atan2(ref.quaternion.y, ref.quaternion.w), scale: [ref.scale.x, ref.scale.y, ref.scale.z] }, entry.origin);
+        // Authored building placements do not move; only their leaf instance buffers do.
+        let state = this.doorOpen.get(ref);
+        if (!state) {
+          const way = doorwayOf({ assetId: entry.id, position: [ref.position.x, ref.position.y, ref.position.z], yaw: 2 * Math.atan2(ref.quaternion.y, ref.quaternion.w), scale: [ref.scale.x, ref.scale.y, ref.scale.z] }, entry.origin);
+          this.doorOpen.set(ref, state = { entry, k: 0, applied: -1, way });
+        }
+        const way = state.way;
         const open = !!way && (holds.some(h => Math.hypot(h.x - way.centre.x, h.z - way.centre.z) < 1) || list.some(b => doorZone(way, b)));
         state.k = Math.max(0, Math.min(1, state.k + (open ? 1 : -1) * seconds / doorSwingS));
         const eased = state.k * state.k * (3 - 2 * state.k);
@@ -487,13 +678,14 @@ export class DistrictView extends Group {
         for (const group of [entry.hero, entry.near, entry.far]) group.pose('gateArm', Math.PI / 2 * open, ref, 'x');
       }
   }
-  private metroShutterClosed = -1;
-  /** L5 closes the existing Metro shutter from its authored half-open offset (1.2 m) onto the platform. */
+  /** L5 raises the authored half-open leaf to 1.9 m clearance, then lowers its bar onto the platform. */
   updateMetroShutter(closed: number): void {
-    if (closed === this.metroShutterClosed) return;
-    this.metroShutterClosed = closed;
+    closed = Math.max(0, Math.min(1, closed));
     for (const entry of this.lodBatches) if (entry.id === 'bld.metro-entrance') for (const ref of entry.refs) {
-      for (const group of [entry.hero, entry.near, entry.far]) group.slide('shutter', -1.2 * closed, ref);
+      // Cache per placement so a late-streamed canopy still receives the current pose.
+      if (ref.userData.metroShutterClosed === closed) continue;
+      ref.userData.metroShutterClosed = closed;
+      for (const group of [entry.hero, entry.near, entry.far]) group.slide('shutter', .7 - 1.9 * closed, ref);
     }
   }
   /** Openness of every doored placement (Scene Lab door gate). */
@@ -512,9 +704,46 @@ export class DistrictView extends Group {
   }
   advance(seconds: number): void {
     this.frameSeconds = seconds; this.phase.value += seconds; this.labelTime += seconds;
+    this.updateSpin(seconds);
   }
+  private spinActive = false;
+  private spinLevel = 0;
+  private readonly spinAngles = new Map<string, number>();
+  private cureCollected = false;
+  /** The pedestal contains the terminal canister; consumed story props never remain beside the carried copy. */
+  setCureCollected(collected: boolean): void {
+    if (this.cureCollected === collected) return;
+    this.cureCollected = collected;
+    for (const entry of this.lodBatches) if (entry.id === 'prop.cure-canister-pedestal') this.dirtyEntries.add(entry);
+  }
+  /** Dispersal running (finale) or idle: fans, turbine rotors and valve wheels pick their rate from this. */
+  setDispersalActive(on: boolean): void { this.spinActive = on; }
+  /** Scene Lab reads the same rotation nodes that are written to the rendered batches. */
+  dispersalProbe() { return { active: this.spinActive, level: this.spinLevel, angles: Object.fromEntries(this.spinAngles) }; }
+  /** One shared angle per rotation node, written only into that node's split batch (no extra draw calls per placement). */
+  private updateSpin(seconds: number): void {
+    this.spinLevel += (+this.spinActive - this.spinLevel) * (1 - Math.exp(-1.2 * seconds));
+    for (const entry of this.lodBatches) {
+      const nodes = spinNodes[entry.id];
+      if (!nodes || !entry.refs.length) continue;
+      for (const spin of nodes) {
+        const key = `${entry.id}/${spin.node}`;
+        const rate = spin.idle + (spin.active - spin.idle) * this.spinLevel;
+        if (rate < 1e-4 && this.spinAngles.has(key)) continue;
+        const angle = ((this.spinAngles.get(key) ?? 0) + rate * seconds) % (Math.PI * 2);
+        this.spinAngles.set(key, angle);
+        for (const group of [entry.hero, entry.near, entry.far]) group.pose(spin.node, angle, undefined, spin.axis);
+      }
+    }
+  }
+  private lodPrefetchMetres = 0;
   /** Static matrices are repartitioned only when the camera moves; far props use LOD2. */
-  updateLods(view: View): void {
+  updateLods(view: View, velocity: { x: number; z: number } = { x: 0, z: 0 }): void {
+    this.lodPrefetchMetres = Math.hypot(velocity.x, velocity.z) * terrainPrefetchSeconds;
+    if (this.terrain) {
+      this.terrain.warm = this.warmHero; this.terrain.swap = this.swapSlot;
+      this.terrain.update([view.cameraTarget.x, view.cameraTarget.z], [velocity.x, velocity.z]);
+    }
     this.ambient?.focus.value.set(view.focus.x, view.focus.z);
     for (const tag of this.tags) {
       const position = tag.sprite.getWorldPosition(this.bounds.center);
@@ -533,20 +762,45 @@ export class DistrictView extends Group {
     this.cameraPosition = p.toArray(); this.cameraRotation = rotation; this.cameraAspect = view.camera.aspect; this.cameraHeight = view.viewportHeight; this.cameraGameLod = view.inspectionGameLod;
     this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(view.camera.projectionMatrix, view.camera.matrixWorldInverse));
     for (const entry of this.lodBatches) this.partition(entry, view);
+    for (const entry of this.dressingEntries) {
+      const { batch, refs, origin, center, radius } = entry, next: Object3D[] = [];
+      for (const ref of refs) {
+        this.bounds.center.copy(center).applyMatrix4(ref.matrix); this.bounds.center.x += origin[0]; this.bounds.center.z += origin[1];
+        this.bounds.radius = radius * Math.max(ref.scale.x, ref.scale.y, ref.scale.z);
+        if (this.frustum.intersectsSphere(this.bounds)) next.push(ref);
+      }
+      if (next.length === batch.references.length && next.every((ref, i) => ref === batch.references[i])) continue;
+      batch.references.length = 0; batch.references.push(...next); batch.visible = next.length > 0;
+      for (const child of batch.children) if (child instanceof InstancedMesh) child.count = next.length;
+      if (next.length) batch.update();
+    }
     this.dirtyEntries.clear();
   }
   private partition(entry: LodBatch, view: View): void {
     const { hero, near, far, refs, origin, height, radius } = entry;
-    hero.references.length = 0; near.references.length = 0; far.references.length = 0;
+    const selectedRefs = new Map([[hero, [] as Object3D[]], [near, [] as Object3D[]], [far, [] as Object3D[]]]);
     const foliage = (!!worldAssets[entry.id].foliage || /^prop\.(tree|bush|hedge)/.test(entry.id));
+    let prefetchNear = false, prefetchHero = false;
     for (const [index, ref] of refs.entries()) {
+      if (entry.id === 'prop.cure-canister-pedestal' && this.cureCollected) continue;
       if (foliage && index >= Math.ceil(refs.length * this.materials.look.values.foliageDensity)) continue;
       const x = ref.position.x + origin[0], z = ref.position.z + origin[1];
       this.bounds.center.set(x, ref.position.y + height * ref.scale.y / 2, z); this.bounds.radius = radius * Math.max(ref.scale.x, ref.scale.y, ref.scale.z);
-      if (!this.frustum.intersectsSphere(this.bounds)) continue;
       const distance = view.inspectionPose && !view.inspectionGameLod ? view.camera.position.distanceTo(this.bounds.center) : Math.hypot(x - view.cameraTarget.x, z - view.cameraTarget.z);
       // Bound detail by distance and projected size; preserve the independent low-tier policy.
-      const detailDistance = distance / (worldAssets[entry.id].category === 'prop' ? Math.min(1, radius / 5) : 1);
+      const prop = worldAssets[entry.id].category === 'prop', factor = prop ? Math.min(1, radius / 5) : 1;
+      const detailDistance = distance / factor;
+      // Warm only tiers reachable within the shared two-second travel horizon, before
+      // frustum entry or a band promotion can draw a coarser stand-in. Low props stay LOD2.
+      const policy = entry.id === 'prop.privacy-fence' ? privacyFenceLodPolicy : lodPolicy;
+      if (this.lodPrefetchMetres > 0) {
+        if (this.low) prefetchNear ||= !prop && !heavyOnLow(entry.id) && distance <= 16 + this.lodPrefetchMetres;
+        else {
+          prefetchNear ||= distance <= policy.lod2From * factor + this.lodPrefetchMetres;
+          prefetchHero ||= distance <= policy.lod1From * factor + this.lodPrefetchMetres;
+        }
+      }
+      if (!this.frustum.intersectsSphere(this.bounds)) continue;
       let band = this.low ? (distance > 16 || worldAssets[entry.id].category === 'prop' || heavyOnLow(entry.id) ? 'lod2' : 'lod1') : pickLod(detailDistance, entry.bands[index], entry.id === 'prop.privacy-fence' ? privacyFenceLodPolicy : undefined);
       if (!this.low && !foliage && worldAssets[entry.id].category === 'prop') {
         const size = worldAssets[entry.id].dimensions;
@@ -565,14 +819,25 @@ export class DistrictView extends Group {
         if (Number.isFinite(gap)) ref.position.y -= ref.userData.propAwake ? Math.min(0, gap) : gap;
         ref.userData.propContactDirty = false; ref.userData.propContactBatch = selected;
       }
-      selected.references.push(ref);
+      selectedRefs.get(selected)!.push(ref);
     }
     for (const batch of [hero, near, far]) {
+      const next = selectedRefs.get(batch)!;
+      // Camera shake changes the frustum every frame, but usually keeps the same
+      // wreck/collapse instances. Upload only a changed partition or moved prop.
+      const changed = this.dirtyEntries.has(entry) || next.length !== batch.references.length || next.some((ref, i) => ref !== batch.references[i]);
+      if (!changed) continue;
+      batch.references.length = 0; batch.references.push(...next);
       batch.visible = batch.references.length > 0;
       for (const child of batch.children) if (child instanceof InstancedMesh) child.count = batch.references.length;
       if (batch.references.length) batch.update();
     }
-    if (hero.references.length && !entry.loaded && !this.pending.has(entry)) {
+    // A placement in view whose LOD1 has not arrived is drawn from the LOD2 placeholder: fetch the tier now (the background prepare()
+    // walks the level nearest-first from the spawn and can be far behind a fast walker). Props never draw LOD1 on the low tier.
+    if ((prefetchNear || near.references.length || hero.references.length && !this.low) && !entry.nearLoaded && !this.pending.has(entry)) {
+      this.pending.set(entry, this.loadHero(entry, 'lod1').finally(() => this.pending.delete(entry)));
+    }
+    if ((prefetchHero || hero.references.length) && !entry.loaded && !this.pending.has(entry)) {
       this.pending.set(entry, this.loadHero(entry).finally(() => this.pending.delete(entry)));
     }
   }
@@ -639,13 +904,41 @@ export class DistrictView extends Group {
   /** Set while the level is playable: prepares a streamed batch's GPU programs and buffers
    * off-screen before replacing its temporary lower-detail batch. */
   warmHero: ((batch: InstancedGroup) => Promise<void>) | null = null;
-  /** Set with warmHero: resolves when a swap may happen (after the first seconds of play, one per frame). */
+  /** Set with warmHero: resolves when a warmed tier may swap through the load gate. */
   swapSlot: (() => Promise<void>) | null = null;
+  /** Baked layout transforms are immutable after attachment. Visibility and
+   * material cutaways remain live, but rendering need not revisit every child matrix. */
+  private freezeLayout(root: Object3D): void {
+    root.updateWorldMatrix(true, true);
+    root.traverse(node => { node.matrixAutoUpdate = false; node.matrixWorldAutoUpdate = false; });
+    root.updateMatrixWorld = () => {};
+  }
+  /** Batch placement matrices (doors, roofs, physics props) live in instance buffers.
+   * The batch's own transform stays fixed under the district's immutable origin. */
+  private freezeBatch(batch: InstancedGroup): void {
+    batch.visible = batch.references.length > 0;
+    batch.freezeWorld();
+  }
+  /** Placement/crown data is read from the source GLB below. Its cloned empty
+   * markers draw nothing, but otherwise enter every frame's matrix/shadow walk. */
+  private stripLayoutMarkers(root: Object3D): void {
+    const markers: Object3D[] = [];
+    root.traverse(node => {
+      if (!(node instanceof Mesh) && !node.children.length && (typeof node.userData.assetId === 'string' || node.userData.foliageColors)) markers.push(node);
+    });
+    for (const marker of markers) marker.removeFromParent();
+  }
   private async loadHero(entry: LodBatch, lod: Lod = 'lod0'): Promise<void> {
     const prototype = await this.registry.asset(entry.id, entry.lit, lod, entry.decay);
     if (this.disposed) return;
+    await this.swapTier(entry, lod, lod, prototype);
+    // The hero slot shows a LOD2 stand-in until its LOD0 arrives; once LOD1 is resident it shows that instead.
+    if (lod === 'lod1' && !this.disposed && !entry.loaded && entry.heroShown === 'lod2') await this.swapTier(entry, 'lod0', 'lod1', prototype);
+  }
+  /** Replace a slot's batch (`slot`) with the prototype of mesh tier `lod`; the slot keeps its current references. */
+  private async swapTier(entry: LodBatch, slot: Lod, lod: Lod, prototype: Object3D): Promise<void> {
     // Allocate full placement capacity, then retain only currently visible refs.
-    const old = lod === 'lod0' ? entry.hero : lod === 'lod1' ? entry.near : entry.far;
+    const old = slot === 'lod0' ? entry.hero : slot === 'lod1' ? entry.near : entry.far;
     const replacement = new InstancedGroup(prototype, entry.refs.slice(), old.capacity);
     let replacementTriangles = 0; if (this.low) replacement.traverse(node => { if (node instanceof Mesh) replacementTriangles += (node.geometry.index?.count ?? node.geometry.getAttribute('position').count) / 3; });
     // Phone tier: far LODs and buildings heavier than 30k triangles per placement skip the shadow pass.
@@ -657,11 +950,12 @@ export class DistrictView extends Group {
     for (const child of replacement.children) if (child instanceof InstancedMesh) child.count = replacement.references.length;
     if (replacement.references.length) replacement.update();
     old.parent!.add(replacement);
+    this.freezeBatch(replacement);
     old.traverse(node => { const index = this.windows.indexOf(node as Mesh); if (index !== -1) this.windows.splice(index, 1); });
     replacement.traverse(node => { if (node instanceof Mesh && node.name === 'window-light') this.windows.push(node); });
     this.batches[this.batches.indexOf(old)] = replacement;
-    if (lod === 'lod0') { entry.hero = replacement; entry.loaded = true; }
-    else if (lod === 'lod1') { entry.near = replacement; entry.nearLoaded = true; }
+    if (slot === 'lod0') { entry.hero = replacement; entry.heroShown = lod; if (lod === 'lod0') entry.loaded = true; }
+    else if (slot === 'lod1') { entry.near = replacement; entry.nearLoaded = true; }
     else { entry.far = replacement; entry.farLoaded = true; }
     this.dirtyEntries.add(entry);
     old.removeFromParent(); old.dispose();
@@ -716,7 +1010,7 @@ export class DistrictView extends Group {
       for (let entry = queue.shift(); entry && !cancelled() && !this.disposed; entry = queue.shift()) {
         await this.pending.get(entry);
         const pending = (async () => {
-          if (!entry.nearLoaded && maximumDistance === Infinity) await this.loadHero(entry, 'lod1');
+          if (!entry.nearLoaded && (this.low || maximumDistance === Infinity)) await this.loadHero(entry, 'lod1');
           if (!entry.farLoaded) await this.loadHero(entry, 'lod2');
           if (lod === 'lod0' && !entry.loaded) await this.loadHero(entry);
         })();
@@ -725,7 +1019,7 @@ export class DistrictView extends Group {
     };
     await Promise.all(Array.from({ length: 4 }, worker));
   }
-  async ready(): Promise<void> { await Promise.all(this.pending.values()); }
+  async ready(): Promise<void> { await Promise.all([...this.pending.values(), this.terrain?.ready()]); }
   /** Probe-only mask; render normal view immediately afterwards so it cannot leak across frames. */
   mask(on: boolean): void {
     if (on) {
@@ -741,14 +1035,40 @@ export class DistrictView extends Group {
     }
   }
   /** Scene Lab probe: current detail band of every static instance (`culled` outside the frustum), district-local positions. */
+  /** Scene Lab: the courier hole's live state, and placements lower than an occluder whose drawn batch would still be cut
+   * by it (must stay empty: PO 10-13 bench without planks at zoom 0.66). */
+  seeThroughAudit(): { strength: number; cover: number; solidRadius: number; center: [number, number]; occluder: string; cutLowProps: string[] } {
+    const cut = new Set<string>();
+    for (const entry of this.lodBatches) {
+      if (entry.height >= occluderMinHeight || worldAssets[entry.id].foliage) continue;
+      for (const batch of [entry.hero, entry.near, entry.far]) batch.traverse(node => {
+        if (node instanceof Mesh && (Array.isArray(node.material) ? node.material : [node.material]).some(m => m.userData.seeThrough)) cut.add(entry.id);
+      });
+    }
+    return { strength: seeThrough.strength.value, cover: seeThrough.cover.value, solidRadius: seeThrough.solidRadius.value, center: seeThrough.center.value.toArray() as [number, number], occluder: this.occluderId, cutLowProps: [...cut].sort() };
+  }
   lodState(): { assetId: string; origin: [number, number]; position: [number, number, number]; lod: Lod | 'culled' }[] {
     return this.lodBatches.flatMap(entry => entry.refs.map(ref => ({ assetId: entry.id, origin: entry.origin, position: ref.position.toArray() as [number, number, number],
       lod: entry.hero.references.includes(ref) ? 'lod0' as const : entry.near.references.includes(ref) ? 'lod1' as const : entry.far.references.includes(ref) ? 'lod2' as const : 'culled' as const })));
+  }
+  /** Placements drawn this frame from a coarser mesh than the band selected for them (the tier's real mesh has not arrived,
+   * so a placeholder is shown). `lod` is the selected band, `shown` the mesh actually drawn. */
+  placeholderDraws(): { assetId: string; lod: Lod; shown: Lod; x: number; z: number }[] {
+    const out: { assetId: string; lod: Lod; shown: Lod; x: number; z: number }[] = [];
+    for (const entry of this.lodBatches) for (const [lod, batch, shown] of [
+      ['lod0', entry.hero, entry.heroShown],
+      ['lod1', entry.near, entry.nearLoaded ? 'lod1' : 'lod2'],
+    ] as const) {
+      if (shown === lod || !batch.references.length) continue;
+      for (const ref of batch.references) out.push({ assetId: entry.id, lod, shown, x: ref.position.x + entry.origin[0], z: ref.position.z + entry.origin[1] });
+    }
+    return out;
   }
   getState() {
     return {
       labels: this.tags.map(({ sprite }) => ({ text: sprite.name, visible: sprite.visible, opacity: sprite.material.opacity, width: sprite.scale.x, height: sprite.scale.y })),
       districts: this.world.districts.map((d) => d.id),
+      terrain: this.terrainState(),
       batches: this.batches.map((b) => ({
         assetId: b.name.slice(5),
         instances: b.references.length,
@@ -763,7 +1083,7 @@ export class DistrictView extends Group {
       ),
       windPhase: this.phase.value,
       foliage: this.foliage.getState(),
-      seeThrough: { strength: seeThrough.strength.value, radius: seeThrough.radius.value, center: seeThrough.center.value.toArray() },
+      seeThrough: { strength: seeThrough.strength.value, cover: seeThrough.cover.value, radius: seeThrough.radius.value, center: seeThrough.center.value.toArray() },
       movedProps: [...this.propLinks.values()].filter(Boolean).length,
       ambient: this.ambient != null,
       photoSpots: [...this.spots.keys()],
@@ -772,12 +1092,14 @@ export class DistrictView extends Group {
   }
   dispose(): void {
     this.disposed = true;
+    this.terrain?.dispose();
     for (const { material } of this.metroMaterials.values()) material.dispose(); this.metroMaterials.clear();
     this.ambient?.dispose();
     this.foliage.dispose();
     for (const b of this.batches) b.dispose();
     for (const b of this.dressingBatches) b.dispose(); this.dressingBatches.length = 0;
     for (const g of this.grass) g.dispose();
+    for (const mesh of this.perimeterPosts) mesh.dispose(); this.perimeterPosts.length = 0;
     for (const g of this.ownedGeometry) g.dispose();
     for (const m of this.ownedMaterials) m.dispose();
     for (const t of this.textures) t.dispose();
