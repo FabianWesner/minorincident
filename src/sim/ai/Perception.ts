@@ -118,7 +118,9 @@ export class Perception {
   humans: HumanTargetQuery;
   readonly los = new LosRegistry();
   readonly rangeM = l1v2.infected.visionRangeM;
-  readonly hearingM = 6;
+  /** PO #25 (10-15) close awareness is an L5 rule; every other level keeps the 2 m line-of-sight hearing its bot bands were tuned on. */
+  private get closeAwareness(): boolean { return this.world.scenario === 'L5'; }
+  get hearingM(): number { return this.closeAwareness ? 6 : 2; }
   private shotUntil = 0;
   /** Level pressure routing (L3 corridor): the courier counts this many metres farther than she is when choosing a new
    * target, so a nearby police line draws the crowd first. 0 everywhere else. */
@@ -146,7 +148,7 @@ export class Perception {
   private readonly trackCos = Math.cos(75 * Math.PI / 180);
   /** Keeps an already chased target: the wide tracking cone, or within `chaseKeepM` with line of sight. */
   tracks(e: EntitySnapshot, target: Vec2): boolean {
-    if (this.hears(e, target)) return true;
+    if (this.closeAwareness && this.hears(e, target)) return true;
     const dx = target.x - e.transform.x, dz = target.z - e.transform.z, distance = Math.hypot(dx, dz);
     if (distance > this.rangeM * (this.world.weather?.modifiers.infectedSight ?? 1) * (this.world.lightPower?.sightMultiplier(target) ?? 1)) return false;
     const near = distance <= this.chaseKeepM || (dx * Math.cos(e.transform.yaw) - dz * Math.sin(e.transform.yaw)) / distance >= this.trackCos;
@@ -157,6 +159,7 @@ export class Perception {
     const dx = target.x - e.transform.x, dz = target.z - e.transform.z, squared = dx * dx + dz * dz;
     // Allies share this query for defence; PO #25 changes infected awareness only.
     if (!e.infected) return squared <= 4 && this.lineOfSight(e.transform, target);
+    if (!this.closeAwareness) return squared <= 4 && this.lineOfSight(e.transform, target);
     if (squared <= this.hearingM * this.hearingM) return true;
     if (squared > 144) return false;
     // Only the courier's running/shooting expands the radius. Keep the common
@@ -174,7 +177,7 @@ export class Perception {
   /** Closest nearby human, using the same huntable target query as vision. */
   closestHeard(e: EntitySnapshot): HumanTarget | undefined {
     let best: HumanTarget | undefined, distance = Infinity;
-    for (const h of this.humans.within(e.transform, 12)) {
+    for (const h of this.humans.within(e.transform, this.closeAwareness ? 12 : this.hearingM)) {
       const d = Math.hypot(h.position.x - e.transform.x, h.position.z - e.transform.z);
       if (d < distance && this.hears(e, h.position)) { best = h; distance = d; }
     }
