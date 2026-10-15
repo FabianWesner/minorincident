@@ -373,7 +373,12 @@ export class CrowdView extends Group {
         // inside the reserved contact space; distant windups retain their full coil and extension.
         const target = this.world.entities.get(e.infected?.heardTargetId || e.infected?.l1?.targetId || 1);
         if (target?.survivor && Math.hypot(x - target.transform.x, z - target.transform.z) < infectedContactDistance(e.combat!.radius) + .15) layers.lunge = Math.min(layers.lunge ?? 0, .04);
-        const layered = !crawling && (layers.lunge || layers.flinch || layers.lurch || layers.chestBeat || layers.trunkSwipe || layers.throwPose) ? layers : undefined;
+        if (!heavy && !specialAttack && b.state !== 'dead' && !this.world.solids.clear(e.transform, e.combat!.radius + .6, e.id, false)) {
+          // Keep the baked attack hunch over its planted feet at a hull or wall.
+          // Combat reach is unchanged; only the added forward body throw yields.
+          layers.lunge = Math.min(layers.lunge ?? 0, 0); layers.lean = -.25; layers.lurch = 0;
+        }
+        const layered = !crawling && (layers.lean || layers.lunge || layers.flinch || layers.lurch || layers.chestBeat || layers.trunkSwipe || layers.throwPose) ? layers : undefined;
         // Zoomed-out encounters retain planted feet inside the same 12 m action range; the footwork cap is unchanged.
         frame = batch.locomotion.present(e.id, batch.poses, frame, blend, clip, phase, this.transform, batch.strideScale, motion.speed, renderTick / 60, (band === 'lod1' || distance <= 12 || !moving || !!specialAttack || !!e.infected?.roar) && !crawling, layered, style, true, this.low && canHoldCrowdPose(e, this.world.tick) ? 2 : 1);
         if (!batch.animal) this.accessories?.place(e, batch.lod as 'lod0' | 'lod1' | 'lod2', batch.poses, frame, blend, this.transform, !!((feedback?.mask ?? 0) & 16));
