@@ -1,42 +1,28 @@
-# Alpha visual upgrade — 2026-10-15
+# Alpha revision after orchestrator review — 2026-10-15
 
-The regular Alpha now has exposed rounded shoulders and chest, larger grasping hands and a stronger forward lurch. The worker's tie, lapels and small office details no longer clutter its silhouette. A dark torn vest and trousers separate from pale infected skin, red wounds and emissive eyes. This is an asset-only change: the worker and Mega builders, shared rig/clip names, hidden stump caps, health-bar implementation and all gameplay data are unchanged.
+Regular Alpha retains the revised posture, broad shoulders and grasping hands. The pale bare chest is replaced by dark torn clothing, bruised purple skin, raised red wounds, larger glowing eyes and red chest veins. Mega matches its height and stays inside the PO's 1.3× footprint limit; dark muscle/skin, shoulder armour, spine spikes and glowing veins carry the stronger appearance. Existing palette tokens carry the bruised colors into the runtime; changing GLB RGB alone is insufficient because the renderer resolves named palette colors. No gameplay counts, speed, damage or HP changed.
 
-The packed Alpha is 2.582 m tall, 1.435× the 1.8 m worker. The unchanged Mega is 2.472 m tall and remains broader and more threatening through its red trapezius, white spine ridge, dark skin and oversized right fist. Both remain visibly different from the ordinary infected and courier.
+## Packed dimensions and budgets
 
-| Tier | Triangles including hidden caps | Limit | KiB | Materials |
-| --- | ---: | ---: | ---: | ---: |
-| LOD0 | 7,777 | 8,000 | 72.42 | 4 |
-| LOD1 | 2,788 | 3,000 | 34.85 | 4 |
-| LOD2 | 868 | 1,000 | 24.21 | 4 |
+Dimensions exclude hidden stump caps and use the rest pose. Both assets face +X, so width is the Z extent, height Y and depth X. Reproduce with `npx tsx docs/reports/alpha-look/measure.ts`; [raw measurements](dimensions.json).
 
-No image textures. The four crowd material draws and existing instancing path are preserved. [Asset validation](asset-validation.json) covers both Alpha and unchanged Mega, all tiers.
+| Tier | Alpha width / height / depth (m) | Mega width / height / depth (m) | Mega/Alpha width / depth |
+| --- | --- | --- | --- |
+| LOD0 | 2.414 / 2.580 / 1.395 | 2.955 / 2.585 / 1.693 | 1.225 / 1.213 |
+| LOD1 | 2.364 / 2.584 / 1.381 | 2.930 / 2.586 / 1.694 | 1.239 / 1.226 |
+| LOD2 | 2.364 / 2.585 / 1.355 | 2.833 / 2.574 / 1.634 | 1.198 / 1.206 |
 
-## Surface integrity
+Regular Alpha LOD0 is 1.433× the 1.8 m worker. Packed triangle counts including caps are **7,777 / 2,794 / 872** for Alpha and **15,587 / 5,648 / 1,908** for Mega. Four/six materials respectively, no textures; existing budgets unchanged. [Asset validation](asset-validation.json) passes every tier for both IDs. Alpha's reduced source exports have zero boundary/non-manifold edges: [topology](lod-topology.json).
 
-The baseline far tier had conspicuous sleeve/cuff shards. LOD1/2 now voxel-union each material inside each rigid owner, then reduce it. Welded degenerate edges, triangular punctures and flattened duplicate-face islands are cleaned before export. No geometry joins different animated owners. Both authored exports have **zero boundary edges and zero non-manifold edges**, including caps, measured from exported GLB triangle positions: [topology measurements](lod-topology.json). Reproduce with `python3 docs/reports/alpha-look/topology.py assets/inf.alpha docs/reports/alpha-look/lod-topology.json`.
+## Relative visibility gate
 
-## Capture method
+The previous absolute `megaVisibleShareMin: 0.015` encouraged widening Mega to occupy a fixed viewport area, contradicting the PO's size requirement. The three isolated Mega close-contact/arrival/speed fixtures now require `megaAlphaVisibleRatioMin: 0.9`. At each sampled contact frame (≤6 m), the probe renders a regular Alpha in the Mega's exact position, orientation and animation pose, with the same camera and lighting. Each asset keeps its normal materials, including the Mega's courier cutout. Simulation does not advance. Each model has its own hidden-crowd background render, so the animated head's different health-bar position cannot inflate the body pixel count. A synthetic PNG regression covers this. The Mega model is restored in `finally`. Missing contact/reference samples fail. `courierVisibleShareMin: 0.6` is unchanged. The compact boss uses a 0.1 cutout strength instead of 0.2: diagnostic images showed the old partial hole dithering much of the smaller body even beside the courier. This is a presentation adjustment; the same courier visibility gate still measures the result.
 
-Before is commit `49d9a8a7c1ee4cee465e480afc4af926c20da776`; after uses the worktree's packed assets. The comparison script serves baseline GLBs only to the before browser, then uses a fresh context for the candidate. Both sides use identical cameras, lighting and actors. A wide 2560×720 viewport fits the courier, worker, regular Alpha and the Mega's extended fist at zoom 0.5; individual/animated catalog scenes also cover the standard 960×540 viewport. Backend checks reject WebGPU fallback. No images are used as model textures.
+The packed asset tests enforce ≤1.3× width and depth at all tiers as well as the existing same-height and rig/clip contracts. The catalog test records why the gate changed and protects both thresholds. Manifest dimensions now describe the smaller exported Mega; no budget limits or specs changed.
 
-Reproduce comparison sheets with `SCENE_PORT=3521 E2E_PORT=3522 sh tools/e2e-lock.sh npx tsx docs/reports/alpha-look/capture.ts 49d9a8a7c1ee4cee465e480afc4af926c20da776`. LOD sheets use `tools/scenelab/lod-sheet.ts`, now with optional `--backend webgpu`.
+## Comparison sheets and visual review
 
-## Validation status
-
-- Asset validation: both requested IDs pass, all LODs.
-- TypeScript and ESLint: pass. Fresh production build: pass.
-- Final browser suite: **20/20 pass**, covering existing Alpha asset, physical/support specials, health bars and mixed crowds plus the new region budget checks.
-- Final scene matrix: **108/108 pass**, high/low × zoom 0.5/1/1.5 × WebGL/WebGPU. [Results](matrix-results.json), [WebGL sheets](final/webgl2/index.md), [WebGPU sheets](final/webgpu/index.md). Detailed metrics are losslessly compressed as `metrics.json.gz`.
-- Full-count render budgets: **64 samples pass** (seven L10 regions and L5 × two zooms × two tiers × two backends). Every region uses its production regular-Alpha cap; L5 uses both Alphas. Synthetic actors are frozen after placement so production spawning cannot compete with the fixture. This measures submitted geometry/draws, not frame time. High peaks: **187 draws / 424,639 triangles** (limits 600 / 1,500,000); low: **181 / 208,149** (limits 300 / 500,000). Both backends match. [Measurements](budgets/).
-
-The western L5 fixture initially overlapped the cropped building footprint. The final fixture uses the adjacent walkable street; no production spawn or difficulty data changed.
-
-## Visual review
-
-Opened all twelve final game-camera before/after sheets and both complete front/back LOD sheets, plus animated L5 east/high, L5 west/low, L10 silhouette/low and tank/high matrix sheets. The shoulder skin separates from the dark torn vest, the chest leans forward and the hands reach farther. Red face/chest wounds and emissive eyes retain their palette. At low quality the fingers consolidate into solid hand shapes; fine clothing/blood detail is deliberately reduced. LOD1/2 no longer show the baseline's dangling cuff triangles or shredded silhouette. There are no visible holes in the inspected final views. Mega's red trapezius, white spine ridge and huge asymmetric fist remain more threatening at every inspected tier/zoom. WebGPU and WebGL match visually. Health bars and physical attack markers remain readable in motion.
-
-The lineup is a shared perspective game camera, so projected size also depends on each actor's position. The packed bounds above establish the actual height relationship; Mega's apparent bulk is not a height increase from this change.
+The new BEFORE is the reviewed candidate **fd0a31963**; AFTER is this revision. Both Alpha and Mega baseline GLBs are served only to the before browser. Same camera, lighting and lineup: courier, worker, Alpha, Mega. Both backends are checked against fallback. New night lineup `alpha-look-night-lineup` adds the dark L10 ground to the catalog.
 
 | Renderer / quality | Zoom 0.5 | Zoom 1 | Zoom 1.5 |
 | --- | --- | --- | --- |
@@ -45,26 +31,28 @@ The lineup is a shared perspective game camera, so projected size also depends o
 | WebGPU high | [sheet](comparisons/webgpu-high-z0.5.jpg) | [sheet](comparisons/webgpu-high-z1.jpg) | [sheet](comparisons/webgpu-high-z1.5.jpg) |
 | WebGPU low | [sheet](comparisons/webgpu-low-z0.5.jpg) | [sheet](comparisons/webgpu-low-z1.jpg) | [sheet](comparisons/webgpu-low-z1.5.jpg) |
 
-All LODs, before left / after right: [WebGL](comparisons/lods-webgl2.png), [WebGPU](comparisons/lods-webgpu.png). Run `python3 docs/reports/alpha-look/package-sheets.py` after capture to assemble the LOD comparisons and package game PNGs as full-resolution quality-95 JPEGs.
+I opened all 12 final lineup sheets and both LOD sheets. At zoom 1.5, Alpha’s eyes and red chest accents remain visible above the dark clothing; purple shoulder/hand highlights preserve its hunched outline. Mega now occupies a comparable footprint while its ivory armour rims, spikes and brighter red veins identify it immediately. The low tier simplifies fingers and wounds into solid shapes; the front/back sheets show continuous surfaces without torn LOD edges. WebGL and WebGPU retain the same color hierarchy. I also opened the night lineup and moving close-contact/speed sheets: red facial accents and armour edges remain distinct on the blue L10 floor, with the courier visible beside the compact boss.
 
-## Remote regression and timing
+All authored LODs, front/back: [WebGL](comparisons/lods-webgl2.png), [WebGPU](comparisons/lods-webgpu.png).
 
-Native headless Chrome on the Apple M4 / ANGLE Metal, after a fresh production build and quiet-run preflight: **4.9 ms frame p95 / 0.8 ms sim p95** with 200 infected at high; **3.2 ms / 0.5 ms** with 100 at low. Each crowd included six visible Alphas, used four instanced crowd material draws, and had zero console errors. Measurements were unthrottled, 1280×720, WebGL; they do not substitute for phone-throttled or WebGPU timing. [Samples and counters](performance.json), [quiet conditions](quiet-conditions.jsonl). One bounded reservation, released after completion; no consecutive quiet batches. Reproduce with `SCENE_PORT=3521 E2E_PORT=3522 sh tools/perf/quiet-run.sh npx tsx docs/reports/alpha-look/performance-probe.ts` (externally enforce the 20-minute reservation deadline).
+Reproduce lineup with `SCENE_PORT=3521 E2E_PORT=3522 sh tools/e2e-lock.sh npx tsx docs/reports/alpha-look/capture.ts fd0a31963`. LOD captures use `capture-lods.ts <out> inf.alpha inf.mega-alpha --backend webgl2|webgpu`, with `ALPHA_BASELINE=fd0a31963` for before; run `package-sheets.py` after both sets.
 
-Full remote command: `sh tools/remote/run.sh "$PWD" -- npx vitest run tests/unit tests/sim tests/levels --maxWorkers=4`. Completed in 3,562.62 s: **2,858 passed / 9 failed / 9 skipped**, 440 passing / 7 failing / 3 skipped files. [Full log](remote-regression.log.gz). This run synced the earlier visual candidate; the final exported surface cleanup was subsequently covered by all 20 browser tests, all 108 matrix variants, validation, topology measurement and the focused asset tests.
+## Revision validation
 
-Final focused asset tests: **12/12 pass**, `npx vitest run tests/unit/assets/alpha.test.ts tests/unit/assets/mega-alpha-dog.test.ts --maxWorkers=4` (0.946 s). The remote duplicate waited over 30 minutes for capacity and was cancelled; only these two small files ran locally, after the quiet reservation ended. No local full-unit, simulation or level sweep. [Asset log](asset-tests.log.gz), [browser log](browser.log.gz).
+- Asset validation, typecheck, lint and fresh production build pass. [Logs](revision-checks.log.gz).
+- Hetzner: **162/162 focused tests pass** (asset contracts, static-bake parity, catalog thresholds and health-bar/pixel regression). [Log](revision-assets.log.gz). No local Vitest run.
+- Full Hetzner unit suite: **1,497 passed / 2 failed / 7 skipped** (262.83 s), 255 passing / 2 failing / 1 skipped files. [Log](revision-units.log.gz). The failures are `character-loading.test.ts` (female direct loader called twice) and `occluder-footprint.test.ts` (mock missing `cutPlacements`).
+- Both failures reproduce against **fd0a31963**: every changed tracked production/test/tool/asset file was restored from `git archive` inside the remote runner's private job, then only those two files ran (**4 passed / 2 failed**). Local files were not reverted. [Baseline log](revision-baseline.log.gz), [restored paths and command](baseline-restoration.json).
+- **25/25 browser tests pass** (10.1 min): shared Alpha rendering/LODs, physical attacks, support moves, health bars and four E18 stress tests. [Log](revision-browser.log.gz). All 64 full-count L10/L5 budget samples pass across both qualities, both backends and zoom 0.5/1. These are draw/triangle counters; no fresh frame-time benchmark is claimed.
 
-The broad run is **not green**. All failing test files and production code they exercise are unchanged by this asset patch:
+| Budget tier | Maximum draws | Maximum triangles | Limits | Evidence (16 samples each) |
+| --- | ---: | ---: | --- | --- |
+| High, both backends | 187 | 424,639 | 600 draws / 1,500,000 triangles | [WebGL](budgets/webgl-high.json), [WebGPU](budgets/webgpu-high.json) |
+| Low, both backends | 181 | 208,149 | 300 draws / 500,000 triangles | [WebGL](budgets/webgl-low.json), [WebGPU](budgets/webgpu-low.json) |
 
-| File | Failure |
-| --- | --- |
-| `tests/levels/L1.test.ts` | Complete-bot median 463.87 s exceeds 180 s; respawn-world corpse position mismatch (two tests). |
-| `tests/levels/l1-forecourt.test.ts` | Both tiers stop at z=35.209 rather than below 34.5 (two tests). |
-| `tests/levels/L10.test.ts` | Existing 300 s deadline exceeded. |
-| `tests/sim/levels/l10-campus-corridor.test.ts` | High route ends 6.181 m away, limit 4 m. |
-| `tests/unit/render/character-loading.test.ts` | Direct female load invokes loader twice, expected once. |
-| `tests/unit/render/occluder-footprint.test.ts` | Mock receiver has no `cutPlacements` set. |
-| `tests/unit/static.test.ts` | Existing 180 s deadline exceeded remotely; standalone local typecheck, lint and build pass. |
+- Full scene matrix: **504/504 pass** (252 per backend), high/low × zoom 0.5/1/1.5. [Aggregate results](matrix-results.json), [WebGL sheets](revision/webgl2/index.md), [WebGPU sheets](revision/webgpu/index.md), logs: [WebGL](revision-webgl2.log.gz) / [WebGPU](revision-webgpu.log.gz). Includes every `l10-q1-*`, all three isolated Mega fixtures, Alpha/L5/appearance fixtures and day/night lineups. Detailed metrics are losslessly compressed as `metrics.json.gz`.
+- Across all measured variants, minimum courier visible share is **0.662** (required 0.6) and minimum Mega/Alpha visible-pixel ratio is **1.0028** (required 0.9). The aggregate results identify the corresponding scene/backend.
 
-Baseline reproduction is **unverified**: the detached original-commit check spent over 30 minutes queued or transferring and was cancelled before test execution. Its requested files were occluder-footprint, character-loading, L1 forecourt and L10 campus/corridor. These failures are outside the changed files, but this run does not establish that every failure reproduces on baseline. [Transfer/queue log](baseline-attempt.log.gz). No test, budget or gameplay criterion was weakened. The aggregate `verify -- E07` wrapper was not run in addition to the explicit validation above.
+No aggregate `verify -- E07` or fresh sim/level sweep was run for this visual-only revision.
+
+The [initial report](initial-review.md) preserves the first candidate's broad regression results, including nine failures and the unverified baseline reproduction. Those historical timing/regression results are not claimed as fresh revision measurements.

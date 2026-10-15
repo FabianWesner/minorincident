@@ -63,7 +63,9 @@ for (const [lod, budget] of [16000, 6000, 2000].entries()) {
     const big = bounds(gltf.scene), small = bounds(alphaGltf.scene);
     expect(big.y / small.y, 'same height as the Alpha (PO 10-15)').toBeGreaterThan(.95);
     expect(big.y / small.y).toBeLessThan(1.1);
-    expect(big.x / small.x, 'bulkier, not only taller').toBeGreaterThan(big.y / small.y);
+    // PO 2026-10-15: strength comes from armour/spikes/veins, never an oversized footprint.
+    expect(big.x / small.x, 'rest depth <= 1.3x regular Alpha').toBeLessThanOrEqual(1.3);
+    expect(big.z / small.z, 'rest width <= 1.3x regular Alpha').toBeLessThanOrEqual(1.3);
     for (const name of mega.requiredNodes) expect(gltf.scene.getObjectByName(name), name).toBeTruthy();
     for (const name of mega.animatedNodes) {
       const joint = gltf.scene.getObjectByName(name)!;

@@ -19,7 +19,7 @@ base = P.parent / 'inf.common-worker/build.py'
 # Redirect the worker's build metadata into this variant, leaving its source intact.
 sys.argv = [str(base), '--']
 ns = {'__file__': str(P / 'build.py'), '__name__': '__alpha_base__'}
-source = base.read_text()
+source = base.read_text().replace("'c9a39a'", "'796084'").replace("'5b4f5c'", "'25222c'")
 # Alter named worker surfaces before its material/owner join. Broad exposed upper
 # arms and a torn vest read at game distance; omit office details that become shards.
 sculpt = """
@@ -31,7 +31,7 @@ for o in list(objects):
         objects.remove(o)
         bpy.data.objects.remove(o, do_unlink=True)
         continue
-    if o.name.startswith(('shirt_body', 'upper_sleeve', 'shoulder_mass')):
+    if o.name.startswith(('upper_sleeve', 'shoulder_mass')):
         o.data.materials.clear()
         o.data.materials.append(M['infectedSkin'])
         for face in o.data.polygons: face.material_index = 0
@@ -40,12 +40,21 @@ for o in list(objects):
         pivot = o.matrix_world.inverted() @ parts[o.parent.name].matrix_world.translation
         o.data.transform(Matrix.Translation(pivot) @ Matrix.Diagonal(Vector((1.22, 1.13, 1, 1))) @ Matrix.Translation(-pivot))
     if o.name == 'shirt_body':
+        o.data.materials.clear()
+        o.data.materials.append(M['asphalt'])
+        for face in o.data.polygons: face.material_index = 0
         o.scale.x *= 1.10
         o.scale.y *= 1.10
+    if o.name.startswith('eye_glow'):
+        o.scale *= 1.3
     if o.name.startswith('hair_base'):
         o.scale.z *= .85
-# A forward neck and broad shoulders preserve the human outline. The Mega keeps
-# its much larger asymmetric arm, exposed spine and red trapezius mass.
+bpy.ops.object.select_all(action='DESELECT')
+# Raised closed wounds and emissive veins keep the chest readable at distant zoom.
+for side in (-1, 1):
+    tube('alpha_wound'+str(side),[(.225,side*.13,1.08),(.24,side*.08,.99),(.23,side*.12,.89)], [.025,.03,.012], 'blood','torso',N=6,sub=0)
+    tube('alpha_vein'+str(side),[(.234,side*.15,1.09),(.25,side*.10,1.02),(.244,side*.14,.97)], [.009,.012,.006], 'eye','torso',N=6,sub=0)
+# A forward neck and broad shoulders preserve the human outline.
 parts['head'].location.x += .035
 """
 marker = '# Applied subdivision defines the sculpted forms; reduce redundant triangles for the crowd budget.'
@@ -59,6 +68,9 @@ exec(compile(source, str(base), 'exec'), ns)
 # The base's rest metadata describes the worker, not this derived rig.
 (P / 'rig-rest.json').unlink(missing_ok=True)
 parts, objects = ns['parts'], ns['objects']
+# Runtime resolves palette names, so RGB changes alone do not change the game.
+ns['M']['infectedSkin'].name = 'pal_purple'
+ns['M']['asphalt'] = ns['M']['uiDark']
 bpy.context.view_layer.update()
 # Compensate for the lower crown and deeper hunch: packed height remains about 2.58 m.
 shape = Matrix.Diagonal(Vector((1.47 * 1.14, 1.47 * 1.22, 1.58, 1)))
@@ -93,7 +105,7 @@ for obj in objects:
     obj.matrix_basis = Matrix.Identity(4)
     materials = list(obj.data.materials)
     for i, material in enumerate(materials):
-        if material.name not in ('pal_infectedSkin', 'pal_blood', 'emi_infectedEye'):
+        if material.name not in ('pal_purple', 'pal_blood', 'emi_infectedEye'):
             obj.data.materials[i] = ns['M']['asphalt']
 # Merge decorations by rigid owner; palette regions remain distinct face materials.
 caps = [obj for obj in objects if obj.name.startswith('stump_')]
@@ -257,4 +269,4 @@ for lod, limit in enumerate((7800, 2900, 950)):
 (P / 'build-stats.json').write_text(json.dumps({'derivedFrom': str(base.relative_to(P.parents[1])),
     'heightRatio': records[0]['dimensions'][2] * 1.08101627 / 1.8,
     'bodyHeightScale': 1.58, 'headScale': [.82, .82, .90], 'shapeScale': [1.6758, 1.7934, 1.58], 'lods': records,
-    'parts': list(parts), 'materials': ['pal_infectedSkin', 'pal_asphalt', 'pal_blood', 'emi_infectedEye']}, indent=2) + '\n')
+    'parts': list(parts), 'materials': ['pal_purple', 'pal_uiDark', 'pal_blood', 'emi_infectedEye']}, indent=2) + '\n')
