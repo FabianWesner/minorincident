@@ -414,8 +414,10 @@ export class GameView implements Lifecycle {
       this.startPreparation();
     };
     // E20/E21: L2 and L3 run the same crowd and outbreak look, so they use the same full shader warm-up.
-    const groveTown = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6' || this.world.scenario === 'L7' || !!this.world.missions?.l9;
-    if (groveTown && this.background) {
+    // L10 also reveals hidden movement/mission meshes on approach. Compile their
+    // graphs behind the loading card, rather than linking cold WebGL programs in play.
+    const fullWarmUp = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6' || this.world.scenario === 'L7' || this.world.scenario === 'L10' || !!this.world.missions?.l9;
+    if (fullWarmUp && this.background) {
       const generation = this.generation;
       this.warming = warm().then(() => {
         if (generation === this.generation) { this.warming = null; finish(); }
@@ -423,7 +425,7 @@ export class GameView implements Lifecycle {
       void this.warming.catch(error => console.error(error));
       return;
     }
-    if (groveTown) await warm();
+    if (fullWarmUp) await warm();
     else if (!this.vfx || this.renderer.selectedBackend === 'webgl') await this.renderer.compileAsync(this.scene, this.camera);
     // The horizon's rocks enter the view well after departure. Warm every coarse
     // material in the gameplay HDR context before control, rather than linking
@@ -527,11 +529,10 @@ export class GameView implements Lifecycle {
   private playSeconds = 0;
   /** Network-only extras wait until the first playable frames have been presented. */
   get backgroundReady(): boolean { return this.params.get('test') === '1' || !this.warming && !this.background && this.playSeconds > .25; }
-  /** LOD0 swaps wait for the first seconds of play to pass (no hitch while the player starts moving),
-   * then run one per frame through the load gate. */
+  /** L10's required tiers must swap within its two-second walking prefetch horizon.
+   * Other levels retain their startup admission; all swaps use the load gate. */
   private async swapSlot(): Promise<void> {
-    // Test mode keeps deterministic readiness (paused clocks would otherwise hold swaps forever).
-    while (this.playSeconds < 4 && this.params.get('test') !== '1') await new Promise(resolve => setTimeout(resolve, 250));
+    while (this.world.scenario !== 'L10' && this.playSeconds < 4 && this.params.get('test') !== '1') await new Promise(resolve => setTimeout(resolve, 250));
     await loadGate.wait();
   }
   /** Living, shown people (courier, pedestrians, story actors, infected) for the automatic street doors. */
