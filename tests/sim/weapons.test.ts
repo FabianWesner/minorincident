@@ -5,7 +5,11 @@ import { arena, dummy, equip, fire, health, step } from './combat/helpers';
 test('T-E06-03 @E06 @E06-AC03 close shotgun / distant SMG role differentiation and heavy ranges', async () => {
   const dps = async (id: string, range: number): Promise<number> => {
     const w = await arena(); equip(w, [id]); w.combat!.assist.setting = 'Off';
-    const target = dummy(w, range, 0, 100000); w.setInput({ aim: { x: 1, z: 0 }, left: { down: false, held: true, up: false } }); step(w, 600);
+    const target = dummy(w, range, 0, 100000); w.setInput({ aim: { x: 1, z: 0 }, left: { down: false, held: true, up: false } });
+    // This measures fixed-distance DPS; the shotgun's new shove must not move the fixture into its distant falloff band.
+    for (let tick = 0; tick < 600; tick++) {
+      Object.assign(w.entities.get(target)!.transform, { x: range, z: 0 }); w.spatial.set(target, range, 0); step(w, 1);
+    }
     return (100000 - health(w, target)) / 10;
   };
   const roles = { shotgun3m: await dps('weapon.shotgun', 3), smg3m: await dps('weapon.smg', 3), shotgun12m: await dps('weapon.shotgun', 12), smg12m: await dps('weapon.smg', 12) };
