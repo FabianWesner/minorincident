@@ -7,7 +7,7 @@ import { populateGrove } from '../outbreak/Population';
 import { allyState } from '../outbreak/Allies';
 import { emitEngine, stopEngine } from '../vehicles/ConvoySound';
 import { L4Spectacle, spawnSetPiece } from './L4Spectacle';
-import { L4ConvoyClearance } from './L4ConvoyClearance';
+import { convoyFootprint, L4ConvoyClearance } from './L4ConvoyClearance';
 import { respawnRule } from './Respawn';
 import { L4Collapse, freshDirector, postLine } from './L4Collapse';
 import type { Mission } from './Mission';
@@ -53,6 +53,11 @@ export class LevelFourWar {
   private anchor(name: string) { return this.mission.def.anchors[name]; }
   private outbreak(): Outbreak { return this.world.npcs!.civilians.outbreak!; }
   private get low(): boolean { return this.world.infected!.director.tier === 'low'; }
+  /** The shared admission/contact owner preserves the convoy's existing posed clearance. */
+  clearOfConvoy(at: Point, e: EntitySnapshot, radius: number): boolean {
+    if (e.passengerOf !== undefined || e.attachedTo !== undefined || e.id === 1 && e.hidden && !e.pendingAdmission) return true;
+    return !this.clearance.overlaps(at, Math.max(radius, convoyFootprint(e)));
+  }
   private snap(p: Point, r = .4): Point {
     const nav = this.world.infected!.nav;
     for (let d = 0; d <= 6; d += .5) for (let k = 0; k < (d ? 16 : 1); k++) {

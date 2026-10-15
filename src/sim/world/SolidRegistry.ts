@@ -148,6 +148,7 @@ export class SolidRegistry {
     this.bodyConflict = false;
     if (![at.x, at.y, at.z, radius].every(Number.isFinite) || radius <= 0) return false;
     let clear = true; const e = ignoreId === undefined ? undefined : this.world.entities.get(ignoreId);
+    if (e && this.world.missions?.l4?.clearOfConvoy(at, e, radius) === false) return false;
     this.solids(at, radius, e, b => { const c = boxContact(b, at.x, at.z, radius, this.contact); if (c.inside || c.depth > limit) clear = false; });
     if (!clear || !bodies) return clear;
     this.world.spatial.query({ x: at.x, z: at.z, r: radius + this.maxActor }, this.nearby, false);
