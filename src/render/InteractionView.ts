@@ -12,7 +12,7 @@ import { isDoor } from '../sim/interact/Interactables';
 import type { EntitySnapshot } from '../sim/world/types';
 import type { Materials } from './Materials';
 import './interaction.css';
-import { l6 } from '../data/l6';
+import { l6, l6Doors, l6Entries } from '../data/l6';
 import { PaletteMaterial } from './PaletteMaterial';
 const assetIds: Record<string, string> = {
   'hazard.propane': 'haz.propane-tank', 'hazard.barrel': 'haz.propane-tank', 'hazard.gas-can': 'haz.gas-can',
@@ -64,6 +64,7 @@ export class InteractionView extends Group {
   private readonly coverageFill = document.createElement('div');
   private readonly projection = new Vector3();
   private readonly debrisMeshes: Mesh[] = [];
+  private readonly entryHatches: { door: number; leaf: Group }[] = [];
   private readonly crateGuides: { id: string; ring: Mesh }[] = [];
   private readonly gateGuides: { x: number; line: Mesh }[] = [];
   private readonly arrowGeometry = new ConeGeometry(.18, .45, 4);
@@ -78,6 +79,15 @@ export class InteractionView extends Group {
     outline.renderOrder = 90; stroke.renderOrder = 91; this.fill.renderOrder = 92;
     this.ring.add(outline, stroke, this.fill); this.ring.rotation.x = -Math.PI / 2; this.add(this.ring);
     if (world.scenario === 'L6') {
+      for (const entry of l6Entries) {
+        const source = l6Doors[entry.door], hatch = new Group(), leaf = new Group();
+        hatch.name = `l6-entry-${entry.door}`; hatch.position.set(source.x, .6, source.z < 15 ? 11.65 : 18.35);
+        const backing = new Mesh(this.box, this.materials.get('uiDark')); backing.scale.set(1.5, 1.9, .08); backing.position.y = .95; hatch.add(backing);
+        for (const x of [-.7, .7]) { const frame = new Mesh(this.box, this.materials.get('policeBlue')); frame.scale.set(.12, 2, .12); frame.position.set(x, 1, 0); hatch.add(frame); }
+        for (let i=0;i<5;i++) { const slat = new Mesh(this.box, this.materials.get('policeBlue')); slat.scale.set(1.3, .12, .14); slat.position.set(0, .25 + i * .35, 0); leaf.add(slat); }
+        const signal = new Mesh(this.led, entry.door % 2 ? this.teal : this.white); signal.position.set(.6, 2.1, 0); hatch.add(signal, leaf);
+        this.entryHatches.push({ door: entry.door, leaf }); this.add(hatch);
+      }
       for (const prop of world.props?.items ?? []) if (prop.assetId === 'prop.crates' && l6.gates.some(x => Math.abs(prop.pose.p[0] - x) < 5)) {
         const ring = new Mesh(this.outlineGeometry, this.teal); ring.rotation.x = -Math.PI / 2; ring.renderOrder = 93; ring.visible = false;
         this.crateGuides.push({ id: prop.id, ring }); this.add(ring);
@@ -274,6 +284,7 @@ export class InteractionView extends Group {
   }
   update(camera: Camera): void {
     this.updateGateGuides();
+    for(const hatch of this.entryHatches){const state=this.world.missions?.state.l6?.entries?.find(e=>e.door===hatch.door);const age=state?.warnedAt?this.world.tick-state.warnedAt:-1;hatch.leaf.rotation.x=age<0?0:age<120?Math.sin(age*.65)*.045:-1.2;}
     let selected: EntitySnapshot | null = null, nearest = 64, ringTarget: EntitySnapshot | null = null, ringDistance = 64;
     const player = this.world.entities.get(1);
     for (const e of this.world.entities.iterate()) {
