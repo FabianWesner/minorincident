@@ -27,10 +27,14 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
         }
       };
     });
-    await page.evaluate(async () => {
+    const loadedGun = await page.evaluate(async () => {
       const a = window.__SS__!;
       await a.loadLevel('L10', { seed: 32, checkpoint: 'cure-disperse-ready' }); a.pause(); a.cheats.god(true);
+      const game = (window.__SCENE__ as unknown as { game: Game }).game;
+      const gun = (game.view as unknown as { mountedGunView?: Object3D }).mountedGunView;
+      const loaded = { present: !!gun, children: gun?.children.length, visible: gun?.visible, resident: game.world.mountedGun && game.world.chunks?.resident(game.world.mountedGun.placement.x, game.world.mountedGun.placement.z), scenario: game.world.scenario, player: { ...game.world.entities.get(1)!.transform } };
       a.teleport('player', { x: 3960, z: -27 }); a.camera.follow();
+      return loaded;
     });
     if (zoom === .5) { await page.mouse.move(800, 450); for (let i = 0; i < 5; i++) await page.mouse.wheel(0, -100); }
     await page.evaluate(async () => { const a = window.__SS__!; await a.step(120); await a.screenshotReady(); });
@@ -78,7 +82,7 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
     const heapMB = heap.usedSize / 1e6;
     const out = 'test-results/lod-standins/perf/startup'; mkdirSync(out, { recursive: true });
     await page.screenshot({ path: `${out}/${backend}-${quality}-z${zoom}.png` });
-    writeFileSync(`${out}/${backend}-${quality}-z${zoom}.json`, JSON.stringify({ ...result, heapMB }, null, 2));
+    writeFileSync(`${out}/${backend}-${quality}-z${zoom}.json`, JSON.stringify({ ...result, loadedGun, heapMB }, null, 2));
     expect(result.backend).toBe(backend); expect(result.quality).toBe(quality); expect(result.cameraZoom).toBeCloseTo(zoom, 2);
     expect(result.x).toBeGreaterThan(3995); expect(result.badFrames).toBe(0);
     expect(result.builds.filter(b => b.material === 'pal_picketWhite' && b.path.includes('body')), 'mounted gun programs must be built behind the loading card').toEqual([]);

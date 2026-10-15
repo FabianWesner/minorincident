@@ -18,14 +18,18 @@ export class MountedGunView extends Group {
   private loading: Promise<void> | null = null;
   private disposed = false;
   private readonly scratch = new Vector3();
-  constructor(private readonly world: SimWorld, private readonly low: boolean, materials: Materials, renderer: WebGPURenderer) {
+  constructor(private readonly world: SimWorld, private readonly low: boolean, materials: Materials, renderer: WebGPURenderer, private readonly warm?: (model: Object3D) => Promise<void>) {
     super();
     this.registry = new AssetRegistry(() => undefined, { renderer, materials });
     this.visible = false;
   }
   /** Starts the model load once; resolves when the gun is drawable. */
   ready(): Promise<void> {
-    return this.loading ??= this.registry.loadAsset('wpn.minigun-mounted', this.low ? 'low' : 'high').then(model => {
+    return this.loading ??= this.registry.loadAsset('wpn.minigun-mounted', this.low ? 'low' : 'high').then(async model => {
+      if (this.disposed) return;
+      // Streaming may bring the gun into residency after the level's loading
+      // warm-up. Keep it hidden until its gameplay HDR programs are ready too.
+      await this.warm?.(model);
       if (this.disposed) return;
       this.model = model; this.add(model);
       this.yawNode = model.getObjectByName('pivot') ?? null; this.barrels = model.getObjectByName('barrels') ?? null;
