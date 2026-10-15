@@ -135,7 +135,7 @@ export class InfectedSystem {
     if (id === 'infected.crow' && opts.birds !== undefined && (!Number.isInteger(opts.birds) || opts.birds < 1 || opts.birds > 20)) throw new RangeError('A flock contains 1–20 birds');
     const weight = id === 'infected.crow' ? (opts.birds ?? 20) * 0.25 : 1;
     if (this.director.count + weight > this.director.cap) throw new Error('Infected concurrency cap reached');
-    if (!Number.isFinite(position.x) || !Number.isFinite(position.z) || (!opts.offNav && !this.nav.clear(position.x, position.z, def.radius))) throw new RangeError('Infected spawn inside collider or outside grid');
+    if (!Number.isFinite(position.x) || !Number.isFinite(position.z) || (!opts.offNav && this.nav.cell(position.x, position.z) < 0)) throw new RangeError('Infected spawn inside collider or outside grid');
     const entity = this.pool.pop(); if (!entity) throw new Error('Infected pool exhausted');
     if (l3Human) this.l3HumanSpawns++;
     entity.locomotion = motionResponse(); delete entity.motion;

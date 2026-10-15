@@ -7,7 +7,7 @@ import type { EntitySnapshot, Transform } from './types';
 import { boxContact, type SolidBox, type Contact } from './SolidGeometry';
 
 type Point = { x: number; z: number; y: number };
-interface Hull { entity: EntitySnapshot; boxes: SolidBox[]; pose: Transform; dirty: boolean }
+interface Hull { entity: EntitySnapshot; boxes: SolidBox[]; pose: Transform; dirty: boolean; quiet: number; nav?: SolidBox; navYaw?: number }
 export interface CollisionOffender { tick: number; actor: number; other: number | string; depth: number; inside: boolean; writer: string }
 const tolerance = .02, skin = .001;
 /** One physical footprint. Reach, crowd spacing and animation envelopes are owned by combat/presentation. */
@@ -61,7 +61,7 @@ export class SolidRegistry {
       boxes = shape.boxes.map(b => ({ x: (b.min[0] + b.max[0]) / 2, y: (b.min[1] + b.max[1]) / 2 - (e.traffic || e.convoy ? .5 : .7), z: (b.min[2] + b.max[2]) / 2, halfX: (b.max[0] - b.min[0]) / 2, halfY: (b.max[1] - b.min[1]) / 2, halfZ: (b.max[2] - b.min[2]) / 2 }));
     }
     for (const b of boxes) this.maxHull = Math.max(this.maxHull, Math.hypot(Math.abs(b.x) + b.halfX, Math.abs(b.z) + b.halfZ));
-    this.hulls.set(e.id, { entity: e, boxes, pose: { ...e.transform }, dirty: true });
+    this.hulls.set(e.id, { entity: e, boxes, pose: { ...e.transform }, dirty: true, quiet: 0 });
     this.hullIndex.set(e.id, e.transform.x, e.transform.z);
   }
   private syncHulls(): boolean {
@@ -69,12 +69,35 @@ export class SolidRegistry {
     for (const e of this.world.entities.iterate()) if (e.vehicle || e.traffic || e.convoy || e.kind === 'setpiece') this.register(e);
     for (const [id, h] of this.hulls) {
       const e = this.world.entities.get(id), p = h.entity.transform;
-      if (e !== h.entity || e.hidden) { this.hulls.delete(id); this.hullIndex.delete(id); changed = true; continue; }
+      if (e !== h.entity || e.hidden) { this.parkedHull(h, false); this.hulls.delete(id); this.hullIndex.delete(id); changed = true; continue; }
+      const stable = Math.hypot(h.pose.x - p.x, h.pose.z - p.z) < .01;
+      h.quiet = stable ? h.quiet + 1 : 0;
+      // Parked hulls participate in ordinary grid routes. Moving convoy/traffic still use their existing yielding/sweeps.
+      if (e.vehicle || e.traffic || e.archetype === 'veh.tank') this.parkedHull(h, h.quiet >= 15 && (e.vehicle?.speed ?? e.traffic?.speed ?? 0) < .2);
       if (h.dirty || h.pose.x !== p.x || h.pose.z !== p.z || h.pose.y !== p.y || h.pose.yaw !== p.yaw) { this.hullIndex.set(id, p.x, p.z); Object.assign(h.pose, p); h.dirty = false; changed = true;
         this.world.spatial.query({ x: p.x, z: p.z, r: this.maxHull + this.maxActor }, this.nearby, false);
         for (const actorId of this.nearby) this.changedActors.add(actorId); }
     }
     return changed;
+  }
+  private parkedHull(h: Hull, blocked: boolean): void {
+    const e = h.entity, id = -e.id, p = e.transform, nav = this.world.infected?.nav;
+    if (!nav || !blocked && !h.nav) return;
+    if (blocked && h.nav && Math.hypot(h.nav.x - p.x, h.nav.z - p.z) < .25 && Math.abs((h.navYaw ?? 0) - p.yaw) < .1) return;
+    let wall = h.nav;
+    if (blocked) {
+      const c = Math.cos(p.yaw), s = Math.sin(p.yaw);
+      let x0 = Infinity, x1 = -Infinity, z0 = Infinity, z1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+      for (const b of h.boxes) {
+        const x = p.x + c * b.x + s * b.z, z = p.z - s * b.x + c * b.z;
+        const hx = Math.abs(c) * b.halfX + Math.abs(s) * b.halfZ, hz = Math.abs(s) * b.halfX + Math.abs(c) * b.halfZ;
+        x0 = Math.min(x0, x - hx); x1 = Math.max(x1, x + hx); z0 = Math.min(z0, z - hz); z1 = Math.max(z1, z + hz);
+        y0 = Math.min(y0, p.y + b.y - b.halfY); y1 = Math.max(y1, p.y + b.y + b.halfY);
+      }
+      wall = { x: (x0+x1)/2, z: (z0+z1)/2, y: (y0+y1)/2, halfX: (x1-x0)/2, halfZ: (z1-z0)/2, halfY: (y1-y0)/2 };
+      h.nav = wall; h.navYaw = p.yaw; this.aliasBlocker(id, e.id);
+    } else { delete h.nav; delete h.navYaw; }
+    this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id, blocked, wall: wall! });
   }
   /** A parked nav blocker and its registered hull are one solid for explicit passenger relationships. */
   aliasBlocker(blockerId: number, hullId: number): void { this.blockerOwners.set(`blocker:${blockerId}`, hullId); }
@@ -83,6 +106,9 @@ export class SolidRegistry {
     const activity = e?.civilian?.schedule?.[e.civilian.scheduleStep ?? 0];
     const seatOwner = activity?.seatProp ? this.world.props?.items.find(p => p.id === activity.seatProp)?.entityId : undefined;
     this.world.infected?.nav.visitSolids(at.x, at.z, radius, (box, id) => {
+      // Navigation uses an AABB for the route bake; exact contact uses its canonical OBB below.
+      const hullOwner = this.blockerOwners.get(id);
+      if (hullOwner !== undefined && this.hulls.has(hullOwner)) return;
       if (at === e?.transform && (owner !== undefined && this.blockerOwners.get(id) === owner || seatOwner !== undefined && id === `blocker:${seatOwner}`)) return;
       // Support below the feet is walkable; navigation-only walls explicitly reserve the ground layer.
       if ((box.navBlocker && at.y < 1.8) || box.y + box.halfY > at.y - .65 + .05 && box.y - box.halfY < at.y + .65) visit(box, id);
@@ -118,6 +144,19 @@ export class SolidRegistry {
     const nav = this.world.infected?.nav;
     const fits = (p: Point) => (!navigation || !nav || nav.clear(p.x, p.z, radius, true)) && this.clear(p, radius, ignoreId);
     if (fits(at)) return { ...at };
+    // Use the exact APC projection before quantized search rings, retaining near-contact ram/door distances.
+    if (range > 0) {
+      const projected = { ...at }, e = ignoreId === undefined ? undefined : this.world.entities.get(ignoreId);
+      for (let pass = 0; pass < 8; pass++) {
+        let changed = false;
+        this.solids(projected, radius, e, box => {
+          const c = boxContact(box, projected.x, projected.z, radius, this.contact);
+          if (c.depth > skin) { projected.x += c.nx * (c.depth + skin); projected.z += c.nz * (c.depth + skin); changed = true; }
+        });
+        if (!changed) break;
+      }
+      if (Math.hypot(projected.x-at.x, projected.z-at.z) <= range && fits(projected)) return projected;
+    }
     for (let r = .25; r <= range; r += .25) {
       const steps = Math.ceil(2 * Math.PI * r / .4);
       for (let k = 0; k < steps; k++) {
@@ -133,7 +172,7 @@ export class SolidRegistry {
     this.syncHulls(); this.writers.set(e, writer);
     const to = this.find(e.transform, actorRadius(e), e.id, range, navigation);
     if (!to) {
-      if (!e.pendingAdmission) { e.pendingAdmission = { ...e.transform, writer, hidden: e.hidden }; this.deferred++; }
+      if (!e.pendingAdmission) { e.pendingAdmission = { ...e.transform, writer, hidden: e.hidden, range, navigation }; this.deferred++; }
       e.hidden = true; this.world.spatial.delete(e.id); return false;
     }
     Object.assign(e.transform, to); delete e.pendingAdmission;
@@ -164,9 +203,11 @@ export class SolidRegistry {
     this.bodies.length = this.moved.length = 0;
     for (const e of this.world.entities.iterate()) {
       if (e.pendingAdmission) {
-        if (this.world.tick % 30 !== e.id % 30) { e.hidden = true; this.world.spatial.delete(e.id); continue; }
-        const pending = e.pendingAdmission;
-        const to = this.find(pending, actorRadius(e), e.id);
+        const pending = e.pendingAdmission, p = e.transform;
+        const scripted = pending.x !== p.x || pending.z !== p.z || pending.y !== p.y;
+        if (scripted) Object.assign(pending, p);
+        if (!scripted && this.world.tick % 30 !== e.id % 30) { e.hidden = true; this.world.spatial.delete(e.id); continue; }
+        const to = this.find(pending, actorRadius(e), e.id, pending.range ?? 4, pending.navigation ?? true);
         if (to) { Object.assign(e.transform, to); e.hidden = pending.hidden; delete e.pendingAdmission; this.admitted++; this.publish(e); }
         else { e.hidden = true; this.world.spatial.delete(e.id); continue; }
       }

@@ -6,7 +6,7 @@ export interface Transform { x: number; y: number; z: number; yaw: number }
 export interface EntitySnapshot {
   id: number;
   /** Unsafe admission retains its identity and slot until a radius-aware placement succeeds. */
-  pendingAdmission?: Transform & { writer: string; hidden?: boolean };
+  pendingAdmission?: Transform & { writer: string; hidden?: boolean; range?: number; navigation?: boolean };
   /** Settled persistent body: no brain, collision obstacle or physics updates. */
   corpse?: boolean;
   /** A retained death pose in flight; the crowd view follows its actual transform. */
