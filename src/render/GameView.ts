@@ -361,7 +361,7 @@ export class GameView implements Lifecycle {
       this.frozenPose = survivor ? structuredClone(survivor) : null;
     }
     if (this.world.scenario === 'drive-course') this.postFx = new PostFx(this.renderer, this.scene, this.camera, this.quality, this.look);
-    if (this.params.has('debug')) {
+    if (this.params.get('debug') === 'physics') {
       this.wireframe = new PhysicsWireframe(this.world.physics); this.scene.add(this.wireframe.lines);
     }
     this.lighting?.applyLook(); this.materials?.applyLook(); this.postFx?.applyLook(); this.districts?.applyLook();

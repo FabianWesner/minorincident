@@ -15,6 +15,8 @@ test('pause debug panel is query gated and reports L1 state', async ({ page }) =
   await expect(panel).toContainText('Step:');
   await expect(page.getByTestId('pause-debug-copy')).toBeVisible();
 
+  // Both branches exercise the fresh-profile character picker.
+  await page.evaluate(() => localStorage.clear());
   await page.goto(menuUrl);
   await page.getByTestId('start-game').click();
   await page.getByTestId('character-female').click();

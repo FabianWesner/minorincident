@@ -1,0 +1,34 @@
+{
+  "name": "po-debug-courier",
+  "note": "PO #32: run with --query debug=true and --query debug=physics. Only the explicit physics link draws capsules and prop colliders; game camera in the quality/zoom matrix.",
+  "ground": "asphalt",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "loadout": [
+        "weapon.shotgun",
+        "weapon.fists"
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 30,
+  "sheet": 10,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}
