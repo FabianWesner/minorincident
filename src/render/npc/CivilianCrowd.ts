@@ -323,17 +323,20 @@ class CivilianBatch extends Group {
     const { layers, style } = this.moves.sample(e, b.state, b.until, (windups.get(e.archetype) ?? .5), renderTick, presented.yaw, motion.speed, moving ? clip : undefined);
     const target = this.world.entities.get(b.heardTargetId || b.l1?.targetId || 1);
     const contact = !!target?.survivor && Math.hypot(presented.x - target.transform.x, presented.z - target.transform.z) < infectedContactDistance(e.combat!.radius) + .15 ||
-      still && !this.world.solids.clear(e.transform, e.combat!.radius + .6, e.id, false);
+      !this.world.solids.clear(e.transform, e.combat!.radius + .6, e.id);
     if (contact) layers.lunge = Math.min(layers.lunge ?? 0, .04);
     this.transform.makeRotationY(presented.yaw + (still ? Math.sin(t * 1.7) * .14 + (Math.sin(t * 7.3) > .93 ? .18 : 0) : 0));
     if (b.state !== 'dead' && !heavy && still) {
       // Near the camera the hunch bends at the hips over planted feet; far away the whole body leans from the feet.
       // The authored pose already hunches. A second whole-body bend at contact
       // sent heads through hull panels and forearms through the courier's pack.
-      const lean = contact ? .08 : .34 + .14 + Math.abs(Math.sin(t * 2.3)) * .1, roll = (e.id % 2 ? .17 : -.17) + Math.sin(t * 1.3) * .04;
-      if (near) { layers.lean = lean; layers.roll = roll; }
-      else this.transform.multiply(this.lean).multiply(this.sway.makeRotationX(roll)).multiply(this.sway.makeRotationZ(contact ? 0 : -.14 - Math.abs(Math.sin(t * 2.3)) * .1));
+      const lean = contact ? -.15 : .34 + .14 + Math.abs(Math.sin(t * 2.3)) * .1, roll = (e.id % 2 ? .17 : -.17) + Math.sin(t * 1.3) * .04;
+      if (near || contact) { layers.lean = lean; layers.roll = roll; }
+      else this.transform.multiply(this.lean).multiply(this.sway.makeRotationX(roll)).multiply(this.sway.makeRotationZ(-.14 - Math.abs(Math.sin(t * 2.3)) * .1));
     }
+    // The baked walking hunch also reaches beyond the roots while approaching a
+    // neighbour. Yield that upper-body pose before two otherwise clear feet meet.
+    if (contact && !still && !heavy && !b.specialAttack && b.state !== 'dead') { layers.lean = -.15; layers.lurch = 0; }
     this.transform.setPosition(presented.x, presented.y - .7, presented.z);
     if (b.state === 'dead') this.deadFeet.set(e.id, { id: e.id, x: presented.x, y: presented.y - .7, z: presented.z });
     let frame = civilianClips.indexOf(clip) * framesPerClip + phase * (framesPerClip - 1);
