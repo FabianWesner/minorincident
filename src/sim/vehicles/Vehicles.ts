@@ -532,7 +532,7 @@ export class Vehicles {
     for (const side of [1, -1]) for (let offset = 0; offset <= 4; offset++) {
       this.localPoint(car, car.physics.def.doorX - offset * .8, side * (car.physics.def.width / 2 + .65));
       const nav = this.world.infected?.nav;
-      if (nav && !nav.clear(this.position.x, this.position.z, actor.combat?.radius ?? survivor.radius)) continue;
+      if (nav && !nav.contains(this.position.x, this.position.z, actor.combat?.radius ?? survivor.radius)) continue;
       if (!this.world.solids.clear(this.position, actor.combat?.radius ?? survivor.radius, actorId)) continue;
       if ([...this.world.entities.iterate()].some(e => e.id !== actorId && !e.hidden && e.health.current > 0 && (e.civilian || e.survivor) && Math.hypot(e.transform.x - this.position.x, e.transform.z - this.position.z) < .8)) continue;
       if (this.world.physics.world!.intersectionWithShape(this.position, this.identity, this.exitShape, RAPIER.QueryFilterFlags.EXCLUDE_SENSORS, undefined, this.world.physics.playerCollider!)) continue;

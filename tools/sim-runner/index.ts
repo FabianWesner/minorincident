@@ -27,7 +27,7 @@ if (values.level) {
   for (const level of values.level === 'all' ? runnerLevels : [values.level as RunnerLevel]) for (let i = 0; i < seeds; i++) {
     const report = await runLevel(level, values.policy as CompletionPolicy, seed + i, values.ticks === undefined ? undefined : ticks / 60, values.route as 'auto' | 'blvd' | 'commerce' | 'oak' | undefined);
     reports.push(report);
-    console.log(JSON.stringify({ level, seed: seed + i, completed: report.completed, time: report.time, deaths: report.deaths, outcome: report.outcome, furthestObjective: report.furthestObjective }));
+    console.log(JSON.stringify({ level, seed: seed + i, completed: report.completed, time: report.time, deaths: report.deaths, outcome: report.outcome, furthestObjective: report.furthestObjective, collision: report.collision }));
   }
   const failures: Record<string, number> = {};
   for (const r of reports) for (const [reason, count] of Object.entries(r.failures)) failures[reason] = (failures[reason] ?? 0) + count;

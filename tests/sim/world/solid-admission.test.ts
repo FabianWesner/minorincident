@@ -117,3 +117,14 @@ test('a clear formation can enter positions its neighbours vacate during the sam
     for (let i=0;i<bodies.length;i++) expect(bodies[i].transform.x).toBeCloseTo(starts[i] + .2, 5);
   } finally { w.dispose(); }
 });
+
+test('parked rotated hull admission uses its exact footprint rather than its coarse route box', async () => {
+  const w = await arena();
+  try {
+    spawnSetPiece(w, 'veh.tank', { x: 12, z: 0, yaw: 40 * Math.PI / 180 }); tick(w, 30);
+    const e = w.entities.get(w.infected!.spawn('infected.alpha', { x: 12, z: 0 }, { state: 'idle' }))!;
+    expect(e.pendingAdmission).toBeUndefined(); expect(e.hidden).not.toBe(true);
+    expect(Math.hypot(e.transform.x - 12, e.transform.z)).toBeLessThan(3);
+    tick(w);
+  } finally { w.dispose(); }
+});
