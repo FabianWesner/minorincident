@@ -1,0 +1,91 @@
+{
+  "ground": "district",
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 180,
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "name": "l2-finale-streets",
+  "note": "PO #7: the direct supermarket to Juniper and Elm escape carries small sight-driven groups. The courier has room to pass on either side of the street.",
+  "time": "L2",
+  "layout": {
+    "level": "L2",
+    "district": "D-GROVE",
+    "bbox": [
+      [
+        -42,
+        -4
+      ],
+      [
+        -18,
+        35
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -30.6,
+        13
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.fists"
+      ]
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        -29,
+        11
+      ]
+    },
+    {
+      "id": "straggler-0",
+      "kind": "infected",
+      "at": [
+        -30,
+        21
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "straggler-1",
+      "kind": "infected",
+      "at": [
+        -28.5,
+        22
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "straggler-2",
+      "kind": "infected",
+      "at": [
+        -32,
+        23
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "straggler-3",
+      "kind": "infected",
+      "at": [
+        -29,
+        25
+      ],
+      "state": "chase"
+    }
+  ]
+}
