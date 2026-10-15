@@ -1,0 +1,56 @@
+{
+  "extends": "l3-blvd-wreck-passage.json",
+  "name": "l3-blvd-cover-detour",
+  "note": "The existing sandbag pallet provides cover at the jam before the next cross-link, clear of the later burning cruiser and wrecked bus. Follow the courier around the visible cover into Boulevard. Inspect the passing width, grounded sandbags, building cutaways and readable street at both tiers and zooms; L3-route checks the full connected detour without relaxing its bounds.",
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "actorTravel": {
+      "courier": [
+        45,
+        75
+      ]
+    }
+  },
+  "layout": {
+    "level": "L3",
+    "district": "D-CORRIDOR",
+    "bbox": [
+      [
+        -20,
+        -42
+      ],
+      [
+        55,
+        -10
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -10,
+        -23.25
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.handgun"
+      ]
+    }
+  ],
+  "script": [
+    {
+      "frame": 1,
+      "actor": "courier",
+      "do": {
+        "moveTo": [
+          40,
+          -23.25
+        ],
+        "pace": "run"
+      }
+    }
+  ]
+}
