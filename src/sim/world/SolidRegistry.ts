@@ -34,6 +34,8 @@ export class SolidRegistry {
   deferred = 0;
   private readonly blockerOwners = new Map<string, number>();
   private readonly hulls = new Map<number, Hull>();
+  private hullRevision = -1;
+  private readonly hiddenHulls = new Set<EntitySnapshot>();
   private readonly hullIndex = new SpatialHash();
   private committed = new WeakMap<EntitySnapshot, Transform>();
   private writers = new WeakMap<EntitySnapshot, string>();
@@ -76,7 +78,12 @@ export class SolidRegistry {
   /** Vehicles, ambient traffic, convoy and setpieces all register by stable entity ID, including on restore. */
   register(e: EntitySnapshot): void {
     const previous = this.hulls.get(e.id);
-    if (e.hidden || previous?.entity === e) return;
+    if (e.hidden) {
+      if (e.vehicle || e.traffic || e.convoy || e.kind === 'setpiece' && e.archetype.startsWith('veh.')) this.hiddenHulls.add(e);
+      return;
+    }
+    this.hiddenHulls.delete(e);
+    if (previous?.entity === e) return;
     if (previous) this.parkedHull(previous, false);
     let boxes: SolidBox[];
     if (e.vehicle) {
@@ -94,10 +101,19 @@ export class SolidRegistry {
   private syncHulls(): boolean {
     let changed = false;
     if (this.changedTick !== this.world.tick) { this.changedActors.clear(); this.changedHulls.clear(); this.changedTick = this.world.tick; }
-    for (const e of this.world.entities.iterate()) if (e.vehicle || e.traffic || e.convoy || e.kind === 'setpiece') this.register(e);
+    if (this.hullRevision !== this.world.entities.revision) {
+      this.hullRevision = this.world.entities.revision;
+      for (const e of this.world.entities.iterate()) if (e.vehicle || e.traffic || e.convoy || e.kind === 'setpiece') this.register(e);
+    }
+    // Visibility changes retain identity/revision. Watch inactive hulls until
+    // they reappear, without rescanning the entire actor pool each tick.
+    for (const e of this.hiddenHulls) {
+      if (this.world.entities.get(e.id) !== e) this.hiddenHulls.delete(e);
+      else if (!e.hidden) this.register(e);
+    }
     for (const [id, h] of this.hulls) {
       const e = this.world.entities.get(id), p = h.entity.transform;
-      if (e !== h.entity || e.hidden) { this.parkedHull(h, false); this.hulls.delete(id); this.hullIndex.delete(id); changed = true; continue; }
+      if (e !== h.entity || e.hidden) { if (e === h.entity && e.hidden) this.hiddenHulls.add(e); this.parkedHull(h, false); this.hulls.delete(id); this.hullIndex.delete(id); changed = true; continue; }
       const stable = Math.hypot(h.pose.x - p.x, h.pose.z - p.z) < .01;
       if (!stable) h.quiet = 0;
       else if (h.quietTick !== this.world.tick) h.quiet++;
@@ -233,6 +249,7 @@ export class SolidRegistry {
   wrote(e: EntitySnapshot, writer: string): void { this.writers.set(e, writer); }
   remember(e: EntitySnapshot, writer: string): void { this.committed.set(e, { ...e.transform }); this.validated.delete(e); this.writers.set(e, writer); }
   restore(): void {
+    this.hullRevision = -1;
     this.committed = new WeakMap(); this.validated = new WeakMap();
     for (const e of this.world.entities.iterate()) if (actor(e)) this.writers.set(e, 'checkpoint.restore');
     this.commit();
@@ -464,5 +481,5 @@ export class SolidRegistry {
     return { failures: this.failures, pending: pending.length, admitted: this.admitted, deferred: this.deferred,
       requests: pending.slice(0, 64).map(e => ({ id: e.id, archetype: e.archetype, ...e.pendingAdmission })), offenders: this.offenders.map(o => ({ ...o })) };
   }
-  reset(): void { this.bodies.length = this.moved.length = this.nearby.length = this.hullNeighbors.length = 0; this.changedActors.clear(); this.changedHulls.clear(); this.changedTick = -1; this.rejected.clear(); this.bodyRejections.clear(); this.unresolved.length = 0; this.live.clear(); this.committing = false; this.blockerOwners.clear(); this.hulls.clear(); this.hullIndex.reset(); this.committed = new WeakMap(); this.proposed = new WeakMap(); this.validated = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = -1; this.nav = undefined; }
+  reset(): void { this.bodies.length = this.moved.length = this.nearby.length = this.hullNeighbors.length = 0; this.changedActors.clear(); this.changedHulls.clear(); this.changedTick = -1; this.rejected.clear(); this.bodyRejections.clear(); this.unresolved.length = 0; this.live.clear(); this.committing = false; this.blockerOwners.clear(); this.hulls.clear(); this.hiddenHulls.clear(); this.hullRevision = -1; this.hullIndex.reset(); this.committed = new WeakMap(); this.proposed = new WeakMap(); this.validated = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = -1; this.nav = undefined; }
 }
