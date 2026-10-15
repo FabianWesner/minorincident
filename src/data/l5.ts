@@ -21,8 +21,8 @@ export const l5 = {
   metro: { triggerM: 1.2, gatherM: 15, waitS: 10, occupantViewS: 3, lookoutAfterS: 0, occupants: 24, stationX: 37.7854, stationZ: -78 },
   /** Sunset gloom ramp: sun intensity factor from 1 to `endFactor` over the story (time share and the share of survivors accounted for). */
   gloom: { rampS: 240, endFactor: 0.5, atMetroMax: 0.7 },
-  /** No music for the first `musicFromS` seconds, then a sparse low drone. */
-  audio: { musicFromS: 60, quietDb: -24 },
+  /** Ambience only until the first survivor is found; preserve the existing L5 recording. */
+  audio: { quietDb: -24 },
   medkits: { heal: 40, positions: [[45.5, 20], [30, -37.2], [-4, -37.2], [-22, 15], [-30.5, -2], [-44, 39.4], [58, 42.5]] as readonly P[] },
   checkpoints: ['outside', 'survivor-1', 'survivor-2', 'survivor-3', 'survivor-4', 'survivor-5'] as const,
   /** Bots (section 8). Keep the original acceptance bands; never pad bot time. */

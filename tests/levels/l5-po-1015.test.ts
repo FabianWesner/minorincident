@@ -1,3 +1,4 @@
+import { l5MusicReady } from '../../src/data/musicBeats';
 import { afterEach, expect, test } from 'vitest';
 import { emptyInput } from '../../src/input/InputFrame';
 import { l5Survivors } from '../../src/data/l5';
@@ -97,4 +98,19 @@ test('PO #20b @E23 @E23-AC09 survivor-1 restore: Alpha at 15 m engages, follower
     expect(distance(follower.transform, w.entities.get(1)!.transform)).toBeLessThanOrEqual(8);
   }
   expect(follower.civilian!.survivor!.mode).toBe('follow'); expect(maxJump).toBeLessThan(1);
+}, 300_000);
+
+test('PO #19c @E23 @E23-AC14 music follows the first find and survivor checkpoint restores, never elapsed time', async () => {
+  const loaded = await loadL5(1); world = loaded.world;
+  const { mission } = loaded, w = world;
+  mission.completeObjective('emerge'); mission.l5!.advance(); mission.checkpoint('outside');
+  mission.state.stats.time = 120;
+  expect(l5MusicReady(mission.state)).toBe(false);
+  runL5(w, mission, 'complete', { stopWhen: m => m.state.checkpoint === 'survivor-1' });
+  expect(l5MusicReady(mission.state)).toBe(true);
+  for (const id of ['survivor-1', 'survivor-2', 'survivor-3', 'survivor-4', 'survivor-5']) {
+    runL5(w, mission, 'complete', { stopWhen: m => m.state.checkpoint === id });
+    mission.restore(id); expect(l5MusicReady(mission.state), id).toBe(true);
+  }
+  mission.restore('outside'); expect(l5MusicReady(mission.state)).toBe(false);
 }, 300_000);

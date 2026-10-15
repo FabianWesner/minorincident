@@ -3,7 +3,7 @@ import { boot, test, expect } from '../fixtures';
 import type { AudioRenderRequest } from '../../../src/debug/audioHarness';
 import { loudness } from '../../../tools/audio/measure';
 
-/** E23-AC14: the silent city. No music in the first 60 s, no battle layer ever, and a mix at least 18 LU below the L4 war phase. */
+/** E23-AC14: the silent city. No music before the first find, no battle layer ever, and a mix at least 18 LU below the L4 war phase. */
 const root = 'test-results/epics/E23';
 async function render(page: import('@playwright/test').Page, request: AudioRenderRequest, name: string) {
     const result = await page.evaluate(req => window.__SS__!.audio.render(req), request), bytes = Buffer.from(result.wav, 'base64');
@@ -11,26 +11,34 @@ async function render(page: import('@playwright/test').Page, request: AudioRende
     writeFileSync(`${root}/${name}.wav`, bytes);
     return { result, path: `${root}/${name}.wav` };
 }
-test('T-E23-14a @E23 @E23-AC14 no music cue in the first 60 s of L5 and no battle-layer cue at any time, while shooting the machine gun and meeting infected', async ({ page }) => {
-    test.setTimeout(600_000);
-    await boot(page);
-    await page.mouse.click(200, 250);
-    const log = await page.evaluate(async () => {
+test('T-E23-14a @E23 @E23-AC14 PO #19c zero music before survivor 1, current recording within 2 s after, including restore', async ({ page }) => {
+    test.setTimeout(300_000);
+    await boot(page); await page.mouse.click(200, 250);
+    await page.evaluate(async () => {
         const a = window.__SS__!;
-        await a.loadLevel('L5', { seed: 1, progression: 'L5-default' }); a.pause(); a.missions.begin(); await a.audio.unlock(); a.cheats.god(true); a.audio.clearLog();
-        a.bot.start('complete');
-        const early: string[] = [], late: string[] = [];
-        for (let second = 0; second < 90; second++) {
-            await a.step(60);
-            const time = a.missions.state()!.stats.time, cues = a.audio.snapshot().cues.map(c => c.cue); a.audio.clearLog();
-            (time < 60 ? early : late).push(...cues);
-        }
-        return { early, late, time: a.missions.state()!.stats.time };
+        await a.loadLevel('L5', { seed: 1, progression: 'L5-default' }); a.pause(); a.missions.begin(); await a.audio.unlock();
+        a.cheats.completeObjective('emerge'); await a.step(120 * 60);
     });
-    mkdirSync(root, { recursive: true }); writeFileSync(`${root}/audio-l5-log.json`, JSON.stringify({ early: [...new Set(log.early)], late: [...new Set(log.late)], time: log.time }, null, 1));
-    expect(log.early.filter(c => c.startsWith('music.') || c.startsWith('stinger.') || c.startsWith('score.'))).toEqual([]);
-    expect(log.late.filter(c => /^music\.L5\.(pulse|drive|peak)$/.test(c))).toEqual([]);
-    expect([...log.early, ...log.late].filter(c => /siren|helicopter|megaphone|explosion\.(boom|roar)|tank|hmg/.test(c))).toEqual([]);
+    const before = await page.evaluate(() => window.__SS__!.audio.snapshot());
+    expect(before.music.streamed.decks.filter(d => !d.paused)).toEqual([]);
+    expect(before.cues.filter(c => /^(music|score|stinger)\./.test(c.cue))).toEqual([]);
+    const quiet = await render(page, { scenario: 'cue-log', level: 'L5', duration: 3, cues: [] }, 'audio-before-survivor-1');
+    expect(quiet.result.voices).toBe(0);
+    await page.evaluate(async () => {
+        const a = window.__SS__!; a.bot.start('complete');
+        for (let i = 0; i < 180 && !a.missions.state()!.l5!.found; i++) await a.step(30);
+        a.bot.stop();
+    });
+    expect(await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint)).toBe('survivor-1');
+    await expect.poll(() => page.evaluate(() => window.__SS__!.audio.snapshot().music.streamed.decks.filter(d => !d.paused && d.gain > 0).map(d => d.file)), { timeout: 2000 }).toEqual(['calm-L5']);
+    const deck = await page.evaluate(() => window.__SS__!.audio.snapshot().music.streamed.decks.find(d => !d.paused)!);
+    const music = await render(page, { scenario: 'cue-log', level: 'L5', duration: 3, cues: [], score: { file: deck.file, gain: deck.gain } }, 'audio-after-survivor-1');
+    expect(loudness(music.path).lufs).toBeGreaterThan(-60);
+    for (const checkpoint of ['survivor-1', 'survivor-5']) {
+        if (checkpoint === 'survivor-5') await page.evaluate(async () => { const a = window.__SS__!; a.cheats.completeObjective('look'); await a.step(2); });
+        await page.evaluate(async id => { const a = window.__SS__!; a.missions.restore(id); await a.step(2); }, checkpoint);
+        await expect.poll(() => page.evaluate(() => window.__SS__!.audio.snapshot().music.streamed.decks.filter(d => !d.paused).map(d => d.file)), { timeout: 2000 }).toEqual(['calm-L5']);
+    }
 });
 test('T-E23-14b @E23 @E23-AC14 the first 60 s of L5 measure at least 18 LU below the battle mix of L4\'s war phase (offline render of the production graph)', async ({ page }) => {
     test.setTimeout(900_000);
