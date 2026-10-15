@@ -1,3 +1,4 @@
+import { groundAgent } from '../locomotion/AgentMotion';
 import { staticCollision } from '../../assets/staticCollision';
 import { vehicleDef } from '../../data/vehicles';
 import { survivor } from '../../data/survivor';
@@ -12,7 +13,7 @@ export interface CollisionOffender { tick: number; actor: number; other: number 
 const tolerance = .02, skin = .001;
 /** One physical footprint. Reach, crowd spacing and animation envelopes are owned by combat/presentation. */
 export function actorRadius(e: EntitySnapshot): number {
-  return e.survivor ? survivor.radius : e.combat?.radius ?? (e.companion ? .3 : .35);
+  return e.survivor ? survivor.radius : e.combat?.radius ?? .35;
 }
 function actor(e: EntitySnapshot): boolean {
   return !!(e.survivor || e.infected || e.civilian || e.companion || e.escort) && e.health.current > 0 && !e.corpse && !e.hidden && !e.infected?.hidden && !e.pendingAdmission;
@@ -179,12 +180,12 @@ export class SolidRegistry {
       e.hidden = true; this.world.spatial.delete(e.id); return false;
     }
     Object.assign(e.transform, to); delete e.pendingAdmission;
-    this.publish(e); this.admitted++; return true;
+    this.publish(e, true); this.admitted++; return true;
   }
   relocate(e: EntitySnapshot, at: Point, writer: string, range = 1.5): boolean {
     this.syncHulls(); const to = this.find(at, actorRadius(e), e.id, range);
     if (!to) return false;
-    Object.assign(e.transform, to); this.writers.set(e, writer); this.publish(e); this.committed.set(e, { ...e.transform }); return true;
+    Object.assign(e.transform, to); this.writers.set(e, writer); this.publish(e, true); this.committed.set(e, { ...e.transform }); return true;
   }
   /** A successful explicit relocation starts a new motion transaction. */
   wrote(e: EntitySnapshot, writer: string): void { this.writers.set(e, writer); }
@@ -194,7 +195,8 @@ export class SolidRegistry {
     for (const e of this.world.entities.iterate()) if (actor(e)) this.writers.set(e, 'checkpoint.restore');
     this.commit();
   }
-  private publish(e: EntitySnapshot): void {
+  private publish(e: EntitySnapshot, ground = false): void {
+    if (ground) groundAgent(this.world, e);
     this.world.spatial.set(e.id, e.transform.x, e.transform.z);
     if (e.id === 1) { this.world.physics.playerBody?.setTranslation(e.transform, true); this.world.physics.playerBody?.setNextKinematicTranslation(e.transform); }
   }
@@ -224,6 +226,7 @@ export class SolidRegistry {
       const radius = actorRadius(e), p = e.transform, old = this.committed.get(e);
       // Locomotion and impulses already sweep through NavGrid/Rapier. Validate their final footprint here,
       // including scripted relocations whose source and destination are intentionally disconnected.
+      const beforeX = p.x, beforeZ = p.z;
       for (let pass = 0; pass < 8; pass++) {
         let moved = false;
         this.solids(p, radius, e, b => {
@@ -232,7 +235,7 @@ export class SolidRegistry {
         });
         if (!moved) break;
       }
-      this.publish(e);
+      this.publish(e, p.x !== beforeX || p.z !== beforeZ);
       if (!this.clear(p, radius, e.id, true, tolerance)) {
         // Exact circle projection handles residual crowd contacts without running a placement search for every chaser.
         for (let pass = 0; pass < 8; pass++) {
@@ -250,12 +253,12 @@ export class SolidRegistry {
           }
           if (!moved) break;
         }
-        this.publish(e);
+        this.publish(e, true);
       }
       if (!this.clear(p, radius, e.id, true, tolerance)) {
         // Only bodies still in contact pay for bounded placement; ordinary motion keeps its exact result.
         const to = this.find(p, radius, e.id, 2, false) ?? (old && this.clear(old, radius, e.id) ? old : null);
-        if (to) { Object.assign(p, to); this.publish(e); }
+        if (to) { Object.assign(p, to); this.publish(e, true); }
       }
     }
     // Audit every moved/new actor, and every actor once a second. Keep a bounded diagnostic ring.

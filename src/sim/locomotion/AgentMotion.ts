@@ -35,6 +35,10 @@ function stepSupport(world: SimWorld, e: EntitySnapshot): number {
   const d = world.districts!, x = e.transform.x, z = e.transform.z, stride = e.civilian?.supportFeet ? .4 : .22, fx = Math.cos(e.transform.yaw) * stride, fz = -Math.sin(e.transform.yaw) * stride;
   return Math.max(d.groundHeight(x, z), d.groundHeight(x + fx, z + fz), d.groundHeight(x - fx, z - fz));
 }
+/** Feet support is resolved before the final collision commit, and again after a contact correction. */
+export function groundAgent(world: SimWorld, e: EntitySnapshot): void {
+  if (world.districts && !e.infected && !e.survivor) e.transform.y = (e.companion || e.civilian?.pet ? .3 : .7) + (e.civilian?.floorY ?? ((e.civilian?.story || e.civilian?.supportFeet) ? stepSupport(world, e) : world.districts.groundHeight(e.transform.x, e.transform.z)));
+}
 function actor(e: EntitySnapshot): boolean { return !e.corpse && !!(e.infected || e.civilian || e.companion || e.escort); }
 // Corgi hiding still follows at the survivor's heels; it must retain its response.
 function forced(e: EntitySnapshot, tick: number, world: SimWorld): boolean {
@@ -58,9 +62,11 @@ export function installAgentMotion(world: SimWorld): void {
     }
   }, SimPhase.missions + .5);
   world.events.on('sim.tick', () => {
+    for (const e of world.entities.iterate()) if (actor(e)) groundAgent(world, e);
+  }, SimPhase.cleanup + .5);
+  world.events.on('sim.tick', () => {
     for (const e of world.entities.iterate()) if (actor(e)) {
       const p = previous.get(e.id); if (!p) continue;
-      if (world.districts && !e.infected) e.transform.y = (e.companion || e.civilian?.pet ? .3 : .7) + (e.civilian?.floorY ?? ((e.civilian?.story || e.civilian?.supportFeet) ? stepSupport(world, e) : world.districts.groundHeight(e.transform.x, e.transform.z)));
       const dx = e.transform.x - p.x, dz = e.transform.z - p.z, distance = Math.hypot(dx, dz);
       const motion = e.motion ??= { velocity: { x: 0, z: 0 }, speed: 0, moving: false, distance: e.id * .137 };
       motion.velocity.x = dx / FIXED_DT; motion.velocity.z = dz / FIXED_DT; motion.speed = distance / FIXED_DT;
@@ -72,5 +78,5 @@ export function installAgentMotion(world: SimWorld): void {
         if (Math.abs(error) > .3) { e.transform.yaw = heading - Math.sign(error) * .3; if (e.locomotion) e.locomotion.omega = 0; }
       }
     }
-  }, SimPhase.cleanup + .5);
+  }, SimPhase.cleanup + 1);
 }
