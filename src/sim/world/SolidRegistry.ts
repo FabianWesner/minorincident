@@ -180,12 +180,13 @@ export class SolidRegistry {
     const seatOwner = activity?.seatProp ? this.world.props?.items.find(p => p.id === activity.seatProp)?.entityId : undefined;
     const nav = e?.infected ? this.world.infected?.infectedNav : this.world.infected?.nav;
     nav?.visitSolids(at.x, at.z, radius, (box, id) => {
+      // Height rejects most nearby roofs/supports before any ownership lookup.
+      if (!(box.y + box.halfY > at.y - .65 + .05 && box.y - box.halfY < at.y + .65)) return;
       // Navigation uses an AABB for the route bake; exact contact uses its canonical OBB below.
       const hullOwner = this.blockerOwners.get(id);
       if (hullOwner !== undefined && this.hulls.has(hullOwner)) return;
       if (at === e?.transform && (owner !== undefined && this.blockerOwners.get(id) === owner || seatOwner !== undefined && id === `blocker:${seatOwner}`)) return;
-      // Support below the feet is walkable; contact only joins overlapping height layers.
-      if (box.y + box.halfY > at.y - .65 + .05 && box.y - box.halfY < at.y + .65) visit(box, id);
+      visit(box, id);
     });
     if (!this.hulls.size) return;
     const passenger = owner ?? (e?.hidden ? this.world.missions?.l4?.passengerHull(e) : undefined);

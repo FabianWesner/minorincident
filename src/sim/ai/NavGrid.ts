@@ -24,6 +24,7 @@ export class NavGrid {
   private pathStamp = 0;
   private readonly heap: { cell: number; score: number }[] = [];
   private readonly buckets = new Map<number, Map<number, Wall[]>>();
+  private readonly routeBuckets = new Map<number, Map<number, Wall[]>>();
   private searchFrom = -1;
   private searchTo = -1;
   private searching = false;
@@ -132,10 +133,10 @@ export class NavGrid {
   }
   clear(x: number, z: number, radius = 0, rounded = false, ignoreBlocker?: number): boolean {
     if (!this.contains(x, z, radius)) return false;
-    if (!this.buckets.size && !this.blockers.size) return true;
+    if (!this.routeBuckets.size && !this.blockers.size) return true;
     const cellX = Math.floor(x / 4), cellZ = Math.floor(z / 4);
-    const walls = this.buckets.get(cellX)?.get(cellZ);
-    if (walls) for (const w of walls) if ((w.navBlocker || w.y - w.halfY < 1.8 && w.y + w.halfY > .05) && (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius)) return false;
+    const walls = this.routeBuckets.get(cellX)?.get(cellZ);
+    if (walls) for (const w of walls) if (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
     const blockers = this.blockerBuckets.get(cellX)?.get(cellZ);
     if (blockers) for (const [id, w] of blockers) if (id !== ignoreBlocker && (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius)) return false;
     return true;
@@ -154,22 +155,28 @@ export class NavGrid {
     if (!this.buckets.size && !this.blockers.size) return;
     const reach = Math.max(0, radius - 2), seen = reach ? new Set<Wall>() : null;
     for (let cx = Math.floor((x - reach) / 4); cx <= Math.floor((x + reach) / 4); cx++) for (let cz = Math.floor((z - reach) / 4); cz <= Math.floor((z + reach) / 4); cz++) {
-      for (const w of this.buckets.get(cx)?.get(cz) ?? []) if (!seen?.has(w)) { seen?.add(w); visit(w, `static:${this.wallIds.get(w)}`); }
+      for (const w of this.buckets.get(cx)?.get(cz) ?? []) if (!seen?.has(w)) { seen?.add(w); visit(w, this.wallIds.get(w)!); }
       for (const [id, w] of this.blockerBuckets.get(cx)?.get(cz) ?? []) if (!seen?.has(w)) { seen?.add(w); visit(w, `blocker:${id}`); }
     }
   }
-  private readonly wallIds = new WeakMap<Wall, number>();
+  private readonly wallIds = new WeakMap<Wall, string>();
   private indexWalls(): void {
     this.revision++;
-    this.walls.forEach((wall, i) => this.wallIds.set(wall, i));
-    this.buckets.clear();
-    for (const wall of this.walls) for (let z = Math.floor((wall.z - wall.halfZ - 2) / 4); z <= Math.floor((wall.z + wall.halfZ + 2) / 4); z++) for (let x = Math.floor((wall.x - wall.halfX - 2) / 4); x <= Math.floor((wall.x + wall.halfX + 2) / 4); x++) {
-      let column = this.buckets.get(x);
-      if (!column) this.buckets.set(x, column = new Map());
-      let bucket = column.get(z);
-      if (!bucket) column.set(z, bucket = []);
-      bucket.push(wall);
-    }
+    this.walls.forEach((wall, i) => this.wallIds.set(wall, `static:${i}`));
+    // Both indexes borrow the same authored walls. Route queries keep their
+    // original ground-height subset; contact queries also inspect raised solids.
+    const index = (walls: readonly Wall[], buckets: typeof this.buckets) => {
+      buckets.clear();
+      for (const wall of walls) for (let z = Math.floor((wall.z - wall.halfZ - 2) / 4); z <= Math.floor((wall.z + wall.halfZ + 2) / 4); z++) for (let x = Math.floor((wall.x - wall.halfX - 2) / 4); x <= Math.floor((wall.x + wall.halfX + 2) / 4); x++) {
+        let column = buckets.get(x);
+        if (!column) buckets.set(x, column = new Map());
+        let bucket = column.get(z);
+        if (!bucket) column.set(z, bucket = []);
+        bucket.push(wall);
+      }
+    };
+    index(this.walls, this.buckets);
+    index(this.walls.filter(w => w.navBlocker || w.y - w.halfY < 1.8 && w.y + w.halfY > .05), this.routeBuckets);
   }
   /** The same walls, live blockers and mask baked for a wider body (E32 Mega Alpha); the caller forwards later blocker changes. */
   withClearance(clearance: number): NavGrid {
@@ -258,7 +265,7 @@ export class NavGrid {
     const divisor = Math.max(1, steps);
     const walls = new Set<Wall>();
     const collect = (x: number, z: number) => {
-      const bucket = this.buckets.get(x)?.get(z); if (bucket) for (const wall of bucket) if (wall.navBlocker || wall.y - wall.halfY < 1.8 && wall.y + wall.halfY > .05) walls.add(wall);
+      const bucket = this.routeBuckets.get(x)?.get(z); if (bucket) for (const wall of bucket) walls.add(wall);
       const blockers = this.blockerBuckets.get(x)?.get(z); if (blockers) for (const wall of blockers.values()) walls.add(wall);
     };
     if (!this.mask) {
