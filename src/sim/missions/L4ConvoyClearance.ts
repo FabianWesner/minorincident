@@ -1,3 +1,4 @@
+import { survivor } from '../../data/survivor';
 import { worldAssets } from '../../assets/worldDefinitions';
 import { SimPhase } from '../../core/EventBus';
 import { l4, l4RoutePose, type l4Route } from '../../data/l4';
@@ -10,6 +11,7 @@ import type { L4State } from './types';
 
 /** Clearance includes knees, bent torso, bags and quadruped length, rather than just the combat capsule. */
 export function convoyFootprint(e: EntitySnapshot): number {
+  if (e.id === 1) return survivor.radius;
   const c = e.civilian, seat = c?.schedule?.[c.scheduleStep ?? 0]?.seat;
   const offset = seat && c?.activityUntil && (c.state === 'calm' || c.state === 'alarmed') ? Math.hypot(seat.x - e.transform.x, seat.z - e.transform.z) : 0;
   return Math.max(e.combat?.radius ?? .35, (c?.pet || e.companion || /\.(dog|cat)/.test(e.archetype) ? .95 : .9) + (offset <= 1.2 ? offset : 0));

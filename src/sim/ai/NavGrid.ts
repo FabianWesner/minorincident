@@ -7,9 +7,8 @@ const marginSteps = [0.002, 0.005, 0.01, 0.02, 0.04, 0.06, 0.08, 0.1];
 // L1's morning population has more than sixteen simultaneous route targets.
 // Retain those exact answers between ticks instead of evicting an entire round.
 const nearestMemoCapacity = 64;
-/** 0.5 m collider-baked district grid. Fixed workspaces serve budgeted A* and shared reverse flow fields. */
+/** Collider-baked district grid (0.5 m by default). Fixed workspaces serve budgeted A* and shared reverse flow fields. */
 export class NavGrid {
-  readonly cellSize = 0.5;
   readonly width: number;
   readonly depth: number;
   readonly blocked: Uint8Array;
@@ -31,10 +30,29 @@ export class NavGrid {
   private readonly blockerBuckets = new Map<number, Map<number, Map<number, Wall>>>();
   /** Optional active-district footprint, supplied by campaign assembly without importing render data. */
   mask: ((x: number, z: number) => boolean) | null = null;
+  private playerRoutes: NavGrid | null = null;
+  private exactPlayerDestination = false;
   private playerBounds: { x0: number; x1: number; z0: number; z1: number } | null = null;
   /** Story perimeters constrain player routes without closing the battle to infected or soldiers. */
   setPlayerBounds(bounds: NavGrid['playerBounds']): void {
     this.playerBounds = bounds; this.reach.active = false; this.reachMemo = null;
+    this.playerRoutes?.setPlayerBounds(bounds);
+  }
+  /** Clamp click destinations to the same inside face used by the player capsule. */
+  clampPlayerTarget(point: { x: number; z: number }, radius: number): { x: number; z: number } {
+    const b = this.playerBounds, margin = radius + .05;
+    return b ? { x: Math.max(b.x0 + margin, Math.min(b.x1 - margin, point.x)), z: Math.max(b.z0 + margin, Math.min(b.z1 - margin, point.z)) } : point;
+  }
+  private playerWall(wall: Wall): Wall { return { ...wall, halfX: wall.playerHalfX ?? wall.halfX, halfZ: wall.playerHalfZ ?? wall.halfZ }; }
+  /** Player routes use capsule clearance; NPC-only body margins never become invisible player walls. */
+  forPlayer(radius: number, cellSize = .5): NavGrid {
+    if (radius >= this.clearance - 1e-6) return this;
+    if (!this.playerRoutes || Math.abs(this.playerRoutes.clearance - radius) > 1e-6 || this.playerRoutes.cellSize !== cellSize) {
+      this.playerRoutes = new NavGrid(this.ground, this.walls, radius, this.center, this.mask, cellSize); this.playerRoutes.exactPlayerDestination = true;
+      for (const [id, wall] of this.blockers) this.playerRoutes.setBlocker(id, this.playerWall(wall), true);
+      this.playerRoutes.setPlayerBounds(this.playerBounds);
+    }
+    return this.playerRoutes;
   }
   private insidePlayerBounds(x: number, z: number, radius: number): boolean {
     const b = this.playerBounds;
@@ -42,7 +60,7 @@ export class NavGrid {
   }
   target = -1;
   expansions = 0;
-  constructor(readonly ground: { width: number; depth: number }, readonly walls: readonly Wall[], readonly clearance = 0.65, readonly center = { x: 0, z: 0 }, mask: NavGrid['mask'] = null) {
+  constructor(readonly ground: { width: number; depth: number }, readonly walls: readonly Wall[], readonly clearance = 0.65, readonly center = { x: 0, z: 0 }, mask: NavGrid['mask'] = null, readonly cellSize = .5) {
     this.mask = mask;
     this.width = Math.ceil(ground.width / this.cellSize); this.depth = Math.ceil(ground.depth / this.cellSize);
     const count = this.width * this.depth;
@@ -136,15 +154,16 @@ export class NavGrid {
   }
   /** The same walls, live blockers and mask baked for a wider body (E32 Mega Alpha); the caller forwards later blocker changes. */
   withClearance(clearance: number): NavGrid {
-    const grid = new NavGrid(this.ground, this.walls, clearance, this.center, this.mask);
+    const grid = new NavGrid(this.ground, this.walls, clearance, this.center, this.mask, this.cellSize);
     for (const [id, wall] of this.blockers) grid.setBlocker(id, wall, true);
     return grid;
   }
   /** E08 campaign tier swaps replace static walls, retaining the fixed search workspace. */
   prepare(walls: readonly Wall[]): Uint8Array {
-    return new NavGrid(this.ground, walls, this.clearance, this.center, this.mask).blocked;
+    return new NavGrid(this.ground, walls, this.clearance, this.center, this.mask, this.cellSize).blocked;
   }
   rebake(prepared?: Uint8Array): void {
+    this.playerRoutes = null;
     this.reachMemo = null;
     this.indexWalls();
     this.nearestBlockers.clear();
@@ -163,6 +182,7 @@ export class NavGrid {
   }
   /** E11 doors and broken props invalidate only their affected cells and cached searches. */
   setBlocker(id: number, wall: Wall, blocked: boolean): void {
+    this.playerRoutes?.setBlocker(id, this.playerWall(wall), blocked);
     this.reachMemo = null;
     const previousBounds = this.nearestBlockers.get(id);
     if (previousBounds) this.indexBlocker(id, previousBounds);
@@ -435,7 +455,9 @@ export class NavGrid {
       if (steps++ >= budget) return false;
       const cell = queue[r.head++], d = (cell % this.width - r.tx) ** 2 + (Math.floor(cell / this.width) - r.tz) ** 2;
       if (d < r.bestD) { r.bestD = d; r.best = cell; }
-      if (d < .5 && depth[cell] >= 4) { done = true; break; } // the click itself is reachable: no need to flood the district
+      // A player click needs a clear final segment, even when its closest grid cell lies behind a chair corner.
+      if (this.exactPlayerDestination && d < 16 && this.visible({ x: this.x(cell), z: this.z(cell) }, target, this.clearance)) { r.best = cell; done = true; break; }
+      if (!this.exactPlayerDestination && d < .5 && depth[cell] >= 4) { done = true; break; } // the click itself is reachable: no need to flood the district
       if (depth[cell] >= 8 && d < r.farD) { r.farD = d; r.far = cell; }
       for (let k = 0; k < 4; k++) { const n = this.neighbor(cell, k); if (n >= 0 && !this.blocked[n] && seen[n] !== r.stamp && this.insidePlayerBounds(this.x(n), this.z(n), this.clearance)) { seen[n] = r.stamp; parent[n] = cell; depth[n] = depth[cell] + 1; queue[r.tail++] = n; } }
     }
@@ -444,7 +466,7 @@ export class NavGrid {
     // the player already stands, take the closest one at least 4 m of walking away (slides along the fence and
     // around its end, toward the click).
     let best = r.best;
-    if (depth[best] < 4 && r.far >= 0 && r.bestD > 4) best = r.far;
+    if (!(this.exactPlayerDestination && done) && depth[best] < 4 && r.far >= 0 && r.bestD > 4) best = r.far;
     result.length = 0;
     for (let cell = best; cell !== r.from && cell >= 0; cell = parent[cell]) result.push(cell);
     result.reverse(); r.active = false; r.key = -1;

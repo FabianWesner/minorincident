@@ -1,0 +1,71 @@
+{
+  "name": "l4-medpack-clearance",
+  "seed": 1,
+  "time": "L4",
+  "ground": "district",
+  "layout": {
+    "level": "L4",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        -16,
+        -46
+      ],
+      [
+        8,
+        -26
+      ]
+    ]
+  },
+  "props": [
+    {
+      "id": "po-evac-bus",
+      "asset": "veh.evac-bus",
+      "at": [
+        -6.017282,
+        0,
+        -38.25
+      ],
+      "yaw": 0
+    },
+    {
+      "id": "cleared-medpack",
+      "asset": "pick.medkit",
+      "at": [
+        -3.609819,
+        0.13,
+        -35.238429
+      ]
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -1.2,
+        -34.9
+      ],
+      "loadout": [
+        "weapon.army-mg",
+        "weapon.fire-axe"
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -3.609819,
+      0,
+      -35.238429
+    ]
+  },
+  "frames": 60,
+  "sheet": 30,
+  "note": "PO13 measured production seed-1 tick-1016 poses: bus at (-6.017,-38.25), med pack resited from (-4,-37.2) to open sidewalk (-3.61,-35.24), clear of its front wheel. Stationary game-camera inspection; tools/qa/l4-boundary-refuge.ts captures the actual moving passenger ride on both backends and tiers.",
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  }
+}

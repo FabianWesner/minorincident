@@ -1,0 +1,340 @@
+{
+  "success": true,
+  "passed": 65,
+  "failed": 0,
+  "skipped": 0,
+  "suites": [
+    {
+      "name": "tests/levels/L4-battlefield-lifecycle.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "L4 war tank Alphas resume combat and bodies persist (high, seed 1) @E22-AC12 @E22-AC14",
+          "status": "passed"
+        },
+        {
+          "title": "L4 war tank Alphas resume combat and bodies persist (high, seed 2) @E22-AC12 @E22-AC14",
+          "status": "passed"
+        },
+        {
+          "title": "L4 war tank Alphas resume combat and bodies persist (high, seed 3) @E22-AC12 @E22-AC14",
+          "status": "passed"
+        },
+        {
+          "title": "L4 war tank Alphas resume combat and bodies persist (low, seed 1) @E22-AC12 @E22-AC14",
+          "status": "passed"
+        },
+        {
+          "title": "L4 war tank Alphas resume combat and bodies persist (low, seed 2) @E22-AC12 @E22-AC14",
+          "status": "passed"
+        },
+        {
+          "title": "L4 war tank Alphas resume combat and bodies persist (low, seed 3) @E22-AC12 @E22-AC14",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "tests/levels/L4-convoy.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "L4 convoy ride collisions T-E22-04c @E22 @E22-AC04 during the live ride no convoy vehicle overlaps another vehicle entity (convoy, real cars, traffic)",
+          "status": "passed"
+        },
+        {
+          "title": "L4 convoy ride collisions T-E22-04f @E22 PO 10-12 \"move this soldier away, all busses drive through him\": during the live ride no actor stands inside a convoy vehicle hull",
+          "status": "passed"
+        },
+        {
+          "title": "L4 convoy ride collisions T-E22-04e @E22 PO 10-12 \"sound when the bus is driving\": every convoy vehicle emits engine events following speed, the courier bus is the muffled one, engines stop after the idle",
+          "status": "passed"
+        },
+        {
+          "title": "L4 convoy ride collisions T-E22-04d @E22 PO 10-12 \"Bus is extremely vibrating\": the player bus pose has no high-frequency jitter over the whole ride",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "tests/levels/L4-movement.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "@E22 L4 plaza permits mouse and direct movement on open plaza tiles",
+          "status": "passed"
+        },
+        {
+          "title": "@E22 L4 war permits mouse and direct movement on open plaza tiles",
+          "status": "passed"
+        },
+        {
+          "title": "@E22 L4 respawn permits mouse and direct movement on open plaza tiles",
+          "status": "passed"
+        },
+        {
+          "title": "@E22 a real L4 armory-table corner cannot trap an outward click",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "tests/levels/L4-perimeter.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "@E22 PO16b visible perimeter holds courier at the reported south edge, infected vault it; one-metre plaza gate",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "tests/levels/L4-refuge-visible.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "@E22 PO15 closed refuge doors keep the entire fleeing group visibly in the world, across L1\u2013L10",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "tests/levels/L4-respawn.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "L4 @E22 @E22-AC17 three deaths after Fall back still reach the cellar from the escape checkpoint",
+          "status": "passed"
+        },
+        {
+          "title": "L4 @E22 @E22-AC17 a mid-war death keeps lost lines, soldiers, and the collapse clock",
+          "status": "passed"
+        },
+        {
+          "title": "L4 @E22 @E22-AC17 director goals respect the shared respawn pause and resume when it expires",
+          "status": "passed"
+        },
+        {
+          "title": "L4 @E22 @E22-AC17 respawn clears live and recovering infected when cover blocks the outward ray",
+          "status": "passed"
+        },
+        {
+          "title": "L4 @E22 @E22-AC17 a falling line anchors at the nearest safe camp post rather than an overrun post",
+          "status": "passed"
+        },
+        {
+          "title": "L4 @E22 @E22-AC17 camp perimeter constrains player retreat routes until the gate opens, without blocking infected",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "tests/levels/l4-convoy-people.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, high, seed 1",
+          "status": "passed"
+        },
+        {
+          "title": "T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, high, seed 2",
+          "status": "passed"
+        },
+        {
+          "title": "T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, high, seed 3",
+          "status": "passed"
+        },
+        {
+          "title": "T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, low, seed 1",
+          "status": "passed"
+        },
+        {
+          "title": "T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, low, seed 2",
+          "status": "passed"
+        },
+        {
+          "title": "T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, low, seed 3",
+          "status": "passed"
+        },
+        {
+          "title": "T-E22-04h @E22 convoy yields to an immobile infected and resumes after clearance, high",
+          "status": "passed"
+        },
+        {
+          "title": "T-E22-04i @E22 cowering woman and pet leave the convoy route by walking, high",
+          "status": "passed"
+        },
+        {
+          "title": "T-E22-04h @E22 convoy yields to an immobile infected and resumes after clearance, low",
+          "status": "passed"
+        },
+        {
+          "title": "T-E22-04i @E22 cowering woman and pet leave the convoy route by walking, low",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "tests/levels/pickup-grounding.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "@pickup-grounding L1: every pickup is reachable from the route and rests on the support at its xz",
+          "status": "passed"
+        },
+        {
+          "title": "@pickup-grounding L2: every pickup is reachable from the route and rests on the support at its xz",
+          "status": "passed"
+        },
+        {
+          "title": "@pickup-grounding L3: every pickup is reachable from the route and rests on the support at its xz",
+          "status": "passed"
+        },
+        {
+          "title": "@pickup-grounding L4: every pickup is reachable from the route and rests on the support at its xz",
+          "status": "passed"
+        },
+        {
+          "title": "@pickup-grounding L5: every pickup is reachable from the route and rests on the support at its xz",
+          "status": "passed"
+        },
+        {
+          "title": "@pickup-grounding L6: every pickup is reachable from the route and rests on the support at its xz",
+          "status": "passed"
+        },
+        {
+          "title": "@pickup-grounding L8: every pickup is reachable from the route and rests on the support at its xz",
+          "status": "passed"
+        },
+        {
+          "title": "@pickup-grounding L9: every pickup is reachable from the route and rests on the support at its xz",
+          "status": "passed"
+        },
+        {
+          "title": "@pickup-grounding L10: every pickup is reachable from the route and rests on the support at its xz",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "tests/levels/pickup-solids.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "@pickup-solids PO13 every campaign ground pickup clears walls, props, vehicle hulls and convoy stop poses",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "tests/sim/ai/navigation.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "navigation lets a capsule leave a shallow collider margin without moving deeper",
+          "status": "passed"
+        },
+        {
+          "title": "@E19 a body inside the conservative wall margin can slide out without crossing the solid",
+          "status": "passed"
+        },
+        {
+          "title": "@E19 respawn connectivity distinguishes an unfinished long route from an enclosed yard without resetting A*",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-01 @E07 @E07-AC01 all human and animal roles validate and spawn",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-02 @E07 @E07-AC02 sight cone and facing-independent gunshot perception",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-03 @E07 @E07-AC03 maze path covers 40 m without crossing static colliders in 15 s",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-04 @E07 @E07-AC04 spatial separation keeps deep overlaps below 2 percent",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-03b @E07 @E07-AC03 grid A* resumes unfinished work without exceeding its per-tick budget",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-03c @E07 @E07-AC03 collider-baked AI navigation honors E10 offset ground bounds",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-02b @E07 @E07-AC02 @E06-AC04 actual infected consume catalog noise, with silent melee misses and bounded kill noise",
+          "status": "passed"
+        },
+        {
+          "title": "T-E07-07c @E07 @E07-AC07 scripted cats validate the actual selected perch before spawning",
+          "status": "passed"
+        },
+        {
+          "title": "@E19 prepared tier occupancy matches a full rebake after dynamic blockers change",
+          "status": "passed"
+        },
+        {
+          "title": "@E07 melee ring: five infected hold 1.08 m from the courier yet keep landing hits (QA qa-courier-attack-bat pile-up)",
+          "status": "passed"
+        },
+        {
+          "title": "@E07 @E07-AC04 larger infected keep contact clearance and still damage the courier",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "tests/unit/performance/nav-capsule-corners.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "@E22 capsule movement escapes a valid rounded collider corner in every quadrant",
+          "status": "passed"
+        },
+        {
+          "title": "grid-only agents retain the conservative square corner margin",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "name": "tests/unit/performance/nav-reach-equivalence.test.ts",
+      "status": "passed",
+      "tests": [
+        {
+          "title": "@E18 @E32 reach flood preserves paths, ties and budgets at 0, perimeter false",
+          "status": "passed"
+        },
+        {
+          "title": "@E18 @E32 reach flood preserves paths, ties and budgets at 0, perimeter true",
+          "status": "passed"
+        },
+        {
+          "title": "@E18 @E32 reach flood preserves paths, ties and budgets at 3980.125, perimeter false",
+          "status": "passed"
+        },
+        {
+          "title": "@E18 @E32 reach flood preserves paths, ties and budgets at 3980.125, perimeter true",
+          "status": "passed"
+        },
+        {
+          "title": "@E18 resumed reach flood retains its original target and prepends its start when the player moves",
+          "status": "passed"
+        },
+        {
+          "title": "@E32 repeated unbudgeted floods reuse only exact answers and copy the returned path",
+          "status": "passed"
+        },
+        {
+          "title": "@E32 exact flood memo invalidates for blocker edits, perimeter changes, rebakes and recentering",
+          "status": "passed"
+        }
+      ]
+    }
+  ]
+}
