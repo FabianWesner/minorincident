@@ -130,7 +130,11 @@ class CivilianBatch extends Group {
   async init(): Promise<void> {
     await loadGate.foreground(); await loadGate.wait();
     let key: string | undefined = `${this.model}:${this.lod}`;
-    const cached = preparedCrowds.get(key) ?? await loadCivilianBake(this.model, this.lod);
+    // The small initial L1 cast uses the existing worker source path: shipping
+    // its full pose atlases costs more than downloading the meshes and baking
+    // off-thread. Later tiers still stream their prebuilt atlases during play.
+    const source = this.world.scenario === 'L1' && this.world.missions?.state.phase === 'briefing';
+    const cached = preparedCrowds.get(key) ?? await loadCivilianBake(this.model, this.lod, source);
     let placeholder = false, model: Group;
     if (cached?.rig) model = cached.rig.clone(true);
     else {
@@ -449,7 +453,8 @@ export class CivilianCrowd extends Group {
     // covers models not represented by an entity until a story beat creates them.
     if (this.staged) {
       const playing = this.world.missions!.state.phase === 'playing';
-      for (const model of playing ? l1CivilianModels : this.nearbyModels(32)) {
+      const models = playing ? new Set([...l1CivilianModels, ...this.nearbyModels(64)]) : this.nearbyModels(32);
+      for (const model of models) {
         this.loadModel(model);
         if (playing) this.loadHero(model);
       }

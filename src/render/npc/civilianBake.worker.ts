@@ -2,13 +2,13 @@ import type { Group } from 'three/webgpu';
 import { decompressCivilianBake } from '../../assets/bakeCompression';
 import files from '../../assets/civilianBakes.json';
 
-const worker = globalThis as unknown as { onmessage: (event: MessageEvent<{ model: string; lod: 'lod0' | 'lod1' | 'lod2'; cpuRate: number }>) => void; postMessage(value: unknown, transfer?: Transferable[]): void };
+const worker = globalThis as unknown as { onmessage: (event: MessageEvent<{ model: string; lod: 'lod0' | 'lod1' | 'lod2'; cpuRate: number; source?: boolean }>) => void; postMessage(value: unknown, transfer?: Transferable[]): void };
 worker.onmessage = async ({ data }) => {
   const start = performance.now(); let downloads = 0;
   let root: Group | undefined, dispose: ((root: Group) => void) | undefined;
   try {
     const path = (files as Record<string, string>)[`${data.model}:${data.lod}`];
-    if (path && typeof DecompressionStream !== 'undefined') {
+    if (!data.source && path && typeof DecompressionStream !== 'undefined') {
       try {
         const before = performance.now();
         const response = await fetch(path);
