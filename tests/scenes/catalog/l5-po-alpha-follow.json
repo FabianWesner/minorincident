@@ -1,0 +1,12 @@
+{
+  "name": "l5-po-alpha-follow",
+  "note": "PO #20b: survivor-1 restored; Alpha sees the protector at 15 m, survivor cowers briefly then regroups behind her.",
+  "ground": "district", "time": "L5", "tier": 5, "size": 220,
+  "layout": { "level": "L5", "district": "D-FAIR" },
+  "l5Aftermath": { "found": ["rosa"], "alphaAt": [-5, -39] },
+  "actors": [{ "id": "courier", "kind": "courier", "at": [10, -39], "loadout": ["weapon.fire-axe", "weapon.army-mg"], "state": "idle" }],
+  "script": [{ "frame": 180, "actor": "courier", "do": { "moveTo": [17, -39], "pace": "walk" } }],
+  "camera": { "mode": "follow", "actor": "courier", "zoom": 1 },
+  "hud": true, "frames": 330, "sheet": 30, "shots": [1, 72, 150, 329],
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}

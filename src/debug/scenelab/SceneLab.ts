@@ -313,9 +313,10 @@ export class SceneLab {
       }
       for (const [i, r] of mission.state.l5!.survivors.filter(r => r.status === 'following').entries()) {
         const e = world.entities.get(r.id)!;
-        Object.assign(e.transform, { x: player.transform.x - 2 - i, z: player.transform.z }); world.spatial.set(e.id, e.transform.x, e.transform.z);
+        Object.assign(e.transform, { x: player.transform.x - (spec.l5Aftermath.alphaAt ? 8 : 2) - i, z: player.transform.z }); world.spatial.set(e.id, e.transform.x, e.transform.z);
       }
     }
+    if (spec.l5Aftermath?.alphaAt) world.infected!.spawn('infected.alpha', { x: spec.l5Aftermath.alphaAt[0], z: spec.l5Aftermath.alphaAt[1] }, { yaw: 0 });
     if (spec.crossingCrash) {
       const def = levelNineMission((_district, name) => {
         const a = world.districts!.districts[0].layout.anchors[name];

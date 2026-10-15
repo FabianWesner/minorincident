@@ -14,7 +14,7 @@ export const l5 = {
   /** The five survivors: stand-to-interact time and reach, sign-of-life cues (heard within 25 m, never beyond 30 m), the direction ping. */
   survivors: { interactS: 1.0, reachM: 2.5, cueRangeM: 25, cueMaxM: 30, cueEveryS: 7, pingS: 4, count: 5 },
   /** Followers (E08 escort follow without a fail state): 2-5 m behind, run slower than the player and every infected. */
-  follow: { minM: 2, maxM: 5, runMs: 3.8, walkMs: 2.6, waitCallM: 10, waitEveryS: 12, coverM: 8, hp: 60 },
+  follow: { minM: 2, maxM: 5, runMs: 3.8, walkMs: 2.6, waitCallM: 10, waitEveryS: 12, coverM: 8, reactS: 1.2, hp: 60 },
   /** Sparse infected: wanderers at the start (ones and twos), the cap, damage like L4's. */
   infected: { start: { high: 18, low: 12 }, maxGroup: 3, cap: { high: 30, low: 30 }, damage: 1.25, leashM: 14 },
   /** Metro: the trigger at the foot of the entrance, every living follower crosses, the residents are shown briefly, then the shutter rolls shut. */
