@@ -27,7 +27,7 @@ parts, objects, M = ns['parts'], ns['objects'], ns['M']
 bpy.context.view_layer.update()
 
 # ---- shape --------------------------------------------------------------------------------------------------------
-HEIGHT = 1.64          # PO 10-15: same height as the regular Alpha (inf.alpha uses 1.47); stronger through mass, not size
+HEIGHT = 1.70          # PO 10-15: same height as the regular Alpha (inf.alpha uses 1.47); stronger through mass, not size
 BULK = 1.16            # extra breadth/depth over the Alpha's 1.14/1.22 proportions
 S = HEIGHT / 3.3       # authored absolute offsets below were sized for the old x3.3 body
 shape = Matrix.Diagonal(Vector((HEIGHT * 1.14 * BULK, HEIGHT * 1.22 * BULK, HEIGHT, 1)))
