@@ -211,5 +211,38 @@
       "frameMsP95": 6.399999999999636,
       "simMsP95": 1
     }
+  ],
+  "latestFocused": [
+    {
+      "check": "single-owner-regressions",
+      "passed": 8,
+      "failed": 1,
+      "skipped": 68,
+      "note": "Its one L4 alarm-location failure passes the subsequent alarm-exit-regression run."
+    },
+    {
+      "check": "alarm-exit-regression",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 22
+    },
+    {
+      "check": "arrival-courier",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 14
+    },
+    {
+      "check": "shared-fight-trial",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 17
+    },
+    {
+      "check": "station-leg-clearance",
+      "passed": 2,
+      "failed": 0,
+      "skipped": 13
+    }
   ]
 }
