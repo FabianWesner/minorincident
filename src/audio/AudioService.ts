@@ -29,6 +29,8 @@ const l5CueSounds: Record<string, { cue: string; gain: number; rate: number }> =
 };
 /** Recorded infected voice cues (alert, hurt, death) are human performances: animals keep their own telegraphs. */
 const voicedInfected = new Set(humanInfected.map(d => d.id));
+/** Melee weapons without their own recorded hit take reuse the nearest existing one (blades like the machete, blunt tools like the bat or crowbar). */
+const fleshLike: Record<string, string> = { knife: 'machete', katana: 'machete', 'fire-axe': 'machete', 'nail-bat': 'bat', shovel: 'crowbar', 'police-baton': 'bat' };
 export interface AudioSettings {
     muted: boolean;
     captions: boolean;
@@ -402,6 +404,7 @@ export class AudioService implements Lifecycle {
             this.caption(result.cue.caption, options.position, Math.min(4, result.cue.duration + 1));
         return v;
     }
+    private readonly reloading = new WeakMap<object, number>();
     private loop(key: string, id: string, options: PlayOptions, sourceId?: number): GraphVoice | null {
         let voice = this.loops.get(key);
         if (voice?.stopped) {
@@ -638,6 +641,9 @@ export class AudioService implements Lifecycle {
             const id = audioCues[`action.${event.actionId}`] ? `action.${event.actionId}` : noiseCues[event.kind as keyof typeof noiseCues] ?? `action.${event.actionId}`;
             this.play(id, { position: event.position, gain: event.loudness, offscreen: audioCues[id]?.bus === 'telegraph' && this.host.offscreen(event.position) }, source);
             const zone = zoneAt(this.graph.map, event.position);
+            // Shotgun: the pump racks the next shell 0.45 s behind the blast (PO 10-15).
+            if (event.actionId === 'weapon.shotgun')
+                this.play('weapon.pump', { position: event.position, time: this.context.currentTime + 0.45 }, source);
             if (event.kind === 'ranged')
                 this.play(`tail.${zone.startsWith('interior') || zone === 'tunnel' ? 'interior' : zone === 'park' || zone === 'suburb-open' ? 'open' : 'street'}`, { position: event.position }, source);
             if (source === 1)
@@ -851,9 +857,10 @@ export class AudioService implements Lifecycle {
             if (event.type === 'combat.hit' && event.amount > 0 && event.damageType === 'melee') {
                 const weapon = event.actionId.split('.').at(-1)!;
                 const targetPosition = target?.transform ?? position;
-                this.play(audioCues[`flesh.${weapon}`] ? `flesh.${weapon}` : 'flesh.fists', { position: targetPosition }, source);
+                const flesh = fleshLike[weapon] ?? weapon;
+                this.play(audioCues[`flesh.${flesh}`] ? `flesh.${flesh}` : 'flesh.fists', { position: targetPosition }, source);
                 // Layered hit: transient (flesh) + body of the weapon + low thump, each with its own variation.
-                const body = weapon === 'bat' ? 'wood' : /crowbar|machete/.test(weapon) ? 'metal' : 'punch', heavy = weapon === 'kick' || weapon === 'bat' || event.amount >= 20;
+                const body = /bat|baton/.test(weapon) ? 'wood' : /crowbar|machete|knife|katana|axe|shovel/.test(weapon) ? 'metal' : 'punch', heavy = weapon === 'kick' || weapon === 'bat' || weapon === 'fire-axe' || event.amount >= 20;
                 this.play(`impact.body.${body}`, { position: targetPosition, gain: heavy ? 1 : 0.8 }, source);
                 this.play('impact.thump', { position: targetPosition, gain: heavy ? 1 : 0.6 }, source);
                 this.graph.buses.ambience.gain.setTargetAtTime(0.7, this.context.currentTime, 0.02);
@@ -871,7 +878,7 @@ export class AudioService implements Lifecycle {
             // machine guns, the soldiers' rifles assault rifles; the tank's round has its own explosion beats.
             if (event.role === 'tank') return;
             const machine = event.weapon === 'hmg' || event.weapon === 'door-gun';
-            this.play(machine ? 'action.weapon.machine-gun' : event.weapon === 'rifle' ? 'action.weapon.assault-rifle' : event.weapon === 'hunting-rifle' ? 'action.weapon.hunting-rifle' : 'action.weapon.pistol', { position: event.from, gain: machine ? 0.85 : 0.8 }, source);
+            this.play(machine ? 'weapon.hmg' : event.weapon === 'rifle' ? 'action.weapon.assault-rifle' : event.weapon === 'hunting-rifle' ? 'action.weapon.hunting-rifle' : 'action.weapon.pistol', { position: event.from, gain: machine ? 0.85 : 0.8 }, source);
             return;
         }
         if (event.type === 'infected.groan' || event.type === 'infected.recovered') {
@@ -934,6 +941,20 @@ export class AudioService implements Lifecycle {
             if (nearest) this.loop('weather:rain-metal', 'weather.rain-metal', { position: nearest, gain: weather.rain });
             else this.stopLoop('weather:rain-metal');
         }
+        // Mounted minigun: the barrel whir follows the live spin, so spin-up and spin-down are heard (0.5 s up, 1.2 s down).
+        const gun = this.world.mountedGun;
+        if (gun && gun.gun.spin > 0.02) {
+            const whir = this.loop('minigun:whir', 'weapon.minigun-whir', { position: gun.placement, gain: 0.3 + gun.gun.spin * 0.7 });
+            if (whir) { whir.rate = 0.45 + gun.gun.spin * 1.35; whir.gain.gain.value = 0.15 + gun.gun.spin * 0.85; }
+        }
+        else this.stopLoop('minigun:whir');
+        // Reload: the player's slot starts its reload this tick -> magazine sound (rifles, SMGs and MGs use the long rifle reload).
+        for (const side of player.weapons ? [player.weapons.LEFT, player.weapons.RIGHT] : [])
+            for (const slot of side.rack) {
+                const was = this.reloading.get(slot) ?? 0;
+                if (slot.reloadUntil && !was) this.play(/rifle|machine-gun|army-mg|smg/.test(slot.id) ? 'weapon.reload-rifle' : 'weapon.reload', { position: player.transform, gain: 0.8 }, 1);
+                this.reloading.set(slot, slot.reloadUntil);
+            }
         if (this.world.tick % 6 === 0) {
             const previous = this.world.previousPlayer;
             if (previous) {

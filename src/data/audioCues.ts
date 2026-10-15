@@ -1,6 +1,6 @@
 import type { NoiseKind } from './noise';
 import { infectedDefinitions } from './infected';
-import { catalog, balanceActions, action } from './actions/catalog';
+import { catalog, balanceActions, mountedActions, action } from './actions/catalog';
 import type { GameEvent } from '../sim/world/types';
 import type { Surface, PropMaterial } from './audioEvents';
 export const audioBuses = ['music', 'weapons', 'impacts', 'vehicles', 'props', 'gore', 'telegraph', 'ambience', 'dialogue', 'barks', 'ui'] as const;
@@ -63,13 +63,35 @@ for (const name of ['civilian', 'explosive']) {
     telegraphCues[`infected.${name}`] = `telegraph.${name}`;
     cue(`telegraph.${name}`, 'telegraph', 'vocal', 0.8, 160, { caption: name === 'explosive' ? 'Explosive infected approaching' : 'Infected approaching', gain: 0.6 });
 }
-for (const def of [...Object.values(catalog), ...balanceActions.filter(d => !(d.id in catalog))])
-    cue(`action.${def.id}`, 'weapons', def.category === 'ranged' ? 'shot' : 'noise', def.category === 'ranged' ? 0.16 : 0.24, 150, { gain: 0.8, antiSpam: 0.025 });
+/**
+ * Weapon audio pass (PO 10-15 "That shutgun sounds lsuper lightM not like an actual shotcun. For all weapons make sure we use proper sounds"):
+ * every catalogued action has a recorded cue with four takes. [duration s, antiSpam s]: a shot keeps its natural tail (shotgun, rifles, rocket long),
+ * rapid-fire guns keep it short so 10-20 rounds a second do not smear. Per-class loudness is baked into the sprites (tools/audio/weapons_recipes.py LEVEL).
+ */
+export const weaponSlices: Readonly<Record<string, readonly [duration: number, antiSpam: number]>> = {
+    'weapon.handgun': [0.6, 0.05], 'weapon.pistol': [0.6, 0.05], 'weapon.nail-gun': [0.3, 0.04], 'weapon.shotgun': [1.1, 0.1], 'weapon.smg': [0.35, 0.03],
+    'weapon.assault-rifle': [0.5, 0.04], 'weapon.machine-gun': [0.4, 0.03], 'weapon.army-mg': [0.45, 0.03], 'weapon.hunting-rifle': [0.9, 0.1], 'weapon.rotary-minigun': [0.28, 0.02],
+    'weapon.rocket-launcher': [1.2, 0.1], 'ability.turret': [0.35, 0.03],
+    'weapon.grenade': [0.4, 0.1], 'weapon.molotov': [0.4, 0.1], 'weapon.pipe-bomb': [0.4, 0.1], 'weapon.smoke-grenade': [0.4, 0.1], 'weapon.flashbang': [0.4, 0.1], 'weapon.firecracker-lure': [0.3, 0.05],
+    'weapon.knife': [0.24, 0.025], 'weapon.nail-bat': [0.24, 0.025], 'weapon.shovel': [0.3, 0.025], 'weapon.police-baton': [0.24, 0.025], 'weapon.fire-axe': [0.32, 0.025], 'weapon.katana': [0.24, 0.025],
+    'ability.ground-slam': [0.45, 0.1],
+};
+for (const def of [...Object.values(catalog), ...Object.values(mountedActions), ...balanceActions.filter(d => !(d.id in catalog))]) {
+    const slice = weaponSlices[def.id];
+    cue(`action.${def.id}`, 'weapons', def.category === 'ranged' ? 'shot' : 'noise', slice?.[0] ?? (def.category === 'ranged' ? 0.16 : 0.24), 150, { gain: 0.8, antiSpam: slice?.[1] ?? 0.025, ...(def.category === 'ranged' ? { rateSpread: 0.04 } : {}) });
+}
 for (const env of ['street', 'interior', 'open'])
-    cue(`tail.${env}`, 'weapons', 'noise', env === 'interior' ? 0.65 : 0.25, 500, { gain: 0.14 });
+    cue(`tail.${env}`, 'weapons', 'noise', env === 'interior' ? 0.65 : 0.25, 500, { gain: env === 'interior' ? 0.5 : 0.35, rateSpread: 0.02 });
 cue('weapon.rocket-whoosh', 'weapons', 'noise', 1, 600, { gain: 0.16, loop: true, antiSpam: 0 });
-cue('weapon.reload', 'weapons', 'step', 0.4, 800);
-cue('weapon.dry', 'weapons', 'step', 0.12, 1000);
+cue('weapon.reload', 'weapons', 'step', 1, 800, { gain: 0.5 });
+cue('weapon.reload-rifle', 'weapons', 'step', 1, 800, { gain: 0.5 });
+cue('weapon.dry', 'weapons', 'step', 0.2, 1000, { gain: 0.5 });
+/** Shotgun pump/rack after each shell, 0.45 s behind the shot. */
+cue('weapon.pump', 'weapons', 'step', 0.47, 700, { gain: 0.6, antiSpam: 0.2 });
+/** Mounted heavy gun (HMG, door gun): deeper than the army MG. */
+cue('weapon.hmg', 'weapons', 'shot', 0.55, 90, { gain: 0.85, antiSpam: 0.03, rateSpread: 0.03 });
+/** Minigun barrel whir: looped, pitched and levelled by the AudioService from the live spin (0 -> 1), so spin-up and spin-down follow the gun. */
+cue('weapon.minigun-whir', 'weapons', 'noise', 0.48, 120, { gain: 0.5, loop: true, antiSpam: 0, rateSpread: 0 });
 export const surfaces: readonly Surface[] = ['asphalt', 'sidewalk', 'grass', 'wood', 'gravel', 'tile', 'metal', 'glass', 'water', 'blood'];
 for (const [index, surface] of surfaces.entries())
     for (const actor of ['survivor', 'infected', 'corgi', 'tires'])
@@ -171,10 +193,12 @@ cue('bike.bell', 'props', 'tone', 0.9, 2000, { gain: 0.4, antiSpam: 0.3 });
 /** Frequent one-shots get +-7 % pitch variation; with the registry's +-1 dB gain jitter and no-repeat variant draw. */
 const variedFamilies = /^(footstep\.|impact\.|prop\.(wood|metal|plastic|glass|rubber|sandbag|break|creak|brace)|lamp\.(break|power)|bark\.|door\.|bike\.)/;
 for (const c of Object.values(audioCues)) if (variedFamilies.test(c.id) && !c.loop) c.rateSpread = 0.14;
+/** Weapon cues with recorded takes: every catalogued action with a slice, the pump and the HMG. */
+const weaponPooled = (id: string): boolean => id === 'weapon.pump' || id === 'weapon.hmg' || (id.startsWith('action.') && id.slice(7) in weaponSlices);
 /** Four independent sprite slices per repeated one-shot; selection never repeats its last slice. */
 export const audioVariationPools: Record<string, string[]> = {};
 for (const original of Object.values(audioCues)) {
-    if (original.loop || !(/^(footstep\.|flesh\.|gore\.|corgi\.|civilian\.|infected\.(vocal|alert|hurt|death|bite)|telegraph\.|screamer\.scream|ambient\.(shout|scream)|ui\.(click|switch|pickup)|impact\.|prop\.(wood|metal|plastic|glass|rubber|sandbag|break|creak|brace)|lamp\.(break|power|flicker)|bark\.|door\.|bike\.|explosion\.(crack|boom|debris)|vehicle\.(crash|grab))/.test(original.id))) continue;
+    if (original.loop || !(/^(footstep\.|flesh\.|gore\.|corgi\.|civilian\.|infected\.(vocal|alert|hurt|death|bite)|telegraph\.|screamer\.scream|ambient\.(shout|scream)|ui\.(click|switch|pickup)|impact\.|prop\.(wood|metal|plastic|glass|rubber|sandbag|break|creak|brace)|lamp\.(break|power|flicker)|bark\.|door\.|bike\.|explosion\.(crack|boom|debris)|vehicle\.(crash|grab))/.test(original.id) || weaponPooled(original.id))) continue;
     const ids = [original.id];
     for (let variant = 1; variant < 4; variant++) {
         const id = `${original.id}.v${variant}`;
