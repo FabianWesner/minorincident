@@ -123,7 +123,9 @@ export class LevelTwoBot {
     if (newbie && !crowd.length && !this.detour && this.rng.next() < .0015) { const at = this.walker.detour(w, route[this.waypoint]); if (at) this.detour = { ...at, until: w.tick + 240 }; }
     if (this.detour) { go(this.detour, .8, `detour-${this.detour.until}`); return frame; }
     // Cover the retreat without an attackTarget command pulling us back into the crowd.
-    if (near[0] && !skip) aimStrike(near[0]);
+    // A completion swing must reach its pursuer before paying the movement lockout.
+    const target = near[0];
+    if (target && !skip && (this.profile !== 'complete' || dist(p, target.transform) <= w.combat!.runner.loadout.definition(w.combat!.runner.loadout.current('LEFT').id).range)) aimStrike(target);
     go(route[this.waypoint], .6, `route-${this.waypoint}`);
     return frame;
   }

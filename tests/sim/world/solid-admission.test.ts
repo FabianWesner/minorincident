@@ -8,9 +8,34 @@ import { emergeResident, walkResidents, type HouseEmergence } from '../../../src
 import { Outbreak } from '../../../src/sim/outbreak/Outbreak';
 import { loadLevel } from '../../../tools/sim-runner/levels';
 import { SimPhase } from '../../../src/core/EventBus';
+import type { ContactCells, SpatialHash } from '../../../src/sim/spatial/SpatialHash';
 
 async function arena() { const w = new SimWorld(); await w.init(); w.loadScenario('horde-arena', 1); return w; }
 const tick = (w: SimWorld, n = 1) => { for (let i = 0; i < n; i++) w.update(); expect(w.solids.offenders).toEqual([]); };
+
+test('a fully reserved moving component needs no further rollback scans', async () => {
+  const w = await arena();
+  try {
+    expect(w.solids.relocate(w.entities.get(1)!, { x: 20, z: 20, y: .7 }, 'test.clear-component')).toBe(true);
+    const a = w.entities.get(w.infected!.spawn('infected.runner', { x: -.35, z: 0 }))!;
+    const b = w.entities.get(w.infected!.spawn('infected.runner', { x: .35, z: 0 }))!;
+    w.tick = 1; w.solids.commit();
+    const registry = w.solids as unknown as { bodyIndex: SpatialHash; rollbackCells: ContactCells };
+    const query = registry.bodyIndex.query.bind(registry.bodyIndex);
+    let scans = 0;
+    registry.bodyIndex.query = (...args: Parameters<SpatialHash['query']>) => {
+      if (args[4] === registry.rollbackCells) scans++;
+      return query(...args);
+    };
+    a.transform.x = b.transform.x = 0;
+    w.tick = 2; w.solids.commit();
+    expect(scans).toBe(0);
+    // Independent two-circle projection: .7 m reach plus the .001 m skin.
+    expect(a.transform.x).toBeCloseTo(-.351, 9); expect(b.transform.x).toBeCloseTo(.35, 9);
+    expect(Math.hypot(a.transform.x - b.transform.x, a.transform.z - b.transform.z)).toBeGreaterThanOrEqual(.68);
+    expect(w.solids.snapshot()).toMatchObject({ failures: 0, pending: 0 });
+  } finally { w.dispose(); }
+});
 
 test('contact repair respects infected-only exclusions while humans retain admission', async () => {
   const w = await arena();
@@ -131,6 +156,9 @@ test('a pooled body can return to its former position under its new identity', a
     tick(w);
     expect(reused.transform.x).toBe(12); expect(reused.hidden).not.toBe(true);
     expect(ai.active).toHaveLength(1); expect(w.solids.snapshot()).toMatchObject({ failures: 0, pending: 0 });
+    const registry = w.solids as unknown as { committedPoses: unknown[]; proposalPoints: unknown[]; contactProofs: unknown[]; bodyRadii: number[] };
+    expect(registry.committedPoses[oldId]).toBeUndefined(); expect(registry.proposalPoints[oldId]).toBeUndefined();
+    expect(registry.contactProofs[oldId]).toBeUndefined(); expect(registry.bodyRadii[oldId]).toBe(0);
   } finally { w.dispose(); }
 });
 

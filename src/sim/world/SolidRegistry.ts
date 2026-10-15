@@ -370,7 +370,7 @@ export class SolidRegistry {
     this.infectedNav = infectedNav; this.infectedNavRevision = infectedNav?.revision ?? -1;
     const previous = this.bodyIds; this.bodyIds = this.previousBodyIds; this.previousBodyIds = previous;
     for (const id of previous) {
-      this.live[id] = undefined; this.committedPoses[id] = this.proposalPoints[id] = undefined; this.contactProofs[id] = undefined; this.bodyRadii[id] = 0; this.rejected[id] = this.movedIds[id] = false; this.bodyRejections[id] = 0;
+      this.live[id] = undefined; this.rejected[id] = this.movedIds[id] = false; this.bodyRejections[id] = 0;
     }
     this.bodyIds.length = 0;
     this.bodies.length = this.moved.length = 0;
@@ -398,7 +398,10 @@ export class SolidRegistry {
       this.bodyIndex.set(e.id, e.transform.x, e.transform.z);
       this.world.spatial.set(e.id, e.transform.x, e.transform.z);
     }
-    for (const id of previous) if (!this.live[id]) this.bodyIndex.delete(id);
+    for (const id of previous) if (!this.live[id]) {
+      this.bodyIndex.delete(id);
+      this.committedPoses[id] = this.proposalPoints[id] = undefined; this.contactProofs[id] = undefined; this.bodyRadii[id] = 0;
+    }
     // Scripted writers and revived actors may not have updated the shared index. Changed
     // hulls inspect the complete current actor index before selecting the tick's guard set.
     for (const id of this.changedHulls) {
@@ -418,9 +421,12 @@ export class SolidRegistry {
     // Accept a mutually clear set of simultaneous proposals atomically. A coherent formation
     // must be able to enter positions its neighbours vacate during this same tick.
     this.unresolved.length = 0;
+    let unreservedMoving = this.moved.length;
+    for (const e of this.moved) this.movedIds[e.id] = true;
     const reject = (e: EntitySnapshot) => {
       if (this.rejected[e.id]) return;
       this.rejected[e.id] = true; this.unresolved.push(e);
+      if (this.movedIds[e.id]) unreservedMoving--;
       let proposed = this.proposed.get(e);
       if (proposed) Object.assign(proposed, e.transform);
       else { proposed = { ...e.transform }; this.proposed.set(e, proposed); }
@@ -446,7 +452,6 @@ export class SolidRegistry {
       for (const e of this.moved) if (e.id === 1) this.publish(e);
       this.finish(full); return;
     }
-    for (const e of this.moved) this.movedIds[e.id] = true;
     this.rollbackCells.epoch++;
     // Reserve rollback positions only for the conflicting component. Propagate a
     // reservation to proposals it intersects; unrelated clear formations keep moving.
@@ -459,6 +464,9 @@ export class SolidRegistry {
       // An unchanged body cannot intersect this same valid pose from last tick.
       // Reuse the hash's cell bounds to visit only unreserved moving proposals.
       const stable = proof?.tick === this.world.tick - 1 && proof.radius === radius && proof.exemption === exemption(e);
+      // Every moving proposal is already reserved. This valid previous pose
+      // cannot reject an unchanged neighbour or an already rejected proposal.
+      if (stable && !unreservedMoving) continue;
       this.rollbackX = old.x; this.rollbackZ = old.z; this.rollbackRadius = radius;
       this.bodyIndex.query({ x: old.x, z: old.z, r: radius + this.maxActor }, this.nearby, false, undefined, stable ? this.rollbackCells : undefined);
       for (const id of this.nearby) {
