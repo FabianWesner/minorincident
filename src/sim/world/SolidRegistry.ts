@@ -374,6 +374,18 @@ export class SolidRegistry {
           }
           if (!moved) break;
         }
+        // The courier's correction crosses the same 3D sweep as ordinary input.
+        // A clear endpoint alone can otherwise cut through a stair riser or deck.
+        if (e.id === 1) {
+          const physics = this.world.physics, body = physics.playerBody, collider = physics.playerCollider, controller = physics.characterController;
+          if (body && collider && controller) {
+            physics.world!.propagateModifiedBodyPositionsToColliders();
+            const from = body.translation(), displacement = { x: p.x - from.x, y: p.y - from.y, z: p.z - from.z };
+            controller.computeColliderMovement(collider, displacement, undefined, collider.collisionGroups());
+            controller.computedMovement(displacement);
+            p.x = from.x + displacement.x; p.y = from.y + displacement.y; p.z = from.z + displacement.z;
+          }
+        }
         groundAgent(this.world, e);
         valid = this.clear(p, radius, e.id, true, tolerance);
         if (!valid) {

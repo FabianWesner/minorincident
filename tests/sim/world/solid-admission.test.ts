@@ -362,3 +362,21 @@ test('parked rotated hull admission uses its exact footprint rather than its coa
     tick(w);
   } finally { w.dispose(); }
 });
+
+test('courier contact projection sweeps the existing capsule instead of crossing a solid to a clear endpoint', async () => {
+  const w = await arena();
+  try {
+    const player = w.entities.get(1)!;
+    expect(w.solids.relocate(player, { x: 10.8, z: 0, y: .705 }, 'test.before-wall', 0, false)).toBe(true);
+    const wall = { x: 12, z: 0, y: .7, halfX: .1, halfZ: 3, halfY: .7 };
+    w.physics.addBlocker(wall); w.infected!.nav.setBlocker(987653, wall, true); w.physics.update();
+    w.tick++; w.solids.commit();
+    // A post-physics writer requests a pose inside the wall. Endpoint projection
+    // points east, but the real capsule must retain the west side it approached.
+    player.transform.x = 12;
+    w.tick++; w.solids.commit();
+    expect(player.transform.x).toBeLessThanOrEqual(11.57);
+    expect(w.solids.clear(player.transform, .35, 1, true, .02)).toBe(true);
+    expect(w.solids.snapshot()).toMatchObject({ failures: 0, pending: 0 });
+  } finally { w.dispose(); }
+});
