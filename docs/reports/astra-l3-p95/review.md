@@ -1,4 +1,6 @@
-# Visual review (initial candidate 97345172)
+# Historical visual review (initial candidate 97345172)
+
+Final committed-renderer visual acceptance is recorded in [sol-review.md](sol-review.md): 18/18 WebGL2 and 18/18 WebGPU, captured and inspected on 2026-10-15. The pending statements below describe the earlier Astra attempt.
 
 Both actual backends passed the two-scene matrix: 12/12 WebGL2 and 12/12 WebGPU, high/low at zoom 1.5, 1 and 0.5. The game-camera sheets were opened and inspected. Boulevard shows warm paving, long purple building shadows, the bus and sandbags, fences, and the moving courier. The close ash scene shows the courier, parked car and visible footprints; all six WebGL2 ash sheets are pixel-identical to the baseline after JPEG decoding.
 

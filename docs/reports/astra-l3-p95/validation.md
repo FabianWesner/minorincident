@@ -1,4 +1,6 @@
-# Validation
+# Historical Astra validation
+
+The Sol continuation supersedes the visual pending status below: both final matrices pass 18/18 with inspected game-camera sheets; see [sol-review.md](sol-review.md). Current phone timing remains unmeasured after the browser fairness cutoff, with admission accounting in `sol-browser-admission.json`. Current checks and final remote counts are recorded in [continuation.md](continuation.md).
 
 - `npm run build`, `npm run typecheck`, `npm run lint`: pass for the pose-texture source change.
 - Remote full suite: `sh tools/remote/run.sh "$PWD" -- npx vitest run tests/unit tests/sim tests/levels --maxWorkers=4`, renderer snapshot 97345172, 428 files: 422 pass, 3 fail, 3 skip; 2809 tests: 2797 pass, 3 fail, 9 skip; 2660.75 seconds. See remote-suite.txt for exact failures. The source snapshot includes the initial-camera test subsequently removed with its unrelated behavior.
