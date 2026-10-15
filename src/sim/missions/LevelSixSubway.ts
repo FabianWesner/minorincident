@@ -73,6 +73,10 @@ export class LevelSixSubway {
   private spawn(n:number,doors:number[],wave:number):number {
     const w=this.w,ai=w.infected!,o=w.npcs!.civilians.outbreak!;let spawned=0;
     for(let i=0;i<n&&ai.director.count<ai.director.cap;i++){
+      // Keep the low-tier pool available for upcoming side entrances; distant
+      // pursuers behind closed gates must not consume the whole route budget.
+      const reserved=(this.s.entries??[]).reduce((total,e)=>total+e.remaining,0);
+      if(wave===3&&ai.director.count>=ai.director.cap-reserved)break;
       const door=doors[i%doors.length],base=l6Doors[door],at={x:base.x+(i%2)*.8,z:base.z-1.4};
       // Doorway arrivals are the maintenance source. Later side-passages only emerge outside the camera.
       if(wave>2&&!ai.director.offscreen(at))continue;
