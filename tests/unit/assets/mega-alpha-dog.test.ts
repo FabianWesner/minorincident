@@ -50,7 +50,7 @@ function bounds(root: Awaited<ReturnType<typeof load>>['scene']) {
 // --- Mega Alpha ----------------------------------------------------------------------------------------------------
 const mega = find('inf.mega-alpha'), alpha = find('inf.alpha');
 for (const [lod, budget] of [16000, 6000, 2000].entries()) {
-  test(`T-L10-mega-alpha-lod${lod} @L10 Mega Alpha stays inside twice the Alpha caps, keeps the Alpha rig contract and bakes the shared clips`, async () => {
+  test(`T-L10-mega-alpha-lod${lod} @L10 Mega Alpha stays inside its 16k/6k/2k caps, keeps the Alpha rig contract and bakes the shared clips`, async () => {
     const path = lodPath(mega, lod);
     const doc = await (await assetIO()).read(path);
     const validation = validateDocument(doc, mega, statSync(path).size, lod);
@@ -61,8 +61,8 @@ for (const [lod, budget] of [16000, 6000, 2000].entries()) {
     expect(coplanarOverlaps(doc), 'no coplanar overlapping surfaces').toEqual([]);
     const gltf = await load(path), alphaGltf = await load(lodPath(alpha, lod));
     const big = bounds(gltf.scene), small = bounds(alphaGltf.scene);
-    expect(big.y / small.y, 'about twice the Alpha height').toBeGreaterThan(1.8);
-    expect(big.y / small.y).toBeLessThan(2.2);
+    expect(big.y / small.y, 'same height as the Alpha (PO 10-15)').toBeGreaterThan(.95);
+    expect(big.y / small.y).toBeLessThan(1.1);
     expect(big.x / small.x, 'bulkier, not only taller').toBeGreaterThan(big.y / small.y);
     for (const name of mega.requiredNodes) expect(gltf.scene.getObjectByName(name), name).toBeTruthy();
     for (const name of mega.animatedNodes) {
