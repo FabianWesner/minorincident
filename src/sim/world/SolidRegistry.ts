@@ -421,8 +421,7 @@ export class SolidRegistry {
     // Accept a mutually clear set of simultaneous proposals atomically. A coherent formation
     // must be able to enter positions its neighbours vacate during this same tick.
     this.unresolved.length = 0;
-    let unreservedMoving = this.moved.length;
-    for (const e of this.moved) this.movedIds[e.id] = true;
+    let unreservedMoving = 0;
     const reject = (e: EntitySnapshot) => {
       if (this.rejected[e.id]) return;
       this.rejected[e.id] = true; this.unresolved.push(e);
@@ -452,6 +451,8 @@ export class SolidRegistry {
       for (const e of this.moved) if (e.id === 1) this.publish(e);
       this.finish(full); return;
     }
+    unreservedMoving = this.moved.length - this.unresolved.length;
+    for (const e of this.moved) this.movedIds[e.id] = true;
     this.rollbackCells.epoch++;
     // Reserve rollback positions only for the conflicting component. Propagate a
     // reservation to proposals it intersects; unrelated clear formations keep moving.
