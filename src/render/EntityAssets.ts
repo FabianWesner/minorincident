@@ -77,7 +77,8 @@ export class EntityAssets extends Group {
       const load = this.actorModel(id, lod).then(model => {
         if (!this.disposed && this.world.entities.get(entity.id)) {
           // An LOD swap keeps the interpolation history (a fresh record restarted at the tick pose: a one-frame snap per swap).
-          const previous = this.records.get(entity.id); previous?.model.removeFromParent(); const wheels: { node: Object3D; radius: number; spin: number; steer: number; front: boolean }[] = [];
+          const previous = this.records.get(entity.id); previous?.model.removeFromParent();
+          for (const material of previous?.reveal ?? []) { material.dispose(); this.materials.delete(material); } const wheels: { node: Object3D; radius: number; spin: number; steer: number; front: boolean }[] = [];
           model.traverse(node => { if (node.userData.wheelRadius) { node.rotation.order = 'YXZ'; wheels.push({ node, radius: node.userData.wheelRadius, spin: node.rotation.z, steer: node.rotation.y, front: node.name.startsWith('wheelF') }); } });
           const reveal: PaletteMaterial[] = [], copies = new Map<PaletteMaterial, PaletteMaterial>();
           if (!/^(npc|char)\./.test(id)) model.traverse(node => {

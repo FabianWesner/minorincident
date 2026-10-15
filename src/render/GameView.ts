@@ -695,16 +695,16 @@ export class GameView implements Lifecycle {
     seeThrough.bossRadius.value = Math.min(.3, Math.max(.1, 2.8 / screenHeight));
   }
   /** Scene Lab: hide the courier / the crowd (Mega included) and redraw, for the courier-visible-share probe. */
-  probeVisibility(hide: { courier: boolean; crowd: boolean }): number {
-    this.probeHide = { ...hide }; this.update(1);
+  probeVisibility(hide: { courier: boolean; crowd: boolean; environment?: boolean }): number {
+    this.probeHide = { courier: hide.courier, crowd: hide.crowd }; this.update(1);
     // The reference removes every possible foreground solid, including static kits and parked cars.
-    if (this.districts) this.districts.visible = !hide.crowd;
-    if (this.npcs) this.npcs.visible = !hide.crowd;
-    if (this.interactions) this.interactions.visible = !hide.crowd;
-    if (this.fixtureProps) this.fixtureProps.visible = !hide.crowd;
-    if (this.bicycle) this.bicycle.visible = !((this.world.entities.get(1) as { riding?: number } | undefined)?.riding !== undefined ? hide.courier : hide.crowd);
-    this.vehicles?.probeVisibility(hide.courier, hide.crowd);
-    this.entityAssets?.probeVisibility(hide.courier, hide.crowd);
+    if (this.districts) this.districts.visible = !hide.environment;
+    if (this.npcs) this.npcs.visible = !hide.environment;
+    if (this.interactions) this.interactions.visible = !hide.environment;
+    if (this.fixtureProps) this.fixtureProps.visible = !hide.environment;
+    if (this.bicycle) this.bicycle.visible = !((this.world.entities.get(1) as { riding?: number } | undefined)?.riding !== undefined ? hide.courier : hide.environment);
+    this.vehicles?.probeVisibility(hide.courier, !!hide.environment);
+    this.entityAssets?.probeVisibility(hide.courier, !!hide.environment);
     const player = this.world.entities.get(1); return player ? this.megaDistance(player.transform) : Infinity;
   }
   /** Project a world point to viewport-normalized coordinates, for masks and input integration. */
@@ -861,7 +861,7 @@ export class GameView implements Lifecycle {
       const feet = current.y - .7;
       this.revealSubject.min.set(current.x - .55, feet, current.z - .55);
       this.revealSubject.max.set(current.x + .55, feet + 1.9, current.z + .55);
-      if ((this.world.entities.get(1) as { riding?: number } | undefined)?.riding !== undefined && this.bicycle) this.revealSubject.union(this.revealVehicle.setFromObject(this.bicycle));
+      if ((this.world.entities.get(1) as { riding?: number } | undefined)?.riding !== undefined && this.bicycle?.playerBounds(this.revealVehicle)) this.revealSubject.union(this.revealVehicle);
       if (this.vehicles?.playerBounds(this.revealVehicle) || this.entityAssets?.playerBounds(this.revealVehicle)) this.revealSubject.union(this.revealVehicle);
       subject = this.revealSubject;
     }

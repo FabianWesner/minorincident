@@ -63,7 +63,7 @@ const privacyFenceLodPolicy = { lod1From: 6, lod2From: 45, hysteresis: 2 };
  * even up close; the E20 rescue peak at the Grove Market otherwise spends ~100 k of the 500 k phone budget on one building. */
 const heavyOnLow = (id: string) => ((worldAssets[id] as { authoredLodTriangles?: { lod1?: number } }).authoredLodTriangles?.lod1 ?? 0) >= 50_000;
 
-interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; /** Local footprint of LOD0 (centre offset and half extents): occluder tests use the real oriented box, not the longest side squared. */ foot: { cx: number; cz: number; hx: number; hz: number }; id: string; decay?: string; lit: boolean; loaded: boolean; nearLoaded: boolean; farLoaded: boolean; heroShown: Lod; bands: (Lod | undefined)[] }
+interface LodBatch { hero: InstancedGroup; near: InstancedGroup; far: InstancedGroup; refs: Object3D[]; origin: [number, number]; height: number; radius: number; half: number; id: string; decay?: string; lit: boolean; loaded: boolean; nearLoaded: boolean; farLoaded: boolean; heroShown: Lod; bands: (Lod | undefined)[] }
 /** Shared static instances; detailed prototypes stream only into the close view. */
 export class DistrictView extends Group {
   readonly spots = new Map<string, CameraPose>();
@@ -348,8 +348,8 @@ export class DistrictView extends Group {
               batch.name = `inst:${id}`; this.batches.push(batch); root.add(batch); this.freezeBatch(batch);
               batch.traverse(o => { if (o instanceof Mesh && o.name === 'window-light') this.windows.push(o); });
             }
-            const footBox = new Box3().setFromObject(prototypes[0]), dimensions = footBox.getSize(new Vector3()), footCenter = footBox.getCenter(new Vector3());
-            this.lodBatches.push({ foot: { cx: footCenter.x, cz: footCenter.z, hx: dimensions.x / 2, hz: dimensions.z / 2 }, hero, near, far, refs, id, decay, lit: power === 'true', loaded: false, nearLoaded, farLoaded, heroShown: nearLoaded ? 'lod1' : 'lod2', bands: [], origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55, half: Math.max(dimensions.x, dimensions.z) / 2 });
+            const footBox = new Box3().setFromObject(prototypes[0]), dimensions = footBox.getSize(new Vector3());
+            this.lodBatches.push({ hero, near, far, refs, id, decay, lit: power === 'true', loaded: false, nearLoaded, farLoaded, heroShown: nearLoaded ? 'lod1' : 'lod2', bands: [], origin: d.origin, height: dimensions.y, radius: Math.hypot(dimensions.x, dimensions.y, dimensions.z) * .55, half: Math.max(dimensions.x, dimensions.z) / 2 });
           }),
         );
         // Dynamic nav-blockers use the same positions/extents as their Rapier colliders.
@@ -491,6 +491,7 @@ export class DistrictView extends Group {
     if (!player) return;
     const feet = player.y - .7;
     const box = subject ?? this.subjectBox.set(this.holeTarget.set(player.x - .55, feet, player.z - .55), this.holeCorner.set(player.x + .55, feet + 1.9, player.z + .55));
+    seeThrough.floor.value = box.min.y;
     let left = Infinity, right = -Infinity, top = Infinity, bottom = -Infinity, depth = Infinity;
     for (const x of [box.min.x, box.max.x]) for (const y of [box.min.y, box.max.y]) for (const z of [box.min.z, box.max.z]) {
       this.holeCorner.set(x, y, z).applyMatrix4(view.camera.matrixWorldInverse); depth = Math.min(depth, this.holeCorner.z);
