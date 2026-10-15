@@ -48,6 +48,7 @@ export class Hud {
   private readonly survivorCards = l5Survivors.map(def => ({ def, root: node('div', `survivor-${def.key}`), face: node('div', `survivor-face-${def.key}`), health: this.bar(`survivor-health-${def.key}`) }));
   private readonly survivorText = node('span', 'survivors-found');
   private readonly cueText = node('span', 'sign-of-life');
+  private readonly followerPins = l5Survivors.map(def => ({ key: def.key, pin: this.pin(`follower-${def.key}`) }));
   private readonly threats: HTMLSpanElement[] = [];
   private readonly tracker = node('div', 'objective-tracker');
   private readonly weapon = this.weaponIcon();
@@ -101,6 +102,7 @@ export class Hud {
     this.cuePin.hidden = true; this.survivorText.hidden = this.cueText.hidden = true;
     this.routePin.style.background = '#64d9ee'; this.routePin.setAttribute('aria-label', 'Next turn on the cellar route');
     this.map.append(north, this.routePin, this.playerPin, this.objectivePin, this.homePin, this.cuePin);
+    for (const { key, pin } of this.followerPins) { pin.classList.add('hud-pin-follower'); pin.hidden = true; pin.setAttribute('aria-label', `${key}, rescued survivor`); this.map.append(pin); }
     // Allocated once; no entity snapshots, DOM creation, or pin lists per frame.
     for (let i = 0; i < 256; i++) { const pin = this.pin(`threat-${i}`); pin.classList.add('hud-pin-threat'); pin.hidden = true; this.threats.push(pin); this.map.append(pin); }
     this.tracker.className = 'hud-tracker hud-panel'; this.tracker.append(this.trackerText, this.survivorText, this.cueText);
@@ -331,6 +333,12 @@ export class Hud {
   }
   /** E23: "Survivors found n/5", the direction ping of a heard sign of life (4 s, clamped to the map edge) and the stand-still prompt next to a hiding place. */
   private updateSurvivors(mission: Mission | null | undefined, px: number, pz: number): void {
+    for (const { key, pin } of this.followerPins) {
+      const r = mission?.state.l5?.survivors.find(r => r.key === key), e = r && this.game.world.entities.get(r.id);
+      const alive = !!e && !e.hidden && !e.infection && e.health.current > 0 && (r?.status === 'following' || r?.status === 'sheltered');
+      setHidden(pin, !alive);
+      if (alive && e) { attribute(pin, 'data-entity-id', String(e.id)); this.place(pin, e.transform.x, e.transform.z, px, pz, true); }
+    }
     for (const card of this.survivorCards) {
       const r = mission?.state.l5?.survivors.find(r => r.key === card.def.key);
       const e = r && this.game.world.entities.get(r.id);
