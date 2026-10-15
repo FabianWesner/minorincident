@@ -1065,15 +1065,16 @@ export class DistrictView extends Group {
   /** Scene Lab probe: current detail band of every static instance (`culled` outside the frustum), district-local positions. */
   /** Scene Lab: the courier hole's live state, and placements lower than an occluder whose drawn batch would still be cut
    * by it (must stay empty: PO 10-13 bench without planks at zoom 0.66). */
-  seeThroughAudit(): { strength: number; cover: number; solidRadius: number; center: [number, number]; occluder: string; cutLowProps: string[] } {
-    const cut = new Set<string>();
+  seeThroughAudit(): { strength: number; cover: number; solidRadius: number; center: [number, number]; occluder: string; cutLowProps: string[]; cutPlacements: string[] } {
+    const cut = new Set<string>(), eligible = new Set<string>();
+    for (const entry of this.lodBatches) for (const ref of entry.refs) if (ref.userData.occluder === true) eligible.add(`${entry.id}@${(ref.position.x + entry.origin[0]).toFixed(1)},${(ref.position.z + entry.origin[1]).toFixed(1)}`);
     for (const entry of this.lodBatches) {
       if (entry.height >= occluderMinHeight || worldAssets[entry.id].foliage) continue;
       for (const batch of [entry.hero, entry.near, entry.far]) batch.traverse(node => {
         if (node instanceof Mesh && (Array.isArray(node.material) ? node.material : [node.material]).some(m => m.userData.seeThrough)) cut.add(entry.id);
       });
     }
-    return { strength: seeThrough.strength.value, cover: seeThrough.cover.value, solidRadius: seeThrough.solidRadius.value, center: seeThrough.center.value.toArray() as [number, number], occluder: this.occluderId, cutLowProps: [...cut].sort() };
+    return { strength: seeThrough.strength.value, cover: seeThrough.cover.value, solidRadius: seeThrough.solidRadius.value, center: seeThrough.center.value.toArray() as [number, number], occluder: this.occluderId, cutLowProps: [...cut].sort(), cutPlacements: [...eligible].sort() };
   }
   lodState(): { assetId: string; origin: [number, number]; position: [number, number, number]; lod: Lod | 'culled' }[] {
     return this.lodBatches.flatMap(entry => entry.refs.map(ref => ({ assetId: entry.id, origin: entry.origin, position: ref.position.toArray() as [number, number, number],
