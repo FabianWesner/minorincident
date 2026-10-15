@@ -42,3 +42,6 @@ export const coreCivilianModels = ['npc.lab-tech-a', 'npc.lab-tech-b', 'npc.lab-
 /** L3's complete cast: all corridor pedestrians, officers and checkpoint soldiers.
  * Laboratory/depot/firefighter batches are discovered if a future authored entity needs them. */
 export const l3CivilianModels = [...l1Pedestrians.models, 'npc.police-officer', 'npc.national-guard'];
+
+/** L1 delivery route, lab outbreak and fire-station rescue; no police or soldiers. */
+export const l1CivilianModels = [...l1Pedestrians.models, 'npc.depot-clerk', 'npc.lab-tech-a', 'npc.lab-tech-b', 'npc.lab-guard', 'npc.firefighter-alive'];

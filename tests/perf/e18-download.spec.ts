@@ -1,12 +1,12 @@
 import { gzipSync } from 'node:zlib';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { test, expect } from '../e2e/fixtures';
-test('T-E18-03 @E18-AC03 @perf production initial network payload <=15MB gzip through level.started', async ({ page }) => {
+test('T-E18-03 @E18-AC03 @perf production initial network payload <=15MB gzip through level.started', async ({ page, context }) => {
   test.setTimeout(180_000);
-  const requests: Promise<{ url: string; rawBytes: number; gzipBytes: number }>[] = []; let collecting = true;
-  page.on('requestfinished', request => {
+  const requests: Promise<{ url: string; rawBytes: number; gzipBytes: number; bodyBytes: number }>[] = []; let collecting = true;
+  context.on('requestfinished', request => {
     if (!collecting || !request.url().startsWith('http')) return;
-    requests.push((async () => { const response = await request.response(); const body = await response!.body(); return { url: new URL(request.url()).pathname, rawBytes: body.length, gzipBytes: gzipSync(body).length }; })());
+    requests.push((async () => { const response = await request.response(); const sizes = await request.sizes(); const body = request.serviceWorker() ? null : await response!.body(); return { bodyBytes: sizes.responseBodySize, url: new URL(request.url()).pathname, rawBytes: body?.length ?? sizes.responseBodySize, gzipBytes: body ? gzipSync(body).length : sizes.responseBodySize }; })());
   });
   await page.goto('/?test=1&renderer=webgl&quality=high&audio=muted');
   await page.waitForFunction(() => Boolean(window.__SS__));
@@ -15,5 +15,6 @@ test('T-E18-03 @E18-AC03 @perf production initial network payload <=15MB gzip th
   const files = await Promise.all(requests), gzipBytes = files.reduce((n, f) => n + f.gzipBytes, 0);
   expect(files.some(f => f.url.endsWith('.glb'))).toBe(true); expect(files.some(f => /rapier-.*\.js$/.test(f.url))).toBe(true);
   expect(files.some(f => f.url.includes('/src/'))).toBe(false); expect(gzipBytes).toBeLessThanOrEqual(15_000_000);
-  mkdirSync('test-results/epics/E18', { recursive: true }); writeFileSync('test-results/epics/E18/download.json', JSON.stringify({ frontier: event, measurement: 'gzip of production response bodies observed through Playwright requestfinished; preview serves uncompressed bodies', gzipBytes, rawBytes: files.reduce((n, f) => n + f.rawBytes, 0), files }, null, 2));
+  expect(files.reduce((n, f) => n + f.bodyBytes, 0), 'worker-inclusive response body bytes').toBeLessThanOrEqual(15_000_000);
+  mkdirSync('test-results/epics/E18', { recursive: true }); writeFileSync('test-results/epics/E18/download.json', JSON.stringify({ frontier: event, measurement: 'browser-context requestfinished including workers; responseBodySize is encoded HTTP body size; gzipBytes estimates production compression for page bodies', gzipBytes, rawBytes: files.reduce((n, f) => n + f.rawBytes, 0), files }, null, 2));
 });

@@ -15,7 +15,7 @@ import { Color, Group, InstancedMesh, InstancedBufferAttribute, InstancedInterle
 import type { Materials } from '../Materials';
 import { civilianMaterial } from './CivilianMaterial';
 import { AssetRegistry } from '../../assets/registry';
-import { l1Pedestrians, coreCivilianModels, l3CivilianModels } from '../../data/npcs';
+import { l1Pedestrians, coreCivilianModels, l3CivilianModels, l1CivilianModels } from '../../data/npcs';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { framesPerClip, civilianClips } from '../characters/bakeInfected';
 import { loadGate } from '../../assets/loadGate';
@@ -389,9 +389,19 @@ export class CivilianCrowd extends Group {
   constructor(private readonly world: SimWorld, shading?: Materials, private readonly accessories?: CrowdAccessories) {
     super(); this.props = new RoutineProps(shading); this.add(this.props); this.shading=shading;
     // The L6 cast is fixed: bake it while briefing, before Mission.begin creates the people.
-    const models=world.scenario==='L7'?[...new Set([...world.entities.iterate()].flatMap(e => { const model = crowdModelOf(e); return model ? [model] : []; }))]:world.scenario==='L6'?[...new Set([...l6CastModels,...l1Pedestrians.models])]:world.scenario==='L3'?l3CivilianModels:coreCivilianModels;
+    const models=this.staged ? this.nearbyModels(32) : world.scenario==='L7'?[...new Set([...world.entities.iterate()].flatMap(e => { const model = crowdModelOf(e); return model ? [model] : []; }))]:world.scenario==='L6'?[...new Set([...l6CastModels,...l1Pedestrians.models])]:world.scenario==='L3'?l3CivilianModels:coreCivilianModels;
     this.known.clear();for(const model of models)this.known.add(model);
     this.batches=models.flatMap(model=>[this.batch(model,'lod1'),this.batch(model,'lod2')]);if (this.batches.length) this.add(...this.batches);
+  }
+  /** L1 has a long peaceful delivery route. Later lab/fire-station actors need not
+   * consume the initial download; checkpoints already contain their live cast. */
+  private get staged(): boolean { return this.world.scenario === 'L1' && !!this.world.missions; }
+  private nearbyModels(radius: number): string[] {
+    const player = this.world.entities.get(1)?.transform;
+    return [...new Set([...this.world.entities.iterate()].flatMap(e => {
+      const model = crowdModelOf(e);
+      return model && (!player || Math.hypot(e.transform.x - player.x, e.transform.z - player.z) <= radius) ? [model] : [];
+    }))];
   }
   private readonly shading?: Materials;
   private batch(model: string, lod: 'lod0' | 'lod1' | 'lod2'): CivilianBatch { return new CivilianBatch(this.world, model, lod, this.visibility, this.shading, this.props, this.gait, this.footwork, this.moves, this.presentation, this.accessories); }
@@ -425,12 +435,23 @@ export class CivilianCrowd extends Group {
     this.heroLoads.set(model, hero.init().then(() => { if (this.disposed) { hero.dispose(); return; } this.batches.push(hero); this.add(hero); this.visibility.heroModels.add(model); }, () => {}));
   }
   private disposed = false;
-  private readonly known = new Set<string>(coreCivilianModels);
+  private readonly known = new Set<string>();
   /** Registers lod1/lod2 batches for model ids first seen on an entity (data-driven, once per id). */
   private discover(): void {
     // Campaign people spawn at Begin. Their close tiers must be ready before
     // the card closes, including L2/L3 officers who first appear at mission start.
-    if (/^L[1-6]$/.test(this.world.scenario ?? '')) for (const model of this.known) this.loadHero(model);
+    if (!this.staged && /^L[1-6]$/.test(this.world.scenario ?? '')) for (const model of this.known) this.loadHero(model);
+    // Start the rest only after Begin, while the peaceful route gives the worker
+    // queue time to finish before any lab exits or firefighter encounter. This also
+    // covers models not represented by an entity until a story beat creates them.
+    if (this.staged) {
+      const playing = this.world.missions!.state.phase === 'playing';
+      for (const model of playing ? l1CivilianModels : this.nearbyModels(32)) {
+        this.loadModel(model);
+        if (playing) this.loadHero(model);
+      }
+      return;
+    }
     for (const e of this.world.entities.iterate()) {
       const model = crowdModelOf(e);
       // L5's small, fixed cast includes the hidden survivors, lookout and wanderers.
@@ -438,17 +459,20 @@ export class CivilianCrowd extends Group {
       // L7's large escort uses the existing four visible hero slots. Warming
       // every follower's LOD0 also retained rigs that never reached the close band.
       if (model && (e.civilian?.survivor && this.world.scenario !== 'L7' || this.world.scenario === 'L5' && !e.corpse)) this.loadHero(model);
-      if (!model || this.known.has(model) || !model.startsWith('npc.')) continue;
-      this.known.add(model);
-      const added = [this.batch(model, 'lod1'), this.batch(model, 'lod2')];
-      this.heroLoads.set('discover:' + model, Promise.all(added.map(b => b.init())).then(() => { if (this.disposed) { added.forEach(b => b.dispose()); return; } this.batches.push(...added); this.add(...added); }, () => {}));
+      if (model) this.loadModel(model);
     }
+  }
+  private loadModel(model: string): void {
+    if (this.known.has(model) || !model.startsWith('npc.')) return;
+    this.known.add(model);
+    const added = [this.batch(model, 'lod1'), this.batch(model, 'lod2')];
+    this.heroLoads.set('discover:' + model, Promise.all(added.map(b => b.init())).then(() => { if (this.disposed) { added.forEach(b => b.dispose()); return; } this.batches.push(...added); this.add(...added); }, () => {}));
   }
   /** Hero LOD0 batches still loading (screenshots and tests wait for them). */
   async ready(): Promise<void> { await Promise.all(this.heroLoads.values()); }
   async init(): Promise<void> {
     const started = performance.now();
-    if (/^L[1-6]$/.test(this.world.scenario ?? '')) for (const model of this.known) this.loadHero(model);
+    if (!this.staged && /^L[1-6]$/.test(this.world.scenario ?? '')) for (const model of this.known) this.loadHero(model);
     await Promise.all(this.batches.map(b => b.init()));
     // L4's fixed close cast uses the same loading barrier as L1/L6 preparation
     // in discover(); no first-use LOD0 bake/index/simplification during the war.
