@@ -11,7 +11,8 @@ const dist = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
 const CELL = 5;
 /** Scripted actors (tank, helicopter, fuel truck) are plain rigid entities (`kind: 'setpiece'`, archetype = the manifest asset id); no combat component, never in the spatial hash. */
 export function spawnSetPiece(world: SimWorld, asset: string, at: { x: number; z: number; y?: number; yaw?: number }): EntitySnapshot {
-  return world.entities.create({ kind: 'setpiece', archetype: asset, faction: 'neutral', health: { current: 1000, max: 1000 }, transform: { x: at.x, y: at.y ?? .7, z: at.z, yaw: at.yaw ?? 0 } });
+  const e = world.entities.create({ kind: 'setpiece', archetype: asset, faction: 'neutral', health: { current: 1000, max: 1000 }, transform: { x: at.x, y: at.y ?? .7, z: at.z, yaw: at.yaw ?? 0 } });
+  world.solids.register(e); return e;
 }
 
 /**

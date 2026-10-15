@@ -72,6 +72,7 @@ export class LevelSevenDeparture {
     const queue = { x: cfg.queue.x + Math.floor(slot / 3) % 3 * .9, z: cfg.queue.z + (slot % 3 - 1) * .8 };
     const near = distance(e.transform, queue) <= 1.6;
     if (near && w.tick - s.lastEnterAt >= cfg.gapTicks) {
+      e.passengerOf = s.busId;
       s.lastEnterAt = w.tick; s.entering[e.id] = w.tick; this.from.set(e.id, { x: e.transform.x, z: e.transform.z });
       return true;
     }
@@ -110,7 +111,7 @@ export class LevelSevenDeparture {
     const w = this.world, s = this.state, player = w.entities.get(1)!;
     s.phase = 'departing'; s.startedAt = w.tick;
     // The courier climbs aboard last: out of the world (no target for the horde, no collider), input locked for the shot.
-    player.hidden = true; w.spatial.delete(1); w.physics.playerCollider?.setEnabled(false);
+    player.passengerOf = s.busId; player.hidden = true; w.spatial.delete(1); w.physics.playerCollider?.setEnabled(false);
     w.storyLock = { scripted: null, skip: false }; w.clearInput();
     if (this.blocker !== undefined) { w.physics.removeBlocker(this.blocker); this.blocker = undefined; }
     w.events.emit({ type: 'world.blocker.changed', tick: w.tick, id: NAV_BUS, blocked: false, wall: this.wall });

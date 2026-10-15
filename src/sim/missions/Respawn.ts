@@ -14,28 +14,20 @@ type Spot = { x: number; z: number };
 const dist = (a: Spot, b: Spot) => Math.hypot(a.x - b.x, a.z - b.z);
 
 /** The anchor itself when the player fits there, else the nearest clear spot within `snapM` (never farther). */
-function snap(world: SimWorld, anchor: Spot): Spot {
-  const nav = world.infected?.nav;
-  if (!nav || nav.clear(anchor.x, anchor.z, .35)) return { x: anchor.x, z: anchor.z };
-  let best: Spot | null = null;
-  for (let r = .25; r <= respawnRule.snapM && !best; r += .25) for (let k = 0; k < 16 && !best; k++) {
-    const at = { x: anchor.x + Math.cos(k * Math.PI / 8) * r, z: anchor.z + Math.sin(k * Math.PI / 8) * r };
-    if (nav.clear(at.x, at.z, .35)) best = at;
-  }
-  return best ?? { x: anchor.x, z: anchor.z };
+function snap(world: SimWorld, anchor: Spot): Spot | null {
+  const player = world.entities.get(1)!;
+  return world.solids.find({ ...anchor, y: player.transform.y }, .35, 1, respawnRule.snapM);
 }
 
 /** Companion and escorts come back beside the courier (the companion has its own settle logic; escorts stand up and follow). */
 function gatherAllies(world: SimWorld, at: Spot, escorts: boolean): void {
   world.npcs?.companion.respawnNear();
   if (!escorts) return;
-  const nav = world.infected?.nav;
   let n = 0;
   for (const e of world.entities.iterate()) {
     const c = e.escort; if (!c || e.passengerOf !== undefined || c.state === 'dead' || e.corpse) continue;
     const a = 2.4 * n++ + 1;
-    const spot = [1.6, 2.2, 1.0, 0].map(r => ({ x: at.x + Math.cos(a) * r, z: at.z + Math.sin(a) * r })).find(s => !nav || nav.clear(s.x, s.z, .35)) ?? at;
-    e.transform.x = spot.x; e.transform.z = spot.z; world.spatial.set(e.id, spot.x, spot.z);
+    world.solids.relocate(e, { x: at.x + Math.cos(a) * 1.6, z: at.z + Math.sin(a) * 1.6, y: e.transform.y }, 'checkpoint.ally', 1.5);
     c.path.length = 0; c.goal = -1; c.pathIndex = 0;
     if (e.motion) { e.motion.velocity.x = e.motion.velocity.z = 0; e.motion.speed = 0; e.motion.moving = false; }
   }
@@ -62,7 +54,7 @@ function clearThreat(world: SimWorld, at: Spot): void {
         const angle = (n % 2 ? 1 : -1) * Math.ceil(n / 2) * Math.PI / 8, c = Math.cos(angle), s = Math.sin(angle);
         for (let m = r.clearM; m <= r.clearM + 6; m += 1) {
           const to = { x: at.x + (dx * c - dz * s) * m, z: at.z + (dx * s + dz * c) * m };
-          if (!ai.nav.clear(to.x, to.z, e.combat?.radius ?? .45)) continue;
+          if (!ai.nav.clear(to.x, to.z, e.combat?.radius ?? .45) || !world.solids.clear({ ...to, y: e.transform.y }, e.combat?.radius ?? .45, e.id)) continue;
           Object.assign(e.transform, to); world.spatial.set(e.id, to.x, to.z);
           if (e.locomotion) e.locomotion.vx = e.locomotion.vz = 0;
           moved = true; break;
@@ -96,14 +88,19 @@ function clearThreat(world: SimWorld, at: Spot): void {
 /** Put the courier on the checkpoint anchor and make it safe. `anchor` is read before any level-specific restore touched the world. */
 /** `worldKept`: the level keeps its world on death (L1), so escorts are brought back; elsewhere the checkpoint snapshot restored them in formation. */
 export function respawnAtCheckpoint(world: SimWorld, anchor: Spot, worldKept = true): void {
-  const player = world.entities.get(1)!, at = snap(world, anchor);
+  const player = world.entities.get(1)!;
+  if (world.missions?.state.checkpoint !== 'cure-disperse-ready') clearThreat(world, anchor);
+  const at = snap(world, anchor);
+  if (!at) {
+    Object.assign(player.transform, anchor); world.solids.admit(player, 'checkpoint.respawn', respawnRule.snapM); return;
+  }
   player.transform.x = at.x; player.transform.z = at.z;
   world.physics.playerBody!.setTranslation(player.transform, true);
   world.previousPlayer = { ...player.transform }; world.spatial.set(1, at.x, at.z);
   if (player.survivor) player.survivor.invulnerableUntil = world.tick + ticks(respawnRule.graceS);
   // E32 ready is an exact pre-assault snapshot; keep its captured defenders and cooldowns.
-  if (world.missions?.state.checkpoint !== 'cure-disperse-ready') clearThreat(world, at);
   gatherAllies(world, at, worldKept);
+  world.solids.remember(player, 'checkpoint.respawn');
 }
 
 /** PO 2026-10-13 run-out after the final objective when action is still going on (see Mission.runOut). */

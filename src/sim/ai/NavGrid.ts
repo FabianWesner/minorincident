@@ -1,5 +1,5 @@
 import type { ScenarioDefinition } from '../../levels/loader';
-type Wall = NonNullable<ScenarioDefinition['walls']>[number];
+export type Wall = NonNullable<ScenarioDefinition['walls']>[number];
 /** Coarse look-ahead offsets (path nodes) for budgeted NPC steering. */
 const lookAhead = [40, 30, 22, 15, 10, 6, 3, 1, 0];
 /** Radius cuts (m) `move` tries, smallest first, for a body that already stands inside the baked wall margin. */
@@ -9,6 +9,8 @@ const marginSteps = [0.002, 0.005, 0.01, 0.02, 0.04, 0.06, 0.08, 0.1];
 const nearestMemoCapacity = 64;
 /** 0.5 m collider-baked district grid. Fixed workspaces serve budgeted A* and shared reverse flow fields. */
 export class NavGrid {
+  /** Changes invalidate solid contact audits as well as routes. */
+  revision = 0;
   readonly cellSize = 0.5;
   readonly width: number;
   readonly depth: number;
@@ -124,7 +126,19 @@ export class NavGrid {
     const outsideX = Math.max(0, dx - w.halfX), outsideZ = Math.max(0, dz - w.halfZ);
     return radius === 0 || outsideX * outsideX + outsideZ * outsideZ < radius * radius;
   }
+  /** Exact solid query over the existing bake buckets; no second static collision world.
+   * Buckets already include a 2 m body margin. Larger footprints visit adjoining buckets. */
+  visitSolids(x: number, z: number, radius: number, visit: (wall: Wall, id: string) => void): void {
+    const reach = Math.max(0, radius - 2), seen = reach ? new Set<Wall>() : null;
+    for (let cx = Math.floor((x - reach) / 4); cx <= Math.floor((x + reach) / 4); cx++) for (let cz = Math.floor((z - reach) / 4); cz <= Math.floor((z + reach) / 4); cz++) {
+      for (const w of this.buckets.get(cx)?.get(cz) ?? []) if (!seen?.has(w)) { seen?.add(w); visit(w, `static:${w.entityId ?? this.wallIds.get(w)}`); }
+      for (const [id, w] of this.blockerBuckets.get(cx)?.get(cz) ?? []) if (!seen?.has(w)) { seen?.add(w); visit(w, `blocker:${id}`); }
+    }
+  }
+  private readonly wallIds = new WeakMap<Wall, number>();
   private indexWalls(): void {
+    this.revision++;
+    this.walls.forEach((wall, i) => this.wallIds.set(wall, i));
     this.buckets.clear();
     for (const wall of this.walls.filter(w => w.navBlocker || (w.y - w.halfY < 1.8 && w.y + w.halfY > .05))) for (let z = Math.floor((wall.z - wall.halfZ - 2) / 4); z <= Math.floor((wall.z + wall.halfZ + 2) / 4); z++) for (let x = Math.floor((wall.x - wall.halfX - 2) / 4); x <= Math.floor((wall.x + wall.halfX + 2) / 4); x++) {
       let column = this.buckets.get(x);
@@ -162,6 +176,7 @@ export class NavGrid {
   }
   /** E11 doors and broken props invalidate only their affected cells and cached searches. */
   setBlocker(id: number, wall: Wall, blocked: boolean): void {
+    this.revision++;
     const previousBounds = this.nearestBlockers.get(id);
     if (previousBounds) this.indexBlocker(id, previousBounds);
     if (blocked) { this.blockers.set(id, wall); this.indexBlocker(id, wall, wall); } else this.blockers.delete(id);

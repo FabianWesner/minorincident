@@ -172,6 +172,8 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
     const value = metrics.actors[actor]?.[field] ?? NaN;
     checks.push({ name: `${field}.${actor}.min`, pass: value >= range[0], value, limit: range[0] }, { name: `${field}.${actor}.max`, pass: value <= range[1], value, limit: range[1] });
   }
+  add('collisionFailures', metrics.collision.failures, e.collisionFailuresMax);
+  add('collisionPending', metrics.collision.pending, e.collisionPendingMax);
   add('propPenetrationFramesMax', metrics.propPenetration.framesMax, e.propPenetrationFramesMax);
   add('convoyOverlapFramesMax', metrics.convoyOverlapFrames, e.convoyOverlapFramesMax);
   add('consoleErrors', errors.length, e.consoleErrors ?? 0);

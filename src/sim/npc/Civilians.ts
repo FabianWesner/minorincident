@@ -45,7 +45,7 @@ export class Civilians {
       combat: { radius: animal?.radius ?? .35, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } });
     if (animal) civilian.l1 = { walkSpeed: 1, fleeSpeed: 2, startleTicks: 30, refuge: null, target: null, repickAt: 0, noticed: -1 };
     if (options.pet === 'dog') { civilian.model = dogModel(this.world.seed, e.id, false); civilian.variant = civilian.model.replace(/^amb\./, 'inf.'); }
-    this.world.spatial.set(e.id, position.x, position.z); return e.id;
+    this.world.spatial.set(e.id, position.x, position.z); this.world.solids.admit(e, 'civilian.spawn'); return e.id;
   }
   state(e: EntitySnapshot, state: CivilianState, duration = 0): void {
     const c = e.civilian!; if (c.state === 'grabbed' && state !== 'grabbed') this.held.delete(c.attacker); if (state !== 'calm' && state !== 'alarmed') leaveSeat(e);
@@ -105,7 +105,7 @@ export class Civilians {
     if (this.outbreak) this.outbreak.update();
     const ai = this.world.infected!, tick = this.world.tick;
     for (const e of this.world.entities.iterate()) {
-      const c = e.civilian; if (!c || c.l1 || c.state === 'infected' || c.state === 'finished') continue;
+      const c = e.civilian; if (e.pendingAdmission || !c || c.l1 || c.state === 'infected' || c.state === 'finished') continue;
       if (!c.adult) continue;
       if (e.combat && e.combat.staggerUntil > tick && c.knockedUntil <= tick) continue;
       if (c.vehicleYield && c.vehicleYield.until > tick && ['calm', 'hide', 'alarmed', 'flee'].includes(c.state)) {

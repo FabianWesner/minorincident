@@ -1,0 +1,19 @@
+{
+  "name": "collision-vehicle-admission",
+  "note": "Production admission: all eight Alphas retain IDs and HP around a parked bus, a sedan and a tank. Inspect both game zooms: bodies stand outside the vehicle hulls and each other; no Alpha is imprisoned inside the tank. Numerical occupancy is gated independently of mesh clipping.",
+  "seed": 1, "ground": "asphalt", "size": 80, "time": "L4",
+  "vehicles": [
+    { "id": "bus", "asset": "vehicle.school-bus", "at": [0, 0] },
+    { "id": "sedan", "asset": "vehicle.sedan", "at": [0, 9] },
+    { "id": "tank", "asset": "veh.tank", "at": [0, -9], "yaw": 40 }
+  ],
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [8, 3], "state": "idle" },
+    { "id": "alpha", "kind": "infected", "archetype": "infected.alpha", "at": [2, 0], "count": 8, "spread": 0, "state": "idle" },
+    { "id": "sedan-alpha", "kind": "infected", "archetype": "infected.alpha", "at": [1.8, 9], "state": "idle" },
+    { "id": "tank-alpha", "kind": "infected", "archetype": "infected.alpha", "at": [0, -9], "state": "idle" }
+  ],
+  "camera": { "mode": "game", "target": [0, 0], "zoom": 1 },
+  "frames": 120, "sheet": 30,
+  "expect": { "consoleErrors": 0, "collisionFailuresMax": 0, "collisionPendingMax": 0 }
+}

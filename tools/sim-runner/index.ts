@@ -34,7 +34,7 @@ if (values.level) {
   const output = values.out ?? `test-results/sim/${values.level}-${values.policy}.json`;
   await mkdir(dirname(output), { recursive: true }); await writeFile(output, JSON.stringify(report, null, 2) + '\n');
   console.log(JSON.stringify({ output, completed: report.completed, runs: report.runs, failures }));
-  if (values['completion-only'] && report.completed !== report.runs) process.exitCode = 1;
+  if (values['completion-only'] && (report.completed !== report.runs || report.failures['collision-invariant'])) process.exitCode = 1;
 } else if (values.scenario === 'perf-horde-200' || values.scenario === 'perf-horde-100') {
   const measurement = await measureHorde(values.scenario, ticks, seed);
   const output = values.out ?? `test-results/sim/${values.scenario}-seed-${seed}.json`;
