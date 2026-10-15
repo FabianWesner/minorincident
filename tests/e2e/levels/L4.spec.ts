@@ -1,3 +1,5 @@
+import { levelFourLayouts } from '../../../src/levels/L4/layout';
+import type { DistrictLayout } from '../../../src/levels/districts/types';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { PNG } from 'pngjs';
 import type { Page } from '@playwright/test';
@@ -8,7 +10,7 @@ import { l4, l4Anchors } from '../../../src/data/l4';
 const output = 'test-results/epics/E22';
 test.use({ trace: 'off' }); // Use the shared platform backend: Metal on Mac, SwiftShader on Hetzner.
 type P = { x: number; z: number };
-const fair = JSON.parse(readFileSync('public/assets/layouts/D-FAIR.layout.json', 'utf8')) as { anchors: Record<string, { position: number[] }> };
+const fair = levelFourLayouts([JSON.parse(readFileSync('public/assets/layouts/D-FAIR.layout.json', 'utf8')) as DistrictLayout])[0];
 /** Authored L4 anchors; the door and the brace come from the layout (levelFourLayouts derives them the same way). */
 const at = (name: string): P => {
   if (name === 'l4-cellar-door') { const d = fair.anchors['kessler-cellar-door'].position; return { x: d[0], z: d[2] }; }
@@ -168,7 +170,7 @@ test.describe('L4 The Safe City Falls in the browser', () => {
     // The collapse: the escape street (l4-collapse-2: at "Fall back!" the horde leaves a gap on it; pursuers still chase): out of the ring's
     // east side, down to Lakeshore Avenue and east to Kessler's cellar door, through whatever comes.
     const inCellar = async () => (await mission()).l4!.phase === 'cellar';
-    const route: P[] = [...l4.director.escape.route.slice(1).map(([x, z]) => ({ x, z })), at('l4-cellar-door')];
+    const route: P[] = [...l4.finale.route.slice(1).map(([x, z]) => ({ x, z })), at('l4-cellar-door')];
     for (const wp of route) { await go(wp, 2.2, inCellar, 9); if (await inCellar()) break; }
     for (let i = 0; i < 40 && !await inCellar(); i++) { await go(at('l4-cellar-door'), .5, inCellar, 9); await interact(); await step(20); }
     expect(await inCellar()).toBe(true);

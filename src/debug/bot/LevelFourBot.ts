@@ -121,7 +121,7 @@ export class LevelFourBot {
     const hp = player.health.current / player.health.max;
     if (!this.medkit && hp <= (newbie ? .9 : .65)) {
       // Never back into the flooded ring for a kit: only kits on the way (not farther from the door than the courier).
-      const ring = l4.map.ring, cellar = a['l4-cellar-door'], ahead = (e: EntitySnapshot) => !(e.transform.x > ring.x0 && e.transform.x < ring.x1 && e.transform.z > ring.z0 && e.transform.z < ring.z1) && dist(e.transform, cellar) <= dist(p, cellar) + 4;
+      const ring = l4.map.ring, next = ROUTES[this.route][this.leg] ?? a['l4-cellar-door'], ahead = (e: EntitySnapshot) => !(e.transform.x > ring.x0 && e.transform.x < ring.x1 && e.transform.z > ring.z0 && e.transform.z < ring.z1) && dist(e.transform, next) <= dist(p, next) + 4;
       const kit = s.medkitIds.map(id => w.entities.get(id)).filter((e): e is EntitySnapshot => !!e?.pickup && 'kind' in e.pickup && !e.pickup.collected)
         .filter(e => dist(e.transform, p) < (newbie ? 34 : 22) && ahead(e)).sort((x, y) => dist(x.transform, p) - dist(y.transform, p))[0];
       if (kit) this.medkit = kit.id;
@@ -145,15 +145,17 @@ export class LevelFourBot {
       if (this.stuck.n >= 3) { const at = this.walker.detour(w, { x: p.x + 8, z: p.z }); this.detour = at ? { ...at, until: w.tick + 150 } : null; this.stuck.n = 0; }
     }
     if (this.detour && (w.tick > this.detour.until || dist(p, this.detour) < 1)) { this.detour = null; this.walker.reset(); }
+    // Reaching a street corner advances the route even while dodging. Otherwise
+    // an evade-only courier circles the reached corner instead of taking the next street.
+    const legs = ROUTES[this.route];
+    while (this.leg < legs.length && dist(p, legs[this.leg]) < 3) this.leg++;
     const crowd = this.threats(p, 4.5), many = this.threats(p, 9).filter(e => this.chasing(e)).length;
-    const door = a['l4-cellar-door'];
-    if (!this.detour && (crowd.length >= (fights ? 4 : 2) || many >= 6) && (hp < .5 || !fights || many >= 6)) { const at = this.walker.detour(w, door, crowd[0]?.transform ?? this.threats(p, 9)[0]?.transform); if (at) this.detour = { ...at, until: w.tick + 90 }; }
+    const door = a['l4-cellar-door'], next = ROUTES[this.route][this.leg] ?? door;
+    if (!this.detour && (crowd.length >= (fights ? 4 : 2) || many >= 6) && (hp < .5 || !fights || many >= 6)) { const at = this.walker.detour(w, next, crowd[0]?.transform ?? this.threats(p, 9)[0]?.transform); if (at) this.detour = { ...at, until: w.tick + 90 }; }
     if (newbie && !this.detour && this.rng.next() < .0015) this.detour = { x: p.x - 4 + this.rng.next() * 8, z: p.z + (this.rng.next() - .5) * 10, until: w.tick + 180 };
     if (this.detour) { if (crowd.length < 2 && fight(5)) return frame; go(this.detour, .8, `detour-${this.detour.until}`); return frame; }
     if (fight(5)) return frame;
     // Waypoints of the route (the grid path takes the cross streets by itself), then the cellar door: stand in its ring to descend.
-    const legs = ROUTES[this.route];
-    while (this.leg < legs.length && dist(p, legs[this.leg]) < 3) this.leg++;
     if (this.leg < legs.length) {
       if (go(legs[this.leg], 1.5, `route-${this.route}-${this.leg}`) && dist(p, legs[this.leg]) > 3) { if (++this.noPath >= 90) { this.noPath = 0; this.route = this.route === 'harbor' ? 'lakeshore' : 'harbor'; this.leg = joinLeg(ROUTES[this.route], p); this.walker.reset(); } } else this.noPath = 0;
       return frame;

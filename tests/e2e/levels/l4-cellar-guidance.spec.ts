@@ -1,7 +1,9 @@
+import { levelFourLayouts } from '../../../src/levels/L4/layout';
+import type { DistrictLayout } from '../../../src/levels/districts/types';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { boot, expect, test } from '../fixtures';
 
-const cellar = JSON.parse(readFileSync('public/assets/layouts/D-FAIR.layout.json', 'utf8')).anchors['kessler-cellar-door'].position as [number, number, number];
+const cellar = levelFourLayouts([JSON.parse(readFileSync('public/assets/layouts/D-FAIR.layout.json', 'utf8')) as DistrictLayout])[0].anchors['kessler-cellar-door'].position;
 
 test.use({ viewport: { width: 1280, height: 720 }, launchOptions: { args: ['--use-angle=metal', '--ignore-gpu-blocklist', '--enable-gpu', '--enable-unsafe-webgpu'] } });
 for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['high', 'low'] as const) for (const zoom of [1, .5]) {
@@ -19,6 +21,9 @@ for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['hig
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint)).toBe('line-break');
     await expect(page.getByTestId('mission-tracker')).toHaveAttribute('data-objective', 'hide');
     await expect(page.getByTestId('mission-tracker')).toContainText('Run to the cellar');
+    await expect(page.getByTestId('mission-tracker')).toContainText(/\b[23]\d{2}\s*m/);
+    await expect(page.getByTestId('objective-text')).toContainText(/\b[23]\d{2}\s*m/);
+    await expect(page.getByTestId('minimap-route')).toBeVisible();
     await expect(page.getByTestId('mission-subtitle')).toContainText('Get to the cellar!');
     const arrow = page.getByTestId('mission-marker');
     await expect(arrow).toBeVisible(); await expect(arrow).toHaveAttribute('data-anchor', 'l4-cellar-door');
