@@ -15,8 +15,7 @@ import type { EntitySnapshot } from '../world/types';
  * - Normal pursuit cruises at 0.7 × the nominal run. Where detailed collision/nav is resident it steers on the shared nav grid
  *   (towards the next authored route node while far, towards the player while near); inside `closeM` the shared Alpha chase brain
  *   (contact, barricade breach, special scheduler) runs it. Off-region it advances along the authored route graph at the same
- *   speed × sim-time every tick (route planning remains 2 Hz), without a mesh or collider. Authored final-approach pressure
- *   may add bounded catch-up beyond the camera, returning to normal cruise before contact.
+ *   speed × sim-time every tick (route planning remains 2 Hz), without a mesh or collider.
  * - Stuck recovery escalates replan → authored alternate link → shared Alpha breach brain, and cycles, so no obstacle traps it for good.
  * - One entity, spawned once, always in the infected system (it counts against the cap even while coarse). Its compact pursuit state
  *   is a checkpoint seam (`world.megaPursuit`); entity HP/position/cooldowns ride the ordinary entity snapshot.
@@ -27,8 +26,8 @@ export interface PursuitNode { id: string; x: number; z: number; region?: string
 /** Authored reachable waypoints (street centre lines, region seams); links are walkable both ways. */
 export interface PursuitRoute {
   nodes: readonly PursuitNode[]; links: readonly (readonly [string, string])[];
-  /** Final courier approach: continuous offscreen catch-up, ending before detailed contact. */
-  pressure?: { from: string; trailM: number; speedMs: number };
+  /** Final courier approach: follow connected route links offscreen, then resume detailed steering. Speed stays at cruise. */
+  pressure?: { from: string; trailM: number };
 }
 export interface PursuitOptions {
   route?: PursuitRoute;
@@ -187,7 +186,7 @@ export class MegaPursuit {
     const pressure = this.options.route?.pressure;
     // D-CURE progresses east along its authored R6/R7 delivery approach.
     const pressured = !!pressure && this.nodes.size > 0 && this.nearestNode(s.target).x >= this.nodes.get(pressure.from)!.x;
-    if (!this.resident(e.transform.x, e.transform.z) || (pressured && dist(e.transform, player.transform) > pressure!.trailM)) { this.coarse(e, pressured ? pressure : undefined); return true; }
+    if (!this.resident(e.transform.x, e.transform.z) || (pressured && dist(e.transform, player.transform) > pressure!.trailM)) { this.coarse(e); return true; }
     // Coarse actors expose zero locomotion intent. Seed the detailed response
     // from their resolved travel only at the handoff, preserving that contract.
     if (s.mode === 'coarse') {
@@ -276,16 +275,14 @@ export class MegaPursuit {
     s.breach = { link, until: tick + Math.round(megaAlpha.breachS * 60) };
     return true;
   }
-  /** Coarse route travel is continuous; authored final-approach pressure may catch up beyond the camera. */
-  private coarse(e: EntitySnapshot, pressure?: PursuitRoute['pressure']): void {
+  /** Coarse route travel uses the same cruise speed as detailed pursuit, including the final approach. */
+  private coarse(e: EntitySnapshot): void {
     const s = this.state, tick = this.world.tick;
     s.mode = 'coarse'; e.combat!.attacking = false; e.infected!.state = 'chase';
     s.stuck.sampleAt = tick; s.stuck.x = e.transform.x; s.stuck.z = e.transform.z; s.stuck.noPath = 0;
     if (s.breach || this.legBlocked()) { if (this.breachStep()) s.mode = 'breach'; return; }
     if (Status.stunned(e, tick)) return;
-    const gap = dist(e.transform, s.target);
-    const speed = pressure && gap > pressure.trailM ? Math.min(pressure.speedMs, megaAlpha.cruiseMs + (gap - pressure.trailM) * 2) : megaAlpha.cruiseMs;
-    let budget = speed * Status.speed(e) / 60;
+    let budget = megaAlpha.cruiseMs * Status.speed(e) / 60;
     const t = e.transform, startX = t.x, startZ = t.z;
     while (budget > 1e-6) {
       if (this.legBlocked(t)) break;
