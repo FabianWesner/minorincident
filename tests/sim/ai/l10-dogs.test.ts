@@ -61,3 +61,18 @@ test('T-E32-08b @E32 @E32-AC08 no infected spawn may substitute for or be drawn 
   expect(cureCanKill(dog)).toBe(true);
   expect(cureCanKill(w.entities.get(1)!)).toBe(false);
 });
+
+test('T-E32-07-los @E32-AC07 a solid wall blocks dog acquisition; ordinary damage staggers and kills it', async () => {
+  const w = await arena(), dog = spawn(w, 'dog', 1.8, 0, 'idle');
+  dog.transform.yaw = Math.PI;
+  const wall = { x: .9, y: 1.5, z: 0, halfX: .1, halfY: 1.5, halfZ: 4 };
+  (w.combat!.query.walls as typeof wall[]).push(wall);
+  step(w, 30);
+  expect(w.events.events().filter(e => e.type === 'infected.attack' && e.sourceId === dog.id)).toHaveLength(0);
+  expect(dog.infected!.state).not.toBe('chase');
+  const hit = { sourceId: 1, targetId: dog.id, attackId: 100, actionId: 'weapon.pistol', origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base: 10, multiplier: 1, type: 'bullet' as const, knockback: 0, stagger: .3 };
+  expect(w.combat!.damage.apply(hit)).toBeGreaterThan(0);
+  expect(dog.combat!.staggerUntil).toBeGreaterThan(w.tick);
+  w.combat!.damage.apply({ ...hit, attackId: 101, base: 1000 });
+  step(w, 1); expect(dog.health.current).toBe(0); expect(dog.infected!.state).toBe('dead');
+});

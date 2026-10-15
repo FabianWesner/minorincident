@@ -19,6 +19,7 @@ import type { MissionResult } from '../../src/sim/missions/types';
 import { l7Rocket } from '../../src/data/l7';
 import { l7CorridorAnchors } from '../../src/levels/L7/corridor';
 import { runL1, Walker } from './l1Bots';
+import { runTen, type CureRegionTiming } from './l10';
 
 export type RunnerLevel = MissionId | 'L7';
 export type CompletionPolicy = 'complete' | 'newbie';
@@ -26,6 +27,7 @@ export type CompletionPolicy = 'complete' | 'newbie';
 export interface LevelReport {
   level: RunnerLevel; policy: CompletionPolicy; seed: number; completed: boolean;
   timerRemaining?: number; runovers?: number; smashed?: number; maxConcurrentInfected?: number;
+  regions?: CureRegionTiming[];
   time: number; deaths: number; kills: number; damageTaken: number;
   failures: Record<string, number>; objectiveTimeline: { id: string; t: number }[];
   furthestObjective: string | null; activeObjectives: string[];
@@ -56,7 +58,7 @@ function findDrive(t: Trigger): Extract<Trigger, { kind: 'drive' }> | undefined 
   if (t.kind === 'all' || t.kind === 'any') return t.triggers.map(findDrive).find(Boolean);
 }
 /** Inputs and ordinary Begin/Retry/Skip menu actions only; no teleport, loadout injection or cheats. */
-export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, seed: number, maxSeconds = 1200, street: L3StreetChoice = 'auto', campaign?: CampaignSave, onComplete?: (world: SimWorld, result: MissionResult) => void): Promise<LevelReport> {
+export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, seed: number, maxSeconds = level === 'L10' ? 3600 : 1200, street: L3StreetChoice = 'auto', campaign?: CampaignSave, onComplete?: (world: SimWorld, result: MissionResult) => void): Promise<LevelReport> {
   const report: LevelReport = { level, policy, seed, completed: false, time: 0, deaths: 0, kills: 0, damageTaken: 0, failures: {}, objectiveTimeline: [], furthestObjective: null, activeObjectives: [], outcome: 'tick-budget', blocker: null };
   let world: SimWorld;
   try { world = await loadLevel(level, seed, campaign); }
@@ -68,6 +70,9 @@ export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, see
     if (level === 'L1') {
       const l1 = runL1(world, mission, policy, { seed, maxSeconds });
       report.outcome = l1.outcome === 'complete' ? 'complete' : 'tick-budget';
+    } else if (level === 'L10') {
+      const result = runTen(world, policy, maxSeconds);
+      report.regions = result.regions; report.maxConcurrentInfected = result.maxConcurrentInfected;
     } else if (level === 'L2') {
       // E20: the shared L2 policy (ordinary inputs only), same as the browser bot.
       const bot = new LevelTwoBot(world, policy);

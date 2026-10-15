@@ -11,6 +11,12 @@ const scenes = new Map(readdirSync(directory).filter(f => f.startsWith('l10-q1-'
 const assets = new Map((manifest as AssetDef[]).map(a => [a.id, a]));
 
 describe('L10-Q1 Scene Lab catalog @E32', () => {
+  it('Q3 verifier admits one functional browser while other lanes occupy two slots', () => {
+    const source = readFileSync('tools/verify.ts', 'utf8');
+    const branch = source.slice(source.indexOf(": target === 'E32'"), source.indexOf(": target === 'E30'"));
+    expect(branch).toContain("'--workers=1'");
+    expect(branch).not.toContain("'--workers=2'");
+  });
   it('T-E32-30-catalog @E32-AC30 resolves every fixture at the game camera and includes it in scene:matrix', () => {
     expect(scenes.size).toBeGreaterThanOrEqual(31);
     for (const [name, scene] of scenes) {
