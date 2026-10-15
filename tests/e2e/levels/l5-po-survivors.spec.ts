@@ -7,7 +7,7 @@ for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['hig
   test(`PO #26 #28 @E23 survivor health and moving radar dots ${renderer} ${quality} zoom ${zoom}`, async ({ page }) => {
     test.setTimeout(180_000);
     await boot(page, `/?test=1&renderer=${renderer}&quality=${quality}&audio=muted&dpr=1&ui=1`);
-    await page.evaluate(async quality => { const a = window.__SS__!; await a.loadLevel('L5', { seed: 1, progression: 'L5-default', tier: 5 }); a.pause(); }, quality);
+    await page.evaluate(async quality => { const a = window.__SS__!; a.settings.set({ quality }); await a.loadLevel('L5', { seed: 1, progression: 'L5-default', tier: 5 }); a.pause(); }, quality);
     await page.getByRole('button', { name: 'Begin mission' }).click();
     await page.evaluate(async () => { const a = window.__SS__!; a.pause(); a.cheats.god(true); a.cheats.completeObjective('emerge'); await a.step(661); });
     for (const key of ['rosa', 'dale']) {
@@ -17,12 +17,13 @@ for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['hig
     const ids = await page.evaluate(async () => {
       const a = window.__SS__!; a.cheats.killAll(); a.teleport(1, { x: 10, z: -39 });
       const ids = a.missions.state()!.l5!.survivors.filter(r => r.status === 'following').map(r => r.id);
-      ids.forEach((id, i) => { a.teleport(id, { x: 7 - i * 2, z: -39 }); a.interact.hit(id, i ? 42 : 24, 'explosive'); });
-      await a.step(2); a.camera.follow(); await a.screenshotReady(); return ids;
+      ids.forEach((id, i) => { a.teleport(id, { x: 9 + i * 2, z: -38 }); a.interact.hit(id, i ? 42 : 24, 'explosive'); });
+      a.camera.follow(); await a.step(90); await a.screenshotReady(); return ids;
     });
     for (let i = 0; i < 20 && Math.abs(await page.evaluate(() => window.__SS__!.getState().render.camera.targetZoom as number) - zoom) > .02; i++) { await page.mouse.move(800, 450); await page.mouse.wheel(0, -120); await page.evaluate(() => window.__SS__!.step(2)); }
     await page.evaluate(() => window.__SS__!.screenshotReady());
     expect(await page.evaluate(() => window.__SS__!.perf().backend)).toBe(renderer);
+    expect(await page.evaluate(() => window.__SS__!.perf().quality.tier)).toBe(quality);
     await expect(page.locator('.hud-pin-follower:visible')).toHaveCount(2);
     await expect(page.locator('.hud-survivor-card:visible')).toHaveCount(2);
     expect(await page.evaluate(ids => window.__SS__!.getState().render.healthBars!.bars.filter(b => ids.includes(b.id)).length, ids)).toBe(2);
