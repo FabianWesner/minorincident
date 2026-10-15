@@ -94,10 +94,10 @@ export function installCharacterSeparation(world: SimWorld): void {
       const angle = e.id * 2.399963, scale = neighbor.fixed ? 1 : .5;
       nav.move(e.transform, (distance ? dx / distance : Math.cos(angle)) * overlap * scale, (distance ? dz / distance : Math.sin(angle)) * overlap * scale, actorRadius(e), true);
     };
-    // Keep the existing three friendly-NPC spacing passes through narrow queues.
-    // Infected need one soft pass (two at a driven hull) before the hard commit.
+    // Keep the authored three passes for friendly queues and L1 pursuit trains.
+    // Classic chasers need one soft pass (two at a driven hull) before the hard commit.
     for (let pass = 0; pass < 3; pass++) for (const body of bodies) {
-      if (pass && body.infected && (!body.hullContact || pass > 1)) continue;
+      if (pass && body.infected && !body.l1 && (!body.hullContact || pass > 1)) continue;
       const { entity: e, radius: r } = body; active = body;
       query.x = e.transform.x; query.z = e.transform.z; query.r = r + maximumRadius + Math.max(.45, .22 + maximumRadius - .35); // covers the largest gap below
       // Consume the same unsorted bucket order directly; nav.move does not mutate the spatial index.
