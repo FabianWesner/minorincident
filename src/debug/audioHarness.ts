@@ -4,8 +4,9 @@ import { type AudioBus, audioCues, resolvedAudioCue, ambienceTiers, explosionBea
 import { dbGain, reverbPresets, type ReverbPreset } from '../audio/acoustics';
 import { wave } from '../audio/synthesis';
 import { MusicDirector } from '../audio/MusicDirector';
+import { l4 } from '../data/l4';
 export interface AudioRenderRequest {
-    scenario: 'shot' | 'occlusion' | 'doppler' | 'twist' | 'ambience' | 'duck' | 'audio-mix' | 'mono' | 'music' | 'l5-quiet' | 'cue-log';
+    scenario: 'shot' | 'occlusion' | 'doppler' | 'twist' | 'ambience' | 'duck' | 'audio-mix' | 'mono' | 'music' | 'l5-quiet' | 'cue-log' | 'l4-convoy-music';
     duration?: number;
     cues?: { cue: string; variant: string; time: number; gain: number; rate: number; lowpass?: number; position?: { x: number; y?: number; z: number } }[];
     score?: { file: string; gain: number };
@@ -19,6 +20,7 @@ export interface AudioRenderRequest {
     tier?: number;
     mono?: boolean;
     kind?: 'radio' | 'mega';
+    source?: 'radio' | 'score';
 }
 export interface AudioRenderResult {
     wav: string;
@@ -38,7 +40,7 @@ export interface AudioRenderResult {
 /** Query-gated offline acceptance harness. Calls the production graph and loads production sprite files.
  * Audio is returned as PCM WAV for independent Node/FFmpeg measurement, never scored against synthetic metadata. */
 export async function renderAudio(request: AudioRenderRequest): Promise<AudioRenderResult> {
-    const duration = request.scenario === 'cue-log' ? request.duration ?? 60 : request.scenario === 'audio-mix' || request.scenario === 'l5-quiet' ? 60 : request.scenario === 'twist' ? 5 : request.scenario === 'music' ? 14 : request.scenario === 'doppler' ? 4 : 3;
+    const duration = request.scenario === 'cue-log' ? request.duration ?? 60 : request.scenario === 'l4-convoy-music' ? 10 : request.scenario === 'audio-mix' || request.scenario === 'l5-quiet' ? 60 : request.scenario === 'twist' ? 5 : request.scenario === 'music' ? 14 : request.scenario === 'doppler' ? 4 : 3;
     const rate = 24000, context = new OfflineAudioContext(2, Math.ceil(duration * rate), rate), graph = new AudioGraph(context), registry = new AudioRegistry(context);
     const events: {
         cue: string;
@@ -119,6 +121,32 @@ export async function renderAudio(request: AudioRenderRequest): Promise<AudioRen
             }
         }
         transitions = music.transitions;
+    }
+    if (request.scenario === 'l4-convoy-music') {
+        const sourceName = request.source === 'score' ? 'calm-L4' : 'calm-L1';
+        let recording: AudioBuffer | undefined;
+        for (const format of ['webm', 'm4a']) {
+            try {
+                const response = await fetch(`/assets/audio/score-${sourceName}.${format}`);
+                if (!response.ok) throw new Error(`Score request failed: ${response.status}`);
+                recording = await context.decodeAudioData(await response.arrayBuffer()); break;
+            } catch { /* Match the live stream's codec fallback. */ }
+        }
+        if (!recording) throw new Error(`Offline score could not decode: ${sourceName}`);
+        const source = context.createBufferSource(), trim = context.createGain();
+        source.buffer = recording; source.loop = true;
+        if (request.source === 'score') {
+            // Streamed deck at 0.5, trimmed to 0.3 while the convoy radio is playing.
+            trim.gain.value = 0.15;
+            source.connect(trim).connect(graph.buses.music);
+        } else {
+            const high = context.createBiquadFilter(), low = context.createBiquadFilter();
+            high.type = 'highpass'; high.frequency.value = 280;
+            low.type = 'lowpass'; low.frequency.value = l4.radio.cabHz;
+            trim.gain.value = l4.radio.gain;
+            source.connect(high).connect(low).connect(trim).connect(graph.buses.vehicles);
+        }
+        source.start(0); scoreVoices = 1;
     }
     if (request.scenario === 'cue-log') {
         // Replay observed production cues in mission time, retaining sprite variation,

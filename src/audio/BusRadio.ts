@@ -4,7 +4,7 @@ import { l4 } from '../data/l4';
 /**
  * The L4 evacuation-bus radio (PO 2026-10-12: "maybe even music"). Diegetic: a licensed recording that is already part of the score set
  * (`score-calm-L1`, Kevin MacLeod "Jazz Brunch", CC-BY 4.0, see public/assets/audio/LICENSES.md) streamed through a band-pass "radio
- * speaker" filter at low volume, slightly more muffled than the adaptive score. Inside the bus it sits close; after the stop it plays on
+ * speaker" filter at a prominent mix level, slightly more muffled than the adaptive score. Inside the bus it sits close; after the stop it plays on
  * from the parked bus and fades with distance. It fades out when the outbreak alarm starts (`wanted` goes false) and the adaptive score
  * is trimmed while it plays, so the two never fight. Everything goes through the existing `vehicles` bus (mixer and master apply).
  */
