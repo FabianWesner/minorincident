@@ -1,0 +1,21 @@
+{
+  "extends": "l5-po-cellar-return.json",
+  "name": "postmerge2-l5-apartment",
+  "note": "Mia uses the next Harbor Street apartment, away from the relocated cellar and at least 25 m from every other hiding place.",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -30.3699,
+        -41.5
+      ],
+      "yaw": 90,
+      "state": "idle",
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.army-mg"
+      ]
+    }
+  ]
+}

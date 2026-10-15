@@ -693,6 +693,9 @@ export class InfectedSystem {
       if (b.state === 'attack') { b.state = 'chase'; e.combat!.attacking = false; }
       return;
     }
+    // Respawn's cleared ring lasts for the full pause. Forecourt diversion and
+    // noticing another human must not replace that pause with a new approach.
+    if (this.world.scenario === 'L1' && brain.ignoreId === 1 && tick < brain.ignoreUntil && tick < brain.pauseUntil) { this.look(e, brain); return; }
     if (this.divertFromForecourt(e, b, brain)) return;
     if (b.state === 'attack') {
       const serviceGate = this.world.entities.get(b.targetId)?.archetype === 'l6.service-gate';

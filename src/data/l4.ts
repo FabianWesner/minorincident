@@ -320,12 +320,12 @@ export const l4Glass: readonly (readonly [number, number, number])[] = [
   [17.6, -25.9, Math.PI / 2], [17.6, -8.5, Math.PI / 2], [17.6, 8.6, Math.PI / 2], [17.6, 25.9, Math.PI / 2],
   [-3, -44.8, 0], [12, -44.8, 0], [28, -44.8, 0], [-12, 39.2, 0], [-44, 39.2, 0], [26, 39.2, 0], [-30, -22.6, 0],
 ];
-/** Post-collapse street homes (x, z, size): out-of-view emergence or existing stragglers arriving on foot under the same cap. */
-export const l4CollapseGroups: readonly (readonly [number, number, number])[] = [
-  [l4.collapse.egress[0], l4.collapse.egress[1], 2],
+/** Post-collapse street homes (x, z, size, optional reserved slots): out-of-view emergence or existing stragglers arriving on foot under the same cap. */
+export const l4CollapseGroups: readonly (readonly [number, number, number, number?])[] = [
+  [l4.collapse.egress[0], l4.collapse.egress[1], 2, 2],
   // Side-street pairs remain outside the protected Lakeshore corridor, with the full road open beside them.
-  [20, 54, 2], [42, 54, 2],
-  [-46, -37.4, 3], [-24, -37.4, 4], [-4, -37.4, 4], [18, -37.4, 4], [38, -37.4, 3], [50, -22, 4], [50, -6, 4], [50, 12, 3],
+  [20, 54, 2], [42, 54, 2, 2],
+  [-84, -39.5, 3, 2], [-46, -37.4, 3], [-24, -37.4, 4, 2], [-4, -37.4, 4, 2], [18, -37.4, 4], [38, -37.4, 3], [50, -22, 4, 2], [50, -6, 4], [50, 12, 3, 2],
   [-46, 44, 3], [-20, 44, 4], [4, 44, 4], [26, 44, 3], [45, 44, 4], [58, 44, 3], [62, 28.6, 3],
 ];
 /** Soldier pockets of the collapse (hold, engaged) with the infected that rush them, along the two routes. */

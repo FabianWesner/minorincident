@@ -54,8 +54,9 @@ test('E19 @E19 respawn after the bat: real-click pickup, die at the house with i
   expect(await page.evaluate(() => window.__SS__!.getState().player!.health.current)).toBeGreaterThan(0);
   const back = await player();
   expect(Math.hypot(back.x - picked.x, back.z - picked.z), 'respawn exactly on the bat pickup, not near the death spot').toBeLessThanOrEqual(1.5);
-  const crowd = await page.evaluate(b => window.__SS__!.getState().entities.filter(e => e.faction === 'infected' && e.health.current > 0 && Math.hypot(e.transform.x - b.x, e.transform.z - b.z) < 8.5).length, back);
-  expect(crowd, 'no infected within 9 m of the respawn').toBe(0);
+  const nearby = await page.evaluate(b => window.__SS__!.getState().entities.filter(e => e.faction === 'infected' && e.health.current > 0 && Math.hypot(e.transform.x - b.x, e.transform.z - b.z) < 8.5).map(e => ({ id: e.id, at: e.transform, brain: e.infected?.l1 })), back);
+  const crowd = nearby.length;
+  expect(crowd, `no infected within 9 m of the respawn: ${JSON.stringify(nearby)}`).toBe(0);
   expect(await page.evaluate(() => window.__SS__!.getState().player!.weapons!.LEFT.rack[0].id)).toBe('weapon.bat');
   if (shotDir) { await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: `${shotDir}/after-respawn.png` }); }
 });

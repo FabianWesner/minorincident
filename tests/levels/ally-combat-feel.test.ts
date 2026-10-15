@@ -76,7 +76,7 @@ function observer(w: SimWorld, allies: () => EntitySnapshot[], queueIds: () => n
         for (const id of queueIds()) {
           const e = w.entities.get(id), c = e?.civilian;
           // A person crouching in a hiding spot (gunfire) is no longer in line, wherever the spot is.
-          if (!c || c.ally || e!.infection || e!.health.current <= 0 || e!.hidden || c.l1?.haven?.cower) continue;
+          if (!c || c.ally || e!.infection || e!.health.current <= 0 || e!.hidden || c.l1?.haven?.cower || c.story?.clip === 'npc-cower') continue;
           // Standing in line: a calm (or frozen alarmed) person on a registration-queue or waiting slot.
           if ((c.state === 'calm' || c.state === 'alarmed') && slots.some(([x, z]) => Math.hypot(e!.transform.x - x, e!.transform.z - z) < 1.2)) n++;
         }

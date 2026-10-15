@@ -62,7 +62,7 @@ const survivors: Omit<L5Survivor, 'outAt'>[] = [
     cue: { id: 'L5.cue.rosa', text: 'Knocking from inside the pharmacy.' }, found: 'You\'re real. I have not seen anyone in hours. Take me with you.' },
   { key: 'okafor', name: 'Mr. Okafor', model: 'npc.mr-okafor.aftermath', role: 'retired teacher', place: 'the church vestry', cover: 'inside', hideAt: [-38, -2.7], ringAt: [-33.5, -2.7], prompt: "Hold still or press E: open the vestry door",
     cue: { id: 'L5.cue.okafor', text: 'A voice, softly praying, from the church.' }, found: 'Bless you, child. Please, take me with you.' },
-  { key: 'mia', name: 'Mia', model: 'npc.mia.aftermath', role: 'shop clerk', place: 'the apartment stairwell above Harbor Street', cover: 'inside', hideAt: [-77.7, -49.2], ringAt: [-76.2, -44.4], prompt: "Hold still or press E: call up the stairwell",
+  { key: 'mia', name: 'Mia', model: 'npc.mia.aftermath', role: 'shop clerk', place: 'the apartment stairwell above Harbor Street', cover: 'inside', hideAt: [-31.8699, -49.2], ringAt: [-30.3699, -44.4], prompt: "Hold still or press E: call up the stairwell",
     cue: { id: 'L5.cue.mia', text: 'A radio crackles above Harbor Street.' }, found: 'Is it over? Please say it\'s over. Take me with you.' },
   { key: 'sam', name: 'Sam', model: 'npc.sam.aftermath', role: 'hunter', place: 'a wrecked bus on Lakeshore Avenue', cover: 'behind', hideAt: [-45, 46.3], ringAt: [-45, 42.6], prompt: "Hold still or press E: pry open the bus door",
     cue: { id: 'L5.cue.sam', text: 'A flashlight blinks inside a wrecked bus.' }, found: 'Thank God. I lost my rifle days ago. Take me with you.' },
@@ -84,11 +84,12 @@ export const l5PhotoSpots: readonly (readonly [string, readonly [number, number,
   ['l5-basement-exit', [-9, 12, -9]], ['l5-sign-of-life', [14, 17, 14]], ['l5-group-of-five', [-28, 24, 0]], ['l5-metro-shelter', [0, 28, -34]], ['l5-metro-doors', [0, 10, 10]],
 ];
 
-/** Wandering infected at the start, in ones and twos (no group above 3), spread over the streets; the first `low` are kept on the phone tier. */
+/** The runner formerly near the new cellar exit patrols Lakeshore instead, keeping the relocated opening quiet.
+ * Wandering infected at the start, in ones and twos (no group above 3), spread over the streets; the first `low` are kept on the phone tier. */
 export const l5Wanderers: readonly { at: P; n: number; alpha?: boolean }[] = [
   { at: [-20, -37.6], n: 2 }, { at: [-56, 22], n: 1 }, { at: [14, 28], n: 2 }, { at: [-22, 10], n: 1 }, { at: [49, 14], n: 1, alpha: true }, { at: [22, -37.4], n: 1 },
   { at: [-26, 40], n: 2 }, { at: [-52, -12], n: 1, alpha: true }, { at: [2, 43.6], n: 1 }, { at: [14, -2], n: 1 }, { at: [-12, 18], n: 1 }, { at: [44, -36.4], n: 2 },
-  { at: [-6, -37.4], n: 1 }, { at: [-58, -34], n: 1 }, { at: [10, 13], n: 1 },
+  { at: [-6, -37.4], n: 1 }, { at: [66, 24], n: 1 }, { at: [10, 13], n: 1 },
 ];
 
 /** Fires still burning (E27 hazards: flame cards, ground light and a smoke column) and smoke columns of fires deep inside blocks. */

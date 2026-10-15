@@ -207,7 +207,7 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   // Once the retreat reaches the streets, targetless officers regroup rather
   // than finishing the station's old firing position. Other levels keep their orders.
   const stationFight = !world.missions || !!world.missions.def.l3 && world.missions.state.l3?.phase !== 'corridor';
-  if (shooter && a.role === 'officer' && stationFight && a.step && !a.run && inFormation && c.state !== 'grabbed') {
+  if (shooter && (a.role !== 'officer' || stationFight) && a.step && !a.run && inFormation && c.state !== 'grabbed') {
     if (tick >= a.step.until || dist(e.transform, a.step) <= .15) a.step = undefined;
     else { npcs.move(e, a.step, tacticFor(a).stepMs, c, .1); return true; }
   }

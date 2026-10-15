@@ -1,5 +1,5 @@
 // Adapted from folio-2025 View.js by Bruno Simon (MIT), commit 41046b5.
-import { PerspectiveCamera, Quaternion, Vector3 } from 'three';
+import { Box3, PerspectiveCamera, Quaternion, Ray, Vector3 } from 'three';
 import { cameraFraming } from '../data/cameraFraming';
 
 /** Player zoom range as a fraction of the default radius: in until the hero is ~1/3.5 of the viewport height. */
@@ -52,6 +52,28 @@ export class View {
   spot: string | null = null;
   private readonly target = new Vector3();
   private readonly offset = new Vector3();
+  /** Building volumes supplied by the loaded district; keep the lens outside narrow-street facades. */
+  readonly cameraSolids: Box3[] = [];
+  private readonly lensRay = new Ray();
+  private readonly lensHit = new Vector3();
+  private clearanceScale = 1;
+  private clearLens(seconds: number): void {
+    const length = this.offset.length();
+    this.lensRay.set(this.focus, this.lensHit.copy(this.offset).normalize());
+    let wanted = 1;
+    for (const box of this.cameraSolids) {
+      if (box.containsPoint(this.focus)) continue;
+      const hit = this.lensRay.intersectBox(box, this.lensHit);
+      if (hit && hit.distanceTo(this.focus) < length) wanted = Math.min(wanted, Math.max(1 / length, (hit.distanceTo(this.focus) - .4) / length));
+    }
+    // Stop before the facade, then ease back toward the requested zoom. Near a
+    // corner, preserve the minimum viewing distance by raising the lens on this
+    // side of the wall; raising it over the roof would still obscure the street.
+    this.clearanceScale = Math.min(wanted, this.clearanceScale + (1 - this.clearanceScale) * (1 - Math.exp(-6 * seconds)));
+    this.offset.multiplyScalar(this.clearanceScale);
+    const closest = this.defaultRadius * zoomLimits[0];
+    if (this.offset.length() < closest) this.offset.y = Math.sqrt(Math.max(0, closest * closest - this.offset.x * this.offset.x - this.offset.z * this.offset.z));
+  }
   private readonly cinematicCamera = new PerspectiveCamera();
   /** Story pull (accident): shifts the framing toward a world point by weight 0..1 without moving the player. */
   private pullX = 0;
@@ -81,7 +103,7 @@ export class View {
     this.camera.updateProjectionMatrix(); this.simCamera.aspect = this.camera.aspect; this.simCamera.updateProjectionMatrix(); this.update({ x: this.focus.x, z: this.focus.z, y: this.focus.y + feetOffset }, 0);
   }
   reset(player: { x: number; z: number; y?: number }): void {
-    this.encounterScale = this.epilogueScale = 1; this.zoomRatio = this.targetZoom = 1; this.radius = this.defaultRadius;
+    this.clearanceScale = 1; this.encounterScale = this.epilogueScale = 1; this.zoomRatio = this.targetZoom = 1; this.radius = this.defaultRadius;
     this.driving = false; this.focus.set(player.x, Math.max(0, (player.y ?? feetOffset) - feetOffset), player.z); this.spot = null; this.blend = this.blendTarget = 0; this.shakeStrength = this.shakeTime = 0; this.rollAngle = this.rollSpeed = 0; this.pullWeight = 0;
     this.update(player, 0);
   }
@@ -136,6 +158,7 @@ export class View {
     // Elevated decks/ramps: follow the feet height (transform.y is the body centre, .72 m above the feet), damped so stairs do not jitter.
     this.focus.y += (Math.max(0, (player.y ?? feetOffset) - feetOffset) - this.focus.y) * (1 - Math.exp(-6 * seconds));
     this.offset.setFromSphericalCoords(this.radius * (this.driving ? 1.15 : 1), this.polar, this.azimuth);
+    if (!this.blendTarget && !this.scripted) this.clearLens(seconds);
     const weight = this.pullWeight > 0 ? this.safePullWeight(this.pullWeight) : 0;
     const pulled = weight > 0 ? this.cameraTarget.set(this.focus.x + (this.pullX - this.focus.x) * weight, this.focus.y + ((this.pullY ?? this.focus.y) - this.focus.y) * weight, this.focus.z + (this.pullZ - this.focus.z) * weight) : this.cameraTarget.copy(this.focus);
     this.camera.position.copy(pulled).add(this.offset); this.camera.lookAt(pulled);

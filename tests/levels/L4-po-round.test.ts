@@ -36,17 +36,28 @@ describe('L4 PO round 10-13', () => {
     expect(inRing(p0), `exit ${p0.x.toFixed(1)},${p0.z.toFixed(1)}`).toBe(true); expect(dist(p0, bus)).toBeLessThan(l4.convoy.vehicles.find(v => v.player)!.len / 2 + 1.5);
     expect(dist(p0, { x: -23.2, z: .6 })).toBeLessThan(14);
     const corgi = [...w.entities.iterate()].find(e => e.companion); if (corgi) expect(inRing(corgi.transform)).toBe(true);
-    // "The gate closes behind the convoy": barriers in the gap, and walking out in any direction stops at the perimeter.
+    // PO 10-15: the visible perimeter holds during the alarm/hold phase.
+    m.completeObjective('quartermaster');
+    while (!s.turnAt) w.update();
+    w.combat!.damage.god = true;
+    // Barriers in the gap, and walking out in any direction stops at the perimeter.
     expect(s.gateIds.length).toBeGreaterThanOrEqual(1);
     const walk = (x: number, z: number, n: number) => { for (let i = 0; i < n; i++) { w.applyInput({ ...emptyInput(), move: { x, z } }, 'keyboard'); w.update(); } return { ...w.entities.get(1)!.transform }; };
     const pe = l4.perimeter, out: Record<string, P> = {};
+    // Start a boundary attempt on the clear south apron: the parked column
+    // can stop an eastward walk from the bus before it reaches the perimeter.
+    const player = w.entities.get(1)!;
+    Object.assign(player.transform, { x: -11.21, z: 21.1 });
+    w.physics.playerBody!.setTranslation(player.transform, true); w.physics.playerBody!.setNextKinematicTranslation(player.transform);
+    Object.assign(w.previousPlayer!, player.transform); w.spatial.set(1, player.transform.x, player.transform.z); w.clearInput();
+    out.south = walk(0, 1, 60); expect(out.south.z).toBeLessThanOrEqual(pe.z1 + .1);
     out.east = walk(1, 0, 8 * 60); expect(out.east.x).toBeLessThanOrEqual(pe.x1 + .1);
     out.southEast = walk(.7, .7, 10 * 60); expect(out.southEast.x).toBeLessThanOrEqual(pe.x1 + .1); expect(out.southEast.z).toBeLessThanOrEqual(pe.z1 + .1);
     out.west = walk(-1, 0, 14 * 60); expect(out.west.x).toBeGreaterThanOrEqual(pe.x0 - .1);
     out.north = walk(0, -1, 14 * 60); expect(out.north.z).toBeGreaterThanOrEqual(pe.z0 - .1);
     expect(lines).toContain('L4.perimeter');
     // After the gun and the turn the war keeps her in; at "Fall back!" (the line break) the gate opens onto the escape street.
-    m.completeObjective('quartermaster'); m.completeObjective('hold');
+    m.completeObjective('hold');
     expect(s.phase).toBe('collapse');
     // Use the authored passage below the parked trucks; the old z=5.6
     // straight-line fixture walked through a truck rather than through the gate.
@@ -80,7 +91,7 @@ describe('L4 PO round 10-13', () => {
     step(w, 10 * 60 - (w.tick - turn));
     const live = soldiers.filter(id => human(w.entities.get(id)));
     const onDuty = live.filter(id => { const e = w.entities.get(id)!, d = dist(e.transform, post(id)); return e.civilian!.ally!.engaged && (d <= 1.5 || !!e.civilian!.ally!.run || d < start.get(id)! - 1); });
-    const fled = peds.filter(id => { const e = w.entities.get(id); return !e || e.hidden || !e.civilian || ['flee', 'hide', 'alarmed', 'grabbed', 'bitten', 'down', 'infected'].includes(e.civilian.state) || !!e.infection; });
+    const fled = peds.filter(id => { const e = w.entities.get(id); return !e || e.hidden || !e.civilian || ['flee', 'hide', 'alarmed', 'grabbed', 'bitten', 'down', 'infected'].includes(e.civilian.state) || !!e.infection || e.civilian.story?.clip === 'npc-cower'; });
     const r = { samples, aimedBefore, offPostMax, routineMin, soldiers: soldiers.length, live: live.length, onDuty: onDuty.length, peds: peds.length, fled: fled.length };
     record('po-round-alarm', r);
     expect(aimedBefore, 'no soldier aims or is engaged before the alarm').toBe(0);
@@ -107,7 +118,7 @@ describe('L4 PO round 10-13', () => {
     expect(s.turnAt).toBe(w.tick);
     step(w, 5 * 60);
     const humans = cohort.filter(id => human(w.entities.get(id)));
-    const panicking = humans.filter(id => ['flee', 'hide', 'alarmed'].includes(w.entities.get(id)!.civilian!.state));
+    const panicking = humans.filter(id => ['flee', 'hide', 'alarmed'].includes(w.entities.get(id)!.civilian!.state) || w.entities.get(id)!.civilian!.story?.clip === 'npc-cower');
     const newInfected = s.emergedIds.filter(id => !before.has(id));
     record(`civilians-stay-${tier}`, { cohort: cohort.length, humans: humans.length, panicking: panicking.length, newInfected: newInfected.length, infections });
     expect(humans.length / cohort.length).toBeGreaterThanOrEqual(.9);

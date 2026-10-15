@@ -54,6 +54,21 @@ export class LevelFourWar {
   private get world() { return this.mission.world; }
   private anchor(name: string) { return this.mission.def.anchors[name]; }
   private outbreak(): Outbreak { return this.world.npcs!.civilians.outbreak!; }
+  /** The longer collapse shares the existing cap with the camp. Its street
+   * slots survive real bites and remain reserved until each authored group arrives. */
+  private streetReserve(): number {
+    if (this.s.phase === 'collapse') { let slots = 0; for (const q of this.s.pendingDoor) if (q.reserved && q.id === 0) slots++; return slots; }
+    if (this.s.phase === 'cellar' || this.s.phase === 'done') return 0;
+    return l4CollapseGroups.reduce((sum, group) => sum + Math.ceil((group[3] ?? 0) * (this.low ? .5 : 1)), 0);
+  }
+  private reserveSlots(): void {
+    const ai = this.world.infected!;
+    ai.director.reserved = l4.alphas.count[this.low ? 'low' : 'high'] - this.s.alphaIds.length + this.streetReserve();
+    // A bitten human already owns a future slot; scripted emergence must count
+    // it just as the ordinary spawn director does (otherwise streets deadlock).
+    let turning = 0; for (const e of this.world.entities.iterate()) if (e.infection && !e.infected) turning++;
+    ai.director.pendingTurns = turning;
+  }
   private get low(): boolean { return this.world.infected!.director.tier === 'low'; }
   private snap(p: Point, r = .4): Point {
     const nav = this.world.infected!.nav;
@@ -85,7 +100,7 @@ export class LevelFourWar {
     const refuges = [...edges, ...this.doors().map(d => ({ id: d.name, x: d.x, z: d.z }))];
     const outbreak = world.npcs.civilians.outbreak ?? new Outbreak(world, { refuges, tier });
     world.npcs.civilians.outbreak = outbreak;
-    world.infected.director.levelCap = l4.war.caps.infected.high; world.infected.director.strict = true; world.infected.director.reserved = l4.alphas.count[this.low ? 'low' : 'high'];
+    world.infected.director.levelCap = l4.war.caps.infected.high; world.infected.director.strict = true; this.reserveSlots();
     world.npcs.setAmbient(0);
     // L4-default progression (bat, axe, handgun) unless a campaign load already applied its racks.
     if (!world.progression || !world.entities.get(1)!.weapons) world.combat?.setLoadout(['weapon.fire-axe', 'weapon.bat'], ['weapon.handgun', 'weapon.kick']);
@@ -520,9 +535,11 @@ export class LevelFourWar {
     return [...this.world.entities.iterate()].filter(e => !e.hidden && e.health.current > 0 && (e.infected || e.civilian)).length < cap - keep;
   }
   /** One infected out of view at `at`; `push` (the collapse director's pressure) may use the whole cap, waves only the stage's share. */
-  private emerge(at: Point, push = false, headroom: number = l4.war.headroom): number {
+  private emerge(at: Point, push = false, headroom: number = l4.war.headroom, streetSlot = false): number {
     const { world } = this.mission, ai = world.infected!, o = this.outbreak();
-    const limit = Math.floor(ai.director.cap * (push ? 1 : this.director.aliveShare())) - ai.director.reserved - headroom;
+    const reserved = ai.director.reserved - (streetSlot ? 1 : 0);
+    const keep = streetSlot ? 0 : Math.max(0, headroom - this.streetReserve());
+    const limit = Math.floor(ai.director.cap * (push ? 1 : this.director.aliveShare())) - reserved - keep - ai.director.pendingTurns;
     if (!this.spawnRoom(ai.director.reserved) || ai.director.count >= limit || !ai.pool.length || this.inGap(at)) return 0;
     const out = this.snap(at, .45), id = o.spawnPedestrian(out), e = world.entities.get(id)!;
     o.turnNow(e);
@@ -551,7 +568,7 @@ export class LevelFourWar {
       if (!ai.nav.clear(at.x, at.z, radius)) continue;
       const id = ai.spawn('infected.alpha', at, { state: 'idle', yaw: -Math.atan2(l4.map.centre.z - at.z, l4.map.centre.x - at.x) });
       const e = world.entities.get(id); if (e?.combat) e.combat.allyResist = l4.alphas.allyResist;
-      s.alphaIds.push(id); s.alphaAnchors.push(entry.anchor); ai.director.reserved = count - s.alphaIds.length;
+      s.alphaIds.push(id); s.alphaAnchors.push(entry.anchor); this.reserveSlots();
     }
   }
   /** Waves from the street edges: pending counts per edge, released out of view (never in the camera, never close to the courier). */
@@ -735,10 +752,10 @@ export class LevelFourWar {
   }
   private populateCollapse(): void {
     const s = this.s, scale = this.low ? .5 : 1;
-    for (const [index, [x, z, size]] of l4CollapseGroups.entries()) {
+    for (const [index, [x, z, size, reserved = 0]] of l4CollapseGroups.entries()) {
       // Street mouths are authored emergence points too. Lakeshore's middle blocks
       // have no building door within 14 m, so the old door-only plan silently skipped them.
-      for (let i = 0; i < Math.ceil(size * scale); i++) s.pendingDoor.push({ id: 0, door: `l4-street-edge-${index}`, home: { x, z } });
+      for (let i = 0; i < Math.ceil(size * scale); i++) s.pendingDoor.push({ id: 0, door: `l4-street-edge-${index}`, home: { x, z }, reserved: i < Math.ceil(reserved * scale) });
     }
   }
   private emergeCollapse(): void {
@@ -749,20 +766,17 @@ export class LevelFourWar {
     let spawned = 0;
     for (const q of s.pendingDoor) {
       if (q.id !== 0 || spawned >= l4.collapse.pendingPerTick) continue;
-      // Reserve the later street groups until the courier has left the fallen plaza.
-      // Only the small egress pair can appear alongside the original protected way out.
+      // The protected way out precedes the street encounters.
       const early = q.home.x === l4.collapse.egress[0] && q.home.z === l4.collapse.egress[1];
-      if (!onStreets && !early) continue;
-      // Harbor is close across the blocks but much farther along the street route.
-      // Keep its slots for the actual arrival instead of spending them beside the plaza.
+      // Passed groups must not claim the slots reserved for the streets ahead.
       const ahead = remaining - l4CellarDistance(q.home);
-      if (ahead > 42 || ahead < -20) continue;
+      if (ahead < 0 || ahead > 42 || dist(q.home, p) > 42 || !onStreets && !early) continue;
       const a = this.anchor(q.door);
-      if (dist(q.home, p) > 42 || !ai.director.offscreen(a) || dist(a, p) < 24) continue;
+      if (this.inGap(q.home) || !ai.director.offscreen(a) || dist(a, p) < 24) continue;
       // After the war, the spare regular slots feed small street groups, still under the same cap.
       const keep = early ? 0 : q.home.z > 30 ? 4 : q.home.x > 0 ? 2 : 0;
-      let id = this.emerge(a, false, keep), straggler = false;
-      if (!id && onStreets) {
+      let id = this.emerge(a, false, keep, !!q.reserved), straggler = false;
+      if (!id && onStreets && !q.reserved) {
         // A full war population already contains the stragglers. Send nearby unseen
         // regulars down the street on foot; retain their identity, HP and cap slots.
         let nearest = 60;
@@ -778,7 +792,7 @@ export class LevelFourWar {
         }
       }
       if (!id) continue;
-      const e = world.entities.get(id)!, brain = e.infected!.l1; q.id = id; spawned++;
+      const e = world.entities.get(id)!, brain = e.infected!.l1; q.id = id; spawned++; this.reserveSlots();
       claimed.add(id);
       if (brain) {
         brain.homeX = q.home.x; brain.homeZ = q.home.z; brain.leashM = 8;
@@ -866,6 +880,7 @@ export class LevelFourWar {
   update(): void {
     const { world, state } = this.mission, s = state.l4; if (!s) return;
     const tick = world.tick;
+    this.reserveSlots();
     if (s.phase === 'convoy') this.ride();
     this.convoySound(tick);
     if (s.phase === 'war' && tick % 10 === 0) { if (!this.fence.length) this.perimeter(true); this.perimeterBark(); }
@@ -926,7 +941,7 @@ export class LevelFourWar {
     const camp = s.phase === 'plaza' || s.phase === 'war';
     this.gateNav(camp); this.perimeter(this.s.phase === 'war'); this.gateOpenAt = 0;
     if (!camp) for (const id of s.gateIds) { const e = this.world.entities.get(id); if (e) e.hidden = true; }
-    this.world.infected!.director.reserved = l4.alphas.count[this.low ? 'low' : 'high'] - s.alphaIds.length;
+    this.reserveSlots();
     const fuel = this.world.entities.get(s.fuelId);
     this.spectacle.reserveFuelTruck(!!fuel && !fuel.hidden);
     // A collapse retry restores the escape window; shared Respawn places the courier at its checkpoint anchor.

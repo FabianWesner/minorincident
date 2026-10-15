@@ -807,6 +807,15 @@ export class SceneLab {
       view.follow(); view.zoom(Math.log((c.zoom ?? 1) / view.getState().targetZoom), true);
       return;
     }
+    // Courier follow scenes use the production rig, including narrow-street lens
+    // clearance. A fixed preset can put the catalog camera inside a building.
+    if (c.mode === 'follow' && this.actors.get(c.actor)?.entity === 1) {
+      const rig = this.game.view.view;
+      rig.follow();
+      const zoom = c.zoom ?? 1, current = rig.getState().targetZoom;
+      if (Math.abs(current - zoom) > 1e-6) rig.zoom(Math.log(zoom / current), true);
+      return;
+    }
     // E32 close camera: Mega fixtures run the real follow rig (boss pull-back, player zoom), not a fixed preset.
     if (this.spec?.megaAlpha && c.mode === 'game' && c.target === 'courier') {
       const rig = this.game.view.view;

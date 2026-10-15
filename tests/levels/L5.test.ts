@@ -42,6 +42,8 @@ describe('L5 Aftermath', () => {
     for (const [n, order] of orders.entries()) {
       const f = await loadL5(10 + n); const fw = f.world; fw.combat!.damage.god = true;
       search(fw);
+      // Isolate graph/find order before revealing anyone; combat has its own AC10 fixture.
+      for (const infected of [...fw.infected!.active]) fw.infected!.release(infected);
       for (const [i, key] of order.entries()) { visit(fw, key); expect(fw.missions!.state.l5!.found, `${order.join()} #${i}`).toBe(i + 1); }
       expect(fw.missions!.state.states.accounted).toBe(true); expect(fw.missions!.state.steps.metro.status).toBe('active');
       // Isolate the graph/order check; AC15 separately exercises a stranded follower's real approach.
@@ -168,6 +170,7 @@ describe('L5 Aftermath', () => {
     place(w, 1, ring.x, ring.z); step(w, 50); expect(s.found).toBe(0); step(w, 15); expect(s.found).toBe(1);
     const rosa = w.entities.get(s.survivors.find(r => r.key === 'rosa')!.id)!;
     expect(rosa.hidden).toBe(false); expect(rosa.civilian!.survivor!.mode).toBe('follow'); expect(w.events.events().some(e => e.type === 'l5.found' && e.key === 'rosa' && e.count === 1)).toBe(true);
+    for (const infected of [...w.infected!.active]) w.infected!.release(infected);
     // The remaining four, then a run along Harbor Street: followers keep up (never teleport, never faster than 3.9 m/s), the courier outruns them.
     const counter = [1];
     for (const key of ['sam', 'mia', 'okafor', 'dale']) { visit(w, key); counter.push(s.found); }
@@ -198,6 +201,8 @@ describe('L5 Aftermath', () => {
       w.combat!.damage.god = true; m.completeObjective('emerge'); step(w, 11 * 60); for (const e of [...ai.active]) ai.release(e);
       const ring = at(w, 'l5-ring-mia'); place(w, 1, ring.x, ring.z); step(w, 70); expect(s.found).toBe(1);
       const mia = w.entities.get(s.survivors.find(r => r.key === 'mia')!.id)!, asset = mia.appearance!.asset, id = mia.id;
+      // Contact timing needs open Harbor pavement, clear of the hiding-place frontage.
+      place(w, mia.id, 10, -39);
       // The courier is far off (30 m); the infected stands 3 m from the survivor, facing her.
       place(w, 1, mia.transform.x + 30, mia.transform.z); w.player!.setCheckpoint(w.entities.get(1)!.transform);
       const g = ai.spawn('infected.runner', { x: mia.transform.x - 3, z: mia.transform.z }, { yaw: 0 });

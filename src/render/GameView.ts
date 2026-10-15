@@ -236,6 +236,13 @@ export class GameView implements Lifecycle {
     const districtKey = this.world.districts?.composition.districts.map(d => `${d.id}:${d.origin.join(',')}`).sort().join('|');
     this.reset(districtKey); this.resourceDistricts = districtKey ?? '';
     const player = this.world.entities.get(1);
+    this.view.cameraSolids.length = 0;
+    for (const district of this.world.districts?.districts ?? []) if (district.id === 'D-FAIR') {
+      for (const placement of district.decay.placements) if (placement.assetId.startsWith('bld.')) {
+        const { min, max } = placement.visualAabb, [x, z] = district.origin;
+        this.view.cameraSolids.push(new Box3(new Vector3(min[0] + x, min[1], min[2] + z), new Vector3(max[0] + x, max[1], max[2] + z)));
+      }
+    }
     this.view.reset(player?.transform ?? { x: 0, z: 0 });
     let actors: Promise<unknown> | null = null;
     if (this.world.districts) {

@@ -1,3 +1,4 @@
+import { l5 } from '../../data/l5';
 import { FIXED_DT } from '../../core/Clock';
 import { SimPhase } from '../../core/EventBus';
 import type { NavGrid } from '../ai/NavGrid';
@@ -43,11 +44,11 @@ function forced(e: EntitySnapshot, tick: number, world: SimWorld): boolean {
 /** Runs once per world. Brakes actors whose behaviour supplies no movement this
  * tick, then publishes post-separation/grounding displacement for every figure. */
 export function installAgentMotion(world: SimWorld): void {
-  const previous = new Map<number, { x: number; z: number }>();
+  const previous = new Map<number, { x: number; z: number; following: boolean }>();
   world.events.on('sim.tick', () => {
     for (const [id] of previous) if (!world.entities.get(id) || world.entities.get(id)!.corpse) previous.delete(id);
     for (const e of world.entities.iterate()) if (actor(e)) {
-      const p = previous.get(e.id) ?? { x: e.transform.x, z: e.transform.z }; p.x = e.transform.x; p.z = e.transform.z; previous.set(e.id, p);
+      const p = previous.get(e.id) ?? { x: e.transform.x, z: e.transform.z, following: false }; p.x = e.transform.x; p.z = e.transform.z; p.following = e.civilian?.survivor?.mode === 'follow'; previous.set(e.id, p);
       if (forced(e, world.tick, world) && e.locomotion) resetResponse(e.locomotion);
     }
   }, SimPhase.intent);
@@ -60,6 +61,16 @@ export function installAgentMotion(world: SimWorld): void {
   world.events.on('sim.tick', () => {
     for (const e of world.entities.iterate()) if (actor(e)) {
       const p = previous.get(e.id); if (!p) continue;
+      // Follow speed includes crowd separation: a chain of people pushing one
+      // another must not run faster than the courier-facing movement contract.
+      if (world.missions?.state.l5 && p.following && e.civilian?.survivor?.mode === 'follow' && !forced(e, world.tick, world)) {
+        const dx = e.transform.x - p.x, dz = e.transform.z - p.z, distance = Math.hypot(dx, dz), limit = l5.follow.runMs * FIXED_DT;
+        if (distance > limit) {
+          const at = { x: p.x, z: p.z };
+          world.infected!.nav.move(at, dx / distance * limit, dz / distance * limit, e.combat?.radius ?? .35);
+          Object.assign(e.transform, at); world.spatial.set(e.id, at.x, at.z);
+        }
+      }
       // Only the corgi companion stands at 0.3 m. Pet dogs keep the civilian 0.7 m of their spawn (NpcView and the infected dog they
       // turn into use it): at 0.3 a moving pet was drawn 40 cm into the ground (PO 10-14/10-15 "that dog looks strange" / "broken").
       if (world.districts && !e.infected) e.transform.y = (e.companion ? .3 : .7) + (e.civilian?.floorY ?? ((e.civilian?.story || e.civilian?.supportFeet) ? stepSupport(world, e) : world.districts.groundHeight(e.transform.x, e.transform.z)));

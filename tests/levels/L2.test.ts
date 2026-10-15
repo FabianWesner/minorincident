@@ -211,7 +211,18 @@ describe('L2 The Failed Rescue', () => {
       } });
       // The courier can beat the slower evacuees to the gate. Keep observing the
       // authored late-arrival route before asserting their eventual gate/turn fate.
-      for (let tick = 0; tick < 30 * 60; tick++) {
+      // The longer finale lets the courier reach the bridge while west-route
+      // evacuees still have several street legs left. Budget the observation
+      // precondition from their remaining authored route before the handover.
+      const settlingS = Math.max(0, ...m.state.l2!.trappedIds.map(id => {
+        const e = w.entities.get(id), h = e?.civilian?.l1?.haven;
+        if (!e || !h || turned.has(id) || e.health.current <= 0) return 0;
+        const route = [e.transform, ...h.route.slice(h.leg), h];
+        let metres = 0;
+        for (let i = 1; i < route.length; i++) metres += Math.hypot(route[i].x - route[i - 1].x, route[i].z - route[i - 1].z);
+        return metres / e.civilian!.l1!.fleeSpeed;
+      }));
+      for (let tick = 0; tick < Math.ceil((settlingS + 30) * 60); tick++) {
         const traveling = m.state.l2!.trappedIds.some(id => {
           const e = w.entities.get(id), c = e?.civilian;
           return !!e && !!c && !turned.has(id) && !['down', 'finished', 'bitten', 'rising', 'grabbed'].includes(c.state)

@@ -82,9 +82,10 @@ function clearThreat(world: SimWorld, at: Spot): void {
         if (brain.mode === 'attracted' || brain.mode === 'search') { brain.mode = 'wander'; if (e.health.current > 0) e.infected.state = 'wander'; }
         if (!brain.leashM) { brain.homeX = at.x; brain.homeZ = at.z; }
       }
-      // A pushed body stands and looks around while it has lost her: a leashed street-group member otherwise walked straight home through
-      // the cleared ring (gate 10-13: 8.8 m from the anchor 3 s after the respawn, on its way back to its block).
-      if (pushed) { brain.pauseUntil = Math.max(brain.pauseUntil, tick + delay); brain.looking = true; }
+      // Nearby pursuers stand and look while they lose her. Bodies just outside
+      // the cleared ring can otherwise chase another human straight through it,
+      // and forecourt diversion can replace the four-second respawn delay.
+      brain.pauseUntil = Math.max(brain.pauseUntil, tick + delay); brain.looking = true;
     } else {
       // Levels without the L1 brain: drop the target and path, and hold attacks for the same delay.
       if (e.infected.targetId === 1 || e.infected.heardTargetId === 1) { e.infected.targetId = 0; e.infected.heardTargetId = 0; if (e.health.current > 0) e.infected.state = 'idle'; }

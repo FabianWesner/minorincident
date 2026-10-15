@@ -1,0 +1,12 @@
+[
+  {
+    "test": "L5 Aftermath T-E23-09 @E23 @E23-AC09 the group grows and follows: stand-to-interact 1.0 s, the counter steps 0 to 5, followers within 8 m, no jump above 1 m per tick, slower than the courier's run",
+    "status": "failed",
+    "failure": "AssertionError: {\"tick\":420,\"id\":21,\"from\":{\"x\":-12.63827026947538,\"z\":-38.97676561521406},\"to\":{\"x\":-8.491774597199566,\"z\":-39.19936260488554,\"y\":0.7,\"yaw\":6.292971978057909},\"locomotion\":{\"vx\":0,\"vz\":0,\"ax\":0,\"az\":0,\"omega\":0,\"updatedAt\":2345},\"companion\":{\"x\":27.885143872711726,\"z\":-38.3775916524498,\"y\":0.3,\"yaw\":-0.14654514251722983}}: expected 4.152466228642065 to be less than or equal to 3.9\n    at /srv/mi/jobs/postmerge-2-334ba3-47411-1792082137/tests/levels/L5.test.ts:187:77\n    at file:///srv/mi/jobs/postmerge-2-334ba3-47411-1792082137/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+  },
+  {
+    "test": "T-E19-firefighter @E19 the firefighter waits at the bay from the start of the objective, infected attack him, he survives a late arrival",
+    "status": "failed",
+    "failure": "AssertionError: {\"player\":{\"x\":-78.4000015258789,\"y\":0.7049999833106995,\"z\":44.27000045776367,\"yaw\":0.3205919885488634},\"hp\":{\"current\":0,\"max\":100},\"phase\":\"playing\",\"l1\":{\"phase\":\"morning\",\"carrying\":true,\"delivered\":false,\"away\":false,\"techId\":157,\"hx\":0,\"hz\":0,\"handoverAt\":0,\"deliveredAt\":0,\"flickerAt\":0,\"exitAt\":0,\"warned\":false,\"fired\":0,\"exitIds\":[],\"exitHeadingsDeg\":[],\"runs\":[],\"turnedIds\":[149,136,122,101,99,96,97,100,98,148,142,146,106,139,124,120,105,119,151,107,123,110,152,143,109,144,108,128,116,115],\"escapedIds\":[147,125,141,150,145,95,137,138],\"graceUntil\":0,\"house\":null,\"labExit\":null,\"firefighterId\":158,\"firefighterNext\":4079}}: expected undefined to be 158 // Object.is equality\n    at /srv/mi/jobs/postmerge-2-334ba3-47411-1792082137/tests/levels/l1-firefighter.test.ts:53:152\n    at file:///srv/mi/jobs/postmerge-2-334ba3-47411-1792082137/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+  }
+]
