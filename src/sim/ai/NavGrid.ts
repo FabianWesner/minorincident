@@ -132,6 +132,7 @@ export class NavGrid {
   /** Exact solid query over the existing bake buckets; no second static collision world.
    * Buckets already include a 2 m body margin. Larger footprints visit adjoining buckets. */
   visitSolids(x: number, z: number, radius: number, visit: (wall: Wall, id: string) => void): void {
+    if (!this.buckets.size && !this.blockers.size) return;
     const reach = Math.max(0, radius - 2), seen = reach ? new Set<Wall>() : null;
     for (let cx = Math.floor((x - reach) / 4); cx <= Math.floor((x + reach) / 4); cx++) for (let cz = Math.floor((z - reach) / 4); cz <= Math.floor((z + reach) / 4); cz++) {
       for (const w of this.buckets.get(cx)?.get(cz) ?? []) if (!seen?.has(w)) { seen?.add(w); visit(w, `static:${this.wallIds.get(w)}`); }
