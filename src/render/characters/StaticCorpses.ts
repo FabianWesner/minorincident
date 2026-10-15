@@ -1,5 +1,6 @@
 import { writeCrowdAppearance, renderedCrowdLook, resolveCrowdAppearance } from './CrowdAppearance';
 import { BufferAttribute, BufferGeometry, Color, Group, InstancedBufferAttribute, InstancedMesh, Matrix4, Uint16BufferAttribute, Uint32BufferAttribute, MeshLambertNodeMaterial, Vector3 } from 'three/webgpu';
+import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import type { CrowdClip } from '../../assets/crowd';
 import type { EntitySnapshot } from '../../sim/world/types';
 import { CrowdFigureProbe } from './CrowdFigureProbe';
@@ -93,43 +94,52 @@ export class StaticCorpses extends Group {
     if (last > 0) mesh.computeBoundingSphere();
   }
   /** L6 prepares the fixed cast's frozen death pages before shader warm-up. */
-  prepare(key: string, source: BufferGeometry, material: MeshLambertNodeMaterial, clip: CrowdClip, frame: number): void {
+  prepare(key: string, source: BufferGeometry, material: MeshLambertNodeMaterial, clip: CrowdClip, frame: number, headwear = false): void {
+    if (headwear) this.frozenPose(source, material, clip, frame, [], true);
     if (![...this.chunks.keys()].some(k => k === key || k.startsWith(`${key}/`))) this.createPage(key, source, material, clip, frame, []);
   }
-  private createPage(key: string, source: BufferGeometry, material: MeshLambertNodeMaterial, clip: CrowdClip, frame: number, hiddenParts: readonly string[], hidesHair = false): Chunk {
-    let pages = this.chunks.get(key);
-    if (!pages) { pages = []; this.chunks.set(key, pages); }
+  private frozenPose(source: BufferGeometry, material: MeshLambertNodeMaterial, clip: CrowdClip, frame: number, hiddenParts: readonly string[], hidesHair = false) {
     const frozenKey = `${source.uuid}/${material.uuid}/${frame}/${hiddenParts.join(',')}/${hidesHair}`;
     let frozen = this.frozen.get(frozenKey);
     if (!frozen) {
-      const geometry = new BufferGeometry(), parts = source.getAttribute('_parts');
-      const hidden = new Set(hiddenParts.map(name => clip.parts.indexOf(name)));
-      const visible = (i: number) => !hidden.has(parts.getX(i)) && !(hidesHair && (parts.getY(i) === -2 || parts.getW(i) >= 4));
-      // Colour tags may differ at vertices of one triangle. Keep whole triangles
-      // in triangle soup; indexed geometry is filtered through its index below.
-      const kept = source.index ? Array.from({ length: parts.count }, (_, i) => i).filter(visible)
-        : Array.from({ length: Math.floor(parts.count / 3) }, (_, triangle) => triangle * 3).flatMap(i => [i, i + 1, i + 2].every(visible) ? [i, i + 1, i + 2] : []);
-      for (const name of ['position', 'normal', 'color', '_parts']) {
-        const original = source.getAttribute(name), data = new Float32Array(kept.length * original.itemSize);
-        for (const [output, i] of kept.entries()) {
-          if (name === 'position' || name === 'normal') {
-            this.partMatrix.fromArray(clip.matrices, (Math.floor(frame) * clip.parts.length + parts.getX(i)) * 16);
-            this.point.fromBufferAttribute(original, i);
-            if (name === 'position') this.point.applyMatrix4(this.partMatrix); else this.point.transformDirection(this.partMatrix);
-            this.point.toArray(data, output * 3);
-          } else for (let c = 0; c < original.itemSize; c++) data[output * original.itemSize + c] = original.getComponent(i, c);
+      const base = source.userData.corpseBody as BufferGeometry | undefined, accessory = source.userData.corpseAccessory as BufferGeometry | undefined;
+      let geometry: BufferGeometry;
+      if (base && accessory) {
+        // The large body has already been posed behind the loading card.
+        const pieces = [this.frozenPose(base, material, clip, frame, hiddenParts, hidesHair).geometry, this.frozenPose(accessory, material, clip, frame, hiddenParts, hidesHair).geometry];
+        const indexed = pieces.map(piece => { if(piece.index)return piece;const wrapper=new BufferGeometry();for(const name of Object.keys(piece.attributes))wrapper.setAttribute(name,piece.getAttribute(name));wrapper.setIndex(Array.from({length:piece.getAttribute('position').count},(_,i)=>i));return wrapper; });
+        geometry = mergeGeometries(indexed)!;
+        indexed.forEach((piece,i)=>{if(piece!==pieces[i])piece.dispose();});
+      } else {
+        geometry = new BufferGeometry(); const parts = source.getAttribute('_parts');
+        const hidden = new Set(hiddenParts.map(name => clip.parts.indexOf(name)));
+        const visible = (i: number) => !hidden.has(parts.getX(i)) && !(hidesHair && (parts.getY(i) === -2 || parts.getW(i) >= 4));
+        // Colour tags may differ at vertices of one triangle. Keep whole triangles
+        // in triangle soup; indexed geometry is filtered through its index below.
+        const kept = source.index ? Array.from({ length: parts.count }, (_, i) => i).filter(visible)
+          : Array.from({ length: Math.floor(parts.count / 3) }, (_, triangle) => triangle * 3).flatMap(i => [i, i + 1, i + 2].every(visible) ? [i, i + 1, i + 2] : []);
+        for (const name of ['position', 'normal', 'color', '_parts']) {
+          const original = source.getAttribute(name), size = name === '_parts' ? 4 : 3, data = new Float32Array(kept.length * size);
+          for (const [output, i] of kept.entries()) {
+            if (name === 'position' || name === 'normal') {
+              this.partMatrix.fromArray(clip.matrices, (Math.floor(frame) * clip.parts.length + parts.getX(i)) * 16);
+              this.point.fromBufferAttribute(original, i);
+              if (name === 'position') this.point.applyMatrix4(this.partMatrix); else this.point.transformDirection(this.partMatrix);
+              this.point.toArray(data, output * 3);
+            } else for (let c = 0; c < size; c++) data[output * size + c] = original.getComponent(i, c);
+          }
+          geometry.setAttribute(name, new BufferAttribute(data, size));
         }
-        geometry.setAttribute(name, new BufferAttribute(data, original.itemSize));
-      }
-      // The shared crowd geometry is indexed: keep triangles whose vertices all survive, renumbered.
-      const index = source.getIndex();
-      if (index) {
-        const renumber = new Map(kept.map((old, i) => [old, i])), triangles: number[] = [];
-        for (let i = 0; i < index.count; i += 3) {
-          const a = renumber.get(index.getX(i)), b = renumber.get(index.getX(i + 1)), c = renumber.get(index.getX(i + 2));
-          if (a !== undefined && b !== undefined && c !== undefined) triangles.push(a, b, c);
+        // The shared crowd geometry is indexed: keep triangles whose vertices all survive, renumbered.
+        const index = source.getIndex();
+        if (index) {
+          const renumber = new Map(kept.map((old, i) => [old, i])), triangles: number[] = [];
+          for (let i = 0; i < index.count; i += 3) {
+            const a = renumber.get(index.getX(i)), b = renumber.get(index.getX(i + 1)), c = renumber.get(index.getX(i + 2));
+            if (a !== undefined && b !== undefined && c !== undefined) triangles.push(a, b, c);
+          }
+          geometry.setIndex(kept.length > 65535 ? new Uint32BufferAttribute(triangles, 1) : new Uint16BufferAttribute(triangles, 1));
         }
-        geometry.setIndex(kept.length > 65535 ? new Uint32BufferAttribute(triangles, 1) : new Uint16BufferAttribute(triangles, 1));
       }
       // One frozen material per source material: every death frame / gore mask shares its shader (l4-collapse-2: a copy per mask
       // compiled a new pipeline mid-fight for each new dismemberment combination).
@@ -140,6 +150,12 @@ export class StaticCorpses extends Group {
       }
       frozen = { geometry, material: frozenMaterial }; this.frozen.set(frozenKey, frozen);
     }
+    return frozen;
+  }
+  private createPage(key: string, source: BufferGeometry, material: MeshLambertNodeMaterial, clip: CrowdClip, frame: number, hiddenParts: readonly string[], hidesHair = false): Chunk {
+    let pages = this.chunks.get(key);
+    if (!pages) { pages = []; this.chunks.set(key, pages); }
+    const frozen = this.frozenPose(source, material, clip, frame, hiddenParts, hidesHair);
     // Static vertex buffers and shader are shared; only instance attributes differ per spatial page.
     const geometry = new BufferGeometry();
     for (const name of ['position', 'normal', 'color', '_parts']) geometry.setAttribute(name, frozen.geometry.getAttribute(name));

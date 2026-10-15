@@ -106,7 +106,7 @@ const commands: string[][] = [
             ]
             : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--workers=1']]),
           // Reserve all configured browser slots for the native GPU frame budgets.
-          ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', target==='E24'?'tests/perf/l6-budgets.spec.ts':'tests/perf/l5-budgets.spec.ts', '--project=chromium', '--workers=1'],
+          ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', target==='E24'?'tests/perf/l6-budgets.spec.ts':'tests/perf/l5-budgets.spec.ts', ...(target==='E24'?['tests/perf/l6-po-scream.spec.ts']:[]), '--project=chromium', '--workers=1'],
         ]
       : target === 'E25'
         ? [
