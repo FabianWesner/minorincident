@@ -6,6 +6,8 @@ import { loadLevel } from './levels';
 import { Walker } from '../../src/debug/bot/Walker';
 import { cure } from '../../src/levels/L10/district';
 import { emptyInput } from '../../src/input/InputFrame';
+import { cureFinaleText } from '../../src/sim/missions/LevelTenFinale';
+import type { EntitySnapshot } from '../../src/sim/world/types';
 export async function runFinaleCalibration(tier: 'high' | 'low' = 'high') {
   const w = await loadLevel('L10', 32), m = w.missions!, walker = new Walker();
   try {
@@ -21,6 +23,9 @@ export async function runFinaleCalibration(tier: 'high' | 'low' = 'high') {
     let bossStepPeak: { tick: number; mode: string; distance: number; hp: number; lastDamage: number | null } | null = null;
     const route = cure.regions.slice(5).flatMap(r => r.route).filter(([x]) => x >= p.transform.x);
     let waypoint = 0, peak = 0, arrival: number | null = null, activation: number | null = null, rocketHits = 0;
+    let activationBoss: { x: number; z: number; distanceM: number } | null = null;
+    let fullChargeBossGate = false, bossGatePursuitM = 0;
+    let fullChargeBossGateText: string | null = null;
     const timeline: { id: string; seconds: number }[] = [];
     const regions: Record<string, { ticks: number; moving: number; pressure: number; fireIntent: number; charge: number; bossGate: number; quiet: number; metres: number; shots: number; kills: number }> = {};
     const region = () => p.transform.x < cure.anchors['cure-complex'][0] ? 'destroyed-corridor' : 'dispersal-complex';
@@ -40,9 +45,14 @@ export async function runFinaleCalibration(tier: 'high' | 'low' = 'high') {
       }
       f.move = walker.step(w, goal, active.id === 'hold' ? 1 : .8, `${active.id}-${waypoint}`) ?? f.move;
       f.interact = i % 60 < 45 && Math.hypot(p.transform.x-anchor.x,p.transform.z-anchor.z) <= anchor.radius;
-      const threats = w.infected!.active.filter(e => e.health.current > 0 && Math.hypot(e.transform.x-p.transform.x,e.transform.z-p.transform.z)<30 && w.infected!.nav.visible(p.transform,e.transform,0));
-      threats.sort((a,b) => Math.hypot(a.transform.x-p.transform.x,a.transform.z-p.transform.z)-Math.hypot(b.transform.x-p.transform.x,b.transform.z-p.transform.z));
-      const target = threats[0];
+      // Only the nearest visible enemy drives the inputs. Preserve stable-sort
+      // ties while avoiding LOS queries for candidates farther than that enemy.
+      let target: EntitySnapshot | undefined, nearestM = 30;
+      for (const e of w.infected!.active) {
+        if (e.health.current <= 0) continue;
+        const d = Math.hypot(e.transform.x - p.transform.x, e.transform.z - p.transform.z);
+        if (d < nearestM && w.infected!.nav.visible(p.transform, e.transform, 0)) { target = e; nearestM = d; }
+      }
       if (target) {
         const slot = p.weapons!.RIGHT.rack.findIndex(s => s.id === 'weapon.rocket-launcher');
         f.selectedSlot = { side: 'RIGHT', index: slot }; f.aimSource = 'keyboard';
@@ -61,15 +71,21 @@ export async function runFinaleCalibration(tier: 'high' | 'low' = 'high') {
       if (arrival === null) bossApproachStepMaxM = Math.max(bossApproachStepMaxM, bossStep);
       const metres = Math.hypot(p.transform.x - x, p.transform.z - z);
       row.ticks++; row.metres += metres; if (metres > .0001) row.moving++;
-      if (threats.length) row.pressure++; if (f.right.held) row.fireIntent++;
+      if (target) row.pressure++; if (f.right.held) row.fireIntent++;
       if (m.state.states['charge-active'] && m.state.steps.hold.status === 'active') row.charge++;
-      if (m.state.counters['charge-ticks'] === 3600 && boss.alive()) row.bossGate++;
-      if (metres <= .0001 && !threats.length && !f.right.held && !f.interact) row.quiet++;
-      if (activation === null && m.state.states['charge-active']) activation=w.tick/60;
+      if (m.state.counters['charge-ticks'] === 3600 && boss.alive()) {
+        row.bossGate++; fullChargeBossGate = true; bossGatePursuitM += bossStep;
+        fullChargeBossGateText ??= cureFinaleText(m);
+      }
+      if (metres <= .0001 && !target && !f.right.held && !f.interact) row.quiet++;
+      if (activation === null && m.state.states['charge-active']) {
+        activation=w.tick/60;
+        const t = boss.entity()!.transform; activationBoss = { x: t.x, z: t.z, distanceM: boss.distance() };
+      }
       if (activation !== null && arrival === null && boss.distance()<=25) arrival=w.tick/60-activation;
     }
     const activity = Object.fromEntries(Object.entries(regions).map(([id, r]) => [id, { elapsedSeconds: r.ticks / 60, movingSeconds: r.moving / 60, pressureSeconds: r.pressure / 60, fireIntentSeconds: r.fireIntent / 60, holdSeconds: r.charge / 60, fullChargeBossGateSeconds: r.bossGate / 60, quietSeconds: r.quiet / 60, metres: r.metres, shots: r.shots, kills: r.kills }]));
-    const result={seed:32,tier,bossId,bossIdChanged,bossStepMaxM,bossStepPeak,bossApproachStepMaxM,checkpoint:'cure-corridor',released:!!m.state.states['cure-released'],seconds:(w.tick-start)/60,hp:p.health.current,deaths:m.state.stats.deaths,peak,rocketHits,activation,arrival,timeline,activity,activityCategoriesOverlap:true,active:m.def.steps.filter(s=>m.state.steps[s.id].status==='active').map(s=>s.id),player:p.transform,boss:boss.snapshot(),expectedRemainingMinutes:[13.5,18.5],withinRemainingBand:(w.tick-start)/60>=810 && (w.tick-start)/60<=1110};
+    const result={seed:32,tier,bossId,bossIdChanged,bossStepMaxM,bossStepPeak,bossApproachStepMaxM,checkpoint:'cure-corridor',released:!!m.state.states['cure-released'],seconds:(w.tick-start)/60,hp:p.health.current,deaths:m.state.stats.deaths,peak,rocketHits,activation,activationBoss,fullChargeBossGate,fullChargeBossGateText,bossGatePursuitM,arrival,timeline,activity,activityCategoriesOverlap:true,active:m.def.steps.filter(s=>m.state.steps[s.id].status==='active').map(s=>s.id),player:p.transform,boss:boss.snapshot(),expectedRemainingMinutes:[13.5,18.5],withinRemainingBand:(w.tick-start)/60>=810 && (w.tick-start)/60<=1110};
     mkdirSync('test-results/epics/E32/E3',{recursive:true}); writeFileSync(`test-results/epics/E32/E3/calibration-seed-32${tier === 'low' ? '-low' : ''}.json`,JSON.stringify(result,null,2));
     return result;
   } finally { w.dispose(); }
