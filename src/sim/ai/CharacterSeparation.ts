@@ -49,7 +49,7 @@ export function installCharacterSeparation(world: SimWorld): void {
       // These contact flags cannot change during the separation phase; cache them once per body.
       body.infected = !!e.infected; body.courier = !!e.survivor; body.l1 = !!e.infected?.l1;
       body.crowd = !!e.infected && (!!e.combat?.attacking || e.infected.state === 'chase');
-      body.hullContact = !!drivenHull && body.infected && drivenHull.hullDistance(e.transform.x, e.transform.z) < 3;
+      body.hullContact = !!drivenHull && drivenHull.speed < .2 && body.infected && drivenHull.hullDistance(e.transform.x, e.transform.z) < 3;
       body.passiveCompanion = !!e.companion && !e.companion.following && e.companion.state === 'follow';
       body.fixed = !!(e.infected?.pursuit && e.infected.specialAttack) || body.courier || !!(e.civilian?.ally?.hold && storyProtected(world, e)) || e.civilian?.state === 'grabbed' || body.passiveCompanion;
       const attack = e.infected?.specialAttack;
@@ -104,8 +104,8 @@ export function installCharacterSeparation(world: SimWorld): void {
       world.spatial.query(query, neighbors, false, visit, contacts);
       if (e.transform.x !== query.x || e.transform.z !== query.z) { world.spatial.set(e.id, e.transform.x, e.transform.z); world.solids.wrote(e, 'cleanup.separation'); }
     }
-    // Hull strikes have 1.5 m of authored reach. Reserve room for their forward
-    // attack pose without changing that hit reach or the physical footprint.
+    // Stationary hull strikes have 1.5 m of authored reach. Reserve their pose
+    // without preemptively pushing victims away from an approaching vehicle's ram.
     if (drivenHull) for (const body of bodies) if (body.hullContact && !body.charge) {
       const e = body.entity, x = e.transform.x, z = e.transform.z;
       drivenHull.separateHull(e.transform, body.radius + .45);
