@@ -44,6 +44,8 @@ export class Hud {
   private readonly homePin = this.pin('home', '⌂');
   /** E23: the direction of the sign of life the courier just heard (4 s), and the survivors counter beside the objective. */
   private readonly cuePin = this.pin('cue', '♪');
+  private readonly survivorVitals = node('div', 'survivor-vitals');
+  private readonly survivorCards = l5Survivors.map(def => ({ def, root: node('div', `survivor-${def.key}`), face: node('div', `survivor-face-${def.key}`), health: this.bar(`survivor-health-${def.key}`) }));
   private readonly survivorText = node('span', 'survivors-found');
   private readonly cueText = node('span', 'sign-of-life');
   private readonly threats: HTMLSpanElement[] = [];
@@ -85,6 +87,15 @@ export class Hud {
     vitals.append(this.portrait, bars, this.weapon.root, this.corgiBadge);
     const companion = node('div', 'corgi-companion'); companion.className = 'hud-companion hud-panel';
     const face = node('div', 'corgi-portrait'); face.className = 'hud-portrait'; face.style.backgroundImage = 'url(/assets/ui/portrait-corgi.png)'; companion.append(face, this.companion);
+    this.survivorVitals.className = 'hud-survivor-vitals';
+    for (const card of this.survivorCards) {
+      card.root.className = 'hud-survivor-card hud-panel'; card.root.hidden = true;
+      card.face.className = 'hud-portrait'; card.face.style.backgroundImage = `url(/assets/ui/portrait-survivor-${['rosa', 'mia'].includes(card.def.key) ? 'f' : 'm'}.png)`;
+      card.face.setAttribute('aria-label', card.def.name); card.face.title = card.def.name;
+      card.root.append(card.face, node('span', `survivor-name-${card.def.key}`, card.def.name), card.health.root);
+      this.survivorVitals.append(card.root);
+    }
+    this.root.append(this.survivorVitals);
     this.map.className = 'hud-map'; this.map.setAttribute('aria-label', 'North-up minimap, range 30 meters');
     const north = node('span', 'minimap-north', 'N'); north.className = 'hud-map-n';
     this.cuePin.hidden = true; this.survivorText.hidden = this.cueText.hidden = true;
@@ -320,6 +331,19 @@ export class Hud {
   }
   /** E23: "Survivors found n/5", the direction ping of a heard sign of life (4 s, clamped to the map edge) and the stand-still prompt next to a hiding place. */
   private updateSurvivors(mission: Mission | null | undefined, px: number, pz: number): void {
+    for (const card of this.survivorCards) {
+      const r = mission?.state.l5?.survivors.find(r => r.key === card.def.key);
+      const e = r && this.game.world.entities.get(r.id);
+      const alive = !!e && !e.hidden && !e.infection && e.health.current > 0 && (r?.status === 'following' || r?.status === 'sheltered');
+      setHidden(card.root, !alive);
+      if (alive && e) {
+        const fraction = healthFraction(e.health.current, e.health.max);
+        style(card.health.fill, 'width', `${fraction * 100}%`);
+        text(card.health.label, `${Math.ceil(e.health.current)}/${e.health.max}`);
+        attribute(card.health.root, 'aria-valuenow', String(Math.round(fraction * 100)));
+        attribute(card.root, 'aria-label', `${card.def.name}, health ${Math.round(fraction * 100)}%`);
+      }
+    }
     const l5 = mission?.state.l5, show = !!mission && !!l5 && l5.phase !== 'cellar';
     setHidden(this.survivorText, !show);
     if (!show || !l5 || !mission) { setHidden(this.cueText, true); setHidden(this.cuePin, true); return; }
