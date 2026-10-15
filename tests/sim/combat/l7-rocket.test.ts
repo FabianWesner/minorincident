@@ -13,7 +13,7 @@ async function rocket() {
 function frozen(w: Awaited<ReturnType<typeof arena>>, x: number, z: number, alpha = false) {
   const id = w.infected!.spawn(alpha ? 'infected.alpha' : 'infected.runner', { x, z });
   const e = w.entities.get(id)!;
-  e.emerging = true; // Keep the authored dense fixture from depenetrating before impact.
+  e.emerging = true; // Hold AI movement before impact; physical footprints remain active.
   e.infected!.until = Number.MAX_SAFE_INTEGER; e.combat!.staggerUntil = Number.MAX_SAFE_INTEGER;
   return e;
 }
@@ -50,9 +50,19 @@ test('T-E29-05 @E29-AC05 600 rockets have no reload/empty/charges and exactly 75
 
 for (const count of [24, 200]) test(`T-E29-06-${count} @E29-AC06 one real projectile permanently clears ${count} infected in its blast tick`, async () => {
   const w = await rocket(); w.infected!.director.levelCap = 200;
-  const targets = [frozen(w, 8, 0), ...Array.from({ length: count - 1 }, (_, i) => {
+  // Twenty-four full bodies fit in the blast's forward half-disk, without the
+  // old overlapping ring. The 200-body packing precondition remains explicit.
+  const targets = count === 24 ? Array.from({ length: count }, (_, i) => {
+    const row = i % 7, z = row ? Math.ceil(row / 2) * .7 * (row % 2 ? -1 : 1) : 0;
+    return frozen(w, 8 + Math.floor(i / 7) * .7, z);
+  }) : [frozen(w, 8, 0), ...Array.from({ length: count - 1 }, (_, i) => {
     const angle = i * 2 * Math.PI / (count - 1); return frozen(w, 9.5 + Math.cos(angle) * 1.4, Math.sin(angle) * 1.4);
   })];
+  if (count === 24) {
+    expect(w.solids.snapshot().pending).toBe(0);
+    for (let i = 0; i < targets.length; i++) for (let j = i + 1; j < targets.length; j++)
+      expect(Math.hypot(targets[i].transform.x - targets[j].transform.x, targets[i].transform.z - targets[j].transform.z)).toBeGreaterThanOrEqual(.68);
+  }
   expect(targets.every(e => e.health.current === 60)).toBe(true);
   const positions = targets.map(e => ({ x: e.transform.x, z: e.transform.z }));
   fire(w); for (let i = 0; i < 80 && !w.explosions!.last; i++) step(w, 1);
