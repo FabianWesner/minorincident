@@ -51,6 +51,10 @@ export class InfectedMoves {
       else this.strikes.delete(e.id);
     }
     const special = e.infected?.specialAttack;
+    if (special?.move === 'alpha.charge' && special.stage === 'telegraph') {
+      const windup = ease((renderTick - special.startTick) / Math.max(1, special.activeTick - special.startTick));
+      layers.lean = -.18 * windup; layers.lunge = -.12 * windup;
+    }
     if (special?.move === 'gorilla.roar' && special.stage === 'telegraph') layers.chestBeat = Math.max(.001, (renderTick - special.startTick) / 60);
     if (special?.move === 'elephant.swipe') {
       const windup = Math.max(0, Math.min(1, (renderTick - special.startTick) / (special.activeTick - special.startTick)));

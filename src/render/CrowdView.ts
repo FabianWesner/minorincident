@@ -18,7 +18,7 @@ import { CrowdFigureProbe } from './characters/CrowdFigureProbe';
 import { contactShadowMaterial } from './ContactShadows';
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon InstancedGroup.js (MIT, 41046b5), using E17 GPU crowdMatrix/clipTexture.
-import { BoxGeometry, BufferGeometry, PlaneGeometry, Color, ConeGeometry, DoubleSide, FrontSide, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, RingGeometry, Frustum, Sphere, Vector3, StreamDrawUsage } from 'three/webgpu';
+import { BoxGeometry, BufferGeometry, PlaneGeometry, Color, DoubleSide, FrontSide, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, Mesh, MeshLambertNodeMaterial, MeshBasicNodeMaterial, Frustum, Sphere, Vector3, StreamDrawUsage } from 'three/webgpu';
 import { mix, attribute, mat4, normalGeometry, vec3, positionGeometry, vec4, float, cameraViewMatrix, luminance, screenCoordinate, uniform } from 'three/tsl';
 import { crowdBlendedMatrix, packCrowdParts } from '../assets/crowd';
 import type { Materials } from './Materials';
@@ -86,10 +86,6 @@ export class CrowdView extends Group {
   private readonly corpseNeighbors: number[] = [];
   private readonly corpseQuery = { x: 0, z: 0, r: 1.25 };
   private readonly corpses = new Map<number, { x: number; z: number; sourceX: number; sourceZ: number; deadAt: number }>();
-  private readonly elephantArrowScale = new Matrix4().makeScale(1, 1, 3.5 / (1.1 * 1.8));
-  private readonly physicalArrowTail = new Matrix4();
-  private readonly physicalArrowScale = new Matrix4().makeScale(1.15, .025, 1.8);
-  private readonly telegraphs: InstancedMesh[] = [];
   private readonly shadows: InstancedMesh;
   private readonly feedback = new Map<number, { mask: number; strength: number }>();
   private readonly caps = new InstancedMesh(new BoxGeometry(.18, .06, .18), new MeshBasicNodeMaterial({ color: '#b3121f' }), 1750);
@@ -101,9 +97,6 @@ export class CrowdView extends Group {
     super(); this.name = 'infected-crowd'; this.add(this.staticCorpses);
     this.caps.frustumCulled = false; this.caps.count = 0; this.add(this.caps);
     this.registry = new AssetRegistry((event) => this.logs.push(event));
-    const ring = new RingGeometry(0.7, 0.8, 24); ring.rotateX(-Math.PI / 2);
-    const arrow = new ConeGeometry(0.55, 2.5, 3); arrow.rotateZ(-Math.PI / 2); arrow.translate(1.3, 0, 0);
-    for (const geometry of [ring, arrow]) { const mesh = new InstancedMesh(geometry, new MeshBasicNodeMaterial({ color: new Color('#ffb32d').multiplyScalar(1.6), transparent: true, depthWrite: false }), 1400); mesh.frustumCulled = false; mesh.count = 0; this.telegraphs.push(mesh); this.add(mesh); }
     const shadow = new PlaneGeometry(1.2, 1.2); shadow.rotateX(-Math.PI / 2);
     this.shadows = new InstancedMesh(shadow, contactShadowMaterial(), 350); this.shadows.frustumCulled = false; this.shadows.count = 0; this.add(this.shadows);
   }
@@ -258,7 +251,7 @@ export class CrowdView extends Group {
     }
     for (const batch of this.batches.values()) { batch.count = 0; batch.probe.begin(); }
     this.footwork.begin(Math.max(0, this.world.tick + alpha - 1) / 60);
-    for (const mesh of this.telegraphs) mesh.count = 0; this.shadows.count = 0; this.caps.count = 0;
+    this.shadows.count = 0; this.caps.count = 0;
     for (const [id, feedback] of this.feedback) { const e = this.world.entities.get(id); if (!e?.combat || e.hidden || e.infected?.hidden) this.feedback.delete(id); else if (e.health.current > 0) feedback.mask = 0; }
     const player = this.world.entities.get(1)!;
     const focus = view?.cameraTarget ?? player.transform;
@@ -399,35 +392,7 @@ export class CrowdView extends Group {
         for (let limb = 0; limb < 5; limb++) if ((feedback?.mask ?? 0) & (1 << limb)) { const p = this.limbPosition(e.id, limb)!; this.transform.makeRotationY(e.transform.yaw); this.transform.setPosition(p.x, p.y + (limb === 4 ? -.17 : .18), p.z); this.caps.setMatrixAt(this.caps.count++, this.transform); }
       }
       if (e.archetype !== 'infected.crow') { this.transform.makeTranslation(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0) + .018, e.transform.z); this.shadows.setMatrixAt(this.shadows.count++, this.transform); }
-      if (physical && physical.stage !== 'recovery' && physical.move !== 'elephant.swipe') {
-        const area = physical.area, ground = (this.world.districts?.groundHeight(area.x, area.z) ?? 0) + .065;
-        if (physical.move === 'alpha.grab-throw' || physical.move === 'alpha.ground-slam' || physical.move === 'gorilla.pound' || physical.move === 'gorilla.roar') {
-          this.transform.makeScale(area.radius / .8, 1, area.radius / .8); this.transform.setPosition(area.x, ground, area.z);
-          this.telegraphs[0].setMatrixAt(this.telegraphs[0].count++, this.transform);
-          if (physical.move === 'gorilla.roar') {
-            this.transform.makeScale(1.5 / .8, 1, 1.5 / .8); this.transform.setPosition(area.x, ground, area.z);
-            this.telegraphs[0].setMatrixAt(this.telegraphs[0].count++, this.transform);
-          }
-        } else {
-          // A sequence of fixed, two-metre-wide arrows shows the entire locked twelve-metre corridor.
-          const length = e.infected?.pursuit ? Math.min(megaAlpha.moves['alpha.charge'].range, megaAlpha.moves['alpha.charge'].speed) : physical.move === 'lion.pounce' ? Math.min(8, Math.hypot(physical.target.x - area.x, physical.target.z - area.z)) : physical.destination ? Math.hypot(physical.destination.x - area.x, physical.destination.z - area.z) : physical.move === 'elephant.charge' ? 16 : physical.move === 'zebra.stampede' ? 15 : 12;
-          for (let i = 0; i < Math.ceil(length / 3); i++) {
-            this.transform.makeRotationY(-Math.atan2(area.dz, area.dx)); this.transform.multiply(this.physicalArrowScale);
-            if (e.infected?.pursuit || physical.move === 'elephant.charge' || physical.move === 'zebra.stampede') {
-              if (e.infected?.pursuit) this.transform.multiply(this.physicalArrowTail.makeScale(1, 1, 3 / (1.1 * 1.8)));
-              else if (physical.move === 'elephant.charge') this.transform.multiply(this.elephantArrowScale);
-              else this.transform.multiply(this.physicalArrowTail.makeScale(1, 1, 1.5 / (1.1 * 1.8)));
-              this.physicalArrowTail.makeScale(Math.min(3, length - i * 3) / 3, 1, 1); this.transform.multiply(this.physicalArrowTail);
-            }
-            this.transform.setPosition(area.x + area.dx * i * 3, ground, area.z + area.dz * i * 3);
-            this.telegraphs[1].setMatrixAt(this.telegraphs[1].count++, this.transform);
-          }
-        }
-      }
-      if ((b.state === 'attack' || (b.state === 'dead' && b.special === 'explode')) && this.world.tick < b.until) {
-        const mesh = this.telegraphs[b.special === 'charge' || b.special === 'pin' || b.special === 'pounce' ? 1 : 0]; if (b.special === 'explode') this.transform.makeScale(3.75, 1, 3.75); else { this.transform.makeRotationY(-Math.atan2(b.dz, b.dx)); if (b.special === 'pounce') this.transform.multiply(this.physicalArrowScale); }
-        this.transform.setPosition(e.transform.x, (this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? e.transform.y - .7) + .065, e.transform.z); mesh.setMatrixAt(mesh.count++, this.transform);
-      }
+      // Attack ground warnings belong to Vfx: one pooled decal per attack.
     }
     for (const batch of this.batches.values()) {
       batch.mesh.count = batch.count; batch.mesh.visible = batch.count > 0;
@@ -436,7 +401,6 @@ export class CrowdView extends Group {
         for (const attribute of [batch.state, batch.tint]) { attribute.clearUpdateRanges(); attribute.addUpdateRange(0, batch.count * 4); attribute.needsUpdate = true; }
       }
     }
-    for (const mesh of this.telegraphs) { mesh.visible = mesh.count > 0; if (mesh.count) mesh.instanceMatrix.needsUpdate = true; }
     this.caps.visible = this.caps.count > 0; this.shadows.visible = this.shadows.count > 0;
     if (this.caps.count) this.caps.instanceMatrix.needsUpdate = true;
     if (this.shadows.count) this.shadows.instanceMatrix.needsUpdate = true;
@@ -492,7 +456,8 @@ export class CrowdView extends Group {
   getState() {
     let instances = 0, draws = 0, objects = 0, nonInstanced = 0;
     this.traverse((node) => { if (node !== this) objects++; if (node instanceof InstancedMesh) { instances += node.count; if (node.count) draws++; } else if (node instanceof Mesh) nonInstanced++; });
-    return { telegraphs: this.telegraphs.map(mesh => mesh.count), figures: [...this.batches.values()].flatMap(b => b.probe.figures).concat(this.staticCorpses.snapshot().figures), instances, meshDrawCalls: draws, objects, nonInstancedMeshes: nonInstanced, caps: this.caps.count, flashes: [...this.feedback.values()].filter(f => f.strength > 0).length, batches: [...this.batches.values()].map((b) => ({ id: b.role, lod: b.lod, instances: b.count, layout: crowdVertexLayout(b.mesh.geometry, b.mesh.instanceMatrix, true), source: b.placeholders ? 'placeholder' : 'glb' })).concat([...this.heroSlots.keys()].map(id => ({ id, lod: 'lod0', instances: 0, layout: { buffers: 0, locations: 0, webgpu: true, webgl2: true }, source: 'pending' }))), assets: this.logs };
+    // Legacy probe fields: warnings now live in render.vfx.telegraphs.
+    return { telegraphs: [0, 0], figures: [...this.batches.values()].flatMap(b => b.probe.figures).concat(this.staticCorpses.snapshot().figures), instances, meshDrawCalls: draws, objects, nonInstancedMeshes: nonInstanced, caps: this.caps.count, flashes: [...this.feedback.values()].filter(f => f.strength > 0).length, batches: [...this.batches.values()].map((b) => ({ id: b.role, lod: b.lod, instances: b.count, layout: crowdVertexLayout(b.mesh.geometry, b.mesh.instanceMatrix, true), source: b.placeholders ? 'placeholder' : 'glb' })).concat([...this.heroSlots.keys()].map(id => ({ id, lod: 'lod0', instances: 0, layout: { buffers: 0, locations: 0, webgpu: true, webgl2: true }, source: 'pending' }))), assets: this.logs };
   }
   dispose(): void {
     this.disposed = true; this.staticCorpses.dispose();
@@ -501,7 +466,7 @@ export class CrowdView extends Group {
     for (const geometry of this.corpseGeometry.values()) geometry.dispose();
     this.corpseGeometry.clear();
     for (const batch of this.batches.values()) { batch.mesh.geometry.dispose(); (batch.mesh.material as MeshLambertNodeMaterial).dispose(); batch.mesh.dispose(); batch.texture.dispose(); }
-    for (const mesh of [...this.telegraphs, this.shadows, this.caps]) { mesh.geometry.dispose(); (mesh.material as MeshBasicNodeMaterial).dispose(); mesh.dispose(); }
+    for (const mesh of [this.shadows, this.caps]) { mesh.geometry.dispose(); (mesh.material as MeshBasicNodeMaterial).dispose(); mesh.dispose(); }
     this.batches.clear(); this.corpses.clear(); this.corpseSpatial.reset(); this.clear(); void this.registry.dispose();
   }
 }

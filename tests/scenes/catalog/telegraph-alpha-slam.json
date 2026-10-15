@@ -1,0 +1,21 @@
+{
+  "extends": "../alpha-s2/qa-alpha-ground-slam.json",
+  "name": "telegraph-alpha-slam",
+  "note": "PO #24: translucent danger band/ring, early to late wind-up and activation; game camera at high/low and zoom 0.5/1/1.5. One pooled decal per special; inspect direction, warning visibility and road visibility.",
+  "frames": 100,
+  "sheet": 10,
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}

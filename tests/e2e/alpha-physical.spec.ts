@@ -12,11 +12,11 @@ for (const viewport of [{ width: 1280, height: 720 }, { width: 390, height: 844 
     const before = await page.evaluate(async ({ spec, windup }) => {
       const lab = window.__SCENE__!, api = window.__SS__!; await api.ready; await lab.load(spec); await lab.step(windup - 1); await lab.ready();
       const id = lab.actors.get('alpha')!.entity;
-      return { source: api.getEntity(id)!, player: api.getEntity(1)!, telegraph: api.events().find(ev => ev.type === 'telegraph' && ev.sourceId === id), figures: api.crowdFigures().filter(f => f.id === id), markers: api.getState().render.crowd?.telegraphs };
+      return { source: api.getEntity(id)!, player: api.getEntity(1)!, telegraph: api.events().find(ev => ev.type === 'telegraph' && ev.sourceId === id), figures: api.crowdFigures().filter(f => f.id === id), markers: api.getState().render.vfx?.telegraphs };
     }, { spec, windup });
     expect(before.source.infected!.specialAttack!.stage).toBe('telegraph'); expect(before.player.health.current).toBe(100);
     expect(before.telegraph).toMatchObject({ move: `alpha.${move}`, duration: windup / 60, area: { radius: move === 'charge' ? 1 : 4 } });
-    expect(before.markers).toEqual(move === 'charge' ? [0, 4] : [1, 0]);
+    expect(before.markers).toHaveLength(1);
     expect(before.figures).toHaveLength(1); expect(before.figures[0].drawn).toBe(true);
     const impact = await page.evaluate(async () => {
       const lab = window.__SCENE__!, api = window.__SS__!; await lab.step(43); await lab.ready();
@@ -43,9 +43,9 @@ for (const quality of ['high', 'low'] as const) test(`T-E07-physical-budget-${qu
         ...Array.from({ length: 6 }, (_, i) => ({ id: `alpha-${i}`, kind: 'infected' as const, archetype: 'infected.alpha', at: [i - 3, -5] as [number, number], state: 'idle' as const }))] });
     for (let i = 0; i < 6; i++) lab.command(`alpha-${i}`, { special: i % 2 ? 'alpha.charge' : 'alpha.ground-slam', target: 'courier' });
     api.camera.preset('perf-horde'); await api.step(1); await api.screenshotReady();
-    return { count: api.getState().ai!.count, drawn: api.crowdFigures().filter(figure => figure.drawn).length, perf: api.perf(), crowd: api.getState().render.crowd };
+    return { count: api.getState().ai!.count, drawn: api.crowdFigures().filter(figure => figure.drawn).length, perf: api.perf(), crowd: api.getState().render.crowd, markers: api.getState().render.vfx?.telegraphs };
   }, quality);
-  expect(proof.crowd?.telegraphs).toEqual([3, 12]);
+  expect(proof.markers).toHaveLength(6);
   expect(proof.count).toBe(quality === 'high' ? 200 : 100); expect(proof.crowd?.meshDrawCalls).toBeLessThanOrEqual(30);
   expect(proof.drawn).toBe(proof.count);
   expect(proof.perf.drawCalls).toBeLessThanOrEqual(quality === 'high' ? 600 : 300);

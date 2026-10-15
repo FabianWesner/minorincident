@@ -30,7 +30,7 @@ for (const tier of ['high', 'low'] as const) test(`T-E32-07-render-${tier} @E32 
   for (const model of ['inf.dog', 'inf.dog.black', 'inf.dog.cream']) {
     expect(crowd.batches.some(b => b.id === model && b.instances > 0 && b.source === 'glb')).toBe(true);
   }
-  expect(crowd.telegraphs[1]).toBeGreaterThan(0);
+  expect(proof.state.render.vfx!.telegraphs.filter(tell => dogs.some(dog => dog.id === tell.sourceId))).toHaveLength(12);
   expect(crowd.meshDrawCalls).toBeLessThanOrEqual(30);
   expect(crowd.nonInstancedMeshes).toBe(0);
   expect(proof.perf.drawCalls).toBeLessThanOrEqual(tier === 'high' ? 600 : 300);

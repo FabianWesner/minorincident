@@ -23,9 +23,11 @@ class OwnedDepth extends ViewportDepthTextureNode {
 
 /** Fixed GPU slots. Only spawn writes attributes; ballistic motion, fading and noise run in TSL.
  * Ground shapes: 0 splat, 1 ring, 2 lane, 3 chevron, 4 cross. Particles use billboards.
+ * Warning pools use motion.y for wind-up seconds; their clock animates fixed slots without CPU writes.
  * Light-field consumers (E25/E27) may supply a world-position sampling node at construction. */
 export class FxPool {
   readonly clock = uniform(0);
+  readonly pulse = uniform(1);
   readonly mesh: InstancedMesh;
   private readonly origin: InstancedBufferAttribute;
   private readonly motion: InstancedBufferAttribute;
@@ -37,7 +39,7 @@ export class FxPool {
   private readonly bloodTextures: Texture[];
   private cursor = 0;
   budget: number;
-  constructor(readonly cap: number, readonly mode: 'particle' | 'ground' | 'wall', lightSample?: Node<'vec3'>, bloodDecals = false) {
+  constructor(readonly cap: number, readonly mode: 'particle' | 'ground' | 'wall', lightSample?: Node<'vec3'>, bloodDecals = false, warnings = false) {
     this.budget = cap;
     this.bloodTextures = bloodDecals && typeof document !== 'undefined' ? ['splats', 'pool', 'trail'].map(kind => {
       const def = (manifest as AssetDef[]).find(asset => asset.id === `decal.blood-${kind}`)!;
@@ -106,6 +108,24 @@ export class FxPool {
         const rearArc = thinRing.mul(p.x.greaterThanEqual(r.mul(Math.SQRT1_2)).select(1, 0));
         const arc = thinRing.mul(p.x.greaterThanEqual(r.mul(.5)).select(1, 0));
         mask = shape.equal(10).select(rearArc, shape.equal(9).select(arc, shape.equal(8).select(thinRing, shape.equal(1).select(ring, shape.equal(2).select(lane, shape.equal(3).select(chevron, shape.equal(4).select(cross, splat)))))));
+        if (warnings) {
+          // World-sized fine strokes: the band marks the hit area without hiding the road.
+          // +X is the locked charge direction; repeating open chevrons sweep toward its end.
+          const windup = age.div(motion.y.max(.001)).clamp(0, 1);
+          const stroke = float(.12).div(style.x).min(.12);
+          const rim = r.lessThan(1).and(r.greaterThan(float(1).sub(stroke.mul(2)))).select(1, 0);
+          const fill = r.lessThan(windup).select(.18, .045);
+          const ringWarning = rim.mul(.65).add(r.lessThan(1).select(fill, 0));
+          const across = p.y.abs();
+          const stripe = p.x.mul(style.x.mul(.5)).add(across.mul(.5)).sub(age.mul(2.4)).div(1.5).fract();
+          const chevrons = stripe.lessThan(.10).and(across.lessThan(.72)).select(.48, 0);
+          const edges = across.greaterThan(float(1).sub(float(.12).div(style.x.mul(style.w).mul(.5).max(.1)))).select(.55, 0);
+          const laneWarning = edges.max(chevrons).add(p.x.lessThan(windup.mul(2).sub(1)).select(.16, .045));
+          const beat = sin(age.mul(Math.PI * 4)).mul(.07).mul(this.pulse).add(.86);
+          const animated = shape.equal(2).or(shape.equal(3)).select(laneWarning, ringWarning)
+            .mul(windup.mul(.25).add(.65)).mul(beat).min(.68);
+          mask = shape.equal(1).or(shape.equal(2)).or(shape.equal(3)).or(shape.equal(8)).select(animated, mask.mul(.65));
+        }
         if (this.bloodTextures.length) {
           const [splats, pool, trail] = this.bloodTextures.map(map => texture(map));
           const blood = shape.equal(6).select(pool, shape.equal(7).select(trail, splats));
