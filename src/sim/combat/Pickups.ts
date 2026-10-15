@@ -16,9 +16,15 @@ export class Pickups {
       const pickup = entity.pickup; if (!pickup || !('actionId' in pickup)) continue;
       const distance = Math.hypot(player.transform.x - entity.transform.x, player.transform.z - entity.transform.z);
       if (!pickup.armed) { if (distance > 0.8) pickup.armed = true; continue; }
-      if (distance > (pickup.interactTicks ? 1.5 : 0.6) || (pickup.interactTicks && frame && Math.hypot(frame.move.x, frame.move.z) > 0)) { if (pickup.interactTicks) pickup.progress = 0; continue; }
+      if (pickup.interactTicks && frame?.moveTarget && Math.hypot(frame.moveTarget.x - entity.transform.x, frame.moveTarget.z - entity.transform.z) < 1.2) pickup.requested = true;
+      // A shelf behind a rail can't be stood next to: a clicked shelf pickup is reachable from 2.2 m (PO 10-15 L5 shotgun).
+      const reach = !pickup.interactTicks ? 0.6 : pickup.requested && (pickup.surfaceY ?? 0) > 0 ? 2.2 : 1.5;
+      // Arrived for a clicked pickup: stop the click route here instead of walking on (the L5 route to the shelf ends at the cellar exit).
+      if (pickup.requested && distance <= reach && this.world.controls.moveTarget) { this.world.controls.reset(); continue; }
+      if (distance > reach || (pickup.interactTicks && frame && Math.hypot(frame.move.x, frame.move.z) > 0)) { if (pickup.interactTicks) pickup.progress = 0; continue; }
       if (pickup.interactTicks) {
-        if (!pickup.progress && !frame?.interact && distance > 0.6) continue;
+        // A click on (or right next to) the pickup counts as interacting: a shelf behind a rail keeps the courier more than 0.6 m away (PO 10-15 L5 shotgun).
+        if (!pickup.progress && !frame?.interact && !pickup.requested && distance > 0.6) continue;
         pickup.progress = (pickup.progress ?? 0) + 1;
         if (pickup.progress < pickup.interactTicks) continue;
       }

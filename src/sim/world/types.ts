@@ -34,7 +34,7 @@ export interface EntitySnapshot {
   /** L1 v2 transformation of a bitten pedestrian (0 to 1); removed when the same entity rises infected. */
   infection?: import('../outbreak/types').InfectionState;
   noiseTarget?: { id: number; until: number };
-  pickup?: import('../interact/Pickups').Pickup | { actionId: string; armed: boolean; /** Authored shelf top in world metres; absent means the drawn ground. */ surfaceY?: number; retain?: boolean; interactTicks?: number; progress?: number };
+  pickup?: import('../interact/Pickups').Pickup | { actionId: string; armed: boolean; /** Authored shelf top in world metres; absent means the drawn ground. */ surfaceY?: number; retain?: boolean; interactTicks?: number; progress?: number; /** The player clicked this pickup: collect from interaction range without E. */ requested?: boolean };
   speedBuff?: { multiplier: number; until: number };
   hidden?: boolean;
   /** Scripted walk out of a house door (HouseEmergence): body separation leaves the body (position and height) alone. */
