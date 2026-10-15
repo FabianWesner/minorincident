@@ -14,7 +14,7 @@ for (const options of [{ interactTicks: 36 }, { retain: true }, { interactTicks:
 for (const moveDog of [false, true]) test(`@E08 running fetch cancels outside player leash (dog departs: ${moveDog})`, async () => {
   const w = world = await npcWorld(); w.npcs!.companion.forceSafe = false;
   const id = w.combat!.pickups.spawn('weapon.bat', { x: 5, z: 0 }, true);
-  step(w, 1); const dog = [...w.entities.iterate()].find(e => e.companion)!;
+  step(w, 2); const dog = [...w.entities.iterate()].find(e => e.companion)!;
   expect(dog.companion!.pickup).toBe(id);
   if (moveDog) { dog.transform.x = -7; dog.transform.z = 0; }
   else teleport(w, -7, 0);
