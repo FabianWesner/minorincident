@@ -42,6 +42,8 @@ export class SolidRegistry {
   private readonly hullNeighbors: number[] = [];
   private readonly bodies: EntitySnapshot[] = [];
   private readonly moved: EntitySnapshot[] = [];
+  private readonly live = new Map<number, EntitySnapshot>();
+  private committing = false;
   private readonly contact: Contact = { depth: 0, nx: 0, nz: 0, inside: false };
   private maxHull = 0;
   private maxActor: number = survivor.radius;
@@ -137,9 +139,10 @@ export class SolidRegistry {
     if (!clear || !bodies) return clear;
     this.world.spatial.query({ x: at.x, z: at.z, r: radius + this.maxActor }, this.nearby, false);
     for (const id of this.nearby) {
-      const other = this.world.entities.get(id);
-      if (id === ignoreId || !other || !actor(other) || pairExempt(e, other) || !layers(at, other.transform)) continue;
-      if (Math.hypot(at.x - other.transform.x, at.z - other.transform.z) < radius + actorRadius(other) - limit) return false;
+      const other = this.committing ? this.live.get(id) : this.world.entities.get(id);
+      if (id === ignoreId || !other || !this.committing && !actor(other) || pairExempt(e, other) || !layers(at, other.transform)) continue;
+      const dx = at.x - other.transform.x, dz = at.z - other.transform.z, reach = radius + actorRadius(other) - limit;
+      if (dx * dx + dz * dz < reach * reach) return false;
     }
     return true;
   }
@@ -183,8 +186,8 @@ export class SolidRegistry {
     Object.assign(e.transform, to); delete e.pendingAdmission;
     this.publish(e, true); this.admitted++; return true;
   }
-  relocate(e: EntitySnapshot, at: Point, writer: string, range = 1.5): boolean {
-    this.syncHulls(); const to = this.find(at, actorRadius(e), e.id, range);
+  relocate(e: EntitySnapshot, at: Point, writer: string, range = 1.5, navigation = true): boolean {
+    this.syncHulls(); const to = this.find(at, actorRadius(e), e.id, range, navigation);
     if (!to) return false;
     Object.assign(e.transform, to); this.writers.set(e, writer); this.publish(e, true); this.committed.set(e, { ...e.transform }); return true;
   }
@@ -206,7 +209,7 @@ export class SolidRegistry {
     this.syncHulls(); const nav = this.world.infected?.nav;
     const full = this.world.tick % 60 === 0 || nav !== this.nav || nav?.revision !== this.navRevision;
     this.nav = nav; this.navRevision = nav?.revision ?? -1;
-    this.bodies.length = this.moved.length = 0;
+    this.bodies.length = this.moved.length = 0; this.live.clear();
     for (const e of this.world.entities.iterate()) {
       if (e.pendingAdmission && e.health.current <= 0) { e.hidden = e.pendingAdmission.hidden; delete e.pendingAdmission; }
       if (e.pendingAdmission) {
@@ -219,10 +222,11 @@ export class SolidRegistry {
         else { e.hidden = true; this.world.spatial.delete(e.id); continue; }
       }
       if (!actor(e)) continue;
-      this.maxActor = Math.max(this.maxActor, actorRadius(e)); this.bodies.push(e);
+      this.maxActor = Math.max(this.maxActor, actorRadius(e)); this.bodies.push(e); this.live.set(e.id, e);
       const old = this.committed.get(e), p = e.transform;
       if (full || this.changedActors.has(e.id) || !old || old.x !== p.x || old.z !== p.z || old.y !== p.y) this.moved.push(e);
     }
+    this.committing = true;
     // Reserve prior committed positions before accepting any proposed motion. A later actor
     // cannot consume an earlier actor's rollback position. New admissions reserve only after motion.
     for (const e of this.moved) {
@@ -247,10 +251,11 @@ export class SolidRegistry {
           });
           this.world.spatial.query({ x: p.x, z: p.z, r: radius + this.maxActor }, this.nearby, false);
           for (const id of this.nearby) {
-            const other = this.world.entities.get(id);
-            if (id === e.id || !other || !actor(other) || pairExempt(e, other) || !layers(p, other.transform)) continue;
-            const dx = p.x - other.transform.x, dz = p.z - other.transform.z, d = Math.hypot(dx, dz), depth = radius + actorRadius(other) - d;
-            if (depth <= tolerance) continue;
+            const other = this.live.get(id);
+            if (id === e.id || !other || pairExempt(e, other) || !layers(p, other.transform)) continue;
+            const dx = p.x - other.transform.x, dz = p.z - other.transform.z, squared = dx * dx + dz * dz, reach = radius + actorRadius(other);
+            if (squared >= (reach - tolerance) ** 2) continue;
+            const d = Math.sqrt(squared), depth = reach - d;
             const nx = d ? dx / d : Math.cos(e.id * 2.399963), nz = d ? dz / d : Math.sin(e.id * 2.399963);
             const to = { x: p.x + nx * (depth + skin), z: p.z + nz * (depth + skin), y: p.y };
             if (!this.clear(to, radius, e.id, false)) continue;
@@ -265,7 +270,7 @@ export class SolidRegistry {
           if (to) { Object.assign(p, to); valid = true; }
           else if (!old) {
             e.pendingAdmission = { ...proposed, writer: this.writers.get(e) ?? 'tick.admission', hidden: e.hidden, range: 4, navigation: false };
-            e.hidden = true; this.world.spatial.delete(e.id); this.deferred++; continue;
+            e.hidden = true; this.world.spatial.delete(e.id); this.live.delete(e.id); this.deferred++; continue;
           }
         }
       }
@@ -279,6 +284,7 @@ export class SolidRegistry {
       const old = this.committed.get(e);
       if (old) Object.assign(old, e.transform); else this.committed.set(e, { ...e.transform });
     }
+    this.committing = false;
   }
   private record(e: EntitySnapshot, other: number | string, depth: number, inside: boolean): void {
     this.failures++;
@@ -300,5 +306,5 @@ export class SolidRegistry {
     }
   }
   snapshot() { return { failures: this.failures, pending: this.world.entities.values().filter(e => e.pendingAdmission).length, admitted: this.admitted, deferred: this.deferred, offenders: this.offenders.map(o => ({ ...o })) }; }
-  reset(): void { this.bodies.length = this.moved.length = this.nearby.length = this.hullNeighbors.length = 0; this.changedActors.clear(); this.blockerOwners.clear(); this.hulls.clear(); this.hullIndex.reset(); this.committed = new WeakMap(); this.proposed = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = -1; this.nav = undefined; }
+  reset(): void { this.bodies.length = this.moved.length = this.nearby.length = this.hullNeighbors.length = 0; this.changedActors.clear(); this.live.clear(); this.committing = false; this.blockerOwners.clear(); this.hulls.clear(); this.hullIndex.reset(); this.committed = new WeakMap(); this.proposed = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = -1; this.nav = undefined; }
 }

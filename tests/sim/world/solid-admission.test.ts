@@ -45,6 +45,8 @@ test('teleport and checkpoint allies reserve distinct radius-aware slots', async
     respawnAtCheckpoint(w, { x: 12, z: 6 }); tick(w);
     expect(ids.every(id => w.entities.get(id)!.health.current > 0)).toBe(true);
     expect(w.solids.clear(player.transform, .35, 1)).toBe(true);
+    missionControls(w).teleport(ids[0], { x: -400, z: -400 });
+    expect(w.entities.get(ids[0])!.transform).toMatchObject({ x: -400, z: -400 });
   } finally { w.dispose(); }
 });
 test('guard audits a stationary actor when a tank moves over it and retains bounded diagnostics', async () => {
