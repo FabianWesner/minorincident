@@ -355,7 +355,7 @@ export class GameUI {
     const closest = nearest.filter(item => item.distance <= 10).sort((a, b) => a.distance - b.distance)[0];
     const entities = [...world.entities.iterate()];
     const infected = entities.filter(entity => entity.infected);
-    const loadout = player?.weapons ? [...player.weapons.LEFT.rack, ...player.weapons.RIGHT.rack].map(slot => slot.id).join(', ') : 'none';
+    const loadout = player?.weapons ? this.game.world.combat!.runner.loadout.activeEntries().map(entry => entry.id).join(', ') : 'none';
     const seed = world.seed;
     const district = world.districts?.districts.map(d => {
       const bounds = d.layout.bounds;

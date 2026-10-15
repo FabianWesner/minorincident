@@ -14,6 +14,8 @@ export interface InputFrame {
   moveTarget?: Vec2;
   /** Mouse LMB fires the active carried action; Shift locks feet for the swing. */
   mouseAttack?: boolean;
+  /** Space attacks the currently selected carried weapon, independent of its rack. */
+  activeAttack?: boolean;
   attackInPlace?: boolean;
   /** RMB/Q cycle the carried actions across racks, deduplicating unarmed. */
   selectorActive?: boolean;
@@ -29,6 +31,8 @@ export interface InputFrame {
   /** Mouse-mode number keys address the same carried list as RMB. */
   selectedActiveSlot?: number;
   selectedSlot?: { side: 'LEFT' | 'RIGHT'; index: number };
+  /** Device number keys address the ordered rack; saved/test commands retain physical indices. */
+  orderedSelection?: boolean;
   selectorSide?: 'LEFT' | 'RIGHT';
   /** Resolved click navigation requests the bounded locomotion response. */
   navigation?: boolean;

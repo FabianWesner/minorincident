@@ -18,7 +18,7 @@ export class ControlIntent {
   reset(): void { this.route.path.length = 0; this.route.goal = -1; this.moveTarget = null; this.attack = null; }
   resolve(raw: InputFrame): InputFrame {
     const player = this.world.entities.get(1)!;
-    if (raw.mouseAttack && player.weapons && !raw.pointerGround) {
+    if ((raw.mouseAttack || raw.activeAttack) && player.weapons && !raw.pointerGround) {
       const side = player.weapons.selectedSide;
       raw = { ...raw, left: side === 'LEFT' ? { ...raw.left } : { down: false, held: false, up: false }, right: side === 'RIGHT' ? { ...raw.left } : { down: false, held: false, up: false },
         ...(raw.attackTarget ? { attackTarget: { ...raw.attackTarget, side } } : {}) };

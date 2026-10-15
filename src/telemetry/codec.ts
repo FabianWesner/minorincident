@@ -18,7 +18,7 @@ export const MAX_CHUNK_BYTES = 256 * 1024;
 export const schemes: readonly Scheme[] = ['mouse-only', 'mouse-keyboard', 'keyboard', 'touch'];
 const sources = [null, 'pointer', 'keyboard', 'touch', 'assist'] as const;
 /** Optional boolean fields, two bits each in slot 20: 0 = absent, 1 = false, 2 = true. */
-const optionalFlags = ['brake', 'handbrake', 'mouseAttack', 'attackInPlace', 'selectorActive', 'cancelMove', 'pointerGround', 'pointerTarget', 'navigation', 'walk'] as const;
+const optionalFlags = ['brake', 'handbrake', 'mouseAttack', 'attackInPlace', 'selectorActive', 'cancelMove', 'pointerGround', 'pointerTarget', 'navigation', 'walk', 'activeAttack', 'orderedSelection'] as const;
 const FLOAT_SLOTS = 10, SLOTS = 21, ALL = 0x1fffff, HEADER = 13;
 /** zoom = wheel delta (float), tier = quality tier index, phase = mission UI command index, view = width * 65536 + height. */
 export type CommandKind = 'zoom' | 'tier' | 'phase' | 'view';
