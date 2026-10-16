@@ -50,7 +50,7 @@ export async function loadLevel(level: RunnerLevel, seed: number, campaign?: Cam
     if (!campaign && level === 'L3') applyCampaign(world, preset('L3-default'));
     if (!campaign && level === 'L2') applyCampaign(world, preset('L2-default'));
     if (level === 'L7') world.l7Encounters!.prepare();
-    else world.loadMission(resolveCampaignMission(level, world.districts!)).begin();
+    world.loadMission(resolveCampaignMission(level, world.districts!)).begin();
     return world;
   } catch (error) { world.dispose(); throw error; }
 }
@@ -199,7 +199,7 @@ export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, see
   } finally { world.dispose(); }
 }
 
-/** L7 deliberately has no mission graph: use its real pickup, encounter group and bus completion event. */
+/** Drive the real pickup, encounter group and bus while the mission records checkpoints. */
 function runSeven(world: SimWorld, report: LevelReport, maxSeconds: number, onComplete?: (world: SimWorld, result: MissionResult) => void): LevelReport {
   const walker = new Walker(), boarding = l7CorridorAnchors['l7-bus-boarding'].position;
   // Authored Northgate -> Lakeshore road route; keep the long injured group out of the frontage yards.

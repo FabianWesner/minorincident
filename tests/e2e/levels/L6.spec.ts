@@ -1,4 +1,5 @@
 import { PNG } from 'pngjs';
+import { compareWeapons } from '../../../src/data/weaponOrder';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { test, expect, boot, testUrl } from '../fixtures';
 const out='test-results/epics/E24';
@@ -35,7 +36,7 @@ test('T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes 
     if(obs.p.x>143&&!shots.has('l6-chokepoint'))await snap('l6-chokepoint');
     if(obs.p.x>263&&!shots.has('l6-exit-night'))await snap('l6-exit-night');
     if(obs.m.phase==='cinematic'){await step(60);continue;}
-    if(obs.close.length<3&&obs.enemy&&(['shelter','first','fails'].includes(obs.s.phase)||i%4!==0)){await page.evaluate(p=>window.__SS__!.camera.cinematic({position:[p.x+24,29,p.z+24],target:[p.x,0,p.z]},true),obs.p);await step(1);const ndc=await page.evaluate(at=>window.__SS__!.camera.project(at.x,at.y,at.z),obs.enemy.at),view=page.viewportSize()!;await page.mouse.move((ndc[0]+1)*view.width/2,(1-ndc[1])*view.height/2);await page.keyboard.down('Shift');await page.keyboard.press('1');await page.keyboard.up('Shift');await step(1);await page.mouse.down();await step(20);await page.mouse.up();continue;}
+    if(obs.close.length<3&&obs.enemy&&(['shelter','first','fails'].includes(obs.s.phase)||i%4!==0)){await page.evaluate(p=>window.__SS__!.camera.cinematic({position:[p.x+24,29,p.z+24],target:[p.x,0,p.z]},true),obs.p);await step(1);const ndc=await page.evaluate(at=>window.__SS__!.camera.project(at.x,at.y,at.z),obs.enemy.at),view=page.viewportSize()!;await page.mouse.move((ndc[0]+1)*view.width/2,(1-ndc[1])*view.height/2);const mgKey=String((await page.evaluate(()=>window.__SS__!.getState().player!.weapons!.RIGHT.rack.map(s=>s.id))).sort(compareWeapons).indexOf('weapon.army-mg')+1);await page.keyboard.down('Shift');await page.keyboard.press(mgKey);await page.keyboard.up('Shift');await step(1);expect(await page.evaluate(()=>{const r=window.__SS__!.getState().player!.weapons!.RIGHT;return r.rack[r.index].id;})).toBe('weapon.army-mg');await page.mouse.down();await step(20);await page.mouse.up();continue;}
     let target={x:obs.s.leaderZ<14?6:Math.max(25,obs.s.leaderX-3),z:15};
     const lag=obs.friends.filter(r=>r.straggler&&!r.rejoined).sort((a,b)=>a.at.x-b.at.x)[0];
     if(lag&&!lag.collected)target=lag.at;else if(lag&&obs.p.x-lag.at.x>5){await step(12);continue;}
@@ -59,7 +60,12 @@ test('T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes 
 
   }
   const m=await page.evaluate(()=>window.__SS__!.missions.state()!);expect(m.phase).toBe('result');expect(m.l6!.flashlight).toBe(true);expect(shots.size).toBe(7);expect(m.l6!.gates.some(g=>g.closedAt>0)).toBe(true);expect(m.result!.deaths).toBe(0);expect(m.result!.rescued/m.result!.survivorsIn!).toBeGreaterThanOrEqual(.6);expect(m.l6!.survivors.some(r=>r.straggler&&r.rejoined)).toBe(true);await expect(page.getByRole('heading',{name:'Night. Still alive.'})).toBeVisible();await expect(page.getByTestId('result-rescued')).toHaveText(String(m.result!.rescued));await expect(page.getByTestId('result-survivorsIn')).toHaveText(String(m.result!.survivorsIn));await expect(page.getByTestId('mission-detail')).toContainText(`Rescued ${m.result!.rescued}`);await page.screenshot({path:`${out}/real-result.png`});// L6 is no longer the last level (PO 10-11 levels 4-9): the result button continues into L7; credits follow the last level.
+  const exitCamera=await page.evaluate(async()=>{const a=window.__SS__!;a.camera.preset('D-SUBWAY/W0/l6-exit-night');await a.screenshotReady();return a.getState().render.camera;});await page.screenshot({path:`${out}/pair-northgate-l6.png`});
   await page.getByRole('button',{name:'Continue',exact:true}).click();await page.waitForFunction(()=>window.__SS__!.getState().scenario==='L7',undefined,{timeout:60_000});
+  await page.evaluate(()=>window.__SS__!.screenshotReady());
+  const next=await page.evaluate(()=>window.__SS__!.getState());expect(await page.evaluate(()=>window.__SS__!.missions.state()!.checkpoint)).toBe('night-exit');expect(next.l7!.roster.map(r=>r.id).sort((a,b)=>a-b)).toEqual(m.result!.escapedSurvivors!.map(e=>e.id).sort((a,b)=>a-b));
+  await page.evaluate(async pose=>{const a=window.__SS__!;a.camera.cinematic({position:pose.position as [number,number,number],target:pose.target as [number,number,number]},true);await a.screenshotReady();},exitCamera);
+  const nextCamera=await page.evaluate(()=>window.__SS__!.getState().render.camera);expect(nextCamera.position).toEqual(exitCamera.position);expect(nextCamera.target).toEqual(exitCamera.target);await page.screenshot({path:`${out}/pair-northgate-l7.png`});
 });
 
 const lum = (r: number, g: number, b: number) => { const c = (v: number) => { v /= 255; return v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }; return .2126 * c(r) + .7152 * c(g) + .0722 * c(b); };

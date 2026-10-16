@@ -134,6 +134,7 @@ export interface GameStateSnapshot {
   l9?: import('../missions/LevelNineCrash').L9CrashState;
   l8?: import('../missions/LevelEightZoo').L8ZooState;
   l7?: import('../missions/LevelSevenEncounters').L7EncounterState;
+  l7Departure?: import('../missions/LevelSevenDeparture').L7DepartureState;
   weather: ReturnType<import('../weather/WeatherSystem').WeatherSystem['snapshot']> | null;
   tick: number;
   ai?: ReturnType<import('../ai/InfectedSystem').InfectedSystem['snapshot']>;

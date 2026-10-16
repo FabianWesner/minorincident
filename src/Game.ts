@@ -155,7 +155,7 @@ export class Game {
       }
       if (!this.loading) {
         const departure = this.world.l7Departure;
-        if (departure?.state.phase === 'done' && !departure.handedOver) { departure.handedOver = true; void this.handOver(7); }
+        if (departure?.state.phase === 'done' && (!this.world.missions || this.world.missions.state.phase === 'result') && !departure.handedOver) { departure.handedOver = true; void this.handOver(7); }
         const mission = this.world.missions;
         if (mission && this.prefetchedMission !== mission && /^L[1-5]$/.test(mission.def.id) && (mission.def.id === 'L2' && mission.state.phase === 'playing' && this.world.tick >= 300 || ['result', 'progression'].includes(mission.state.phase) || mission.def.finish.some(id => ['active', 'completed'].includes(mission.state.steps[id]?.status ?? '')))) { this.prefetchedMission = mission; void prefetchLevel(`L${Number(mission.def.id.slice(1)) + 1}`, 4, this.quality.tier); }
       }
@@ -246,8 +246,8 @@ export class Game {
           if(opts?.checkpoint) mission.loadCheckpoint(opts.checkpoint);
         }
         if (id === 'L7') {
-          if (this.campaign) this.applyCampaign();
           this.world.l7Encounters!.prepare();
+          this.world.missions!.begin();
         }
         opts?.setup?.(this.world);
         if(this.campaign && id !== 'L10')this.watchCampaign();
@@ -296,7 +296,7 @@ export class Game {
   async startCampaign(character:SurvivorVariant):Promise<void> {
     this.campaign=newCampaign(character,Number(this.params.get('seed')??1));this.campaign.settings={...this.audio.settings};this.saveCampaign();await this.loadLevel('L1');
   }
-  /** Levels without a mission screen (L7 onwards) hand over directly: the next level when it exists, else the credits. */
+  /** Late levels hand over directly: the next level when it exists, else the credits. */
   private async handOver(finished: number): Promise<void> {
     const save = this.campaign, next = nextLevelAfter(finished);
     if (!save) return;
@@ -344,7 +344,13 @@ export class Game {
       if (compositions[`L${next}`]) void prefetchLevel(`L${next}`, 4, this.quality.tier);
     });
     this.world.events.on('checkpoint.set', () => { if (this.world.scenario === 'L10') this.saveCampaign(); });
-    this.world.events.on('checkpoint.restored', () => { if (this.world.scenario === 'L10') this.saveCampaign(); });
+    this.world.events.on('checkpoint.restored', () => {
+      if (this.world.scenario === 'L7' && this.world.progression?.campaign) {
+        const live = this.world.progression.campaign;
+        save.ownedActions = [...live.ownedActions]; save.racks = structuredClone(live.racks);
+        this.saveCampaign();
+      } else if (this.world.scenario === 'L10') this.saveCampaign();
+    });
     this.world.events.on('mission.signal', event => { if (event.type === 'mission.signal' && (event.name.startsWith('l9.') || event.name === 'cure-released' || event.name.startsWith('epilogue-'))) this.saveCampaign(); });
     this.world.events.on('combat.attack',event=>{if(event.type==='combat.attack')save.usage[event.actionId]=(save.usage[event.actionId]??0)+1;});
     this.world.events.on('pickup.collected',event=>{if(event.type==='pickup.collected'&&'actionId' in event&&!save.ownedActions.includes(event.actionId))save.ownedActions.push(event.actionId);});

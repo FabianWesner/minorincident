@@ -1,0 +1,46 @@
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { boot, expect, test } from '../fixtures';
+
+const webgpu = process.env.L7_ENTRY_WEBGPU === '1';
+if (webgpu) test.use({ launchOptions: { args: ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] } });
+for (const tier of ['high', 'low'] as const) for (const zoom of [1, .5]) test(`T-E29-16-browser @E29-AC16 ${tier} zoom ${zoom}: entry, real rocket pickup and checkpoint death`, async ({ page }) => {
+  test.setTimeout(180_000);
+  const out = `test-results/l7-entry/${webgpu ? 'webgpu' : 'webgl2'}-${tier}-z${zoom}`;
+  mkdirSync(out, { recursive: true });
+  await boot(page, `/?test=1&ui=1&${webgpu ? '' : 'renderer=webgl&'}quality=${tier}&audio=muted&dpr=1`);
+  await page.evaluate(async () => { const a = window.__SS__!; await a.loadLevel('L7', { seed: 29 }); a.pause(); });
+  expect(await page.evaluate(() => window.__SS__!.getState().render.backend)).toBe(webgpu ? 'webgpu' : 'webgl2');
+  expect(await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint)).toBe('night-exit');
+  if (zoom === .5) { await page.mouse.move(800, 450); for (let i = 0; i < 5; i++) { await page.mouse.wheel(0, -120); await page.evaluate(() => window.__SS__!.step(1)); } await page.evaluate(() => window.__SS__!.step(30)); }
+  await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: `${out}/night-exit.png` });
+  expect(await page.evaluate(() => window.__SS__!.getState().render.camera.zoom)).toBeCloseTo(zoom, 2);
+  const initial = await page.evaluate(() => window.__SS__!.getState().l7!.roster);
+  await page.evaluate(async () => { const a = window.__SS__!; a.survivor.damage(1000); await a.step(121); });
+  expect(await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint)).toBe('night-exit');
+  expect(await page.evaluate(() => window.__SS__!.getState().l7!.roster)).toEqual(initial);
+  expect(await page.evaluate(() => window.__SS__!.events(0).some(e => e.type === 'checkpoint.restored' && e.id === 'night-exit'))).toBe(true);
+  // Click the real production pickup: device adapters drive the approach and the interaction hold.
+  const click = await page.evaluate(() => {
+    const a = window.__SS__!, pickup = a.query({}).find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === 'weapon.rocket-launcher')!;
+    return a.input.project(pickup.transform);
+  });
+  await page.mouse.click(click.x, click.y);
+  await page.keyboard.down('e');
+  for (let i = 0; i < 30 && await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint) !== 'rocket'; i++) await page.evaluate(() => window.__SS__!.step(12));
+  await page.keyboard.up('e');
+  expect(await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint)).toBe('rocket');
+  await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: `${out}/rocket.png` });
+  for (const checkpoint of ['rocket', 'corridor']) {
+    if (checkpoint === 'corridor') await page.evaluate(async () => { const a = window.__SS__!; a.teleport(1, { x: -30, z: 47 }); await a.step(1); });
+    const before = await page.evaluate(() => { const s = window.__SS__!.getState(); return { roster: s.l7!.roster, bus: s.l7Departure, weapons: s.player!.weapons, checkpoint: window.__SS__!.missions.state()!.checkpoint }; });
+    expect(before.checkpoint).toBe(checkpoint);
+    await page.evaluate(async () => { const a = window.__SS__!; await a.step(121); a.survivor.damage(1000); await a.step(121); });
+    const after = await page.evaluate(() => window.__SS__!.getState());
+    expect(await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint)).toBe(checkpoint); expect(after.player!.health.current).toBeGreaterThan(0);
+    expect(after.l7!.roster).toEqual(before.roster);
+    expect(after.l7Departure!.busId).toBe(before.bus!.busId); expect(after.l7Departure!.boarded).toEqual(before.bus!.boarded);
+    expect(after.player!.weapons!.RIGHT.rack.map(s => s.id)).toEqual(before.weapons!.RIGHT.rack.map(s => s.id));
+    await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: `${out}/${checkpoint}-retry.png` });
+  }
+  writeFileSync(`${out}/state.json`, JSON.stringify(await page.evaluate(() => ({ state: window.__SS__!.getState(), events: window.__SS__!.events(0), perf: window.__SS__!.perf() })), null, 2));
+});
