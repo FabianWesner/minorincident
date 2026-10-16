@@ -236,12 +236,12 @@ test('coarse pursuit crosses nonresident collision and re-enters with its curren
   w.update(); const before = e.transform.x, hp = e.health.current;
   resident = false; wall(w, -110, 0, .5, 40);
   run(w, 10);
-  expect(pursuit.state.mode).toBe('coarse');
+  expect(pursuit.state.mode).toBe('coarse'); expect(e.infected!.hidden).toBe(true);
   expect(e.transform.x - before).toBeCloseTo(megaAlpha.cruiseMs * 10, 3);
   expect(w.solids.clear(e.transform, survivor.radius, 1)).toBe(true);
   const endpoint = e.transform.x;
   resident = true; w.update();
-  expect(pursuit.state.mode).toBe('detailed');
+  expect(pursuit.state.mode).toBe('detailed'); expect(e.infected!.hidden).toBe(false);
   expect(e.transform.x).toBeGreaterThanOrEqual(endpoint);
   expect(w.solids.clear(e.transform, survivor.radius, 1)).toBe(false);
   expect(e.health.current).toBe(hp); expect(w.infected!.director.count).toBe(1);
