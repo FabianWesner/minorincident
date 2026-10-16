@@ -114,7 +114,7 @@ export interface ActorSpec {
   species?: import('../../sim/npc/types').ZooSpecies;
   at?: [number, number];
   yaw?: number;
-  /** Pedestrian look (model npc.civilian-*, tint #rrggbb, accessories, handProp); courier: survivor variant via `model: 'female'|'male'`. */
+  /** Pedestrian look (model npc.civilian-*, tint #rrggbb, accessories, handProp); courier: `model: 'female'|'male'` defaults to the URL selection (female), gearTier defaults to 0 independently of previous scenes. */
   look?: Look;
   /** Infected archetype (src/data/infected.ts), default infected.runner. */
   archetype?: string;
@@ -238,7 +238,7 @@ export interface Expectations {
   seeThroughCutInsideMax?: number;
   /** Share of the courier and ridden vehicle's own pixels visible on every sheet frame, including f0. Reference hides foreground solids and the crowd; Mega fixtures sample within 14 m. */
   courierVisibleShareMin?: number;
-  /** PO 10-15: within 6 m, Mega visible pixels / regular Alpha pixels at the identical transform and pose. Relative gate avoids incentivizing an oversized boss; use 0.9. */
+  /** Within 6 m, Mega / regular Alpha body pixels at identical transform/pose, both outside the courier's intended boss-reveal disc. Use 0.9; courier visibility independently stays >= 0.6. */
   megaAlphaVisibleRatioMin?: number;
   /** Placement pairs whose LOD0 meshes cut through each other (`clipping.static` only; bone hits not counted). */
   staticOverlapMax?: number;

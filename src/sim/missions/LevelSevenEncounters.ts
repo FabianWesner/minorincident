@@ -45,8 +45,11 @@ export class LevelSevenEncounters {
       }
       Object.assign(e.transform, { ...at, y: w.districts!.groundHeight(at.x, at.z) + .7 });
       e.hidden = false;
+      e.health.current = e.health.max;
       const c = e.civilian!;
       delete c.floorY; c.story = null; c.path.length = 0; c.goal = -1; c.pauseUntil = 0; c.state = 'calm';
+      c.entered = w.tick; c.until = 0; c.knockedUntil = 0;
+      if (e.combat) { e.combat.staggerUntil = 0; e.combat.attacking = false; delete e.combat.reaction; }
       if (c.l1) c.l1.target = null;
       // Armed shelter residents travel with the group rather than holding their old underground post.
       const key = c.survivor?.key ?? `shelter-${slot}`;

@@ -5,12 +5,26 @@ import { edgeNoise } from '../../../tools/scenelab/edge-noise';
 import { validateSpec } from '../../../src/debug/scenelab/spec';
 import manifest from '../../../src/assets/manifest.json';
 import type { AssetDef } from '../../../src/assets/types';
+import { PNG } from 'pngjs';
+import { bodyPixels } from '../../../tools/scenelab/run';
 
 const directory = 'tests/scenes/catalog';
 const scenes = new Map(readdirSync(directory).filter(f => f.startsWith('l10-q1-')).map(f => [f.slice(0, -5), readSpec(`${directory}/${f}`)]));
 const assets = new Map((manifest as AssetDef[]).map(a => [a.id, a]));
 
 describe('L10-Q1 Scene Lab catalog @E32', () => {
+  it('compares Mega and Alpha outside the same courier reveal, including its dither rim', () => {
+    const background = new PNG({ width: 40, height: 20 }), alpha = new PNG({ width: 40, height: 20 }), mega = new PNG({ width: 40, height: 20 });
+    const paint = (png: PNG, x: number, y: number) => png.data.fill(255, (y * png.width + x) * 4, (y * png.width + x) * 4 + 4);
+    // The uncut Alpha has extra pixels inside the disc; only its outside pixels are the comparison.
+    paint(alpha, 20, 10); paint(alpha, 24, 10); paint(alpha, 30, 10); paint(mega, 30, 10);
+    const hole = { center: [.5, .5], radius: .2, strength: 1 };
+    expect(bodyPixels(alpha, background)).toBe(3);
+    expect(bodyPixels(alpha, background, hole)).toBe(1);
+    expect(bodyPixels(mega, background, hole)).toBe(1);
+    expect(bodyPixels(alpha, background, { ...hole, strength: 0 })).toBe(3);
+    paint(mega, 31, 10); expect(bodyPixels(mega, background, hole)).toBe(2);
+  });
   it('keeps the Mega readable relative to an Alpha without requiring a larger body', () => {
     // PO 10-15: an absolute 1.5% viewport gate encouraged widening the boss.
     // The replacement compares visible pixels at the same pose/camera distance;

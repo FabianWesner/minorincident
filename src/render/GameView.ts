@@ -87,7 +87,7 @@ export class GameView implements Lifecycle {
   private readonly revealSubject = new Box3();
   private readonly revealVehicle = new Box3();
   private probeVisibilityPending = false;
-  private probeHide = { courier: false, crowd: false, environment: false };
+  private probeHide = { courier: false, crowd: false, environment: false, bars: false };
   private readonly storyFocus = new Vector3();
   private readonly storyOffset = new Vector3();
   readonly view = new View();
@@ -710,8 +710,8 @@ export class GameView implements Lifecycle {
     seeThrough.bossRadius.value = Math.min(.3, Math.max(.1, 2.8 / screenHeight));
   }
   /** Scene Lab: hide the courier / the crowd (Mega included) and redraw, for the courier-visible-share probe. */
-  probeVisibility(hide: { courier: boolean; crowd: boolean; environment?: boolean }): number {
-    this.probeHide = { ...hide, environment: hide.environment ?? false }; this.probeVisibilityPending = true; this.update(1);
+  probeVisibility(hide: { courier: boolean; crowd: boolean; environment?: boolean; bars?: boolean }): number {
+    this.probeHide = { ...hide, environment: hide.environment ?? false, bars: hide.bars ?? false }; this.probeVisibilityPending = true; this.update(1);
     const player = this.world.entities.get(1); return player ? this.megaDistance(player.transform) : Infinity;
   }
   /** Project a world point to viewport-normalized coordinates, for masks and input integration. */
@@ -960,7 +960,7 @@ export class GameView implements Lifecycle {
       this.savedMaterials.clear(); this.scene.background = background; this.scene.backgroundNode = backgroundNode; this.scene.fog = fog; this.renderer.shadowMap.enabled = shadow;
     } else if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
     // Health bars keep their CSS size and contrast through DOF, bloom and vignette.
-    if (this.healthBars?.count && !this.idPass && !this.windowMask && !this.foliageMask) {
+    if (this.healthBars?.count && !this.probeHide.bars && !this.idPass && !this.windowMask && !this.foliageMask) {
       this.renderBars();
     }
     if (profileStart) this.renderCpuMs = performance.now() - renderStart;

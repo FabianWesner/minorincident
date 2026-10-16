@@ -1,0 +1,12 @@
+{
+  "name": "seethrough-gear-four",
+  "note": "Explicit tier-4 look used before the door/gate scene in the reload-isolation browser regression. A following scene with no look must return to default tier 0.",
+  "ground": "asphalt",
+  "time": "L2",
+  "size": 12,
+  "actors": [{ "id": "courier", "kind": "courier", "at": [0, 0], "look": { "model": "female", "gearTier": 4 } }],
+  "camera": { "mode": "game", "target": "courier", "zoom": 1 },
+  "frames": 1,
+  "sheet": 1,
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "drawCallsMax": 300, "trianglesMax": 500000 }
+}

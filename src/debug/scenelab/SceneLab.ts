@@ -56,6 +56,7 @@ import { buildScene, validateSpec, type Action, type ActorSpec, type BuiltScene,
 import { bodyOverlap, boneClipping, boxOf, staticClipping, type Bone, type BoneHit, type StaticClip, type TriangleSet, type Vec3 } from './geometry';
 import { footYaw, summarizeMotion, torsoPitch, unplantedClips, type FootSample, type MotionFrame } from './motion';
 import { Status } from '../../sim/combat/Status';
+import { seeThrough } from '../../render/SeeThrough';
 
 const assets = new Map((manifest as AssetDef[]).map(a => [a.id, a]));
 const rad = (deg: number) => deg * Math.PI / 180;
@@ -552,11 +553,11 @@ export class SceneLab {
         entity = 1; const player = world.entities.get(1)!;
         if (a.at) this.teleport(player, at);
         player.transform.yaw = yaw; Object.assign(world.previousPlayer!, player.transform);
-        if (a.look?.model === 'male' || a.look?.model === 'female') {
-          const tier = a.look.gearTier ?? 0;
-          if (![0, 1, 2, 3, 4].includes(tier)) throw new Error('Courier gear tier must be 0–4');
-          world.player!.select(a.look.model, tier as import('../../data/survivor').GearTier);
-        }
+        // Game handovers preserve cosmetics; independent lab fixtures must not inherit the preceding scene's campaign gear.
+        const variant = a.look?.model === 'male' || a.look?.model === 'female' ? a.look.model : this.game.params.get('survivor') === 'male' ? 'male' : 'female';
+        const tier = a.look?.gearTier ?? 0;
+        if (![0, 1, 2, 3, 4].includes(tier)) throw new Error('Courier gear tier must be 0–4');
+        world.player!.select(variant, tier as import('../../data/survivor').GearTier);
         // L1 parity: the courier starts empty-handed (Game.loadLevel clears the L1 loadout); `loadout` arms her.
         if (a.loadout) world.combat!.setLoadout([a.loadout[0]].flat(), [a.loadout[1]].flat()); else world.combat!.clearLoadout();
         world.combat!.damage.god = a.god ?? true;
@@ -1552,7 +1553,9 @@ export class SceneLab {
     return audit && { center: audit.center, solidRadius: audit.solidRadius, strength: audit.strength, cover: audit.cover, occluder: audit.occluder };
   }
   /** Courier-visible-share probe: redraw with the courier and/or the crowd (Mega included) hidden; returns the courier-to-Mega distance in metres (Infinity when none). */
-  hideProbe(courier: boolean, crowd: boolean, environment = false): number { return this.game.view.probeVisibility({ courier, crowd, environment }); }
+  hideProbe(courier: boolean, crowd: boolean, environment = false, bars = false): number { return this.game.view.probeVisibility({ courier, crowd, environment, bars }); }
+  /** Exact screen disc used by the boss shader, for comparing body pixels outside the intended courier reveal. */
+  bossRevealProbe() { return { center: seeThrough.center.value.toArray(), radius: seeThrough.bossRadius.value, strength: seeThrough.bossStrength.value }; }
   private megaProbeModels = new Map<number, string | undefined>();
   /** Render a regular Alpha at each Mega's exact transform/pose, without advancing simulation.
    * Preserve pursuit/pose; each asset keeps its normal material (Mega alone has the courier cutout). */
