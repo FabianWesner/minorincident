@@ -228,7 +228,7 @@ export class InfectedSystem {
             this.world.events.emit({ type: 'ai.alerted', tick: this.world.tick, sourceId: heard.id, targetId: e.id, cause: 'hearing', position: { ...e.transform } });
             this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: this.nextAttackId(), special: 'alpha.roar', duration: .6 });
           }
-          if (this.world.tick < b.proximityNotice.until) {
+          if (heard.id !== 1 && this.world.tick < b.proximityNotice.until) {
             const yaw = -Math.atan2(heard.position.z - e.transform.z, heard.position.x - e.transform.x);
             const delta = Math.atan2(Math.sin(yaw - e.transform.yaw), Math.cos(yaw - e.transform.yaw));
             e.transform.yaw += Math.max(-hearingTurnRadS / 60, Math.min(hearingTurnRadS / 60, delta));
@@ -259,7 +259,7 @@ export class InfectedSystem {
         const authoredSight = this.world.scenario === 'L4' || this.world.scenario === 'L5';
         const seen = authoredSight ? this.hearing.closest(e, b.heardTargetId ?? 0) : this.hearing.closestHeard(e);
         if (seen) {
-          const newHeard = this.world.scenario !== 'L5' && b.heardTargetId !== seen.id && !this.hearing.sees(e, seen.position);
+          const newHeard = this.world.scenario !== 'L5' && (b.heardTargetId || (b.state === 'chase' ? 1 : 0)) !== seen.id && !this.hearing.sees(e, seen.position);
           delete b.investigate; b.heardTargetId = seen.id;
           if (b.state === 'attracted') b.state = 'idle';
           if (b.state === 'idle' || b.state === 'wander' || newHeard && b.state === 'chase') {

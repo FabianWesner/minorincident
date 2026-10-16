@@ -98,3 +98,11 @@ test('T-E07-06-chasing @E07 @E07-AC06 a chasing Alpha notices a nearby ally inst
   step(w, 6); expect(Math.abs(alpha.transform.yaw)).toBeGreaterThan(.5);
   expect(ai.hearing.humans.get(id)).toBeDefined();
 });
+
+test('T-E07-06-known-target @E07 @E07-AC06 proximity does not restart discovery for a courier already being chased', async () => {
+  const w = await arena(), player = w.entities.get(1)!;
+  player.transform.x = -3.8; w.physics.playerBody!.setTranslation(player.transform, true);
+  const alpha = spawn(w, 'alpha', 0, 0, 'chase'); step(w, 1);
+  expect(alpha.infected!.state).not.toBe('alerted');
+  expect(w.events.events().filter(e => e.type === 'ai.alerted' && e.targetId === alpha.id)).toHaveLength(0);
+});
