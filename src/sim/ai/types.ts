@@ -23,6 +23,8 @@ export interface InfectedState {
   scripted?: { x: number; z: number };
   /** E32 Mega Alpha: movement owned by MegaPursuit (no sight, hearing or lure); survives checkpoints with the entity. */
   pursuit?: true;
+  /** Mega local notice cue; global pursuit still owns the courier target. */
+  proximityNotice?: { id: number; until: number };
   /** Mega hit bookkeeping is bounded, serializable and shared by every weapon/status. */
   megaStaggerReady?: number;
   megaRocketIds?: number[];

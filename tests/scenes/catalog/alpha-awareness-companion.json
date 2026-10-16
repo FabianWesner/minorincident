@@ -1,0 +1,57 @@
+{
+  "name": "alpha-awareness-companion",
+  "note": "PO 10-16: nearby human companion behind Alpha; courier is outside hearing range. Inspect turn toward companion and retained human target. Full courier/companion/ally cover controls are in alpha-awareness.test.ts.",
+  "seed": 1,
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L4",
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -16,
+        0
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0,
+      "state": "idle"
+    },
+    {
+      "id": "companion",
+      "kind": "pedestrian",
+      "at": [
+        -3.8,
+        0
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -1,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 90,
+  "sheet": 6,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}
