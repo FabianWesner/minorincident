@@ -1,0 +1,25 @@
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { expect, test } from 'vitest';
+import { loadL6, runL6 } from '../../tools/sim-runner/l6Bots';
+
+test('T-E24-09-evade @E24 @E24-AC09 an unprotected group loses at least seventy percent in the single-seed evade run', async () => {
+  const { world } = await loadL6(1);
+  try {
+    let attacks = 0;
+    const off = world.events.on('combat.attack', event => { if (event.type === 'combat.attack' && event.sourceId === 1) attacks++; });
+    const report = runL6(world, 'evade-only');
+    off();
+    const lost = report.fates.filter(fate => fate.status === 'turned' || fate.status === 'dead').length;
+    const escaped = report.fates.filter(fate => fate.status === 'out').length;
+    // AC09 requires a rescue ceiling, not completion by the non-fighting bot.
+    // Counting every remaining human as potentially rescued avoids a vacuous
+    // zero-result assertion when the run times out with the whole group intact.
+    const potentiallyRescued = report.total - lost;
+    mkdirSync('test-results/epics/E24', { recursive: true });
+    writeFileSync('test-results/epics/E24/evade-protection-seed-1.json', JSON.stringify({ ...report, attacks, lost, escaped, potentiallyRescued }, null, 2) + '\n');
+    expect(report.total).toBe(29);
+    expect(attacks).toBe(0);
+    expect(escaped / report.total).toBeLessThanOrEqual(.3);
+    expect(potentiallyRescued / report.total).toBeLessThanOrEqual(.3);
+  } finally { world.dispose(); }
+}, 1_800_000);
