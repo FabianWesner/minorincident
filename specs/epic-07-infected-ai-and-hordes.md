@@ -169,6 +169,6 @@ PO 2026-10-13, verbatim (`po-levels-4-9-2026-10-11.md`, L4 pressure): "L4: Zombi
 
 This supersedes the older 2–3 L4 Alpha count in the table above; E22-AC12 specifies 8 high / 6 low. E07-AC01 uses that revised table.
 
-PO 2026-10-15, verbatim (bug intake #25): "The alpha needs to be aware when someone is so close (even when not in view)". The intake requires proximity awareness for all infected within about 6 m independent of sight. #29 explicitly retains it in L5: "Should #25 stay in L5? - YES". This extends E07-AC02's sight/noise contract; it does not remove its original cone fixture. The current L5-only implementation does not close the global requirement.
+PO 2026-10-15, verbatim (bug intake #25): "The alpha needs to be aware when someone is so close (even when not in view)". Orchestrator 2026-10-16 scopes this to L5, where #29 explicitly retains it: "Should #25 stay in L5? - YES". This extends E07-AC02 only in L5 with about 6 m awareness independent of sight. Other levels retain their existing perception and calibrated bot bands; global proximity awareness is not a gap.
 
 PO 2026-10-15, verbatim (bug intake #37): "I got the shotgun, but it's not powerful. It feels less than the regular gun. SHOULD: Shotgun kills Zombies with a single shot and also is effective against alphas." The binding intake target extends E07-AC14 / E23-AC12 to every regular infected within about 8 m, permanent death, with Alpha stagger/knockback each close hit. Alpha HP/resistance stay unchanged.
