@@ -1,0 +1,56 @@
+{
+  "passed": 8,
+  "failed": 0,
+  "pending": 0,
+  "success": true,
+  "tests": [
+    {
+      "file": "sim/missions/l7-departure.test.ts",
+      "name": "T-E29-15-bus @E29-AC15 departure emits positional cab engine updates and stops once before handover",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-departure.test.ts",
+      "name": "T-E29-13-board @E29-AC13 the complete living roster boards before the bus leaves; the bus moves >= 30 m in 6-10 s; L8 gets the exact roster",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-departure.test.ts",
+      "name": "T-E29-13-bite-loss @E29-AC13 fatal-bite bodies with positive HP never hold or board the bus",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-departure.test.ts",
+      "name": "T-E29-13-wait @E29-AC13 a straggler holds the bus; the player is never timed out",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-departure.test.ts",
+      "name": "T-E29-13-zero @E29-AC13 zero survivors: the courier boards alone; leaving the bus pauses boarding",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-departure.test.ts",
+      "name": "T-E29-13-bus-blocks @E29-AC13 the waiting bus blocks the player and navigation; the lane is free once it leaves",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-departure.test.ts",
+      "name": "T-E29-13-handover @E29-AC13 L7 completion unlocks L8 and carries the arsenal; L9 continues to L10",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-departure.test.ts",
+      "name": "T-E29-13-35 @E29-AC13 a full 35-person roster boards and every figure is accounted for",
+      "status": "passed",
+      "failures": []
+    }
+  ]
+}

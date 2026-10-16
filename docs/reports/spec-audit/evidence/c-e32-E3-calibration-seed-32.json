@@ -1,0 +1,138 @@
+{
+  "seed": 32,
+  "tier": "high",
+  "bossId": 9,
+  "bossIdChanged": false,
+  "bossStepMaxM": 0.5187239157572926,
+  "bossStepPeak": {
+    "tick": 26728,
+    "mode": "close",
+    "distance": 3.8364452275049326,
+    "hp": 900,
+    "lastDamage": 26728
+  },
+  "bossApproachStepMaxM": 0.05250000000017147,
+  "checkpoint": "cure-corridor",
+  "released": true,
+  "seconds": 450.48333333333335,
+  "hp": 60.26666666666608,
+  "deaths": 0,
+  "peak": 168,
+  "rocketHits": 10,
+  "activation": 287.43333333333334,
+  "activationBoss": {
+    "x": 3577,
+    "z": 25.13817030444331,
+    "distanceM": 428.8693699909538
+  },
+  "fullChargeBossGate": true,
+  "fullChargeBossGateText": "Kill the Mega Alpha · Charge 60/60 s",
+  "bossGatePursuitM": 304.39148042431384,
+  "arrival": 143.14999999999998,
+  "timeline": [
+    {
+      "id": "dispersal-complex",
+      "seconds": 216.16666666666666
+    },
+    {
+      "id": "install",
+      "seconds": 285.01666666666665
+    },
+    {
+      "id": "hold",
+      "seconds": 449.4
+    },
+    {
+      "id": "release",
+      "seconds": 450.48333333333335
+    }
+  ],
+  "activity": {
+    "destroyed-corridor": {
+      "elapsedSeconds": 216.61666666666667,
+      "movingSeconds": 216.61666666666667,
+      "pressureSeconds": 37.86666666666667,
+      "fireIntentSeconds": 37.86666666666667,
+      "holdSeconds": 0,
+      "fullChargeBossGateSeconds": 0,
+      "quietSeconds": 0,
+      "metres": 973.4704670820157,
+      "shots": 31,
+      "kills": 104
+    },
+    "dispersal-complex": {
+      "elapsedSeconds": 233.86666666666667,
+      "movingSeconds": 144.78333333333333,
+      "pressureSeconds": 94.76666666666667,
+      "fireIntentSeconds": 94.76666666666667,
+      "holdSeconds": 161.96666666666667,
+      "fullChargeBossGateSeconds": 101.95,
+      "quietSeconds": 16.35,
+      "metres": 624.5427417741604,
+      "shots": 76,
+      "kills": 168
+    }
+  },
+  "activityCategoriesOverlap": true,
+  "active": [
+    "epilogue"
+  ],
+  "player": {
+    "x": 4001.39697265625,
+    "y": 0.7099999785423279,
+    "z": -25.172361373901367,
+    "yaw": 1.2521247035519303
+  },
+  "boss": {
+    "tick": 27029,
+    "id": 9,
+    "mode": "dead",
+    "introducedAt": 0,
+    "introduceTick": 5400,
+    "x": 4008.0743753348634,
+    "z": -23.462628655347775,
+    "hp": 0,
+    "maxHp": 3000,
+    "target": {
+      "x": 3999.44580078125,
+      "z": -23.55820083618164
+    },
+    "route": [],
+    "routeAt": 26941,
+    "passed": "cure-route-41",
+    "blocked": {},
+    "breach": null,
+    "stuck": {
+      "level": 1,
+      "since": 26879,
+      "sampleAt": 26908,
+      "x": 4009.7853961453498,
+      "z": -23.502472867735683,
+      "noPath": 0,
+      "goal": {
+        "x": 4010.25,
+        "z": -24.75
+      }
+    },
+    "lastDamage": {
+      "tick": 26963,
+      "amount": 300,
+      "sourceId": 1
+    },
+    "coarseM": 1244.1491388489198,
+    "audio": {
+      "next": 27662,
+      "step": 26977,
+      "index": 17,
+      "last": {
+        "x": 4008.0743753348634,
+        "z": -23.462628655347775
+      }
+    }
+  },
+  "expectedRemainingMinutes": [
+    13.5,
+    18.5
+  ],
+  "withinRemainingBand": false
+}

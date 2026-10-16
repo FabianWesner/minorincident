@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { test, expect } from './fixtures';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 for (const [name, move, windup, hp] of [['zebra-kick', 'zebra.kick', 36, 180], ['zebra-stampede', 'zebra.stampede', 48, 180], ['flamingo-dive', 'flamingo.dive', 36, 15]] as const) {
-  test(`T-E07-19-${name}-browser @E07-AC05 @E07-AC19 production cue, pause, bar, impact and expiry`, async ({ page }) => {
+  test(`T-E07-19-${name}-browser @E07-AC05 @E07-AC19 @E30-AC10 production cue, pause, bar, impact and expiry`, async ({ page }) => {
     test.setTimeout(120_000);
     const spec = JSON.parse(readFileSync(`tests/scenes/zoo-s3/qa-zoo-${name}.json`, 'utf8')) as SceneSpec;
     await page.goto('/?test=1&scenelab&ui=1&renderer=webgl&quality=high&audio=muted&profile=1&dpr=1');
@@ -37,7 +37,7 @@ for (const [name, move, windup, hp] of [['zebra-kick', 'zebra.kick', 36, 180], [
     expect(await page.evaluate(id => window.__SS__!.events().filter(ev => ev.type === 'infected.attack' && ev.attackId === id && ev.targetId === 1).length, a.attackId)).toBe(1);
   });
 }
-for (const [width, height] of [[390, 844], [844, 390]] as const) test(`T-E07-19-zebra-flamingo-phone-${width} @E07-AC19 shared phone bars update from real HP in low tier`, async ({ page }) => {
+for (const [width, height] of [[390, 844], [844, 390]] as const) test(`T-E07-19-zebra-flamingo-phone-${width} @E07-AC19 @E30-AC10 shared phone bars update from real HP in low tier`, async ({ page }) => {
   await page.setViewportSize({ width, height });
   const spec = JSON.parse(readFileSync('tests/scenes/zoo-s3/qa-zoo-flamingo-dive.json', 'utf8')) as SceneSpec;
   spec.script = []; spec.actors!.push({ id: 'zebra', kind: 'infected', archetype: 'infected.zebra', at: [-3, 0], state: 'idle' });

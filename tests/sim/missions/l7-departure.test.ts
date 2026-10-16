@@ -3,7 +3,7 @@ import { afterEach, expect, test } from 'vitest';
 import { compositions } from '../../../src/levels/compositions';
 import { l7Departure } from '../../../src/data/l7';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
-import type { EntitySnapshot } from '../../../src/sim/world/types';
+import type { EntitySnapshot, GameEvent } from '../../../src/sim/world/types';
 import { completeCampaignLevel } from '../../../src/sim/progression/carryover';
 import { nextLevelAfter, preset } from '../../../src/sim/progression/Campaign';
 import { validateSave } from '../../../src/sim/progression/Save';
@@ -32,6 +32,29 @@ function gather(w: SimWorld, ids: number[], x0 = -64) {
   expect(n).toBe(ids.length);
 }
 const boardingAnchor = () => compositions.L7 && { x: -70.5, z: 47.5 };
+
+test('T-E29-15-bus @E29-AC15 departure emits positional cab engine updates and stops once before handover', async () => {
+  const w = await load([]), d = w.l7Departure!, events: Extract<GameEvent, { type: 'vehicle.sound' }>[] = [];
+  w.events.on('vehicle.sound', e => { if (e.type === 'vehicle.sound' && e.sourceId === d.state.busId) events.push(e); });
+  let stoppedBeforeHandover = false;
+  w.events.on('level.completed', () => { stoppedBeforeHandover = events.at(-1)?.phase === 'stop'; });
+  put(w, 1, boardingAnchor()!.x, boardingAnchor()!.z);
+  step(w, 1);
+  expect(d.state.phase).toBe('departing');
+  step(w, l7Departure.seconds * 60 + 12);
+  expect(d.state.phase).toBe('done');
+  const engine = events.filter(e => e.phase === 'engine');
+  expect(engine.length).toBeGreaterThan(10);
+  for (const [i, e] of engine.entries()) {
+    expect(e.inCar).toBe(true); expect(e.rpm).toBeGreaterThanOrEqual(1000);
+    expect(e.velocity.x).toBeCloseTo(e.speed); expect(e.velocity.z).toBeCloseTo(0);
+    if (i) expect(e.tick - engine[i - 1].tick).toBe(6);
+  }
+  expect(engine.some(e => e.speed > 0)).toBe(true);
+  expect(events.filter(e => e.phase === 'stop')).toHaveLength(1);
+  expect(stoppedBeforeHandover).toBe(true);
+  const count = events.length; step(w, 120); expect(events).toHaveLength(count);
+});
 
 test('T-E29-13-board @E29-AC13 the complete living roster boards before the bus leaves; the bus moves >= 30 m in 6-10 s; L8 gets the exact roster', async () => {
   const w = await load(), c = w.l7Encounters!, d = w.l7Departure!, ids = c.state.roster.map(r => r.id);
