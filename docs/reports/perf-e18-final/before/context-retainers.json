@@ -1,0 +1,87 @@
+[
+  {
+    "from": "0:synthetic:#1",
+    "edge": "element:1",
+    "to": "1:synthetic:(GC roots)#3"
+  },
+  {
+    "from": "1:synthetic:(GC roots)#3",
+    "edge": "element:10",
+    "to": "11:synthetic:(Global handles)#23"
+  },
+  {
+    "from": "11:synthetic:(Global handles)#23",
+    "edge": "internal:7 / V8PerContextData::context_",
+    "to": "3697:native:system / NativeContext / http://127.0.0.1:3517#7387"
+  },
+  {
+    "from": "3697:native:system / NativeContext / http://127.0.0.1:3517#7387",
+    "edge": "internal:global_object",
+    "to": "961535:object:Window [JSGlobalObject] / http://127.0.0.1:3517#1203753"
+  },
+  {
+    "from": "961535:object:Window [JSGlobalObject] / http://127.0.0.1:3517#1203753",
+    "edge": "property:__SS__",
+    "to": "1252789:object:Object#1205785"
+  },
+  {
+    "from": "1252789:object:Object#1205785",
+    "edge": "property:pause",
+    "to": "334646:closure:pause#1346127"
+  },
+  {
+    "from": "334646:closure:pause#1346127",
+    "edge": "internal:context",
+    "to": "334648:object:system / Context / scope @1346133#1346135"
+  },
+  {
+    "from": "334648:object:system / Context / scope @1346133#1346135",
+    "edge": "context:e",
+    "to": "334953:object:by#1346805"
+  },
+  {
+    "from": "334953:object:by#1346805",
+    "edge": "property:view",
+    "to": "658852:object:fb#1806745"
+  },
+  {
+    "from": "658852:object:fb#1806745",
+    "edge": "property:renderer",
+    "to": "334099:object:Ci#1345097"
+  },
+  {
+    "from": "334099:object:Ci#1345097",
+    "edge": "property:_geometries",
+    "to": "334441:object:wN#1345777"
+  },
+  {
+    "from": "334441:object:wN#1345777",
+    "edge": "property:_geometryDisposeListeners",
+    "to": "3165278:object:Map#4573865"
+  },
+  {
+    "from": "3165278:object:Map#4573865",
+    "edge": "internal:table",
+    "to": "3097159:array:#10211521"
+  },
+  {
+    "from": "3097159:array:#10211521",
+    "edge": "internal:552",
+    "to": "1409257:closure:r#7273727"
+  },
+  {
+    "from": "1409257:closure:r#7273727",
+    "edge": "internal:context",
+    "to": "1409254:object:system / Context / scope @305787#7273721"
+  },
+  {
+    "from": "1409254:object:system / Context / scope @305787#7273721",
+    "edge": "context:e",
+    "to": "1409255:object:bN#7273723"
+  },
+  {
+    "from": "1409255:object:bN#7273723",
+    "edge": "property:context",
+    "to": "337311:object:FN#5485715"
+  }
+]

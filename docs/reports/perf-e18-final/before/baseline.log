@@ -1,0 +1,354 @@
+ 9:30  up 68 days,  8:23, 4 users, load averages: 2.97 2.00 2.57
+Quiet-run preflight: load < 3; no local Vitest or headless Chrome processes; all configured browser slots held.
+
+Running 11 tests using 1 worker
+
+  ✘   1 [chromium] › tests/perf/e18-devices.spec.ts:11:57 › Pixel 7 › T-E18-08-android-webgl @E18-AC08 @perf emulated mobile L6 at 4x CPU p50 >=30fps (3.7s)
+  -   2 [chromium] › tests/perf/e18-devices.spec.ts:11:57 › Pixel 7 › T-E18-08-android-webgpu @E18-AC08 @perf emulated mobile L6 at 4x CPU p50 >=30fps
+  ✘   3 [chromium] › tests/perf/e18-devices.spec.ts:11:57 › iPhone 14 › T-E18-08-ios-webgl @E18-AC08 @perf emulated mobile L6 at 2x CPU p50 >=30fps (3.5s)
+  -   4 [chromium] › tests/perf/e18-devices.spec.ts:11:57 › iPhone 14 › T-E18-08-ios-webgpu @E18-AC08 @perf emulated mobile L6 at 2x CPU p50 >=30fps
+  -   5 [chromium] › tests/perf/e18-devices.spec.ts:44:1 › T-E18-08-physical @E18-AC08 @manual physical iOS and Android recordings at final verification
+  ✘   6 [chromium] › tests/perf/e18-memory.spec.ts:4:46 › T-E18-05-high @E18-AC05 @perf five L1/L6 loads release heap and GPU resources (1.1m)
+  ✘   7 [chromium] › tests/perf/e18-memory.spec.ts:4:46 › T-E18-05-low @E18-AC05 @perf five L1/L6 loads release heap and GPU resources (14.5s)
+  ✘   8 [chromium] › tests/perf/e18-world-profile.spec.ts:6:3 › remaining world budget profile perf-l6-mainstreet high @profile (962ms)
+  ✘   9 [chromium] › tests/perf/e18-world-profile.spec.ts:6:3 › remaining world budget profile perf-l5-aftermath high @profile (2.2s)
+  ✘  10 [chromium] › tests/perf/e18-world-profile.spec.ts:6:3 › remaining world budget profile perf-l6-mainstreet low @profile (1.2s)
+  ✘  11 [chromium] › tests/perf/e18-world-profile.spec.ts:6:3 › remaining world budget profile perf-l5-aftermath low @profile (1.5s)
+
+
+  1) [chromium] › tests/perf/e18-devices.spec.ts:11:57 › Pixel 7 › T-E18-08-android-webgl @E18-AC08 @perf emulated mobile L6 at 4x CPU p50 >=30fps
+
+    Error: frame.evaluate: TypeError: Cannot read properties of undefined (reading 'origin')
+        at Op (http://127.0.0.1:3517/build/index-KfNcb4Nu.js:3:11966)
+        at http://127.0.0.1:3517/build/index-KfNcb4Nu.js:12:45132
+        at Op (http://127.0.0.1:3517/build/index-KfNcb4Nu.js:3:11966)
+        at http://127.0.0.1:3517/build/index-KfNcb4Nu.js:12:45132
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-e18-final/tests/perf/e18-devices.spec.ts:19:33
+
+    Error: Uncaught errors, console errors and failed requests
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 5
+
+    - Array []
+    + Array [
+    +   "console.error: Level load failed TypeError: Cannot read properties of undefined (reading 'origin')
+    +     at Op (http://127.0.0.1:3517/build/index-KfNcb4Nu.js:3:11966)
+    +     at http://127.0.0.1:3517/build/index-KfNcb4Nu.js:12:45132",
+    + ]
+
+       at e2e/fixtures.ts:42
+
+      40 |     const guard = attachErrorGuard(page);
+      41 |     await use(); guard.dispose();
+    > 42 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);
+         |                                                                                 ^
+      43 |   }, { auto: true }],
+      44 | });
+      45 | export { expect };
+        at Object.base.extend.errorGuard.auto (/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-e18-final/tests/e2e/fixtures.ts:42:81)
+
+    Error Context: test-results/playwright/run-3517/perf-e18-devices-Pixel-7-T-c529f-bile-L6-at-4x-CPU-p50-30fps-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3517/perf-e18-devices-Pixel-7-T-c529f-bile-L6-at-4x-CPU-p50-30fps-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3517/perf-e18-devices-Pixel-7-T-c529f-bile-L6-at-4x-CPU-p50-30fps-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/perf/e18-devices.spec.ts:11:57 › iPhone 14 › T-E18-08-ios-webgl @E18-AC08 @perf emulated mobile L6 at 2x CPU p50 >=30fps
+
+    Error: frame.evaluate: TypeError: Cannot read properties of undefined (reading 'origin')
+        at Op (http://127.0.0.1:3517/build/index-KfNcb4Nu.js:3:11966)
+        at http://127.0.0.1:3517/build/index-KfNcb4Nu.js:12:45132
+        at Op (http://127.0.0.1:3517/build/index-KfNcb4Nu.js:3:11966)
+        at http://127.0.0.1:3517/build/index-KfNcb4Nu.js:12:45132
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-e18-final/tests/perf/e18-devices.spec.ts:19:33
+
+    Error: Uncaught errors, console errors and failed requests
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 5
+
+    - Array []
+    + Array [
+    +   "console.error: Level load failed TypeError: Cannot read properties of undefined (reading 'origin')
+    +     at Op (http://127.0.0.1:3517/build/index-KfNcb4Nu.js:3:11966)
+    +     at http://127.0.0.1:3517/build/index-KfNcb4Nu.js:12:45132",
+    + ]
+
+       at e2e/fixtures.ts:42
+
+      40 |     const guard = attachErrorGuard(page);
+      41 |     await use(); guard.dispose();
+    > 42 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);
+         |                                                                                 ^
+      43 |   }, { auto: true }],
+      44 | });
+      45 | export { expect };
+        at Object.base.extend.errorGuard.auto (/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-e18-final/tests/e2e/fixtures.ts:42:81)
+
+    Error Context: test-results/playwright/run-3517/perf-e18-devices-iPhone-14-2b231-bile-L6-at-2x-CPU-p50-30fps-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3517/perf-e18-devices-iPhone-14-2b231-bile-L6-at-2x-CPU-p50-30fps-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3517/perf-e18-devices-iPhone-14-2b231-bile-L6-at-2x-CPU-p50-30fps-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/perf/e18-memory.spec.ts:4:46 › T-E18-05-high @E18-AC05 @perf five L1/L6 loads release heap and GPU resources
+
+    Error: heapBytes
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 88026479.2
+    Received:    97077216
+
+      16 |       const chunks: string[] = [];
+      17 |       const collect = ({ chunk }: { chunk: string }) => chunks.push(chunk);
+    > 18 |       cdp.on('HeapProfiler.addHeapSnapshotChunk', collect);
+         |                                                            ^
+      19 |       await cdp.send('HeapProfiler.takeHeapSnapshot');
+      20 |       cdp.off('HeapProfiler.addHeapSnapshotChunk', collect);
+      21 |       mkdirSync('test-results/epics/E18', { recursive: true });
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-e18-final/tests/perf/e18-memory.spec.ts:18:94
+
+    Error Context: test-results/playwright/run-3517/perf-e18-memory-T-E18-05-h-111b9-ease-heap-and-GPU-resources-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3517/perf-e18-memory-T-E18-05-h-111b9-ease-heap-and-GPU-resources-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3517/perf-e18-memory-T-E18-05-h-111b9-ease-heap-and-GPU-resources-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests/perf/e18-memory.spec.ts:4:46 › T-E18-05-low @E18-AC05 @perf five L1/L6 loads release heap and GPU resources
+
+    Error: heapBytes
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 75384232
+    Received:    86519112
+
+      16 |       const chunks: string[] = [];
+      17 |       const collect = ({ chunk }: { chunk: string }) => chunks.push(chunk);
+    > 18 |       cdp.on('HeapProfiler.addHeapSnapshotChunk', collect);
+         |                                                            ^
+      19 |       await cdp.send('HeapProfiler.takeHeapSnapshot');
+      20 |       cdp.off('HeapProfiler.addHeapSnapshotChunk', collect);
+      21 |       mkdirSync('test-results/epics/E18', { recursive: true });
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-e18-final/tests/perf/e18-memory.spec.ts:18:94
+
+    Error Context: test-results/playwright/run-3517/perf-e18-memory-T-E18-05-l-13b3b-ease-heap-and-GPU-resources-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3517/perf-e18-memory-T-E18-05-l-13b3b-ease-heap-and-GPU-resources-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3517/perf-e18-memory-T-E18-05-l-13b3b-ease-heap-and-GPU-resources-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › tests/perf/e18-world-profile.spec.ts:6:3 › remaining world budget profile perf-l6-mainstreet high @profile
+
+    Error: page.evaluate: TypeError: Cannot read properties of undefined (reading 'origin')
+        at Op (http://127.0.0.1:3517/build/index-KfNcb4Nu.js:3:11966)
+        at http://127.0.0.1:3517/build/index-KfNcb4Nu.js:12:45132
+        at Op (http://127.0.0.1:3517/build/index-KfNcb4Nu.js:3:11966)
+        at http://127.0.0.1:3517/build/index-KfNcb4Nu.js:12:45132
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-e18-final/tests/perf/e18-world-profile.spec.ts:9:30
+
+    Error: Uncaught errors, console errors and failed requests
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 5
+
+    - Array []
+    + Array [
+    +   "console.error: Level load failed TypeError: Cannot read properties of undefined (reading 'origin')
+    +     at Op (http://127.0.0.1:3517/build/index-KfNcb4Nu.js:3:11966)
+    +     at http://127.0.0.1:3517/build/index-KfNcb4Nu.js:12:45132",
+    + ]
+
+       at e2e/fixtures.ts:42
+
+      40 |     const guard = attachErrorGuard(page);
+      41 |     await use(); guard.dispose();
+    > 42 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);
+         |                                                                                 ^
+      43 |   }, { auto: true }],
+      44 | });
+      45 | export { expect };
+        at Object.base.extend.errorGuard.auto (/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-e18-final/tests/e2e/fixtures.ts:42:81)
+
+    Error Context: test-results/playwright/run-3517/perf-e18-world-profile-rem-e27d1--l6-mainstreet-high-profile-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3517/perf-e18-world-profile-rem-e27d1--l6-mainstreet-high-profile-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3517/perf-e18-world-profile-rem-e27d1--l6-mainstreet-high-profile-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [chromium] › tests/perf/e18-world-profile.spec.ts:6:3 › remaining world budget profile perf-l5-aftermath high @profile
+
+    Error: page.evaluate: Error: Infected concurrency cap reached
+        at mn.spawn (http://127.0.0.1:3517/build/install-DZHF0_e8.js:1:310122)
+        at Op (http://127.0.0.1:3517/build/index-KfNcb4Nu.js:3:13197)
+        at http://127.0.0.1:3517/build/index-KfNcb4Nu.js:12:45132
+        at mn.spawn (http://127.0.0.1:3517/build/install-DZHF0_e8.js:1:310122)
+        at Op (http://127.0.0.1:3517/build/index-KfNcb4Nu.js:3:13197)
+        at http://127.0.0.1:3517/build/index-KfNcb4Nu.js:12:45132
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-e18-final/tests/perf/e18-world-profile.spec.ts:9:30
+
+    Error: Uncaught errors, console errors and failed requests
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 6
+
+    - Array []
+    + Array [
+    +   "console.error: Level load failed Error: Infected concurrency cap reached
+    +     at mn.spawn (http://127.0.0.1:3517/build/install-DZHF0_e8.js:1:310122)
+    +     at Op (http://127.0.0.1:3517/build/index-KfNcb4Nu.js:3:13197)
+    +     at http://127.0.0.1:3517/build/index-KfNcb4Nu.js:12:45132",
+    + ]
+
+       at e2e/fixtures.ts:42
+
+      40 |     const guard = attachErrorGuard(page);
+      41 |     await use(); guard.dispose();
+    > 42 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);
+         |                                                                                 ^
+      43 |   }, { auto: true }],
+      44 | });
+      45 | export { expect };
+        at Object.base.extend.errorGuard.auto (/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-e18-final/tests/e2e/fixtures.ts:42:81)
+
+    Error Context: test-results/playwright/run-3517/perf-e18-world-profile-rem-39d7c-f-l5-aftermath-high-profile-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3517/perf-e18-world-profile-rem-39d7c-f-l5-aftermath-high-profile-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3517/perf-e18-world-profile-rem-39d7c-f-l5-aftermath-high-profile-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [chromium] › tests/perf/e18-world-profile.spec.ts:6:3 › remaining world budget profile perf-l6-mainstreet low @profile
+
+    Error: page.evaluate: TypeError: Cannot read properties of undefined (reading 'origin')
+        at Op (http://127.0.0.1:3517/build/index-KfNcb4Nu.js:3:11966)
+        at http://127.0.0.1:3517/build/index-KfNcb4Nu.js:12:45132
+        at Op (http://127.0.0.1:3517/build/index-KfNcb4Nu.js:3:11966)
+        at http://127.0.0.1:3517/build/index-KfNcb4Nu.js:12:45132
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-e18-final/tests/perf/e18-world-profile.spec.ts:9:30
+
+    Error: Uncaught errors, console errors and failed requests
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 5
+
+    - Array []
+    + Array [
+    +   "console.error: Level load failed TypeError: Cannot read properties of undefined (reading 'origin')
+    +     at Op (http://127.0.0.1:3517/build/index-KfNcb4Nu.js:3:11966)
+    +     at http://127.0.0.1:3517/build/index-KfNcb4Nu.js:12:45132",
+    + ]
+
+       at e2e/fixtures.ts:42
+
+      40 |     const guard = attachErrorGuard(page);
+      41 |     await use(); guard.dispose();
+    > 42 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);
+         |                                                                                 ^
+      43 |   }, { auto: true }],
+      44 | });
+      45 | export { expect };
+        at Object.base.extend.errorGuard.auto (/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-e18-final/tests/e2e/fixtures.ts:42:81)
+
+    Error Context: test-results/playwright/run-3517/perf-e18-world-profile-rem-09b2d-f-l6-mainstreet-low-profile-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3517/perf-e18-world-profile-rem-09b2d-f-l6-mainstreet-low-profile-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3517/perf-e18-world-profile-rem-09b2d-f-l6-mainstreet-low-profile-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [chromium] › tests/perf/e18-world-profile.spec.ts:6:3 › remaining world budget profile perf-l5-aftermath low @profile
+
+    Error: page.evaluate: Error: Infected concurrency cap reached
+        at mn.spawn (http://127.0.0.1:3517/build/install-DZHF0_e8.js:1:310122)
+        at Op (http://127.0.0.1:3517/build/index-KfNcb4Nu.js:3:13197)
+        at http://127.0.0.1:3517/build/index-KfNcb4Nu.js:12:45132
+        at mn.spawn (http://127.0.0.1:3517/build/install-DZHF0_e8.js:1:310122)
+        at Op (http://127.0.0.1:3517/build/index-KfNcb4Nu.js:3:13197)
+        at http://127.0.0.1:3517/build/index-KfNcb4Nu.js:12:45132
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-e18-final/tests/perf/e18-world-profile.spec.ts:9:30
+
+    Error: Uncaught errors, console errors and failed requests
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 6
+
+    - Array []
+    + Array [
+    +   "console.error: Level load failed Error: Infected concurrency cap reached
+    +     at mn.spawn (http://127.0.0.1:3517/build/install-DZHF0_e8.js:1:310122)
+    +     at Op (http://127.0.0.1:3517/build/index-KfNcb4Nu.js:3:13197)
+    +     at http://127.0.0.1:3517/build/index-KfNcb4Nu.js:12:45132",
+    + ]
+
+       at e2e/fixtures.ts:42
+
+      40 |     const guard = attachErrorGuard(page);
+      41 |     await use(); guard.dispose();
+    > 42 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);
+         |                                                                                 ^
+      43 |   }, { auto: true }],
+      44 | });
+      45 | export { expect };
+        at Object.base.extend.errorGuard.auto (/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-e18-final/tests/e2e/fixtures.ts:42:81)
+
+    Error Context: test-results/playwright/run-3517/perf-e18-world-profile-rem-d4ee6-rf-l5-aftermath-low-profile-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3517/perf-e18-world-profile-rem-d4ee6-rf-l5-aftermath-low-profile-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3517/perf-e18-world-profile-rem-d4ee6-rf-l5-aftermath-low-profile-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8 failed
+    [chromium] › tests/perf/e18-devices.spec.ts:11:57 › Pixel 7 › T-E18-08-android-webgl @E18-AC08 @perf emulated mobile L6 at 4x CPU p50 >=30fps
+    [chromium] › tests/perf/e18-devices.spec.ts:11:57 › iPhone 14 › T-E18-08-ios-webgl @E18-AC08 @perf emulated mobile L6 at 2x CPU p50 >=30fps
+    [chromium] › tests/perf/e18-memory.spec.ts:4:46 › T-E18-05-high @E18-AC05 @perf five L1/L6 loads release heap and GPU resources
+    [chromium] › tests/perf/e18-memory.spec.ts:4:46 › T-E18-05-low @E18-AC05 @perf five L1/L6 loads release heap and GPU resources
+    [chromium] › tests/perf/e18-world-profile.spec.ts:6:3 › remaining world budget profile perf-l6-mainstreet high @profile
+    [chromium] › tests/perf/e18-world-profile.spec.ts:6:3 › remaining world budget profile perf-l5-aftermath high @profile
+    [chromium] › tests/perf/e18-world-profile.spec.ts:6:3 › remaining world budget profile perf-l6-mainstreet low @profile
+    [chromium] › tests/perf/e18-world-profile.spec.ts:6:3 › remaining world budget profile perf-l5-aftermath low @profile
+  3 skipped

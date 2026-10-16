@@ -86,7 +86,7 @@ export class CharacterView extends Group {
           throw new Error(reason);
         }
         const skinned = skin && outfit === 'courier';
-        const scene = (await loader.loadAsync('/' + (skinned ? def.glb.replace(/\.glb$/, '.skin.glb') : low ? def.lods?.lod1 ?? def.glb : def.glb).replace(/^public\//, ''))).scene;
+        const scene = (await loader.loadAsync('/' + (skinned ? def.glb.replace(/\.glb$/, low ? '.skin.low.glb' : '.skin.glb') : low ? def.lods?.lod1 ?? def.glb : def.glb).replace(/^public\//, ''))).scene;
         if (skinned && alignSkeleton(scene).length) isSkin = true;
         return scene;
       }, def?.dimensions.y);

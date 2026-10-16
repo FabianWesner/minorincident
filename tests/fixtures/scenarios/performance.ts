@@ -10,7 +10,7 @@ export const performanceScenarios: Record<string, ScenarioDefinition> = {
 };
 export const performanceLevels: Record<string, { level: string; spot: string }> = {
   'perf-l1-foliage-200': { level: 'L1', spot: 'V5' },
-  'perf-l6-mainstreet': { level: 'L6', spot: 'D-MAIN/W5/overview' },
+  'perf-l6-mainstreet': { level: 'L6', spot: 'D-SUBWAY/W0/l6-shelter-calm' },
   /** E23: the devastated Fairhaven (W5) at the pair-plaza camera with the worst-cap crowd (the retired L5 convoy bridge was the old stress scene). */
   'perf-l5-aftermath': { level: 'L5', spot: 'D-FAIR/W5/pair-plaza' },
   'perf-l8-mixed-outbreak': { level: 'L8', spot: '' },
@@ -30,22 +30,31 @@ export function populateHorde(world: SimWorld, count: number): void {
 export function installPerformanceLevel(world: SimWorld, tier: QualityTier, name: string): void {
   if (name === 'perf-l8-mixed-outbreak') { installZooOutbreak(world, tier); return; }
   if (name === 'perf-night-street') { installNightStreet(world); return; }
-  const district = world.districts!.districts.find(d => d.id === (name === 'perf-l1-foliage-200' || name === 'perf-l6-mainstreet' ? 'D-MAIN' : name === 'perf-l5-aftermath' ? 'D-FAIR' : 'D-EDGE'))!;
+  const district = world.districts!.districts.find(d => d.id === (name === 'perf-l1-foliage-200' ? 'D-MAIN' : name === 'perf-l6-mainstreet' ? 'D-SUBWAY' : name === 'perf-l5-aftermath' ? 'D-FAIR' : 'D-EDGE'))!;
+  const shelter = name === 'perf-l6-mainstreet' ? district.layout.anchors['player-start'].position : null;
+  const origin = shelter ? [district.origin[0] + shelter[0], district.origin[1] + shelter[2]] : district.origin;
   const { min, max } = world.districts!.nav;
   const walls: NonNullable<ScenarioDefinition['walls']> = [];
   for (const d of world.districts!.districts) for (const box of d.decay.colliders.map(c => c.aabb).concat(d.blockers)) walls.push({ x: (box.min[0] + box.max[0]) / 2 + d.origin[0], y: (box.min[1] + box.max[1]) / 2, z: (box.min[2] + box.max[2]) / 2 + d.origin[1], halfX: (box.max[0] - box.min[0]) / 2, halfY: (box.max[1] - box.min[1]) / 2, halfZ: (box.max[2] - box.min[2]) / 2 });
+  // Prepare the campaign cast before installing the E18 stress cap. Replacing an
+  // already-populated AI leaves its actors orphaned in the render entity store;
+  // preparing afterwards also replaces the stress cap with L5's campaign cap.
+  if (name !== 'perf-l1-foliage-200') world.missions?.begin();
   const alreadyUpdating = world.infected !== null;
-  world.infected = new InfectedSystem(world, { ...arena, name, ground: { width: max[0] - min[0], depth: max[1] - min[1], center: { x: (min[0] + max[0]) / 2, z: (min[1] + max[1]) / 2 } }, walls });
+  if (!world.infected || name === 'perf-l1-foliage-200') world.infected = new InfectedSystem(world, { ...arena, name, ground: { width: max[0] - min[0], depth: max[1] - min[1], center: { x: (min[0] + max[0]) / 2, z: (min[1] + max[1]) / 2 } }, walls });
+  world.infected.director.levelCap = 200;
   world.infected.director.tier = name === 'perf-l1-foliage-200' ? 'high' : tier;
   if (!alreadyUpdating) world.events.on('sim.tick', () => world.infected!.update(), SimPhase.ai);
   world.combat!.damage.god = true;
   const target = name === 'perf-l1-foliage-200' || tier === 'high' ? 200 : 100;
   const player = world.entities.get(1)!;
-  if (!world.infected.nav.clear(district.origin[0], district.origin[1], .4)) throw new Error('Perf photo spot is blocked');
-  Object.assign(player.transform, { x: district.origin[0], z: district.origin[1] });
+  if (!world.infected.nav.clear(origin[0], origin[1], .4)) throw new Error('Perf photo spot is blocked');
+  // L5 begin places the courier in the cellar. Preserve that authored final
+  // pose; the paired photo camera and stress crowd remain at the plaza.
+  if (name !== 'perf-l5-aftermath') Object.assign(player.transform, { x: origin[0], z: origin[1] });
   world.previousPlayer = { ...player.transform }; world.spatial.set(1, player.transform.x, player.transform.z); world.physics.playerBody!.setTranslation(player.transform, true);
-  world.missions?.begin();
   if (name === 'perf-l1-foliage-200') {
+    world.missions?.begin();
     world.scenario = name;
     // Hold the stress load at V5: overlapping crowd capsules must not push the
     // survivor and the entire attacking crowd out of the measurement frustum.
@@ -65,7 +74,7 @@ export function installPerformanceLevel(world: SimWorld, tier: QualityTier, name
   }
   // Authored colliders constrain placement; a grid scan yields reproducible legal positions.
   for (let z = -24; z < 24 && world.infected.director.count < target; z += 1.2) for (let x = -24; x < 24 && world.infected.director.count < target; x += 1.2) {
-    const p = { x: x + district.origin[0], z: z + district.origin[1] };
+    const p = { x: x + origin[0], z: z + origin[1] };
     if (world.infected.nav.clear(p.x, p.z, .4)) world.infected.spawn('infected.runner', p, { state: 'chase' });
   }
   if (world.infected.director.count !== target) throw new Error('Perf district lacks legal crowd positions');

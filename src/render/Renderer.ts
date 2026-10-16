@@ -199,6 +199,17 @@ export class Renderer extends WebGPURenderer {
    * Level unload retires all render objects before dropping these renderer-owned caches. */
   releaseLevelCaches(): void {
     this.levelCacheReleases++;
+    // r186's geometry listeners capture the first RenderObject using each
+    // geometry. Shared fullscreen/retained prototype geometry outlives a level,
+    // pinning that render context and its entire shared-uniform cache. Retire
+    // attributes and invalidate initialization so the next use uploads again.
+    const geometries = (this as unknown as { _geometries: {
+      _geometryDisposeListeners: Map<object, () => void>;
+      delete(geometry: object): unknown;
+    } | null })._geometries;
+    if (geometries) for (const [geometry, retire] of geometries._geometryDisposeListeners) {
+      retire(); geometries.delete(geometry);
+    }
     const caches = this as unknown as { _objects: { dispose(): void } | null; _nodes: { dispose(): void } | null; _renderLists: { dispose(): void } | null; _renderContexts: { dispose(): void } | null };
     caches._objects?.dispose(); caches._nodes?.dispose(); caches._renderLists?.dispose(); caches._renderContexts?.dispose();
     if (this.selectedBackend === 'webgl') {
