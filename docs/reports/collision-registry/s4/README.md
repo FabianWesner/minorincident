@@ -1,0 +1,6 @@
+**Collision gates GREEN; broader E18 RED.** Gameplay `3714fe54e`; batch-5 main `3883a1679` merged first (`5f9c2fef4`); L5 difficulty frozen; no deploy or merge back.\
+Profiled query/pose scans, retained synchronized caches: Zoo S2 high **3.804490 ms <=4**, low **1.737080 ms <=6**, original 200/100 actors and special schedule; paired100-actor main comparison **-7.16%**.\
+Hetzner: **3,014 passed, nine existing skips, zero failures** across complete unit/sim/levels; all5,760 final-change state hashes match; special activations51/27 unchanged.\
+Exact requested gate: typecheck/lint/build pass; smoke **6 Node +31 browser**; matrix **608/608**; deploy browser **120/120**, no skips/flakes.\
+Native performance **9 passed /four existing manual skips**; phone proxies4/4, maxframe31.4ms/maxsim4.2ms; touched WebGL/WebGPU **72/72**, high/low x zoom1/.5 reviewed in48 opened sheets; physical/manual GPU timing remains pending.\
+Extra E18 **19 passed /three failed**: both memory-growth failures reproduce on main; L5-low565,883triangles>500k (main fails earlier on cap exception, numerical attribution unresolved). [Implementation](implementation.md) · [gates/baseline evidence](gates.md) · [opened captures](visual-review.md).

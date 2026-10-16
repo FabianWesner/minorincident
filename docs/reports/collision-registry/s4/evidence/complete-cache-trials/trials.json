@@ -1,0 +1,116 @@
+[
+  {
+    "repeat": 0,
+    "variant": "baseline",
+    "exit": 0,
+    "200": {
+      "count": 200,
+      "zoo": 20,
+      "activations": 51,
+      "simMsP95": 3.9210720000000947,
+      "budgetMs": 4
+    },
+    "100": {
+      "count": 100,
+      "zoo": 10,
+      "activations": 27,
+      "simMsP95": 1.9843049999999494,
+      "budgetMs": 6
+    }
+  },
+  {
+    "repeat": 0,
+    "variant": "complete-cache",
+    "exit": 0,
+    "200": {
+      "count": 200,
+      "zoo": 20,
+      "activations": 51,
+      "simMsP95": 3.87184999999954,
+      "budgetMs": 4
+    },
+    "100": {
+      "count": 100,
+      "zoo": 10,
+      "activations": 27,
+      "simMsP95": 1.8566259999997783,
+      "budgetMs": 6
+    }
+  },
+  {
+    "repeat": 1,
+    "variant": "baseline",
+    "exit": 0,
+    "200": {
+      "count": 200,
+      "zoo": 20,
+      "activations": 51,
+      "simMsP95": 3.948605000000498,
+      "budgetMs": 4
+    },
+    "100": {
+      "count": 100,
+      "zoo": 10,
+      "activations": 27,
+      "simMsP95": 2.0026299999999537,
+      "budgetMs": 6
+    }
+  },
+  {
+    "repeat": 1,
+    "variant": "complete-cache",
+    "exit": 1,
+    "200": {
+      "count": 200,
+      "zoo": 20,
+      "activations": 51,
+      "simMsP95": 4.309791000000587,
+      "budgetMs": 4
+    },
+    "100": {
+      "count": 100,
+      "zoo": 10,
+      "activations": 27,
+      "simMsP95": 1.9407240000000456,
+      "budgetMs": 6
+    }
+  },
+  {
+    "repeat": 2,
+    "variant": "baseline",
+    "exit": 0,
+    "200": {
+      "count": 200,
+      "zoo": 20,
+      "activations": 51,
+      "simMsP95": 3.765681000000768,
+      "budgetMs": 4
+    },
+    "100": {
+      "count": 100,
+      "zoo": 10,
+      "activations": 27,
+      "simMsP95": 1.7284159999999247,
+      "budgetMs": 6
+    }
+  },
+  {
+    "repeat": 2,
+    "variant": "complete-cache",
+    "exit": 1,
+    "200": {
+      "count": 200,
+      "zoo": 20,
+      "activations": 51,
+      "simMsP95": 4.214292999999998,
+      "budgetMs": 4
+    },
+    "100": {
+      "count": 100,
+      "zoo": 10,
+      "activations": 27,
+      "simMsP95": 1.541053999999349,
+      "budgetMs": 6
+    }
+  }
+]

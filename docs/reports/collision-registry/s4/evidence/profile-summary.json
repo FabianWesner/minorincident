@@ -1,0 +1,470 @@
+{
+  "source": "5f9c2fef4 with SceneLab merge brace corrected; gameplay query source unchanged",
+  "rounds": [
+    {
+      "round": 0,
+      "count": 200,
+      "activations": 51,
+      "p95": 4.855024999999841
+    },
+    {
+      "round": 1,
+      "count": 200,
+      "activations": 51,
+      "p95": 4.172170999999253
+    },
+    {
+      "round": 2,
+      "count": 200,
+      "activations": 51,
+      "p95": 4.366743999999926
+    }
+  ],
+  "profiles": [
+    {
+      "file": "round-2.cpuprofile.gz",
+      "sha256": "2cd7bc62e14221ef3c187074e15a3291f8107bee3f6b725bbb77755d5bad40d9",
+      "selfMs": [
+        [
+          "query SpatialHash.ts",
+          388.7529999999997
+        ],
+        [
+          " CharacterSeparation.ts",
+          215.40800000000033
+        ],
+        [
+          "commit SolidRegistry.ts",
+          193.10999999999999
+        ],
+        [
+          "post node:inspector",
+          121.232
+        ],
+        [
+          " SolidRegistry.ts",
+          117.64800000000005
+        ],
+        [
+          " SimWorld.ts",
+          112.33600000000007
+        ],
+        [
+          "emit EventBus.ts",
+          94.46200000000017
+        ],
+        [
+          "update InfectedSystem.ts",
+          81.131
+        ],
+        [
+          "clear SolidRegistry.ts",
+          41.96599999999999
+        ],
+        [
+          "seek InfectedSystem.ts",
+          28.43599999999999
+        ],
+        [
+          "set SpatialHash.ts",
+          25.599
+        ],
+        [
+          "layers SolidRegistry.ts",
+          25.398000000000014
+        ],
+        [
+          "pairExempt SolidRegistry.ts",
+          25.05999999999999
+        ],
+        [
+          " AgentMotion.ts",
+          22.056999999999995
+        ],
+        [
+          "forced AgentMotion.ts",
+          19.335999999999995
+        ],
+        [
+          "spacingRadius CharacterSeparation.ts",
+          17.831999999999997
+        ],
+        [
+          "move NavGrid.ts",
+          16.352
+        ],
+        [
+          "moveAgent AgentMotion.ts",
+          15.873999999999999
+        ],
+        [
+          "structuredClone js_transferable",
+          15.648
+        ],
+        [
+          "respond MotionResponse.ts",
+          15.085999999999995
+        ],
+        [
+          "grid DistrictNavigation.ts",
+          13.846000000000002
+        ],
+        [
+          "publish SolidRegistry.ts",
+          12.358999999999995
+        ],
+        [
+          "faceMotion MotionResponse.ts",
+          11.457
+        ],
+        [
+          "(garbage collector) ",
+          11.380000000000003
+        ],
+        [
+          "wrote SolidRegistry.ts",
+          9.630000000000003
+        ]
+      ],
+      "queryCallersMs": [
+        [
+          " CharacterSeparation.ts",
+          169.43200000000002
+        ],
+        [
+          "clear SolidRegistry.ts",
+          143.19400000000016
+        ],
+        [
+          "commit SolidRegistry.ts",
+          73.61
+        ],
+        [
+          "auditActor SolidRegistry.ts",
+          2.032
+        ],
+        [
+          "resolvePhysical InfectedSystem.ts",
+          0.298
+        ],
+        [
+          "alarm Civilians.ts",
+          0.187
+        ]
+      ]
+    },
+    {
+      "file": "round-0.cpuprofile.gz",
+      "sha256": "124d8b3edde273eaf01cc408112ece48d311461afd9c8b14405cce017f4831a3",
+      "selfMs": [
+        [
+          "query SpatialHash.ts",
+          401.45799999999974
+        ],
+        [
+          " CharacterSeparation.ts",
+          234.46000000000052
+        ],
+        [
+          "commit SolidRegistry.ts",
+          199.0450000000002
+        ],
+        [
+          " SimWorld.ts",
+          113.85300000000001
+        ],
+        [
+          " SolidRegistry.ts",
+          111.3930000000002
+        ],
+        [
+          "post node:inspector",
+          103.654
+        ],
+        [
+          "emit EventBus.ts",
+          87.74900000000012
+        ],
+        [
+          "update InfectedSystem.ts",
+          78.3160000000001
+        ],
+        [
+          "clear SolidRegistry.ts",
+          41.61099999999997
+        ],
+        [
+          "layers SolidRegistry.ts",
+          39.84799999999999
+        ],
+        [
+          " AgentMotion.ts",
+          36.457999999999984
+        ],
+        [
+          "set SpatialHash.ts",
+          31.599000000000007
+        ],
+        [
+          "forced AgentMotion.ts",
+          28.685000000000002
+        ],
+        [
+          "seek InfectedSystem.ts",
+          27.913000000000007
+        ],
+        [
+          "pairExempt SolidRegistry.ts",
+          25.393999999999995
+        ],
+        [
+          "respond MotionResponse.ts",
+          20.688000000000006
+        ],
+        [
+          "spacingRadius CharacterSeparation.ts",
+          16.77
+        ],
+        [
+          "moveAgent AgentMotion.ts",
+          14.674
+        ],
+        [
+          "structuredClone js_transferable",
+          13.680000000000001
+        ],
+        [
+          "(garbage collector) ",
+          13.452
+        ],
+        [
+          "finish SolidRegistry.ts",
+          13.037
+        ],
+        [
+          "move NavGrid.ts",
+          12.402000000000001
+        ],
+        [
+          "js-to-wasm::i d443fe4e",
+          12.379999999999999
+        ],
+        [
+          "publish SolidRegistry.ts",
+          12.059
+        ],
+        [
+          "faceMotion MotionResponse.ts",
+          11.611999999999998
+        ]
+      ],
+      "queryCallersMs": [
+        [
+          " CharacterSeparation.ts",
+          174.85600000000005
+        ],
+        [
+          "clear SolidRegistry.ts",
+          151.33199999999994
+        ],
+        [
+          "commit SolidRegistry.ts",
+          72.76400000000004
+        ],
+        [
+          "auditActor SolidRegistry.ts",
+          1.0430000000000001
+        ],
+        [
+          "alarm Civilians.ts",
+          0.716
+        ],
+        [
+          "resolvePhysical InfectedSystem.ts",
+          0.39
+        ],
+        [
+          "sweep SolidRegistry.ts",
+          0.18
+        ],
+        [
+          "emit EventBus.ts",
+          0.177
+        ]
+      ]
+    },
+    {
+      "file": "round-1.cpuprofile.gz",
+      "sha256": "0c193d7d34908f7965c0abf20475ddd5456c5355981273a8106feb430e723c58",
+      "selfMs": [
+        [
+          "query SpatialHash.ts",
+          377.71400000000017
+        ],
+        [
+          " CharacterSeparation.ts",
+          217.27300000000025
+        ],
+        [
+          "commit SolidRegistry.ts",
+          185.50799999999987
+        ],
+        [
+          " SolidRegistry.ts",
+          109.28900000000014
+        ],
+        [
+          " SimWorld.ts",
+          108.35900000000004
+        ],
+        [
+          "post node:inspector",
+          107.474
+        ],
+        [
+          "emit EventBus.ts",
+          93.19000000000013
+        ],
+        [
+          "update InfectedSystem.ts",
+          61.48899999999998
+        ],
+        [
+          "clear SolidRegistry.ts",
+          41.62399999999997
+        ],
+        [
+          "seek InfectedSystem.ts",
+          29.634
+        ],
+        [
+          "pairExempt SolidRegistry.ts",
+          25.195999999999987
+        ],
+        [
+          "layers SolidRegistry.ts",
+          23.971999999999987
+        ],
+        [
+          " AgentMotion.ts",
+          22.10000000000001
+        ],
+        [
+          "forced AgentMotion.ts",
+          20.331
+        ],
+        [
+          "set SpatialHash.ts",
+          19.278999999999996
+        ],
+        [
+          "respond MotionResponse.ts",
+          17.075
+        ],
+        [
+          "moveAgent AgentMotion.ts",
+          16.967999999999993
+        ],
+        [
+          "grid DistrictNavigation.ts",
+          14.172
+        ],
+        [
+          "spacingRadius CharacterSeparation.ts",
+          13.904
+        ],
+        [
+          "tryZooSpecial InfectedSystem.ts",
+          12.929
+        ],
+        [
+          "publish SolidRegistry.ts",
+          12.05
+        ],
+        [
+          "structuredClone js_transferable",
+          11.826
+        ],
+        [
+          "(garbage collector) ",
+          11.415000000000003
+        ],
+        [
+          "move NavGrid.ts",
+          11.385000000000002
+        ],
+        [
+          "faceMotion MotionResponse.ts",
+          9.927999999999999
+        ]
+      ],
+      "queryCallersMs": [
+        [
+          " CharacterSeparation.ts",
+          163.13200000000018
+        ],
+        [
+          "clear SolidRegistry.ts",
+          143.44100000000006
+        ],
+        [
+          "commit SolidRegistry.ts",
+          68.96100000000001
+        ],
+        [
+          "auditActor SolidRegistry.ts",
+          1.103
+        ],
+        [
+          "alarm Civilians.ts",
+          0.5660000000000001
+        ],
+        [
+          "resolvePhysical InfectedSystem.ts",
+          0.34099999999999997
+        ],
+        [
+          "emit EventBus.ts",
+          0.17
+        ]
+      ]
+    }
+  ],
+  "scans": {
+    "visitor": {
+      "calls": 69177,
+      "buckets": 367059,
+      "points": 920829,
+      "matches": 170061,
+      "skipped": 0
+    },
+    "separation": {
+      "calls": 422898,
+      "buckets": 2243775,
+      "points": 21129420,
+      "matches": 11142909,
+      "skipped": 906651
+    },
+    "occupancy": {
+      "calls": 584580,
+      "buckets": 3119973,
+      "points": 7916964,
+      "matches": 4888905,
+      "skipped": 1716111
+    },
+    "list": {
+      "calls": 60708,
+      "buckets": 393384,
+      "points": 2589477,
+      "matches": 859905,
+      "skipped": 0
+    },
+    "rollback": {
+      "calls": 287487,
+      "buckets": 1887243,
+      "points": 5046282,
+      "matches": 3149910,
+      "skipped": 1096575
+    }
+  }
+}

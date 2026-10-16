@@ -1,0 +1,42 @@
+# Opened game-camera captures
+
+Source `3714fe54e`, fresh production build. Each backend ran 36/36 catalog rows: six scenes, high/low, zoom 1.5/1.0/0.5. I opened all **48 sheets** at the requested zooms 1.0 and 0.5, on both tiers and both backends. The review manifest below lists the exact saved images. Zoom 1.5 is additional numeric coverage. All requested backend/tier checks pass; no console errors were recorded.
+
+## Observations
+
+| Scene | What the opened sheets show |
+| --- | --- |
+| `collision-zoo-s2-mixed-query` | Yellow charge arrows cross the courier's position, followed by elephant travel into the group. Cyan gorilla grab/throw marks appear around frames 108–162. Ordinary infected continue to gather and move. At zoom .5 the elephant and gorilla enter from the crop edges; the close camera cannot show the whole crowd at once. Both backends show the same sequence, with less fur detail on low. The 27-actor visual scene supplements the unchanged 200/100 timing fixture. Collision failure and pending counters are zero in every row. |
+| `corgi-firestation-apron` | The courier turns on the tiled apron; the corgi follows, turns and settles beside the garage. At .5 the orange/white paws, green bags and their separation from the slabs are readable. Shadows cross the yellow hatch marks without the visible toe disappearing into the floor. The numeric mesh-sole sink is 0 cm against the unchanged 1 cm limit in all rows. Sheets alone cannot resolve one centimeter. Low quality has simpler foliage and different local light/shadow detail; the foot placement sequence remains consistent. |
+| `corgi-follow` | The corgi catches up, follows through the courier's turns, then pauses and turns back. Both subjects and the bag silhouette remain distinct. Dense high-tier grass partly covers the shortest paw tips; sparse low-tier grass exposes them more clearly. At zoom 1 they are small but trackable; .5 shows the changing paw poses. |
+| `corgi-behaviour` | The dog follows, pauses, faces the nearby infected and reacts during the cyan warning/attack sequence, then resumes following. The short warning lift is visible at .5. The original anchor still measures contact/slide; real mesh depth measures penetration. No frozen paw or missing dog is visible in either backend. |
+| `l10-e3b-mega-arrival` | The courier waits at the lit console with the directional HUD. The Mega enters around frame 5250 and reaches the courier by frame 6000. Its black/red torso and legs remain opaque; the courier's cap, body and equipment remain visible over the overlapping boss silhouette. There is no circular hole erasing the boss. The cyan strike mark is readable beneath them. |
+| `l10-mega-close-contact` | Yellow approach arrows precede the Mega's arrival; a cyan ring and strike wedges alternate through contact. The courier stays visible beside/in front of its feet, and the red chest/arm highlights remain intact. At zoom .5 the boss's upper body is cropped by the fixed close camera/HUD. This is recorded as a framing limit, not evidence of a full-body close-up. |
+
+Across all 72 focused rows, the courier ID visibility minimum is **93.2% on WebGL /95.9% on WebGPU**, above 60%; the minimum Mega/Alpha visible-area ratio is **1.0176 /1.0186**, above .90. There are zero undrawn-frame or placeholder-frame failures. These probes accompany the opened images; their thresholds were not changed. Contact sheets have unused black cells after the last labeled frame.
+
+## Native phone captures
+
+I also opened the four final `native-final/collision-s4-final-371-L*.png` game-camera captures. L1 shows the courier, corgi and seated NPC clearly beside the bench. L3 deliberately surrounds the courier with 12 infected; bodies partly occlude the courier. L4 shows the corgi/courier beside the bus, with the existing interaction text clipped under the narrow right-side HUD. L5 shows the courier and nearby fire, with the existing objectives crowded into columns at the upper left. These are timing fixtures, not a claim that every mobile HUD layout is polished. No L5 difficulty values were changed.
+
+The two L6 emulation screenshots were opened too. They show the recorder controls and the crowded night scene with the large existing headlamp prompt. Those overlays limit visual assessment; the artifacts support the recorded timing, not a clean presentation capture. Both recordings retain 100 infected and 1,200 rendered samples, at 4x/2x CPU respectively. The device names are Chromium emulation profiles on Apple M4 Metal, not physical Android/iOS results.
+
+## Review manifest
+
+### webgl
+
+- `collision-zoo-s2-mixed-query`: [high z1](evidence/final-webgl/collision-zoo-s2-mixed-query@high-z1/sheet.jpg), [high z0.5](evidence/final-webgl/collision-zoo-s2-mixed-query@high-z0.5/sheet.jpg), [low z1](evidence/final-webgl/collision-zoo-s2-mixed-query@low-z1/sheet.jpg), [low z0.5](evidence/final-webgl/collision-zoo-s2-mixed-query@low-z0.5/sheet.jpg)
+- `corgi-firestation-apron`: [high z1](evidence/final-webgl/corgi-firestation-apron@high-z1/sheet.jpg), [high z0.5](evidence/final-webgl/corgi-firestation-apron@high-z0.5/sheet.jpg), [low z1](evidence/final-webgl/corgi-firestation-apron@low-z1/sheet.jpg), [low z0.5](evidence/final-webgl/corgi-firestation-apron@low-z0.5/sheet.jpg)
+- `corgi-follow`: [high z1](evidence/final-webgl/corgi-follow@high-z1/sheet.jpg), [high z0.5](evidence/final-webgl/corgi-follow@high-z0.5/sheet.jpg), [low z1](evidence/final-webgl/corgi-follow@low-z1/sheet.jpg), [low z0.5](evidence/final-webgl/corgi-follow@low-z0.5/sheet.jpg)
+- `corgi-behaviour`: [high z1](evidence/final-webgl/corgi-behaviour@high-z1/sheet.jpg), [high z0.5](evidence/final-webgl/corgi-behaviour@high-z0.5/sheet.jpg), [low z1](evidence/final-webgl/corgi-behaviour@low-z1/sheet.jpg), [low z0.5](evidence/final-webgl/corgi-behaviour@low-z0.5/sheet.jpg)
+- `l10-e3b-mega-arrival`: [high z1](evidence/final-webgl/l10-e3b-mega-arrival@high-z1/sheet.jpg), [high z0.5](evidence/final-webgl/l10-e3b-mega-arrival@high-z0.5/sheet.jpg), [low z1](evidence/final-webgl/l10-e3b-mega-arrival@low-z1/sheet.jpg), [low z0.5](evidence/final-webgl/l10-e3b-mega-arrival@low-z0.5/sheet.jpg)
+- `l10-mega-close-contact`: [high z1](evidence/final-webgl/l10-mega-close-contact@high-z1/sheet.jpg), [high z0.5](evidence/final-webgl/l10-mega-close-contact@high-z0.5/sheet.jpg), [low z1](evidence/final-webgl/l10-mega-close-contact@low-z1/sheet.jpg), [low z0.5](evidence/final-webgl/l10-mega-close-contact@low-z0.5/sheet.jpg)
+
+### webgpu
+
+- `collision-zoo-s2-mixed-query`: [high z1](evidence/final-webgpu/collision-zoo-s2-mixed-query@high-z1/sheet.jpg), [high z0.5](evidence/final-webgpu/collision-zoo-s2-mixed-query@high-z0.5/sheet.jpg), [low z1](evidence/final-webgpu/collision-zoo-s2-mixed-query@low-z1/sheet.jpg), [low z0.5](evidence/final-webgpu/collision-zoo-s2-mixed-query@low-z0.5/sheet.jpg)
+- `corgi-firestation-apron`: [high z1](evidence/final-webgpu/corgi-firestation-apron@high-z1/sheet.jpg), [high z0.5](evidence/final-webgpu/corgi-firestation-apron@high-z0.5/sheet.jpg), [low z1](evidence/final-webgpu/corgi-firestation-apron@low-z1/sheet.jpg), [low z0.5](evidence/final-webgpu/corgi-firestation-apron@low-z0.5/sheet.jpg)
+- `corgi-follow`: [high z1](evidence/final-webgpu/corgi-follow@high-z1/sheet.jpg), [high z0.5](evidence/final-webgpu/corgi-follow@high-z0.5/sheet.jpg), [low z1](evidence/final-webgpu/corgi-follow@low-z1/sheet.jpg), [low z0.5](evidence/final-webgpu/corgi-follow@low-z0.5/sheet.jpg)
+- `corgi-behaviour`: [high z1](evidence/final-webgpu/corgi-behaviour@high-z1/sheet.jpg), [high z0.5](evidence/final-webgpu/corgi-behaviour@high-z0.5/sheet.jpg), [low z1](evidence/final-webgpu/corgi-behaviour@low-z1/sheet.jpg), [low z0.5](evidence/final-webgpu/corgi-behaviour@low-z0.5/sheet.jpg)
+- `l10-e3b-mega-arrival`: [high z1](evidence/final-webgpu/l10-e3b-mega-arrival@high-z1/sheet.jpg), [high z0.5](evidence/final-webgpu/l10-e3b-mega-arrival@high-z0.5/sheet.jpg), [low z1](evidence/final-webgpu/l10-e3b-mega-arrival@low-z1/sheet.jpg), [low z0.5](evidence/final-webgpu/l10-e3b-mega-arrival@low-z0.5/sheet.jpg)
+- `l10-mega-close-contact`: [high z1](evidence/final-webgpu/l10-mega-close-contact@high-z1/sheet.jpg), [high z0.5](evidence/final-webgpu/l10-mega-close-contact@high-z0.5/sheet.jpg), [low z1](evidence/final-webgpu/l10-mega-close-contact@low-z1/sheet.jpg), [low z0.5](evidence/final-webgpu/l10-mega-close-contact@low-z0.5/sheet.jpg)
