@@ -160,16 +160,37 @@ export class LevelSevenDeparture {
     if (t >= 1) this.finish();
   }
   private finish(): void {
+    const w = this.world;
+    this.state.phase = 'done';
+    stopEngine(w, this.state.busId);
+    if (w.missions?.def.id === 'L7') w.missions.signal('l7.departed');
+    else w.events.emit({ type: 'level.completed', tick: w.tick, id: 'L7', result: this.result() });
+  }
+  /** Exact identities and loadout are consumed by the ordinary mission/campaign completion path. */
+  result(): MissionResult {
     const w = this.world, s = this.state;
-    s.phase = 'done';
-    stopEngine(w, s.busId);
     const escaped = s.boarded.map(id => structuredClone(w.entities.get(id)!)).filter(e => e.health.current > 0 && e.civilian?.state !== 'finished' && !e.infected && !e.infection);
     for (const e of escaped) { e.hidden = false; delete e.passengerOf; if (e.civilian) e.civilian.pauseUntil = 0; }
-    const result: MissionResult = {
-      time: w.tick / 60, kills: 0, knockdowns: 0, damage: 0, deaths: 0, rescued: escaped.length, optionalObjectives: [],
+    return {
+      time: w.tick / 60, kills: 0, knockdowns: 0, damage: 0, deaths: 0, optionalObjectives: [],
+      ...w.missions?.state.stats, rescued: escaped.length,
       companion: structuredClone([...w.entities.iterate()].find(e => e.companion)),
       survivors: escaped.map(e => e.civilian?.survivor?.key ?? `survivor-${e.id}`), escapedSurvivors: escaped,
     };
-    w.events.emit({ type: 'level.completed', tick: w.tick, id: 'L7', result });
+  }
+  snapshot() { return { state: structuredClone(this.state), from: [...this.from], handedOver: this.handedOver, tick: this.world.tick }; }
+  restore(saved: unknown): void {
+    const record = saved as ReturnType<LevelSevenDeparture['snapshot']>, w = this.world, delta = w.tick - record.tick;
+    this.state = structuredClone(record.state); this.handedOver = record.handedOver;
+    if (this.state.lastEnterAt > -1e9) this.state.lastEnterAt += delta;
+    if (this.cinematic) this.state.startedAt += delta;
+    for (const id of Object.keys(this.state.entering).map(Number)) this.state.entering[id] += delta;
+    this.from.clear(); for (const [id, at] of record.from) this.from.set(id, { ...at });
+    if (this.blocker !== undefined) { w.physics.removeBlocker(this.blocker); this.blocker = undefined; }
+    const blocked = !this.cinematic;
+    if (blocked) this.blocker = w.physics.addBlocker(this.wall);
+    w.events.emit({ type: 'world.blocker.changed', tick: w.tick, id: NAV_BUS, blocked, wall: this.wall });
+    w.physics.playerCollider?.setEnabled(!this.cinematic);
+    w.storyLock = this.cinematic ? { scripted: null, skip: false } : null;
   }
 }
