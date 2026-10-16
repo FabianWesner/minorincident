@@ -1,0 +1,162 @@
+{
+  "epic": "E26",
+  "passed": 31,
+  "failed": 0,
+  "selected": [
+    {
+      "file": "sim/combat/balance.test.ts",
+      "test": "S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash",
+      "status": "passed"
+    },
+    {
+      "file": "sim/barricades.test.ts",
+      "test": "T-E26-02 @E26-AC02 prop-yard 300 authored bodies sleep after 1s without interaction",
+      "status": "passed"
+    },
+    {
+      "file": "sim/barricades.test.ts",
+      "test": "T-E26-06 @E26-AC06 staged awake budget freezes farthest props after waking 250",
+      "status": "passed"
+    },
+    {
+      "file": "sim/barricades.test.ts",
+      "test": "T-E26-07 @E26-AC07 fallen props without a reset flag recover above ground at their displaced position within one tick",
+      "status": "passed"
+    },
+    {
+      "file": "sim/barricades.test.ts",
+      "test": "T-E26-09 @E26-AC09 coverage rejects overlaps and low fill; 1.5s brace pins props and blocks navigation",
+      "status": "passed"
+    },
+    {
+      "file": "sim/barricades.test.ts",
+      "test": "T-E26-10 @E26-AC10 ten spaced runners deal defined DPS; Brute fivefold; breaking releases props and nav in the same tick",
+      "status": "passed"
+    },
+    {
+      "file": "sim/barricades.test.ts",
+      "test": "T-E26-12 @E26-AC12 stand 2s boards 200HP; repairs 25% per 2s; moving interrupts progress",
+      "status": "passed"
+    },
+    {
+      "file": "sim/barricades.test.ts",
+      "test": "T-E26-03 @E26-AC03 authored 35kg medium push slows to 55%; heavy requires shoulder upgrade",
+      "status": "passed"
+    },
+    {
+      "file": "sim/barricades.test.ts",
+      "test": "T-E26-04 @E26 @E26-AC04 real kick launches cone at 6m/s and momentum downs a runner",
+      "status": "passed"
+    },
+    {
+      "file": "sim/barricades.test.ts",
+      "test": "T-E26-05 @E26 @E26-AC05 blast impulse is delayed, upward and linear; outside radius stays asleep",
+      "status": "passed"
+    },
+    {
+      "file": "sim/barricades.test.ts",
+      "test": "T-E26-06b @E26 @E26-AC06 explosion wakes 250 bodies within both tier limits, farthest freeze first",
+      "status": "passed"
+    },
+    {
+      "file": "sim/barricades.test.ts",
+      "test": "T-E26-07b @E26 @E26-AC07 remove flag disables a fallen prop without respawning it",
+      "status": "passed"
+    },
+    {
+      "file": "sim/barricades.test.ts",
+      "test": "T-E26-08 @E26 @E26-AC08 displaced resting dumpster updates nav in 0.5s, short routes detour and long routes attack",
+      "status": "passed"
+    },
+    {
+      "file": "sim/barricades.test.ts",
+      "test": "T-E26-11 @E26 @E26-AC11 runners vault low sandbags in 1.2s; crawlers/heavies cannot; cover stops front shots",
+      "status": "passed"
+    },
+    {
+      "file": "sim/barricades.test.ts",
+      "test": "T-E26-13 @E26 @E26-AC13 parked car braces at 100% coverage and twice car HP; break releases it",
+      "status": "passed"
+    },
+    {
+      "file": "sim/barricades.test.ts",
+      "test": "T-E26-11b @E26 @E26-AC11 pooled heavies cannot inherit an interrupted runner vault",
+      "status": "passed"
+    },
+    {
+      "file": "sim/barricades.test.ts",
+      "test": "T-E26-15 @E26 @E26-AC15 60s push/kick/explosion tape has identical repeat state hashes",
+      "status": "passed"
+    },
+    {
+      "file": "sim/barricades.test.ts",
+      "test": "T-E26-14 @E26 @E26-AC14 complete bot fills/braces two slots and defense reduces core arrivals >=40%",
+      "status": "passed"
+    },
+    {
+      "file": "sim/barricades.test.ts",
+      "test": "T-E26-09b @E26 @E26-AC09 overlapping props do not double-count slot coverage",
+      "status": "passed"
+    },
+    {
+      "file": "sim/barricades.test.ts",
+      "test": "T-E26-03b @E26 @E26-AC03 authored 35kg shopping cart moves along push direction at 55% speed",
+      "status": "passed"
+    },
+    {
+      "file": "sim/determinism.test.ts",
+      "test": "S-05-foundation @smoke empty scripted 1800-tick golden hash",
+      "status": "passed"
+    },
+    {
+      "file": "sim/explosions.test.ts",
+      "test": "T-E27-02b @E27 @E27-AC02 @E26-AC05 the radial impulse has an upward bias, scales with mass and lands one tick later",
+      "status": "passed"
+    },
+    {
+      "file": "sim/props.test.ts",
+      "test": "E26 authored pushable props @E26 a moved prop frozen by the awake cap blocks its resting footprint in the same tick",
+      "status": "passed"
+    },
+    {
+      "file": "sim/props.test.ts",
+      "test": "E26 authored pushable props @E26 resting authored benches block civilian, infected and ally navigation from the first frame",
+      "status": "passed"
+    },
+    {
+      "file": "unit/physics-metadata.test.ts",
+      "test": "@E26 authored GLB records are reproduced at layout build with masses, collision shapes and break rules",
+      "status": "passed"
+    },
+    {
+      "file": "unit/physics-prop-contract.test.ts",
+      "test": "T-E26-01 @E26 @E26-AC01 every movable prop GLB validates mass band, collider bounds, COM and explosion references",
+      "status": "passed"
+    },
+    {
+      "file": "sim/combat/combat.test.ts",
+      "test": "S-06 @E05 @smoke each category fires/hits; swept projectile cannot tunnel through a dummy",
+      "status": "passed"
+    },
+    {
+      "file": "sim/missions/adapters.test.ts",
+      "test": "@E26 mission barricade actors use real HP/blockers, emit filtered break events and restore at checkpoints",
+      "status": "passed"
+    },
+    {
+      "file": "sim/npc/permanence.test.ts",
+      "test": "20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07",
+      "status": "passed"
+    },
+    {
+      "file": "unit/motionlab/stage1.test.ts",
+      "test": "stage1 navigation capsule and NPC traces meet motion budgets @smoke",
+      "status": "passed"
+    },
+    {
+      "file": "unit/motionlab/stage1.test.ts",
+      "test": "crowd fades preserve head position when clips change or interrupt @smoke",
+      "status": "passed"
+    }
+  ]
+}

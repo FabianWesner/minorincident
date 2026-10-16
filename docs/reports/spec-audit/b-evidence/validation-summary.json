@@ -1,0 +1,99 @@
+{
+  "baseline": "8718d0fb1fbc4c46ee4eda34860955345eed2ea6",
+  "auditCommits": [
+    "01280db1b test(E28): add fully wet native storm frame and heap gates",
+    "3ec6e7a00 fix(verify): discard stale browser evidence when timing never starts",
+    "7cd29302a test(E25): prove masked light pool parity on both render backends",
+    "b9b68e7c9 fix(verify): reserve quiet batches for E26 and E28 timing",
+    "a1453dcb1 test(E26): enforce all ten barricade defense seeds in verify"
+  ],
+  "unit": {
+    "passed": 1539,
+    "skipped": 7,
+    "newVerifierCliPassed": 4
+  },
+  "epics": {
+    "E25": {
+      "verifyExit": 1,
+      "nodePassed": 32,
+      "nodeFailed": 0,
+      "finished": 1792138223.172768,
+      "headless": {
+        "startTime": "2026-10-16T07:55:31.821Z",
+        "duration": 891309.9550000001,
+        "expected": 42,
+        "skipped": 3,
+        "unexpected": 2,
+        "flaky": 0
+      },
+      "nativeStatus": "unmeasured; historical GPU reporter excluded"
+    },
+    "E26": {
+      "verifyExit": 1,
+      "nodePassed": 31,
+      "nodeFailed": 0,
+      "finished": 1792140146.8132749,
+      "headless": {
+        "startTime": "2026-10-16T08:25:24.108Z",
+        "duration": 2267.523,
+        "expected": 0,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    "E27": {
+      "verifyExit": 0,
+      "nodePassed": 27,
+      "nodeFailed": 0,
+      "finished": 1792141603.040816,
+      "headless": {
+        "startTime": "2026-10-16T08:49:05.008Z",
+        "duration": 325453.75100000005,
+        "expected": 41,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "gpu": {
+        "startTime": "2026-10-16T09:06:04.880Z",
+        "duration": 38138.337,
+        "expected": 2,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    },
+    "E28": {
+      "verifyExit": 1,
+      "nodePassed": 25,
+      "nodeFailed": 0,
+      "finished": 1792143427.063605,
+      "headless": {
+        "startTime": "2026-10-16T09:20:19.224Z",
+        "duration": 371976.623,
+        "expected": 52,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    }
+  },
+  "matrices": {
+    "webgl2": {
+      "cases": 54,
+      "passed": 54,
+      "consoleErrors": 0
+    },
+    "webgpu": {
+      "cases": 54,
+      "passed": 54,
+      "consoleErrors": 0
+    }
+  },
+  "supplemental": {
+    "E26BrowserPassed": 34,
+    "E25ParityPassed": 2,
+    "newStormTiming": "typecheck/lint/collection pass; native execution unmeasured after fairness stop"
+  }
+}
