@@ -415,6 +415,8 @@ export class SimWorld implements Lifecycle {
   }
   reset(): void {
     this.solids.reset();
+    // Reachability belongs to the departing mission's grid, including during the next level's pickup assembly.
+    this.stopTrapRescue?.(); this.stopTrapRescue = null; this.trapRescue = null;
     this.chunks?.dispose(); this.chunks = null;
     this.inspectionGhost = false; this.weather = null; this.lightPower = null;
     this.vehicles?.dispose(); this.vehicles = null;
