@@ -18,6 +18,17 @@ function hsv(r: number, g: number, b: number): { h: number; s: number; v: number
 function mean(image: PNG): number { let sum = 0; for (let i = 0; i < image.data.length; i += 4) sum += (image.data[i] * 0.2126 + image.data[i + 1] * 0.7152 + image.data[i + 2] * 0.0722) / 255; return sum / (image.width * image.height); }
 function changed(a: PNG, b: PNG): number { let n = 0; for (let i = 0; i < a.data.length; i += 4) if (Math.abs(a.data[i] - b.data[i]) + Math.abs(a.data[i + 1] - b.data[i + 1]) + Math.abs(a.data[i + 2] - b.data[i + 2]) > 30) n++; return n; }
 
+/** Animated warnings keep their full ground footprint visible from the birth frame. */
+function changedBounds(a: PNG, b: PNG): number[] {
+  let left = a.width, top = a.height, right = -1, bottom = -1;
+  for (let y = 0; y < a.height; y++) for (let x = 0; x < a.width; x++) {
+    const i = (y * a.width + x) * 4;
+    if (Math.abs(a.data[i] - b.data[i]) + Math.abs(a.data[i + 1] - b.data[i + 1]) + Math.abs(a.data[i + 2] - b.data[i + 2]) <= 10) continue;
+    left = Math.min(left, x); top = Math.min(top, y); right = Math.max(right, x); bottom = Math.max(bottom, y);
+  }
+  return [left, top, right, bottom];
+}
+
 test('T-E15-03 @E15 @E15-AC03 @visual Full ground splat has palette red; Off has no red decal pixels', async ({ page }) => {
   await setup(page, 'blood-probe'); const results = [];
   for (const gore of ['Full', 'Off'] as const) {
@@ -50,7 +61,13 @@ test('T-E15-04 @E15 @E15-AC04 @visual each sim telegraph appears in the next fra
     const on = await capture(page, `telegraph-${kind}`); const pixels = changed(baseline, on); expect(pixels).toBeGreaterThan(100);
     await page.evaluate(() => window.__SS__!.vfx.stepRender(0.05));
     const settled = await capture(page, `telegraph-${kind}-settled`);
-    expect(changed(on, settled), 'birth frame must have the same solid footprint as the settled tell').toBeLessThan(200);
+    expect(changed(baseline, settled), 'the warning remains readable while it animates').toBeGreaterThan(100);
+    if (kind === 'bloated') expect(changed(on, settled), 'the cross keeps its static footprint').toBeLessThan(200);
+    else {
+      const bornBounds = changedBounds(baseline, on), settledBounds = changedBounds(baseline, settled);
+      for (let edge = 0; edge < 4; edge++) expect(Math.abs(bornBounds[edge] - settledBounds[edge]), 'animation keeps the full warning footprint fixed').toBeLessThanOrEqual(2);
+    }
+    if (kind === 'charge' || kind === 'lunge') expect(changed(on, settled), 'chevrons sweep during wind-up').toBeGreaterThan(100);
     const persistence = await page.evaluate(async () => { const a = window.__SS__!; await a.step(180); for (let i = 0; i < 5; i++) a.vfx.stepRender(1); const during = a.getState().render.vfx!; a.vfx.emit({ type: 'attack.resolved', attackId: 7 }); return { during, after: a.getState().render.vfx! }; });
     expect(persistence.during.telegraphs).toHaveLength(1); expect(persistence.after.telegraphs).toHaveLength(0); results.push({ index, kind, pixels, tell, persistence });
   }
@@ -58,8 +75,12 @@ test('T-E15-04 @E15 @E15-AC04 @visual each sim telegraph appears in the next fra
   // Re-enabling at a nonzero paused visual time must still show the next tell immediately.
   await page.evaluate(() => window.__SS__!.settings.set({ vfx: false }));
   const off = await capture(page, 'telegraph-toggle-off');
+  await page.evaluate(() => window.__SS__!.vfx.emit({ type: 'telegraph', attackId: 8, kind: 'lunge', position: { x: 3, z: 0 }, radius: 2, angle: 0 }));
+  const warning = await capture(page, 'telegraph-disabled-warning');
+  expect(changed(off, warning), 'optional VFX off keeps combat warnings visible').toBeGreaterThan(100);
+  expect(await page.evaluate(() => window.__SS__!.getState().render.vfx!.enabled)).toBe(false);
   await page.evaluate(() => {
-    const a = window.__SS__!; a.settings.set({ vfx: true });
+    const a = window.__SS__!; a.vfx.emit({ type: 'attack.resolved', attackId: 8 }); a.settings.set({ vfx: true });
     a.vfx.emit({ type: 'telegraph', attackId: 8, kind: 'lunge', position: { x: 3, z: 0 }, radius: 2, angle: 0 });
   });
   const on = await capture(page, 'telegraph-toggle-on'); expect(changed(off, on)).toBeGreaterThan(100);
