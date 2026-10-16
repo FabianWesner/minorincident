@@ -3,6 +3,8 @@ import { PNG } from 'pngjs';
 import { boot, test, expect } from '../e2e/fixtures';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 
+test.use({ headless: true, launchOptions: { args: ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] } });
+
 const out = 'test-results/epics/E25/closure';
 export const lightLab: SceneSpec = {
   name: 'light-lab', ground: 'asphalt', size: 50, time: 'night', dof: false,
@@ -18,6 +20,36 @@ function patch(image: PNG, point: number[], radius = 4) {
   return sum / n;
 }
 async function scene(page: import('@playwright/test').Page, spec: SceneSpec) { await boot(page, '/?test=1&scenelab&renderer=webgl&quality=high&audio=muted&dpr=1'); await page.evaluate(async spec => { await window.__SCENE__!.load(spec); await window.__SCENE__!.step(120); await window.__SS__!.screenshotReady(); }, spec); mkdirSync(out, { recursive: true }); }
+
+test.describe('actual backend pool parity', () => {
+  for (const quality of ['high', 'low']) test(`T-E25-04 @E25 @E25-AC04 ${quality} identical trailer pool mask differs by at most ten percent`, async ({ page }) => {
+    mkdirSync(out, { recursive: true });
+    const samples: { backend: string; mean: number; pixels: number }[] = [];
+    let mask: Set<number> | undefined;
+    for (const backend of ['webgl', 'webgpu']) {
+      await boot(page, `/?test=1&scenelab&renderer=${backend}&quality=${quality}&audio=muted&dpr=1`);
+      await page.evaluate(async spec => { await window.__SCENE__!.load(spec); await window.__SCENE__!.step(120); await window.__SS__!.screenshotReady(); }, lightLab);
+      expect(await page.evaluate(() => window.__SS__!.getState().render.backend)).toBe(backend);
+      const png = PNG.sync.read(await page.locator('canvas').screenshot({ path: `${out}/parity-${quality}-${backend}.png` }));
+      if (!mask) {
+        // Include the pool's bright core and falloff, away from the trailer and fence.
+        // Rasterize it once and use precisely the same screen pixels on both backends.
+        const points = await page.evaluate(() => Array.from({ length: 57 * 49 }, (_, i) => window.__SS__!.camera.project(-7 + (i % 57) * .25, .05, -6 + Math.floor(i / 57) * .25)));
+        mask = new Set<number>();
+        for (const point of points) {
+          const cx = Math.round((point[0] + 1) / 2 * png.width), cy = Math.round((1 - point[1]) / 2 * png.height);
+          for (let y = cy - 2; y <= cy + 2; y++) for (let x = cx - 2; x <= cx + 2; x++) if (x >= 0 && y >= 0 && x < png.width && y < png.height) mask.add((y * png.width + x) * 4);
+        }
+      }
+      expect(mask.size).toBeGreaterThan(1000);
+      const mean = [...mask].reduce((sum, i) => sum + lum(png.data[i], png.data[i + 1], png.data[i + 2]), 0) / mask.size;
+      expect(mean).toBeGreaterThan(.1); samples.push({ backend, mean, pixels: mask.size });
+    }
+    const relativeDifference = Math.abs(samples[1].mean - samples[0].mean) / samples[0].mean;
+    writeFileSync(`${out}/parity-${quality}.json`, JSON.stringify({ samples, relativeDifference }, null, 2));
+    expect(relativeDifference).toBeLessThanOrEqual(.1);
+  });
+});
 
 test('T-E25-03 @E25 @E25-AC03 trailer pool ends at the fence and exceeds ambient by four', async ({ page }) => {
   await scene(page, lightLab);
