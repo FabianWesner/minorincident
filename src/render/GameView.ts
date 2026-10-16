@@ -672,7 +672,7 @@ export class GameView implements Lifecycle {
     this.update(1);
   }
   /** Render settings only; persistence and gameplay accessibility remain owned by E14. */
-  settings(patch: { cameraShake?: boolean; bloom?: boolean; cheapDof?: boolean; timeOfDay?: TimeOfDay; occludersVisible?: boolean; idPass?: boolean; windowMask?: boolean; foliageMask?: boolean | 'crowns'; foliageReveal?: boolean; seeThroughReference?: boolean; seeThroughOff?: boolean; foliageVisible?: boolean } & VfxSettings): void {
+  settings(patch: { cameraShake?: boolean; bloom?: boolean; cheapDof?: boolean; timeOfDay?: TimeOfDay; occludersVisible?: boolean; idPass?: boolean; windowMask?: boolean; foliageMask?: boolean | 'crowns'; foliageReveal?: boolean; interiorCullOff?: boolean; seeThroughReference?: boolean; seeThroughOff?: boolean; foliageVisible?: boolean } & VfxSettings): void {
     this.vfx?.set(patch);
     if (patch.gore !== undefined || patch.vfx !== undefined) this.crowd?.setGoreEnabled(this.vfx?.snapshot().enabled === true && this.vfx.snapshot().gore === 'Full');
     if (patch.colorblind !== undefined) this.vfxSettings.colorblind = patch.colorblind;
@@ -689,6 +689,7 @@ export class GameView implements Lifecycle {
     if(patch.windowMask!==undefined)this.windowMask=patch.windowMask;
     if(patch.foliageMask!==undefined)this.foliageMask=patch.foliageMask;
     if(patch.foliageReveal!==undefined)this.districts?.setFoliageReveal(patch.foliageReveal);
+    if(patch.interiorCullOff!==undefined&&this.districts)this.districts.interiorCullOff=patch.interiorCullOff;
     if(patch.seeThroughReference!==undefined&&this.districts)this.districts.seeThroughReference=patch.seeThroughReference;
     if(patch.seeThroughOff!==undefined&&this.districts)this.districts.seeThroughOff=patch.seeThroughOff;
     if(patch.foliageVisible!==undefined)this.districts?.setFoliageVisible(patch.foliageVisible);

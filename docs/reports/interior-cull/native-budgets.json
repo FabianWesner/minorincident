@@ -1,0 +1,163 @@
+{
+  "stats": {
+    "startTime": "2026-10-15T20:30:28.558Z",
+    "duration": 313227.756,
+    "expected": 6,
+    "skipped": 4,
+    "unexpected": 3,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "title": "T-E18-09 @E18-AC09 @perf local headless native-GPU Chrome high horde p95 frame <=16.7ms",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 15262,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "E18 @E18 WebGPU low tier parity compiles two-mip bloom and capped crowds",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "duration": 103,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "T-E18-08-physical @E18-AC08 @manual physical iOS and Android recordings at final verification",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "duration": 93,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "T-E18-08-android-webgl @E18-AC08 @perf emulated mobile L6 at 4x CPU p50 >=30fps",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 2942,
+          "errors": [
+            "Error: frame.evaluate: TypeError: Cannot read properties of undefined (reading 'origin')\n    at jp (http://127.0.0.1:4395/build/index-C6iqW90u.js:3:11966)\n    at http://127.0.0.1:4395/build/index-C6iqW90u.js:12:45132\n    at jp (http://127.0.0.1:4395/build/index-C6iqW90u.js:3:11966)\n    at http://127.0.0.1:4395/build/index-C6iqW90u.js:12:45132\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/interior-cull/tests/perf/e18-devices.spec.ts:19:33",
+            "Error: Uncaught errors, console errors and failed requests\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 5\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"console.error: Level load failed TypeError: Cannot read properties of undefined (reading 'origin')\u001b[39m\n\u001b[31m+     at jp (http://127.0.0.1:4395/build/index-C6iqW90u.js:3:11966)\u001b[39m\n\u001b[31m+     at http://127.0.0.1:4395/build/index-C6iqW90u.js:12:45132\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   at e2e/fixtures.ts:42\n\n  40 |     const guard = attachErrorGuard(page);\n  41 |     await use(); guard.dispose();\n> 42 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);\n     |                                                                                 ^\n  43 |   }, { auto: true }],\n  44 | });\n  45 | export { expect };\n    at Object.base.extend.errorGuard.auto (/Users/wesner/Workspace/minorincident/.claude/worktrees/interior-cull/tests/e2e/fixtures.ts:42:81)"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T-E18-08-android-webgpu @E18-AC08 @perf emulated mobile L6 at 4x CPU p50 >=30fps",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "duration": 200,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "T-E18-08-ios-webgl @E18-AC08 @perf emulated mobile L6 at 2x CPU p50 >=30fps",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 2103,
+          "errors": [
+            "Error: frame.evaluate: TypeError: Cannot read properties of undefined (reading 'origin')\n    at jp (http://127.0.0.1:4395/build/index-C6iqW90u.js:3:11966)\n    at http://127.0.0.1:4395/build/index-C6iqW90u.js:12:45132\n    at jp (http://127.0.0.1:4395/build/index-C6iqW90u.js:3:11966)\n    at http://127.0.0.1:4395/build/index-C6iqW90u.js:12:45132\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/interior-cull/tests/perf/e18-devices.spec.ts:19:33",
+            "Error: Uncaught errors, console errors and failed requests\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 5\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"console.error: Level load failed TypeError: Cannot read properties of undefined (reading 'origin')\u001b[39m\n\u001b[31m+     at jp (http://127.0.0.1:4395/build/index-C6iqW90u.js:3:11966)\u001b[39m\n\u001b[31m+     at http://127.0.0.1:4395/build/index-C6iqW90u.js:12:45132\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   at e2e/fixtures.ts:42\n\n  40 |     const guard = attachErrorGuard(page);\n  41 |     await use(); guard.dispose();\n> 42 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);\n     |                                                                                 ^\n  43 |   }, { auto: true }],\n  44 | });\n  45 | export { expect };\n    at Object.base.extend.errorGuard.auto (/Users/wesner/Workspace/minorincident/.claude/worktrees/interior-cull/tests/e2e/fixtures.ts:42:81)"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T-E18-08-ios-webgpu @E18-AC08 @perf emulated mobile L6 at 2x CPU p50 >=30fps",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "duration": 163,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "horde budget high run 1 @E18-AC01 @E18-AC09 @perf",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 15097,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "horde budget low run 1 @E18-AC01 @E18-AC09 @perf",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 16588,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break high",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 55782,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break low",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 99086,
+          "errors": [
+            "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m80\u001b[39m\nReceived:    \u001b[31m91\u001b[39m\n\n  108 |     else { expect(proof.warP50).toBeLessThanOrEqual(1000 / 30); expect(proof.collapseP50).toBeLessThanOrEqual(1000 / 30); }\n  109 |     // Hitch bound: 50 ms on desktop; the phone profile runs under a 4x CPU throttle, so the same bound is 80 ms there (20 ms unthrottled).\n> 110 |     for (const max of [proof.turnMaxMs, proof.tankMaxMs, proof.breakMaxMs]) expect(max).toBeLessThanOrEqual(tier === 'high' ? 50 : 80);\n      |                                                                                         ^\n  111 |   });\n  112 | });\n  113 |\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/interior-cull/tests/perf/l4-budgets.spec.ts:110:89"
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T-E23-19 @E23 @E23-AC19 @E28-AC10 @perf L5 pair-plaza with fires, smoke and five followers, and a walk with the group, high",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 40721,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "title": "T-E23-19 @E23 @E23-AC19 @E28-AC10 @perf L5 pair-plaza with fires, smoke and five followers, and a walk with the group, low",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 57649,
+          "errors": []
+        }
+      ]
+    }
+  ]
+}
