@@ -24,7 +24,7 @@ function wall(w: World, x: number, halfZ = 2) {
   w.infected!.hearing.los.register({ id: 'wall', active: true, source: 'building', shape: { kind: 'aabb', min: { x: x - .1, z: -halfZ }, max: { x: x + .1, z: halfZ } } });
 }
 for (const move of ['gorilla.grab-throw', 'elephant.charge', 'elephant.swipe'] as const) {
-  test(`T-E07-19-${move.replace('.', '-')}-timing @E07-AC05 @E07-AC19 telegraph, pause, recovery and exact restored activation interval`, async () => {
+  test(`T-E07-19-${move.replace('.', '-')}-timing @E07-AC05 @E07-AC19 @E30-AC10 telegraph, pause, recovery and exact restored activation interval`, async () => {
     const w = await arena(); player(w, 25); const e = spawn(w, move.split('.')[0], 0, 0, 'idle');
     const a = start(w, e, move), timing = infectedSpecialMoves[move];
     const clock = new Clock(); clock.pause(); clock.advance(1, () => w.update()); expect(w.tick).toBe(0);
@@ -40,7 +40,7 @@ for (const move of ['gorilla.grab-throw', 'elephant.charge', 'elephant.swipe'] a
     expect(next.attackId).toBeGreaterThan(a.attackId); expect(w.infected!.startSpecial(e.id, move, a.target, a.area)).toBe(false);
   });
 }
-test('T-E07-19-elephant-charge @E07-AC19 locked 8m/s, 16m range, exact 3.5m sweep, 40 HP and 90 tick knockdown once', async () => {
+test('T-E07-19-elephant-charge @E07-AC19 @E30-AC10 locked 8m/s, 16m range, exact 3.5m sweep, 40 HP and 90 tick knockdown once', async () => {
   const w = await arena(); player(w, 25); const e = spawn(w, 'elephant', 0, 0, 'idle');
   expect(e.health).toEqual({ current: 1200, max: 1200 });
   const inside = human(w, 5, 1.75), outside = human(w, 5, -1.751), a = start(w, e, 'elephant.charge');
@@ -51,11 +51,11 @@ test('T-E07-19-elephant-charge @E07-AC19 locked 8m/s, 16m range, exact 3.5m swee
   const hits = w.events.events().filter(ev => ev.type === 'combat.hit' && ev.attackId === a.attackId && ev.targetId === inside.id);
   expect(hits).toHaveLength(1); expect(inside.civilian!.knockedUntil).toBe(hits[0].tick + 90);
 });
-test('T-E07-19-elephant-charge-wall @E07-AC19 wall stops the body and blocks sweep damage', async () => {
+test('T-E07-19-elephant-charge-wall @E07-AC19 @E30-AC10 wall stops the body and blocks sweep damage', async () => {
   const w = await arena(); player(w, 25); const e = spawn(w, 'elephant', 0, 0, 'idle'), behind = human(w, 5, 0); wall(w, 4);
   start(w, e, 'elephant.charge'); step(w, 100); expect(e.transform.x).toBeLessThan(2.71); expect(behind.health.current).toBe(100);
 });
-test('T-E07-19-elephant-charge-barricade @E07-AC19 400 HP slot damage clears nav in the impact tick, keeps debris and source logs', async () => {
+test('T-E07-19-elephant-charge-barricade @E07-AC19 @E30-AC10 400 HP slot damage clears nav in the impact tick, keeps debris and source logs', async () => {
   const w = await arena(); player(w, 25); const e = spawn(w, 'elephant', 0, 0, 'idle');
   const id = w.barricades!.spawn({ id: 'line', groupId: 'line', a: { x: 4, z: -3 }, b: { x: 4, z: 3 }, height: 1, initialHp: 400 });
   start(w, e, 'elephant.charge'); while (w.entities.get(id)!.barricade!.intact && w.tick < 100) step(w, 1);
@@ -64,7 +64,7 @@ test('T-E07-19-elephant-charge-barricade @E07-AC19 400 HP slot damage clears nav
   expect(w.events.events().find(ev => ev.type === 'barricade.damaged' && ev.id === id)).toMatchObject({ sourceId: e.id, slotId: 'line', previousHp: 400, hp: 0, amount: 400 });
   expect(w.entities.get(id)).toBeDefined(); step(w, 30); expect(e.transform.x).toBeGreaterThan(4);
 });
-test('T-E07-19-elephant-charge-vehicle @E07-AC19 light E09 chassis takes 80 HP and physical lateral impulse; heavy vehicle unaffected', async () => {
+test('T-E07-19-elephant-charge-vehicle @E07-AC19 @E30-AC10 light E09 chassis takes 80 HP and physical lateral impulse; heavy vehicle unaffected', async () => {
   const w = await arena(); player(w, 25); const e = spawn(w, 'elephant', 0, 0, 'idle');
   const lightId = w.vehicles!.spawn('vehicle.sedan', { x: 7, z: 2 }), light = w.vehicles!.cars.get(lightId)!;
   const heavyId = w.vehicles!.spawn('vehicle.fire-engine', { x: 12, z: -2 }), heavy = w.vehicles!.cars.get(heavyId)!;
@@ -76,7 +76,7 @@ test('T-E07-19-elephant-charge-vehicle @E07-AC19 light E09 chassis takes 80 HP a
   expect(heavy.entity.health.current).toBe(heavyHp); expect(a.hitIds).not.toContain(heavyId);
   expect(w.events.events().filter(ev => ev.type === 'infected.attack' && ev.targetId === lightId && ev.attackId === a.attackId)).toHaveLength(1);
 });
-test('T-E07-19-elephant-swipe @E07-AC19 exact forward 120 degree/3m arc, 25 damage, 3m knockback, 48 tick down, wall and protected controls', async () => {
+test('T-E07-19-elephant-swipe @E07-AC19 @E30-AC10 exact forward 120 degree/3m arc, 25 damage, 3m knockback, 48 tick down, wall and protected controls', async () => {
   const w = await arena(); player(w, 25); const e = spawn(w, 'elephant', 0, 0, 'idle');
   const edge = human(w, 1.5, Math.sqrt(6.75)), outside = human(w, 1.499, -Math.sqrt(6.75)), rear = human(w, -2, 0), far = human(w, 3.001, 0), covered = human(w, 2, 0);
   const child = w.entities.get(w.npcs!.escorts.spawn({ x: 2, z: 1 }, true))!; const childHp = child.health.current;
@@ -85,7 +85,7 @@ test('T-E07-19-elephant-swipe @E07-AC19 exact forward 120 degree/3m arc, 25 dama
   expect(edge.civilian!.knockedUntil).toBe(w.tick + 48); for (const t of [outside, rear, far, covered]) expect(t.health.current).toBe(100); expect(child.health.current).toBe(childHp);
   step(w, 10); expect(w.events.events().filter(ev => ev.type === 'combat.hit' && ev.attackId === a.attackId)).toHaveLength(1);
 });
-test('T-E07-19-gorilla-throw @E07-AC14 @E07-AC19 nearest corpse within 3m, retained pose/id, 12m/s, first impact 30HP and 48 tick down', async () => {
+test('T-E07-19-gorilla-throw @E07-AC14 @E07-AC19 @E30-AC10 nearest corpse within 3m, retained pose/id, 12m/s, first impact 30HP and 48 tick down', async () => {
   const w = await arena(); const p = player(w, 8), e = spawn(w, 'gorilla', 0, 0, 'idle'); let body = spawn(w, 'runner', 0, 3, 'idle');
   body.health.current = 0; body.infected!.state = 'dead'; body.infected!.deadAt = -120; body.infected!.recoverAt = -1; step(w, 1);
   body = w.entities.get(body.id)!; const pose = structuredClone(body.infected), a = start(w, e, 'gorilla.grab-throw', 8), before = { ...body.transform };
@@ -94,7 +94,7 @@ test('T-E07-19-gorilla-throw @E07-AC14 @E07-AC19 nearest corpse within 3m, retai
   expect(body.corpse).toBe(true); expect(body.infected).toEqual(pose); expect(body.transform.x).toBeGreaterThan(6); expect(body.transform.y).toBe(.7);
   expect(a.hitIds).toEqual([p.id]); expect(w.infected!.barricadeDamage(e.id, 10)).toBe(60);
 });
-test('T-E07-19-gorilla-throw-controls @E07-AC19 nearest medium only, 15m range, locked target and no-object cancellation', async () => {
+test('T-E07-19-gorilla-throw-controls @E07-AC19 @E30-AC10 nearest medium only, 15m range, locked target and no-object cancellation', async () => {
   const w = await arena(); player(w, 25); const e = spawn(w, 'gorilla', 0, 0, 'idle');
   for (const [id, z, cls] of [[900, 1, 'light'], [901, 3, 'medium'], [902, 3.001, 'medium']] as const) {
     const body = w.physics.world!.createRigidBody(RAPIER.RigidBodyDesc.dynamic().setTranslation(0, .4, z));
@@ -108,7 +108,7 @@ test('T-E07-19-gorilla-throw-controls @E07-AC19 nearest medium only, 15m range, 
 });
 
 const checkpoint: MissionDef = { id: 'zoo-restore', briefing: 'Zoo', anchors: { spawn: { x: 0, z: 0, radius: 2 } }, actors: {}, groups: {}, gates: {}, items: [], states: [], counters: [], checkpoints: ['C'], cinematics: {}, steps: [{ id: 'wait', type: 'custom', text: 'Wait', anchor: 'spawn', start: { kind: 'start' }, complete: { kind: 'timer', seconds: 1000 }, fail: [] }], finish: ['wait'], onStart: [], onComplete: [] };
-for (const move of ['gorilla.grab-throw', 'elephant.charge', 'elephant.swipe'] as const) test(`T-E07-19-${move}-checkpoint @E07-AC05 @E07-AC19 production checkpoint restores active state and cooldown`, async () => {
+for (const move of ['gorilla.grab-throw', 'elephant.charge', 'elephant.swipe'] as const) test(`T-E07-19-${move}-checkpoint @E07-AC05 @E07-AC19 @E30-AC10 production checkpoint restores active state and cooldown`, async () => {
   const w = await arena(); player(w, 25); const m = w.loadMission(checkpoint); m.begin();
   const e = spawn(w, move.split('.')[0], 0, 0, 'idle'), body = spawn(w, 'runner', 0, 2, 'idle');
   body.health.current = 0; body.infected!.state = 'dead'; body.infected!.deadAt = -120; body.infected!.recoverAt = -1; step(w, 1);
@@ -124,7 +124,7 @@ for (const move of ['gorilla.grab-throw', 'elephant.charge', 'elephant.swipe'] a
   }
 });
 
-test('T-E07-19-gorilla-throw-wall @E07-AC19 intact cover stops a thrown corpse and rejects hidden pickups', async () => {
+test('T-E07-19-gorilla-throw-wall @E07-AC19 @E30-AC10 intact cover stops a thrown corpse and rejects hidden pickups', async () => {
   const w = await arena(); const p = player(w, 8), e = spawn(w, 'gorilla', 0, 0, 'idle');
   let body = spawn(w, 'runner', 0, 2, 'idle'); body.health.current = 0; body.infected!.state = 'dead'; body.infected!.deadAt = -120; body.infected!.recoverAt = -1;
   step(w, 1); body = w.entities.get(body.id)!; wall(w, 4);
@@ -134,7 +134,7 @@ test('T-E07-19-gorilla-throw-wall @E07-AC19 intact cover stops a thrown corpse a
   body.transform.x = 3.001; body.transform.z = 0; expect(w.infected!.props.nearestObject(e, 3)).toBeUndefined();
   body.transform.x = 2; wall(w, 1); expect(w.infected!.props.nearestObject(e, 3)).toBeUndefined();
 });
-test('T-E07-19-elephant-charge-slot-boundary @E07-AC19 full telegraphed width contacts an offset E26 slot', async () => {
+test('T-E07-19-elephant-charge-slot-boundary @E07-AC19 @E30-AC10 full telegraphed width contacts an offset E26 slot', async () => {
   const w = await arena(); player(w, 25); const e = spawn(w, 'elephant', 0, 0, 'idle');
   const id = w.barricades!.spawn({ id: 'edge', groupId: 'edge', a: { x: 5, z: 1.6 }, b: { x: 5, z: 1.8 }, height: 1, initialHp: 400 });
   start(w, e, 'elephant.charge'); step(w, 100);
