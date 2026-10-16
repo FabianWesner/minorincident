@@ -1,0 +1,970 @@
+{
+  "variant": "female",
+  "quality": "high",
+  "renderer": "webgpu",
+  "frontier": {
+    "type": "level.started",
+    "tick": 0,
+    "id": "L1"
+  },
+  "measurement": "browser-context requestfinished including dedicated workers; encoded HTTP responseBodySize before level.started",
+  "bodyBytes": 14723876,
+  "files": [
+    {
+      "url": "/",
+      "bodyBytes": 921
+    },
+    {
+      "url": "/build/modulepreload-polyfill-B5Qt9EMX.js",
+      "bodyBytes": 711
+    },
+    {
+      "url": "/build/preload-helper-BlTxHScW.js",
+      "bodyBytes": 668
+    },
+    {
+      "url": "/build/l5-KCMD6j4i.js",
+      "bodyBytes": 1970
+    },
+    {
+      "url": "/build/navigation-CkBevQzJ.js",
+      "bodyBytes": 2455
+    },
+    {
+      "url": "/build/l4-cBdBvsfu.js",
+      "bodyBytes": 6640
+    },
+    {
+      "url": "/build/index-BZx3BNCD.css",
+      "bodyBytes": 8017
+    },
+    {
+      "url": "/build/worldLook-DT8mxh_z.js",
+      "bodyBytes": 773
+    },
+    {
+      "url": "/build/meleeCombos-DLj8sN20.js",
+      "bodyBytes": 4959
+    },
+    {
+      "url": "/build/lookPatch-BT7ef7_D.js",
+      "bodyBytes": 2708
+    },
+    {
+      "url": "/build/rapier-ykuY6d4E.js",
+      "bodyBytes": 36186
+    },
+    {
+      "url": "/build/three.module-BTYUxhMo.js",
+      "bodyBytes": 77841
+    },
+    {
+      "url": "/build/light-anchors-DQGCSUUw.js",
+      "bodyBytes": 6803
+    },
+    {
+      "url": "/build/PropSystem-CW0Zk0wG.js",
+      "bodyBytes": 65359
+    },
+    {
+      "url": "/build/Pickups-BHswgo6p.js",
+      "bodyBytes": 24911
+    },
+    {
+      "url": "/build/crowd-I_xKRYhA.js",
+      "bodyBytes": 1290
+    },
+    {
+      "url": "/build/Physics-Bu6-ffMX.js",
+      "bodyBytes": 23794
+    },
+    {
+      "url": "/build/lookViewpoints-BX-OEann.js",
+      "bodyBytes": 233
+    },
+    {
+      "url": "/build/registry-FDoOMUsb.js",
+      "bodyBytes": 65325
+    },
+    {
+      "url": "/build/rapier-C6GCbKVJ.wasm",
+      "bodyBytes": 3082103
+    },
+    {
+      "url": "/build/install-C6XRqZcB.js",
+      "bodyBytes": 194590
+    },
+    {
+      "url": "/build/WeatherView-yj9UD0dn.js",
+      "bodyBytes": 232330
+    },
+    {
+      "url": "/build/index-BjKMP8-U.js",
+      "bodyBytes": 362322
+    },
+    {
+      "url": "/build/character-clips-CGKWtM3S.js",
+      "bodyBytes": 342069
+    },
+    {
+      "url": "/build/controls-BD2KGrGS.js",
+      "bodyBytes": 770
+    },
+    {
+      "url": "/build/probe-cH6419Ax.js",
+      "bodyBytes": 3033
+    },
+    {
+      "url": "/build/LevelFiveBot-eg8u01Pb.js",
+      "bodyBytes": 6409
+    },
+    {
+      "url": "/build/testApi-Nnk29M3y.js",
+      "bodyBytes": 10908
+    },
+    {
+      "url": "/assets/audio/impacts.webm",
+      "bodyBytes": 757785
+    },
+    {
+      "url": "/assets/audio/barks.webm",
+      "bodyBytes": 376167
+    },
+    {
+      "url": "/assets/audio/ui.webm",
+      "bodyBytes": 37450
+    },
+    {
+      "url": "/assets/audio/l1arc.webm",
+      "bodyBytes": 190599
+    },
+    {
+      "url": "/assets/models/char.survivor-female.glb",
+      "bodyBytes": 166964
+    },
+    {
+      "url": "/assets/models/acc.courier-gear.glb",
+      "bodyBytes": 40800
+    },
+    {
+      "url": "/assets/models/acc.hair-afro.lod1.glb",
+      "bodyBytes": 3416
+    },
+    {
+      "url": "/assets/models/acc.hair-bun.glb",
+      "bodyBytes": 3276
+    },
+    {
+      "url": "/assets/models/acc.hair-bun.lod1.glb",
+      "bodyBytes": 2920
+    },
+    {
+      "url": "/assets/models/acc.hair-long-straight.glb",
+      "bodyBytes": 3220
+    },
+    {
+      "url": "/assets/models/acc.hair-long-straight.lod1.glb",
+      "bodyBytes": 2856
+    },
+    {
+      "url": "/assets/models/acc.hair-afro.glb",
+      "bodyBytes": 4748
+    },
+    {
+      "url": "/assets/models/acc.hair-ponytail.glb",
+      "bodyBytes": 3232
+    },
+    {
+      "url": "/assets/models/acc.hair-ponytail.lod1.glb",
+      "bodyBytes": 2924
+    },
+    {
+      "url": "/assets/models/acc.hair-short-crop.glb",
+      "bodyBytes": 3016
+    },
+    {
+      "url": "/assets/models/acc.hair-short-crop.lod1.glb",
+      "bodyBytes": 2760
+    },
+    {
+      "url": "/assets/models/acc.hair-side-part.glb",
+      "bodyBytes": 3116
+    },
+    {
+      "url": "/assets/models/acc.hair-side-part.lod1.glb",
+      "bodyBytes": 2880
+    },
+    {
+      "url": "/assets/models/acc.hat-baseball-cap.lod1.glb",
+      "bodyBytes": 3628
+    },
+    {
+      "url": "/assets/models/acc.hat-beanie.glb",
+      "bodyBytes": 3216
+    },
+    {
+      "url": "/assets/models/acc.hat-beanie.lod1.glb",
+      "bodyBytes": 2876
+    },
+    {
+      "url": "/assets/models/acc.hat-bucket-hat.glb",
+      "bodyBytes": 3100
+    },
+    {
+      "url": "/assets/models/acc.hat-bucket-hat.lod1.glb",
+      "bodyBytes": 2844
+    },
+    {
+      "url": "/assets/models/acc.hat-baseball-cap.glb",
+      "bodyBytes": 4536
+    },
+    {
+      "url": "/assets/models/acc.hat-flat-cap.glb",
+      "bodyBytes": 3072
+    },
+    {
+      "url": "/assets/models/acc.hat-flat-cap.lod1.glb",
+      "bodyBytes": 2800
+    },
+    {
+      "url": "/assets/models/acc.hat-hard-hat.glb",
+      "bodyBytes": 3228
+    },
+    {
+      "url": "/assets/models/acc.hat-hard-hat.lod1.glb",
+      "bodyBytes": 2968
+    },
+    {
+      "url": "/assets/models/acc.hat-sun-hat.glb",
+      "bodyBytes": 3076
+    },
+    {
+      "url": "/assets/models/acc.hat-sun-hat.lod1.glb",
+      "bodyBytes": 2856
+    },
+    {
+      "url": "/assets/models/char.corgi.glb",
+      "bodyBytes": 271996
+    },
+    {
+      "url": "/ui/home/home-landscape-1920.avif",
+      "bodyBytes": 116977
+    },
+    {
+      "url": "/build/index-DdYis5z7.js",
+      "bodyBytes": 4418
+    },
+    {
+      "url": "/assets/layouts/D-GROVE.layout.json",
+      "bodyBytes": 78401
+    },
+    {
+      "url": "/assets/models/acc.hair-afro.glb",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/assets/models/acc.hair-afro.lod1.glb",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/assets/models/acc.hair-bun.glb",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/assets/models/acc.hair-bun.lod1.glb",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/assets/models/acc.hair-long-straight.glb",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/assets/models/acc.hair-long-straight.lod1.glb",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/assets/models/acc.hair-ponytail.lod1.glb",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/assets/models/acc.hair-short-crop.glb",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/assets/models/acc.hair-short-crop.lod1.glb",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/assets/models/acc.hair-side-part.glb",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/assets/models/acc.hair-ponytail.glb",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/assets/models/acc.hat-baseball-cap.glb",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/assets/models/acc.hat-baseball-cap.lod1.glb",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/assets/models/acc.hat-beanie.glb",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/assets/models/acc.hat-beanie.lod1.glb",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/assets/models/acc.hair-side-part.lod1.glb",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/assets/models/acc.hat-bucket-hat.lod1.glb",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/assets/models/acc.hat-flat-cap.glb",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/assets/models/acc.hat-flat-cap.lod1.glb",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/assets/models/acc.hat-hard-hat.glb",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/assets/models/acc.hat-bucket-hat.glb",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/assets/models/acc.hat-hard-hat.lod1.glb",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/assets/models/acc.hat-sun-hat.glb",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/assets/models/acc.hat-sun-hat.lod1.glb",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/assets/models/inf.dog.black.lod2.glb",
+      "bodyBytes": 38040
+    },
+    {
+      "url": "/assets/models/inf.dog.black.lod1.glb",
+      "bodyBytes": 43496
+    },
+    {
+      "url": "/assets/models/inf.dog.cream.lod1.glb",
+      "bodyBytes": 43500
+    },
+    {
+      "url": "/assets/models/inf.dog.black.glb",
+      "bodyBytes": 59272
+    },
+    {
+      "url": "/assets/models/inf.dog.cream.glb",
+      "bodyBytes": 59276
+    },
+    {
+      "url": "/assets/models/inf.dog.cream.lod2.glb",
+      "bodyBytes": 38044
+    },
+    {
+      "url": "/assets/models/inf.common-worker.lod2.glb",
+      "bodyBytes": 60692
+    },
+    {
+      "url": "/assets/models/inf.dog.lod1.glb",
+      "bodyBytes": 43500
+    },
+    {
+      "url": "/assets/models/inf.common-worker.glb",
+      "bodyBytes": 255488
+    },
+    {
+      "url": "/assets/models/inf.dog.glb",
+      "bodyBytes": 59276
+    },
+    {
+      "url": "/assets/models/inf.dog.lod2.glb",
+      "bodyBytes": 38044
+    },
+    {
+      "url": "/assets/models/inf.common-worker.lod1.glb",
+      "bodyBytes": 66304
+    },
+    {
+      "url": "/assets/statics/prop.privacy-fence.lod2.base.2e16769d02382ed4.bin.gz",
+      "bodyBytes": 2704
+    },
+    {
+      "url": "/assets/statics/prop.privacy-fence.lod1.base.b173054cf76e6145.bin.gz",
+      "bodyBytes": 23875
+    },
+    {
+      "url": "/assets/models/pick.medkit.glb",
+      "bodyBytes": 15300
+    },
+    {
+      "url": "/assets/models/prop.yard-gate.glb",
+      "bodyBytes": 35516
+    },
+    {
+      "url": "/assets/models/veh.courier-bike.glb",
+      "bodyBytes": 173980
+    },
+    {
+      "url": "/assets/models/kit.car-wash.glb",
+      "bodyBytes": 208284
+    },
+    {
+      "url": "/assets/statics/prop.hedge.lod2.base.9883da87953f0176.bin.gz",
+      "bodyBytes": 2214
+    },
+    {
+      "url": "/assets/statics/prop.hedge.lod1.base.9883da87953f0176.bin.gz",
+      "bodyBytes": 2214
+    },
+    {
+      "url": "/assets/statics/prop.picket-fence.lod2.base.34d16940362176dd.bin.gz",
+      "bodyBytes": 3602
+    },
+    {
+      "url": "/assets/statics/prop.garden-bush.lod2.base.9883da87953f0176.bin.gz",
+      "bodyBytes": 2214
+    },
+    {
+      "url": "/assets/statics/prop.picket-fence.lod1.base.57009b531a623126.bin.gz",
+      "bodyBytes": 8098
+    },
+    {
+      "url": "/assets/statics/bld.house-b.lod2.base.408622de3776d1c5.bin.gz",
+      "bodyBytes": 118654
+    },
+    {
+      "url": "/assets/statics/prop.street-tree.lod2.base.a6d3908e74f0e032.bin.gz",
+      "bodyBytes": 23851
+    },
+    {
+      "url": "/assets/statics/prop.garden-bush.lod1.base.9883da87953f0176.bin.gz",
+      "bodyBytes": 2214
+    },
+    {
+      "url": "/assets/statics/prop.garden-bush-small.lod2.base.9883da87953f0176.bin.gz",
+      "bodyBytes": 2214
+    },
+    {
+      "url": "/assets/statics/prop.garden-bush-small.lod1.base.9883da87953f0176.bin.gz",
+      "bodyBytes": 2214
+    },
+    {
+      "url": "/assets/statics/prop.street-tree.lod1.base.a6d3908e74f0e032.bin.gz",
+      "bodyBytes": 23851
+    },
+    {
+      "url": "/assets/statics/bld.house-e.lod2.base.37a42a9a506fef23.bin.gz",
+      "bodyBytes": 30548
+    },
+    {
+      "url": "/assets/statics/prop.mailbox-blue.lod2.base.abfbf7d0859f2d63.bin.gz",
+      "bodyBytes": 12711
+    },
+    {
+      "url": "/assets/statics/prop.mailbox-blue.lod1.base.6c7cd63faa105073.bin.gz",
+      "bodyBytes": 17927
+    },
+    {
+      "url": "/assets/statics/bld.house-d.lod2.base.81fd29f0aea8bed0.bin.gz",
+      "bodyBytes": 39318
+    },
+    {
+      "url": "/assets/statics/veh.sedan-blue.lod2.base.f239269d3b252584.bin.gz",
+      "bodyBytes": 23999
+    },
+    {
+      "url": "/assets/statics/bld.house-d.lod1.base.ce45820bcb9e64e3.bin.gz",
+      "bodyBytes": 90320
+    },
+    {
+      "url": "/assets/statics/veh.sedan-blue.lod1.base.c0fe9b3652131efd.bin.gz",
+      "bodyBytes": 37576
+    },
+    {
+      "url": "/assets/statics/prop.flower-bed.large.lod2.base.df51e1bf5170e37d.bin.gz",
+      "bodyBytes": 9862
+    },
+    {
+      "url": "/assets/models/bld.house-c.lod2.glb",
+      "bodyBytes": 71944
+    },
+    {
+      "url": "/assets/statics/prop.gnome.lod2.base.2472db5b773a85df.bin.gz",
+      "bodyBytes": 10210
+    },
+    {
+      "url": "/assets/statics/prop.flamingo.lod2.base.7cf120baaeeb5771.bin.gz",
+      "bodyBytes": 5357
+    },
+    {
+      "url": "/assets/statics/prop.flower-bed.large.lod1.base.a210668b54f18b63.bin.gz",
+      "bodyBytes": 28287
+    },
+    {
+      "url": "/assets/statics/veh.suv-dark.lod2.base.3d1d376670667a1a.bin.gz",
+      "bodyBytes": 21558
+    },
+    {
+      "url": "/assets/statics/veh.pickup-red.lod2.base.8d47813f6e851e27.bin.gz",
+      "bodyBytes": 27699
+    },
+    {
+      "url": "/assets/statics/veh.sedan-white.lod2.base.54e77c10ae182db3.bin.gz",
+      "bodyBytes": 23424
+    },
+    {
+      "url": "/assets/statics/veh.sedan-green.lod2.base.03e70c5ababbc722.bin.gz",
+      "bodyBytes": 25226
+    },
+    {
+      "url": "/assets/statics/prop.street-tree-blossom.lod2.base.a6d3908e74f0e032.bin.gz",
+      "bodyBytes": 23851
+    },
+    {
+      "url": "/assets/statics/veh.sedan-white.lod1.base.70bbda6fe2ef172f.bin.gz",
+      "bodyBytes": 47950
+    },
+    {
+      "url": "/assets/statics/prop.street-tree-blossom.lod1.base.a6d3908e74f0e032.bin.gz",
+      "bodyBytes": 23851
+    },
+    {
+      "url": "/assets/statics/prop.wheelbarrow.lod2.base.81dfca0601dff48a.bin.gz",
+      "bodyBytes": 17380
+    },
+    {
+      "url": "/assets/statics/veh.pickup-white.lod2.base.aae59518b2c1e300.bin.gz",
+      "bodyBytes": 25214
+    },
+    {
+      "url": "/assets/statics/bld.house-a.lod1.base.92d02b5a5f4228d9.bin.gz",
+      "bodyBytes": 87315
+    },
+    {
+      "url": "/assets/statics/bld.house-a.lod2.base.9bb2f1fa237a9438.bin.gz",
+      "bodyBytes": 40319
+    },
+    {
+      "url": "/assets/statics/prop.lawn-chair-a.lod2.base.64eaf7a5f2da7f33.bin.gz",
+      "bodyBytes": 22266
+    },
+    {
+      "url": "/assets/statics/prop.lawn-chair-b.lod2.base.44d75b5f667aa505.bin.gz",
+      "bodyBytes": 21805
+    },
+    {
+      "url": "/assets/statics/prop.sprinkler.lod1.base.cb2ad7347103e07f.bin.gz",
+      "bodyBytes": 10193
+    },
+    {
+      "url": "/assets/statics/prop.sprinkler.lod2.base.9c6262ce5bb9a55e.bin.gz",
+      "bodyBytes": 5673
+    },
+    {
+      "url": "/assets/statics/prop.bench.lod2.base.417c2af9a14a00b9.bin.gz",
+      "bodyBytes": 6691
+    },
+    {
+      "url": "/assets/statics/prop.bench.lod1.base.bf0640c937d0581f.bin.gz",
+      "bodyBytes": 13059
+    },
+    {
+      "url": "/assets/statics/veh.suv-green.lod2.base.9877aa14af1b3a69.bin.gz",
+      "bodyBytes": 19171
+    },
+    {
+      "url": "/assets/statics/prop.hose-reel.lod2.base.84388d37e9023f25.bin.gz",
+      "bodyBytes": 23378
+    },
+    {
+      "url": "/assets/statics/prop.bbq.lod2.base.a2560c50e520e51b.bin.gz",
+      "bodyBytes": 3823
+    },
+    {
+      "url": "/assets/statics/veh.sedan-red.lod2.base.11706267fbfcf734.bin.gz",
+      "bodyBytes": 17912
+    },
+    {
+      "url": "/assets/models/bld.cafe-corner.lod2.glb",
+      "bodyBytes": 53156
+    },
+    {
+      "url": "/assets/models/bld.cafe-corner.lod1.glb",
+      "bodyBytes": 157144
+    },
+    {
+      "url": "/assets/statics/prop.trash-bin.lod1.base.43c75ee307538d4e.bin.gz",
+      "bodyBytes": 34463
+    },
+    {
+      "url": "/assets/statics/prop.trash-bin.lod2.base.c0c9dac478535742.bin.gz",
+      "bodyBytes": 26511
+    },
+    {
+      "url": "/assets/statics/bld.bus-stop.lod1.base.257dae4b68a57531.bin.gz",
+      "bodyBytes": 26502
+    },
+    {
+      "url": "/assets/statics/bld.bus-stop.lod2.base.bc0b09903ed0ca2a.bin.gz",
+      "bodyBytes": 23908
+    },
+    {
+      "url": "/assets/models/bld.mainstreet-brick.lod2.glb",
+      "bodyBytes": 55984
+    },
+    {
+      "url": "/assets/statics/bld.courier-depot.lod2.base.7f9cda6e5ed9d60f.bin.gz",
+      "bodyBytes": 38733
+    },
+    {
+      "url": "/assets/statics/prop.bike-rack.lod2.base.b3ce4b89d6cfa2c1.bin.gz",
+      "bodyBytes": 2003
+    },
+    {
+      "url": "/assets/statics/veh.courier-van.lod2.base.9bad34ac401840ac.bin.gz",
+      "bodyBytes": 26782
+    },
+    {
+      "url": "/assets/statics/prop.pallet.lod2.base.a18bdedbd67c09c7.bin.gz",
+      "bodyBytes": 4310
+    },
+    {
+      "url": "/assets/models/bld.clinic-annex.lod2.glb",
+      "bodyBytes": 74900
+    },
+    {
+      "url": "/assets/models/prop.lab-signs.lod2.glb",
+      "bodyBytes": 94116
+    },
+    {
+      "url": "/assets/models/bld.garage-detached.lod2.glb",
+      "bodyBytes": 47264
+    },
+    {
+      "url": "/assets/statics/kit.car-wash.lod2.base.c5a942b324491dca.bin.gz",
+      "bodyBytes": 10883
+    },
+    {
+      "url": "/assets/models/bld.gas-station.lod2.glb",
+      "bodyBytes": 45532
+    },
+    {
+      "url": "/assets/statics/prop.fire-hydrant.lod2.base.dd3d1c10941b6357.bin.gz",
+      "bodyBytes": 13764
+    },
+    {
+      "url": "/assets/statics/prop.fire-hydrant.lod1.base.b2e9601574b8e4bc.bin.gz",
+      "bodyBytes": 23175
+    },
+    {
+      "url": "/assets/statics/prop.street-lamp.lod1.base.75d03dbf0482aac9.bin.gz",
+      "bodyBytes": 12103
+    },
+    {
+      "url": "/assets/statics/prop.street-lamp.lod2.base.155ba700ada93a74.bin.gz",
+      "bodyBytes": 8064
+    },
+    {
+      "url": "/assets/models/kit.edge-roadwork.glb",
+      "bodyBytes": 116684
+    },
+    {
+      "url": "/assets/statics/prop.street-sign.lod1.base.8e2d367636ef9dfd.bin.gz",
+      "bodyBytes": 27023
+    },
+    {
+      "url": "/assets/statics/bld.fire-station.lod2.base.b7c8df691471022e.bin.gz",
+      "bodyBytes": 62195
+    },
+    {
+      "url": "/assets/statics/prop.crates.lod2.base.3ef2ddbe8eab5787.bin.gz",
+      "bodyBytes": 5238
+    },
+    {
+      "url": "/assets/statics/prop.street-sign.lod2.base.5d0774a759779f1d.bin.gz",
+      "bodyBytes": 18377
+    },
+    {
+      "url": "/assets/statics/prop.trash-bags.lod2.base.32327e9ed59c7ca1.bin.gz",
+      "bodyBytes": 15246
+    },
+    {
+      "url": "/assets/statics/prop.recycling-bin.lod1.base.ad2eae45ae00b517.bin.gz",
+      "bodyBytes": 15436
+    },
+    {
+      "url": "/assets/statics/prop.carpet.lod2.base.33c56104f4861bbf.bin.gz",
+      "bodyBytes": 23646
+    },
+    {
+      "url": "/assets/statics/prop.broken-chair.lod2.base.48e569c6b820c93a.bin.gz",
+      "bodyBytes": 59231
+    },
+    {
+      "url": "/assets/statics/prop.recycling-bin.lod2.base.0586a14bba4b55a0.bin.gz",
+      "bodyBytes": 2784
+    },
+    {
+      "url": "/assets/statics/prop.traffic-cone.lod2.base.6327029429a6c3d4.bin.gz",
+      "bodyBytes": 3759
+    },
+    {
+      "url": "/assets/models/prop.laundry-line.lod2.glb",
+      "bodyBytes": 14004
+    },
+    {
+      "url": "/assets/models/prop.vending-machine.lod2.glb",
+      "bodyBytes": 41396
+    },
+    {
+      "url": "/assets/models/wpn.baseball-bat.glb",
+      "bodyBytes": 22124
+    },
+    {
+      "url": "/assets/models/wpn.pistol.glb",
+      "bodyBytes": 46516
+    },
+    {
+      "url": "/assets/models/thr.frag-grenade.glb",
+      "bodyBytes": 58496
+    },
+    {
+      "url": "/assets/layouts/D-GROVE.base.glb",
+      "bodyBytes": 1781156
+    },
+    {
+      "url": "/build/civilianBake.worker-C13d_nt9.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/civilianBake.worker-C13d_nt9.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/civilianBake.worker-C13d_nt9.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/civilianBake.worker-C13d_nt9.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/civilianBake.worker-C13d_nt9.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/civilianBake.worker-C13d_nt9.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/civilianBake.worker-C13d_nt9.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/civilianBake.worker-C13d_nt9.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/civilianBakeData-DRZjElYi.js",
+      "bodyBytes": 1521
+    },
+    {
+      "url": "/build/civilianBakeData-DRZjElYi.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/civilianBakeData-DRZjElYi.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/civilianBakeData-DRZjElYi.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/civilianBakeData-DRZjElYi.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/civilianBakeData-DRZjElYi.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/three.module-B-nHBglW.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/three.module-B-nHBglW.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/three.module-B-nHBglW.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/three.module-B-nHBglW.js",
+      "bodyBytes": 54409
+    },
+    {
+      "url": "/build/three.module-B-nHBglW.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/civilianSource-UMMueCh2.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/three.module-B-nHBglW.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/civilianSource-UMMueCh2.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/civilianSource-UMMueCh2.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/civilianSource-UMMueCh2.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/civilianSource-UMMueCh2.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/civilianSource-UMMueCh2.js",
+      "bodyBytes": 53345
+    },
+    {
+      "url": "/build/BufferGeometryUtils-E8HioxtM.js",
+      "bodyBytes": 2248
+    },
+    {
+      "url": "/build/BufferGeometryUtils-E8HioxtM.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/BufferGeometryUtils-E8HioxtM.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/BufferGeometryUtils-E8HioxtM.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/BufferGeometryUtils-E8HioxtM.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/BufferGeometryUtils-E8HioxtM.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/prepareCivilianGeometry-PivjJtk0.js",
+      "bodyBytes": 372918
+    },
+    {
+      "url": "/build/prepareCivilianGeometry-PivjJtk0.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/prepareCivilianGeometry-PivjJtk0.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/prepareCivilianGeometry-PivjJtk0.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/prepareCivilianGeometry-PivjJtk0.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/build/prepareCivilianGeometry-PivjJtk0.js",
+      "bodyBytes": 0
+    },
+    {
+      "url": "/assets/models/npc.civilian-elderly.glb",
+      "bodyBytes": 304612
+    },
+    {
+      "url": "/assets/models/npc.civilian-woman-a.glb",
+      "bodyBytes": 285352
+    },
+    {
+      "url": "/assets/models/npc.civilian-woman-b.lod1.glb",
+      "bodyBytes": 66080
+    },
+    {
+      "url": "/assets/models/npc.civilian-elderly.lod1.glb",
+      "bodyBytes": 67392
+    },
+    {
+      "url": "/assets/models/npc.civilian-woman-a.lod1.glb",
+      "bodyBytes": 134804
+    },
+    {
+      "url": "/assets/models/npc.civilian-man-a.glb",
+      "bodyBytes": 288944
+    },
+    {
+      "url": "/assets/models/char.corgi.lod1.glb",
+      "bodyBytes": 50788
+    },
+    {
+      "url": "/assets/models/amb.dog.black.lod1.glb",
+      "bodyBytes": 38644
+    },
+    {
+      "url": "/assets/models/amb.dog.lod1.glb",
+      "bodyBytes": 39024
+    },
+    {
+      "url": "/assets/models/npc.brother.lod1.glb",
+      "bodyBytes": 56156
+    },
+    {
+      "url": "/assets/decals/blood-splats.png",
+      "bodyBytes": 18782
+    },
+    {
+      "url": "/assets/decals/blood-pool.png",
+      "bodyBytes": 9366
+    },
+    {
+      "url": "/assets/decals/blood-trail.png",
+      "bodyBytes": 13335
+    },
+    {
+      "url": "/assets/models/char.courier-female.skin.glb",
+      "bodyBytes": 642348
+    },
+    {
+      "url": "/assets/ui/portrait-survivor-f.png",
+      "bodyBytes": 52711
+    },
+    {
+      "url": "/assets/ui/portrait-corgi.png",
+      "bodyBytes": 52522
+    }
+  ]
+}

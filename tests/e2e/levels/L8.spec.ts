@@ -18,13 +18,30 @@ test('T-E30-18 @E30-AC18 real keyboard exploration, tunnel breach and complete A
   const shot = async (name: string) => { await page.evaluate(async () => { window.__SS__!.camera.follow(); await window.__SS__!.screenshotReady(); }); await page.screenshot({ path: `${out}/${name}.png` }); };
   await shot('real-calm');
   const initial = await page.evaluate(() => window.__SS__!.getState().player!.transform);
+  const initialCorgi = await page.evaluate(() => window.__SS__!.getState().entities.find(e => e.companion));
+  expect(initialCorgi, 'the protected campaign corgi arrives at the zoo').toBeDefined();
   await page.keyboard.down('w'); await page.keyboard.down('d'); await step(120); await page.keyboard.up('w'); await page.keyboard.up('d');
   const explored = await page.evaluate(() => window.__SS__!.getState());
   expect(Math.hypot(explored.player!.transform.x - initial.x, explored.player!.transform.z - initial.z)).toBeGreaterThan(3);
   expect(await page.evaluate(() => window.__SS__!.missions.state()!.marker)).toBeNull(); await expect(page.locator('.mission-tracker')).toBeHidden();
-  await expect(page.locator('.hud-companion')).toBeHidden();
+  // The protected dog now travels through L7/L8; this must describe the real
+  // follower rather than the obsolete phantom "awaiting rescue" prompt.
+  const corgi = explored.entities.find(e => e.id === initialCorgi!.id)!;
+  expect(corgi, 'the same corgi remains present during calm exploration').toBeDefined();
+  expect(corgi.companion?.state).toBe('follow'); expect(corgi.hidden).not.toBe(true);
+  expect(corgi.health.current).toBe(corgi.health.max);
+  expect(corgi.infected).toBeUndefined(); expect(corgi.infection).toBeUndefined();
+  await expect(page.locator('.hud-companion')).toBeVisible();
+  await expect(page.locator('.hud-companion')).toHaveText('Corgi · following');
   await expect(page.locator('.hud-pin-objective')).toBeHidden(); await expect(page.locator('.hud-pin-home')).toBeHidden();
-  await step(3479); expect(await page.evaluate(() => window.__SS__!.getState().l8!.breachedAt)).toBe(0);
+  // The real Begin click can advance a few frames before pause reaches the page.
+  // Measure the exact boundary from the live clock rather than assuming tick 120.
+  const calmClock = await page.evaluate(() => { const s = window.__SS__!.getState(); return { tick: s.tick, start: s.l8!.startedAt }; });
+  const breachTick = calmClock.start + 3600;
+  expect(breachTick).toBe(3600); expect(calmClock.tick).toBeLessThan(breachTick - 1);
+  await step(breachTick - 1 - calmClock.tick);
+  expect(await page.evaluate(() => window.__SS__!.getState().tick)).toBe(breachTick - 1);
+  expect(await page.evaluate(() => window.__SS__!.getState().l8!.breachedAt)).toBe(0);
   await step(1); const breach = await page.evaluate(() => window.__SS__!.getState().l8!);
   expect(breach.breachedAt).toBe(3600); expect(new Set(breach.arrivals.map(a => a.outlet)).size).toBe(4);
   // Physical key movement is computed from the same isometric axes as other real-input campaign gates.
@@ -60,6 +77,11 @@ test('T-E30-18 @E30-AC18 real keyboard exploration, tunnel breach and complete A
   const destination = await page.evaluate(() => window.__SS__!.getState());
   expect(destination.entities.find(e => e.id === breach.carId)!.vehicle!.driver).toBe(1);
   expect(destination.progression!.campaign!.results!.L8.rescued).toBeGreaterThanOrEqual(8);
+  const carriedCorgi = destination.entities.find(e => e.id === initialCorgi!.id)!;
+  expect(carriedCorgi, 'the same protected dog arrives aboard the crossing APC').toBeDefined();
+  expect(carriedCorgi.companion).toBeDefined(); expect(carriedCorgi.passengerOf).toBe(breach.carId);
+  expect(carriedCorgi.health.current).toBe(carriedCorgi.health.max);
+  expect(carriedCorgi.infected).toBeUndefined(); expect(carriedCorgi.infection).toBeUndefined();
   writeFileSync(`${out}/real-input.json`, JSON.stringify(destination, null, 2)); await shot('real-l9-arrival');
 });
 

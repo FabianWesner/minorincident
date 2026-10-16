@@ -99,7 +99,7 @@ Bots: `complete` (covers the rear, closes gates, collects stragglers), `newbie`,
 | E24-AC11 | **Chokepoints and doors:** ≥ 3 chokepoints ≤ 2.5 m wide along the route; a closed gate blocks movement and sight and holds 8–12 s against 5 infected (+ the braced HP per E26-AC09/AC10); a gate refuses to close with a survivor within 2 m of its line | sim |
 | E24-AC12 | **Confined layout:** main tunnel width ≤ 8 m; no open area > 30 × 30 m outside the two stations; tunnel length 200–260 m; ≥ 3 side passages, ≥ 2 cross-passages; sight blockers every ≤ 25 m (layout test) | unit (layout) |
 | E24-AC13 | **Caps and survivor infection:** concurrent infected ≤ 60 (high) / 30 (low); bitten survivors turn in 2.5–3.5 s with identity continuity; the E20-AC11 omniscience audit passes | sim |
-| E24-AC14 | **CHANGED 2026-10-11 — Night exit hands to L7:** at Northgate switch to `L6` night (intensity ≤ 0.4× L4), gate closure completes L6; preserve existing caption "Night. Still alive." as orchestrator default. Load L7 at the shared exit with exactly the living survivor ids/state, full health at the new level start and carried arsenal including acquired shotgun. No reward/summary screen, credits or main menu; L7 rocket pickup is beside this exit. | sim + e2e |
+| E24-AC14 | **CHANGED 2026-10-11 — Night exit hands to L7:** at Northgate switch to `L6` night (intensity ≤ 0.4× L4), gate closure completes L6; preserve existing caption "Night. Still alive." as orchestrator default. Load L7 at the shared exit with exactly the living survivor ids/state, full health at the new level start and carried arsenal including acquired shotgun. No reward-selection screen, credits or main menu; the existing result/Continue flow is permitted by PO 2026-10-13 level-end run-out (quoted below). L7 rocket pickup is beside this exit. | sim + e2e |
 | E24-AC15 | **Underground readability:** at `l6-tunnel-retreat` and `l6-shelter-fails` the player mask contrast against its 2 m ring is ≥ 3:1 and infected eyes are the brightest pixels of each infected (E25-AC13 metric); the existing flashlight is a promoted hero light with a shadow on high only | visual |
 | E24-AC16 | **Checkpoints:** dying right after `shelter`, `abandon`, `mid-tunnel`, `exit-platform` restores the snapshot (survivor states and positions, gates, power state, outbreak layer) within tolerance | sim |
 | E24-AC17 | **CHANGED 2026-10-11 — Real-input playthrough:** headless Playwright mouse/keyboard from shelter to night exit and L7 handover, gate closing via `E`, one seed, zero console errors, all §6 photo spots plus `pair-northgate-exit` captured on both sides of the cut. | real-input e2e |
@@ -133,3 +133,20 @@ PO (verbatim): "L6 overall. Make the level darker. Let the user pickup a flashli
 - Efficiency: one spotlight (shadows on high only), no new render pass, E18 budgets hold at high and low.
 
 PO implementation clarification: the equipment pickup is beside the start lantern, requires E / middle-click, persists in checkpoint inventory and is worn on either courier. Reuse the existing warm beam and courier glow; outside its facing cone use grey material output while emissive eyes and sparse existing practical pools keep their colour. No additional render pass. Native scream frame maximum: <50 ms desktop / <100 ms low, with and without debug.
+
+
+## PO 2026-10-15: subway follow-up (spec audit)
+
+Source: `epics-pipeline/po-bugs-1015.md` in the main workspace.
+
+- #30, verbatim: "L6 - Tracks are disconnected". AC12 includes a continuous shared rail/sleeper/ballast kit from station to portal, rail endpoint seams ≤ 2 cm, and a station/portal Scene Lab view.
+- #33, verbatim: "I heard a scream and then the game froze for 3s". AC19 includes the scream cold-start frame maximum < 50 ms desktop / < 100 ms low, with and without `?debug`; warm outbreak assets behind loading and stage arrivals. The earlier breach2/abandon limits still apply.
+- #34, verbatim: "What is this?". For the service-gate task, AC11/17 require one understandable objective/progress bar, highlighted crates and target line, next-crate marker, first-push hint and gate occlusion treatment.
+- #35, verbatim: "L6 is too easy because Zombies are only coming from behind, but there could be more places where they enter the tunnel, so overall more action". AC06 includes telegraphed small groups ahead/beside the player from side accesses, route engagement measurements and the retained newbie death limit. This extends the original rear-pursuit pressure; darkness and escape paths remain binding.
+
+
+## PO 2026-10-13: level-end result or transition (audit clarification)
+
+Latest all-levels decision in `po-levels-4-9-2026-10-11.md`, verbatim: "For all levels. After I reached the final checkpoint, if there is still action, then let it go for another 5s, so it doesn't feel cutted."
+
+The source's accompanying decision says the world simulates for five seconds "before the result screen or transition" and "without action, end as now." On the orchestrator's 2026-10-16 request to apply that newest transition wording, AC14's older blanket no-summary requirement is obsolete: L6 may retain its existing result/Continue flow into L7. No reward selection, credits or main-menu ending is introduced. Living survivor ids/state, the carried arsenal, the night exit and the five-second live-action run-out remain required. This clarification changes the audited expectation; no transition code or test is relaxed by the audit.

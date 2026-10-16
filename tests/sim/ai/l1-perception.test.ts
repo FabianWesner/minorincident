@@ -396,10 +396,16 @@ describe('L1 v2 infected perception', () => {
       // Ten average-tier infected packed around one start point, all facing the courier 8 m away along the diagonal.
       const group = Array.from({ length: 10 }, (_, i) => zombie(w, -52 + (i % 4) * .8 - (i >> 2) * .8 * k, -42 + (i >> 2) * .8 * k, -Math.PI / 4));
       const p = humans.add(1, 'player', -50 + 8 * k, -40 + 8 * k);
+      const courier = w.entities.get(1)!;
+      w.combat!.damage.god = true;
       const arrived = group.map(() => Infinity);
       // The courier runs away for 12 s, then stands: arrival = first tick within 2 m.
       for (let t = 0; t < 30 * 60 && arrived.some(a => !Number.isFinite(a)); t++) {
         if (t < 12 * 60) { p.position.x += l1v2.player.runMs / 60 * k; p.position.z += l1v2.player.runMs / 60 * k; }
+        // Perception and the lunge resolver must target the same courier. The
+        // former proxy left her physical body at the arena origin, so lunges
+        // turned away from the moving target before entering the arrival ring.
+        expect(w.solids.relocate(courier, { ...p.position, y: courier.transform.y }, 'test.arrival-courier', 0, false)).toBe(true);
         w.update();
         group.forEach((e, i) => { if (!Number.isFinite(arrived[i]) && Math.hypot(e.transform.x - p.position.x, e.transform.z - p.position.z) <= 2) arrived[i] = t / 60; });
       }

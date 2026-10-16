@@ -528,8 +528,9 @@ export class Outbreak {
   /** The same entity becomes an infected: same id, asset, tint, accessories; speed from its tier (section 5.4). */
   private rise(e: EntitySnapshot, bitten = true): void {
     const ai = this.world.infected!, tick = this.world.tick, c = e.civilian!, inf = e.infection!;
-    const nav = ai.nav, cell = c.zooAnimal ? -1 : nav.clear(e.transform.x, e.transform.z, .4) ? -1 : nav.nearestCell(e.transform.x, e.transform.z);
-    const at = cell >= 0 ? { x: nav.x(cell), z: nav.z(cell) } : { x: e.transform.x, z: e.transform.z };
+    // A conversion keeps the admitted actor's pose. The coarse route margin is
+    // not another spawn owner; the shared admission query checks the new body below.
+    const at = { x: e.transform.x, z: e.transform.z };
     let id: number;
     try { id = ai.spawn(c.zooAnimal ? `infected.${c.zooAnimal}` : 'infected.runner', at, { variant: c.variant, yaw: e.transform.yaw, state: 'idle', perched: false, tier: inf.tier }); }
     catch { delete e.infection; this.kill(e); return; }
@@ -544,6 +545,7 @@ export class Outbreak {
     // Lane C's L1 brain already gave it the tier run speed; without it (tests, old levels) use the tier base +/- jitter.
     if (!c.zooAnimal && !e.infected!.l1) e.infected!.speed = l1v2.speedTiers[inf.tier].baseMs * (1 + (this.rng.next() * 2 - 1) * l1v2.speedTiers.jitter);
     delete e.civilian; delete e.infection; delete e.motion; if (c.zooAnimal) delete e.locomotion;
+    this.world.solids.admit(e, 'outbreak.rise');
     this.humans.invalidate();
     for (const pet of this.world.entities.iterate()) if (pet.civilian?.owner === e.id) pet.civilian.owner = null;
     this.world.spatial.set(e.id, e.transform.x, e.transform.z);

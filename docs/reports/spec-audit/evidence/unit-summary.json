@@ -1,0 +1,19 @@
+{
+  "numTotalTests": 1547,
+  "numPassedTests": 1537,
+  "numFailedTests": 1,
+  "numPendingTests": 9,
+  "numFailedTestSuites": 1,
+  "failures": [
+    {
+      "file": "unit/assets/validate.test.ts",
+      "name": "T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts",
+      "messages": [
+        "Error: Test timed out in 300000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\n    at task (file:///srv/mi/jobs/spec-audit-a-e72c4d-78807-1792137228/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2681:43)\n    at Object.<anonymous> (file:///srv/mi/jobs/spec-audit-a-e72c4d-78807-1792137228/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2698:16)\n    at Object.<anonymous> (file:///srv/mi/jobs/spec-audit-a-e72c4d-78807-1792137228/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2471:28)\n    at chain (file:///srv/mi/jobs/spec-audit-a-e72c4d-78807-1792137228/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1859:14)\n    at /srv/mi/jobs/spec-audit-a-e72c4d-78807-1792137228/tests/unit/assets/validate.test.ts:83:1\n    at VitestModuleEvaluator._runInlinedModule (file:///srv/mi/jobs/spec-audit-a-e72c4d-78807-1792137228/node_modules/vitest/dist/module-evaluator.js:261:4)\n    at VitestModuleRunner.directRequest (file:///srv/mi/jobs/spec-audit-a-e72c4d-78807-1792137228/node_modules/vite/dist/node/module-runner.js:1284:61)\n    at VitestModuleRunner.cachedRequest (file:///srv/mi/jobs/spec-audit-a-e72c4d-78807-1792137228/node_modules/vite/dist/node/module-runner.js:1180:76)\n    at VitestModuleRunner.import (file:///srv/mi/jobs/spec-audit-a-e72c4d-78807-1792137228/node_modules/vite/dist/node/module-runner.js:1117:12)\n    at file:///srv/mi/jobs/spec-audit-a-e72c4d-78807-1792137228/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3448:5"
+      ]
+    }
+  ],
+  "verifyRemoteRegression": [
+    "passed"
+  ]
+}

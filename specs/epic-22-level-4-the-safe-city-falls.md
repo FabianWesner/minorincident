@@ -179,3 +179,14 @@ Epic report rationale: AC09/12/13/15 changed because the PO adds Alphas and expl
 > "L4 alarm is there, but no Zombies anywhere"
 
 The first war stream starts with the alarm (superseding the old 28 s empty prelude). Nearby authored building doors feed the first wave; later streams retain the perimeter ring. A real-input browser check must show living infected on screen within 10 s of the alarm. Counts and military weapon strength remain unchanged.
+
+
+## PO 2026-10-15 precedence (spec audit)
+
+Source: `epics-pipeline/po-bugs-1015.md` in the main workspace.
+
+PO #17, verbatim: "The miltiary action is amaing! But walkinto the the safe space is boring, since there are zero Zombies". PO #17b, verbatim: "The safe space is also too close, so I don't see much of this level. Provide a longer way to walk with some Zombie action underway".
+
+This supersedes the older direct Kessler Lane escape described in §5. The escape follows Lakeshore Avenue, unseen Metro Road blocks and Harbor Street to the far northwest refuge at approximately (-79.3, -45.28), within D-FAIR. Require about 2–3 minutes of walking with action along the way, ≥ 250 m of connected route, clear escape lanes and updated objective/minimap route distance (AC15/18). Running may shorten the walk. The AC02 band stays 4:20–7:40 pending measured verification; the PO authorizes a spec adjustment if the longer route exceeds it, not padding or a scope reduction.
+
+PO #16b, verbatim: "ah I see, you want me to keep in the military area, that's fine, let's keep this, just make sure this doesn't feel like a bug to the user (who is used to move around freely). Think how to make this clear (e.g. with a wall) but stil lalow to Zombies to enter....". The hold boundary is intentional; AC05/18 include its visible perimeter, infected entry, bark/HUD/blocked-click feedback and internal reachability. This supersedes #16's direction to remove the hold boundary; it does not permit invisible blockers inside it.

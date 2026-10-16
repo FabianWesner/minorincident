@@ -1,3 +1,4 @@
+import { boxContact } from '../world/SolidGeometry';
 // Port of Bruno Simon folio-2025 PhysicsVehicle.js (MIT, 41046b5).
 // Four raycast wheels, low COM, engine taper, reverse braking and bounded stuck history.
 import * as RAPIER from '@dimforge/rapier3d-compat';
@@ -101,17 +102,11 @@ export class VehicleBody {
   }
   /** Unrigid infected stay on the chassis surface instead of walking into seated occupants. */
   separateHull(position: { x: number; z: number }, radius: number): void {
-    const p = this.transform, dx = position.x - p.x, dz = position.z - p.z, c = Math.cos(p.yaw), s = Math.sin(p.yaw);
-    let x = dx * c - dz * s, z = dx * s + dz * c;
-    const halfX = this.def.length / 2, halfZ = this.def.width / 2;
-    const nearestX = Math.max(-halfX, Math.min(halfX, x)), nearestZ = Math.max(-halfZ, Math.min(halfZ, z));
-    const outX = x - nearestX, outZ = z - nearestZ, distance = Math.hypot(outX, outZ);
-    if (distance >= radius) return;
-    if (distance > 0) { x = nearestX + outX / distance * radius; z = nearestZ + outZ / distance * radius; }
-    else if (halfX - Math.abs(x) < halfZ - Math.abs(z)) x = (x < 0 ? -1 : 1) * (halfX + radius);
-    else z = (z < 0 ? -1 : 1) * (halfZ + radius);
-    position.x = p.x + c * x + s * z; position.z = p.z - s * x + c * z;
+    const p = this.transform;
+    const contact = boxContact({ ...p, halfX: this.def.length / 2, halfZ: this.def.width / 2, halfY: .3 }, position.x, position.z, radius, { depth: 0, nx: 0, nz: 0, inside: false });
+    if (contact.depth > 0) { position.x += contact.nx * contact.depth; position.z += contact.nz * contact.depth; }
   }
+
   clearStuck(): void { this.travel.fill(0); this.travelCount = this.travelIndex = this.travelSum = 0; this.stuck = false; }
   /** Bruno's mass-scaled jump/roll recovery, retried in sim time while a driver is overturned. */
   recoverFlip(): boolean {

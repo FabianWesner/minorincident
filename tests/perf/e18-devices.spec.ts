@@ -4,12 +4,12 @@ import { test, expect } from '../e2e/fixtures';
 import { validateDeviceEvidence } from '../../tools/performance/deviceEvidence';
 // Authorized AC08 proxy: headless native GPU Chromium with mobile/touch and CDP CPU throttling.
 // Keep real-device recordings separate; the physical recorder remains available for final user verification.
-test.use({ channel: 'chrome', headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] } });
+test.use({ channel: 'chrome', headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist'] } });
 for (const [profile, platform, rate] of [['Pixel 7', 'android', 4], ['iPhone 14', 'ios', 2]] as const) {
   test.describe(profile, () => {
     test.use({ viewport: { width: 390, height: 844 }, deviceScaleFactor: devices[profile].deviceScaleFactor, userAgent: devices[profile].userAgent, isMobile: true, hasTouch: true });
     for (const backend of ['webgl', 'webgpu'] as const) test(`T-E18-08-${platform}-${backend} @E18-AC08 @perf emulated mobile L6 at ${rate}x CPU p50 >=30fps`, async ({ page, context }) => {
-      test.skip(backend === 'webgpu', 'WebGPU-only checks require manual verification; browser automation is headless.');
+      test.skip(backend === 'webgpu' && process.env.E18_WEBGPU_PROXY !== '1', 'Set E18_WEBGPU_PROXY=1 for the explicitly requested headless native WebGPU proxy; physical checks remain manual.');
       test.setTimeout(240_000);
       const cdp = await context.newCDPSession(page);
       await cdp.send('Emulation.setCPUThrottlingRate', { rate });

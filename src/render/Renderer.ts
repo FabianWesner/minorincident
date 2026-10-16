@@ -38,6 +38,23 @@ export function installPaletteVariantCache(objects: RenderObjects): void {
   };
 }
 
+/** Three r186 stores interleaved WebGPU buffers under their shared data object,
+ * but destroys them through an attribute wrapper. Retire the same cache key so
+ * a later level uploads a fresh buffer instead of writing to the destroyed one. */
+export function installInterleavedBufferDisposal(backend: {
+  get(attribute: object): { buffer?: unknown };
+  delete(attribute: object): unknown;
+  destroyAttribute(attribute: object): void;
+}): void {
+  const destroy = backend.destroyAttribute;
+  backend.destroyAttribute = function (attribute: object) {
+    const interleaved = attribute as { isInterleavedBufferAttribute?: boolean; data: object };
+    if (!interleaved.isInterleavedBufferAttribute) { destroy.call(this, attribute); return; }
+    if (this.get(interleaved.data).buffer) destroy.call(this, interleaved.data);
+    this.delete(attribute);
+  };
+}
+
 // Load lane: three emits small instance-matrix arrays (and bone/range arrays) as per-object uniform
 // buffers named after the node id ('NodeBuffer_<id>'), so every InstancedMesh below the uniform limit
 // compiled its own shader module and pipeline (L1 v2: 21 civilian batches x 2 passes = 42 of 130
@@ -93,6 +110,7 @@ export class Renderer extends WebGPURenderer {
   override async init(): Promise<this> {
     await super.init();
     installTextureRanges(this.backend);
+    if (this.selectedBackend === 'webgpu') installInterleavedBufferDisposal(this.backend as unknown as Parameters<typeof installInterleavedBufferDisposal>[0]);
     installPaletteVariantCache((this as unknown as { _objects: RenderObjects })._objects);
     const nodes = (this as unknown as { _nodes: { getForRender(object: unknown): unknown; getForRenderAsync(object: unknown): Promise<unknown> } })._nodes;
     const asynchronous = nodes.getForRenderAsync;
@@ -199,6 +217,17 @@ export class Renderer extends WebGPURenderer {
    * Level unload retires all render objects before dropping these renderer-owned caches. */
   releaseLevelCaches(): void {
     this.levelCacheReleases++;
+    // r186's geometry listeners capture the first RenderObject using each
+    // geometry. Shared fullscreen/retained prototype geometry outlives a level,
+    // pinning that render context and its entire shared-uniform cache. Retire
+    // attributes and invalidate initialization so the next use uploads again.
+    const geometries = (this as unknown as { _geometries: {
+      _geometryDisposeListeners: Map<object, () => void>;
+      delete(geometry: object): unknown;
+    } | null })._geometries;
+    if (geometries) for (const [geometry, retire] of geometries._geometryDisposeListeners) {
+      retire(); geometries.delete(geometry);
+    }
     const caches = this as unknown as { _objects: { dispose(): void } | null; _nodes: { dispose(): void } | null; _renderLists: { dispose(): void } | null; _renderContexts: { dispose(): void } | null };
     caches._objects?.dispose(); caches._nodes?.dispose(); caches._renderLists?.dispose(); caches._renderContexts?.dispose();
     if (this.selectedBackend === 'webgl') {

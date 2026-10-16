@@ -1,0 +1,22 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-e18-final -> 91.98.11.241:/srv/mi/ws/perf-e18-final-abfe7a
+[remote] cache-gc deleted:none
+[remote] sync 55s, 13728 files; job /srv/mi/jobs/perf-e18-final-abfe7a-98809-1792139803; queueing for a slot
+[runner] slot 0 acquired; load 0.28 0.70 2.53
+[runner] npm ci (lockfile hash bd6030e920a7101e)
+
+added 247 packages in 4s
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/perf-e18-final-abfe7a-98809-1792139803[39m
+
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/level-fixtures.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 1966[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18-AC01 perf-l5-aftermath high prepared=false retains campaign cast and measures the exact stress population[33m 604[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18-AC01 perf-l5-aftermath high prepared=true retains campaign cast and measures the exact stress population[33m 333[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m8 passed[39m[22m[90m (8)[39m
+[2m   Start at [22m 08:37:51
+[2m   Duration [22m 4.32s[2m (tests 47%, transform 45%, import 9%)[22m
+
+JSON report written to /srv/mi/jobs/perf-e18-final-abfe7a-98809-1792139803/docs/reports/perf-e18-final/fixture-final.json
+[remote] pulled docs/reports/perf-e18-final/fixture-final.json
+[remote] done exit=0 (runner 91.98.11.241, sync 55s, remote total 19s)

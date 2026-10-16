@@ -1,0 +1,28 @@
+{
+  "at": 1792143426.981025,
+  "reason": "User browser-slot fairness rule: cumulative browser/quiet-window waits exceed 30 minutes; release pending reservation instead of waiting",
+  "terminatedOwnQueuedHelpers": [
+    54190,
+    80573,
+    80622
+  ],
+  "terminatedOwnQuietTree": [
+    70578
+  ],
+  "unmeasured": [
+    "E25 supplementary native lighting",
+    "E26 native barricade stress/final repeat",
+    "E28 native L5/storm incl new timing cases",
+    "additional storm backend matrix"
+  ],
+  "completedMatrixCases": 108,
+  "conservativeWaitEvidenceMinutes": {
+    "E27_quiet_window": 9.45,
+    "E28_build_slot": 6.35,
+    "parity_slot": 5.06,
+    "E26_browser_slot": 2,
+    "E26_build_slot": 2.33,
+    "matrix_slot": 0.5,
+    "E28_quiet_window": 9.96
+  }
+}

@@ -201,7 +201,8 @@ test('T-E26-15 @E26 @E26-AC15 60s push/kick/explosion tape has identical repeat 
 
 test('T-E26-14 @E26 @E26-AC14 complete bot fills/braces two slots and defense reduces core arrivals >=40%', async () => {
   const { BarricadeBot } = await import('../../src/debug/bot/BarricadeBot');
-  const seeds = Number(process.env.E26_AB_SEEDS ?? 1); expect(seeds).toBeLessThanOrEqual(10);
+  // AC14 requires the A/B comparison on all ten seeds in the normal epic gate.
+  const seeds = 10;
   const results = [];
   for (let seed = 1; seed <= seeds; seed++) {
   const w = await world('barricade-lab', seed), b = new BarricadeBot(w);

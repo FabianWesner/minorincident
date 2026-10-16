@@ -101,11 +101,27 @@ export class LevelTwoBot {
     if (near.length >= 3 || player.health.current < 70) this.retreatAt = Math.min(this.retreatAt, w.tick);
     const leaving = w.tick >= this.retreatAt;
     if (!leaving) { if (near[0] && !skip) strike(near[0]); else go(a['l2-forecourt'], 2.5, 'cover'); return frame; }
+    // Use a nearby health pickup while disengaging, before the next fight.
+    if (this.profile === 'complete' && player.health.current < 70) {
+      const kit = [...w.entities.iterate()].filter(e => !e.hidden && e.pickup && 'kind' in e.pickup && !e.pickup.collected && (e.pickup.kind === 'medkit' || e.pickup.kind === 'soda') && dist(p, e.transform) <= 16)
+        .sort((a, b) => dist(p, a.transform) - dist(p, b.transform))[0];
+      if (kit) { go(kit.transform, .1, `heal-${kit.id}`); return frame; }
+    }
     const route = this.profile === 'complete' && this.opening === 'side' ? completeSideRoute : l2Routes[this.opening];
     // After a respawn (checkpoint restore) rejoin the route at its nearest point instead of cutting across blocks.
     if (!this.last || dist(this.last, p) > 6) { this.waypoint = route.reduce((best, q, i) => dist(q, p) < dist(route[best], p) ? i : best, 0); this.walker.reset(); this.detour = null; if (this.opening === 'alarm' && this.waypoint <= ALARM_AT) this.alarmed = false; }
     this.last = { x: p.x, z: p.z };
     while (this.waypoint < route.length - 1 && dist(p, route[this.waypoint]) < 2.2) this.waypoint++;
+    // The last outside waypoint is close enough for the police to cover us.
+    // Closing the gate with pursuers beside it hides them without clearing the
+    // calm-save radius. Let the nearby officers clear them before crossing.
+    if (this.profile === 'complete' && !s.crossedAt && this.waypoint >= route.length - 2 && dist(p, route[route.length - 2]) < 1.2) {
+      const pursued = (w.infected?.active ?? []).some(e => e.health.current > 0 && !e.hidden && !e.infected?.hidden && dist(p, e.transform) < 10);
+      if (pursued || player.health.current < 70) {
+        if (near[0]) aimStrike(near[0]);
+        return frame;
+      }
+    }
     if (this.opening === 'alarm' && !this.alarmed && this.waypoint >= ALARM_AT) {
       // Set the car alarm off (interact at the car), then double back while the cluster runs to it.
       const car = a['l2-cluster-alarm'];
@@ -126,7 +142,9 @@ export class LevelTwoBot {
     if (newbie && !crowd.length && !this.detour && this.rng.next() < .0015) { const at = this.walker.detour(w, route[this.waypoint]); if (at) this.detour = { ...at, until: w.tick + 240 }; }
     if (this.detour) { go(this.detour, .8, `detour-${this.detour.until}`); return frame; }
     // Cover the retreat without an attackTarget command pulling us back into the crowd.
-    if (near[0] && !skip) aimStrike(near[0]);
+    // A completion swing must reach its pursuer before paying the movement lockout.
+    const target = near[0];
+    if (target && !skip && (this.profile !== 'complete' || dist(p, target.transform) <= w.combat!.runner.loadout.definition(w.combat!.runner.loadout.current('LEFT').id).range)) aimStrike(target);
     go(route[this.waypoint], .6, `route-${this.waypoint}`);
     return frame;
   }

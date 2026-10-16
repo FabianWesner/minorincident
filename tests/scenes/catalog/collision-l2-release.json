@@ -1,0 +1,41 @@
+{
+  "name": "collision-l2-release",
+  "note": "The production L2 controller opens both market doors and releases its authored population. Admission searches outwards from each doorstep: crowd congestion must not choose an interior pose. Inspect separate feet at both doors, the outward fan and living civilians after release. The isolated fixture opens the doors directly; it does not replay the truck journey.",
+  "seed": 1,
+  "time": "L2",
+  "ground": "district",
+  "tier": 1,
+  "layout": {
+    "level": "L2",
+    "district": "D-GROVE"
+  },
+  "l2Release": true,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -46.5,
+        -39
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -52,
+      -39
+    ],
+    "zoom": 1
+  },
+  "frames": 720,
+  "sheet": 45,
+  "expect": {
+    "consoleErrors": 0,
+    "collisionFailuresMax": 0,
+    "collisionPendingMax": 0,
+    "bodyOverlapMaxCm": 2
+  },
+  "size": 220
+}

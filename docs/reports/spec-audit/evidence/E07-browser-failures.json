@@ -1,0 +1,23 @@
+[
+  {
+    "title": "crowd variety and vertex layout on webgl @E07 @E08 @E18-AC01",
+    "file": "e2e/crowd-variety.spec.ts",
+    "errors": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m8\u001b[39m\nReceived:    \u001b[31m9\u001b[39m\n\n  24 |     const layouts = [...(proof.state.render.crowd?.batches.map(b=>b.layout) ?? []),...(proof.state.render.npcs?.civilians.layouts ?? []),...proof.state.render.accessories.map(b=>b.layout)];\n  25 |     expect(layouts.length).toBeGreaterThan(0);\n> 26 |     for(const layout of layouts) { expect(layout!.buffers).toBeLessThanOrEqual(8); expect(layout!.locations).toBeLessThanOrEqual(16); }\n     |                                                            ^\n  27 |   }\n  28 | });\n  29 |\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a/tests/e2e/crowd-variety.spec.ts:26:60"
+    ]
+  },
+  {
+    "title": "crowd variety and vertex layout on webgpu @E07 @E08 @E18-AC01",
+    "file": "e2e/crowd-variety.spec.ts",
+    "errors": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m8\u001b[39m\nReceived:    \u001b[31m9\u001b[39m\n\n  24 |     const layouts = [...(proof.state.render.crowd?.batches.map(b=>b.layout) ?? []),...(proof.state.render.npcs?.civilians.layouts ?? []),...proof.state.render.accessories.map(b=>b.layout)];\n  25 |     expect(layouts.length).toBeGreaterThan(0);\n> 26 |     for(const layout of layouts) { expect(layout!.buffers).toBeLessThanOrEqual(8); expect(layout!.locations).toBeLessThanOrEqual(16); }\n     |                                                            ^\n  27 |   }\n  28 | });\n  29 |\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a/tests/e2e/crowd-variety.spec.ts:26:60"
+    ]
+  },
+  {
+    "title": "T-E07-12 @E07 @E07-AC12 @perf 200 infected render in fixed scene graph and at most 30 crowd draws",
+    "file": "perf/horde.spec.ts",
+    "errors": [
+      "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m125\u001b[39m\nReceived: \u001b[31m123\u001b[39m\n\n  20 |   expect(runners.filter(batch => batch.lod === 'lod0').reduce((n,b)=>n+b.instances,0)).toBe(8);\n  21 |   expect(proof.crowd.meshDrawCalls).toBeLessThanOrEqual(30); expect(proof.crowd.nonInstancedMeshes).toBe(0);\n> 22 |   expect(proof.crowd.objects).toBe(proof.crowd.batches.length + 5); // Four fixed effects and the empty static-corpse group.\n     |                               ^\n  23 |   const offscreen = await page.evaluate(() => {\n  24 |     const api = window.__SS__!, e = api.query({ kind: 'infected' }).find(e => e.transform.x === 50)!;\n  25 |     return { projected: api.camera.project(e.transform.x, e.transform.y, e.transform.z), drawn: api.crowdFigures().some(f => f.id === e.id && f.drawn) };\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a/tests/perf/horde.spec.ts:22:31"
+    ]
+  }
+]

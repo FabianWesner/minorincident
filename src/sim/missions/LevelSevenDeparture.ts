@@ -1,3 +1,4 @@
+import { actorRadius } from '../world/SolidRegistry';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { CoverWall } from '../combat/HitQuery';
@@ -5,6 +6,7 @@ import type { MissionResult } from './types';
 import { l7Departure as cfg } from '../../data/l7';
 import { l7Bus, l7CorridorAnchors } from '../../levels/L7/corridor';
 import { spawnSetPiece } from './L4Spectacle';
+import { emitEngine, stopEngine } from '../vehicles/ConvoySound';
 
 export interface L7DepartureState {
   phase: 'waiting' | 'boarding' | 'departing' | 'done';
@@ -33,6 +35,7 @@ export class LevelSevenDeparture {
   handedOver = false;
   private blocker: number | undefined;
   private readonly from = new Map<number, { x: number; z: number }>();
+  private readonly approaches = new Map<number, { x: number; z: number; at: number; around?: { x: number; z: number } }>();
   private readonly boarding = l7CorridorAnchors['l7-bus-boarding'].position;
   private readonly wall: CoverWall = { x: l7Bus.x, y: 1.5, z: l7Bus.z, halfX: 4.68, halfY: 1.5, halfZ: 1.48 };
   constructor(private readonly world: SimWorld) {}
@@ -40,6 +43,7 @@ export class LevelSevenDeparture {
     const w = this.world;
     const bus = spawnSetPiece(w, l7Bus.asset, { x: l7Bus.x, z: cfg.lane.z, y: w.districts!.groundHeight(l7Bus.x, cfg.lane.z) + .7, yaw: l7Bus.yaw });
     this.state.busId = bus.id;
+    w.solids.aliasBlocker(NAV_BUS, bus.id);
     this.blocker = w.physics.addBlocker(this.wall);
     w.events.emit({ type: 'world.blocker.changed', tick: w.tick, id: NAV_BUS, blocked: true, wall: this.wall });
   }
@@ -70,12 +74,34 @@ export class LevelSevenDeparture {
     const c = e.civilian!, slot = c.survivor!.slot;
     c.state = 'calm'; c.story = null; c.survivor!.cover = false;
     const queue = { x: cfg.queue.x + Math.floor(slot / 3) % 3 * .9, z: cfg.queue.z + (slot % 3 - 1) * .8 };
-    const near = distance(e.transform, queue) <= 1.6;
+    // Admit when the full footprint reaches the queue, including when the
+    // courier is standing between its centre and the last waiting survivor.
+    const near = distance(e.transform, queue) <= 1.6 + (e.combat?.radius ?? .35);
     if (near && w.tick - s.lastEnterAt >= cfg.gapTicks) {
+      e.passengerOf = s.busId; this.approaches.delete(e.id);
       s.lastEnterAt = w.tick; s.entering[e.id] = w.tick; this.from.set(e.id, { x: e.transform.x, z: e.transform.z });
       return true;
     }
-    if (!near) w.npcs!.move(e, queue, (w.l7Encounters!.state.roster.find(r => r.id === e.id)?.injured ? 1.4 : 3.8), c, .5, 1600);
+    if (!near) {
+      let approach = this.approaches.get(e.id);
+      if (!approach) { approach = { x: e.transform.x, z: e.transform.z, at: w.tick }; this.approaches.set(e.id, approach); }
+      if (distance(e.transform, approach) > .05) { approach.x = e.transform.x; approach.z = e.transform.z; approach.at = w.tick; }
+      if (approach.around && distance(e.transform, approach.around) < .15) delete approach.around;
+      let goal = approach.around ?? queue;
+      const courier = w.entities.get(1)!, p = courier.transform, dx = queue.x - e.transform.x, dz = queue.z - e.transform.z, length2 = dx * dx + dz * dz;
+      const t = length2 ? ((p.x - e.transform.x) * dx + (p.z - e.transform.z) * dz) / length2 : 0;
+      const clearance = actorRadius(e) + actorRadius(courier) + .05;
+      // Only a stalled close approach needs a detour. Keep ordinary queue
+      // travel and its existing boarding cadence, then walk around the courier.
+      if (!approach.around && w.tick - approach.at >= 30 && Math.abs(p.y - e.transform.y) < 1.2 && distance(p, e.transform) < clearance + .75 && t > 0 && t < 1 && Math.hypot(e.transform.x + t * dx - p.x, e.transform.z + t * dz - p.z) < clearance) {
+        const length = Math.sqrt(length2), side = dx * (p.z - e.transform.z) - dz * (p.x - e.transform.x) >= 0 ? 1 : -1;
+        for (const sign of [side, -side]) {
+          const around = { x: e.transform.x + sign * dz / length, z: e.transform.z - sign * dx / length };
+          if (w.solids.clear({ ...around, y: e.transform.y }, actorRadius(e), e.id)) { goal = approach.around = around; break; }
+        }
+      }
+      w.npcs!.move(e, goal, r.injured ? 1.4 : 3.8, c, goal === queue ? .5 : .05, 1600);
+    }
     w.spatial.set(e.id, e.transform.x, e.transform.z);
     return true;
   }
@@ -110,25 +136,33 @@ export class LevelSevenDeparture {
     const w = this.world, s = this.state, player = w.entities.get(1)!;
     s.phase = 'departing'; s.startedAt = w.tick;
     // The courier climbs aboard last: out of the world (no target for the horde, no collider), input locked for the shot.
+    player.passengerOf = s.busId; player.hidden = true; w.spatial.delete(1); w.physics.playerCollider?.setEnabled(false);
     for (const e of w.entities.iterate()) if (e.companion) { e.hidden = true; e.passengerOf = s.busId; w.spatial.delete(e.id); }
-    player.hidden = true; w.spatial.delete(1); w.physics.playerCollider?.setEnabled(false);
     w.storyLock = { scripted: null, skip: false }; w.clearInput();
     if (this.blocker !== undefined) { w.physics.removeBlocker(this.blocker); this.blocker = undefined; }
     w.events.emit({ type: 'world.blocker.changed', tick: w.tick, id: NAV_BUS, blocked: false, wall: this.wall });
+    emitEngine(w, s.busId, 0, true);
     w.events.emit({ type: 'mission.signal', tick: w.tick, name: 'l7.departing' });
   }
   private drive(): void {
     const w = this.world, s = this.state, t = Math.min(1, (w.tick - s.startedAt) / (cfg.seconds * 60));
     const x = cfg.lane.fromX + (cfg.lane.toX - cfg.lane.fromX) * ease(t), tr = this.bus.transform;
+    const speed = Math.abs(x - tr.x) * 60;
     tr.x = x; tr.z = cfg.lane.z; tr.yaw = 0; tr.y = w.districts!.groundHeight(x, cfg.lane.z) + .7;
+    if ((w.tick - s.startedAt) % 6 === 0) emitEngine(w, s.busId, speed, true);
     const player = w.entities.get(1)!.transform;
     Object.assign(player, { x, z: cfg.lane.z });
+    // Keep the hidden passenger's physics pose with its bus: cleanup publishes
+    // the player body after missions and would otherwise restore the boarding spot.
+    w.physics.playerBody!.setTranslation(player, true);
+    w.physics.playerBody!.setNextKinematicTranslation(player);
     for (const e of w.entities.iterate()) if (e.companion && e.passengerOf === s.busId) Object.assign(e.transform, tr);
     if (t >= 1) this.finish();
   }
   private finish(): void {
     const w = this.world, s = this.state;
     s.phase = 'done';
+    stopEngine(w, s.busId);
     const escaped = s.boarded.map(id => structuredClone(w.entities.get(id)!)).filter(e => e.health.current > 0 && e.civilian?.state !== 'finished' && !e.infected && !e.infection);
     for (const e of escaped) { e.hidden = false; delete e.passengerOf; if (e.civilian) e.civilian.pauseUntil = 0; }
     const result: MissionResult = {

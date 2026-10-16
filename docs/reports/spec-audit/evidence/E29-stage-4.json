@@ -1,0 +1,388 @@
+{
+  "check": {
+    "command": [
+      "sh",
+      "tools/remote/run.sh",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-c",
+      "--pull",
+      "test-results/epics/E29/vitest.json",
+      "--",
+      "npx",
+      "vitest",
+      "run",
+      "-t",
+      "@(?:E29)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+      "--maxWorkers=1",
+      "--reporter=default",
+      "--reporter=json",
+      "--outputFile=test-results/epics/E29/vitest.json"
+    ],
+    "exitCode": 0
+  },
+  "passed": 60,
+  "failed": 0,
+  "pending": 2885,
+  "success": true,
+  "tests": [
+    {
+      "file": "sim/determinism.test.ts",
+      "name": "S-05-foundation @smoke empty scripted 1800-tick golden hash",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/combat/combat.test.ts",
+      "name": "S-06 @E05 @smoke each category fires/hits; swept projectile cannot tunnel through a dummy",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/combat/l7-rocket.test.ts",
+      "name": "T-E29-04 @E29-AC04 exit-relative pickup retains all five previous weapons, equips once after 0.6s / E",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/combat/l7-rocket.test.ts",
+      "name": "T-E29-05 @E29-AC05 600 rockets have no reload/empty/charges and exactly 75 tick cadence",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/combat/l7-rocket.test.ts",
+      "name": "T-E29-06-24 @E29-AC06 one real projectile permanently clears 24 infected in its blast tick",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/combat/l7-rocket.test.ts",
+      "name": "T-E29-06-200 @E29-AC06 one real projectile permanently clears 200 infected in its blast tick",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/combat/l7-rocket.test.ts",
+      "name": "T-E29-06-los @E29-AC06 E27 full cover shields a crowd member from a real rocket",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/combat/l7-rocket.test.ts",
+      "name": "T-E29-07-rocket @E29-AC07 shared Alpha takes two center rocket blasts",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/npc/fetch-leash.test.ts",
+      "name": "@E08 @E29 authored interaction pickup is never fetched: {\"interactTicks\":36}",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/npc/fetch-leash.test.ts",
+      "name": "@E08 @E29 authored interaction pickup is never fetched: {\"retain\":true}",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/npc/fetch-leash.test.ts",
+      "name": "@E08 @E29 authored interaction pickup is never fetched: {\"interactTicks\":36,\"retain\":true}",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/npc/permanence.test.ts",
+      "name": "20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/npc/zoo-companion.test.ts",
+      "name": "@E29 @E30 bus passenger keeps the same corgi identity at zoo arrival",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-departure.test.ts",
+      "name": "T-E29-13-board @E29-AC13 the complete living roster boards before the bus leaves; the bus moves >= 30 m in 6-10 s; L8 gets the exact roster",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-departure.test.ts",
+      "name": "T-E29-13-bite-loss @E29-AC13 fatal-bite bodies with positive HP never hold or board the bus",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-departure.test.ts",
+      "name": "T-E29-13-wait @E29-AC13 a straggler holds the bus; the player is never timed out",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-departure.test.ts",
+      "name": "T-E29-13-zero @E29-AC13 zero survivors: the courier boards alone; leaving the bus pauses boarding",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-departure.test.ts",
+      "name": "T-E29-13-bus-blocks @E29-AC13 the waiting bus blocks the player and navigation; the lane is free once it leaves",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-departure.test.ts",
+      "name": "T-E29-13-handover @E29-AC13 L7 completion unlocks L8 and carries the arsenal; L9 continues to L10",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-departure.test.ts",
+      "name": "T-E29-13-35 @E29-AC13 a full 35-person roster boards and every figure is accounted for",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-encounters.test.ts",
+      "name": "T-E29-08 @E29-AC08 high: all arrivals, five Alphas, safe emergence and strict caps",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-encounters.test.ts",
+      "name": "T-E29-08 @E29-AC08 low: all arrivals, five Alphas, safe emergence and strict caps",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-encounters.test.ts",
+      "name": "T-E29-08-visible @E29-AC08 visible final emergence stays queued with both Alphas",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-encounters.test.ts",
+      "name": "T-E29-11-roster @E29-AC11 incoming ids, appearance and injury survive; health recovers; 0\u201335 followers use bounded motion",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-encounters.test.ts",
+      "name": "T-E29-11-L6-result @E29-AC11 L6 serializes effective injury speed without mutating the escaped resident",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-encounters.test.ts",
+      "name": "T-E29-11-stragglers @E29-AC11 cross-city followers use staggered partial routes and keep walking",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-encounters.test.ts",
+      "name": "T-E29-11-loss @E29-AC11 combat losses are logged without deleting the roster",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-encounters.test.ts",
+      "name": "T-E29-12 @E29-AC12 rocket opening is traversed by a living follower while street infected remain",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-encounters.test.ts",
+      "name": "T-E29-16-encounters @E29-AC16 checkpoint seam retains queues, Alpha requests, identities and passage state",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-encounters.test.ts",
+      "name": "T-E29-11-zero @E29-AC11 zero living survivors can reach passage without a kill-all requirement",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-encounters.test.ts",
+      "name": "T-E29-19-dying @E29-AC19 high: rocket death animations retain active-pool slots",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-encounters.test.ts",
+      "name": "T-E29-19-dying @E29-AC19 low: rocket death animations retain active-pool slots",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-encounters.test.ts",
+      "name": "T-E29-08-turning @E29-AC08 pending survivor transformations reserve a slot before queued arrivals",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l7-encounters.test.ts",
+      "name": "T-E31-20-armed-roster @E31-AC20 @E29-AC11 carried armed shelter resident follows the L7 group instead of holding an old post",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/w6.test.ts",
+      "name": "T-E29-16-tier @E29-AC16 checkpoint restores W6 mission/world tier, navigation and weapon ownership",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/assets/registry.test.ts",
+      "name": "T-E29-09-decay-lod @E29-AC09 ruined LODs use declared decay dimensions and still reject malformed geometry",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/layouts/w6.test.ts",
+      "name": "T-E29-09-contract @E29-AC09 W0\u2013W6 serialize exact layer ranges without extending W5 lifetimes",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/layouts/w6.test.ts",
+      "name": "T-E29-09-validation @E29-AC09 W6 is accepted and invalid tiers/ranges/variants rejected",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/layouts/w6.test.ts",
+      "name": "T-E29-09-scene @E29-AC09 W6 Scene Lab props retain visuals, compound collision and reviewed asset URLs",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/levels/l7-district.test.ts",
+      "name": "T-E29-09-district @E29-AC09 W6 explicitly retains Fairhaven landmarks and reviewed W5 derivatives",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/levels/l7-district.test.ts",
+      "name": "T-E29-10-district @E29-AC10 heavier dressing, dead defenses and passable Northgate branches",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/levels/l7-district.test.ts",
+      "name": "T-E29-10-fires @E29-AC10 production district installs persistent fires and shared rocket hooks",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/levels/l7-district.test.ts",
+      "name": "T-E29-09-assets @E29-AC09 W6 deliveries satisfy the existing geometry and LOD contracts",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/levels/l7-district.test.ts",
+      "name": "T-E29-10-corridor @E29-AC10 @E29-AC13 two routes reach the corridor and its working bus; no blocker seals it",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/levels/l7-district.test.ts",
+      "name": "T-E29-13-lane @E29-AC13 the departure lane east of the bus is free of solid corridor items and fires",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/performance/event-bus-cache.test.ts",
+      "name": "T-E29-19-event-dispatch @E29-AC19 cached dispatch preserves phase snapshots, nested emits and reset",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/performance/human-query.test.ts",
+      "name": "T-E29-19-human-query @E29-AC19 human queries match the original spatial filter through same-tick movement, bites, spawn, deletion and restore",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/performance/human-query.test.ts",
+      "name": "T-E29-19-traffic-query @E29-AC19 cached traffic obstacles retain live movement, late components, deletion and restore",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/motionlab/stage1.test.ts",
+      "name": "stage1 navigation capsule and NPC traces meet motion budgets @smoke",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/motionlab/stage1.test.ts",
+      "name": "crowd fades preserve head position when clips change or interrupt @smoke",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/render/footprints.test.ts",
+      "name": "weather footprints T-E29-19-tracks @E29-AC19 low resolution retains both height layers and lifetime",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/render/footprints.test.ts",
+      "name": "weather footprints T-E29-19-track-raster @E29-AC19 cached crowd probes preserve the shipped mask bytes",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/render/l7-memory.test.ts",
+      "name": "T-E29-19-memory @E29-AC19 district cache drops unused RGB while preserving palette and figure color graphs",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/render/l7-memory.test.ts",
+      "name": "T-E29-19-grouping @E29-AC19 L7 LOD batches share only their model figures and retain every corpse",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/render/l7-perf.test.ts",
+      "name": "T-E29-19-fire-culling @E29-AC19 offscreen fires retain lifetime/light and render again when the camera returns",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/render/l7-perf.test.ts",
+      "name": "T-E29-19-static-uploads @E29-AC19 camera motion preserves unchanged collapse/wreck buffers and updates moved or culled instances",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/render/l7-perf.test.ts",
+      "name": "T-E29-19-dressing-culling @E29-AC19 distant collapse placements leave the batch and return without losing authored transforms",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/render/l7-perf.test.ts",
+      "name": "T-E29-19-foot-probe @E29-AC19 partial foot probes match full rig probes during a blended pose",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/render/rocket-corpses.test.ts",
+      "name": "T-E29-19-corpses @E29-AC19 settled crowd bodies keep positions/colors/rig ownership with fewer triangles",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/combat/balance.test.ts",
+      "name": "S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash",
+      "status": "passed",
+      "failures": []
+    }
+  ]
+}

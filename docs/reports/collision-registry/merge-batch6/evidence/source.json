@@ -1,0 +1,15 @@
+{
+  "base": "8718d0fb1",
+  "incoming": "d6536bc6d",
+  "sha256": {
+    "src/sim/missions/LevelSevenDeparture.ts": "4a7b32e9b7f32c071c21caa91f3a6044df40ed3771d4ecafe04ad990ff0cd5e0",
+    "src/sim/world/SolidRegistry.ts": "d976b9d07ba1ed4307c4a95ac892987836d0dfc672c29c98ad26577336885b20",
+    "src/sim/ai/CharacterSeparation.ts": "c3af33b72870ff263b0addf793a6ba6b81fabdeb71c2187babaf8ba1642dfaa0",
+    "src/render/CrowdView.ts": "860f30ccda5673a9cb87c244d7822c1fc478a31fa5f3358dcb9100c58036291f",
+    "src/render/GameView.ts": "9e0e0c0751ea012153d1085ec586130ca0d9d06b331d2755caff977219a85765",
+    "package.json": "856a33b7dc51ca64ffd12dd932ddaf45a003f095890510dd55b4debecca56697",
+    "tests/scenes/l5-encounters/metro-ingress.json": "a50dc94c1120059c69557146fe7cb5b2fc28f268f919840795da367d9db85797",
+    "tests/sim/missions/l7-departure.test.ts": "84f568e87c4c523433f38d5ea6dc3112c9f9096a2e24e263e0f11048e471d309"
+  },
+  "diffFromIncomingSim": "diff --git a/src/sim/missions/LevelSevenDeparture.ts b/src/sim/missions/LevelSevenDeparture.ts\nindex 74bd0c29b..aa5696d3f 100644\n--- a/src/sim/missions/LevelSevenDeparture.ts\n+++ b/src/sim/missions/LevelSevenDeparture.ts\n@@ -148,6 +148,10 @@ export class LevelSevenDeparture {\n     tr.x = x; tr.z = cfg.lane.z; tr.yaw = 0; tr.y = w.districts!.groundHeight(x, cfg.lane.z) + .7;\n     const player = w.entities.get(1)!.transform;\n     Object.assign(player, { x, z: cfg.lane.z });\n+    // Keep the hidden passenger's physics pose with its bus: cleanup publishes\n+    // the player body after missions and would otherwise restore the boarding spot.\n+    w.physics.playerBody!.setTranslation(player, true);\n+    w.physics.playerBody!.setNextKinematicTranslation(player);\n     for (const e of w.entities.iterate()) if (e.companion && e.passengerOf === s.busId) Object.assign(e.transform, tr);\n     if (t >= 1) this.finish();\n   }\n"
+}
