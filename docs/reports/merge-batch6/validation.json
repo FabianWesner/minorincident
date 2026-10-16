@@ -1,0 +1,87 @@
+{
+  "base": "3883a1679",
+  "branch": "lane/merge-batch6",
+  "merges": [
+    "d3db6d381",
+    "04753927d"
+  ],
+  "typecheck": true,
+  "lint": true,
+  "build": true,
+  "unitLevelsInitial": {
+    "passed": 1854,
+    "failed": 1,
+    "skipped": 11
+  },
+  "unitSlowFilesIsolated": {
+    "passed": 19,
+    "failed": 0
+  },
+  "fullSimInitial": {
+    "passed": 1061,
+    "failed": 18
+  },
+  "simSharedRetry": {
+    "passed": 66,
+    "failed": 13
+  },
+  "simExclusiveRetry": {
+    "passed": 13,
+    "failed": 0
+  },
+  "all18InitialSimFailuresCleared": true,
+  "smoke": {
+    "nodePassed": 6,
+    "browserPassed": 31
+  },
+  "deployBrowser": {
+    "passed": 120,
+    "failed": 0
+  },
+  "deployMatrix": {
+    "passed": 650,
+    "failed": 0
+  },
+  "focusedAlphaInteriorMatrix": {
+    "passed": 96,
+    "failed": 0
+  },
+  "supplementalMegaWebGL2Matrix": {
+    "passed": 18,
+    "failed": 0
+  },
+  "megaWebGPUMatrixWithinDeployMatrix": {
+    "passed": 18,
+    "failed": 0
+  },
+  "targetedTelegraphBrowser": {
+    "passed": 9,
+    "failed": 0
+  },
+  "native": {
+    "mergedPassed": 9,
+    "mainControlPassed": 1,
+    "manualSkipped": 1,
+    "interiorAbPosesPassed": 8
+  },
+  "mainL4LowWorstHitchMs": 64.2,
+  "mergedL4LowWorstHitchMs": 65.6,
+  "hitchLimitMs": 80,
+  "baselineL6MobileFixture": {
+    "mainFailed": 2,
+    "mergedFailed": 2,
+    "skipped": 3,
+    "cause": "D-MAIN absent in L6; undefined origin before measurement",
+    "modified": false
+  },
+  "reservation": {
+    "quietPreflightUtc": "2026-10-16T04:07:43.258Z",
+    "gateStillHeldSlotsUtc": "2026-10-16T04:05:44Z",
+    "releasedByUtc": "2026-10-16T04:15:28Z",
+    "absoluteCutoffUtc": "2026-10-16T04:24:00Z",
+    "maximumPossibleHoldSeconds": 584,
+    "batches": 1
+  },
+  "deploymentPerformed": false,
+  "staticCollisionChanged": false
+}
