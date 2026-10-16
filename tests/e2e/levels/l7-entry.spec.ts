@@ -3,12 +3,34 @@ import { boot, expect, test } from '../fixtures';
 
 const webgpu = process.env.L7_ENTRY_WEBGPU === '1';
 if (webgpu) test.use({ launchOptions: { args: ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] } });
-for (const tier of ['high', 'low'] as const) for (const zoom of [1, .5]) test(`T-E29-16-browser @E29-AC16 ${tier} zoom ${zoom}: entry, real rocket pickup and checkpoint death`, async ({ page }) => {
+for (const tier of ['high', 'low'] as const) for (const zoom of [1, .5]) test(`T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 ${tier} zoom ${zoom}: entry, real rocket pickup and checkpoint death`, async ({ page }) => {
   test.setTimeout(180_000);
   const out = `test-results/l7-entry/${webgpu ? 'webgpu' : 'webgl2'}-${tier}-z${zoom}`;
   mkdirSync(out, { recursive: true });
   await boot(page, `/?test=1&ui=1&${webgpu ? '' : 'renderer=webgl&'}quality=${tier}&audio=muted&dpr=1`);
-  await page.evaluate(async () => { const a = window.__SS__!; await a.loadLevel('L7', { seed: 29 }); a.pause(); });
+  await page.evaluate(async () => {
+    const a = window.__SS__!;
+    await a.loadLevel('L6', { seed: 29, progression: 'L6-default' }); a.pause(); a.missions.begin();
+    // Fixture starts on the raised exit apron; the full shelter-to-exit input route retains its own acceptance test.
+    a.cheats.completeObjective('shelter'); a.cheats.completeObjective('stop'); a.cheats.completeObjective('retreat');
+    a.teleport(1, { x: 261, z: 15 });
+    a.missions.state()!.l6!.survivors.forEach((r, i) => a.teleport(r.id, { x: 266 + Math.floor(i / 3) * .8, z: 15 + (i % 3 - 1) * .8 }));
+    a.camera.cinematic({ position: [285, 32.9, 39], target: [261, 3.9, 15] }, true); await a.step(1);
+  });
+  await page.keyboard.down('s'); await page.keyboard.down('d'); await page.evaluate(() => window.__SS__!.step(100));
+  await page.keyboard.up('s'); await page.keyboard.up('d');
+  expect(await page.evaluate(() => window.__SS__!.missions.state()!.phase)).toBe('result');
+  const carried = await page.evaluate(() => {
+    const a = window.__SS__!, p = a.getEntity(1)!;
+    return { ids: a.missions.state()!.result!.escapedSurvivors!.map(e => e.id).sort((a,b) => a-b), weapons: [...p.weapons!.LEFT.rack, ...p.weapons!.RIGHT.rack].map(s => s.id).sort() };
+  });
+  await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: `${out}/l6-exit.png` });
+  await page.getByRole('button', { name: 'Continue', exact: true }).click();
+  await page.waitForFunction(() => window.__SS__!.getState().scenario === 'L7');
+  await page.evaluate(async () => { const a = window.__SS__!; await a.screenshotReady(); a.pause(); a.camera.follow(); });
+  const arrived = await page.evaluate(() => { const s = window.__SS__!.getState(); return { ids: s.l7!.roster.map(r => r.id).sort((a,b) => a-b), weapons: [...s.player!.weapons!.LEFT.rack, ...s.player!.weapons!.RIGHT.rack].map(s => s.id).sort() }; });
+  expect(arrived).toEqual(carried);
+
   expect(await page.evaluate(() => window.__SS__!.getState().render.backend)).toBe(webgpu ? 'webgpu' : 'webgl');
   expect(await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint)).toBe('night-exit');
   if (zoom === .5) { await page.mouse.move(800, 450); for (let i = 0; i < 5; i++) { await page.mouse.wheel(0, -120); await page.evaluate(() => window.__SS__!.step(1)); } await page.evaluate(() => window.__SS__!.step(30)); }
