@@ -18,7 +18,7 @@ export interface OutbreakSeam extends SnapshotSeam {
 }
 export interface L1Seams { bicycle?: SnapshotSeam; toys?: SnapshotSeam; outbreak?: OutbreakSeam }
 
-const names = ['bicycle', 'toys', 'outbreak', 'props', 'chunks', 'l7Encounters', 'l10Encounters', 'l8', 'l9', 'megaPursuit', 'mountedGun'] as const;
+const names = ['bicycle', 'toys', 'outbreak', 'props', 'chunks', 'l7Encounters', 'l7Departure', 'l10Encounters', 'l8', 'l9', 'megaPursuit', 'mountedGun'] as const;
 /** The real outbreak layer (lane D) is `world.npcs.civilians.outbreak`; its state is snapshot()/load(). */
 function resolve(world: SimWorld, name: typeof names[number]): SnapshotSeam | undefined {
   if (name === 'chunks') return world.chunks ?? undefined;
@@ -26,12 +26,13 @@ function resolve(world: SimWorld, name: typeof names[number]): SnapshotSeam | un
   if (name === 'l8') return world.missions?.l8 ?? undefined;
   if (name === 'l10Encounters') return world.l10Encounters ?? undefined;
   if (name === 'l7Encounters') return world.l7Encounters ?? undefined;
+  if (name === 'l7Departure') return world.l7Departure ?? undefined;
   if (name === 'megaPursuit') return world.megaPursuit ?? undefined;
   if (name === 'mountedGun') return world.mountedGun ?? undefined;
   if (name === 'props') return world.props ?? undefined;
   if (name === 'outbreak') { const o = world.npcs?.civilians.outbreak; return o ? { snapshot: () => o.snapshot(), restore: s => o.load(s as ReturnType<typeof o.snapshot>) } : undefined; }
   // Real lane objects (e.g. world.toys) without snapshot() are persisted through entities; only duck-typed seams count here.
-  const seam = l1Seams(world)[name as Exclude<typeof name, 'props' | 'chunks' | 'l7Encounters' | 'l10Encounters' | 'l8' | 'l9' | 'megaPursuit' | 'mountedGun'>];
+  const seam = l1Seams(world)[name as Exclude<typeof name, 'props' | 'chunks' | 'l7Encounters' | 'l7Departure' | 'l10Encounters' | 'l8' | 'l9' | 'megaPursuit' | 'mountedGun'>];
   return typeof seam?.snapshot === 'function' ? seam : undefined;
 }
 export function l1Seams(world: SimWorld): L1Seams { return world as unknown as L1Seams; }

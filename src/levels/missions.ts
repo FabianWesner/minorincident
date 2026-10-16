@@ -1,6 +1,7 @@
 import { levelTenMission } from './L10/mission';
 import { levelNineMission } from './L9/mission';
 import { levelEightMission } from './L8/mission';
+import { levelSevenMission } from './L7/mission';
 import { levelSixMission } from './L6/mission';
 import { levelFiveMission } from './L5/mission';
 import { levelFourMission } from './L4/mission';
@@ -11,7 +12,7 @@ import type { DistrictId } from './districts/types';
 import type { DistrictWorld } from '../sim/world/DistrictWorld';
 import type { Anchor, MissionDef, ObjectiveDef, ObjectiveType, Trigger } from '../sim/missions/types';
 
-export const missionIds = ['L1','L2','L3','L4','L5','L6','L8','L9','L10'] as const;
+export const missionIds = ['L1','L2','L3','L4','L5','L6','L7','L8','L9','L10'] as const;
 export type MissionId = typeof missionIds[number];
 /** Campaign graph authoring, distinct from encounter tuning and bots owned by E19–E24.
  * Coordinates come from loaded district GLB anchors; no duplicate placement coordinates. */
@@ -19,6 +20,7 @@ export function campaignMission(id: MissionId, resolve: (district: DistrictId, a
   if (id === 'L10') return levelTenMission(name => name === 'cure-crash' ? resolve('D-CROSSING', 'crawl-end') : undefined);
   if (id === 'L9') return levelNineMission(resolve);
   if (id === 'L8') return levelEightMission(resolve);
+  if (id === 'L7') return levelSevenMission(resolve);
   if (id === 'L6') return levelSixMission(resolve);
   if (id === 'L5') return levelFiveMission(resolve);
   if (id === 'L4') return levelFourMission(resolve);
