@@ -1,0 +1,543 @@
+{
+ "name": "inf-horde-headwear",
+ "note": "Spec audit 10-16 E07-AC13: dense undressed regular infected (inf.* models via CrowdView; sprinters skip the L1 civilian dressing) at golden hour. Headwear must sit on the skull at the reference civilian's proportions, no hats swallowing face and shoulders.",
+ "ground": "asphalt",
+ "size": 30,
+ "time": "golden",
+ "actors": [
+  {
+   "id": "courier",
+   "kind": "courier",
+   "at": [
+    0,
+    6
+   ],
+   "loadout": [
+    "weapon.bat",
+    "weapon.fists"
+   ]
+  },
+  {
+   "id": "z00",
+   "kind": "infected",
+   "at": [
+    -2.3,
+    -4.0
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "z01",
+   "kind": "infected",
+   "at": [
+    -1.4,
+    -4.0
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.jogger"
+   }
+  },
+  {
+   "id": "z02",
+   "kind": "infected",
+   "at": [
+    -0.5,
+    -4.0
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.cashier"
+   }
+  },
+  {
+   "id": "z03",
+   "kind": "infected",
+   "at": [
+    0.4,
+    -4.0
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.delivery-driver"
+   }
+  },
+  {
+   "id": "z04",
+   "kind": "infected",
+   "at": [
+    1.3,
+    -4.0
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.suburban-mom"
+   }
+  },
+  {
+   "id": "z05",
+   "kind": "infected",
+   "at": [
+    2.2,
+    -4.0
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.bbq-dad"
+   }
+  },
+  {
+   "id": "z06",
+   "kind": "infected",
+   "at": [
+    -2.3,
+    -2.8
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.bathrobe-neighbor"
+   }
+  },
+  {
+   "id": "z07",
+   "kind": "infected",
+   "at": [
+    -1.4,
+    -2.8
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "z08",
+   "kind": "infected",
+   "at": [
+    -0.5,
+    -2.8
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.jogger"
+   }
+  },
+  {
+   "id": "z09",
+   "kind": "infected",
+   "at": [
+    0.4,
+    -2.8
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.cashier"
+   }
+  },
+  {
+   "id": "z10",
+   "kind": "infected",
+   "at": [
+    1.3,
+    -2.8
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.delivery-driver"
+   }
+  },
+  {
+   "id": "z11",
+   "kind": "infected",
+   "at": [
+    2.2,
+    -2.8
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.suburban-mom"
+   }
+  },
+  {
+   "id": "z12",
+   "kind": "infected",
+   "at": [
+    -2.3,
+    -1.6
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.bbq-dad"
+   }
+  },
+  {
+   "id": "z13",
+   "kind": "infected",
+   "at": [
+    -1.4,
+    -1.6
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.bathrobe-neighbor"
+   }
+  },
+  {
+   "id": "z14",
+   "kind": "infected",
+   "at": [
+    -0.5,
+    -1.6
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "z15",
+   "kind": "infected",
+   "at": [
+    0.4,
+    -1.6
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.jogger"
+   }
+  },
+  {
+   "id": "z16",
+   "kind": "infected",
+   "at": [
+    1.3,
+    -1.6
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.cashier"
+   }
+  },
+  {
+   "id": "z17",
+   "kind": "infected",
+   "at": [
+    2.2,
+    -1.6
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.delivery-driver"
+   }
+  },
+  {
+   "id": "z18",
+   "kind": "infected",
+   "at": [
+    -2.3,
+    -0.4
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.suburban-mom"
+   }
+  },
+  {
+   "id": "z19",
+   "kind": "infected",
+   "at": [
+    -1.4,
+    -0.4
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.bbq-dad"
+   }
+  },
+  {
+   "id": "z20",
+   "kind": "infected",
+   "at": [
+    -0.5,
+    -0.4
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.bathrobe-neighbor"
+   }
+  },
+  {
+   "id": "z21",
+   "kind": "infected",
+   "at": [
+    0.4,
+    -0.4
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "z22",
+   "kind": "infected",
+   "at": [
+    1.3,
+    -0.4
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.jogger"
+   }
+  },
+  {
+   "id": "z23",
+   "kind": "infected",
+   "at": [
+    2.2,
+    -0.4
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.cashier"
+   }
+  },
+  {
+   "id": "z24",
+   "kind": "infected",
+   "at": [
+    -2.3,
+    0.8
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.delivery-driver"
+   }
+  },
+  {
+   "id": "z25",
+   "kind": "infected",
+   "at": [
+    -1.4,
+    0.8
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.suburban-mom"
+   }
+  },
+  {
+   "id": "z26",
+   "kind": "infected",
+   "at": [
+    -0.5,
+    0.8
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.bbq-dad"
+   }
+  },
+  {
+   "id": "z27",
+   "kind": "infected",
+   "at": [
+    0.4,
+    0.8
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.bathrobe-neighbor"
+   }
+  },
+  {
+   "id": "z28",
+   "kind": "infected",
+   "at": [
+    1.3,
+    0.8
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  },
+  {
+   "id": "z29",
+   "kind": "infected",
+   "at": [
+    2.2,
+    0.8
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.jogger"
+   }
+  },
+  {
+   "id": "z30",
+   "kind": "infected",
+   "at": [
+    -2.3,
+    2.0
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.cashier"
+   }
+  },
+  {
+   "id": "z31",
+   "kind": "infected",
+   "at": [
+    -1.4,
+    2.0
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.delivery-driver"
+   }
+  },
+  {
+   "id": "z32",
+   "kind": "infected",
+   "at": [
+    -0.5,
+    2.0
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.suburban-mom"
+   }
+  },
+  {
+   "id": "z33",
+   "kind": "infected",
+   "at": [
+    0.4,
+    2.0
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.bbq-dad"
+   }
+  },
+  {
+   "id": "z34",
+   "kind": "infected",
+   "at": [
+    1.3,
+    2.0
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.bathrobe-neighbor"
+   }
+  },
+  {
+   "id": "z35",
+   "kind": "infected",
+   "at": [
+    2.2,
+    2.0
+   ],
+   "yaw": -45,
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
+  }
+ ],
+ "camera": {
+  "mode": "game",
+  "target": [
+   0,
+   0.9,
+   0
+  ],
+  "zoom": 1
+ },
+ "frames": 40,
+ "shots": [
+  30
+ ],
+ "expect": {
+  "consoleErrors": 0,
+  "undrawnFramesMax": 0
+ },
+ "infectedCap": 80
+}
