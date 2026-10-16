@@ -65,7 +65,11 @@ swatches.push({ name: 'headHair', color: new Color('#57301f') }, { name: 'headHa
 /** Also annotates shipped prebuilt civilian bakes, whose material names were folded into vertex colours.
  * Skin/eye/garment flags win over matching colours, keeping lips, pupils and story uniforms intact. */
 export function markCrowdAppearance(geometry: BufferGeometry, ordinaryInfected = false): void {
-  const parts = geometry.getAttribute('_parts'), color = geometry.getAttribute('color');
+  const parts = geometry.getAttribute('_parts'), color = geometry.getAttribute('color'), position = geometry.getAttribute('position');
+  // Ordinary infected: the glowing eyes bound the face; any surface clearly above them belongs to hair or headwear.
+  let eyeTop = -Infinity;
+  if (ordinaryInfected) for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getZ(i) > 0) eyeTop = Math.max(eyeTop, position.getY(i));
+  if (eyeTop === -Infinity) eyeTop = Infinity;
   for (let i = 0; i < parts.count; i++) {
     if (parts.getY(i) !== 0 || parts.getZ(i) > 0) continue;
     if (parts.getX(i) === characterNodes.indexOf('head') && headwearColors.some(c => Math.abs(c.r-color.getX(i)) < .003 && Math.abs(c.g-color.getY(i)) < .003 && Math.abs(c.b-color.getZ(i)) < .003)) parts.setW(i, parts.getW(i) % 4 + 4);
@@ -78,6 +82,11 @@ export function markCrowdAppearance(geometry: BufferGeometry, ordinaryInfected =
     if (['hip', 'legL', 'legR', 'shinL', 'shinR'].includes(part) && (same('picketWhite') || same('sidewalk') || ordinaryInfected && (same('asphalt') || same('uiDark')))) parts.setY(i, -3);
     else if (ordinaryInfected && part === 'head' && same('uiDark') && geometry.getAttribute('position').getY(i) > .08) parts.setY(i, -2);
     else if (ordinaryInfected && ['torso', 'armL', 'armR', 'foreArmL', 'foreArmR'].includes(part) && (same('picketWhite') || same('survivorRed') || same('woodWarm') || same('cardiganRose') || same('policeBlue'))) parts.setY(i, 1);
+    // Spec audit 10-16 (E07-AC13): ordinary infected exports tint their own hair and caps per model (woodWarm/
+    // policeBlue/teal/... in model-specific shades), so no token matched them and they poked through every shared
+    // hat or hair piece as jagged multicoloured patches. Every remaining head surface except the face tokens
+    // (teeth/eye whites, blood, mouth, pupils/brows) is own headwear: hidden whenever an accessory covers the head.
+    else if (ordinaryInfected && part === 'head' && (position.getY(i) > eyeTop + .06 || !same('picketWhite') && !same('blood') && !same('survivorRed') && !same('uiDark'))) parts.setW(i, parts.getW(i) % 4 + 4);
   }
 }
 /** Count unique GPU buffers and attribute locations (an interleaved matrix is one buffer/four locations).
