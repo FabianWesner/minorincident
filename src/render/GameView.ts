@@ -82,6 +82,7 @@ export class GameView implements Lifecycle {
   private storyFraming = false;
   private l5StationView = false;
   private l3AttackScale = 1;
+  private courierForeground = false;
   /** Scene Lab courier-visibility probe: hide the courier and/or every crowd figure (including the Mega) for one screenshot. */
   private readonly revealSubject = new Box3();
   private readonly revealVehicle = new Box3();
@@ -697,7 +698,7 @@ export class GameView implements Lifecycle {
   /** Distance (m) from a point to the nearest living Mega Alpha (pursuit infected), Infinity when none. */
   private megaDistance(at: { x: number; z: number }): number {
     let best = Infinity;
-    for (const e of this.world.entities.iterate()) if (e.infected?.pursuit && !e.hidden && e.health.current > 0) best = Math.min(best, Math.hypot(e.transform.x - at.x, e.transform.z - at.z));
+    for (const e of this.world.entities.iterate()) if (e.infected?.pursuit && !e.hidden && !e.infected.hidden && e.health.current > 0) best = Math.min(best, Math.hypot(e.transform.x - at.x, e.transform.z - at.z));
     return best;
   }
   /** Scene Lab: hide the courier / the crowd (Mega included) and redraw, for the courier-visible-share probe. */
@@ -874,6 +875,8 @@ export class GameView implements Lifecycle {
       seeThrough.strength.value = subject ? 1 : 0;
       if (subject) projectReveal(this.camera, subject); else seeThrough.center.value.set(-10, -10);
     }
+    this.courierForeground = !!current && this.megaDistance(current) < 14;
+    this.character?.setForeground(this.courierForeground);
     this.healthBars?.update(this.camera, this.view.viewportHeight * this.camera.aspect, this.view.viewportHeight, this.barOccluded);
     if (this.world.missions?.state.l3) {
       const at = this.world.missions.state.l3.barrierClosedAt;
@@ -944,7 +947,7 @@ export class GameView implements Lifecycle {
             child.material = this.foliageIdMasks.get(source)!;
           } else child.material = hero ? this.idPlayer : this.idBackground; }
       });
-      this.idPlayer.depthTest = !this.occlusion.getState().some((building) => building.blocked);
+      this.idPlayer.depthTest = !this.courierForeground && !this.occlusion.getState().some((building) => building.blocked);
       this.renderer.render(this.scene, this.camera);
       for (const [mesh, material] of this.savedMaterials) mesh.material = material;
       this.savedMaterials.clear(); this.scene.background = background; this.scene.backgroundNode = backgroundNode; this.scene.fog = fog; this.renderer.shadowMap.enabled = shadow;

@@ -1252,7 +1252,7 @@ export class SceneLab {
       }
       if (e && actor.kind === 'infected') this.samplePursuit(actor, e);
       sim[actor.kind] = (sim[actor.kind] ?? 0) + (e && !e.hidden && e.health.current > 0 ? 1 : 0);
-      let feet: FootSample[] = [], joints: Record<string, number[]> | null = null, forward: number[] = [1, 0, 0], lod = 'lod0', visible = false, clipName: string | undefined, label: string | undefined;
+      let feet: FootSample[] = [], joints: Record<string, number[]> | null = null, forward: number[] = [1, 0, 0], lod = 'lod0', visible = false, clipName: string | undefined, label: string | undefined, soleLowestY: number | undefined;
       if (actor.kind === 'courier') {
         const c = probes.character; visible = !!c?.visible;
         const node = (name: Parameters<NonNullable<typeof c>['node']>[0]) => c?.node(name);
@@ -1270,7 +1270,7 @@ export class SceneLab {
       } else if (actor.kind === 'corgi' || actor.kind === 'animal' && !!e?.civilian?.pet) {
         const root = probes.npcs?.heroRoot(actor.entity); visible = !!root?.visible; label = probes.npcs?.heroClip(actor.entity);
         if (root) {
-          root.updateMatrixWorld(true); feet = ['legFL', 'legFR', 'legBL', 'legBR'].flatMap(n => { const leg = root.getObjectByName(n); if (!leg) return []; const paw = this.paw(leg); return [{ heel: paw, toe: paw, yaw: 0 }]; });
+          root.updateMatrixWorld(true); feet = ['legFL', 'legFR', 'legBL', 'legBR'].flatMap(n => { const leg = root.getObjectByName(n); if (!leg) return []; const paw = this.paw(leg); soleLowestY = Math.min(soleLowestY ?? Infinity, this.pawSole(leg)); return [{ heel: paw, toe: paw, yaw: 0 }]; });
           // The loaded corgi's trunk and head capsules, including the muzzle; compare with the courier's legs too.
           const body = root.getObjectByName('body'), head = root.getObjectByName('head');
           if (visible && body && head) {
@@ -1301,7 +1301,7 @@ export class SceneLab {
       if (visible && e && lod === 'lod2' && this.game.view.camera.position.distanceTo(this.point.set(e.transform.x, e.transform.y, e.transform.z)) < closeLodM) actor.farClose++;
       const shoulders = joints?.armL && joints.armR ? joints.armL.map((v, k) => (v + joints!.armR[k]) / 2) : undefined;
       const motion = e?.motion?.speed ?? Math.hypot(e?.survivor?.velocity?.x ?? 0, e?.survivor?.velocity?.z ?? 0);
-      actor.track.push({ frame: this.frame, ...(this.spec?.trace && visible && figures.get(actor.entity)?.appearance ? { appearance: figures.get(actor.entity)!.appearance, corpse: !!e?.corpse } : {}), floor: e ? this.world.districts?.pavingHeight(e.transform.x, e.transform.z) ?? 0 : undefined, clip: clipName ?? (e?.civilian?.state === 'calm' && e.civilian.schedule?.[e.civilian.scheduleStep ?? 0]?.activity === 'sit' && e.civilian.activityUntil ? 'sit' : undefined), feet, speed: motion, ...(label ? { label } : {}), ...(this.spec?.trace && e ? { at: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)] } : {}), torsoPitchDeg: joints?.hip && shoulders ? torsoPitch(joints.hip, shoulders, forward) : undefined });
+      actor.track.push({ frame: this.frame, ...(this.spec?.trace && visible && figures.get(actor.entity)?.appearance ? { appearance: figures.get(actor.entity)!.appearance, corpse: !!e?.corpse } : {}), floor: e ? this.world.districts?.pavingHeight(e.transform.x, e.transform.z) ?? 0 : undefined, clip: clipName ?? (e?.civilian?.state === 'calm' && e.civilian.schedule?.[e.civilian.scheduleStep ?? 0]?.activity === 'sit' && e.civilian.activityUntil ? 'sit' : undefined), feet, ...(soleLowestY === undefined ? {} : { soleLowestY }), speed: motion, ...(label ? { label } : {}), ...(this.spec?.trace && e ? { at: [+e.transform.x.toFixed(3), +e.transform.z.toFixed(3)] } : {}), torsoPitchDeg: joints?.hip && shoulders ? torsoPitch(joints.hip, shoulders, forward) : undefined });
       if (this.frame % 3 === 0 && joints?.hip && joints.head && shoulders && visible && e && e.health.current > 0 && !(clipName && unplantedClips.test(clipName))) {
         if (e.infected && e.attachedTo === undefined) attackerArms.push({ id: actor.id, bones: this.bones(joints, shoulders).filter(b => b.name.startsWith('foreArm')) });
         // Torso, neck and the (chibi) head above its pivot: body-vs-body contact between actors (crowding, melee rings).
@@ -1484,18 +1484,21 @@ export class SceneLab {
     return found;
   }
   private readonly paws = new WeakMap<Object3D, Vector3>();
-  /** Keep the horizontal contact anchor for slide, but measure sink/lift at the drawn sole. */
+  /** Fixed contact anchor used by the existing slide rule. Mesh depth is measured separately. */
   private paw(leg: Object3D): number[] {
     let local = this.paws.get(leg);
     if (!local) { const bounds = new Box3(); leg.traverse(n => { if (n instanceof Mesh) bounds.expandByObject(n); }); const p = bounds.getCenter(new Vector3()); p.y = bounds.min.y; local = leg.worldToLocal(p); this.paws.set(leg, local); }
-    const paw = leg.localToWorld(local.clone()), vertex = new Vector3(); let bottom = Infinity;
+    return leg.localToWorld(local.clone()).toArray();
+  }
+  /** The lowest drawn vertex can differ from the contact anchor as the rigid leg rotates. */
+  private pawSole(leg: Object3D): number {
+    const vertex = new Vector3(); let bottom = Infinity;
     leg.traverse(n => {
       if (!(n instanceof Mesh)) return;
       const positions = n.geometry.attributes.position, indices = n.geometry.index;
       for (let i = 0; i < (indices?.count ?? positions.count); i++) bottom = Math.min(bottom, vertex.fromBufferAttribute(positions, indices ? indices.getX(i) : i).applyMatrix4(n.matrixWorld).y);
     });
-    paw.y = bottom;
-    return paw.toArray();
+    return bottom;
   }
   private bones(j: Record<string, number[]>, shoulders?: number[]): Bone[] {
     const list: [string, string | number[] | undefined, string | number[] | undefined, number][] = [

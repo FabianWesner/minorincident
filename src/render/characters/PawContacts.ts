@@ -75,8 +75,9 @@ export class PawContacts {
       // brushed the floor for ~4 frames there, dragging the paw 25-40 cm per step at body speed, QA "paw slide").
       // Keep the swinging paw above the floor, ramping in after lift-off and out before touchdown; in stance the
       // floor itself is the limit (the authored gallop can dip a paw under it).
+      // Keep swing clearance until touchdown; lowering early drags the drawn toe.
       const swing = p > stance ? (p - stance) / Math.max(.001, 1 - stance) : 0;
-      const clearance = swing > 0 ? swingLift * Math.min(1, Math.max(.4, swing / .1), (1 - swing) / .12) : 0;
+      const clearance = swing > 0 ? swingLift * Math.min(1, Math.max(.4, swing / .1)) : 0;
       // Rotation changes which sole vertex is lowest. The bind-pose centre can
       // stay above the floor while the drawn toe penetrates it by several cm.
       let bottom = Infinity;
@@ -123,6 +124,16 @@ export class PawContacts {
       foot.correction.copy(target).sub(this.offset.copy(foot.paw).multiply(foot.leg.scale).applyQuaternion(foot.leg.quaternion)).sub(foot.leg.position);
       foot.release.copy(foot.correction);
       foot.leg.position.add(foot.correction); foot.leg.updateWorldMatrix(false, true);
+      if (!grounded) {
+        let bottom = Infinity;
+        for (const vertex of foot.vertices) bottom = Math.min(bottom, this.offset.copy(vertex).applyMatrix4(foot.leg.matrixWorld).y);
+        const dip = sole + (foot.step >= 0 ? arc(foot.step) : 0) - bottom;
+        if (dip > 0) {
+          const parent = foot.leg.parent!, low = parent.worldToLocal(this.point.copy(foot.paw).applyMatrix4(foot.leg.matrixWorld).clone());
+          const high = parent.worldToLocal(this.point.clone().setY(this.point.y + dip)).sub(low);
+          foot.leg.position.add(high); foot.correction.add(high); foot.leg.updateWorldMatrix(false, true);
+        }
+      }
       (foot.last ??= new Vector3()).copy(foot.paw).applyMatrix4(foot.leg.matrixWorld);
     }
   }
