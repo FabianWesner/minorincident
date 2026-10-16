@@ -48,6 +48,8 @@ export class View {
   /** Finale widening multiplies player zoom without locking wheel/pinch or follow input. */
   epilogueScale = 1;
   driving = false;
+  /** Scripted convoy overview keeps its lens distance as facades pass the bus. */
+  convoy = false;
   cameraShake = true;
   spot: string | null = null;
   private readonly target = new Vector3();
@@ -158,7 +160,7 @@ export class View {
     // Elevated decks/ramps: follow the feet height (transform.y is the body centre, .72 m above the feet), damped so stairs do not jitter.
     this.focus.y += (Math.max(0, (player.y ?? feetOffset) - feetOffset) - this.focus.y) * (1 - Math.exp(-6 * seconds));
     this.offset.setFromSphericalCoords(this.radius * (this.driving ? 1.15 : 1), this.polar, this.azimuth);
-    if (!this.blendTarget && !this.scripted) this.clearLens(seconds);
+    if (!this.blendTarget && !this.scripted && !this.convoy) this.clearLens(seconds);
     const weight = this.pullWeight > 0 ? this.safePullWeight(this.pullWeight) : 0;
     const pulled = weight > 0 ? this.cameraTarget.set(this.focus.x + (this.pullX - this.focus.x) * weight, this.focus.y + ((this.pullY ?? this.focus.y) - this.focus.y) * weight, this.focus.z + (this.pullZ - this.focus.z) * weight) : this.cameraTarget.copy(this.focus);
     this.camera.position.copy(pulled).add(this.offset); this.camera.lookAt(pulled);
