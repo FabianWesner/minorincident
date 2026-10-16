@@ -1,0 +1,43 @@
+{
+  "high": {
+    "timing": {
+      "frameP95": 6.299999999999272,
+      "simP95": 1,
+      "simSamples": 453,
+      "draws": 68,
+      "triangles": 1178346,
+      "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+    },
+    "retainedHeapBytes": 110300540
+  },
+  "low": {
+    "timing": {
+      "frameP95": 4.599999999998545,
+      "simP95": 0.8000001907348633,
+      "simSamples": 465,
+      "draws": 50,
+      "triangles": 220942,
+      "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+    },
+    "retainedHeapBytes": 75645784
+  },
+  "remote": {
+    "alphaPhysical200": {
+      "count": 200,
+      "alphas": 40,
+      "minInfected": 200,
+      "activations": 156,
+      "cap": 200,
+      "ticks": 600,
+      "simMsP95": 2.270011999993585,
+      "budgetMs": 4
+    },
+    "zoo200": {
+      "count": 200,
+      "zoo": 20,
+      "activations": 55,
+      "simMsP95": 3.1309689999907278,
+      "budgetMs": 4
+    }
+  }
+}

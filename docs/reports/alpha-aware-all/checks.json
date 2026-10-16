@@ -1,0 +1,91 @@
+{
+  "sourceCommit": "4b7c945718a1b8984bf3d3bae857ce10881fa8ef",
+  "qaClean": false,
+  "vitest": {
+    "final-focused": {
+      "numPassedTests": 135,
+      "numFailedTests": 0,
+      "numPendingTests": 0
+    },
+    "final-regressions": {
+      "numPassedTests": 44,
+      "numFailedTests": 0,
+      "numPendingTests": 0
+    },
+    "final-campaign": {
+      "numPassedTests": 9,
+      "numFailedTests": 0,
+      "numPendingTests": 0
+    },
+    "final-l4-telegraphs": {
+      "numPassedTests": 1,
+      "numFailedTests": 1,
+      "numPendingTests": 33
+    },
+    "baseline-l4-tank": {
+      "numPassedTests": 1,
+      "numFailedTests": 0,
+      "numPendingTests": 22
+    }
+  },
+  "browser": {
+    "startTime": "2026-10-16T12:25:45.740Z",
+    "duration": 772231.952,
+    "expected": 103,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "sceneMatrix": {
+    "passed": 36,
+    "failed": 0,
+    "backends": [
+      "webgl",
+      "webgpu"
+    ],
+    "tiers": [
+      "high",
+      "low"
+    ],
+    "zooms": [
+      0.5,
+      1,
+      1.5
+    ]
+  },
+  "nativePerf": {
+    "passed": 4,
+    "failed": 0,
+    "reservationSeconds": 40
+  },
+  "bots": {
+    "runs": 20,
+    "completed": 20,
+    "deaths": 0
+  },
+  "initialBulk": {
+    "unit": {
+      "files": 268,
+      "tests": 1546,
+      "failed": 0,
+      "skipped": 9
+    },
+    "sim": {
+      "files": 146,
+      "tests": 1113,
+      "failed": 7,
+      "skipped": 0
+    },
+    "levels": {
+      "files": 56,
+      "tests": 318,
+      "failed": 1,
+      "skipped": 2
+    }
+  },
+  "initialBulkExitCode": 130,
+  "unresolved": [
+    "T-E22-11 tank gap 12.8166667 s > unchanged 12.8 s limit (baseline passes)",
+    "T-E22-18 browser travel helper fails twice after 10 deaths; 103/104 browser checks pass"
+  ]
+}

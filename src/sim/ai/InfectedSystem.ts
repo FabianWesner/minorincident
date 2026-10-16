@@ -117,9 +117,12 @@ export class InfectedSystem {
         if (target.infected.special === 'pin' && target.infected.grabHits >= 2) this.releasePin(target);
       }
     });
+    world.events.on('ally.attack', event => {
+      if (event.type === 'ally.attack' && event.from) this.hearing.shot(event.sourceId);
+    });
     world.events.on('combat.attack', (event) => {
       if (event.type !== 'combat.attack' || event.sourceId !== 1) return;
-      if (world.scenario === 'L5' && (actionCatalog[event.actionId] ?? mountedActions[event.actionId])?.category === 'ranged') this.hearing.shot();
+      if ((actionCatalog[event.actionId] ?? mountedActions[event.actionId])?.category === 'ranged') this.hearing.shot();
       for (const e of this.active) if (e.infected!.grabUntil > world.tick) {
         if (e.infected!.special === 'cling') e.infected!.grabUntil = 0;
         else if (e.infected!.special === 'pin' && ++e.infected!.grabHits >= 2) this.releasePin(e);
@@ -155,7 +158,7 @@ export class InfectedSystem {
     if (l3Human) this.l3HumanSpawns++;
     entity.locomotion = motionResponse(); delete entity.motion;
     delete entity.infected!.investigate; delete entity.infected!.model; delete entity.infected!.birdDeadMask; delete entity.infectionRise; delete entity.appearance; delete entity.noiseTarget; delete entity.attachedTo; delete entity.hidden; delete entity.corpse;
-    delete entity.infected!.roar; delete entity.corpseThrown; delete entity.infected!.pursuit; delete entity.infected!.megaStaggerReady; delete entity.infected!.megaRocketIds;
+    delete entity.infected!.roar; delete entity.corpseThrown; delete entity.infected!.pursuit; delete entity.infected!.megaStaggerReady; delete entity.infected!.megaRocketIds; delete entity.infected!.proximityNotice;
     delete entity.infected!.cureRegion; delete entity.infected!.territory; delete entity.infected!.vault; delete entity.infected!.specialAttack; delete entity.infected!.specialCooldowns; delete entity.infected!.specialRecoveryUntil;
     entity.archetype = id; entity.health.current = entity.health.max = def.hp * INFECTED_TOUGHNESS;
     Object.assign(entity.transform, position); entity.transform.y = perch?.y ?? .7 + (this.world.districts?.pavingHeight(position.x, position.z) ?? 0); entity.transform.yaw = opts.yaw ?? 0;
@@ -224,6 +227,25 @@ export class InfectedSystem {
         e.combat!.attacking = false; b.grabUntil = 0; b.state = 'chase';
         this.seek(e, courier.transform); this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
       }
+      // PO 10-16: Mega notices nearby humans too, while its E32 global target stays the courier.
+      if (b.pursuit && !b.specialAttack && b.state !== 'attack' && b.state !== 'stagger' && b.grabUntil <= this.world.tick && this.world.tick >= (b.specialRecoveryUntil ?? 0) && !Status.stunned(e, this.world.tick)) {
+        const heard = this.hearing.closestHeard(e);
+        if (!heard) delete b.proximityNotice;
+        else {
+          if (!b.proximityNotice) {
+            b.proximityNotice = { id: heard.id, until: this.world.tick + 36 };
+            this.world.events.emit({ type: 'ai.alerted', tick: this.world.tick, sourceId: heard.id, targetId: e.id, cause: 'hearing', position: { ...e.transform } });
+            this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: this.nextAttackId(), special: 'alpha.roar', duration: .6 });
+          }
+          if (heard.id !== 1 && this.world.tick < b.proximityNotice.until) {
+            const yaw = -Math.atan2(heard.position.z - e.transform.z, heard.position.x - e.transform.x);
+            const delta = Math.atan2(Math.sin(yaw - e.transform.yaw), Math.cos(yaw - e.transform.yaw));
+            e.transform.yaw += Math.max(-hearingTurnRadS / 60, Math.min(hearingTurnRadS / 60, delta));
+            if (e.locomotion) resetResponse(e.locomotion);
+            e.combat!.attacking = false; continue;
+          }
+        }
+      }
       // E32 Mega Alpha: global pursuit owns its movement; close range and recovery hand the tick to the Alpha brain below.
       if (b.pursuit && this.world.megaPursuit?.drive(e)) continue;
       if (this.world.barricades?.vault(e)) continue;
@@ -242,21 +264,24 @@ export class InfectedSystem {
         if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - b.scripted.x, e.transform.z - b.scripted.z) > .6) this.seek(e, b.scripted);
         e.combat!.attacking = false; this.world.spatial.set(e.id, e.transform.x, e.transform.z); continue;
       }
-      if ((this.world.scenario === 'L4' || this.world.scenario === 'L5') && e.archetype === 'infected.alpha' && !b.specialAttack && !b.pursuit) {
-        const seen = this.hearing.closest(e, b.heardTargetId ?? 0);
+      if (e.archetype === 'infected.alpha' && !b.specialAttack && !b.pursuit) {
+        const authoredSight = this.world.scenario === 'L4' || this.world.scenario === 'L5';
+        const seen = authoredSight ? this.hearing.closest(e, b.heardTargetId ?? 0) : this.hearing.closestHeard(e);
         if (seen) {
+          const newHeard = this.world.scenario !== 'L5' && (b.heardTargetId || (b.state === 'chase' ? 1 : 0)) !== seen.id && !this.hearing.sees(e, seen.position);
           delete b.investigate; b.heardTargetId = seen.id;
           if (b.state === 'attracted') b.state = 'idle';
-          if (b.state === 'idle' || b.state === 'wander') {
-            const heard = this.world.scenario === 'L5' && !this.hearing.sees(e, seen.position);
+          if (b.state === 'idle' || b.state === 'wander' || newHeard && b.state === 'chase') {
+            const heard = !this.hearing.sees(e, seen.position);
             this.alert(e);
+            if (newHeard) b.state = 'alerted';
             if (heard) {
               b.until = this.world.tick + 36;
               this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: this.nextAttackId(), special: 'alpha.roar', duration: .6 });
             }
             this.world.events.emit({ type: 'ai.alerted', tick: this.world.tick, sourceId: seen.id, targetId: e.id, cause: heard ? 'hearing' : 'sight', position: { ...e.transform } });
           }
-        } else {
+        } else if (authoredSight) {
           b.heardTargetId = 0; e.combat!.attacking = false;
           if (b.investigate && this.world.tick < b.until) {
             if (!Status.stunned(e, this.world.tick) && Math.hypot(e.transform.x - b.investigate.x, e.transform.z - b.investigate.z) > 1.5) this.seek(e, b.investigate);
@@ -306,8 +331,8 @@ export class InfectedSystem {
       if (!smoked && (b.state === 'idle' || b.state === 'wander') && !Status.stunned(e, this.world.tick) && !e.emerging) {
         const heard = this.hearing.closestHeard(e);
         if (heard && !(heard.id === 1 && this.seesPlayer(e, player))) {
-          b.heardTargetId = heard.id; b.state = 'alerted'; b.until = this.world.tick + (e.archetype === 'infected.alpha' && this.world.scenario === 'L5' ? 36 : hearingReactionTicks);
-          if (e.archetype === 'infected.alpha' && this.world.scenario === 'L5') this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: this.nextAttackId(), special: 'alpha.roar', duration: .6 });
+          b.heardTargetId = heard.id; b.state = 'alerted'; b.until = this.world.tick + (e.archetype === 'infected.alpha' ? 36 : hearingReactionTicks);
+          if (e.archetype === 'infected.alpha') this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: this.nextAttackId(), special: 'alpha.roar', duration: .6 });
           this.world.events.emit({ type: 'ai.alerted', tick: this.world.tick, sourceId: heard.id, targetId: e.id, cause: 'hearing', position: { ...e.transform } });
         }
       }
@@ -1042,6 +1067,7 @@ export class InfectedSystem {
   /** Rebase serialized timers when a checkpoint is restored at a later world tick. */
   restoreSpecialTimers(b: InfectedState, delta: number): void {
     this.sequence = Math.max(this.sequence, b.attackId, b.specialAttack?.attackId ?? 0, b.roar?.attackId ?? 0);
+    if (b.proximityNotice) b.proximityNotice.until += delta;
     if (b.megaStaggerReady !== undefined) b.megaStaggerReady += delta;
     if (b.specialAttack?.grabReleaseTick !== undefined) b.specialAttack.grabReleaseTick += delta;
     if (b.roar) { b.roar.until += delta; if (b.roar.speedUntil !== undefined) b.roar.speedUntil += delta; }

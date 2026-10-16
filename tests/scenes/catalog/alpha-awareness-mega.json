@@ -1,0 +1,63 @@
+{
+  "name": "alpha-awareness-mega",
+  "note": "PO 10-16: Mega notices a nearby human behind it, turns/roars for 0.6 s, then resumes global pursuit of the far courier. Inspect the human-facing cue and retained E32 courier route target on both tiers/zooms/backends.",
+  "seed": 1,
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L4",
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -16,
+        0
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "companion",
+      "kind": "pedestrian",
+      "at": [
+        -3.8,
+        0
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -1,
+      2,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 54,
+  "sheet": 6,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "megaAlpha": {
+    "id": "mega",
+    "at": [
+      0,
+      0
+    ]
+  },
+  "script": [
+    {
+      "frame": 0,
+      "actor": "mega",
+      "do": {
+        "turn": 0
+      }
+    }
+  ]
+}
