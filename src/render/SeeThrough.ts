@@ -67,5 +67,8 @@ export function projectReveal(camera: Camera & { aspect: number }, box: Box3): v
   }
   seeThrough.center.value.set((left + right) / 2, (top + bottom) / 2);
   seeThrough.solidRadius.value = Math.hypot((right - left) * camera.aspect, bottom - top) / 2 / .85;
+  // Both clear inner discs enclose the same presented subject. A fixed world
+  // radius erased the entire contact-range boss at some camera distances.
+  seeThrough.bossRadius.value = seeThrough.solidRadius.value * .85 / .6;
   seeThrough.depth.value = depth - .05;
 }

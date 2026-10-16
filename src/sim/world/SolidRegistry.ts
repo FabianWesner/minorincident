@@ -16,8 +16,12 @@ const tolerance = .02, skin = .001;
 export function actorRadius(e: EntitySnapshot): number {
   return e.survivor ? survivor.radius : e.combat?.radius ?? .35;
 }
-function actor(e: EntitySnapshot): boolean {
-  return !!(e.survivor || e.infected || e.civilian || e.companion || e.escort) && e.health.current > 0 && e.civilian?.state !== 'finished' && !e.corpse && !e.hidden && !e.infected?.hidden && !e.pendingAdmission && e.passengerOf === undefined;
+/** A managed off-region pursuit advances on its authored graph without a physical body. */
+function coarse(e: EntitySnapshot, world: SimWorld): boolean {
+  return !!e.infected?.pursuit && world.megaPursuit?.state.id === e.id && world.megaPursuit.state.mode === 'coarse';
+}
+function actor(e: EntitySnapshot, world: SimWorld): boolean {
+  return !!(e.survivor || e.infected || e.civilian || e.companion || e.escort) && e.health.current > 0 && e.civilian?.state !== 'finished' && !e.corpse && !e.hidden && !e.infected?.hidden && !e.pendingAdmission && e.passengerOf === undefined && !coarse(e, world);
 }
 /** Passengers and clingers have an explicit owner. Cosmetics (dead bodies, debris) have no actor mask. */
 function pairExempt(a: EntitySnapshot | undefined, b: EntitySnapshot): boolean {
@@ -57,7 +61,7 @@ export class SolidRegistry {
   private readonly proposalPoints: (Transform | undefined)[] = [];
   private readonly contactProofs: (BodyProof | undefined)[] = [];
   private readonly bodyRadii: number[] = [];
-  /** Current transforms and attachment eligibility are stable during commit. */
+  /** Transform references and attachment eligibility are stable during commit. */
   private readonly bodyPoints: (Transform | undefined)[] = [];
   private hasPairExemptions = false;
   private readonly moved: EntitySnapshot[] = [];
@@ -88,7 +92,7 @@ export class SolidRegistry {
   private clearLimit = 0;
   private readonly visitClear = (id: number): boolean => {
     const other = this.committing ? this.live[id] : this.world.entities.get(id);
-    if (id === this.clearId || !other || !this.committing && !actor(other) || pairExempt(this.clearEntity, other) || !layers(this.clearPoint, other.transform)) return true;
+    if (id === this.clearId || !other || !this.committing && !actor(other, this.world) || pairExempt(this.clearEntity, other) || !layers(this.clearPoint, other.transform)) return true;
     const dx = this.clearPoint.x - other.transform.x, dz = this.clearPoint.z - other.transform.z, reach = this.clearRadius + (this.committing ? this.bodyRadii[id] : actorRadius(other)) - this.clearLimit;
     if (dx * dx + dz * dz >= reach * reach) return true;
     this.bodyConflict = true; this.bodyConflictId = id; return false;
@@ -260,7 +264,7 @@ export class SolidRegistry {
     this.world.spatial.query({ x: p.x, z: p.z, r: distance + radius + this.maxActor + (contact ? tolerance : 0) }, neighbors, false);
     for (const id of neighbors) {
       const other = this.world.entities.get(id);
-      if (!other || other === e || !actor(other) || pairExempt(e, other) || !layers(p, other.transform)) continue;
+      if (!other || other === e || !actor(other, this.world) || pairExempt(e, other) || !layers(p, other.transform)) continue;
       const t = other.transform, dx = t.x - p.x, dz = t.z - p.z;
       const along = dx * direction.x + dz * direction.z, lateral = dx * direction.z - dz * direction.x;
       const reach = actorRadius(e) + actorRadius(other), side2 = lateral * lateral;
@@ -362,7 +366,7 @@ export class SolidRegistry {
   remember(e: EntitySnapshot, writer: string): void { this.committed.set(e, { ...e.transform }); this.validated.delete(e); this.writers.set(e, writer); }
   restore(): void {
     this.committed = new WeakMap(); this.validated = new WeakMap();
-    for (const e of this.world.entities.iterate()) if (actor(e)) this.writers.set(e, 'checkpoint.restore');
+    for (const e of this.world.entities.iterate()) if (actor(e, this.world)) this.writers.set(e, 'checkpoint.restore');
     this.commit();
   }
   private publish(e: EntitySnapshot, ground = false): void {
@@ -405,7 +409,10 @@ export class SolidRegistry {
         if (to) { Object.assign(e.transform, to); this.releasePending(e); this.admitted++; this.publish(e); }
         else { e.hidden = true; this.world.spatial.delete(e.id); continue; }
       }
-      if (!actor(e)) continue;
+      // Re-entry must validate the current coarse endpoint, never roll back to a
+      // committed pose from the previous resident region.
+      if (coarse(e, this.world)) { this.committed.delete(e); this.validated.delete(e); continue; }
+      if (!actor(e, this.world)) continue;
       const radius = actorRadius(e);
       // Shapes and eligibility are stable during this final transaction. Reuse
       // their snapshot in the correction loops; full audits still read actors.
@@ -625,7 +632,7 @@ export class SolidRegistry {
     this.world.spatial.query({ x: p.x, z: p.z, r: radius + this.maxActor }, this.nearby, false);
     for (const id of this.nearby) {
       const other = this.world.entities.get(id);
-      if (id === e.id || !other || !actor(other) || pairExempt(e, other) || !layers(p, other.transform)) continue;
+      if (id === e.id || !other || !actor(other, this.world) || pairExempt(e, other) || !layers(p, other.transform)) continue;
       const depth = radius + actorRadius(other) - Math.hypot(p.x - other.transform.x, p.z - other.transform.z);
       if (depth > tolerance + 1e-6) this.record(e, id, depth, false);
     }

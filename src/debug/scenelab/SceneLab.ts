@@ -1484,11 +1484,18 @@ export class SceneLab {
     return found;
   }
   private readonly paws = new WeakMap<Object3D, Vector3>();
-  /** Lowest point of a leg's meshes in leg space (PawContacts rule), returned in world metres. */
+  /** Keep the horizontal contact anchor for slide, but measure sink/lift at the drawn sole. */
   private paw(leg: Object3D): number[] {
     let local = this.paws.get(leg);
     if (!local) { const bounds = new Box3(); leg.traverse(n => { if (n instanceof Mesh) bounds.expandByObject(n); }); const p = bounds.getCenter(new Vector3()); p.y = bounds.min.y; local = leg.worldToLocal(p); this.paws.set(leg, local); }
-    return leg.localToWorld(local.clone()).toArray();
+    const paw = leg.localToWorld(local.clone()), vertex = new Vector3(); let bottom = Infinity;
+    leg.traverse(n => {
+      if (!(n instanceof Mesh)) return;
+      const positions = n.geometry.attributes.position, indices = n.geometry.index;
+      for (let i = 0; i < (indices?.count ?? positions.count); i++) bottom = Math.min(bottom, vertex.fromBufferAttribute(positions, indices ? indices.getX(i) : i).applyMatrix4(n.matrixWorld).y);
+    });
+    paw.y = bottom;
+    return paw.toArray();
   }
   private bones(j: Record<string, number[]>, shoulders?: number[]): Bone[] {
     const list: [string, string | number[] | undefined, string | number[] | undefined, number][] = [

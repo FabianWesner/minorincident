@@ -706,8 +706,6 @@ export class GameView implements Lifecycle {
     const goal = player && this.megaDistance(player) < 14 ? 1 : 0;   // Immediate full hole (see-through lane): the 60% courier pixel gate holds; the Mega is judged against an Alpha, never enlarged.
     this.bossHole = goal;
     seeThrough.bossStrength.value = this.bossHole;
-    const screenHeight = 2 * this.camera.position.distanceTo(this.view.focus) * Math.tan(this.camera.fov * Math.PI / 360);
-    seeThrough.bossRadius.value = Math.min(.3, Math.max(.1, 2.8 / screenHeight));
   }
   /** Scene Lab: hide the courier / the crowd (Mega included) and redraw, for the courier-visible-share probe. */
   probeVisibility(hide: { courier: boolean; crowd: boolean; environment?: boolean; bars?: boolean }): number {

@@ -40,6 +40,7 @@ test('the clear inner disc and depth include every corner of a whole ridden vehi
       const dx = (projected.x * .5 + .5 - seeThrough.center.value.x) * view.camera.aspect;
       const dy = .5 - projected.y * .5 - seeThrough.center.value.y;
       expect(Math.hypot(dx, dy)).toBeLessThanOrEqual(seeThrough.solidRadius.value * .85 + 1e-8);
+      expect(Math.hypot(dx, dy)).toBeLessThanOrEqual(seeThrough.bossRadius.value * .6 + 1e-8);
       expect(point.applyMatrix4(view.camera.matrixWorldInverse).z).toBeGreaterThan(seeThrough.depth.value);
     }
   }

@@ -77,7 +77,12 @@ export class PawContacts {
       // floor itself is the limit (the authored gallop can dip a paw under it).
       const swing = p > stance ? (p - stance) / Math.max(.001, 1 - stance) : 0;
       const clearance = swing > 0 ? swingLift * Math.min(1, Math.max(.4, swing / .1), (1 - swing) / .12) : 0;
-      const dip = this.origin.y + foot.sole + clearance - this.point.copy(foot.paw).applyMatrix4(foot.leg.matrixWorld).y;
+      // Rotation changes which sole vertex is lowest. The bind-pose centre can
+      // stay above the floor while the drawn toe penetrates it by several cm.
+      let bottom = Infinity;
+      for (const vertex of foot.vertices) bottom = Math.min(bottom, this.offset.copy(vertex).applyMatrix4(foot.leg.matrixWorld).y);
+      this.point.copy(foot.paw).applyMatrix4(foot.leg.matrixWorld);
+      const dip = this.origin.y + foot.sole + clearance - Math.min(bottom, this.point.y);
       if (dip > 0) {
         const parent = foot.leg.parent!, low = parent.worldToLocal(this.point.clone()), high = parent.worldToLocal(this.point.clone().setY(this.point.y + dip));
         high.sub(low); foot.leg.position.add(high); foot.correction.add(high); foot.leg.updateWorldMatrix(false, true);
