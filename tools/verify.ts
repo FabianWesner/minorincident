@@ -6,7 +6,7 @@ const target = process.argv[2];
 const selection = selectionFor(target);
 const output = `test-results/epics/${target}`;
 mkdirSync(output, { recursive: true });
-// E07's Alpha wall-clock fixtures stay on the Mac when functional sims run remotely.
+// E07's Alpha wall-clock fixtures use isolated runner slots when sims run remotely.
 const alphaTiming = ['tests/sim/ai/director.test.ts', 'tests/sim/performance/alpha.test.ts', 'tests/sim/performance/alpha-physical.test.ts'];
 const e18GpuPattern = '@perf|@E18-AC01|crowd-drawn|crowd variety|crowd-close-lod|T-E18-04-browser|T-E13-05|S-01|S-02';
 const infectedGpuPattern = 'alpha-(?:asset|physical|support)[.]spec[.]ts|crowd-(?:drawn|feel|visible-outbreak)[.]spec[.]ts|health-bars[.]spec[.]ts|infected-visibility[.]spec[.]ts|controls-playtest[.]spec[.]ts|l4-boot[.]spec[.]ts|T-E13-05|S-01|T-E07-12|T-E07-13';
@@ -35,7 +35,7 @@ const commands: string[][] = [
     ? ['sh', 'tools/e2e-lock.sh', 'npm', 'run', 'build']
     : ['npm', 'run', 'build'],
   // Timing fixtures must not compete with other Vitest workers on the shared Mac.
-  ...(splitAlphaTiming ? [['sh', 'tools/sim-lock.sh', 'npx', 'vitest', 'run', ...alphaTiming, '-t', 'T-E07-11', '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest-timing.json`]] : []),
+  ...(splitAlphaTiming ? [['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/vitest-timing.json`, '--', 'bash', 'tools/remote/timing-isolated.sh', 'npx', 'vitest', 'run', ...alphaTiming, '-t', 'T-E07-11', '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest-timing.json`]] : []),
   ...(splitE18Timing ? [['sh', 'tools/sim-lock.sh', 'npx', 'vitest', 'run', '-t', `^(?=.*(?:${selection.pattern}))(?=.*(?:@E18-AC02|@perf))`, '--maxWorkers=1', '--reporter=default', '--reporter=json', `--outputFile=${output}/vitest-timing.json`]] : []),
   simCommand,
   // Reserve both existing runner slots in order; release slot 1 first so concurrent timing jobs cannot deadlock.
