@@ -1,5 +1,4 @@
-import { missionIds } from '../../src/levels/missions';
-import { runLevel, type CompletionPolicy, type RunnerLevel } from './levels';
+import { runLevel, runnerLevels, type CompletionPolicy, type RunnerLevel } from './levels';
 import { measureHorde } from '../performance/sim';
 import { loadL1, runL1, type L1Profile } from './l1Bots';
 import { mkdir, writeFile } from 'node:fs/promises';
@@ -16,9 +15,8 @@ const { values } = parseArgs({ options: {
 } });
 const ticks = Number(values.ticks ?? '600'), seed = Number(values.seed);
 if (!Number.isSafeInteger(ticks) || ticks < 0 || !Number.isSafeInteger(seed)) throw new RangeError('Ticks must be nonnegative and seed an integer');
-const runnerLevels: RunnerLevel[] = [...missionIds, 'L7'];
 if (values.level) {
-  if (values.level !== 'all' && !runnerLevels.includes(values.level as RunnerLevel)) throw new RangeError('Level must be a registered campaign mission or all');
+  if (values.level !== 'all' && !runnerLevels.includes(values.level as RunnerLevel)) throw new RangeError('Level must be a registered campaign level or all');
   if (!['complete', 'newbie'].includes(values.policy!)) throw new RangeError('Policy must be complete or newbie');
   const seeds = Number(values.seeds);
   if (!Number.isSafeInteger(seeds) || seeds <= 0 || !Number.isSafeInteger(seed + seeds - 1)) throw new RangeError('Seeds must be a positive integer');

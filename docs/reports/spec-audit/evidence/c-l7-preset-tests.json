@@ -1,0 +1,26 @@
+{
+  "passed": 3,
+  "failed": 0,
+  "pending": 0,
+  "success": true,
+  "tests": [
+    {
+      "file": "levels/l7-audit.test.ts",
+      "name": "T-E29-02 @E29-AC02 standalone seed 1 boards at least 60% of the starting group without cheats",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/tooling/l7-runner-default.test.ts",
+      "name": "T-E29-02-preset @E29-AC02 L7-default retains the five prior weapons and leaves the rocket to its pickup",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/tooling/l7-runner-default.test.ts",
+      "name": "T-E29-02-cli @E29-AC02 explicit and all-level CLI registration include L7 in campaign order",
+      "status": "passed",
+      "failures": []
+    }
+  ]
+}

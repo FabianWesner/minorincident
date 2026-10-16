@@ -10,14 +10,14 @@ import { arena, spawn, step } from './helpers';
 const shot = (targetId: number, actionId: string, base: number, type: DamageEvent['type'] = 'bullet'): DamageEvent => ({ sourceId: 1, targetId, attackId: 1, actionId, origin: { x: 0, z: 0 }, direction: { x: 1, z: 0 }, base, multiplier: 1, type, knockback: 0, stagger: 0 });
 const target = { id: 1, x: 0, z: 0 }, area = { x: 0, z: 0, radius: 4, dx: -1, dz: 0 };
 
-test('T-E07-01-alpha @E07-AC01 Alpha has 300 effective HP and authored ordinary contact tuning', async () => {
+test('T-E07-01-alpha @E07-AC01 @E29-AC07 @E30-AC10 @E32-AC09 Alpha has 300 effective HP and authored ordinary contact tuning', async () => {
   const w = await arena(), e = spawn(w, 'alpha', 6, 0, 'idle'), def = infectedDef(e.archetype);
   expect(def).toMatchObject({ hp: 200, speed: 3.8, radius: .55, windup: .5, range: 1.5, damage: 25, attackInterval: 1 });
   expect(e.health).toEqual({ current: def.hp * INFECTED_TOUGHNESS, max: 300 });
   expect(() => validateInfected([{ ...def, attackInterval: .1 }])).toThrow();
 });
 for (const [weapon, hits, type] of [['handgun', 30, 'bullet'], ['army-mg', 43, 'bullet'], ['shotgun', 2, 'bullet'], ['rocket-launcher', 2, 'explosive']] as const) {
-  test(`T-E07-06-alpha-${weapon} @E07-AC06 resistance landed hits and permanence`, async () => {
+  test(`T-E07-06-alpha-${weapon} @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 resistance landed hits and permanence`, async () => {
     const w = await arena(), e = spawn(w, 'alpha', 6, 0, 'idle'), def = catalog[`weapon.${weapon}`];
     e.combat!.armor = .9; // Alpha's table replaces generic armor.
     const interval = 60 / def.fireRate!;
@@ -36,7 +36,7 @@ for (const [weapon, hits, type] of [['handgun', 30, 'bullet'], ['army-mg', 43, '
     if (weapon === 'rocket-launcher') expect(damageAmount(shot(e.id, def.id, def.damage * .4, type), e)).toBe(72);
   });
 }
-test('T-E07-06-alpha-melee @E07-AC06 kick preserves Alpha HP and upright reaction; ordinary contact knocks a soldier down for 72 ticks', async () => {
+test('T-E07-06-alpha-melee @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 kick preserves Alpha HP and upright reaction; ordinary contact knocks a soldier down for 72 ticks', async () => {
   const w = await arena(), e = spawn(w, 'alpha', 6, 0, 'idle');
   w.combat!.damage.apply({ ...shot(e.id, 'weapon.kick', 20, 'melee'), knockdown: true, stagger: .5 });
   expect(e.health.current).toBe(280); expect(e.combat!.reaction!.heavy).toBe(false); expect(e.infected!.recoverAt).toBe(-1);
@@ -53,7 +53,7 @@ test('T-E07-06-alpha-melee @E07-AC06 kick preserves Alpha HP and upright reactio
   step(w, 60); expect(soldier.health.current).toBe(50);
 });
 for (const move of Object.keys(infectedSpecialMoves) as InfectedSpecialMove[]) {
-  test(`T-E07-05-scheduler-${move} @E07-AC05 locked telegraph, independent cooldown, recovery and serialized state`, async () => {
+  test(`T-E07-05-scheduler-${move} @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state`, async () => {
     const w = await arena(), ai = w.infected!, e = spawn(w, 'alpha', 6, 0, 'idle'), timing = infectedSpecialMoves[move]; w.inspectionGhost = true;
     vi.spyOn(ai.alphaSupport, 'update').mockImplementation(() => {}); // Test scheduling independently of move effects.
     // The scheduler also serves the later zoo lanes; no animal effects are claimed here.
@@ -90,7 +90,7 @@ for (const move of Object.keys(infectedSpecialMoves) as InfectedSpecialMove[]) {
     step(w, timing.windup); expect(restored.specialAttack!.activeTick - (attack.activeTick + 100)).toBe(timing.cooldown);
   });
 }
-for (const withNpcs of [false, true]) test(`T-E07-05-alpha-checkpoint-${withNpcs} @E07-AC05 checkpoint rebases pending specials and cooldowns`, async () => {
+for (const withNpcs of [false, true]) test(`T-E07-05-alpha-checkpoint-${withNpcs} @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 checkpoint rebases pending specials and cooldowns`, async () => {
   const w = await arena();
   if (!withNpcs) { w.npcs = null; }
   const def: MissionDef = { id: 'alpha-checkpoint', briefing: 'Alpha scheduler', anchors: { spawn: { x: 0, z: 0, radius: 2 } }, actors: {}, groups: {}, gates: {}, items: [], states: [], counters: [], checkpoints: ['C'], cinematics: {}, steps: [{ id: 'wait', type: 'custom', text: 'Wait', anchor: 'spawn', start: { kind: 'start' }, complete: { kind: 'timer', seconds: 1000 }, fail: [] }], finish: ['wait'], onStart: [], onComplete: [] };
@@ -101,7 +101,7 @@ for (const withNpcs of [false, true]) test(`T-E07-05-alpha-checkpoint-${withNpcs
   step(w, before); expect(restored.infected!.specialAttack!.stage).toBe('recovery'); expect(restored.infected!.specialCooldowns!['alpha.roar']! - w.tick).toBe(900);
 });
 
-test('T-E07-05-alpha-independent @E07-AC05 another move has its own cooldown and retargeting never resets the first', async () => {
+test('T-E07-05-alpha-independent @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 another move has its own cooldown and retargeting never resets the first', async () => {
   const w = await arena(), ai = w.infected!, e = spawn(w, 'alpha', 6, 0, 'idle'); w.inspectionGhost = true;
   expect(ai.startSpecial(e.id, 'alpha.charge', target, area)).toBe(true); step(w, 48);
   const expiry = e.infected!.specialCooldowns!['alpha.charge'];
@@ -115,7 +115,7 @@ test('T-E07-05-alpha-independent @E07-AC05 another move has its own cooldown and
   expect(ai.specialHit(e.id, 1)).toBe(false);
 });
 
-for (const [weapon, hits, maxSpan] of [['handgun', 30, 9.7], ['army-mg', 43, 4.3], ['shotgun', 2, .6]] as const) test(`T-E07-06-alpha-live-${weapon} @E07-AC06 real sustained firing reaches the authored resistance fixture`, async () => {
+for (const [weapon, hits, maxSpan] of [['handgun', 30, 9.7], ['army-mg', 43, 4.3], ['shotgun', 2, .6]] as const) test(`T-E07-06-alpha-live-${weapon} @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 real sustained firing reaches the authored resistance fixture`, async () => {
   const w = await arena(), e = spawn(w, 'alpha', 1.2, 0, 'idle');
   w.combat!.setLoadout([`weapon.${weapon}`], ['weapon.fists']); w.combat!.damage.god = true;
   e.combat!.staggerUntil = 10000;
@@ -130,7 +130,7 @@ for (const [weapon, hits, maxSpan] of [['handgun', 30, 9.7], ['army-mg', 43, 4.3
 });
 
 for (const move of ['alpha.charge', 'alpha.ground-slam', 'alpha.grab-throw', 'alpha.roar'] as const) {
-  test(`T-E07-06-alpha-selection-${move} @E07-AC05 @E07-AC06 chase selects each available move through the merged scheduler`, async () => {
+  test(`T-E07-06-alpha-selection-${move} @E07-AC0 @E29-AC07 @E30-AC10 @E32-AC095 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 chase selects each available move through the merged scheduler`, async () => {
     const w = await arena(), e = spawn(w, 'alpha', move === 'alpha.ground-slam' ? 3 : 6);
     e.transform.yaw = Math.PI;
     e.infected!.specialCooldowns = { 'alpha.charge': 10000, 'alpha.ground-slam': 10000, 'alpha.grab-throw': 10000, 'alpha.roar': 10000, [move]: 0 };

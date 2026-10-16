@@ -1,0 +1,842 @@
+{
+  "check": {
+    "command": [
+      "sh",
+      "tools/e2e-lock.sh",
+      "npx",
+      "playwright",
+      "test",
+      "--grep",
+      "@(?:E30)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+      "--grep-invert",
+      "@perf",
+      "--workers=1"
+    ],
+    "exitCode": 1
+  },
+  "stats": {
+    "startTime": "2026-10-16T08:34:57.218Z",
+    "duration": 476123.79799999995,
+    "expected": 61,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "file": "e2e/apc.spec.ts",
+      "name": "T-E30-14-browser T-E31-03-browser @E30-AC14 @E31-AC03 real APC enter, drive, both firing inputs and exit",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5292,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/audio/smoke.spec.ts",
+      "name": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6039,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/audio/smoke.spec.ts",
+      "name": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "pixel-7",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6045,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/audio/smoke.spec.ts",
+      "name": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "pixel-7-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6496,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/audio/smoke.spec.ts",
+      "name": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "iphone-14",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6685,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/audio/smoke.spec.ts",
+      "name": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "iphone-14-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6010,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/audio/smoke.spec.ts",
+      "name": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 9225,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/controls-playtest.spec.ts",
+      "name": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 21511,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/crowd-drawn.spec.ts",
+      "name": "T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 25139,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/crowd-drawn.spec.ts",
+      "name": "T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 26988,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/crowd-feel.spec.ts",
+      "name": "20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 7952,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/driving.spec.ts",
+      "name": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4265,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/health-bars.spec.ts",
+      "name": "T-E07-06-bars-1600 @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera high",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 27743,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/health-bars.spec.ts",
+      "name": "T-E07-06-bars-390 @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera low",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 15488,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/health-bars.spec.ts",
+      "name": "T-E07-06-bars-844 @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera low",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 14861,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/l8-animals.spec.ts",
+      "name": "T-E30-09-lion-high-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4880,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/l8-animals.spec.ts",
+      "name": "T-E30-09-gorilla-high-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4850,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/l8-animals.spec.ts",
+      "name": "T-E30-09-elephant-high-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4275,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/l8-animals.spec.ts",
+      "name": "T-E30-09-zebra-high-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4720,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/l8-animals.spec.ts",
+      "name": "T-E30-09-flamingo-high-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4324,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/l8-animals.spec.ts",
+      "name": "T-E30-09-lion-low-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3081,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/l8-animals.spec.ts",
+      "name": "T-E30-09-gorilla-low-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3793,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/l8-animals.spec.ts",
+      "name": "T-E30-09-elephant-low-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3115,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/l8-animals.spec.ts",
+      "name": "T-E30-09-zebra-low-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3019,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/l8-animals.spec.ts",
+      "name": "T-E30-09-flamingo-low-browser @E30-AC09 @E30-AC15 same drawn entity turns from healthy/barless to infected/shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3083,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/l4-boot.spec.ts",
+      "name": "T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 12811,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/L8.spec.ts",
+      "name": "T-E30-18 @E30-AC18 real keyboard exploration, tunnel breach and complete APC escape into L9",
+      "project": "chromium",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 13474,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-c/tests/e2e/levels/L8.spec.ts",
+                "column": 48,
+                "line": 25
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeHidden\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('.hud-companion')\nExpected: hidden\nReceived: visible\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeHidden\" locator('.hud-companion') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('.hud-companion')\u001b[22m\n\u001b[2m    14 \u00d7 locator resolved to <div data-testid=\"corgi-companion\" class=\"hud-companion hud-panel\">\u2026</div>\u001b[22m\n\u001b[2m       - unexpected value \"visible\"\u001b[22m\n\n\n  23 |   expect(Math.hypot(explored.player!.transform.x - initial.x, explored.player!.transform.z - initial.z)).toBeGreaterThan(3);\n  24 |   expect(await page.evaluate(() => window.__SS__!.missions.state()!.marker)).toBeNull(); await expect(page.locator('.mission-tracker')).toBeHidden();\n> 25 |   await expect(page.locator('.hud-companion')).toBeHidden();\n     |                                                ^\n  26 |   await expect(page.locator('.hud-pin-objective')).toBeHidden(); await expect(page.locator('.hud-pin-home')).toBeHidden();\n  27 |   await step(3479); expect(await page.evaluate(() => window.__SS__!.getState().l8!.breachedAt)).toBe(0);\n  28 |   await step(1); const breach = await page.evaluate(() => window.__SS__!.getState().l8!);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-c/tests/e2e/levels/L8.spec.ts:25:48"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/L8.spec.ts",
+      "name": "T-E30-19 @E30-AC19 game camera calm, internal breach and same-id animal turn captures",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 8901,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/L8.spec.ts",
+      "name": "T-E30-18-mobile @E30-AC18 touch stick reaches the APC ACTION with no HUD overflow",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 24090,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/menus-mouse.spec.ts",
+      "name": "T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4605,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/save.spec.ts",
+      "name": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 8579,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "name": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 740,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "name": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 757,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "name": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "pixel-7",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 617,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "name": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "pixel-7",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 836,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "name": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "pixel-7-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 827,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "name": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "pixel-7-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 1462,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "name": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "iphone-14",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 602,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "name": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "iphone-14",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 715,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "name": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "iphone-14-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 578,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "name": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "iphone-14-landscape",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 670,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "name": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2109,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "name": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "webkit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3247,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/webgpu-canvas.spec.ts",
+      "name": "T-E02-webgpu-canvas @smoke @E02 WebGPU high mega health bars preserve the game frame at both zoom limits",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 9899,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/webgpu-canvas.spec.ts",
+      "name": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU high L1 L4 L8 game cameras render at both zoom limits",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 43253,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/webgpu-canvas.spec.ts",
+      "name": "T-E02-webgpu-canvas @smoke @E02 WebGPU low mega health bars preserve the game frame at both zoom limits",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4244,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/webgpu-canvas.spec.ts",
+      "name": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU low L1 L4 L8 game cameras render at both zoom limits",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 8602,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/webgpu-level-transitions.spec.ts",
+      "name": "T-E02-webgpu-level-transitions @smoke @E02 title, L1, L2 and L3 in one WebGPU renderer log no GPU validation errors",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 10173,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/zoo-s1.spec.ts",
+      "name": "T-E07-19-lion-pounce-browser @E07-AC05 @E07-AC19 @E30-AC10 production telegraph, pause, activation and shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4701,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/zoo-s1.spec.ts",
+      "name": "T-E07-19-lion-flank-browser @E07-AC05 @E07-AC19 @E30-AC10 production telegraph, pause, activation and shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4234,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/zoo-s1.spec.ts",
+      "name": "T-E07-19-gorilla-roar-browser @E07-AC05 @E07-AC19 @E30-AC10 production telegraph, pause, activation and shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4206,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/zoo-s1.spec.ts",
+      "name": "T-E07-19-gorilla-pound-browser @E07-AC05 @E07-AC19 @E30-AC10 production telegraph, pause, activation and shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4472,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/zoo-s2.spec.ts",
+      "name": "T-E07-19-gorilla-throw-browser @E07-AC05 @E07-AC19 @E30-AC10 production telegraph, pause, activation and shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4893,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/zoo-s2.spec.ts",
+      "name": "T-E07-19-elephant-charge-browser @E07-AC05 @E07-AC19 @E30-AC10 production telegraph, pause, activation and shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6562,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/zoo-s2.spec.ts",
+      "name": "T-E07-19-elephant-swipe-browser @E07-AC05 @E07-AC19 @E30-AC10 production telegraph, pause, activation and shared bar",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4585,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/zoo-s2.spec.ts",
+      "name": "T-E07-19-elephant-bar-390 @E07-AC19 @E30-AC10 shared mobile bar uses real HP and updates within a frame",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 2947,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/zoo-s2.spec.ts",
+      "name": "T-E07-19-elephant-bar-844 @E07-AC19 @E30-AC10 shared mobile bar uses real HP and updates within a frame",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3367,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/zoo-s3.spec.ts",
+      "name": "T-E07-19-zebra-kick-browser @E07-AC05 @E07-AC19 @E30-AC10 production cue, pause, bar, impact and expiry",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 7690,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/zoo-s3.spec.ts",
+      "name": "T-E07-19-zebra-stampede-browser @E07-AC05 @E07-AC19 @E30-AC10 production cue, pause, bar, impact and expiry",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5470,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/zoo-s3.spec.ts",
+      "name": "T-E07-19-flamingo-dive-browser @E07-AC05 @E07-AC19 @E30-AC10 production cue, pause, bar, impact and expiry",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 7261,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/zoo-s3.spec.ts",
+      "name": "T-E07-19-zebra-flamingo-phone-390 @E07-AC19 @E30-AC10 shared phone bars update from real HP in low tier",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4201,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/zoo-s3.spec.ts",
+      "name": "T-E07-19-zebra-flamingo-phone-844 @E07-AC19 @E30-AC10 shared phone bars update from real HP in low tier",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4570,
+          "errors": []
+        }
+      ]
+    }
+  ]
+}

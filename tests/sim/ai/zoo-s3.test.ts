@@ -26,7 +26,7 @@ function wall(w: World, x: number, halfZ = 2) {
   (w.combat!.query.walls as typeof shape[]).push(shape);
 }
 for (const move of ['zebra.kick', 'zebra.stampede', 'flamingo.dive'] as const) {
-  test(`T-E07-19-${move}-timing @E07-AC05 @E07-AC19 pause, telegraph, recovery, serialized group/cooldown, exact next activation`, async () => {
+  test(`T-E07-19-${move}-timing @E07-AC05 @E07-AC19 @E30-AC10 pause, telegraph, recovery, serialized group/cooldown, exact next activation`, async () => {
     const w = await arena(); player(w, 25); const e = group(w, move), timing = infectedSpecialMoves[move];
     const a = start(w, e, move), initial = structuredClone(e.transform);
     const clock = new Clock(); clock.pause(); clock.advance(1, () => w.update()); expect(w.tick).toBe(0);
@@ -44,7 +44,7 @@ for (const move of ['zebra.kick', 'zebra.stampede', 'flamingo.dive'] as const) {
     expect(next.attackId).toBeGreaterThan(a.attackId); expect(w.infected!.startSpecial(e.id, move, a.target, a.area)).toBe(false);
   });
 }
-test('T-E07-19-zebra-kick @E07-AC01 @E07-AC19 rear 90 degree/2m boundary, 20 damage, 3m shove and 36 tick stagger; front/cover/protected controls', async () => {
+test('T-E07-19-zebra-kick @E07-AC01 @E07-AC19 @E30-AC10 rear 90 degree/2m boundary, 20 damage, 3m shove and 36 tick stagger; front/cover/protected controls', async () => {
   const w = await arena(); player(w, 25); const e = group(w, 'zebra.kick'); expect(e.health).toEqual({ current: 180, max: 180 });
   const edge = human(w, -Math.SQRT2, Math.SQRT2), outside = human(w, -Math.SQRT2 + .001, -Math.SQRT2), front = human(w, 1.8, 0), far = human(w, -2.001, 0), cover = human(w, -1.8, 0);
   const child = w.entities.get(w.npcs!.escorts.spawn({ x: -1, z: -.8 }, true))!; const childHp = child.health.current;
@@ -55,7 +55,7 @@ test('T-E07-19-zebra-kick @E07-AC01 @E07-AC19 rear 90 degree/2m boundary, 20 dam
   for (const t of [outside, front, far, cover]) expect(t.health.current).toBe(100); expect(child.health.current).toBe(childHp);
   step(w, 10); expect(w.events.events().filter(ev => ev.type === 'combat.hit' && ev.attackId === a.attackId)).toHaveLength(1);
 });
-test('T-E07-19-zebra-stampede @E07-AC19 existing 2-4 zebras, locked 10m/s, 15m, 1.5m sweep and one hit per zebra', async () => {
+test('T-E07-19-zebra-stampede @E07-AC19 @E30-AC10 existing 2-4 zebras, locked 10m/s, 15m, 1.5m sweep and one hit per zebra', async () => {
   const w = await arena(); player(w, 25); const e = group(w, 'zebra.stampede');
   // PO contact-hit decision: .45 m zebra + .35 m human + .02 m contact
   // tolerance = .82 m. Keep the outside control at least .05 m beyond that
@@ -68,14 +68,14 @@ test('T-E07-19-zebra-stampede @E07-AC19 existing 2-4 zebras, locked 10m/s, 15m, 
   const hits = w.events.events().filter(ev => ev.type === 'combat.hit' && ev.targetId === inside.id);
   expect(hits).toHaveLength(2); expect(new Set(hits.map(h => h.type === 'combat.hit' ? h.attackId : 0)).size).toBe(2); expect(inside.civilian!.knockedUntil).toBe(hits[1].tick + 60);
 });
-test('T-E07-19-zebra-stampede-wall @E07-AC19 intact walls stop every participant and remain intact', async () => {
+test('T-E07-19-zebra-stampede-wall @E07-AC19 @E30-AC10 intact walls stop every participant and remain intact', async () => {
   const w = await arena(); player(w, 25); const e = group(w, 'zebra.stampede'), behind = human(w, 5, 0); wall(w, 4);
   const id = w.barricades!.spawn({ id: 'line', groupId: 'line', a: { x: 2, z: -3 }, b: { x: 2, z: 3 }, height: 1, initialHp: 300 });
   const a = start(w, e, 'zebra.stampede'); step(w, 110);
   for (const member of a.members!) expect(w.entities.get(member)!.transform.x).toBeLessThan(1.5);
   expect(behind.health.current).toBe(100); expect(w.entities.get(id)!.health.current).toBe(300);
 });
-test('T-E07-19-group-controls @E07-AC19 no phantom herd/flock, cap, 12m acquisition, busy/dead/occluded animals excluded', async () => {
+test('T-E07-19-group-controls @E07-AC19 @E30-AC10 no phantom herd/flock, cap, 12m acquisition, busy/dead/occluded animals excluded', async () => {
   const w = await arena(); player(w, 25); const e = spawn(w, 'zebra', 0, 0, 'idle');
   expect(w.infected!.startSpecial(e.id, 'zebra.stampede', { id: 1, x: 20, z: 0 }, { x: 0, z: 0, dx: 1, dz: 0, radius: 1 })).toBe(false);
   const far = spawn(w, 'zebra', 12.001, 0, 'idle');
@@ -83,7 +83,7 @@ test('T-E07-19-group-controls @E07-AC19 no phantom herd/flock, cap, 12m acquisit
   for (let i = 0; i < 6; i++) spawn(w, 'zebra', -2 - i, 0, 'idle');
   const a = start(w, e, 'zebra.stampede'); expect(a.members).toHaveLength(4); expect(a.members).not.toContain(far.id);
 });
-test('T-E07-19-flamingo-dive @E07-AC19 existing birds steer, locked 3m area, 5 HP/36 tick stagger once, 48 tick obstruction expiry', async () => {
+test('T-E07-19-flamingo-dive @E07-AC19 @E30-AC10 existing birds steer, locked 3m area, 5 HP/36 tick stagger once, 48 tick obstruction expiry', async () => {
   const w = await arena(); const p = player(w, 2), e = group(w, 'flamingo.dive'), edge = human(w, 2, 3), outside = human(w, 2, -3.001);
   const a = start(w, e, 'flamingo.dive', 2); expect(a.members).toHaveLength(3); expect(a.area).toMatchObject({ x: 2, z: 0, radius: 3 });
   step(w, 35); expect(e.transform.y).toBe(.7); expect(p.health.current).toBe(100); step(w, 1); expect(e.transform.y).toBeCloseTo(.7, 12);
@@ -92,14 +92,14 @@ test('T-E07-19-flamingo-dive @E07-AC19 existing birds steer, locked 3m area, 5 H
   step(w, 47); expect(w.events.events().filter(ev => ev.type === 'infected.attack' && ev.special === 'flamingo.dive' && ev.targetId === 1)).toHaveLength(1);
   step(w, 1); expect(a.obstructionUntil).toBe(w.tick); expect(e.transform.y).toBe(.7); step(w, 12); expect(e.infected!.specialAttack).toBeUndefined();
 });
-test('T-E07-19-flamingo-dive-wall @E07-AC19 flock cannot affect a target through solid geometry', async () => {
+test('T-E07-19-flamingo-dive-wall @E07-AC19 @E30-AC10 flock cannot affect a target through solid geometry', async () => {
   const w = await arena(); const p = player(w, 8), e = group(w, 'flamingo.dive'); wall(w, 4, 30);
   const a = start(w, e, 'flamingo.dive', 8); step(w, 60); expect(p.health.current).toBe(100); expect(a.obstructionUntil).toBeUndefined();
   for (const id of a.members!) expect(w.entities.get(id)!.transform.x).toBeLessThan(4);
 });
 
 const checkpoint: import('../../../src/sim/missions/types').MissionDef = { id: 'zoo-restore', briefing: 'Zoo', anchors: { spawn: { x: 0, z: 0, radius: 2 } }, actors: {}, groups: {}, gates: {}, items: [], states: [], counters: [], checkpoints: ['C'], cinematics: {}, steps: [{ id: 'wait', type: 'custom', text: 'Wait', anchor: 'spawn', start: { kind: 'start' }, complete: { kind: 'timer', seconds: 1000 }, fail: [] }], finish: ['wait'], onStart: [], onComplete: [] };
-for (const move of ['zebra.kick', 'zebra.stampede', 'flamingo.dive'] as const) test(`T-E07-19-${move}-checkpoint @E07-AC05 @E07-AC19 production checkpoint restores group, locked area, hit set and independent cooldowns`, async () => {
+for (const move of ['zebra.kick', 'zebra.stampede', 'flamingo.dive'] as const) test(`T-E07-19-${move}-checkpoint @E07-AC05 @E07-AC19 @E30-AC10 production checkpoint restores group, locked area, hit set and independent cooldowns`, async () => {
   const w = await arena(); player(w, 25); const mission = w.loadMission(checkpoint); mission.begin();
   const e = group(w, move); start(w, e, move); step(w, infectedSpecialMoves[move].windup + 5); mission.checkpoint('C');
   const savedTick = w.tick, saved = structuredClone(e.infected!); step(w, 20); mission.restore('C'); const restored = w.entities.get(e.id)!.infected!;
@@ -109,19 +109,19 @@ for (const move of ['zebra.kick', 'zebra.stampede', 'flamingo.dive'] as const) t
   for (const id of restored.specialAttack!.members ?? []) expect(w.entities.get(id)!.infected!.specialCooldowns![move]).toBe(restored.specialCooldowns![move]);
 });
 
-test('T-E07-19-zebra-stampede-player @E07-AC19 every distinct zebra deals 25HP even inside the ordinary hurt grace window', async () => {
+test('T-E07-19-zebra-stampede-player @E07-AC19 @E30-AC10 every distinct zebra deals 25HP even inside the ordinary hurt grace window', async () => {
   const w = await arena(); const p = player(w, 5), e = group(w, 'zebra.stampede'); const a = start(w, e, 'zebra.stampede', 5);
   step(w, 110); expect(p.health.current).toBe(50);
   const hits = w.events.events().filter(ev => ev.type === 'infected.attack' && ev.special === 'zebra.stampede' && ev.targetId === 1);
   expect(hits).toHaveLength(2); expect(a.hitIds).toContain(1);
 });
-test('T-E07-19-flamingo-dive-lock @E07-AC19 moving target does not drag the marked area; small/absent flock cannot create a dive', async () => {
+test('T-E07-19-flamingo-dive-lock @E07-AC19 @E30-AC10 moving target does not drag the marked area; small/absent flock cannot create a dive', async () => {
   const w = await arena(); const p = player(w, 2), e = group(w, 'flamingo.dive'); const a = start(w, e, 'flamingo.dive', 2);
   step(w, 35); player(w, 5.001); step(w, 25); expect(a.area.x).toBe(2); expect(p.health.current).toBe(100); expect(a.obstructionUntil).toBeUndefined();
   for (const id of a.members!) w.entities.get(id)!.health.current = 0;
   step(w, 1); expect(p.health.current).toBe(100);
 });
-test('T-E07-19-zoo-stagger-lethal @E07-AC19 lethal kick/dive finishes a civilian instead of leaving a zero-HP moving brain', async () => {
+test('T-E07-19-zoo-stagger-lethal @E07-AC19 @E30-AC10 lethal kick/dive finishes a civilian instead of leaving a zero-HP moving brain', async () => {
   for (const move of ['zebra.kick', 'flamingo.dive'] as const) {
     const w = await arena(); player(w, 25); const e = group(w, move), victim = human(w, move === 'zebra.kick' ? -1.8 : 2, 0);
     victim.health.current = move === 'zebra.kick' ? 20 : 5;

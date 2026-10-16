@@ -12,7 +12,7 @@ import { readFileSync } from 'node:fs';
 import { Rng } from '../../src/core/Rng';
 import { emptyInput, type InputFrame } from '../../src/input/InputFrame';
 import { compositions } from '../../src/levels/compositions';
-import { resolveCampaignMission, type MissionId } from '../../src/levels/missions';
+import { missionIds, resolveCampaignMission, type MissionId } from '../../src/levels/missions';
 import type { Trigger } from '../../src/sim/missions/types';
 import { SimWorld } from '../../src/sim/world/SimWorld';
 import type { MissionResult } from '../../src/sim/missions/types';
@@ -22,6 +22,8 @@ import { runL1, Walker } from './l1Bots';
 import { runTen, type CureRegionTiming } from './l10';
 
 export type RunnerLevel = MissionId | 'L7';
+/** Playable campaign order, including L7's graph-free encounter/departure flow. */
+export const runnerLevels: readonly RunnerLevel[] = [...missionIds, 'L7' as const].sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)));
 export type CompletionPolicy = 'complete' | 'newbie';
 /** Same contract for individual levels and the fast completion battery. Times are simulation seconds. */
 export interface LevelReport {
@@ -45,6 +47,7 @@ export async function loadLevel(level: RunnerLevel, seed: number, campaign?: Cam
     if(campaign)applyCampaign(world,campaign);
     if (!campaign && level === 'L10') applyCampaign(world, preset('L10-default'));
     if (!campaign && level === 'L8') applyCampaign(world, preset('L8-default'));
+    if (!campaign && level === 'L7') applyCampaign(world, preset('L7-default'));
     if (!campaign && level === 'L6') applyCampaign(world, preset('L6-default'));
     if (!campaign && level === 'L5') applyCampaign(world, preset('L5-default'));
     if (!campaign && level === 'L4') applyCampaign(world, preset('L4-default'));
