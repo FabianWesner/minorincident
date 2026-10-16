@@ -15,7 +15,15 @@ const brace = (): P => { const c = fair.anchors['cellar-interior'].position; ret
 const metroFoot = (): P => ({ x: l5Anchors['l5-metro-foot'][0], z: l5Anchors['l5-metro-foot'][1] });
 
 function helpers(page: Page) {
-  const step = (n: number) => page.evaluate(n => window.__SS__!.step(n), n);
+  let recordedLoss = false;
+  const step = async (n: number) => {
+    const loss = await page.evaluate(async ({ n, recordedLoss }) => {
+      const a = window.__SS__!; await a.step(n);
+      if (recordedLoss || !a.missions.state()?.l5?.survivors.some(r => r.lostAt > 0)) return;
+      return { state: a.getState(), mission: a.missions.state(), events: a.events(0) };
+    }, { n, recordedLoss });
+    if (loss) { recordedLoss = true; writeFileSync(`${output}/first-survivor-loss.json`, JSON.stringify(loss, null, 1)); }
+  };
   const mission = () => page.evaluate(() => window.__SS__!.missions.state()!);
   const player = () => page.evaluate(() => window.__SS__!.getState().player!);
   const shots = new Set<string>();
