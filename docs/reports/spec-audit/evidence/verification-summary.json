@@ -1,0 +1,366 @@
+{
+  "E07": {
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/remote/run.sh",
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a",
+          "--pull",
+          "test-results/epics/E07/vitest-timing.json",
+          "--",
+          "bash",
+          "tools/remote/timing-isolated.sh",
+          "npx",
+          "vitest",
+          "run",
+          "tests/sim/ai/director.test.ts",
+          "tests/sim/performance/alpha.test.ts",
+          "tests/sim/performance/alpha-physical.test.ts",
+          "-t",
+          "T-E07-11",
+          "--maxWorkers=1",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E07/vitest-timing.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/remote/run.sh",
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a",
+          "--pull",
+          "test-results/epics/E07/vitest.json",
+          "--",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "^(?!.*T-E07-11).*(?:@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$))",
+          "--maxWorkers=1",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E07/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)"
+        ],
+        "exitCode": 1
+      }
+    ],
+    "vitest.json": {
+      "numTotalTests": 2946,
+      "numPassedTests": 308,
+      "numFailedTests": 0,
+      "numPendingTests": 2638,
+      "failures": []
+    },
+    "vitest-timing.json": {
+      "numTotalTests": 15,
+      "numPassedTests": 5,
+      "numFailedTests": 0,
+      "numPendingTests": 10,
+      "failures": []
+    },
+    "browserFunctional": {
+      "startTime": "2026-10-16T09:15:29.317Z",
+      "duration": 553123.2860000001,
+      "expected": 80,
+      "skipped": 0,
+      "unexpected": 3,
+      "flaky": 0
+    },
+    "verifyExitCode": 1
+  },
+  "E22": {
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/remote/run.sh",
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a",
+          "--pull",
+          "test-results/epics/E22/vitest.json",
+          "--",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "@(?:E22)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--maxWorkers=1",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E22/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "@(?:E22)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--grep-invert",
+          "@perf",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": 1
+      }
+    ],
+    "vitest.json": {
+      "numTotalTests": 2945,
+      "numPassedTests": 108,
+      "numFailedTests": 0,
+      "numPendingTests": 2837,
+      "failures": []
+    },
+    "browserFunctional": {
+      "startTime": "2026-10-16T08:42:09.878Z",
+      "duration": 1354013.078,
+      "expected": 73,
+      "skipped": 0,
+      "unexpected": 18,
+      "flaky": 0
+    },
+    "verifyExitCode": 1
+  },
+  "E23": {
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/remote/run.sh",
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a",
+          "--pull",
+          "test-results/epics/E23/vitest.json",
+          "--",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "@(?:E23)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--maxWorkers=1",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E23/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "@(?:E23)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--grep-invert",
+          "@perf",
+          "--workers=1"
+        ],
+        "exitCode": 1
+      }
+    ],
+    "vitest.json": {
+      "numTotalTests": 2946,
+      "numPassedTests": 65,
+      "numFailedTests": 0,
+      "numPendingTests": 2881,
+      "failures": []
+    },
+    "playwright-headless.json": {
+      "startTime": "2026-10-16T09:25:14.784Z",
+      "duration": 1122835.523,
+      "expected": 51,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "browserFunctional": {
+      "startTime": "2026-10-16T09:25:14.784Z",
+      "duration": 1122835.523,
+      "expected": 51,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "verifyExitCode": 1
+  },
+  "E24": {
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/remote/run.sh",
+          "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a",
+          "--pull",
+          "test-results/epics/E24/vitest.json",
+          "--",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "@(?:E24)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--maxWorkers=1",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E24/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "@(?:E24)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--grep-invert",
+          "@perf",
+          "--workers=1"
+        ],
+        "exitCode": 1
+      }
+    ],
+    "vitest.json": {
+      "numTotalTests": 2946,
+      "numPassedTests": 33,
+      "numFailedTests": 0,
+      "numPendingTests": 2913,
+      "failures": []
+    },
+    "playwright-headless.json": {
+      "startTime": "2026-10-16T09:44:31.498Z",
+      "duration": 340849.382,
+      "expected": 38,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "browserFunctional": {
+      "startTime": "2026-10-16T09:44:31.498Z",
+      "duration": 340849.382,
+      "expected": 38,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "verifyExitCode": 1
+  }
+}

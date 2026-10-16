@@ -1,0 +1,21 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a -> 2.28.24.66:/srv/mi/ws/spec-audit-a-e72c4d
+[remote] cache-gc deleted:none
+[remote] sync 15s, 13693 files; job /srv/mi/jobs/spec-audit-a-e72c4d-28882-1792141036; queueing for a slot
+[runner] slot 0 acquired; load 0.15 0.18 1.79
+[runner] waiting for both slots to isolate wall-clock timing
+[runner] both slots held for the timing project
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/spec-audit-a-e72c4d-28882-1792141036[39m
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/validate.test.ts [2m([22m[2m17 tests[22m[2m | [22m[33m16 skipped[39m[2m)[22m[33m 180406[2mms[22m[39m
+[runner] functional phase reached; extra slot released
+   [33m[2m✓[22m[39m T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts[33m 180403[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m1 passed[39m[22m[2m | [22m[33m16 skipped[39m[90m (17)[39m
+[2m   Start at [22m 08:57:32
+[2m   Duration [22m 180.98s[2m (tests 100%)[22m
+
+JSON report written to /srv/mi/jobs/spec-audit-a-e72c4d-28882-1792141036/test-results/spec-audit/asset-contract.json
+[remote] pulled test-results/spec-audit/asset-contract.json
+[remote] done exit=0 (runner 2.28.24.66, sync 15s, remote total 184s)

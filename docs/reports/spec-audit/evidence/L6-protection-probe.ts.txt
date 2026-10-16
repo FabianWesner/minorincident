@@ -1,0 +1,18 @@
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { expect, test } from 'vitest';
+import { loadL6, runL6 } from '../../tools/sim-runner/l6Bots';
+
+test('T-E24-09-evade @E24 @E24-AC09 refusing to fight still reaches the exit but saves at most thirty percent', async () => {
+  const { world } = await loadL6(1);
+  try {
+    let attacks = 0;
+    const off = world.events.on('combat.attack', event => { if (event.sourceId === 1) attacks++; });
+    const report = runL6(world, 'evade-only');
+    off();
+    mkdirSync('test-results/epics/E24', { recursive: true });
+    writeFileSync('test-results/epics/E24/evade-seed-1.json', JSON.stringify({ ...report, attacks }, null, 2) + '\n');
+    expect(attacks).toBe(0);
+    expect(report.outcome).toBe('complete');
+    expect(report.rescued / report.total).toBeLessThanOrEqual(.3);
+  } finally { world.dispose(); }
+}, 1_800_000);

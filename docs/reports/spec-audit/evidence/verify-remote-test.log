@@ -1,0 +1,43 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a -> 94.130.181.173:/srv/mi/ws/spec-audit-a-e72c4d
+[remote] cache-gc deleted:none
+[remote] sync 83s, 13649 files; job /srv/mi/jobs/spec-audit-a-e72c4d-62930-1792136956; queueing for a slot
+[runner] slot 1 acquired; load 5.74 4.28 2.13
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/spec-audit-a-e72c4d-62930-1792136956[39m
+
+ [31m❯[39m [30m[43m functional [49m[39m tests/unit/tooling/verify-remote.test.ts [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[32m 53[2mms[22m[39m
+[31m   [31m×[31m E07 remote verification isolates timing on Hetzner, pulls evidence and keeps browsers locked locally[39m[32m 50[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/unit/tooling/verify-remote.test.ts[2m > [22mE07 remote verification isolates timing on Hetzner, pulls evidence and keeps browsers locked locally
+[31m[1mError[22m: [vitest] No "readFileSync" export is defined on the "node:fs" mock. Did you forget to return it from "vi.mock"?
+If you need to partially mock a module, you can use "importOriginal" helper inside:
+[39m
+vi.mock(import("node:fs"), async (importOriginal) => {
+  const actual = await importOriginal()
+  return {
+    ...actual,
+    // your mocked methods
+  }
+})
+
+[36m [2m❯[22m selectionFor tools/verify-selection.ts:[2m7:31[22m[39m
+    [90m  5|[39m   let epics: string[];
+    [90m  6|[39m   if (/^E\d{2}$/.test(target)) {
+    [90m  7|[39m     const status = JSON.parse(readFileSync('specs/status.json', 'utf8'…
+    [90m   |[39m                               [31m^[39m
+    [90m  8|[39m     if (!(target in status)) throw new Error(`Unknown epic: ${target}`…
+    [90m  9|[39m     epics = [target];
+[90m [2m❯[22m tools/verify.ts:[2m6:19[22m[39m
+[90m [2m❯[22m tests/unit/tooling/verify-remote.test.ts:[2m13:3[22m[39m
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m   Start at [22m 07:54:08
+[2m   Duration [22m 262ms[2m (tests 41%, transform 40%, import 14%, worker 5%)[22m
+
+[remote] done exit=1 (runner 94.130.181.173, sync 83s, remote total 210s)
