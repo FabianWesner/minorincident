@@ -1,0 +1,828 @@
+{
+  "base": "350ac1d1d",
+  "e15": {
+    "stats": {
+      "startTime": "2026-10-15T19:44:03.581Z",
+      "duration": 179011.482,
+      "expected": 43,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "failures": [
+      {
+        "test": "T-E15-lifecycle @E15 pools, visual physics and event listeners unload without leaks; low tier reduces particles",
+        "project": "chromium",
+        "message": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 1\nReceived: 11"
+      },
+      {
+        "test": "T-E15-03 @E15 @E15-AC03 @visual Full ground splat has palette red; Off has no red decal pixels",
+        "project": "chromium",
+        "message": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 1\nReceived: 4"
+      }
+    ],
+    "simPassed": 23
+  },
+  "unit": {
+    "initialPassed": 1516,
+    "initialSkipped": 7,
+    "initialFailure": "tests/unit/assets/validate.test.ts T-E17-02b timed out at 300000ms",
+    "isolatedRetry": {
+      "passed": 17,
+      "productionValidatorMs": 152902,
+      "timeoutChanged": false
+    }
+  },
+  "matrix": [
+    {
+      "scene": "l10-q1-mega-charge@high-z0.5",
+      "backend": "webgl",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 18,
+      "triangles": 78749
+    },
+    {
+      "scene": "l10-q1-mega-charge@high-z1",
+      "backend": "webgl",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 20,
+      "triangles": 69878
+    },
+    {
+      "scene": "l10-q1-mega-charge@high-z1.5",
+      "backend": "webgl",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 20,
+      "triangles": 69878
+    },
+    {
+      "scene": "l10-q1-mega-charge@low-z0.5",
+      "backend": "webgl",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 18,
+      "triangles": 55276
+    },
+    {
+      "scene": "l10-q1-mega-charge@low-z1",
+      "backend": "webgl",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 20,
+      "triangles": 55282
+    },
+    {
+      "scene": "l10-q1-mega-charge@low-z1.5",
+      "backend": "webgl",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 20,
+      "triangles": 55282
+    },
+    {
+      "scene": "l10-q1-mega-grab@high-z0.5",
+      "backend": "webgl",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 17,
+      "triangles": 69187
+    },
+    {
+      "scene": "l10-q1-mega-grab@high-z1",
+      "backend": "webgl",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 18,
+      "triangles": 60310
+    },
+    {
+      "scene": "l10-q1-mega-grab@high-z1.5",
+      "backend": "webgl",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 18,
+      "triangles": 60310
+    },
+    {
+      "scene": "l10-q1-mega-grab@low-z0.5",
+      "backend": "webgl",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 17,
+      "triangles": 51858
+    },
+    {
+      "scene": "l10-q1-mega-grab@low-z1",
+      "backend": "webgl",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 18,
+      "triangles": 51858
+    },
+    {
+      "scene": "l10-q1-mega-grab@low-z1.5",
+      "backend": "webgl",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 18,
+      "triangles": 51858
+    },
+    {
+      "scene": "l10-q1-mega-slam@high-z0.5",
+      "backend": "webgl",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 19,
+      "triangles": 78755
+    },
+    {
+      "scene": "l10-q1-mega-slam@high-z1",
+      "backend": "webgl",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 20,
+      "triangles": 69878
+    },
+    {
+      "scene": "l10-q1-mega-slam@high-z1.5",
+      "backend": "webgl",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 20,
+      "triangles": 69878
+    },
+    {
+      "scene": "l10-q1-mega-slam@low-z0.5",
+      "backend": "webgl",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 19,
+      "triangles": 55282
+    },
+    {
+      "scene": "l10-q1-mega-slam@low-z1",
+      "backend": "webgl",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 20,
+      "triangles": 55282
+    },
+    {
+      "scene": "l10-q1-mega-slam@low-z1.5",
+      "backend": "webgl",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 20,
+      "triangles": 55282
+    },
+    {
+      "scene": "telegraph-alpha-charge@high-z0.5",
+      "backend": "webgl",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 24,
+      "triangles": 131644
+    },
+    {
+      "scene": "telegraph-alpha-charge@high-z1",
+      "backend": "webgl",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 24,
+      "triangles": 76247
+    },
+    {
+      "scene": "telegraph-alpha-charge@high-z1.5",
+      "backend": "webgl",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 24,
+      "triangles": 70153
+    },
+    {
+      "scene": "telegraph-alpha-charge@low-z0.5",
+      "backend": "webgl",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 24,
+      "triangles": 63465
+    },
+    {
+      "scene": "telegraph-alpha-charge@low-z1",
+      "backend": "webgl",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 24,
+      "triangles": 63465
+    },
+    {
+      "scene": "telegraph-alpha-charge@low-z1.5",
+      "backend": "webgl",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 24,
+      "triangles": 57371
+    },
+    {
+      "scene": "telegraph-alpha-grab@high-z0.5",
+      "backend": "webgl",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 18,
+      "triangles": 75315
+    },
+    {
+      "scene": "telegraph-alpha-grab@high-z1",
+      "backend": "webgl",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 21,
+      "triangles": 70592
+    },
+    {
+      "scene": "telegraph-alpha-grab@high-z1.5",
+      "backend": "webgl",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 21,
+      "triangles": 70592
+    },
+    {
+      "scene": "telegraph-alpha-grab@low-z0.5",
+      "backend": "webgl",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 18,
+      "triangles": 57804
+    },
+    {
+      "scene": "telegraph-alpha-grab@low-z1",
+      "backend": "webgl",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 21,
+      "triangles": 57810
+    },
+    {
+      "scene": "telegraph-alpha-grab@low-z1.5",
+      "backend": "webgl",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 21,
+      "triangles": 57810
+    },
+    {
+      "scene": "telegraph-alpha-slam@high-z0.5",
+      "backend": "webgl",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 21,
+      "triangles": 131638
+    },
+    {
+      "scene": "telegraph-alpha-slam@high-z1",
+      "backend": "webgl",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 24,
+      "triangles": 76247
+    },
+    {
+      "scene": "telegraph-alpha-slam@high-z1.5",
+      "backend": "webgl",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 24,
+      "triangles": 70153
+    },
+    {
+      "scene": "telegraph-alpha-slam@low-z0.5",
+      "backend": "webgl",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 21,
+      "triangles": 63459
+    },
+    {
+      "scene": "telegraph-alpha-slam@low-z1",
+      "backend": "webgl",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 24,
+      "triangles": 63465
+    },
+    {
+      "scene": "telegraph-alpha-slam@low-z1.5",
+      "backend": "webgl",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 24,
+      "triangles": 57371
+    },
+    {
+      "scene": "telegraph-alpha-charge@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 24,
+      "triangles": 131644
+    },
+    {
+      "scene": "telegraph-alpha-charge@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 24,
+      "triangles": 76247
+    },
+    {
+      "scene": "telegraph-alpha-charge@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 24,
+      "triangles": 70153
+    },
+    {
+      "scene": "telegraph-alpha-charge@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 24,
+      "triangles": 63465
+    },
+    {
+      "scene": "telegraph-alpha-charge@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 24,
+      "triangles": 63465
+    },
+    {
+      "scene": "telegraph-alpha-charge@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 24,
+      "triangles": 57371
+    },
+    {
+      "scene": "telegraph-alpha-grab@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 18,
+      "triangles": 75315
+    },
+    {
+      "scene": "telegraph-alpha-grab@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 21,
+      "triangles": 70592
+    },
+    {
+      "scene": "telegraph-alpha-grab@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 21,
+      "triangles": 70592
+    },
+    {
+      "scene": "telegraph-alpha-grab@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 18,
+      "triangles": 57804
+    },
+    {
+      "scene": "telegraph-alpha-grab@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 21,
+      "triangles": 57810
+    },
+    {
+      "scene": "telegraph-alpha-grab@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 21,
+      "triangles": 57810
+    },
+    {
+      "scene": "telegraph-alpha-slam@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 21,
+      "triangles": 131638
+    },
+    {
+      "scene": "telegraph-alpha-slam@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 24,
+      "triangles": 76247
+    },
+    {
+      "scene": "telegraph-alpha-slam@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 24,
+      "triangles": 70153
+    },
+    {
+      "scene": "telegraph-alpha-slam@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 21,
+      "triangles": 63459
+    },
+    {
+      "scene": "telegraph-alpha-slam@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 24,
+      "triangles": 63465
+    },
+    {
+      "scene": "telegraph-alpha-slam@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 24,
+      "triangles": 57371
+    },
+    {
+      "scene": "l10-q1-mega-charge@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 18,
+      "triangles": 78749
+    },
+    {
+      "scene": "l10-q1-mega-charge@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 20,
+      "triangles": 69878
+    },
+    {
+      "scene": "l10-q1-mega-charge@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 20,
+      "triangles": 69878
+    },
+    {
+      "scene": "l10-q1-mega-charge@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 18,
+      "triangles": 55276
+    },
+    {
+      "scene": "l10-q1-mega-charge@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 20,
+      "triangles": 55282
+    },
+    {
+      "scene": "l10-q1-mega-charge@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 20,
+      "triangles": 55282
+    },
+    {
+      "scene": "l10-q1-mega-grab@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 17,
+      "triangles": 69187
+    },
+    {
+      "scene": "l10-q1-mega-grab@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 18,
+      "triangles": 60310
+    },
+    {
+      "scene": "l10-q1-mega-grab@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 18,
+      "triangles": 60310
+    },
+    {
+      "scene": "l10-q1-mega-grab@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 17,
+      "triangles": 51858
+    },
+    {
+      "scene": "l10-q1-mega-grab@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 18,
+      "triangles": 51858
+    },
+    {
+      "scene": "l10-q1-mega-grab@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 18,
+      "triangles": 51858
+    },
+    {
+      "scene": "l10-q1-mega-slam@high-z0.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 19,
+      "triangles": 78755
+    },
+    {
+      "scene": "l10-q1-mega-slam@high-z1",
+      "backend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 20,
+      "triangles": 69878
+    },
+    {
+      "scene": "l10-q1-mega-slam@high-z1.5",
+      "backend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 20,
+      "triangles": 69878
+    },
+    {
+      "scene": "l10-q1-mega-slam@low-z0.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 19,
+      "triangles": 55282
+    },
+    {
+      "scene": "l10-q1-mega-slam@low-z1",
+      "backend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 20,
+      "triangles": 55282
+    },
+    {
+      "scene": "l10-q1-mega-slam@low-z1.5",
+      "backend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "drawCalls": 20,
+      "triangles": 55282
+    }
+  ],
+  "baselineBrowser": {
+    "commit": "350ac1d1d",
+    "stats": {
+      "startTime": "2026-10-15T19:51:14.611Z",
+      "duration": 10171.886,
+      "expected": 0,
+      "skipped": 0,
+      "unexpected": 2,
+      "flaky": 0
+    },
+    "failures": [
+      {
+        "test": "T-E15-lifecycle @E15 pools, visual physics and event listeners unload without leaks; low tier reduces particles",
+        "message": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 1\nReceived: 11"
+      },
+      {
+        "test": "T-E15-03 @E15 @E15-AC03 @visual Full ground splat has palette red; Off has no red decal pixels",
+        "message": "Error: expect(received).toBe(expected) // Object.is equality\n\nExpected: 1\nReceived: 4"
+      }
+    ]
+  },
+  "simIsolatedRetry": {
+    "passed": 5,
+    "files": 5,
+    "horde200SimMsP95": 2.0831060000055004
+  },
+  "simPerformanceRetry": {
+    "passed": 20,
+    "failed": 1,
+    "failures": [
+      {
+        "test": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+        "messages": [
+          "AssertionError: expected 4.0264399999978195 to be less than or equal to 4\n    at /srv/mi/jobs/telegraph-vfx-edb046-92468-1792094046/tests/sim/performance/zoo-s2.test.ts:26:68\n    at file:///srv/mi/jobs/telegraph-vfx-edb046-92468-1792094046/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        ]
+      }
+    ]
+  },
+  "zooFreshProcess": {
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0
+  },
+  "campusIsolated": {
+    "passed": 1,
+    "failed": 0,
+    "skipped": 1
+  },
+  "telegraphUnitFinal": {
+    "passed": 4,
+    "failed": 0,
+    "skipped": 0
+  },
+  "simFullInitial": {
+    "files": 145,
+    "passed": 1059,
+    "failed": 16,
+    "failures": "wall-clock deadline or simulation p95 assertions on the shared runner",
+    "allFailuresPassedIsolated": true
+  },
+  "nativeTimingConditions": [
+    {
+      "at": "2026-10-15T19:34:27.449Z",
+      "load": [
+        2.99951171875,
+        4.11376953125,
+        3.57080078125
+      ],
+      "otherHeadlessChrome": 0,
+      "localVitest": 0,
+      "browserSlots": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "command": [
+        "npx",
+        "playwright",
+        "test",
+        "tests/perf/horde-budget.spec.ts",
+        "tests/perf/l10-alpha-contracts.spec.ts",
+        "--project=chromium",
+        "--workers=1",
+        "--retries=0"
+      ]
+    }
+  ],
+  "finalVfxToggleBrowser": {
+    "passed": 2,
+    "failed": 0,
+    "ordinaryWarningVisibleWithOptionalVfxOff": true,
+    "disabledWarningChangedPixelsMin": 100
+  },
+  "finalVfxUnit": {
+    "files": 9,
+    "passed": 38,
+    "failed": 0
+  },
+  "finalPrewarmUnit": {
+    "passed": 4,
+    "failed": 0,
+    "hiddenParentWarmedAndRestored": true
+  },
+  "continuityRetry": {
+    "passed": 0,
+    "failed": 1,
+    "failures": [
+      {
+        "test": "L1 -> L2 world-state continuity T-CONT-01S @continuity after the L1 lab blast the L2 town has the burned annex, the debris cells blocked, the outbreak house aftermath and this run's carryover",
+        "messages": [
+          "AssertionError: expected 213.03333333333333 to be less than or equal to 210\n    at /srv/mi/jobs/telegraph-vfx-edb046-6857-1792097177/tests/levels/continuity.test.ts:45:30\n    at file:///srv/mi/jobs/telegraph-vfx-edb046-6857-1792097177/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        ]
+      }
+    ]
+  },
+  "baselineContinuity": {
+    "commit": "350ac1d1d",
+    "passed": 0,
+    "failed": 1,
+    "failures": [
+      {
+        "test": "L1 -> L2 world-state continuity T-CONT-01S @continuity after the L1 lab blast the L2 town has the burned annex, the debris cells blocked, the outbreak house aftermath and this run's carryover",
+        "messages": [
+          "AssertionError: expected 213.03333333333333 to be less than or equal to 210\n    at /srv/mi/jobs/mi-telegraph-vfx-baseline-1015-fcb0f3-15556-1792097470/tests/levels/continuity.test.ts:45:30\n    at file:///srv/mi/jobs/mi-telegraph-vfx-baseline-1015-fcb0f3-15556-1792097470/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        ]
+      }
+    ]
+  },
+  "levelsFull": {
+    "files": 53,
+    "passed": 312,
+    "failed": 1,
+    "skipped": 2,
+    "failure": "T-CONT-01S: L2 with L1 aftermath completes in 213.03333333333333 simulated seconds vs the unchanged 210-second cap",
+    "baselineReproducedExactly": true
+  },
+  "finalPrewarmBrowser": {
+    "passed": 1,
+    "failed": 0,
+    "ordinaryWarningVisibleWithOptionalVfxOff": true
+  }
+}

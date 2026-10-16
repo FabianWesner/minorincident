@@ -1,0 +1,50 @@
+{
+  "physical-high": {
+    "backend": "webgl",
+    "drawCalls": 54,
+    "triangles": 487543
+  },
+  "horde-high": {
+    "tier": "high",
+    "frameMsP95": 7.5,
+    "simMsP95": 1,
+    "updateCpuMsP95": 5,
+    "renderCpuMsP95": 2.1000003814697266,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+  },
+  "alpha-dog-high": {
+    "timing": {
+      "frameP95": 7.300000000000182,
+      "simP95": 1.3999996185302734,
+      "simSamples": 458,
+      "draws": 68,
+      "triangles": 1178433,
+      "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+    },
+    "retainedHeapBytes": 110016884
+  },
+  "physical-low": {
+    "backend": "webgl",
+    "drawCalls": 46,
+    "triangles": 243130
+  },
+  "horde-low": {
+    "tier": "low",
+    "frameMsP95": 32.899999999999636,
+    "simMsP95": 4.59999942779541,
+    "updateCpuMsP95": 8.300000190734863,
+    "renderCpuMsP95": 7.59999942779541,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+  },
+  "alpha-dog-low": {
+    "timing": {
+      "frameP95": 5,
+      "simP95": 0.8000001907348633,
+      "simSamples": 465,
+      "draws": 50,
+      "triangles": 220860,
+      "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+    },
+    "retainedHeapBytes": 75483668
+  }
+}
