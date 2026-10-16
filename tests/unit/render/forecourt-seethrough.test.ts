@@ -18,6 +18,7 @@ test('PO #3 only the garage between camera and courier dissolves; its batched ne
   const camera = new PerspectiveCamera(); camera.position.set(10, 8, 10);
   camera.lookAt(0, .72, 0); camera.updateMatrixWorld();
   const view = Object.assign(Object.create(DistrictView.prototype), {
+    interiorBuildings: [], interiorPose: { x: Infinity, y: Infinity, z: Infinity }, interiorRevision: 0, appliedInteriorRevision: -1, appliedInteriorCullOff: false,
     cutPlacements: new Set<Object3D>(), occluderId: '',
     foliage: { update() {}, reveal: true }, updateRoofs() {}, frameSeconds: 1,
     lensRay: new Vector3(), lensPoint: new Vector3(), holeTarget: new Vector3(), holeCorner: new Vector3(), subjectBox: new Box3(),
