@@ -1,0 +1,19 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b -> 94.130.181.173:/srv/mi/ws/spec-audit-b-5b46d9
+[remote] cache-gc deleted:none
+[remote] sync 20s, 13651 files; job /srv/mi/jobs/spec-audit-b-5b46d9-87863-1792137408; queueing for a slot
+[runner] slot 0 acquired; load 1.87 3.16 2.08
+
+ RUN  v5.0.3 /srv/mi/jobs/spec-audit-b-5b46d9-87863-1792137408
+
+stdout | tests/sim/barricades.test.ts > T-E26-14 @E26 @E26-AC14 complete bot fills/braces two slots and defense reduces core arrivals >=40%
+{"barricadeAB":[{"seed":1,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":2,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":3,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":4,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":5,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":6,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":7,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":8,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":9,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":10,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100}]}
+
+ ✓  functional  tests/sim/barricades.test.ts (22 tests | 21 skipped) 5406ms
+   ✓ T-E26-14 @E26 @E26-AC14 complete bot fills/braces two slots and defense reduces core arrivals >=40% 5403ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 21 skipped (22)
+   Start at  07:57:09
+   Duration  8.87s (tests 62%, transform 32%, import 6%)
+
+[remote] done exit=0 (runner 94.130.181.173, sync 20s, remote total 11s)

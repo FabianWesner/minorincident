@@ -1,0 +1,142 @@
+{
+  "epic": "E27",
+  "passed": 27,
+  "failed": 0,
+  "selected": [
+    {
+      "file": "sim/combat/balance.test.ts",
+      "test": "S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash",
+      "status": "passed"
+    },
+    {
+      "file": "sim/determinism.test.ts",
+      "test": "S-05-foundation @smoke empty scripted 1800-tick golden hash",
+      "status": "passed"
+    },
+    {
+      "file": "sim/explosion-extinguisher.test.ts",
+      "test": "T-E27-10-bullet @E27 @E27-AC10 extinguisher extinguishes within 3 m and stuns its forward cone for exactly one second (bullet)",
+      "status": "passed"
+    },
+    {
+      "file": "sim/explosion-extinguisher.test.ts",
+      "test": "T-E27-10-melee @E27 @E27-AC10 extinguisher extinguishes within 3 m and stuns its forward cone for exactly one second (melee)",
+      "status": "passed"
+    },
+    {
+      "file": "sim/explosion-gas.test.ts",
+      "test": "T-E27-09b @E27 @E27-AC09 a toxic blast creates the defined six metre, twelve second gas hazard",
+      "status": "passed"
+    },
+    {
+      "file": "sim/explosion-gas.test.ts",
+      "test": "T-E27-09 @E27 @E27-AC09 toxic DoT excludes Hazmat; tear gas slows infected by 30% and the player by 15%, then clears",
+      "status": "passed"
+    },
+    {
+      "file": "sim/explosions.test.ts",
+      "test": "T-E27-02 @E27 @E27-AC02 per class the sim damage at 0 / 50 / 100 % radius matches the curve within 2 %",
+      "status": "passed"
+    },
+    {
+      "file": "sim/explosions.test.ts",
+      "test": "T-E27-02b @E27 @E27-AC02 @E26-AC05 the radial impulse has an upward bias, scales with mass and lands one tick later",
+      "status": "passed"
+    },
+    {
+      "file": "sim/explosions.test.ts",
+      "test": "T-E27-02c @E27 @E27-AC02 full cover shields a target; barricade rails take blast damage",
+      "status": "passed"
+    },
+    {
+      "file": "sim/explosions.test.ts",
+      "test": "T-E27-04 @E27 @E27-AC04 five propane tanks 3 m apart chain in sequence at 0.15\u20130.3 s per link; \u2264 8 links per second",
+      "status": "passed"
+    },
+    {
+      "file": "sim/explosions.test.ts",
+      "test": "T-E27-05 @E27 @E27-AC05 a car explosion lifts the body \u2265 0.5 m, detaches doors and hood, chars the wreck and leaves fires \u2265 20 s",
+      "status": "passed"
+    },
+    {
+      "file": "sim/explosions.test.ts",
+      "test": "T-E27-06 @E27 @E27-AC06 explosion.gas-station mega sequence: cab/pump \u2192 rupture \u2192 tanker, \u2265 80% kills in 12 m, slow-mo only within 15 m",
+      "status": "passed"
+    },
+    {
+      "file": "sim/explosions.test.ts",
+      "test": "T-E27-06 @E27 @E27-AC06 explosion.fuel-truck mega sequence: cab/pump \u2192 rupture \u2192 tanker, \u2265 80% kills in 12 m, slow-mo only within 15 m",
+      "status": "passed"
+    },
+    {
+      "file": "sim/explosions.test.ts",
+      "test": "T-E27-08 @E27 @E27-AC08 infected inside a 6 m smoke cloud lose their target within 0.5 s, wander, and the cloud ends at 12 s",
+      "status": "passed"
+    },
+    {
+      "file": "sim/explosions.test.ts",
+      "test": "T-E27-fires @E27 aftermath fires damage, spread once under the cap and burn out",
+      "status": "passed"
+    },
+    {
+      "file": "unit/vehicles.test.ts",
+      "test": "T-E09-01-wreck @E09-AC01 @E27-AC05 fire-engine damage tiers preserve wheels/seats and disable authored lamps",
+      "status": "passed"
+    },
+    {
+      "file": "sim/ai/infected-recover.test.ts",
+      "test": "T-recover-02 @E05 @E27 explosives kill for good and leave a persistent corpse; a blast or a lethal burn finishes a downed infected",
+      "status": "passed"
+    },
+    {
+      "file": "sim/combat/combat.test.ts",
+      "test": "S-06 @E05 @smoke each category fires/hits; swept projectile cannot tunnel through a dummy",
+      "status": "passed"
+    },
+    {
+      "file": "sim/npc/permanence.test.ts",
+      "test": "20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07",
+      "status": "passed"
+    },
+    {
+      "file": "unit/assets/registry.test.ts",
+      "test": "T-E09-06d @E09-AC06 @E27-AC05 variant-less vehicles retain meshes, darken damage and extinguish lamps at every LOD",
+      "status": "passed"
+    },
+    {
+      "file": "unit/data/explosions.test.ts",
+      "test": "T-E27-01 @E27 @E27-AC01 every ExplosionDef and BlastFxPreset validates and every explosive source references one",
+      "status": "passed"
+    },
+    {
+      "file": "unit/motionlab/stage1.test.ts",
+      "test": "stage1 navigation capsule and NPC traces meet motion budgets @smoke",
+      "status": "passed"
+    },
+    {
+      "file": "unit/motionlab/stage1.test.ts",
+      "test": "crowd fades preserve head position when clips change or interrupt @smoke",
+      "status": "passed"
+    },
+    {
+      "file": "unit/render/e27-blasts.test.ts",
+      "test": "T-E27-06v @E27 @E27-AC06 mega lights the town orange for five seconds and slow motion can be disabled",
+      "status": "passed"
+    },
+    {
+      "file": "unit/render/e27-blasts.test.ts",
+      "test": "T-E27-06d @E27 @E27-AC06 daylight transients clear the field after expiry without enabling practical lamps",
+      "status": "passed"
+    },
+    {
+      "file": "unit/render/e27-blasts.test.ts",
+      "test": "T-E27-15f @E27 @E27-AC15 persistent fire emits pooled embers without an explosion on both tiers",
+      "status": "passed"
+    },
+    {
+      "file": "unit/render/e27-blasts.test.ts",
+      "test": "T-E27-03p @E27 @E27-AC03 a fixed-tick jump retains distributed smoke births and upward motion",
+      "status": "passed"
+    }
+  ]
+}

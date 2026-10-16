@@ -1,0 +1,132 @@
+{
+  "epic": "E28",
+  "passed": 25,
+  "failed": 0,
+  "selected": [
+    {
+      "file": "sim/weather.test.ts",
+      "test": "live weather L1 @E28 seeded continuous authored blend",
+      "status": "passed"
+    },
+    {
+      "file": "sim/weather.test.ts",
+      "test": "live weather L3 @E28 seeded continuous authored blend",
+      "status": "passed"
+    },
+    {
+      "file": "sim/weather.test.ts",
+      "test": "live weather L5 @E28 seeded continuous authored blend",
+      "status": "passed"
+    },
+    {
+      "file": "sim/weather.test.ts",
+      "test": "live rain @E28 blend onset, wetness and clearing stay continuous",
+      "status": "passed"
+    },
+    {
+      "file": "sim/weather.test.ts",
+      "test": "T-E28-01 @E28 @E28-AC01 seeded gust/lightning/wetness timeline and campaign keys",
+      "status": "passed"
+    },
+    {
+      "file": "sim/weather.test.ts",
+      "test": "T-E28-02 @E28 @E28-AC02 rain changes real noise, Molotov duration and wheel friction",
+      "status": "passed"
+    },
+    {
+      "file": "sim/weather.test.ts",
+      "test": "T-E28-03 @E28 @E28-AC03 heavy rain saturates in 60 seconds and dries with 90s half-life",
+      "status": "passed"
+    },
+    {
+      "file": "sim/weather.test.ts",
+      "test": "T-E28-04 @E28 @E28-AC04 lightning reveals only within 40m for 30 ticks and delays thunder by distance",
+      "status": "passed"
+    },
+    {
+      "file": "sim/weather.test.ts",
+      "test": "T-E28-05 @E28 @E28-AC05 fog perception uses 60% of the ordinary sight range",
+      "status": "passed"
+    },
+    {
+      "file": "sim/weather.test.ts",
+      "test": "T-E28-06 @E28 @E28-AC06 wind biases at least 60% of spread cells downwind over 20 trials",
+      "status": "passed"
+    },
+    {
+      "file": "sim/weather.test.ts",
+      "test": "T-E28-07 @E28 @E28-AC07 moving player/infected record tracks and snow/ash apply grip",
+      "status": "passed"
+    },
+    {
+      "file": "sim/weather.test.ts",
+      "test": "T-E28-08 @E28 @E28-AC08 every override preserves all registered mission graph walks",
+      "status": "passed"
+    },
+    {
+      "file": "sim/weather.test.ts",
+      "test": "T-E28-06b @E28 @E28-AC06 strong gusts move light Rapier props",
+      "status": "passed"
+    },
+    {
+      "file": "sim/weather.test.ts",
+      "test": "footprints @E28 @E28-AC07 alternate at stride distance and reject airborne/teleported steps",
+      "status": "passed"
+    },
+    {
+      "file": "sim/weather.test.ts",
+      "test": "footprints @E28 @E28-AC07 stay on bridge support and do not offset through its barrier",
+      "status": "passed"
+    },
+    {
+      "file": "sim/combat/balance.test.ts",
+      "test": "S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash",
+      "status": "passed"
+    },
+    {
+      "file": "sim/determinism.test.ts",
+      "test": "S-05-foundation @smoke empty scripted 1800-tick golden hash",
+      "status": "passed"
+    },
+    {
+      "file": "sim/combat/combat.test.ts",
+      "test": "S-06 @E05 @smoke each category fires/hits; swept projectile cannot tunnel through a dummy",
+      "status": "passed"
+    },
+    {
+      "file": "sim/npc/permanence.test.ts",
+      "test": "20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07",
+      "status": "passed"
+    },
+    {
+      "file": "unit/motionlab/stage1.test.ts",
+      "test": "stage1 navigation capsule and NPC traces meet motion budgets @smoke",
+      "status": "passed"
+    },
+    {
+      "file": "unit/motionlab/stage1.test.ts",
+      "test": "crowd fades preserve head position when clips change or interrupt @smoke",
+      "status": "passed"
+    },
+    {
+      "file": "unit/render/weather-materials.test.ts",
+      "test": "weather surface graphs @E28 cached graphs keep see-through and frozen corpses following weather after the source is disposed",
+      "status": "passed"
+    },
+    {
+      "file": "unit/tooling/verify-quiet.test.ts",
+      "test": "E28 CLI @E28 reserves quiet timing separately and retains functional/perf evidence",
+      "status": "passed"
+    },
+    {
+      "file": "unit/tooling/verify-quiet.test.ts",
+      "test": "@E26 @E28 a quiet timing failure keeps the verifier red and records its exit code",
+      "status": "passed"
+    },
+    {
+      "file": "unit/tooling/verify-quiet.test.ts",
+      "test": "@E26 @E28 quiet admission refusal cannot reuse functional results or a previous GPU artifact",
+      "status": "passed"
+    }
+  ]
+}
