@@ -1,0 +1,123 @@
+{
+  "check": {
+    "command": [
+      "sh",
+      "tools/perf/quiet-run.sh",
+      "npx",
+      "playwright",
+      "test",
+      "tests/perf/l7-rocket.spec.ts",
+      "tests/perf/l7-district.spec.ts",
+      "tests/perf/l7-encounters.spec.ts",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "exitCode": 1
+  },
+  "stats": {
+    "startTime": "2026-10-16T08:19:47.364Z",
+    "duration": 118935.656,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "file": "perf/l7-district.spec.ts",
+      "name": "T-E29-19-district @E29-AC19 @perf W6 district high fire and rocket stress",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 16369,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "perf/l7-district.spec.ts",
+      "name": "T-E29-19-district @E29-AC19 @perf W6 district low fire and rocket stress",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 23873,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "perf/l7-encounters.spec.ts",
+      "name": "T-E29-19-encounters @E29-AC19 @perf high: final horde, followers and queued arrivals",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 20028,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "perf/l7-encounters.spec.ts",
+      "name": "T-E29-19-encounters @E29-AC19 @perf low: final horde, followers and queued arrivals",
+      "project": "chromium",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 22346,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-c/tests/perf/l7-encounters.spec.ts",
+                "column": 27,
+                "line": 48
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.3\u001b[39m\nReceived:    \u001b[31m33.70000000000073\u001b[39m\n\n  46 |   expect(result.initialRegulars).toBe(low ? 60 : 120); expect(result.initialAlphas).toBe(2); expect(result.followers).toBe(low ? 15 : 24);\n  47 |   expect(result.peakInfected).toBe(low ? 100 : 200); expect(result.blasts).toBeGreaterThanOrEqual(6);\n> 48 |   expect(result.frameP95).toBeLessThanOrEqual(low ? 33.3 : 16.7); expect(result.simP95).toBeLessThanOrEqual(low ? 6 : 4);\n     |                           ^\n  49 |   expect(result.draws).toBeLessThanOrEqual(low ? 300 : 600); expect(result.triangles).toBeLessThanOrEqual(low ? 500000 : 1500000); expect(result.heapMB).toBeLessThanOrEqual(low ? 250 : 400);\n  50 |   expect(result.puffs).toBeLessThanOrEqual(low ? 120 : 400); expect(result.debris).toBeLessThanOrEqual(low ? 40 : 120); expect(result.particles).toBeLessThanOrEqual(low ? 2000 : 6000);\n  51 |   expect(result.lights).toBeLessThanOrEqual(low ? 3 : 8); expect(result.props).toBeLessThanOrEqual(low ? 60 : 150);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-c/tests/perf/l7-encounters.spec.ts:48:27"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "perf/l7-rocket.spec.ts",
+      "name": "T-E29-19-rocket @E29-AC19 @perf high repeated rocket hits at the 200/100 infected cap",
+      "project": "chromium",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 14937,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-c/tests/perf/l7-rocket.spec.ts",
+                "column": 93,
+                "line": 49
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m400\u001b[39m\nReceived:    \u001b[31m420.1672601699829\u001b[39m\n\n  47 |   expect(result.blasts).toBeGreaterThanOrEqual(6); expect(result.peakInfected).toBe(tier === 'high' ? 200 : 100);\n  48 |   expect(result.draws).toBeLessThanOrEqual(tier === 'high' ? 600 : 300); expect(result.triangles).toBeLessThanOrEqual(tier === 'high' ? 1_500_000 : 500_000);\n> 49 |   expect(result.simP95).toBeLessThanOrEqual(tier === 'high' ? 4 : 6); expect(result.heapMB).toBeLessThanOrEqual(tier === 'high' ? 400 : 250);\n     |                                                                                             ^\n  50 |   expect(result.particles + result.puffs).toBeLessThanOrEqual(tier === 'high' ? 6000 : 2000);\n  51 |   expect(result.puffs).toBeLessThanOrEqual(tier === 'high' ? 400 : 120);\n  52 |   expect(result.debris).toBeLessThanOrEqual(tier === 'high' ? 120 : 40); expect(result.gibs).toBeLessThanOrEqual(tier === 'high' ? 80 : 30);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-c/tests/perf/l7-rocket.spec.ts:49:93"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "file": "perf/l7-rocket.spec.ts",
+      "name": "T-E29-19-rocket @E29-AC19 @perf low repeated rocket hits at the 200/100 infected cap",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 15679,
+          "errors": []
+        }
+      ]
+    }
+  ]
+}

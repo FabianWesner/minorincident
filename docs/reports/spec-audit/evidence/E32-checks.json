@@ -1,0 +1,57 @@
+{
+  "target": "E32",
+  "epics": [
+    "E32"
+  ],
+  "pattern": "@(?:E32)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+  "checks": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/remote/run.sh",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-c",
+        "--pull",
+        "test-results/epics/E32/vitest.json",
+        "--",
+        "bash",
+        "tools/remote/timing-isolated.sh",
+        "npx",
+        "vitest",
+        "run",
+        "-t",
+        "@(?:E32)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--maxWorkers=1",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/epics/E32/vitest.json"
+      ],
+      "exitCode": 1
+    }
+  ]
+}

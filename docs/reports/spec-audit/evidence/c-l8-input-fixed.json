@@ -1,0 +1,26 @@
+{
+  "kind": "corrected full input pass",
+  "stats": {
+    "startTime": "2026-10-16T08:52:26.604Z",
+    "duration": 30354.125,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "file": "e2e/levels/L8.spec.ts",
+      "name": "T-E30-18 @E30-AC18 real keyboard exploration, tunnel breach and complete APC escape into L9",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 29391,
+          "errors": []
+        }
+      ]
+    }
+  ]
+}

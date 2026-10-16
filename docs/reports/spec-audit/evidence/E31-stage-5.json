@@ -1,0 +1,49 @@
+{
+  "check": {
+    "command": [
+      "sh",
+      "tools/remote/run.sh",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-c",
+      "--pull",
+      "test-results/epics/E31/vitest-timing.json",
+      "--pull",
+      "test-results/epics/E31/residency-perf-200.json",
+      "--pull",
+      "test-results/epics/E31/residency-perf-100.json",
+      "--",
+      "sh",
+      "-c",
+      "case \"$(readlink /proc/self/fd/9)\" in *.0) exec flock /srv/mi/locks/slot.1 \"$@\";; *.1) flock -u 9 || exit 2; exec flock /srv/mi/locks/slot.0 flock /srv/mi/locks/slot.1 \"$@\";; *) exit 2;; esac",
+      "sh",
+      "npx",
+      "vitest",
+      "run",
+      "tests/sim/world/chunk-residency.test.ts",
+      "-t",
+      "T-E31-19-S4",
+      "--maxWorkers=1",
+      "--reporter=default",
+      "--reporter=json",
+      "--outputFile=test-results/epics/E31/vitest-timing.json"
+    ],
+    "exitCode": 0
+  },
+  "passed": 2,
+  "failed": 0,
+  "pending": 9,
+  "success": true,
+  "tests": [
+    {
+      "file": "sim/world/chunk-residency.test.ts",
+      "name": "T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/world/chunk-residency.test.ts",
+      "name": "T-E31-19-S4-100 @E31-AC19 @E18-AC02 resident crossing horde sim p95",
+      "status": "passed",
+      "failures": []
+    }
+  ]
+}
