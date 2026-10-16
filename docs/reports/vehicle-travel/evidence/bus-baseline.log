@@ -1,0 +1,36 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-60hz @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz) (16.2s)
+
+
+  1) [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-60hz @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz)
+
+    Error: bus screen jitter (px RMS)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.6
+    Received:    4.689948765057468
+
+      86 |     expect(samples.every(sample => Math.abs(sample.bus[0]) < half.width / 2 && Math.abs(sample.bus[1]) < half.height / 2), 'the sampled player bus stays on screen').toBe(true);
+      87 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).
+    > 88 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+         |                                                              ^
+      89 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+      90 |   });
+      91 | }
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/vehicle-travel/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:88:62
+
+    Error Context: test-results/playwright/run-34761/e2e-levels-l4-bus-ride-smo-8f280-creen-during-the-ride-60hz--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-34761/e2e-levels-l4-bus-ride-smo-8f280-creen-during-the-ride-60hz--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-34761/e2e-levels-l4-bus-ride-smo-8f280-creen-during-the-ride-60hz--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-60hz @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz)

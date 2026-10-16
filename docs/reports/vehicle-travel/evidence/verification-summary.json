@@ -1,0 +1,87 @@
+{
+  "baseline": "8718d0fb1",
+  "commits": [
+    "5221e9afa",
+    "4bfc40624"
+  ],
+  "typecheck": "pass",
+  "lint": "pass",
+  "build": "pass",
+  "bus": {
+    "passed": 17,
+    "rmsLimitPx": 0.6,
+    "minRmsPx": 0.013572333641353476,
+    "maxRmsPx": 0.08857245845325365,
+    "playerBusIndices": [
+      2
+    ]
+  },
+  "realInputL5": {
+    "passed": true,
+    "handover": {
+      "level": "L6",
+      "survivors": [
+        "dale",
+        "rosa",
+        "okafor",
+        "mia",
+        "sam"
+      ]
+    },
+    "deaths": 0,
+    "photos": [
+      "l5-basement-exit",
+      "l5-group-of-five",
+      "l5-metro-doors",
+      "l5-metro-shelter",
+      "l5-sign-of-life",
+      "pair-harbor-street",
+      "pair-kessler-lane",
+      "pair-metro-entrance",
+      "pair-plaza"
+    ],
+    "errors": []
+  },
+  "sceneLab": {
+    "webgl": {
+      "passed": 12,
+      "failed": 0
+    },
+    "webgpu": {
+      "passed": 12,
+      "failed": 0
+    },
+    "tiers": [
+      "high",
+      "low"
+    ],
+    "zooms": [
+      1.5,
+      1,
+      0.5
+    ],
+    "reviewedRequiredSheets": true
+  },
+  "nativeBudgetTests": {
+    "passed": 4,
+    "failed": 0,
+    "quietBatchPassed": 21,
+    "literalLowL4Transition50ms": "fails: turn 64.5 ms; break 68.3 ms"
+  },
+  "focusedRemote": {
+    "rendererTestsPassed": 14,
+    "travelTestsPassed": 1
+  },
+  "fullRemote": {
+    "exitCode": 0,
+    "testsPassed": 2937,
+    "testsFailed": 0,
+    "testsSkipped": 11,
+    "filesPassed": 467,
+    "filesSkipped": 3,
+    "durationSeconds": 2657.19,
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit tests/sim tests/levels --maxWorkers=4"
+  },
+  "collisionRegistryIntegration": "unavailable in freshly fetched main",
+  "deployOrMerge": false
+}
