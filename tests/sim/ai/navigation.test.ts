@@ -93,10 +93,14 @@ test('T-E07-02b @E07 @E07-AC02 @E06-AC04 actual infected consume catalog noise, 
   const attack = () => { w.setInput({ left: { down: true, held: true, up: false }, aim: { x: 1, z: 0 } }); step(w, 1); w.clearInput(); step(w, 30); };
   w.combat!.setLoadout(['weapon.bat'], ['weapon.grenade']); attack();
   expect(near.infected!.state).toBe('idle'); expect(w.events.events().filter((e) => e.type === 'noise')).toHaveLength(0);
+  // The new cover/proximity awareness belongs to L5, not this generic arena.
+  expect(w.events.events().some(e => e.type === 'ai.alerted' && e.targetId === near.id && e.cause === 'hearing')).toBe(false);
   const victim = w.entities.get(w.infected!.spawn('infected.runner', { x: 1, z: 0 }))!; victim.health.current = 1;
   attack();
   expect(victim.health.current).toBe(0); expect(near.infected!.state).not.toBe('idle'); expect(outside.infected!.state).toBe('idle');
-  expect(w.events.events().some((e) => e.type === 'ai.alerted' && e.targetId === near.id && e.cause === 'noise')).toBe(true);
+  expect(w.events.events().some(e => e.type === 'ai.alerted' && e.targetId === near.id && e.cause === 'noise')).toBe(true);
+  // A kill, unlike the silent miss, emits the bounded catalog noise.
+  expect(w.events.events().some(e => e.type === 'noise' && e.actionId === 'weapon.bat' && e.radius === 6)).toBe(true);
   w.combat!.setLoadout(['weapon.hunting-rifle'], ['weapon.grenade']); attack();
   expect(distant.infected!.state).toBe('chase');
   expect(w.events.events().some((e) => e.type === 'ai.alerted' && e.targetId === distant.id && e.cause === 'noise')).toBe(true);

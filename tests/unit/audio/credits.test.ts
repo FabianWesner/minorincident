@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { expect, test } from 'vitest';
 import { audioCues, lazyCategories } from '../../../src/data/audioCues';
-import { audioCredits, codeCredits } from '../../../src/data/credits';
+import { audioCredits, codeCredits, technologyCredits, toolchainCredits } from '../../../src/data/credits';
 import { madeBy } from '../../../src/data/madeBy';
 import imports from '../../../assets/audio/imports.json';
 import { noticesWith, render } from '../../../tools/credits/generate';
@@ -46,6 +46,29 @@ test('@E16 every production dependency is listed with its locked permissive lice
     }
     for (const reference of ['Bruno Simon', 'Mesh2Motion'])
         expect(codeCredits.some(c => c.author.startsWith(reference)), reference).toBe(true);
+});
+
+/** PO 10-15: "Make sure in Credits we mention all libs we are using ... and also all technologies". Fails when any dependency, devDependency or shipped audio source lacks a credit. */
+test('every dependency, devDependency, non-npm technology and audio source is credited with name, URL and license', () => {
+    const pkg = JSON.parse(readFileSync('package.json', 'utf8')) as { dependencies: Record<string, string>; devDependencies: Record<string, string> };
+    const shown = [...codeCredits, ...toolchainCredits, ...technologyCredits, ...audioCredits];
+    for (const name of Object.keys(pkg.dependencies))
+        expect(codeCredits.some(c => c.title.startsWith(`${name} `)), `dependency ${name}`).toBe(true);
+    for (const name of Object.keys(pkg.devDependencies))
+        expect([...codeCredits, ...toolchainCredits].some(c => c.title.startsWith(`${name} `)), `devDependency ${name}`).toBe(true);
+    for (const title of ['WebGPU', 'WebGL 2', 'three.js WebGPURenderer', 'Rapier', 'Blender', 'FFmpeg', 'Basis Universal', 'meshoptimizer', 'Cloudflare Pages', 'Hetzner Cloud', 'Mesh2Motion'])
+        expect(shown.some(c => c.title.includes(title)), title).toBe(true);
+    // Every source the audio ledger ships (music streams, cue recordings, fanfare layers) is credited by author, page and license.
+    const sources = imports.sources as Record<string, { title: string; author: string; url: string; license: string }>;
+    const shipped = new Set([...Object.values(imports.streams).map(s => s.source), ...Object.values(imports.cues).map(c => c.source), ...Object.values(imports.fanfare as Record<string, { source: string }[]>).flatMap(l => l.map(x => x.source))]);
+    for (const id of shipped) {
+        const s = sources[id];
+        expect(audioCredits.some(c => c.url === s.url && c.author === s.author && c.license === s.license), `audio source ${id} (${s.title})`).toBe(true);
+    }
+    // The weapon pass sources, by name.
+    for (const name of ['The Free Firearm Sound Library', 'gun reload sounds', 'Residue SFX'])
+        expect(audioCredits.some(c => c.title.includes(name) && c.url.startsWith('https://') && c.license === 'CC0'), name).toBe(true);
+    for (const c of shown) { expect(c.title.length, c.title).toBeGreaterThan(0); expect(c.licenseUrl, c.title).toMatch(/^https:\/\//); expect(c.license.length, c.title).toBeGreaterThan(0); }
 });
 
 test('credits open with the makers: Fabian Wesner (LinkedIn), every AI model, harness and tool', () => {

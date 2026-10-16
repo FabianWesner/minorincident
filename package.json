@@ -42,7 +42,7 @@
     "scene:layout": "sh tools/e2e-lock.sh tsx tools/scenelab/cli.ts specs/scenes/layout-sweep/*.json",
     "scene:mcp": "tsx tools/scenelab/mcp.ts",
     "scene:catalog": "sh tools/e2e-lock.sh tsx tools/scenelab/catalog.ts",
-    "scene:matrix": "E2E_UNITS=2 sh tools/e2e-lock.sh tsx tools/scenelab/catalog.ts --matrix --backend webgpu --filter 'seat-*,ped-*,corgi-*,dog-*,area-grove-*,l10-q1-*,l10-q3-*,l10-e3b-*,l10-mega-speed-*,l10-mega-close-*,l10-lod-*,l10-minigun-heat,l10-cure-install-defend,l10-cure-mist,qa-l10-*,l10-region-seam,seethrough-*,l3-highway-entry-medkit,l3-highway-melee-escape,ui-menu-*,l10-e2-terminal'",
+    "scene:matrix": "E2E_UNITS=2 sh tools/e2e-lock.sh tsx tools/scenelab/catalog.ts --matrix --backend webgpu --filter 'qa-l6-rested-shelter,l2-finale-*,po-debug-*,po-shotgun-*,seat-*,ped-*,corgi-*,dog-*,area-grove-*,l10-q1-*,l10-q3-*,l10-e3b-*,l10-mega-speed-*,l10-mega-close-*,l10-lod-*,l10-minigun-heat,l10-cure-install-defend,l10-cure-mist,qa-l10-*,l10-region-seam,seethrough-*,l3-highway-entry-medkit,l3-highway-melee-escape,ui-menu-*,l10-e2-terminal'",
     "assets:bake-statics": "tsx tools/assets/bake-statics.ts"
   },
   "dependencies": {

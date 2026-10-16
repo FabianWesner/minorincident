@@ -6,8 +6,10 @@ import { worldAssets } from '../../src/assets/worldDefinitions';
 import physicsAssets from '../../src/data/physicsAssets';
 import { l6, l6Doors, l6PhotoSpots } from '../../src/data/l6';
 import type { DistrictLayout, Placement, Point } from '../../src/levels/districts/types';
+/** The station sits SZ north of its authored frame so its platform track (kit.metro-track, z=23 in model frame) lands on the tunnel line z=15 (PO 10-15 "Tracks are disconnected"). */
+const SZ = -8;
 const rect = (a: number, b: number, c: number, d: number): Point[] => [[a,b],[c,b],[c,d],[a,d],[a,b]];
-const layout: DistrictLayout = { version: 1, district: 'D-SUBWAY', title: 'Lakeshore — Northgate', geometryHash: '', bounds: rect(-32,-22,288,32), roads: { nodes: [{id:'start',point:[6,-2]},{id:'end',point:[273,15]}], edges:[{id:'track',start:'start',end:'end',points:[[6,-2],[6,15],[273,15]],laneWidth:2.2}] }, placements:[], anchors:{}, buildings:[], colliders:[], walkable:{cellSize:.5,excluded:[]}, lawns:[], lightGroups:[{id:'metro-main',offAt:5},{id:'metro-emergency',offAt:5},{id:'shelter-camp',offAt:5},{id:'self',offAt:5}], acousticZones:[{id:'shelter',preset:'interior',polygon:rect(-30,-20,30,20)},{id:'tunnel',preset:'tunnel',polygon:rect(30,11.2,246,18.8)}], surfaces:[{surface:'tile',height:.6,polygon:rect(-30,-20,30,20)},{surface:'gravel',height:.6,polygon:rect(30,11.2,246,18.8)},{surface:'asphalt',height:3.9,polygon:rect(258,0,288,30)}], layers:[] };
+const layout: DistrictLayout = { version: 1, district: 'D-SUBWAY', title: 'Lakeshore — Northgate', geometryHash: '', bounds: rect(-32,-30,288,32), roads: { nodes: [{id:'start',point:[6,-2]},{id:'end',point:[273,15]}], edges:[{id:'track',start:'start',end:'end',points:[[6,-2],[6,15],[273,15]],laneWidth:2.2}] }, placements:[], anchors:{}, buildings:[], colliders:[], walkable:{cellSize:.5,excluded:[]}, lawns:[], lightGroups:[{id:'metro-main',offAt:5},{id:'metro-emergency',offAt:5},{id:'shelter-camp',offAt:5},{id:'self',offAt:5}], acousticZones:[{id:'shelter',preset:'interior',polygon:rect(-30,-28,30,18.8)},{id:'tunnel',preset:'tunnel',polygon:rect(30,11.2,246,18.8)}], surfaces:[{surface:'tile',height:.6,polygon:rect(-30,-28,30,12)},{surface:'gravel',height:.6,polygon:rect(-30,12,30,18.8)},{surface:'gravel',height:.6,polygon:rect(30,11.2,246,18.8)},{surface:'asphalt',height:3.9,polygon:rect(258,0,288,30)}], layers:[] };
 const place = (assetId: string, x: number, z: number, y=0, yaw=0, lightGroup='metro-main'): Placement => {
   const d = worldAssets[assetId]; if (!d) throw new Error(`Unregistered ${assetId}`);
   const hx = (Math.abs(Math.cos(yaw))*d.dimensions.x+Math.abs(Math.sin(yaw))*d.dimensions.z)/2, hz=(Math.abs(Math.sin(yaw))*d.dimensions.x+Math.abs(Math.cos(yaw))*d.dimensions.z)/2;
@@ -25,7 +27,7 @@ const place = (assetId: string, x: number, z: number, y=0, yaw=0, lightGroup='me
   }
   return p;
 };
-place('int.metro-station',0,0);
+place('int.metro-station',0,SZ);
 for(let i=0;i<18;i++) place('kit.metro-tunnel',36+i*12,15,.35);
 for(const x of [54,126,198]) place('kit.maintenance-corridor',x,6.2,.4,Math.PI/2);
 for(const x of [78,174]) place('kit.maintenance-corridor',x,23.8,.4,-Math.PI/2);
@@ -36,30 +38,33 @@ layout.colliders.push({id:'northgate-platform',aabb:{min:[246,.4,11.2],max:[249.
 for(const [z,width]of [[16.4,1.5],[14.1,1.35]])for(let i=0;i<24;i++)layout.colliders.push({id:`northgate-tread-${z}-${i}`,aabb:{min:[249.4+i*.25,.4,z-width/2],max:[249.4+(i+1)*.25,.6+3.3*(i+1)/24,z+width/2]},walkable:true,minTier:0,maxTier:5});
 layout.colliders.push({id:'northgate-landing',aabb:{min:[255.4,.4,12.2],max:[258,3.9,17.8]},walkable:true,minTier:0,maxTier:5});
 
-for(const [x,z] of [[-8,-2],[0,-2],[-24,15],[-12,15],[0,15],[20,15]]) place('kit.shelter-camp',x,z,.6,0,'shelter-camp');
+for(const [x,z] of [[-8,-2+SZ],[0,-2+SZ],[-24,15+SZ],[-12,15+SZ],[0,15+SZ],[20,15+SZ]]) place('kit.shelter-camp',x,z,.6,0,'shelter-camp');
 for(const [x,z] of [[269,3],[282,26],[283,6]]) place('prop.jersey-barrier',x,z,3.9);
 place('prop.crates',279,24,3.9);
 place('veh.wreck',279,22,3.9,.4);
 place('bld.backdrop-houses',284,27,3.9,Math.PI);
 place('decay.fuel-truck-crater',283,8,3.9);
-place('util.radio',-4,2,.6,0,'shelter-camp');
+place('util.radio',-4,2+SZ,.6,0,'shelter-camp');
 for(let x=30;x<=246;x+=12) place('prop.emergency-light',x,12,3.2,Math.PI/2,'metro-emergency');
-for(const x of [-12,0,12]) place('prop.emergency-light',x,8.8,3.2,Math.PI/2,'metro-emergency');
+for(const x of [-12,0,12]) place('prop.emergency-light',x,8.8+SZ,3.2,Math.PI/2,'metro-emergency');
 // Paired barriers narrow each service gate to 2.2 m. Alternating piers break long sight lines every 24 m.
 for(const x of l6.gates) for(const z of [12.65,17.35]) place('prop.jersey-barrier',x,z,.6,Math.PI/2);
 for(let x=42;x<246;x+=24) if(!l6.gates.some(g=>g===x)) place('prop.jersey-barrier',x,((x-42)/24)%2?17.35:12.65,.6,Math.PI/2);
 for(const x of l6.gates) for(const z of [13.1,16.9]) place('prop.crates',x-3,z,.6,0,'self');
+// Appended last so the ids of every other placement stay (placement-solids baseline keys on them).
+// One continuous track: the tunnel's own track kit, placed like its modules (y .35, 12 m apart) along the station's whole length.
+for(const x of [-24,-12,0,12,24]) place('kit.metro-track',x,15,.35);
 const anchor=(name:string,x:number,z:number,y=.6)=>{layout.anchors[name]={position:[x,y,z],yaw:0};};
-anchor('player-start',3,8);anchor('maintenance-a',-10,-10);anchor('maintenance-b',10,-10);anchor('tunnel-start',30,15);anchor('mid-tunnel',150,15);anchor('exit-platform',242,15);anchor('night-exit',273,15,3.9);
+anchor('player-start',3,8+SZ);anchor('maintenance-a',-10,-10+SZ);anchor('maintenance-b',10,-10+SZ);anchor('tunnel-start',30,15);anchor('mid-tunnel',150,15);anchor('exit-platform',242,15);anchor('night-exit',273,15,3.9);
 for(const [i,p] of l6Doors.entries())anchor(`service-${i}`,p.x,p.z);
 for(const [n,p]of l6PhotoSpots)anchor(`photo-${n}`,p[0],p[1],n==='l6-exit-night'?3.9:.6);
 // Complement of the actual rooms: no traversable void around the kit walls.
-const rooms=[[-30,-20,30,20],[30,11.2,258,18.8],[258,0,288,30],...[54,126,198].map(x=>[x-2.3,1.2,x+2.3,11.2]),...[78,174].map(x=>[x-2.3,18.8,x+2.3,28.8])];
+const rooms=[[-30,-20+SZ,30,18.8],[30,11.2,258,18.8],[258,0,288,30],...[54,126,198].map(x=>[x-2.3,1.2,x+2.3,11.2]),...[78,174].map(x=>[x-2.3,18.8,x+2.3,28.8])];
 const edges=[...new Set([-32,288,...rooms.flatMap(r=>[r[0],r[2]])])].sort((a,b)=>a-b);
-for(let i=1;i<edges.length;i++){const x0=edges[i-1],x1=edges[i],mid=(x0+x1)/2,spans=rooms.filter(r=>mid>=r[0]&&mid<r[2]).map(r=>[r[1],r[3]]).sort((a,b)=>a[0]-b[0]);let z=-22;for(const [lo,hi]of spans){if(lo>z)layout.walkable.excluded.push(rect(x0,z,x1,lo));z=Math.max(z,hi);}if(z<32)layout.walkable.excluded.push(rect(x0,z,x1,32));}
+for(let i=1;i<edges.length;i++){const x0=edges[i-1],x1=edges[i],mid=(x0+x1)/2,spans=rooms.filter(r=>mid>=r[0]&&mid<r[2]).map(r=>[r[1],r[3]]).sort((a,b)=>a[0]-b[0]);let z=-30;for(const [lo,hi]of spans){if(lo>z)layout.walkable.excluded.push(rect(x0,z,x1,lo));z=Math.max(z,hi);}if(z<32)layout.walkable.excluded.push(rect(x0,z,x1,32));}
 layout.colliders.push({id:'night-street-floor',aabb:{min:[258,3.75,0],max:[288,3.9,30]},walkable:true,minTier:0,maxTier:5});
 // There are no drivable road lanes underground; the track is a pedestrian route.
-layout.roads={nodes:[{id:'shelter',point:[3,8]}],edges:[]};
+layout.roads={nodes:[{id:'shelter',point:[3,8+SZ]}],edges:[]};
 layout.geometryHash=createHash('sha256').update(JSON.stringify(layout)).digest('hex');
 mkdirSync('public/assets/layouts',{recursive:true});writeFileSync('public/assets/layouts/D-SUBWAY.layout.json',JSON.stringify(layout,null,2)+'\n');
 // Authored 30x30 night street slab. The tunnel/stations retain their shipped floors.

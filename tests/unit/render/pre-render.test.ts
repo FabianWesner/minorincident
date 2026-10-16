@@ -1,13 +1,15 @@
 import { expect, test, vi } from 'vitest';
-import { BoxGeometry, DirectionalLight, Group, InstancedMesh, Mesh, MeshBasicNodeMaterial, Matrix4, PerspectiveCamera, DataTexture, Scene, SpotLight, Vector2, Vector3 } from 'three/webgpu';
+import { BoxGeometry, DirectionalLight, Group, InstancedMesh, LineSegments, LineBasicNodeMaterial, Mesh, MeshBasicNodeMaterial, Matrix4, PerspectiveCamera, DataTexture, Scene, SpotLight, Vector2, Vector3 } from 'three/webgpu';
 import { compileLanes, preRender, warmUpSize } from '../../../src/render/PreRenderer';
 import { Renderer } from '../../../src/render/Renderer';
 
 test('T-E25-14g @E25 warm-up preserves the active gameplay light list', async () => {
   const scene = new Scene(), sun = new DirectionalLight(), spot = new SpotLight(); spot.visible = false; scene.add(sun, spot);
+  const lines = new LineSegments(new BoxGeometry(), new LineBasicNodeMaterial()); lines.visible = false; scene.add(lines); let compiledLines=0;
   const check = () => { expect(sun.visible).toBe(true); expect(spot.visible).toBe(false); };
-  const renderer = { selectedBackend: 'webgl', getSize: (target: Vector2) => target.set(100, 100), setSize: vi.fn(), finishWarmUp: vi.fn(async () => {}), compileAsync: vi.fn(async () => check()) } as unknown as Renderer;
-  await preRender(renderer, scene, new PerspectiveCamera(), check); check(); sun.dispose(); spot.dispose();
+  const renderer = { selectedBackend: 'webgl', getSize: (target: Vector2) => target.set(100, 100), setSize: vi.fn(), finishWarmUp: vi.fn(async () => {}), compileAsync: vi.fn(async () => { check(); if(lines.visible){compiledLines++;expect(lines.frustumCulled).toBe(false);} }) } as unknown as Renderer;
+  await preRender(renderer, scene, new PerspectiveCamera(), () => { check(); expect(lines.visible).toBe(true); }); check();
+  expect(compiledLines).toBe(1);expect(lines.visible).toBe(false);expect(lines.frustumCulled).toBe(true);lines.geometry.dispose();(lines.material as LineBasicNodeMaterial).dispose();sun.dispose();spot.dispose();
 });
 
 for (const fails of [false, true]) test(`@E19 pre-render warms hidden zero-count variants and restores state on ${fails ? 'failure' : 'success'}`, async () => {

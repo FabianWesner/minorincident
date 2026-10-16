@@ -158,6 +158,41 @@ FFmpeg is a local asset/test tool, not bundled or redistributed with the game.
 - meshoptimizer decoder (bundled with three.js addons) — Arseny Kapoulkine. Source: https://github.com/zeux/meshoptimizer. License: MIT (https://spdx.org/licenses/MIT.html).
 - Basis Universal transcoder (public/assets/basis) — Binomial LLC. Source: https://github.com/BinomialLLC/basis_universal. License: Apache-2.0 (https://spdx.org/licenses/Apache-2.0.html).
 
+## Build and test toolchain (devDependencies)
+
+- @gltf-transform/core 4.5.1 — @gltf-transform/core. Source: https://www.npmjs.com/package/@gltf-transform/core. License: MIT (https://spdx.org/licenses/MIT.html).
+- @gltf-transform/extensions 4.5.1 — @gltf-transform/extensions. Source: https://www.npmjs.com/package/@gltf-transform/extensions. License: MIT (https://spdx.org/licenses/MIT.html).
+- @gltf-transform/functions 4.5.1 — @gltf-transform/functions. Source: https://www.npmjs.com/package/@gltf-transform/functions. License: MIT (https://spdx.org/licenses/MIT.html).
+- @modelcontextprotocol/sdk 1.32.1 — @modelcontextprotocol/sdk. Source: https://www.npmjs.com/package/@modelcontextprotocol/sdk. License: MIT (https://spdx.org/licenses/MIT.html).
+- @playwright/test 1.63.0 — @playwright/test. Source: https://www.npmjs.com/package/@playwright/test. License: Apache-2.0 (https://spdx.org/licenses/Apache-2.0.html).
+- @tweakpane/core 2.0.5 — @tweakpane/core. Source: https://www.npmjs.com/package/@tweakpane/core. License: MIT (https://spdx.org/licenses/MIT.html).
+- @types/node 22.19.1 — @types/node. Source: https://www.npmjs.com/package/@types/node. License: MIT (https://spdx.org/licenses/MIT.html).
+- @types/pngjs 6.0.5 — @types/pngjs. Source: https://www.npmjs.com/package/@types/pngjs. License: MIT (https://spdx.org/licenses/MIT.html).
+- @types/three 0.186.0 — @types/three. Source: https://www.npmjs.com/package/@types/three. License: MIT (https://spdx.org/licenses/MIT.html).
+- eslint 10.12.0 — eslint. Source: https://www.npmjs.com/package/eslint. License: MIT (https://spdx.org/licenses/MIT.html).
+- meshoptimizer 1.3.0 — meshoptimizer. Source: https://www.npmjs.com/package/meshoptimizer. License: MIT (https://spdx.org/licenses/MIT.html).
+- ndarray-pixels 5.2.0 — ndarray-pixels. Source: https://www.npmjs.com/package/ndarray-pixels. License: MIT (https://spdx.org/licenses/MIT.html).
+- pixelmatch 7.1.0 — pixelmatch. Source: https://www.npmjs.com/package/pixelmatch. License: ISC (https://spdx.org/licenses/ISC.html).
+- pngjs 7.0.0 — pngjs. Source: https://www.npmjs.com/package/pngjs. License: MIT (https://spdx.org/licenses/MIT.html).
+- tsx 4.23.15 — tsx. Source: https://www.npmjs.com/package/tsx. License: MIT (https://spdx.org/licenses/MIT.html).
+- typescript 5.9.3 — typescript. Source: https://www.npmjs.com/package/typescript. License: Apache-2.0 (https://spdx.org/licenses/Apache-2.0.html).
+- typescript-eslint 8.71.0 — typescript-eslint. Source: https://www.npmjs.com/package/typescript-eslint. License: MIT (https://spdx.org/licenses/MIT.html).
+- vite 6.4.3 — vite. Source: https://www.npmjs.com/package/vite. License: MIT (https://spdx.org/licenses/MIT.html).
+- vitest 5.0.3 — vitest. Source: https://www.npmjs.com/package/vitest. License: MIT (https://spdx.org/licenses/MIT.html).
+- zod 4.6.5 — zod. Source: https://www.npmjs.com/package/zod. License: MIT (https://spdx.org/licenses/MIT.html).
+
+## Other technology and services
+
+- WebGPU — W3C GPU for the Web Working Group. Source: https://www.w3.org/TR/webgpu/. License: W3C Software and Document License (https://www.w3.org/copyright/software-license/). Browser API: the primary renderer backend.
+- WebGL 2 — Khronos Group. Source: https://registry.khronos.org/webgl/specs/latest/2.0/. License: Khronos specification (royalty-free web API) (https://registry.khronos.org/webgl/specs/latest/2.0/). Browser API: the fallback renderer backend.
+- three.js WebGPURenderer and TSL (Three Shading Language) — three.js authors. Source: https://threejs.org/docs/#api/en/renderers/WebGPURenderer. License: MIT (https://spdx.org/licenses/MIT.html). Ships inside the three package listed above: node materials, the WebGPU renderer and its WebGL 2 backend.
+- Rapier physics (WebAssembly build) — Dimforge. Source: https://rapier.rs/. License: Apache-2.0 (https://spdx.org/licenses/Apache-2.0.html). Ships as @dimforge/rapier3d-compat, listed above.
+- Blender (headless asset builds) — Blender Foundation and community. Source: https://www.blender.org/. License: GPL-3.0-or-later (tool only) (https://www.blender.org/about/license/). Used offline to build the 3D models; no Blender code ships, and the exported assets are the game's own.
+- FFmpeg (audio processing) — FFmpeg developers. Source: https://ffmpeg.org/. License: LGPL-2.1-or-later / GPL (tool only) (https://ffmpeg.org/legal.html). Used offline to cut, filter, loudness-measure and encode the audio sprites; no FFmpeg code ships.
+- Opus codec (libopus) and AAC — Xiph.Org Foundation and contributors; AAC via the platform encoder. Source: https://opus-codec.org/. License: BSD-3-Clause (https://opus-codec.org/license/). The shipped audio sprites are Opus (WebM) with an AAC (M4A) fallback.
+- Cloudflare Pages and Pages Functions — Cloudflare, Inc.. Source: https://pages.cloudflare.com/. License: Cloudflare Terms of Service (hosted service) (https://www.cloudflare.com/terms/). Hosting and the analytics endpoints (with D1 and R2 storage).
+- Hetzner Cloud — Hetzner Online GmbH. Source: https://www.hetzner.com/cloud/. License: Hetzner Terms and Conditions (hosted service) (https://www.hetzner.com/legal/terms-and-conditions/). Remote test runners for unit, simulation and end-to-end suites.
+
 ## Recorded music and sound credits
 
 Every recording below was modified for the game: excerpts, EQ, pitch, fades, compression, loudness normalization and Opus/AAC encoding.
@@ -209,6 +244,9 @@ Every recording below was modified for the game: excerpts, EQ, pitch, fades, com
 - Aggressive NPC sounds — mujtaba-io. Source: https://opengameart.org/content/aggressive-npc-sounds-hey-i-will-kill-you. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: hey_aggressive_mujtaba.wav.
 - Voice Effects Zombie-Skeleton-Monster Human Male — ArcadeParty. Source: https://opengameart.org/content/zombie-skeleton-monster-voice-effects. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: zombieDeath1.wav, zombieDeath2.wav, zombieDeath3.wav, zombieDeath4.wav, zombieYell2.wav, zombieYell4.wav, zombieYell7.wav, zombieYell9.wav.
 - 8 wet squish/slurp impacts — Independent.nu. Source: https://opengameart.org/content/8-wet-squish-slurp-impacts. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: impactsplat03.mp3.flac, impactsplat07.mp3.flac.
+- The Free Firearm Sound Library — Ben Jaszczak, Brian Nelson, Kevin Heras, Matthew Nanney (OGA: bart). Source: https://opengameart.org/content/the-free-firearm-sound-library. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: A_42P.wav, C_28P.wav, D_32P.wav, G_31P.wav, H_21P.wav, K_17P.wav, K_22P.wav, O_21P.wav, P_30P.wav, R_35P.wav, T_27P.wav, V_27P.wav, W_29P.wav, X_39P.wav.
+- gun reload sounds — SpringySpringo. Source: https://opengameart.org/content/gun-reload-sounds. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: assaultriflereload1_0.wav, gunreload1.wav, shotguncock_0.wav.
+- Residue SFX — FacadeGaikan. Source: https://opengameart.org/content/residue-sfx. License: CC0 (https://creativecommons.org/publicdomain/zero/1.0/). Files: boom.ogg, emptyclip.wav, ventilator.wav.
 
 ## Original work
 

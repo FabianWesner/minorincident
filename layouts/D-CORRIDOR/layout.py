@@ -232,7 +232,7 @@ g.path(ST_X + sdx / 2, -4.5, -128.0, -20.0, 'sidewalk')    # forecourt in front 
 g.collide_only('bridge-gate', [.3, 2.2, 10.6], [-161.0, 1.1, 0.0])
 for z in (-3.4, 0.0, 3.4):
     g.place('prop.barricade', -160.4, z, 0.0, 1.0, soft=True)
-g.place('bld.river-bridge', -167.0, 0.0, 0.0, (.7, 1.0, 1.0), check=False)
+g.place('bld.river-bridge', -167.0, 0.0, 0.0, (.7, 1.0, 1.0), check=False, y=-3.03)
 for z in (-22.0, 22.0):
     g.fence('privacy', XR + .7, z, YX0, z)
 # the river: water west of the bank, a low parapet as the visible edge

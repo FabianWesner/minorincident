@@ -2,7 +2,7 @@
 // highlighted active point above geometry, range-based reveal, separate presentation state.
 import { PaletteMaterial } from './PaletteMaterial';
 import { modelLod } from './lodPolicy';
-import { BoxGeometry, CylinderGeometry, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, SphereGeometry, Vector3, type Camera, type Object3D, type BufferGeometry, type Material } from 'three/webgpu';
+import { BoxGeometry, EdgesGeometry, LineBasicNodeMaterial, LineSegments, ConeGeometry, CylinderGeometry, Group, Mesh, MeshBasicNodeMaterial, PlaneGeometry, RingGeometry, SphereGeometry, Vector3, type Camera, type Object3D, type BufferGeometry, type Material } from 'three/webgpu';
 import { uv, vec4 } from 'three/tsl';
 import type { View } from './View';
 import type { AssetQuality } from '../assets/types';
@@ -13,6 +13,7 @@ import { isDoor } from '../sim/interact/Interactables';
 import type { EntitySnapshot } from '../sim/world/types';
 import type { Materials } from './Materials';
 import './interaction.css';
+import { l6, l6Doors, l6Entries } from '../data/l6';
 const assetIds: Record<string, string> = {
   'hazard.propane': 'haz.propane-tank', 'hazard.barrel': 'haz.propane-tank', 'hazard.gas-can': 'haz.gas-can',
   'hazard.extinguisher': 'prop.fire-extinguisher',
@@ -24,6 +25,7 @@ const assetIds: Record<string, string> = {
 export function isMissionInteraction(world: SimWorld, entity: EntitySnapshot): boolean {
   const mission = world.missions;
   if (!mission || mission.state.phase !== 'playing') return false;
+  if (entity.archetype === 'pickup.headlamp') return !!entity.pickup && 'collected' in entity.pickup && !entity.pickup.collected;
   return mission.def.steps.some(step => {
     const axeRack = step.id === 'axe' && step.complete.kind === 'interact' && step.complete.anchor === 'l2-axe-rack';
     if ((step.optional && !axeRack) || mission.state.steps[step.id]?.status !== 'active' || step.complete.kind !== 'interact') return false;
@@ -64,6 +66,13 @@ export class InteractionView extends Group {
   private readonly coverageFill = document.createElement('div');
   private readonly projection = new Vector3();
   private readonly debrisMeshes: Mesh[] = [];
+  private readonly entryHatches: { door: number; leaf: Group }[] = [];
+  private readonly crateEdges = new EdgesGeometry(this.box);
+  private readonly crateOutline = new LineBasicNodeMaterial({ color: '#58ffe0', transparent: true, opacity: .85, depthTest: false, depthWrite: false });
+  private readonly crateGuides: { id: string; ring: Mesh; outline: LineSegments }[] = [];
+  private readonly gateGuides: { x: number; line: Mesh }[] = [];
+  private readonly arrowGeometry = new ConeGeometry(.18, .45, 4);
+  private readonly crateArrow = new Mesh(this.arrowGeometry, this.teal);
   private disposed = false;
   constructor(private readonly world: SimWorld, private readonly materials: Materials, private readonly view: View, private readonly low = false) {
     super(); this.registry = new AssetRegistry(() => {}, { materials: materials }); this.name = 'interactions';
@@ -71,6 +80,27 @@ export class InteractionView extends Group {
     const outline = new Mesh(this.outlineGeometry, this.black), stroke = new Mesh(this.strokeGeometry, this.white);
     outline.renderOrder = 90; stroke.renderOrder = 91; this.fill.renderOrder = 92;
     this.ring.add(outline, stroke, this.fill); this.ring.rotation.x = -Math.PI / 2; this.add(this.ring);
+    if (world.scenario === 'L6') {
+      for (const entry of l6Entries) {
+        const source = l6Doors[entry.door], hatch = new Group(), leaf = new Group();
+        hatch.name = `l6-entry-${entry.door}`; hatch.position.set(source.x, .6, source.z < 15 ? 11.65 : 18.35);
+        const backing = new Mesh(this.box, this.materials.get('uiDark')); backing.scale.set(1.5, 1.9, .08); backing.position.y = .95; hatch.add(backing);
+        for (const x of [-.7, .7]) { const frame = new Mesh(this.box, this.materials.get('policeBlue')); frame.scale.set(.12, 2, .12); frame.position.set(x, 1, 0); hatch.add(frame); }
+        for (let i=0;i<5;i++) { const slat = new Mesh(this.box, this.materials.get('policeBlue')); slat.scale.set(1.3, .12, .14); slat.position.set(0, .25 + i * .35, 0); leaf.add(slat); }
+        const signal = new Mesh(this.led, entry.door % 2 ? this.teal : this.white); signal.position.set(.6, 2.1, 0); hatch.add(signal, leaf);
+        this.entryHatches.push({ door: entry.door, leaf }); this.add(hatch);
+      }
+      for (const prop of world.props?.items ?? []) if (prop.assetId === 'prop.crates' && l6.gates.some(x => Math.abs(prop.pose.p[0] - x) < 5)) {
+        const ring = new Mesh(this.outlineGeometry, this.teal); ring.rotation.x = -Math.PI / 2; ring.renderOrder = 93; ring.visible = false;
+        const outline = new LineSegments(this.crateEdges, this.crateOutline); outline.renderOrder = 93; outline.visible = false;
+        ring.scale.setScalar(.65); this.crateGuides.push({ id: prop.id, ring, outline }); this.add(ring, outline);
+      }
+      for (const x of l6.gates) {
+        const line = new Mesh(this.box, this.teal); line.scale.set(.12, .035, 2.2); line.position.set(x, .64, 15); line.visible = false;
+        this.gateGuides.push({ x, line }); this.add(line);
+      }
+      this.crateArrow.rotation.z = Math.PI; this.crateArrow.renderOrder = 94; this.crateArrow.visible = false; this.add(this.crateArrow);
+    }
     this.panel.className = 'interaction-prompt'; this.panel.dataset.testid = 'interaction-prompt'; this.panel.hidden = true;
     this.meter.className = 'interaction-meter'; this.meter.setAttribute('role', 'progressbar'); this.meter.setAttribute('aria-label', 'Interaction progress'); this.meter.setAttribute('aria-valuemin', '0'); this.meter.setAttribute('aria-valuemax', '100');
     this.coverage.className = 'interaction-meter'; this.coverage.hidden = true; this.coverage.setAttribute('role', 'meter'); this.coverage.setAttribute('aria-label', 'Slot coverage'); this.coverage.setAttribute('aria-valuemin', '0'); this.coverage.setAttribute('aria-valuemax', '100'); this.coverage.append(this.coverageFill);
@@ -80,7 +110,7 @@ export class InteractionView extends Group {
   async prewarmServiceGates(): Promise<() => void> {
     const lods: AssetQuality[] = this.low ? ['lod1', 'lod2'] : ['lod0', 'lod1', 'lod2'];
     const models = await Promise.all(lods.map(lod => this.registry.loadAsset('prop.service-gate', lod)));
-    for (const model of models) { model.visible = false; this.add(model); }
+    for (const model of models) { this.prepareGate(model); model.visible = false; this.add(model); }
     return () => { for (const model of models) model.removeFromParent(); };
   }
   /** Asset readiness barrier used at load and screenshotReady, including dynamically spawned objects. */
@@ -124,7 +154,7 @@ export class InteractionView extends Group {
   }
   private assetId(e: EntitySnapshot): string | undefined {
     const pickup = e.pickup && 'kind' in e.pickup ? e.pickup : undefined;
-    return e.barricade?.slot.sandbag ? 'prop.sandbag-pallet' : e.archetype === 'l6.service-gate' ? 'prop.service-gate' : pickup?.kind === 'item' && pickup.item?.startsWith('key.') ? 'util.keys' : pickup?.item === 'batteries' ? 'util.batteries' : assetIds[e.archetype];
+    return e.archetype === 'pickup.headlamp' ? 'acc.headlamp' : e.barricade?.slot.sandbag ? 'prop.sandbag-pallet' : e.archetype === 'l6.service-gate' ? 'prop.service-gate' : pickup?.kind === 'item' && pickup.item?.startsWith('key.') ? 'util.keys' : pickup?.item === 'batteries' ? 'util.batteries' : assetIds[e.archetype];
   }
   /** L1 v2 toys: gameplay-shaped code art (hinged gate leaf, dumpster, car-alarm LED + beacons, car-wash foam curtain and brushes). */
   private toyObject(e: EntitySnapshot): Group {
@@ -183,7 +213,7 @@ export class InteractionView extends Group {
     }
   }
   private async create(e: EntitySnapshot, lod: AssetQuality): Promise<Object3D> {
-    if (e.archetype === 'l6.service-gate') return this.registry.loadAsset('prop.service-gate', lod);
+    if (e.archetype === 'l6.service-gate') { const model = await this.registry.loadAsset('prop.service-gate', lod); this.prepareGate(model); return model; }
     if (e.barricade) {
       const object = this.barricadeObject(e);
       if (e.barricade.slot.sandbag) {
@@ -244,7 +274,29 @@ export class InteractionView extends Group {
     for (const [id, o] of this.objects) { const p = this.world.entities.get(id)?.pickup; if (p && 'kind' in p && !p.collected && o.visible) out.push({ id, kind: p.kind, x: o.position.x, y: o.position.y, z: o.position.z }); }
     return out;
   }
+  private prepareGate(model: Object3D): void {
+    model.traverse(node => { if (node instanceof Mesh) for (const material of Array.isArray(node.material) ? node.material : [node.material]) if (material instanceof PaletteMaterial) material.seeThrough(); });
+  }
+  private updateGateGuides(): void {
+    const player = this.world.entities.get(1), state = this.world.missions?.state.l6;
+    let next: import('../sim/interact/PropSystem').PushProp | undefined, nearest = Infinity;
+    for (const guide of this.crateGuides) {
+      const prop = this.world.props?.items.find(p => p.id === guide.id);
+      const gate = prop && state?.gates.find(g => Math.abs(g.x - prop.home.p[0]) < 5);
+      const distance = prop && player ? Math.hypot(player.transform.x - prop.pose.p[0], player.transform.z - prop.pose.p[2]) : Infinity;
+      guide.ring.visible = !!prop && !!gate && !prop.braced && distance < 9;
+      guide.outline.visible = guide.ring.visible;
+      if (prop && guide.ring.visible) {
+        guide.outline.position.set(prop.pose.p[0] + prop.center[0], prop.pose.p[1] + prop.center[1], prop.pose.p[2] + prop.center[2]);
+        guide.outline.quaternion.set(...prop.pose.q); guide.outline.scale.set(prop.half[0] * 2 + .08, prop.half[1] * 2 + .08, prop.half[2] * 2 + .08); guide.ring.position.set(prop.pose.p[0], prop.pose.p[1] + .05, prop.pose.p[2]); if (distance < nearest) { nearest = distance; next = prop; } }
+    }
+    for (const guide of this.gateGuides) guide.line.visible = !!player && Math.abs(player.transform.x - guide.x) < 9 && !!state?.gates.find(g => g.x === guide.x);
+    this.crateArrow.visible = !!next;
+    if (next) this.crateArrow.position.set(next.pose.p[0], next.pose.p[1] + 1.8 + Math.sin(this.world.tick / 15) * .1, next.pose.p[2]);
+  }
   update(camera: Camera): void {
+    this.updateGateGuides();
+    for(const hatch of this.entryHatches){const state=this.world.missions?.state.l6?.entries?.find(e=>e.door===hatch.door);const age=state?.warnedAt?this.world.tick-state.warnedAt:-1;hatch.leaf.rotation.x=age<0?0:age<120?Math.sin(age*.65)*.045:-1.2;}
     let selected: EntitySnapshot | null = null, nearest = 64, ringTarget: EntitySnapshot | null = null, ringDistance = 64;
     const player = this.world.entities.get(1);
     for (const e of this.world.entities.iterate()) {
@@ -268,7 +320,7 @@ export class InteractionView extends Group {
           if (b.intact && age < 12) object.position.x += Math.sin(age * 2) * .045 * (1 - age / 12);
         }
       }
-      if (player && e.interactable && (!e.barricade || this.world.barricades!.playerBuildable(e)) && (e.interactable.enabled || e.barricade && !e.barricade.intact) && (!e.interactable.completed || e.interactable.instant && isDoor(e.interactable.kind))) {
+      if (player && e.interactable && (!e.barricade || this.world.barricades!.playerBuildable(e)) && (e.interactable.enabled || e.archetype === 'l6.service-gate' || e.barricade && !e.barricade.intact) && (!e.interactable.completed || e.interactable.instant && isDoor(e.interactable.kind))) {
         const d = (e.transform.x - player.transform.x) ** 2 + (e.transform.z - player.transform.z) ** 2;
         if (d < nearest) { nearest = d; selected = e; }
         if (d < ringDistance && isMissionInteraction(this.world, e)) { ringDistance = d; ringTarget = e; }
@@ -279,7 +331,7 @@ export class InteractionView extends Group {
     this.panel.hidden = !inRange;
     if (ringTarget) {
       const c = ringTarget.interactable!;
-      this.ring.position.set(ringTarget.transform.x, .05, ringTarget.transform.z); this.ring.scale.setScalar(c.radius);
+      this.ring.position.set(ringTarget.transform.x, (this.world.districts?.pavingHeight(ringTarget.transform.x, ringTarget.transform.z) ?? 0) + .05, ringTarget.transform.z); this.ring.scale.setScalar(c.radius);
       this.fillGeometry.setDrawRange(0, Math.round(c.progress * 64) * 6);
     }
     if (selected && inRange) {
@@ -288,15 +340,19 @@ export class InteractionView extends Group {
       this.projection.set(selected.transform.x, 2.8, selected.transform.z).project(camera);
       this.panel.style.left = `${(this.projection.x + 1) * innerWidth / 2}px`; this.panel.style.top = `${(1 - this.projection.y) * innerHeight / 2}px`;
       const b = selected.barricade;
-      const label = b && !b.intact ? `${c.label} · ${Math.round(b.coverage * 100)}% coverage` : c.label;
-      const purpose = !b ? null : b.intact ? 'Repair the barricade: stand here to reinforce it' : b.slot.boardUp ? 'Seal this opening: stand here to board it up' : c.enabled ? 'Barricade the gap: press E / middle-click to brace the crates' : 'Barricade the gap: push crates into the marked line · 80% needed';
-      const caption = c.hint || purpose || (c.completed && isDoor(c.kind) ? `E / middle-click to ${c.open ? 'close' : 'open'}` : nearest <= c.radius ** 2 ? c.instant ? 'Stand here · E / middle-click' : 'Stand here to interact' : 'Move into the ring');
+      const service = selected.archetype === 'l6.service-gate';
+      const label = service ? 'Block the tunnel' : b && !b.intact ? `${c.label} · ${Math.round(b.coverage * 100)}% coverage` : c.label;
+      const gate = this.world.missions?.state.l6?.gates.find(g => g.id === selected.id);
+      const purpose = service ? gate?.closedAt ? (b?.props.length ?? 0) >= 2 ? 'Tunnel blocked · keep moving' : 'Push glowing crates onto the line · E to brace' : 'Let everyone pass · E to close the gate' : !b ? null : b.intact ? 'Repair the barricade: stand here to reinforce it' : b.slot.boardUp ? 'Seal this opening: stand here to board it up' : c.enabled ? 'Barricade the gap: press E / middle-click to brace the crates' : 'Barricade the gap: push crates into the marked line · 80% needed';
+      const caption = (service ? purpose : c.hint) || purpose || (c.completed && isDoor(c.kind) ? `E / middle-click to ${c.open ? 'close' : 'open'}` : nearest <= c.radius ** 2 ? c.instant ? 'Stand here · E / middle-click' : 'Stand here to interact' : 'Move into the ring');
       if (this.label.textContent !== label) this.label.textContent = label;
       if (this.caption.textContent !== caption) this.caption.textContent = caption;
       this.panel.dataset.entityId = String(selected.id); this.panel.dataset.hint = c.hint;
-      this.coverage.hidden = !selected.barricade || selected.barricade.intact;
+      this.coverage.hidden = service || !selected.barricade || selected.barricade.intact;
+      this.meter.hidden = false;
       if (!this.coverage.hidden) { const coverage = selected.barricade!.coverage; this.coverage.setAttribute('aria-valuenow', String(Math.round(coverage * 100))); this.coverageFill.style.transform = `scaleX(${coverage})`; }
-      this.meter.setAttribute('aria-valuenow', String(Math.round(c.progress * 100 + 1e-8))); this.meterFill.style.transform = `scaleX(${c.progress})`;
+      const progress = service ? gate?.closedAt ? Math.min(1, (b?.props.length ?? 0) / 2) : (gate?.hold ?? 0) / 60 : c.progress;
+      this.meter.setAttribute('aria-valuenow', String(Math.round(progress * 100))); this.meterFill.style.transform = `scaleX(${progress})`;
     }
     const pieces = this.world.hazards?.debris.pieces ?? [];
     for (let i = 0; i < pieces.length; i++) {
@@ -309,7 +365,7 @@ export class InteractionView extends Group {
     this.disposed = true; this.panel.remove(); this.clear(); this.objects.clear(); this.lods.clear();
     for (const geometry of this.geometries) geometry.dispose(); for (const material of this.batchMaterials) material.dispose();
     this.geometries.clear(); this.batchMaterials.clear(); this.prototypes.clear();
-    this.box.dispose(); this.led.dispose(); this.brush.dispose(); this.foam.dispose(); this.fillGeometry.dispose(); this.outlineGeometry.dispose(); this.strokeGeometry.dispose(); this.black.dispose(); this.white.dispose(); this.teal.dispose();
+    this.crateEdges.dispose(); this.crateOutline.dispose(); this.arrowGeometry.dispose(); this.box.dispose(); this.led.dispose(); this.brush.dispose(); this.foam.dispose(); this.fillGeometry.dispose(); this.outlineGeometry.dispose(); this.strokeGeometry.dispose(); this.black.dispose(); this.white.dispose(); this.teal.dispose();
     this.gasGeometry.dispose(); this.gasMaterial.dispose();
     void this.registry.dispose();
   }

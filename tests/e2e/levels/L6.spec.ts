@@ -25,7 +25,7 @@ test('T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes 
   const snap=async(name:string)=>{await page.evaluate(async name=>{const a=window.__SS__!;a.camera.preset(`D-SUBWAY/W0/${name}`);if(name!=='l6-first-breach'&&name!=='l6-shelter-fails')a.vfx.stepRender(.3);if(name==='l6-tunnel-retreat'){const s=a.missions.state()!.l6!,p=a.getState().player!.transform,front=Math.max(p.x,...s.survivors.filter(r=>r.status==='following').map(r=>a.getEntity(r.id)!.transform.x)),x=(p.x+front)/2;a.camera.cinematic({position:[x+34,40,49],target:[x,.6,15]},true);}await a.screenshotReady();},name);await page.screenshot({path:`${out}/real-${name}.png`});shots.add(name);await page.evaluate(()=>window.__SS__!.camera.follow());await step(1);};
   await step(30);await expect(page.locator('.story-bubble')).toContainText('Keep the wrap tight');await expect(page.locator('.story-bubble')).toBeVisible();await snap('l6-shelter-calm');await step(300);await expect(page.locator('.story-bubble')).toContainText('Please do not leave me behind');
   for(let i=0;i<3500;i++){
-    const obs=await page.evaluate(()=>{const a=window.__SS__!,m=a.missions.state()!,s=m.l6!,p=a.getState().player!.transform,all=a.query({}),friends=s.survivors.filter(r=>r.status==='following').map(r=>({...r,at:all.find(e=>e.id===r.id)!.transform})),close=all.filter(e=>e.infected&&e.health.current>0&&!e.hidden&&!e.infectionRise&&Math.hypot(e.transform.x-p.x,e.transform.z-p.z)<2.5).map(e=>e.transform);const enemy=all.filter(e=>e.infected&&e.health.current>0&&!e.hidden&&!e.infectionRise&&a.input.visible(e.transform)&&Math.hypot(e.transform.x-p.x,e.transform.z-p.z)<(['shelter','first','fails'].includes(s.phase)?18:12)).sort((a,b)=>Math.hypot(a.transform.x-p.x,a.transform.z-p.z)-Math.hypot(b.transform.x-p.x,b.transform.z-p.z))[0];return{tick:a.getState().tick,m,s,p,friends,input:a.getState().input,controls:a.getState().controls,close,enemy:enemy?{id:enemy.id,at:enemy.transform}:null};});
+    const obs=await page.evaluate(()=>{const a=window.__SS__!,m=a.missions.state()!,s=m.l6!,p=a.getState().player!.transform,all=a.query({}),friends=s.survivors.filter(r=>r.status==='following').map(r=>({...r,at:all.find(e=>e.id===r.id)!.transform})),close=all.filter(e=>e.infected&&e.health.current>0&&!e.hidden&&!e.infectionRise&&Math.hypot(e.transform.x-p.x,e.transform.z-p.z)<2.5).map(e=>e.transform);const enemy=all.filter(e=>e.infected&&e.health.current>0&&!e.hidden&&!e.infectionRise&&a.input.visible(e.transform)&&Math.hypot(e.transform.x-p.x,e.transform.z-p.z)<(['shelter','first','fails'].includes(s.phase)?18:12)).sort((a,b)=>Math.hypot(a.transform.x-p.x,a.transform.z-p.z)-Math.hypot(b.transform.x-p.x,b.transform.z-p.z))[0];const lamp=all.find(e=>e.archetype==='pickup.headlamp'&&e.pickup&&'collected' in e.pickup&&!e.pickup.collected);return{tick:a.getState().tick,m,s,p,lamp:lamp?.transform,friends,input:a.getState().input,controls:a.getState().controls,close,enemy:enemy?{id:enemy.id,at:enemy.transform}:null};});
     if(i%100===0)writeFileSync(`${out}/real-progress.json`,JSON.stringify({i,obs},null,2));
     if(obs.m.phase==='result'){writeFileSync(`${out}/real-input.json`,JSON.stringify({result:obs.m.result,shots:[...shots],state:obs.s},null,2));break;}
     if(obs.s.phase==='first'&&obs.tick>obs.s.breach1At+120&&!shots.has('l6-first-breach'))await snap('l6-first-breach');
@@ -45,9 +45,11 @@ test('T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes 
     else if(obs.friends.length&&obs.p.x>Math.min(...obs.friends.map(r=>r.at.x))+6){await step(12);continue;}
     if(obs.p.x>=246){target={x:273,z:obs.p.x<258?14.1:15};if(obs.p.x<249.1)target={x:250,z:14.1};}
     if(obs.p.x<25&&obs.p.z<14)target={x:6,z:obs.p.x<5.5?obs.p.z:15};
-    if(['shelter','first','fails'].includes(obs.s.phase))target={x:0,z:4};
+    if(['shelter','first','fails'].includes(obs.s.phase))target={x:0,z:-4};
     if(obs.close.length>=3){const cx=obs.close.reduce((n,e)=>n+e.x,0)/obs.close.length,cz=obs.close.reduce((n,e)=>n+e.z,0)/obs.close.length,scale=5/Math.max(.1,Math.hypot(obs.p.x-cx,obs.p.z-cz));target={x:obs.p.x+(obs.p.x-cx)*scale,z:obs.p.z+(obs.p.z-cz)*scale};}
+    if(obs.lamp)target=obs.lamp;
     const dx=target.x-obs.p.x,dz=target.z-obs.p.z;
+    if(obs.lamp&&Math.hypot(dx,dz)<1.7){await page.keyboard.down('e');await step(24);await page.keyboard.up('e');continue;}
     if(gate&&Math.hypot(dx,dz)<1.2){await page.keyboard.down('e');await step(60);await page.keyboard.up('e');continue;}
     if(Math.hypot(dx,dz)<1){await step(12);continue;}
     // Keep the isometric pose stable while physical WASD crosses the authored route.
@@ -56,7 +58,7 @@ test('T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes 
     for(const key of keys)await page.keyboard.down(key);await step(Math.min(12,Math.max(2,Math.floor(Math.max(Math.abs(dx),Math.abs(dz))*10))));for(const key of keys)await page.keyboard.up(key);
 
   }
-  const m=await page.evaluate(()=>window.__SS__!.missions.state()!);expect(m.phase).toBe('result');expect(shots.size).toBe(7);expect(m.l6!.gates.some(g=>g.closedAt>0)).toBe(true);expect(m.result!.deaths).toBe(0);expect(m.result!.rescued/m.result!.survivorsIn!).toBeGreaterThanOrEqual(.6);expect(m.l6!.survivors.some(r=>r.straggler&&r.rejoined)).toBe(true);await expect(page.getByRole('heading',{name:'Night. Still alive.'})).toBeVisible();await expect(page.getByTestId('result-rescued')).toHaveText(String(m.result!.rescued));await expect(page.getByTestId('result-survivorsIn')).toHaveText(String(m.result!.survivorsIn));await expect(page.getByTestId('mission-detail')).toContainText(`Rescued ${m.result!.rescued}`);await page.screenshot({path:`${out}/real-result.png`});// L6 is no longer the last level (PO 10-11 levels 4-9): the result button continues into L7; credits follow the last level.
+  const m=await page.evaluate(()=>window.__SS__!.missions.state()!);expect(m.phase).toBe('result');expect(m.l6!.flashlight).toBe(true);expect(shots.size).toBe(7);expect(m.l6!.gates.some(g=>g.closedAt>0)).toBe(true);expect(m.result!.deaths).toBe(0);expect(m.result!.rescued/m.result!.survivorsIn!).toBeGreaterThanOrEqual(.6);expect(m.l6!.survivors.some(r=>r.straggler&&r.rejoined)).toBe(true);await expect(page.getByRole('heading',{name:'Night. Still alive.'})).toBeVisible();await expect(page.getByTestId('result-rescued')).toHaveText(String(m.result!.rescued));await expect(page.getByTestId('result-survivorsIn')).toHaveText(String(m.result!.survivorsIn));await expect(page.getByTestId('mission-detail')).toContainText(`Rescued ${m.result!.rescued}`);await page.screenshot({path:`${out}/real-result.png`});// L6 is no longer the last level (PO 10-11 levels 4-9): the result button continues into L7; credits follow the last level.
   await page.getByRole('button',{name:'Continue',exact:true}).click();await page.waitForFunction(()=>window.__SS__!.getState().scenario==='L7',undefined,{timeout:60_000});
 });
 
@@ -72,12 +74,13 @@ function patch(png: PNG, ndc: number[], radius = 6) {
   return { r: r / n, g: g / n, b: b / n, l: lum(r / n, g / n, b / n) };
 }
 
-for(const [name,spot] of [['l6-shelter-fails',{x:0,z:4}],['l6-tunnel-retreat',{x:110,z:15}]] as const)test(`T-E24-15 @E24 @E24-AC15 ${name} mask contrast, red eye maxima and flashlight shadow`,async({page})=>{
+for(const [name,spot] of [['l6-shelter-fails',{x:0,z:-4}],['l6-tunnel-retreat',{x:110,z:15}]] as const)test(`T-E24-15 @E24 @E24-AC15 ${name} mask contrast, red eye maxima and flashlight shadow`,async({page})=>{
   test.setTimeout(300_000);mkdirSync(out,{recursive:true});await boot(page);
   await page.addStyleTag({content:'#hud,.hud,.story-bubble,.mission-subtitle,.mission-hud,.objective-hud{visibility:hidden!important}'});
   const setup=await page.evaluate(async spot=>{
     const a=window.__SS__!;
     await a.loadLevel('L6',{seed:1,progression:'L6-default'});a.pause();a.missions.begin();a.cheats.god(true);
+    const lamp=a.query({}).find(e=>e.archetype==='pickup.headlamp')!;a.teleport(1,lamp.transform);a.input.set({interact:true});await a.step(24);a.input.clear();
     a.cheats.completeObjective('shelter');a.cheats.completeObjective('stop');a.teleport(1,spot);
     a.camera.cinematic({position:[spot.x+20,25,spot.z+20],target:[spot.x-3,0,spot.z]},true);
     await a.step(30);

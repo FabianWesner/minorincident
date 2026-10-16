@@ -73,8 +73,8 @@ export class NpcView extends Group {
       };
       const old = node.material; node.material = Array.isArray(old) ? old.map(remap) : remap(old); if (this.dogSource === 'placeholder') for (const m of Array.isArray(old) ? old : [old]) m.dispose(); node.castShadow = node.receiveShadow = true;
     });
-    if (this.world.scenario === 'L7') {
-      const material = this.materials.fromVertexColors('npc:l7-corgi'); material.movingFigure.value = 1; material.userData.sharedPalette = true;
+    if (this.world.scenario === 'L7' || this.world.scenario === 'L6') {
+      const material = this.materials.fromVertexColors(`npc:${this.world.scenario.toLowerCase()}-corgi`); material.movingFigure.value = 1; material.userData.sharedPalette = true;
       const def = this.registry.definition('char.corgi');
       batchRigidParts(this.dog, [...def.requiredNodes, ...def.animatedNodes, ...def.sockets], material, source => (source as import('three').MeshBasicMaterial).color);
     }

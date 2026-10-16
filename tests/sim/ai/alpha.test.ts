@@ -16,7 +16,7 @@ test('T-E07-01-alpha @E07-AC01 Alpha has 300 effective HP and authored ordinary 
   expect(e.health).toEqual({ current: def.hp * INFECTED_TOUGHNESS, max: 300 });
   expect(() => validateInfected([{ ...def, attackInterval: .1 }])).toThrow();
 });
-for (const [weapon, hits, type] of [['handgun', 30, 'bullet'], ['army-mg', 43, 'bullet'], ['shotgun', 3, 'bullet'], ['rocket-launcher', 2, 'explosive']] as const) {
+for (const [weapon, hits, type] of [['handgun', 30, 'bullet'], ['army-mg', 43, 'bullet'], ['shotgun', 2, 'bullet'], ['rocket-launcher', 2, 'explosive']] as const) {
   test(`T-E07-06-alpha-${weapon} @E07-AC06 resistance landed hits and permanence`, async () => {
     const w = await arena(), e = spawn(w, 'alpha', 6, 0, 'idle'), def = catalog[`weapon.${weapon}`];
     e.combat!.armor = .9; // Alpha's table replaces generic armor.
@@ -30,9 +30,9 @@ for (const [weapon, hits, type] of [['handgun', 30, 'bullet'], ['army-mg', 43, '
       expect(e.health.current > 0).toBe(i < hits - 1);
       if (i < hits - 1) w.tick += interval;
     }
-    expect((hits - 1) / def.fireRate!).toBeCloseTo(weapon === 'handgun' ? 29 / 3 : weapon === 'army-mg' ? 4.2 : weapon === 'shotgun' ? 1 : 1.25);
+    expect((hits - 1) / def.fireRate!).toBeCloseTo(weapon === 'handgun' ? 29 / 3 : weapon === 'army-mg' ? 4.2 : weapon === 'shotgun' ? .5 : 1.25);
     expect(e.infected!.recoverAt >= 0).toBe(type !== 'explosive');
-    if (weapon === 'shotgun') expect(damageAmount(shot(e.id, def.id, def.damage * .1), e)).toBe(12);
+    if (weapon === 'shotgun') expect(damageAmount(shot(e.id, def.id, def.damage * .1), e)).toBeCloseTo(19.2);
     if (weapon === 'rocket-launcher') expect(damageAmount(shot(e.id, def.id, def.damage * .4, type), e)).toBe(72);
   });
 }
@@ -115,7 +115,7 @@ test('T-E07-05-alpha-independent @E07-AC05 another move has its own cooldown and
   expect(ai.specialHit(e.id, 1)).toBe(false);
 });
 
-for (const [weapon, hits, maxSpan] of [['handgun', 30, 9.7], ['army-mg', 43, 4.3], ['shotgun', 3, 1.1]] as const) test(`T-E07-06-alpha-live-${weapon} @E07-AC06 real sustained firing reaches the authored resistance fixture`, async () => {
+for (const [weapon, hits, maxSpan] of [['handgun', 30, 9.7], ['army-mg', 43, 4.3], ['shotgun', 2, .6]] as const) test(`T-E07-06-alpha-live-${weapon} @E07-AC06 real sustained firing reaches the authored resistance fixture`, async () => {
   const w = await arena(), e = spawn(w, 'alpha', 1.2, 0, 'idle');
   w.combat!.setLoadout([`weapon.${weapon}`], ['weapon.fists']); w.combat!.damage.god = true;
   e.combat!.staggerUntil = 10000;

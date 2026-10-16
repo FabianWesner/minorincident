@@ -8,7 +8,7 @@ const accessoryKinds = new Map((manifest as unknown as {id: string; accessory?: 
 import { infectedDefinitions } from '../../data/infected';
 import type { EntitySnapshot } from '../../sim/world/types';
 import { characterNodes } from '../../data/survivor';
-export const crowdAccessoryIds = manifest.filter(a => a.id.startsWith('acc.') && !a.aliasOf).map(a => a.id).sort();
+export const crowdAccessoryIds = manifest.filter(a => a.id.startsWith('acc.') && !a.aliasOf && 'accessory' in a).map(a => a.id).sort();
 /** Resolve identity without consulting pose, health, quality, LOD or pool membership. */
 export function resolveCrowdAppearance(e: EntitySnapshot, ids: readonly string[] = crowdAccessoryIds) {
   const selected = e.appearance?.asset ?? e.civilian?.model ?? e.infected?.model ?? e.infected?.variant ?? e.archetype;

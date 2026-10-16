@@ -129,6 +129,10 @@ test('T-E29-13-35 @E29-AC13 a full 35-person roster boards and every figure is a
   const source = await load(), base = source.entities.get(source.l7Encounters!.state.roster[0].id)!;
   const incoming = Array.from({ length: 35 }, (_, i) => { const e = structuredClone(base); e.id = 40 + i; e.health.current = 30 + i; e.civilian!.survivor!.key = `carry-${i}`; return e; });
   const w = await load(incoming, 'low'), d = w.l7Departure!;
+  for (const e of incoming) expect(w.entities.get(e.id)!.health.current).toBe(e.health.max);
+  // An injury acquired in L7 remains in its departure snapshot; recovery belongs to the next level's arrival.
+  w.entities.get(incoming[0].id)!.health.current = 23;
+  const departureHealth = incoming.map(e => [e.id, w.entities.get(e.id)!.health.current]);
   gather(w, incoming.map(e => e.id), -66);
   put(w, 1, boardingAnchor()!.x, boardingAnchor()!.z);
   for (let i = 0; i < 3000 && d.state.phase !== 'departing'; i++) step(w, 1);
@@ -139,7 +143,7 @@ test('T-E29-13-35 @E29-AC13 a full 35-person roster boards and every figure is a
   let done: { result: { escapedSurvivors: EntitySnapshot[] } } | null = null;
   w.events.on('level.completed', e => { if (e.type === 'level.completed') done = e as never; });
   step(w, 600);
-  expect(done!.result.escapedSurvivors.map(e => [e.id, e.health.current]).sort((a, b) => a[0] - b[0])).toEqual(incoming.map(e => [e.id, e.health.current]));
+  expect(done!.result.escapedSurvivors.map(e => [e.id, e.health.current]).sort((a, b) => a[0] - b[0])).toEqual(departureHealth);
 });
 
 test('a finished civilian retains its identity as a loss and never holds the boarding roster', async () => {

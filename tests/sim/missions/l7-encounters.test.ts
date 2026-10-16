@@ -66,17 +66,25 @@ test('T-E29-08-visible @E29-AC08 visible final emergence stays queued with both 
   expect(ai.director.queue.filter(q => q.options.pack === 700 && q.archetype === 'infected.alpha')).toHaveLength(2);
   expect(ai.active.every(e => e.infected!.pack !== 700)).toBe(true);
 });
-test('T-E29-11-roster @E29-AC11 incoming ids, health, appearance and injury survive; 0–35 followers use bounded motion', async () => {
+test('T-E29-11-roster @E29-AC11 incoming ids, appearance and injury survive; health recovers; 0–35 followers use bounded motion', async () => {
   const source = await load(), base = source.entities.get(source.l7Encounters!.state.roster[0].id)!;
   for (const count of [0, 1, 35]) {
     const incoming = Array.from({ length: count }, (_, i) => {
       const e = structuredClone(base); e.id = 40 + i; e.health.current = 21 + i;
+      e.civilian!.knockedUntil = 7594; e.civilian!.until = 7594;
+      if (e.combat) e.combat.staggerUntil = 7594;
       e.civilian!.survivor!.key = `carry-${i}`; e.civilian!.l1!.walkSpeed = i % 5 ? 2.2 : 1.4;
       return e;
     });
     const w = await load('high', incoming), c = w.l7Encounters!;
     expect(c.state.roster.map(r => r.id)).toEqual(incoming.map(e => e.id));
-    for (const e of incoming) { expect(w.entities.get(e.id)!.health).toEqual(e.health); expect(w.entities.get(e.id)!.appearance).toEqual(e.appearance); }
+    for (const e of incoming) {
+      const arrived = w.entities.get(e.id)!;
+      expect(arrived.health).toEqual({ current: e.health.max, max: e.health.max }); expect(arrived.appearance).toEqual(e.appearance);
+      expect(arrived.civilian!.knockedUntil).toBe(0); expect(arrived.civilian!.until).toBe(0);
+      if (arrived.combat) expect(arrived.combat.staggerUntil).toBe(0);
+      expect(e.civilian!.knockedUntil).toBe(7594);
+    }
     expect(w.entities.values().filter(e => e.hazard?.kind === 'fire')).toHaveLength(l7Fires.length + l7CorridorFires.length);
     expect(c.state.roster.filter(r => r.injured)).toHaveLength(Math.ceil(count / 5));
     teleport(w, 258, 15);
@@ -96,7 +104,8 @@ test('T-E29-11-L6-result @E29-AC11 L6 serializes effective injury speed without 
   expect(e.civilian!.l1!.walkSpeed).toBe(2.2);
   const next = await load('low', result.escapedSurvivors);
   expect(next.l7Encounters!.state.roster[0]).toMatchObject({ id: e.id, key: r.key, injured: true });
-  expect(next.entities.get(e.id)!.health.current).toBe(27);
+  expect(next.entities.get(e.id)!.health.current).toBe(e.health.max);
+  expect(e.health.current).toBe(27);
   expect(next.entities.get(e.id)!.appearance).toEqual(e.appearance);
 });
 test('T-E29-11-stragglers @E29-AC11 cross-city followers use staggered partial routes and keep walking', async () => {
