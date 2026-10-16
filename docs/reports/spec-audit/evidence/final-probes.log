@@ -1,0 +1,120 @@
+AUDIT bounded batch: sh tools/perf/quiet-run.sh npx playwright test tests/perf/horde.spec.ts tests/perf/e18-memory.spec.ts tests/e2e/levels/l5-po-2.spec.ts tests/perf/l5-budgets.spec.ts tests/perf/l6-budgets.spec.ts tests/perf/l6-po-scream.spec.ts --project=chromium --workers=1
+11:50  up 68 days, 10:44, 4 users, load averages: 2.23 2.75 3.37
+Quiet-run preflight: load < 3; no local Vitest or headless Chrome processes; all configured browser slots held.
+
+Running 19 tests using 1 worker
+
+  ✘   1 [chromium] › tests/e2e/levels/l5-po-2.spec.ts:7:1 › PO #21b @E23 survivor-3: ordinary clicks lead from the wrong plaza bus to Sam, then keyboard reveals Mia (21.6s)
+  ✘   2 [chromium] › tests/perf/e18-memory.spec.ts:4:46 › T-E18-05-high @E18-AC05 @perf five L1/L6 loads release heap and GPU resources (1.6m)
+  ✘   3 [chromium] › tests/perf/e18-memory.spec.ts:4:46 › T-E18-05-low @E18-AC05 @perf five L1/L6 loads release heap and GPU resources (14.2s)
+  ✓   4 [chromium] › tests/perf/horde.spec.ts:7:1 › T-E07-12 @E07 @E07-AC12 @perf 200 infected render in fixed scene graph and at most 30 crowd draws (7.7s)
+  ✓   5 [chromium] › tests/perf/horde.spec.ts:53:1 › T-E07-13 @E07 @E07-AC13 @vision golden-hour street has 60 separable runners glowing eyes and an identifiable player (9.2s)
+{"tier":"high","counts":{"followers":5,"infected":18,"fires":13,"corpses":37},"weather":{"sim":{"kind":"ash","flakes":0.35,"fog":0.12},"render":{"particles":1750,"flash":0,"rayDitherRadius":6,"wetness":0,"accumulation":0.15263888888888713,"tracks":399,"trackPixels":5709}},"baselineDrawCalls":444,"baselineTriangles":710271,"pairDrawCalls":324,"pairTriangles":641735,"followDrawCalls":324,"followTriangles":641231,"p50":7.599999999998545,"p95":9.900000000001455,"max":14.200000000000728}
+  ✓   6 [chromium] › tests/perf/l5-budgets.spec.ts:12:3 › high › T-E23-19 @E23 @E23-AC19 @E28-AC10 @perf L5 pair-plaza with fires, smoke and five followers, and a walk with the group, high (51.9s)
+{"tier":"low","counts":{"followers":5,"infected":12,"fires":13,"corpses":37},"weather":{"sim":{"kind":"ash","flakes":0.35,"fog":0.12},"render":{"particles":525,"flash":0,"rayDitherRadius":6,"wetness":0,"accumulation":0.15263888888888713,"tracks":262,"trackPixels":5713}},"baselineDrawCalls":294,"baselineTriangles":314767,"pairDrawCalls":237,"pairTriangles":299626,"followDrawCalls":237,"followTriangles":299626,"p50":21.100000000000364,"p95":34.5,"max":54.29999999999927}
+  ✓   7 [chromium] › tests/perf/l5-budgets.spec.ts:12:3 › low › T-E23-19 @E23 @E23-AC19 @E28-AC10 @perf L5 pair-plaza with fires, smoke and five followers, and a walk with the group, low (50.6s)
+{"tier":"high","p50":5.799999999999272,"p95":8.5,"max":43.600000000000364,"survivors":28,"infected":40,"drawCalls":129,"triangles":419069,"lighting":{"lightFieldMs":0.09999942779541016,"lightPools":21,"lightCandidates":21,"shadowMaps":1,"heroLights":1,"heroShadow":1,"preset":"L6-subway"},"tasks":[]}
+  ✓   8 [chromium] › tests/perf/l6-budgets.spec.ts:8:3 › high › T-E24-19 @E24 @E24-AC19 @perf perf-l6-tunnel community, infected, emergency lights and flashlight high (16.1s)
+{"tier":"low","p50":12.900000000001455,"p95":25.89999999999418,"max":69.89999999999782,"survivors":28,"infected":30,"drawCalls":76,"triangles":90552,"lighting":{"lightFieldMs":0.5,"lightPools":16,"lightCandidates":16,"shadowMaps":0,"heroLights":1,"heroShadow":0,"preset":"L6-subway"},"tasks":[{"start":18939.900000572205,"duration":59}]}
+  ✓   9 [chromium] › tests/perf/l6-budgets.spec.ts:8:3 › low › T-E24-19 @E24 @E24-AC19 @perf perf-l6-tunnel community, infected, emergency lights and flashlight low (39.7s)
+  ✓  10 [chromium] › tests/perf/l6-budgets.spec.ts:24:1 › transitions high › T-E24-19-transitions @E24 @E24-AC19 @perf breach2 and abandon switch without a 50ms frame high (6.3s)
+  ✓  11 [chromium] › tests/perf/l6-budgets.spec.ts:24:1 › transitions low › T-E24-19-transitions @E24 @E24-AC19 @perf breach2 and abandon switch without a 50ms frame low (13.2s)
+  ✓  12 [chromium] › tests/perf/l6-po-scream.spec.ts:5:115 › @E24 @perf PO33 native L6 screams webgl high debug=false (9.0s)
+  ✓  13 [chromium] › tests/perf/l6-po-scream.spec.ts:5:115 › @E24 @perf PO33 native L6 screams webgl high debug=true (8.8s)
+  ✓  14 [chromium] › tests/perf/l6-po-scream.spec.ts:5:115 › @E24 @perf PO33 native L6 screams webgl low debug=false (7.8s)
+  ✓  15 [chromium] › tests/perf/l6-po-scream.spec.ts:5:115 › @E24 @perf PO33 native L6 screams webgl low debug=true (7.9s)
+  ✓  16 [chromium] › tests/perf/l6-po-scream.spec.ts:5:115 › @E24 @perf PO33 native L6 screams webgpu high debug=false (10.1s)
+  ✓  17 [chromium] › tests/perf/l6-po-scream.spec.ts:5:115 › @E24 @perf PO33 native L6 screams webgpu high debug=true (10.1s)
+  ✓  18 [chromium] › tests/perf/l6-po-scream.spec.ts:5:115 › @E24 @perf PO33 native L6 screams webgpu low debug=false (8.7s)
+  ✓  19 [chromium] › tests/perf/l6-po-scream.spec.ts:5:115 › @E24 @perf PO33 native L6 screams webgpu low debug=true (8.6s)
+
+
+  1) [chromium] › tests/e2e/levels/l5-po-2.spec.ts:7:1 › PO #21b @E23 survivor-3: ordinary clicks lead from the wrong plaza bus to Sam, then keyboard reveals Mia 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "following"
+    Received: "hidden"
+
+      51 |   }
+      52 |   await page.keyboard.down('e'); await page.evaluate(async () => { await window.__SS__!.step(70); await window.__SS__!.screenshotReady(); }); await page.keyboard.up('e');
+    > 53 |   expect(await page.evaluate(() => window.__SS__!.missions.state()!.l5!.survivors.find(r => r.key === 'mia')!.status)).toBe('following');
+         |                                                                                                                        ^
+      54 |   await page.screenshot({ path: 'test-results/l5-po-2/mia-rescued.png' });
+      55 | });
+      56 |
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a/tests/e2e/levels/l5-po-2.spec.ts:53:120
+
+    Error Context: test-results/playwright/run-34681/e2e-levels-l5-po-2-PO-21b--3d9c2-m-then-keyboard-reveals-Mia-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-34681/e2e-levels-l5-po-2-PO-21b--3d9c2-m-then-keyboard-reveals-Mia-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-34681/e2e-levels-l5-po-2-PO-21b--3d9c2-m-then-keyboard-reveals-Mia-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/perf/e18-memory.spec.ts:4:46 › T-E18-05-high @E18-AC05 @perf five L1/L6 loads release heap and GPU resources 
+
+    Error: heapBytes
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 88088866.80000001
+    Received:    97068256
+
+      16 |   const first = loads[0], last = loads[4];
+      17 |   mkdirSync('test-results/epics/E18', { recursive: true }); writeFileSync(`test-results/epics/E18/memory-${tier}.json`, JSON.stringify(loads, null, 2));
+    > 18 |   for (const key of ['heapBytes', 'geometries', 'textures'] as const) expect(last[key], key).toBeLessThanOrEqual(first[key] * 1.1);
+         |                                                                                              ^
+      19 |   for (const load of loads.filter(l => l.id === 'L6')) expect(load.heapBytes).toBeLessThanOrEqual(qualityBudgets[tier].heapMB * 1_000_000);
+      20 | });
+      21 |
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a/tests/perf/e18-memory.spec.ts:18:94
+
+    Error Context: test-results/playwright/run-34681/perf-e18-memory-T-E18-05-h-111b9-ease-heap-and-GPU-resources-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-34681/perf-e18-memory-T-E18-05-h-111b9-ease-heap-and-GPU-resources-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-34681/perf-e18-memory-T-E18-05-h-111b9-ease-heap-and-GPU-resources-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/perf/e18-memory.spec.ts:4:46 › T-E18-05-low @E18-AC05 @perf five L1/L6 loads release heap and GPU resources 
+
+    Error: heapBytes
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 75491864.80000001
+    Received:    86523608
+
+      16 |   const first = loads[0], last = loads[4];
+      17 |   mkdirSync('test-results/epics/E18', { recursive: true }); writeFileSync(`test-results/epics/E18/memory-${tier}.json`, JSON.stringify(loads, null, 2));
+    > 18 |   for (const key of ['heapBytes', 'geometries', 'textures'] as const) expect(last[key], key).toBeLessThanOrEqual(first[key] * 1.1);
+         |                                                                                              ^
+      19 |   for (const load of loads.filter(l => l.id === 'L6')) expect(load.heapBytes).toBeLessThanOrEqual(qualityBudgets[tier].heapMB * 1_000_000);
+      20 | });
+      21 |
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a/tests/perf/e18-memory.spec.ts:18:94
+
+    Error Context: test-results/playwright/run-34681/perf-e18-memory-T-E18-05-l-13b3b-ease-heap-and-GPU-resources-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-34681/perf-e18-memory-T-E18-05-l-13b3b-ease-heap-and-GPU-resources-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-34681/perf-e18-memory-T-E18-05-l-13b3b-ease-heap-and-GPU-resources-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    [chromium] › tests/e2e/levels/l5-po-2.spec.ts:7:1 › PO #21b @E23 survivor-3: ordinary clicks lead from the wrong plaza bus to Sam, then keyboard reveals Mia 
+    [chromium] › tests/perf/e18-memory.spec.ts:4:46 › T-E18-05-high @E18-AC05 @perf five L1/L6 loads release heap and GPU resources 
+    [chromium] › tests/perf/e18-memory.spec.ts:4:46 › T-E18-05-low @E18-AC05 @perf five L1/L6 loads release heap and GPU resources 
+  16 passed (6.8m)
+
+AUDIT batch exit=1

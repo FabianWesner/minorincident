@@ -19,7 +19,7 @@ test('T-E07-12 @E07 @E07-AC12 @perf 200 infected render in fixed scene graph and
   expect(rendered).toBeGreaterThan(0); expect(rendered).toBeLessThan(200);
   expect(runners.filter(batch => batch.lod === 'lod0').reduce((n,b)=>n+b.instances,0)).toBe(8);
   expect(proof.crowd.meshDrawCalls).toBeLessThanOrEqual(30); expect(proof.crowd.nonInstancedMeshes).toBe(0);
-  expect(proof.crowd.objects).toBe(proof.crowd.batches.length + 5); // Four fixed effects and the empty static-corpse group.
+  expect(proof.crowd.objects).toBe(proof.crowd.batches.length + 3); // Fixed cap/shadow meshes and the empty static-corpse group; telegraphs live in VfxView.
   const offscreen = await page.evaluate(() => {
     const api = window.__SS__!, e = api.query({ kind: 'infected' }).find(e => e.transform.x === 50)!;
     return { projected: api.camera.project(e.transform.x, e.transform.y, e.transform.z), drawn: api.crowdFigures().some(f => f.id === e.id && f.drawn) };

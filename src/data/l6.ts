@@ -1,7 +1,7 @@
 import { l5Survivors } from './l5';
 /** E24 tuning in metres/seconds. The shelter falls on a seeded clock; losses never fail the mission. */
 export const l6 = {
-  shelter: { high: 24, low: 15 }, breach: { model: 'npc.civilian-man-a.aftermath', first: [30, 40], secondDelay: [20, 30], abandonS: 15, telegraphS: 2, streamS: 10 },
+  shelter: { high: 24, low: 24 }, breach: { model: 'npc.civilian-man-a.aftermath', first: [30, 40], secondDelay: [20, 30], abandonS: 15, telegraphS: 2, streamS: 10 },
   follow: { speed: 2.2, injuredSpeed: 1.4, stragglerM: 15, collectM: 3, rejoinM: 5 },
   infected: { high: 60, low: 30 }, tunnel: { start: 30, end: 246, z: 15, width: 6.9 },
   gates: [90, 150, 210], checkpoints: ['shelter', 'abandon', 'mid-tunnel', 'exit-platform'], caption: 'Night. Still alive.',
