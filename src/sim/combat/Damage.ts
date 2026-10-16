@@ -80,7 +80,7 @@ export class Damage {
     const transportId = target.id === 1 ? this.world.vehicles?.active : target.passengerOf;
     if (target.hidden && transportId != null && source.kind === 'infected' && hit.type === 'melee' && this.world.entities.get(transportId)?.archetype === 'vehicle.military-apc') return 0;
     // Newer campaign PO: shotgun HP depletion kills ordinary human infected permanently.
-    if (hit.actionId === 'weapon.shotgun' && /^L[5-9]$/.test(this.world.scenario ?? '') && target.archetype !== 'infected.alpha' && humanInfected.some(d => d.id === target.archetype)) hit = { ...hit, permanent: true };
+    if (source.id === 1 && hit.actionId === 'weapon.shotgun' && /^L(?:[5-9]|10)$/.test(this.world.scenario ?? '') && target.archetype !== 'infected.alpha' && humanInfected.some(d => d.id === target.archetype)) hit = { ...hit, permanent: true };
     if (storyProtected(this.world, target)) {
       if (hit.knockback > 0) this.world.knockback(target, hit.direction, hit.knockback);
       return 0;

@@ -108,7 +108,8 @@ export async function writeStaticCollision(ids: readonly string[] = []): Promise
   const aliases: Record<string, string> = { 'prop.tree': 'prop.street-tree' };
   // Include delivered solid dressing even before a district starts using it.
   // Pickups/equipment/decals are not static district obstacles.
-  for (const def of manifest.filter(a => (('world' in a && a.world) || a.id.startsWith('prop.') || a.id.startsWith('veh.') || a.id === 'decay.rubble-pile') && a.id !== 'prop.flower')) {
+  // kit.market-doors: the L2 door leaves swing out of the doorway; the mission's own door walls (LevelTwoRescue) are its only collision.
+  for (const def of manifest.filter(a => (('world' in a && a.world) || a.id.startsWith('prop.') || a.id.startsWith('veh.') || a.id === 'decay.rubble-pile') && a.id !== 'prop.flower' && a.id !== 'kit.market-doors')) {
     if (ids.length && !ids.includes(def.id)) continue;
     const source = manifest.find(a => a.id === (aliases[def.id] ?? def.id))!;
     if (source.status !== 'integrated' && source.status !== 'final') continue;

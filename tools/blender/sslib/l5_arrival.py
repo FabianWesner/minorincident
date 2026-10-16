@@ -14,14 +14,8 @@ def station(s):
     structure(s, 'platformFloor', (0, -15, .3), (60, 10, .6), stone)
     structure(s, 'trackBed', (0, -23, .09), (60, 6, .18), dark)
     s.box('tactileEdge', (0, -19.65, .64), (60, .55, .08), yellow)
-    s.box('platformFascia', (0, -20, .35), (60, .14, .48), teal)
-    for y in (-22.2, -23.8):
-        s.box('railFoot', (0, y, .23), (60, .22, .10), stone)
-        s.box('railWeb', (0, y, .32), (60, .07, .12), stone)
-        s.box('railCrown', (0, y, .41), (60, .14, .06), stone)
-    for i in range((64, 40, 24)[s.lod]):
-        x=-29.5+i*59/((64,40,24)[s.lod]-1)
-        s.box('sleeper', (x, -23, .17), (.26, 3.2, .12), teal, bevel=0)
+    # The track itself (rails, sleepers, ballast) is kit.metro-track, the tunnel's own track, placed by the level on the
+    # tunnel line z=23 in this model's frame (PO 10-15 "Tracks are disconnected"); the slab below is only its sub-base.
     # Far wall has two actual openings. Near side and end walls are cut away.
     wall_with_openings(s, 9.85, [(-11.2,-8.8),(8.8,11.2)], 30, 4.6, stone)
     for a,b in [(-15,-11.2),(-8.8,8.8),(11.2,15)]:
@@ -90,8 +84,8 @@ def station(s):
     port(s,'sealedStreetStairSocket',(6,8.5,4.4),3.4,sealed=True)
     port(s,'stairsArrivalSocket',(6,2,.6),3.4,route='L5-arrival')
     port(s,'concoursePlatformSocket',(0,-10,.6),12)
-    port(s,'tunnelStartSocket',(-30,-15,.6),8,route='north-tunnel')
-    port(s,'tunnelEndSocket',(30,-15,.6),8)
+    port(s,'tunnelStartSocket',(-30,-23,.6),8,route='north-tunnel')
+    port(s,'tunnelEndSocket',(30,-23,.6),8)
     anchor(s,'shelterCampSocket',(0,1,.6),asset='kit.shelter-camp',reservedArea=[9,7])
     # Wayfinding boards stay bold at 135px; geometric lettering is near-tier detail.
     for x in (-17,17):

@@ -988,6 +988,27 @@ export class DistrictView extends Group {
     this.dirtyEntries.add(entry);
     old.removeFromParent(); old.dispose();
   }
+  private marketDoorK: number | null = null;
+  /**
+   * L2 Grove Market doors (kit.market-doors, PO 10-15 "no visible door"): both glazed leaves swing 100 degrees outward when the
+   * firefighters force the doors. The target follows the mission state every frame, so the open pose survives the checkpoint,
+   * a restore and a reload (the first call jumps to the target instead of animating); changes ease over 0.45 s.
+   */
+  marketDoors(open: boolean, instant = false): void {
+    const target = open ? 1 : 0, from = this.marketDoorK ?? target;
+    const k = instant || this.marketDoorK === null ? target : from + Math.sign(target - from) * Math.min(Math.abs(target - from), this.frameSeconds / .45);
+    this.marketDoorK = k;
+    const eased = 1 - (1 - k) * (1 - k);
+    for (const entry of this.lodBatches) if (entry.id === 'kit.market-doors') for (const ref of entry.refs) {
+      if (ref.userData.marketDoorPose === eased) continue;
+      ref.userData.marketDoorPose = eased;
+      for (const group of [entry.hero, entry.near, entry.far]) { group.pose('marketLeafL', 1.75 * eased, ref); group.pose('marketLeafR', -1.75 * eased, ref); }
+    }
+  }
+  /** Scene Lab door gate: the current openness (0 closed, 1 open) of the market doors, null before the first update. */
+  marketDoorOpenness(): number | null { return this.marketDoorK; }
+  /** Scene Lab door gate: every market door placement with its pose and leaf batches. */
+  marketDoorPlacements(): { pose: number | null; leaves: string[] }[] { return this.lodBatches.filter(e => e.id === 'kit.market-doors').flatMap(e => e.refs.map(ref => ({ pose: ref.userData.marketDoorPose ?? null, leaves: e.hero.doors }))); }
   private northgateClosed: boolean | null = null;
   northgate(closed: boolean): void {if(this.northgateClosed===closed)return;this.northgateClosed=closed;for(const e of this.lodBatches)if(e.id==='int.metro-exit')for(const b of [e.hero,e.near,e.far])b.pose('exitGate',closed?0:Math.PI*.55);}
   private readonly metroMaterials = new Map<string, { material: Material; power: { value: number } }>();

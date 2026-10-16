@@ -1,0 +1,54 @@
+{
+  "name": "qa-l6-rested-shelter",
+  "l6Subway": "pickup",
+  "time": "L6-subway",
+  "dof": false,
+  "hud": true,
+  "ground": "district",
+  "layout": {
+    "level": "L6",
+    "district": "D-SUBWAY",
+    "bbox": [
+      [
+        -32,
+        -30
+      ],
+      [
+        288,
+        32
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        2,
+        -2
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.army-mg"
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      16.9,
+      5.6
+    ],
+    "zoom": 1
+  },
+  "frames": 60,
+  "shots": [
+    1,
+    59
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  },
+  "note": "Orchestrator 2026-10-16: hours after L5, the same living residents start L6 at full health. Medic and injured story poses remain; numerical recovery/checkpoint continuity is covered by L5-encounters."
+}

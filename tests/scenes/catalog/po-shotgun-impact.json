@@ -1,0 +1,69 @@
+{
+  "name": "po-shotgun-impact",
+  "note": "PO #37: a real Alpha takes two close shells with shove, hit pose, muzzle flash and camera kick. Game projection frames the Alpha and its full shove corridor at close zoom; enemy stats are unmodified.",
+  "ground": "asphalt",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "loadout": [
+        "weapon.shotgun",
+        "weapon.fists"
+      ]
+    },
+    {
+      "id": "alpha",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        3,
+        0
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      4,
+      1,
+      0
+    ],
+    "zoom": 1
+  },
+  "script": [
+    {
+      "frame": 10,
+      "actor": "courier",
+      "do": {
+        "attack": "alpha",
+        "seconds": 0.2
+      }
+    },
+    {
+      "frame": 45,
+      "actor": "courier",
+      "do": {
+        "attack": "alpha",
+        "seconds": 0.2
+      }
+    }
+  ],
+  "frames": 90,
+  "sheet": 4,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "actorHealth": {
+      "alpha": [
+        0,
+        0
+      ]
+    }
+  }
+}

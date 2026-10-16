@@ -251,24 +251,42 @@ describe('L2 The Failed Rescue', () => {
     const l = await loadL2(2); world = l.world; const m = l.mission, w = l.world;
     // 'escape' is only saved at a calm moment (PO 10-09, l2.mercy), which a bot chased the whole way never gets before the cluster: its restore is covered in L2-escape-loop.test.ts.
     for (const id of ['doors', 'cluster'] as const) {
-      runL2(w, m, 'complete', { stopWhen: mm => mm.state.checkpoint === id });
+      runL2(w, m, 'complete', { stopWhen: mm => id === 'cluster' ? mm.state.l2!.clusterReached : mm.state.checkpoint === id });
+      if (id === 'cluster' && m.state.checkpoint !== id) {
+        // Controlled restore fixture: create the calm window before the final gate. Every infected keeps its health and roster entry;
+        // automatic checkpoint refusal during a chase and retry relief are exercised in L2-escape-loop.
+        const p = w.entities.get(1)!, nav = w.infected!.nav;
+        p.health.current = p.health.max;
+        for (const e of w.infected!.active) {
+          const cell = nav.nearestCell(p.transform.x - 60, p.transform.z - 20, .6);
+          e.transform.x = nav.x(cell); e.transform.z = nav.z(cell); w.spatial.set(e.id, e.transform.x, e.transform.z);
+        }
+        for (let i = 0; i < 60 && m.state.checkpoint !== id; i++) w.update();
+      }
       expect(m.state.checkpoint).toBe(id);
-      const snap = { tick: w.tick, infected: w.infected!.active.filter(e => e.health.current > 0).map(e => e.id).sort(), crew: m.state.l2!.crewIds.map(c => { const e = w.entities.get(c)!; return `${c}:${e.kind}:${e.health.current > 0}`; }), weapons: w.entities.get(1)!.weapons!.LEFT.rack.map(r => r.id), doors: m.state.l2!.doorsOpenAt > 0, phase: m.state.l2!.phase, stats: w.npcs!.civilians.outbreak!.stats.turned };
+      expect(m.state.phase, `${id} reached before the transition`).toBe('playing');
+      const capture = () => ({ tick: w.tick, infected: w.infected!.active.filter(e => e.health.current > 0).map(e => e.id).sort(), crew: m.state.l2!.crewIds.map(c => { const e = w.entities.get(c)!; return `${c}:${e.kind}:${e.health.current > 0}`; }), weapons: w.entities.get(1)!.weapons!.LEFT.rack.map(r => r.id), doors: m.state.l2!.doorsOpenAt > 0, phase: m.state.l2!.phase, stats: w.npcs!.civilians.outbreak!.stats.turned });
+      const snap = capture();
       for (let i = 0; i < 90; i++) w.update();
       // A hit just before the kill leaves her invulnerable for a few ticks and the lethal damage would be ignored
       // (no death, no restore; seen at 'escape' once the melee ring shifted the fight's timing).
       const p = w.entities.get(1)!; while (w.tick < p.survivor!.invulnerableUntil) w.update();
+      // Observe restoration before the next mission update applies intentional retry relief (covered in L2-escape-loop).
+      // The changed route can reach this checkpoint after a death, so the forced retry may legitimately thin its restored crowd.
+      let restored: ReturnType<typeof capture> | undefined;
+      const off = w.events.on('checkpoint.restored', e => { if (e.type === 'checkpoint.restored' && e.id === id) restored = capture(); });
       w.player!.damage(p.health.current, w.tick);
       for (let i = 0; i < 400 && m.state.checkpoint === id && w.entities.get(1)!.health.current <= 0; i++) w.update();
+      off(); expect(restored, `${id} restored after death`).toBeDefined();
       expect(m.state.checkpoint).toBe(id);
       // Within tolerance: the restore lands mid-tick, so a turning civilian may rise or a grabbed one fall in that same tick.
-      const now = new Set(w.infected!.active.filter(e => e.health.current > 0).map(e => e.id)), before = new Set(snap.infected);
+      const now = new Set(restored!.infected), before = new Set(snap.infected);
       expect([...now].filter(i => !before.has(i)).length + [...before].filter(i => !now.has(i)).length, `${id} infected`).toBeLessThanOrEqual(2);
-      const crew = m.state.l2!.crewIds.map(c => { const e = w.entities.get(c)!; return `${c}:${e.kind}:${e.health.current > 0}`; });
+      const crew = restored!.crew;
       expect(crew.filter((c, i) => c !== snap.crew[i]).length, `${id} crew`).toBeLessThanOrEqual(1);
-      expect(w.entities.get(1)!.weapons!.LEFT.rack.map(r => r.id)).toEqual(snap.weapons);
-      expect(m.state.l2!.doorsOpenAt > 0).toBe(snap.doors); expect(m.state.l2!.phase).toBe(snap.phase);
-      expect(Math.abs(w.npcs!.civilians.outbreak!.stats.turned - snap.stats), `${id} turned`).toBeLessThanOrEqual(1);
+      expect(restored!.weapons).toEqual(snap.weapons);
+      expect(restored!.doors).toBe(snap.doors); expect(restored!.phase).toBe(snap.phase);
+      expect(Math.abs(restored!.stats - snap.stats), `${id} turned`).toBeLessThanOrEqual(1);
     }
   }, HEAVY);
 });

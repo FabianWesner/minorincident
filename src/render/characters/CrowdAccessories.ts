@@ -133,23 +133,25 @@ export class CrowdAccessories extends Group {
     this.fit(look.accessory, model);
     // Render backends may pad colours/normals to vec4 in place. Read the semantic
     // channels from both sources rather than borrowing their GPU attribute layout.
-    const body = new BufferGeometry(), piece = new BufferGeometry();
-    for (const [geometry, original] of [[body, source], [piece, accessory.geometry]]) {
-      for (const [name, size] of [['position', 3], ['normal', 3], ['color', 3], ['_parts', 4]] as const) {
-        const input = original.getAttribute(name); if (!input) continue;
-        const values = new Float32Array(input.count * size);
-        for (let i = 0; i < input.count; i++) for (let c = 0; c < size; c++) values[i * size + c] = input.getComponent(i, c);
-        geometry.setAttribute(name, new BufferAttribute(values, size));
-      }
-      geometry.setIndex(original.index?.clone() ?? Array.from({ length: original.getAttribute('position').count }, (_, i) => i));
+    const piece = new BufferGeometry(), original = accessory.geometry;
+    for (const [name, size] of [['position', 3], ['normal', 3], ['color', 3]] as const) {
+      const input = original.getAttribute(name); if (!input) continue;
+      const values = new Float32Array(input.count * size);
+      for (let i = 0; i < input.count; i++) for (let c = 0; c < size; c++) values[i * size + c] = input.getComponent(i, c);
+      piece.setAttribute(name, new BufferAttribute(values, size));
     }
+    piece.setIndex(original.index?.clone() ?? Array.from({ length: original.getAttribute('position').count }, (_, i) => i));
     piece.applyMatrix4(this.fitTransform);
     const count = piece.getAttribute('position').count, parts = new Float32Array(count * 4);
     for (let i = 0; i < count; i++) { parts[i * 4] = head; parts[i * 4 + 1] = definitions.get(look.accessory)?.tint === 'hair' ? -5 : -4; }
     piece.setAttribute('_parts', new BufferAttribute(parts, 4));
-    const merged = mergeGeometries([body, piece]);
-    if (!merged) throw new Error(`Cannot freeze crowd accessory ${look.accessory} on ${model}`);
-    body.dispose(); piece.dispose();
+    // Keep the large live buffers shared. StaticCorpses reuses their frozen
+    // body pose and merges only after the small head piece has been posed.
+    const merged = new BufferGeometry();
+    for (const name of ['position', 'normal', 'color', '_parts']) merged.setAttribute(name, source.getAttribute(name));
+    merged.setIndex(source.index);
+    merged.userData.corpseBody = source; merged.userData.corpseAccessory = piece;
+    merged.userData.appearanceTags = source.userData.appearanceTags;
     this.corpseSources.set(key, merged); return merged;
   }
   finish(): void {
@@ -160,5 +162,5 @@ export class CrowdAccessories extends Group {
     return { id, instances: mesh.count, draws: mesh.count ? 1 : 0, triangles: mesh.count * (mesh.geometry.index?.count ?? mesh.geometry.getAttribute('position').count) / 3,
       layout: { buffers, locations, webgpu: buffers <= 8, webgl2: locations <= 16 } };
   }); }
-  dispose(): void { this.disposed = true; for (const mesh of this.batches.values()) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.dispose(); } void this.registry.dispose(); this.batches.clear(); for (const geometry of this.corpseSources.values()) geometry.dispose(); this.corpseSources.clear(); this.clear(); }
+  dispose(): void { this.disposed = true; for (const mesh of this.batches.values()) { mesh.geometry.dispose(); (mesh.material as MeshLambertNodeMaterial).dispose(); mesh.dispose(); } void this.registry.dispose(); this.batches.clear(); for (const geometry of this.corpseSources.values()) { (geometry.userData.corpseAccessory as BufferGeometry|undefined)?.dispose(); geometry.dispose(); } this.corpseSources.clear(); this.clear(); }
 }

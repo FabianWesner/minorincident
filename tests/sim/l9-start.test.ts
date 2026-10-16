@@ -28,7 +28,7 @@ for (const hp of [730, 0]) test(`T-E31-02 @E31-AC02 actual L9 start restores the
     expect(w.vehicles!.active).toBe(id); expect(w.missions!.l9!.state.carId).toBe(id);
     expect(w.entities.get(id)!.health).toEqual(save.transport.vehicle.health);
     for (const e of save.transport.occupants) {
-      expect(w.entities.get(e.id)!.health).toEqual(e.health);
+      expect(w.entities.get(e.id)!.health).toEqual(e.civilian || e.companion ? { current: e.health.max, max: e.health.max } : e.health);
       if (e.weapons) expect(w.entities.get(e.id)!.weapons).toEqual(e.weapons);
     }
     const dogs = [...w.entities.iterate()].filter(e => e.companion);

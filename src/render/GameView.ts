@@ -1,3 +1,4 @@
+import { l6Doors, l6Entries } from '../data/l6';
 import { MilitaryPerimeter } from './MilitaryPerimeter';
 import { l3, l3AttackView } from '../data/l3';
 import { epiloguePull } from '../sim/missions/LevelTenEpilogue';
@@ -86,7 +87,7 @@ export class GameView implements Lifecycle {
   private readonly revealSubject = new Box3();
   private readonly revealVehicle = new Box3();
   private probeVisibilityPending = false;
-  private probeHide = { courier: false, crowd: false, environment: false };
+  private probeHide = { courier: false, crowd: false, environment: false, bars: false };
   private readonly storyFocus = new Vector3();
   private readonly storyOffset = new Vector3();
   readonly view = new View();
@@ -263,7 +264,7 @@ export class GameView implements Lifecycle {
       // with the level (sharing its prototypes) and are warmed below; their LOD0 streams later.
       const variants = this.world.scenario === 'L1' ? [...this.world.preparedDistricts.values()].filter(prepared => prepared !== this.world.districts).map(prepared => new DistrictView(prepared, this.materials!, shared.registry, shared.phase, shared.grassMaterial, this.quality === 'low', instanceCapacity)) : [];
       // E19: Level 1 is played as the courier (white cap, orange tee, teal bag); same rig/animations.
-      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2', 'L3', 'L4', 'L5', 'L6'].includes(this.world.districts.composition.id) || this.world.districts.composition.scene?.courier ? 'courier' : 'survivor', useSkinnedCourier(this.params), this.world.missions?.state?.id === 'L10', this.world.scenario === 'L1' ? this.missionHidden ? null : player?.survivor?.variant : undefined);
+      const character = this.character.init(this.materials, Boolean(this.world.combat), this.quality === 'low', ['L1', 'L2', 'L3', 'L4', 'L5', 'L6'].includes(this.world.districts.composition.id) || this.world.districts.composition.scene?.courier ? 'courier' : 'survivor', useSkinnedCourier(this.params), this.world.missions?.state?.id === 'L10', this.world.scenario === 'L1' ? this.missionHidden ? null : player?.survivor?.variant : undefined, this.world.scenario === 'L6');
       // Actor models download and bake while the district loads (they do not depend on it).
       actors = this.startActors(character); actors.catch(() => {}); // a district failure must not leave it unhandled
       const initialFocus = grove || this.world.districts.districts.some(d => !!d.layout.terrainChunks?.length) ? this.view.cameraTarget : undefined;
@@ -371,7 +372,7 @@ export class GameView implements Lifecycle {
       this.frozenPose = survivor ? structuredClone(survivor) : null;
     }
     if (this.world.scenario === 'drive-course') this.postFx = new PostFx(this.renderer, this.scene, this.camera, this.quality, this.look);
-    if (this.params.has('debug')) {
+    if (this.params.get('debug') === 'physics') {
       this.wireframe = new PhysicsWireframe(this.world.physics); this.scene.add(this.wireframe.lines);
     }
     this.lighting?.applyLook(); this.materials?.applyLook(); this.postFx?.applyLook(); this.districts?.applyLook();
@@ -406,7 +407,7 @@ export class GameView implements Lifecycle {
       const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
       const unwarm = this.labWindows?.prewarmWindows();
       const restore = this.vfx?.prewarm(focus.x, focus.z); this.labAccident?.prewarm();
-      const prepare = () => preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress, this.background, this.world.scenario === 'L3');
+      const prepare = () => preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress, this.background, this.world.scenario === 'L3' || this.world.scenario === 'L6');
       try {
         // Execute the shared shader's fire branch and its HDR field pass while
         // loading. The final full-size draw also executes the daylight branch.
@@ -417,6 +418,14 @@ export class GameView implements Lifecycle {
             await prepare();
           } finally { pulse.remove(); this.lighting.applyLook(); }
         } else await prepare();
+        // L6's scream changes from the shelter lights to the courier spot. Warm both
+        // light lists in the actual HDR target before the loading card is dismissed.
+        if (this.world.scenario === 'L6' && this.lighting) {
+          const spot = this.lighting.spot, sun = this.lighting.sun;
+          const wasSpot = spot.visible, wasSun = sun.visible;
+          try { spot.visible = true; sun.visible = false; await prepare(); }
+          finally { spot.visible = wasSpot; sun.visible = wasSun; }
+        }
         // The temporary fire pulse above has now been removed. Execute the
         // daylight graph too, while the rigid prototype still covers pixels;
         // removing it first leaves a hiding corgi cold until its arrival.
@@ -694,15 +703,15 @@ export class GameView implements Lifecycle {
   }
   /** The boss hole opens while the Mega is within 14 m of the courier; it only drops boss fragments nearer the lens than her, inside a courier-sized disc. */
   private updateBossHole(player?: { x: number; z: number }): void {
-    const goal = player && this.megaDistance(player) < 14 ? 1 : 0;
+    const goal = player && this.megaDistance(player) < 14 ? 1 : 0;   // Immediate full hole (see-through lane): the 60% courier pixel gate holds; the Mega is judged against an Alpha, never enlarged.
     this.bossHole = goal;
     seeThrough.bossStrength.value = this.bossHole;
     const screenHeight = 2 * this.camera.position.distanceTo(this.view.focus) * Math.tan(this.camera.fov * Math.PI / 360);
     seeThrough.bossRadius.value = Math.min(.3, Math.max(.1, 2.8 / screenHeight));
   }
   /** Scene Lab: hide the courier / the crowd (Mega included) and redraw, for the courier-visible-share probe. */
-  probeVisibility(hide: { courier: boolean; crowd: boolean; environment?: boolean }): number {
-    this.probeHide = { ...hide, environment: hide.environment ?? false }; this.probeVisibilityPending = true; this.update(1);
+  probeVisibility(hide: { courier: boolean; crowd: boolean; environment?: boolean; bars?: boolean }): number {
+    this.probeHide = { ...hide, environment: hide.environment ?? false, bars: hide.bars ?? false }; this.probeVisibilityPending = true; this.update(1);
     const player = this.world.entities.get(1); return player ? this.megaDistance(player.transform) : Infinity;
   }
   /** Project a world point to viewport-normalized coordinates, for masks and input integration. */
@@ -881,6 +890,7 @@ export class GameView implements Lifecycle {
       this.districts?.updateArmyBoom(at ? Math.max(0, 1 - (this.world.tick - at) / 42) : 1);
     }
     if (this.params.get('doors') !== '0') this.districts?.updateDoors(this.doorBodies(), this.world.openDoors.values());
+    const marketState = this.world.missions?.state.l2; if (marketState) this.districts?.marketDoors(marketState.doorsOpenAt > 0 && this.world.tick >= marketState.doorsOpenAt);
     const shutterAt = this.world.missions?.state.l5?.shutterAt;
     if (this.world.scenario === 'L5') this.districts?.updateMetroShutter(Math.min(1, Math.max(0, shutterAt ? (this.world.tick - shutterAt) / 120 : 0)));
     this.wireframe?.update();
@@ -950,7 +960,7 @@ export class GameView implements Lifecycle {
       this.savedMaterials.clear(); this.scene.background = background; this.scene.backgroundNode = backgroundNode; this.scene.fog = fog; this.renderer.shadowMap.enabled = shadow;
     } else if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
     // Health bars keep their CSS size and contrast through DOF, bloom and vignette.
-    if (this.healthBars?.count && !this.idPass && !this.windowMask && !this.foliageMask) {
+    if (this.healthBars?.count && !this.probeHide.bars && !this.idPass && !this.windowMask && !this.foliageMask) {
       this.renderBars();
     }
     if (profileStart) this.renderCpuMs = performance.now() - renderStart;
@@ -969,7 +979,7 @@ export class GameView implements Lifecycle {
   /** E25 lighting-pass counters for perf(): light-field CPU ms and pools, shadow maps, the promoted hero shadow light. */
   lightingPerf() {
     const field = this.lighting?.field.snapshot();
-    return field ? { lightFieldMs: field.ms, lightPools: field.drawn, lightCandidates: field.candidates, shadowMaps: this.renderer.shadowMap.enabled ? Number(this.lighting!.sun.visible && this.lighting!.sun.castShadow) + Number(this.lighting!.spot.visible && this.lighting!.spot.castShadow) : 0, heroLights: Number(this.lighting!.spot.visible), heroShadow: (this.lighting?.fieldShadow.value ?? 0) > .5 ? 1 : 0, preset: this.lighting!.preset } : null;
+    return field ? { lightFieldMs: field.ms, lightPools: field.drawn, lightCandidates: field.candidates, shadowMaps: this.renderer.shadowMap.enabled ? Number(this.lighting!.sun.visible && this.lighting!.sun.castShadow) + Number(this.lighting!.spot.visible && this.lighting!.spot.castShadow) : 0, heroLights: Number(this.lighting!.spot.visible), heroShadow: Number(this.lighting!.spot.visible && this.lighting!.spot.castShadow), preset: this.lighting!.preset } : null;
   }
   /** E25 light field of the loaded scene (E27 transients hook in here). */
   get lightField() { return this.lighting?.field ?? null; }
@@ -981,6 +991,11 @@ export class GameView implements Lifecycle {
     if (this.world.lightPower) lighting.field.syncPower(id => this.world.lightPower!.isOn(id));
     let flashlight: ReturnType<typeof footprint> | null = null;
     const field = lighting.field, hero = this.character?.visible && this.world.entities.get(1) ? this.character.position : null;
+    lighting.subwayDarkness.value = metro || lighting.preset === 'L6-subway' ? 1 : 0;
+    this.character?.showHeadlamp(!!metro?.flashlight);
+    lighting.headlampOn.value = metro?.flashlight ? 1 : 0;
+    const headlampYaw = this.world.entities.get(1)?.transform.yaw ?? 0;
+    lighting.headlampAim.value.set(Math.cos(headlampYaw), -Math.sin(headlampYaw));
     if (hero) lighting.hero.value.copy(hero); else lighting.hero.value.set(0, -100, 0);
     lighting.setPlayerSmoke(!!hero && (this.world.combat?.effects.inSmoke(hero) ?? false));
     if (field.active) {
@@ -991,9 +1006,18 @@ export class GameView implements Lifecycle {
         flashlight = footprint({type:'spot',color:'light_led_white',intensity:9,range:18,angle:48,flicker:'none',shadow:'hero',position:[hero.x,hero.y+1,hero.z],direction:[Math.cos(yaw),-.3,-Math.sin(yaw)]});
         field.push(flashlight);
       }
+      if (metro && lighting.preset === 'L6-subway') for (const entry of l6Entries) {
+        const door = l6Doors[entry.door];
+        field.push(footprint({type:'point',color:entry.door%2?'light_neon_blue':'light_siren_red',intensity:2,range:2.3,flicker:'damaged',position:[door.x,2.4,door.z],direction:[0,-1,0]}));
+      }
+      const sam = this.world.missions?.state.l5?.survivors.find(r => r.key === 'sam');
+      const bus = this.world.missions?.def.anchors['l5-ring-sam'];
+      if (sam?.status === 'hidden' && bus && this.world.tick % 90 < 45) {
+        field.push(footprint({ type: 'point', color: 'light_led_white', intensity: 8, range: 5, flicker: 'none', shadow: 'none', position: [bus.x, 1.2, bus.z], direction: [0, -1, 0] }));
+      }
       this.vehicles?.pushLights(field, aura);
       // Pickups keep a small cool glint pool so loot stays findable in the dark.
-      for (const entity of this.world.entities.iterate()) if (entity.pickup && !entity.hidden) field.push(pickupLight(entity.transform.x, entity.transform.z));
+      for (const entity of this.world.entities.iterate()) if (entity.pickup && !entity.hidden && !('collected' in entity.pickup && entity.pickup.collected)) field.push(pickupLight(entity.transform.x, entity.transform.z));
     }
     lighting.setHeroLight(hero && field.active ? flashlight ?? field.heroAt(hero.x, hero.z) : null, hero ?? this.view.focus, this.world.tick / 60);
     // Low W6 keeps the palette moon shade and contact shadows; a promoted fire

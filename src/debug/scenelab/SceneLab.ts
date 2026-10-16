@@ -57,6 +57,7 @@ import { buildScene, validateSpec, type Action, type ActorSpec, type BuiltScene,
 import { bodyOverlap, boneClipping, boxOf, staticClipping, type Bone, type BoneHit, type StaticClip, type TriangleSet, type Vec3 } from './geometry';
 import { footYaw, summarizeMotion, torsoPitch, unplantedClips, type FootSample, type MotionFrame } from './motion';
 import { Status } from '../../sim/combat/Status';
+import { seeThrough } from '../../render/SeeThrough';
 
 const assets = new Map((manifest as AssetDef[]).map(a => [a.id, a]));
 const rad = (deg: number) => deg * Math.PI / 180;
@@ -198,6 +199,7 @@ export class SceneLab {
     this.camera = spec.camera ?? { mode: 'game', target: built.center };
     this.applyCamera();
     if (this.boom) this.game.view.labProbes().districts?.updateArmyBoom(spec.armyBoom?.closed ? 0 : 1);
+    if (spec.marketDoors) this.game.view.labProbes().districts?.marketDoors(!!spec.marketDoors.open && spec.marketDoors.openAtFrame === undefined, true);
     // Prop triangles for the per-frame bone checks (LOD0 GLBs, cached by the registry across loads).
     await Promise.all([this.game.screenshotReady(), this.prepareClipping()]);
     if (spec.hud || spec.megaHud) {
@@ -317,6 +319,27 @@ export class SceneLab {
           world.infected!.rush(e.id, world.entities.get(1)!.transform, world.tick + 600);
           this.actors.set(id, { id, kind: 'infected', entity: e.id, spec: { id, kind: 'infected', archetype: e.archetype }, plan: null, track: [], lod: {}, drawn: 0, inView: 0, missed: 0, farClose: 0 });
         }
+        }
+      }
+    }
+    if (spec.l6Subway) {
+      world.scenario = 'L6'; applyCampaign(world, preset('L6-default'));
+      const mission = world.loadMission(resolveCampaignMission('L6', world.districts!)); mission.begin();
+      if (spec.l6Subway !== 'pickup') {
+        const lamp = world.entities.values().find(e => e.archetype === 'pickup.headlamp')!;
+        lamp.interactable!.completed = true; Object.assign(player.transform, lamp.transform);
+        world.physics.playerBody!.setTranslation(player.transform, true); world.update(); world.update();
+      }
+      if (spec.l6Subway === 'gate' || spec.l6Subway === 'entry') {
+        mission.completeObjective('shelter'); mission.completeObjective('stop');
+        for (const r of mission.state.l6!.survivors) {
+          const e = world.entities.get(r.id)!; e.transform.x = 99 + r.hold; e.transform.z = 15;
+        }
+        mission.state.l6!.leaderX = 105; mission.state.l6!.leaderZ = 15;
+      }
+      if (courier?.at) {
+        Object.assign(player.transform, { x: courier.at[0], y: 1.3, z: courier.at[1] });
+        world.physics.playerBody!.setTranslation(player.transform, true); world.spatial.set(1, player.transform.x, player.transform.z);
       }
     }
     if (spec.l3Rendezvous) {
@@ -379,6 +402,11 @@ export class SceneLab {
       }
       for (const [i, r] of mission.state.l5!.survivors.filter(r => r.status === 'following').entries()) {
         const e = world.entities.get(r.id)!;
+        const hp = spec.l5Aftermath.health?.[r.key];
+        if (hp !== undefined) {
+          if (!Number.isFinite(hp) || hp < 0 || hp > e.health.max) throw new RangeError(`Invalid L5 fixture health for ${r.key}`);
+          e.health.current = hp;
+        }
         Object.assign(e.transform, { x: player.transform.x - (spec.l5Aftermath.alphaAt ? 4 : 2) - i, z: player.transform.z + (spec.l5Aftermath.alphaAt ? 2 : 0) }); world.spatial.set(e.id, e.transform.x, e.transform.z);
         this.actors.set(r.key, { id: r.key, kind: 'pedestrian', entity: r.id, spec: { id: r.key, kind: 'pedestrian' }, plan: null, track: [], lod: {}, drawn: 0, inView: 0, missed: 0, farClose: 0 });
       }
@@ -561,11 +589,11 @@ export class SceneLab {
         entity = 1; const player = world.entities.get(1)!;
         if (a.at) this.teleport(player, at);
         player.transform.yaw = yaw; Object.assign(world.previousPlayer!, player.transform);
-        if (a.look?.model === 'male' || a.look?.model === 'female') {
-          const tier = a.look.gearTier ?? 0;
-          if (![0, 1, 2, 3, 4].includes(tier)) throw new Error('Courier gear tier must be 0–4');
-          world.player!.select(a.look.model, tier as import('../../data/survivor').GearTier);
-        }
+        // Game handovers preserve cosmetics; independent lab fixtures must not inherit the preceding scene's campaign gear.
+        const variant = a.look?.model === 'male' || a.look?.model === 'female' ? a.look.model : this.game.params.get('survivor') === 'male' ? 'male' : 'female';
+        const tier = a.look?.gearTier ?? 0;
+        if (![0, 1, 2, 3, 4].includes(tier)) throw new Error('Courier gear tier must be 0–4');
+        world.player!.select(variant, tier as import('../../data/survivor').GearTier);
         // L1 parity: the courier starts empty-handed (Game.loadLevel clears the L1 loadout); `loadout` arms her.
         if (a.loadout) world.combat!.setLoadout([a.loadout[0]].flat(), [a.loadout[1]].flat()); else world.combat!.clearLoadout();
         world.combat!.damage.god = a.god ?? true;
@@ -899,6 +927,7 @@ export class SceneLab {
       const start = performance.now();
       this.nextRenderFrame();
       if (this.boom) this.game.view.labProbes().districts?.updateArmyBoom(this.spec?.armyBoom?.closed ? 0 : this.boomClosedAt ? Math.max(0, 1 - (this.world.tick - this.boomClosedAt) / 42) : 1);
+      if (this.spec?.marketDoors) this.game.view.labProbes().districts?.marketDoors(!!this.spec.marketDoors.open || (this.spec.marketDoors.openAtFrame !== undefined && this.frame >= this.spec.marketDoors.openAtFrame));
       this.game.view.frame(1 / 60); await this.game.step(1);
       // `?profile` (set by the runner) attributes every submitted draw, including the PostFx scene pass and shadows.
       const stepMs = performance.now() - start, info = this.game.view.renderer.info.render, profile = Object.entries(this.game.view.renderer.profile ?? {});
@@ -1530,7 +1559,7 @@ export class SceneLab {
     }).map(f => f.appearance!))]));
     const clipping = this.staticSets ? await this.clipping() : null;
     const bodies = [...this.bodies.values()].sort((x, y) => y.depthCm - x.depthCm);
-    return { collision: this.world.solids.snapshot(), armyBoom: this.boom ? { closedAt: this.boomClosedAt, closed: !!this.spec?.armyBoom?.closed || !!this.boomClosedAt } : null, scene: this.spec?.name ?? null, frame: this.frame, tick: this.world.tick, backend: this.game.view.renderer.selectedBackend, quality: this.game.quality.tier,
+    return { collision: this.world.solids.snapshot(), marketDoors: this.spec?.marketDoors ? { openness: this.game.view.labProbes().districts?.marketDoorOpenness() ?? null, posed: this.game.view.labProbes().districts?.marketDoorPlacements() ?? [] } : null, armyBoom: this.boom ? { closedAt: this.boomClosedAt, closed: !!this.spec?.armyBoom?.closed || !!this.boomClosedAt } : null, scene: this.spec?.name ?? null, frame: this.frame, tick: this.world.tick, backend: this.game.view.renderer.selectedBackend, quality: this.game.quality.tier,
       convoyOverlapFrames: this.convoyOverlapFrames,
       propPenetration: { samples: this.propPenetrationSamples, framesMax: Math.max(0, ...[...this.propPenetration.values()].map(m => m.max)), pairs: [...this.propPenetration.values()] },
       props: { sinkMaxCm: this.propSinkMaxCm, samples: this.propGroundSamples, gaps: this.game.view.labProbes().districts?.propGroundGaps() ?? [] },
@@ -1570,7 +1599,24 @@ export class SceneLab {
     return audit && { center: audit.center, solidRadius: audit.solidRadius, strength: audit.strength, cover: audit.cover, occluder: audit.occluder };
   }
   /** Courier-visible-share probe: redraw with the courier and/or the crowd (Mega included) hidden; returns the courier-to-Mega distance in metres (Infinity when none). */
-  hideProbe(courier: boolean, crowd: boolean, environment = false): number { return this.game.view.probeVisibility({ courier, crowd, environment }); }
+  hideProbe(courier: boolean, crowd: boolean, environment = false, bars = false): number { return this.game.view.probeVisibility({ courier, crowd, environment, bars }); }
+  /** Exact screen disc used by the boss shader, for comparing body pixels outside the intended courier reveal. */
+  bossRevealProbe() { return { center: seeThrough.center.value.toArray(), radius: seeThrough.bossRadius.value, strength: seeThrough.bossStrength.value }; }
+  private megaProbeModels = new Map<number, string | undefined>();
+  /** Render a regular Alpha at each Mega's exact transform/pose, without advancing simulation.
+   * Preserve pursuit/pose; each asset keeps its normal material (Mega alone has the courier cutout). */
+  alphaReferenceProbe(enabled: boolean): void {
+    for (const e of this.world.entities.iterate()) if (e.infected?.pursuit) {
+      if (enabled) {
+        if (!this.megaProbeModels.has(e.id)) this.megaProbeModels.set(e.id, e.infected.model);
+        e.infected.model = 'inf.alpha';
+      } else if (this.megaProbeModels.has(e.id)) {
+        e.infected.model = this.megaProbeModels.get(e.id);
+        this.megaProbeModels.delete(e.id);
+      }
+    }
+    this.game.view.probeVisibility({ courier: false, crowd: false });
+  }
   /** Point-in-scene to client pixels (for cropping close-ups from a screenshot). */
   project(p: [number, number, number]): { x: number; y: number } { const q = this.game.view.project(...p); return { x: (q[0] + 1) / 2 * innerWidth, y: (1 - q[1]) / 2 * innerHeight }; }
 }

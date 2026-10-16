@@ -34,7 +34,13 @@ for (const tier of ['high', 'low'] as const) test(`@E23 @E23-AC04 @E23-AC15 @E23
     expect(world.infected!.active.filter(e => e.archetype === 'infected.alpha')).toHaveLength(2);
     // Exercise both five rescued and zero rescued with the same existing station crowd.
     if (tier === 'low') for (const r of mission.state.l5!.survivors) world.entities.get(r.id)!.health.current = 0;
-    world.update(); mission.completeObjective('look'); mission.completeObjective('metro');
+    world.update();
+    const rosa = mission.state.l5!.survivors.find(r => r.key === 'rosa')!;
+    if (tier === 'high') {
+      const e = world.entities.get(rosa.id)!; e.health.current = 5;
+      e.civilian!.knockedUntil = world.tick + 72; e.combat!.staggerUntil = world.tick + 72;
+    }
+    mission.completeObjective('look'); mission.completeObjective('metro');
     const result = mission.state.result!;
     const rescued = result.rescuedSurvivors!;
     expect(rescued).toHaveLength(tier === 'low' ? 0 : 5);
@@ -42,6 +48,7 @@ for (const tier of ['high', 'low'] as const) test(`@E23 @E23-AC04 @E23-AC15 @E23
     expect(result.stationOccupants!.map(e => e.id)).toEqual(ids);
     const campaign = preset('L5-default');
     completeCampaignLevel(campaign, 5, result, world);
+    if (tier === 'high') expect(campaign.rescuedSurvivors!.find(e => e.id === rosa.id)!.health.current).toBe(5);
     expect(validateSave(campaign)).toBe(true);
     expect(decodeSave(JSON.stringify(campaign)).status).toBe('ok');
     await next.init();
@@ -52,10 +59,10 @@ for (const tier of ['high', 'low'] as const) test(`@E23 @E23-AC04 @E23-AC15 @E23
     expect(next.entities.values().some(e => carriedIds.includes(e.id))).toBe(false);
     const m6 = next.loadMission(resolveCampaignMission('L6', next.districts!)); m6.begin();
     expect(m6.state.l6!.survivors.map(r => r.id)).toEqual(carriedIds);
-    for (const prior of rescued) { expect(next.entities.get(prior.id)!.health).toEqual(prior.health); expect(next.entities.get(prior.id)!.appearance).toEqual(prior.appearance); }
+    for (const prior of rescued) { const e = next.entities.get(prior.id)!; expect(e.health).toEqual({ current: prior.health.max, max: prior.health.max }); expect(e.civilian!.knockedUntil).toBe(0); expect(e.combat!.staggerUntil).toBe(0); expect(e.appearance).toEqual(prior.appearance); }
     for (const prior of saved) {
       const actual = next.entities.get(prior.id)!;
-      expect(actual.health).toEqual(prior.health);
+      expect(actual.health).toEqual({ current: prior.health.max, max: prior.health.max });
       expect(actual.appearance).toEqual(prior.appearance);
       expect(actual.civilian!.state).toBe(prior.civilian!.state);
       expect(actual.civilian!.story).toEqual(prior.civilian!.story);

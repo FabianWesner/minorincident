@@ -2,12 +2,26 @@ import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import { boot, expect, test, testUrl } from './fixtures';
 import { canvasFrame, canvasFrameChecks } from './canvas-frame';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
+import { readSpec } from '../../tools/scenelab/session';
 
 test.use({ launchOptions: { args: process.platform === 'darwin'
   ? ['--use-angle=metal', '--ignore-gpu-blocklist', '--enable-gpu', '--enable-unsafe-webgpu']
   : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--enable-unsafe-webgpu'] } });
 
 for (const tier of ['high', 'low'] as const) {
+  for (const backend of ['webgl', 'webgpu']) test(`Scene Lab reload isolates courier gear ${backend} ${tier}`, async ({ page }) => {
+    test.setTimeout(180_000);
+    await boot(page, `${testUrl.replace('renderer=webgl', `renderer=${backend}`).replace('quality=high', `quality=${tier}`)}&scenelab=1`);
+    const geared = readSpec('tests/scenes/catalog/seethrough-gear-four.json'), gate = readSpec('tests/scenes/catalog/seethrough-door-gate.json');
+    const result = await page.evaluate(async ({ geared, gate }) => {
+      const lab = window.__SCENE__!, api = window.__SS__!;
+      await lab.load(geared); await lab.ready();
+      const before = api.getState().render.character!.gearTier;
+      await lab.load(gate); await lab.step(250); await lab.ready();
+      return { before, after: api.getState().render.character!.gearTier, draws: (await lab.metrics()).perf.drawCalls.max, backend: api.perf().backend };
+    }, { geared, gate });
+    expect(result.backend).toBe(backend); expect(result.before).toBe(4); expect(result.after).toBe(0); expect(result.draws).toBeLessThanOrEqual(30);
+  });
   test(`T-E02-webgpu-canvas @smoke @E02 WebGPU ${tier} mega health bars preserve the game frame at both zoom limits`, async ({ page }) => {
     test.setTimeout(180_000);
     await boot(page, `${testUrl.replace('renderer=webgl', 'renderer=webgpu').replace('quality=high', `quality=${tier}`)}&scenelab=1`);

@@ -62,10 +62,10 @@ test('T-E32-08b @E32 @E32-AC08 no infected spawn may substitute for or be drawn 
   expect(cureCanKill(w.entities.get(1)!)).toBe(false);
 });
 
-test('T-E32-07-los @E32-AC07 a solid wall blocks dog acquisition; ordinary damage staggers and kills it', async () => {
-  const w = await arena(), dog = spawn(w, 'dog', 1.8, 0, 'idle');
+test('T-E32-07-los @E32-AC07 a solid wall blocks dog acquisition beyond close hearing; ordinary damage staggers and kills it', async () => {
+  const w = await arena(), dog = spawn(w, 'dog', 7, 0, 'idle');
   dog.transform.yaw = Math.PI;
-  const wall = { x: .9, y: 1.5, z: 0, halfX: .1, halfY: 1.5, halfZ: 4 };
+  const wall = { x: 3.5, y: 1.5, z: 0, halfX: .1, halfY: 1.5, halfZ: 4 };
   (w.combat!.query.walls as typeof wall[]).push(wall);
   step(w, 30);
   expect(w.events.events().filter(e => e.type === 'infected.attack' && e.sourceId === dog.id)).toHaveLength(0);

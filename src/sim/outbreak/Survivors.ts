@@ -46,6 +46,7 @@ export function updateSurvivor(world: SimWorld, e: EntitySnapshot): boolean {
     return true;
   }
   if (c.story?.clip === 'npc-cower') c.story = null;
+  if (!threat && world.scenario === 'L5' && world.pickups?.seekSurvivorMedkit(e)) return true;
   const d = dist(me, p);
   if (d > f.waitCallM && tick >= s.waitAt) { s.waitAt = tick + ticks(f.waitEveryS); world.events.emit({ type: 'l5.wait', tick, id: e.id }); }
   // Slot: behind the courier when she moves (alternating sides, a little further back for each follower), anywhere 2-5 m around her when she stands.

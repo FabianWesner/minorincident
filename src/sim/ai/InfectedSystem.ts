@@ -1,3 +1,4 @@
+import { catalog as actionCatalog, mountedActions } from '../../data/actions/catalog';
 import { l3BaseCollision } from '../../levels/L3/collision';
 import { dogModel } from '../../data/dogAppearance';
 import { cureAlphaPopulation, cureAlphaCap, cureRegularAlphaCount, type CureRegion } from '../../levels/L10/alphaContracts';
@@ -118,6 +119,7 @@ export class InfectedSystem {
     });
     world.events.on('combat.attack', (event) => {
       if (event.type !== 'combat.attack' || event.sourceId !== 1) return;
+      if (world.scenario === 'L5' && (actionCatalog[event.actionId] ?? mountedActions[event.actionId])?.category === 'ranged') this.hearing.shot();
       for (const e of this.active) if (e.infected!.grabUntil > world.tick) {
         if (e.infected!.special === 'cling') e.infected!.grabUntil = 0;
         else if (e.infected!.special === 'pin' && ++e.infected!.grabHits >= 2) this.releasePin(e);
@@ -245,7 +247,15 @@ export class InfectedSystem {
         if (seen) {
           delete b.investigate; b.heardTargetId = seen.id;
           if (b.state === 'attracted') b.state = 'idle';
-          if (b.state === 'idle' || b.state === 'wander') { this.alert(e); this.world.events.emit({ type: 'ai.alerted', tick: this.world.tick, sourceId: seen.id, targetId: e.id, cause: 'sight', position: { ...e.transform } }); }
+          if (b.state === 'idle' || b.state === 'wander') {
+            const heard = this.world.scenario === 'L5' && !this.hearing.sees(e, seen.position);
+            this.alert(e);
+            if (heard) {
+              b.until = this.world.tick + 36;
+              this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: this.nextAttackId(), special: 'alpha.roar', duration: .6 });
+            }
+            this.world.events.emit({ type: 'ai.alerted', tick: this.world.tick, sourceId: seen.id, targetId: e.id, cause: heard ? 'hearing' : 'sight', position: { ...e.transform } });
+          }
         } else {
           b.heardTargetId = 0; e.combat!.attacking = false;
           if (b.investigate && this.world.tick < b.until) {
@@ -296,7 +306,8 @@ export class InfectedSystem {
       if (!smoked && (b.state === 'idle' || b.state === 'wander') && !Status.stunned(e, this.world.tick) && !e.emerging) {
         const heard = this.hearing.closestHeard(e);
         if (heard && !(heard.id === 1 && this.seesPlayer(e, player))) {
-          b.heardTargetId = heard.id; b.state = 'alerted'; b.until = this.world.tick + hearingReactionTicks;
+          b.heardTargetId = heard.id; b.state = 'alerted'; b.until = this.world.tick + (e.archetype === 'infected.alpha' && this.world.scenario === 'L5' ? 36 : hearingReactionTicks);
+          if (e.archetype === 'infected.alpha' && this.world.scenario === 'L5') this.world.events.emit({ type: 'telegraph', tick: this.world.tick, sourceId: e.id, attackId: this.nextAttackId(), special: 'alpha.roar', duration: .6 });
           this.world.events.emit({ type: 'ai.alerted', tick: this.world.tick, sourceId: heard.id, targetId: e.id, cause: 'hearing', position: { ...e.transform } });
         }
       }

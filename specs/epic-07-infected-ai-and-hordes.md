@@ -41,7 +41,7 @@ Source: [`po-levels-4-9-2026-10-11.md`](po-levels-4-9-2026-10-11.md), highest pr
 | --- | --- | --- | --- |
 | Handgun `weapon.handgun` | 20 damage, 3 shots/s | 0.50 (50 %) | 10/hit; 30 landed shots; ≥ 9.6 s first-to-last |
 | Campaign machine gun `weapon.army-mg` | 14 damage, 10 rounds/s | 0.50 (50 %) | 7/round; 43 landed rounds; ≥ 4.2 s sustained burst |
-| Shotgun `weapon.shotgun` | 150 total/shell, 8 pellets, 2 shots/s | 0.80 (20 %) | 120/shell at ≤ 4 m with every pellet landing; 3 shells; 1.0 s first-to-last (fixture ≤ 1.1 s) |
+| Shotgun `weapon.shotgun` | 240 total/shell, 8 pellets, 2 shots/s (PO #37) | 0.80 (20 %) | 192/shell at ≤ 8 m with every pellet landing; 2 shells; 0.5 s first-to-last (fixture ≤ 0.6 s) |
 | Rocket `weapon.rocket-launcher` | 180 blast damage, 0.8 shots/s | 1.00 (0 %) | 180 at blast center; 2 center blasts; 1.25 s first-to-last; more at the edge after E27 falloff |
 
 Shotgun is fastest single-target at close range; machine gun keeps its piercing/group role. Ally rifle/HMG use 0.50 multiplier (orchestrator default); ordinary melee keeps its existing damage, but contact kick cannot bypass Alpha HP by forcing a full knockdown (orchestrator default).
@@ -118,7 +118,7 @@ Scene paths are proposed under `specs/scenes/`, created during implementation. *
 | E07-AC03 | Chase: in `maze` (a corridor maze), a runner reaches a stationary god-mode player 40 m away by path within 15 s; the path never crosses static colliders | sim |
 | E07-AC04 | Separation: 100 runners chasing a player keep a pairwise overlap (distance < 0.5 × sum of radii) under 2% of pairs per tick on average | sim |
 | E07-AC05 | **CHANGED 2026-10-11:** retain ≥ 0.35 s telegraphs for original attacks (Brute ≥ 0.8 s); every Alpha/zoo special has ≥ 0.6 s telegraph with source/move/attack id and target/area, no effect before activation, exact listed cooldowns/recovery in sim ticks, stable across pause/restore; all 14 per-move scenes capture boundary/cooldown probes. | sim + visual |
-| E07-AC06 | **CHANGED 2026-10-11:** retain original human specials. Alpha resistance fixture matches 300 HP: handgun 30 hits, army-MG 43 rounds, close shotgun 3 shells (≤ 1.1 s), center rocket 2 blasts. Ordinary melee knocks soldiers down 1.2 s; **all four Alpha move rows** meet telegraph, cooldown, radius/sweep, damage, knockdown/buff/expiry and wall controls, with one named Scene Lab scene/test suffix per move. Its world-space HP bar meets shared 15 m/damaged visibility, fill and phone-size/contrast contract. | sim + e2e + visual |
+| E07-AC06 | **CHANGED 2026-10-11:** retain original human specials. Alpha resistance fixture matches 300 HP: handgun 30 hits, army-MG 43 rounds, close shotgun 2 shells (≤ 0.6 s, PO #37; Alpha HP/resistance unchanged), center rocket 2 blasts. Ordinary melee knocks soldiers down 1.2 s; **all four Alpha move rows** meet telegraph, cooldown, radius/sweep, damage, knockdown/buff/expiry and wall controls, with one named Scene Lab scene/test suffix per move. Its world-space HP bar meets shared 15 m/damaged visibility, fill and phone-size/contrast contract. | sim + e2e + visual |
 | E07-AC07 | Spawn rules: no spawn within 18 m of the player or inside the camera frustum (expanded by 10%); spawns never inside colliders | sim |
 | E07-AC08 | Caps: the `SpawnDirector` never exceeds the tier's concurrency cap; when capped, it queues rather than drops scripted spawns | sim |
 | E07-AC09 | Migration: a 150-infected migration follows its spline to the target within ±20% of the expected time and fans out on arrival | sim |

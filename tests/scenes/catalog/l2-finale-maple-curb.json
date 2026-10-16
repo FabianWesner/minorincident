@@ -1,0 +1,96 @@
+{
+  "ground": "district",
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 180,
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "name": "l2-finale-maple-curb",
+  "note": "Continuity regression after fbb6200e8: the complete bot takes the western Maple curb (x=-69) past the street group at (-64,25). The population and newbie route are unchanged.",
+  "time": "L2",
+  "layout": {
+    "level": "L2",
+    "district": "D-GROVE",
+    "bbox": [
+      [
+        -78,
+        0
+      ],
+      [
+        -54,
+        36
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -69,
+        17
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.fists"
+      ]
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        -70,
+        15
+      ]
+    },
+    {
+      "id": "straggler-0",
+      "kind": "infected",
+      "at": [
+        -64.0,
+        23.0
+      ],
+      "state": "chase",
+      "yaw": 90
+    },
+    {
+      "id": "straggler-1",
+      "kind": "infected",
+      "at": [
+        -62.5,
+        23.0
+      ],
+      "state": "chase",
+      "yaw": 90
+    },
+    {
+      "id": "straggler-2",
+      "kind": "infected",
+      "at": [
+        -64.0,
+        24.5
+      ],
+      "state": "chase",
+      "yaw": 90
+    },
+    {
+      "id": "straggler-3",
+      "kind": "infected",
+      "at": [
+        -62.5,
+        24.5
+      ],
+      "state": "chase",
+      "yaw": 90
+    }
+  ],
+  "tier": 1
+}

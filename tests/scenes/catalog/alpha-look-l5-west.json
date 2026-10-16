@@ -1,0 +1,61 @@
+{
+  "name": "alpha-look-l5-west",
+  "note": "L5 western Alpha street approach near the authored wanderer location, ordinary chase and health bar in W5. The nominal [-52,-12] is inside the cropped building footprint; use the adjacent street, as campaign spawns resolve to walkable ground. No gameplay data overrides.",
+  "seed": 5,
+  "ground": "district",
+  "time": "L5",
+  "tier": 5,
+  "layout": {
+    "level": "L5",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        -64,
+        -24
+      ],
+      [
+        -40,
+        0
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -57,
+        -16
+      ],
+      "god": true
+    },
+    {
+      "id": "alpha",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        -57,
+        -12
+      ],
+      "yaw": 0,
+      "state": "chase"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -57,
+      1.2,
+      -12
+    ],
+    "zoom": 1
+  },
+  "frames": 180,
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}

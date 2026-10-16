@@ -1,7 +1,8 @@
-import { expect, test, vi } from 'vitest';
+import { afterEach, expect, test, vi } from 'vitest';
 import { PNG } from 'pngjs';
 import { measureCourierShare, measureCut } from '../../../tools/scenelab/run';
 import type { SceneSession } from '../../../tools/scenelab/session';
+afterEach(() => vi.unstubAllGlobals());
 
 const pixels = (count: number) => {
   const png = new PNG({ width: 20, height: 20 });
@@ -11,19 +12,24 @@ const pixels = (count: number) => {
 
 test('visibility probe measures static occlusion with an independent reference, even below 150 pixels', async () => {
   let courier = false, environment = false;
+  let rendered = () => pixels(courier ? 0 : environment ? 100 : 40);
+  vi.stubGlobal('window', { __SCENE__: {
+    ready: async () => {}, bossRevealProbe: () => ({ center: [.5, .5], radius: .1, strength: 0 }),
+    hideProbe: (c: boolean, _crowd: boolean, e = false) => { courier = c; environment = e; return Infinity; },
+  } });
+  vi.stubGlobal('document', { querySelector: () => ({ toDataURL: () => `data:image/png;base64,${rendered().toString('base64')}` }) });
   const session = {
     ready: vi.fn(),
     page: {
-      evaluate: vi.fn((_callback, flags?: boolean[]) => {
-        [courier, , environment] = flags ?? [false, false, false]; return Infinity;
-      }),
-      screenshot: vi.fn(() => pixels(courier ? 0 : environment ? 100 : 40)),
+      evaluate: vi.fn((callback: (arg?: unknown) => unknown, flags?: unknown) => callback(flags)),
+      screenshot: vi.fn(),
     },
   } as unknown as SceneSession;
   const result = await measureCourierShare(session);
   expect(result.visible).toBe(40); expect(result.reference).toBe(100); expect(result.share).toBe(.4);
   expect(courier).toBe(false); expect(environment).toBe(false);
-  session.page.screenshot = vi.fn(async () => pixels(0));
+  expect(session.page.screenshot).not.toHaveBeenCalled(); // DOM HUD pixels must never enter this measurement.
+  rendered = () => pixels(0);
   expect((await measureCourierShare(session)).share).toBe(0);
 });
 
