@@ -10,7 +10,7 @@ describe('retry checkpoint names', () => {
       L4: ['arrival', 'turn', 'line-1', 'nests', 'armor', 'line-break'],
       L5: ['outside', 'survivor-1', 'survivor-2', 'survivor-3', 'survivor-4', 'survivor-5'],
       L6: ['shelter', 'abandon', 'mid-tunnel', 'exit-platform'],
-      L7: [],
+      L7: ['night-exit', 'rocket', 'corridor'],
       L8: ['sanctuary', 'breach', 'escape-route'],
       L9: ['crossing-start', 'outskirts-approach'],
       L10: ['cure-crash', 'cure-residential', 'cure-industrial', 'cure-military', 'cure-research-entry', 'cure-research', 'cure-corridor', 'cure-complex', 'cure-disperse-ready'],

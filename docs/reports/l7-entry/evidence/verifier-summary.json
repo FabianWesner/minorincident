@@ -1,0 +1,10 @@
+{
+  "command": "MI_VERIFY_REMOTE_SIM=1 E2E_PORT=34761 SCENE_PORT=34762 npm run verify -- E29",
+  "exitCode": 1,
+  "static": "typecheck, lint, fresh build passed",
+  "nodePassed": 65,
+  "functionalBrowserPassed": 38,
+  "nativePassed": 1,
+  "nativeFailed": 5,
+  "quietConditions": "{\"at\":\"2026-10-16T10:45:07.555Z\",\"load\":[2.9794921875,6.26806640625,6.0244140625],\"otherHeadlessChrome\":0,\"localVitest\":0,\"browserSlots\":[0,1,2,3],\"command\":[\"npx\",\"playwright\",\"test\",\"tests/perf/l7-rocket.spec.ts\",\"tests/perf/l7-district.spec.ts\",\"tests/perf/l7-encounters.spec.ts\",\"--project=chromium\",\"--workers=1\"]}"
+}

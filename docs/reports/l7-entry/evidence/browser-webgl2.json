@@ -1,0 +1,13 @@
+{
+  "backend": "webgl2",
+  "command": "headless Chromium, Playwright one worker, private port, shared e2e-lock",
+  "success": true,
+  "passed": 4,
+  "cases": [
+    "\u2713  1 [chromium] \u203a tests/e2e/levels/l7-entry.spec.ts:6:74 \u203a T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 1: entry, real rocket pickup and checkpoint death (15.0s)",
+    "\u2713  2 [chromium] \u203a tests/e2e/levels/l7-entry.spec.ts:6:74 \u203a T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 0.5: entry, real rocket pickup and checkpoint death (12.9s)",
+    "\u2713  3 [chromium] \u203a tests/e2e/levels/l7-entry.spec.ts:6:74 \u203a T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 1: entry, real rocket pickup and checkpoint death (12.3s)",
+    "\u2713  4 [chromium] \u203a tests/e2e/levels/l7-entry.spec.ts:6:74 \u203a T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 0.5: entry, real rocket pickup and checkpoint death (12.2s)"
+  ],
+  "setup": "L6 raised apron fixture; real keyboard crosses the exit, real Continue loads L7, real mouse/E collects rocket; lethal damage exercises each reached L7 checkpoint."
+}
