@@ -1,0 +1,22 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-e18-final -> 94.130.181.173:/srv/mi/ws/perf-e18-final-abfe7a
+[remote] cache-gc deleted:none
+[remote] sync 27s, 13727 files; job /srv/mi/jobs/perf-e18-final-abfe7a-75271-1792139195; queueing for a slot
+[runner] slot 1 acquired; load 1.33 1.71 2.07
+[runner] waiting for both slots to isolate wall-clock timing
+[runner] both slots held for the timing project
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/perf-e18-final-abfe7a-75271-1792139195[39m
+
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/weather.test.ts [2m([22m[2m15 tests[22m[2m | [22m[33m14 skipped[39m[2m)[22m[33m 108495[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E28-08 @E28 @E28-AC08 every override preserves all registered mission graph walks[33m 108493[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/world/chunk-residency.test.ts [2m([22m[2m11 tests[22m[2m | [22m[33m10 skipped[39m[2m)[22m[33m 4604[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95[33m 4602[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m2 passed[39m[22m[2m | [22m[33m24 skipped[39m[90m (26)[39m
+[2m   Start at [22m 08:33:08
+[2m   Duration [22m 117.54s[2m (tests 97%, transform 3%, import 1%)[22m
+
+JSON report written to /srv/mi/jobs/perf-e18-final-abfe7a-75271-1792139195/docs/reports/perf-e18-final/timing-retry-remaining.json
+[remote] pulled docs/reports/perf-e18-final/timing-retry-remaining.json
+[remote] done exit=0 (runner 94.130.181.173, sync 27s, remote total 485s)

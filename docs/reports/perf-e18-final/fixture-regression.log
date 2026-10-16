@@ -1,0 +1,17 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-e18-final -> 2.28.24.66:/srv/mi/ws/perf-e18-final-abfe7a
+[remote] cache-gc deleted:none
+[remote] sync 46s, 13651 files; job /srv/mi/jobs/perf-e18-final-abfe7a-45728-1792136094; queueing for a slot
+[runner] slot 0 acquired; load 0.39 0.09 0.03
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/perf-e18-final-abfe7a-45728-1792136094[39m
+
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/level-fixtures.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 1388[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18-AC01 perf-l5-aftermath high retains campaign cast and measures the exact stress population[33m 681[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18-AC01 perf-l5-aftermath low retains campaign cast and measures the exact stress population[33m 395[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m4 passed[39m[22m[90m (4)[39m
+[2m   Start at [22m 07:35:42
+[2m   Duration [22m 4.54s[2m (transform 57%, tests 32%, import 11%)[22m
+
+[remote] done exit=0 (runner 2.28.24.66, sync 46s, remote total 10s)

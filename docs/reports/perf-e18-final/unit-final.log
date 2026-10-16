@@ -1,0 +1,1124 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-e18-final -> 94.130.181.173:/srv/mi/ws/perf-e18-final-abfe7a
+[remote] cache-gc deleted:none
+[remote] sync 18s, 13717 files; job /srv/mi/jobs/perf-e18-final-abfe7a-98528-1792137643; queueing for a slot
+[runner] slot 0 acquired; load 1.94 2.57 2.09
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/perf-e18-final-abfe7a-98528-1792137643[39m
+
+ [32m✓[39m [30m[45m timing [49m[39m tests/unit/progression/perf.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 389[2mms[22m[39m
+   [33m[2m✓[22m[39m @E13 @perf progression combat-arena sim timing and power progression counters[33m 383[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/l5-static.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 690[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/static-corpses.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 1259[2mms[22m[39m
+   [33m[2m✓[22m[39m static corpse pages grow beyond the old population cap and survive camera movement @E07[33m 309[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/pre-render.test.ts [2m([22m[2m17 tests[22m[2m)[22m[32m 128[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/layouts/d-grove.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 857[2mms[22m[39m
+   [32m✓[39m D-GROVE layout [2m(11)[22m
+     [33m[2m✓[22m[39m T-E19-04 @E19 @E19-AC04 no footprint overlaps between buildings, vehicles, props and tree trunks (asset QA P1-P9)[33m 424[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/skin-pilot.test.ts [2m([22m[2m18 tests[22m[2m)[22m[33m 5981[2mms[22m[39m
+   [33m[2m✓[22m[39m courier female walks and runs on world-locked feet with a readable knee arc @E04[33m 624[2mms[22m[39m
+   [33m[2m✓[22m[39m courier male walks and runs on world-locked feet with a readable knee arc @E04[33m 445[2mms[22m[39m
+   [33m[2m✓[22m[39m courier female turns with steps instead of pivoting or skating @E04[33m 573[2mms[22m[39m
+   [33m[2m✓[22m[39m courier male turns with steps instead of pivoting or skating @E04[33m 429[2mms[22m[39m
+   [33m[2m✓[22m[39m skin rollout female hands and soles follow bike sockets under heading, lean, steering and crank rotation @E04[33m 364[2mms[22m[39m
+   [33m[2m✓[22m[39m courier female chest and head stay over the hips through idle, gait, start, stop and 90/180 turns @E04[33m 1016[2mms[22m[39m
+   [33m[2m✓[22m[39m courier male chest and head stay over the hips through idle, gait, start, stop and 90/180 turns @E04[33m 927[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/authored-animation.test.ts [2m([22m[2m17 tests[22m[2m)[22m[33m 6617[2mms[22m[39m
+   [33m[2m✓[22m[39m M1-10 @E04 authored death poses flatten the full character and crowd matrices match the hierarchy[33m 356[2mms[22m[39m
+   [33m[2m✓[22m[39m M1-25 @E04 grounded locomotion retains support across survivor and civilian rigs (source)[33m 2228[2mms[22m[39m
+   [33m[2m✓[22m[39m M1-25 @E04 grounded locomotion retains support across survivor and civilian rigs (production)[33m 1631[2mms[22m[39m
+   [33m[2m✓[22m[39m M1-23 @E19 infection collapse and rise share a low pose, then rise into infected posture[33m 328[2mms[22m[39m
+   [33m[2m✓[22m[39m VQA-13 @E19 settled infected death poses contact the floor across delivered rigs[33m 1513[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/telemetry/functions.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 496[2mms[22m[39m
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-03 @E17-AC03 join/quantize/meshopt preserve named parts and world pivots through roundtrip
+[22m[39mprune: Removed types... Accessor (1)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-03 @E17-AC03 join/quantize/meshopt preserve named parts and world pivots through roundtrip
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-03 @E17-AC03 join/quantize/meshopt preserve named parts and world pivots through roundtrip
+[22m[39mprune: Removed types... Accessor (3)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+[22m[39mprune: Removed types... Accessor (1)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+[22m[39mprune: Removed types... Mesh (1), Primitive (2), Accessor (4)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-02d @E17-AC02 optimization removes zero-area faces through compressed roundtrip
+[22m[39mprune: Removed types... Accessor (1)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-02d @E17-AC02 optimization removes zero-area faces through compressed roundtrip
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-02d @E17-AC02 optimization removes zero-area faces through compressed roundtrip
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-scale @E17-AC03 uniform scale preserves local joints and applies once
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-scale @E17-AC03 uniform scale preserves local joints and applies once
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-scale @E17-AC03 uniform scale preserves local joints and applies once
+[22m[39mprune: Removed types... Accessor (1)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-scale @E17-AC03 uniform scale preserves local joints and applies once
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-scale @E17-AC03 uniform scale preserves local joints and applies once
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side
+[22m[39mprune: Removed types... Accessor (95)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side
+[22m[39mprune: Removed types... Mesh (1), Primitive (4), Accessor (12)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side
+[22m[39mprune: Removed types... Accessor (389)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side
+[22m[39mprune: Removed types... Mesh (49), Primitive (49), Accessor (513)
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/l3-static.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 5408[2mms[22m[39m
+   [32m✓[39m L3 static [2m(6)[22m
+     [33m[2m✓[22m[39m T-E21-11a @E21 @E21-AC11 corridor layout: valid, 280-340 m, three parallel streets, >= 6 cross-links <= 60 m apart[33m 1731[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E21-11b @E21 @E21-AC11 sight blockers every <= 25 m on every street, no dead end longer than 30 m, edges sealed by visible geometry[33m 3580[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/courier-bike.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 7904[2mms[22m[39m
+   [33m[2m✓[22m[39m @regression courier bike tyres touch the drawn D-GROVE road, paving, kerbs and road paint (-0.5..+1 cm)[33m 7658[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/mega-alpha-dog.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 3723[2mms[22m[39m
+   [33m[2m✓[22m[39m T-L10-mega-alpha-lod0 @L10 Mega Alpha stays inside its 16k/6k/2k caps, keeps the Alpha rig contract and bakes the shared clips[33m 926[2mms[22m[39m
+   [33m[2m✓[22m[39m T-L10-mega-alpha-lod1 @L10 Mega Alpha stays inside its 16k/6k/2k caps, keeps the Alpha rig contract and bakes the shared clips[33m 374[2mms[22m[39m
+   [33m[2m✓[22m[39m T-L10-dog-assets-lod0 @L10 dogs: budgets, closed authored tiers, palette coats, shared quadruped contract and clips[33m 1207[2mms[22m[39m
+   [33m[2m✓[22m[39m T-L10-dog-assets-lod1 @L10 dogs: budgets, closed authored tiers, palette coats, shared quadruped contract and clips[33m 572[2mms[22m[39m
+   [33m[2m✓[22m[39m T-L10-dog-assets-lod2 @L10 dogs: budgets, closed authored tiers, palette coats, shared quadruped contract and clips[33m 462[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/l4-static.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 6822[2mms[22m[39m
+   [32m✓[39m L4 static [2m(11)[22m
+     [33m[2m✓[22m[39m T-E22-13-district @E22 @E22-AC12 @E22-AC13 breakable-line anchors match existing sandbags; each pallet can open a clear crossing without moving other dressing[33m 870[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-04b @E22 @E22-AC04 convoy vehicles never overlap each other, and never touch a static collider (any height), over the whole scripted ride and when parked[33m 5448[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/performance/nav-visibility.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 476[2mms[22m[39m
+[90mstderr[2m | tests/unit/render/npc.test.ts[2m > [22m[2m@E19 civilian variety keeps authored gait, sim idle hysteresis and raised ground with shared shading
+[22m[39m[assets] npc.civilian-man-b fell back to a PLACEHOLDER BOX (TypeError: Failed to parse URL from /assets/models/npc.civilian-man-b.glb). Never ship this.
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/optimize.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 10265[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side[33m 835[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E17-height @E17-AC02 ordinary adults stay 1.75–1.85 m, Alpha stays 1.35–1.5x worker and elephant stays 3 m at every LOD[33m 4530[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E17-lanes @E17-AC02 road vehicle envelopes including mirrors fit district lanes at every LOD[33m 2120[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E17-aircraft @E17-AC02 helicopter preserves authored scale and rotor pivots at every LOD[33m 2501[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/crowd-appearance.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 5093[2mms[22m[39m
+   [33m[2m✓[22m[39m crowd appearance lod0: real infected/civilian layouts fit BOTH WebGPU eight buffers and WebGL2 sixteen locations @E18-AC01[33m 3023[2mms[22m[39m
+   [33m[2m✓[22m[39m crowd appearance lod1: real infected/civilian layouts fit BOTH WebGPU eight buffers and WebGL2 sixteen locations @E18-AC01[33m 949[2mms[22m[39m
+   [33m[2m✓[22m[39m crowd appearance lod2: real infected/civilian layouts fit BOTH WebGPU eight buffers and WebGL2 sixteen locations @E18-AC01[33m 452[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/npc.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 6765[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 phone civilians retain four full footwork slots and restore all desktop slots[33m 494[2mms[22m[39m
+   [33m[2m✓[22m[39m @E19 civilian variety keeps authored gait, sim idle hysteresis and raised ground with shared shading[33m 3384[2mms[22m[39m
+   [33m[2m✓[22m[39m @transition prepared civilian geometry survives scene disposal without sharing instance attributes[33m 2534[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/courier-rig-v2.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 4361[2mms[22m[39m
+   [33m[2m✓[22m[39m courier female skeleton v2 carries the Mesh2Motion chain and the clips retarget onto it[33m 536[2mms[22m[39m
+   [33m[2m✓[22m[39m courier male skeleton v2 carries the Mesh2Motion chain and the clips retarget onto it[33m 306[2mms[22m[39m
+   [33m[2m✓[22m[39m courier female living layer is frozen-frame exact and deterministic across runs @E04[33m 764[2mms[22m[39m
+   [33m[2m✓[22m[39m courier male living layer is frozen-frame exact and deterministic across runs @E04[33m 488[2mms[22m[39m
+   [33m[2m✓[22m[39m courier blinks every 2–6 s with the lids closed for about 0.1 s @E04[33m 836[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/progression/campaign.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 900[2mms[22m[39m
+   [32m✓[39m campaign [2m(10)[22m
+     [33m[2m✓[22m[39m T-E13-01 @E13 @E13-AC01 1000 seeds give three distinct prerequisite-valid reproducible offers[33m 658[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/corgi-feet.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 5481[2mms[22m[39m
+   [33m[2m✓[22m[39m corgi paws remain planted below the cadence cap in walk, trot and gallop @E07[33m 1028[2mms[22m[39m
+   [33m[2m✓[22m[39m corgi idle, sit and warning poses keep every paw and the rump on the floor (QA: sit hind paw 17.8 cm under) @E07[33m 1946[2mms[22m[39m
+   [33m[2m✓[22m[39m corgi paws do not skate by the Scene Lab rule through gaits, gait changes and stops (QA: corgi-follow slideMax 88 cm) @E07[33m 495[2mms[22m[39m
+   [33m[2m✓[22m[39m corgi settles from spawn height, seats its visible rump/paws and resumes its bind leg scale @E08-AC10[33m 1737[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/terrain-streaming.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 686[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-13-seams-S3 @E31-AC13 independently loaded local cells and coarse terrain preserve seam heights[33m 472[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/telemetry/client.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 1344[2mms[22m[39m
+   [32m✓[39m replay recorder [2m(3)[22m
+     [33m[2m✓[22m[39m retries a failed chunk, then gives up without blocking later ones[33m 1001[2mms[22m[39m
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Accessor (18)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Accessor (56)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Mesh (7), Primitive (7), Accessor (77)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Primitive (2), Accessor (63)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Accessor (204)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Mesh (33), Primitive (33), Accessor (307)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Primitive (1), Accessor (59)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Accessor (260)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Mesh (32), Primitive (32), Accessor (358)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery keeps skin joints and morph animation channels on the geometry node
+[22m[39mprune: Removed types... Accessor (6)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery keeps skin joints and morph animation channels on the geometry node
+[22m[39mprune: Removed types... Skin (1), Accessor (5)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdistance tiers preserve disconnected thin panels inside a large assembly
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdistance tiers preserve disconnected thin panels inside a large assembly
+[22m[39mprune: Removed types... Accessor (3)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdistance tiers preserve disconnected thin panels inside a large assembly
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery preserves optional source roof geometry before manifest registration
+[22m[39mprune: Removed types... Accessor (1)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery preserves optional source roof geometry before manifest registration
+[22m[39mprune: Removed types... Accessor (3)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery preserves optional source roof geometry before manifest registration
+[22m[39mprune: Removed types... Accessor (3)
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/delivery.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 2158[2mms[22m[39m
+   [33m[2m✓[22m[39m delivery bundling quantizes shared material primitives once and preserves LOD0 silhouette[33m 1895[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/view.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 164[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/static-batch-equivalence.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 2838[2mms[22m[39m
+   [33m[2m✓[22m[39m optimized static batch attributes equal the reference loop @load[33m 2831[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/camera-jitter.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 149[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/l7-perf.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 529[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-19-foot-probe @E29-AC19 partial foot probes match full rig probes during a blended pose[33m 342[2mms[22m[39m
+[90mstdout[2m | tests/unit/telemetry/codec.test.ts[2m > [22m[2minput log codec[2m > [22m[2mrecording cost stays far below 0.1 ms per tick
+[22m[39minput log encode cost: 1.58 us per tick
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/telemetry/codec.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 2594[2mms[22m[39m
+   [32m✓[39m input log codec [2m(8)[22m
+     [33m[2m✓[22m[39m round-trips every InputFrame field exactly, including absent vs false vs null[33m 674[2mms[22m[39m
+     [33m[2m✓[22m[39m cuts independent chunks (keyframe each) under the upload cap and decodes them in order[33m 774[2mms[22m[39m
+     [33m[2m✓[22m[39m rejects a chunk gap and garbage[33m 472[2mms[22m[39m
+     [33m[2m✓[22m[39m recording cost stays far below 0.1 ms per tick[33m 381[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/l7-district.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 18102[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-10-district @E29-AC10 heavier dressing, dead defenses and passable Northgate branches[33m 343[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-10-fires @E29-AC10 production district installs persistent fires and shared rocket hooks[33m 1272[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-09-assets @E29-AC09 W6 deliveries satisfy the existing geometry and LOD contracts[33m 15850[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-10-corridor @E29-AC10 @E29-AC13 two routes reach the corridor and its working bus; no blocker seals it[33m 412[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/zebra.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 1644[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-01-zebra-asset-lod0 @E07-AC01 @E18-AC01 shared zebra anatomy, closed LOD, stripe palette and crowd rig[33m 986[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-01-zebra-asset-lod1 @E07-AC01 @E18-AC01 shared zebra anatomy, closed LOD, stripe palette and crowd rig[33m 428[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/gun-pose.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 708[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/l8-district.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 2331[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E30-05-district @E30-AC05 intact zoo facilities, named enclosures, public lights and service infrastructure[33m 322[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E30-06-sight @E30-AC06 shipped district registers perimeter as actual attack/sight cover[33m 1002[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E30-05-foot-probe @E30-AC05 paused/raised scene starts cannot change the measured asset shoe depth[33m 451[2mms[22m[39m
+[90mstdout[2m | tests/unit/render/crowd-feet.test.ts[2m > [22m[2mcrowd stance ankles travel at most 3 cm at actual walk/run speeds and headings @E07
+[22m[39m[{"asset":"npc.civilian-man-a","rootScale":1,"clip":"npc-walk","speed":1.4,"beforeCm":1.8569929950456976,"afterCm":0.13757419470091503},{"asset":"npc.civilian-man-a","rootScale":1,"clip":"civ-flee","speed":4,"beforeCm":2.0273044329703005,"afterCm":0.26587028315767364},{"asset":"npc.civilian-man-a","rootScale":1,"clip":"infected-frail","speed":4.7,"beforeCm":12.448116255279686,"afterCm":0.11327046352896883},{"asset":"npc.civilian-man-a","rootScale":1,"clip":"infected-lurch","speed":5.1,"beforeCm":9.806923009769662,"afterCm":0.25941118928743956},{"asset":"npc.civilian-man-a","rootScale":1,"clip":"infected-sprint","speed":5.6,"beforeCm":2.0194144146919504,"afterCm":0.3578158447313593},{"asset":"npc.civilian-man-a","rootScale":0.7,"clip":"npc-walk","speed":1.4,"beforeCm":0.29465786846351927,"afterCm":0.09604809945064159},{"asset":"npc.civilian-man-a","rootScale":0.7,"clip":"civ-flee","speed":4,"beforeCm":5.752636603367249,"afterCm":0.18874959523004797},{"asset":"npc.civilian-man-a","rootScale":0.7,"clip":"infected-frail","speed":4.7,"beforeCm":11.798327354957978,"afterCm":0.07911442111492506},{"asset":"npc.civilian-man-a","rootScale":0.7,"clip":"infected-lurch","speed":5.1,"beforeCm":10.264620459235259,"afterCm":0.18724213892107838},{"asset":"npc.civilian-man-a","rootScale":0.7,"clip":"infected-sprint","speed":5.6,"beforeCm":5.741426983167929,"afterCm":0.2813355073254288},{"asset":"npc.civilian-woman-a","rootScale":1,"clip":"npc-walk","speed":1.4,"beforeCm":15.408563850473364,"afterCm":0.1699677158610601},{"asset":"npc.civilian-woman-a","rootScale":1,"clip":"civ-flee","speed":4,"beforeCm":0.48173628823627734,"afterCm":0.3381826616803535},{"asset":"npc.civilian-woman-a","rootScale":1,"clip":"infected-frail","speed":4.7,"beforeCm":8.067541419217305,"afterCm":0.1590788697828497},{"asset":"npc.civilian-woman-a","rootScale":1,"clip":"infected-lurch","speed":5.1,"beforeCm":3.6863527521918953,"afterCm":0.33121367284033987},{"asset":"npc.civilian-woman-a","rootScale":1,"clip":"infected-sprint","speed":5.6,"beforeCm":0.48680447861846676,"afterCm":0.5079144603844108},{"asset":"npc.civilian-woman-a","rootScale":0.7,"clip":"npc-walk","speed":1.4,"beforeCm":0.36326975789034405,"afterCm":0.11530132259270039},{"asset":"npc.civilian-woman-a","rootScale":0.7,"clip":"civ-flee","speed":4,"beforeCm":4.380398097680477,"afterCm":0.23925904312618865},{"asset":"npc.civilian-woman-a","rootScale":0.7,"clip":"infected-frail","speed":4.7,"beforeCm":13.372625016804154,"afterCm":0.11790627749764136},{"asset":"npc.civilian-woman-a","rootScale":0.7,"clip":"infected-lurch","speed":5.1,"beforeCm":11.096039974460982,"afterCm":0.2302997645168186},{"asset":"npc.civilian-woman-a","rootScale":0.7,"clip":"infected-sprint","speed":5.6,"beforeCm":4.383559250593167,"afterCm":0.3619659767140931},{"asset":"npc.lab-tech-a","rootScale":1,"clip":"npc-walk","speed":1.4,"beforeCm":0.2885414460686889,"afterCm":0.1197995337942584},{"asset":"npc.lab-tech-a","rootScale":1,"clip":"civ-flee","speed":4,"beforeCm":5.914492510222649,"afterCm":0.2149053964432253},{"asset":"npc.lab-tech-a","rootScale":1,"clip":"infected-frail","speed":4.7,"beforeCm":11.696583237604214,"afterCm":0.06400924683537598},{"asset":"npc.lab-tech-a","rootScale":1,"clip":"infected-lurch","speed":5.1,"beforeCm":10.229205549861694,"afterCm":0.22350018203070132},{"asset":"npc.lab-tech-a","rootScale":1,"clip":"infected-sprint","speed":5.6,"beforeCm":5.9091178132823226,"afterCm":0.24913452994173016},{"asset":"npc.lab-tech-a","rootScale":0.7,"clip":"npc-walk","speed":1.4,"beforeCm":2.0902274670899237,"afterCm":0.08368498158902347},{"asset":"npc.lab-tech-a","rootScale":0.7,"clip":"civ-flee","speed":4,"beforeCm":6.428372467088107,"afterCm":0.1542881012783254},{"asset":"npc.lab-tech-a","rootScale":0.7,"clip":"infected-frail","speed":4.7,"beforeCm":9.815800370499002,"afterCm":0.0442677640941852},{"asset":"npc.lab-tech-a","rootScale":0.7,"clip":"infected-lurch","speed":5.1,"beforeCm":8.954629936860966,"afterCm":0.16799792771419597},{"asset":"npc.lab-tech-a","rootScale":0.7,"clip":"infected-sprint","speed":5.6,"beforeCm":6.420934674516938,"afterCm":0.20296917529379127},{"asset":"inf.common-worker.lod1","rootScale":1,"clip":"npc-walk","speed":1.4,"beforeCm":0.3635404117189859,"afterCm":0.059201444740252906},{"asset":"inf.common-worker.lod1","rootScale":1,"clip":"civ-flee","speed":4,"beforeCm":4.9502207162237335,"afterCm":0.11562591757090616},{"asset":"inf.common-worker.lod1","rootScale":1,"clip":"infected-frail","speed":4.7,"beforeCm":14.744287840249044,"afterCm":0.0642285011703381},{"asset":"inf.common-worker.lod1","rootScale":1,"clip":"infected-lurch","speed":5.1,"beforeCm":12.266295627767434,"afterCm":0.13406881101360799},{"asset":"inf.common-worker.lod1","rootScale":1,"clip":"infected-sprint","speed":5.6,"beforeCm":4.957920641478718,"afterCm":0.2503989760784516},{"asset":"inf.common-worker.lod1","rootScale":0.7,"clip":"npc-walk","speed":1.4,"beforeCm":0.254478288203292,"afterCm":0.04144101131817721},{"asset":"inf.common-worker.lod1","rootScale":0.7,"clip":"civ-flee","speed":4,"beforeCm":7.345151198456803,"afterCm":0.08099376816203052},{"asset":"inf.common-worker.lod1","rootScale":0.7,"clip":"infected-frail","speed":4.7,"beforeCm":13.08080348151266,"afterCm":0.044615558110816245},{"asset":"inf.common-worker.lod1","rootScale":0.7,"clip":"infected-lurch","speed":5.1,"beforeCm":11.628786399349195,"afterCm":0.09451664229763958},{"asset":"inf.common-worker.lod1","rootScale":0.7,"clip":"infected-sprint","speed":5.6,"beforeCm":7.3468650776122635,"afterCm":0.17796613075552797}]
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/tooling/scenelab.test.ts [2m([22m[2m12 tests[22m[2m)[22m[32m 143[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/crowd-feet.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 2242[2mms[22m[39m
+   [33m[2m✓[22m[39m crowd stance ankles travel at most 3 cm at actual walk/run speeds and headings @E07[33m 1675[2mms[22m[39m
+   [33m[2m✓[22m[39m crowd footwork entering mid-run never produces a non-finite pose @E07[33m 372[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/load-pipeline.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 1993[2mms[22m[39m
+   [33m[2m✓[22m[39m @load asset URLs carry content versions only when the build provides them[33m 1555[2mms[22m[39m
+   [33m[2m✓[22m[39m @transition outro prefetch warms authored decay assets without assembling a layout or parsing models[33m 347[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/sim/police-range.test.ts [2m([22m[2m18 tests[22m[2m)[22m[32m 300[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/appearance-stable.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 938[2mms[22m[39m
+   [33m[2m✓[22m[39m every human crowd model keeps its complete identity through poses, tiers, LODs and restore @E07 @E08 @E32[33m 862[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/e25-lighting.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 1374[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E25-02 @E25 @E25-AC02 every light:* anchor in the shipped GLBs parses into a valid ss_light and the runtime table is current[33m 1175[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/l2-static.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 5263[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E20-15 @E20 @E20-AC15 W1 dressing manifest: section 5.7 minimum counts, exactly one smoking vehicle, nothing post-apocalyptic[33m 1668[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E20-01 @E20 L2 starts where L1 ends: the station frame is the D-GROVE Fire Station 3 placement, the L2 copy removes what it replaces, the ambush doors stay by the market[33m 2012[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E20-doors @E20 PO 10-15 "no visible door": Grove Market has real glazed door leaves at its front and loading doorways, no collider of their own[33m 1576[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/e25-windows.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 926[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E25-12s @E25 @E25-AC12 real house windows retain power indices and normalized room coordinates in every LOD[33m 768[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/civilian-grip.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 7612[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native man-a fingers clear all routine props[33m 1550[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native man-b fingers clear all routine props[33m 1297[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native woman-a fingers clear all routine props[33m 1364[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native woman-b fingers clear all routine props[33m 1128[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native elderly fingers clear all routine props[33m 1254[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 man-a holds the mug by the handle, upright, elbow bent, at chest/waist height[33m 381[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 elderly holds the mug by the handle, upright, elbow bent, at chest/waist height[33m 333[2mms[22m[39m
+[90mstderr[2m | tests/unit/assets/registry.test.ts[2m > [22m[2mT-E17-05 @E17-AC05 missing GLB and pre-integrated art fall back with logs and contract nodes
+[22m[39m[assets] prop.test fell back to a PLACEHOLDER BOX (Error: 404). Never ship this.
+
+[90mstderr[2m | tests/unit/assets/registry.test.ts[2m > [22m[2mT-E17-05 @E17-AC05 missing GLB and pre-integrated art fall back with logs and contract nodes
+[22m[39m[assets] prop.test fell back to a PLACEHOLDER BOX (status modeled). Never ship this.
+
+[90mstdout[2m | tests/unit/assets/registry.test.ts[2m > [22m[2mT-E29-09-decay-lod @E29-AC09 ruined LODs use declared decay dimensions and still reject malformed geometry
+[22m[39m{"type":"asset.lod-fallback","id":"prop.test","lod":"lod2","reason":"dimensions"}
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/registry.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 69[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/l9-district.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 9119[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-04 @E31-AC04 greybox extent, connected materially different routes and skyline[33m 3911[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-05-district @E31-AC05 open road departure/reentry, shortcut ratio and avoidable risk anchors[33m 4949[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/tooling/l10-scene-catalog.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 44[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/performance/nav-reach-equivalence.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 576[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/data/l10-finale-anchors.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 291[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/bus-hero.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 2381[2mms[22m[39m
+   [33m[2m✓[22m[39m @bus-hero veh.evac-bus: no coplanar overlapping faces in any delivered tier or decay variant[33m 1057[2mms[22m[39m
+   [33m[2m✓[22m[39m @bus-hero veh.school-bus: no coplanar overlapping faces in any delivered tier[33m 1119[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/runtime-integration.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 555[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/vfx/tracers.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 761[2mms[22m[39m
+   [33m[2m✓[22m[39m @E15 moving tracers use one warm pooled slot per selected round (high)[33m 301[2mms[22m[39m
+   [33m[2m✓[22m[39m @E15 tracer cadence and predicted hit queries preserve an MG burst simulation hash[33m 382[2mms[22m[39m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/unit/tooling/e2e-lock.test.ts [2m([22m[2m7 tests[22m[2m | [22m[33m7 skipped[39m[2m)[22m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/l8-variants.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 602[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E30-07-outlets @E30-AC07 at least three occluded tunnel outlets, >= 20 m apart, inside the perimeter, on the path network[33m 435[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/roof-cutaway.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 75[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/audio/pickup-fanfare.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 1475[2mms[22m[39m
+   [33m[2m✓[22m[39m every fanfare has audio files, a synthesised body, and licence records for each recorded layer[33m 1454[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/audio/credits.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 147[2mms[22m[39m
+[90mstdout[2m | tests/unit/render/l1-grade.test.ts[2m > [22m[2m@E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+[22m[39m{"type":"asset.lod-fallback","id":"prop.hedge","lod":"lod1","reason":"Error: missing node crown:0"}
+
+[90mstderr[2m | tests/unit/render/l1-grade.test.ts[2m > [22m[2m@E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+[22m[39m[assets] prop.hedge fell back to a PLACEHOLDER BOX (Error: missing node crown:0). Never ship this.
+
+[90mstdout[2m | tests/unit/render/l1-grade.test.ts[2m > [22m[2m@E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+[22m[39m{"type":"asset.lod-fallback","id":"prop.street-tree","lod":"lod1","reason":"Error: missing node crown:0"}
+
+[90mstderr[2m | tests/unit/render/l1-grade.test.ts[2m > [22m[2m@E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+[22m[39m[assets] prop.street-tree fell back to a PLACEHOLDER BOX (Error: missing node crown:0). Never ship this.
+
+[90mstdout[2m | tests/unit/render/l1-grade.test.ts[2m > [22m[2m@E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+[22m[39m{"type":"asset.lod-fallback","id":"prop.garden-bush-small","lod":"lod1","reason":"Error: missing node crown:0"}
+
+[90mstderr[2m | tests/unit/render/l1-grade.test.ts[2m > [22m[2m@E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+[22m[39m[assets] prop.garden-bush-small fell back to a PLACEHOLDER BOX (Error: missing node crown:0). Never ship this.
+
+[90mstdout[2m | tests/unit/render/l1-grade.test.ts[2m > [22m[2m@E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+[22m[39m{"type":"asset.lod-fallback","id":"prop.street-tree-blossom","lod":"lod1","reason":"Error: missing node crown:0"}
+
+[90mstderr[2m | tests/unit/render/l1-grade.test.ts[2m > [22m[2m@E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+[22m[39m[assets] prop.street-tree-blossom fell back to a PLACEHOLDER BOX (Error: missing node crown:0). Never ship this.
+
+[90mstdout[2m | tests/unit/render/l1-grade.test.ts[2m > [22m[2m@E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+[22m[39m{"type":"asset.lod-fallback","id":"prop.garden-bush","lod":"lod1","reason":"Error: missing node crown:0"}
+
+[90mstderr[2m | tests/unit/render/l1-grade.test.ts[2m > [22m[2m@E19 L1 scene built from production world assets contains no plain Lambert/Standard materials
+[22m[39m[assets] prop.garden-bush fell back to a PLACEHOLDER BOX (Error: missing node crown:0). Never ship this.
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/l1-grade.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 1915[2mms[22m[39m
+   [33m[2m✓[22m[39m @E19 L1 scene built from production world assets contains no plain Lambert/Standard materials[33m 1894[2mms[22m[39m
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (3)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (3)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (3)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (3)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (3)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking reviewed authored LODs preserves triangles, sharp normals and provenance
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking mixed RGB and RGBA AO keeps each primitive stream and its indices aligned
+[22m[39mprune: Removed types... Accessor (3)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking mixed RGB and RGBA AO keeps each primitive stream and its indices aligned
+[22m[39mprune: Removed types... Accessor (8)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mpacking mixed RGB and RGBA AO keeps each primitive stream and its indices aligned
+[22m[39mprune: Removed types... Accessor (6)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/authored-lods.test.ts[2m > [22m[2mnative distance packing enforces absolute triangle caps and decreasing bytes
+[22m[39mprune: Removed types... Accessor (2)
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/authored-lods.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 322[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/continuity.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 9604[2mms[22m[39m
+   [33m[2m✓[22m[39m T-CONT-10 @continuity L2 layout carries the burned annex (decay twin, lights off) and the canon dressing; L1 stays intact[33m 1945[2mms[22m[39m
+   [33m[2m✓[22m[39m T-CONT-11 @continuity the debris blocks nav cells in L2 but keeps the annex door, lab door and every objective reachable[33m 4285[2mms[22m[39m
+   [33m[2m✓[22m[39m T-CONT-14 @continuity player-caused statics never land on an L2 set piece (bike on the truck route is dropped)[33m 3364[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/texture-ranges.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 148[2mms[22m[39m
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Accessor (50)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Accessor (200)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Accessor (292)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Primitive (6), Accessor (98)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Mesh (14), Primitive (23), Accessor (92)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Accessor (340)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Mesh (35), Primitive (39), Accessor (483)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Primitive (4), Accessor (69)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Mesh (8), Primitive (15), Accessor (60)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Accessor (260)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Mesh (26), Primitive (30), Accessor (366)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Accessor (50)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Accessor (200)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Accessor (292)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Primitive (6), Accessor (98)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Mesh (14), Primitive (23), Accessor (92)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Accessor (340)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Mesh (35), Primitive (39), Accessor (483)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Primitive (4), Accessor (69)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Mesh (8), Primitive (15), Accessor (60)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Accessor (260)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2mT-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal
+[22m[39mprune: Removed types... Mesh (26), Primitive (30), Accessor (366)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2m@E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+[22m[39mprune: Removed types... Accessor (103)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2m@E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+[22m[39mprune: Removed types... Mesh (14), Primitive (17), Accessor (68)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2m@E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+[22m[39mprune: Removed types... Accessor (188)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2m@E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+[22m[39mprune: Removed types... Mesh (23), Primitive (23), Accessor (302)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2m@E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+[22m[39mprune: Removed types... Accessor (98)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2m@E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+[22m[39mprune: Removed types... Mesh (9), Primitive (12), Accessor (48)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2m@E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+[22m[39mprune: Removed types... Accessor (188)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2m@E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+[22m[39mprune: Removed types... Mesh (23), Primitive (23), Accessor (302)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2m@E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+[22m[39mprune: Removed types... Accessor (71)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2m@E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+[22m[39mprune: Removed types... Mesh (2), Primitive (4), Accessor (16)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2m@E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+[22m[39mprune: Removed types... Accessor (136)
+
+[90mstdout[2m | tests/unit/assets/build.test.ts[2m > [22m[2m@E17-AC01 wreck builds preserve authored distance meshes and validate all variant files
+[22m[39mprune: Removed types... Mesh (15), Primitive (15), Accessor (207)
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/audio/weapon-audio.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 72315[2mms[22m[39m
+   [33m[2m✓[22m[39m offline loudness: shotgun >= 4 LU above the handgun, every weapon cue <= -1 dBTP[33m 38955[2mms[22m[39m
+   [33m[2m✓[22m[39m class loudness order, firearms never quieter than a punch, and no over-driven class[33m 33332[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/long-gun-aim.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 519[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/lod-fidelity.test.ts [2m([22m[2m238 tests[22m[2m)[22m[33m 75148[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity prop.shopping-cart[33m 306[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity veh.fire-engine[33m 742[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity veh.sedan-red[33m 666[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity veh.sedan-blue[33m 376[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity veh.sedan-white[33m 721[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity veh.school-bus[33m 1009[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity veh.suv-dark[33m 738[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity veh.pickup-red[33m 922[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity veh.pickup-white[33m 827[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity veh.sedan-green[33m 807[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity veh.suv-green[33m 857[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity veh.police-sedan[33m 876[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity veh.police-suv[33m 792[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity veh.ambulance[33m 800[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity veh.jeep-red[33m 899[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.house-a[33m 1035[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.house-b[33m 1013[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.house-c[33m 1133[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.safe-house[33m 522[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.joes-diner[33m 1052[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.gas-station[33m 1083[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.maple-hardware[33m 1038[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.mainstreet-brick[33m 1190[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity int.diner[33m 1498[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.school-elementary[33m 948[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity int.gym-cafeteria[33m 1550[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity kit.playground[33m 324[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity int.supermarket[33m 1229[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity int.mini-mall[33m 1057[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity int.food-court[33m 1109[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity int.pharmacy-clinic[33m 943[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.fire-station[33m 670[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.hospital-exterior[33m 976[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity kit.police-checkpoint[33m 328[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.gazebo[33m 460[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.restroom-block[33m 386[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.dugout[33m 524[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity kit.creek-bridge-wood[33m 398[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity kit.campground[33m 507[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity veh.courier-van[33m 826[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity veh.military-truck[33m 786[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity veh.box-truck[33m 776[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity veh.semi-trailer[33m 720[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity veh.helicopter[33m 689[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity veh.train-freight[33m 926[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.river-bridge[33m 660[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity kit.river-terrain[33m 487[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity kit.rail-crossing[33m 373[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.tunnel-portal[33m 1002[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.power-substation[33m 596[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity kit.highway-onramp[33m 615[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.civic-center[33m 1500[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity veh.fuel-truck[33m 955[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.school[33m 866[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.gym[33m 1391[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.supermarket[33m 1247[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.pharmacy[33m 901[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.hospital[33m 1182[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.substation[33m 616[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.clinic-annex[33m 1137[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.garage-detached[33m 803[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.cafe-corner[33m 991[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.courier-depot[33m 983[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.house-d[33m 1016[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.house-e[33m 886[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.backdrop-houses[33m 989[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity kit.army-checkpoint[33m 320[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.storefront-row[33m 382[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.kessler-hardware[33m 323[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity bld.apartment-block-a[33m 369[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 LOD fidelity int.metro-station[33m 322[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/lod-policy.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/audio/policies.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 54[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/layouts/districts.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 604[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E10-10 @E10 @E10-AC10 vector minimap overlays exported 3D roads within one metre[33m 487[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/tooling/l10-q2-scene-catalog.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 21[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/vfx/lab-accident.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 254[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/infected-bake.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 871[2mms[22m[39m
+   [33m[2m✓[22m[39m @transition crowd bake cache evicts old CPU templates at its fixed limit[33m 422[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/audio/assets.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 513[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E16-20 @E16 @E16-AC20 every audio file has an allowed license/hash and no Bruno SFX match[33m 423[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/e27-blasts.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 109[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/build.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 26720[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E17-01 @E17-AC01 staged exports are deterministic and exporter errors are fatal[33m 13987[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E17-04 @E17-AC04 fire-engine Blender proof matches legacy dimensions and all LODs validate[33m 2929[2mms[22m[39m
+   [33m[2m✓[22m[39m @E17-AC01 wreck builds preserve authored distance meshes and validate all variant files[33m 3253[2mms[22m[39m
+   [33m[2m✓[22m[39m @E17-AC02 commerce decay caps are enforced independently of the integrated base[33m 6459[2mms[22m[39m
+[90mstdout[2m | tests/unit/render/interior-cull.test.ts[2m > [22m[2m@E18 footprints tag enclosed placements and reveal/inside transitions update before rendering
+[22m[39minterior visibility steady cost ms/building [33m0.0007998632000002545[39m
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/interior-cull.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 61[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/apc-damage.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 872[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-22-smoke @E31-AC22 @E31-AC19 moving floor APCs reuse the bounded E27 pool without fire[33m 716[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/vehicles.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 777[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E09-01 @E09-AC01 roster validates and every used asset has its complete vehicle node contract[33m 428[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E09-01-wreck @E09-AC01 @E27-AC05 fire-engine damage tiers preserve wheels/seats and disable authored lamps[33m 332[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/cure-kits.test.ts [2m([22m[2m46 tests[22m[2m)[22m[33m 4600[2mms[22m[39m
+   [33m[2m✓[22m[39m T-L10-cure-kit-bld.cure-duplex-lod0 @L10 bld.cure-duplex: per-LOD triangle cap, <=4 materials, closed solids, z-fight clean, low-rise[33m 775[2mms[22m[39m
+   [33m[2m✓[22m[39m T-L10-cure-kit-bld.cure-warehouse-lod0 @L10 bld.cure-warehouse: per-LOD triangle cap, <=4 materials, closed solids, z-fight clean, low-rise[33m 545[2mms[22m[39m
+   [33m[2m✓[22m[39m T-L10-cure-kit-bld.cure-service-building-lod0 @L10 bld.cure-service-building: per-LOD triangle cap, <=4 materials, closed solids, z-fight clean, low-rise[33m 396[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/occluder-footprint.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 52[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/vfx/events.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 3381[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E15-01 @E15 @E15-AC01 60s combat hash is identical with all visual settings[33m 2776[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E15-09 @E15 @E15-AC09 seeded 200 machete kills detach 35% ±5%; gore never changes kills or sim hash[33m 356[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/audio/l1-arc.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 88[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/building-shells.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 293[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/sit-pose.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 114[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/alpha.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 1249[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-01-alpha-asset-lod0 @E07-AC01 @E18-AC01 derived Alpha validates budgets and shared crowd animation[33m 704[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-01-alpha-asset-lod1 @E07-AC01 @E18-AC01 derived Alpha validates budgets and shared crowd animation[33m 328[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/layouts/w6.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 78[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/audio/streaming.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/long-gun-hold.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 551[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/elephant.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 1428[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-01-elephant-asset-lod0 @E07-AC01 @E18-AC01 normal/infected share rig and closed silhouette within budgets[33m 752[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-01-elephant-asset-lod1 @E07-AC01 @E18-AC01 normal/infected share rig and closed silhouette within budgets[33m 355[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-01-elephant-asset-lod2 @E07-AC01 @E18-AC01 normal/infected share rig and closed silhouette within budgets[33m 310[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/layouts/clipping.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 1774[2mms[22m[39m
+   [32m✓[39m layout clipping guard (L1 + L2) [2m(1)[22m
+     [33m[2m✓[22m[39m @clipping D-GROVE: no hard static props interpenetrate[33m 1547[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/core/foundation.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 148[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/health-bars.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/seethrough.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/crowd-baked-pose.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 1147[2mms[22m[39m
+   [33m[2m✓[22m[39m baked crowd band keeps continuous finite poses, stops pose uploads and resumes nearby footwork[33m 641[2mms[22m[39m
+   [33m[2m✓[22m[39m blocked phone figures hold the complete world pose between solves and an action updates immediately[33m 502[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/ground-field-cache.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 41[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/no-placeholder-assets.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 3384[2mms[22m[39m
+   [32m✓[39m no placeholder art in any level [2m(5)[22m
+     [33m[2m✓[22m[39m L2: every placed asset and decay variant resolves to real geometry[33m 1678[2mms[22m[39m
+     [33m[2m✓[22m[39m L3: every placed asset and decay variant resolves to real geometry[33m 1066[2mms[22m[39m
+     [33m[2m✓[22m[39m L5: every placed asset and decay variant resolves to real geometry[33m 327[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/dispersal-kit.test.ts [2m([22m[2m30 tests[22m[2m)[22m[33m 1737[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/audio/danger.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/audio/base-alarm.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 128[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/vehicle-glass.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 236[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/l1-look.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 258[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/civilian-bake.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 4590[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-man-a: worker transfer preserves all poses, geometry, rig transforms and gun aim[33m 1311[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-elderly: worker transfer preserves all poses, geometry, rig transforms and gun aim[33m 946[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.national-guard: worker transfer preserves all poses, geometry, rig transforms and gun aim[33m 1082[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.shelter-survivor.lying: worker transfer preserves all poses, geometry, rig transforms and gun aim[33m 1159[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/l4-vehicle-solids.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 52[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/civilian-bake-worker.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 57[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/l10-district.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 4594[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-03-D1-D2 @E32-AC03 @E32-AC28 R1–R4 geometry, route lengths and pickup anchors agree[33m 4342[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/vfx/integration.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 363[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/performance/human-query.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 59[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/layout-overlap.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 12000[2mms[22m[39m
+   [33m[2m✓[22m[39m L2 additions on D-GROVE do not cut into any other placement (staticOverlapMax 0)[33m 2269[2mms[22m[39m
+   [33m[2m✓[22m[39m L3 additions on D-CORRIDOR do not cut into any other placement (staticOverlapMax 0)[33m 1469[2mms[22m[39m
+   [33m[2m✓[22m[39m L3 vehicles never sit inside a wall, barrier rail, fence, building or other solid (PO 10-12: wreck inside the bridge barrier)[33m 2375[2mms[22m[39m
+   [33m[2m✓[22m[39m L1 vehicles never sit inside a solid (all tiers)[33m 669[2mms[22m[39m
+   [33m[2m✓[22m[39m L2 vehicles never sit inside a solid (all tiers)[33m 2479[2mms[22m[39m
+   [33m[2m✓[22m[39m L3 vehicles never sit inside a solid (all tiers)[33m 1889[2mms[22m[39m
+   [33m[2m✓[22m[39m L5 vehicles never sit inside a solid (all tiers)[33m 552[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/forecourt-seethrough.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 44[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/static-instance-attributes.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 51[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/motionlab/stage1.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 484[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/audio/mega-presentation.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/crowd.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 697[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E17-07 @E17-AC07 baked part coordinates reproduce source hierarchy poses at five clip times[33m 695[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/roundhouse-pose.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 315[2mms[22m[39m
+   [33m[2m✓[22m[39m @E04 @E05 roundhouse: full-circle body spin, lead foot pivots on the spot, trail foot lifts and lands[33m 313[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/l7-memory.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 242[2mms[22m[39m
+[90mstdout[2m | tests/unit/render/crowd-footwork.test.ts[2m > [22m[2mpedestrian footwork: planted feet ≤ 3 cm slide, ≤ 8° yaw drift, steps through turns @E07
+[22m[39m┌─────────┬──────────────────────────┬──────────────────────┬──────────┬────────────┬────────────────┬───────────┬─────────────┬───────────┐
+│ (index) │ asset                    │ scenario             │ contacts │ slideMaxCm │ yawDriftMaxDeg │ liftMaxCm │ beforeSlide │ beforeYaw │
+├─────────┼──────────────────────────┼──────────────────────┼──────────┼────────────┼────────────────┼───────────┼─────────────┼───────────┤
+│ 0       │ [32m'npc.civilian-man-a@1'[39m   │ [32m'walk 1.4 m/s'[39m       │ [33m13[39m       │ [33m0.21[39m       │ [33m0[39m              │ [33m11.1[39m      │ [33m0.21[39m        │ [33m0[39m         │
+│ 1       │ [32m'npc.civilian-man-a@1'[39m   │ [32m'walk turn 90°'[39m      │ [33m13[39m       │ [33m0.79[39m       │ [33m0[39m              │ [33m12.4[39m      │ [33m7.34[39m        │ [33m38.68[39m     │
+│ 2       │ [32m'npc.civilian-man-a@1'[39m   │ [32m'walk turn 180°'[39m     │ [33m14[39m       │ [33m2.24[39m       │ [33m0.01[39m           │ [33m17.6[39m      │ [33m7.76[39m        │ [33m41[39m        │
+│ 3       │ [32m'npc.civilian-man-a@1'[39m   │ [32m'turn in place 180°'[39m │ [33m6[39m        │ [33m0.15[39m       │ [33m0[39m              │ [33m5.9[39m       │ [33m71.98[39m       │ [33m180[39m       │
+│ 4       │ [32m'npc.civilian-man-a@1'[39m   │ [32m'start-stop'[39m         │ [33m9[39m        │ [33m0.47[39m       │ [33m0[39m              │ [33m12.8[39m      │ [33m5.43[39m        │ [33m0[39m         │
+│ 5       │ [32m'npc.civilian-man-a@1'[39m   │ [32m'flee 4 m/s'[39m         │ [33m22[39m       │ [33m0.08[39m       │ [33m0[39m              │ [33m13.6[39m      │ [33m0.16[39m        │ [33m0[39m         │
+│ 6       │ [32m'npc.civilian-man-a@1'[39m   │ [32m'flee turn 120°'[39m     │ [33m22[39m       │ [33m0.2[39m        │ [33m0.02[39m           │ [33m19[39m        │ [33m1.66[39m        │ [33m7.09[39m      │
+│ 7       │ [32m'npc.civilian-man-a@1'[39m   │ [32m'wander (seeded)'[39m    │ [33m49[39m       │ [33m2.18[39m       │ [33m0.01[39m           │ [33m25.2[39m      │ [33m81.57[39m       │ [33m146.81[39m    │
+│ 8       │ [32m'npc.civilian-woman-a@1'[39m │ [32m'walk 1.4 m/s'[39m       │ [33m13[39m       │ [33m0.13[39m       │ [33m0[39m              │ [33m12.8[39m      │ [33m0.41[39m        │ [33m0[39m         │
+│ 9       │ [32m'npc.civilian-woman-a@1'[39m │ [32m'walk turn 90°'[39m      │ [33m14[39m       │ [33m0.61[39m       │ [33m0.01[39m           │ [33m14.5[39m      │ [33m7.45[39m        │ [33m38.39[39m     │
+│ 10      │ [32m'npc.civilian-woman-a@1'[39m │ [32m'walk turn 180°'[39m     │ [33m14[39m       │ [33m1.54[39m       │ [33m0.02[39m           │ [33m12.7[39m      │ [33m7.42[39m        │ [33m38.39[39m     │
+│ 11      │ [32m'npc.civilian-woman-a@1'[39m │ [32m'turn in place 180°'[39m │ [33m6[39m        │ [33m0[39m          │ [33m0[39m              │ [33m6.7[39m       │ [33m75.7[39m        │ [33m180[39m       │
+│ 12      │ [32m'npc.civilian-woman-a@1'[39m │ [32m'start-stop'[39m         │ [33m9[39m        │ [33m0.36[39m       │ [33m0[39m              │ [33m16.1[39m      │ [33m11.6[39m        │ [33m0[39m         │
+│ 13      │ [32m'npc.civilian-woman-a@1'[39m │ [32m'flee 4 m/s'[39m         │ [33m18[39m       │ [33m0.19[39m       │ [33m0[39m              │ [33m18[39m        │ [33m0.43[39m        │ [33m0[39m         │
+│ 14      │ [32m'npc.civilian-woman-a@1'[39m │ [32m'flee turn 120°'[39m     │ [33m18[39m       │ [33m0.21[39m       │ [33m0.03[39m           │ [33m18[39m        │ [33m2.11[39m        │ [33m10.25[39m     │
+│ 15      │ [32m'npc.civilian-woman-a@1'[39m │ [32m'wander (seeded)'[39m    │ [33m42[39m       │ [33m1.38[39m       │ [33m0.04[39m           │ [33m25.9[39m      │ [33m100.12[39m      │ [33m146.81[39m    │
+│ 16      │ [32m'npc.civilian-man-a@0.7'[39m │ [32m'walk 1.4 m/s'[39m       │ [33m16[39m       │ [33m0.76[39m       │ [33m0[39m              │ [33m7.1[39m       │ [33m0.13[39m        │ [33m0[39m         │
+│ 17      │ [32m'npc.civilian-man-a@0.7'[39m │ [32m'walk turn 90°'[39m      │ [33m16[39m       │ [33m0.91[39m       │ [33m0[39m              │ [33m7.1[39m       │ [33m5.9[39m         │ [33m39.8[39m      │
+│ 18      │ [32m'npc.civilian-man-a@0.7'[39m │ [32m'walk turn 180°'[39m     │ [33m17[39m       │ [33m2.55[39m       │ [33m0.01[39m           │ [33m13.2[39m      │ [33m4.89[39m        │ [33m36.95[39m     │
+│ 19      │ [32m'npc.civilian-man-a@0.7'[39m │ [32m'turn in place 180°'[39m │ [33m6[39m        │ [33m0.1[39m        │ [33m0[39m              │ [33m4.2[39m       │ [33m50.39[39m       │ [33m180[39m       │
+│ 20      │ [32m'npc.civilian-man-a@0.7'[39m │ [32m'start-stop'[39m         │ [33m12[39m       │ [33m0.71[39m       │ [33m0[39m              │ [33m7.9[39m       │ [33m17.75[39m       │ [33m0[39m         │
+│ 21      │ [32m'npc.civilian-man-a@0.7'[39m │ [32m'flee 4 m/s'[39m         │ [33m25[39m       │ [33m0.13[39m       │ [33m0[39m              │ [33m12.4[39m      │ [33m0.24[39m        │ [33m0[39m         │
+│ 22      │ [32m'npc.civilian-man-a@0.7'[39m │ [32m'flee turn 120°'[39m     │ [33m26[39m       │ [33m0.85[39m       │ [33m0.01[39m           │ [33m13.2[39m      │ [33m4.45[39m        │ [33m12.57[39m     │
+│ 23      │ [32m'npc.civilian-man-a@0.7'[39m │ [32m'wander (seeded)'[39m    │ [33m59[39m       │ [33m1.93[39m       │ [33m0.01[39m           │ [33m18[39m        │ [33m76.57[39m       │ [33m146.81[39m    │
+└─────────┴──────────────────────────┴──────────────────────┴──────────┴────────────┴────────────────┴───────────┴─────────────┴───────────┘
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/l1-infection-overlay.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 2471[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E19-18 @E19 @E19-AC18 a turned pedestrian renders as the same person: own model batch, own tint, infection overlay[33m 2470[2mms[22m[39m
+[90mstdout[2m | tests/unit/render/crowd-footwork.test.ts[2m > [22m[2mzombie move set: drag-foot shamble, lurch, lunge-grab and flinch keep planted feet @E08
+[22m[39m┌─────────┬──────────────────────────┬─────────────────────────────┬──────────┬────────────┬────────────────┬───────────┬─────────────┬───────────┐
+│ (index) │ asset                    │ scenario                    │ contacts │ slideMaxCm │ yawDriftMaxDeg │ liftMaxCm │ beforeSlide │ beforeYaw │
+├─────────┼──────────────────────────┼─────────────────────────────┼──────────┼────────────┼────────────────┼───────────┼─────────────┼───────────┤
+│ 0       │ [32m'inf.common-worker.lod1'[39m │ [32m'shamble 1 m/s (drag foot)'[39m │ [33m12[39m       │ [33m0.12[39m       │ [33m0[39m              │ [33m15.4[39m      │ [33m0.16[39m        │ [33m0[39m         │
+│ 1       │ [32m'inf.common-worker.lod1'[39m │ [32m'shamble turn 90°'[39m          │ [33m14[39m       │ [33m0.14[39m       │ [33m0[39m              │ [33m15.4[39m      │ [33m5.65[39m        │ [33m34.69[39m     │
+│ 2       │ [32m'inf.common-worker.lod1'[39m │ [32m'runner lurch 5.1 m/s'[39m      │ [33m23[39m       │ [33m0.17[39m       │ [33m0[39m              │ [33m15.3[39m      │ [33m0.28[39m        │ [33m0[39m         │
+│ 3       │ [32m'inf.common-worker.lod1'[39m │ [32m'runner turn 90°'[39m           │ [33m23[39m       │ [33m0.21[39m       │ [33m0.01[39m           │ [33m15.3[39m      │ [33m5.11[39m        │ [33m15.03[39m     │
+│ 4       │ [32m'inf.common-worker.lod1'[39m │ [32m'face target 150° (snap)'[39m   │ [33m6[39m        │ [33m0.07[39m       │ [33m0[39m              │ [33m10.4[39m      │ [33m44.02[39m       │ [33m118.51[39m    │
+│ 5       │ [32m'inf.common-worker.lod1'[39m │ [32m'lunge-grab attack'[39m         │ [33m5[39m        │ [33m0.86[39m       │ [33m0[39m              │ [33m2.5[39m       │ [33m95.03[39m       │ [33m1.75[39m      │
+│ 6       │ [32m'inf.common-worker.lod1'[39m │ [32m'wander (seeded)'[39m           │ [33m48[39m       │ [33m1.83[39m       │ [33m0.01[39m           │ [33m21.5[39m      │ [33m71.14[39m       │ [33m142.09[39m    │
+│ 7       │ [32m'inf.common-worker.lod1'[39m │ [32m'flinch x4 (fast clicks)'[39m   │ [33m2[39m        │ [33m0[39m          │ [33m0[39m              │ [33m0[39m         │ [33m22.33[39m       │ [33m1.81[39m      │
+│ 8       │ [32m'npc.civilian-woman-b'[39m   │ [32m'shamble 1 m/s (drag foot)'[39m │ [33m12[39m       │ [33m0.57[39m       │ [33m0[39m              │ [33m15.9[39m      │ [33m0.4[39m         │ [33m0[39m         │
+│ 9       │ [32m'npc.civilian-woman-b'[39m   │ [32m'shamble turn 90°'[39m          │ [33m14[39m       │ [33m0.57[39m       │ [33m0[39m              │ [33m15.9[39m      │ [33m6.43[39m        │ [33m32.63[39m     │
+│ 10      │ [32m'npc.civilian-woman-b'[39m   │ [32m'runner lurch 5.1 m/s'[39m      │ [33m22[39m       │ [33m0.14[39m       │ [33m0[39m              │ [33m18.1[39m      │ [33m0.27[39m        │ [33m0[39m         │
+│ 11      │ [32m'npc.civilian-woman-b'[39m   │ [32m'runner turn 90°'[39m           │ [33m22[39m       │ [33m0.15[39m       │ [33m0.01[39m           │ [33m18.1[39m      │ [33m3.61[39m        │ [33m18.67[39m     │
+│ 12      │ [32m'npc.civilian-woman-b'[39m   │ [32m'face target 150° (snap)'[39m   │ [33m6[39m        │ [33m0[39m          │ [33m0[39m              │ [33m6.7[39m       │ [33m36.87[39m       │ [33m124.19[39m    │
+│ 13      │ [32m'npc.civilian-woman-b'[39m   │ [32m'lunge-grab attack'[39m         │ [33m2[39m        │ [33m0.58[39m       │ [33m0[39m              │ [33m0.6[39m       │ [33m100.51[39m      │ [33m1.89[39m      │
+│ 14      │ [32m'npc.civilian-woman-b'[39m   │ [32m'wander (seeded)'[39m           │ [33m48[39m       │ [33m1.77[39m       │ [33m0.01[39m           │ [33m23.9[39m      │ [33m69.62[39m       │ [33m142.09[39m    │
+│ 15      │ [32m'npc.civilian-woman-b'[39m   │ [32m'flinch x4 (fast clicks)'[39m   │ [33m2[39m        │ [33m0[39m          │ [33m0[39m              │ [33m0[39m         │ [33m28.53[39m       │ [33m1.89[39m      │
+└─────────┴──────────────────────────┴─────────────────────────────┴──────────┴────────────┴────────────────┴───────────┴─────────────┴───────────┘
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/crowd-footwork.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 13512[2mms[22m[39m
+   [33m[2m✓[22m[39m pedestrian footwork: planted feet ≤ 3 cm slide, ≤ 8° yaw drift, steps through turns @E07[33m 8912[2mms[22m[39m
+   [33m[2m✓[22m[39m zombie move set: drag-foot shamble, lurch, lunge-grab and flinch keep planted feet @E08[33m 4598[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/foliage.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 136[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/crowd-topology.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 1489[2mms[22m[39m
+   [33m[2m✓[22m[39m common-worker crowd triangles keep one rigid owner and bounded posed edges at every LOD @E07[33m 1487[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/footprints.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 131[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/accessories.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 146[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/ui-telegraphs.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 249[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/progression/aftermath.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 146[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/audio/ambience-guard.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 66[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/campaign-nav-preparation.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 53256[2mms[22m[39m
+   [33m[2m✓[22m[39m L1: one campaign navigation bake matches the previous mask/rebake path[33m 3186[2mms[22m[39m
+   [33m[2m✓[22m[39m L2: one campaign navigation bake matches the previous mask/rebake path[33m 4568[2mms[22m[39m
+   [33m[2m✓[22m[39m L3: one campaign navigation bake matches the previous mask/rebake path[33m 3612[2mms[22m[39m
+   [33m[2m✓[22m[39m L4: one campaign navigation bake matches the previous mask/rebake path[33m 819[2mms[22m[39m
+   [33m[2m✓[22m[39m L5: one campaign navigation bake matches the previous mask/rebake path[33m 822[2mms[22m[39m
+   [33m[2m✓[22m[39m L6: one campaign navigation bake matches the previous mask/rebake path[33m 1303[2mms[22m[39m
+   [33m[2m✓[22m[39m L8: one campaign navigation bake matches the previous mask/rebake path[33m 895[2mms[22m[39m
+   [33m[2m✓[22m[39m L9: one campaign navigation bake matches the previous mask/rebake path[33m 21051[2mms[22m[39m
+   [33m[2m✓[22m[39m L10: one campaign navigation bake matches the previous mask/rebake path[33m 16988[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/vehicle-occupant-matrices.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 360[2mms[22m[39m
+   [33m[2m✓[22m[39m seated contacts reuse current matrices with identical poses under translated, leaning and reflected cars[33m 359[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/survivor.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 270[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/civilian-staging.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 112[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/l6-static.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 29[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/ik-matrix-reuse.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 228[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/footprint-uploads.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 335[2mms[22m[39m
+   [33m[2m✓[22m[39m partial track uploads reproduce every mask byte through fading, recentering, clearing and expiry[33m 333[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/l5-footprints.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 782[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E23-05c @E23 @E23-AC05 shipped W5 hero geometry retains a top-down footprint mask IoU >= 0.9[33m 781[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/look-patch.test.ts [2m([22m[2m14 tests[22m[2m)[22m[32m 24[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/texture-upload.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 68[2mms[22m[39m
+[90mstdout[2m | tests/unit/render/crowd-lod-geometry.test.ts[2m > [22m[2m@E18-AC01 @perf far worker reduces geometry while retaining every vertex channel and rigid-part ownership
+[22m[39m{ before: [33m3782[39m, after: [33m2946[39m }
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/crowd-lod-geometry.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 975[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18-AC01 @perf far worker reduces geometry while retaining every vertex channel and rigid-part ownership[33m 445[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E25-14g @E25 @E25-AC14 gripped far civilian remains within its authored triangle count and retains vertex channels[33m 529[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/static-collision.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 316[2mms[22m[39m
+   [33m[2m✓[22m[39m @E19 M1-07 baked static collision is current with delivered GLBs and has finite body-height geometry[33m 306[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/combat/gun-raise.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/figure-height.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 13804[2mms[22m[39m
+   [33m[2m✓[22m[39m every civilian, ally and infected skin has its age/species height in high lod0 @E08 @E18[33m 6027[2mms[22m[39m
+   [33m[2m✓[22m[39m every civilian, ally and infected skin has its age/species height in high lod1 @E08 @E18[33m 1143[2mms[22m[39m
+   [33m[2m✓[22m[39m every civilian, ally and infected skin has its age/species height in high lod2 @E08 @E18[33m 736[2mms[22m[39m
+   [33m[2m✓[22m[39m every civilian, ally and infected skin has its age/species height in low lod0 @E08 @E18[33m 3946[2mms[22m[39m
+   [33m[2m✓[22m[39m every civilian, ally and infected skin has its age/species height in low lod1 @E08 @E18[33m 1024[2mms[22m[39m
+   [33m[2m✓[22m[39m every civilian, ally and infected skin has its age/species height in low lod2 @E08 @E18[33m 920[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/performance/hit-query-grid.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 482[2mms[22m[39m
+   [33m[2m✓[22m[39m ray-cell traversal and unrolled slabs exactly match full scans, including corners, padding and moving walls[33m 481[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/weather-materials.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 99[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/input/rack-selection.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 40[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/placement-clearance-cache.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 697[2mms[22m[39m
+   [33m[2m✓[22m[39m D-GROVE: footprint reuse preserves sequential overlap resolution[33m 324[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/tooling/prop-penetration.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 104[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/audio/registry.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/living-adults.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 3029[2mms[22m[39m
+   [33m[2m✓[22m[39m living adult shipped tiers obey the base draw ceiling and batch attachments[33m 2800[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/tooling/night-read.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 50[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/catalog-motion.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 844[2mms[22m[39m
+   [33m[2m✓[22m[39m far pedestrian steps move between sole contacts at the actual travel speed[33m 348[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/combat/minigun.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/input/click-pick.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/physics-preparation.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 290[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/decoration-surface.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 3771[2mms[22m[39m
+   [33m[2m✓[22m[39m @E19 D-GROVE: drawn decorations stand only on soil[33m 2044[2mms[22m[39m
+   [33m[2m✓[22m[39m @E19 D-MAIN: drawn decorations stand only on soil[33m 653[2mms[22m[39m
+   [33m[2m✓[22m[39m @E19 D-RES: drawn decorations stand only on soil[33m 331[2mms[22m[39m
+   [33m[2m✓[22m[39m @E19 D-SHOP: drawn decorations stand only on soil[33m 670[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/performance/nav-bake.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 640[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/corpse-placement.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 228[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/l10-campus-corridor.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 4393[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-03-D3 @E32-AC03 @E32-AC15 @E32-AC28 campus and corridor story anchors and full route are walkable[33m 4381[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/static-bakes.test.ts [2m([22m[2m142 tests[22m[2m)[22m[33m 4178[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/character-loading.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 1825[2mms[22m[39m
+   [33m[2m✓[22m[39m selected female courier (high, direct) loads alone; a later menu choice joins one load and retains both rigs[33m 493[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/motionlab/skin.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 696[2mms[22m[39m
+   [33m[2m✓[22m[39m motion lab crowd palettes yield finite landmarks and use one instanced mesh[33m 555[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/combat/loadout.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/material-variants.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 76[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/audio/fight-music.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 20[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/pose-texture.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/crowd-register.test.ts [2m([22m[2m5 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/production-gates.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 220[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/scripted-wheels.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 43[2mms[22m[39m
+fatal: Needed a single revision
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/import-graph.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 4299[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E01-03 @E01 @E01-AC03 sim transitive import graph has no renderer or DOM dependencies[33m 2518[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E01-03b @E01 @E01-AC03 lint rejects unseeded randomness, DOM and renderer imports[33m 1779[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/progression/cure.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 37[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/crowd-arm-matrices.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 137[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/setup.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 1802[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E01-previews @E01 dev server serves optional preview pages[33m 1719[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/missions/schema.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/crowd-gun-matrices.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 607[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/l5-shutter.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 211[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/layouts/d-grove-scaffold.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 53[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/l2-roads.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 4469[2mms[22m[39m
+   [33m[2m✓[22m[39m L2 starts with no loose furniture footprint in a driving lane, including inherited and dressed props[33m 1584[2mms[22m[39m
+   [33m[2m✓[22m[39m L2 assembly rejects carried furniture on a road; gameplay/checkpoint restoration keeps a displaced pose[33m 2880[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/l10-arena.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 4766[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-17-D4 @E32-AC03 @E32-AC17 R7 route, installation and three dodge lanes connect to the console[33m 4764[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/palette-cache-key.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 48[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/tooling/seethrough-probe.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 47[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/crowd-parent-inverses.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 189[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/e25-hero.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 363[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E25-05 @E25 @E25-AC05 sixty-second walk past forty anchors holds promotions below two per second on both tiers[33m 359[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/courier-skin-lod.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 4875[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18-AC01 female low skin preserves vertices, influences and the complete rig[33m 2412[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18-AC01 male low skin preserves vertices, influences and the complete rig[33m 2461[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/input/buttons.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/progression/next-level.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/car-transition.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 277[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/data/actions.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 33[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/performance/quality.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/crowd-layer-matrices.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 212[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/data/explosions.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 20[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/post-fx-streaming.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 23[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/missions/house-emergence.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 32[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/placement-solids.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 34380[2mms[22m[39m
+   [33m[2m✓[22m[39m @E21 no placed prop cuts into a solid, L1-L9, every tier (new offenders only; backlog in the baseline)[33m 34377[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/physics-prop-contract.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 435[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E26-01 @E26 @E26-AC01 every movable prop GLB validates mass band, collider bounds, COM and explosion references[33m 434[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/transport.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 272[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/input/bindings.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/l6-power.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/audio/levelSoundtracks.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/rocket-corpses.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 625[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-19-corpses @E29-AC19 settled crowd bodies keep positions/colors/rig ownership with fewer triangles[33m 623[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/l10-lod-prefetch.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/data/player-text-dashes.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 1399[2mms[22m[39m
+   [33m[2m✓[22m[39m player-facing text sources contain no em dashes or en dashes used as dashes[33m 1397[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/layouts/build.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 2683[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E10-12 @E10 @E10-AC12 layout exports cache by authoring input; gameplay edits do not invalidate; exporter failures are fatal[33m 2680[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/cure-animal-death.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 240[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/crowd-sink.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 1626[2mms[22m[39m
+   [33m[2m✓[22m[39m baked crowd standing and gait frames keep both soles on the floor: inf.common-worker.lod1 @E07[33m 365[2mms[22m[39m
+   [33m[2m✓[22m[39m baked crowd standing and gait frames keep both soles on the floor: npc.civilian-man-a @E07[33m 306[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/audio/music-beats.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 19[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/references.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 118[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/crowd-store-matrices.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 212[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/l10-alpha-contracts.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/crowd-visibility.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/vfx/zoo-s2.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 356[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/vfx/zoo-s3.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 316[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/data/action-assets.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 60[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/audio/noise.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 307[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E16-02 @E16 @E16-AC02 a pistol emits one 25m noise heard by AI and audio subscriber[33m 306[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/vfx/pools.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 90[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/l10-platform-supports.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 31[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/tooling/mega-visible-share.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 39[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/level-geometry-retention.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/traceability.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 849[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E01-traceability @E01 every active epic AC has a matching test tag[33m 843[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/tools/remote-cache-gc.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 99[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/layouts/crossval.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 739[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E10-11 @E10 @E10-AC11 all TS anchor references, spawn volumes, triggers and objectives validate against layout/nav[33m 737[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/nested-scene-matrices.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/palette.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/audio/acoustics.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/inspection-camera.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 291[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/civilian-corpse-prewarm.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 1159[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 L4 high prewarms the actual settled-corpse band lod1[33m 507[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/vehicle-matrix-reuse.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 76[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/performance/deviceEvidence.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/e2e-error-guard.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/data/checkpoint-names.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/vfx/cure-mist.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 365[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-23-mist-pool-high @E32-AC23 @E18-AC06 cure shares the fixed smoke pool and deaths make no blood/gibs[33m 308[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/prefetch-worker.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 441[2mms[22m[39m
+   [33m[2m✓[22m[39m gameplay prefetch uses one worker per level/tier and releases it after completion or error[33m 440[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/performance/event-bus-cache.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/mounted-gun-warmup.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/civilian-material.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 26[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/input/walk.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/rig-translation-matrices.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 138[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/combat/events.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 448[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E05-12 @E05 @E05-AC12 attack/hit/kill carry stable entity IDs, positions and one lethal event[33m 447[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/stride-scale.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/tooling/l9-vehicle-camera.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 40[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/interaction-marker.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/layouts/visual-bounds.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 360[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E10-07b @E10 @E10-AC07 actual placeholder geometry and collider contract agree in X/Z within 10%[33m 358[2mms[22m[39m
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (63)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (208)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Mesh (26), Primitive (26), Accessor (286)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (54)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (196)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Mesh (24), Primitive (24), Accessor (266)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (45)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (180)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Mesh (22), Primitive (22), Accessor (244)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (7)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (48)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Mesh (4), Primitive (4), Accessor (64)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (7)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (48)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Mesh (4), Primitive (4), Accessor (64)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (7)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (48)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Mesh (4), Primitive (4), Accessor (64)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (7)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (48)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Mesh (4), Primitive (4), Accessor (64)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (7)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (48)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Mesh (4), Primitive (4), Accessor (64)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (7)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Accessor (48)
+
+[90mstdout[2m | tests/unit/assets/commerce-pack.test.ts[2m > [22m[2m@E17-AC01 packing a base delivers every declared decay and preserves native tiers
+[22m[39mprune: Removed types... Mesh (4), Primitive (4), Accessor (64)
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/commerce-pack.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 3320[2mms[22m[39m
+   [33m[2m✓[22m[39m @E17-AC01 packing a base delivers every declared decay and preserves native tiers[33m 3319[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/crowd-models.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/combat/elevated-melee.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/missions/marker-anchor.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 19[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/perimeter-posts.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 222[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/performance/nav-capsule-corners.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/motionlab/motion.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 85[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/environment-lifetime.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/performance/assets.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 26[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/performance/spatial-contact-cache.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 2374[2mms[22m[39m
+   [33m[2m✓[22m[39m contact cache preserves full horde simulation state against unfiltered spatial queries[33m 2372[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/overlay.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/e25-visibility.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/corgi-scale.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 35[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/l3-boom.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/data/l2-glass.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 17[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/input/wheel.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/missions/dialogue.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 30[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/civilian-residency.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/physics-metadata.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 226[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/ui-settings.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/performance/gibs.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 331[2mms[22m[39m
+   [33m[2m✓[22m[39m E18 @E18 low tier keeps at most 30 active gibs and resets removed physics slots[33m 326[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/l5-shotgun.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 14[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/l6-scream-debug.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/lod-residency.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/ui-dom.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 4[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/army-boom.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 85[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/input/raised-floor.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/performance/layouts.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 110[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/lod-pop-gate.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/png-pixels.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 22[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/debug-physics.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/tooling/headless-only.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 347[2mms[22m[39m
+   [32m✓[39m browser automation is headless only [2m(1)[22m
+     [33m[2m✓[22m[39m no test, tool or config launches a headed browser[33m 345[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/view-uniform-groups.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 15[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/startup-background.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/window-glow-lod.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 1800[2mms[22m[39m
+   [32m✓[39m window glows stay in their windows in every LOD [2m(1)[22m
+     [33m[2m✓[22m[39m LOD1/LOD2 glow patches coincide with the LOD0 patches of every building[33m 1798[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/audio/l4-radio-mix.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 6[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/civilian-bake-build.test.ts [2m([22m[2m72 tests[22m[2m)[22m[33m 37055[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-elderly:lod0: shipped bake exactly matches runtime preparation[33m 1853[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-elderly:lod1: shipped bake exactly matches runtime preparation[33m 647[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-elderly:lod2: shipped bake exactly matches runtime preparation[33m 380[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-man-a:lod0: shipped bake exactly matches runtime preparation[33m 1500[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-man-a:lod1: shipped bake exactly matches runtime preparation[33m 670[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-man-a:lod2: shipped bake exactly matches runtime preparation[33m 462[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-man-a.aftermath:lod0: shipped bake exactly matches runtime preparation[33m 870[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-man-a.aftermath:lod1: shipped bake exactly matches runtime preparation[33m 574[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-man-b:lod0: shipped bake exactly matches runtime preparation[33m 1439[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-man-b:lod1: shipped bake exactly matches runtime preparation[33m 532[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-man-b.aftermath:lod0: shipped bake exactly matches runtime preparation[33m 645[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-man-b.aftermath:lod1: shipped bake exactly matches runtime preparation[33m 588[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-man-b.aftermath:lod2: shipped bake exactly matches runtime preparation[33m 491[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-woman-a:lod0: shipped bake exactly matches runtime preparation[33m 1291[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-woman-a:lod1: shipped bake exactly matches runtime preparation[33m 474[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-woman-b:lod0: shipped bake exactly matches runtime preparation[33m 1101[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-woman-b:lod1: shipped bake exactly matches runtime preparation[33m 361[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-woman-b:lod2: shipped bake exactly matches runtime preparation[33m 310[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-woman-b.aftermath:lod0: shipped bake exactly matches runtime preparation[33m 429[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-woman-b.aftermath:lod1: shipped bake exactly matches runtime preparation[33m 424[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.dale.aftermath:lod0: shipped bake exactly matches runtime preparation[33m 650[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.dale.aftermath:lod1: shipped bake exactly matches runtime preparation[33m 315[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.depot-clerk:lod0: shipped bake exactly matches runtime preparation[33m 1239[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.depot-clerk:lod1: shipped bake exactly matches runtime preparation[33m 560[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.depot-clerk:lod2: shipped bake exactly matches runtime preparation[33m 327[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.firefighter-alive:lod0: shipped bake exactly matches runtime preparation[33m 894[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.firefighter-alive:lod1: shipped bake exactly matches runtime preparation[33m 398[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.lab-guard:lod0: shipped bake exactly matches runtime preparation[33m 1492[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.lab-guard:lod1: shipped bake exactly matches runtime preparation[33m 513[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.lab-guard:lod2: shipped bake exactly matches runtime preparation[33m 314[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.lab-tech-a:lod0: shipped bake exactly matches runtime preparation[33m 1047[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.lab-tech-a:lod1: shipped bake exactly matches runtime preparation[33m 328[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.lab-tech-b:lod0: shipped bake exactly matches runtime preparation[33m 742[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.marcus.aftermath:lod0: shipped bake exactly matches runtime preparation[33m 539[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.marcus.aftermath:lod1: shipped bake exactly matches runtime preparation[33m 341[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.mia.aftermath:lod0: shipped bake exactly matches runtime preparation[33m 449[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.mia.aftermath:lod1: shipped bake exactly matches runtime preparation[33m 312[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.mr-okafor.aftermath:lod0: shipped bake exactly matches runtime preparation[33m 539[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.national-guard:lod0: shipped bake exactly matches runtime preparation[33m 815[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.national-guard:lod1: shipped bake exactly matches runtime preparation[33m 364[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.national-guard:lod2: shipped bake exactly matches runtime preparation[33m 337[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.police-officer:lod0: shipped bake exactly matches runtime preparation[33m 681[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.rosa.aftermath:lod0: shipped bake exactly matches runtime preparation[33m 388[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.sam.aftermath:lod0: shipped bake exactly matches runtime preparation[33m 394[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.shelter-survivor.bandaged:lod0: shipped bake exactly matches runtime preparation[33m 524[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.shelter-survivor.bandaged:lod1: shipped bake exactly matches runtime preparation[33m 353[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.shelter-survivor.lying:lod0: shipped bake exactly matches runtime preparation[33m 499[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.shelter-survivor.lying:lod1: shipped bake exactly matches runtime preparation[33m 657[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.shelter-survivor.lying:lod2: shipped bake exactly matches runtime preparation[33m 335[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.shelter-survivor.sitting:lod0: shipped bake exactly matches runtime preparation[33m 524[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.shelter-survivor.sitting:lod1: shipped bake exactly matches runtime preparation[33m 355[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/validate.test.ts [2m([22m[2m17 tests[22m[2m)[22m[33m 246445[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts[33m 238193[2mms[22m[39m
+   [33m[2m✓[22m[39m distance cap for veh.test LODNaN cannot be relaxed by the manifest[33m 541[2mms[22m[39m
+   [33m[2m✓[22m[39m distance cap for bld.house-test LODNaN cannot be relaxed by the manifest[33m 2081[2mms[22m[39m
+   [33m[2m✓[22m[39m distance cap for bld.safe-house LODNaN cannot be relaxed by the manifest[33m 2101[2mms[22m[39m
+   [33m[2m✓[22m[39m @E17-AC02 decay caps apply to variants without changing the integrated base budget[33m 1387[2mms[22m[39m
+   [33m[2m✓[22m[39m @E17-AC02 burned budgets reject oversized siblings without altering existing wreck limits[33m 1467[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/static.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 91914[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E01-01b @E01 @E01-AC01 typecheck, lint and build exit zero without warnings[33m 91913[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m269 passed[39m[22m[2m | [22m[33m1 skipped[39m[90m (270)[39m
+[2m      Tests [22m [1m[32m1546 passed[39m[22m[2m | [22m[33m7 skipped[39m[90m (1553)[39m
+[2m   Start at [22m 08:01:03
+[2m   Duration [22m 316.26s[2m (tests 91%, import 6%, transform 2%)[22m
+
+JSON report written to /srv/mi/jobs/perf-e18-final-abfe7a-98528-1792137643/docs/reports/perf-e18-final/unit-final.json
+[remote] pulled docs/reports/perf-e18-final/unit-final.json
+[remote] done exit=0 (runner 94.130.181.173, sync 18s, remote total 319s)

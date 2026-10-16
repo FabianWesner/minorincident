@@ -20,19 +20,27 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     await page.waitForFunction(() => Boolean(window.__SS__));
     await page.evaluate(async () => { const a = window.__SS__!; await a.ready; await a.loadLevel('L4', { seed: 2, progression: 'L4-default' }); a.pause(); a.missions.begin(); a.cheats.god(true); a.bot.start('complete'); });
     expect(await page.evaluate(() => window.__SS__!.perf().backend)).toBe(renderer);
+    const profiler = process.env.L4_CPU_PROFILE === '1' ? await context.newCDPSession(page) : null;
+    if (profiler) { await profiler.send('Profiler.enable'); await profiler.send('Profiler.setSamplingInterval', { interval: 500 }); await profiler.send('Profiler.start'); }
+    const profileStartedAt = profiler ? await page.evaluate(() => performance.now()) : 0;
     const step = async (until: string, max = 600) => { for (let i = 0; i < max && !await page.evaluate(until); i++) await page.evaluate(() => window.__SS__!.step(15)); };
     /** rAF frame times while the real clock runs, until `until` holds (plus `tail` ms). */
-    const record = (until: string, tail: number) => page.evaluate(async ({ until, tail }) => {
-      const a = window.__SS__!, frames: number[] = [], cpu: { sim: number; simFrame: number; ticks: number; update: number; render: number }[] = []; let previous = 0, previousTick = a.tick(), end = 0; a.resume();
+    const record = (until: string, tail: number) => page.evaluate(async ({ until, tail, diagnostic }) => {
+      const a = window.__SS__!, frames: number[] = [], cpu: { at: number; sim: number; simFrame: number; ticks: number; update: number; render: number }[] = []; let previous = 0, previousTick = a.tick(), end = 0; a.resume();
       for (let i = 0; i < 6000; i++) {
         const now = await new Promise<number>(resolve => requestAnimationFrame(resolve));
         const tick = a.tick(), steps = tick - previousTick; previousTick = tick;
-        if (previous && i > 2) { frames.push(now - previous); const p = a.perf(); cpu.push({ sim: steps ? p.simMs / steps : 0, simFrame: p.simMs, ticks: steps, update: p.updateCpuMs, render: p.renderCpuMs }); } previous = now;
+        if (previous && i > 2) { frames.push(now - previous); const p = a.perf(); cpu.push({ at: performance.now(), sim: steps ? p.simMs / steps : 0, simFrame: p.simMs, ticks: steps, update: p.updateCpuMs, render: p.renderCpuMs }); } previous = now;
         if (!end && (0, eval)(until)) end = now + tail;
         if (end && now >= end) break;
       }
-      a.pause(); (window as unknown as { l4Cpu: typeof cpu }).l4Cpu = cpu; return frames;
-    }, { until, tail });
+      a.pause(); (window as unknown as { l4Cpu: typeof cpu }).l4Cpu = cpu;
+      if (diagnostic) {
+        const state = window as unknown as { l4Phases?: { frames: number[]; cpu: typeof cpu }[] };
+        (state.l4Phases ??= []).push({ frames, cpu });
+      }
+      return frames;
+    }, { until, tail, diagnostic: process.env.L4_CPU_PROFILE === '1' });
     const percentile = (values: number[], fraction: number) => [...values].sort((a, b) => a - b)[Math.ceil(values.length * fraction) - 1];
     const l4 = 'window.__SS__.missions.state().l4';
     // The ride and the calm plaza (the bot goes to the quartermaster), then the first turn.
@@ -91,6 +99,7 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
       simP95: percentile(warCpu.filter(c => c.ticks > 0).map(c => c.sim), .95), simFrameP95: percentile(warCpu.map(c => c.simFrame), .95), updateP95: percentile(warCpu.map(c => c.update), .95), renderP95: percentile(warCpu.map(c => c.render), .95), lineBroke: await page.evaluate(() => window.__SS__!.missions.state()!.l4!.lineBreakAt > 0) };
     writeFileSync(`${dir}/l4-${tier}.json`, JSON.stringify({ ...proof, warProfile: warStatic.profile, collapseProfile: collapseStatic.profile, collapseAssets: collapseStatic.profileAssets, war, turn, tank, breakFrames, collapse }, null, 2));
     console.log(JSON.stringify(proof));
+    if (profiler) writeFileSync(`${dir}/l4-${tier}-profile.json`, JSON.stringify({ ...await profiler.send('Profiler.stop'), profileStartedAt, phases: await page.evaluate(() => (window as unknown as { l4Phases: unknown[] }).l4Phases) }));
     // The approved collapse: the first nest Alpha is in (84 s; l4-po-round: three Alphas in, from 84 s high, 92 s low), soldiers have died but the survivors still fight (at least half firing within the 8 s window; fallen-back posts can be out of range).
     expect(counts.turnS).toBeGreaterThanOrEqual(84); expect(counts.alphasArrived).toBeGreaterThanOrEqual(3);
     expect(counts.soldiers).toBeLessThan(counts.soldiersAtTurn); expect(counts.soldiers).toBeGreaterThanOrEqual(tier === 'high' ? 6 : 3);

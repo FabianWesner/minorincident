@@ -86,7 +86,9 @@ test('@transition outro prefetch warms authored decay assets without assembling 
   expect(assemble).not.toHaveBeenCalled();
   expect(requested).toContain('/assets/models/bld.clinic-annex.burned.lod2.glb');
   expect(requested.some(url => /npc\.lab-tech-a(?:\.lod[12])?\.glb/.test(url))).toBe(false);
-  expect(requested.some(url => /char\.courier-female\.skin\.glb/.test(url))).toBe(true);
+  expect(requested).toContain('/assets/models/char.courier-female.skin.low.glb');
+  expect(requested).toContain('/assets/models/char.courier-male.skin.low.glb');
+  expect(requested.some(url => /char\.courier-.*\.skin\.glb/.test(url))).toBe(false);
   expect(new Set(requested).size).toBe(requested.length);
   expect(requested.some(url => /prop\.(bench|bbq|picket-fence)\.lod1\.glb/.test(url))).toBe(false);
   requested.length = 0;
