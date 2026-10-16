@@ -5,6 +5,7 @@ import type { MissionResult } from './types';
 import { l7Departure as cfg } from '../../data/l7';
 import { l7Bus, l7CorridorAnchors } from '../../levels/L7/corridor';
 import { spawnSetPiece } from './L4Spectacle';
+import { emitEngine, stopEngine } from '../vehicles/ConvoySound';
 
 export interface L7DepartureState {
   phase: 'waiting' | 'boarding' | 'departing' | 'done';
@@ -115,12 +116,15 @@ export class LevelSevenDeparture {
     w.storyLock = { scripted: null, skip: false }; w.clearInput();
     if (this.blocker !== undefined) { w.physics.removeBlocker(this.blocker); this.blocker = undefined; }
     w.events.emit({ type: 'world.blocker.changed', tick: w.tick, id: NAV_BUS, blocked: false, wall: this.wall });
+    emitEngine(w, s.busId, 0, true);
     w.events.emit({ type: 'mission.signal', tick: w.tick, name: 'l7.departing' });
   }
   private drive(): void {
     const w = this.world, s = this.state, t = Math.min(1, (w.tick - s.startedAt) / (cfg.seconds * 60));
     const x = cfg.lane.fromX + (cfg.lane.toX - cfg.lane.fromX) * ease(t), tr = this.bus.transform;
+    const speed = Math.abs(x - tr.x) * 60;
     tr.x = x; tr.z = cfg.lane.z; tr.yaw = 0; tr.y = w.districts!.groundHeight(x, cfg.lane.z) + .7;
+    if ((w.tick - s.startedAt) % 6 === 0) emitEngine(w, s.busId, speed, true);
     const player = w.entities.get(1)!.transform;
     Object.assign(player, { x, z: cfg.lane.z });
     for (const e of w.entities.iterate()) if (e.companion && e.passengerOf === s.busId) Object.assign(e.transform, tr);
@@ -129,6 +133,7 @@ export class LevelSevenDeparture {
   private finish(): void {
     const w = this.world, s = this.state;
     s.phase = 'done';
+    stopEngine(w, s.busId);
     const escaped = s.boarded.map(id => structuredClone(w.entities.get(id)!)).filter(e => e.health.current > 0 && e.civilian?.state !== 'finished' && !e.infected && !e.infection);
     for (const e of escaped) { e.hidden = false; delete e.passengerOf; if (e.civilian) e.civilian.pauseUntil = 0; }
     const result: MissionResult = {
