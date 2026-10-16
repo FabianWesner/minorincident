@@ -1,0 +1,78 @@
+{
+  "name": "qa-l6-exit-approach",
+  "note": "L6 final barricade to Northgate: the dead escalator and its supports align with the tunnel centreline z=15. Follow camera must show a continuous ascent onto the street, without falling into the old gap between flights. The browser full-input test separately covers the complete mission and L7 handover.",
+  "seed": 1,
+  "ground": "district",
+  "time": "L6",
+  "tier": 0,
+  "layout": {
+    "level": "L6",
+    "district": "D-SUBWAY",
+    "bbox": [
+      [
+        230,
+        9
+      ],
+      [
+        278,
+        22
+      ]
+    ],
+    "ids": [
+      "l6-24"
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        234,
+        15
+      ],
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 30,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            244,
+            15
+          ],
+          [
+            260,
+            15
+          ],
+          [
+            273,
+            15
+          ]
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 780,
+  "sheet": 45,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "collisionFailuresMax": 0,
+    "collisionPendingMax": 0,
+    "actorMaxX": {
+      "courier": [
+        271,
+        275
+      ]
+    }
+  }
+}
