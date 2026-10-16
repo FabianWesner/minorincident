@@ -104,23 +104,18 @@ export class EntityAssets extends Group {
     }
     await Promise.all(this.pending.values());
   }
-  update(alpha = 1): void {
-    void this.ready();
-    const player0 = this.world.entities.get(1)?.transform;
-    const ridden = this.playerVehicle();
+  /** Capture scripted actors after each fixed tick, alongside the camera history. */
+  advance(): void {
     for (const [id, rec] of this.records) {
-      for (const material of rec.reveal) material.seeThrough(id !== ridden);
-      const model = rec.model, entity = this.world.entities.get(id);
-      if (!entity) { model.removeFromParent(); this.records.delete(id); continue; }
-      const t = entity.transform, flat = entity.kind === 'obstacle';
+      const entity = this.world.entities.get(id);
+      if (!entity) continue;
+      const t = entity.transform;
       let pose = rec.pose;
       if (!pose) pose = rec.pose = { tick: this.world.tick, px: t.x, py: t.y, pz: t.z, pyaw: t.yaw, x: t.x, y: t.y, z: t.z, yaw: t.yaw, distance: 0, pdistance: 0, steer: 0 };
       else if (pose.tick !== this.world.tick) {
         // A jump (checkpoint restore, teleport) must not smear across the map.
         const jump = this.world.tick < pose.tick || Math.hypot(t.x - pose.x, t.z - pose.z) > 6;
-        // PO 10-13 (low tier, phone cadence): with k > 1 ticks since the last drawn frame the start pose is the tick before
-        // the current one (k-1 of k steps along the last drawn pose's path), not the stale drawn tick, or the bus lags 1-2 ticks
-        // against the camera alternately and vibrates.
+        // Normally sampled each fixed tick; setup/restore can skip directly to a new world tick.
         const k = Math.max(1, this.world.tick - pose.tick), back = (from: number, to: number) => to - (to - from) / k;
         const dyaw = Math.atan2(Math.sin(t.yaw - pose.yaw), Math.cos(t.yaw - pose.yaw));
         const dx = t.x - pose.x, dz = t.z - pose.z;
@@ -130,6 +125,18 @@ export class EntityAssets extends Group {
         pose.pdistance = jump ? distance : back(pose.distance, distance); pose.distance = distance;
         Object.assign(pose, { tick: this.world.tick, px: jump ? t.x : back(pose.x, t.x), py: jump ? t.y : back(pose.y, t.y), pz: jump ? t.z : back(pose.z, t.z), pyaw: jump ? t.yaw : t.yaw - dyaw / k, x: t.x, y: t.y, z: t.z, yaw: t.yaw });
       }
+    }
+  }
+  update(alpha = 1): void {
+    this.advance();
+    void this.ready();
+    const player0 = this.world.entities.get(1)?.transform;
+    const ridden = this.playerVehicle();
+    for (const [id, rec] of this.records) {
+      for (const material of rec.reveal) material.seeThrough(id !== ridden);
+      const model = rec.model, entity = this.world.entities.get(id);
+      if (!entity) { model.removeFromParent(); this.records.delete(id); continue; }
+      const flat = entity.kind === 'obstacle', pose = rec.pose!;
       const a = Math.max(0, Math.min(1, alpha));
       const y = pose.py + (pose.y - pose.py) * a;
       model.position.set(pose.px + (pose.x - pose.px) * a, flat ? 0 : Math.max(0, y - .7), pose.pz + (pose.z - pose.pz) * a);

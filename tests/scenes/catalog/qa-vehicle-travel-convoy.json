@@ -1,0 +1,50 @@
+{
+  "name": "qa-vehicle-travel-convoy",
+  "seed": 1,
+  "l4Convoy": true,
+  "time": "L4",
+  "ground": "district",
+  "layout": {
+    "level": "L4",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        -90,
+        -85
+      ],
+      [
+        90,
+        70
+      ]
+    ]
+  },
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "hud": true,
+  "frames": 660,
+  "sheet": 60,
+  "shots": [
+    450,
+    510,
+    570,
+    630
+  ],
+  "note": "Moving production first-bus ride: fixed convoy lens and tick-sampled rigid actors through the Lakeshore facade crossing. Compare game-camera high/low at zoom 1 and 0.5 on both backends.",
+  "expect": {
+    "consoleErrors": 0
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -70,
+        46
+      ],
+      "state": "idle"
+    }
+  ]
+}

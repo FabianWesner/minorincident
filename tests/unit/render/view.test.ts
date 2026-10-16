@@ -141,3 +141,14 @@ test('@E22 camera clearance beside the moved Lakeshore apartment preserves frami
     expect(view.camera.position.toArray()).toEqual(view.simCamera.position.toArray());
   }
 });
+
+test('@E22 seated convoy keeps a constant lens offset while passing Fairhaven facades', () => {
+  const view = new View(); view.resize(1600, 900); view.convoy = true; view.driving = true;
+  view.cameraSolids.push(new Box3(new Vector3(-5, 0, 4), new Vector3(20, 18, 18)));
+  view.reset({ x: -20, z: 0 });
+  const distance = view.camera.position.distanceTo(view.focus);
+  for (let tick = 0; tick < 300; tick++) {
+    view.update({ x: -20 + tick * .15, z: 0 }, 1 / 60);
+    expect(view.camera.position.distanceTo(view.focus)).toBeCloseTo(distance, 8);
+  }
+});
