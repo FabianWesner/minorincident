@@ -1,15 +1,24 @@
 {
   "name": "alpha-awareness-mega",
-  "note": "PO 10-16: Mega close notice/roar cue, then resumed global courier pursuit; no civilian diversion of the E32 route target.",
+  "note": "PO 10-16: Mega notices a nearby human behind it, turns/roars for 0.6 s, then resumes global pursuit of the far courier. Inspect the human-facing cue and retained E32 courier route target on both tiers/zooms/backends.",
   "seed": 1,
   "ground": "asphalt",
-  "size": 30,
+  "size": 40,
   "time": "L4",
   "dof": false,
   "actors": [
     {
       "id": "courier",
       "kind": "courier",
+      "at": [
+        -16,
+        0
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "companion",
+      "kind": "pedestrian",
       "at": [
         -3.8,
         0
@@ -26,7 +35,7 @@
     ],
     "zoom": 1
   },
-  "frames": 90,
+  "frames": 54,
   "sheet": 6,
   "trace": true,
   "expect": {
