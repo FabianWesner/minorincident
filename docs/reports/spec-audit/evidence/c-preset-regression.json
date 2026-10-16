@@ -1,0 +1,104 @@
+{
+  "passed": 16,
+  "failed": 0,
+  "pending": 0,
+  "success": true,
+  "tests": [
+    {
+      "file": "unit/progression/campaign.test.ts",
+      "name": "campaign T-E13-01 @E13 @E13-AC01 1000 seeds give three distinct prerequisite-valid reproducible offers",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/progression/campaign.test.ts",
+      "name": "campaign @E13 fixed unlock alternatives grant only the chosen weapon and retain guaranteed unlocks",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/progression/campaign.test.ts",
+      "name": "campaign @E13 @E13-AC01 used weapon weights bias offers without changing the save-seeded choice",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/progression/campaign.test.ts",
+      "name": "campaign T-E13-03 @E13 @E13-AC03 all 243 seeded choice paths increase power L1 to L6",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/progression/campaign.test.ts",
+      "name": "campaign T-E13-04 @E13 @E13-AC04 rack sizes and overfill/unknown/duplicate rejections",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/progression/campaign.test.ts",
+      "name": "campaign T-E13-06 @E13 @E13-AC06 corrupt/unknown saves fail safely and v0 migrates exactly",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/progression/campaign.test.ts",
+      "name": "campaign T-E13-07-unit @E13 @E13-AC07 L2 through L6 presets are valid reproducible complete saves",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/progression/campaign.test.ts",
+      "name": "campaign @E13 @E14 campaign saves retain validated HUD accessibility settings",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/progression/campaign.test.ts",
+      "name": "campaign T-E13-08-unit @E13 @E13-AC08 default path ends L1 through L5 in gear tiers zero through four",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/progression/campaign.test.ts",
+      "name": "campaign @E13 saves round-trip at each pending phase; rewards cannot be claimed twice",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/progression/campaign.test.ts",
+      "name": "@E24 @E24-AC14 finished L6 save round-trips without granting a sixth reward",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/progression/campaign.test.ts",
+      "name": "@E24 @E24-AC05 the actual L5 fire axe rack is valid at the L6 handover when existing equipment ownership is recorded",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/progression/campaign.test.ts",
+      "name": "@E13 PO 2026-10-12: old saves holding the retired L3 SMG or hunting rifle migrate to the handgun on load",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/progression/campaign.test.ts",
+      "name": "@E30 @E30-AC03 L8 standalone keeps all six acquired weapons selectable and saves them",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/tooling/l7-runner-default.test.ts",
+      "name": "T-E29-02-preset @E29-AC02 L7-default retains the five prior weapons and leaves the rocket to its pickup",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/tooling/l7-runner-default.test.ts",
+      "name": "T-E29-02-cli @E29-AC02 explicit and all-level CLI registration include L7 in campaign order",
+      "status": "passed",
+      "failures": []
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "kind": "stale fixture clock assumption, corrected",
+  "stats": {
+    "startTime": "2026-10-16T08:50:06.311Z",
+    "duration": 12591.499,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "file": "e2e/levels/L8.spec.ts",
+      "name": "T-E30-18 @E30-AC18 real keyboard exploration, tunnel breach and complete APC escape into L9",
+      "project": "chromium",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 9890,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-c/tests/e2e/levels/L8.spec.ts",
+                "column": 97,
+                "line": 36
+              },
+              "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m3600\u001b[39m\n\n  34 |   await expect(page.locator('.hud-companion')).toHaveText('Corgi \u00b7 following');\n  35 |   await expect(page.locator('.hud-pin-objective')).toBeHidden(); await expect(page.locator('.hud-pin-home')).toBeHidden();\n> 36 |   await step(3479); expect(await page.evaluate(() => window.__SS__!.getState().l8!.breachedAt)).toBe(0);\n     |                                                                                                 ^\n  37 |   await step(1); const breach = await page.evaluate(() => window.__SS__!.getState().l8!);\n  38 |   expect(breach.breachedAt).toBe(3600); expect(new Set(breach.arrivals.map(a => a.outlet)).size).toBe(4);\n  39 |   // Physical key movement is computed from the same isometric axes as other real-input campaign gates.\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-c/tests/e2e/levels/L8.spec.ts:36:97"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
