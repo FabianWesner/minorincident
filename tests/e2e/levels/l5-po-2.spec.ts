@@ -41,7 +41,8 @@ test('PO #21b @E23 survivor-3: ordinary clicks lead from the wrong plaza bus to 
   await page.screenshot({ path: 'test-results/l5-po-2/sam-rescued.png' });
   writeFileSync('test-results/l5-po-2/sam-proof.json', JSON.stringify(await page.evaluate(() => ({ player: window.__SS__!.getEntity(1)!.transform, mission: window.__SS__!.missions.state()!.l5 })), null, 2));
   // Continue to the fifth survivor using the same ordinary click destinations, then E at the stairwell.
-  for (const target of [{ x: -56, z: 22 }, { x: -56, z: -34 }, { x: -76.2, z: -44.4 }]) {
+  const mia = l5Survivors.find(s => s.key === 'mia')!;
+  for (const target of [{ x: -56, z: 22 }, { x: -56, z: -34 }, { x: mia.ringAt[0], z: mia.ringAt[1] }]) {
     for (let attempt = 0; attempt < 25; attempt++) {
       const state = await page.evaluate(target => { const a = window.__SS__!, p = a.getEntity(1)!.transform, d = Math.hypot(target.x - p.x, target.z - p.z), f = Math.min(1, 4 / (d || 1)); return { d, point: a.input.project({ x: p.x + (target.x - p.x) * f, z: p.z + (target.z - p.z) * f }) }; }, target);
       if (state.d < 2) break;
