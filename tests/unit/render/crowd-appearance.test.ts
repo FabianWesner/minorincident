@@ -56,7 +56,12 @@ for (const lod of ['lod0','lod1','lod2'] as const) test(`crowd appearance ${lod}
   packCrowdParts(infected.geometry); markCrowdAppearance(infected.geometry);
   const matrix = new InstancedBufferAttribute(new Float32Array(16), 16);
   for (const name of ['_state','_variant']) infected.geometry.setAttribute(name, new InstancedBufferAttribute(new Float32Array(4),4));
-  const layout = crowdVertexLayout(infected.geometry, matrix, true);
+  // CrowdView binds the explicit E17 matrix as `_crowd0..3` geometry attributes (one interleaved buffer) and keeps
+  // the implicit instanceMatrix as the worst-case mask/id-pass binding. Counting both plus a phantom explicit
+  // matrix reported 9 buffers (spec audit 10-16) while the real WebGPU pipeline uses 7.
+  const crowd = new InstancedInterleavedBuffer(new Float32Array(16),16,1);
+  for (let c=0;c<4;c++) infected.geometry.setAttribute(`_crowd${c}`,new InterleavedBufferAttribute(crowd,4,c*4));
+  const layout = crowdVertexLayout(infected.geometry, matrix);
   expect(layout).toEqual({ buffers:8, locations:14, webgpu:true, webgl2:true });
   const rig = await model('npc.civilian-elderly', lod); prepareCivilianRig(rig, 'npc.civilian-elderly');
   const civilian = await prepareCivilianGeometry(rig, 'npc.civilian-elderly', lod==='lod2');

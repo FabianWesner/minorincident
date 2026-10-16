@@ -81,7 +81,9 @@ export function markCrowdAppearance(geometry: BufferGeometry, ordinaryInfected =
   }
 }
 /** Count unique GPU buffers and attribute locations (an interleaved matrix is one buffer/four locations).
- * The limits apply to the complete crowd layout, including the default instance transform. */
+ * The limits apply to the complete crowd layout, including the default instance transform.
+ * Pass `instanceMatrix` when a pass may still bind Three's implicit instancing (mask/id passes of static-attribute
+ * batches); `explicitMatrix` only for a separate matrix buffer NOT already present as geometry attributes. */
 export function crowdVertexLayout(geometry: BufferGeometry, instanceMatrix?: InstancedBufferAttribute, explicitMatrix = false) {
   const attributes = Object.values(geometry.attributes), buffers = new Set<unknown>();
   let locations = attributes.reduce((n, a) => n + Math.ceil(a.itemSize / 4), 0);
