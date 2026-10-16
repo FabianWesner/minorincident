@@ -1,4 +1,7 @@
 import { afterEach, expect, test } from 'vitest';
+import { readFileSync } from 'node:fs';
+import { compositions } from '../../src/levels/compositions';
+import { resolveCampaignMission } from '../../src/levels/missions';
 import { loadLevel } from '../../tools/sim-runner/levels';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
 import { emptyInput } from '../../src/input/InputFrame';
@@ -86,4 +89,19 @@ test('T-E29-16-west @E29-AC16 west alley arrival records corridor and resumes a 
   expect(m.state.checkpoint).toBe('corridor'); expect(d.state.boarded).toEqual([first.id]);
   expect(c.state.roster.map(r => r.id)).toEqual(saved.checkpoint.seams.l7Encounters.state.roster.map((r: { id: number }) => r.id));
   expect(d.state.phase).toBe('boarding'); expect(w.infected!.nav.clear(-78.5, 47, .4)).toBe(false);
+}, 120_000);
+
+
+test('T-E24-14-handover @E24-AC14 @E29-AC03 L6 reachability is disposed before L7 places its exit pickup', async () => {
+  const w = world = await loadLevel('L6', 1), oldRescue = w.trapRescue;
+  expect(oldRescue).not.toBeNull();
+  const layout = JSON.parse(readFileSync('public/assets/layouts/D-FAIR.layout.json', 'utf8'));
+  // Game reuses its SimWorld at Continue. A fresh-world L7 fixture hid this stale reachability mask.
+  expect(() => w.loadComposition(compositions.L7, [layout], 1)).not.toThrow();
+  expect(w.trapRescue).toBeNull();
+  w.loadMission(resolveCampaignMission('L7', w.districts!)).begin();
+  expect(w.trapRescue).not.toBe(oldRescue); expect(w.missions!.state.checkpoint).toBe('night-exit');
+  const pickups = w.entities.values().filter(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === 'weapon.rocket-launcher');
+  expect(pickups).toHaveLength(1);
+  expect(Math.hypot(pickups[0].transform.x - l7Exit.position[0], pickups[0].transform.z - l7Exit.position[2])).toBeLessThanOrEqual(5);
 }, 120_000);
