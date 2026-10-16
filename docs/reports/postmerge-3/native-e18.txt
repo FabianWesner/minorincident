@@ -1,0 +1,14 @@
+Native admission attempt: all four slots nonblocking; ten-minute total deadline; prior twenty-minute attempt released more than an hour earlier.
+ 5:08  up 68 days,  4:02, 4 users, load averages: 2.91 4.63 4.58
+Quiet-run preflight: load < 3; no local Vitest or headless Chrome processes; all configured browser slots held.
+
+Running 3 tests using 1 worker
+
+  ✓  1 [chromium] › tests/perf/e18-desktop.spec.ts:6:1 › T-E18-09 @E18-AC09 @perf local headless native-GPU Chrome high horde p95 frame <=16.7ms (15.5s)
+{"phase":"after","run":1,"tier":"high","p95":6.399999999999636,"sim":0.8999996185302734,"update":3.6999998092651367,"render":1.6000003814697266,"triangles":557848,"draws":71,"profile":{"other":{"drawCalls":38,"triangles":49991},"shadows":{"drawCalls":20,"triangles":31147},"crowd":{"drawCalls":13,"triangles":476710}}}
+  ✓  2 [chromium] › tests/perf/horde-budget.spec.ts:11:41 › high › horde budget high run 1 @E18-AC01 @E18-AC09 @perf (15.1s)
+{"phase":"after","run":1,"tier":"low","p95":11.299999999999272,"sim":2.40000057220459,"update":5.09999942779541,"render":4,"triangles":120003,"draws":70,"profile":{"other":{"drawCalls":38,"triangles":12554},"shadows":{"drawCalls":20,"triangles":4275},"crowd":{"drawCalls":12,"triangles":103174}}}
+  ✓  3 [chromium] › tests/perf/horde-budget.spec.ts:11:41 › low › horde budget low run 1 @E18-AC01 @E18-AC09 @perf (18.4s)
+
+  3 passed (50.5s)
+Native batch exit=0; locks released.
