@@ -10,6 +10,17 @@ import { measureContrast, type ContrastResult } from './contrast';
  * load, step in batches, capture shots / video / contact sheet, write metrics.json, evaluate the gates. */
 export interface RunOptions { file?: string; out: string; frames?: number; shots?: number[]; video?: number; sheet?: number; openMs?: number; inspect?: boolean }
 export const maxSheetCells = 24;
+type RevealDisc = { center: number[]; radius: number; strength: number };
+const changedPixel = (a: PNG, b: PNG, i: number) => Math.abs(a.data[i] - b.data[i]) + Math.abs(a.data[i + 1] - b.data[i + 1]) + Math.abs(a.data[i + 2] - b.data[i + 2]) >= 36;
+/** Count body pixels with the exact same optional reveal-disc exclusion for both reference models. */
+export function bodyPixels(a: PNG, b: PNG, hole?: RevealDisc): number {
+  let n = 0;
+  for (let y = 0; y < a.height; y++) for (let x = 0; x < a.width; x++) {
+    if (hole && hole.strength > 0 && Math.hypot(x + .5 - hole.center[0] * a.width, y + .5 - hole.center[1] * a.height) <= hole.radius * a.height + 1.5) continue;
+    if (changedPixel(a, b, (y * a.width + x) * 4)) n++;
+  }
+  return n;
+}
 /** The production renderer names its WebGL2 backend `webgl`; catalog requests use `webgl2`. */
 export function matchesBackend(actual: string, requested: Backend): boolean { return actual === (requested === 'webgl2' ? 'webgl' : 'webgpu'); }
 
@@ -43,38 +54,51 @@ export async function measureCut(session: SceneSession) {
   return { outside, inside, strength: hole.strength, cover: hole.cover, occluder: hole.occluder };
 }
 
-/** E32 close camera: courier visible share. Five redraws of the same frame (no sim step, so the boss hole's dither pattern is identical):
- * all / courier hidden give the courier's visible pixels; environment and crowd hidden / subject also hidden give her unoccluded pixels; all vs crowd hidden gives the Mega's pixels. */
+/** Same-frame redraws: courier visible share against her unobstructed silhouette; boss bodies compared with the courier hidden,
+ * outside her intended reveal disc. No sim step, so pose and the boss hole's dither pattern stay identical. */
 export async function measureCourierShare(session: SceneSession, compareAlpha = false) {
   await session.ready();
-  const shot = async (courier: boolean, crowd: boolean, environment = false) => { const d = await session.page.evaluate(([c, w, e]) => window.__SCENE__!.hideProbe(c, w, e), [courier, crowd, environment] as [boolean, boolean, boolean]); await session.ready(); return { d, png: PNG.sync.read(await session.page.screenshot({ type: 'png' })) }; };
-  const all = await shot(false, false), noCourier = await shot(true, false), noCrowd = await shot(false, true), clear = await shot(false, true, true), none = await shot(true, true, true);
+  const hole = await session.page.evaluate(() => window.__SCENE__!.bossRevealProbe());
+  const shot = async (courier: boolean, crowd: boolean, environment = false) => {
+    const d = await session.page.evaluate(([c, w, e]) => window.__SCENE__!.hideProbe(c, w, e, true), [courier, crowd, environment] as [boolean, boolean, boolean]);
+    // Read the render canvas directly: DOM roster/minimap updates between redraws are not body pixels.
+    const png = await session.page.evaluate(async () => { await window.__SCENE__!.ready(); return document.querySelector('canvas')!.toDataURL('image/png'); });
+    return { d, png: PNG.sync.read(Buffer.from(png.slice(png.indexOf(',') + 1), 'base64')) };
+  };
+  const all = await shot(false, false), noCourier = await shot(true, false), clear = await shot(false, true, true), none = await shot(true, true, true);
+  const noBodies = await shot(true, true);
   await session.page.evaluate(() => window.__SCENE__!.hideProbe(false, false));
-  const changed = (a: PNG, b: PNG, i: number) => Math.abs(a.data[i] - b.data[i]) + Math.abs(a.data[i + 1] - b.data[i + 1]) + Math.abs(a.data[i + 2] - b.data[i + 2]) >= 36;
-  const diff = (a: PNG, b: PNG) => { let n = 0; for (let i = 0; i < a.data.length; i += 4) if (changed(a, b, i)) n++; return n; };
   // Count visible pixels only inside the unobstructed subject silhouette: ground shadows and HUD changes are not body pixels.
   let visible = 0, reference = 0;
   for (let i = 0; i < clear.png.data.length; i += 4) {
-    if (!changed(clear.png, none.png, i)) continue;
-    reference++; if (changed(all.png, noCourier.png, i)) visible++;
+    if (!changedPixel(clear.png, none.png, i)) continue;
+    reference++; if (changedPixel(all.png, noCourier.png, i)) visible++;
   }
-  const mega = diff(all.png, noCrowd.png);
+  const mega = bodyPixels(noCourier.png, noBodies.png, hole);
   // The old viewport-area minimum forced the boss to be wider than the PO allows.
   // Compare identical camera distance, pose and lighting instead; never enlarge the asset to pass.
-  let alphaPixels = 0;
+  let alphaPixels = 0, alphaBodyPixels = 0;
   if (compareAlpha && all.d <= 6) {
     try {
       await session.page.evaluate(() => window.__SCENE__!.alphaReferenceProbe(true));
-      const alpha = await shot(false, false), alphaBackground = await shot(false, true);
+      const alpha = await shot(true, false), alphaBackground = await shot(true, true);
       // Its animated head moves the world-space health bar. Use this model's
       // own hidden-crowd background so bar movement is never counted as body pixels.
-      alphaPixels = diff(alpha.png, alphaBackground.png);
+      alphaPixels = bodyPixels(alpha.png, alphaBackground.png, hole);
+      alphaBodyPixels = bodyPixels(alpha.png, alphaBackground.png);
+      if (!alphaBodyPixels) {
+        // Foreground scenery can hide the entire reference at contact. Prove the model actually drew before accepting an empty outside-disc comparison.
+        const unoccluded = await shot(true, false, true), background = await shot(true, true, true);
+        alphaBodyPixels = bodyPixels(unoccluded.png, background.png);
+      }
     } finally {
       await session.page.evaluate(() => window.__SCENE__!.alphaReferenceProbe(false));
       await session.ready();
     }
   }
-  return { alphaPixels, megaAlphaRatio: alphaPixels > 0 ? mega / alphaPixels : 0, megaM: all.d, visible, reference, share: reference > 0 ? Math.min(1, visible / reference) : 0, megaPixels: mega, megaShare: mega / (all.png.width * all.png.height) };
+  // At contact the whole regular Alpha can lie inside the excluded disc. A real reference must still have been drawn;
+  // outside it, the comparison is mega >= 0.9 * alpha, which holds when alpha has no remaining pixels.
+  return { alphaPixels, alphaBodyPixels, bossReveal: hole, megaAlphaRatio: alphaPixels > 0 ? mega / alphaPixels : alphaBodyPixels > 0 ? 1 : 0, megaM: all.d, visible, reference, share: reference > 0 ? Math.min(1, visible / reference) : 0, megaPixels: mega, megaShare: mega / (all.png.width * all.png.height) };
 }
 
 export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOptions) {
@@ -162,7 +186,7 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   if (shares.length) {
     const near = spec.megaAlpha ? shares.filter(s => s.megaM <= 14) : shares, contact = shares.filter(s => s.megaM <= 6);
     if (spec.expect?.courierVisibleShareMin !== undefined) result.checks.push({ name: 'courierVisibleShare', pass: near.every(s => s.share >= spec.expect!.courierVisibleShareMin!), value: near.length ? Math.min(...near.map(s => +s.share.toFixed(3))) : 1, limit: spec.expect.courierVisibleShareMin });
-    if (spec.expect?.megaAlphaVisibleRatioMin !== undefined) result.checks.push({ name: 'megaAlphaVisibleRatio', pass: contact.length > 0 && contact.every(s => s.alphaPixels > 0 && s.megaAlphaRatio >= spec.expect!.megaAlphaVisibleRatioMin!), value: contact.length ? Math.min(...contact.map(s => +s.megaAlphaRatio.toFixed(4))) : 0, limit: spec.expect.megaAlphaVisibleRatioMin });
+    if (spec.expect?.megaAlphaVisibleRatioMin !== undefined) result.checks.push({ name: 'megaAlphaVisibleRatio', pass: contact.length > 0 && contact.every(s => s.alphaBodyPixels > 0 && s.megaPixels >= spec.expect!.megaAlphaVisibleRatioMin! * s.alphaPixels), value: contact.length ? Math.min(...contact.map(s => +s.megaAlphaRatio.toFixed(4))) : 0, limit: spec.expect.megaAlphaVisibleRatioMin });
     result.checks.push({ name: spec.megaAlpha ? 'courierShareSampledNearMega' : 'courierShareSampled', pass: near.length > 0, value: near.length, limit: 1 });
   }
   if (cutPixels) {

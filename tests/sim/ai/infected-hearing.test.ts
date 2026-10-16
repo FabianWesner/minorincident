@@ -9,6 +9,7 @@ const worlds: SimWorld[] = [];
 afterEach(() => { for (const w of worlds) w.dispose(); worlds.length = 0; });
 async function setup(archetype = 'infected.runner', l1 = false, civilian = false, distance = 1.8) {
   const w = new SimWorld(); worlds.push(w); await w.init(); w.loadScenario('horde-arena', 1);
+  w.scenario = 'L5'; // PO #25 proximity through cover is scoped to L5 by the merge decision.
   if (l1) w.infected!.configureL1v2();
   w.combat!.damage.god = true;
   // Keep the hearing probe outside each species' contact ring; an elephant has a larger body.
@@ -26,7 +27,7 @@ async function setup(archetype = 'infected.runner', l1 = false, civilian = false
 }
 const step = (w: SimWorld, ticks: number) => { for (let i = 0; i < ticks; i++) w.update(); };
 
-describe('PO 2026-10-15 close infected hearing @E07', () => {
+describe('PO 2026-10-15 L5 close infected hearing @E07', () => {
   for (const l1 of [false, true]) for (const civilian of [false, true]) {
     test.each(infectedDefinitions.map(d => d.id))(`%s hears a ${civilian ? 'civilian' : 'player'} behind it (${l1 ? 'outbreak' : 'archetype'} brain)`, async archetype => {
       const { w, e, victimId, alerts } = await setup(archetype, l1, civilian);
@@ -101,5 +102,10 @@ describe('PO 2026-10-15 close infected hearing @E07', () => {
     step(w, 30); expect(alerts.some(ev => ev.cause === 'hearing')).toBe(true);
     w.infected!.l1!.los.setActive('door', false); step(w, 30);
     expect(alerts.some(ev => ev.cause === 'hearing')).toBe(true); expect(e.infected!.l1!.targetId).toBe(1);
+  });
+  for (const level of ['L1', 'L2', 'L3', 'L8']) test(`${level} retains sight-blocked close hearing`, async () => {
+    const { w, e, alerts } = await setup('infected.runner', true); w.scenario = level;
+    w.infected!.l1!.los.register({ id: 'wall', source: 'building', active: true, shape: { kind: 'aabb', min: { x: -1, z: -4 }, max: { x: -.8, z: 4 } } });
+    step(w, 30); expect(alerts).toHaveLength(0); expect(e.infected!.heardTargetId).toBe(0);
   });
 });

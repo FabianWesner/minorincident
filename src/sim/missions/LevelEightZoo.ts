@@ -46,7 +46,8 @@ export class LevelEightZoo {
       if (source) { if (w.entities.get(e.id)) throw new Error(`L8 incoming survivor collision: ${e.id}`); w.entities.replace(e); }
       Object.assign(e.transform, { ...at, y: .7 }); e.hidden = false; delete e.passengerOf;
       const c = e.civilian!; c.path = []; c.goal = -1; c.pauseUntil = 0; c.story = null; delete c.floorY;
-      // Unload into the new level's clock, preserving injuries rather than old city hit/route timers.
+      // Hours pass between levels: recover health and unload into the new level's clock.
+      e.health.current = e.health.max;
       c.state = 'calm'; c.entered = w.tick; c.until = 0; c.knockedUntil = 0;
       if (c.l1) c.l1.target = null;
       if (e.combat) { e.combat.staggerUntil = 0; e.combat.attacking = false; delete e.combat.reaction; }

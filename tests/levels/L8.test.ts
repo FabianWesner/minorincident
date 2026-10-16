@@ -77,12 +77,12 @@ test('T-E30-17 @E30-AC17 sanctuary and breach restore preserve remaining time, t
 for (const count of [0, 12, 35]) test(`T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with ${count} survivors and exact APC transfer`, async () => {
   const source = await load();
   const base = source.entities.get(source.missions!.l8!.state.roster[0])!;
-  const carried = Array.from({ length: count }, (_, i) => { const e = structuredClone(base); e.id = 10_000 + i; e.health.current = 80 + i % 20; e.civilian!.knockedUntil = 10_000; e.combat!.staggerUntil = 10_000; e.civilian!.survivor!.key = `carried-${i}`; return e; });
+  const carried = Array.from({ length: count }, (_, i) => { const e = structuredClone(base); e.id = 10_000 + i; e.health.current = 5 + i % 20; e.civilian!.knockedUntil = 10_000; e.combat!.staggerUntil = 10_000; e.civilian!.survivor!.key = `carried-${i}`; return e; });
   source.dispose();
   const w = await load('high', carried);
   try {
     const zoo = w.missions!.l8!, bot = new LevelEightBot(w), turns = new Set<number>();
-    for (const id of zoo.state.roster) { expect(w.entities.get(id)!.civilian!.knockedUntil).toBe(0); expect(w.entities.get(id)!.combat!.staggerUntil).toBe(0); }
+    for (const id of zoo.state.roster) { const e = w.entities.get(id)!; expect(e.health.current).toBe(e.health.max); expect(e.civilian!.knockedUntil).toBe(0); expect(e.combat!.staggerUntil).toBe(0); }
     w.events.on('outbreak.infection', e => { if (e.type === 'outbreak.infection' && e.phase === 'infected' && zoo.state.animals.includes(e.entityId)) turns.add(e.entityId); });
     for (let i = 0; i < 300 * 60 && !bot.finished; i++) { w.applyInput(bot.sample(), 'keyboard'); w.update(); }
     expect(w.missions!.state.phase, JSON.stringify({ p: w.entities.get(1)!.transform, friends: zoo.roster().map(id => ({ id, at: w.entities.get(id)?.transform, passenger: w.entities.get(id)?.passengerOf, hp: w.entities.get(id)?.health.current })) })).toBe('progression'); expect(w.missions!.state.stats.deaths).toBe(0);

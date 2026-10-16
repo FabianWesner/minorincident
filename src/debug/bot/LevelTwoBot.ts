@@ -20,6 +20,9 @@ export const l2Routes: Record<L2Opening, readonly P[]> = {
 };
 /** Route index at which the `alarm` opening sets the car off. */
 const ALARM_AT = 6;
+// The finale street groups now occupy Maple's eastern side (-64, 8/25). Take its western curb instead of walking through them.
+// Keep the newbie's authored route and the game's population unchanged.
+const completeSideRoute = l2Routes.side.map(p => p.x === -66 && p.z >= 2 ? { ...p, x: -69 } : p);
 
 /**
  * L2 policy shared by the Node battery and the browser (ordinary controls only: movement, attack, interact; no cheats).
@@ -98,7 +101,7 @@ export class LevelTwoBot {
     if (near.length >= 3 || player.health.current < 70) this.retreatAt = Math.min(this.retreatAt, w.tick);
     const leaving = w.tick >= this.retreatAt;
     if (!leaving) { if (near[0] && !skip) strike(near[0]); else go(a['l2-forecourt'], 2.5, 'cover'); return frame; }
-    const route = l2Routes[this.opening];
+    const route = this.profile === 'complete' && this.opening === 'side' ? completeSideRoute : l2Routes[this.opening];
     // After a respawn (checkpoint restore) rejoin the route at its nearest point instead of cutting across blocks.
     if (!this.last || dist(this.last, p) > 6) { this.waypoint = route.reduce((best, q, i) => dist(q, p) < dist(route[best], p) ? i : best, 0); this.walker.reset(); this.detour = null; if (this.opening === 'alarm' && this.waypoint <= ALARM_AT) this.alarmed = false; }
     this.last = { x: p.x, z: p.z };

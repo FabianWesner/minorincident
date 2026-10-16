@@ -26,6 +26,7 @@ export function installCampaignNpcs(world: SimWorld, carriedCompanion?: EntitySn
     if (districts.composition.id === 'L8') {
       if (carriedCompanion?.companion) {
         const corgi = structuredClone(carriedCompanion); delete corgi.passengerOf; corgi.hidden = false;
+        corgi.health.current = corgi.health.max;
         Object.assign(corgi.companion!, { state: 'follow', courage: 100, until: 0, barkAt: 0, hurtAt: 0 });
         world.entities.replace(corgi); world.npcs!.companion.respawnNear();
       } else world.npcs!.companion.spawn();

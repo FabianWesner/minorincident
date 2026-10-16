@@ -45,6 +45,10 @@ export class LevelNineCrash {
       w.spatial.set(corgi, dog.transform.x, dog.transform.z); w.vehicles!.boardPassenger(this.state.carId, corgi);
     }
     w.vehicles!.setFloorPolicy(this.state.carId);
+    for (const actor of payload?.occupants ?? []) {
+      const live = w.entities.get(actor.id);
+      if (live && (live.civilian || live.companion) && live.health.current > 0 && !live.infection && !live.infected) live.health.current = live.health.max;
+    }
     const saved = w.progression?.campaign?.l9Crash;
     if (saved) {
       if (this.state.carId !== saved.state.carId) w.entities.delete(this.state.carId);

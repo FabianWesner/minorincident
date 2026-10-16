@@ -1,7 +1,8 @@
-import { expect, test, vi } from 'vitest';
+import { afterEach, expect, test, vi } from 'vitest';
 import { PNG } from 'pngjs';
 import { measureCourierShare } from '../../../tools/scenelab/run';
 import type { SceneSession } from '../../../tools/scenelab/session';
+afterEach(() => vi.unstubAllGlobals());
 
 test('Mega/Alpha visibility excludes health-bar movement when the reference model changes', async () => {
   const pixels = (bar: number[], body: boolean, courier: boolean) => {
@@ -10,13 +11,19 @@ test('Mega/Alpha visibility excludes health-bar movement when the reference mode
     for (const i of [...bar, ...(body ? [20, 21, 22, 23] : []), ...(courier ? [70, 71, 72] : [])]) png.data.fill(255, i * 4, i * 4 + 4);
     return PNG.sync.write(png);
   };
-  // Same four body pixels, but the animated head places the health bar elsewhere.
-  // Comparing Alpha to Mega's background would incorrectly count eight pixels.
-  // Shots in order: all, courier hidden, crowd hidden, environment + crowd hidden, everything hidden, Alpha, Alpha with crowd hidden.
-  const frames = [pixels([0, 1], true, true), pixels([0, 1], true, false), pixels([0, 1], false, true), pixels([0, 1], false, true), pixels([0, 1], false, false), pixels([5, 6], true, true), pixels([5, 6], false, true)];
-  const session = { ready: async () => {}, page: { evaluate: vi.fn(async () => 2), screenshot: vi.fn(async () => frames.shift()!) } } as unknown as SceneSession;
+  // Same four body pixels, but the reference head moves the bar. Exercise the real page callbacks against a canvas;
+  // page screenshots represent the independently changing DOM HUD and must never be sampled.
+  let alpha = false, courier = false, crowd = false, bars = false;
+  vi.stubGlobal('window', { __SCENE__: {
+    ready: async () => {}, bossRevealProbe: () => ({ center: [.5, .5], radius: .1, strength: 0 }),
+    hideProbe: (c: boolean, w: boolean, _environment: boolean, b = false) => { courier = c; crowd = w; bars = b; return 2; },
+    alphaReferenceProbe: (enabled: boolean) => { alpha = enabled; },
+  } });
+  vi.stubGlobal('document', { querySelector: () => ({ toDataURL: () => `data:image/png;base64,${pixels(bars ? [] : alpha ? [5, 6] : [0, 1], !crowd, !courier).toString('base64')}` }) });
+  const session = { ready: async () => {}, page: { evaluate: vi.fn((callback: (arg?: unknown) => unknown, flags?: unknown) => callback(flags)), screenshot: vi.fn() } } as unknown as SceneSession;
   const result = await measureCourierShare(session, true);
   expect(result.megaPixels).toBe(4);
   expect(result.alphaPixels).toBe(4);
   expect(result.megaAlphaRatio).toBe(1);
+  expect(session.page.screenshot).not.toHaveBeenCalled();
 });
