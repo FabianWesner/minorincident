@@ -1,0 +1,174 @@
+
+> verify
+> tsx tools/verify.ts E26
+
+
+Verifying E26: npm run typecheck
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+Verifying E26: npm run lint
+
+> lint
+> eslint src tests tools functions *.config.ts eslint.config.js
+
+
+Verifying E26: sh tools/e2e-lock.sh npm run build
+
+> build
+> NODE_ENV=production vite build --configLoader runner
+
+vite v6.4.3 building for production...
+transforming...
+✓ 528 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/preview/index.html                             1.65 kB │ gzip:     0.72 kB
+dist/index.html                                     2.65 kB │ gzip:     0.90 kB
+dist/build/civilianBakeData-DRZjElYi.js             3.68 kB
+dist/build/BufferGeometryUtils-E8HioxtM.js          6.88 kB
+dist/build/civilianBake.worker-C13d_nt9.js          8.74 kB
+dist/build/basis_transcoder-o4Hde_L7.js            57.53 kB
+dist/build/three.module-B-nHBglW.js               206.11 kB
+dist/build/civilianSource-UMMueCh2.js             411.18 kB
+dist/build/basis_transcoder-VXdx5NbI.wasm         527.33 kB │ gzip:   244.57 kB
+dist/build/prefetch.worker--lwGsOcI.js          1,053.99 kB
+dist/build/prepareCivilianGeometry-PivjJtk0.js  2,020.30 kB
+dist/build/rapier-C6GCbKVJ.wasm                 3,082.10 kB │ gzip: 1,171.17 kB
+dist/build/index-BZx3BNCD.css                      36.72 kB │ gzip:     8.00 kB
+dist/build/lookViewpoints-BX-OEann.js               0.23 kB │ gzip:     0.16 kB
+dist/build/modulepreload-polyfill-B5Qt9EMX.js       0.71 kB │ gzip:     0.40 kB
+dist/build/preload-helper-BlTxHScW.js               1.11 kB │ gzip:     0.65 kB
+dist/build/crowdProbe-CLs7QHTp.js                   1.35 kB │ gzip:     0.78 kB
+dist/build/controls-DGdjkqyP.js                     1.40 kB │ gzip:     0.74 kB
+dist/build/worldLook-DT8mxh_z.js                    1.64 kB │ gzip:     0.76 kB
+dist/build/crowd-B3oba-p7.js                        2.35 kB │ gzip:     1.28 kB
+dist/build/l5-KCMD6j4i.js                           4.21 kB │ gzip:     1.95 kB
+dist/build/lookPatch-BT7ef7_D.js                    5.26 kB │ gzip:     2.69 kB
+dist/build/navigation-D5smqHUk.js                   5.30 kB │ gzip:     2.47 kB
+dist/build/probe-cH6419Ax.js                        7.46 kB │ gzip:     3.02 kB
+dist/build/index-B-cfaXpk.js                       12.12 kB │ gzip:     4.40 kB
+dist/build/Inspection-Bo-d0Br1.js                  12.83 kB │ gzip:     4.39 kB
+dist/build/meleeCombos-CKWE9C7V.js                 15.00 kB │ gzip:     4.94 kB
+dist/build/l4-cBdBvsfu.js                          15.72 kB │ gzip:     6.62 kB
+dist/build/MotionLab-_QLppypF.js                   20.03 kB │ gzip:     8.43 kB
+dist/build/LevelFiveBot-gECXFKV1.js                23.00 kB │ gzip:     6.21 kB
+dist/build/index-DSkXvcEQ.js                       27.23 kB │ gzip:     7.29 kB
+dist/build/testApi-Cf91sY3I.js                     28.91 kB │ gzip:    10.89 kB
+dist/build/Physics-D1AKIHqU.js                     69.38 kB │ gzip:    23.77 kB
+dist/build/Pickups-DWoyd96O.js                     78.01 kB │ gzip:    24.89 kB
+dist/build/light-anchors-DQGCSUUw.js               90.38 kB │ gzip:     6.79 kB
+dist/build/SceneLab-Dzr5FV67.js                    93.66 kB │ gzip:    32.54 kB
+dist/build/Debug-DoeeJH5i.js                      155.75 kB │ gzip:    32.99 kB
+dist/build/registry-Da9_89c3.js                   190.38 kB │ gzip:    65.27 kB
+dist/build/PropSystem-D1Qjfq4O.js                 209.76 kB │ gzip:    64.74 kB
+dist/build/rapier-ykuY6d4E.js                     212.13 kB │ gzip:    36.15 kB
+dist/build/three.module-BlJEN_py.js               290.37 kB │ gzip:    77.77 kB
+dist/build/install-DZHF0_e8.js                    689.93 kB │ gzip:   185.44 kB
+dist/build/WeatherView-DgXM-q0V.js              1,050.79 kB │ gzip:   232.14 kB
+dist/build/index-B5EFy9VY.js                    1,161.07 kB │ gzip:   362.94 kB
+dist/build/character-clips-CGKWtM3S.js          1,939.70 kB │ gzip:   341.80 kB
+✓ built in 7.09s
+
+Verifying E26: sh tools/remote/run.sh /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b --pull test-results/epics/E26/vitest.json -- npx vitest run -t @(?:E26)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$) --maxWorkers=1 --reporter=default --reporter=json --outputFile=test-results/epics/E26/vitest.json
+[pool] all runners full (mi-runner-1:2/2+2q, mi-runner-2:2/2+0q, mi-runner-3:2/2+0q); waiting 0s
+[pool] all runners full (mi-runner-1:2/2+2q, mi-runner-2:2/2+0q, mi-runner-3:2/2+0q); waiting 63s
+[pool] all runners full (mi-runner-1:2/2+2q, mi-runner-2:2/2+0q, mi-runner-3:2/2+0q); waiting 120s
+[pool] all runners full (mi-runner-1:2/2+2q, mi-runner-2:2/2+0q, mi-runner-3:2/2+0q); waiting 182s
+[pool] all 3 runner(s) full for 302s; adding one
+[pool] nbg1: POST /servers: resource_limit_exceeded Primary IP limit exceeded
+[pool] fsn1: POST /servers: resource_limit_exceeded Primary IP limit exceeded
+[pool] hel1: POST /servers: resource_limit_exceeded Primary IP limit exceeded
+[pool] could not add a runner (pool.py: create failed: POST /servers: resource_limit_exceeded Primary IP limit exceeded); waiting for a free slot instead
+[pool] all runners full (mi-runner-1:2/2+2q, mi-runner-2:2/2+0q, mi-runner-3:2/2+0q); waiting 302s
+[pool] all runners full (mi-runner-1:2/2+2q, mi-runner-2:2/2+0q, mi-runner-3:2/2+0q); waiting 360s
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b -> 94.130.181.173:/srv/mi/ws/spec-audit-b-5b46d9
+[remote] cache-gc deleted:none
+[remote] sync 399s, 13660 files; job /srv/mi/jobs/spec-audit-b-5b46d9-39752-1792138495; queueing for a slot
+[runner] slot 1 acquired; load 2.40 1.90 2.27
+
+ RUN  v5.0.3 /srv/mi/jobs/spec-audit-b-5b46d9-39752-1792138495
+
+ ✓  timing  tests/sim/combat/balance.test.ts (3 tests | 2 skipped) 472ms
+   ✓ S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash 470ms
+stdout | tests/sim/barricades.test.ts > T-E26-14 @E26 @E26-AC14 complete bot fills/braces two slots and defense reduces core arrivals >=40%
+{"barricadeAB":[{"seed":1,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":2,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":3,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":4,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":5,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":6,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":7,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":8,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":9,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":10,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100}]}
+
+ ✓  functional  tests/sim/barricades.test.ts (22 tests | 3 skipped) 6888ms
+   ✓ T-E26-15 @E26 @E26-AC15 60s push/kick/explosion tape has identical repeat state hashes 1210ms
+   ✓ T-E26-14 @E26 @E26-AC14 complete bot fills/braces two slots and defense reduces core arrivals >=40% 5004ms
+ ✓  functional  tests/sim/combat/combat.test.ts (19 tests | 18 skipped) 295ms
+ ✓  functional  tests/sim/missions/adapters.test.ts (13 tests | 12 skipped) 171ms
+ ✓  functional  tests/sim/props.test.ts (9 tests | 7 skipped) 599ms
+   ✓ E26 authored pushable props (9)
+     ✓ @E26 a moved prop frozen by the awake cap blocks its resting footprint in the same tick 398ms
+ ✓  functional  tests/sim/explosions.test.ts (9 tests | 8 skipped) 201ms
+ ✓  functional  tests/unit/motionlab/stage1.test.ts (4 tests | 2 skipped) 327ms
+ ✓  functional  tests/sim/npc/permanence.test.ts (4 tests | 3 skipped) 2133ms
+   ✓ 20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07 2131ms
+ ✓  functional  tests/unit/physics-prop-contract.test.ts (1 test) 305ms
+   ✓ T-E26-01 @E26 @E26-AC01 every movable prop GLB validates mass band, collider bounds, COM and explosion references 303ms
+ ✓  functional  tests/sim/determinism.test.ts (3 tests | 2 skipped) 281ms
+ ✓  functional  tests/unit/physics-metadata.test.ts (1 test) 351ms
+   ✓ @E26 authored GLB records are reproduced at layout build with masses, collision shapes and break rules 348ms
+
+ Test Files  11 passed | 460 skipped (471)
+      Tests  31 passed | 2917 skipped (2948)
+   Start at  08:21:36
+   Duration  209.63s (import 72%, transform 19%, tests 8%, worker 1%)
+
+JSON report written to /srv/mi/jobs/spec-audit-b-5b46d9-39752-1792138495/test-results/epics/E26/vitest.json
+[remote] pulled test-results/epics/E26/vitest.json
+[remote] done exit=0 (runner 94.130.181.173, sync 399s, remote total 212s)
+
+Verifying E26: sh tools/e2e-lock.sh npx playwright test --grep @(?:E26)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$) --grep-invert @perf --workers=1
+Cannot use({ headless }) in a describe group, because it forces a new worker.
+Make it top-level in the test file or put in the configuration file.
+
+   at visual/e25-closure.spec.ts:23
+
+  21 |
+  22 | test.describe('actual backend pool parity', () => {
+> 23 |   test.use({ headless: true, launchOptions: { args: ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] } });
+     |        ^
+  24 |   for (const quality of ['high', 'low']) test(`T-E25-04 @E25 @E25-AC04 ${quality} identical trailer pool mask differs by at most ten percent`, async ({ page }) => {
+  25 |     mkdirSync(out, { recursive: true });
+  26 |     const samples: { backend: string; mean: number; pixels: number }[] = [];
+Cannot use({ launchOptions }) in a describe group, because it forces a new worker.
+Make it top-level in the test file or put in the configuration file.
+
+   at visual/e25-closure.spec.ts:23
+
+  21 |
+  22 | test.describe('actual backend pool parity', () => {
+> 23 |   test.use({ headless: true, launchOptions: { args: ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] } });
+     |        ^
+  24 |   for (const quality of ['high', 'low']) test(`T-E25-04 @E25 @E25-AC04 ${quality} identical trailer pool mask differs by at most ten percent`, async ({ page }) => {
+  25 |     mkdirSync(out, { recursive: true });
+  26 |     const samples: { backend: string; mean: number; pixels: number }[] = [];
+Cannot use({ headless }) in a describe group, because it forces a new worker.
+Make it top-level in the test file or put in the configuration file.
+
+   at visual/e25-closure.spec.ts:23
+
+  21 |
+  22 | test.describe('actual backend pool parity', () => {
+> 23 |   test.use({ headless: true, launchOptions: { args: ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] } });
+     |        ^
+  24 |   for (const quality of ['high', 'low']) test(`T-E25-04 @E25 @E25-AC04 ${quality} identical trailer pool mask differs by at most ten percent`, async ({ page }) => {
+  25 |     mkdirSync(out, { recursive: true });
+  26 |     const samples: { backend: string; mean: number; pixels: number }[] = [];
+Cannot use({ launchOptions }) in a describe group, because it forces a new worker.
+Make it top-level in the test file or put in the configuration file.
+
+   at visual/e25-closure.spec.ts:23
+
+  21 |
+  22 | test.describe('actual backend pool parity', () => {
+> 23 |   test.use({ headless: true, launchOptions: { args: ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] } });
+     |        ^
+  24 |   for (const quality of ['high', 'low']) test(`T-E25-04 @E25 @E25-AC04 ${quality} identical trailer pool mask differs by at most ten percent`, async ({ page }) => {
+  25 |     mkdirSync(out, { recursive: true });
+  26 |     const samples: { backend: string; mean: number; pixels: number }[] = [];

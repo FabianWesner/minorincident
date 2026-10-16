@@ -44,5 +44,17 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 
 ## Deviations
 
+### PO 2026-10-15: campaign barricade readability and required routes
+
+The [PO bug intake](/Users/wesner/Workspace/minorincident/epics-pipeline/po-bugs-1015.md) adds campaign integration requirements alongside the lab criteria; passing AC08/AC16 alone does not close these reports.
+
+> #5: "This bank is super annoying because it blocks the bike"
+
+The intake identifies a displaced bench at L1's required bike route and requires that route to stay clear. Audit the campaign route separately from the lab's intentional dynamic nav blocking. Collision work belongs to its active lane.
+
+> #34: "What is this?"
+
+At L6's service gate, the intake requires a short objective in game language, one progress bar, visible highlighted crates and target line, next-crate guidance, a first-push hint and gate occlusion handling. This supersedes treating the old lab coverage/brace UI as sufficient campaign acceptance; retain the underlying coverage and bracing mechanics in AC09/AC16.
+
 - AC01 applies the class mass bands to environment props; vehicles retain the tuned, PO-tested E09 mass bands (including the 6,500 kg school bus). Integration scope decision: do not retune vehicles.
 - Campaign performance no-regression remains unproved: fresh quiet unchanged-source controls also fail existing L2/L3 gates, while some current L1/L2 frame times increase; thresholds and level missions were preserved.

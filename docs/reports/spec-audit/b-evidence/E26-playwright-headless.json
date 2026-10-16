@@ -1,0 +1,211 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b/node_modules/.bin/playwright",
+      "test",
+      "--grep",
+      "@(?:E26)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+      "--grep-invert",
+      "@perf",
+      "--workers=1"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b/test-results/playwright/run-4385",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b/test-results/playwright/run-4385",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b/test-results/playwright/run-4385",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b/test-results/playwright/run-4385",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b/test-results/playwright/run-4385",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b/test-results/playwright/run-4385",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 4385 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:4385",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [],
+  "errors": [
+    {
+      "message": "Cannot use({ headless }) in a describe group, because it forces a new worker.\nMake it top-level in the test file or put in the configuration file.",
+      "location": {
+        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b/tests/visual/e25-closure.spec.ts",
+        "line": 23,
+        "column": 8
+      },
+      "snippet": "\u001b[90m   at \u001b[39mvisual/e25-closure.spec.ts:23\n\n  21 |\n  22 | test.describe('actual backend pool parity', () => {\n> 23 |   test.use({ headless: true, launchOptions: { args: ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] } });\n     |        ^\n  24 |   for (const quality of ['high', 'low']) test(`T-E25-04 @E25 @E25-AC04 ${quality} identical trailer pool mask differs by at most ten percent`, async ({ page }) => {\n  25 |     mkdirSync(out, { recursive: true });\n  26 |     const samples: { backend: string; mean: number; pixels: number }[] = [];"
+    },
+    {
+      "message": "Cannot use({ launchOptions }) in a describe group, because it forces a new worker.\nMake it top-level in the test file or put in the configuration file.",
+      "location": {
+        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b/tests/visual/e25-closure.spec.ts",
+        "line": 23,
+        "column": 8
+      },
+      "snippet": "\u001b[90m   at \u001b[39mvisual/e25-closure.spec.ts:23\n\n  21 |\n  22 | test.describe('actual backend pool parity', () => {\n> 23 |   test.use({ headless: true, launchOptions: { args: ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] } });\n     |        ^\n  24 |   for (const quality of ['high', 'low']) test(`T-E25-04 @E25 @E25-AC04 ${quality} identical trailer pool mask differs by at most ten percent`, async ({ page }) => {\n  25 |     mkdirSync(out, { recursive: true });\n  26 |     const samples: { backend: string; mean: number; pixels: number }[] = [];"
+    },
+    {
+      "message": "Cannot use({ headless }) in a describe group, because it forces a new worker.\nMake it top-level in the test file or put in the configuration file.",
+      "location": {
+        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b/tests/visual/e25-closure.spec.ts",
+        "line": 23,
+        "column": 8
+      },
+      "snippet": "\u001b[90m   at \u001b[39mvisual/e25-closure.spec.ts:23\n\n  21 |\n  22 | test.describe('actual backend pool parity', () => {\n> 23 |   test.use({ headless: true, launchOptions: { args: ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] } });\n     |        ^\n  24 |   for (const quality of ['high', 'low']) test(`T-E25-04 @E25 @E25-AC04 ${quality} identical trailer pool mask differs by at most ten percent`, async ({ page }) => {\n  25 |     mkdirSync(out, { recursive: true });\n  26 |     const samples: { backend: string; mean: number; pixels: number }[] = [];"
+    },
+    {
+      "message": "Cannot use({ launchOptions }) in a describe group, because it forces a new worker.\nMake it top-level in the test file or put in the configuration file.",
+      "location": {
+        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b/tests/visual/e25-closure.spec.ts",
+        "line": 23,
+        "column": 8
+      },
+      "snippet": "\u001b[90m   at \u001b[39mvisual/e25-closure.spec.ts:23\n\n  21 |\n  22 | test.describe('actual backend pool parity', () => {\n> 23 |   test.use({ headless: true, launchOptions: { args: ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] } });\n     |        ^\n  24 |   for (const quality of ['high', 'low']) test(`T-E25-04 @E25 @E25-AC04 ${quality} identical trailer pool mask differs by at most ten percent`, async ({ page }) => {\n  25 |     mkdirSync(out, { recursive: true });\n  26 |     const samples: { backend: string; mean: number; pixels: number }[] = [];"
+    }
+  ],
+  "stats": {
+    "startTime": "2026-10-16T08:25:24.108Z",
+    "duration": 2267.523,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

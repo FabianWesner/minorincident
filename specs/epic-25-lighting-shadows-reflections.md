@@ -42,4 +42,16 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 | E25-AC13 | Night readability: in `night-street` (no practical lights near the player), the player mask has a luminance contrast ratio ≥ 3:1 against its 2 m ring (hero aura + rim); infected eyes are the brightest pixels of each infected | visual |
 | E25-AC14 | Performance: `light-lab` and `night-street` within the tier budgets (E18), with the lighting passes reported in `perf()` (light-field ms, shadow maps count, hero lights count) | perf |
 | E25-AC15 | Previews: `render_preview.py` produces day and night Blender renders for every light-bearing asset, and `assets:turntable` produces a night/lights-on view and an on-vs-off pair | e2e/static |
-| E25-AC16 | Vision **checklist G (lighting)** passes for `light-lab` (vs `kf-light-trailer-night`), `l2-streets-w1` (vs `kf-l2-midday`), `l3-grove-boulevard` (vs `kf-l3-late-afternoon-smoke`), `l4-plaza-safe` (vs `kf-l4-safe-city`), `pair-plaza` in L5 (vs `kf-l5-sunset-ruins`), `l6-shelter-fails` (vs `kf-l6-subway-emergency`), and `mall-floor` (vs `kf-mall-polished-floor`) (spots updated for the 2026-10-07 level redesign) | vision |
+| E25-AC16 | Vision **checklist G (lighting)** passes for `light-lab` (vs `kf-light-trailer-night`), `l2-streets-w1` (vs `kf-l2-midday`), `l3-grove-boulevard` (vs `kf-l3-late-afternoon-smoke`), `l4-plaza-safe` (vs `kf-l4-safe-city`), `pair-plaza` in L5 (vs `kf-l5-sunset-ruins`), `l6-shelter-fails` (PO 2026-10-15 darkness/headlamp design below supersedes the older emergency-only mood), and `mall-floor` (vs `kf-mall-polished-floor`) (other spots retain their reference requirements) | vision |
+
+## PO 2026-10-15: L6 lighting review
+
+The [PO bug intake, #31](/Users/wesner/Workspace/minorincident/epics-pipeline/po-bugs-1015.md) and [E24's binding addendum](epic-24-level-6-the-subway.md#po-2026-10-15-darkness-and-headlamp-binding) supersede the older L6 emergency-only reference mood in AC16.
+
+> "L6 overall. Make the level darker. Let the user pickup a flashlight hat at the beginning, so only the viewport is enlightened. The rest is visibile, but gray and dark"
+>
+> "btw there is already a super nice light effect in place"
+>
+> "with some light accents here and there."
+
+Review the existing warm beam, headlamp pickup, dark desaturated surroundings, sparse coloured accents and glowing infected eyes. Retain one spotlight (shadows on high only), the existing post chain and E18 budgets. The other AC16 locations still require checklist G; this decision does not waive their references or backend evidence.
