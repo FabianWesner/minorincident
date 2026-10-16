@@ -9,7 +9,7 @@ for (const tier of ['high', 'low'] as const) for (const zoom of [1, .5]) test(`T
   mkdirSync(out, { recursive: true });
   await boot(page, `/?test=1&ui=1&${webgpu ? '' : 'renderer=webgl&'}quality=${tier}&audio=muted&dpr=1`);
   await page.evaluate(async () => { const a = window.__SS__!; await a.loadLevel('L7', { seed: 29 }); a.pause(); });
-  expect(await page.evaluate(() => window.__SS__!.getState().render.backend)).toBe(webgpu ? 'webgpu' : 'webgl2');
+  expect(await page.evaluate(() => window.__SS__!.getState().render.backend)).toBe(webgpu ? 'webgpu' : 'webgl');
   expect(await page.evaluate(() => window.__SS__!.missions.state()!.checkpoint)).toBe('night-exit');
   if (zoom === .5) { await page.mouse.move(800, 450); for (let i = 0; i < 5; i++) { await page.mouse.wheel(0, -120); await page.evaluate(() => window.__SS__!.step(1)); } await page.evaluate(() => window.__SS__!.step(30)); }
   await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: `${out}/night-exit.png` });
