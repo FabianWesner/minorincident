@@ -122,7 +122,8 @@ const commands: string[][] = [
         : target === 'E32'
           ? [
             ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--project=chromium', '--workers=1'],
-            ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/l10-district-budgets.spec.ts', '--project=chromium', '--workers=1'],
+            // Include assault, arena, mist, LOD residency and ending budgets too.
+            ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', '--grep', `^(?=.*(?:${selection.pattern}))(?=.*@perf)`, '--project=chromium', '--workers=1'],
           ]
         : target === 'E30'
           ? [
@@ -140,12 +141,6 @@ const commands: string[][] = [
             // Native Metal timing belongs on the Mac; Hetzner verifies the functional gates.
             ...(target === 'E31' ? [['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', '--grep', `^(?=.*(?:${selection.pattern}))(?=.*@perf)`, '--project=chromium', '--workers=1']] : []),
             ...(target === 'E29' && process.platform === 'darwin' ? [['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/l7-rocket.spec.ts', 'tests/perf/l7-district.spec.ts', 'tests/perf/l7-encounters.spec.ts', '--project=chromium', '--workers=1']] : []),
-          ]
-        : target === 'E32'
-          ? [
-            ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@perf', '--workers=1'],
-            // E32's native frame/sim/heap gates must have the Mac GPU and CPU to themselves.
-            ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', '--grep', `^(?=.*(?:${selection.pattern}))(?=.*@perf)`, '--project=chromium', '--workers=1'],
           ]
         : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, ...(target === 'E26' || target === 'E28' ? ['--workers=1'] : [])]]),
 ];
