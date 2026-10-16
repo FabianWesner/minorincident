@@ -21,8 +21,10 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   readonly hitFlash = uniform(0).setGroup(this._uniformGroup);
   /** E27 burned variant: 0 = authored surface, 1 = charred soot (exploded cars). */
   readonly char = uniform(0).setGroup(this._uniformGroup);
-  /** E25 night readability: 1 on crowd figures (infected/civilians) for a moonlit silhouette rim. */
+  /** E25 silhouette rim strength: restrained on crowds, full on the driven hero vehicle. */
   readonly figureRim = uniform(0).setGroup(this._uniformGroup);
+  /** Moon bounce on crowd clothing, independent of the driven vehicle's hero rim. */
+  readonly figureFill = uniform(0).setGroup(this._uniformGroup);
   /** Moving figures shed ash; snow still accumulates as on the rest of the world. */
   readonly movingFigure = uniform(0).setGroup(this._uniformGroup);
   // NodeMaterial.copy skips underscored internals; frozen copies need their own cache.
@@ -98,7 +100,10 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       const rim = lighting.rimColor.mul(fresnel.mul(max(heroMask, this.figureRim)).mul(lighting.rim));
       // The survivor's own aura fill (readability rule): lifts the hero, not the ground ring around it.
       const fill = lighting.heroFillColor.mul(heroMask.mul(lighting.heroFill).mul(normalWorld.y.mul(.3).add(.7)));
-      const shaded = mix(lit, surface.mul(lighting.shadow), shadow).add(surface.mul(field.add(fill))).add(rim).toVar();
+      // A narrow Fresnel alone turns dark clothing into disconnected pale seams.
+      // Moon bounce carries the whole crowd surface; a restrained rim keeps its outline.
+      const figureFill = lighting.rimColor.mul(this.figureFill).mul(lighting.rim).mul(.9);
+      const shaded = mix(lit, surface.mul(lighting.shadow), shadow).add(surface.mul(field.add(fill).add(figureFill))).add(rim).toVar();
       // Night route read (E31-AC16): asphalt keeps a moon-pale sheen that no shadow removes, so the road is a pale band between dark verges.
       const road = nodes?.road ?? (token === 'asphalt' && !emissive ? float(1) : undefined);
       // Strongest around the camera focus (the survivor, or the vehicle being driven: the route ahead reads), easing to 40 % towards the screen edge so the night stays dark.

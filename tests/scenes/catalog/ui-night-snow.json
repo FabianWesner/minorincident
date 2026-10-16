@@ -1,0 +1,58 @@
+{
+  "extends": "../../../specs/scenes/weather-lab-snow.json",
+  "name": "ui-night-snow",
+  "note": "Same weather-lab mood/assets; threat placed beside the courier so the close game zoom includes the whole figure. Inspect solid clothing, restrained rim and red eyes on both tiers/backends.",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        2
+      ],
+      "state": {
+        "walk": [
+          [
+            -2,
+            2
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "loop": true
+      }
+    },
+    {
+      "id": "infected",
+      "kind": "infected",
+      "at": [
+        -2,
+        0
+      ],
+      "state": {
+        "walk": [
+          [
+            -2,
+            6
+          ],
+          [
+            2,
+            6
+          ]
+        ],
+        "loop": true
+      },
+      "yaw": -45
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -0.5,
+      1
+    ],
+    "zoom": 1
+  }
+}
