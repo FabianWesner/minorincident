@@ -571,8 +571,10 @@ export class GameView implements Lifecycle {
   }
   advance(seconds: number): void {
     this.districts?.advance(seconds);
+    this.entityAssets?.advance();
     const player = this.world.entities.get(1);
     if (player) {
+      this.view.convoy = !!this.world.missions?.state.l4?.seated;
       // E20: riding the fire truck as a passenger uses the same 15 % zoom-out as driving.
       this.view.driving = this.world.vehicles?.active != null || !!this.world.missions?.state.l2?.seated || !!this.world.missions?.state.l4?.seated;
       // E19 story beats: ease the game camera onto the beat (between courier and the other actor, a little closer),

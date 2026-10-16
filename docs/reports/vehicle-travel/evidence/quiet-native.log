@@ -1,0 +1,32 @@
+12:24  up 68 days, 11:18, 4 users, load averages: 2.59 5.60 5.12
+Quiet-run preflight: load < 3; no local Vitest or headless Chrome processes; all configured browser slots held.
+
+Running 21 tests using 1 worker
+
+  ✓   1 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-60hz @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz) (13.2s)
+  ✓   2 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-120hz @E22 the L4 convoy bus does not vibrate on screen during the ride (120hz) (22.5s)
+  ✓   3 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-120hz @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz) (22.5s)
+  ✓   4 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-30hz @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz) (8.2s)
+  ✓   5 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-phone @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone) (8.8s)
+  ✓   6 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-60hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz-webgl-low) (12.9s)
+  ✓   7 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-120hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz-webgl-low) (22.6s)
+  ✓   8 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-30hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz-webgl-low) (8.2s)
+  ✓   9 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-phone-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone-webgl-low) (8.9s)
+  ✓  10 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-60hz-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz-webgpu-high) (12.9s)
+  ✓  11 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-120hz-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz-webgpu-high) (22.4s)
+  ✓  12 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-30hz-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz-webgpu-high) (8.0s)
+  ✓  13 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-phone-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone-webgpu-high) (8.9s)
+  ✓  14 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-60hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz-webgpu-low) (12.8s)
+  ✓  15 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-120hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz-webgpu-low) (22.5s)
+  ✓  16 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-30hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz-webgpu-low) (8.1s)
+  ✓  17 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-phone-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone-webgpu-low) (8.7s)
+{"renderer":"webgl","tier":"high","seed":2,"counts":{"infected":97,"alphas":3,"alphasArrived":3,"turnS":84,"soldiersAtTurn":20,"soldiers":18,"civilians":40},"firingSoldiers":10,"warAwakeProps":0,"collapseAwakeProps":1,"warDrawCalls":365,"warTriangles":570814,"collapseDrawCalls":307,"collapseTriangles":572643,"warP50":9.700000000000728,"warP95":12.5,"warMax":34.70000000000073,"turnMaxMs":20,"tankMaxMs":17.400000000001455,"breakMaxMs":26.5,"collapseP50":8.799999999995634,"collapseP95":11.5,"simP95":3.09999942779541,"simFrameP95":2.6999998092651367,"updateP95":4.199999809265137,"renderP95":5.800000190734863,"lineBroke":true}
+  ✓  18 [chromium] › tests/perf/l4-budgets.spec.ts:16:3 › high › T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break high (1.0m)
+{"renderer":"webgl","tier":"low","seed":2,"counts":{"infected":48,"alphas":2,"alphasArrived":3,"turnS":105.51666666666667,"soldiersAtTurn":10,"soldiers":9,"civilians":20},"firingSoldiers":5,"warAwakeProps":0,"collapseAwakeProps":2,"warDrawCalls":207,"warTriangles":292506,"collapseDrawCalls":278,"collapseTriangles":310693,"warP50":27.299999999995634,"warP95":32.599999999998545,"warMax":62.5,"turnMaxMs":64.5,"tankMaxMs":45.10000000000582,"breakMaxMs":68.29999999998836,"collapseP50":25.5,"collapseP95":33.80000000000291,"simP95":5.59999942779541,"simFrameP95":9,"updateP95":9.5,"renderP95":13.5,"lineBroke":true}
+  ✓  19 [chromium] › tests/perf/l4-budgets.spec.ts:16:3 › low › T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break low (1.6m)
+{"tier":"high","counts":{"followers":5,"infected":18,"fires":13,"corpses":37},"weather":{"sim":{"kind":"ash","flakes":0.35,"fog":0.12},"render":{"particles":1750,"flash":0,"rayDitherRadius":6,"wetness":0,"accumulation":0.15263888888888713,"tracks":399,"trackPixels":5709}},"baselineDrawCalls":444,"baselineTriangles":710271,"pairDrawCalls":324,"pairTriangles":641735,"followDrawCalls":324,"followTriangles":641231,"p50":9.099999999998545,"p95":12.399999999997817,"max":17.799999999999272}
+  ✓  20 [chromium] › tests/perf/l5-budgets.spec.ts:12:3 › high › T-E23-19 @E23 @E23-AC19 @E28-AC10 @perf L5 pair-plaza with fires, smoke and five followers, and a walk with the group, high (46.8s)
+{"tier":"low","counts":{"followers":5,"infected":12,"fires":13,"corpses":37},"weather":{"sim":{"kind":"ash","flakes":0.35,"fog":0.12},"render":{"particles":525,"flash":0,"rayDitherRadius":6,"wetness":0,"accumulation":0.15263888888888713,"tracks":262,"trackPixels":5713}},"baselineDrawCalls":294,"baselineTriangles":314767,"pairDrawCalls":237,"pairTriangles":299626,"followDrawCalls":237,"followTriangles":299626,"p50":24.5,"p95":33.20000000000073,"max":52.20000000000073}
+  ✓  21 [chromium] › tests/perf/l5-budgets.spec.ts:12:3 › low › T-E23-19 @E23 @E23-AC19 @E28-AC10 @perf L5 pair-plaza with fires, smoke and five followers, and a walk with the group, low (57.6s)
+
+  21 passed (8.2m)

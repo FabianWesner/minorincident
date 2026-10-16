@@ -112,8 +112,22 @@ function helpers(page: Page) {
         if (!lag) await click();
       }
       else if (lag && lagWait < 300) { await page.keyboard.down('w'); await step(1); await page.keyboard.up('w'); await step(12); lagWait += 12; await click(); }
-      else { if (!lag) lagWait = 0; if (i % 4 === 3) await click(); }
+      else {
+        if (!lag) lagWait = 0;
+        // An ordinary destination click persists while navigation builds and follows its route.
+        // Re-click only after the command is consumed/cancelled (including a respawn):
+        // unconditional retries restart the long Sam-to-Mia flood before the corner is cleared.
+        if (i % 4 === 3 && !await page.evaluate(() => window.__SS__!.getState().controls?.moveTarget)) await click();
+      }
     }
+    const diagnostic = await page.evaluate(() => {
+      const a = window.__SS__!, s = a.getState();
+      return { tick: s.tick, player: s.player, controls: s.controls, input: s.input, pick: a.input.lastPick(),
+        survivors: a.missions.state()?.l5?.survivors, infected: a.query({ kind: 'infected' }).filter(e => e.health.current > 0) };
+    });
+    writeFileSync(`${output}/travel-progress.json`, JSON.stringify({ target, ...diagnostic }, null, 1));
+    await page.screenshot({ path: `${output}/travel-progress.png` });
+
     throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)}`);
   };
   const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(2); };
