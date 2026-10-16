@@ -1,0 +1,213 @@
+{
+  "raw": "collision-s3-query-oracle.json",
+  "passed": 41,
+  "failed": 0,
+  "skipped": 0,
+  "tests": [
+    {
+      "name": "T-E05-encounter @E05 @E19 efficient clicker HP lost per encounter: one infected <= 5 HP (bat and unarmed), two/three with the bat <= 15/30",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "E18 @E18 mobile GLB selection prefers declared .low export, preserves lod1 and releases its cache",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "E18 @E18 recording validation rejects emulation declarations, incorrect scenarios and invented summaries",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "E18 @E18-AC08 emulation evidence requires the authorized CPU profile and cannot masquerade as physical hardware",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "T-E29-19-event-dispatch @E29-AC19 cached dispatch preserves phase snapshots, nested emits and reset",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "E18 @E18 low tier keeps at most 30 active gibs and resets removed physics slots",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "ray-cell traversal and unrolled slabs exactly match full scans, including corners, padding and moving walls",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "T-E29-19-human-query @E29-AC19 human queries match the original spatial filter through same-tick movement, bites, spawn, deletion and restore",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "T-E29-19-traffic-query @E29-AC19 cached traffic obstacles retain live movement, late components, deletion and restore",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "E18 @E18-AC05 level layouts retain shared districts and release documents outside the active level",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "@E31-AC12 rectangular streamed nav bake equals clearance queries at radius 0.35",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "@E31-AC12 rectangular streamed nav bake equals clearance queries at radius 0.5",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "@E31-AC12 rectangular streamed nav bake equals clearance queries at radius 0.65",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "@E31-AC12 rectangular streamed nav bake equals clearance queries at radius 1.4",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "@E31-AC12 streamed rectangle bucket traversal matches sampled exact wall sweeps",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "@E31-AC12 streamed nav recenter reuses bounded buffers and matches a fresh bake",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "@E22 capsule movement escapes a valid rounded collider corner in every quadrant",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "grid-only agents retain the conservative square corner margin",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "route buckets retain ground navigation while solid queries keep all height layers and stable IDs",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "@E18 @E32 reach flood preserves paths, ties and budgets at 0, perimeter false",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "@E18 @E32 reach flood preserves paths, ties and budgets at 0, perimeter true",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "@E18 @E32 reach flood preserves paths, ties and budgets at 3980.125, perimeter false",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "@E18 @E32 reach flood preserves paths, ties and budgets at 3980.125, perimeter true",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "@E18 resumed reach flood retains its original target and prepends its start when the player moves",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "@E32 repeated unbudgeted floods reuse only exact answers and copy the returned path",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "@E32 exact flood memo invalidates for blocker edits, perimeter changes, rebakes and recentering",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "@E20 navigation visibility keeps the original sample and slab decisions",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "@E20 blocker changes keep only unaffected nearest-cell answers",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "@E18 morning route targets reuse exact nearest-cell answers across ticks",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "@E18 nearest-cell pruning preserves the full scan and its tie order",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "@E20 stamped A* matches the original routes and expansion budgets across retries and resets",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "live furniture broad phase follows replacement, in-place movement, removal and rebake",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "@E21 elevated road blockers remain in navigation while overhead roofs stay clear",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "E18 quality policy T-E18-04 @E18-AC04 adapts within 6 seconds and recovers only at next level start",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "E18 quality policy T-E18-04b @E18-AC04 defers degradation through a cinematic, ignores spikes and honors explicit settings",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "E18 quality policy T-E18-04c @E18-AC04 an exact budget cadence does not degrade due to Float32 rounding",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "E18 quality policy T-E18-07 @E18-AC07 selects low for mobile profiles and enforces distinct tier budgets",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "2 m cells retain exact circle queries across negative cell edges and moves",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "4 m cells retain exact circle queries across negative cell edges and moves",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "contact cache preserves horde state against unfiltered queries (mixed zoo: false)",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "contact cache preserves horde state against unfiltered queries (mixed zoo: true)",
+      "status": "passed",
+      "failure": ""
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "code": "e723998d0",
+  "runner": "2.28.24.66; both slots reserved",
+  "passed": 17,
+  "failed": 0,
+  "tests": [
+    {
+      "name": "cheap LODs retain silhouettes while dense scenery still has a ratio budget",
+      "status": "passed",
+      "durationMs": 8.172708000000057,
+      "failureMessages": []
+    },
+    {
+      "name": "living skins count animated materials and compare only their shipped group member",
+      "status": "passed",
+      "durationMs": 10.816888999999946,
+      "failureMessages": []
+    },
+    {
+      "name": "living skins retain the base crowd animation and infection classifications",
+      "status": "passed",
+      "durationMs": 1.3344740000000002,
+      "failureMessages": []
+    },
+    {
+      "name": "T-E17-02 @E17-AC02 validates geometry and rejects independent contract violations",
+      "status": "passed",
+      "durationMs": 9.110369999999875,
+      "failureMessages": []
+    },
+    {
+      "name": "T-E17-06 @E17-AC06 current manifest status meets every inventory snapshot stage",
+      "status": "passed",
+      "durationMs": 9.562987000000021,
+      "failureMessages": []
+    },
+    {
+      "name": "T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts",
+      "status": "passed",
+      "durationMs": 191000.30576800002,
+      "failureMessages": []
+    },
+    {
+      "name": "distance cap for veh.test LODNaN cannot be relaxed by the manifest",
+      "status": "passed",
+      "durationMs": 634.5004400000034,
+      "failureMessages": []
+    },
+    {
+      "name": "distance cap for veh.test LODNaN cannot be relaxed by the manifest",
+      "status": "passed",
+      "durationMs": 70.46602699998766,
+      "failureMessages": []
+    },
+    {
+      "name": "distance cap for bld.house-test LODNaN cannot be relaxed by the manifest",
+      "status": "passed",
+      "durationMs": 1955.8253749999858,
+      "failureMessages": []
+    },
+    {
+      "name": "distance cap for bld.house-test LODNaN cannot be relaxed by the manifest",
+      "status": "passed",
+      "durationMs": 261.04560500002117,
+      "failureMessages": []
+    },
+    {
+      "name": "distance cap for house.test LODNaN cannot be relaxed by the manifest",
+      "status": "passed",
+      "durationMs": 327.7665879999986,
+      "failureMessages": []
+    },
+    {
+      "name": "distance cap for bld.safe-house LODNaN cannot be relaxed by the manifest",
+      "status": "passed",
+      "durationMs": 2271.7190660000197,
+      "failureMessages": []
+    },
+    {
+      "name": "@E17-AC02 decay caps apply to variants without changing the integrated base budget",
+      "status": "passed",
+      "durationMs": 1627.1190950000018,
+      "failureMessages": []
+    },
+    {
+      "name": "@E17-AC02 burned budgets reject oversized siblings without altering existing wreck limits",
+      "status": "passed",
+      "durationMs": 1516.4611759999825,
+      "failureMessages": []
+    },
+    {
+      "name": "living skins count animated material draws and reject duplicate attachment batches",
+      "status": "passed",
+      "durationMs": 2.27207800000906,
+      "failureMessages": []
+    },
+    {
+      "name": "living adult draw cap counts geometry under animated owners",
+      "status": "passed",
+      "durationMs": 1.1038779999944381,
+      "failureMessages": []
+    },
+    {
+      "name": "integrated non-model presentation requires a shipped implementation",
+      "status": "passed",
+      "durationMs": 1.1229830000083894,
+      "failureMessages": []
+    }
+  ]
+}

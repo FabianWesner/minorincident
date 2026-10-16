@@ -1,0 +1,13 @@
+{
+  "passed": 21,
+  "failed": 1,
+  "pending": 0,
+  "failures": [
+    {
+      "name": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+      "messages": [
+        "AssertionError: expected 4.500553999998374 to be less than or equal to 4\n    at /srv/mi/jobs/collision-s1-d2c10a-84376-1792112321/tests/sim/performance/zoo-s2.test.ts:26:68\n    at file:///srv/mi/jobs/collision-s1-d2c10a-84376-1792112321/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    }
+  ]
+}

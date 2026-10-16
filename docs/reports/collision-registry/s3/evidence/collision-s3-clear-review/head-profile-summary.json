@@ -1,0 +1,653 @@
+{
+  "source": "test-results/collision-s3-clear-review/head.json.cpuprofile",
+  "selfMs": [
+    [
+      "query SpatialHash.ts",
+      512.8470000000007
+    ],
+    [
+      " CharacterSeparation.ts",
+      386.5010000000001
+    ],
+    [
+      "commit SolidRegistry.ts",
+      311.1140000000003
+    ],
+    [
+      " SimWorld.ts",
+      214.4800000000001
+    ],
+    [
+      " SolidRegistry.ts",
+      185.6100000000001
+    ],
+    [
+      "update InfectedSystem.ts",
+      134.66499999999996
+    ],
+    [
+      "emit EventBus.ts",
+      123.80099999999996
+    ],
+    [
+      "post node:inspector",
+      107.302
+    ],
+    [
+      " AgentMotion.ts",
+      76.732
+    ],
+    [
+      "seek InfectedSystem.ts",
+      59.937000000000005
+    ],
+    [
+      "clear SolidRegistry.ts",
+      58.954000000000015
+    ],
+    [
+      "layers SolidRegistry.ts",
+      45.257
+    ],
+    [
+      "set SpatialHash.ts",
+      40.51199999999999
+    ],
+    [
+      "move NavGrid.ts",
+      38.51599999999999
+    ],
+    [
+      "respond MotionResponse.ts",
+      35.909
+    ],
+    [
+      "(garbage collector) ",
+      35.41199999999999
+    ],
+    [
+      "spacingRadius CharacterSeparation.ts",
+      35.40200000000001
+    ],
+    [
+      "pairExempt SolidRegistry.ts",
+      30.27
+    ],
+    [
+      "moveAgent AgentMotion.ts",
+      26.301000000000005
+    ],
+    [
+      "forced AgentMotion.ts",
+      25.010000000000005
+    ],
+    [
+      "grid DistrictNavigation.ts",
+      24.893000000000004
+    ],
+    [
+      "finish SolidRegistry.ts",
+      24.07
+    ],
+    [
+      "faceMotion MotionResponse.ts",
+      20.813000000000006
+    ],
+    [
+      "contains NavGrid.ts",
+      19.930999999999994
+    ],
+    [
+      "tryZooSpecial InfectedSystem.ts",
+      18.064
+    ],
+    [
+      "wrote SolidRegistry.ts",
+      15.799999999999997
+    ],
+    [
+      "move KinematicController.ts",
+      15.453
+    ],
+    [
+      "publish SolidRegistry.ts",
+      15.443000000000001
+    ],
+    [
+      "structuredClone js_transferable",
+      14.879000000000001
+    ],
+    [
+      "updateSpecial InfectedSystem.ts",
+      14.52
+    ],
+    [
+      "actorRadius SolidRegistry.ts",
+      13.790999999999999
+    ],
+    [
+      "js-to-wasm:ii:i 00bc1dde",
+      13.177
+    ],
+    [
+      "actor SolidRegistry.ts",
+      11.913
+    ],
+    [
+      "wasm-function[2664] 00bc1dde",
+      9.971999999999998
+    ],
+    [
+      "obstacle InfectedSystem.ts",
+      9.476
+    ],
+    [
+      "auditActor SolidRegistry.ts",
+      8.555
+    ],
+    [
+      "clear NavGrid.ts",
+      7.777
+    ],
+    [
+      " MotionResponse.ts",
+      7.756
+    ],
+    [
+      "update Hazards.ts",
+      7.747999999999999
+    ],
+    [
+      "update Npcs.ts",
+      7.627000000000001
+    ],
+    [
+      "get EntityStore.ts",
+      7.607000000000001
+    ],
+    [
+      "update Status.ts",
+      6.667
+    ],
+    [
+      "actor AgentMotion.ts",
+      6.6080000000000005
+    ],
+    [
+      "playerSpeedScale InfectedSystem.ts",
+      6.593999999999999
+    ],
+    [
+      "depenetrate InfectedSystem.ts",
+      6.393000000000001
+    ],
+    [
+      "exemption SolidRegistry.ts",
+      6.023
+    ],
+    [
+      "update SpawnDirector.ts",
+      5.6160000000000005
+    ],
+    [
+      "visible NavGrid.ts",
+      5.598000000000001
+    ],
+    [
+      "stunned Status.ts",
+      5.581999999999999
+    ],
+    [
+      "clearDistance HitQuery.ts",
+      5.505
+    ],
+    [
+      "wasm-to-js ",
+      5.481
+    ],
+    [
+      "attackTarget Barricades.ts",
+      5.471
+    ],
+    [
+      "get entity Bicycle.ts",
+      5.457
+    ],
+    [
+      "world.mapNewSoftBodies Physics.ts",
+      5.437
+    ],
+    [
+      "prePhysics Player.ts",
+      5.405
+    ],
+    [
+      "now ",
+      5.215
+    ],
+    [
+      " collision-s3-zoo-profile.ts",
+      4.687
+    ],
+    [
+      "structuredClone ",
+      4.574
+    ],
+    [
+      "target DistrictNavigation.ts",
+      4.455
+    ],
+    [
+      "playerPinned InfectedSystem.ts",
+      4.442
+    ],
+    [
+      "removeFromCell SpatialHash.ts",
+      4.438000000000001
+    ],
+    [
+      "step rapier.mjs",
+      4.428
+    ],
+    [
+      "startSpecial InfectedSystem.ts",
+      4.428
+    ],
+    [
+      "update Combat.ts",
+      4.426
+    ],
+    [
+      "update Pickups.ts",
+      4.424
+    ],
+    [
+      "(program) ",
+      4.33
+    ],
+    [
+      "__name CharacterSeparation.ts",
+      4.295
+    ],
+    [
+      "syncHulls SolidRegistry.ts",
+      4.264
+    ],
+    [
+      "visible HitQuery.ts",
+      3.9510000000000005
+    ],
+    [
+      "infectedDef infected.ts",
+      3.822
+    ],
+    [
+      "holds Civilians.ts",
+      3.7430000000000003
+    ],
+    [
+      "set Storage ",
+      3.394
+    ],
+    [
+      "update Companion.ts",
+      3.3409999999999997
+    ],
+    [
+      "get riding Bicycle.ts",
+      3.319
+    ],
+    [
+      "update Loadout.ts",
+      3.3180000000000005
+    ],
+    [
+      "nearestObject PropThrows.ts",
+      3.296
+    ],
+    [
+      "lineOfSight Perception.ts",
+      3.286
+    ],
+    [
+      "district DistrictNavigation.ts",
+      3.285
+    ],
+    [
+      "update SimWorld.ts",
+      3.2809999999999997
+    ],
+    [
+      "find SolidRegistry.ts",
+      3.2699999999999996
+    ],
+    [
+      "Z rapier.mjs",
+      3.242
+    ],
+    [
+      "victim InfectedSystem.ts",
+      3.238
+    ],
+    [
+      "get count SpawnDirector.ts",
+      2.441
+    ],
+    [
+      "update AlphaSupportMoves.ts",
+      2.3560000000000003
+    ],
+    [
+      "speed Status.ts",
+      2.3
+    ],
+    [
+      "wasm-function[356] 00bc1dde",
+      2.276
+    ],
+    [
+      "intent Combat.ts",
+      2.259
+    ],
+    [
+      "vault Barricades.ts",
+      2.258
+    ],
+    [
+      "update Traffic.ts",
+      2.24
+    ],
+    [
+      "filter Bicycle.ts",
+      2.23
+    ],
+    [
+      "tracks Perception.ts",
+      2.229
+    ],
+    [
+      "wasm-function[60] 00bc1dde",
+      2.221
+    ],
+    [
+      "wasm-function[32] 00bc1dde",
+      2.215
+    ],
+    [
+      "update Civilians.ts",
+      2.2119999999999997
+    ],
+    [
+      "wasm-function[1943] 00bc1dde",
+      2.2030000000000003
+    ],
+    [
+      "wrappedFn errors",
+      2.2030000000000003
+    ],
+    [
+      "postPhysics Bicycle.ts",
+      2.193
+    ],
+    [
+      "update WeatherSystem.ts",
+      2.192
+    ],
+    [
+      "strikeRange InfectedSystem.ts",
+      2.1870000000000003
+    ],
+    [
+      "get hasSolids NavGrid.ts",
+      2.1870000000000003
+    ],
+    [
+      "resolvePhysical InfectedSystem.ts",
+      2.176
+    ],
+    [
+      "within Perception.ts",
+      2.175
+    ],
+    [
+      " infected.ts",
+      2.169
+    ],
+    [
+      "__name SolidRegistry.ts",
+      2.165
+    ],
+    [
+      "neighbor NavGrid.ts",
+      2.152
+    ],
+    [
+      "wasm-function[666] 00bc1dde",
+      1.852
+    ],
+    [
+      "flow NavGrid.ts",
+      1.4220000000000002
+    ],
+    [
+      "sweep SolidRegistry.ts",
+      1.419
+    ],
+    [
+      "translation rapier.mjs",
+      1.382
+    ],
+    [
+      "get infectedNav InfectedSystem.ts",
+      1.354
+    ],
+    [
+      "configure WeatherSystem.ts",
+      1.137
+    ],
+    [
+      "update Barricades.ts",
+      1.131
+    ],
+    [
+      "update Interactables.ts",
+      1.129
+    ],
+    [
+      "get speedScale Bicycle.ts",
+      1.126
+    ],
+    [
+      "hasSolids SolidRegistry.ts",
+      1.121
+    ],
+    [
+      "mA rapier.mjs",
+      1.117
+    ],
+    [
+      "postPhysics Vehicles.ts",
+      1.114
+    ],
+    [
+      "wasm-function[170] 00bc1dde",
+      1.113
+    ],
+    [
+      "smokeBlocks ActionEffects.ts",
+      1.113
+    ],
+    [
+      "seesPlayer InfectedSystem.ts",
+      1.113
+    ],
+    [
+      "wasm-function[2744] 00bc1dde",
+      1.112
+    ],
+    [
+      "wasm-function[155] 00bc1dde",
+      1.112
+    ],
+    [
+      "computeColliderMovement rapier.mjs",
+      1.111
+    ],
+    [
+      "update ActionRunner.ts",
+      1.111
+    ],
+    [
+      "wasm-function[160] 00bc1dde",
+      1.11
+    ],
+    [
+      "wasm-function[1283] 00bc1dde",
+      1.109
+    ],
+    [
+      "wasm-function[159] 00bc1dde",
+      1.107
+    ],
+    [
+      "update Escorts.ts",
+      1.104
+    ],
+    [
+      "__wbg___wbindgen_is_function_1f9d30630b8b1d3d rapier.mjs",
+      1.104
+    ],
+    [
+      "closestHeard Perception.ts",
+      1.103
+    ],
+    [
+      "action catalog.ts",
+      1.103
+    ],
+    [
+      "wasm-function[1252] 00bc1dde",
+      1.102
+    ],
+    [
+      "damage Player.ts",
+      1.102
+    ],
+    [
+      "floorHeight Physics.ts",
+      1.099
+    ],
+    [
+      "finishSpecial InfectedSystem.ts",
+      1.098
+    ],
+    [
+      "wasm-function[1595] 00bc1dde",
+      1.098
+    ],
+    [
+      "clear Perception.ts",
+      1.098
+    ],
+    [
+      "windup InfectedSystem.ts",
+      1.096
+    ],
+    [
+      "prepareForecourt InfectedSystem.ts",
+      1.096
+    ],
+    [
+      "free rapier.mjs",
+      1.096
+    ],
+    [
+      "human Perception.ts",
+      1.095
+    ],
+    [
+      "wasm-function[269] 00bc1dde",
+      1.094
+    ],
+    [
+      "wasm-function[56] 00bc1dde",
+      1.093
+    ],
+    [
+      "wasm-function[2020] 00bc1dde",
+      1.093
+    ],
+    [
+      "wasm-function[868] 00bc1dde",
+      1.09
+    ],
+    [
+      "wasm-function[64] 00bc1dde",
+      1.089
+    ],
+    [
+      "HA rapier.mjs",
+      1.088
+    ],
+    [
+      "wasm-function[1496] 00bc1dde",
+      1.086
+    ],
+    [
+      "get night LightPower.ts",
+      1.084
+    ],
+    [
+      "resetResponse MotionResponse.ts",
+      1.083
+    ],
+    [
+      "resolve InfectedSystem.ts",
+      1.082
+    ],
+    [
+      "wasm-function[775] 00bc1dde",
+      1.082
+    ],
+    [
+      "wasm-function[124] 00bc1dde",
+      1.081
+    ],
+    [
+      "sightMultiplier LightPower.ts",
+      1.08
+    ],
+    [
+      "relocate SolidRegistry.ts",
+      1.079
+    ],
+    [
+      "alarm Civilians.ts",
+      1.071
+    ],
+    [
+      "iterate EntityStore.ts",
+      1.058
+    ],
+    [
+      "__name WeatherSystem.ts",
+      1.052
+    ],
+    [
+      "get speedMultiplier ActionEffects.ts",
+      1.029
+    ],
+    [
+      "attackVictim InfectedSystem.ts",
+      0.402
+    ],
+    [
+      "releasePending SolidRegistry.ts",
+      0.291
+    ],
+    [
+      "tryStart AlphaSupportMoves.ts",
+      0.135
+    ]
+  ]
+}
