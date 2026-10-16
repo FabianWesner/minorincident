@@ -1,0 +1,18 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b -> 94.130.181.173:/srv/mi/ws/spec-audit-b-5b46d9
+[remote] cache-gc deleted:none
+[remote] sync 17s, 13652 files; job /srv/mi/jobs/spec-audit-b-5b46d9-91889-1792137491; queueing for a slot
+[runner] slot 0 acquired; load 2.50 3.06 2.14
+
+ RUN  v5.0.3 /srv/mi/jobs/spec-audit-b-5b46d9-91889-1792137491
+
+ ✓  functional  tests/unit/tooling/verify-quiet.test.ts (3 tests) 2151ms
+   ✓ E26 CLI reserves quiet timing separately and retains functional/perf evidence 1159ms
+   ✓ E28 CLI reserves quiet timing separately and retains functional/perf evidence 518ms
+   ✓ a quiet timing failure keeps the verifier red and records its exit code 471ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  07:58:29
+   Duration  2.39s (tests 96%, transform 3%, import 1%)
+
+[remote] done exit=0 (runner 94.130.181.173, sync 17s, remote total 4s)

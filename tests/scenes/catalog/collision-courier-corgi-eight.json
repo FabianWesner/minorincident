@@ -1,0 +1,89 @@
+{
+  "name": "collision-courier-corgi-eight",
+  "note": "PO L1 eight-attacker pileup: production chase, windups and warning companion, game camera. Retain all eight requests and keep courier/corgi contacts clear.",
+  "seed": 1,
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L1",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        2,
+        0
+      ],
+      "state": "follow"
+    },
+    {
+      "id": "attacker",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        0,
+        0
+      ],
+      "count": 8,
+      "spread": 4,
+      "state": "chase"
+    }
+  ],
+  "frames": 420,
+  "sheet": 20,
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "expect": {
+    "consoleErrors": 0,
+    "collisionFailuresMax": 0,
+    "collisionPendingMax": 0,
+    "bodyOverlapMaxCm": 2,
+    "attackBodyOverlapMaxCm": 2,
+    "corgiCourierOverlapMaxCm": 2,
+    "courierAttacksMin": 1,
+    "actorHealth": {
+      "attacker-1": [
+        60,
+        60
+      ],
+      "attacker-2": [
+        60,
+        60
+      ],
+      "attacker-3": [
+        60,
+        60
+      ],
+      "attacker-4": [
+        60,
+        60
+      ],
+      "attacker-5": [
+        60,
+        60
+      ],
+      "attacker-6": [
+        60,
+        60
+      ],
+      "attacker-7": [
+        60,
+        60
+      ],
+      "attacker-8": [
+        60,
+        60
+      ]
+    }
+  }
+}

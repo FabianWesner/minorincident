@@ -7,6 +7,28 @@ import { QuadrupedAnimator } from '../../../src/render/characters/QuadrupedAnima
 import { PawContacts } from '../../../src/render/characters/PawContacts';
 import { authoredClips, cadenceStride, sampleClip, strideScale } from '../../../src/render/characters/clips';
 
+test('moving corgi keeps the drawn toe vertices above its floor through turns and gait changes', async () => {
+  for (const lod of ['', '.lod1']) {
+    const bytes = readFileSync(`public/assets/models/char.corgi${lod}.glb`);
+    const { scene } = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
+    const animator = new QuadrupedAnimator(scene), point = new Vector3(); let distance = 0;
+    for (let frame = 0; frame < 480; frame++) {
+      const speed = frame < 60 ? 0 : frame < 200 ? 1.4 : frame < 320 ? 3.8 : frame < 400 ? 7 : 0;
+      distance += speed / 60; scene.position.set(distance, .4, 0); scene.rotation.y = Math.sin(frame / 30);
+      animator.update(frame / 60, speed, distance); scene.updateWorldMatrix(true, true);
+      for (const name of ['legFL', 'legFR', 'legBL', 'legBR']) {
+        let bottom = Infinity;
+        scene.getObjectByName(name)!.traverse(node => {
+          if (!(node instanceof Mesh)) return;
+          const positions = node.geometry.attributes.position, indices = node.geometry.index;
+          for (let i = 0; i < (indices?.count ?? positions.count); i++) bottom = Math.min(bottom, point.fromBufferAttribute(positions, indices ? indices.getX(i) : i).applyMatrix4(node.matrixWorld).y);
+        });
+        expect(bottom, `${lod} ${name} f${frame}`).toBeGreaterThanOrEqual(.4 - .01);
+      }
+    }
+  }
+});
+
 test('corgi paws remain planted below the cadence cap in walk, trot and gallop @E07', async () => {
   const results = [];
   for (const speed of [1.4, 3.8, 7]) {

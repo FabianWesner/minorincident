@@ -1,0 +1,225 @@
+
+> verify
+> tsx tools/verify.ts E25
+
+
+Verifying E25: npm run typecheck
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+Verifying E25: npm run lint
+
+> lint
+> eslint src tests tools functions *.config.ts eslint.config.js
+
+
+Verifying E25: sh tools/e2e-lock.sh npm run build
+
+> build
+> NODE_ENV=production vite build --configLoader runner
+
+vite v6.4.3 building for production...
+transforming...
+✓ 528 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/preview/index.html                             1.65 kB │ gzip:     0.72 kB
+dist/index.html                                     2.65 kB │ gzip:     0.90 kB
+dist/build/civilianBakeData-DRZjElYi.js             3.68 kB
+dist/build/BufferGeometryUtils-E8HioxtM.js          6.88 kB
+dist/build/civilianBake.worker-C13d_nt9.js          8.74 kB
+dist/build/basis_transcoder-o4Hde_L7.js            57.53 kB
+dist/build/three.module-B-nHBglW.js               206.11 kB
+dist/build/civilianSource-UMMueCh2.js             411.18 kB
+dist/build/basis_transcoder-VXdx5NbI.wasm         527.33 kB │ gzip:   244.57 kB
+dist/build/prefetch.worker--lwGsOcI.js          1,053.99 kB
+dist/build/prepareCivilianGeometry-PivjJtk0.js  2,020.30 kB
+dist/build/rapier-C6GCbKVJ.wasm                 3,082.10 kB │ gzip: 1,171.17 kB
+dist/build/index-BZx3BNCD.css                      36.72 kB │ gzip:     8.00 kB
+dist/build/lookViewpoints-BX-OEann.js               0.23 kB │ gzip:     0.16 kB
+dist/build/modulepreload-polyfill-B5Qt9EMX.js       0.71 kB │ gzip:     0.40 kB
+dist/build/preload-helper-BlTxHScW.js               1.11 kB │ gzip:     0.65 kB
+dist/build/crowdProbe-CLs7QHTp.js                   1.35 kB │ gzip:     0.78 kB
+dist/build/controls-DGdjkqyP.js                     1.40 kB │ gzip:     0.74 kB
+dist/build/worldLook-DT8mxh_z.js                    1.64 kB │ gzip:     0.76 kB
+dist/build/crowd-B3oba-p7.js                        2.35 kB │ gzip:     1.28 kB
+dist/build/l5-KCMD6j4i.js                           4.21 kB │ gzip:     1.95 kB
+dist/build/lookPatch-BT7ef7_D.js                    5.26 kB │ gzip:     2.69 kB
+dist/build/navigation-D5smqHUk.js                   5.30 kB │ gzip:     2.47 kB
+dist/build/probe-cH6419Ax.js                        7.46 kB │ gzip:     3.02 kB
+dist/build/index-ABpOygnc.js                       12.12 kB │ gzip:     4.40 kB
+dist/build/Inspection-Bo-d0Br1.js                  12.83 kB │ gzip:     4.39 kB
+dist/build/meleeCombos-CKWE9C7V.js                 15.00 kB │ gzip:     4.94 kB
+dist/build/l4-cBdBvsfu.js                          15.72 kB │ gzip:     6.62 kB
+dist/build/MotionLab-_QLppypF.js                   20.03 kB │ gzip:     8.43 kB
+dist/build/LevelFiveBot-gECXFKV1.js                23.00 kB │ gzip:     6.21 kB
+dist/build/index-DSkXvcEQ.js                       27.23 kB │ gzip:     7.29 kB
+dist/build/testApi-Cf91sY3I.js                     28.91 kB │ gzip:    10.89 kB
+dist/build/Physics-D1AKIHqU.js                     69.38 kB │ gzip:    23.77 kB
+dist/build/Pickups-DWoyd96O.js                     78.01 kB │ gzip:    24.89 kB
+dist/build/light-anchors-DQGCSUUw.js               90.38 kB │ gzip:     6.79 kB
+dist/build/SceneLab-Dzr5FV67.js                    93.66 kB │ gzip:    32.54 kB
+dist/build/Debug-DoeeJH5i.js                      155.75 kB │ gzip:    32.99 kB
+dist/build/registry-Da9_89c3.js                   190.38 kB │ gzip:    65.27 kB
+dist/build/PropSystem-D1Qjfq4O.js                 209.76 kB │ gzip:    64.74 kB
+dist/build/rapier-ykuY6d4E.js                     212.13 kB │ gzip:    36.15 kB
+dist/build/three.module-BlJEN_py.js               290.37 kB │ gzip:    77.77 kB
+dist/build/install-DZHF0_e8.js                    689.93 kB │ gzip:   185.44 kB
+dist/build/WeatherView-DgXM-q0V.js              1,050.79 kB │ gzip:   232.14 kB
+dist/build/index-KfNcb4Nu.js                    1,161.07 kB │ gzip:   362.94 kB
+dist/build/character-clips-CGKWtM3S.js          1,939.70 kB │ gzip:   341.80 kB
+✓ built in 8.98s
+
+Verifying E25: sh tools/remote/run.sh /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b --pull test-results/epics/E25/vitest.json -- npx vitest run -t @(?:E25)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$) --maxWorkers=1 --reporter=default --reporter=json --outputFile=test-results/epics/E25/vitest.json
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b -> 94.130.181.173:/srv/mi/ws/spec-audit-b-5b46d9
+[remote] cache-gc deleted:none
+[remote] sync 28s, 13649 files; job /srv/mi/jobs/spec-audit-b-5b46d9-62912-1792136956; queueing for a slot
+[runner] slot 1 acquired; load 2.52 0.87 0.55
+
+ RUN  v5.0.3 /srv/mi/jobs/spec-audit-b-5b46d9-62912-1792136956
+
+ ✓  timing  tests/sim/combat/balance.test.ts (3 tests | 2 skipped) 808ms
+   ✓ S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash 804ms
+ ✓  functional  tests/sim/combat/combat.test.ts (19 tests | 18 skipped) 336ms
+   ✓ S-06 @E05 @smoke each category fires/hits; swept projectile cannot tunnel through a dummy 335ms
+ ✓  functional  tests/unit/render/pre-render.test.ts (17 tests | 16 skipped) 9ms
+ ✓  functional  tests/unit/render/e25-lighting.test.ts (6 tests | 1 skipped) 1963ms
+   ✓ T-E25-02 @E25 @E25-AC02 every light:* anchor in the shipped GLBs parses into a valid ss_light and the runtime table is current 1784ms
+ ✓  functional  tests/unit/render/e25-windows.test.ts (5 tests) 658ms
+   ✓ T-E25-12s @E25 @E25-AC12 real house windows retain power indices and normalized room coordinates in every LOD 594ms
+ ✓  functional  tests/sim/light-power.test.ts (6 tests) 724ms
+   ✓ T-E25-07m @E25 @E25-AC07 authored emergency power survives a district power revision 450ms
+ ✓  functional  tests/unit/render/vehicle-glass.test.ts (6 tests | 2 skipped) 59ms
+ ✓  functional  tests/unit/motionlab/stage1.test.ts (4 tests | 2 skipped) 629ms
+   ✓ stage1 navigation capsule and NPC traces meet motion budgets @smoke 424ms
+ ✓  functional  tests/unit/render/crowd-lod-geometry.test.ts (2 tests | 1 skipped) 638ms
+   ✓ T-E25-14g @E25 @E25-AC14 gripped far civilian remains within its authored triangle count and retains vertex channels 637ms
+ ✓  functional  tests/sim/npc/permanence.test.ts (4 tests | 3 skipped) 2957ms
+   ✓ 20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07 2953ms
+ ✓  functional  tests/unit/render/e25-hero.test.ts (2 tests) 284ms
+ ✓  functional  tests/sim/determinism.test.ts (3 tests | 2 skipped) 544ms
+   ✓ S-05-foundation @smoke empty scripted 1800-tick golden hash 542ms
+ ✓  functional  tests/unit/render/e25-visibility.test.ts (2 tests) 7ms
+
+ Test Files  13 passed | 457 skipped (470)
+      Tests  32 passed | 2913 skipped (2945)
+   Start at  07:49:47
+   Duration  258.29s (import 71%, transform 23%, tests 5%, worker 1%)
+
+JSON report written to /srv/mi/jobs/spec-audit-b-5b46d9-62912-1792136956/test-results/epics/E25/vitest.json
+[remote] pulled test-results/epics/E25/vitest.json
+[remote] done exit=0 (runner 94.130.181.173, sync 28s, remote total 262s)
+
+Verifying E25: sh tools/e2e-lock.sh npx playwright test --grep @(?:E25)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$) --grep-invert T-E25-14 --workers=1
+
+Running 47 tests using 1 worker
+
+  ✓   1 [chromium] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.9s)
+  ✓   2 [chromium] › tests/e2e/controls-playtest.spec.ts:8:1 › S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB (22.3s)
+  ✓   3 [chromium] › tests/e2e/driving.spec.ts:22:1 › S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit (4.1s)
+  ✓   4 [chromium] › tests/e2e/levels/l4-boot.spec.ts:5:1 › T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors (12.6s)
+  ✓   5 [chromium] › tests/e2e/menus-mouse.spec.ts:3:1 › T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only (4.7s)
+  ✓   6 [chromium] › tests/e2e/save.spec.ts:76:1 › T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly (10.1s)
+  ✓   7 [chromium] › tests/e2e/smoke.spec.ts:4:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (639ms)
+  ✓   8 [chromium] › tests/e2e/smoke.spec.ts:14:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (680ms)
+  ✓   9 [chromium] › tests/visual/e25-closure.spec.ts:22:1 › T-E25-03 @E25 @E25-AC03 trailer pool ends at the fence and exceeds ambient by four (4.7s)
+  ✓  10 [chromium] › tests/visual/e25-closure.spec.ts:31:1 › T-E25-07 @E25 @E25-AC07 generator startup and one-frame shutdown drive every visible channel (5.8s)
+  ✓  11 [chromium] › tests/visual/e25-closure.spec.ts:52:1 › T-E25-01 @E25 @E25-AC01 headless WebGL tone-mapping comparison records the same trailer and counters (13.4s)
+  ✓  12 [chromium] › tests/visual/e25-closure.spec.ts:64:1 › T-E25-16 @E25 @E25-AC16 production photo spots for the non-L6 lighting review (1.1m)
+  ✓  13 [chromium] › tests/visual/e25-closure.spec.ts:83:1 › T-E25-10 @E25 @E25-AC10 wet reflection splats exceed the dry surface on both tiers (18.0s)
+  ✘  14 [chromium] › tests/visual/e25-closure.spec.ts:125:1 › T-E25-11 T-E25-12 @E25 @E25-AC11 @E25-AC12 camera angles expose car environment highlights and measured window depth (15.7s)
+  ✓  15 [chromium] › tests/visual/e25-closure.spec.ts:155:1 › T-E25-09 @E25 @E25-AC09 four spot cones fade across their ground intersection (5.0s)
+  ✓  16 [chromium] › tests/visual/e25-closure.spec.ts:170:1 › T-E25-15 @E25 @E25-AC15 production asset turntable emits night on/off views (2.6s)
+  ✓  17 [chromium] › tests/visual/e25-closure.spec.ts:192:1 › T-E25-05v @E25 @E25-AC05 sixty seconds past forty lights: promotion rate and per-frame pool luminance (7.2m)
+  -  18 [chromium] › tests/visual/e25-deferred.spec.ts:4:6 › T-E25-01-GPU @E25 @E25-AC01 deferred: comparative ClusteredLighting/DynamicLighting WebGPU GPU timing (manual)
+  -  19 [chromium] › tests/visual/e25-deferred.spec.ts:5:6 › T-E25-04 @E25 @E25-AC04 deferred: WebGL2/WebGPU pool parity at one photo spot (WebGPU is checked manually)
+  -  20 [chromium] › tests/visual/e25-deferred.spec.ts:6:6 › T-E25-10-SSR @E25 @E25-AC10 deferred: SSR reflected car silhouette (release extras, specs/04 section 6)
+  ✓  21 [chromium] › tests/visual/e25-lighting.spec.ts:23:1 › T-E25-moods @E25 @vision game-camera mood per time-of-day preset: readable player, infected and pickups (9.2s)
+  ✘  22 [chromium] › tests/visual/e25-lighting.spec.ts:43:1 › T-E25-13 @E25 @E25-AC13 night-street: player contrast against its 2 m ring with no practical light nearby; infected eyes are their brightest pixels (8.0s)
+  ✓  23 [chromium] › tests/visual/e25-lighting.spec.ts:84:1 › T-E25-06 @E25 @E25-AC06 hero shadow: under a promoted hero lamp the survivor shadow is >=35% darker than beside it and tinted, not black (6.1s)
+  ✓  24 [chromium] › tests/visual/l3-contrast.spec.ts:24:1 › L3 courier retains contrast and colour through the authored haze-to-ash timeline @E25 @visual (1.1m)
+  ✓  25 [chromium] › tests/e2e/crowd-drawn.spec.ts:15:3 › T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props (21.6s)
+  ✓  26 [chromium] › tests/e2e/crowd-drawn.spec.ts:15:3 › T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props (19.8s)
+  ✓  27 [chromium] › tests/e2e/crowd-feel.spec.ts:87:1 › 20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07 (4.5s)
+  ✓  28 [chromium] › tests/e2e/webgpu-canvas.spec.ts:25:3 › T-E02-webgpu-canvas @smoke @E02 WebGPU high mega health bars preserve the game frame at both zoom limits (7.1s)
+  ✓  29 [chromium] › tests/e2e/webgpu-canvas.spec.ts:41:3 › T-E02-webgpu-game-canvas @smoke @E02 WebGPU high L1 L4 L8 game cameras render at both zoom limits (35.7s)
+  ✓  30 [chromium] › tests/e2e/webgpu-canvas.spec.ts:25:3 › T-E02-webgpu-canvas @smoke @E02 WebGPU low mega health bars preserve the game frame at both zoom limits (4.0s)
+  ✓  31 [chromium] › tests/e2e/webgpu-canvas.spec.ts:41:3 › T-E02-webgpu-game-canvas @smoke @E02 WebGPU low L1 L4 L8 game cameras render at both zoom limits (9.6s)
+  ✓  32 [chromium] › tests/e2e/webgpu-level-transitions.spec.ts:15:1 › T-E02-webgpu-level-transitions @smoke @E02 title, L1, L2 and L3 in one WebGPU renderer log no GPU validation errors (12.1s)
+  ✓  33 [pixel-7] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.4s)
+  ✓  34 [pixel-7] › tests/e2e/smoke.spec.ts:4:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (624ms)
+  ✓  35 [pixel-7] › tests/e2e/smoke.spec.ts:14:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (778ms)
+  ✓  36 [pixel-7-landscape] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.3s)
+  ✓  37 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:4:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (604ms)
+  ✓  38 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:14:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (791ms)
+  ✓  39 [iphone-14] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.3s)
+  ✓  40 [iphone-14] › tests/e2e/smoke.spec.ts:4:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (567ms)
+  ✓  41 [iphone-14] › tests/e2e/smoke.spec.ts:14:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (687ms)
+  ✓  42 [iphone-14-landscape] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.2s)
+  ✓  43 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:4:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (585ms)
+  ✓  44 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:14:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (833ms)
+  ✓  45 [webkit] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (10.2s)
+  ✓  46 [webkit] › tests/e2e/smoke.spec.ts:4:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.8s)
+  ✓  47 [webkit] › tests/e2e/smoke.spec.ts:14:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.9s)
+
+
+  1) [chromium] › tests/visual/e25-closure.spec.ts:125:1 › T-E25-11 T-E25-12 @E25 @E25-AC11 @E25-AC12 camera angles expose car environment highlights and measured window depth
+
+    Error: expect(received).toHaveLength(expected)
+
+    Expected length: 200
+    Received length: 0
+    Received array:  []
+
+      134 |     evidence.push({ subject: subject.name, angle, lighting: await page.evaluate(() => window.__SS__!.getState().render.lighting) });
+      135 |     if (subject === house) {
+    > 136 |       const line = await windowLine(page); expect(line).toHaveLength(200);
+          |                                                         ^
+      137 |       const luminance = line.map(point => patch(image, point, 1));
+      138 |       // Exclude the physical perimeter/middle mullion. The room's far wall
+      139 |       // ends at a bright-to-dark boundary inside the central panes.
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b/tests/visual/e25-closure.spec.ts:136:57
+
+    Error Context: test-results/playwright/run-4385/visual-e25-closure-T-E25-1-fc9bf-s-and-measured-window-depth-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-4385/visual-e25-closure-T-E25-1-fc9bf-s-and-measured-window-depth-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-4385/visual-e25-closure-T-E25-1-fc9bf-s-and-measured-window-depth-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/visual/e25-lighting.spec.ts:43:1 › T-E25-13 @E25 @E25-AC13 night-street: player contrast against its 2 m ring with no practical light nearby; infected eyes are their brightest pixels
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 60
+    Received:    -60
+
+      79 |   expect(contrast).toBeGreaterThanOrEqual(3);
+      80 |   // Bloomed eye centres saturate towards pink-white; the brightest pixel must still be clearly red (hue 330-20°).
+    > 81 |   for (const eye of eyes) { expect(eye.r - Math.max(eye.g, eye.b)).toBeGreaterThanOrEqual(60); const h = hue(eye.r, eye.g, eye.b); expect(h >= 330 || h <= 20).toBe(true); }
+         |                                                                    ^
+      82 | });
+      83 |
+      84 | test('T-E25-06 @E25 @E25-AC06 hero shadow: under a promoted hero lamp the survivor shadow is >=35% darker than beside it and tinted, not black', async ({ page }) => {
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b/tests/visual/e25-lighting.spec.ts:81:68
+
+    Error Context: test-results/playwright/run-4385/visual-e25-lighting-T-E25--ec78b--are-their-brightest-pixels-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-4385/visual-e25-lighting-T-E25--ec78b--are-their-brightest-pixels-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-4385/visual-e25-lighting-T-E25--ec78b--are-their-brightest-pixels-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests/visual/e25-closure.spec.ts:125:1 › T-E25-11 T-E25-12 @E25 @E25-AC11 @E25-AC12 camera angles expose car environment highlights and measured window depth
+    [chromium] › tests/visual/e25-lighting.spec.ts:43:1 › T-E25-13 @E25 @E25-AC13 night-street: player contrast against its 2 m ring with no practical light nearby; infected eyes are their brightest pixels
+  3 skipped
+  42 passed (14.9m)

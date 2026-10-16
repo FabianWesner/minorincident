@@ -1,0 +1,115 @@
+{
+  "numPassedTests": 7,
+  "numFailedTests": 1,
+  "numPendingTests": 0,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [],
+          "fullName": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+          "status": "failed",
+          "title": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+          "duration": 2470.7235729999998,
+          "failureMessages": [
+            "AssertionError: expected 4.503467999999884 to be less than or equal to 4\n    at /srv/mi/jobs/collision-s1-d2c10a-42009-1792120953/tests/sim/performance/zoo-s2.test.ts:26:68\n    at file:///srv/mi/jobs/collision-s1-d2c10a-42009-1792120953/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [],
+          "fullName": "T-E07-11-zoo-s2-100 @E07-AC11 @E18-AC02 mixed zoo specials stay within 6ms",
+          "status": "passed",
+          "title": "T-E07-11-zoo-s2-100 @E07-AC11 @E18-AC02 mixed zoo specials stay within 6ms",
+          "duration": 896.3541889999997,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        }
+      ],
+      "startTime": 1792120970394,
+      "endTime": 1792120973761.3542,
+      "status": "failed",
+      "message": "",
+      "name": "/srv/mi/jobs/collision-s1-d2c10a-42009-1792120953/tests/sim/performance/zoo-s2.test.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [],
+          "fullName": "2 m cells retain both radius policies across alternating queries and inserts",
+          "status": "passed",
+          "title": "2 m cells retain both radius policies across alternating queries and inserts",
+          "duration": 3.279816999999639,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [],
+          "fullName": "4 m cells retain both radius policies across alternating queries and inserts",
+          "status": "passed",
+          "title": "4 m cells retain both radius policies across alternating queries and inserts",
+          "duration": 0.40454500000032567,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [],
+          "fullName": "2 m cells retain exact circle queries across negative cell edges and moves",
+          "status": "passed",
+          "title": "2 m cells retain exact circle queries across negative cell edges and moves",
+          "duration": 11.371289000000615,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [],
+          "fullName": "4 m cells retain exact circle queries across negative cell edges and moves",
+          "status": "passed",
+          "title": "4 m cells retain exact circle queries across negative cell edges and moves",
+          "duration": 6.166881000000103,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [],
+          "fullName": "contact cache preserves horde state against unfiltered queries (mixed zoo: false)",
+          "status": "passed",
+          "title": "contact cache preserves horde state against unfiltered queries (mixed zoo: false)",
+          "duration": 979.3639469999998,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        },
+        {
+          "ancestorTitles": [],
+          "fullName": "contact cache preserves horde state against unfiltered queries (mixed zoo: true)",
+          "status": "passed",
+          "title": "contact cache preserves horde state against unfiltered queries (mixed zoo: true)",
+          "duration": 1757.6539979999998,
+          "failureMessages": [],
+          "meta": {},
+          "tags": [],
+          "benchmarks": []
+        }
+      ],
+      "startTime": 1792120973889,
+      "endTime": 1792120976647.654,
+      "status": "passed",
+      "message": "",
+      "name": "/srv/mi/jobs/collision-s1-d2c10a-42009-1792120953/tests/unit/performance/spatial-contact-cache.test.ts"
+    }
+  ]
+}

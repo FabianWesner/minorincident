@@ -1,0 +1,24 @@
+[
+  {
+    "scenario": "perf-horde-100",
+    "seed": 1,
+    "warmup": 120,
+    "ticks": 3600,
+    "minInfected": 100,
+    "cap": 100,
+    "simMsP50": 0.6035650000003443,
+    "simMsP95": 0.9409660000001168,
+    "simMsMax": 5.306925999999976
+  },
+  {
+    "scenario": "perf-horde-200",
+    "seed": 1,
+    "warmup": 120,
+    "ticks": 3600,
+    "minInfected": 200,
+    "cap": 200,
+    "simMsP50": 1.248689000000013,
+    "simMsP95": 1.9419010000001435,
+    "simMsMax": 3.0259229999992385
+  }
+]

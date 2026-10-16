@@ -3,7 +3,7 @@ import { test, expect } from './fixtures';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 
 for (const [name, move, windup] of [['gorilla-throw', 'gorilla.grab-throw', 48], ['elephant-charge', 'elephant.charge', 54], ['elephant-swipe', 'elephant.swipe', 42]] as const) {
-  test(`T-E07-19-${name}-browser @E07-AC05 @E07-AC19 production telegraph, pause, activation and shared bar`, async ({ page }) => {
+  test(`T-E07-19-${name}-browser @E07-AC05 @E07-AC19 @E30-AC10 production telegraph, pause, activation and shared bar`, async ({ page }) => {
     test.setTimeout(120_000);
     const spec = JSON.parse(readFileSync(`tests/scenes/zoo-s2/qa-zoo-${name}.json`, 'utf8')) as SceneSpec;
     await page.goto('/?test=1&scenelab&renderer=webgl&quality=high&audio=muted&profile=1&dpr=1');
@@ -32,7 +32,7 @@ for (const [name, move, windup] of [['gorilla-throw', 'gorilla.grab-throw', 48],
   });
 }
 
-for (const [width, height] of [[390, 844], [844, 390]] as const) test(`T-E07-19-elephant-bar-${width} @E07-AC19 shared mobile bar uses real HP and updates within a frame`, async ({ page }) => {
+for (const [width, height] of [[390, 844], [844, 390]] as const) test(`T-E07-19-elephant-bar-${width} @E07-AC19 @E30-AC10 shared mobile bar uses real HP and updates within a frame`, async ({ page }) => {
   await page.setViewportSize({ width, height });
   const spec = JSON.parse(readFileSync('tests/scenes/zoo-s2/qa-zoo-elephant-swipe.json', 'utf8')) as SceneSpec;
   spec.script = []; spec.actors![0].at = [8, 0];

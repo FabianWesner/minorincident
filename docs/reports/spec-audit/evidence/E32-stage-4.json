@@ -1,0 +1,1370 @@
+{
+  "check": {
+    "command": [
+      "sh",
+      "tools/remote/run.sh",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-c",
+      "--pull",
+      "test-results/epics/E32/vitest.json",
+      "--",
+      "bash",
+      "tools/remote/timing-isolated.sh",
+      "npx",
+      "vitest",
+      "run",
+      "-t",
+      "@(?:E32)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+      "--maxWorkers=1",
+      "--reporter=default",
+      "--reporter=json",
+      "--outputFile=test-results/epics/E32/vitest.json"
+    ],
+    "exitCode": 1
+  },
+  "passed": 222,
+  "failed": 1,
+  "pending": 2736,
+  "success": false,
+  "tests": [
+    {
+      "file": "sim/combat/balance.test.ts",
+      "name": "S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/levels/l10-arrival.test.ts",
+      "name": "T-E32-21-E3b @E32-AC21 seed-32 rocket checkpoint route arrival high",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/levels/l10-arrival.test.ts",
+      "name": "T-E32-21-E3b @E32-AC21 seed-32 rocket checkpoint route arrival low",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/levels/l10-assault.test.ts",
+      "name": "T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/levels/l10-assault.test.ts",
+      "name": "T-E32-21-E3-low @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/levels/l10-assault.test.ts",
+      "name": "T-E32-21-E3-overlap-high @E32-AC06 @E32-AC21 full cap defers assault, dead bodies survive replenishment and revisit",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/levels/l10-assault.test.ts",
+      "name": "T-E32-21-E3-overlap-low @E32-AC06 @E32-AC21 full cap defers assault, dead bodies survive replenishment and revisit",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/levels/l10-assault.test.ts",
+      "name": "T-E32-10-E3 @E32-AC10 production composition introduces one reserved pursuer behind R1",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/levels/l10-district.test.ts",
+      "name": "T-E32-03-D1-D2-high @E32-AC02 @E32-AC05 @E32-AC03 @E32-AC27 @E32-AC28 route through R1\u2013R4 acquires the ordered arsenal and retains ground/nav/checkpoint support",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/levels/l10-district.test.ts",
+      "name": "T-E32-03-D1-D2-low @E32-AC02 @E32-AC05 @E32-AC03 @E32-AC27 @E32-AC28 route through R1\u2013R4 acquires the ordered arsenal and retains ground/nav/checkpoint support",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/levels/l10-district.test.ts",
+      "name": "T-E32-28-D1 @E32-AC10 @E32-AC28 authored pursuit crosses the R1/R2 seam using shared residency",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/performance/l10-finale.test.ts",
+      "name": "T-E32-20-perf-200 @E32-AC20 @E32-AC31 @E18-AC02 full-cap active dispersal predicate",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/performance/l10-finale.test.ts",
+      "name": "T-E32-20-perf-100 @E32-AC20 @E32-AC31 @E18-AC02 full-cap active dispersal predicate",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/performance/mega-audio.test.ts",
+      "name": "T-E32-13-perf-200 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/performance/mega-audio.test.ts",
+      "name": "T-E32-13-perf-100 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/performance/mega-moves.test.ts",
+      "name": "T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+      "status": "failed",
+      "failures": [
+        "AssertionError: expected 4.196231000008993 to be less than or equal to 4\n    at /srv/mi/jobs/spec-audit-c-3a032d-57853-1792142246/tests/sim/performance/mega-moves.test.ts:24:104\n    at file:///srv/mi/jobs/spec-audit-c-3a032d-57853-1792142246/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "sim/performance/mega-moves.test.ts",
+      "name": "T-E32-11-perf-100 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/world/chunk-residency.test.ts",
+      "name": "T-E32-28-S4 @E31-AC13 @E32-AC10 @E32-AC28 Mega crosses coarse/detailed residency without >0.5 m tick jumps",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "levels/L10-campaign.test.ts",
+      "name": "T-E32-32 @E32-AC32 continuous seed 1 L1 through L10 reaches credits with real campaign handovers",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "levels/L10.test.ts",
+      "name": "T-E32-04-complete @E32-AC04 one seed completes the full L10 route with ordinary inputs and regional timing",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/determinism.test.ts",
+      "name": "S-05-foundation @smoke empty scripted 1800-tick golden hash",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/health-bars.test.ts",
+      "name": "T-E32-09-bars @E32 @E32-AC09 regular Alpha bars remain smaller than Mega bars on desktop and phone",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha-tank.test.ts",
+      "name": "L10 research-campus seed 1 Alpha paths around a parked hull @E32-AC09",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha-tank.test.ts",
+      "name": "L10 destroyed-corridor seed 1 Alpha paths around a parked hull @E32-AC09",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-01-alpha @E07-AC01 @E29-AC07 @E30-AC10 @E32-AC09 Alpha has 300 effective HP and authored ordinary contact tuning",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-06-alpha-handgun @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 resistance landed hits and permanence",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-06-alpha-army-mg @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 resistance landed hits and permanence",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-06-alpha-shotgun @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 resistance landed hits and permanence",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-06-alpha-rocket-launcher @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 resistance landed hits and permanence",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-06-alpha-melee @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 kick preserves Alpha HP and upright reaction; ordinary contact knocks a soldier down for 72 ticks",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-05-scheduler-alpha.charge @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-05-scheduler-alpha.ground-slam @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-05-scheduler-alpha.grab-throw @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-05-scheduler-alpha.roar @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-05-scheduler-lion.pounce @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-05-scheduler-lion.flank @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-05-scheduler-gorilla.roar @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-05-scheduler-gorilla.pound @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-05-scheduler-gorilla.grab-throw @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-05-scheduler-elephant.charge @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-05-scheduler-elephant.swipe @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-05-scheduler-zebra.kick @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-05-scheduler-zebra.stampede @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-05-scheduler-flamingo.dive @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-05-alpha-checkpoint-false @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 checkpoint rebases pending specials and cooldowns",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-05-alpha-checkpoint-true @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 checkpoint rebases pending specials and cooldowns",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-05-alpha-independent @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 another move has its own cooldown and retargeting never resets the first",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-06-alpha-live-handgun @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 real sustained firing reaches the authored resistance fixture",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-06-alpha-live-army-mg @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 real sustained firing reaches the authored resistance fixture",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-06-alpha-live-shotgun @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 real sustained firing reaches the authored resistance fixture",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-06-alpha-selection-alpha.charge @E07-AC0 @E29-AC07 @E30-AC10 @E32-AC095 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 chase selects each available move through the merged scheduler",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-06-alpha-selection-alpha.ground-slam @E07-AC0 @E29-AC07 @E30-AC10 @E32-AC095 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 chase selects each available move through the merged scheduler",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-06-alpha-selection-alpha.grab-throw @E07-AC0 @E29-AC07 @E30-AC10 @E32-AC095 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 chase selects each available move through the merged scheduler",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/alpha.test.ts",
+      "name": "T-E07-06-alpha-selection-alpha.roar @E07-AC0 @E29-AC07 @E30-AC10 @E32-AC095 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 chase selects each available move through the merged scheduler",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/l10-alpha-contracts.test.ts",
+      "name": "T-E32-09-count-high @E32 @E32-AC09 authored regional quotas include dead records and exclude Mega; mixed infected share the global cap",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/l10-alpha-contracts.test.ts",
+      "name": "T-E32-09-count-low @E32 @E32-AC09 authored regional quotas include dead records and exclude Mega; mixed infected share the global cap",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/l10-alpha-contracts.test.ts",
+      "name": "T-E32-09-queue @E32 @E32-AC09 queued Alpha admission waits at the regional assault cap and retains ownership",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/l10-alpha-contracts.test.ts",
+      "name": "T-E32-09-specials @E32 @E32-AC09 L10 regular Alphas use all four stock specials, cooldowns and conventional resistance",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/l10-alpha-contracts.test.ts",
+      "name": "T-E32-07-spawn-coats @E32 @E32-AC07 actual dog spawns choose seeded palette assets and preserve explicit overrides",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/l10-alpha-contracts.test.ts",
+      "name": "T-E32-09-stream-high @E32 @E32-AC09 serialized Alpha ownership and dog coat survive five revisits and save/load",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/l10-alpha-contracts.test.ts",
+      "name": "T-E32-09-stream-low @E32 @E32-AC09 serialized Alpha ownership and dog coat survive five revisits and save/load",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/l10-alpha-contracts.test.ts",
+      "name": "T-E32-07-pet-turn @E32 @E32-AC07 a scheduled healthy dog turns on the dog brain and retains its seeded infected coat",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/l10-dogs.test.ts",
+      "name": "T-E32-07a @E32 @E32-AC07 inf.dog data: 1.1x run, >= 0.6 s telegraph, <= 2 m reach, >= 2 s cooldown, 10 HP, non-corgi asset",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/l10-dogs.test.ts",
+      "name": "T-E32-07b @E32 @E32-AC07 a dog telegraphs >= 0.6 s before each bite and waits >= 2 s between its own bites",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/l10-dogs.test.ts",
+      "name": "T-E32-07c @E32 @E32-AC07 a dog bite costs the courier 10 HP",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/l10-dogs.test.ts",
+      "name": "T-E32-08a @E32 @E32-AC08 the companion corgi can neither be infected nor turned, and is never an enemy target",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/l10-dogs.test.ts",
+      "name": "T-E32-08b @E32 @E32-AC08 no infected spawn may substitute for or be drawn as the corgi; real infected are valid cure targets",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/l10-dogs.test.ts",
+      "name": "T-E32-07-los @E32-AC07 a solid wall blocks dog acquisition beyond close hearing; ordinary damage staggers and kills it",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-audio.test.ts",
+      "name": "T-E32-13-schedule @E32-AC13 sim-time roar/impact, steps <60m, checkpoint timing and death",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-audio.test.ts",
+      "name": "T-E32-15-terminal @E32-AC15 existing radio action shows all research facts for 14 seconds without audio",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-moves.test.ts",
+      "name": "T-E32-12a @E32-AC12 nine direct rockets survive, tenth kills permanently, once per projectile",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-moves.test.ts",
+      "name": "T-E32-12b @E32-AC12 1000 MG/minigun rounds, melee, statuses and props never cross 90% floor or finish a wounded boss",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-moves.test.ts",
+      "name": "T-E32-12c @E32-AC12 splash is 2.5% max and cannot also apply as direct damage",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-moves.test.ts",
+      "name": "T-E32-12d @E32-AC12 shared stagger cooldown survives floor hits and checkpoint timer rebasing; no heavy blast knockdown",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-moves.test.ts",
+      "name": "T-E32-11-alpha.charge @E32-AC11 windup, damage, recovery, nonoverlap and activation cooldown",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-moves.test.ts",
+      "name": "T-E32-11-dodge-alpha.charge @E32-AC11 move only inside 12m, windup allows a safe dodge",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-moves.test.ts",
+      "name": "T-E32-11-alpha.ground-slam @E32-AC11 windup, damage, recovery, nonoverlap and activation cooldown",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-moves.test.ts",
+      "name": "T-E32-11-dodge-alpha.ground-slam @E32-AC11 move only inside 12m, windup allows a safe dodge",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-moves.test.ts",
+      "name": "T-E32-11-alpha.grab-throw @E32-AC11 windup, damage, recovery, nonoverlap and activation cooldown",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-moves.test.ts",
+      "name": "T-E32-11-dodge-alpha.grab-throw @E32-AC11 move only inside 12m, windup allows a safe dodge",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-moves.test.ts",
+      "name": "T-E32-11-grab-release-false @E32-AC11 stagger/death always releases grab",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-moves.test.ts",
+      "name": "T-E32-11-grab-release-true @E32-AC11 stagger/death always releases grab",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-moves.test.ts",
+      "name": "T-E32-11-walls @E32-AC11 oversized arm envelope stops charge and refuses specials near side/back cover",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-moves.test.ts",
+      "name": "T-E32-12-projectile @E32-AC12 real stock rocket ray contact attributes direct damage once through Explosions",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-moves.test.ts",
+      "name": "T-E32-12-pressure @E32-AC12 sustained minigun fire at the damage floor cannot extend a stagger or pin movement",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-moves.test.ts",
+      "name": "T-E32-12-crowd-impact @E32-AC12 kicked infected cannot bypass the shared Mega stagger cooldown",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-pursuit.test.ts",
+      "name": "T-E32-10a @E32-AC10 cruise is 0.7 \u00d7 the nominal run (\u00b12%): a running player stays ahead, the gap grows ~1.35 m/s",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-pursuit.test.ts",
+      "name": "T-E32-10b @E32-AC10 no sight, hearing or lure: it closes on a player hidden behind a wall, through a lure and smoke, and attacks",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-pursuit.test.ts",
+      "name": "T-E32-10c @E32-AC10 a player who stops is always caught: arrival time matches route length / cruise",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-pursuit.test.ts",
+      "name": "T-E32-10d @E32-AC10 obstacle recovery: a U-trap opening away from the player and a door closing on its path never trap it",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-pursuit.test.ts",
+      "name": "T-E32-10e @E32-AC10 a sealed pocket escalates replan \u2192 alternate \u2192 Alpha breach brain and keeps cycling (never a permanent stop)",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-pursuit.test.ts",
+      "name": "T-E32-10f @E32-AC10 off-region: coarse per-tick advance at cruise \u00d7 sim-time (2 Hz route planning) along authored nodes, counts against the cap, keeps HP, detailed on entry",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-pursuit.test.ts",
+      "name": "T-E32-10g @E32-AC10 an authored blocked street takes the detour; with no alternate it breaches after breachS (no border stop)",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-pursuit.test.ts",
+      "name": "T-E32-10h @E32-AC10 introduced once by 2:00, \u2265 80 m behind along the route; introduce() is idempotent",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-pursuit.test.ts",
+      "name": "T-E32-10i @E32-AC10 checkpoint restore: same id, HP, route state and cooldown timers; \u2265 respawnGapM from the player; a kill stays a kill",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-pursuit.test.ts",
+      "name": "T-E32-10j @E32-AC10 the pursuit seam round-trips through captureSeams and the world snapshot",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-pursuit.test.ts",
+      "name": "T-E32-10k @E32-AC10 removed without dying (restore from a pre-install snapshot): it is introduced again, still exactly one",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/ai/mega-pursuit.test.ts",
+      "name": "T-E32-10-E3b @E32-AC10 coarse to detailed handoff retains cruise on the first tick and next second",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/combat/combat.test.ts",
+      "name": "S-06 @E05 @smoke each category fires/hits; swept projectile cannot tunnel through a dummy",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/combat/mounted-gun.test.ts",
+      "name": "T-E32-18f @E32-AC18 interact next to the gun mounts, interact again leaves in one tick with the rocket launcher ready",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/combat/mounted-gun.test.ts",
+      "name": "T-E32-18g @E32-AC18 too far cannot mount; a deck gun lifts the gunner to the deck and a dismount stays on it",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/combat/mounted-gun.test.ts",
+      "name": "T-E32-18h @E32-AC18 spin-up first, then an ordinary infected (40 HP) falls within 0.25 s of landed fire; no carried weapon fires",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/combat/mounted-gun.test.ts",
+      "name": "T-E32-18i @E32-AC18 a regular Alpha (200 HP) falls to landed fire in at most 4 s, inside the heat budget",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/combat/mounted-gun.test.ts",
+      "name": "T-E32-19-remount @E32-AC19 heat persists through dismount and remount, locks at 100%, a checkpoint restores it",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/combat/mounted-gun.test.ts",
+      "name": "T-E32-18k @E32-AC18 choosing a weapon slot leaves the gun at once; dying drops the player off it",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/combat/mounted-gun.test.ts",
+      "name": "T-E32-18l @E32-AC18 minigun-only against the Mega Alpha never takes it below 90%, whatever the heat cycles",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/levels/l10-arena.test.ts",
+      "name": "T-E32-17-D4-play @E32-AC17 @E32-AC18 walk from the R7 checkpoint to console, climb stairs and mount the shipped gun",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/levels/l10-campus-corridor.test.ts",
+      "name": "T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/levels/l10-campus-corridor.test.ts",
+      "name": "T-E32-03-D3-low @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/levels/l10-district-detours.test.ts",
+      "name": "T-E32-03-D2-detours-high @E32-AC03 @E32-AC28 service road and motor pool alternatives retain collision/nav support",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/levels/l10-district-detours.test.ts",
+      "name": "T-E32-03-D2-detours-low @E32-AC03 @E32-AC28 service road and motor pool alternatives retain collision/nav support",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/levels/l10-encounters.test.ts",
+      "name": "T-E32-06-E2-high @E32-AC02 @E32-AC06 @E32-AC09 @E32-AC15 @E32-AC16 @E32-AC27 depth population, health detours and checkpoint slot persistence",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/levels/l10-encounters.test.ts",
+      "name": "T-E32-06-E2-low @E32-AC02 @E32-AC06 @E32-AC09 @E32-AC15 @E32-AC16 @E32-AC27 depth population, health detours and checkpoint slot persistence",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/levels/l10-mega-cruise.test.ts",
+      "name": "T-E32-10-production-pressure-high @E32-AC10 R6 coarse pursuit cruises at 0.7\u00d7 run and the courier outruns it",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/levels/l10-mega-cruise.test.ts",
+      "name": "T-E32-10-shortcuts-high @E32-AC10 pursuit corner cuts clear the existing district at Mega radius",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/levels/l10-mega-cruise.test.ts",
+      "name": "T-E32-10-production-pressure-low @E32-AC10 R6 coarse pursuit cruises at 0.7\u00d7 run and the courier outruns it",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/levels/l10-mega-cruise.test.ts",
+      "name": "T-E32-10-shortcuts-low @E32-AC10 pursuit corner cuts clear the existing district at Mega radius",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/levels/l10-regression.test.ts",
+      "name": "T-E32-02-minute-high @E32-AC02 @E32-AC05 first minute remains axe-only despite historical unlocks",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/levels/l10-regression.test.ts",
+      "name": "T-E32-28-cure-high @E32-AC28 D-CURE prefetch reversal and five revisits retain corpse/pickup/boss state",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/levels/l10-regression.test.ts",
+      "name": "T-E32-02-minute-low @E32-AC02 @E32-AC05 first minute remains axe-only despite historical unlocks",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/levels/l10-regression.test.ts",
+      "name": "T-E32-28-cure-low @E32-AC28 D-CURE prefetch reversal and five revisits retain corpse/pickup/boss state",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-cure-front.test.ts",
+      "name": "T-E32-23-S8 @E32-AC23 explicit expanding front kills every infected species, downed and remaining Mega; no recovery or conversion",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-cure-front.test.ts",
+      "name": "T-E32-23-exclusions-S8 @E32-AC23 healthy people/animals, player and corgi excluded; particles/quality never decide death",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-cure-front.test.ts",
+      "name": "T-E32-24/25-once-S8 @E32-AC24 @E32-AC25 release/retry/load permanent, campaign cleared once, approaching attacks/spawners suppressed",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-cure-front.test.ts",
+      "name": "T-E32-24-unloaded-S8 @E32-AC24 sleeping infected die in snapshots and survive five revisits without loading regions",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-cure-front.test.ts",
+      "name": "T-E32-24-zoo-S8 @E32-AC24 cleared campaign kills subsequently visited zoo infected without harming healthy animals",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-cure-front.test.ts",
+      "name": "T-E32-23-front-S8 @E32-AC23 route branch delay and boundary use authoritative metre distance",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-cure-front.test.ts",
+      "name": "T-E32-23-flag-S8 @E32-AC23 infected flag governs future types and retained civilian appearances",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-cure-front.test.ts",
+      "name": "T-E32-24-fresh-clock-S8 @E32-AC24 early fall resumes on a fresh clock without replaying death/release",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-cure-front.test.ts",
+      "name": "T-E32-25-pending-S8 @E32-AC25 pending lion pins and civilian grabs cannot continue beyond release before mist contact",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-cure.test.ts",
+      "name": "T-E32-15/16/27-E2 @E32-AC05 @E32-AC15 @E32-AC16 @E32-AC27 terminal, unique backpack and death at every approach checkpoint",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-cure.test.ts",
+      "name": "T-E32-16-before-exit @E32-AC16 death before the exit returns the sole canister to the terminal",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-cure.test.ts",
+      "name": "T-E32-16-speed @E32-AC16 carried cure leaves both weapon racks and running speed unchanged",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-epilogue.test.ts",
+      "name": "T-E32-25/26-S9 @E32-AC25 @E32-AC26 150 s playable reversal, last 36 s eased pull retains walk/run; title then credits and once-only victory",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-epilogue.test.ts",
+      "name": "T-E32-26-resume-S9 @E32-AC26 fresh-clock save/load at mid-pull, title, credits and completed ending never replays combat or victory",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-epilogue.test.ts",
+      "name": "T-E32-25-cast-S9 @E32-AC25 @E32-AC31 production safe anchors emerge and bounded approaches collapse on both E18 tiers",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-22 truth table installed=false charge=false dead=false @E32-AC22",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-22 truth table installed=false charge=false dead=true @E32-AC22",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-22 truth table installed=false charge=true dead=false @E32-AC22",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-22 truth table installed=false charge=true dead=true @E32-AC22",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-22 truth table installed=true charge=false dead=false @E32-AC22",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-22 truth table installed=true charge=false dead=true @E32-AC22",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-22 truth table installed=true charge=true dead=false @E32-AC22",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-22 truth table installed=true charge=true dead=true @E32-AC22",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-20/22 seed 327 install, pause, boundary, early rockets and explicit once-only release @E32-AC17 @E32-AC20 @E32-AC22",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-20/27 death restores ready boss/enemy/heat and zero charge; live save resumes exactly @E32-AC20 @E32-AC27",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-16/27 pre-S7 save migration retains its reached cure checkpoint @E32-AC16 @E32-AC27",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-22 living boss blocks at 60 s; held input cannot release after its death @E32-AC22",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-20 early kill captured at ready remains dead after death @E32-AC20 @E32-AC22",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-finale.test.ts",
+      "name": "T-E32-20 live save resumes accrued charge and captured living boss exactly @E32-AC20 @E32-AC27",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-progression.test.ts",
+      "name": "T-E32-01 @E32 @E32-AC01 ordered graph prevents skipping arsenal, cure and release prerequisites",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-progression.test.ts",
+      "name": "T-E32-27 @E32 @E32-AC27 every region retries with its arsenal, mission items, chunk and Mega seam",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-progression.test.ts",
+      "name": "T-E32-05 @E32 @E32-AC05 arsenal additions/removals and retry checkpoint survive JSON SaveStore round trip",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-progression.test.ts",
+      "name": "T-E32-27b @E32 @E32-AC27 live progress reload retains the prior retry snapshot",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-progression.test.ts",
+      "name": "T-E32-27-chunks-high @E32 @E32-AC27 @E32-AC28 region retry and fresh reload restore inactive chunks and the same Mega",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-progression.test.ts",
+      "name": "T-E32-27-chunks-low @E32 @E32-AC27 @E32-AC28 region retry and fresh reload restore inactive chunks and the same Mega",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-progression.test.ts",
+      "name": "T-E32-27-death @E32 @E32-AC27 death returns to the reached industrial checkpoint with both acquired guns",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-progression.test.ts",
+      "name": "T-E32-27-death-save @E32 @E32-AC27 saving during death resumes at the retry checkpoint",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/missions/l10-progression.test.ts",
+      "name": "T-E32-27-attack-ids @E32 @E32-AC27 fresh reload preserves attack IDs for the Mega rocket ledger",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "sim/npc/permanence.test.ts",
+      "name": "20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/audio/mega-presentation.test.ts",
+      "name": "T-E32-13-audio @E32-AC13 bands increase the same recorded cue by at least 6 dB per band",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/audio/mega-presentation.test.ts",
+      "name": "T-E32-14-ring @E32-AC14 ring exposes only a band, centered on the player; HUD excludes Mega pins",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/audio/mega-presentation.test.ts",
+      "name": "T-E32-15-recording @E32-AC15 campus recording reuses an instrumental stock slice and carries all story facts",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/audio/mega-presentation.test.ts",
+      "name": "@E32-AC13 finale music reuses licensed L6 recordings, tempo and the existing director transitions",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/audio/mega-presentation.test.ts",
+      "name": "@E32-AC13 processed cues retain the original sprite buffer/offset and their own captions/priority",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/combat/minigun.test.ts",
+      "name": "T-E32-18a @E32-AC18 spin-up comes before the first round, then 20 rounds/s",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/combat/minigun.test.ts",
+      "name": "T-E32-19-heat @E32-AC19 heat rises 12.5%/s and locks the gun at 100% after 8 s of fire",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/combat/minigun.test.ts",
+      "name": "T-E32-19-cooling @E32-AC19 cooling starts 0.5 s after the last round at 20%/s; unlock only below 40%",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/combat/minigun.test.ts",
+      "name": "T-E32-19-tapping @E32-AC19 tapping the trigger cannot shed heat inside the 0.5 s delay",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/combat/minigun.test.ts",
+      "name": "T-E32-19-snapshot @E32-AC19 snapshot keeps heat and lock, barrels start still after a reload",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/levels/l10-alpha-contracts.test.ts",
+      "name": "T-E32-09a @E32 @E32-AC09 regular Alpha region ranges and high/low assault limits match the epic",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/levels/l10-alpha-contracts.test.ts",
+      "name": "T-E32-07-coats @E32 @E32-AC07 seeded dog coats are stable, cover all assets and preserve healthy/infected identity",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/levels/l10-arena.test.ts",
+      "name": "T-E32-17-D4 @E32-AC03 @E32-AC17 R7 route, installation and three dodge lanes connect to the console",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/levels/l10-campus-corridor.test.ts",
+      "name": "T-E32-03-D3 @E32-AC03 @E32-AC15 @E32-AC28 campus and corridor story anchors and full route are walkable",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/levels/l10-campus-corridor.test.ts",
+      "name": "T-E32-06-D3 @E32-AC06 regional threat is authored by route depth with shared-cap headroom",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/levels/l10-campus-corridor.test.ts",
+      "name": "T-E32-15-D3 @E32-AC15 terminal operator socket faces the reachable interaction anchor",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/levels/l10-district.test.ts",
+      "name": "T-E32-03-D1-D2 @E32-AC03 @E32-AC28 R1\u2013R4 geometry, route lengths and pickup anchors agree",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/levels/l10-district.test.ts",
+      "name": "T-E32-28-D1-ground @E32-AC28 exported cells retain shared 100 m edges within 2 cm",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/motionlab/stage1.test.ts",
+      "name": "stage1 navigation capsule and NPC traces meet motion budgets @smoke",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/motionlab/stage1.test.ts",
+      "name": "crowd fades preserve head position when clips change or interrupt @smoke",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/performance/nav-reach-equivalence.test.ts",
+      "name": "@E18 @E32 reach flood preserves paths, ties and budgets at 0, perimeter false",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/performance/nav-reach-equivalence.test.ts",
+      "name": "@E18 @E32 reach flood preserves paths, ties and budgets at 0, perimeter true",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/performance/nav-reach-equivalence.test.ts",
+      "name": "@E18 @E32 reach flood preserves paths, ties and budgets at 3980.125, perimeter false",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/performance/nav-reach-equivalence.test.ts",
+      "name": "@E18 @E32 reach flood preserves paths, ties and budgets at 3980.125, perimeter true",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/performance/nav-reach-equivalence.test.ts",
+      "name": "@E32 repeated unbudgeted floods reuse only exact answers and copy the returned path",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/performance/nav-reach-equivalence.test.ts",
+      "name": "@E32 exact flood memo invalidates for blocker edits, perimeter changes, rebakes and recentering",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/progression/cure.test.ts",
+      "name": "T-E32-02 @E32 @E32-AC02 standalone preset has axe only and retains nonweapon progression",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/progression/cure.test.ts",
+      "name": "T-E32-05-ammo @E32 @E32-AC05 all reacquired campaign firearms are bottomless with their existing cooldowns",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/progression/cure.test.ts",
+      "name": "T-E32-01-data @E32 @E32-AC01 graph validates, including when later geometry has not landed",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/progression/cure.test.ts",
+      "name": "T-E32-27-invalid @E32 @E32-AC27 malformed persisted checkpoint is rejected",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/render/appearance-stable.test.ts",
+      "name": "every human crowd model keeps its complete identity through poses, tiers, LODs and restore @E07 @E08 @E32",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/render/appearance-stable.test.ts",
+      "name": "LOD2 and frozen bodies keep hood/cap/hat geometry, colour and head transform without stacking authored headwear @E07 @E18 @E32",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/render/crowd-register.test.ts",
+      "name": "T-E32-07-pet-preload @E32 @E32-AC07 seeded healthy dog palettes are never registered as human crowd skins",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/render/cure-animal-death.test.ts",
+      "name": "T-E32-23-fall-inf.dog @E32-AC23 shared death rolls the whole animal rig and rests on the ground",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/render/cure-animal-death.test.ts",
+      "name": "T-E32-23-fall-inf.lion @E32-AC23 shared death rolls the whole animal rig and rests on the ground",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/render/cure-animal-death.test.ts",
+      "name": "T-E32-23-fall-inf.gorilla @E32-AC23 shared death rolls the whole animal rig and rests on the ground",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/render/cure-animal-death.test.ts",
+      "name": "T-E32-23-fall-inf.elephant @E32-AC23 shared death rolls the whole animal rig and rests on the ground",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/render/cure-animal-death.test.ts",
+      "name": "T-E32-23-fall-inf.zebra @E32-AC23 shared death rolls the whole animal rig and rests on the ground",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/render/cure-animal-death.test.ts",
+      "name": "T-E32-23-fall-inf.flamingo @E32-AC23 shared death rolls the whole animal rig and rests on the ground",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/render/l10-lod-prefetch.test.ts",
+      "name": "T-E32-28-lods-high @E32-AC28 two-second walking horizon loads off-screen near tiers without drawing them",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/render/l10-lod-prefetch.test.ts",
+      "name": "T-E32-28-lods-low @E32-AC28 two-second walking horizon loads off-screen near tiers without drawing them",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/render/lod-residency.test.ts",
+      "name": "T-E32-28-residency @E32-AC28 production L10 tier swaps use the load gate from the first playable frame",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/render/mounted-gun-warmup.test.ts",
+      "name": "@E32 @E18 streamed gun waits for HDR compilation; disposed false",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/render/mounted-gun-warmup.test.ts",
+      "name": "@E32 @E18 streamed gun waits for HDR compilation; disposed true",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/render/view.test.ts",
+      "name": "T-E32-26-camera-S9 @E32-AC26 epilogue pull widens the follow rig while wheel zoom, player tracking and resize keep working",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/tooling/l10-q2-scene-catalog.test.ts",
+      "name": "L10-Q2 finale Scene Lab @E32 T-E32-Q2-matrix-options lets npm script callers select WebGL2 and the Q2 subset",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/tooling/l10-q2-scene-catalog.test.ts",
+      "name": "L10-Q2 finale Scene Lab @E32 T-E32-Q2-catalog @E32-AC30 reuses shipped fixtures and resolves all numeric gates in the matrix",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/tooling/l10-q2-scene-catalog.test.ts",
+      "name": "L10-Q2 finale Scene Lab @E32 T-E32-Q2-mist @E32-AC08 @E32-AC23 rejects an unreleased front, a surviving species and a harmed control",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/tooling/l10-q2-scene-catalog.test.ts",
+      "name": "L10-Q2 finale Scene Lab @E32 T-E32-Q2-heat-hud @E32-AC19 rejects an absent heat HUD or a stale heat value",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/tooling/l10-q2-scene-catalog.test.ts",
+      "name": "L10-Q2 finale Scene Lab @E32 T-E32-Q2-seam @E32-AC28 rejects a courier that never crosses the terrain seam",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/tooling/l10-q2-scene-catalog.test.ts",
+      "name": "L10-Q2 finale Scene Lab @E32 T-E32-Q2-charge @E32-AC20 rejects missing boundary coverage, lost charge and advance outside the radius",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/tooling/l10-scene-catalog.test.ts",
+      "name": "L10-Q1 Scene Lab catalog @E32 compares Mega and Alpha outside the same courier reveal, including its dither rim",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/tooling/l10-scene-catalog.test.ts",
+      "name": "L10-Q1 Scene Lab catalog @E32 keeps the Mega readable relative to an Alpha without requiring a larger body",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/tooling/l10-scene-catalog.test.ts",
+      "name": "L10-Q1 Scene Lab catalog @E32 Q3 verifier admits one functional browser while other lanes occupy two slots",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/tooling/l10-scene-catalog.test.ts",
+      "name": "L10-Q1 Scene Lab catalog @E32 T-E32-30-catalog @E32-AC30 resolves every fixture at the game camera and includes it in scene:matrix",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/tooling/l10-scene-catalog.test.ts",
+      "name": "L10-Q1 Scene Lab catalog @E32 T-E32-30-regions @E32-AC30 covers all seven production district regions without scaling props",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/tooling/l10-scene-catalog.test.ts",
+      "name": "L10-Q1 Scene Lab catalog @E32 T-E32-07-dog @E32-AC07 retains seeded runtime coats and the real chase telegraph",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/tooling/l10-scene-catalog.test.ts",
+      "name": "L10-Q1 Scene Lab catalog @E32 T-E32-10/11/14-fixtures @E32-AC10 @E32-AC11 @E32-AC14 uses one persistent pursuit and the production move scheduler/HUD",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/tooling/l10-scene-catalog.test.ts",
+      "name": "L10-Q1 Scene Lab catalog @E32 T-E32-16-carry @E32-AC16 restores the real carried checkpoint for both courier rigs",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/tooling/l10-scene-catalog.test.ts",
+      "name": "L10-Q1 Scene Lab catalog @E32 T-E32-09-edge-noise @E32-AC09 rejects black/white triangles while accepting a continuous dark silhouette",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/tooling/verify-e32-perf.test.ts",
+      "name": "E32 verifier selects every tagged native performance case @E32-AC31",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/vfx/cure-mist.test.ts",
+      "name": "T-E32-23-mist-pool-high @E32-AC23 @E18-AC06 cure shares the fixed smoke pool and deaths make no blood/gibs",
+      "status": "passed",
+      "failures": []
+    },
+    {
+      "file": "unit/vfx/cure-mist.test.ts",
+      "name": "T-E32-23-mist-pool-low @E32-AC23 @E18-AC06 cure shares the fixed smoke pool and deaths make no blood/gibs",
+      "status": "passed",
+      "failures": []
+    }
+  ]
+}

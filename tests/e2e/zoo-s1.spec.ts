@@ -3,7 +3,7 @@ import { test, expect } from './fixtures';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 
 for (const [name, move, windup] of [['lion-pounce', 'lion.pounce', 36], ['lion-flank', 'lion.flank', 36], ['gorilla-roar', 'gorilla.roar', 60], ['gorilla-pound', 'gorilla.pound', 60]] as const) {
-  test(`T-E07-19-${name}-browser @E07-AC05 @E07-AC19 production telegraph, pause, activation and shared bar`, async ({ page }) => {
+  test(`T-E07-19-${name}-browser @E07-AC05 @E07-AC19 @E30-AC10 production telegraph, pause, activation and shared bar`, async ({ page }) => {
     test.setTimeout(120_000);
     const spec = JSON.parse(readFileSync(`tests/scenes/zoo-s1/qa-zoo-${name}.json`, 'utf8')) as SceneSpec;
     await page.goto('/?test=1&scenelab&renderer=webgl&quality=high&audio=muted&profile=1&dpr=1');

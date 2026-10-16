@@ -30,6 +30,18 @@ function loadGear(loader: GLTFLoader, low: boolean): Promise<Group | undefined> 
 }
 
 export class CharacterView extends Group {
+  private foregroundActive: boolean | undefined;
+  /** The same presentation silhouette used through faded buildings: keep the
+   * courier readable at boss contact without dissolving the boss's body. */
+  setForeground(active: boolean): void {
+    if (!active && this.foregroundActive === false) return;
+    this.foregroundActive = active;
+    this.traverse(node => {
+      if (!(node instanceof Mesh)) return;
+      for (const material of Array.isArray(node.material) ? node.material : [node.material]) material.depthTest = !active;
+      node.renderOrder = active ? 20 : 0;
+    });
+  }
   private readonly characters = new Map<SurvivorVariant, LoadedCharacter>();
   private variant: SurvivorVariant = 'female';
   private tier: GearTier = 0;
@@ -86,7 +98,7 @@ export class CharacterView extends Group {
           throw new Error(reason);
         }
         const skinned = skin && outfit === 'courier';
-        const scene = (await loader.loadAsync('/' + (skinned ? def.glb.replace(/\.glb$/, '.skin.glb') : low ? def.lods?.lod1 ?? def.glb : def.glb).replace(/^public\//, ''))).scene;
+        const scene = (await loader.loadAsync('/' + (skinned ? def.glb.replace(/\.glb$/, low ? '.skin.low.glb' : '.skin.glb') : low ? def.lods?.lod1 ?? def.glb : def.glb).replace(/^public\//, ''))).scene;
         if (skinned && alignSkeleton(scene).length) isSkin = true;
         return scene;
       }, def?.dimensions.y);

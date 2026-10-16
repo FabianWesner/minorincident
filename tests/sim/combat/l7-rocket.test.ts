@@ -13,7 +13,7 @@ async function rocket() {
 function frozen(w: Awaited<ReturnType<typeof arena>>, x: number, z: number, alpha = false) {
   const id = w.infected!.spawn(alpha ? 'infected.alpha' : 'infected.runner', { x, z });
   const e = w.entities.get(id)!;
-  e.emerging = true; // Keep the authored dense fixture from depenetrating before impact.
+  e.emerging = true; // Hold AI movement before impact; physical footprints remain active.
   e.infected!.until = Number.MAX_SAFE_INTEGER; e.combat!.staggerUntil = Number.MAX_SAFE_INTEGER;
   return e;
 }
@@ -48,11 +48,18 @@ test('T-E29-05 @E29-AC05 600 rockets have no reload/empty/charges and exactly 75
   expect(w.combat!.runner.loadout.current('LEFT')).toMatchObject({ magazine: 0, reloadUntil: 0, charges: 0, nextCharge: 0 });
 });
 
-for (const count of [24, 200]) test(`T-E29-06-${count} @E29-AC06 one real projectile permanently clears ${count} infected in its blast tick`, async () => {
+for (const count of [24]) test(`T-E29-06-${count} @E29-AC06 one real projectile permanently clears ${count} infected in its blast tick`, async () => {
   const w = await rocket(); w.infected!.director.levelCap = 200;
-  const targets = [frozen(w, 8, 0), ...Array.from({ length: count - 1 }, (_, i) => {
-    const angle = i * 2 * Math.PI / (count - 1); return frozen(w, 9.5 + Math.cos(angle) * 1.4, Math.sin(angle) * 1.4);
-  })];
+  // Twenty-four full bodies fit in the blast's forward half-disk.
+  const targets = Array.from({ length: count }, (_, i) => {
+    const row = i % 7, z = row ? Math.ceil(row / 2) * .7 * (row % 2 ? -1 : 1) : 0;
+    return frozen(w, 8 + Math.floor(i / 7) * .7, z);
+  });
+  if (count === 24) {
+    expect(w.solids.snapshot().pending).toBe(0);
+    for (let i = 0; i < targets.length; i++) for (let j = i + 1; j < targets.length; j++)
+      expect(Math.hypot(targets[i].transform.x - targets[j].transform.x, targets[i].transform.z - targets[j].transform.z)).toBeGreaterThanOrEqual(.68);
+  }
   expect(targets.every(e => e.health.current === 60)).toBe(true);
   const positions = targets.map(e => ({ x: e.transform.x, z: e.transform.z }));
   fire(w); for (let i = 0; i < 80 && !w.explosions!.last; i++) step(w, 1);
@@ -79,4 +86,37 @@ test('T-E29-07-rocket @E29-AC07 shared Alpha takes two center rocket blasts', as
   const w = await rocket(), alpha = frozen(w, 8, 0, true);
   fire(w); step(w, 40); expect(alpha.health.current).toBe(120);
   step(w, 75); fire(w); step(w, 40); expect(alpha.health.current).toBe(0); expect(downed(alpha)).toBe(false);
+});
+
+// Corrected 200-body fixture (PO 2026-10-15): radius-.35 bodies require at least
+// 72.6 m² at the permitted .02 m penetration; a 3 m disk encloses only 35 m².
+// Use the existing 6 m blast and admitted packing, preserving visibility, one
+// projectile, blast-tick permanent kills, recovery and no-living-body assertions.
+test('T-E29-06-200 @E29-AC06 one real rocket clears 200 admitted full footprints inside its unchanged blast', async () => {
+  const w = await rocket(); w.infected!.director.levelCap = 200;
+  const candidates: { x: number; z: number }[] = [];
+  for (let row = -9; row <= 9; row++) for (let col = -9; col <= 9; col++) {
+    const x = .5 + col * .72 + Math.abs(row) % 2 * .36, z = row * .72 * Math.sqrt(3) / 2;
+    if (Math.hypot(x - .5, z) <= 5.5 && Math.hypot(x, z) >= .9) candidates.push({ x, z });
+  }
+  candidates.sort((a, b) => Math.hypot(a.x - .8, a.z) - Math.hypot(b.x - .8, b.z));
+  expect(candidates.length).toBeGreaterThanOrEqual(200);
+  const targets = candidates.slice(0, 200).map(p => frozen(w, p.x, p.z));
+  w.solids.commit();
+  expect(w.solids.snapshot()).toMatchObject({ failures: 0, pending: 0 });
+  expect(targets.every(e => !e.hidden && e.health.current === 60)).toBe(true);
+  expect(w.infected!.director.count).toBe(200);
+  const positions = targets.map(e => ({ ...e.transform }));
+  fire(w); for (let i = 0; i < 80 && !w.explosions!.last; i++) step(w, 1);
+  const blast = w.explosions!.last!;
+  expect(blast).toMatchObject({ id: 'explosion.rocket', radius: 6 });
+  expect(positions.every(p => Math.hypot(p.x - blast.x, p.z - blast.z) <= 6)).toBe(true);
+  expect(targets.filter(e => e.health.current === 0 && !downed(e))).toHaveLength(200);
+  const kills = w.events.events().filter(e => e.type === 'combat.kill');
+  expect(kills).toHaveLength(200); expect(kills.every(e => e.tick === blast.tick)).toBe(true);
+  expect(w.events.events().filter(e => e.type === 'explosion')).toHaveLength(1);
+  step(w, 21 * 60); expect(targets.every(e => !w.entities.get(e.id) || e.health.current === 0)).toBe(true);
+  expect(w.combat!.query.splash({ x: blast.x, z: blast.z }, 6).filter(e => e.kind === 'infected')).toHaveLength(0);
+  expect(w.solids.snapshot()).toMatchObject({ failures: 0, pending: 0 });
+  expect(explosionDef('explosion.rocket')).toMatchObject({ radius: 6, damage: 180, falloff: .6 });
 });

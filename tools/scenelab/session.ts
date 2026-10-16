@@ -172,6 +172,8 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
     const value = metrics.actors[actor]?.[field] ?? NaN;
     checks.push({ name: `${field}.${actor}.min`, pass: value >= range[0], value, limit: range[0] }, { name: `${field}.${actor}.max`, pass: value <= range[1], value, limit: range[1] });
   }
+  add('collisionFailures', metrics.collision?.failures ?? Infinity, e.collisionFailuresMax);
+  add('collisionPending', metrics.collision?.pending ?? Infinity, e.collisionPendingMax);
   add('propPenetrationFramesMax', metrics.propPenetration.framesMax, e.propPenetrationFramesMax);
   add('convoyOverlapFramesMax', metrics.convoyOverlapFrames, e.convoyOverlapFramesMax);
   add('consoleErrors', errors.length, e.consoleErrors ?? 0);
@@ -190,6 +192,7 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   add('footSlideMaxCm', Math.max(0, ...motion.map(m => m.slideMaxCm)), e.footSlideMaxCm);
   add('footSinkMaxCm', Math.max(0, ...motion.map(m => m.sinkMaxCm)), e.footSinkMaxCm);
   add('footJitterRunMax', Math.max(0, ...Object.values(metrics.actors).filter(a => a.kind === 'courier').map(a => a.motion.jitterRunMax)), e.footJitterRunMax);
+  add('attackBodyOverlapMaxCm', metrics.attackOverlap?.depthCm ?? Infinity, e.attackBodyOverlapMaxCm);
   add('bodyOverlapMaxCm', Math.max(0, ...(metrics.bodies ?? []).map(b => b.depthCm)), e.bodyOverlapMaxCm);
   add('corgiCourierOverlapMaxCm', metrics.companion?.samples ? metrics.companion.overlapMaxCm : Infinity, e.corgiCourierOverlapMaxCm);
   add('corgiRunLagMaxM', metrics.companion?.runningSamples ? metrics.companion.runLagMaxM : Infinity, e.corgiRunLagMaxM);

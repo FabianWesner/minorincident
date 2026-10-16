@@ -79,7 +79,7 @@ export class L4ConvoyClearance {
     }
   }
   private place(e: EntitySnapshot, p: Point): void {
-    Object.assign(e.transform, p); this.world.spatial.set(e.id, p.x, p.z);
+    Object.assign(e.transform, p); this.world.solids.admit(e, 'l4.convoy.clearance');
     if (e.id === 1) {
       this.world.physics.playerBody!.setTranslation(e.transform, true);
       this.world.physics.playerBody!.setNextKinematicTranslation(e.transform);

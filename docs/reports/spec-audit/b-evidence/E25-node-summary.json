@@ -1,0 +1,167 @@
+{
+  "epic": "E25",
+  "passed": 32,
+  "failed": 0,
+  "selected": [
+    {
+      "file": "sim/combat/balance.test.ts",
+      "test": "S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash",
+      "status": "passed"
+    },
+    {
+      "file": "sim/determinism.test.ts",
+      "test": "S-05-foundation @smoke empty scripted 1800-tick golden hash",
+      "status": "passed"
+    },
+    {
+      "file": "sim/light-power.test.ts",
+      "test": "T-E25-07s @E25 @E25-AC07 generator interaction starts three emissive transitions in 1.5 seconds; power.off is immediate",
+      "status": "passed"
+    },
+    {
+      "file": "sim/light-power.test.ts",
+      "test": "T-E25-08s @E25 @E25-AC08 one pistol hit breaks a lamp once, emits sparks, and lowers darkness sight by exactly 40%",
+      "status": "passed"
+    },
+    {
+      "file": "sim/light-power.test.ts",
+      "test": "T-E25-08p @E25 @E25-AC08 darkness feeds both detection and tracking in the production perception path",
+      "status": "passed"
+    },
+    {
+      "file": "sim/light-power.test.ts",
+      "test": "T-E25-07c @E25 @E25-AC07 power and broken-lamp state rebind from plain entity checkpoint components",
+      "status": "passed"
+    },
+    {
+      "file": "sim/light-power.test.ts",
+      "test": "T-E25-07i @E25 authored lamps preserve gameplay IDs across creation and checkpoint restore",
+      "status": "passed"
+    },
+    {
+      "file": "sim/light-power.test.ts",
+      "test": "T-E25-07m @E25 @E25-AC07 authored emergency power survives a district power revision",
+      "status": "passed"
+    },
+    {
+      "file": "sim/combat/combat.test.ts",
+      "test": "S-06 @E05 @smoke each category fires/hits; swept projectile cannot tunnel through a dummy",
+      "status": "passed"
+    },
+    {
+      "file": "sim/npc/permanence.test.ts",
+      "test": "20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07",
+      "status": "passed"
+    },
+    {
+      "file": "unit/motionlab/stage1.test.ts",
+      "test": "stage1 navigation capsule and NPC traces meet motion budgets @smoke",
+      "status": "passed"
+    },
+    {
+      "file": "unit/motionlab/stage1.test.ts",
+      "test": "crowd fades preserve head position when clips change or interrupt @smoke",
+      "status": "passed"
+    },
+    {
+      "file": "unit/render/crowd-lod-geometry.test.ts",
+      "test": "T-E25-14g @E25 @E25-AC14 gripped far civilian remains within its authored triangle count and retains vertex channels",
+      "status": "passed"
+    },
+    {
+      "file": "unit/render/e25-hero.test.ts",
+      "test": "T-E25-05 @E25 @E25-AC05 sixty-second walk past forty anchors holds promotions below two per second on both tiers",
+      "status": "passed"
+    },
+    {
+      "file": "unit/render/e25-hero.test.ts",
+      "test": "T-E25-05l @E25 @E25-AC05 hero transitions preserve cached shadow nodes and render only one source",
+      "status": "passed"
+    },
+    {
+      "file": "unit/render/e25-lighting.test.ts",
+      "test": "T-E25-02 @E25 @E25-AC02 every light:* anchor in the shipped GLBs parses into a valid ss_light and the runtime table is current",
+      "status": "passed"
+    },
+    {
+      "file": "unit/render/e25-lighting.test.ts",
+      "test": "T-E25-02b @E25 @E25-AC02 the validator rejects \u00a76 violations: tokens, intensity, sky-pointing spots, missing emissive nodes",
+      "status": "passed"
+    },
+    {
+      "file": "unit/render/e25-lighting.test.ts",
+      "test": "T-E25-U1 @E25 layout assembly places authored lights in world space and follows decay power groups",
+      "status": "passed"
+    },
+    {
+      "file": "unit/render/e25-lighting.test.ts",
+      "test": "T-E25-U2 @E25 light field budget, spot footprints and the E27 transient hook",
+      "status": "passed"
+    },
+    {
+      "file": "unit/render/e25-lighting.test.ts",
+      "test": "T-E25-U3 @E25 level moods: morning, midday and afternoon skip the field; dusk and night are lit and readable",
+      "status": "passed"
+    },
+    {
+      "file": "unit/render/e25-visibility.test.ts",
+      "test": "T-E25-03u @E25 @E25-AC03 static visibility polygon ends at the fence and retains the unobstructed pool",
+      "status": "passed"
+    },
+    {
+      "file": "unit/render/e25-visibility.test.ts",
+      "test": "T-E25-03b @E25 @E25-AC03 ignore the source pole footprint, but clip against other buildings",
+      "status": "passed"
+    },
+    {
+      "file": "unit/render/e25-windows.test.ts",
+      "test": "T-E25-12s @E25 @E25-AC12 real house windows retain power indices and normalized room coordinates in every LOD",
+      "status": "passed"
+    },
+    {
+      "file": "unit/render/e25-windows.test.ts",
+      "test": "T-E25-11s @E25 @E25-AC11 shipped car primitives preserve gloss paint, environment-dominant chrome, and matte tyres",
+      "status": "passed"
+    },
+    {
+      "file": "unit/render/e25-windows.test.ts",
+      "test": "T-E25-05p @E25 tinted and plain instances use one warmed vertex-input layout and clear old tint",
+      "status": "passed"
+    },
+    {
+      "file": "unit/render/e25-windows.test.ts",
+      "test": "T-E25-11p T-E25-12p @E25 shared district materials preserve window and polished-floor shader graphs",
+      "status": "passed"
+    },
+    {
+      "file": "unit/render/e25-windows.test.ts",
+      "test": "T-E25-13b @E25 @E25-AC13 shared light-bearing dressing keeps the player see-through graph",
+      "status": "passed"
+    },
+    {
+      "file": "unit/render/pre-render.test.ts",
+      "test": "T-E25-14g @E25 warm-up preserves the active gameplay light list",
+      "status": "passed"
+    },
+    {
+      "file": "unit/render/vehicle-glass.test.ts",
+      "test": "@E09-AC10 @E25-AC11 glass and opaque paint sharing a palette token stay distinct (false, false)",
+      "status": "passed"
+    },
+    {
+      "file": "unit/render/vehicle-glass.test.ts",
+      "test": "@E09-AC10 @E25-AC11 glass and opaque paint sharing a palette token stay distinct (false, true)",
+      "status": "passed"
+    },
+    {
+      "file": "unit/render/vehicle-glass.test.ts",
+      "test": "@E09-AC10 @E25-AC11 glass and opaque paint sharing a palette token stay distinct (true, false)",
+      "status": "passed"
+    },
+    {
+      "file": "unit/render/vehicle-glass.test.ts",
+      "test": "@E09-AC10 @E25-AC11 glass and opaque paint sharing a palette token stay distinct (true, true)",
+      "status": "passed"
+    }
+  ]
+}

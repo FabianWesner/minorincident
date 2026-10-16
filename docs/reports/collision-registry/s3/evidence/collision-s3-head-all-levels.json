@@ -1,0 +1,1960 @@
+{
+  "source": "test-results/collision-s3-head-all-levels.json",
+  "passed": 322,
+  "failed": 1,
+  "pending": 2,
+  "suites": [
+    {
+      "file": "levels/L1.test.ts",
+      "durationMs": 531581.9431152344,
+      "tests": [
+        {
+          "name": "L1 v2 mission T-E19-01 @E19 @E19-AC01 mission graph is completable, no fail timer",
+          "status": "passed",
+          "durationMs": 833.9466940000002
+        },
+        {
+          "name": "L1 v2 mission T-E19-02 @E19 @E19-AC02 complete bot finishes single seed, median 1:15-3:00",
+          "status": "passed",
+          "durationMs": 23946.65621
+        },
+        {
+          "name": "L1 v2 mission T-E19-03 @E19 @E19-AC03 newbie bot finishes single seed, median 1:30-3:30, deaths <= 1",
+          "status": "passed",
+          "durationMs": 16836.6744
+        },
+        {
+          "name": "L1 v2 mission T-E19-10 @E19 the weapon objective and its garage-door marker are live right after the exits, zombies keep acting",
+          "status": "passed",
+          "durationMs": 10691.372798999997
+        },
+        {
+          "name": "L1 v2 mission T-E19-evade @E19 @E19-AC03 evade-only bot never attacks and still finishes",
+          "status": "passed",
+          "durationMs": 43161.972792
+        },
+        {
+          "name": "L1 v2 mission T-E19-06 @E19 @E19-AC06 systemic spread, unopposed observer=false",
+          "status": "passed",
+          "durationMs": 39449.88395799999
+        },
+        {
+          "name": "L1 v2 mission T-E19-06 @E19 @E19-AC06 systemic spread, unopposed observer=true",
+          "status": "passed",
+          "durationMs": 36156.795919
+        },
+        {
+          "name": "L1 v2 mission T-E19-07 @E19 @E19-AC07 accident releases exactly 5 infected, >= 3 headings, technician entity",
+          "status": "passed",
+          "durationMs": 9506.643338999973
+        },
+        {
+          "name": "L1 v2 mission T-E19-07b @E19 @E19-AC07 robust start: each of the five exit victims leaves a bite within 60 s on single seed",
+          "status": "passed",
+          "durationMs": 49858.475427
+        },
+        {
+          "name": "L1 v2 mission T-E19-15 @E19 @E19-AC15 bat only via the garage interaction, empty starting loadout",
+          "status": "passed",
+          "durationMs": 13968.021494999994
+        },
+        {
+          "name": "L1 v2 mission T-E19-05b @E19 grace: a newbie standing still at the door keeps >= 60 HP for 8 s after the infected exit",
+          "status": "passed",
+          "durationMs": 62311.472662999964
+        },
+        {
+          "name": "L1 v2 mission T-E19-respawn @E19 death at the door after the exits respawns on the checkpoint anchor with 2 s invulnerability and no infected within 9 m",
+          "status": "passed",
+          "durationMs": 30766.307812000043
+        },
+        {
+          "name": "L1 v2 mission T-E19-house @E19 @E19-AC25 beat 9: ten residents come out of ONE house front door near the garage, one by one, 1.5-4 s apart",
+          "status": "passed",
+          "durationMs": 19074.332872
+        },
+        {
+          "name": "L1 v2 mission T-E19-provenance @E19 PO 10-10: infected provenance is lab exits, house residents, authored street groups or bitten pedestrians",
+          "status": "passed",
+          "durationMs": 59814.76736699999
+        },
+        {
+          "name": "L1 v2 mission T-E19-05 @E19 fair accident: the blast pushes a player at the door back, front-door infected wait 2.5 s, staff are varied",
+          "status": "passed",
+          "durationMs": 9558.10343300004
+        },
+        {
+          "name": "L1 v2 mission T-E19-19 @E19 @E19-AC19 accident beat order flicker -> blast -> ringing -> smoke -> screams within 8 s after a 4-6 s calm",
+          "status": "passed",
+          "durationMs": 57204.89381700003
+        },
+        {
+          "name": "L1 v2 mission T-E19-respawn-world @E19 PO rule: a death after the bat keeps the world (corpses, infected, pedestrians, props, objectives, bat)",
+          "status": "passed",
+          "durationMs": 23148.324035999947
+        },
+        {
+          "name": "L1 v2 mission T-E19-end @E19 fire station: shutter closes, caption, result fields (delivered, infected, turned, escaped)",
+          "status": "passed",
+          "durationMs": 22251.714879999985
+        },
+        {
+          "name": "L1 v2 mission T-E19-14 @E19 @E19-AC14 duel bot harness: 1 infected is beatable, 5 unarmed are lethal once lane G tuning lands",
+          "status": "passed",
+          "durationMs": 3039.9430309999734
+        }
+      ]
+    },
+    {
+      "file": "levels/L10-campaign.test.ts",
+      "durationMs": 776758.1091308594,
+      "tests": [
+        {
+          "name": "T-E32-32 @E32-AC32 continuous seed 1 L1 through L10 reaches credits with real campaign handovers",
+          "status": "passed",
+          "durationMs": 776758.109039
+        }
+      ]
+    },
+    {
+      "file": "levels/L10.test.ts",
+      "durationMs": 119948.13720703125,
+      "tests": [
+        {
+          "name": "T-E32-04-complete @E32-AC04 one seed completes the full L10 route with ordinary inputs and regional timing",
+          "status": "passed",
+          "durationMs": 119948.13726400002
+        }
+      ]
+    },
+    {
+      "file": "levels/L2-boarding.test.ts",
+      "durationMs": 27565.929443359375,
+      "tests": [
+        {
+          "name": "L2 one-attempt interactions axe can be taken at 5 s, immediately ringing the alarm, then board normally",
+          "status": "passed",
+          "durationMs": 3967.5854980000295
+        },
+        {
+          "name": "L2 one-attempt interactions axe: one click on the rack picks it up (single seed)",
+          "status": "passed",
+          "durationMs": 1810.4263579999097
+        },
+        {
+          "name": "L2 one-attempt interactions truck: one click on the boarding ring boards after the required axe (single seed)",
+          "status": "passed",
+          "durationMs": 2064.9730279999785
+        },
+        {
+          "name": "L2 one-attempt interactions standing anywhere in a ring counts: hold at the edge, and E from the edge",
+          "status": "passed",
+          "durationMs": 19722.929520000005
+        }
+      ]
+    },
+    {
+      "file": "levels/L2-escape-loop.test.ts",
+      "durationMs": 63108.83984375,
+      "tests": [
+        {
+          "name": "L2 escape death loop the escape checkpoint waits for a calm moment (nothing within 10 m, health >= 70 %)",
+          "status": "passed",
+          "durationMs": 29546.274990000064
+        },
+        {
+          "name": "L2 escape death loop a courier who dies twice at the same checkpoint respawns with fewer infected within 25 m (the shared respawn already pushes them out of 9 m)",
+          "status": "passed",
+          "durationMs": 33561.839826000156
+        }
+      ]
+    },
+    {
+      "file": "levels/L2-finale-pressure.test.ts",
+      "durationMs": 133127.13330078125,
+      "tests": [
+        {
+          "name": "PO #7 @E20 supermarket to bridge has steady sight-driven action, an open escape and unchanged newbie survival",
+          "status": "passed",
+          "durationMs": 66989.782136
+        },
+        {
+          "name": "PO #7b @E20 the arriving player sees police firing on a horde at the bridge",
+          "status": "passed",
+          "durationMs": 66133.13322900003
+        }
+      ]
+    },
+    {
+      "file": "levels/L2.test.ts",
+      "durationMs": 392892.4133300781,
+      "tests": [
+        {
+          "name": "L2 The Failed Rescue T-E20-01 @E20 @E20-AC01 mission graph calm -> board -> doors -> bridge checkpoint is completable, no fail timer",
+          "status": "passed",
+          "durationMs": 1688.0171909999917
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-02 @E20 @E20-AC02 complete bot finishes single seed from L2-default, median time in band",
+          "status": "passed",
+          "durationMs": 34331.96661400003
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-03 @E20 @E20-AC03 newbie single seed, median in band, median deaths <= 1; bat escape single seed",
+          "status": "passed",
+          "durationMs": 49527.28475500003
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-04 @E20 @E20-AC04 calm: no infected, no combat until the pickup alarm; crew at the truck within 8 s; axe rack live",
+          "status": "passed",
+          "durationMs": 0.5082969999639317
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-05 @E20 @E20-AC05 ride: passenger boarding, 15-25 s route with everyone seated, input inert, exits and control back on time",
+          "status": "passed",
+          "durationMs": 3958.0202469999786
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-06 @E20 @E20-AC06 set piece: event order, empty forecourt, release and ambush timing, three directions",
+          "status": "passed",
+          "durationMs": 0.764396000013221
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-07 @E20 @E20-AC07 snowball: idle courier (observer, no damage), rescue infected >= 20 at +60 s and >= 30 at +120 s, all by bites",
+          "status": "passed",
+          "durationMs": 39229.56118299998
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-08 @E20 @E20-AC08 firefighters fight, turn with identity continuity, >= 2 turned by +90 s when idle, no immunity",
+          "status": "passed",
+          "durationMs": 12444.134982999996
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-09 @E20 @E20-AC09 lesson: the aggressive axe kills >= 10 yet the outbreak grows and the courier falls; the disengaging bot survives",
+          "status": "passed",
+          "durationMs": 40183.005292000016
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-11 @E20 @E20-AC11 omniscience audit over single seed: sight or close hearing alerts with clear LOS, emergence at doors out of view",
+          "status": "passed",
+          "durationMs": 0.43178500002250075
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-12 @E20 @E20-AC12 escape population at the radio: >= 25 spread infected, >= 3 groups of >= 4, <= 20 % on the courier",
+          "status": "passed",
+          "durationMs": 0.17123000003630295
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-12b @E20 @E20-AC12 layout: two disjoint routes (< 30 % shared), sight blockers every <= 25 m, alarms and dumpsters on the routes",
+          "status": "passed",
+          "durationMs": 1773.6448550000205
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-13 @E20 @E20-AC13 cluster of 12-16 on the approach; complete passes killing <= 50 %; side path and car alarm each suffice",
+          "status": "passed",
+          "durationMs": 25221.211993000004
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-14 @E20 @E20-AC14 checkpoint: line composition, gate closes <= 1.5 s behind the courier, nothing crosses after, straight on to L3",
+          "status": "passed",
+          "durationMs": 37677.118525
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-21 @E20 rescued people never despawn: they flee for the checkpoint and end behind the line, at the gate, turned or down",
+          "status": "passed",
+          "durationMs": 121292.84324999998
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-17 @E20 @E20-AC17 checkpoints doors, escape and cluster restore entities, outbreak, crew, gates and weapons",
+          "status": "failed",
+          "durationMs": 25563.41339999996,
+          "failureMessages": [
+            "AssertionError: expected 'doors' to be 'cluster' // Object.is equality\n    at /srv/mi/jobs/collision-s1-d2c10a-22648-1792102887/tests/levels/L2.test.ts:255:34\n    at file:///srv/mi/jobs/collision-s1-d2c10a-22648-1792102887/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "levels/L3-bridge.test.ts",
+      "durationMs": 10556.665283203125,
+      "tests": [
+        {
+          "name": "@E21 L3 nav: no deck cell links to the lower road except along the authored ramps",
+          "status": "passed",
+          "durationMs": 2108.5197769999504
+        },
+        {
+          "name": "@E21 L3 sim: nobody leaves the deck through the ramp-to-span junctions, and the group crosses the whole bridge on the deck",
+          "status": "passed",
+          "durationMs": 6054.959050999954
+        },
+        {
+          "name": "@E21 L3 safety net: a player stranded off the route for 3 s is faded out and put back on a cell that reaches the objective",
+          "status": "passed",
+          "durationMs": 2392.665256000124
+        }
+      ]
+    },
+    {
+      "file": "levels/L3-follow.test.ts",
+      "durationMs": 100496.7548828125,
+      "tests": [
+        {
+          "name": "L3 squad and checkpoint @E21 retry relief also covers a street segment first populated after the respawn",
+          "status": "passed",
+          "durationMs": 3449.2189380000054
+        },
+        {
+          "name": "L3 squad and checkpoint @E21 a distant failed encounter keeps retry pursuit relief until the courier approaches, retaining every actor",
+          "status": "passed",
+          "durationMs": 1218.3507399999944
+        },
+        {
+          "name": "L3 squad and checkpoint @E21 a returning body keeps its timer and the L3 pursuit delay when it gets up after respawn",
+          "status": "passed",
+          "durationMs": 1654.6984140000131
+        },
+        {
+          "name": "L3 squad and checkpoint @E21 second-retry relief thins the living crowd while retaining each downed body and recovery slot",
+          "status": "passed",
+          "durationMs": 1316.3411699999997
+        },
+        {
+          "name": "L3 squad and checkpoint @E21 @E21-AC17 fatal bites at the infected cap retain a dead officer without blocking rescue or allied fire",
+          "status": "passed",
+          "durationMs": 1192.3194940000249
+        },
+        {
+          "name": "L3 squad and checkpoint @E21 @E21-AC17 HMG post can fire down the approach and into the resting compound",
+          "status": "passed",
+          "durationMs": 1311.1166459999804
+        },
+        {
+          "name": "L3 squad and checkpoint @E21 @E21-AC17 rescued officers at the compound edge stay inside after boom closure",
+          "status": "passed",
+          "durationMs": 12975.870953999984
+        },
+        {
+          "name": "L3 squad and checkpoint @E21 army compound is walkable before the rendezvous and does not finish while the courier rests",
+          "status": "passed",
+          "durationMs": 1939.6601500000106
+        },
+        {
+          "name": "L3 squad and checkpoint @E21 @E21-AC17 arrival finishes with stalled officer",
+          "status": "passed",
+          "durationMs": 18379.657043000014
+        },
+        {
+          "name": "L3 squad and checkpoint @E21 @E21-AC17 arrival finishes with dead officer",
+          "status": "passed",
+          "durationMs": 10111.854602000007
+        },
+        {
+          "name": "L3 squad and checkpoint @E21 @E21-AC17 arrival finishes with turning officer",
+          "status": "passed",
+          "durationMs": 10253.977848999988
+        },
+        {
+          "name": "L3 squad and checkpoint @E21 @E21-AC17 arrival finishes with occupied boom",
+          "status": "passed",
+          "durationMs": 9672.075150999997
+        },
+        {
+          "name": "L3 squad and checkpoint closed checkpoint boom stops a walking courier and shared NPC navigation; opening restores the lane",
+          "status": "passed",
+          "durationMs": 1557.2548190000234
+        },
+        {
+          "name": "L3 squad and checkpoint fallback recruits every living human officer, including the yard posts",
+          "status": "passed",
+          "durationMs": 1207.7427630000166
+        },
+        {
+          "name": "L3 squad and checkpoint @E21 the Boulevard wreck passing line collects its existing sidewalk medkits",
+          "status": "passed",
+          "durationMs": 1974.8542069999967
+        },
+        {
+          "name": "L3 squad and checkpoint @E21 the first Boulevard turn medkit is collected on the walking line",
+          "status": "passed",
+          "durationMs": 1425.6035050000064
+        },
+        {
+          "name": "L3 squad and checkpoint @E21 the Boulevard corner medkit is collected on the walking line",
+          "status": "passed",
+          "durationMs": 1138.675292000029
+        },
+        {
+          "name": "L3 squad and checkpoint @E21 the last street turn medkit is collected on the walking line",
+          "status": "passed",
+          "durationMs": 1325.6497760000057
+        },
+        {
+          "name": "L3 squad and checkpoint @E21 the bus passing-line end medkit is collected on the walking line",
+          "status": "passed",
+          "durationMs": 1353.7394570000179
+        },
+        {
+          "name": "L3 squad and checkpoint @E21 the entry ramp medkit is collected on the walking line",
+          "status": "passed",
+          "durationMs": 1545.827746999974
+        },
+        {
+          "name": "L3 squad and checkpoint @E21 the upper ramp medkit is collected on the walking line",
+          "status": "passed",
+          "durationMs": 1360.2495690000069
+        },
+        {
+          "name": "L3 squad and checkpoint @E21 the exit ramp medkit is collected on the walking line",
+          "status": "passed",
+          "durationMs": 1289.4450369999977
+        },
+        {
+          "name": "L3 squad and checkpoint all three routes have sidewalk med packs within 40 m and reachable from the street",
+          "status": "passed",
+          "durationMs": 1466.7023090000148
+        },
+        {
+          "name": "L3 squad and checkpoint boom waits for the last living officer; a dead officer cannot prevent closure",
+          "status": "passed",
+          "durationMs": 1211.9487369999988
+        },
+        {
+          "name": "L3 squad and checkpoint every closed army kit placement keeps the arm collider; only explicitly raised arms omit it",
+          "status": "passed",
+          "durationMs": 2.1522639999748208
+        },
+        {
+          "name": "L3 squad and checkpoint living officers regroup on commerce instead of being marked separated",
+          "status": "passed",
+          "durationMs": 3592.5473319999874
+        },
+        {
+          "name": "L3 squad and checkpoint living officers regroup on blvd instead of being marked separated",
+          "status": "passed",
+          "durationMs": 4457.103646999982
+        },
+        {
+          "name": "L3 squad and checkpoint living officers regroup on oak instead of being marked separated",
+          "status": "passed",
+          "durationMs": 2103.7548279999755
+        }
+      ]
+    },
+    {
+      "file": "levels/L3-route.test.ts",
+      "durationMs": 14559.974365234375,
+      "tests": [
+        {
+          "name": "@E21 @E21-route L3 wreck lines close both sidewalks for player and NPCs; the connected detour crosses Oak, Boulevard and the elevated highway",
+          "status": "passed",
+          "durationMs": 14559.974288000027
+        }
+      ]
+    },
+    {
+      "file": "levels/L3.test.ts",
+      "durationMs": 937926.3813476562,
+      "tests": [
+        {
+          "name": "L3 The Police Collapse T-E21-01 @E21 @E21-AC01 mission graph armory -> defend -> fallback -> army checkpoint is completable, no fail timer",
+          "status": "passed",
+          "durationMs": 2281.2766260000003
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-02 @E21 @E21-AC02 complete bot finishes single seed from L3-default (bat + axe), median time in band",
+          "status": "passed",
+          "durationMs": 144400.037587
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2",
+          "status": "passed",
+          "durationMs": 83196.62959699999
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-04 @E21 @E21-AC04 handgun: only at the armory (complete bot within 40 s), one target per shot, two hits per 40 HP, 22 m, no ammunition",
+          "status": "passed",
+          "durationMs": 83813.37422000003
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-04b @E21 @E21-AC04 the complete bot has the handgun from the armory within 40 s of the start",
+          "status": "passed",
+          "durationMs": 0.4244409999810159
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-05 @E21 @E21-AC05 ranged before contact: handgun knockdowns at >= 5 m (PO 10-12 police -50 %), axe/bat at <= 2.5 m (median, complete runs)",
+          "status": "passed",
+          "durationMs": 0.6520259999670088
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-06 @E21 @E21-AC06 gunfire: non-chasing infected within 20 m reach the shot within 10 s and search; beyond 20 m or chasing unaffected; omniscience audit",
+          "status": "passed",
+          "durationMs": 2197.3641940000234
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-06b @E21 @E21-AC06 omniscience audit over single seed: sight-only alerts, emergence out of view",
+          "status": "passed",
+          "durationMs": 0.3212690000073053
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-07 @E21 @E21-AC07 station attack: 8-10 officers, three directions >= 60 degrees apart, an officer turns on single seed, first-of fallback, idle still falls back",
+          "status": "passed",
+          "durationMs": 6542.734763000044
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-07d @E21 @E21-AC07 PO 10-12 the police lose without the courier: 50 % police guns, spread streams, police zombies from the station",
+          "status": "passed",
+          "durationMs": 20134.368717999954
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-08 @E21 @E21-AC08 squad: at least 3 living officers join at the fallback on single seed; no immunity or scripted-survival flag",
+          "status": "passed",
+          "durationMs": 0.44024099997477606
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-09 @E21 @E21-AC09 squad feels strong first: officers >= 60 % of S1 knockdowns, S1 damage below one life (PO 10-12 police -50 %), near the courier, never teleports",
+          "status": "passed",
+          "durationMs": 0.8180170000414364
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-10 @E21 @E21-AC10 squad falls apart systemically: non-increasing medians, <= 2 at the checkpoint, all 4 on <= 15 %, a corridor turn on >= 50 %",
+          "status": "passed",
+          "durationMs": 1.5196429999778047
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-11 @E21 @E21-AC11 the single-seed complete route uses Oak and Boulevard around the wreck lines",
+          "status": "passed",
+          "durationMs": 0.33363299997290596
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-12 @E21 @E21-AC12 escalation: pre-populated 250/625/1000 (+-20 %), live infected near the courier rise S1 -> S3, caps never exceeded",
+          "status": "passed",
+          "durationMs": 0.3718830000143498
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-13 @E21 @E21-AC13 forward pressure: idling 20 s behind the furthest line starts emergences 15-35 m behind it, advancing stops them",
+          "status": "passed",
+          "durationMs": 42226.73239999998
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-14 @E21 @E21-AC14 medkits: >= 2 per street, >= 7 total, +40 HP capped and consumed; newbie picks >= 2, < 10 % time below 20 % HP",
+          "status": "passed",
+          "durationMs": 1177.3418150000507
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-17 @E21 @E21-AC17 army checkpoint: >= 8 soldiers, the rendezvous ends the level straight into progression",
+          "status": "passed",
+          "durationMs": 173425.122892
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-18 @E21 @E21-AC18 checkpoints armory, fallback, segment-2, segment-3 restore squad, outbreak layer and picked medkits",
+          "status": "passed",
+          "durationMs": 87116.726976
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-bots @E21 evade-only never attacks and still reaches the army zone",
+          "status": "passed",
+          "durationMs": 291408.716503
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-segments @E21 segment helper matches the corridor bounds",
+          "status": "passed",
+          "durationMs": 0.38131099997553974
+        }
+      ]
+    },
+    {
+      "file": "levels/L4-barricade-prompts.test.ts",
+      "durationMs": 9438.9296875,
+      "tests": [
+        {
+          "name": "@E22 broken army lines stay destructible cover without a player rebuild interaction in war and collapse",
+          "status": "passed",
+          "durationMs": 9438.929665999953
+        }
+      ]
+    },
+    {
+      "file": "levels/L4-battlefield-lifecycle.test.ts",
+      "durationMs": 19868.78857421875,
+      "tests": [
+        {
+          "name": "L4 war tank Alphas resume combat and bodies persist (high, seed 1) @E22-AC12 @E22-AC14",
+          "status": "passed",
+          "durationMs": 4458.885076000122
+        },
+        {
+          "name": "L4 war tank Alphas resume combat and bodies persist (high, seed 2) @E22-AC12 @E22-AC14",
+          "status": "passed",
+          "durationMs": 4234.398362000007
+        },
+        {
+          "name": "L4 war tank Alphas resume combat and bodies persist (high, seed 3) @E22-AC12 @E22-AC14",
+          "status": "passed",
+          "durationMs": 4399.447074000025
+        },
+        {
+          "name": "L4 war tank Alphas resume combat and bodies persist (low, seed 1) @E22-AC12 @E22-AC14",
+          "status": "passed",
+          "durationMs": 2231.008595000021
+        },
+        {
+          "name": "L4 war tank Alphas resume combat and bodies persist (low, seed 2) @E22-AC12 @E22-AC14",
+          "status": "passed",
+          "durationMs": 2413.6173059998546
+        },
+        {
+          "name": "L4 war tank Alphas resume combat and bodies persist (low, seed 3) @E22-AC12 @E22-AC14",
+          "status": "passed",
+          "durationMs": 2131.788487000158
+        }
+      ]
+    },
+    {
+      "file": "levels/L4-botprobe.test.ts",
+      "durationMs": 0,
+      "tests": [
+        {
+          "name": "L4 complete bot probe",
+          "status": "skipped",
+          "durationMs": null
+        }
+      ]
+    },
+    {
+      "file": "levels/L4-collapse.test.ts",
+      "durationMs": 283343.8210449219,
+      "tests": [
+        {
+          "name": "L4 collapse director T-E22-13-collapse @E22 @E22-AC13 idle courier: 15-25 new infected enter inside the perimeter, the three lines fall on their beats, Alphas break a slot and knock crews down",
+          "status": "passed",
+          "durationMs": 68928.46372600005
+        },
+        {
+          "name": "L4 collapse director T-E22-13-escape @E22 @E22-AC13 @E22-AC15 l4-collapse-2: at \"Fall back!\" the horde leaves a gap on the escape street; corpses persist throughout the war and no stack surrounds a still courier",
+          "status": "passed",
+          "durationMs": 76480.31314500002
+        },
+        {
+          "name": "L4 collapse director T-E22-13-collapse-shooter @E22 @E22-AC13 an optimal machine gunner (one down every 0.1 s in 26 m) cannot save the lines: the beats keep their windows",
+          "status": "passed",
+          "durationMs": 85252.13809999998
+        },
+        {
+          "name": "L4 collapse director T-E22-13-collapse-low @E22 @E22-AC13 the low tier keeps the beats inside its caps",
+          "status": "passed",
+          "durationMs": 52682.821130000055
+        }
+      ]
+    },
+    {
+      "file": "levels/L4-convoy.test.ts",
+      "durationMs": 36481.074462890625,
+      "tests": [
+        {
+          "name": "L4 convoy ride collisions T-E22-04c @E22 @E22-AC04 during the live ride no convoy vehicle overlaps another vehicle entity (convoy, real cars, traffic)",
+          "status": "passed",
+          "durationMs": 9253.844524000073
+        },
+        {
+          "name": "L4 convoy ride collisions T-E22-04f @E22 PO 10-12 \"move this soldier away, all busses drive through him\": during the live ride no actor stands inside a convoy vehicle hull",
+          "status": "passed",
+          "durationMs": 8808.188006999902
+        },
+        {
+          "name": "L4 convoy ride collisions T-E22-04e @E22 PO 10-12 \"sound when the bus is driving\": every convoy vehicle emits engine events following speed, the courier bus is the muffled one, engines stop after the idle",
+          "status": "passed",
+          "durationMs": 9919.559711000067
+        },
+        {
+          "name": "L4 convoy ride collisions T-E22-04d @E22 PO 10-12 \"Bus is extremely vibrating\": the player bus pose has no high-frequency jitter over the whole ride",
+          "status": "passed",
+          "durationMs": 8499.074555000057
+        }
+      ]
+    },
+    {
+      "file": "levels/L4-finale-pressure.test.ts",
+      "durationMs": 178964.56640625,
+      "tests": [
+        {
+          "name": "PO #17 @E22 the collapse walk has steady sight-driven action and preserves the newbie death limit and E18 cap",
+          "status": "passed",
+          "durationMs": 178961.561032
+        },
+        {
+          "name": "PO #17b @E22 the route to the farther cellar lasts two to three minutes through Fairhaven",
+          "status": "passed",
+          "durationMs": 1.566292000003159
+        }
+      ]
+    },
+    {
+      "file": "levels/L4-guidance.test.ts",
+      "durationMs": 7090.355224609375,
+      "tests": [
+        {
+          "name": "@E22 the line break immediately names and marks the cellar and retains its escape checkpoint after death",
+          "status": "passed",
+          "durationMs": 7090.3551390001085
+        }
+      ]
+    },
+    {
+      "file": "levels/L4-movement.test.ts",
+      "durationMs": 54722.4921875,
+      "tests": [
+        {
+          "name": "@E22 L4 plaza permits mouse and direct movement on open plaza tiles",
+          "status": "passed",
+          "durationMs": 11294.379968999885
+        },
+        {
+          "name": "@E22 L4 war permits mouse and direct movement on open plaza tiles",
+          "status": "passed",
+          "durationMs": 19815.67874000012
+        },
+        {
+          "name": "@E22 L4 respawn permits mouse and direct movement on open plaza tiles",
+          "status": "passed",
+          "durationMs": 18002.892165000085
+        },
+        {
+          "name": "@E22 a real L4 armory-table corner cannot trap an outward click",
+          "status": "passed",
+          "durationMs": 5608.49228799995
+        }
+      ]
+    },
+    {
+      "file": "levels/L4-perimeter.test.ts",
+      "durationMs": 33522.348876953125,
+      "tests": [
+        {
+          "name": "@E22 PO16b visible perimeter holds courier at the reported south edge, infected vault it; one-metre plaza gate",
+          "status": "passed",
+          "durationMs": 33522.34894100018
+        }
+      ]
+    },
+    {
+      "file": "levels/L4-po-round.test.ts",
+      "durationMs": 202425.80126953125,
+      "tests": [
+        {
+          "name": "L4 PO round 10-13 T-E22-po-1 @E22 @E22-AC04 the courier gets off the first bus inside the military area and cannot walk out before the line breaks",
+          "status": "passed",
+          "durationMs": 25025.827076999936
+        },
+        {
+          "name": "L4 PO round 10-13 T-E22-po-2 @E22 @E22-AC05 @E22-AC07 soldiers relaxed before the alarm and at their posts within 10 s of it; people in routines, then fleeing and hiding",
+          "status": "passed",
+          "durationMs": 14050.54457899998
+        },
+        {
+          "name": "L4 PO round 10-13 T-E22-civilians-stay-high @E22 @E22-AC07 pre-alarm camp civilians remain human and panic/hide; incoming infected are new entities",
+          "status": "passed",
+          "durationMs": 68205.380627
+        },
+        {
+          "name": "L4 PO round 10-13 T-E22-civilians-stay-low @E22 @E22-AC07 pre-alarm camp civilians remain human and panic/hide; incoming infected are new entities",
+          "status": "passed",
+          "durationMs": 31654.588434999925
+        },
+        {
+          "name": "L4 PO round 10-13 T-E22-po-3 @E22 @E22-AC10 @E22-AC12 infected come spread from all sides (and from inside the camp); six to eight Alphas reach the lines and nests; the beats hold",
+          "status": "passed",
+          "durationMs": 63488.80117900006
+        }
+      ]
+    },
+    {
+      "file": "levels/L4-probe.test.ts",
+      "durationMs": 0,
+      "tests": [
+        {
+          "name": "L4 collapse probe (idle player, god)",
+          "status": "skipped",
+          "durationMs": null
+        }
+      ]
+    },
+    {
+      "file": "levels/L4-refuge-visible.test.ts",
+      "durationMs": 21519.83447265625,
+      "tests": [
+        {
+          "name": "@E22 PO15 closed refuge doors keep the entire fleeing group visibly in the world, across L1\u2013L10",
+          "status": "passed",
+          "durationMs": 21519.834492999827
+        }
+      ]
+    },
+    {
+      "file": "levels/L4-respawn.test.ts",
+      "durationMs": 261713.98217773438,
+      "tests": [
+        {
+          "name": "L4 @E22 @E22-AC17 three deaths after Fall back still reach the cellar from the escape checkpoint",
+          "status": "passed",
+          "durationMs": 161164.47646499996
+        },
+        {
+          "name": "L4 @E22 @E22-AC17 a mid-war death keeps lost lines, soldiers, and the collapse clock",
+          "status": "passed",
+          "durationMs": 99172.27706300002
+        },
+        {
+          "name": "L4 @E22 @E22-AC17 director goals respect the shared respawn pause and resume when it expires",
+          "status": "passed",
+          "durationMs": 556.1677310001105
+        },
+        {
+          "name": "L4 @E22 @E22-AC17 respawn clears live and recovering infected when cover blocks the outward ray",
+          "status": "passed",
+          "durationMs": 388.98127300012857
+        },
+        {
+          "name": "L4 @E22 @E22-AC17 a falling line anchors at the nearest safe camp post rather than an overrun post",
+          "status": "passed",
+          "durationMs": 429.69617099990137
+        },
+        {
+          "name": "L4 @E22 @E22-AC17 camp perimeter constrains player retreat routes until the gate opens, without blocking infected",
+          "status": "passed",
+          "durationMs": 1.9821760000195354
+        }
+      ]
+    },
+    {
+      "file": "levels/L4.test.ts",
+      "durationMs": 1149524.0405273438,
+      "tests": [
+        {
+          "name": "L4 The Safe City Falls T-E22-01 @E22 @E22-AC01 mission graph ride -> quartermaster -> hold -> hide -> bar is completable, no fail timer",
+          "status": "passed",
+          "durationMs": 8020.342328000001
+        },
+        {
+          "name": "L4 The Safe City Falls T-E22-02 @E22 @E22-AC02 the complete bot finishes a single seed from L4-default (bat, axe, handgun) with few deaths, in the time band",
+          "status": "passed",
+          "durationMs": 103115.47215300001
+        },
+        {
+          "name": "L4 The Safe City Falls T-E22-04 @E22 @E22-AC04 convoy: five vehicles, the courier a seated passenger of a bus, 20-35 s ride, control back <= 0.5 s after the stop",
+          "status": "passed",
+          "durationMs": 4835.934873000006
+        },
+        {
+          "name": "L4 The Safe City Falls T-E22-05 @E22 @E22-AC05 false safety until the first turn: zero infected, zero combat events, >= 40 civilians in routines, >= 16 soldiers on posts",
+          "status": "passed",
+          "durationMs": 8647.731321
+        },
+        {
+          "name": "L4 The Safe City Falls T-E22-06 @E22 @E22-AC06 machine gun: 14 per round, 10/s, 4 degrees, 26 m, pierce 1, no ammunition; 5 infected at 10 m fall in <= 3 s (handgun >= 2x slower)",
+          "status": "passed",
+          "durationMs": 54908.152014999985
+        },
+        {
+          "name": "L4 The Safe City Falls T-E22-07 @E22 @E22-AC07 the alarm: 40-50 s after the gun (or arrival + 100 s), 15-25 new infected enter from camp buildings or street mouths with >= 10 humans near the alarm",
+          "status": "passed",
+          "durationMs": 53559.50422100001
+        },
+        {
+          "name": "L4 The Safe City Falls T-E22-08 @E22 @E22-AC08 scale: 18-22 soldiers and 60-70 civilians (24 evacuees from the buses), >= 40 % armed with pistols, hunting rifles and melee (>= 3 each); the low tier halves; caps hold",
+          "status": "passed",
+          "durationMs": 466.02742100000614
+        },
+        {
+          "name": "L4 The Safe City Falls T-E22-09 @E22 @E22-AC09 allied fighters: shots from soldiers, armed civilians fight, everyone can turn (same id, look kept, weapon dropped), nobody is immune",
+          "status": "passed",
+          "durationMs": 22240.573679000023
+        },
+        {
+          "name": "L4 The Safe City Falls T-E22-10 @E22 @E22-AC10 from all sides: six street and alley mouths (>= 3 mutually >= 60 degrees apart around the plaza), emergence out of view",
+          "status": "passed",
+          "durationMs": 31768.975057000003
+        },
+        {
+          "name": "L4 The Safe City Falls T-E22-11 @E22 @E22-AC11 military spectacle: two HMG positions fire, trucks and an armoured vehicle stand in the plaza, the tank fires every 8-12 s away from the player and allies, the helicopter orbits and withdraws without landing",
+          "status": "passed",
+          "durationMs": 34380.01217400003
+        },
+        {
+          "name": "L4 The Safe City Falls T-E22-13 @E22 @E22-AC13 the line breaks after the third lost line (\"Fall back!\", also with the idle bot): fuel-truck mega chain, objective \"Run to the cellar\", the helicopter withdraws",
+          "status": "passed",
+          "durationMs": 80551.801385
+        },
+        {
+          "name": "L4 The Safe City Falls T-E22-14 @E22 @E22-AC14 live damage at the cellar: >= 4 fires, >= 2 burning vehicles, >= 10 broken windows, >= 6 blast scorches, all traceable to explosion/fire events of the run",
+          "status": "passed",
+          "durationMs": 92989.81505399995
+        },
+        {
+          "name": "L4 The Safe City Falls T-E22-15 @E22 @E22-AC15 cellar: only the courier (and the corgi) go down, nobody can path in, the door bars, battle events go on >= 6 s, then level.completed",
+          "status": "passed",
+          "durationMs": 7444.562748999975
+        },
+        {
+          "name": "L4 The Safe City Falls T-E22-16 @E22 @E22-AC16 light: L4 polar 1.15-1.30 rad, fog far >= L3 + 20 m; no smoke column before the first turn, >= 3 at the line break",
+          "status": "passed",
+          "durationMs": 10541.339918000042
+        },
+        {
+          "name": "L4 The Safe City Falls T-E22-17 @E22 @E22-AC17 checkpoints preserve the live battlefield across deaths, with only live infection losses",
+          "status": "passed",
+          "durationMs": 71874.49546000006
+        },
+        {
+          "name": "L4 The Safe City Falls T-E22-bots @E22 evade-only never attacks and still reaches the cellar; the low tier finishes too",
+          "status": "passed",
+          "durationMs": 149750.28298700007
+        },
+        {
+          "name": "L4 The Safe City Falls T-E22-03 @E22 @E22-AC03 the newbie bot finishes (single seed; the 20-seed battery is dropped as a gate, PO 10-09) with few deaths",
+          "status": "passed",
+          "durationMs": 133197.18010799994
+        },
+        {
+          "name": "L4 The Safe City Falls T-E22-12 @E22 @E22-AC12 still not enough: soldiers thin out and the infected outgrow the kills by the line break (single seed)",
+          "status": "passed",
+          "durationMs": 154903.26398399996
+        },
+        {
+          "name": "L4 The Safe City Falls T-E22-12-alphas-high @E22 @E22-AC12 first Alphas use the district mouths after the internal turn, inside both caps",
+          "status": "passed",
+          "durationMs": 86442.89021300012
+        },
+        {
+          "name": "L4 The Safe City Falls T-E22-12-alphas-low @E22 @E22-AC12 first Alphas use the district mouths after the internal turn, inside both caps",
+          "status": "passed",
+          "durationMs": 33850.31607099995
+        },
+        {
+          "name": "L4 The Safe City Falls T-E22-13-authored-gap @E22 @E22-AC12 @E22-AC13 the authored line replaces static pallets and breaks through logged Alpha HP damage",
+          "status": "passed",
+          "durationMs": 707.2100220001303
+        },
+        {
+          "name": "L4 The Safe City Falls T-E22-15-carry @E22 @E22-AC15 solitary basement completion carries the actual arsenal to L5 without pending rewards",
+          "status": "passed",
+          "durationMs": 5053.86265499983
+        },
+        {
+          "name": "L4 The Safe City Falls T-E22-anchors @E22 every authored L4 anchor resolves in the layout copy",
+          "status": "passed",
+          "durationMs": 274.040485000005
+        }
+      ]
+    },
+    {
+      "file": "levels/L5-encounters.test.ts",
+      "durationMs": 5901.896484375,
+      "tests": [
+        {
+          "name": "@E23 @E23-AC04 @E23-AC15 @E23-AC16 station identities/state survive checkpoint and L6 handover, high",
+          "status": "passed",
+          "durationMs": 981.8692949999822
+        },
+        {
+          "name": "@E23 @E23-AC04 @E23-AC15 @E23-AC16 station identities/state survive checkpoint and L6 handover, low",
+          "status": "passed",
+          "durationMs": 674.6682489999803
+        },
+        {
+          "name": "@E23 @E23-AC01 L5 retains the carried racks instead of replacing them with its fallback arsenal",
+          "status": "passed",
+          "durationMs": 321.13541200000327
+        },
+        {
+          "name": "@E23 @E23-AC07 Alphas investigate nearby gunfire and acquire visible civilians without omniscience",
+          "status": "passed",
+          "durationMs": 492.07924700004514
+        },
+        {
+          "name": "@E23 @E23-AC04 Alphas stay in town away from the Metro and final escort leg, high",
+          "status": "passed",
+          "durationMs": 358.2473000000464
+        },
+        {
+          "name": "@E23 @E23-AC04 Alphas stay in town away from the Metro and final escort leg, low",
+          "status": "passed",
+          "durationMs": 331.77948199992534
+        },
+        {
+          "name": "@E23 @E23-AC15 nearby infected do not stall ingress; the descending shutter sweeps intruders out and blocks return",
+          "status": "passed",
+          "durationMs": 1028.5618610000238
+        },
+        {
+          "name": "@E23 @E23-AC15 the five survivors cross the Metro opening from the real-input group photo",
+          "status": "passed",
+          "durationMs": 721.0649640000192
+        },
+        {
+          "name": "@E23 @E23-AC11 @E23-AC15 a survivor turning during shutter closure cannot corrupt the L6 save",
+          "status": "passed",
+          "durationMs": 989.8964160000905
+        }
+      ]
+    },
+    {
+      "file": "levels/L5.test.ts",
+      "durationMs": 169886.490234375,
+      "tests": [
+        {
+          "name": "L5 Aftermath T-E23-01 @E23 @E23-AC01 mission graph emerge -> look -> metro is completable for every find order, with no fail timer and no fail on a survivor's death",
+          "status": "passed",
+          "durationMs": 14400.560782
+        },
+        {
+          "name": "L5 Aftermath T-E23-02 @E23 @E23-AC02 the complete bot finishes a single seed from L5-default without cheats, in the time band, rescuing at least 4",
+          "status": "passed",
+          "durationMs": 13493.357748999999
+        },
+        {
+          "name": "L5 Aftermath T-E23-03 @E23 @E23-AC03 the newbie bot finishes a single seed with at most one death, rescuing at least 3",
+          "status": "passed",
+          "durationMs": 15280.491430000002
+        },
+        {
+          "name": "L5 Aftermath T-E23-04 @E23 @E23-AC04 the opening is empty: no allied fighter, no living civilian but the five survivors (hidden) and the lookout, no helicopter or moving vehicle, no gunfire but the courier's; 12-20 infected in ones and twos",
+          "status": "passed",
+          "durationMs": 6651.544698999998
+        },
+        {
+          "name": "L5 Aftermath T-E23-07 @E23 @E23-AC07 sparse and never omniscient: no director spawn or emergence, at most 30 at once, sight-only alerts; a machine-gun burst pulls non-chasing infected within 30 m to the shot",
+          "status": "passed",
+          "durationMs": 9633.034439000003
+        },
+        {
+          "name": "L5 Aftermath T-E23-08 @E23 @E23-AC08 signs of life: a positional cue with a subtitle within 25 m of each hiding place, none beyond 30 m; no objective marker ever points at a survivor",
+          "status": "passed",
+          "durationMs": 2851.383818999995
+        },
+        {
+          "name": "L5 Aftermath T-E23-09 @E23 @E23-AC09 the group grows and follows: stand-to-interact 1.0 s, the counter steps 0 to 5, followers within 8 m, no jump above 1 m per tick, slower than the courier's run",
+          "status": "passed",
+          "durationMs": 12915.582696999998
+        },
+        {
+          "name": "L5 Aftermath T-E23-10 @E23 @E23-AC10 protection matters: an infected that reaches an unprotected survivor grabs and bites within 1.5 s, a hit during the grab saves them, a bitten survivor turns in 2.5-3.5 s as the same person",
+          "status": "passed",
+          "durationMs": 33709.107311
+        },
+        {
+          "name": "L5 Aftermath T-E23-11 @E23 @E23-AC11 losses do not stop the level: killing 1, 3 or all 5 survivors at random points still lets the complete bot finish; the result reports the rescued count",
+          "status": "passed",
+          "durationMs": 21724.140230000005
+        },
+        {
+          "name": "L5 Aftermath T-E23-12 @E23 @E23-AC12 optional basement shotgun auto-equips and retains the L4 arsenal",
+          "status": "passed",
+          "durationMs": 441.31497800000943
+        },
+        {
+          "name": "L5 Aftermath T-E23-16-shotgun @E23 @E23-AC16 checkpoint restores owned shotgun or available pickup without duplication",
+          "status": "passed",
+          "durationMs": 509.0189379999938
+        },
+        {
+          "name": "L5 Aftermath T-E23-13 @E23 @E23-AC13 sunset and gloom: the sun intensity falls monotonically over the level and is at least 30 % lower at the Metro than at the basement exit",
+          "status": "passed",
+          "durationMs": 10981.720424
+        },
+        {
+          "name": "L5 Aftermath T-E23-15 @E23 @E23-AC15 every living follower crosses before visible closure; the grace period regroups stragglers; occupants persist",
+          "status": "passed",
+          "durationMs": 2130.5366839999915
+        },
+        {
+          "name": "L5 Aftermath T-E23-16 @E23 @E23-AC16 checkpoints: dying right after outside and each survivor-n restores the snapshot (followers, lost survivors stay lost, infected)",
+          "status": "passed",
+          "durationMs": 9442.392040999985
+        },
+        {
+          "name": "L5 Aftermath T-E23-bots @E23 the idle bot unbars the door and waits (the level never fails, nobody dies of the level); the low tier finishes too",
+          "status": "passed",
+          "durationMs": 15721.490116
+        }
+      ]
+    },
+    {
+      "file": "levels/L6-campaign.test.ts",
+      "durationMs": 575706.9196777344,
+      "tests": [
+        {
+          "name": "T-E24-08 @E24 @E24-AC08 continuous complete campaign on one seed with real L5 handover",
+          "status": "passed",
+          "durationMs": 312690.07515499997
+        },
+        {
+          "name": "T-E24-08 @E24 @E24-AC08 continuous newbie campaign on one seed with real L5 handover",
+          "status": "passed",
+          "durationMs": 263015.91971100005
+        }
+      ]
+    },
+    {
+      "file": "levels/L6.test.ts",
+      "durationMs": 58548.91357421875,
+      "tests": [
+        {
+          "name": "T-E24-01 @E24 @E24-AC01 graph shelter -> stop -> retreat -> exit has no fail timer or survivor fail",
+          "status": "passed",
+          "durationMs": 308.4218019999098
+        },
+        {
+          "name": "T-E24-04 @E24 @E24-AC04 @E24-AC05 @E08-AC11 calm adult routines, carried ids, readable injury dialogue, no weapon pickup and no early combat",
+          "status": "passed",
+          "durationMs": 1099.7492349999957
+        },
+        {
+          "name": "T-E24-06 @E24 @E24-AC06 @E24-AC07 @E24-AC13 idle two breaches, bangs, immediate power failure, first-of abandonment and caps",
+          "status": "passed",
+          "durationMs": 2749.751193999895
+        },
+        {
+          "name": "T-E24-16 @E24 @E24-AC16 death restores all four checkpoint snapshots, outbreak, gates and power",
+          "status": "passed",
+          "durationMs": 382.89772900007665
+        },
+        {
+          "name": "T-E24-02 @E24 @E24-AC02 @E24-AC10 single-seed complete bot (PO: no batteries) protects and rejoins the community",
+          "status": "passed",
+          "durationMs": 24128.825725000002
+        },
+        {
+          "name": "T-E24-09 @E24 @E24-AC09 group pauses at a gate when the rear is under attack and the player is absent",
+          "status": "passed",
+          "durationMs": 110.42950600001495
+        },
+        {
+          "name": "T-E24-11 @E24 @E24-AC11 service leaf refuses to trap survivors, then blocks sight and motion",
+          "status": "passed",
+          "durationMs": 136.32224100001622
+        },
+        {
+          "name": "T-E24-13 @E24 @E24-AC13 bitten shelter adult retains identity through the shared 2.5-3.5 s infection",
+          "status": "passed",
+          "durationMs": 389.8634299999103
+        },
+        {
+          "name": "T-E24-zero @E24 @E24-AC01 all survivors lost still permits the physical exit",
+          "status": "passed",
+          "durationMs": 123.71513100003358
+        },
+        {
+          "name": "T-E24-11-siege @E24 @E24-AC11 five real infected break the closed service gate in 8-12 seconds",
+          "status": "passed",
+          "durationMs": 612.247022000025
+        },
+        {
+          "name": "T-E24-03 @E24 @E24-AC03 single-seed newbie protects injured survivors within the original band",
+          "status": "passed",
+          "durationMs": 28505.91362300003
+        }
+      ]
+    },
+    {
+      "file": "levels/L8.test.ts",
+      "durationMs": 108725.1083984375,
+      "tests": [
+        {
+          "name": "T-E30-04 T-E30-05 T-E30-07 @E30-AC04 @E30-AC05 @E30-AC07 high active-time calm and simultaneous inside emergence",
+          "status": "passed",
+          "durationMs": 5590.752588999923
+        },
+        {
+          "name": "T-E30-04 T-E30-05 T-E30-07 @E30-AC04 @E30-AC05 @E30-AC07 low active-time calm and simultaneous inside emergence",
+          "status": "passed",
+          "durationMs": 4201.401978999958
+        },
+        {
+          "name": "T-E30-08 T-E30-09 T-E30-11 @E30-AC08 @E30-AC09 @E30-AC11 seed 1 systemic zoo outbreak converts animals and humans",
+          "status": "passed",
+          "durationMs": 37807.34999000002
+        },
+        {
+          "name": "T-E30-17 @E30-AC17 sanctuary and breach restore preserve remaining time, tunnel walks and animal identities",
+          "status": "passed",
+          "durationMs": 8852.504329000018
+        },
+        {
+          "name": "T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 0 survivors and exact APC transfer",
+          "status": "passed",
+          "durationMs": 9245.645560999983
+        },
+        {
+          "name": "T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 12 survivors and exact APC transfer",
+          "status": "passed",
+          "durationMs": 12948.87073700002
+        },
+        {
+          "name": "T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 35 survivors and exact APC transfer",
+          "status": "passed",
+          "durationMs": 19506.869870000053
+        },
+        {
+          "name": "T-E30-13-losses @E30-AC13 finished civilians and released former survivors cannot block an all-lost escape",
+          "status": "passed",
+          "durationMs": 10566.108325000037
+        }
+      ]
+    },
+    {
+      "file": "levels/L9-campaign.test.ts",
+      "durationMs": 576030.1184082031,
+      "tests": [
+        {
+          "name": "T-E31-20 @E31-AC20 continuous seed 1 L1 through L9 commits real campaign handovers and the axe reset",
+          "status": "passed",
+          "durationMs": 576030.1184080001
+        }
+      ]
+    },
+    {
+      "file": "levels/ally-combat-feel.test.ts",
+      "durationMs": 40964.568359375,
+      "tests": [
+        {
+          "name": "ally combat feel L4 war: soldiers and armed civilians keep moving, never fire off screen, and the queue breaks up",
+          "status": "passed",
+          "durationMs": 28612.23242600006
+        },
+        {
+          "name": "ally combat feel L3 station attack: the police move and fight in view of the idle courier",
+          "status": "passed",
+          "durationMs": 12352.568410000065
+        }
+      ]
+    },
+    {
+      "file": "levels/camera-sightline.test.ts",
+      "durationMs": 4911.72216796875,
+      "tests": [
+        {
+          "name": "objective anchors are not hidden behind tall buildings (fixed game camera) L1",
+          "status": "passed",
+          "durationMs": 189.24686699989252
+        },
+        {
+          "name": "objective anchors are not hidden behind tall buildings (fixed game camera) L2",
+          "status": "passed",
+          "durationMs": 2178.811984000029
+        },
+        {
+          "name": "objective anchors are not hidden behind tall buildings (fixed game camera) L3",
+          "status": "passed",
+          "durationMs": 1619.6077890000306
+        },
+        {
+          "name": "objective anchors are not hidden behind tall buildings (fixed game camera) L4",
+          "status": "passed",
+          "durationMs": 257.6830609999597
+        },
+        {
+          "name": "objective anchors are not hidden behind tall buildings (fixed game camera) L5",
+          "status": "passed",
+          "durationMs": 530.6726049999706
+        },
+        {
+          "name": "objective anchors are not hidden behind tall buildings (fixed game camera) L6",
+          "status": "passed",
+          "durationMs": 133.72205199999735
+        }
+      ]
+    },
+    {
+      "file": "levels/collision-invariant.test.ts",
+      "durationMs": 21381.639892578125,
+      "tests": [
+        {
+          "name": "L1: committed actor occupancy stays valid, including stationary full audits",
+          "status": "passed",
+          "durationMs": 1370.8976159999147
+        },
+        {
+          "name": "L2: committed actor occupancy stays valid, including stationary full audits",
+          "status": "passed",
+          "durationMs": 2160.40967600001
+        },
+        {
+          "name": "L3: committed actor occupancy stays valid, including stationary full audits",
+          "status": "passed",
+          "durationMs": 1537.9424469999503
+        },
+        {
+          "name": "L4: committed actor occupancy stays valid, including stationary full audits",
+          "status": "passed",
+          "durationMs": 1663.4907510001212
+        },
+        {
+          "name": "L5: committed actor occupancy stays valid, including stationary full audits",
+          "status": "passed",
+          "durationMs": 1082.105345999822
+        },
+        {
+          "name": "L6: committed actor occupancy stays valid, including stationary full audits",
+          "status": "passed",
+          "durationMs": 390.46142999990843
+        },
+        {
+          "name": "L8: committed actor occupancy stays valid, including stationary full audits",
+          "status": "passed",
+          "durationMs": 756.3367310001049
+        },
+        {
+          "name": "L9: committed actor occupancy stays valid, including stationary full audits",
+          "status": "passed",
+          "durationMs": 3430.5755549999885
+        },
+        {
+          "name": "L10: committed actor occupancy stays valid, including stationary full audits",
+          "status": "passed",
+          "durationMs": 8006.407243999885
+        },
+        {
+          "name": "L7: committed actor occupancy stays valid, including stationary full audits",
+          "status": "passed",
+          "durationMs": 980.6397830001079
+        }
+      ]
+    },
+    {
+      "file": "levels/continuity.test.ts",
+      "durationMs": 71075.625,
+      "tests": [
+        {
+          "name": "L1 -> L2 world-state continuity T-CONT-01S @continuity after the L1 lab blast the L2 town has the burned annex, the debris cells blocked, the outbreak house aftermath and this run's carryover",
+          "status": "passed",
+          "durationMs": 66690.03406800004
+        },
+        {
+          "name": "L1 -> L2 world-state continuity T-CONT-02S @continuity player-caused toys carry over: a pushed dumpster blocks its passage, a closed gate stays shut, the bike is parked",
+          "status": "passed",
+          "durationMs": 4384.624944999814
+        }
+      ]
+    },
+    {
+      "file": "levels/corpse-grounding.test.ts",
+      "durationMs": 4845.359375,
+      "tests": [
+        {
+          "name": "@l3-grounding L3 highway: dead infected settle onto the ramp, the deck, or the street past the deck edge",
+          "status": "passed",
+          "durationMs": 2447.305201999843
+        },
+        {
+          "name": "@l3-grounding L3 highway: a live infected standing on the ramp (above the 2 m separation cut-off) stays on the ramp surface",
+          "status": "passed",
+          "durationMs": 1491.0699750001077
+        },
+        {
+          "name": "@l3-grounding L1 street: dead infected on pavement, sidewalk slabs and kerbs stand on the support (generic case)",
+          "status": "passed",
+          "durationMs": 904.3592760001775
+        }
+      ]
+    },
+    {
+      "file": "levels/l1-bench-exit.test.ts",
+      "durationMs": 2150.780517578125,
+      "tests": [
+        {
+          "name": "PO #5 @E19 a toppled bench cannot close the garage fence gap, including checkpoint restore",
+          "status": "passed",
+          "durationMs": 2150.780568999937
+        }
+      ]
+    },
+    {
+      "file": "levels/l1-firefighter.test.ts",
+      "durationMs": 24041.958251953125,
+      "tests": [
+        {
+          "name": "T-E19-firefighter @E19 the firefighter waits at the bay from the start of the objective, infected attack him, he survives a late arrival",
+          "status": "passed",
+          "durationMs": 21913.286263999995
+        },
+        {
+          "name": "T-E19-firefighter-corpse @E19 a finished invitation actor with positive HP is replaced (legacy checkpoint recovery)",
+          "status": "passed",
+          "durationMs": 2128.9581839999883
+        }
+      ]
+    },
+    {
+      "file": "levels/l1-forecourt.test.ts",
+      "durationMs": 13754.2490234375,
+      "tests": [
+        {
+          "name": "PO #3/#4b @E19 high: 28 living infected, bounded forecourt attackers and bike reachable within 20 s",
+          "status": "passed",
+          "durationMs": 6633.388325999957
+        },
+        {
+          "name": "PO #3/#4b @E19 low: 28 living infected, bounded forecourt attackers and bike reachable within 20 s",
+          "status": "passed",
+          "durationMs": 5730.1502669998445
+        },
+        {
+          "name": "@E19 the forecourt preserves respawn clearance while other humans are visible",
+          "status": "passed",
+          "durationMs": 1390.2490640000906
+        }
+      ]
+    },
+    {
+      "file": "levels/l1-medkits.test.ts",
+      "durationMs": 2173.219970703125,
+      "tests": [
+        {
+          "name": "T-E19-medkits @E19 L1 has 2-3 reachable med packs along the post-accident route; each heals 50 % once and stays taken after a respawn",
+          "status": "passed",
+          "durationMs": 2173.2199510000646
+        }
+      ]
+    },
+    {
+      "file": "levels/l1-ride-input.test.ts",
+      "durationMs": 8794.453369140625,
+      "tests": [
+        {
+          "name": "E19 @E19 QA1-01 arriving at the depot counter on the bicycle without the parcel parks the bike; E picks up the parcel",
+          "status": "passed",
+          "durationMs": 932.0656799999997
+        },
+        {
+          "name": "E19 @E19 QA1-02 click-to-move from the bike start reaches the parcel counter (seed 1)",
+          "status": "passed",
+          "durationMs": 459.0850559999235
+        },
+        {
+          "name": "E19 @E19 QA1-02 click-to-move from the bike start reaches the parcel counter (seed 2)",
+          "status": "passed",
+          "durationMs": 335.4666079999879
+        },
+        {
+          "name": "E19 @E19 QA1-02 click-to-move from the bike start reaches the parcel counter (seed 3)",
+          "status": "passed",
+          "durationMs": 330.5826310000848
+        },
+        {
+          "name": "E19 @E19 QA1-02 click-to-move from the bike start reaches the parcel counter (seed 4)",
+          "status": "passed",
+          "durationMs": 352.33101999992505
+        },
+        {
+          "name": "E19 @E19 QA1-02 click-to-move from the bike start reaches the parcel counter (seed 5)",
+          "status": "passed",
+          "durationMs": 286.8802699998487
+        },
+        {
+          "name": "E19 @E19 QA1-02 click-to-move on the bicycle reaches lab-gate around fences",
+          "status": "passed",
+          "durationMs": 2003.7757540000603
+        },
+        {
+          "name": "E19 @E19 QA1-02 click-to-move on the bicycle reaches garage-door around fences",
+          "status": "passed",
+          "durationMs": 1876.9193759998307
+        },
+        {
+          "name": "E19 @E19 QA1-02 click-to-move on the bicycle reaches fire-bay-door around fences",
+          "status": "passed",
+          "durationMs": 1875.9076890000142
+        },
+        {
+          "name": "E19 @E19 QA1-02 click-to-move on the bicycle reaches carwash-start around fences",
+          "status": "passed",
+          "durationMs": 340.4533700000029
+        }
+      ]
+    },
+    {
+      "file": "levels/l2-start.test.ts",
+      "durationMs": 14618.635498046875,
+      "tests": [
+        {
+          "name": "level start loadouts (no pickup owned before it is taken) T-L2START-L2 @l2start L2 starts without weapon.fire-axe from a loaded save",
+          "status": "passed",
+          "durationMs": 2462.7605339998845
+        },
+        {
+          "name": "level start loadouts (no pickup owned before it is taken) T-L2START-L3 @l2start L3 starts without weapon.handgun from a loaded save",
+          "status": "passed",
+          "durationMs": 1833.6964420001023
+        },
+        {
+          "name": "level start loadouts (no pickup owned before it is taken) T-L2START-L4 @l2start L4 starts without weapon.army-mg from a loaded save",
+          "status": "passed",
+          "durationMs": 573.4060980000068
+        },
+        {
+          "name": "level start loadouts (no pickup owned before it is taken) T-L2START-L5 @l2start L5 starts without weapon.shotgun from a loaded save",
+          "status": "passed",
+          "durationMs": 653.406886999961
+        },
+        {
+          "name": "level start loadouts (no pickup owned before it is taken) T-L2START-L2-handover @l2start L2 from the L1 handover keeps the bat and has no axe",
+          "status": "passed",
+          "durationMs": 2720.6565219999757
+        },
+        {
+          "name": "level start loadouts (no pickup owned before it is taken) T-L2START-L2-keep @l2start the L2 loaded-save start keeps the other racked weapons",
+          "status": "passed",
+          "durationMs": 3127.9159909999
+        },
+        {
+          "name": "L2 station bench sitters T-L2START-seats @l2start sitters sit on the benches outside the building, hips on the seat anchor; off the seat they stand",
+          "status": "passed",
+          "durationMs": 3241.6354710001033
+        }
+      ]
+    },
+    {
+      "file": "levels/l4-convoy-people.test.ts",
+      "durationMs": 65051.290771484375,
+      "tests": [
+        {
+          "name": "T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, high, seed 1",
+          "status": "passed",
+          "durationMs": 12200.216485999874
+        },
+        {
+          "name": "T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, high, seed 2",
+          "status": "passed",
+          "durationMs": 11627.28910000017
+        },
+        {
+          "name": "T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, high, seed 3",
+          "status": "passed",
+          "durationMs": 11637.996144999983
+        },
+        {
+          "name": "T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, low, seed 1",
+          "status": "passed",
+          "durationMs": 5598.132380999858
+        },
+        {
+          "name": "T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, low, seed 2",
+          "status": "passed",
+          "durationMs": 5130.289931999985
+        },
+        {
+          "name": "T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, low, seed 3",
+          "status": "passed",
+          "durationMs": 4865.54680599994
+        },
+        {
+          "name": "T-E22-04h @E22 convoy yields to an immobile infected and resumes after clearance, high",
+          "status": "passed",
+          "durationMs": 4271.633655000012
+        },
+        {
+          "name": "T-E22-04i @E22 cowering woman and pet leave the convoy route by walking, high",
+          "status": "passed",
+          "durationMs": 4823.930988000007
+        },
+        {
+          "name": "T-E22-04h @E22 convoy yields to an immobile infected and resumes after clearance, low",
+          "status": "passed",
+          "durationMs": 2449.786589999916
+        },
+        {
+          "name": "T-E22-04i @E22 cowering woman and pet leave the convoy route by walking, low",
+          "status": "passed",
+          "durationMs": 2444.290840999922
+        }
+      ]
+    },
+    {
+      "file": "levels/l5-district.test.ts",
+      "durationMs": 2518.53662109375,
+      "tests": [
+        {
+          "name": "T-E23-12d @E23 @E23-AC12 basement shotgun rests on the shelf within 3 m, can be reached from the aisle and disappears on collection",
+          "status": "passed",
+          "durationMs": 890.9623589999974
+        },
+        {
+          "name": "T-E23-15d @E23 @E23-AC15 metro closure enables the matching passage collider at the end of the visible descent",
+          "status": "passed",
+          "durationMs": 1627.5365039999597
+        }
+      ]
+    },
+    {
+      "file": "levels/l5-po-1015.test.ts",
+      "durationMs": 36840.105712890625,
+      "tests": [
+        {
+          "name": "PO #21 @E23 @E23-AC08 @E23-AC09 survivor-2 restore: walking to the sound reveals survivors 3, 4 and 5, then reaches the ending",
+          "status": "passed",
+          "durationMs": 20153.070107999956
+        },
+        {
+          "name": "PO #21 @E23 @E23-AC09 discovery is available from every reachable side within 2.5 m of each sound",
+          "status": "passed",
+          "durationMs": 2414.7444740000647
+        },
+        {
+          "name": "PO #20b @E23 @E23-AC09 survivor-1 restore: Alpha at 15 m engages, follower reacts briefly and keeps following",
+          "status": "passed",
+          "durationMs": 2398.5449439999647
+        },
+        {
+          "name": "PO #19c @E23 @E23-AC14 music follows the first find and survivor checkpoint restores, never elapsed time",
+          "status": "passed",
+          "durationMs": 8394.170210999902
+        },
+        {
+          "name": "PO #18 @E23 @E23-AC16 every L5 safe-space exit returns to its entry door, faces out and rejects occupied exit spots",
+          "status": "passed",
+          "durationMs": 416.79557399998885
+        },
+        {
+          "name": "PO #18 @E23 L4 records the doorway actually entered and carries it into L5",
+          "status": "passed",
+          "durationMs": 808.738893999951
+        },
+        {
+          "name": "PO #20b @E23 @E23-AC07 a visible player at 15 m is acquired beyond the former Alpha territory",
+          "status": "passed",
+          "durationMs": 2254.1058259999845
+        }
+      ]
+    },
+    {
+      "file": "levels/pickup-grounding.test.ts",
+      "durationMs": 16618.89013671875,
+      "tests": [
+        {
+          "name": "@pickup-grounding L1: every pickup is reachable from the route and rests on the support at its xz",
+          "status": "passed",
+          "durationMs": 550.5455189999193
+        },
+        {
+          "name": "@pickup-grounding L2: every pickup is reachable from the route and rests on the support at its xz",
+          "status": "passed",
+          "durationMs": 1774.5328360002022
+        },
+        {
+          "name": "@pickup-grounding L3: every pickup is reachable from the route and rests on the support at its xz",
+          "status": "passed",
+          "durationMs": 1552.194453000091
+        },
+        {
+          "name": "@pickup-grounding L4: every pickup is reachable from the route and rests on the support at its xz",
+          "status": "passed",
+          "durationMs": 373.90825599990785
+        },
+        {
+          "name": "@pickup-grounding L5: every pickup is reachable from the route and rests on the support at its xz",
+          "status": "passed",
+          "durationMs": 452.887674999889
+        },
+        {
+          "name": "@pickup-grounding L6: every pickup is reachable from the route and rests on the support at its xz",
+          "status": "passed",
+          "durationMs": 144.43365600006655
+        },
+        {
+          "name": "@pickup-grounding L8: every pickup is reachable from the route and rests on the support at its xz",
+          "status": "passed",
+          "durationMs": 258.3495990000665
+        },
+        {
+          "name": "@pickup-grounding L9: every pickup is reachable from the route and rests on the support at its xz",
+          "status": "passed",
+          "durationMs": 3341.825553999981
+        },
+        {
+          "name": "@pickup-grounding L10: every pickup is reachable from the route and rests on the support at its xz",
+          "status": "passed",
+          "durationMs": 8168.8900289998855
+        }
+      ]
+    },
+    {
+      "file": "levels/pickup-solids.test.ts",
+      "durationMs": 16019.030029296875,
+      "tests": [
+        {
+          "name": "@pickup-solids PO13 every campaign ground pickup clears walls, props, vehicle hulls and convoy stop poses",
+          "status": "passed",
+          "durationMs": 16019.030151000014
+        }
+      ]
+    },
+    {
+      "file": "levels/respawn-all-levels.test.ts",
+      "durationMs": 43632.57568359375,
+      "tests": [
+        {
+          "name": "death respawns exactly on the last reached checkpoint, every level L1 (start): back on the anchor, nothing within 9 m, grace, loadout kept",
+          "status": "passed",
+          "durationMs": 1849.3751979998779
+        },
+        {
+          "name": "death respawns exactly on the last reached checkpoint, every level L1 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept",
+          "status": "passed",
+          "durationMs": 1313.0803259999957
+        },
+        {
+          "name": "death respawns exactly on the last reached checkpoint, every level L2 (start): back on the anchor, nothing within 9 m, grace, loadout kept",
+          "status": "passed",
+          "durationMs": 2504.7501199999824
+        },
+        {
+          "name": "death respawns exactly on the last reached checkpoint, every level L2 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept",
+          "status": "passed",
+          "durationMs": 2467.382700999966
+        },
+        {
+          "name": "death respawns exactly on the last reached checkpoint, every level L3 (start): back on the anchor, nothing within 9 m, grace, loadout kept",
+          "status": "passed",
+          "durationMs": 2217.947445000056
+        },
+        {
+          "name": "death respawns exactly on the last reached checkpoint, every level L3 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept",
+          "status": "passed",
+          "durationMs": 1978.0282429999206
+        },
+        {
+          "name": "death respawns exactly on the last reached checkpoint, every level L4 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept",
+          "status": "passed",
+          "durationMs": 2450.238767999923
+        },
+        {
+          "name": "death respawns exactly on the last reached checkpoint, every level L5 (start): back on the anchor, nothing within 9 m, grace, loadout kept",
+          "status": "passed",
+          "durationMs": 1035.2406849998515
+        },
+        {
+          "name": "death respawns exactly on the last reached checkpoint, every level L5 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept",
+          "status": "passed",
+          "durationMs": 976.0184200000949
+        },
+        {
+          "name": "death respawns exactly on the last reached checkpoint, every level L6 (start): back on the anchor, nothing within 9 m, grace, loadout kept",
+          "status": "passed",
+          "durationMs": 472.14359200000763
+        },
+        {
+          "name": "death respawns exactly on the last reached checkpoint, every level L6 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept",
+          "status": "passed",
+          "durationMs": 445.2839509998448
+        },
+        {
+          "name": "death respawns exactly on the last reached checkpoint, every level L8 (start): back on the anchor, nothing within 9 m, grace, loadout kept",
+          "status": "passed",
+          "durationMs": 1225.0955799999647
+        },
+        {
+          "name": "death respawns exactly on the last reached checkpoint, every level L8 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept",
+          "status": "passed",
+          "durationMs": 876.8800439999904
+        },
+        {
+          "name": "death respawns exactly on the last reached checkpoint, every level L9 (start): back on the anchor, nothing within 9 m, grace, loadout kept",
+          "status": "passed",
+          "durationMs": 3547.170800999971
+        },
+        {
+          "name": "death respawns exactly on the last reached checkpoint, every level L9 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept",
+          "status": "passed",
+          "durationMs": 3508.7475019998383
+        },
+        {
+          "name": "death respawns exactly on the last reached checkpoint, every level L10 (start): back on the anchor, nothing within 9 m, grace, loadout kept",
+          "status": "passed",
+          "durationMs": 8154.113103999989
+        },
+        {
+          "name": "death respawns exactly on the last reached checkpoint, every level L10 (checkpoint): back on the anchor, nothing within 9 m, grace, loadout kept",
+          "status": "passed",
+          "durationMs": 8609.575757999904
+        }
+      ]
+    },
+    {
+      "file": "levels/respawn-checkpoint.test.ts",
+      "durationMs": 73466.34594726562,
+      "tests": [
+        {
+          "name": "respawn at the last reached checkpoint L1 seed 1: bat pickup, walk far away, die: back at the bat spot with the bat",
+          "status": "passed",
+          "durationMs": 18917.53928500018
+        },
+        {
+          "name": "respawn at the last reached checkpoint L1 seed 2: bat pickup, walk far away, die: back at the bat spot with the bat",
+          "status": "passed",
+          "durationMs": 17722.422986999853
+        },
+        {
+          "name": "respawn at the last reached checkpoint L1 seed 3: bat pickup, walk far away, die: back at the bat spot with the bat",
+          "status": "passed",
+          "durationMs": 15266.177194999997
+        },
+        {
+          "name": "respawn at the last reached checkpoint L1 seed 4: bat pickup, walk far away, die: back at the bat spot with the bat",
+          "status": "passed",
+          "durationMs": 16457.771941999905
+        },
+        {
+          "name": "respawn at the last reached checkpoint L1: before the bat only the start checkpoint exists",
+          "status": "passed",
+          "durationMs": 391.0541109999176
+        },
+        {
+          "name": "respawn at the last reached checkpoint L2: taking the axe records a checkpoint; death before the doors respawns at the axe rack with the axe",
+          "status": "passed",
+          "durationMs": 4711.346007000189
+        }
+      ]
+    },
+    {
+      "file": "levels/ring-clearance.test.ts",
+      "durationMs": 4122.466064453125,
+      "tests": [
+        {
+          "name": "interaction rings are prop-free L2 (all rings, 1.2 m around each ring)",
+          "status": "passed",
+          "durationMs": 3671.9824179999996
+        },
+        {
+          "name": "interaction rings are prop-free L1 (all rings, 1.2 m around each ring)",
+          "status": "passed",
+          "durationMs": 450.46617200016044
+        }
+      ]
+    },
+    {
+      "file": "levels/run-out.test.ts",
+      "durationMs": 5984.3876953125,
+      "tests": [
+        {
+          "name": "run-out after the final objective L2: with action the world runs 5 s, invulnerable, then the transition happens once",
+          "status": "passed",
+          "durationMs": 4664.321813999908
+        },
+        {
+          "name": "run-out after the final objective L6: without action the level ends at once",
+          "status": "passed",
+          "durationMs": 568.3689959999174
+        },
+        {
+          "name": "run-out after the final objective L6: with action the world runs 5 s, invulnerable, then the transition happens once",
+          "status": "passed",
+          "durationMs": 752.3876569999848
+        }
+      ]
+    },
+    {
+      "file": "levels/story-bots.test.ts",
+      "durationMs": 69375.77587890625,
+      "tests": [
+        {
+          "name": "@E19 PO UAT story beats: complete bot still completes L1 (seed 1)",
+          "status": "passed",
+          "durationMs": 37412.230863999925
+        },
+        {
+          "name": "@E19 PO UAT story beats: newbie bot still completes L1 (seed 1)",
+          "status": "passed",
+          "durationMs": 28636.249421000015
+        },
+        {
+          "name": "@E19 PO UAT story beat locks input and any press skips it",
+          "status": "passed",
+          "durationMs": 405.3710479999427
+        },
+        {
+          "name": "@E19 PO story beat holds until its bubble has been read",
+          "status": "passed",
+          "durationMs": 668.1585469997954
+        },
+        {
+          "name": "@E19 @E19-AC22 fire-station invitation repeats without moving or protecting the player; entry alone completes",
+          "status": "passed",
+          "durationMs": 2252.7758639999665
+        }
+      ]
+    },
+    {
+      "file": "levels/story-protection.test.ts",
+      "durationMs": 5278.964111328125,
+      "tests": [
+        {
+          "name": "story protection L1 @E19 : every required actor resists bites, damage and collapse, then releases",
+          "status": "passed",
+          "durationMs": 522.1108549998607
+        },
+        {
+          "name": "story protection L2 @E20 : every required actor resists bites, damage and collapse, then releases",
+          "status": "passed",
+          "durationMs": 1822.221768999938
+        },
+        {
+          "name": "story protection L3 @E21 : every required actor resists bites, damage and collapse, then releases",
+          "status": "passed",
+          "durationMs": 1624.5028780000284
+        },
+        {
+          "name": "story protection L4 @E22 : every required actor resists bites, damage and collapse, then releases",
+          "status": "passed",
+          "durationMs": 467.86877799988724
+        },
+        {
+          "name": "story protection L5 @E23 : every required actor resists bites, damage and collapse, then releases",
+          "status": "passed",
+          "durationMs": 677.7426569999661
+        },
+        {
+          "name": "story protection L6 @E24 : every required actor resists bites, damage and collapse, then releases",
+          "status": "passed",
+          "durationMs": 163.96409999998286
+        }
+      ]
+    },
+    {
+      "file": "levels/trap-pockets.test.ts",
+      "durationMs": 4753.67138671875,
+      "tests": [
+        {
+          "name": "@trap-pockets directed reachability L1: every cell the player can reach keeps an objective anchor reachable",
+          "status": "passed",
+          "durationMs": 613.9673160000239
+        },
+        {
+          "name": "@trap-pockets directed reachability L2: every cell the player can reach keeps an objective anchor reachable",
+          "status": "passed",
+          "durationMs": 1631.1377120001707
+        },
+        {
+          "name": "@trap-pockets directed reachability L3: every cell the player can reach keeps an objective anchor reachable",
+          "status": "passed",
+          "durationMs": 1547.3377309998032
+        },
+        {
+          "name": "@trap-pockets directed reachability L4: every cell the player can reach keeps an objective anchor reachable",
+          "status": "passed",
+          "durationMs": 453.8153269998729
+        },
+        {
+          "name": "@trap-pockets directed reachability L5: every cell the player can reach keeps an objective anchor reachable",
+          "status": "passed",
+          "durationMs": 357.2983709999826
+        },
+        {
+          "name": "@trap-pockets directed reachability L6: every cell the player can reach keeps an objective anchor reachable",
+          "status": "passed",
+          "durationMs": 148.67135900002904
+        }
+      ]
+    }
+  ]
+}

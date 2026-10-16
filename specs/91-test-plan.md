@@ -110,6 +110,16 @@ Every acceptance criterion `E<NN>-ACxx` has a test `T-E<NN>-xx` with the tag `@E
 
 A static test (`tests/unit/traceability.test.ts`) parses every `specs/epic-*.md` acceptance table and fails if any AC ID has no tagged test **once that epic is marked in progress or done** in `specs/status.json`. The specs and the tests can therefore not drift apart.
 
+### PO 2026-10-15 corrections carried into this traceability table
+
+The older three-shell-only fixture and doubled Mega size below are superseded; the epic criteria already carry the newer decisions.
+
+> **PO 2026-10-15**, bug intake `po-bugs-1015.md` #37, verbatim: "I got the shotgun, but it's not powerful. It feels less than the regular gun. SHOULD: Shotgun kills Zombies with a single shot and also is effective against alphas."
+
+The binding intake target is 2–3 close shots against an unchanged Alpha; E29's current two-shot default is retained. This corrects the table, not enemy HP/resistance.
+
+> **PO 2026-10-15**, [campaign addendum](po-levels-9-10-2026-10-13.md), verbatim: "The Mega Alpha shouldn't be bigger than the regular ALpha. Just look stronger and more freightinng."
+
 ### 5.1 PO 2026-10-11 changed/new test IDs (planned coverage)
 
 Old IDs/tags are preserved so built compatible assertions remain. **A matching existing tag is structural coverage only; revised behaviors are pending until assertions are extended and pass.** E07 and E22 reopen; E29–E32 are `todo` (E31 remainder re-planned; S1/D1 retained on main), so traceability does not demand nonexistent implementation tests yet. Spec-only validation checks document consistency, traceability and typecheck; level/browser/perf verification belongs to implementation. Existing passing tags do not prove revised E31 or new E32 behavior.
@@ -150,7 +160,7 @@ Every move scene checks activation/impact/expiry and two activations separated b
 | `T-E29-04` | `@E29-AC04` | Rocket pickup on a wrecked army vehicle is ≤ 5 m from exit and usable before first required combat |
 | `T-E29-05` | `@E29-AC05` | 600 rocket shots produce no empty, reload, reserve, overheat or ammo HUD state |
 | `T-E29-06` | `@E29-AC06` | One rocket kills ≥ 20/24 regular 60 HP infected within 3 m of impact within one blast-resolution tick and opens a ≥ 3 m gap |
-| `T-E29-07` | `@E29-AC07` | Default Alpha fixture follows E07: 2 center rocket blasts, 3 close shotgun shells, 43 army-MG hits to HP depletion |
+| `T-E29-07` | `@E29-AC07` | Default Alpha fixture follows E07: 2 center rocket blasts, 2 close shotgun shells (current default within PO #37's 2–3), 43 army-MG hits to HP depletion |
 | `T-E29-08` | `@E29-AC08` | Over one run 4–6 Alphas and ≥ 400/200 regular infected arrive high/low |
 | `T-E29-09` | `@E29-AC09` | Composition uses D-FAIR W6 |
 | `T-E29-10` | `@E29-AC10` | W6 dressing meets §5.1 counts and exceeds W5 in fires, damaged/collapsed facades and wrecked military vehicles |
@@ -225,7 +235,7 @@ All-levels rule: **death respawns at the last checkpoint**. E31-AC14/E32-AC27 re
 | `T-E32-06` | `@E32-AC06` | Depth-authored fixtures follow §4 density curve with axe few → handgun more → shotgun stronger → MG groups → rockets multiple Alphas → minigun assault; changing loadout alone spawns zero enemies. Global overlap cap ≤ 200/100 incl boss/dogs. |
 | `T-E32-07` | `@E32-AC07` | inf.dog uses non-corgi quadruped base/animal role, fast low silhouette; default speed 1.1× run, ≥ 0.6 s telegraph, ≤ 2 m reach, ≥ 2 s cooldown and 10 HP/bite; ordinary LOS/stagger/death rules work. |
 | `T-E32-08` | `@E32-AC08` | Corgi is excluded from infection/spawn substitution/enemy targeting/cure damage; healthy humans/animals remain unharmed by cure. Negative fixtures cover historical pet paths and all cure phases. |
-| `T-E32-09` | `@E32-AC09` | Regular Alphas match E07 bars/resistance/four specials and can die to conventional weapons; R3–R7 counts meet §4, silhouette/scale/bar distinguish them from ≈2× Mega Alpha. |
+| `T-E32-09` | `@E32-AC09` | Regular Alphas match E07 bars/resistance/four specials and can die to conventional weapons; R3–R7 counts meet §4, silhouette/look/bar distinguish them from the same-size Mega Alpha (PO 2026-10-15). |
 | `T-E32-10` | `@E32-AC10` | One Mega Alpha is introduced by 2:00, always pursues player without LOS/hearing/lure, cruise 0.7× nominal run ±2%; off-region state/position/HP persists, no teleport/respawn/border stop, obstacle route cannot permanently trap it. |
 | `T-E32-11` | `@E32-AC11` | Mega charge/slam/grab only activate inside 12 m and meet §5.4 windup/range/speed/damage/cooldown/recovery; moves never overlap, grab always releases and dodge fixtures avoid hits. |
 | `T-E32-12` | `@E32-AC12` | Full-HP Mega survives nine direct stock rockets and dies on tenth; conventional/minigun damage cannot reduce HP below 90% max or kill, rocket damage applies once/projectile, splash ≤ 2.5% max; stagger ≤ 0.5 s with ≥ 2 s shared cooldown. |

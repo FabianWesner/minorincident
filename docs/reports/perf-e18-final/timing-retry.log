@@ -1,0 +1,27 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-e18-final -> 94.130.181.173:/srv/mi/ws/perf-e18-final-abfe7a
+[remote] cache-gc deleted:none
+[remote] sync 28s, 13719 files; job /srv/mi/jobs/perf-e18-final-abfe7a-20109-1792138101; queueing for a slot
+[runner] slot 1 acquired; load 1.46 1.70 2.21
+[runner] waiting for both slots to isolate wall-clock timing
+[runner] both slots held for the timing project
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/perf-e18-final-abfe7a-20109-1792138101[39m
+
+[90mstdout[2m | tests/sim/ai/director.test.ts[2m > [22m[2mT-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget
+[22m[39m{"scenario":"horde-arena","infected":200,"simMsP95":1.9475939999992988,"budget":4}
+
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/ai/director.test.ts [2m([22m[2m11 tests[22m[2m | [22m[33m10 skipped[39m[2m)[22m[33m 1407[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget[33m 1406[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/levels/l10-assault.test.ts [2m([22m[2m5 tests[22m[2m | [22m[33m4 skipped[39m[2m)[22m[33m 13687[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets[33m 13685[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/zoo-s3.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 1686[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms[33m 1684[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[32m3 passed[39m[22m[2m | [22m[33m15 skipped[39m[90m (18)[39m
+[2m   Start at [22m 08:25:07
+[2m   Duration [22m 21.73s[2m (tests 79%, transform 15%, import 6%)[22m
+
+JSON report written to /srv/mi/jobs/perf-e18-final-abfe7a-20109-1792138101/docs/reports/perf-e18-final/timing-retry.json
+[remote] pulled docs/reports/perf-e18-final/timing-retry.json
+[remote] done exit=0 (runner 94.130.181.173, sync 28s, remote total 999s)

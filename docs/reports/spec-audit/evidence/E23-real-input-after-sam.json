@@ -1,0 +1,264 @@
+{
+ "id": "L5",
+ "phase": "playing",
+ "completedObjectives": [
+  "emerge"
+ ],
+ "volumes": [],
+ "killedBosses": [],
+ "deadlineTicks": null,
+ "steps": {
+  "emerge": {
+   "status": "completed",
+   "started": 0,
+   "kills": [],
+   "events": {},
+   "interaction": 25
+  },
+  "look": {
+   "status": "active",
+   "started": 683,
+   "kills": [
+    98,
+    86,
+    1000000054,
+    82,
+    84,
+    1000000053,
+    96,
+    100,
+    1000000049,
+    91,
+    93
+   ],
+   "events": {
+    "combat.kill:*": 17,
+    "player.damaged:*": 1
+   },
+   "interaction": 0
+  },
+  "metro": {
+   "status": "pending",
+   "started": 0,
+   "kills": [],
+   "events": {},
+   "interaction": 0
+  }
+ },
+ "actors": {},
+ "items": [],
+ "states": {
+  "emerged": true,
+  "searching": true,
+  "accounted": false,
+  "at-metro": false,
+  "sheltered": false
+ },
+ "counters": {},
+ "gates": {
+  "l5-metro-shutter": true
+ },
+ "marker": null,
+ "checkpoint": "survivor-2",
+ "tier": 5,
+ "timeOfDay": null,
+ "subtitle": {
+  "id": "L5.found.sam",
+  "text": "Sam: Thank God. I lost my rifle days ago. Take me with you.",
+  "until": 12427
+ },
+ "cinematic": null,
+ "failure": null,
+ "stats": {
+  "time": 202.51666666666668,
+  "kills": 0,
+  "knockdowns": 13,
+  "damage": 10,
+  "deaths": 0,
+  "rescued": 0,
+  "optionalObjectives": []
+ },
+ "result": null,
+ "l5": {
+  "phase": "search",
+  "startAt": 0,
+  "emergedAt": 83,
+  "searchAt": 683,
+  "accountedAt": 0,
+  "metroAt": 0,
+  "shutterAt": 0,
+  "doneAt": 0,
+  "survivors": [
+   {
+    "key": "dale",
+    "id": 20,
+    "status": "hidden",
+    "foundAt": 0,
+    "cueAt": 6083,
+    "lostAt": 0,
+    "hold": 0
+   },
+   {
+    "key": "rosa",
+    "id": 21,
+    "status": "following",
+    "foundAt": 7814,
+    "cueAt": 7948,
+    "lostAt": 0,
+    "hold": 0
+   },
+   {
+    "key": "okafor",
+    "id": 22,
+    "status": "hidden",
+    "foundAt": 0,
+    "cueAt": 4552,
+    "lostAt": 0,
+    "hold": 0
+   },
+   {
+    "key": "mia",
+    "id": 23,
+    "status": "hidden",
+    "foundAt": 0,
+    "cueAt": 3333,
+    "lostAt": 0,
+    "hold": 0
+   },
+   {
+    "key": "sam",
+    "id": 24,
+    "status": "following",
+    "foundAt": 12127,
+    "cueAt": 12524,
+    "lostAt": 0,
+    "hold": 0
+   }
+  ],
+  "found": 2,
+  "lookoutId": 25,
+  "stationIds": [
+   117,
+   118,
+   119,
+   120,
+   121,
+   122,
+   123,
+   124,
+   125,
+   126,
+   127,
+   128,
+   129,
+   130,
+   131,
+   132,
+   133,
+   134,
+   135,
+   136,
+   137,
+   138,
+   139,
+   140
+  ],
+  "infectedIds": [
+   76,
+   78,
+   80,
+   82,
+   84,
+   86,
+   88,
+   89,
+   91,
+   93,
+   95,
+   96,
+   98,
+   100,
+   102,
+   104,
+   106,
+   108
+  ],
+  "medkitIds": [
+   110,
+   111,
+   112,
+   113,
+   114,
+   115,
+   116
+  ],
+  "corpseIds": [
+   26,
+   27,
+   28,
+   29,
+   30,
+   31,
+   32,
+   33,
+   34,
+   35,
+   36,
+   37,
+   38,
+   39,
+   40,
+   41,
+   42,
+   43,
+   44,
+   45,
+   46,
+   47,
+   48,
+   49,
+   50,
+   51,
+   52,
+   53,
+   54,
+   55,
+   56,
+   57,
+   58,
+   59,
+   60,
+   61,
+   62
+  ],
+  "fireIds": [
+   63,
+   64,
+   65,
+   66,
+   67,
+   68,
+   69,
+   70,
+   71,
+   72,
+   73,
+   74,
+   75
+  ],
+  "gloom": 0.5809722222222222,
+  "cue": {
+   "key": "sam",
+   "x": -45,
+   "z": 42.6,
+   "until": 12344,
+   "text": "A flashlight blinks inside the wrecked bus on Lakeshore Avenue."
+  },
+  "lastShot": {
+   "1": 10433
+  },
+  "waitedAt": 0,
+  "infectedMax": 18,
+  "deadAtMetro": 0
+ }
+}

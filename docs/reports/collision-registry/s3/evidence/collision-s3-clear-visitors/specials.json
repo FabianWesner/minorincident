@@ -1,0 +1,19 @@
+{
+  "passed": 20,
+  "failed": 2,
+  "pending": 0,
+  "failures": [
+    {
+      "name": "T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
+      "messages": [
+        "AssertionError: expected 4.87678600000072 to be less than or equal to 4\n    at /srv/mi/jobs/collision-s1-d2c10a-86886-1792112453/tests/sim/performance/zoo-s1.test.ts:30:101\n    at file:///srv/mi/jobs/collision-s1-d2c10a-86886-1792112453/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "name": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+      "messages": [
+        "AssertionError: expected 5.162898999999015 to be less than or equal to 4\n    at /srv/mi/jobs/collision-s1-d2c10a-86886-1792112453/tests/sim/performance/zoo-s2.test.ts:26:68\n    at file:///srv/mi/jobs/collision-s1-d2c10a-86886-1792112453/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    }
+  ]
+}

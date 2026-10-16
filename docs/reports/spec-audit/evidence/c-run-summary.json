@@ -1,0 +1,46 @@
+{
+  "baseline": "8718d0fb1fbc4c46ee4eda34860955345eed2ea6",
+  "branch": "lane/spec-audit-c",
+  "date": "2026-10-16",
+  "commands": [
+    {
+      "command": "MI_VERIFY_REMOTE_SIM=1 E2E_PORT=34999 SCENE_PORT=35099 npm run verify E29",
+      "exit": 1,
+      "checks": "E29-checks.json"
+    },
+    {
+      "command": "MI_VERIFY_REMOTE_SIM=1 E2E_PORT=35000 SCENE_PORT=35100 npm run verify E30",
+      "exit": 143,
+      "checks": "E30-checks.json"
+    },
+    {
+      "command": "MI_VERIFY_REMOTE_SIM=1 E2E_PORT=35001 SCENE_PORT=35101 npm run verify E31",
+      "exit": 143,
+      "checks": "E31-checks.json"
+    },
+    {
+      "command": "MI_VERIFY_REMOTE_SIM=1 E2E_PORT=35002 SCENE_PORT=35102 npm run verify E32",
+      "exit": 1,
+      "checks": "E32-checks.json"
+    }
+  ],
+  "browserAdmissionCancellations": [
+    {
+      "at": "2026-10-16T09:01:39Z",
+      "verifier": "node /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-c/node_modules/.bin/tsx tools/verify.ts E30",
+      "phase": "lockf -k /tmp/minor-incident-e2e.lock.0 lockf -k /tmp/minor-incident-e2e.lock.1 lockf -k /tmp/minor-incident-e2e.lock.2 lockf -k /tmp/minor-incident-e2e.lock.3 sh tools/perf/quiet-run.sh npx playwright test tests/perf/l8-budgets.spec.ts --project=chromium --workers=1",
+      "reason": "Cumulative browser-slot wait allowance exhausted; remaining phases get immediate admission only"
+    },
+    {
+      "at": "2026-10-16T09:16:47Z",
+      "verifier": "node /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-c/node_modules/.bin/tsx tools/verify.ts E31",
+      "phase": "sh tools/e2e-lock.sh npx playwright test --grep @(?:E31)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$) --grep-invert @perf --workers=1",
+      "reason": "Cumulative browser-slot wait allowance exhausted; remaining phases get immediate admission only"
+    }
+  ],
+  "localFinalChecks": {
+    "typecheck": 0,
+    "lint": 0
+  },
+  "scope": "No collision edits; no budget/assertion relaxation; status.json unchanged; no deployment or merge."
+}

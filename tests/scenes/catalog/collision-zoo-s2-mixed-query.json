@@ -1,0 +1,312 @@
+{
+  "name": "collision-zoo-s2-mixed-query",
+  "note": "Mixed physical radii exercise separation queries, alternating occupancy/rollback bounds and real elephant/gorilla specials. This visual fixture supplements the unchanged 200/100 actor Zoo S2 timing tests. Inspect game-camera footprints on both qualities and zooms.",
+  "seed": 1,
+  "ground": "asphalt",
+  "size": 50,
+  "time": "L4",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "god": true,
+      "state": "idle"
+    },
+    {
+      "id": "elephant",
+      "kind": "infected",
+      "archetype": "infected.elephant",
+      "at": [
+        -7,
+        0
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "gorilla",
+      "kind": "infected",
+      "archetype": "infected.gorilla",
+      "at": [
+        4,
+        2
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "crowd-0",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        10.0,
+        0.0
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "crowd-1",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        9.659,
+        2.588
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "crowd-2",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        8.66,
+        5.0
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "crowd-3",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        7.071,
+        7.071
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "crowd-4",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        5.0,
+        8.66
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "crowd-5",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        2.588,
+        9.659
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "crowd-6",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        0.0,
+        10.0
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "crowd-7",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -2.588,
+        9.659
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "crowd-8",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -5.0,
+        8.66
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "crowd-9",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -7.071,
+        7.071
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "crowd-10",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -8.66,
+        5.0
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "crowd-11",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -9.659,
+        2.588
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "crowd-12",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -10.0,
+        0.0
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "crowd-13",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -9.659,
+        -2.588
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "crowd-14",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -8.66,
+        -5.0
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "crowd-15",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -7.071,
+        -7.071
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "crowd-16",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -5.0,
+        -8.66
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "crowd-17",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -2.588,
+        -9.659
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "crowd-18",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -0.0,
+        -10.0
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "crowd-19",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        2.588,
+        -9.659
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "crowd-20",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        5.0,
+        -8.66
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "crowd-21",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        7.071,
+        -7.071
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "crowd-22",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        8.66,
+        -5.0
+      ],
+      "state": "chase"
+    },
+    {
+      "id": "crowd-23",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        9.659,
+        -2.588
+      ],
+      "state": "chase"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "script": [
+    {
+      "frame": 0,
+      "actor": "elephant",
+      "do": {
+        "special": "elephant.charge",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 90,
+      "actor": "gorilla",
+      "do": {
+        "special": "gorilla.grab-throw",
+        "target": "courier"
+      }
+    }
+  ],
+  "frames": 180,
+  "sheet": 18,
+  "expect": {
+    "consoleErrors": 0,
+    "collisionFailuresMax": 0,
+    "collisionPendingMax": 0,
+    "specialActiveMin": 1,
+    "specialActiveMove": "elephant.charge"
+  }
+}

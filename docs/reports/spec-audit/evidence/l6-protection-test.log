@@ -1,0 +1,41 @@
+[pool] all runners full (mi-runner-1:2/2+0q, mi-runner-2:2/2+0q, mi-runner-3:2/2+0q); waiting 0s
+[pool] all runners full (mi-runner-1:2/2+0q, mi-runner-2:2/2+0q, mi-runner-3:2/2+0q); waiting 63s
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a -> 94.130.181.173:/srv/mi/ws/spec-audit-a-e72c4d
+[remote] cache-gc deleted:none
+[remote] sync 98s, 13681 files; job /srv/mi/jobs/spec-audit-a-e72c4d-10764-1792137906; queueing for a slot
+[runner] slot 0 acquired; load 3.87 4.45 3.17
+[runner] npm ci (lockfile hash 4f908e203a9e75df)
+
+added 247 packages in 5s
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/spec-audit-a-e72c4d-10764-1792137906[39m
+
+ [31m❯[39m [30m[43m functional [49m[39m tests/levels/L6-protection.test.ts [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 36479[2mms[22m[39m
+[31m   [31m×[31m T-E24-09-evade @E24 @E24-AC09 refusing to fight still reaches the exit but saves at most thirty percent[39m[33m 36477[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/levels/L6-protection.test.ts[2m > [22mT-E24-09-evade @E24 @E24-AC09 refusing to fight still reaches the exit but saves at most thirty percent
+[31m[1mAssertionError[22m: expected 'timeout' to be 'complete' // Object.is equality[39m
+
+Expected: [32m"complete"[39m
+Received: [31m"timeout"[39m
+
+[36m [2m❯[22m tests/levels/L6-protection.test.ts:[2m15:28[22m[39m
+    [90m 13|[39m     writeFileSync('test-results/epics/E24/evade-seed-1.json', JSON.str…
+    [90m 14|[39m     expect(attacks).toBe(0);
+    [90m 15|[39m     expect(report.outcome).toBe('complete');
+    [90m   |[39m                            [31m^[39m
+    [90m 16|[39m     expect(report.rescued / report.total).toBeLessThanOrEqual(.3);
+    [90m 17|[39m   } finally { world.dispose(); }
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m   Start at [22m 08:06:56
+[2m   Duration [22m 40.08s[2m (tests 91%, transform 7%, import 1%)[22m
+
+[remote] pulled test-results/epics/E24/evade-seed-1.json
+[remote] done exit=1 (runner 94.130.181.173, sync 98s, remote total 53s)

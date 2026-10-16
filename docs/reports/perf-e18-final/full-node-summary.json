@@ -1,0 +1,33 @@
+{
+  "source": "full-node.log",
+  "runner": "2.28.24.66",
+  "tests": {
+    "passed": 2934,
+    "failed": 5,
+    "skipped": 11,
+    "total": 2950
+  },
+  "files": {
+    "passed": 464,
+    "failed": 5,
+    "skipped": 3,
+    "total": 472
+  },
+  "failedTests": [
+    "\u00d7 T-E28-08 @E28 @E28-AC08 every override preserves all registered mission graph walks 133715ms",
+    "\u00d7 T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95 5115ms",
+    "\u00d7 T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget 1991ms",
+    "\u00d7 T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets 15813ms",
+    "\u00d7 T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms 1998ms"
+  ],
+  "isolatedRetries": {
+    "runner": "94.130.181.173",
+    "passed": 5,
+    "failed": 0,
+    "reports": [
+      "timing-retry.json",
+      "timing-retry-remaining.json"
+    ]
+  },
+  "note": "Full JSON was not pulled by the original launcher; raw complete stdout is retained. Counts come from its final summary. All five original timing/deadline failures passed without changing their limits."
+}

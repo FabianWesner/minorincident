@@ -1,0 +1,627 @@
+{
+  "source": "590b667e4",
+  "reservationUnits": 1,
+  "workers": 1,
+  "stats": {
+    "startTime": "2026-10-16T01:11:41.881Z",
+    "duration": 691607.419,
+    "expected": 47,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "file": "e2e/crowd-visible-outbreak.spec.ts",
+      "title": "T-E07-crowd-visible-outbreak-webgl @E07 every on-screen living infected and pedestrian is drawn through an L1 outbreak fight (webgl)",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 25302,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/crowd-visible-outbreak.spec.ts",
+      "title": "T-E07-crowd-visible-outbreak-webgpu @E07 every on-screen living infected and pedestrian is drawn through an L1 outbreak fight (webgpu)",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 25386,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/input-mouse.spec.ts",
+      "title": "T-E03-01 @E03 @E03-AC01 cursor aims without moving",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1058,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/input-mouse.spec.ts",
+      "title": "T-E03-02 @E03 @E03-AC02 mouse buttons preserve down held up and prevent context menus",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 872,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/input-mouse.spec.ts",
+      "title": "T-E03-03 @E03 @E03-AC03 @E02-AC03 wheel zooms smoothly and never cycles weapons",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 1114,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/input-mouse.spec.ts",
+      "title": "T-E03-12 @E03 @E03-AC12 middle-click F and E interact without browser autoscroll",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 858,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/input-mouse.spec.ts",
+      "title": "T-E03-14 @E03 @E03-AC14 click ground walks, retargets, stops and held ground follows cursor",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 5654,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/input-mouse.spec.ts",
+      "title": "T-E03-ground-escape @E03 @E21 clear ground near a melee target stays movement; a near miss at its feet still targets it",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3939,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/input-mouse.spec.ts",
+      "title": "T-E03-15-left @E03 @E03-AC15 target click approaches then attacks left",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 5585,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/input-mouse.spec.ts",
+      "title": "T-E03-16 @E03 @E03-AC16 Shift LMB distant ground swings stationary and cancels destination",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3454,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/input-mouse.spec.ts",
+      "title": "T-E03-17 @E03 @E03-AC17 RMB and Q cycle carried actions without attacking",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3499,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/input-mouse.spec.ts",
+      "title": "T-E03-12-car @E03 @E03-AC12 middle-click near car immediately enters; F exits",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 4006,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/input-mouse.spec.ts",
+      "title": "T-E03-15-held @E03 @E03-AC15 held LMB target repeats and target death stops approach",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3974,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/input-mouse.spec.ts",
+      "title": "T-E03-17-pending @E03 @E03-AC15 @E03-AC17 Q during target command waits for swap then attacks once",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3861,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/input-mouse.spec.ts",
+      "title": "T-E03-15-live @E03 @E03-AC15 real LMB follows a moving infected and attacks it",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 4186,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/input-mouse.spec.ts",
+      "title": "T-E03-chord @E03 @E03-AC02 @E03-AC13 releasing LMB before RMB clears both independently",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 802,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/input-mouse.spec.ts",
+      "title": "@E03-AC05 @E03-AC17 M1-05 numbers and HUD clicks select either rack; Shift never attacks",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 4247,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/input-mouse.spec.ts",
+      "title": "PO #14 active numbers, Q, RMB and HUD follow weapon order after unordered pickups",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 4347,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/cellar-position.spec.ts",
+      "title": "T-E22-cellar-pos @E22 L4 end: Harbor pavement, door, descent, brace; L5 start in the same yard (game camera captures)",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 30185,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/cellar-position.spec.ts",
+      "title": "T-E23-cellar-pos @E23 L5 start: the courier stands in the cellar yard under the game camera, the brace is reachable by keyboard and unbarring steps out on Kessler Lane",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 16853,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/L1.spec.ts",
+      "title": "T-E19-unlock @E19 result screen, real click on Continue: straight to the next level, no upgrade/rack screens (PO decision 2026-10-07)",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 20111,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/L1.spec.ts",
+      "title": "T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 29388,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/L1.spec.ts",
+      "title": "T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 34467,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/l4-blank-viewport.spec.ts",
+      "title": "T-E22-blank @E22 L4 the walk along Lakeshore Avenue past the former cellar never leaves the viewport one flat colour (webgl)",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 21464,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/l4-blank-viewport.spec.ts",
+      "title": "T-E22-blank @E22 L4 the walk along Lakeshore Avenue past the former cellar never leaves the viewport one flat colour (webgpu)",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 21898,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/l4-blank-viewport.spec.ts",
+      "title": "T-E22-blank @E22 L4 the walk along Kessler Lane north of the store never leaves the viewport one flat colour (webgl)",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 22052,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/l4-blank-viewport.spec.ts",
+      "title": "T-E22-blank @E22 L4 the walk along Kessler Lane north of the store never leaves the viewport one flat colour (webgpu)",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 20451,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/l4-blank-viewport.spec.ts",
+      "title": "T-E22-blank @E22 L4 the walk along Harbor Street to the relocated cellar never leaves the viewport one flat colour (webgl)",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 21841,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/l4-blank-viewport.spec.ts",
+      "title": "T-E22-blank @E22 L4 the walk along Harbor Street to the relocated cellar never leaves the viewport one flat colour (webgpu)",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 22424,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/l4-po-round.spec.ts",
+      "title": "webgl high zoom 1",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 21055,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/l4-po-round.spec.ts",
+      "title": "webgl high zoom 0.5",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 21013,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/l4-po-round.spec.ts",
+      "title": "webgl high zoom 1.5",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 20572,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/l4-po-round.spec.ts",
+      "title": "webgl low zoom 1",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 8790,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/l4-po-round.spec.ts",
+      "title": "webgl low zoom 0.5",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 8968,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/l4-po-round.spec.ts",
+      "title": "webgl low zoom 1.5",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 9199,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/l4-po-round.spec.ts",
+      "title": "webgpu high zoom 1",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 20314,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/l4-po-round.spec.ts",
+      "title": "webgpu high zoom 1.5",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 21275,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/l4-po-round.spec.ts",
+      "title": "webgpu low zoom 1",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 8620,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/l4-po-round.spec.ts",
+      "title": "webgpu low zoom 1.5",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 8899,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/L4.spec.ts",
+      "title": "T-E22-alarm @E22 @E22-AC07 real-input alarm has living visible infected within 10 seconds",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 13143,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/L4.spec.ts",
+      "title": "T-E22-18 @E22 @E22-AC18 @E22-AC19 real-input playthrough: convoy, quartermaster, the turn, the war, the line break, Kessler Lane, the barred cellar door; photo spots and pair cameras",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 61960,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/L4.spec.ts",
+      "title": "T-E22-15b @E22 @E22-AC15 campaign: the barred cellar door loads L5 with the carried loadout and no reward screen",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 7011,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/L4.spec.ts",
+      "title": "T-E22-19 @E22 @E22-AC20 pedestrians, soldiers and infected are drawn on screen in L4 (webgl), not only their props",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 14546,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/L4.spec.ts",
+      "title": "T-E22-19 @E22 @E22-AC20 pedestrians, soldiers and infected are drawn on screen in L4 (webgpu), not only their props",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 16825,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/menu-10-levels.spec.ts",
+      "title": "ten level menu high @menu-10-levels",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 25182,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/menu-10-levels.spec.ts",
+      "title": "ten level menu low @menu-10-levels",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 17064,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/menu-10-levels.spec.ts",
+      "title": "L9 saved crossing row resumes and can restart @menu-10-levels",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 18497,
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

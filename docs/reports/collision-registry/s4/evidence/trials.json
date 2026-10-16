@@ -1,0 +1,2538 @@
+{
+  "separation": [
+    {
+      "round": 0,
+      "name": "baseline",
+      "exit": 0,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 2.184881000000132,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 3.885392999999567,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.6208749999987049,
+            "simMsP95": 1.2201199999999517,
+            "simMsMax": 3.1233030000003055
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.2596439999997529,
+            "simMsP95": 2.043235999999524,
+            "simMsMax": 5.342056999999841
+          }
+        }
+      }
+    },
+    {
+      "round": 0,
+      "name": "variant",
+      "exit": 0,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.8765010000006441,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 3.9867440000007264,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.595989000001282,
+            "simMsP95": 0.9154379999999946,
+            "simMsMax": 1.4555019999988872
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.259422999999515,
+            "simMsP95": 1.779671000000235,
+            "simMsMax": 2.7768919999998616
+          }
+        }
+      }
+    },
+    {
+      "round": 1,
+      "name": "baseline",
+      "exit": 1,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.798888000000261,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 4.571691000000101,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.6133409999983996,
+            "simMsP95": 1.3148180000007414,
+            "simMsMax": 2.9616489999989426
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.3438030000015715,
+            "simMsP95": 2.202032999999574,
+            "simMsMax": 3.022083999998358
+          }
+        }
+      }
+    },
+    {
+      "round": 1,
+      "name": "variant",
+      "exit": 1,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 2.2497519999997166,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 5.366272000000208,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.5791380000009667,
+            "simMsP95": 0.8673189999990427,
+            "simMsMax": 1.577831000000515
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.1787230000009004,
+            "simMsP95": 1.7010229999996227,
+            "simMsMax": 2.4533450000017183
+          }
+        }
+      }
+    },
+    {
+      "round": 2,
+      "name": "baseline",
+      "exit": 1,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 2.1093799999998737,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 5.674089999999524,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.5687780000007479,
+            "simMsP95": 0.8376630000002478,
+            "simMsMax": 1.5561409999991156
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.2644929999987653,
+            "simMsP95": 2.2189050000015413,
+            "simMsMax": 4.439663999999539
+          }
+        }
+      }
+    },
+    {
+      "round": 2,
+      "name": "variant",
+      "exit": 0,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.6863759999996546,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 3.886956000000282,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.5860200000006444,
+            "simMsP95": 0.8073460000014165,
+            "simMsMax": 1.5922289999998611
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.3206499999996595,
+            "simMsP95": 2.18629300000066,
+            "simMsMax": 5.100104000001011
+          }
+        }
+      }
+    }
+  ],
+  "query": [
+    {
+      "round": 0,
+      "name": "baseline",
+      "exit": 0,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.914491000000453,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 3.856633000000329,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.5516890000008061,
+            "simMsP95": 0.8371619999998074,
+            "simMsMax": 1.427161999999953
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.1547430000000531,
+            "simMsP95": 1.8673429999998916,
+            "simMsMax": 3.2818999999999505
+          }
+        }
+      }
+    },
+    {
+      "round": 0,
+      "name": "variant",
+      "exit": 1,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.664252999999917,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 4.159808000000339,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.616320000000087,
+            "simMsP95": 0.8367400000006455,
+            "simMsMax": 1.9013969999996334
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.208092000000761,
+            "simMsP95": 1.9123249999993277,
+            "simMsMax": 5.674121999999443
+          }
+        }
+      }
+    },
+    {
+      "round": 1,
+      "name": "baseline",
+      "exit": 1,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.889314000000013,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 4.3375489999998535,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.5504870000004303,
+            "simMsP95": 0.9042069999995874,
+            "simMsMax": 1.281420000000253
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.2866800000001604,
+            "simMsP95": 2.2154019999998127,
+            "simMsMax": 3.977256999999554
+          }
+        }
+      }
+    },
+    {
+      "round": 1,
+      "name": "variant",
+      "exit": 0,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 2.0646200000001045,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 3.9165130000001227,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.638492000000042,
+            "simMsP95": 0.9544999999998254,
+            "simMsMax": 1.7590710000004037
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.2257870000003095,
+            "simMsP95": 1.9089500000000044,
+            "simMsMax": 4.1572439999999915
+          }
+        }
+      }
+    },
+    {
+      "round": 2,
+      "name": "baseline",
+      "exit": 0,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.7079550000007657,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 3.8123390000000654,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.5952010000000882,
+            "simMsP95": 0.9751390000001265,
+            "simMsMax": 1.457206999999471
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.3057760000001508,
+            "simMsP95": 1.975413999999546,
+            "simMsMax": 3.279936999999336
+          }
+        }
+      }
+    },
+    {
+      "round": 2,
+      "name": "variant",
+      "exit": 0,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.9023990000005142,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 3.9932870000002367,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.5607160000008662,
+            "simMsP95": 0.8127850000000763,
+            "simMsMax": 1.5826820000002044
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.1812129999998433,
+            "simMsP95": 1.8593080000000555,
+            "simMsMax": 4.282645999999659
+          }
+        }
+      }
+    }
+  ],
+  "fine": [
+    {
+      "round": 0,
+      "name": "baseline",
+      "exit": 1,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.678290000000743,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 4.042609999999513,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.5964130000002115,
+            "simMsP95": 0.8375810000006823,
+            "simMsMax": 1.4991760000002614
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.211949000000459,
+            "simMsP95": 1.9966139999996813,
+            "simMsMax": 4.51844599999913
+          }
+        }
+      }
+    },
+    {
+      "round": 0,
+      "name": "variant",
+      "exit": 1,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 25,
+          "simMsP95": 2.307733999999982,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 54,
+          "simMsP95": 4.588416000000052,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.5791900000003807,
+            "simMsP95": 0.9142549999996845,
+            "simMsMax": 1.9828170000000682
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.4156499999999141,
+            "simMsP95": 2.3745890000000145,
+            "simMsMax": 4.2105719999999565
+          }
+        }
+      }
+    },
+    {
+      "round": 1,
+      "name": "baseline",
+      "exit": 1,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.9513790000000881,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 4.6202079999998205,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.8337940000001254,
+            "simMsP95": 1.5123700000003737,
+            "simMsMax": 3.549951000000874
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.399731000000429,
+            "simMsP95": 2.278458999999202,
+            "simMsMax": 6.098693999999341
+          }
+        }
+      }
+    },
+    {
+      "round": 1,
+      "name": "variant",
+      "exit": 1,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 25,
+          "simMsP95": 2.257158999999774,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 54,
+          "simMsP95": 4.347437000000355,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.5830779999996594,
+            "simMsP95": 0.9043380000002799,
+            "simMsMax": 3.7754509999995207
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.2197839999998905,
+            "simMsP95": 1.808853999999883,
+            "simMsMax": 2.7433759999994436
+          }
+        }
+      }
+    },
+    {
+      "round": 2,
+      "name": "baseline",
+      "exit": 1,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.6796519999998054,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 4.269994000000224,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.651175000000876,
+            "simMsP95": 2.0378319999999803,
+            "simMsMax": 3.2200450000000274
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.2416960000000472,
+            "simMsP95": 2.621498999999858,
+            "simMsMax": 6.151331000000027
+          }
+        }
+      }
+    },
+    {
+      "round": 2,
+      "name": "variant",
+      "exit": 1,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 25,
+          "simMsP95": 2.0466779999997016,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 54,
+          "simMsP95": 4.091491000000133,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.5946180000000822,
+            "simMsP95": 0.8773160000000644,
+            "simMsMax": 1.64816300000075
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.338027000000693,
+            "simMsP95": 2.0302160000001095,
+            "simMsMax": 3.4504839999999604
+          }
+        }
+      }
+    }
+  ],
+  "window": [
+    {
+      "round": 0,
+      "name": "baseline",
+      "exit": 1,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.9984779999995226,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 4.154138999999304,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.6510069999985717,
+            "simMsP95": 1.2120869999998831,
+            "simMsMax": 6.706292000000758
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.2594659999995201,
+            "simMsP95": 2.1440999999995256,
+            "simMsMax": 7.726591000000553
+          }
+        }
+      }
+    },
+    {
+      "round": 0,
+      "name": "variant",
+      "exit": 0,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.8385189999999056,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 3.8032830000001923,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.5588749999988067,
+            "simMsP95": 1.0079769999993005,
+            "simMsMax": 1.3355869999995775
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.22396099999969,
+            "simMsP95": 1.992647000000943,
+            "simMsMax": 3.494466000000102
+          }
+        }
+      }
+    },
+    {
+      "round": 1,
+      "name": "baseline",
+      "exit": 1,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.925151000000369,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 4.268825000000106,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.6237960000016756,
+            "simMsP95": 1.2759360000000015,
+            "simMsMax": 4.614141999998537
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.2533339999990858,
+            "simMsP95": 2.0047909999993863,
+            "simMsMax": 3.2185499999995955
+          }
+        }
+      }
+    },
+    {
+      "round": 1,
+      "name": "variant",
+      "exit": 1,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.645727999999508,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 4.4893980000006195,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.6084179999998014,
+            "simMsP95": 0.8264060000001336,
+            "simMsMax": 1.9425429999992048
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.253805000000284,
+            "simMsP95": 1.8732749999999214,
+            "simMsMax": 2.949688000000606
+          }
+        }
+      }
+    },
+    {
+      "round": 2,
+      "name": "baseline",
+      "exit": 0,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.7511460000005172,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 3.7988359999999375,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.5837009999995644,
+            "simMsP95": 0.9405800000004092,
+            "simMsMax": 1.706623000000036
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.1826010000004317,
+            "simMsP95": 1.7469979999987117,
+            "simMsMax": 3.345858999999109
+          }
+        }
+      }
+    },
+    {
+      "round": 2,
+      "name": "variant",
+      "exit": 0,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.886939999999413,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 3.967490999999427,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.6489540000002307,
+            "simMsP95": 0.8775730000015756,
+            "simMsMax": 1.7664939999995113
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.2405500000004395,
+            "simMsP95": 1.9449279999989812,
+            "simMsMax": 2.8683560000008583
+          }
+        }
+      }
+    }
+  ],
+  "windows64": [
+    {
+      "round": 0,
+      "name": "baseline",
+      "exit": 0,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.7082970000001296,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 3.908705999999256,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.6214540000000852,
+            "simMsP95": 1.0070840000007593,
+            "simMsMax": 1.8822129999989556
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.2362450000000536,
+            "simMsP95": 1.9620020000002114,
+            "simMsMax": 2.901840999998967
+          }
+        }
+      }
+    },
+    {
+      "round": 0,
+      "name": "variant",
+      "exit": 0,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.6353810000000522,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 3.924215000000004,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.5443390000000363,
+            "simMsP95": 1.0107920000009472,
+            "simMsMax": 3.2262379999992845
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.2468950000002224,
+            "simMsP95": 1.919992999999522,
+            "simMsMax": 2.8058209999999235
+          }
+        }
+      }
+    },
+    {
+      "round": 1,
+      "name": "baseline",
+      "exit": 1,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.6786929999998392,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 4.565934999999627,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.5537359999998444,
+            "simMsP95": 0.7610850000000937,
+            "simMsMax": 2.7549659999986034
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.1968600000000151,
+            "simMsP95": 1.8537599999999657,
+            "simMsMax": 6.070832999999766
+          }
+        }
+      }
+    },
+    {
+      "round": 1,
+      "name": "variant",
+      "exit": 0,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.7631289999999353,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 3.7326160000002346,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.5715700000000652,
+            "simMsP95": 0.7797700000010082,
+            "simMsMax": 1.9249429999999847
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.267812000000049,
+            "simMsP95": 2.078810999999405,
+            "simMsMax": 5.32842299999902
+          }
+        }
+      }
+    },
+    {
+      "round": 2,
+      "name": "baseline",
+      "exit": 0,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 2.0303710000007413,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 3.91307500000039,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.6106230000004871,
+            "simMsP95": 0.907748999999967,
+            "simMsMax": 2.1220530000009603
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.2099450000005163,
+            "simMsP95": 1.8763720000006288,
+            "simMsMax": 4.619628000000375
+          }
+        }
+      }
+    },
+    {
+      "round": 2,
+      "name": "variant",
+      "exit": 1,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.8119520000000193,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 4.05780600000071,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.574585999998817,
+            "simMsP95": 1.2866489999996702,
+            "simMsMax": 2.6030829999999696
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.3320929999990767,
+            "simMsP95": 2.5253869999996823,
+            "simMsMax": 8.195371999998315
+          }
+        }
+      }
+    }
+  ],
+  "empty": [
+    {
+      "round": 0,
+      "name": "baseline",
+      "exit": 0,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.7960190000003422,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 3.33754399999998,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.581304999999702,
+            "simMsP95": 0.8951600000000326,
+            "simMsMax": 3.2244229999996605
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.2668620000004012,
+            "simMsP95": 2.116877999999815,
+            "simMsMax": 3.473076000000219
+          }
+        }
+      }
+    },
+    {
+      "round": 0,
+      "name": "variant",
+      "exit": 0,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.7804599999999482,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 3.731149000000187,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.5857019999994009,
+            "simMsP95": 0.7952139999997598,
+            "simMsMax": 1.3817259999996168
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.3586639999994077,
+            "simMsP95": 2.0277310000001307,
+            "simMsMax": 4.051744999999755
+          }
+        }
+      }
+    },
+    {
+      "round": 1,
+      "name": "baseline",
+      "exit": 1,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.9821270000002187,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 4.863129000000299,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.5313510000005408,
+            "simMsP95": 0.9630059999999503,
+            "simMsMax": 2.5783689999998387
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.143912999999884,
+            "simMsP95": 2.2801529999997,
+            "simMsMax": 5.212540999999874
+          }
+        }
+      }
+    },
+    {
+      "round": 1,
+      "name": "variant",
+      "exit": 1,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.7910000000001673,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 4.730119999999715,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.5852820000000065,
+            "simMsP95": 1.1340449999997873,
+            "simMsMax": 1.7780149999998685
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.2305660000001808,
+            "simMsP95": 2.105938000000606,
+            "simMsMax": 5.127281000000039
+          }
+        }
+      }
+    },
+    {
+      "round": 2,
+      "name": "baseline",
+      "exit": 1,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 2.1733930000000328,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 4.654199999999946,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.5872849999996106,
+            "simMsP95": 0.8012539999999717,
+            "simMsMax": 1.4615460000004532
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.363322999999582,
+            "simMsP95": 3.0237090000000535,
+            "simMsMax": 6.129500000000007
+          }
+        }
+      }
+    },
+    {
+      "round": 2,
+      "name": "variant",
+      "exit": 0,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.674272000000201,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 3.823660999999902,
+          "budgetMs": 4
+        },
+        "horde": {
+          "100": {
+            "scenario": "perf-horde-100",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 100,
+            "minVisibleInfected": 100,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 100,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 100,
+            "simMsP50": 0.5983249999990221,
+            "simMsP95": 0.9371179999998276,
+            "simMsMax": 2.2365209999998115
+          },
+          "200": {
+            "scenario": "perf-horde-200",
+            "seed": 1,
+            "warmup": 120,
+            "ticks": 600,
+            "minInfected": 200,
+            "minVisibleInfected": 200,
+            "collision": {
+              "failures": 0,
+              "pending": 0,
+              "admitted": 200,
+              "deferred": 0,
+              "requests": [],
+              "offenders": []
+            },
+            "cap": 200,
+            "simMsP50": 1.2021119999999428,
+            "simMsP95": 2.0829750000002605,
+            "simMsMax": 3.0903330000001006
+          }
+        }
+      }
+    }
+  ],
+  "pose": [
+    {
+      "trial": 0,
+      "name": "base",
+      "exit": 1,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.6427519999997457,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 4.263627999999699,
+          "budgetMs": 4
+        }
+      }
+    },
+    {
+      "trial": 0,
+      "name": "variant",
+      "exit": 0,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 2.0976259999997637,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 3.866624000000229,
+          "budgetMs": 4
+        }
+      }
+    },
+    {
+      "trial": 1,
+      "name": "base",
+      "exit": 1,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.7882339999996475,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 4.350171999999475,
+          "budgetMs": 4
+        }
+      }
+    },
+    {
+      "trial": 1,
+      "name": "variant",
+      "exit": 0,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.80904400000054,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 3.804106000000502,
+          "budgetMs": 4
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "name": "base",
+      "exit": 0,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.7813319999995656,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 3.877433999999994,
+          "budgetMs": 4
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "name": "variant",
+      "exit": 1,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.7487810000002355,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 4.2220109999998385,
+          "budgetMs": 4
+        }
+      }
+    }
+  ],
+  "pose-copy": [
+    {
+      "trial": 0,
+      "name": "base",
+      "exit": 1,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.5920670000004975,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 4.245895000000019,
+          "budgetMs": 4
+        }
+      }
+    },
+    {
+      "trial": 0,
+      "name": "variant",
+      "exit": 0,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.583070000000589,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 3.7697130000005927,
+          "budgetMs": 4
+        }
+      }
+    },
+    {
+      "trial": 1,
+      "name": "base",
+      "exit": 1,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.874826999999641,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 4.408089999999902,
+          "budgetMs": 4
+        }
+      }
+    },
+    {
+      "trial": 1,
+      "name": "variant",
+      "exit": 0,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.6053329999995185,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 3.64959700000054,
+          "budgetMs": 4
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "name": "base",
+      "exit": 1,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 3.077183000000332,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 4.1551250000002256,
+          "budgetMs": 4
+        }
+      }
+    },
+    {
+      "trial": 2,
+      "name": "variant",
+      "exit": 0,
+      "proof": {
+        "100": {
+          "count": 100,
+          "zoo": 10,
+          "activations": 27,
+          "simMsP95": 1.84609300000011,
+          "budgetMs": 6
+        },
+        "200": {
+          "count": 200,
+          "zoo": 20,
+          "activations": 51,
+          "simMsP95": 3.917739999999867,
+          "budgetMs": 4
+        }
+      }
+    }
+  ]
+}

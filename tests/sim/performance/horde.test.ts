@@ -5,6 +5,7 @@ for (const [scenario, count, budget] of [['perf-horde-200', 200, 4], ['perf-hord
   test(`T-E18-02-${count} @E18-AC02 @perf Node sim p95 ${count} living infected <= ${budget}ms`, async () => {
     const proof = await measureHorde(scenario);
     mkdirSync('test-results/epics/E18', { recursive: true }); writeFileSync(`test-results/epics/E18/sim-${count}.json`, JSON.stringify(proof, null, 2) + '\n');
+    expect(proof.minVisibleInfected).toBe(count); expect(proof.collision).toMatchObject({ failures: 0, pending: 0 });
     expect(proof.minInfected).toBe(count); expect(proof.cap).toBe(count); expect(proof.simMsP95).toBeLessThanOrEqual(budget);
   });
 }
