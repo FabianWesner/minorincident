@@ -70,7 +70,7 @@ test.each([false, true])('contact cache preserves horde state against unfiltered
   } finally { actual.dispose(); reference.dispose(); }
 });
 
-test('cached query windows retain live membership, nested visits and reset order', () => {
+test('queries retain live membership, nested visits and reset order', () => {
   const hash = new SpatialHash(2), query = { x: 0, z: 0, r: 6 };
   hash.set(9, -1, 0); hash.set(2, 0, 0); hash.set(7, .2, 0);
   expect(hash.query(query, [], false)).toEqual([9, 2, 7]);
