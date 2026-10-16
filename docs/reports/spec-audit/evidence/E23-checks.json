@@ -1,0 +1,70 @@
+{
+  "target": "E23",
+  "epics": [
+    "E23"
+  ],
+  "pattern": "@(?:E23)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+  "checks": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/remote/run.sh",
+        "/Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a",
+        "--pull",
+        "test-results/epics/E23/vitest.json",
+        "--",
+        "npx",
+        "vitest",
+        "run",
+        "-t",
+        "@(?:E23)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--maxWorkers=1",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/epics/E23/vitest.json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "npx",
+        "playwright",
+        "test",
+        "--grep",
+        "@(?:E23)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--grep-invert",
+        "@perf",
+        "--workers=1"
+      ],
+      "exitCode": 1
+    }
+  ]
+}
