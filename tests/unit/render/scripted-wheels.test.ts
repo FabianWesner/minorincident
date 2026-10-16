@@ -37,3 +37,19 @@ for (const low of [false, true]) test(`scripted bus wheels roll with interpolate
     for (const wheel of wheels()) expect(wheel.spin).toBeCloseTo(-1 / .52);
   } finally { view.dispose(); }
 });
+
+for (const low of [false, true]) test(`scripted bus keeps the actual penultimate tick through acceleration and multiple ticks per draw (${low})`, async () => {
+  const player = { id: 1, transform: { x: 0, y: .7, z: 0, yaw: 0 } };
+  const bus = { id: 2, kind: 'setpiece', archetype: 'veh.evac-bus', health: { current: 100 }, transform: { x: 0, y: .7, z: 0, yaw: 0 } };
+  const world = { tick: 0, entities: { get: (id: number) => id === 1 ? player : bus, iterate: () => [player, bus] } } as unknown as SimWorld;
+  const view = new EntityAssets(world, low);
+  try {
+    await view.ready(); view.update();
+    for (const x of [.1, .3, .6]) { world.tick++; bus.transform.x = x; view.advance(); }
+    view.update(0);
+    expect(view.getState().actors[0].position[0]).toBeCloseTo(.3, 9);
+    view.update(.5);
+    expect(view.getState().actors[0].position[0]).toBeCloseTo(.45, 9);
+    for (const wheel of view.getState().actors[0].wheels) expect(wheel.spin).toBeCloseTo(-.45 / .52);
+  } finally { view.dispose(); }
+});
