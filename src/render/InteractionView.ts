@@ -338,7 +338,6 @@ export class InteractionView extends Group {
       const c = selected.interactable!;
       // Leave the survivor's head/torso clear when they stand just behind the device.
       this.projection.set(selected.transform.x, 2.8, selected.transform.z).project(camera);
-      this.panel.style.left = `${(this.projection.x + 1) * innerWidth / 2}px`; this.panel.style.top = `${(1 - this.projection.y) * innerHeight / 2}px`;
       const b = selected.barricade;
       const service = selected.archetype === 'l6.service-gate';
       const label = service ? 'Block the tunnel' : b && !b.intact ? `${c.label} · ${Math.round(b.coverage * 100)}% coverage` : c.label;
@@ -353,6 +352,17 @@ export class InteractionView extends Group {
       if (!this.coverage.hidden) { const coverage = selected.barricade!.coverage; this.coverage.setAttribute('aria-valuenow', String(Math.round(coverage * 100))); this.coverageFill.style.transform = `scaleX(${coverage})`; }
       const progress = service ? gate?.closedAt ? Math.min(1, (b?.props.length ?? 0) / 2) : (gate?.hold ?? 0) / 60 : c.progress;
       this.meter.setAttribute('aria-valuenow', String(Math.round(progress * 100))); this.meterFill.style.transform = `scaleX(${progress})`;
+      // Content and visibility determine the final size (coverage, repair and gate
+      // captions wrap differently). Clamp the translated panel, not its anchor.
+      const viewport = window.visualViewport;
+      this.panel.style.maxWidth = `${(viewport?.width ?? innerWidth) - 16}px`;
+      this.panel.style.maxHeight = `${(viewport?.height ?? innerHeight) - 16}px`;
+      const { width, height } = this.panel.getBoundingClientRect();
+      const left = viewport?.offsetLeft ?? 0, top = viewport?.offsetTop ?? 0;
+      const right = left + (viewport?.width ?? innerWidth), bottom = top + (viewport?.height ?? innerHeight);
+      const x = (this.projection.x + 1) * innerWidth / 2, y = (1 - this.projection.y) * innerHeight / 2;
+      this.panel.style.left = `${Math.max(left + 8 + width / 2, Math.min(right - 8 - width / 2, x))}px`;
+      this.panel.style.top = `${Math.max(top + 8 + height, Math.min(bottom - 8, y))}px`;
     }
     const pieces = this.world.hazards?.debris.pieces ?? [];
     for (let i = 0; i < pieces.length; i++) {
