@@ -1,0 +1,102 @@
+
+Running 5 tests using 1 worker
+
+  ✘  1 [chromium] › tests/perf/e18-devices.spec.ts:11:57 › Pixel 7 › T-E18-08-android-webgl @E18-AC08 @perf emulated mobile L6 at 4x CPU p50 >=30fps (4.0s)
+  -  2 [chromium] › tests/perf/e18-devices.spec.ts:11:57 › Pixel 7 › T-E18-08-android-webgpu @E18-AC08 @perf emulated mobile L6 at 4x CPU p50 >=30fps
+  ✘  3 [chromium] › tests/perf/e18-devices.spec.ts:11:57 › iPhone 14 › T-E18-08-ios-webgl @E18-AC08 @perf emulated mobile L6 at 2x CPU p50 >=30fps (4.1s)
+  -  4 [chromium] › tests/perf/e18-devices.spec.ts:11:57 › iPhone 14 › T-E18-08-ios-webgpu @E18-AC08 @perf emulated mobile L6 at 2x CPU p50 >=30fps
+  -  5 [chromium] › tests/perf/e18-devices.spec.ts:44:1 › T-E18-08-physical @E18-AC08 @manual physical iOS and Android recordings at final verification
+
+
+  1) [chromium] › tests/perf/e18-devices.spec.ts:11:57 › Pixel 7 › T-E18-08-android-webgl @E18-AC08 @perf emulated mobile L6 at 4x CPU p50 >=30fps
+
+    Error: frame.evaluate: TypeError: Cannot read properties of undefined (reading 'origin')
+        at Op (http://127.0.0.1:3468/build/index-UYiOzTFv.js:3:11966)
+        at http://127.0.0.1:3468/build/index-UYiOzTFv.js:12:45132
+        at Op (http://127.0.0.1:3468/build/index-UYiOzTFv.js:3:11966)
+        at http://127.0.0.1:3468/build/index-UYiOzTFv.js:12:45132
+        at /private/tmp/merge-batch6-main/tests/perf/e18-devices.spec.ts:19:33
+
+    Error: Uncaught errors, console errors and failed requests
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 5
+
+    - Array []
+    + Array [
+    +   "console.error: Level load failed TypeError: Cannot read properties of undefined (reading 'origin')
+    +     at Op (http://127.0.0.1:3468/build/index-UYiOzTFv.js:3:11966)
+    +     at http://127.0.0.1:3468/build/index-UYiOzTFv.js:12:45132",
+    + ]
+
+       at e2e/fixtures.ts:42
+
+      40 |     const guard = attachErrorGuard(page);
+      41 |     await use(); guard.dispose();
+    > 42 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);
+         |                                                                                 ^
+      43 |   }, { auto: true }],
+      44 | });
+      45 | export { expect };
+        at Object.base.extend.errorGuard.auto (/private/tmp/merge-batch6-main/tests/e2e/fixtures.ts:42:81)
+
+    Error Context: test-results/playwright/run-3468/perf-e18-devices-Pixel-7-T-c529f-bile-L6-at-4x-CPU-p50-30fps-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3468/perf-e18-devices-Pixel-7-T-c529f-bile-L6-at-4x-CPU-p50-30fps-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3468/perf-e18-devices-Pixel-7-T-c529f-bile-L6-at-4x-CPU-p50-30fps-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/perf/e18-devices.spec.ts:11:57 › iPhone 14 › T-E18-08-ios-webgl @E18-AC08 @perf emulated mobile L6 at 2x CPU p50 >=30fps
+
+    Error: frame.evaluate: TypeError: Cannot read properties of undefined (reading 'origin')
+        at Op (http://127.0.0.1:3468/build/index-UYiOzTFv.js:3:11966)
+        at http://127.0.0.1:3468/build/index-UYiOzTFv.js:12:45132
+        at Op (http://127.0.0.1:3468/build/index-UYiOzTFv.js:3:11966)
+        at http://127.0.0.1:3468/build/index-UYiOzTFv.js:12:45132
+        at /private/tmp/merge-batch6-main/tests/perf/e18-devices.spec.ts:19:33
+
+    Error: Uncaught errors, console errors and failed requests
+
+    expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 5
+
+    - Array []
+    + Array [
+    +   "console.error: Level load failed TypeError: Cannot read properties of undefined (reading 'origin')
+    +     at Op (http://127.0.0.1:3468/build/index-UYiOzTFv.js:3:11966)
+    +     at http://127.0.0.1:3468/build/index-UYiOzTFv.js:12:45132",
+    + ]
+
+       at e2e/fixtures.ts:42
+
+      40 |     const guard = attachErrorGuard(page);
+      41 |     await use(); guard.dispose();
+    > 42 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);
+         |                                                                                 ^
+      43 |   }, { auto: true }],
+      44 | });
+      45 | export { expect };
+        at Object.base.extend.errorGuard.auto (/private/tmp/merge-batch6-main/tests/e2e/fixtures.ts:42:81)
+
+    Error Context: test-results/playwright/run-3468/perf-e18-devices-iPhone-14-2b231-bile-L6-at-2x-CPU-p50-30fps-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3468/perf-e18-devices-iPhone-14-2b231-bile-L6-at-2x-CPU-p50-30fps-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3468/perf-e18-devices-iPhone-14-2b231-bile-L6-at-2x-CPU-p50-30fps-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests/perf/e18-devices.spec.ts:11:57 › Pixel 7 › T-E18-08-android-webgl @E18-AC08 @perf emulated mobile L6 at 4x CPU p50 >=30fps
+    [chromium] › tests/perf/e18-devices.spec.ts:11:57 › iPhone 14 › T-E18-08-ios-webgl @E18-AC08 @perf emulated mobile L6 at 2x CPU p50 >=30fps
+  3 skipped

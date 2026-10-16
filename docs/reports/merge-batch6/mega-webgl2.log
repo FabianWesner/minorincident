@@ -1,0 +1,25 @@
+
+> scene:catalog
+> sh tools/e2e-lock.sh tsx tools/scenelab/catalog.ts --matrix --jobs 1 --backend webgl2 --filter l10-q1-mega-charge,l10-q1-mega-slam,l10-q1-mega-grab --out test-results/merge-batch6/mega-webgl2
+
+[catalog] 9 scenes, 1 browser(s), 960x540, webgl2, high
+[catalog] 1/18 pass l10-q1-mega-charge@high-z1.5 (7.1 s)
+[catalog] 2/18 pass l10-q1-mega-charge@high-z1 (4.9 s)
+[catalog] 3/18 pass l10-q1-mega-charge@high-z0.5 (4.8 s)
+[catalog] 4/18 pass l10-q1-mega-grab@high-z1.5 (4.7 s)
+[catalog] 5/18 pass l10-q1-mega-grab@high-z1 (4.8 s)
+[catalog] 6/18 pass l10-q1-mega-grab@high-z0.5 (5.2 s)
+[catalog] 7/18 pass l10-q1-mega-slam@high-z1.5 (5.2 s)
+[catalog] 8/18 pass l10-q1-mega-slam@high-z1 (5.2 s)
+[catalog] 9/18 pass l10-q1-mega-slam@high-z0.5 (5.2 s)
+[catalog] 9 scenes, 1 browser(s), 960x540, webgl2, low
+[catalog] 10/18 pass l10-q1-mega-charge@low-z1.5 (4.3 s)
+[catalog] 11/18 pass l10-q1-mega-charge@low-z1 (4.8 s)
+[catalog] 12/18 pass l10-q1-mega-charge@low-z0.5 (3.1 s)
+[catalog] 13/18 pass l10-q1-mega-grab@low-z1.5 (3.1 s)
+[catalog] 14/18 pass l10-q1-mega-grab@low-z1 (3.2 s)
+[catalog] 15/18 pass l10-q1-mega-grab@low-z0.5 (3.1 s)
+[catalog] 16/18 pass l10-q1-mega-slam@low-z1.5 (3.3 s)
+[catalog] 17/18 pass l10-q1-mega-slam@low-z1 (3.1 s)
+[catalog] 18/18 pass l10-q1-mega-slam@low-z0.5 (3.2 s)
+18/18 pass in 80 s -> test-results/merge-batch6/mega-webgl2/index.md

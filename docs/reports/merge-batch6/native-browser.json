@@ -1,0 +1,487 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch6/node_modules/.bin/playwright",
+      "test",
+      "tests/perf/horde-budget.spec.ts",
+      "tests/perf/l10-alpha-contracts.spec.ts",
+      "tests/perf/e18-desktop.spec.ts",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch6/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch6/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch6/test-results/playwright/run-3471",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch6/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch6/test-results/playwright/run-3471",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch6/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch6/test-results/playwright/run-3471",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch6/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch6/test-results/playwright/run-3471",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch6/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch6/test-results/playwright/run-3471",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch6/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch6/test-results/playwright/run-3471",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch6/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3471 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3471",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "perf/e18-desktop.spec.ts",
+      "file": "perf/e18-desktop.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E18-09 @E18-AC09 @perf local headless native-GPU Chrome high horde p95 frame <=16.7ms",
+          "ok": true,
+          "tags": [
+            "E18-AC09",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15217,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T04:07:44.263Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7c075c58ab864332a98e-1e3f9e28dee7bf7def56",
+          "file": "perf/e18-desktop.spec.ts",
+          "line": 6,
+          "column": 1
+        },
+        {
+          "title": "E18 @E18 WebGPU low tier parity compiles two-mip bloom and capped crowds",
+          "ok": true,
+          "tags": [
+            "E18"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "WebGPU-only checks are verified manually; browser automation is headless.",
+                  "location": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch6/tests/perf/e18-desktop.spec.ts",
+                    "line": 32,
+                    "column": 8
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 92,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T04:07:59.811Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "WebGPU-only checks are verified manually; browser automation is headless.",
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch6/tests/perf/e18-desktop.spec.ts",
+                        "line": 32,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "7c075c58ab864332a98e-cddcf7d99e37be73b3f3",
+          "file": "perf/e18-desktop.spec.ts",
+          "line": 31,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "perf/horde-budget.spec.ts",
+      "file": "perf/horde-budget.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "high",
+          "file": "perf/horde-budget.spec.ts",
+          "line": 9,
+          "column": 51,
+          "specs": [
+            {
+              "title": "horde budget high run 1 @E18-AC01 @E18-AC09 @perf",
+              "ok": true,
+              "tags": [
+                "E18-AC01",
+                "E18-AC09",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 15141,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "{\"phase\":\"after\",\"run\":1,\"tier\":\"high\",\"p95\":6.5,\"sim\":0.8999996185302734,\"update\":3.8999996185302734,\"render\":1.6999998092651367,\"triangles\":557848,\"draws\":71,\"profile\":{\"other\":{\"drawCalls\":38,\"triangles\":49991},\"shadows\":{\"drawCalls\":20,\"triangles\":31147},\"crowd\":{\"drawCalls\":13,\"triangles\":476710}}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T04:08:00.187Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f5a13d911a1bf8890d1f-c2f3b73b9c7f4ebd574d",
+              "file": "perf/horde-budget.spec.ts",
+              "line": 11,
+              "column": 41
+            }
+          ]
+        },
+        {
+          "title": "low",
+          "file": "perf/horde-budget.spec.ts",
+          "line": 9,
+          "column": 51,
+          "specs": [
+            {
+              "title": "horde budget low run 1 @E18-AC01 @E18-AC09 @perf",
+              "ok": true,
+              "tags": [
+                "E18-AC01",
+                "E18-AC09",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 16723,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "{\"phase\":\"after\",\"run\":1,\"tier\":\"low\",\"p95\":11.399999999999636,\"sim\":2.5,\"update\":5,\"render\":4,\"triangles\":120003,\"draws\":70,\"profile\":{\"other\":{\"drawCalls\":38,\"triangles\":12554},\"shadows\":{\"drawCalls\":20,\"triangles\":4275},\"crowd\":{\"drawCalls\":12,\"triangles\":103174}}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T04:08:15.493Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f5a13d911a1bf8890d1f-0a834c20c604b4ae4e14",
+              "file": "perf/horde-budget.spec.ts",
+              "line": 11,
+              "column": 41
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "perf/l10-alpha-contracts.spec.ts",
+      "file": "perf/l10-alpha-contracts.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E32-07-render-high @E32 @E32-AC07 @E32-AC09 @E18-AC01 @perf seeded dog coats and pounce telegraphs retain mixed-horde budgets",
+          "ok": true,
+          "tags": [
+            "E32",
+            "E32-AC07",
+            "E32-AC09",
+            "E18-AC01",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14720,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T04:08:32.511Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2a2bc30029c41dbd0f95-1c94162c2f7abb2cfbf6",
+          "file": "perf/l10-alpha-contracts.spec.ts",
+          "line": 7,
+          "column": 46
+        },
+        {
+          "title": "T-E32-07-render-low @E32 @E32-AC07 @E32-AC09 @E18-AC01 @perf seeded dog coats and pounce telegraphs retain mixed-horde budgets",
+          "ok": true,
+          "tags": [
+            "E32",
+            "E32-AC07",
+            "E32-AC09",
+            "E18-AC01",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13298,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T04:08:47.546Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2a2bc30029c41dbd0f95-b5591a52a16c53ccedc4",
+          "file": "perf/l10-alpha-contracts.spec.ts",
+          "line": 7,
+          "column": 46
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-16T04:07:43.668Z",
+    "duration": 77264.07999999999,
+    "expected": 5,
+    "skipped": 1,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

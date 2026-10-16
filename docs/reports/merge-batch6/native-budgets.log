@@ -1,0 +1,14 @@
+
+Running 6 tests using 1 worker
+
+  ✓  1 [chromium] › tests/perf/e18-desktop.spec.ts:6:1 › T-E18-09 @E18-AC09 @perf local headless native-GPU Chrome high horde p95 frame <=16.7ms (15.2s)
+  -  2 [chromium] › tests/perf/e18-desktop.spec.ts:31:1 › E18 @E18 WebGPU low tier parity compiles two-mip bloom and capped crowds
+{"phase":"after","run":1,"tier":"high","p95":6.5,"sim":0.8999996185302734,"update":3.8999996185302734,"render":1.6999998092651367,"triangles":557848,"draws":71,"profile":{"other":{"drawCalls":38,"triangles":49991},"shadows":{"drawCalls":20,"triangles":31147},"crowd":{"drawCalls":13,"triangles":476710}}}
+  ✓  3 [chromium] › tests/perf/horde-budget.spec.ts:11:41 › high › horde budget high run 1 @E18-AC01 @E18-AC09 @perf (15.1s)
+{"phase":"after","run":1,"tier":"low","p95":11.399999999999636,"sim":2.5,"update":5,"render":4,"triangles":120003,"draws":70,"profile":{"other":{"drawCalls":38,"triangles":12554},"shadows":{"drawCalls":20,"triangles":4275},"crowd":{"drawCalls":12,"triangles":103174}}}
+  ✓  4 [chromium] › tests/perf/horde-budget.spec.ts:11:41 › low › horde budget low run 1 @E18-AC01 @E18-AC09 @perf (16.7s)
+  ✓  5 [chromium] › tests/perf/l10-alpha-contracts.spec.ts:7:46 › T-E32-07-render-high @E32 @E32-AC07 @E32-AC09 @E18-AC01 @perf seeded dog coats and pounce telegraphs retain mixed-horde budgets (14.7s)
+  ✓  6 [chromium] › tests/perf/l10-alpha-contracts.spec.ts:7:46 › T-E32-07-render-low @E32 @E32-AC07 @E32-AC09 @E18-AC01 @perf seeded dog coats and pounce telegraphs retain mixed-horde budgets (13.3s)
+
+  1 skipped
+  5 passed (1.3m)
