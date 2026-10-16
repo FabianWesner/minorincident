@@ -63,7 +63,7 @@ export async function prefetchLevelAssets(level: string, concurrency: number, qu
     }
   }
   for (const variant of ['female', 'male']) {
-    const def = definitions.get(`char.courier-${variant}`); if (def?.glb) urls.add('/' + def.glb.replace(/\.glb$/, '.skin.glb').replace(/^public\//, ''));
+    const def = definitions.get(`char.courier-${variant}`); if (def?.glb) urls.add('/' + def.glb.replace(/\.glb$/, quality === 'low' ? '.skin.low.glb' : '.skin.glb').replace(/^public\//, ''));
   }
   // Weapon/action view models load one after another in ActionView: warm them too.
   for (const def of Object.values(catalog)) {

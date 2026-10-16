@@ -20,3 +20,17 @@ for (const tier of ['high', 'low'] as const) for (const scenario of ['perf-horde
     await page.locator('canvas').screenshot({ path: `${output}/${name}-${tier}.png` });
   });
 }
+test('T-E18-01-low-male @E18-AC01 @perf L5 stress retains its budget with the larger male courier skin', async ({ page }) => {
+  test.setTimeout(180_000); await boot(page);
+  const proof = await page.evaluate(async () => {
+    const a = window.__SS__!; a.settings.set({ quality: 'low' }); await a.loadScenario('perf-l5-aftermath'); a.pause();
+    a.survivor.select('male', a.getEntity(1)!.survivor!.gearTier);
+    await a.screenshotReady();
+    return { perf: a.perf(), state: a.getState() };
+  });
+  mkdirSync(output, { recursive: true }); writeFileSync(`${output}/perf-l5-aftermath-low-male.json`, JSON.stringify(proof, null, 2));
+  expect(proof.state.ai!.count).toBe(100);
+  expect(proof.perf.drawCalls).toBeLessThanOrEqual(qualityBudgets.low.drawCalls);
+  expect(proof.perf.triangles).toBeLessThanOrEqual(qualityBudgets.low.triangles);
+  await page.locator('canvas').screenshot({ path: `${output}/perf-l5-aftermath-low-male.png` });
+});

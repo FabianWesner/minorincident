@@ -12,6 +12,15 @@ for (const tier of ['high', 'low'] as const) test(`T-E18-05-${tier} @E18-AC05 @p
     await cdp.send('HeapProfiler.collectGarbage');
     const heap = await cdp.send('Runtime.getHeapUsage');
     loads.push({ id, ...await page.evaluate(() => window.__SS__!.perf()), heapBytes: heap.usedSize });
+    if (process.env.E18_HEAP_PROFILE === '1' && (loads.length === 1 || loads.length === 5)) {
+      const chunks: string[] = [];
+      const collect = ({ chunk }: { chunk: string }) => chunks.push(chunk);
+      cdp.on('HeapProfiler.addHeapSnapshotChunk', collect);
+      await cdp.send('HeapProfiler.takeHeapSnapshot');
+      cdp.off('HeapProfiler.addHeapSnapshotChunk', collect);
+      mkdirSync('test-results/epics/E18', { recursive: true });
+      writeFileSync(`test-results/epics/E18/heap-${tier}-${loads.length}.heapsnapshot`, chunks.join(''));
+    }
   }
   const first = loads[0], last = loads[4];
   mkdirSync('test-results/epics/E18', { recursive: true }); writeFileSync(`test-results/epics/E18/memory-${tier}.json`, JSON.stringify(loads, null, 2));

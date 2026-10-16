@@ -1,0 +1,85 @@
+{
+  "historicalCollisionS4": {
+    "triangles": 565883,
+    "drawCalls": 243,
+    "infected": 100,
+    "entities": 380,
+    "crowdInstances": 132,
+    "player": {
+      "x": 75.3,
+      "y": 0.705,
+      "z": -5.4,
+      "yaw": 0.3205919885488634
+    },
+    "camera": {
+      "zoom": 1,
+      "targetZoom": 1,
+      "zoomLimits": [
+        0.5,
+        1.5
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 19,
+      "focus": [
+        75.3,
+        0,
+        -5.4
+      ],
+      "target": [
+        -17,
+        0,
+        3
+      ],
+      "position": [
+        33,
+        40,
+        53
+      ],
+      "spot": "D-FAIR/W5/pair-plaza"
+    }
+  },
+  "withdrawnMovedPlayerSample": {
+    "triangles": 493750,
+    "drawCalls": 249,
+    "infected": 100,
+    "entities": 380,
+    "crowdInstances": 132,
+    "player": {
+      "x": 0,
+      "y": 0.705,
+      "z": 0,
+      "yaw": 0.3205919885488634
+    },
+    "camera": {
+      "zoom": 1,
+      "targetZoom": 1,
+      "zoomLimits": [
+        0.5,
+        1.5
+      ],
+      "fov": 25,
+      "azimuth": 0.7853981633974483,
+      "polar": 0.9424777960769379,
+      "radius": 19,
+      "focus": [
+        0,
+        0,
+        0
+      ],
+      "target": [
+        -17,
+        0,
+        3
+      ],
+      "position": [
+        33,
+        40,
+        53
+      ],
+      "spot": "D-FAIR/W5/pair-plaza"
+    }
+  },
+  "conclusion": "The photo camera pose matches but player/follow focus differs. The new sample is withdrawn as original-scenario acceptance. Preserve the cellar player pose and rerun the counters."
+}

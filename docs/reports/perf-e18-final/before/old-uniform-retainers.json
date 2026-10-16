@@ -1,0 +1,321 @@
+[
+  {
+    "from": "0:synthetic:#1",
+    "edge": "element:1",
+    "to": "1:synthetic:(GC roots)#3"
+  },
+  {
+    "from": "1:synthetic:(GC roots)#3",
+    "edge": "element:10",
+    "to": "11:synthetic:(Global handles)#23"
+  },
+  {
+    "from": "11:synthetic:(Global handles)#23",
+    "edge": "internal:3 / DevTools console",
+    "to": "3693:object:InjectedScript#7383"
+  },
+  {
+    "from": "3693:object:InjectedScript#7383",
+    "edge": "property:document",
+    "to": "1126081:native:HTMLDocument#893807"
+  },
+  {
+    "from": "1126081:native:HTMLDocument#893807",
+    "edge": "element:33",
+    "to": "3211376:native:ScriptedAnimationController#21598"
+  },
+  {
+    "from": "3211376:native:ScriptedAnimationController#21598",
+    "edge": "element:2",
+    "to": "3211377:native:blink::HeapVectorBacking<cppgc::internal::BasicMember<blink::FrameCallback, cppgc::internal::StrongMemberTag, cppgc::internal::DijkstraWriteBarrierPolicy>>#30530"
+  },
+  {
+    "from": "3211377:native:blink::HeapVectorBacking<cppgc::internal::BasicMember<blink::FrameCallback, cppgc::internal::StrongMemberTag, cppgc::internal::DijkstraWriteBarrierPolicy>>#30530",
+    "edge": "element:1",
+    "to": "3205479:native:V8FrameCallback#25466"
+  },
+  {
+    "from": "3205479:native:V8FrameCallback#25466",
+    "edge": "element:1",
+    "to": "3200725:native:V8FrameRequestCallback#24866"
+  },
+  {
+    "from": "3200725:native:V8FrameRequestCallback#24866",
+    "edge": "element:1",
+    "to": "1126166:closure:e#1808423"
+  },
+  {
+    "from": "1126166:closure:e#1808423",
+    "edge": "internal:context",
+    "to": "1126168:object:system / Context / scope @304951#1808421"
+  },
+  {
+    "from": "1126168:object:system / Context / scope @304951#1808421",
+    "edge": "internal:previous",
+    "to": "280955:object:system / Context / scope @287301#393049"
+  },
+  {
+    "from": "280955:object:system / Context / scope @287301#393049",
+    "edge": "context:af",
+    "to": "1522243:object:WeakMap#1274763"
+  },
+  {
+    "from": "1522243:object:WeakMap#1274763",
+    "edge": "internal:table",
+    "to": "1522244:array:#7455865"
+  },
+  {
+    "from": "1522244:array:#7455865",
+    "edge": "internal:1 / part of key (FN @5485715) -> value (Map @6920443) pair in WeakMap (table @7455865)",
+    "to": "1200348:object:Map#6920443"
+  },
+  {
+    "from": "1200348:object:Map#6920443",
+    "edge": "internal:table",
+    "to": "1200349:array:#6920445"
+  },
+  {
+    "from": "1200349:array:#6920445",
+    "edge": "internal:726",
+    "to": "1181132:object:Pc#6889987"
+  },
+  {
+    "from": "1181132:object:Pc#6889987",
+    "edge": "property:bindings",
+    "to": "1181133:object:Array#6889989"
+  },
+  {
+    "from": "1181133:object:Array#6889989",
+    "edge": "element:0",
+    "to": "1181179:object:P1#6890081"
+  },
+  {
+    "from": "1181179:object:P1#6890081",
+    "edge": "property:uniforms",
+    "to": "1181369:object:Array#6890451"
+  },
+  {
+    "from": "1181369:object:Array#6890451",
+    "edge": "element:35",
+    "to": "1182443:object:gC#6892483"
+  },
+  {
+    "from": "1182443:object:gC#6892483",
+    "edge": "property:nodeUniform",
+    "to": "2805154:object:JA#49081"
+  }
+]
+[
+  {
+    "from": "0:synthetic:#1",
+    "edge": "element:1",
+    "to": "1:synthetic:(GC roots)#3"
+  },
+  {
+    "from": "1:synthetic:(GC roots)#3",
+    "edge": "element:10",
+    "to": "11:synthetic:(Global handles)#23"
+  },
+  {
+    "from": "11:synthetic:(Global handles)#23",
+    "edge": "internal:3 / DevTools console",
+    "to": "3693:object:InjectedScript#7383"
+  },
+  {
+    "from": "3693:object:InjectedScript#7383",
+    "edge": "property:document",
+    "to": "1126081:native:HTMLDocument#893807"
+  },
+  {
+    "from": "1126081:native:HTMLDocument#893807",
+    "edge": "element:33",
+    "to": "3211376:native:ScriptedAnimationController#21598"
+  },
+  {
+    "from": "3211376:native:ScriptedAnimationController#21598",
+    "edge": "element:2",
+    "to": "3211377:native:blink::HeapVectorBacking<cppgc::internal::BasicMember<blink::FrameCallback, cppgc::internal::StrongMemberTag, cppgc::internal::DijkstraWriteBarrierPolicy>>#30530"
+  },
+  {
+    "from": "3211377:native:blink::HeapVectorBacking<cppgc::internal::BasicMember<blink::FrameCallback, cppgc::internal::StrongMemberTag, cppgc::internal::DijkstraWriteBarrierPolicy>>#30530",
+    "edge": "element:1",
+    "to": "3205479:native:V8FrameCallback#25466"
+  },
+  {
+    "from": "3205479:native:V8FrameCallback#25466",
+    "edge": "element:1",
+    "to": "3200725:native:V8FrameRequestCallback#24866"
+  },
+  {
+    "from": "3200725:native:V8FrameRequestCallback#24866",
+    "edge": "element:1",
+    "to": "1126166:closure:e#1808423"
+  },
+  {
+    "from": "1126166:closure:e#1808423",
+    "edge": "internal:context",
+    "to": "1126168:object:system / Context / scope @304951#1808421"
+  },
+  {
+    "from": "1126168:object:system / Context / scope @304951#1808421",
+    "edge": "internal:previous",
+    "to": "280955:object:system / Context / scope @287301#393049"
+  },
+  {
+    "from": "280955:object:system / Context / scope @287301#393049",
+    "edge": "context:af",
+    "to": "1522243:object:WeakMap#1274763"
+  },
+  {
+    "from": "1522243:object:WeakMap#1274763",
+    "edge": "internal:table",
+    "to": "1522244:array:#7455865"
+  },
+  {
+    "from": "1522244:array:#7455865",
+    "edge": "internal:1 / part of key (FN @5485715) -> value (Map @6920443) pair in WeakMap (table @7455865)",
+    "to": "1200348:object:Map#6920443"
+  },
+  {
+    "from": "1200348:object:Map#6920443",
+    "edge": "internal:table",
+    "to": "1200349:array:#6920445"
+  },
+  {
+    "from": "1200349:array:#6920445",
+    "edge": "internal:726",
+    "to": "1181132:object:Pc#6889987"
+  },
+  {
+    "from": "1181132:object:Pc#6889987",
+    "edge": "property:bindings",
+    "to": "1181133:object:Array#6889989"
+  },
+  {
+    "from": "1181133:object:Array#6889989",
+    "edge": "element:0",
+    "to": "1181179:object:P1#6890081"
+  },
+  {
+    "from": "1181179:object:P1#6890081",
+    "edge": "property:uniforms",
+    "to": "1181369:object:Array#6890451"
+  },
+  {
+    "from": "1181369:object:Array#6890451",
+    "edge": "element:37",
+    "to": "1182445:object:gC#6892487"
+  },
+  {
+    "from": "1182445:object:gC#6892487",
+    "edge": "property:nodeUniform",
+    "to": "2805152:object:JA#56969"
+  }
+]
+[
+  {
+    "from": "0:synthetic:#1",
+    "edge": "element:1",
+    "to": "1:synthetic:(GC roots)#3"
+  },
+  {
+    "from": "1:synthetic:(GC roots)#3",
+    "edge": "element:10",
+    "to": "11:synthetic:(Global handles)#23"
+  },
+  {
+    "from": "11:synthetic:(Global handles)#23",
+    "edge": "internal:3 / DevTools console",
+    "to": "3693:object:InjectedScript#7383"
+  },
+  {
+    "from": "3693:object:InjectedScript#7383",
+    "edge": "property:document",
+    "to": "1126081:native:HTMLDocument#893807"
+  },
+  {
+    "from": "1126081:native:HTMLDocument#893807",
+    "edge": "element:33",
+    "to": "3211376:native:ScriptedAnimationController#21598"
+  },
+  {
+    "from": "3211376:native:ScriptedAnimationController#21598",
+    "edge": "element:2",
+    "to": "3211377:native:blink::HeapVectorBacking<cppgc::internal::BasicMember<blink::FrameCallback, cppgc::internal::StrongMemberTag, cppgc::internal::DijkstraWriteBarrierPolicy>>#30530"
+  },
+  {
+    "from": "3211377:native:blink::HeapVectorBacking<cppgc::internal::BasicMember<blink::FrameCallback, cppgc::internal::StrongMemberTag, cppgc::internal::DijkstraWriteBarrierPolicy>>#30530",
+    "edge": "element:1",
+    "to": "3205479:native:V8FrameCallback#25466"
+  },
+  {
+    "from": "3205479:native:V8FrameCallback#25466",
+    "edge": "element:1",
+    "to": "3200725:native:V8FrameRequestCallback#24866"
+  },
+  {
+    "from": "3200725:native:V8FrameRequestCallback#24866",
+    "edge": "element:1",
+    "to": "1126166:closure:e#1808423"
+  },
+  {
+    "from": "1126166:closure:e#1808423",
+    "edge": "internal:context",
+    "to": "1126168:object:system / Context / scope @304951#1808421"
+  },
+  {
+    "from": "1126168:object:system / Context / scope @304951#1808421",
+    "edge": "internal:previous",
+    "to": "280955:object:system / Context / scope @287301#393049"
+  },
+  {
+    "from": "280955:object:system / Context / scope @287301#393049",
+    "edge": "context:af",
+    "to": "1522243:object:WeakMap#1274763"
+  },
+  {
+    "from": "1522243:object:WeakMap#1274763",
+    "edge": "internal:table",
+    "to": "1522244:array:#7455865"
+  },
+  {
+    "from": "1522244:array:#7455865",
+    "edge": "internal:3 / part of key (FN @7058581) -> value (Map @7661165) pair in WeakMap (table @7455865)",
+    "to": "1662146:object:Map#7661165"
+  },
+  {
+    "from": "1662146:object:Map#7661165",
+    "edge": "internal:table",
+    "to": "2692928:array:#9499623"
+  },
+  {
+    "from": "2692928:array:#9499623",
+    "edge": "internal:1614",
+    "to": "1656530:object:Pc#7652689"
+  },
+  {
+    "from": "1656530:object:Pc#7652689",
+    "edge": "property:bindings",
+    "to": "1656531:object:Array#7652691"
+  },
+  {
+    "from": "1656531:object:Array#7652691",
+    "edge": "element:0",
+    "to": "434145:object:P1#5632497"
+  },
+  {
+    "from": "434145:object:P1#5632497",
+    "edge": "property:uniforms",
+    "to": "434179:object:Array#5632565"
+  },
+  {
+    "from": "434179:object:Array#5632565",
+    "edge": "element:13",
+    "to": "434741:object:fC#5633689"
+  },
+  {
+    "from": "434741:object:fC#5633689",
+    "edge": "property:nodeUniform",
+    "to": "437531:object:JA#33065"
+  }
+]

@@ -1,0 +1,6 @@
+- **PARTIAL: E18 remains open.** Memory retention is fixed; original-pose L5 attribution/budget, L4 hitch and phone p95 remain open. No deploy or merge.
+- Unchanged five-load heap gate passes: high **+2.84%**, low **+5.57%**, within 10%; retained geometry-listener chain identified and retired.
+- L6 fixture uses D-SUBWAY and its authored start; L5 stress cap/AI ownership fixed with original cellar pose and 200/100 targets preserved; **8/8 final fixture checks pass**.
+- Low courier skins retain original attributes/rigs and reduce mesh triangles to **27,346 / 29,674**; final level-budget/visual acceptance is pending. Earlier moved-player L5 counter numbers are withdrawn.
+- Typecheck/lint/build pass; final units **1,546 passed / seven skips**; full Node **2,934 passed / five timing failures / 11 skips**, then **5/5 isolated retries pass**; continuous L1→L10 passes.
+- Browser queues cancelled at the 30-minute cutoff: L2–L4 phone timing, L6 FPS, final backend/zoom matrix and deploy gates unmeasured. [Evidence](evidence.md) · [captures/review](visual-review.md) · [remaining checks](reproduce.md).
