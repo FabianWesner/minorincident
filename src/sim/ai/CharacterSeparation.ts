@@ -16,7 +16,7 @@ function spacingRadius(e: EntitySnapshot, world: SimWorld): number {
   if (e.survivor) return actorRadius(e);
   return e.survivor || e.companion || e.escort || (e.civilian && e.civilian.state !== 'infected' && e.civilian.state !== 'finished') || e.infected ? e.combat?.radius ?? .35 : 0;
 }
-type Body = { entity: EntitySnapshot; radius: number; physical: number; extra: number; contact: number; category: number; infected: boolean; courier: boolean; crowd: boolean; hullContact: boolean; l1: boolean; fixed: boolean; charge: boolean; passiveCompanion: boolean };
+type Body = { entity: EntitySnapshot; point: EntitySnapshot['transform']; radius: number; physical: number; extra: number; contact: number; category: number; infected: boolean; courier: boolean; crowd: boolean; hullContact: boolean; l1: boolean; fixed: boolean; charge: boolean; passiveCompanion: boolean };
 /** Combat/presentation spacing is wider than the physical footprint for companions and pets.
  * Resolve body circles against the same static geometry as steering, after physics.
  * The survivor stays authoritative in Rapier; AI yields to it, including during
@@ -28,7 +28,7 @@ export function installCharacterSeparation(world: SimWorld): void {
   let active: typeof bodies[number] | undefined;
   const contacts: ContactCells = { epoch: 0, radius: id => radii[id]?.radius ?? 0, intersects: (maximum, x, z) => {
     if (!active || !maximum) return false;
-    const p = active.entity.transform, r = active.radius;
+    const p = active.point, r = active.radius;
     const dx = Math.max(x - p.x, 0, p.x - x - 4), dz = Math.max(z - p.z, 0, p.z - z - 4);
     const reach = Math.max(r + maximum + (active.hullContact ? .45 : .3), meleeRing) + Math.max(0, r - .35, maximum - .35);
     return dx * dx + dz * dz < reach * reach;
@@ -47,9 +47,10 @@ export function installCharacterSeparation(world: SimWorld): void {
     for (const e of world.entities.iterate()) {
       const r = spacingRadius(e, world); if (!r) continue;
       let body = records.get(e);
-      if (!body) { body = { entity: e, radius: r, physical: 0, extra: 0, contact: 0, category: 0, infected: false, courier: false, crowd: false, hullContact: false, l1: false, fixed: false, charge: false, passiveCompanion: false }; records.set(e, body); }
+      if (!body) { body = { entity: e, point: e.transform, radius: r, physical: 0, extra: 0, contact: 0, category: 0, infected: false, courier: false, crowd: false, hullContact: false, l1: false, fixed: false, charge: false, passiveCompanion: false }; records.set(e, body); }
       else body.radius = r;
-      body.physical = actorRadius(e);
+      // Refresh after restore/reuse; coordinates stay live as this phase moves the body.
+      body.point = e.transform; body.physical = actorRadius(e);
       body.extra = Math.max(0, r - .35); body.contact = infectedContactDistance(r);
       // These contact flags cannot change during the separation phase; cache them once per body.
       body.infected = !!e.infected; body.courier = !!e.survivor; body.l1 = !!e.infected?.l1;
@@ -90,11 +91,11 @@ export function installCharacterSeparation(world: SimWorld): void {
       }
     }
     const visit = (id: number): void => {
-      const body = active!, { entity: e } = body;
+      const body = active!, { entity: e, point: p } = body;
       const neighbor = radii[id]; if (!neighbor || neighbor.entity === e) return;
-      const other = neighbor.entity;
+      const other = neighbor.entity, otherPoint = neighbor.point;
       if (body.courier && !other.civilian?.survivor) return;
-      const dx = e.transform.x - other.transform.x, dz = e.transform.z - other.transform.z, squared = dx * dx + dz * dz;
+      const dx = p.x - otherPoint.x, dz = p.z - otherPoint.z, squared = dx * dx + dz * dz;
       const reach = reaches[body.category][neighbor.category];
       if (squared >= reach * reach || neighbor.charge || (body.passiveCompanion && !neighbor.courier)) return;
       const distance = Math.sqrt(squared), overlap = reach - distance;
@@ -102,17 +103,17 @@ export function installCharacterSeparation(world: SimWorld): void {
       // A protected story actor holding a post is authoritative like the courier;
       // crowd overlap cannot push the invitation away from its interaction. Damage may still shove it.
       const angle = e.id * 2.399963, scale = neighbor.fixed ? 1 : .5;
-      (e.infected ? world.infected!.infectedNav : nav).move(e.transform, (distance ? dx / distance : Math.cos(angle)) * overlap * scale, (distance ? dz / distance : Math.sin(angle)) * overlap * scale, body.physical, true);
+      (body.infected ? world.infected!.infectedNav : nav).move(p, (distance ? dx / distance : Math.cos(angle)) * overlap * scale, (distance ? dz / distance : Math.sin(angle)) * overlap * scale, body.physical, true);
     };
     // Keep the authored three passes for ordinary groups, friendly queues and
     // L1 pursuit trains. Large classic crowds use one (two at a driven hull).
     for (let pass = 0; pass < 3; pass++) for (const body of bodies) {
       if (pass && bodies.length > 20 && body.infected && !body.l1 && (!body.hullContact || pass > 1)) continue;
-      const { entity: e, radius: r } = body; active = body;
-      query.x = e.transform.x; query.z = e.transform.z; query.r = r + maximumRadius + Math.max(.45, .22 + maximumRadius - .35); // covers the largest gap below
+      const { entity: e, radius: r, point: p } = body; active = body;
+      query.x = p.x; query.z = p.z; query.r = r + maximumRadius + Math.max(.45, .22 + maximumRadius - .35); // covers the largest gap below
       // Consume the same unsorted bucket order directly; nav.move does not mutate the spatial index.
       world.spatial.query(query, neighbors, false, visit, contacts);
-      if (e.transform.x !== query.x || e.transform.z !== query.z) { world.spatial.set(e.id, e.transform.x, e.transform.z); world.solids.wrote(e, 'cleanup.separation'); }
+      if (p.x !== query.x || p.z !== query.z) { world.spatial.set(e.id, p.x, p.z); world.solids.wrote(e, 'cleanup.separation'); }
     }
     // Stationary hull strikes have 1.5 m of authored reach. Reserve their pose
     // without preemptively pushing victims away from an approaching vehicle's ram.
