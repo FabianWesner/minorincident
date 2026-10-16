@@ -21,6 +21,7 @@
     "mode": "game",
     "target": [
       -1,
+      2,
       0
     ],
     "zoom": 1
@@ -40,5 +41,14 @@
       0,
       0
     ]
-  }
+  },
+  "script": [
+    {
+      "frame": 0,
+      "actor": "mega",
+      "do": {
+        "turn": 0
+      }
+    }
+  ]
 }
