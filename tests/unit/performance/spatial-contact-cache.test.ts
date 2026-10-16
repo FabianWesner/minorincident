@@ -74,7 +74,7 @@ test('queries retain live membership, nested visits and reset order', () => {
   const hash = new SpatialHash(2), query = { x: 0, z: 0, r: 6 };
   hash.set(9, -1, 0); hash.set(2, 0, 0); hash.set(7, .2, 0);
   expect(hash.query(query, [], false)).toEqual([9, 2, 7]);
-  // Refill a retained cell, and create a cell absent from the cached window.
+  // Refill an empty bucket, then insert a previously unseen bucket.
   hash.delete(9); hash.set(5, -1, 0); hash.set(3, 3, 0);
   expect(hash.query(query, [], false)).toEqual([5, 2, 7, 3]);
   const visited: number[] = [];
@@ -83,7 +83,7 @@ test('queries retain live membership, nested visits and reset order', () => {
     expect(hash.query({ x: 100, z: 100, r: 1 })).toEqual([]);
   });
   expect(visited).toEqual([5, 2, 7, 3]);
-  // A move within a cached cell must expose the latest coordinates.
+  // A move within a bucket must expose the latest coordinates.
   hash.set(7, 1.9, 1.9);
   expect(hash.query({ x: 0, z: 0, r: .5 })).toEqual([2]);
   hash.reset(); hash.set(10, 0, 0);

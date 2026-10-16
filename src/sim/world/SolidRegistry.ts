@@ -57,6 +57,9 @@ export class SolidRegistry {
   private readonly proposalPoints: (Transform | undefined)[] = [];
   private readonly contactProofs: (BodyProof | undefined)[] = [];
   private readonly bodyRadii: number[] = [];
+  /** Current transforms and attachment eligibility are stable during commit. */
+  private readonly bodyPoints: (Transform | undefined)[] = [];
+  private hasPairExemptions = false;
   private readonly moved: EntitySnapshot[] = [];
   private readonly rejected: boolean[] = [];
   private readonly bodyRejections: number[] = [];
@@ -87,6 +90,15 @@ export class SolidRegistry {
     const other = this.committing ? this.live[id] : this.world.entities.get(id);
     if (id === this.clearId || !other || !this.committing && !actor(other) || pairExempt(this.clearEntity, other) || !layers(this.clearPoint, other.transform)) return true;
     const dx = this.clearPoint.x - other.transform.x, dz = this.clearPoint.z - other.transform.z, reach = this.clearRadius + (this.committing ? this.bodyRadii[id] : actorRadius(other)) - this.clearLimit;
+    if (dx * dx + dz * dz >= reach * reach) return true;
+    this.bodyConflict = true; this.bodyConflictId = id; return false;
+  };
+  // The live roster already excludes passengers. Read cached transforms directly,
+  // and consult entity attachment fields only when the transaction contains one.
+  private readonly visitCommittedClear = (id: number): boolean => {
+    const p = this.bodyPoints[id];
+    if (id === this.clearId || !p || this.hasPairExemptions && pairExempt(this.clearEntity, this.live[id]!) || !layers(this.clearPoint, p)) return true;
+    const dx = this.clearPoint.x - p.x, dz = this.clearPoint.z - p.z, reach = this.clearRadius + this.bodyRadii[id] - this.clearLimit;
     if (dx * dx + dz * dz >= reach * reach) return true;
     this.bodyConflict = true; this.bodyConflictId = id; return false;
   };
@@ -218,7 +230,7 @@ export class SolidRegistry {
     this.clearPoint = at; this.clearEntity = e; this.clearId = ignoreId; this.clearRadius = radius; this.clearLimit = limit;
     // A few large zoo bodies widen the search for every ordinary actor. Use
     // exact conservative cell bounds only where that radius disparity pays off.
-    (this.committing ? this.bodyIndex : this.world.spatial).query(this.query, this.nearby, false, this.visitClear,
+    (this.committing ? this.bodyIndex : this.world.spatial).query(this.query, this.nearby, false, this.committing ? this.visitCommittedClear : this.visitClear,
       this.committing && this.maxActor > radius * 2 ? this.occupancyCells : undefined);
     return !this.bodyConflict;
   }
@@ -378,7 +390,7 @@ export class SolidRegistry {
       this.live[id] = undefined; this.rejected[id] = this.movedIds[id] = false; this.bodyRejections[id] = 0;
     }
     this.bodyIds.length = 0;
-    this.bodies.length = this.moved.length = 0;
+    this.bodies.length = this.moved.length = 0; this.hasPairExemptions = false;
     for (const e of this.world.entities.iterate()) {
       if (e.pendingAdmission && e.health.current <= 0) this.releasePending(e);
       if (e.pendingAdmission) {
@@ -397,7 +409,7 @@ export class SolidRegistry {
       const radius = actorRadius(e);
       // Shapes and eligibility are stable during this final transaction. Reuse
       // their snapshot in the correction loops; full audits still read actors.
-      this.bodyRadii[e.id] = radius; this.committedPoses[e.id] = this.committed.get(e); this.contactProofs[e.id] = this.validated.get(e);
+      this.bodyRadii[e.id] = radius; this.bodyPoints[e.id] = e.transform; this.hasPairExemptions ||= e.attachedTo !== undefined; this.committedPoses[e.id] = this.committed.get(e); this.contactProofs[e.id] = this.validated.get(e);
       this.maxActor = Math.max(this.maxActor, radius); this.bodies.push(e); this.live[e.id] = e;
       this.bodyIds.push(e.id);
       this.bodyIndex.set(e.id, e.transform.x, e.transform.z);
@@ -405,7 +417,7 @@ export class SolidRegistry {
     }
     for (const id of previous) if (!this.live[id]) {
       this.bodyIndex.delete(id);
-      this.committedPoses[id] = this.proposalPoints[id] = undefined; this.contactProofs[id] = undefined; this.bodyRadii[id] = 0;
+      this.committedPoses[id] = this.proposalPoints[id] = undefined; this.contactProofs[id] = undefined; this.bodyRadii[id] = 0; this.bodyPoints[id] = undefined;
     }
     // Scripted writers and revived actors may not have updated the shared index. Changed
     // hulls inspect the complete current actor index before selecting the tick's guard set.
@@ -432,7 +444,7 @@ export class SolidRegistry {
       this.rejected[e.id] = true; this.unresolved.push(e);
       if (this.movedIds[e.id]) unreservedMoving--;
       let proposed = this.proposed.get(e);
-      if (proposed) Object.assign(proposed, e.transform);
+      if (proposed) { const p = e.transform; proposed.x = p.x; proposed.y = p.y; proposed.z = p.z; proposed.yaw = p.yaw; }
       else { proposed = { ...e.transform }; this.proposed.set(e, proposed); }
       this.proposalPoints[e.id] = proposed;
     };
@@ -465,7 +477,7 @@ export class SolidRegistry {
       const e = this.unresolved[i];
       const old = this.committedPoses[e.id];
       if (!old) { this.world.spatial.delete(e.id); this.bodyIndex.delete(e.id); continue; }
-      Object.assign(e.transform, old); this.publish(e);
+      const p = e.transform; p.x = old.x; p.y = old.y; p.z = old.z; p.yaw = old.yaw; this.publish(e);
       const radius = this.bodyRadii[e.id], proof = this.contactProofs[e.id];
       // An unchanged body cannot intersect this same valid pose from last tick.
       // Reuse the hash's cell bounds to visit only unreserved moving proposals.
@@ -497,7 +509,7 @@ export class SolidRegistry {
           proof!.blocked++; continue; // The previous valid pose is already reserved and published.
         }
       }
-      Object.assign(p, proposed);
+      p.x = proposed.x; p.y = proposed.y; p.z = proposed.z; p.yaw = proposed.yaw;
       const blocker = this.live[this.bodyRejections[e.id] ?? 0];
       const blocked = blocker && !pairExempt(e, blocker) && layers(p, blocker.transform) &&
         (p.x - blocker.transform.x) ** 2 + (p.z - blocker.transform.z) ** 2 < (radius + this.bodyRadii[blocker.id] - tolerance) ** 2;
@@ -527,7 +539,7 @@ export class SolidRegistry {
           // footprint and attachment mask, rejecting motion needs no second contact search.
           // Stagger the one-in-ten projection retries by actor ID, avoiding a
           // synchronized repair frame that dominates the E18 p95 window.
-          proof!.blocked++; Object.assign(p, old); this.publish(e); continue;
+          proof!.blocked++; p.x = old!.x; p.y = old!.y; p.z = old!.z; p.yaw = old!.yaw; this.publish(e); continue;
         }
         if (proof) proof.blocked = 0;
         for (let pass = 0; pass < 4; pass++) {
@@ -575,7 +587,7 @@ export class SolidRegistry {
           else if (!old) {
             e.pendingAdmission = { ...proposed, writer: this.writers.get(e) ?? 'tick.admission', hidden: e.hidden, range: 4, navigation: false };
             if (e.id === 1) { e.pendingAdmission.colliderEnabled = this.world.physics.playerCollider?.isEnabled(); this.world.physics.playerCollider?.setEnabled(false); }
-            e.hidden = true; this.world.spatial.delete(e.id); this.bodyIndex.delete(e.id); this.live[e.id] = undefined; this.deferred++; continue;
+            e.hidden = true; this.world.spatial.delete(e.id); this.bodyIndex.delete(e.id); this.live[e.id] = undefined; this.bodyPoints[e.id] = undefined; this.deferred++; continue;
           }
         }
       }
@@ -623,5 +635,5 @@ export class SolidRegistry {
     return { failures: this.failures, pending: pending.length, admitted: this.admitted, deferred: this.deferred,
       requests: pending.slice(0, 64).map(e => ({ id: e.id, archetype: e.archetype, ...e.pendingAdmission })), offenders: this.offenders.map(o => ({ ...o })) };
   }
-  reset(): void { this.previousBodyIds.length = this.bodyIds.length = this.bodies.length = this.moved.length = this.nearby.length = this.hullNeighbors.length = 0; this.changedActors.clear(); this.changedHulls.clear(); this.changedTick = -1; this.rejected.length = this.bodyRejections.length = this.movedIds.length = 0; this.unresolved.length = 0; this.live.length = this.committedPoses.length = this.proposalPoints.length = this.contactProofs.length = this.bodyRadii.length = 0; this.committing = false; this.blockerOwners.clear(); this.hulls.clear(); this.hullRevision = -1; this.hullCandidates.length = 0; this.hullIndex.reset(); this.bodyIndex.reset(); this.committed = new WeakMap(); this.proposed = new WeakMap(); this.validated = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = this.infectedNavRevision = -1; this.nav = this.infectedNav = undefined; }
+  reset(): void { this.previousBodyIds.length = this.bodyIds.length = this.bodies.length = this.moved.length = this.nearby.length = this.hullNeighbors.length = 0; this.changedActors.clear(); this.changedHulls.clear(); this.changedTick = -1; this.rejected.length = this.bodyRejections.length = this.movedIds.length = 0; this.unresolved.length = 0; this.live.length = this.committedPoses.length = this.proposalPoints.length = this.contactProofs.length = this.bodyRadii.length = this.bodyPoints.length = 0; this.hasPairExemptions = false; this.committing = false; this.blockerOwners.clear(); this.hulls.clear(); this.hullRevision = -1; this.hullCandidates.length = 0; this.hullIndex.reset(); this.bodyIndex.reset(); this.committed = new WeakMap(); this.proposed = new WeakMap(); this.validated = new WeakMap(); this.writers = new WeakMap(); this.offenders.length = 0; this.failures = this.admitted = this.deferred = 0; this.maxHull = 0; this.maxActor = survivor.radius; this.navRevision = this.infectedNavRevision = -1; this.nav = this.infectedNav = undefined; }
 }
