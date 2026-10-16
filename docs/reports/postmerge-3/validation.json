@@ -1,0 +1,185 @@
+{
+  "implementation": "246725b0a",
+  "remote": {
+    "unit": {
+      "success": true,
+      "numPassedTests": 1533,
+      "numPendingTests": 7,
+      "numFailedTests": 0,
+      "skippedTests": [
+        {
+          "file": "unit/tooling/e2e-lock.test.ts",
+          "name": "machine browser capacity reserves units across concurrent jobs and releases them for waiting jobs",
+          "status": "skipped"
+        },
+        {
+          "file": "unit/tooling/e2e-lock.test.ts",
+          "name": "machine browser capacity returns a child exit 75 exactly once and preserves its stderr",
+          "status": "skipped"
+        },
+        {
+          "file": "unit/tooling/e2e-lock.test.ts",
+          "name": "machine browser capacity charges the Playwright worker count, including separated CLI arguments",
+          "status": "skipped"
+        },
+        {
+          "file": "unit/tooling/e2e-lock.test.ts",
+          "name": "machine browser capacity rejects undersized and invalid reservations before launching a command",
+          "status": "skipped"
+        },
+        {
+          "file": "unit/tooling/e2e-lock.test.ts",
+          "name": "machine browser capacity allows nesting within a reservation and rejects expansion",
+          "status": "skipped"
+        },
+        {
+          "file": "unit/tooling/e2e-lock.test.ts",
+          "name": "machine browser capacity can acquire nonadjacent free slots without holding a partial reservation",
+          "status": "skipped"
+        },
+        {
+          "file": "unit/tooling/e2e-lock.test.ts",
+          "name": "machine browser capacity quiet-run covers the legacy fourth slot even with E2E_SLOTS=1",
+          "status": "skipped"
+        }
+      ]
+    },
+    "sim": {
+      "success": true,
+      "numPassedTests": 1079,
+      "numPendingTests": 0,
+      "numFailedTests": 0
+    },
+    "levels": {
+      "success": true,
+      "numPassedTests": 318,
+      "numPendingTests": 2,
+      "numFailedTests": 0,
+      "skippedTests": [
+        {
+          "file": "levels/L4-botprobe.test.ts",
+          "name": "L4 complete bot probe",
+          "status": "skipped"
+        },
+        {
+          "file": "levels/L4-probe.test.ts",
+          "name": "L4 collapse probe (idle player, god)",
+          "status": "skipped"
+        }
+      ]
+    },
+    "startup-isolation": {
+      "success": true,
+      "numPassedTests": 11,
+      "numPendingTests": 0,
+      "numFailedTests": 0
+    }
+  },
+  "standaloneBotBands": [
+    {
+      "level": "L1",
+      "profile": "complete",
+      "seed": 1,
+      "outcome": "complete",
+      "simSeconds": 167.71666666666667,
+      "deaths": 0
+    },
+    {
+      "level": "L1",
+      "profile": "newbie",
+      "seed": 1,
+      "outcome": "complete",
+      "simSeconds": 111.06666666666666,
+      "deaths": 0
+    },
+    {
+      "level": "L2",
+      "profile": "complete",
+      "seed": 1,
+      "outcome": "complete",
+      "simSeconds": 145.68333333333334,
+      "deaths": 0
+    },
+    {
+      "level": "L2",
+      "profile": "newbie",
+      "seed": 1,
+      "outcome": "complete",
+      "simSeconds": 140.51666666666668,
+      "deaths": 0
+    },
+    {
+      "level": "L3",
+      "profile": "complete",
+      "seed": 1,
+      "outcome": "complete",
+      "simSeconds": 394.81666666666666,
+      "deaths": 2
+    },
+    {
+      "level": "L3",
+      "profile": "newbie",
+      "seed": 1,
+      "outcome": "complete",
+      "simSeconds": 291.68333333333334,
+      "deaths": 1
+    }
+  ],
+  "sceneMatrices": {
+    "touched-webgl": {
+      "passed": 56,
+      "total": 56,
+      "failed": []
+    },
+    "l9-webgl": {
+      "passed": 12,
+      "total": 12,
+      "failed": []
+    },
+    "l9-webgpu": {
+      "passed": 12,
+      "total": 12,
+      "failed": []
+    },
+    "full-webgpu": {
+      "passed": 602,
+      "total": 602,
+      "seconds": 1640.012,
+      "failed": []
+    }
+  },
+  "originalBrowserGate": {
+    "command": "sh /Users/wesner/Workspace/minorincident/epics-pipeline/gate-browser.sh \"$PWD\"",
+    "typecheck": 0,
+    "lint": 0,
+    "build": 0,
+    "matrixExit": 0,
+    "matrixPassed": 602,
+    "matrixTotal": 602,
+    "staticSmokePassed": 6,
+    "browserSmokePassed": 31,
+    "e2ePassed": 120,
+    "e2eFailed": 0,
+    "e2eFlaky": 0,
+    "e2eMinutes": 14.1
+  },
+  "nativeE18": {
+    "passed": 3,
+    "failed": 0,
+    "desktopP95Ms": 5.899999999999636,
+    "hordeHighP95Ms": 6.399999999999636,
+    "hordeLowP95Ms": 11.299999999999272,
+    "preflightLoad": [
+      2.9140625,
+      4.62841796875,
+      4.580078125
+    ],
+    "browserSlots": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "reservationReleased": true
+  }
+}
