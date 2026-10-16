@@ -319,7 +319,6 @@ export class SceneLab {
           world.infected!.rush(e.id, world.entities.get(1)!.transform, world.tick + 600);
           this.actors.set(id, { id, kind: 'infected', entity: e.id, spec: { id, kind: 'infected', archetype: e.archetype }, plan: null, track: [], lod: {}, drawn: 0, inView: 0, missed: 0, farClose: 0 });
         }
-        }
       }
     }
     if (spec.l6Subway) {
