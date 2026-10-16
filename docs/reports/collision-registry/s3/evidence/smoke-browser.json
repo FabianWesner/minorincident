@@ -1,0 +1,191 @@
+{
+  "source": "test-results/collision-s3-smoke-browser.json",
+  "code": "e723998d0; pre-health-detour build",
+  "stats": {
+    "startTime": "2026-10-15T22:42:58.191Z",
+    "duration": 85440.709,
+    "expected": 16,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "errors": [],
+  "tests": [
+    {
+      "name": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6200,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 19118,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 18659,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 18607,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4104,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3814,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 11861,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4112,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 8365,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 601,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 682,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E02-webgpu-canvas @smoke @E02 WebGPU high mega health bars preserve the game frame at both zoom limits",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6731,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU high L1 L4 L8 game cameras render at both zoom limits",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 32974,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E02-webgpu-canvas @smoke @E02 WebGPU low mega health bars preserve the game frame at both zoom limits",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3199,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU low L1 L4 L8 game cameras render at both zoom limits",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 8003,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E02-webgpu-level-transitions @smoke @E02 title, L1, L2 and L3 in one WebGPU renderer log no GPU validation errors",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 10573,
+          "errors": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,224 @@
+{
+  "source": "590b667e4",
+  "reservationUnits": 1,
+  "workers": 1,
+  "stats": {
+    "startTime": "2026-10-16T01:23:13.928Z",
+    "duration": 178335.63799999998,
+    "expected": 16,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "file": "e2e/audio/smoke.spec.ts",
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 6143,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/controls-playtest.spec.ts",
+      "title": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 18230,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/crowd-drawn.spec.ts",
+      "title": "T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 23823,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/crowd-drawn.spec.ts",
+      "title": "T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 24046,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/crowd-feel.spec.ts",
+      "title": "20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3913,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/driving.spec.ts",
+      "title": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3531,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/l4-boot.spec.ts",
+      "title": "T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 13847,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/menus-mouse.spec.ts",
+      "title": "T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3578,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/save.spec.ts",
+      "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 7614,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 547,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 615,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/webgpu-canvas.spec.ts",
+      "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU high mega health bars preserve the game frame at both zoom limits",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 6459,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/webgpu-canvas.spec.ts",
+      "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU high L1 L4 L8 game cameras render at both zoom limits",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 37727,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/webgpu-canvas.spec.ts",
+      "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU low mega health bars preserve the game frame at both zoom limits",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 3833,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/webgpu-canvas.spec.ts",
+      "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU low L1 L4 L8 game cameras render at both zoom limits",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 9685,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/webgpu-level-transitions.spec.ts",
+      "title": "T-E02-webgpu-level-transitions @smoke @E02 title, L1, L2 and L3 in one WebGPU renderer log no GPU validation errors",
+      "project": "chromium",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 11207,
+          "errors": []
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

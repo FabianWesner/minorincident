@@ -1,0 +1,243 @@
+{
+  "raw": "collision-s3-reserved-component.json",
+  "passed": 47,
+  "failed": 0,
+  "skipped": 0,
+  "tests": [
+    {
+      "name": "T-E05-encounter @E05 @E19 efficient clicker HP lost per encounter: one infected <= 5 HP (bat and unarmed), two/three with the bat <= 15/30",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "a fully reserved moving component needs no further rollback scans",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "contact repair respects infected-only exclusions while humans retain admission",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "body congestion cannot admit an actor through a thin wall",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "all moving and parked vehicle hulls use the contact commit: vehicle.sedan",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "all moving and parked vehicle hulls use the contact commit: vehicle.military-apc",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "all moving and parked vehicle hulls use the contact commit: vehicle.pickup",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "all moving and parked vehicle hulls use the contact commit: vehicle.suv",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "all moving and parked vehicle hulls use the contact commit: vehicle.police",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "all moving and parked vehicle hulls use the contact commit: vehicle.ambulance",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "all moving and parked vehicle hulls use the contact commit: vehicle.school-bus",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "all moving and parked vehicle hulls use the contact commit: vehicle.fire-engine",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "unsafe spawn retains identity and concurrency slot, then admits when the hull leaves",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "teleport and checkpoint allies reserve distinct radius-aware slots",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "a deferred checkpoint keeps its requested pose and restores collider and grace on admission",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "repeating a blocked checkpoint request does not turn its hidden courier into a passenger",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "a pooled body can return to its former position under its new identity",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "a safe explicit relocation releases an earlier deferred checkpoint request",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "a circular admission beside a box corner can walk away at its full radius",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "checkpoint restore discards a deferred player mask from the discarded timeline",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "a checkpoint containing a deferred player restores the inactive collider until admission",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "guard audits a stationary actor when a tank moves over it and retains bounded diagnostics",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "vehicle exits wait for bodyless actors occupying both doors",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "a deferred casualty leaves admission and follows normal death cleanup",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "a stationary revived actor is admitted again after its attachment exemption ends",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "an explicit actor attachment alone exempts contact with its owner",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "an attack windup faces its victim without residual steering rotating it into a neighbour",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "a clear formation can enter positions its neighbours vacate during the same tick",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "an isolated blocked actor projects along contact instead of freezing at its prior pose",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "a cached dense-crowd contact permits a formation to enter the space its blocker vacates",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "a wider house resident keeps its identity and walks clear of the pedestrian doorstep",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "a queued house resident can leave a body-blocked doorstep without crossing its wall",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "same-id conversion keeps a legal circular pose beside a conservative route corner",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "courier and corgi remain outside eight classic attackers through windup and knockback",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "courier and corgi remain outside eight L1 attackers through windup and knockback",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "the courier can push out of eight living bodies while every committed footprint stays clear",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "parked rotated hull admission uses its exact footprint rather than its coarse route box",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "courier contact projection sweeps the existing capsule instead of crossing a solid to a clear endpoint",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "a stationary footprint change revalidates contact with its stationary neighbour",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "a hidden courier without a passenger owner still needs clear hull admission",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "the legacy L4 seated courier exempts only its explicit convoy bus",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "a hull reappears with unchanged entity revision and excludes an actor admitted while it was hidden",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "route buckets retain ground navigation while solid queries keep all height layers and stable IDs",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "2 m cells retain exact circle queries across negative cell edges and moves",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "4 m cells retain exact circle queries across negative cell edges and moves",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "contact cache preserves horde state against unfiltered queries (mixed zoo: false)",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "contact cache preserves horde state against unfiltered queries (mixed zoo: true)",
+      "status": "passed",
+      "failure": ""
+    }
+  ]
+}

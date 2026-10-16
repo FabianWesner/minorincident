@@ -1,0 +1,267 @@
+{
+  "source": "test-results/collision-s3-perf-reviewed/isolated-timing.json",
+  "passed": 37,
+  "failed": 0,
+  "pending": 0,
+  "tests": [
+    {
+      "file": "sim/ai/director.test.ts",
+      "name": "T-E07-07 @E07 @E07-AC07 director excludes player radius, expanded camera footprint and colliders",
+      "status": "passed",
+      "duration": 166.79453900000226,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/ai/director.test.ts",
+      "name": "T-E07-08 @E07 @E07-AC08 scripted waves queue and resume within both tier caps",
+      "status": "passed",
+      "duration": 62.46957200000179,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/ai/director.test.ts",
+      "name": "T-E07-09 @E07 @E07-AC09 150-infected stream follows spline on time and fans out",
+      "status": "passed",
+      "duration": 948.538582000001,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/ai/director.test.ts",
+      "name": "T-E07-10 @E07 @E07-AC10 five-minute spawn/kill cycle reuses prewarmed entity objects",
+      "status": "passed",
+      "duration": 51506.51461400001,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/ai/director.test.ts",
+      "name": "T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget",
+      "status": "passed",
+      "duration": 1289.0432029999938,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/ai/director.test.ts",
+      "name": "T-E07-10b @E07 @E07-AC10 recycled archetypes refresh borrowed player-collision radii",
+      "status": "passed",
+      "duration": 89.86569999999483,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/ai/director.test.ts",
+      "name": "T-E07-08b @E07 @E07-AC08 revival respects cap and retries instead of exceeding it",
+      "status": "passed",
+      "duration": 13.960988999999245,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/ai/director.test.ts",
+      "name": "T-E07-08c @E07 @E07-AC08 a capped scripted migration remains queued and begins when capacity returns",
+      "status": "passed",
+      "duration": 5.683460000000196,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/ai/director.test.ts",
+      "name": "T-E07-07b @E07 @E07-AC07 supplied camera volume uses the 10 percent expanded frustum",
+      "status": "passed",
+      "duration": 2.2336429999995744,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/ai/director.test.ts",
+      "name": "T-E19-street-reservation @E19 ordinary waves leave slots for scripted house residents without raising the cap",
+      "status": "passed",
+      "duration": 2.893601999996463,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/ai/director.test.ts",
+      "name": "T-E07-max-zoom @E07-AC07 @E18-AC01 max zoom defers a spawn newly revealed by the wider simulation camera",
+      "status": "passed",
+      "duration": 5.570256999999401,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/levels/l10-assault.test.ts",
+      "name": "T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+      "status": "passed",
+      "duration": 13596.82353699999,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/levels/l10-assault.test.ts",
+      "name": "T-E32-21-E3-low @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+      "status": "passed",
+      "duration": 12191.235086,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/levels/l10-assault.test.ts",
+      "name": "T-E32-21-E3-overlap-high @E32-AC06 @E32-AC21 full cap defers assault, dead bodies survive replenishment and revisit",
+      "status": "passed",
+      "duration": 9785.097561000002,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/levels/l10-assault.test.ts",
+      "name": "T-E32-21-E3-overlap-low @E32-AC06 @E32-AC21 full cap defers assault, dead bodies survive replenishment and revisit",
+      "status": "passed",
+      "duration": 8748.366651999997,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/levels/l10-assault.test.ts",
+      "name": "T-E32-10-E3 @E32-AC10 production composition introduces one reserved pursuer behind R1",
+      "status": "passed",
+      "duration": 7074.12772400002,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/npc/campaign.test.ts",
+      "name": "@E08 campaign steering mask preserves polygon edges, offsets, winding and irregular bounds",
+      "status": "passed",
+      "duration": 871.8811410000199,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/npc/campaign.test.ts",
+      "name": "T-E08-11-high @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity",
+      "status": "passed",
+      "duration": 43320.073715000006,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/npc/campaign.test.ts",
+      "name": "T-E08-11-low @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity",
+      "status": "passed",
+      "duration": 38609.291807,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/npc/campaign.test.ts",
+      "name": "T-E08-17 @E08 @E08-AC17 100 seeds use data pet probability and 2\u20134s down before dog rise",
+      "status": "passed",
+      "duration": 959.3621299999941,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/npc/campaign.test.ts",
+      "name": "@E08 stray cats use systemic grabs and the short pet down/rise lifecycle",
+      "status": "passed",
+      "duration": 20.259451000019908,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/chunk-residency.test.ts",
+      "name": "T-E31-13-S4-high @E31-AC12 @E31-AC13 @E31-AC14 revisit preserves HP, corpse/pickup IDs and remaining timers",
+      "status": "passed",
+      "duration": 3028.721351,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/chunk-residency.test.ts",
+      "name": "T-E31-12-S4-high @E31-AC12 @E31-AC13 predictive support remains loaded on forward/reverse seams",
+      "status": "passed",
+      "duration": 2940.9010550000003,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/chunk-residency.test.ts",
+      "name": "T-E31-13-S4-low @E31-AC12 @E31-AC13 @E31-AC14 revisit preserves HP, corpse/pickup IDs and remaining timers",
+      "status": "passed",
+      "duration": 3540.6120140000003,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/chunk-residency.test.ts",
+      "name": "T-E31-12-S4-low @E31-AC12 @E31-AC13 predictive support remains loaded on forward/reverse seams",
+      "status": "passed",
+      "duration": 3487.9608019999996,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/chunk-residency.test.ts",
+      "name": "T-E32-28-S4 @E31-AC13 @E32-AC10 @E32-AC28 Mega crosses coarse/detailed residency without >0.5 m tick jumps",
+      "status": "passed",
+      "duration": 3039.7437519999985,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/chunk-residency.test.ts",
+      "name": "T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95",
+      "status": "passed",
+      "duration": 4387.513251999997,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/chunk-residency.test.ts",
+      "name": "T-E31-19-S4-100 @E31-AC19 @E18-AC02 resident crossing horde sim p95",
+      "status": "passed",
+      "duration": 4215.2164470000025,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/chunk-residency.test.ts",
+      "name": "T-E31-12-colliders-S4 @E31-AC12 @E31-AC13 seam-spanning collider is shared, unloaded and restored with nav",
+      "status": "passed",
+      "duration": 1492.0377990000015,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/chunk-residency.test.ts",
+      "name": "T-E31-19-quality-S4 @E31-AC12 @E31-AC13 @E31-AC19 low cap serializes excess brains and high restores the same IDs/HP",
+      "status": "passed",
+      "duration": 1831.8530339999998,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/chunk-residency.test.ts",
+      "name": "T-E31-14-clock-S4 @E31-AC13 @E31-AC14 inactive recovery survives loading into a fresh tick-zero world",
+      "status": "passed",
+      "duration": 5861.288278,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/chunk-residency.test.ts",
+      "name": "T-E31-13-prop-S4 @E31-AC12 @E31-AC13 inactive movable prop releases its body and restores pose, HP and ID",
+      "status": "passed",
+      "duration": 2628.2302539999946,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/l9-handover.test.ts",
+      "name": "T-E31-15-handover @E31-AC14 @E31-AC15 1000 HP crash commits axe-only L10, save and retry",
+      "status": "passed",
+      "duration": 11066.448930999992,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/l9-handover.test.ts",
+      "name": "T-E31-15-handover @E31-AC14 @E31-AC15 0 HP crash commits axe-only L10, save and retry",
+      "status": "passed",
+      "duration": 11379.73297500002,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/l9-handover.test.ts",
+      "name": "T-E31-14-legacy @E31-AC14 broken pre-finale save migrates at its saved location to the driveable floor",
+      "status": "passed",
+      "duration": 3116.6401170000026,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/levels/l10-campus-corridor.test.ts",
+      "name": "T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex",
+      "status": "passed",
+      "duration": 29750.538942000014,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/levels/l10-campus-corridor.test.ts",
+      "name": "T-E32-03-D3-low @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex",
+      "status": "passed",
+      "duration": 20783.55416900001,
+      "failureMessages": []
+    }
+  ]
+}

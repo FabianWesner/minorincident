@@ -1,0 +1,63 @@
+{
+  "level": "L4",
+  "phase": "reviewed",
+  "throttle": 4,
+  "frameP95": 34.900000000001455,
+  "simP95": 4.100000381469727,
+  "updateP95": 5.5,
+  "renderP95": 11.100000381469727,
+  "peakActors": 0,
+  "costs": {
+    "simTick": 5.199999809265137,
+    "simTickMax": 4,
+    "sim": 4.899999618530273,
+    "physics": 0.9000005722045898,
+    "simNpcs": 1.1999998092651367,
+    "ai": 0.10000038146972656,
+    "trapRescue": 0,
+    "audio": 0.6000003814697266,
+    "telemetry": 0.09999942779541016,
+    "input": 0.6000003814697266,
+    "camera": 0.6000003814697266,
+    "view": 16,
+    "weather": 0.3000001907348633,
+    "render": 11.59999942779541,
+    "crowd": 0.8000001907348633,
+    "npcs": 2.09999942779541,
+    "accessories": 0,
+    "occlusion": 0.7999992370605469,
+    "doors": 0,
+    "lod": 0.10000038146972656,
+    "lightField": 1,
+    "lighting": 1.2000007629394531,
+    "ui": 0.9000005722045898
+  },
+  "environment": {
+    "recordedAt": "2026-10-15T23:28:42.027Z",
+    "quality": "low",
+    "backend": "webgl",
+    "viewport": {
+      "width": 390,
+      "height": 844,
+      "dpr": 2.625
+    },
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)",
+    "drawCalls": 190,
+    "triangles": 203685
+  },
+  "hostLoadStart": [
+    5.041015625,
+    4.3681640625,
+    3.7099609375
+  ],
+  "hostLoadEnd": [
+    4.845703125,
+    4.3740234375,
+    3.7275390625
+  ],
+  "localVitestStart": [],
+  "localVitestEnd": [],
+  "otherHeadlessChromeStart": [],
+  "otherHeadlessChromeEnd": [],
+  "endLevel": "L4"
+}

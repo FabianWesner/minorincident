@@ -1,0 +1,53 @@
+{
+  "raw": "collision-s3-arrival-budget.json",
+  "passed": 9,
+  "failed": 0,
+  "skipped": 0,
+  "tests": [
+    {
+      "name": "L2 escape death loop the escape checkpoint waits for a calm moment (nothing within 10 m, health >= 70 %)",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "L2 escape death loop a courier who dies twice at the same checkpoint respawns with fewer infected within 25 m (the shared respawn already pushes them out of 9 m)",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "PO #7 @E20 supermarket to bridge has steady sight-driven action, an open escape and unchanged newbie survival",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "PO #7b @E20 the arriving player sees police firing on a horde at the bridge",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "@E20 phone arrival reservations survive checkpoint restore without accumulating or owning other reservations",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "@E20 restored phone quota includes only pending cluster and first two street beats",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "@E20 required axe: 120 s idle stays calm; pickup equips and rings the alarm in the same tick",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "@E20 after the alarm every playing tick has objective text and destinations have markers, including the doors checkpoint",
+      "status": "passed",
+      "failure": ""
+    },
+    {
+      "name": "@E20-AC05 ride control latency stays on its observed clock after checkpoint respawn",
+      "status": "passed",
+      "failure": ""
+    }
+  ]
+}
