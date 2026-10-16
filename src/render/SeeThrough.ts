@@ -16,7 +16,7 @@ export const seeThrough = {
   cover: uniform(0).setGroup(renderGroup),
   /** World height of the subject's lowest point (feet or tyres). Solid occluders retain the support surface below it. */
   floor: uniform(0).setGroup(renderGroup),
-  /** Mega Alpha only (E32 close camera): 0..1 eased opening of a courier-sized hole in the boss while it stands between the lens and the courier. */
+  /** Legacy boss-mask diagnostic: the current Alpha-sized Mega stays opaque. */
   bossStrength: uniform(0).setGroup(renderGroup),
   /** Boss hole radius in screen heights (the boss hole is about a courier wide, not a survivor group). */
   bossRadius: uniform(.12).setGroup(renderGroup),
@@ -67,8 +67,5 @@ export function projectReveal(camera: Camera & { aspect: number }, box: Box3): v
   }
   seeThrough.center.value.set((left + right) / 2, (top + bottom) / 2);
   seeThrough.solidRadius.value = Math.hypot((right - left) * camera.aspect, bottom - top) / 2 / .85;
-  // Both clear inner discs enclose the same presented subject. A fixed world
-  // radius erased the entire contact-range boss at some camera distances.
-  seeThrough.bossRadius.value = seeThrough.solidRadius.value * .85 / .6;
   seeThrough.depth.value = depth - .05;
 }

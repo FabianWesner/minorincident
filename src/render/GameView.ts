@@ -82,7 +82,6 @@ export class GameView implements Lifecycle {
   private storyFraming = false;
   private l5StationView = false;
   private l3AttackScale = 1;
-  private bossHole = 0;
   /** Scene Lab courier-visibility probe: hide the courier and/or every crowd figure (including the Mega) for one screenshot. */
   private readonly revealSubject = new Box3();
   private readonly revealVehicle = new Box3();
@@ -701,12 +700,6 @@ export class GameView implements Lifecycle {
     for (const e of this.world.entities.iterate()) if (e.infected?.pursuit && !e.hidden && e.health.current > 0) best = Math.min(best, Math.hypot(e.transform.x - at.x, e.transform.z - at.z));
     return best;
   }
-  /** The boss hole opens while the Mega is within 14 m of the courier; it only drops boss fragments nearer the lens than her, inside a courier-sized disc. */
-  private updateBossHole(player?: { x: number; z: number }): void {
-    const goal = player && this.megaDistance(player) < 14 ? 1 : 0;   // Immediate full hole (see-through lane): the 60% courier pixel gate holds; the Mega is judged against an Alpha, never enlarged.
-    this.bossHole = goal;
-    seeThrough.bossStrength.value = this.bossHole;
-  }
   /** Scene Lab: hide the courier / the crowd (Mega included) and redraw, for the courier-visible-share probe. */
   probeVisibility(hide: { courier: boolean; crowd: boolean; environment?: boolean; bars?: boolean }): number {
     this.probeHide = { ...hide, environment: hide.environment ?? false, bars: hide.bars ?? false }; this.probeVisibilityPending = true; this.update(1);
@@ -881,7 +874,6 @@ export class GameView implements Lifecycle {
       seeThrough.strength.value = subject ? 1 : 0;
       if (subject) projectReveal(this.camera, subject); else seeThrough.center.value.set(-10, -10);
     }
-    this.updateBossHole(current);
     this.healthBars?.update(this.camera, this.view.viewportHeight * this.camera.aspect, this.view.viewportHeight, this.barOccluded);
     if (this.world.missions?.state.l3) {
       const at = this.world.missions.state.l3.barrierClosedAt;

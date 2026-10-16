@@ -192,8 +192,7 @@ export class CrowdView extends Group {
       const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
       // E25 night readability: crowd silhouettes take the preset's moonlit rim.
       if ('figureRim' in material) material.figureRim.value = 1;
-      // E32 close camera: the Mega Alpha opens a courier-sized hole (SeeThrough.bossStrength) while it stands between the lens and the courier.
-      if (asset === megaAlpha.asset && 'seeThrough' in material) material.seeThrough('boss');
+      // The Alpha-sized Mega retains its silhouette at contact, like a regular Alpha.
       // Instances cannot be sorted independently in the transparent render list.
       // A shared 4x4 screen-door threshold keeps every surface of a corpse at
       // a pixel together, unlike a 3D hash that exposes its deeper body parts.

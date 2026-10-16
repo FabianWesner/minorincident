@@ -131,7 +131,7 @@ export class MegaPursuit {
     const place = resident ? this.clearNear(spot) ?? spot : spot;
     const id = ai.spawn(megaAlpha.archetype, place, { state: 'chase', variant: megaAlpha.asset, offNav: !resident });
     const e = this.world.entities.get(id)!, b = e.infected!;
-    b.pursuit = true; b.speed = megaAlpha.cruiseMs; e.combat!.radius = this.radius;
+    b.pursuit = true; b.hidden = !resident; b.speed = megaAlpha.cruiseMs; e.combat!.radius = this.radius;
     e.health.current = e.health.max = megaAlpha.hp;
     const player = this.world.entities.get(1)!.transform;
     e.transform.yaw = -Math.atan2(player.z - place.z, player.x - place.x);
@@ -182,11 +182,12 @@ export class MegaPursuit {
     const player = this.world.entities.get(1)!;
     // Never lured, never investigating a noise, never a civilian's pursuer: the player is the only target.
     delete e.noiseTarget; delete b.investigate; b.heardTargetId = 0; b.speed = megaAlpha.cruiseMs;
-    if (b.specialAttack) { s.mode = 'close'; return false; }
+    if (b.specialAttack) { b.hidden = false; s.mode = 'close'; return false; }
     const pressure = this.options.route?.pressure;
     // D-CURE progresses east along its authored R6/R7 delivery approach.
     const pressured = !!pressure && this.nodes.size > 0 && this.nearestNode(s.target).x >= this.nodes.get(pressure.from)!.x;
     if (!this.resident(e.transform.x, e.transform.z) || (pressured && dist(e.transform, player.transform) > pressure!.trailM)) { this.coarse(e); return true; }
+    b.hidden = false;
     // Coarse actors expose zero locomotion intent. Seed the detailed response
     // from their resolved travel only at the handoff, preserving that contract.
     if (s.mode === 'coarse') {
@@ -278,6 +279,10 @@ export class MegaPursuit {
   /** Coarse route travel uses the same cruise speed as detailed pursuit, including the final approach. */
   private coarse(e: EntitySnapshot): void {
     const s = this.state, tick = this.world.tick;
+    // Reuse the existing hidden actor mask for nonresident pursuit: no mesh,
+    // separation or collider, while the same entity still owns HP and its cap slot.
+    if (!e.infected!.hidden) this.world.solids.forget(e);
+    e.infected!.hidden = true;
     s.mode = 'coarse'; e.combat!.attacking = false; e.infected!.state = 'chase';
     s.stuck.sampleAt = tick; s.stuck.x = e.transform.x; s.stuck.z = e.transform.z; s.stuck.noPath = 0;
     if (s.breach || this.legBlocked()) { if (this.breachStep()) s.mode = 'breach'; return; }
