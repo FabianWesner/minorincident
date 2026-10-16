@@ -1,0 +1,17 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a -> 2.28.24.66:/srv/mi/ws/spec-audit-a-e72c4d
+[remote] cache-gc deleted:none
+[remote] sync 18s, 13689 files; job /srv/mi/jobs/spec-audit-a-e72c4d-71120-1792139118; queueing for a slot
+[runner] slot 1 acquired; load 6.25 6.50 6.34
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/spec-audit-a-e72c4d-71120-1792139118[39m
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/levels/L6-protection.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 66364[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E24-09-evade @E24 @E24-AC09 an unprotected group loses at least seventy percent in the single-seed evade run[33m 66361[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m   Start at [22m 08:32:34
+[2m   Duration [22m 72.73s[2m (tests 92%, transform 7%, import 1%)[22m
+
+[remote] pulled test-results/epics/E24/evade-protection-seed-1.json
+[remote] done exit=0 (runner 2.28.24.66, sync 18s, remote total 492s)

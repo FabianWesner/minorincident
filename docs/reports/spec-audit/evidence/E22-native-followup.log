@@ -1,0 +1,527 @@
+AUDIT bounded batch: sh tools/perf/quiet-run.sh npx playwright test tests/e2e/levels/l4-bus-ride-smooth.spec.ts tests/e2e/levels/l4-blank-viewport.spec.ts tests/perf/l4-budgets.spec.ts --grep T-E22-ride-smooth|T-E22-20|T-E22-blank.*Harbor.*webgpu --project=chromium --workers=1
+11:06  up 68 days, 10 hrs, 4 users, load averages: 2.80 6.21 7.88
+Quiet-run preflight: load < 3; no local Vitest or headless Chrome processes; all configured browser slots held.
+
+Running 20 tests using 1 worker
+
+  ✓   1 [chromium] › tests/e2e/levels/l4-blank-viewport.spec.ts:24:80 › T-E22-blank @E22 L4 the walk along Harbor Street to the relocated cellar never leaves the viewport one flat colour (webgpu) (18.0s)
+  ✘   2 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-60hz @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz) (15.3s)
+  ✘   3 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-120hz @E22 the L4 convoy bus does not vibrate on screen during the ride (120hz) (24.7s)
+  ✘   4 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-120hz @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz) (24.7s)
+  ✘   5 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-30hz @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz) (10.2s)
+  ✘   6 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-phone @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone) (10.9s)
+  ✘   7 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-60hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz-webgl-low) (15.4s)
+  ✘   8 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-120hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz-webgl-low) (24.6s)
+  ✘   9 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-30hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz-webgl-low) (10.4s)
+  ✘  10 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-phone-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone-webgl-low) (10.9s)
+  ✘  11 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-60hz-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz-webgpu-high) (15.1s)
+  ✘  12 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-120hz-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz-webgpu-high) (24.7s)
+  ✘  13 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-30hz-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz-webgpu-high) (10.2s)
+  ✘  14 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-phone-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone-webgpu-high) (10.9s)
+  ✘  15 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-60hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz-webgpu-low) (15.1s)
+  ✘  16 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-120hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz-webgpu-low) (24.6s)
+  ✘  17 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-30hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz-webgpu-low) (10.2s)
+  ✘  18 [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-phone-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone-webgpu-low) (11.0s)
+{"renderer":"webgl","tier":"high","seed":2,"counts":{"infected":97,"alphas":3,"alphasArrived":3,"turnS":84,"soldiersAtTurn":20,"soldiers":18,"civilians":40},"firingSoldiers":10,"warAwakeProps":0,"collapseAwakeProps":1,"warDrawCalls":365,"warTriangles":570814,"collapseDrawCalls":310,"collapseTriangles":575841,"warP50":6.799999999999272,"warP95":9.299999999999272,"warMax":14.5,"turnMaxMs":17.100000000000364,"tankMaxMs":11.19999999999709,"breakMaxMs":18.700000000004366,"collapseP50":7.100000000005821,"collapseP95":10,"simP95":2.3000001907348633,"simFrameP95":2.1000003814697266,"updateP95":3.40000057220459,"renderP95":4,"lineBroke":true}
+  ✓  19 [chromium] › tests/perf/l4-budgets.spec.ts:16:3 › high › T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break high (55.8s)
+{"renderer":"webgl","tier":"low","seed":2,"counts":{"infected":48,"alphas":2,"alphasArrived":3,"turnS":105.5,"soldiersAtTurn":10,"soldiers":9,"civilians":20},"firingSoldiers":6,"warAwakeProps":0,"collapseAwakeProps":0,"warDrawCalls":207,"warTriangles":292506,"collapseDrawCalls":243,"collapseTriangles":284784,"warP50":24,"warP95":29.900000000001455,"warMax":40.700000000004366,"turnMaxMs":60.69999999999709,"tankMaxMs":43.5,"breakMaxMs":43.89999999999418,"collapseP50":23.20000000001164,"collapseP95":34.69999999999709,"simP95":5.200000762939453,"simFrameP95":8.399999618530273,"updateP95":8.59999942779541,"renderP95":12.299999237060547,"lineBroke":true}
+  ✓  20 [chromium] › tests/perf/l4-budgets.spec.ts:16:3 › low › T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break low (1.5m)
+
+
+  1) [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-60hz @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz) 
+
+    Error: bus screen jitter (px RMS)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.6
+    Received:    4.912785427027454
+
+      86 |     expect(samples.every(sample => Math.abs(sample.bus[0]) < half.width / 2 && Math.abs(sample.bus[1]) < half.height / 2), 'the sampled player bus stays on screen').toBe(true);
+      87 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).
+    > 88 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+         |                                                              ^
+      89 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+      90 |   });
+      91 | }
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:88:62
+
+    Error Context: test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-8f280-creen-during-the-ride-60hz--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-8f280-creen-during-the-ride-60hz--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-8f280-creen-during-the-ride-60hz--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-120hz @E22 the L4 convoy bus does not vibrate on screen during the ride (120hz) 
+
+    Error: bus screen jitter (px RMS)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.6
+    Received:    3.746595080645615
+
+      86 |     expect(samples.every(sample => Math.abs(sample.bus[0]) < half.width / 2 && Math.abs(sample.bus[1]) < half.height / 2), 'the sampled player bus stays on screen').toBe(true);
+      87 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).
+    > 88 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+         |                                                              ^
+      89 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+      90 |   });
+      91 | }
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:88:62
+
+    Error Context: test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-8b5b4-reen-during-the-ride-120hz--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-8b5b4-reen-during-the-ride-120hz--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-8b5b4-reen-during-the-ride-120hz--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-120hz @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz) 
+
+    Error: bus screen jitter (px RMS)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.6
+    Received:    3.5414879113031916
+
+      86 |     expect(samples.every(sample => Math.abs(sample.bus[0]) < half.width / 2 && Math.abs(sample.bus[1]) < half.height / 2), 'the sampled player bus stays on screen').toBe(true);
+      87 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).
+    > 88 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+         |                                                              ^
+      89 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+      90 |   });
+      91 | }
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:88:62
+
+    Error Context: test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-d7035-ring-the-ride-uneven-120hz--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-d7035-ring-the-ride-uneven-120hz--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-d7035-ring-the-ride-uneven-120hz--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-30hz @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz) 
+
+    Error: bus screen jitter (px RMS)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.6
+    Received:    6.316125970674645
+
+      86 |     expect(samples.every(sample => Math.abs(sample.bus[0]) < half.width / 2 && Math.abs(sample.bus[1]) < half.height / 2), 'the sampled player bus stays on screen').toBe(true);
+      87 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).
+    > 88 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+         |                                                              ^
+      89 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+      90 |   });
+      91 | }
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:88:62
+
+    Error Context: test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-0a9ec-creen-during-the-ride-30hz--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-0a9ec-creen-during-the-ride-30hz--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-0a9ec-creen-during-the-ride-30hz--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-phone @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone) 
+
+    Error: bus screen jitter (px RMS)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.6
+    Received:    7.53865238551145
+
+      86 |     expect(samples.every(sample => Math.abs(sample.bus[0]) < half.width / 2 && Math.abs(sample.bus[1]) < half.height / 2), 'the sampled player bus stays on screen').toBe(true);
+      87 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).
+    > 88 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+         |                                                              ^
+      89 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+      90 |   });
+      91 | }
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:88:62
+
+    Error Context: test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-00e83-ring-the-ride-uneven-phone--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-00e83-ring-the-ride-uneven-phone--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-00e83-ring-the-ride-uneven-phone--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-60hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz-webgl-low) 
+
+    Error: bus screen jitter (px RMS)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.6
+    Received:    4.912785427027456
+
+      86 |     expect(samples.every(sample => Math.abs(sample.bus[0]) < half.width / 2 && Math.abs(sample.bus[1]) < half.height / 2), 'the sampled player bus stays on screen').toBe(true);
+      87 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).
+    > 88 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+         |                                                              ^
+      89 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+      90 |   });
+      91 | }
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:88:62
+
+    Error Context: test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-619bd-ng-the-ride-60hz-webgl-low--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-619bd-ng-the-ride-60hz-webgl-low--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-619bd-ng-the-ride-60hz-webgl-low--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-120hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz-webgl-low) 
+
+    Error: bus screen jitter (px RMS)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.6
+    Received:    3.548443009193821
+
+      86 |     expect(samples.every(sample => Math.abs(sample.bus[0]) < half.width / 2 && Math.abs(sample.bus[1]) < half.height / 2), 'the sampled player bus stays on screen').toBe(true);
+      87 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).
+    > 88 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+         |                                                              ^
+      89 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+      90 |   });
+      91 | }
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:88:62
+
+    Error Context: test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-5bcad-ide-uneven-120hz-webgl-low--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-5bcad-ide-uneven-120hz-webgl-low--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-5bcad-ide-uneven-120hz-webgl-low--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-30hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz-webgl-low) 
+
+    Error: bus screen jitter (px RMS)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.6
+    Received:    0.7191540702694513
+
+      86 |     expect(samples.every(sample => Math.abs(sample.bus[0]) < half.width / 2 && Math.abs(sample.bus[1]) < half.height / 2), 'the sampled player bus stays on screen').toBe(true);
+      87 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).
+    > 88 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+         |                                                              ^
+      89 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+      90 |   });
+      91 | }
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:88:62
+
+    Error Context: test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-765e9-ng-the-ride-30hz-webgl-low--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-765e9-ng-the-ride-30hz-webgl-low--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-765e9-ng-the-ride-30hz-webgl-low--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  9) [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-phone-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone-webgl-low) 
+
+    Error: bus screen jitter (px RMS)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.6
+    Received:    7.071798123023245
+
+      86 |     expect(samples.every(sample => Math.abs(sample.bus[0]) < half.width / 2 && Math.abs(sample.bus[1]) < half.height / 2), 'the sampled player bus stays on screen').toBe(true);
+      87 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).
+    > 88 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+         |                                                              ^
+      89 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+      90 |   });
+      91 | }
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:88:62
+
+    Error Context: test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-58ee0-ide-uneven-phone-webgl-low--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-58ee0-ide-uneven-phone-webgl-low--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-58ee0-ide-uneven-phone-webgl-low--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  10) [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-60hz-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz-webgpu-high) 
+
+    Error: bus screen jitter (px RMS)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.6
+    Received:    4.873454074829801
+
+      86 |     expect(samples.every(sample => Math.abs(sample.bus[0]) < half.width / 2 && Math.abs(sample.bus[1]) < half.height / 2), 'the sampled player bus stays on screen').toBe(true);
+      87 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).
+    > 88 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+         |                                                              ^
+      89 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+      90 |   });
+      91 | }
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:88:62
+
+    Error Context: test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-9b7a9--the-ride-60hz-webgpu-high--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-9b7a9--the-ride-60hz-webgpu-high--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-9b7a9--the-ride-60hz-webgpu-high--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  11) [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-120hz-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz-webgpu-high) 
+
+    Error: bus screen jitter (px RMS)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.6
+    Received:    3.6387420576657203
+
+      86 |     expect(samples.every(sample => Math.abs(sample.bus[0]) < half.width / 2 && Math.abs(sample.bus[1]) < half.height / 2), 'the sampled player bus stays on screen').toBe(true);
+      87 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).
+    > 88 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+         |                                                              ^
+      89 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+      90 |   });
+      91 | }
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:88:62
+
+    Error Context: test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-a9121-e-uneven-120hz-webgpu-high--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-a9121-e-uneven-120hz-webgpu-high--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-a9121-e-uneven-120hz-webgpu-high--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  12) [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-30hz-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz-webgpu-high) 
+
+    Error: bus screen jitter (px RMS)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.6
+    Received:    6.609983980756159
+
+      86 |     expect(samples.every(sample => Math.abs(sample.bus[0]) < half.width / 2 && Math.abs(sample.bus[1]) < half.height / 2), 'the sampled player bus stays on screen').toBe(true);
+      87 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).
+    > 88 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+         |                                                              ^
+      89 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+      90 |   });
+      91 | }
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:88:62
+
+    Error Context: test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-0da91--the-ride-30hz-webgpu-high--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-0da91--the-ride-30hz-webgpu-high--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-0da91--the-ride-30hz-webgpu-high--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  13) [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-phone-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone-webgpu-high) 
+
+    Error: bus screen jitter (px RMS)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.6
+    Received:    7.020748168249798
+
+      86 |     expect(samples.every(sample => Math.abs(sample.bus[0]) < half.width / 2 && Math.abs(sample.bus[1]) < half.height / 2), 'the sampled player bus stays on screen').toBe(true);
+      87 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).
+    > 88 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+         |                                                              ^
+      89 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+      90 |   });
+      91 | }
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:88:62
+
+    Error Context: test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-a1f4b-e-uneven-phone-webgpu-high--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-a1f4b-e-uneven-phone-webgpu-high--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-a1f4b-e-uneven-phone-webgpu-high--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  14) [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-60hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz-webgpu-low) 
+
+    Error: bus screen jitter (px RMS)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.6
+    Received:    4.873454074830138
+
+      86 |     expect(samples.every(sample => Math.abs(sample.bus[0]) < half.width / 2 && Math.abs(sample.bus[1]) < half.height / 2), 'the sampled player bus stays on screen').toBe(true);
+      87 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).
+    > 88 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+         |                                                              ^
+      89 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+      90 |   });
+      91 | }
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:88:62
+
+    Error Context: test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-f01d4-g-the-ride-60hz-webgpu-low--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-f01d4-g-the-ride-60hz-webgpu-low--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-f01d4-g-the-ride-60hz-webgpu-low--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  15) [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-120hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz-webgpu-low) 
+
+    Error: bus screen jitter (px RMS)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.6
+    Received:    3.7129042306927764
+
+      86 |     expect(samples.every(sample => Math.abs(sample.bus[0]) < half.width / 2 && Math.abs(sample.bus[1]) < half.height / 2), 'the sampled player bus stays on screen').toBe(true);
+      87 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).
+    > 88 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+         |                                                              ^
+      89 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+      90 |   });
+      91 | }
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:88:62
+
+    Error Context: test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-cc52b-de-uneven-120hz-webgpu-low--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-cc52b-de-uneven-120hz-webgpu-low--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-cc52b-de-uneven-120hz-webgpu-low--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  16) [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-30hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz-webgpu-low) 
+
+    Error: bus screen jitter (px RMS)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.6
+    Received:    6.609983980756174
+
+      86 |     expect(samples.every(sample => Math.abs(sample.bus[0]) < half.width / 2 && Math.abs(sample.bus[1]) < half.height / 2), 'the sampled player bus stays on screen').toBe(true);
+      87 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).
+    > 88 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+         |                                                              ^
+      89 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+      90 |   });
+      91 | }
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:88:62
+
+    Error Context: test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-b6905-g-the-ride-30hz-webgpu-low--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-b6905-g-the-ride-30hz-webgpu-low--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-b6905-g-the-ride-30hz-webgpu-low--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  17) [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-phone-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone-webgpu-low) 
+
+    Error: bus screen jitter (px RMS)
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 0.6
+    Received:    7.020748168249798
+
+      86 |     expect(samples.every(sample => Math.abs(sample.bus[0]) < half.width / 2 && Math.abs(sample.bus[1]) < half.height / 2), 'the sampled player bus stays on screen').toBe(true);
+      87 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).
+    > 88 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+         |                                                              ^
+      89 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
+      90 |   });
+      91 | }
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-a/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:88:62
+
+    Error Context: test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-ab8d7-de-uneven-phone-webgpu-low--chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-ab8d7-de-uneven-phone-webgpu-low--chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-34679/e2e-levels-l4-bus-ride-smo-ab8d7-de-uneven-phone-webgpu-low--chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  17 failed
+    [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-60hz @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz) 
+    [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-120hz @E22 the L4 convoy bus does not vibrate on screen during the ride (120hz) 
+    [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-120hz @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz) 
+    [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-30hz @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz) 
+    [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-phone @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone) 
+    [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-60hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz-webgl-low) 
+    [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-120hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz-webgl-low) 
+    [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-30hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz-webgl-low) 
+    [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-phone-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone-webgl-low) 
+    [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-60hz-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz-webgpu-high) 
+    [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-120hz-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz-webgpu-high) 
+    [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-30hz-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz-webgpu-high) 
+    [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-phone-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone-webgpu-high) 
+    [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-60hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz-webgpu-low) 
+    [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-120hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz-webgpu-low) 
+    [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-30hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz-webgpu-low) 
+    [chromium] › tests/e2e/levels/l4-bus-ride-smooth.spec.ts:34:3 › T-E22-ride-smooth-uneven-phone-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone-webgpu-low) 
+  3 passed (8.0m)
+
+AUDIT batch exit=1
