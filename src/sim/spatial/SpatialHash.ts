@@ -1,7 +1,8 @@
 const numericOrder = (a: number, b: number): number => a - b;
 export interface ContactCells { epoch: number; radius(id: number): number; intersects(maximum: number, minX: number, minZ: number): boolean }
 type Position = { id: number; x: number; z: number; cellX: number; cellZ: number; slot: number };
-type Cell = { items: Position[]; bound?: { epoch: number; radius: ContactCells['radius']; maximum: number } };
+type Bound = { epoch: number; radius: ContactCells['radius']; maximum: number };
+type Cell = { items: Position[]; bound?: Bound; otherBound?: Bound };
 /** 4 m cells; the exact distance filter and numeric sort give stable queries. */
 export class SpatialHash {
   private readonly inverseCellSize: number;
@@ -25,7 +26,10 @@ export class SpatialHash {
     if (!cell) column.set(cellZ, cell = { items: [] });
     position.slot = cell.items.length; cell.items.push(position);
     // Keep a conservative upper bound as bodies change cells during the current contact phase.
-    const bound = cell.bound; if (bound) bound.maximum = Math.max(bound.maximum, bound.radius(id));
+    const bound = cell.bound; if (bound) {
+      bound.maximum = Math.max(bound.maximum, bound.radius(id));
+      const other = cell.otherBound; if (other) other.maximum = Math.max(other.maximum, other.radius(id));
+    }
   }
   delete(id: number): void {
     const position = this.positions.get(id);
@@ -52,8 +56,13 @@ export class SpatialHash {
       for (let cz = minZ; cz <= maxZ; cz++) {
         const cell = column.get(cz); if (!cell) continue;
         if (contacts) {
+          // Occupancy and rollback alternate radius policies in one transaction.
           let bound = cell.bound;
+          if (bound?.radius !== contacts.radius && cell.otherBound?.radius === contacts.radius) {
+            const previous = bound; bound = cell.otherBound; cell.bound = bound; cell.otherBound = previous;
+          }
           if (!bound || bound.epoch !== contacts.epoch || bound.radius !== contacts.radius) {
+            if (bound && bound.radius !== contacts.radius) { cell.otherBound = bound; bound = undefined; }
             let maximum = 0; for (let i = 0; i < cell.items.length; i++) maximum = Math.max(maximum, contacts.radius(cell.items[i].id));
             if (bound) { bound.epoch = contacts.epoch; bound.radius = contacts.radius; bound.maximum = maximum; }
             else { bound = { epoch: contacts.epoch, radius: contacts.radius, maximum }; cell.bound = bound; }

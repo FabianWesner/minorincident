@@ -1,5 +1,23 @@
 import { expect, test } from 'vitest';
-import { SpatialHash } from '../../../src/sim/spatial/SpatialHash';
+import { SpatialHash, type ContactCells } from '../../../src/sim/spatial/SpatialHash';
+
+test.each([2, 4])('%d m cells retain both radius policies across alternating queries and inserts', cellSize => {
+  const hash = new SpatialHash(cellSize), calls = [0, 0], maxima = [0, 0];
+  hash.set(1, .1, .1); hash.set(2, .2, .2);
+  const policy = (index: number): ContactCells => ({ epoch: 1,
+    radius: id => { calls[index]++; return id === 3 ? 2 - index : .3 + index; },
+    intersects: maximum => { maxima[index] = maximum; return true; },
+  });
+  const a = policy(0), b = policy(1), query = { x: 0, z: 0, r: 2 };
+  for (const p of [a, b, a, b]) expect(hash.query(query, [], false, undefined, p)).toEqual([1, 2]);
+  expect(calls).toEqual([2, 2]);
+  hash.set(3, .3, .3);
+  for (const p of [a, b]) expect(hash.query(query, [], false, undefined, p)).toEqual([1, 2, 3]);
+  expect(calls).toEqual([3, 3]); expect(maxima).toEqual([2, 1.3]);
+  a.epoch++;
+  hash.query(query, [], false, undefined, a); hash.query(query, [], false, undefined, b);
+  expect(calls).toEqual([6, 3]);
+});
 
 test.each([2, 4])('%d m cells retain exact circle queries across negative cell edges and moves', cellSize => {
   const hash = new SpatialHash(cellSize), positions = new Map<number, { x: number; z: number }>();

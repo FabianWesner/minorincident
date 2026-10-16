@@ -109,6 +109,12 @@ export class LevelTwoBot {
     if (!this.last || dist(this.last, p) > 6) { this.waypoint = route.reduce((best, q, i) => dist(q, p) < dist(route[best], p) ? i : best, 0); this.walker.reset(); this.detour = null; if (this.opening === 'alarm' && this.waypoint <= ALARM_AT) this.alarmed = false; }
     this.last = { x: p.x, z: p.z };
     while (this.waypoint < route.length - 1 && dist(p, route[this.waypoint]) < 2.2) this.waypoint++;
+    // Let the police cover the final approach before closing the gate behind us.
+    // Pursuers hidden outside a closed gate still prevent a calm checkpoint.
+    if (this.profile === 'complete' && this.waypoint >= route.length - 2 && (player.health.current < 70 || this.threats(p, 10).length)) {
+      if (near[0]) aimStrike(near[0]);
+      return frame;
+    }
     if (this.opening === 'alarm' && !this.alarmed && this.waypoint >= ALARM_AT) {
       // Set the car alarm off (interact at the car), then double back while the cluster runs to it.
       const car = a['l2-cluster-alarm'];
