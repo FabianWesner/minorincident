@@ -186,6 +186,8 @@ export class LevelSevenDeparture {
     if (this.cinematic) this.state.startedAt += delta;
     for (const id of Object.keys(this.state.entering).map(Number)) this.state.entering[id] += delta;
     this.from.clear(); for (const [id, at] of record.from) this.from.set(id, { ...at });
+    // Detours belong to the discarded contact timeline; rebuild them from the restored actors.
+    this.approaches.clear();
     if (this.blocker !== undefined) { w.physics.removeBlocker(this.blocker); this.blocker = undefined; }
     const blocked = !this.cinematic;
     if (blocked) this.blocker = w.physics.addBlocker(this.wall);
