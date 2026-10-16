@@ -1,5 +1,6 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { test, expect, boot, testUrl } from '../fixtures';
+import { l4 } from '../../../src/data/l4';
 
 /** PO 2026-10-12: "L4: Bus is extremely vibrating when driving." The drawn bus must move like the interpolated camera: on screen it
  * stays put (the camera follows it) and the road scrolls smoothly, also on an uneven 120 Hz display. */
@@ -54,21 +55,24 @@ for (const { renderer, quality } of configs) for (const [pace, steps] of Object.
     // real frame, so a slower cadence runs the game faster than real time: wait the same game time (about 8 s at 60 Hz).
     const mean = steps.reduce((a, b) => a + b, 0) / steps.length;
     await page.waitForTimeout(Math.round(8000 * (1000 / 60) / mean));
-    const samples = await page.evaluate(() => new Promise<{ t: number; bus: number[]; apc: number[]; prop: number[]; wheels: number[] }[]>((resolve) => {
-      const api = window.__SS__!, out: { t: number; bus: number[]; apc: number[]; prop: number[]; wheels: number[] }[] = [], ids = api.missions.state()!.l4!.convoyIds;
+    // PO 10-13 moved the courier into the first bus. The tail bus can be behind the camera.
+    const playerBusIndex = l4.convoy.vehicles.findIndex(vehicle => vehicle.player);
+    expect(l4.convoy.vehicles[playerBusIndex].asset).toBe('veh.evac-bus');
+    const samples = await page.evaluate((busIndex: number) => new Promise<{ t: number; bus: number[]; apc: number[]; prop: number[]; wheels: number[] }[]>((resolve) => {
+      const api = window.__SS__!, out: { t: number; bus: number[]; apc: number[]; prop: number[]; wheels: number[] }[] = [], ids = api.missions.state()!.l4!.convoyIds, busId = ids[busIndex];
       let start = -1, fixed: number[] | null = null;
       const record = (now: number) => {
         if (start < 0) start = now;
         const elapsed = now - start, actors = api.getState().render.entityAssets!.actors as { id: number; position: number[]; wheels: { spin: number }[] }[];
         const at = (id: number) => { const a = actors.find(x => x.id === id)!.position, p = api.camera.project(a[0], a[1] + 1.5, a[2]); return [p[0] * innerWidth / 2, p[1] * innerHeight / 2]; };
-        const bus = actors.find(x => x.id === ids[ids.length - 1])!.position;
+        const bus = actors.find(x => x.id === busId)!.position;
         fixed ??= [bus[0] + 4, 0, bus[2] + 4];
         const f = api.camera.project(fixed[0], fixed[1], fixed[2]);
-        out.push({ t: elapsed, wheels: actors.find(x => x.id === ids[ids.length - 1])!.wheels.map(w => w.spin), bus: at(ids[ids.length - 1]), apc: at(ids[0]), prop: [f[0] * innerWidth / 2, f[1] * innerHeight / 2] });
+        out.push({ t: elapsed, wheels: actors.find(x => x.id === busId)!.wheels.map(w => w.spin), bus: at(busId), apc: at(ids[0]), prop: [f[0] * innerWidth / 2, f[1] * innerHeight / 2] });
         if (elapsed < 1500) requestAnimationFrame(record); else resolve(out);
       };
       requestAnimationFrame(record);
-    }));
+    }), playerBusIndex);
     if (name === '60hz') await page.screenshot({ path: 'test-results/epics/E22/ride-bus.png' });
     const t = samples.map(s => s.t), fit = steps.reduce((a, b) => a + b, 0) / steps.length > 20 ? 250 : 100, jit = (pick: (s: typeof samples[number]) => number[]) => Math.hypot(rms(t, samples.map(s => pick(s)[0]), fit), rms(t, samples.map(s => pick(s)[1]), fit));
     // The lead vehicle only counts while it is on screen (behind the lens its projection is meaningless).
@@ -76,9 +80,10 @@ for (const { renderer, quality } of configs) for (const [pace, steps] of Object.
     const wheelSpinDeltaRad = samples[0].wheels.map((spin, i) => Math.abs(samples.at(-1)!.wheels[i] - spin));
     expect(wheelSpinDeltaRad).toHaveLength(4);
     for (const delta of wheelSpinDeltaRad) expect(delta, 'every bus wheel rolls during the ride').toBeGreaterThan(1);
-    const result = { wheelSpinDeltaRad, frames: samples.length, busJitterPx: jit(s => s.bus), apcJitterPx: onScreen ? jit(s => s.apc) : null, roadJitterPx: jit(s => s.prop) };
+    const result = { playerBusIndex, wheelSpinDeltaRad, frames: samples.length, busJitterPx: jit(s => s.bus), apcJitterPx: onScreen ? jit(s => s.apc) : null, roadJitterPx: jit(s => s.prop) };
     writeFileSync(`test-results/epics/E22/ride-smooth-${name}.json`, JSON.stringify({ ...result, samples: samples.map(s => ({ t: +s.t.toFixed(1), bus: s.bus.map(v => +v.toFixed(2)), apc: s.apc.map(v => +v.toFixed(2)) })) }));
     expect(samples.length).toBeGreaterThan(30);
+    expect(samples.every(sample => Math.abs(sample.bus[0]) < half.width / 2 && Math.abs(sample.bus[1]) < half.height / 2), 'the sampled player bus stays on screen').toBe(true);
     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).
     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);
