@@ -29,7 +29,7 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 
 ## Alpha (PO update 2026-10-11)
 
-Source: [`po-levels-4-9-2026-10-11.md`](po-levels-4-9-2026-10-11.md), highest priority. Existing human/animal AI remains; **new scope is not built yet**. Asset/archetype shorthand `inf.alpha` maps to sim definition `infected.alpha`, matching `src/data/infected.ts` conventions.
+Source: [`po-levels-4-9-2026-10-11.md`](po-levels-4-9-2026-10-11.md), highest priority. Existing human/animal AI remains; the historical lane plans below describe the added scope. Current implementation and remaining evidence are audited in `docs/reports/spec-audit/a.md`. Asset/archetype shorthand `inf.alpha` maps to sim definition `infected.alpha`, matching `src/data/infected.ts` conventions.
 
 > PO, verbatim: "They are not fantasy monsters or bosses, but unusually resilient infected that can absorb concentrated gunfire and physically break defensive lines. Their real tactical value is that soldiers have to focus on them while regular infected overwhelm the gaps."
 
@@ -51,7 +51,7 @@ Shotgun is fastest single-target at close range; machine gun keeps its piercing/
 | Level | Alpha count over one run, both tiers | Spawn rule |
 | --- | --- | --- |
 | L1–L3 | 0 | First introduction is L4 |
-| L4 | 2–3 | After internal evacuee turn, inside 120/60 infected caps |
+| L4 | 6–8 (8 high, 6 low; PO 2026-10-13) | After the alarm, staggered from ≥ 6 directions, inside 120/60 infected caps |
 | L5 | 1–2 | Included in 12–20 scattered infected; no group > 3, no director |
 | L6 | 0 (orchestrator default) | Preserve existing maintenance-tunnel encounters |
 | L7 | 4–6 (orchestrator default for "multiple" / "several") | Distributed city + final horde, within 200/100 concurrent infected |
@@ -90,7 +90,7 @@ These later PO statements and the revised source's orchestrator decisions supers
 
 ### Infected zoo animal roster and moves (L8)
 
-Reuse shipped `infected.lion`/`inf.lion`, `infected.gorilla`/`inf.gorilla`, `infected.flamingo`/`inf.flamingo`. Add `infected.elephant`/`inf.elephant` and `infected.zebra`/`inf.zebra` **derived from `amb.elephant`/`amb.zebra`**, sharing shape/rig and healthy→infected continuity. Those normal bases are **manifest placeholders, with no production model directories yet**; build the normal base once, then derive infected variants, not an unrelated model. Existing cat/pet code remains a reuse reference; cats are not substituted for the five required zoo species.
+Reuse shipped `infected.lion`/`inf.lion`, `infected.gorilla`/`inf.gorilla`, `infected.flamingo`/`inf.flamingo`. Add `infected.elephant`/`inf.elephant` and `infected.zebra`/`inf.zebra` **derived from `amb.elephant`/`amb.zebra`**, sharing shape/rig and healthy→infected continuity. The normal and infected production models now live in `assets/amb.elephant/`, `assets/inf.elephant/`, `assets/amb.zebra/` and `assets/inf.zebra/`; retain the shared base/derived relationship, not an unrelated infected model. Existing cat/pet code remains a reuse reference; cats are not substituted for the five required zoo species.
 
 Orchestrator default new definitions: elephant base HP 800 → 1,200 effective with current 1.5 toughness, speed 3.5 m/s, radius 1.2 m; zebra base HP 120 → 180 effective, speed 6 m/s, radius 0.45 m. Shared bars use these actual effective values. Existing lion/gorilla/flamingo HP stays data-driven. All five species can start healthy and turn through the E30 infection path.
 
@@ -107,7 +107,7 @@ Orchestrator default new definitions: elephant base HP 800 → 1,200 effective w
 | Zebra — herd stampede | 0.8 s / 12 s | 2–4 infected zebras within 12 m align a telegraphed corridor; each runs 10 m/s ≤ 15 m, 1.5 m-wide sweep; humans take 25 damage + 1 s knockdown per distinct zebra/attack id, no repeat overlap hit, no summoning extra animals. | `qa-zoo-zebra-stampede.json` / `T-E07-19-zebra-stampede` |
 | Flamingo — flock dive | 0.6 s / 8 s | Existing flamingos (3–8 in fixture) dive into marked 3 m area; 5 damage + **0.6 s stagger**, once per target per flock attack; feather/wing view obstruction lasts **≤ 0.8 s**, opacity ≤ 0.35, player silhouette/health HUD remain visible and reduced-flash setting respected. | `qa-zoo-flamingo-dive.json` / `T-E07-19-flamingo-dive` |
 
-Scene paths are proposed under `specs/scenes/`, created during implementation. **One scene per move**, not one generic animal scene: fixed seed, healthy/damaged/in-range/out-of-range bar probes, pre-telegraph/start/activation/impact/expiry captures, targets just inside/outside radius or sweep, solid-wall control, two consecutive activations proving cooldown, checkpoint restore during cooldown. Reuse existing Scene Lab entity/prop/vehicle fixtures and extend schema only where a move is not currently controllable. No scene is claimed to exist yet.
+The named move scenes are implemented under `tests/scenes/alpha-s2/`, `alpha-s3/` and `zoo-s1/` through `zoo-s3/` (see the audit report for coverage gaps). **One scene per move**, not one generic animal scene: fixed seed, healthy/damaged/in-range/out-of-range bar probes, pre-telegraph/start/activation/impact/expiry captures, targets just inside/outside radius or sweep, solid-wall control, two consecutive activations proving cooldown, checkpoint restore during cooldown. Reuse existing Scene Lab entity/prop/vehicle fixtures and extend schema only where a move is not currently controllable. Scene existence alone does not establish the boundary/cooldown capture contract.
 
 ## Acceptance criteria
 
@@ -161,3 +161,14 @@ Epic report rationale: AC01/05/06/14/19 extend the archetype roster and physical
 | Z-E1 encounters | 2 h | All-five-species infection/cooldown/bar fixture using E30 normal→infected identity and existing local target queries. |
 | Z-Q1 Scene Lab | 3 h | Ten named per-move `qa-zoo-*.json` scenes (split into further ≤ 3 h lanes if authoring exceeds this budget) with exact activation/expiry/cooldown frames and radius/wall controls. |
 | Z-Q2 browser e2e | 3 h | Headless desktop/phone bar/telegraph tests plus all move suffixes under `@E07-AC19`, no normal-animal bars, E18 mixed-species counters. |
+
+
+## PO 2026-10-13 / 2026-10-15 precedence (spec audit)
+
+PO 2026-10-13, verbatim (`po-levels-4-9-2026-10-11.md`, L4 pressure): "L4: Zombies still have no chance against soldiers. Let them come from all directios, not in bulk. ALso from within buildings inside the army area. And add more alphas. The current one has zero chance."
+
+This supersedes the older 2–3 L4 Alpha count in the table above; E22-AC12 specifies 8 high / 6 low. E07-AC01 uses that revised table.
+
+PO 2026-10-15, verbatim (bug intake #25): "The alpha needs to be aware when someone is so close (even when not in view)". The intake requires proximity awareness for all infected within about 6 m independent of sight. #29 explicitly retains it in L5: "Should #25 stay in L5? - YES". This extends E07-AC02's sight/noise contract; it does not remove its original cone fixture. The current L5-only implementation does not close the global requirement.
+
+PO 2026-10-15, verbatim (bug intake #37): "I got the shotgun, but it's not powerful. It feels less than the regular gun. SHOULD: Shotgun kills Zombies with a single shot and also is effective against alphas." The binding intake target extends E07-AC14 / E23-AC12 to every regular infected within about 8 m, permanent death, with Alpha stagger/knockback each close hit. Alpha HP/resistance stay unchanged.
