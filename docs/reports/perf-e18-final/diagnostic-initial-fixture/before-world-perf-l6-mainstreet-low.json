@@ -1,0 +1,210 @@
+{
+  "scenario": "perf-l6-mainstreet",
+  "tier": "low",
+  "draws": 106,
+  "triangles": 191000,
+  "profile": {
+    "other": {
+      "drawCalls": 53,
+      "triangles": 60479
+    },
+    "shadows": {
+      "drawCalls": 29,
+      "triangles": 64505
+    },
+    "buildings": {
+      "drawCalls": 5,
+      "triangles": 12238
+    },
+    "crowd": {
+      "drawCalls": 16,
+      "triangles": 53126
+    },
+    "props": {
+      "drawCalls": 3,
+      "triangles": 652
+    }
+  },
+  "assets": {
+    "view:other/Background.mesh/Background.mesh": {
+      "drawCalls": 1,
+      "triangles": 1984
+    },
+    "shadow:other/sunset-grove/Mesh": {
+      "drawCalls": 6,
+      "triangles": 72
+    },
+    "shadow:other/interactions/static-body": {
+      "drawCalls": 1,
+      "triangles": 68
+    },
+    "shadow:other/npcs/rigid-part": {
+      "drawCalls": 8,
+      "triangles": 6900
+    },
+    "shadow:other/Group/mesh_0": {
+      "drawCalls": 1,
+      "triangles": 508
+    },
+    "shadow:other/Group/mesh_1": {
+      "drawCalls": 1,
+      "triangles": 844
+    },
+    "shadow:other/Group/mesh_1_1": {
+      "drawCalls": 1,
+      "triangles": 280
+    },
+    "shadow:other/npcs/Mesh": {
+      "drawCalls": 1,
+      "triangles": 24
+    },
+    "shadow:kit.shelter-camp": {
+      "drawCalls": 1,
+      "triangles": 8080
+    },
+    "shadow:other/Group/courierSkin": {
+      "drawCalls": 1,
+      "triangles": 44620
+    },
+    "shadow:other/Group/Mesh": {
+      "drawCalls": 0,
+      "triangles": 0
+    },
+    "shadow:int.metro-station": {
+      "drawCalls": 1,
+      "triangles": 3102
+    },
+    "view:other/sunset-grove/Mesh": {
+      "drawCalls": 7,
+      "triangles": 74
+    },
+    "view:int.metro-station": {
+      "drawCalls": 2,
+      "triangles": 3198
+    },
+    "view:other/npcs/rigid-part": {
+      "drawCalls": 8,
+      "triangles": 6900
+    },
+    "view:other/Group/mesh_0": {
+      "drawCalls": 1,
+      "triangles": 508
+    },
+    "view:other/Group/mesh_1": {
+      "drawCalls": 1,
+      "triangles": 844
+    },
+    "view:other/Group/mesh_1_1": {
+      "drawCalls": 1,
+      "triangles": 280
+    },
+    "view:other/Group/courierSkin": {
+      "drawCalls": 1,
+      "triangles": 44620
+    },
+    "view:other/interactions/window-light": {
+      "drawCalls": 1,
+      "triangles": 12
+    },
+    "view:kit.shelter-camp": {
+      "drawCalls": 2,
+      "triangles": 8176
+    },
+    "view:prop.emergency-light": {
+      "drawCalls": 2,
+      "triangles": 468
+    },
+    "view:util.radio": {
+      "drawCalls": 1,
+      "triangles": 184
+    },
+    "view:other/interactions/static-body": {
+      "drawCalls": 1,
+      "triangles": 68
+    },
+    "view:other/crowd-accessories/acc.hat-hard-hat:lod1": {
+      "drawCalls": 1,
+      "triangles": 43
+    },
+    "view:other/crowd-accessories/acc.hat-baseball-cap:lod1": {
+      "drawCalls": 1,
+      "triangles": 260
+    },
+    "view:other/crowd-accessories/acc.hair-bun:lod1": {
+      "drawCalls": 1,
+      "triangles": 44
+    },
+    "view:other/crowd-accessories/acc.hat-flat-cap:lod1": {
+      "drawCalls": 1,
+      "triangles": 28
+    },
+    "view:other/npcs/Mesh": {
+      "drawCalls": 1,
+      "triangles": 24
+    },
+    "view:other/crowd-accessories/acc.hat-sun-hat:lod1": {
+      "drawCalls": 1,
+      "triangles": 270
+    },
+    "view:other/crowd-accessories/acc.hat-beanie:lod1": {
+      "drawCalls": 1,
+      "triangles": 96
+    },
+    "view:other/crowd-accessories/acc.hair-afro:lod1": {
+      "drawCalls": 1,
+      "triangles": 40
+    },
+    "view:other/crowd-accessories/acc.hat-bucket-hat:lod1": {
+      "drawCalls": 1,
+      "triangles": 216
+    },
+    "view:other/crowd-accessories/acc.hair-side-part:lod1": {
+      "drawCalls": 1,
+      "triangles": 36
+    },
+    "view:other/crowd-accessories/acc.hair-short-crop:lod1": {
+      "drawCalls": 1,
+      "triangles": 96
+    },
+    "view:kit.metro-track": {
+      "drawCalls": 1,
+      "triangles": 864
+    },
+    "view:other/crowd-accessories/acc.hair-ponytail:lod1": {
+      "drawCalls": 1,
+      "triangles": 176
+    },
+    "view:other/Group/Mesh": {
+      "drawCalls": 7,
+      "triangles": 3042
+    },
+    "view:other/sunset-grove/perimeter-posts": {
+      "drawCalls": 4,
+      "triangles": 480
+    },
+    "view:other/sunset-grove/grass-gpu-wind": {
+      "drawCalls": 1,
+      "triangles": 0
+    },
+    "view:other/figure-contact-shadows/figure-contact-shadows": {
+      "drawCalls": 1,
+      "triangles": 34
+    },
+    "view:other/interactions/Mesh": {
+      "drawCalls": 3,
+      "triangles": 256
+    },
+    "shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]": {
+      "drawCalls": 6,
+      "triangles": 6
+    },
+    "shadow:other/Render Pipeline/Render Pipeline": {
+      "drawCalls": 1,
+      "triangles": 1
+    },
+    "view:other/infected-health-bars/Mesh": {
+      "drawCalls": 3,
+      "triangles": 48
+    }
+  }
+}

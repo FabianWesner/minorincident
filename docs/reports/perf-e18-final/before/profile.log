@@ -1,0 +1,38 @@
+ 9:34  up 68 days,  8:28, 4 users, load averages: 2.75 3.30 3.08
+Quiet-run preflight: load < 3; no local Vitest or headless Chrome processes; all configured browser slots held.
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › tests/perf/e18-memory.spec.ts:4:46 › T-E18-05-high @E18-AC05 @perf five L1/L6 loads release heap and GPU resources (1.4m)
+
+
+  1) [chromium] › tests/perf/e18-memory.spec.ts:4:46 › T-E18-05-high @E18-AC05 @perf five L1/L6 loads release heap and GPU resources
+
+    Error: heapBytes
+
+    expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 88026690.4
+    Received:    97090244
+
+      25 |   const first = loads[0], last = loads[4];
+      26 |   mkdirSync('test-results/epics/E18', { recursive: true }); writeFileSync(`test-results/epics/E18/memory-${tier}.json`, JSON.stringify(loads, null, 2));
+    > 27 |   for (const key of ['heapBytes', 'geometries', 'textures'] as const) expect(last[key], key).toBeLessThanOrEqual(first[key] * 1.1);
+         |                                                                                              ^
+      28 |   for (const load of loads.filter(l => l.id === 'L6')) expect(load.heapBytes).toBeLessThanOrEqual(qualityBudgets[tier].heapMB * 1_000_000);
+      29 | });
+      30 |
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-e18-final/tests/perf/e18-memory.spec.ts:27:94
+
+    Error Context: test-results/playwright/run-3517/perf-e18-memory-T-E18-05-h-111b9-ease-heap-and-GPU-resources-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3517/perf-e18-memory-T-E18-05-h-111b9-ease-heap-and-GPU-resources-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3517/perf-e18-memory-T-E18-05-h-111b9-ease-heap-and-GPU-resources-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/perf/e18-memory.spec.ts:4:46 › T-E18-05-high @E18-AC05 @perf five L1/L6 loads release heap and GPU resources

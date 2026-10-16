@@ -1,0 +1,226 @@
+[
+  {
+    "from": "0:synthetic:#1",
+    "edge": "element:1",
+    "to": "1:synthetic:(GC roots)#3"
+  },
+  {
+    "from": "1:synthetic:(GC roots)#3",
+    "edge": "element:10",
+    "to": "11:synthetic:(Global handles)#23"
+  },
+  {
+    "from": "11:synthetic:(Global handles)#23",
+    "edge": "internal:7 / V8PerContextData::context_",
+    "to": "3697:native:system / NativeContext / http://127.0.0.1:3517#7387"
+  },
+  {
+    "from": "3697:native:system / NativeContext / http://127.0.0.1:3517#7387",
+    "edge": "internal:global_object",
+    "to": "961535:object:Window [JSGlobalObject] / http://127.0.0.1:3517#1203753"
+  },
+  {
+    "from": "961535:object:Window [JSGlobalObject] / http://127.0.0.1:3517#1203753",
+    "edge": "property:__SS__",
+    "to": "1252789:object:Object#1205785"
+  },
+  {
+    "from": "1252789:object:Object#1205785",
+    "edge": "property:pause",
+    "to": "334646:closure:pause#1346127"
+  },
+  {
+    "from": "334646:closure:pause#1346127",
+    "edge": "internal:context",
+    "to": "334648:object:system / Context / scope @1346133#1346135"
+  },
+  {
+    "from": "334648:object:system / Context / scope @1346133#1346135",
+    "edge": "context:e",
+    "to": "334953:object:by#1346805"
+  },
+  {
+    "from": "334953:object:by#1346805",
+    "edge": "property:view",
+    "to": "658852:object:fb#1806745"
+  },
+  {
+    "from": "658852:object:fb#1806745",
+    "edge": "property:postFx",
+    "to": "2235303:object:pi#8688797"
+  },
+  {
+    "from": "2235303:object:pi#8688797",
+    "edge": "property:bloomEnabled",
+    "to": "593090:object:mi#5884775"
+  },
+  {
+    "from": "593090:object:mi#5884775",
+    "edge": "internal:1 / part of key (mi @5884775) -> value (Object @7889027) pair in WeakMap (table @7888493)",
+    "to": "1782384:object:Object#7889027"
+  },
+  {
+    "from": "1782384:object:Object#7889027",
+    "edge": "property:fragment",
+    "to": "1782820:object:Object#7889897"
+  },
+  {
+    "from": "1782820:object:Object#7889897",
+    "edge": "property:uniform",
+    "to": "1781054:object:JA#7886379"
+  }
+]
+[
+  {
+    "from": "0:synthetic:#1",
+    "edge": "element:1",
+    "to": "1:synthetic:(GC roots)#3"
+  },
+  {
+    "from": "1:synthetic:(GC roots)#3",
+    "edge": "element:10",
+    "to": "11:synthetic:(Global handles)#23"
+  },
+  {
+    "from": "11:synthetic:(Global handles)#23",
+    "edge": "internal:7 / V8PerContextData::context_",
+    "to": "3697:native:system / NativeContext / http://127.0.0.1:3517#7387"
+  },
+  {
+    "from": "3697:native:system / NativeContext / http://127.0.0.1:3517#7387",
+    "edge": "internal:global_object",
+    "to": "961535:object:Window [JSGlobalObject] / http://127.0.0.1:3517#1203753"
+  },
+  {
+    "from": "961535:object:Window [JSGlobalObject] / http://127.0.0.1:3517#1203753",
+    "edge": "property:__SS__",
+    "to": "1252789:object:Object#1205785"
+  },
+  {
+    "from": "1252789:object:Object#1205785",
+    "edge": "property:pause",
+    "to": "334646:closure:pause#1346127"
+  },
+  {
+    "from": "334646:closure:pause#1346127",
+    "edge": "internal:context",
+    "to": "334648:object:system / Context / scope @1346133#1346135"
+  },
+  {
+    "from": "334648:object:system / Context / scope @1346133#1346135",
+    "edge": "context:e",
+    "to": "334953:object:by#1346805"
+  },
+  {
+    "from": "334953:object:by#1346805",
+    "edge": "property:view",
+    "to": "658852:object:fb#1806745"
+  },
+  {
+    "from": "658852:object:fb#1806745",
+    "edge": "property:look",
+    "to": "337375:object:io#3786183"
+  },
+  {
+    "from": "337375:object:io#3786183",
+    "edge": "property:nodes",
+    "to": "2317815:object:Object#4573637"
+  },
+  {
+    "from": "2317815:object:Object#4573637",
+    "edge": "property:dofStart",
+    "to": "948864:object:mi#3062567"
+  },
+  {
+    "from": "948864:object:mi#3062567",
+    "edge": "internal:2 / part of key (mi @3062567) -> value (Object @7889063) pair in WeakMap (table @7888493)",
+    "to": "1782402:object:Object#7889063"
+  },
+  {
+    "from": "1782402:object:Object#7889063",
+    "edge": "property:fragment",
+    "to": "1782852:object:Object#7889961"
+  },
+  {
+    "from": "1782852:object:Object#7889961",
+    "edge": "property:uniform",
+    "to": "1781048:object:JA#7886367"
+  }
+]
+[
+  {
+    "from": "0:synthetic:#1",
+    "edge": "element:1",
+    "to": "1:synthetic:(GC roots)#3"
+  },
+  {
+    "from": "1:synthetic:(GC roots)#3",
+    "edge": "element:10",
+    "to": "11:synthetic:(Global handles)#23"
+  },
+  {
+    "from": "11:synthetic:(Global handles)#23",
+    "edge": "internal:7 / V8PerContextData::context_",
+    "to": "3697:native:system / NativeContext / http://127.0.0.1:3517#7387"
+  },
+  {
+    "from": "3697:native:system / NativeContext / http://127.0.0.1:3517#7387",
+    "edge": "internal:global_object",
+    "to": "961535:object:Window [JSGlobalObject] / http://127.0.0.1:3517#1203753"
+  },
+  {
+    "from": "961535:object:Window [JSGlobalObject] / http://127.0.0.1:3517#1203753",
+    "edge": "property:__SS__",
+    "to": "1252789:object:Object#1205785"
+  },
+  {
+    "from": "1252789:object:Object#1205785",
+    "edge": "property:pause",
+    "to": "334646:closure:pause#1346127"
+  },
+  {
+    "from": "334646:closure:pause#1346127",
+    "edge": "internal:context",
+    "to": "334648:object:system / Context / scope @1346133#1346135"
+  },
+  {
+    "from": "334648:object:system / Context / scope @1346133#1346135",
+    "edge": "context:e",
+    "to": "334953:object:by#1346805"
+  },
+  {
+    "from": "334953:object:by#1346805",
+    "edge": "property:view",
+    "to": "658852:object:fb#1806745"
+  },
+  {
+    "from": "658852:object:fb#1806745",
+    "edge": "property:look",
+    "to": "337375:object:io#3786183"
+  },
+  {
+    "from": "337375:object:io#3786183",
+    "edge": "property:nodes",
+    "to": "2317815:object:Object#4573637"
+  },
+  {
+    "from": "2317815:object:Object#4573637",
+    "edge": "property:dofEnd",
+    "to": "948865:object:mi#3062563"
+  },
+  {
+    "from": "948865:object:mi#3062563",
+    "edge": "internal:2 / part of key (mi @3062563) -> value (Object @7888961) pair in WeakMap (table @7888493)",
+    "to": "1782351:object:Object#7888961"
+  },
+  {
+    "from": "1782351:object:Object#7888961",
+    "edge": "property:fragment",
+    "to": "1782759:object:Object#7889775"
+  },
+  {
+    "from": "1782759:object:Object#7889775",
+    "edge": "property:uniform",
+    "to": "1781049:object:JA#7886369"
+  }
+]

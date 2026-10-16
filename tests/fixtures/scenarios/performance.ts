@@ -37,21 +37,25 @@ export function installPerformanceLevel(world: SimWorld, tier: QualityTier, name
   const { min, max } = world.districts!.nav;
   const walls: NonNullable<ScenarioDefinition['walls']> = [];
   for (const d of world.districts!.districts) for (const box of d.decay.colliders.filter(c => !c.walkable).map(c => c.aabb).concat(d.blockers)) walls.push({ x: (box.min[0] + box.max[0]) / 2 + d.origin[0], y: (box.min[1] + box.max[1]) / 2, z: (box.min[2] + box.max[2]) / 2 + d.origin[1], halfX: (box.max[0] - box.min[0]) / 2, halfY: (box.max[1] - box.min[1]) / 2, halfZ: (box.max[2] - box.min[2]) / 2 });
+  // Prepare the campaign cast before installing the E18 stress cap. Replacing an
+  // already-populated AI leaves its actors orphaned in the render entity store;
+  // preparing afterwards also replaces the stress cap with L5's campaign cap.
+  if (name !== 'perf-l1-foliage-200') world.missions?.begin();
   const alreadyUpdating = world.infected !== null;
-  world.infected = new InfectedSystem(world, { ...arena, name, ground: { width: max[0] - min[0], depth: max[1] - min[1], center: { x: (min[0] + max[0]) / 2, z: (min[1] + max[1]) / 2 } }, walls });
+  if (!world.infected || name === 'perf-l1-foliage-200') world.infected = new InfectedSystem(world, { ...arena, name, ground: { width: max[0] - min[0], depth: max[1] - min[1], center: { x: (min[0] + max[0]) / 2, z: (min[1] + max[1]) / 2 } }, walls });
+  world.infected.director.levelCap = 200;
   world.infected.director.tier = name === 'perf-l1-foliage-200' ? 'high' : tier;
   if (!alreadyUpdating) world.events.on('sim.tick', () => world.infected!.update(), SimPhase.ai);
   world.combat!.damage.god = true;
   const target = name === 'perf-l1-foliage-200' || tier === 'high' ? 200 : 100;
   const player = world.entities.get(1)!;
   if (!world.infected.nav.clear(origin[0], origin[1], .4)) throw new Error('Perf photo spot is blocked');
-  Object.assign(player.transform, { x: origin[0], z: origin[1] });
+  // L5 begin places the courier in the cellar. Preserve that authored final
+  // pose; the paired photo camera and stress crowd remain at the plaza.
+  if (name !== 'perf-l5-aftermath') Object.assign(player.transform, { x: origin[0], z: origin[1] });
   world.previousPlayer = { ...player.transform }; world.spatial.set(1, player.transform.x, player.transform.z); world.physics.playerBody!.setTranslation(player.transform, true);
-  world.missions?.begin();
-  // Mission begin installs its campaign cap (L6: 60/30). This probe explicitly
-  // measures the E18 worst-cap population, 200/100, on the campaign geometry.
-  world.infected.director.levelCap = 200;
   if (name === 'perf-l1-foliage-200') {
+    world.missions?.begin();
     world.scenario = name;
     // Hold the stress load at V5: overlapping crowd capsules must not push the
     // survivor and the entire attacking crowd out of the measurement frustum.

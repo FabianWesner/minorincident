@@ -1,0 +1,1 @@
+These are diagnostic captures/counters from an intermediate fixture. L5 incorrectly moved the player to the district origin; those triangle comparisons are withdrawn. L6 used the shelter district origin before the final correction to its authored player-start anchor. Neither set is final-scenario acceptance. See ../l5-scenario-audit.json and ../evidence.md.
