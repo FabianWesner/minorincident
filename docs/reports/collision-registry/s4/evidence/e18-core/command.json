@@ -1,0 +1,20 @@
+{
+  "source": "3714fe54e",
+  "command": [
+    "sh",
+    "tools/e2e-lock.sh",
+    "npx",
+    "playwright",
+    "test",
+    "tests/e2e/e18-quality.spec.ts",
+    "tests/e2e/e18-mobile.spec.ts",
+    "tests/perf/e18-counters.spec.ts",
+    "tests/perf/e18-memory.spec.ts",
+    "tests/perf/e18-download.spec.ts",
+    "--project=chromium",
+    "--workers=1",
+    "--retries=0"
+  ],
+  "port": 3480,
+  "exit": 1
+}

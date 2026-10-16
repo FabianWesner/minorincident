@@ -1,0 +1,358 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/private/tmp/collision-s4-main-qa/node_modules/.bin/playwright",
+      "test",
+      "tests/perf/e18-counters.spec.ts",
+      "tests/perf/e18-memory.spec.ts",
+      "--grep",
+      "low-perf-l5-aftermath|T-E18-05-high",
+      "--project=chromium",
+      "--workers=1",
+      "--retries=0"
+    ],
+    "configFile": "/private/tmp/collision-s4-main-qa/playwright.config.ts",
+    "rootDir": "/private/tmp/collision-s4-main-qa/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/private/tmp/collision-s4-main-qa/test-results/playwright/run-3481",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/private/tmp/collision-s4-main-qa/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/private/tmp/collision-s4-main-qa/test-results/playwright/run-3481",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/private/tmp/collision-s4-main-qa/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/private/tmp/collision-s4-main-qa/test-results/playwright/run-3481",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/private/tmp/collision-s4-main-qa/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/private/tmp/collision-s4-main-qa/test-results/playwright/run-3481",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/private/tmp/collision-s4-main-qa/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/private/tmp/collision-s4-main-qa/test-results/playwright/run-3481",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/private/tmp/collision-s4-main-qa/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/private/tmp/collision-s4-main-qa/test-results/playwright/run-3481",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/private/tmp/collision-s4-main-qa/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3481 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3481",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "perf/e18-counters.spec.ts",
+      "file": "perf/e18-counters.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E18-01-low-perf-l5-aftermath @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets",
+          "ok": false,
+          "tags": [
+            "E18-AC01",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 1490,
+                  "error": {
+                    "message": "Error: page.evaluate: Error: Infected concurrency cap reached\n    at mn.spawn (http://127.0.0.1:3481/build/install-dFP3eCbm.js:1:310122)\n    at Op (http://127.0.0.1:3481/build/index-DbQ91XvJ.js:3:13197)\n    at http://127.0.0.1:3481/build/index-DbQ91XvJ.js:12:45132",
+                    "stack": "Error: page.evaluate: Error: Infected concurrency cap reached\n    at mn.spawn (http://127.0.0.1:3481/build/install-dFP3eCbm.js:1:310122)\n    at Op (http://127.0.0.1:3481/build/index-DbQ91XvJ.js:3:13197)\n    at http://127.0.0.1:3481/build/index-DbQ91XvJ.js:12:45132\n    at mn.spawn (http://127.0.0.1:3481/build/install-dFP3eCbm.js:1:310122)\n    at Op (http://127.0.0.1:3481/build/index-DbQ91XvJ.js:3:13197)\n    at http://127.0.0.1:3481/build/index-DbQ91XvJ.js:12:45132\n    at /private/tmp/collision-s4-main-qa/tests/perf/e18-counters.spec.ts:9:30",
+                    "location": {
+                      "file": "http://127.0.0.1:3481/build/install-dFP3eCbm.js",
+                      "column": 310122,
+                      "line": 1
+                    }
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "http://127.0.0.1:3481/build/install-dFP3eCbm.js",
+                        "column": 310122,
+                        "line": 1
+                      },
+                      "message": "Error: page.evaluate: Error: Infected concurrency cap reached\n    at mn.spawn (http://127.0.0.1:3481/build/install-dFP3eCbm.js:1:310122)\n    at Op (http://127.0.0.1:3481/build/index-DbQ91XvJ.js:3:13197)\n    at http://127.0.0.1:3481/build/index-DbQ91XvJ.js:12:45132\n    at mn.spawn (http://127.0.0.1:3481/build/install-dFP3eCbm.js:1:310122)\n    at Op (http://127.0.0.1:3481/build/index-DbQ91XvJ.js:3:13197)\n    at http://127.0.0.1:3481/build/index-DbQ91XvJ.js:12:45132\n    at /private/tmp/collision-s4-main-qa/tests/perf/e18-counters.spec.ts:9:30"
+                    },
+                    {
+                      "location": {
+                        "file": "/private/tmp/collision-s4-main-qa/tests/e2e/fixtures.ts",
+                        "column": 81,
+                        "line": 42
+                      },
+                      "message": "Error: Uncaught errors, console errors and failed requests\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 1\u001b[39m\n\u001b[31m+ Received  + 6\u001b[39m\n\n\u001b[32m- Array []\u001b[39m\n\u001b[31m+ Array [\u001b[39m\n\u001b[31m+   \"console.error: Level load failed Error: Infected concurrency cap reached\u001b[39m\n\u001b[31m+     at mn.spawn (http://127.0.0.1:3481/build/install-dFP3eCbm.js:1:310122)\u001b[39m\n\u001b[31m+     at Op (http://127.0.0.1:3481/build/index-DbQ91XvJ.js:3:13197)\u001b[39m\n\u001b[31m+     at http://127.0.0.1:3481/build/index-DbQ91XvJ.js:12:45132\",\u001b[39m\n\u001b[31m+ ]\u001b[39m\n\n   at e2e/fixtures.ts:42\n\n  40 |     const guard = attachErrorGuard(page);\n  41 |     await use(); guard.dispose();\n> 42 |     expect(guard.errors, 'Uncaught errors, console errors and failed requests').toEqual([]);\n     |                                                                                 ^\n  43 |   }, { auto: true }],\n  44 | });\n  45 | export { expect };\n    at Object.base.extend.errorGuard.auto (/private/tmp/collision-s4-main-qa/tests/e2e/fixtures.ts:42:81)"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T07:14:57.098Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/private/tmp/collision-s4-main-qa/test-results/playwright/run-3481/perf-e18-counters-T-E18-01-35d48-unters-stay-in-tier-budgets-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/private/tmp/collision-s4-main-qa/test-results/playwright/run-3481/perf-e18-counters-T-E18-01-35d48-unters-stay-in-tier-budgets-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "http://127.0.0.1:3481/build/install-dFP3eCbm.js",
+                    "column": 310122,
+                    "line": 1
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "e59cb90cf0e163e84967-1416ef01ee95442c4d22",
+          "file": "perf/e18-counters.spec.ts",
+          "line": 6,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "perf/e18-memory.spec.ts",
+      "file": "perf/e18-memory.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E18-05-high @E18-AC05 @perf five L1/L6 loads release heap and GPU resources",
+          "ok": false,
+          "tags": [
+            "E18-AC05",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 98318,
+                  "error": {
+                    "message": "Error: heapBytes\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m87193048.80000001\u001b[39m\nReceived:    \u001b[31m96179812\u001b[39m",
+                    "stack": "Error: heapBytes\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m87193048.80000001\u001b[39m\nReceived:    \u001b[31m96179812\u001b[39m\n    at /private/tmp/collision-s4-main-qa/tests/perf/e18-memory.spec.ts:18:94",
+                    "location": {
+                      "file": "/private/tmp/collision-s4-main-qa/tests/perf/e18-memory.spec.ts",
+                      "column": 94,
+                      "line": 18
+                    },
+                    "snippet": "  16 |   const first = loads[0], last = loads[4];\n  17 |   mkdirSync('test-results/epics/E18', { recursive: true }); writeFileSync(`test-results/epics/E18/memory-${tier}.json`, JSON.stringify(loads, null, 2));\n> 18 |   for (const key of ['heapBytes', 'geometries', 'textures'] as const) expect(last[key], key).toBeLessThanOrEqual(first[key] * 1.1);\n     |                                                                                              ^\n  19 |   for (const load of loads.filter(l => l.id === 'L6')) expect(load.heapBytes).toBeLessThanOrEqual(qualityBudgets[tier].heapMB * 1_000_000);\n  20 | });\n  21 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/private/tmp/collision-s4-main-qa/tests/perf/e18-memory.spec.ts",
+                        "column": 94,
+                        "line": 18
+                      },
+                      "message": "Error: heapBytes\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m87193048.80000001\u001b[39m\nReceived:    \u001b[31m96179812\u001b[39m\n\n  16 |   const first = loads[0], last = loads[4];\n  17 |   mkdirSync('test-results/epics/E18', { recursive: true }); writeFileSync(`test-results/epics/E18/memory-${tier}.json`, JSON.stringify(loads, null, 2));\n> 18 |   for (const key of ['heapBytes', 'geometries', 'textures'] as const) expect(last[key], key).toBeLessThanOrEqual(first[key] * 1.1);\n     |                                                                                              ^\n  19 |   for (const load of loads.filter(l => l.id === 'L6')) expect(load.heapBytes).toBeLessThanOrEqual(qualityBudgets[tier].heapMB * 1_000_000);\n  20 | });\n  21 |\n    at /private/tmp/collision-s4-main-qa/tests/perf/e18-memory.spec.ts:18:94"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T07:14:59.050Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/private/tmp/collision-s4-main-qa/test-results/playwright/run-3481/perf-e18-memory-T-E18-05-h-111b9-ease-heap-and-GPU-resources-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/private/tmp/collision-s4-main-qa/test-results/playwright/run-3481/perf-e18-memory-T-E18-05-h-111b9-ease-heap-and-GPU-resources-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/private/tmp/collision-s4-main-qa/tests/perf/e18-memory.spec.ts",
+                    "column": 94,
+                    "line": 18
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "cd3e318c7fa2eef02b66-4cd754dfa1ac0643f654",
+          "file": "perf/e18-memory.spec.ts",
+          "line": 4,
+          "column": 46
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-16T07:14:56.460Z",
+    "duration": 104451.981,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}
