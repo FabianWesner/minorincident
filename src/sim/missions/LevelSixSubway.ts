@@ -110,7 +110,7 @@ export class LevelSixSubway {
     if(r.status!=='following')return false;
     const live=this.living(),slot=Math.max(0,live.findIndex(q=>q.id===e.id));
     const target=r.collected?this.w.entities.get(1)!.transform:{x:s.leaderX-Math.floor(slot/3)*1.4,z:s.leaderZ+(slot%3-1)*1.2};
-    const goal=target.x<25?{x:target.x,z:target.z}: {x:target.x,z:target.x>=246&&target.x<258?14.1:15+(r.collected?0:(slot%3-1)*.75)};
+    const goal=target.x<25?{x:target.x,z:target.z}: {x:target.x,z:target.x>=246&&target.x<258?15:15+(r.collected?0:(slot%3-1)*.75)};
     const reach=r.collected?1.8:.4;
     if(r.injured&&!r.collected&&s.leaderX<e.transform.x&&s.leaderX<25)return true;
     if(distance(e.transform,goal)>reach+.15)this.w.npcs!.move(e,goal,r.injured?1.4:2.2,e.civilian!,reach);
@@ -160,7 +160,7 @@ export class LevelSixSubway {
     if(!s.mid&&p.x>=150){s.mid=true;this.mission.requestCheckpoint('mid-tunnel');}
     if(!s.platform&&p.x>=240){s.platform=true;this.mission.requestCheckpoint('exit-platform');this.mission.setState('platform',true);s.phase='exit';}
     if(s.phase==='exit'&&p.x>=263){if(!s.exitAt){s.exitAt=t;this.mission.state.timeOfDay='L6';w.events.emit({type:'l6.exit',tick:t});}
-      if(live.length===0){s.gateAt=t;const gate=w.barricades!.spawn({id:'l6-night-exit',groupId:'l6-exit',a:{x:258,z:12.85},b:{x:258,z:17.15},height:2.5,initialHp:10000});w.entities.get(gate)!.archetype='l6.service-gate';w.entities.get(gate)!.transform.y=3.9;s.phase='done';this.mission.setState('exited',true);}}
+      if(live.length===0){s.gateAt=t;const gate=w.barricades!.spawn({id:'l6-night-exit',groupId:'l6-exit',a:{x:258,z:l6.exit.centerZ-2.15},b:{x:258,z:l6.exit.centerZ+2.15},height:2.5,initialHp:10000});w.entities.get(gate)!.archetype='l6.service-gate';w.entities.get(gate)!.transform.y=3.9;s.phase='done';this.mission.setState('exited',true);}}
   }
   completed(id:string):void {if(id==='shelter'&&this.s.phase==='shelter')this.breach(false);if(id==='stop'&&!this.s.abandonAt){if(this.s.phase==='first')this.breach(true);this.abandon();}if(id==='retreat'){this.s.platform=true;this.mission.setState('platform',true);if(this.s.phase!=='done')this.s.phase='exit';}if(id==='exit'){this.s.phase='done';this.s.gateAt=this.w.tick;this.mission.state.timeOfDay='L6';}}
   advance():boolean{return false;}

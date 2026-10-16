@@ -4,7 +4,7 @@ export const l6 = {
   shelter: { high: 24, low: 24 }, breach: { model: 'npc.civilian-man-a.aftermath', first: [30, 40], secondDelay: [20, 30], abandonS: 15, telegraphS: 2, streamS: 10 },
   follow: { speed: 2.2, injuredSpeed: 1.4, stragglerM: 15, collectM: 3, rejoinM: 5 },
   infected: { high: 60, low: 30 }, tunnel: { start: 30, end: 246, z: 15, width: 6.9 },
-  gates: [90, 150, 210], checkpoints: ['shelter', 'abandon', 'mid-tunnel', 'exit-platform'], caption: 'Night. Still alive.',
+  exit: { centerZ: 15.9 }, gates: [90, 150, 210], checkpoints: ['shelter', 'abandon', 'mid-tunnel', 'exit-platform'], caption: 'Night. Still alive.',
 } as const;
 export const l6BreachModels = [l6.breach.model, 'npc.civilian-man-b.aftermath', 'npc.civilian-woman-b.aftermath', 'npc.civilian-woman-a', 'npc.civilian-elderly'] as const;
 /** Fixed shelter and maintenance cast, including every possible carried L5 survivor. */
