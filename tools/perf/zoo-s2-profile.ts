@@ -30,7 +30,7 @@ for (let round = 0; round < 3; round++) {
     w.update(); if (tick >= 120) times.push(performance.now() - t);
     if (ai.director.count !== 200) throw new Error('Zoo S2 population changed');
   }
-  const profile = await post('Profiler.stop');
+  const { profile } = await post('Profiler.stop');
   writeFileSync(`${out}/round-${round}.cpuprofile`, JSON.stringify(profile));
   times.sort((a, b) => a - b); rounds.push({ round, count: ai.director.count, activations, p95: times[569] });
   w.dispose();
