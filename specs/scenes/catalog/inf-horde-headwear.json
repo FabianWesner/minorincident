@@ -1,6 +1,6 @@
 {
  "name": "inf-horde-headwear",
- "note": "Spec audit 10-16 E07-AC13: dense regular infected horde (default model mix) at golden hour; headwear must sit on the head at head size, no multicoloured patches over torsos/limbs.",
+ "note": "Spec audit 10-16 E07-AC13: dense undressed regular infected (inf.* models via CrowdView; sprinters skip the L1 civilian dressing) at golden hour. Headwear must sit on the skull at the reference civilian's proportions, no hats swallowing face and shoulders.",
  "ground": "asphalt",
  "size": 30,
  "time": "golden",
@@ -25,7 +25,11 @@
     -4.0
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
   },
   {
    "id": "z01",
@@ -35,7 +39,11 @@
     -4.0
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.jogger"
+   }
   },
   {
    "id": "z02",
@@ -45,7 +53,11 @@
     -4.0
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.cashier"
+   }
   },
   {
    "id": "z03",
@@ -55,7 +67,11 @@
     -4.0
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.delivery-driver"
+   }
   },
   {
    "id": "z04",
@@ -65,7 +81,11 @@
     -4.0
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.suburban-mom"
+   }
   },
   {
    "id": "z05",
@@ -75,7 +95,11 @@
     -4.0
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.bbq-dad"
+   }
   },
   {
    "id": "z06",
@@ -85,7 +109,11 @@
     -2.8
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.bathrobe-neighbor"
+   }
   },
   {
    "id": "z07",
@@ -95,7 +123,11 @@
     -2.8
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
   },
   {
    "id": "z08",
@@ -105,7 +137,11 @@
     -2.8
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.jogger"
+   }
   },
   {
    "id": "z09",
@@ -115,7 +151,11 @@
     -2.8
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.cashier"
+   }
   },
   {
    "id": "z10",
@@ -125,7 +165,11 @@
     -2.8
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.delivery-driver"
+   }
   },
   {
    "id": "z11",
@@ -135,7 +179,11 @@
     -2.8
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.suburban-mom"
+   }
   },
   {
    "id": "z12",
@@ -145,7 +193,11 @@
     -1.6
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.bbq-dad"
+   }
   },
   {
    "id": "z13",
@@ -155,7 +207,11 @@
     -1.6
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.bathrobe-neighbor"
+   }
   },
   {
    "id": "z14",
@@ -165,7 +221,11 @@
     -1.6
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
   },
   {
    "id": "z15",
@@ -175,7 +235,11 @@
     -1.6
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.jogger"
+   }
   },
   {
    "id": "z16",
@@ -185,7 +249,11 @@
     -1.6
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.cashier"
+   }
   },
   {
    "id": "z17",
@@ -195,7 +263,11 @@
     -1.6
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.delivery-driver"
+   }
   },
   {
    "id": "z18",
@@ -205,7 +277,11 @@
     -0.4
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.suburban-mom"
+   }
   },
   {
    "id": "z19",
@@ -215,7 +291,11 @@
     -0.4
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.bbq-dad"
+   }
   },
   {
    "id": "z20",
@@ -225,7 +305,11 @@
     -0.4
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.bathrobe-neighbor"
+   }
   },
   {
    "id": "z21",
@@ -235,7 +319,11 @@
     -0.4
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
   },
   {
    "id": "z22",
@@ -245,7 +333,11 @@
     -0.4
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.jogger"
+   }
   },
   {
    "id": "z23",
@@ -255,7 +347,11 @@
     -0.4
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.cashier"
+   }
   },
   {
    "id": "z24",
@@ -265,7 +361,11 @@
     0.8
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.delivery-driver"
+   }
   },
   {
    "id": "z25",
@@ -275,7 +375,11 @@
     0.8
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.suburban-mom"
+   }
   },
   {
    "id": "z26",
@@ -285,7 +389,11 @@
     0.8
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.bbq-dad"
+   }
   },
   {
    "id": "z27",
@@ -295,7 +403,11 @@
     0.8
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.bathrobe-neighbor"
+   }
   },
   {
    "id": "z28",
@@ -305,7 +417,11 @@
     0.8
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
   },
   {
    "id": "z29",
@@ -315,7 +431,11 @@
     0.8
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.jogger"
+   }
   },
   {
    "id": "z30",
@@ -325,7 +445,11 @@
     2.0
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.cashier"
+   }
   },
   {
    "id": "z31",
@@ -335,7 +459,11 @@
     2.0
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.delivery-driver"
+   }
   },
   {
    "id": "z32",
@@ -345,7 +473,11 @@
     2.0
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.suburban-mom"
+   }
   },
   {
    "id": "z33",
@@ -355,7 +487,11 @@
     2.0
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.bbq-dad"
+   }
   },
   {
    "id": "z34",
@@ -365,7 +501,11 @@
     2.0
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.bathrobe-neighbor"
+   }
   },
   {
    "id": "z35",
@@ -375,7 +515,11 @@
     2.0
    ],
    "yaw": -45,
-   "state": "idle"
+   "state": "idle",
+   "archetype": "infected.sprinter",
+   "look": {
+    "model": "inf.common-worker"
+   }
   }
  ],
  "camera": {
@@ -394,5 +538,6 @@
  "expect": {
   "consoleErrors": 0,
   "undrawnFramesMax": 0
- }
+ },
+ "infectedCap": 80
 }

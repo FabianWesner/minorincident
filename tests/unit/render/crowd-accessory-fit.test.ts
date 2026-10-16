@@ -8,6 +8,7 @@ import { regularInfectedModels } from '../../../src/data/crowdAppearance';
 import { markCrowdAppearance, crowdAccessoryIds } from '../../../src/render/characters/CrowdAppearance';
 import { bakeInfected } from '../../../src/render/characters/bakeInfected';
 import { packCrowdParts } from '../../../src/assets/crowdParts';
+import { characterNodes } from '../../../src/data/survivor';
 import manifest from '../../../src/assets/manifest.json';
 
 async function model(id: string, lod: 'lod0' | 'lod1' | 'lod2') {
@@ -50,6 +51,14 @@ test('ordinary infected accessories keep the authored reference proportions on t
   const expected = new Map(ids.map(acc => [acc, relative('npc.civilian-man-a', reference, acc)]));
   for (const id of regularInfectedModels) for (const lod of ['lod1', 'lod2'] as const) {
     const geometry = await crowdGeometry(id, lod), skull = bakedSkull(geometry)!;
+    // The model's own hair/caps must hide under a shared accessory: nothing above the eyes stays unmasked.
+    const parts = geometry.getAttribute('_parts'), position = geometry.getAttribute('position');
+    let eyeTop = -Infinity, exposed = 0, masked = 0;
+    for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getZ(i) > 0) eyeTop = Math.max(eyeTop, position.getY(i));
+    for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getY(i) === 0 && parts.getZ(i) <= 0) {
+      if (parts.getW(i) >= 4) masked++; else if (position.getY(i) > eyeTop + .06) exposed++;
+    }
+    expect(exposed, `${id} ${lod} unmasked own headwear`).toBe(0); expect(masked, `${id} ${lod} masked own headwear`).toBeGreaterThan(0);
     // CrowdView keeps the first registered LOD per model; check each LOD's own fit.
     (accessories as unknown as { fits: Map<string, Matrix4> }).fits.delete(id); accessories.registerSkull(id, geometry);
     for (const acc of ids) {
