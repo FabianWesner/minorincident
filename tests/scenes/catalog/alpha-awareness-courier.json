@@ -1,0 +1,49 @@
+{
+  "name": "alpha-awareness-courier",
+  "note": "PO 10-16: \"Alpha awareness: needs to be level independent\". Courier starts behind the idle Alpha, outside its sight. Inspect the turn/roar pause then pursuit at the game camera on both tiers/zooms/backends.",
+  "seed": 1,
+  "ground": "asphalt",
+  "size": 30,
+  "time": "L4",
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -3.8,
+        0
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0,
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -1,
+      1.5,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 90,
+  "sheet": 6,
+  "trace": true,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}

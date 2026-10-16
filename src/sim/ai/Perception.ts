@@ -110,25 +110,28 @@ export class WorldHumans implements HumanTargetQuery {
 
 /**
  * L1 infected vision (specs/epic-19 section 5.2): a forward 90 degree cone, 16 m, blocked by the scene's full-height
- * cover walls and by registered dynamic blockers. A human within 6 m is heard from any side through cover
- * (PO #25, 10-15); running and gunfire increase the courier's radius. A chased
+ * cover walls and by registered dynamic blockers. L5 humans and Alphas in every level are heard from any side through cover
+ * (PO #25 / 10-16); movement and gunfire scale the awareness radius. A chased
  * target stays tracked within `chaseKeepM` in any direction, else in a wide 150 degree cone, while line of sight is clear.
  */
 export class Perception {
   humans: HumanTargetQuery;
   readonly los = new LosRegistry();
   readonly rangeM = l1v2.infected.visionRangeM;
-  /** PO #25 (10-15) close awareness is an L5 rule; every other level keeps the 2 m line-of-sight hearing its bot bands were tuned on. */
-  private get closeAwareness(): boolean { return this.world.scenario === 'L5'; }
-  get hearingM(): number { return this.closeAwareness ? 6 : 2; }
-  private shotUntil = 0;
+  /** PO 10-16: "Alpha awareness: needs to be level independent". Ordinary infected retain their level rules. */
+  private closeAwareness(e: EntitySnapshot): boolean { return this.world.scenario === 'L5' || e.archetype === 'infected.alpha'; }
+  get hearingM(): number { return this.world.scenario === 'L5' ? 6 : 2; }
+  private readonly shotUntil = new Map<number, number>();
   /** Level pressure routing (L3 corridor): the courier counts this many metres farther than she is when choosing a new
    * target, so a nearby police line draws the crowd first. 0 everywhere else. */
   playerBiasM = 0;
   private readonly cosHalf = Math.cos(l1v2.infected.visionConeDeg / 2 * Math.PI / 180);
   constructor(private readonly world: SimWorld) { this.humans = new WorldHumans(world); }
-  /** The infected system records real courier gunshots on its existing combat subscription. */
-  shot(): void { this.shotUntil = this.world.tick + 60; }
+  /** Real courier/ally gunshots expand Alpha hearing for one second; L5 still uses courier shots only. */
+  shot(sourceId = 1): void {
+    for (const [id, until] of this.shotUntil) if (until <= this.world.tick) this.shotUntil.delete(id);
+    this.shotUntil.set(sourceId, this.world.tick + 60);
+  }
   /** Clear line of sight between two ground points (static cover walls + active dynamic blockers). */
   lineOfSight(from: Vec2, to: Vec2): boolean {
     return (this.world.combat?.query.visible(from, to) ?? true) && this.los.clear(from, to);
@@ -147,39 +150,53 @@ export class Perception {
   /** Half-angle cosine of the tracking cone for an already chased target (150 degrees: the body turns slower than the head). */
   private readonly trackCos = Math.cos(75 * Math.PI / 180);
   /** Keeps an already chased target: the wide tracking cone, or within `chaseKeepM` with line of sight. */
-  tracks(e: EntitySnapshot, target: Vec2): boolean {
-    if (this.closeAwareness && this.hears(e, target)) return true;
+  tracks(e: EntitySnapshot, target: Vec2, targetId?: number): boolean {
+    if (this.closeAwareness(e) && this.hears(e, target, targetId)) return true;
     const dx = target.x - e.transform.x, dz = target.z - e.transform.z, distance = Math.hypot(dx, dz);
     if (distance > this.rangeM * (this.world.weather?.modifiers.infectedSight ?? 1) * (this.world.lightPower?.sightMultiplier(target) ?? 1)) return false;
     const near = distance <= this.chaseKeepM || (dx * Math.cos(e.transform.yaw) - dz * Math.sin(e.transform.yaw)) / distance >= this.trackCos;
     return near && this.lineOfSight(e.transform, target);
   }
   /** PO #25: nearby humans are smelled/heard through cover, independent of facing and sight. */
-  hears(e: EntitySnapshot, target: Vec2): boolean {
+  hears(e: EntitySnapshot, target: Vec2, targetId?: number): boolean {
     const dx = target.x - e.transform.x, dz = target.z - e.transform.z, squared = dx * dx + dz * dz;
     // Allies share this query for defence; PO #25 changes infected awareness only.
     if (!e.infected) return squared <= 4 && this.lineOfSight(e.transform, target);
-    if (!this.closeAwareness) return squared <= 4 && this.lineOfSight(e.transform, target);
+    if (!this.closeAwareness(e)) return squared <= 4 && this.lineOfSight(e.transform, target);
+    if (this.world.scenario !== 'L5') {
+      if (squared > 144) return false;
+      let entity = targetId !== undefined ? this.world.entities.get(targetId) : undefined;
+      if (targetId === undefined) for (const candidate of this.world.entities.iterate()) {
+        if ((candidate.id === 1 || candidate.civilian) && (candidate.transform.x - target.x) ** 2 + (candidate.transform.z - target.z) ** 2 < .01) { entity = candidate; break; }
+      }
+      if (!entity) return squared <= 36;
+      const velocity = entity.survivor?.velocity ?? entity.motion?.velocity;
+      const speedSquared = velocity ? velocity.x ** 2 + velocity.z ** 2 : (entity.locomotion?.vx ?? 0) ** 2 + (entity.locomotion?.vz ?? 0) ** 2;
+      const quiet = entity.civilian?.story?.clip === 'npc-cower' || entity.civilian?.state === 'hide' || speedSquared < .25;
+      const radius = this.world.tick < (this.shotUntil.get(entity.id) ?? 0) ? 12 : quiet ? 4 : speedSquared > 9 ? 9 : 6;
+      return squared <= radius * radius;
+    }
+    // PO #29 freezes L5's original six-metre floor, including still/crouched humans.
     if (squared <= this.hearingM * this.hearingM) return true;
     if (squared > 144) return false;
     // Only the courier's running/shooting expands the radius. Keep the common
     // six-metre query free of entity lookups and square roots in large hordes.
     const player = this.world.entities.get(1);
     if (!player || (target.x - player.transform.x) ** 2 + (target.z - player.transform.z) ** 2 > .01) return false;
-    if (this.world.tick < this.shotUntil) return true;
+    if (this.world.tick < (this.shotUntil.get(1) ?? 0)) return true;
     const v = player.survivor?.velocity;
     return squared <= 81 && !!v && v.x * v.x + v.z * v.z > 9;
   }
   /** Detection of a new target by unchanged vision or close hearing. */
-  notices(e: EntitySnapshot, target: Vec2): boolean {
-    return this.sees(e, target) || this.hears(e, target);
+  notices(e: EntitySnapshot, target: Vec2, targetId?: number): boolean {
+    return this.sees(e, target) || this.hears(e, target, targetId);
   }
   /** Closest nearby human, using the same huntable target query as vision. */
   closestHeard(e: EntitySnapshot): HumanTarget | undefined {
     let best: HumanTarget | undefined, distance = Infinity;
-    for (const h of this.humans.within(e.transform, this.closeAwareness ? 12 : this.hearingM)) {
+    for (const h of this.humans.within(e.transform, this.closeAwareness(e) ? 12 : this.hearingM)) {
       const d = Math.hypot(h.position.x - e.transform.x, h.position.z - e.transform.z);
-      if (d < distance && this.hears(e, h.position)) { best = h; distance = d; }
+      if (d < distance && this.hears(e, h.position, h.id)) { best = h; distance = d; }
     }
     return best;
   }
@@ -192,7 +209,7 @@ export class Perception {
     for (const h of this.humans.within(e.transform, this.rangeM)) {
       if (h.id === ignoreId) continue;
       const isCurrent = h.id === currentId;
-      if (!(isCurrent ? this.tracks(e, h.position) : this.notices(e, h.position))) continue;
+      if (!(isCurrent ? this.tracks(e, h.position, h.id) : this.notices(e, h.position, h.id))) continue;
       const distance = Math.hypot(h.position.x - e.transform.x, h.position.z - e.transform.z) + (h.id === 1 ? this.playerBiasM : 0);
       if (isCurrent) { current = h; currentDistance = distance; }
       if (distance < bestDistance) { best = h; bestDistance = distance; }
