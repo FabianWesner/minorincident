@@ -1,7 +1,7 @@
 import { Color, type BufferGeometry, type InstancedBufferAttribute } from 'three';
 import type { Node } from 'three/webgpu';
 import { attribute, varying, vec3 } from 'three/tsl';
-import { crowdAppearance, hairTones, skinTones, infectedSkinTones, trouserTones, shirtTones } from '../../data/crowdAppearance';
+import { crowdAppearance, infectedWearsAccessory, hairTones, skinTones, infectedSkinTones, trouserTones, shirtTones } from '../../data/crowdAppearance';
 import palette from '../../assets/palette.json';
 import manifest from '../../assets/manifest.json' with { type: 'json' };
 const accessoryKinds = new Map((manifest as unknown as {id: string; accessory?: {slot: string}}[]).map(a => [a.id, a.accessory?.slot]));
@@ -16,7 +16,9 @@ export function resolveCrowdAppearance(e: EntitySnapshot, ids: readonly string[]
   const uniform = /firefighter|police|guard|hazmat|riot|armored|lab-|patient-zero|infected\.(dog|cat|crow|lion|gorilla|elephant|zebra|flamingo)/.test(model);
   const eligible = !uniform && !e.civilian?.zooAnimal && !e.archetype.startsWith('healthy.') && (!e.infected || ['infected.runner', 'infected.sprinter'].includes(e.archetype));
   const channels = crowdAppearance(e.id), explicit = e.appearance?.accessories.find(id => ids.includes(id));
-  const slot = eligible ? explicit ? ids.indexOf(explicit) + 1 : channels.accessory % (ids.length + 1) : 0;
+  // A person who turned keeps the head piece they wore alive (story-true); infected generated as infected are capped.
+  const turnedPerson = !!e.infected && e.appearance?.entityId === e.id && !e.appearance.bornInfected;
+  const slot = eligible ? explicit ? ids.indexOf(explicit) + 1 : !e.infected || turnedPerson ? channels.accessory % (ids.length + 1) : infectedWearsAccessory(e.id) ? channels.accessory % ids.length + 1 : 0 : 0;
   const accessory = slot ? ids[slot - 1] : null, kind = accessoryKinds.get(accessory ?? '');
   const hidesHair = kind === 'hat' || kind === 'hair' || !!accessory?.startsWith('acc.placeholder-');
   return { ...channels, model, outfit: model, head: model, headwear: kind === 'hat' ? accessory : accessory ? null : model,

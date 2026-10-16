@@ -10,6 +10,10 @@ export const trouserTones = ['#364253', '#50596c', '#5e5145', '#847359', '#38494
 export const shirtTones = ['#3178ac', '#e5d9b9', '#d4ad32', '#79865b', '#a86645', '#ac7a91', '#486e69', '#b95862', '#59627e', '#968d78', '#6b517c', '#46734d'] as const;
 export const skinTones = ['#edb18d', '#d69a78', '#bd815f', '#9c684f', '#78513f', '#593e34'] as const;
 export const infectedSkinTones = ['#afb89a', '#a4ad8e', '#919c7f', '#889276', '#7a886d', '#6c7b63'] as const;
+/** Orchestrator 10-16: infected read as infected, not as a hat parade. Share of ordinary infected (those generated as
+ * infected, not people who turned) that wear a shared head accessory; deterministic per entity. */
+export const infectedAccessoryShare = .3;
+export function infectedWearsAccessory(id: number): boolean { return appearanceSample(id, 5) % 1000 < infectedAccessoryShare * 1000; }
 export function crowdAppearance(id: number) {
   return { hair: (appearanceSample(Math.floor(id / 8), 0) + id) % hairTones.length, skin: appearanceSample(id, 1) % skinTones.length,
     trousers: appearanceSample(id, 2) % trouserTones.length, shirt: appearanceSample(id, 3) % shirtTones.length, accessory: appearanceSample(id, 4) };
