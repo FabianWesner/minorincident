@@ -1,3 +1,4 @@
+import { actorRadius } from '../world/SolidRegistry';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import { civilianRoles, npcs } from '../../data/npcs';
@@ -26,25 +27,25 @@ export class Npcs {
     this.civilians = new Civilians(world); this.companion = new Companion(world); this.escorts = new Escorts(world); this.traffic = new Traffic(world); }
   /** False only when the target is unreachable (no route within the steering budget). */
   move(e: EntitySnapshot, target: Point, speed: number, path: { path: number[]; goal: number; pathIndex: number }, stop = .1, budget = 1600): boolean {
-    const nav = this.world.infected!.nav;
+    const nav = this.world.infected!.nav, footprint = actorRadius(e);
     let dx = target.x - e.transform.x, dz = target.z - e.transform.z;
     const distance = Math.hypot(dx, dz);
     if (distance <= stop) { if (e.companion?.velocity) e.companion.velocity.x = e.companion.velocity.z = 0; return true; }
     const l3Follower = !!e.civilian?.ally?.follow && !!this.world.missions?.def.l3;
-    const cell = l3Follower ? nav.nearestCell(e.transform.x, e.transform.z, .35) : -1;
+    const cell = l3Follower ? nav.nearestCell(e.transform.x, e.transform.z, footprint) : -1;
     const flowNext = l3Follower && distance > 30 ? nav.flowNext(cell) : -1;
     if (l3Follower && cell < 0) {
       // Rounded bodies can enter an alley narrower than the baked crowd grid. Walk out; never teleport.
       const last = this.escapes.get(e.id), tick = this.world.tick;
       const fresh = !last || tick < last.tick || tick - last.tick >= 30 || Math.hypot(last.x - e.transform.x, last.z - e.transform.z) >= .1;
-      const escape = fresh ? nav.escapeCell(e.transform, .35, 8, false) : last.cell;
+      const escape = fresh ? nav.escapeCell(e.transform, footprint, 8, false) : last.cell;
       if (fresh) this.escapes.set(e.id, { x: e.transform.x, z: e.transform.z, tick, cell: escape });
       if (escape < 0) return false;
       this.waypoint.x = nav.x(escape); this.waypoint.z = nav.z(escape);
     } else if (flowNext >= 0 && flowNext !== cell) {
       // Reuse the shared reverse field rather than starving a long per-officer A* search.
       this.waypoint.x = nav.x(flowNext); this.waypoint.z = nav.z(flowNext);
-    } else if (e.civilian?.vehicleYield?.target === target && nav.visible(e.transform, target, .35)) {
+    } else if (e.civilian?.vehicleYield?.target === target && nav.visible(e.transform, target, footprint)) {
       // Kerb orders have a clear direct approach. A grid-centre detour can send
       // an actor back underneath the bus it is stepping away from.
       this.waypoint.x = target.x; this.waypoint.z = target.z;
@@ -52,7 +53,7 @@ export class Npcs {
       // Quiet streets do not build a crowd flow field; followers still need their own route.
       const failed = this.unreachable.get(e.id), tick = this.world.tick;
       if (failed && tick < failed.until && Math.abs(failed.x - target.x) + Math.abs(failed.z - target.z) < .25) return false;
-      if (!nav.steer(e.transform, target, path, e.civilian?.zooAnimal ? e.combat!.radius : .35, this.waypoint, budget)) { this.unreachable.set(e.id, { x: target.x, z: target.z, until: tick + 60 }); return false; }
+      if (!nav.steer(e.transform, target, path, footprint, this.waypoint, budget)) { this.unreachable.set(e.id, { x: target.x, z: target.z, until: tick + 60 }); return false; }
       if (failed) this.unreachable.delete(e.id);
     }
     dx = this.waypoint.x - e.transform.x; dz = this.waypoint.z - e.transform.z;
@@ -63,9 +64,10 @@ export class Npcs {
     this.world.spatial.set(e.id, e.transform.x, e.transform.z); return true;
   }
   moveStep(e: EntitySnapshot, dx: number, dz: number): void {
-    if (e.passengerOf !== undefined) return;
+    if (e.passengerOf !== undefined || e.pendingAdmission) return;
+    this.world.solids.wrote(e, 'npc.move');
     const x = e.transform.x, z = e.transform.z;
-    moveAgent(e, dx * 60, dz * 60, this.world.infected!.nav, this.world.tick, e.civilian?.zooAnimal ? e.combat!.radius : .35);
+    moveAgent(e, dx * 60, dz * 60, this.world.infected!.nav, this.world.tick, actorRadius(e));
     if ((e.civilian || e.escort) && this.traffic.overlaps(e.transform)) { e.transform.x = x; e.transform.z = z; }
   }
   /** Place collision-safe rectangular routines from authored navigation, never inside buildings. */

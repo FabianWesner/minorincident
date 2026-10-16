@@ -5,10 +5,16 @@ import { emptyInput } from '../../../src/input/InputFrame';
 async function fixture() {
   const w = new SimWorld(); await w.init(); w.loadScenario('horde-arena', 31);
   const v = w.vehicles!, id = v.spawn('vehicle.military-apc', { x: 0, z: 0 }), car = v.cars.get(id)!;
+  expect(w.solids.relocate(w.entities.get(1)!, { x: -20, y: .7, z: -20 }, 'test.apc.observer')).toBe(true);
   // Isolate the fixed-phase resolver from AI locomotion, keeping real Rapier hull transforms.
-  const step = (n = 1, speed = 0) => { for (let i = 0; i < n; i++) { w.tick++; car.physics.body.setLinvel({ x: speed, y: 0, z: 0 }, true); v.postPhysics(); } };
-  const spawn = (x: number, z: number, aware = true) => w.infected!.spawn('infected.runner', { x, z }, { state: aware ? 'chase' : 'idle' });
-  const move = (id: number, x: number, z: number) => { Object.assign(w.entities.get(id)!.transform, { x, z }); w.spatial.set(id, x, z); };
+  const step = (n = 1, speed = 0) => { for (let i = 0; i < n; i++) { w.tick++; car.physics.body.setLinvel({ x: speed, y: 0, z: 0 }, true); v.postPhysics(); w.solids.commit(); expect(w.solids.offenders).toEqual([]); } };
+  // These are deliberate impact proposals, consumed by postPhysics before the
+  // final contact commit. Ordinary spawn admission now rejects hull penetration.
+  const spawn = (x: number, z: number, aware = true) => {
+    const id = w.infected!.spawn('infected.runner', { x: 20, z: -10 }, { state: aware ? 'chase' : 'idle' });
+    Object.assign(w.entities.get(id)!.transform, { x, z }); w.spatial.set(id, x, z); return id;
+  };
+  const move = (id: number, x: number, z: number) => { const e = w.entities.get(id)!; Object.assign(e.transform, { x, z }); w.solids.remember(e, 'test.apc.impact'); w.spatial.set(id, x, z); };
   return { w, v, id, car, step, spawn, move };
 }
 

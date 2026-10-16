@@ -1,0 +1,31 @@
+{
+  "passed": 18,
+  "failed": 4,
+  "pending": 0,
+  "failures": [
+    {
+      "name": "T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms",
+      "messages": [
+        "AssertionError: expected 4.095014999998966 to be less than or equal to 4\n    at /srv/mi/jobs/collision-s1-d2c10a-94197-1792112775/tests/sim/performance/alpha.test.ts:29:61\n    at file:///srv/mi/jobs/collision-s1-d2c10a-94197-1792112775/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "name": "T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+      "messages": [
+        "AssertionError: expected 4.444073999999091 to be less than or equal to 4\n    at /srv/mi/jobs/collision-s1-d2c10a-94197-1792112775/tests/sim/performance/mega-moves.test.ts:24:104\n    at file:///srv/mi/jobs/collision-s1-d2c10a-94197-1792112775/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "name": "T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
+      "messages": [
+        "AssertionError: expected 6.075314999998227 to be less than or equal to 4\n    at /srv/mi/jobs/collision-s1-d2c10a-94197-1792112775/tests/sim/performance/zoo-s1.test.ts:30:101\n    at file:///srv/mi/jobs/collision-s1-d2c10a-94197-1792112775/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "name": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+      "messages": [
+        "AssertionError: expected 5.947543000002042 to be less than or equal to 4\n    at /srv/mi/jobs/collision-s1-d2c10a-94197-1792112775/tests/sim/performance/zoo-s2.test.ts:26:68\n    at file:///srv/mi/jobs/collision-s1-d2c10a-94197-1792112775/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    }
+  ]
+}

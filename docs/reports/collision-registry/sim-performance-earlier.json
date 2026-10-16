@@ -1,0 +1,78 @@
+{
+  "changedSource": "45cdd3e04",
+  "note": "Earlier isolated paired measurement; later source still requires remeasurement.",
+  "measurements": {
+    "baseline-200": {
+      "outcome": "tick-budget",
+      "scenario": "perf-horde-200",
+      "seed": 1,
+      "warmup": 120,
+      "ticks": 3600,
+      "minInfected": 200,
+      "minVisibleInfected": 200,
+      "collision": null,
+      "cap": 200,
+      "simMsP50": 1.2350200000000768,
+      "simMsP95": 1.7065050000001065,
+      "simMsMax": 5.73070400000006,
+      "maxConcurrentInfected": 200
+    },
+    "changed-200": {
+      "outcome": "tick-budget",
+      "scenario": "perf-horde-200",
+      "seed": 1,
+      "warmup": 120,
+      "ticks": 3600,
+      "minInfected": 200,
+      "minVisibleInfected": 200,
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 200,
+        "deferred": 0,
+        "offenders": []
+      },
+      "cap": 200,
+      "simMsP50": 0.9418390000000727,
+      "simMsP95": 1.2638050000000476,
+      "simMsMax": 2.0926200000001245,
+      "maxConcurrentInfected": 200
+    },
+    "baseline-100": {
+      "outcome": "tick-budget",
+      "scenario": "perf-horde-100",
+      "seed": 1,
+      "warmup": 120,
+      "ticks": 3600,
+      "minInfected": 100,
+      "minVisibleInfected": 100,
+      "collision": null,
+      "cap": 100,
+      "simMsP50": 0.6179609999999229,
+      "simMsP95": 0.9679380000000037,
+      "simMsMax": 4.210627999999929,
+      "maxConcurrentInfected": 100
+    },
+    "changed-100": {
+      "outcome": "tick-budget",
+      "scenario": "perf-horde-100",
+      "seed": 1,
+      "warmup": 120,
+      "ticks": 3600,
+      "minInfected": 100,
+      "minVisibleInfected": 100,
+      "collision": {
+        "failures": 0,
+        "pending": 0,
+        "admitted": 100,
+        "deferred": 0,
+        "offenders": []
+      },
+      "cap": 100,
+      "simMsP50": 0.4943789999999808,
+      "simMsP95": 0.8079569999999876,
+      "simMsMax": 4.284557999999947,
+      "maxConcurrentInfected": 100
+    }
+  }
+}

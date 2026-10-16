@@ -1,3 +1,4 @@
+import { actorRadius } from '../world/SolidRegistry';
 import type { SimWorld } from '../world/SimWorld';
 import type { EntitySnapshot } from '../world/types';
 import type { Point } from './types';
@@ -17,7 +18,7 @@ export class Traffic {
   spawn(route: Point[], panic = false): number {
     if (route.length < 2 || !route.every(p => Number.isFinite(p.x) && Number.isFinite(p.z))) throw new RangeError('Invalid traffic lane');
     const e = this.world.entities.create({ kind: 'traffic', archetype: 'veh.sedan-red', faction: 'environment', transform: { ...route[0], y: .5, yaw: 0 }, health: { current: 100, max: 100 }, traffic: { route: structuredClone(route), segment: 1, speed: 0, desired: panic ? 9 : 6, braking: 6, stopped: false, panic } });
-    this.world.spatial.set(e.id, e.transform.x, e.transform.z); return e.id;
+    this.world.spatial.set(e.id, e.transform.x, e.transform.z); this.world.solids.register(e); return e.id;
   }
   /** Sample E07's Catmull-Rom migration spline once; convoy members share the sampled route. */
   convoy(route: Point[], count = 3): number[] {
@@ -31,17 +32,18 @@ export class Traffic {
     }
     for (let i = 0; i < count; i++) {
       const e = this.world.entities.create({ kind: 'convoy', archetype: ['veh.school-bus', 'veh.ambulance', 'veh.pickup'][i % 3], faction: 'escort', transform: { x: route[0].x - (route[1].x - route[0].x) / (Math.hypot(route[1].x - route[0].x, route[1].z - route[0].z) || 1) * i * 7, z: route[0].z - (route[1].z - route[0].z) / (Math.hypot(route[1].x - route[0].x, route[1].z - route[0].z) || 1) * i * 7, y: .5, yaw: 0 }, health: { current: 1000, max: 1000 }, convoy: { route, samples, distance: -i * 7, length, state: 'stop', speed: 3, offset: i * 7 } });
-      ids.push(e.id); this.world.spatial.set(e.id, e.transform.x, e.transform.z);
+      ids.push(e.id); this.world.spatial.set(e.id, e.transform.x, e.transform.z); this.world.solids.register(e);
     }
     return ids;
   }
   private blocked(e: EntitySnapshot, direction: Point, brakingDistance: number): number {
     let gap = Infinity;
     for (const pedestrian of this.world.entities.iterate()) {
-      if (pedestrian.hidden || (pedestrian.kind !== 'player' && !pedestrian.civilian && !pedestrian.escort)) continue;
+      if (pedestrian.hidden || (pedestrian.kind !== 'player' && !pedestrian.civilian && !pedestrian.escort && !pedestrian.companion) || Math.abs(pedestrian.transform.y - e.transform.y) >= 1.2) continue;
       const dx = pedestrian.transform.x - e.transform.x, dz = pedestrian.transform.z - e.transform.z;
       const along = dx * direction.x + dz * direction.z, across = Math.abs(dx * direction.z - dz * direction.x);
-      if (along > -2.35 && across < 1.2 && along < brakingDistance + 2.5) gap = Math.min(gap, along - 2.5);
+      const radius = actorRadius(pedestrian);
+      if (along > -2.35 - radius && across < 1.2 + radius && along < brakingDistance + 2.5 + radius) gap = Math.min(gap, along - 2.5 - radius);
     }
     return gap;
   }

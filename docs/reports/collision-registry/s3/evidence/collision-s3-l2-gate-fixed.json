@@ -1,0 +1,161 @@
+{
+  "source": "test-results/collision-s3-l2-gate-fixed.json",
+  "passed": 7,
+  "failed": 0,
+  "pending": 20,
+  "suites": [
+    {
+      "file": "levels/L2.test.ts",
+      "durationMs": 98405.57202148438,
+      "tests": [
+        {
+          "name": "L2 The Failed Rescue T-E20-01 @E20 @E20-AC01 mission graph calm -> board -> doors -> bridge checkpoint is completable, no fail timer",
+          "status": "skipped",
+          "durationMs": null
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-02 @E20 @E20-AC02 complete bot finishes single seed from L2-default, median time in band",
+          "status": "passed",
+          "durationMs": 34328.458461999995
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-03 @E20 @E20-AC03 newbie single seed, median in band, median deaths <= 1; bat escape single seed",
+          "status": "skipped",
+          "durationMs": null
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-04 @E20 @E20-AC04 calm: no infected, no combat until the pickup alarm; crew at the truck within 8 s; axe rack live",
+          "status": "skipped",
+          "durationMs": null
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-05 @E20 @E20-AC05 ride: passenger boarding, 15-25 s route with everyone seated, input inert, exits and control back on time",
+          "status": "skipped",
+          "durationMs": null
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-06 @E20 @E20-AC06 set piece: event order, empty forecourt, release and ambush timing, three directions",
+          "status": "skipped",
+          "durationMs": null
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-07 @E20 @E20-AC07 snowball: idle courier (observer, no damage), rescue infected >= 20 at +60 s and >= 30 at +120 s, all by bites",
+          "status": "skipped",
+          "durationMs": null
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-08 @E20 @E20-AC08 firefighters fight, turn with identity continuity, >= 2 turned by +90 s when idle, no immunity",
+          "status": "skipped",
+          "durationMs": null
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-09 @E20 @E20-AC09 lesson: the aggressive axe kills >= 10 yet the outbreak grows and the courier falls; the disengaging bot survives",
+          "status": "skipped",
+          "durationMs": null
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-11 @E20 @E20-AC11 omniscience audit over single seed: sight or close hearing alerts with clear LOS, emergence at doors out of view",
+          "status": "skipped",
+          "durationMs": null
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-12 @E20 @E20-AC12 escape population at the radio: >= 25 spread infected, >= 3 groups of >= 4, <= 20 % on the courier",
+          "status": "skipped",
+          "durationMs": null
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-12b @E20 @E20-AC12 layout: two disjoint routes (< 30 % shared), sight blockers every <= 25 m, alarms and dumpsters on the routes",
+          "status": "skipped",
+          "durationMs": null
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-13 @E20 @E20-AC13 cluster of 12-16 on the approach; complete passes killing <= 50 %; side path and car alarm each suffice",
+          "status": "skipped",
+          "durationMs": null
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-14 @E20 @E20-AC14 checkpoint: line composition, gate closes <= 1.5 s behind the courier, nothing crosses after, straight on to L3",
+          "status": "passed",
+          "durationMs": 31326.357858000003
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-21 @E20 rescued people never despawn: they flee for the checkpoint and end behind the line, at the gate, turned or down",
+          "status": "skipped",
+          "durationMs": null
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-17 @E20 @E20-AC17 checkpoints doors, escape and cluster restore entities, outbreak, crew, gates and weapons",
+          "status": "passed",
+          "durationMs": 32750.572107
+        }
+      ]
+    },
+    {
+      "file": "sim/missions/l2-gate-contact.test.ts",
+      "durationMs": 2047.504150390625,
+      "tests": [
+        {
+          "name": "@E20 the closed south gate joins its fence and keeps permitted contact outside the checkpoint",
+          "status": "passed",
+          "durationMs": 2047.5041410000003
+        }
+      ]
+    },
+    {
+      "file": "unit/render/view.test.ts",
+      "durationMs": 45.8515625,
+      "tests": [
+        {
+          "name": "T-E02-12 @E02 @E02-AC12 shake is bounded and respects the setting immediately",
+          "status": "skipped",
+          "durationMs": null
+        },
+        {
+          "name": "T-E02-camera @E02 follow is frame-rate independent and portrait preserves readable framing and seven metres of ground",
+          "status": "skipped",
+          "durationMs": null
+        },
+        {
+          "name": "T-E02-cinematic @E02 cinematic pose blends to the target and follow restores the combat pose",
+          "status": "skipped",
+          "durationMs": null
+        },
+        {
+          "name": "T-fix-camera-ramp camera target follows the player height on decks and ramps, damped, on desktop and phone",
+          "status": "skipped",
+          "durationMs": null
+        },
+        {
+          "name": "T-E21-spawn-camera @E21 spawn framing retains ramp height and zoom while ignoring pull, shake and roll",
+          "status": "skipped",
+          "durationMs": null
+        },
+        {
+          "name": "T-E02-max-zoom @E02-AC03 @E18-AC01 max zoom keeps desktop and portrait ground inside the low-tier cull and light-field bounds",
+          "status": "skipped",
+          "durationMs": null
+        },
+        {
+          "name": "T-E32-26-camera-S9 @E32-AC26 epilogue pull widens the follow rig while wheel zoom, player tracking and resize keep working",
+          "status": "skipped",
+          "durationMs": null
+        },
+        {
+          "name": "@E22 @E23 the Fairhaven follow lens stays outside the opposite building at the cellar exit",
+          "status": "passed",
+          "durationMs": 14.28394800000001
+        },
+        {
+          "name": "@E22 vehicle follow framing stays fixed across facade bounds at both zooms",
+          "status": "passed",
+          "durationMs": 28.910424000000035
+        },
+        {
+          "name": "@E22 camera clearance beside the moved Lakeshore apartment preserves framing throughout the lane",
+          "status": "passed",
+          "durationMs": 1.8516740000000027
+        }
+      ]
+    }
+  ]
+}

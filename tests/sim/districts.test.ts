@@ -107,15 +107,15 @@ test("T-E10-runtime @E10 gameplay blockers have Rapier colliders, fires damage o
     for (let i = 0; i < 60; i++) world.update();
     expect(world.entities.get(1)!.health.current).toBe(100);
     const fire = world.districts!.fires[0];
-    Object.assign(world.entities.get(1)!.transform, {
+    // This fixture teleports rather than walking from the old committed pose.
+    // Use the admission owner and retain a clear position inside the same fire.
+    expect(world.solids.relocate(world.entities.get(1)!, {
       x: fire.x,
-      y: 0.705,
+      y: .705 + world.districts!.groundHeight(fire.x, fire.z),
       z: fire.z,
-    });
-    world.physics.playerBody!.setTranslation(
-      { x: fire.x, y: 0.5, z: fire.z },
-      true,
-    );
+    }, 'test.fire-teleport', 1.5, false)).toBe(true);
+    const at = world.entities.get(1)!.transform;
+    expect(Math.hypot(at.x - fire.x, at.z - fire.z)).toBeLessThan(fire.radius);
     for (let i = 0; i < 60; i++) world.update();
     expect(world.entities.get(1)!.health.current).toBeLessThan(100);
     world.reset();

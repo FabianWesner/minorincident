@@ -1,0 +1,61 @@
+{
+  "name": "collision-sedan-admission",
+  "note": "Production radius-aware admission from the centre of the sedan. The Alpha must stand outside the hull, alive and visible. Inspect the feet/chassis boundary at both game zooms.",
+  "seed": 1,
+  "ground": "asphalt",
+  "size": 80,
+  "time": "L4",
+  "vehicles": [
+    {
+      "id": "sedan",
+      "asset": "vehicle.sedan",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 0
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        25,
+        25
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        2,
+        0
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 120,
+  "sheet": 30,
+  "expect": {
+    "consoleErrors": 0,
+    "collisionFailuresMax": 0,
+    "collisionPendingMax": 0,
+    "actorHealth": {
+      "alpha": [
+        300,
+        300
+      ]
+    }
+  }
+}

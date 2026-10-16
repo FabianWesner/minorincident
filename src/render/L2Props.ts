@@ -105,7 +105,9 @@ export class L2Props extends Group {
       }
     };
     panel(.16, z1 - z0 - 2.4, [x - .2, z1 + 4.6], [x, (z0 + z1) / 2]);
-    panel(2.5, .16, [80.2, 37.4], [81.5, 35]);
+    // Match the closed contact span through the eastern fence post; retain the
+    // open panel's right edge so the riverside approach remains clear.
+    panel(3.4, .16, [79.75, 37.4], [81.9, 35.05]);
     this.stripes.push({ mesh: instanced(materials.get('picketWhite'), white.length), boxes: white }, { mesh: instanced(this.red, redStripes.length), boxes: redStripes });
     // Broken windows: a dark pane on the facade and pale glass shards on the pavement in front of it.
     const panes: Box[] = [], shards: Box[] = [];

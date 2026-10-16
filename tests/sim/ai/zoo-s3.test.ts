@@ -57,7 +57,10 @@ test('T-E07-19-zebra-kick @E07-AC01 @E07-AC19 rear 90 degree/2m boundary, 20 dam
 });
 test('T-E07-19-zebra-stampede @E07-AC19 existing 2-4 zebras, locked 10m/s, 15m, 1.5m sweep and one hit per zebra', async () => {
   const w = await arena(); player(w, 25); const e = group(w, 'zebra.stampede');
-  const inside = human(w, 5, .75), outside = human(w, 5, -.751), a = start(w, e, 'zebra.stampede');
+  // PO contact-hit decision: .45 m zebra + .35 m human + .02 m contact
+  // tolerance = .82 m. Keep the outside control at least .05 m beyond that
+  // boundary; the former .751 m centre corridor control is a physical contact.
+  const inside = human(w, 5, .75), outside = human(w, 5, -.88), a = start(w, e, 'zebra.stampede');
   expect(a.members).toHaveLength(2); const count = w.infected!.active.length;
   step(w, 47); expect(inside.health.current).toBe(100); step(w, 1); expect(e.transform.x).toBeCloseTo(10 / 60);
   player(w, 25, 8); step(w, 89); expect(e.transform.x).toBeCloseTo(15); expect(e.transform.z).toBe(0); expect(a.stage).toBe('recovery');

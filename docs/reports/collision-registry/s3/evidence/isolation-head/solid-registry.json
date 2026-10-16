@@ -1,0 +1,38 @@
+{
+  "code": "e723998d0",
+  "runner": "2.28.24.66; both slots reserved",
+  "passed": 5,
+  "failed": 0,
+  "tests": [
+    {
+      "name": "collision admission: parked vehicle.sedan excludes an Alpha",
+      "status": "passed",
+      "durationMs": 280.7845120000002,
+      "failureMessages": []
+    },
+    {
+      "name": "collision admission: parked vehicle.school-bus excludes an Alpha",
+      "status": "passed",
+      "durationMs": 38.51406700000007,
+      "failureMessages": []
+    },
+    {
+      "name": "collision commit: full Alpha radius survives thin nav blocker knockback",
+      "status": "passed",
+      "durationMs": 6.8308990000005,
+      "failureMessages": []
+    },
+    {
+      "name": "collision admission: eight coincident Alphas keep all eight encounters without a committed stack",
+      "status": "passed",
+      "durationMs": 14.85377199999948,
+      "failureMessages": []
+    },
+    {
+      "name": "collision natural L4: tank excludes every living Alpha through audit tick 15662",
+      "status": "passed",
+      "durationMs": 65248.027909,
+      "failureMessages": []
+    }
+  ]
+}

@@ -5,7 +5,7 @@
  * `jitterRunMax`: longest run of consecutive frames in which a sole zig-zags vertically by >= 0.8 cm (a one-frame bob). */
 export interface FootSample { heel: number[]; toe: number[]; yaw: number }
 /** `floor`: ground height under the actor when known (Scene Lab); otherwise the lowest sole point of the track is used. */
-export interface MotionFrame { frame: number; appearance?: import('../../render/characters/CrowdAppearance').CrowdLook; corpse?: boolean; clip?: string; /** Informational animation label (not used by the foot rules), e.g. the corgi clip. */ label?: string; /** Sim position [x, z] (trace only). */ at?: number[]; feet: FootSample[]; torsoPitchDeg?: number; speed?: number; floor?: number }
+export interface MotionFrame { frame: number; appearance?: import('../../render/characters/CrowdAppearance').CrowdLook; corpse?: boolean; clip?: string; /** Informational animation label (not used by the foot rules), e.g. the corgi clip. */ label?: string; /** Sim position [x, z] (trace only). */ at?: number[]; feet: FootSample[]; /** Independent drawn-mesh depth, without changing contact classification. */ soleLowestY?: number; torsoPitchDeg?: number; speed?: number; floor?: number }
 export interface MotionSummary {
   frames: number; contacts: number; slideMaxCm: number; slideP95Cm: number | null; yawDriftMaxDeg: number; liftMaxCm: number; sinkMaxCm: number; jitterRunMax: number;
   torsoPitchMinDeg: number | null; torsoPitchMaxDeg: number | null; worstSlideFrame: number | null;
@@ -36,7 +36,9 @@ export function summarizeMotion(frames: MotionFrame[], grounded = .012): MotionS
       const h = lowest - floor, consecutive = h1 !== undefined && h2 !== undefined && f1 === f.frame - 2 && f2 === f.frame - 1;
       if (consecutive && (h2! - h1!) * (h - h2!) < 0 && Math.min(Math.abs(h2! - h1!), Math.abs(h - h2!)) >= .008) jitterRun = Math.max(jitterRun, ++run); else if (consecutive) run = 0;
       h1 = h2; f1 = f2; h2 = h; f2 = f.frame;
-      lift = Math.max(lift, lowest - floor); if (f.frame >= 3) sink = Math.max(sink, floor - lowest);   // frames 0-2 are the spawn settle
+      // Mesh depth is authoritative for sink when available. A contact anchor
+      // can lie outside the rotated mesh; its own height still owns slide/lift.
+      lift = Math.max(lift, lowest - floor); if (f.frame >= 3) sink = Math.max(sink, floor - (f.soleLowestY ?? lowest));   // frames 0-2 are the spawn settle
       if (lowest < floor + grounded) {
         if (startYaw === undefined) { startYaw = c.yaw; started = f.frame; }
         else if (previous) {

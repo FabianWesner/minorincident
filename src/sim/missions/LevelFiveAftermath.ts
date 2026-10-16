@@ -91,13 +91,14 @@ export class LevelFiveAftermath {
   private placeInCellar(): void {
     const { world } = this.mission, player = world.entities.get(1)!, inn = this.anchor('l5-cellar-in');
     this.teleport(player, inn);
-    for (const e of world.entities.iterate()) if (e.companion) { const p = this.snap({ x: inn.x + 1.2, z: inn.z - .6 }, e.combat?.radius ?? .4); Object.assign(e.transform, p); e.hidden = false; world.spatial.set(e.id, p.x, p.z); }
+    for (const e of world.entities.iterate()) if (e.companion) { const p = this.snap({ x: inn.x + 1.2, z: inn.z - .6 }, e.combat?.radius ?? .4); Object.assign(e.transform, p); e.hidden = false; world.solids.admit(e, 'l5.cellar.companion'); }
   }
   private teleport(player: EntitySnapshot, to: Point): void {
     const { world } = this.mission;
     Object.assign(player.transform, { x: to.x, z: to.z });
+    world.solids.admit(player, 'l5.teleport', 4, false);
     world.physics.playerBody!.setTranslation(player.transform, true); world.physics.playerBody!.setNextKinematicTranslation(player.transform);
-    Object.assign(world.previousPlayer!, player.transform); world.spatial.set(1, to.x, to.z); world.player!.locomotion.reset(); world.player!.setCheckpoint(player.transform); world.clearInput();
+    Object.assign(world.previousPlayer!, player.transform); world.spatial.set(1, player.transform.x, player.transform.z); world.player!.locomotion.reset(); world.player!.setCheckpoint(player.transform); world.clearInput();
   }
   private hiddenSchedule(p: Point) { return [{ activity: 'look' as const, anchor: 'l5/hidden', target: p, facing: { x: p.x, z: p.z + 5 }, ticks: 60 * 60 * 6 }]; }
   private spawnSurvivors(): void {
@@ -198,7 +199,7 @@ export class LevelFiveAftermath {
     if (!exit) return; // Retry admission on the next tick if the doorway is temporarily occupied.
     player.transform.yaw = yaw;
     this.teleport(player, exit);
-    for (const e of world.entities.iterate()) if (e.companion) { const p = this.snap({ x: exit.x - 1.2, z: exit.z + .8 }, .4); Object.assign(e.transform, p); world.spatial.set(e.id, p.x, p.z); }
+    for (const e of world.entities.iterate()) if (e.companion) { const p = this.snap({ x: exit.x - 1.2, z: exit.z + .8 }, .4); Object.assign(e.transform, p); world.solids.admit(e, 'l5.emerge.companion'); }
     s.phase = 'emerged'; s.emergedAt = tick;
     if (!this.mission.state.states.emerged) this.mission.setState('emerged', true);
     world.events.emit({ type: 'l5.emerged', tick });
@@ -221,7 +222,7 @@ export class LevelFiveAftermath {
     const { world } = this.mission, s = this.s, tick = world.tick, e = this.entity(r.id);
     if (!e?.civilian?.survivor || r.status !== 'hidden') return;
     const out = this.snap(this.anchor(`l5-ring-${r.key}`), .4), c = e.civilian, sv = c.survivor!;
-    Object.assign(e.transform, out); e.hidden = false; world.spatial.set(e.id, out.x, out.z);
+    Object.assign(e.transform, out); e.hidden = false; world.solids.admit(e, 'l5.survivor.reveal');
     c.pauseUntil = 0; c.path.length = 0; c.goal = -1; c.schedule = this.hiddenSchedule(out); c.scheduleStep = 0; c.activityUntil = 0;
     sv.mode = 'follow'; sv.slot = s.found; sv.foundAt = tick; sv.waitAt = tick + ticks(l5.follow.waitEveryS);
     r.status = 'following'; r.foundAt = tick; r.hold = 0; s.found++;
@@ -242,9 +243,9 @@ export class LevelFiveAftermath {
     if (look) { look.hidden = false; this.world.spatial.set(look.id, look.transform.x, look.transform.z); if (look.civilian) look.civilian.story = { clip: 'npc-wave-in', start: world.tick }; }
     world.events.emit({ type: 'l5.accounted', tick: world.tick });
   }
-  private following(): { r: L5State['survivors'][number]; e: EntitySnapshot }[] {
+  private following(sheltered = false): { r: L5State['survivors'][number]; e: EntitySnapshot }[] {
     const out: { r: L5State['survivors'][number]; e: EntitySnapshot }[] = [];
-    for (const r of this.s.survivors) if (r.status === 'following') { const e = this.entity(r.id); if (e) out.push({ r, e }); }
+    for (const r of this.s.survivors) if (r.status === 'following' || sheltered && r.status === 'sheltered') { const e = this.entity(r.id); if (e) out.push({ r, e }); }
     return out;
   }
   /** A found survivor is lost when bitten (turns in about 3 s: same entity, same look) or killed. */
@@ -295,8 +296,13 @@ export class LevelFiveAftermath {
   /** Once the player enters, guide every living follower through the narrow opening. */
   ingress(e: EntitySnapshot): Point | null {
     if (!this.s.metroAt || this.s.phase !== 'metro' && this.s.phase !== 'shelter') return null;
-    const door = this.anchor('l5-metro-shutter'), slot = Math.max(0, e.civilian!.survivor!.slot);
-    return { x: door.x + (slot % 2 ? .4 : -.4), z: door.z - 1.4 - Math.floor(slot / 2) * 1.05 };
+    const door = this.anchor('l5-metro-shutter');
+    // The courier and waving lookout occupy the right lane. Fill the open left
+    // lane from the back, in arrival order: a late straggler must not pass through
+    // followers already standing inside the narrow ingress.
+    const ordered = this.following(true).sort((a, b) => a.e.transform.z - b.e.transform.z || a.e.id - b.e.id);
+    const slot = Math.max(0, ordered.findIndex(f => f.e.id === e.id));
+    return { x: door.x - .35, z: door.z - 4.4 + slot * .75 };
   }
   private metro(): void {
     const { world } = this.mission, s = this.s, tick = world.tick, player = world.entities.get(1)!;

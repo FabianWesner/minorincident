@@ -259,7 +259,8 @@ describe('L2 The Failed Rescue', () => {
         p.health.current = p.health.max;
         for (const e of w.infected!.active) {
           const cell = nav.nearestCell(p.transform.x - 60, p.transform.z - 20, .6);
-          e.transform.x = nav.x(cell); e.transform.z = nav.z(cell); w.spatial.set(e.id, e.transform.x, e.transform.z);
+          // Admit the unchanged roster around the distant anchor; raw coincident writes roll back.
+          expect(w.solids.relocate(e, { x: nav.x(cell), y: .7, z: nav.z(cell) }, 'test.l2-calm-checkpoint', 16)).toBe(true);
         }
         for (let i = 0; i < 60 && m.state.checkpoint !== id; i++) w.update();
       }

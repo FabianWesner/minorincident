@@ -1,0 +1,24 @@
+{
+  "source": "590b667e4",
+  "freshBuild": true,
+  "attemptedAt": "2026-10-16T01:10:50Z",
+  "result": "unmeasured",
+  "reason": "Quiet reservation not admitted within5seconds; released without queueing",
+  "requested": [
+    "phone-base L1/L3/L4/L5",
+    "ride17configs",
+    "three paired100/200actor Mac Node trials"
+  ],
+  "attempts": [
+    {
+      "at": "2026-10-16T01:10:50Z",
+      "admissionLimitSeconds": 5,
+      "result": "unmeasured"
+    },
+    {
+      "at": "2026-10-16T01:27:31Z",
+      "admissionLimitSeconds": 5,
+      "result": "unmeasured"
+    }
+  ]
+}
