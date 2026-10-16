@@ -1,0 +1,576 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/node_modules/.bin/playwright",
+      "test",
+      "tests/perf/phone-base.spec.ts",
+      "tests/perf/e18-desktop.spec.ts",
+      "tests/perf/horde-budget.spec.ts",
+      "--project=chromium",
+      "--workers=1",
+      "--retries=0"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/test-results/playwright/run-3468",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/test-results/playwright/run-3468",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/test-results/playwright/run-3468",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/test-results/playwright/run-3468",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/test-results/playwright/run-3468",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/test-results/playwright/run-3468",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3468 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3468",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "perf/e18-desktop.spec.ts",
+      "file": "perf/e18-desktop.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E18-09 @E18-AC09 @perf local headless native-GPU Chrome high horde p95 frame <=16.7ms",
+          "ok": true,
+          "tags": [
+            "E18-AC09",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15246,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T05:07:26.076Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7c075c58ab864332a98e-1e3f9e28dee7bf7def56",
+          "file": "perf/e18-desktop.spec.ts",
+          "line": 6,
+          "column": 1
+        },
+        {
+          "title": "E18 @E18 WebGPU low tier parity compiles two-mip bloom and capped crowds",
+          "ok": true,
+          "tags": [
+            "E18"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [
+                {
+                  "type": "skip",
+                  "description": "WebGPU-only checks are verified manually; browser automation is headless.",
+                  "location": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/perf/e18-desktop.spec.ts",
+                    "line": 32,
+                    "column": 8
+                  }
+                }
+              ],
+              "expectedStatus": "skipped",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "skipped",
+                  "duration": 93,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T05:07:41.605Z",
+                  "annotations": [
+                    {
+                      "type": "skip",
+                      "description": "WebGPU-only checks are verified manually; browser automation is headless.",
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/perf/e18-desktop.spec.ts",
+                        "line": 32,
+                        "column": 8
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "skipped"
+            }
+          ],
+          "id": "7c075c58ab864332a98e-cddcf7d99e37be73b3f3",
+          "file": "perf/e18-desktop.spec.ts",
+          "line": 31,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "perf/horde-budget.spec.ts",
+      "file": "perf/horde-budget.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "high",
+          "file": "perf/horde-budget.spec.ts",
+          "line": 9,
+          "column": 51,
+          "specs": [
+            {
+              "title": "horde budget high run 1 @E18-AC01 @E18-AC09 @perf",
+              "ok": true,
+              "tags": [
+                "E18-AC01",
+                "E18-AC09",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 15222,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "{\"phase\":\"after\",\"run\":1,\"tier\":\"high\",\"p95\":6.300000000001091,\"sim\":0.8999996185302734,\"update\":3.59999942779541,\"render\":1.6999998092651367,\"triangles\":557848,\"draws\":71,\"profile\":{\"other\":{\"drawCalls\":38,\"triangles\":49991},\"shadows\":{\"drawCalls\":20,\"triangles\":31147},\"crowd\":{\"drawCalls\":13,\"triangles\":476710}}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T05:07:41.976Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f5a13d911a1bf8890d1f-c2f3b73b9c7f4ebd574d",
+              "file": "perf/horde-budget.spec.ts",
+              "line": 11,
+              "column": 41
+            }
+          ]
+        },
+        {
+          "title": "low",
+          "file": "perf/horde-budget.spec.ts",
+          "line": 9,
+          "column": 51,
+          "specs": [
+            {
+              "title": "horde budget low run 1 @E18-AC01 @E18-AC09 @perf",
+              "ok": true,
+              "tags": [
+                "E18-AC01",
+                "E18-AC09",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 16628,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "{\"phase\":\"after\",\"run\":1,\"tier\":\"low\",\"p95\":11.5,\"sim\":2.5,\"update\":5.100000381469727,\"render\":4,\"triangles\":120003,\"draws\":70,\"profile\":{\"other\":{\"drawCalls\":38,\"triangles\":12554},\"shadows\":{\"drawCalls\":20,\"triangles\":4275},\"crowd\":{\"drawCalls\":12,\"triangles\":103174}}}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T05:07:57.356Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "f5a13d911a1bf8890d1f-0a834c20c604b4ae4e14",
+              "file": "perf/horde-budget.spec.ts",
+              "line": 11,
+              "column": 41
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "perf/phone-base.spec.ts",
+      "file": "perf/phone-base.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "phone base L1 @E18 @perf @phone-base",
+          "ok": true,
+          "tags": [
+            "E18",
+            "perf",
+            "phone-base"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 25479,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "{\"level\":\"L1\",\"phase\":\"collision-s4-retained\",\"throttle\":4,\"frameP95\":15.900000000001455,\"simP95\":4.100000381469727,\"updateP95\":4.59999942779541,\"renderP95\":7.199999809265137,\"peakActors\":0,\"costs\":{\"simTick\":4.09999942779541,\"simTickMax\":4,\"sim\":3.90000057220459,\"physics\":0.8000001907348633,\"simNpcs\":1.6000003814697266,\"ai\":0.10000038146972656,\"trapRescue\":0,\"audio\":0.6999998092651367,\"telemetry\":0,\"input\":0.10000038146972656,\"camera\":0.5999994277954102,\"view\":11.299999237060547,\"weather\":0.10000038146972656,\"render\":7.199999809265137,\"crowd\":0.6999998092651367,\"npcs\":2.5,\"accessories\":0,\"occlusion\":1,\"doors\":0.6000003814697266,\"lod\":0.09999942779541016,\"lightField\":0,\"lighting\":0.6999998092651367,\"ui\":0.8999996185302734},\"environment\":{\"recordedAt\":\"2026-10-16T05:08:39.974Z\",\"quality\":\"low\",\"backend\":\"webgl\",\"viewport\":{\"width\":390,\"height\":844,\"dpr\":2.625},\"gpu\":\"ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)\",\"drawCalls\":154,\"triangles\":295447},\"hostLoadStart\":[2.70263671875,2.72314453125,4.07177734375],\"hostLoadEnd\":[2.92041015625,2.78515625,4.06298828125],\"localVitestStart\":[],\"localVitestEnd\":[],\"otherHeadlessChromeStart\":[],\"otherHeadlessChromeEnd\":[],\"endLevel\":\"L1\"}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T05:08:14.281Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "76538841f28a54161a3f-5715b3bd3470c6e149d0",
+          "file": "perf/phone-base.spec.ts",
+          "line": 20,
+          "column": 56
+        },
+        {
+          "title": "phone base L3 @E18 @perf @phone-base",
+          "ok": true,
+          "tags": [
+            "E18",
+            "perf",
+            "phone-base"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 26492,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "{\"level\":\"L3\",\"phase\":\"collision-s4-retained\",\"throttle\":4,\"frameP95\":17,\"simP95\":3.8999996185302734,\"updateP95\":5.09999942779541,\"renderP95\":7,\"peakActors\":12,\"costs\":{\"simTick\":3.8999996185302734,\"simTickMax\":3.8000001907348633,\"sim\":3.59999942779541,\"physics\":0.8999996185302734,\"simNpcs\":0.9000005722045898,\"ai\":1.1000003814697266,\"trapRescue\":0,\"audio\":0.6999998092651367,\"telemetry\":0,\"input\":0.19999980926513672,\"camera\":0.5,\"view\":11.699999809265137,\"weather\":0.10000038146972656,\"render\":7.5,\"crowd\":0.8000001907348633,\"npcs\":2.1000003814697266,\"accessories\":0,\"occlusion\":1,\"doors\":0.6000003814697266,\"lod\":0.10000038146972656,\"lightField\":0.8999996185302734,\"lighting\":1.1000003814697266,\"ui\":1.0999994277954102},\"environment\":{\"recordedAt\":\"2026-10-16T05:09:06.456Z\",\"quality\":\"low\",\"backend\":\"webgl\",\"viewport\":{\"width\":390,\"height\":844,\"dpr\":2.625},\"gpu\":\"ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)\",\"drawCalls\":100,\"triangles\":343065},\"hostLoadStart\":[3.2470703125,2.85498046875,4.080078125],\"hostLoadEnd\":[2.6767578125,2.74951171875,4.013671875],\"localVitestStart\":[],\"localVitestEnd\":[],\"otherHeadlessChromeStart\":[],\"otherHeadlessChromeEnd\":[],\"endLevel\":\"L3\"}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T05:08:40.043Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "76538841f28a54161a3f-688b6f1ae8882edc7aec",
+          "file": "perf/phone-base.spec.ts",
+          "line": 20,
+          "column": 56
+        },
+        {
+          "title": "phone base L4 @E18 @perf @phone-base",
+          "ok": true,
+          "tags": [
+            "E18",
+            "perf",
+            "phone-base"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 26308,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "{\"level\":\"L4\",\"phase\":\"collision-s4-retained\",\"throttle\":4,\"frameP95\":31.399999999999636,\"simP95\":3.6000003814697266,\"updateP95\":4.90000057220459,\"renderP95\":9.100000381469727,\"peakActors\":0,\"costs\":{\"simTick\":3.90000057220459,\"simTickMax\":3.59999942779541,\"sim\":3.6000003814697266,\"physics\":0.8999996185302734,\"simNpcs\":1.0999994277954102,\"ai\":0.10000038146972656,\"trapRescue\":0,\"audio\":0.6000003814697266,\"telemetry\":0,\"input\":0.10000038146972656,\"camera\":0.5,\"view\":13.600000381469727,\"weather\":0.10000038146972656,\"render\":9.5,\"crowd\":0.8000001907348633,\"npcs\":2.09999942779541,\"accessories\":0,\"occlusion\":0.8000001907348633,\"doors\":0,\"lod\":0.10000038146972656,\"lightField\":0.8999996185302734,\"lighting\":1.1999998092651367,\"ui\":0.8999996185302734},\"environment\":{\"recordedAt\":\"2026-10-16T05:09:32.808Z\",\"quality\":\"low\",\"backend\":\"webgl\",\"viewport\":{\"width\":390,\"height\":844,\"dpr\":2.625},\"gpu\":\"ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)\",\"drawCalls\":190,\"triangles\":203685},\"hostLoadStart\":[2.54248046875,2.72021484375,3.99560546875],\"hostLoadEnd\":[2.78955078125,2.78173828125,3.98828125],\"localVitestStart\":[],\"localVitestEnd\":[],\"otherHeadlessChromeStart\":[],\"otherHeadlessChromeEnd\":[],\"endLevel\":\"L4\"}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T05:09:06.544Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "76538841f28a54161a3f-a7097428a621a0207d62",
+          "file": "perf/phone-base.spec.ts",
+          "line": 20,
+          "column": 56
+        },
+        {
+          "title": "phone base L5 @E18 @perf @phone-base",
+          "ok": true,
+          "tags": [
+            "E18",
+            "perf",
+            "phone-base"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 26570,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "{\"level\":\"L5\",\"phase\":\"collision-s4-retained\",\"throttle\":4,\"frameP95\":31.100000000002183,\"simP95\":3.3999996185302734,\"updateP95\":8,\"renderP95\":7.699999809265137,\"peakActors\":12,\"costs\":{\"simTick\":3.90000057220459,\"simTickMax\":3.3000001907348633,\"sim\":3.8000001907348633,\"physics\":0.7000007629394531,\"simNpcs\":0.8000001907348633,\"ai\":1.0000009536743164,\"trapRescue\":0,\"audio\":0.7999992370605469,\"telemetry\":0,\"input\":0.10000038146972656,\"camera\":0.40000057220458984,\"view\":15.5,\"weather\":4.799999237060547,\"render\":8.000000953674316,\"crowd\":0.6000003814697266,\"npcs\":1.6000003814697266,\"accessories\":0,\"occlusion\":0.8000001907348633,\"doors\":0,\"lod\":0.10000038146972656,\"lightField\":0.8999996185302734,\"lighting\":1,\"ui\":0.9000005722045898},\"environment\":{\"recordedAt\":\"2026-10-16T05:09:59.370Z\",\"quality\":\"low\",\"backend\":\"webgl\",\"viewport\":{\"width\":390,\"height\":844,\"dpr\":2.625},\"gpu\":\"ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)\",\"drawCalls\":194,\"triangles\":226433},\"hostLoadStart\":[2.80615234375,2.78515625,3.982421875],\"hostLoadEnd\":[3.3408203125,2.95166015625,4.009765625],\"localVitestStart\":[],\"localVitestEnd\":[],\"otherHeadlessChromeStart\":[],\"otherHeadlessChromeEnd\":[],\"endLevel\":\"L5\"}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-16T05:09:32.861Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "76538841f28a54161a3f-3edafae327e6b84550d8",
+          "file": "perf/phone-base.spec.ts",
+          "line": 20,
+          "column": 56
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-16T05:07:25.484Z",
+    "duration": 154064.41,
+    "expected": 7,
+    "skipped": 1,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -128,6 +128,22 @@ test('@E22 @E23 the Fairhaven follow lens stays outside the opposite building at
   expect(view.camera.position.distanceTo(view.focus)).toBeCloseTo(view.radius, 6);
 });
 
+test('@E22 vehicle follow framing stays fixed across facade bounds at both zooms', () => {
+  for (const zoom of [.5, 1]) {
+    const view = new View();
+    view.cameraSolids.push(new Box3(new Vector3(-54, 0, -34), new Vector3(-43, 18, -20)));
+    view.reset({ x: -56.75, y: .705, z: -18 });
+    view.driving = true; view.zoom(Math.log(zoom), true);
+    view.update({ x: -56.75, y: .705, z: -18 }, 0);
+    const offset = view.camera.position.clone().sub(view.focus);
+    for (let tick = 0; tick < 240; tick++) {
+      view.update({ x: -56.75, y: .705, z: -18 - tick * .115 }, 1 / 60);
+      expect(view.camera.position.clone().sub(view.focus).distanceTo(offset)).toBeLessThan(1e-9);
+      expect(view.camera.position.distanceTo(view.focus)).toBeCloseTo(view.getState().radius, 8);
+    }
+  }
+});
+
 test('@E22 camera clearance beside the moved Lakeshore apartment preserves framing throughout the lane', () => {
   const building = new Box3(new Vector3(61.28, 0, 30.2599), new Vector3(73.88, 17.76, 40.2201));
   for (const x of [57, 59.1, 61, 64, 67]) {

@@ -97,15 +97,17 @@ export function* l1Frames(world: SimWorld, mission: Mission, profile: L1Profile,
       // Hold a normal keyboard direction between novice decisions; fractional waypoint braking
       // made the courier creep toward the bat while faster infected caught up from behind.
       if (newbie && dir) { const length = Math.hypot(dir.x, dir.z); if (length) { dir.x /= length; dir.z /= length; } }
-      move = fight && !newbie ? { x: 0, z: 0 } : dir ?? { x: 0, z: 0 };
+      // Both profiles follow the objective while fending off pursuers (E19-AC14).
+      // The newbie adds its reaction/miss/detour handicaps to this same base policy.
+      move = dir ?? { x: 0, z: 0 };
     }
     const target = fight && fight.health.current > 0 ? fight : null;
-    if (newbie && target) {
+    if (target) {
       // Keep heading for the objective while batting a pursuer; do not auto-approach it and stop in the crowd.
       const dx = target.transform.x - p.x, dz = target.transform.z - p.z, length = Math.hypot(dx, dz) || 1;
       world.setInput({ move, interact: press, attackTarget: undefined, aimSource: 'keyboard', aim: { x: dx / length, z: dz / length }, aimPoint: { x: target.transform.x, z: target.transform.z }, left: { down: false, held: true, up: false } });
     } else {
-      world.setInput(target ? { move, interact: press, attackTarget: { id: target.id, side: 'LEFT' }, left: { down: false, held: true, up: false } }   : { move, interact: press, attackTarget: undefined, left: { down: false, held: false, up: false } });
+      world.setInput({ move, interact: press, attackTarget: undefined, left: { down: false, held: false, up: false } });
     }
     yield structuredClone(world.deviceInput);
   }

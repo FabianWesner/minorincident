@@ -1,0 +1,68 @@
+{
+  "name": "collision-alpha-charge-registry",
+  "note": "Locked Alpha charge against courier and tank. Registry sweeps stop the body at the chassis and displace contacted actors through occupancy. Inspect game camera feet/chassis and courier contact; automatic high/low zoom matrix.",
+  "seed": 1,
+  "ground": "asphalt",
+  "size": 50,
+  "time": "L4",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        5,
+        0
+      ],
+      "god": false,
+      "state": "idle"
+    },
+    {
+      "id": "alpha",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        0,
+        0
+      ],
+      "state": "idle"
+    }
+  ],
+  "vehicles": [
+    {
+      "id": "tank",
+      "asset": "veh.tank",
+      "at": [
+        10,
+        0
+      ],
+      "yaw": 90
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      5,
+      0
+    ],
+    "zoom": 1
+  },
+  "script": [
+    {
+      "frame": 0,
+      "actor": "alpha",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    }
+  ],
+  "frames": 150,
+  "sheet": 15,
+  "expect": {
+    "consoleErrors": 0,
+    "collisionFailuresMax": 0,
+    "collisionPendingMax": 0,
+    "specialActiveMin": 1,
+    "specialActiveMove": "alpha.charge"
+  }
+}

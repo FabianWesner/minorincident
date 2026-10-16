@@ -63,6 +63,7 @@ export class LevelOneOutbreak {
     const e = world.entities.get(id)!, c = e.civilian!;
     c.ambient = false; c.pauseUntil = Number.MAX_SAFE_INTEGER; c.routine = 'staff';
     Object.assign(e.transform, spawn); this.face(e, this.anchor('lab-door'));
+    world.solids.admit(e, 'l1.technician.wait', 0, false);
     world.spatial.set(id, spawn.x, spawn.z);
     this.l1.techId = id;
   }
@@ -129,6 +130,7 @@ export class LevelOneOutbreak {
     e.transform.x = x; e.transform.z = z;
     if (Math.hypot(dx, dz) > 1e-4) e.transform.yaw = -Math.atan2(dz, dx); else this.face(e, towards);
     this.mission.world.spatial.set(e.id, x, z);
+    this.mission.world.solids.admit(e, 'l1.technician.walk', 0, false);
   }
 
   update(): void {
@@ -309,7 +311,10 @@ export class LevelOneOutbreak {
   private infectTechnician(at: { x: number; z: number }): number {
     const { world } = this.mission, l1 = this.l1, e = world.entities.get(l1.techId), outbreak = world.npcs?.civilians.outbreak;
     if (!e || !outbreak) return this.spawnInfected(at, story.variants[0]);
+    const requested = { ...e.transform };
     outbreak.turnNow(e, 'average');
+    Object.assign(e.transform, requested);
+    world.solids.admit(e, 'l1.technician.exit', 0, false);
     // Held still until he reaches the door (scripted indoor leg), then the real AI is rushed outward.
     const brain = e.infected?.l1; if (brain) brain.pauseUntil = world.tick + 60 * TICKS;
     return e.id;
@@ -438,9 +443,11 @@ export class LevelOneOutbreak {
       }
       const vx = run.via.x - e.transform.x, vz = run.via.z - e.transform.z, d = Math.hypot(vx, vz);
       // Several infected share one doorstep: within 1.2 m of it (body spacing) counts as out.
-      if (d < 1.2 || tick >= run.until) { l1.runs.splice(i, 1); ai.rush(e.id, { x: run.dx, z: run.dz }, tick + story.exitSearchS * TICKS); continue; }
+      if (!e.pendingAdmission && (d < 1.2 || tick >= run.until)) { l1.runs.splice(i, 1); ai.rush(e.id, { x: run.dx, z: run.dz }, tick + story.exitSearchS * TICKS); continue; }
+      if (d < .01) { world.solids.admit(e, 'l1.technician.exit', 0, false); continue; }
       e.transform.x += vx / d * run.speed / TICKS; e.transform.z += vz / d * run.speed / TICKS; e.transform.yaw = -Math.atan2(vz, vx);
       world.spatial.set(e.id, e.transform.x, e.transform.z);
+      world.solids.admit(e, 'l1.technician.exit', 0, false);
     }
   }
 }

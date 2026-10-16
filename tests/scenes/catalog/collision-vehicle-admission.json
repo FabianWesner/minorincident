@@ -1,0 +1,90 @@
+{
+  "name": "collision-vehicle-admission",
+  "note": "Eight coincident Alpha requests beside the production bus retain all eight IDs and HP. Inspect feet around the bumper and each other at game zooms; numerical body occupancy is gated independently of animation silhouettes.",
+  "seed": 1,
+  "ground": "asphalt",
+  "size": 80,
+  "time": "L4",
+  "vehicles": [
+    {
+      "id": "bus",
+      "asset": "vehicle.school-bus",
+      "at": [
+        0,
+        0
+      ]
+    }
+  ],
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        25,
+        25
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        2,
+        0
+      ],
+      "count": 8,
+      "spread": 0,
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 120,
+  "sheet": 30,
+  "expect": {
+    "consoleErrors": 0,
+    "collisionFailuresMax": 0,
+    "collisionPendingMax": 0,
+    "actorHealth": {
+      "alpha-1": [
+        300,
+        300
+      ],
+      "alpha-2": [
+        300,
+        300
+      ],
+      "alpha-3": [
+        300,
+        300
+      ],
+      "alpha-4": [
+        300,
+        300
+      ],
+      "alpha-5": [
+        300,
+        300
+      ],
+      "alpha-6": [
+        300,
+        300
+      ],
+      "alpha-7": [
+        300,
+        300
+      ],
+      "alpha-8": [
+        300,
+        300
+      ]
+    }
+  }
+}

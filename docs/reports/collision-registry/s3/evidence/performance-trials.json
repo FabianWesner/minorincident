@@ -1,0 +1,1445 @@
+[
+  {
+    "batch": "collision-s3-local-perf",
+    "applied": "see implementation and source SHA; earlier batches are historical",
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            0.2297919999999749,
+            0.22720799999996188,
+            0.2295840000000453
+          ],
+          "changed": [
+            0.261792000000014,
+            0.2697499999999877,
+            0.2701250000000073
+          ]
+        },
+        "medianP95ChangePercent": 17.495121611233564,
+        "budgetPercent": 3,
+        "pass": false
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            0.44033299999978226,
+            0.4400410000002921,
+            0.4383749999999509
+          ],
+          "changed": [
+            0.4774169999998321,
+            0.4359580000000278,
+            0.47729199999980665
+          ]
+        },
+        "medianP95ChangePercent": 8.465347547044445,
+        "budgetPercent": 3,
+        "pass": false
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-local-perf-2m",
+    "applied": "see implementation and source SHA; earlier batches are historical",
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            0.2277920000000222,
+            0.24216699999999491,
+            0.22937500000000455
+          ],
+          "changed": [
+            0.2611249999999927,
+            0.2745840000000044,
+            0.2642079999999396
+          ]
+        },
+        "medianP95ChangePercent": 15.186049046292904,
+        "budgetPercent": 3,
+        "pass": false
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            0.436916999999994,
+            0.48929199999975026,
+            0.4724580000001879
+          ],
+          "changed": [
+            0.42162499999994907,
+            0.41958299999987503,
+            0.45366600000011204
+          ]
+        },
+        "medianP95ChangePercent": -10.759263257309348,
+        "budgetPercent": 3,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-local-perf-bounds",
+    "applied": "see implementation and source SHA; earlier batches are historical",
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            0.22604100000000926,
+            0.2272090000000162,
+            0.29404199999999037
+          ],
+          "changed": [
+            0.24512499999991633,
+            0.24862500000006094,
+            0.24929200000002538
+          ]
+        },
+        "medianP95ChangePercent": 9.42568296152142,
+        "budgetPercent": 3,
+        "pass": false
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            0.44291599999996834,
+            0.4390419999999722,
+            0.4391249999998763
+          ],
+          "changed": [
+            0.3922499999998763,
+            0.3944169999999758,
+            0.3924170000000231
+          ]
+        },
+        "medianP95ChangePercent": -10.636606888668688,
+        "budgetPercent": 3,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-local-perf-cluster",
+    "applied": "see implementation and source SHA; earlier batches are historical",
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            0.2259999999999991,
+            0.23295799999999645,
+            0.229582999999991
+          ],
+          "changed": [
+            0.255375000000015,
+            0.2602909999999383,
+            0.26191699999998264
+          ]
+        },
+        "medianP95ChangePercent": 13.375554810220503,
+        "budgetPercent": 3,
+        "pass": false
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            0.43445799999972223,
+            0.4750000000001364,
+            0.4425420000000031
+          ],
+          "changed": [
+            0.41608400000018264,
+            0.41879199999993943,
+            0.41849999999999454
+          ]
+        },
+        "medianP95ChangePercent": -5.4327046924378735,
+        "budgetPercent": 3,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-local-perf-head",
+    "applied": "see implementation and source SHA; earlier batches are historical",
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            0.2296249999999418,
+            0.24149999999997362,
+            0.2301249999999868
+          ],
+          "changed": [
+            0.24854200000004312,
+            0.24604099999999107,
+            0.24358300000005784
+          ]
+        },
+        "medianP95ChangePercent": 6.9162411732776485,
+        "budgetPercent": 3,
+        "pass": false
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            0.43754100000001017,
+            0.43204099999979917,
+            0.4456669999999576
+          ],
+          "changed": [
+            0.3811670000000049,
+            0.37045899999998255,
+            0.37216699999999037
+          ]
+        },
+        "medianP95ChangePercent": -14.941228364888836,
+        "budgetPercent": 3,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-local-perf-reuse",
+    "applied": "see implementation and source SHA; earlier batches are historical",
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            0.2281669999999849,
+            0.22883300000000872,
+            0.22674999999998136
+          ],
+          "changed": [
+            0.25720799999999144,
+            0.26545800000002373,
+            0.2594169999999849
+          ]
+        },
+        "medianP95ChangePercent": 13.696108552070218,
+        "budgetPercent": 3,
+        "pass": false
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            0.43412499999999454,
+            0.43545899999980975,
+            0.4275000000000091
+          ],
+          "changed": [
+            0.40599999999994907,
+            0.4087080000001606,
+            0.4106249999999818
+          ]
+        },
+        "medianP95ChangePercent": -5.8547653325273235,
+        "budgetPercent": 3,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-native-static",
+    "applied": "see implementation and source SHA; earlier batches are historical",
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            0.2372909999999706,
+            0.23020800000000463,
+            0.2292910000000461
+          ],
+          "changed": [
+            0.25070800000003146,
+            0.2558330000000524,
+            0.24670800000001236
+          ]
+        },
+        "medianP95ChangePercent": 8.904990269680635,
+        "budgetPercent": 3,
+        "pass": false
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            0.44704200000023775,
+            0.4297079999998914,
+            0.43774999999982356
+          ],
+          "changed": [
+            0.395958999999948,
+            0.3764169999999467,
+            0.37054200000000037
+          ]
+        },
+        "medianP95ChangePercent": -14.010965162741652,
+        "budgetPercent": 3,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-node-final",
+    "applied": "see implementation and source SHA; earlier batches are historical",
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            0.22633299999995415,
+            0.22758299999998144,
+            0.22470799999996416
+          ],
+          "changed": [
+            0.24620899999996482,
+            0.25962499999997135,
+            0.2640830000000278
+          ]
+        },
+        "medianP95ChangePercent": 14.709300013707205,
+        "budgetPercent": 3,
+        "pass": false
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            0.5010409999999865,
+            0.44299999999998363,
+            0.44529099999999744
+          ],
+          "changed": [
+            0.38075000000003456,
+            0.3805409999999938,
+            0.42466699999999946
+          ]
+        },
+        "medianP95ChangePercent": -14.494117330007395,
+        "budgetPercent": 3,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-open-index",
+    "applied": false,
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            1.2800399999996444,
+            1.4118800000001102,
+            1.1132069999998748
+          ],
+          "changed": [
+            1.3002989999999954,
+            1.3375200000000405,
+            1.3389839999999822
+          ]
+        },
+        "medianP95ChangePercent": 4.490484672386175,
+        "budgetPercent": 3,
+        "pass": false
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            2.5351449999998295,
+            2.782122000000527,
+            2.3373209999999744
+          ],
+          "changed": [
+            2.1630420000001322,
+            1.6813199999996868,
+            1.790356999999858
+          ]
+        },
+        "medianP95ChangePercent": -29.37851681067637,
+        "budgetPercent": 3,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-perf",
+    "applied": "see implementation and source SHA; earlier batches are historical",
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            0.9619940000002316,
+            1.0124590000000353,
+            0.8938870000001771
+          ],
+          "changed": [
+            1.0681020000001809,
+            1.2640559999999823,
+            1.006427000000258
+          ]
+        },
+        "medianP95ChangePercent": 11.030006424148553,
+        "budgetPercent": 3,
+        "pass": false
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            2.1331690000006347,
+            1.7528679999995802,
+            1.7506840000005468
+          ],
+          "changed": [
+            1.881347999999889,
+            1.75535200000013,
+            1.5890129999997953
+          ]
+        },
+        "medianP95ChangePercent": 0.1417106137227897,
+        "budgetPercent": 3,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-perf-2m",
+    "applied": "see implementation and source SHA; earlier batches are historical",
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            1.0480540000003202,
+            1.0156240000000025,
+            1.1300679999999375
+          ],
+          "changed": [
+            1.081047000000126,
+            1.1102209999999104,
+            1.1038189999999304
+          ]
+        },
+        "medianP95ChangePercent": 5.320813622160037,
+        "budgetPercent": 3,
+        "pass": false
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            2.0700609999994413,
+            1.9049830000003567,
+            2.117428999999902
+          ],
+          "changed": [
+            1.8390810000000783,
+            1.7821640000001935,
+            1.9923560000006546
+          ]
+        },
+        "medianP95ChangePercent": -11.15812529193223,
+        "budgetPercent": 3,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-perf-final",
+    "applied": "see implementation and source SHA; earlier batches are historical",
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            0.8717870000000403,
+            0.8722060000000056,
+            0.819829000000027
+          ],
+          "changed": [
+            0.8604860000000372,
+            0.9592489999999998,
+            0.8807839999999487
+          ]
+        },
+        "medianP95ChangePercent": 1.0320181420356178,
+        "budgetPercent": 3,
+        "pass": true
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            1.751166999999441,
+            1.5998519999993732,
+            1.568373000000065
+          ],
+          "changed": [
+            1.27712800000063,
+            1.4402639999998428,
+            1.3912909999999101
+          ]
+        },
+        "medianP95ChangePercent": -13.036268354794366,
+        "budgetPercent": 3,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-perf-fine",
+    "applied": "see implementation and source SHA; earlier batches are historical",
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            0.9833230000003823,
+            0.9241230000000087,
+            1.0814560000001165
+          ],
+          "changed": [
+            1.1080360000000837,
+            1.1064030000000002,
+            1.0947620000001734
+          ]
+        },
+        "medianP95ChangePercent": 12.51674170130974,
+        "budgetPercent": 3,
+        "pass": false
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            1.9641120000005685,
+            1.9610059999995428,
+            1.8999129999992874
+          ],
+          "changed": [
+            1.7437219999992521,
+            1.9473700000007739,
+            1.8462820000004285
+          ]
+        },
+        "medianP95ChangePercent": -5.8502625692701145,
+        "budgetPercent": 3,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-perf-head",
+    "applied": "see implementation and source SHA; earlier batches are historical",
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            0.9151380000002973,
+            0.8523099999999886,
+            0.8991189999999278
+          ],
+          "changed": [
+            0.8660859999999957,
+            1.0387900000000627,
+            0.8560469999999896
+          ]
+        },
+        "medianP95ChangePercent": -3.673929702290224,
+        "budgetPercent": 3,
+        "pass": true
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            1.697557000001325,
+            1.6420830000001843,
+            1.5404319999997824
+          ],
+          "changed": [
+            1.358009999999922,
+            1.5420839999997042,
+            1.3346259999998438
+          ]
+        },
+        "medianP95ChangePercent": -17.299551849707374,
+        "budgetPercent": 3,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-perf-latest",
+    "applied": "see implementation and source SHA; earlier batches are historical",
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            1.6153229999999894,
+            1.5887430000000222,
+            1.2710809999998673
+          ],
+          "changed": [
+            1.293184999999994,
+            1.3243330000000242,
+            1.3329889999999978
+          ]
+        },
+        "medianP95ChangePercent": -16.64271691519612,
+        "budgetPercent": 3,
+        "pass": true
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            2.3337310000006255,
+            2.8791420000015933,
+            2.5954140000003463
+          ],
+          "changed": [
+            1.9224340000000666,
+            2.472443000000567,
+            2.249471999999514
+          ]
+        },
+        "medianP95ChangePercent": -13.328971794125566,
+        "budgetPercent": 3,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-perf-latest-head",
+    "applied": "see implementation and source SHA; earlier batches are historical",
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            1.7091159999999945,
+            1.223334999999679,
+            1.240827999999965
+          ],
+          "changed": [
+            1.3974239999997735,
+            1.4346959999998035,
+            1.1624390000001767
+          ]
+        },
+        "medianP95ChangePercent": 12.620282585484288,
+        "budgetPercent": 3,
+        "pass": false
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            2.8315890000012587,
+            2.8571279999996477,
+            2.6151209999998173
+          ],
+          "changed": [
+            2.2326849999999467,
+            2.1482149999992544,
+            2.045710999998846
+          ]
+        },
+        "medianP95ChangePercent": -24.133940342390815,
+        "budgetPercent": 3,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-perf-reference",
+    "applied": "see implementation and source SHA; earlier batches are historical",
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            1.042855000000145,
+            0.9738259999999173,
+            1.0299909999999954
+          ],
+          "changed": [
+            1.0373250000002372,
+            1.0205929999999626,
+            0.9953669999999875
+          ]
+        },
+        "medianP95ChangePercent": -0.9124351572035949,
+        "budgetPercent": 3,
+        "pass": true
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            1.7102089999998498,
+            1.875227999999879,
+            1.9487840000001597
+          ],
+          "changed": [
+            1.524703000000045,
+            1.6181079999996655,
+            1.7403659999999945
+          ]
+        },
+        "medianP95ChangePercent": -13.711399360516708,
+        "budgetPercent": 3,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-perf-shared",
+    "applied": false,
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            1.4766580000004979,
+            1.3705170000002909,
+            1.3793040000000474
+          ],
+          "changed": [
+            1.3647359999999935,
+            1.192931999999928,
+            1.2465629999999237
+          ]
+        },
+        "medianP95ChangePercent": -9.623766769335774,
+        "budgetPercent": 3,
+        "pass": true
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            2.8002139999989595,
+            2.3392159999993964,
+            3.0436250000002474
+          ],
+          "changed": [
+            1.9204250000002503,
+            2.0858270000007906,
+            1.6996979999994437
+          ]
+        },
+        "medianP95ChangePercent": -31.418634432905346,
+        "budgetPercent": 3,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-records",
+    "applied": false,
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            1.217783000000054,
+            1.2068020000001525,
+            1.3043270000000575
+          ],
+          "changed": [
+            1.2146170000000893,
+            1.3047069999997802,
+            1.3404860000000554
+          ]
+        },
+        "medianP95ChangePercent": 7.137889098445482,
+        "budgetPercent": 3,
+        "pass": false
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            2.3916339999996126,
+            2.3819249999996828,
+            2.954606999999669
+          ],
+          "changed": [
+            2.1308799999997063,
+            1.6250430000000051,
+            2.140809999999874
+          ]
+        },
+        "medianP95ChangePercent": -10.90275518745546,
+        "budgetPercent": 3,
+        "pass": true
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-perf-reviewed",
+    "applied": "retained source",
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            0.882176999999956,
+            0.8250090000001364,
+            0.8857830000001741
+          ],
+          "changed": [
+            0.9395739999999932,
+            0.8720680000001266,
+            0.8242079999999987
+          ]
+        },
+        "medianP95ChangePercent": {
+          "changed": -1.1459151621307173
+        },
+        "budgetPercent": 3
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            1.5371869999999035,
+            1.5745159999996758,
+            1.5608789999996588
+          ],
+          "changed": [
+            1.4657010000009905,
+            1.2384759999999915,
+            1.3716949999998178
+          ]
+        },
+        "medianP95ChangePercent": {
+          "changed": -12.120350136037604
+        },
+        "budgetPercent": null
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-node-head",
+    "applied": "retained source",
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            0.2346249999999941,
+            0.2319159999999556,
+            0.22620799999998553
+          ],
+          "changed": [
+            0.23937499999999545,
+            0.2456250000000182,
+            0.24329199999999673
+          ]
+        },
+        "medianP95ChangePercent": {
+          "changed": 4.905224305370615
+        },
+        "budgetPercent": 3
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            0.4361670000000686,
+            0.44504200000005767,
+            0.43879199999992125
+          ],
+          "changed": [
+            0.37212499999986903,
+            0.37266700000009223,
+            0.37629199999992125
+          ]
+        },
+        "medianP95ChangePercent": {
+          "changed": -15.06978249371932
+        },
+        "budgetPercent": null
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-owner-cache",
+    "applied": "private experiment; not applied",
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            0.9409660000001168,
+            0.8776960000000145,
+            0.9422370000002047
+          ],
+          "head": [
+            0.8534319999998843,
+            0.8461469999999736,
+            0.8321809999999914
+          ],
+          "changed": [
+            0.9248750000001564,
+            0.8546840000001339,
+            0.968405999999959
+          ]
+        },
+        "medianP95ChangePercent": {
+          "head": -10.076772168190073,
+          "changed": -1.7100511601862656
+        },
+        "budgetPercent": 3
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            1.9419010000001435,
+            1.742699999999786,
+            1.7689689999997427
+          ],
+          "head": [
+            1.4308890000002066,
+            1.494535000000269,
+            1.566392000000178
+          ],
+          "changed": [
+            1.4832960000003368,
+            1.5163069999998697,
+            1.4703920000001744
+          ]
+        },
+        "medianP95ChangePercent": {
+          "head": -15.51378232176559,
+          "changed": -16.14912415081595
+        },
+        "budgetPercent": null
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-owner-bounds",
+    "applied": "private experiment; not applied",
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            0.9357970000000932,
+            0.8099400000000969,
+            0.7888900000000376
+          ],
+          "head": [
+            0.8628399999997782,
+            1.1443480000000363,
+            1.1460810000000947
+          ],
+          "changed": [
+            0.8201599999997597,
+            0.8643429999999626,
+            0.8847710000000006
+          ]
+        },
+        "medianP95ChangePercent": {
+          "head": 41.287996641714116,
+          "changed": 6.716917302498837
+        },
+        "budgetPercent": 3
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            1.5298629999997502,
+            1.7340350000004037,
+            1.69146499999988
+          ],
+          "head": [
+            1.4292629999999917,
+            1.3578200000001743,
+            1.6588629999996556
+          ],
+          "changed": [
+            1.4860790000002453,
+            1.3285439999999653,
+            1.4362369999998919
+          ]
+        },
+        "medianP95ChangePercent": {
+          "head": -15.501473574676805,
+          "changed": -15.089168265379794
+        },
+        "budgetPercent": null
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-clear-context",
+    "applied": "registry retained in 327222ce2; exact measured SHA256 ab743f382460d6f1a2bdaf4012e12ccfb2dedf94f501291448cabda6c5ee1bba; this does not waive its Zoo S2 failure",
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            0.9937119999995048,
+            0.9811600000000453,
+            0.8776169999999865
+          ],
+          "head": [
+            0.9938139999999294,
+            0.9283609999999953,
+            1.0112239999998565
+          ],
+          "changed": [
+            0.9159469999999601,
+            1.0276360000000295,
+            0.9013310000000274
+          ]
+        },
+        "medianP95ChangePercent": {
+          "head": 1.2896979085861071,
+          "changed": -6.646520445195714
+        },
+        "budgetPercent": 3
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            1.9598249999999098,
+            1.6934070000006614,
+            1.9325339999995776
+          ],
+          "head": [
+            1.5936629999996512,
+            1.5195739999999205,
+            1.5746859999999288
+          ],
+          "changed": [
+            1.7229129999996076,
+            1.4664950000005774,
+            1.4775159999999232
+          ]
+        },
+        "medianP95ChangePercent": {
+          "head": -18.517035146586146,
+          "changed": -23.545148494140534
+        },
+        "budgetPercent": null
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-bounds-alone",
+    "applied": "two-policy cache retained with uniform-path guard",
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            0.9364080000000286,
+            0.8170139999997446,
+            0.7676799999999275
+          ],
+          "head": [
+            0.8551949999996395,
+            0.8102519999999913,
+            0.9133440000000519
+          ],
+          "changed": [
+            0.8643430000001899,
+            0.8511069999999563,
+            0.8672080000001188
+          ]
+        },
+        "medianP95ChangePercent": {
+          "head": 4.673236933505054,
+          "changed": 5.7929239891189255
+        },
+        "budgetPercent": 3
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            1.662489999999707,
+            1.6189399999998386,
+            1.4135829999995622
+          ],
+          "head": [
+            1.3745310000003883,
+            1.3730180000002292,
+            1.4025830000000497
+          ],
+          "changed": [
+            1.2841210000005958,
+            1.4156169999996564,
+            1.2789800000000469
+          ]
+        },
+        "medianP95ChangePercent": {
+          "head": -15.09685349669998,
+          "changed": -20.68137176172534
+        },
+        "budgetPercent": null
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-projection-context",
+    "applied": "private experiment, rejected",
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            0.9731369999999515,
+            1.011388999999781,
+            0.8930569999999989
+          ],
+          "head": [
+            0.8440840000002936,
+            0.8967740000000504,
+            0.8789799999999559
+          ],
+          "changed": [
+            0.876234000000295,
+            0.9989949999999226,
+            0.8954110000001947
+          ]
+        },
+        "medianP95ChangePercent": {
+          "head": -9.675616074612336,
+          "changed": -7.98715905363383
+        },
+        "budgetPercent": 3
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            1.624469999998837,
+            1.629689999999755,
+            1.6576820000000225
+          ],
+          "head": [
+            1.3642709999994622,
+            1.3934159999998883,
+            1.3613959999993313
+          ],
+          "changed": [
+            1.3238039999996545,
+            1.4978620000001683,
+            1.4841150000002017
+          ]
+        },
+        "medianP95ChangePercent": {
+          "head": -16.286471660274813,
+          "changed": -8.932680448402774
+        },
+        "budgetPercent": null
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-retained-final",
+    "applied": "retained source 7ef492f7f",
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            0.8603309999998601,
+            0.8622460000000274,
+            0.8807710000000952
+          ],
+          "changed": [
+            1.1227739999999358,
+            0.8382300000000669,
+            0.8772439999997914
+          ]
+        },
+        "medianP95ChangePercent": {
+          "changed": 1.7394107945718051
+        },
+        "budgetPercent": 3
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            1.6979609999998502,
+            1.6843149999999696,
+            1.5966410000000906
+          ],
+          "changed": [
+            1.423225999999886,
+            1.4604770000000826,
+            1.3808879999996861
+          ]
+        },
+        "medianP95ChangePercent": {
+          "changed": -15.501197816328204
+        },
+        "budgetPercent": null
+      }
+    ]
+  },
+  {
+    "batch": "collision-s3-envelope",
+    "applied": "private experiment, rejected",
+    "results": [
+      {
+        "actors": 100,
+        "samples": {
+          "main": [
+            0.8949079999993046,
+            0.8836570000000847,
+            1.087981000000127
+          ],
+          "head": [
+            0.8399860000004082,
+            0.9547109999999748,
+            0.8639820000000782
+          ],
+          "changed": [
+            0.9095660000002681,
+            1.0679239999999481,
+            0.9194850000001225
+          ]
+        },
+        "medianP95ChangePercent": {
+          "head": -3.455774224752761,
+          "changed": 2.746315822502088
+        },
+        "budgetPercent": 3
+      },
+      {
+        "actors": 200,
+        "samples": {
+          "main": [
+            1.5827289999997447,
+            1.5878999999995358,
+            1.6640909999996438
+          ],
+          "head": [
+            1.3256469999996625,
+            1.348058999999921,
+            1.276705999999649
+          ],
+          "changed": [
+            1.4088339999998425,
+            1.376350999999886,
+            1.5019570000004023
+          ]
+        },
+        "medianP95ChangePercent": {
+          "head": -16.515712576355558,
+          "changed": -11.276906606193437
+        },
+        "budgetPercent": null
+      }
+    ]
+  },
+  {
+    "trial": "collision-s3-query-branches",
+    "adopted": false,
+    "main100Median": 0.926948,
+    "head100Median": 0.899207,
+    "changed100Median": 0.898657,
+    "changed100DeltaPct": -3.052059,
+    "head200Median": 1.572183,
+    "changed200Median": 1.590967,
+    "specials": {
+      "passed": 21,
+      "failed": 1,
+      "zooS2P95": 5.330662
+    },
+    "regressions": 84,
+    "reason": "No material improvement; Zoo S2 still fails."
+  },
+  {
+    "trial": "collision-s3-attachment-flags",
+    "adopted": false,
+    "medians": {
+      "100": {
+        "main": 0.9713320000000749,
+        "head": 0.8776379999999335,
+        "changed": 0.9284309999998186
+      },
+      "200": {
+        "main": 1.7697800000005373,
+        "head": 1.5228610000003755,
+        "changed": 1.5120310000002064
+      }
+    },
+    "specials": {
+      "passed": 21,
+      "failed": 1,
+      "failures": [
+        {
+          "name": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+          "messages": [
+            "AssertionError: expected 4.500553999998374 to be less than or equal to 4\n    at /srv/mi/jobs/collision-s1-d2c10a-84376-1792112321/tests/sim/performance/zoo-s2.test.ts:26:68\n    at file:///srv/mi/jobs/collision-s1-d2c10a-84376-1792112321/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        }
+      ]
+    },
+    "regressions": 84,
+    "reason": "No consistent relative improvement; Zoo S2 still red."
+  },
+  {
+    "trial": "collision-s3-clear-visitors",
+    "adopted": false,
+    "medians": {
+      "100": {
+        "main": 0.9339410000000044,
+        "head": 0.9522950000000492,
+        "changed": 0.95326799999998
+      },
+      "200": {
+        "main": 1.9158729999999196,
+        "head": 1.7919819999997344,
+        "changed": 1.672207999999955
+      }
+    },
+    "specials": {
+      "passed": 20,
+      "failed": 2,
+      "pending": 0,
+      "failures": [
+        {
+          "name": "T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
+          "messages": [
+            "AssertionError: expected 4.87678600000072 to be less than or equal to 4\n    at /srv/mi/jobs/collision-s1-d2c10a-86886-1792112453/tests/sim/performance/zoo-s1.test.ts:30:101\n    at file:///srv/mi/jobs/collision-s1-d2c10a-86886-1792112453/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        },
+        {
+          "name": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+          "messages": [
+            "AssertionError: expected 5.162898999999015 to be less than or equal to 4\n    at /srv/mi/jobs/collision-s1-d2c10a-86886-1792112453/tests/sim/performance/zoo-s2.test.ts:26:68\n    at file:///srv/mi/jobs/collision-s1-d2c10a-86886-1792112453/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        }
+      ]
+    },
+    "regressions": 84,
+    "reason": "No100-actor improvement; Zoo S1/S2 remain red."
+  },
+  {
+    "trial": "collision-s3-flat-events",
+    "adopted": false,
+    "medians": {
+      "100": {
+        "main": 1.6003610000000208,
+        "head": 1.3079609999999775,
+        "changed": 1.3027910000000702
+      },
+      "200": {
+        "main": 2.5337450000006356,
+        "head": 2.085428999999749,
+        "changed": 2.4039499999998952
+      }
+    },
+    "specials": {
+      "passed": 18,
+      "failed": 4,
+      "pending": 0,
+      "failures": [
+        {
+          "name": "T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms",
+          "messages": [
+            "AssertionError: expected 4.095014999998966 to be less than or equal to 4\n    at /srv/mi/jobs/collision-s1-d2c10a-94197-1792112775/tests/sim/performance/alpha.test.ts:29:61\n    at file:///srv/mi/jobs/collision-s1-d2c10a-94197-1792112775/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        },
+        {
+          "name": "T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+          "messages": [
+            "AssertionError: expected 4.444073999999091 to be less than or equal to 4\n    at /srv/mi/jobs/collision-s1-d2c10a-94197-1792112775/tests/sim/performance/mega-moves.test.ts:24:104\n    at file:///srv/mi/jobs/collision-s1-d2c10a-94197-1792112775/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        },
+        {
+          "name": "T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
+          "messages": [
+            "AssertionError: expected 6.075314999998227 to be less than or equal to 4\n    at /srv/mi/jobs/collision-s1-d2c10a-94197-1792112775/tests/sim/performance/zoo-s1.test.ts:30:101\n    at file:///srv/mi/jobs/collision-s1-d2c10a-94197-1792112775/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        },
+        {
+          "name": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+          "messages": [
+            "AssertionError: expected 5.947543000002042 to be less than or equal to 4\n    at /srv/mi/jobs/collision-s1-d2c10a-94197-1792112775/tests/sim/performance/zoo-s2.test.ts:26:68\n    at file:///srv/mi/jobs/collision-s1-d2c10a-94197-1792112775/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        }
+      ]
+    },
+    "regressions": 84,
+    "reason": "No100-actor gain and200actors slower;18/22specials. Retain structuredClone unchanged."
+  },
+  {
+    "trial": "collision-s3-wide-cells",
+    "adopted": false,
+    "result": "unmeasured",
+    "reason": "Runner1couldnotreservebothslotswithin300seconds;nosampleortestresult",
+    "source": "590b667e4"
+  },
+  {
+    "trial": "collision-s3-zero-sweep",
+    "adopted": false,
+    "medians": {
+      "100": {
+        "main": 1.3684860000003027,
+        "head": 1.3034840000000258,
+        "changed": 1.2890959999999723
+      },
+      "200": {
+        "main": 2.6163159999996424,
+        "head": 2.0481810000001133,
+        "changed": 2.1012610000007044
+      }
+    },
+    "specials": {
+      "passed": 20,
+      "failed": 2,
+      "pending": 0,
+      "failures": [
+        {
+          "name": "T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
+          "messages": [
+            "AssertionError: expected 5.674244999998336 to be less than or equal to 4\n    at /srv/mi/jobs/collision-s1-d2c10a-30290-1792113989/tests/sim/performance/zoo-s1.test.ts:30:101\n    at file:///srv/mi/jobs/collision-s1-d2c10a-30290-1792113989/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        },
+        {
+          "name": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+          "messages": [
+            "AssertionError: expected 6.456443999995827 to be less than or equal to 4\n    at /srv/mi/jobs/collision-s1-d2c10a-30290-1792113989/tests/sim/performance/zoo-s2.test.ts:26:68\n    at file:///srv/mi/jobs/collision-s1-d2c10a-30290-1792113989/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        }
+      ]
+    },
+    "regressions": 84,
+    "reason": "No consistent gain;ZooS1/S2 still fail. No early-sweep optimization retained."
+  }
+]

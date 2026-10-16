@@ -18,7 +18,12 @@ const HEAVY = 1_800_000;
 function record(name: string, value: unknown) { mkdirSync('test-results/epics/E23', { recursive: true }); writeFileSync(`test-results/epics/E23/${name}.json`, JSON.stringify(value, null, 2) + '\n'); }
 const dist = (a: { x: number; z: number }, b: { x: number; z: number }) => Math.hypot(a.x - b.x, a.z - b.z);
 const step = (w: SimWorld, ticks: number) => { for (let i = 0; i < ticks; i++) w.update(); };
-const place = (w: SimWorld, id: number, x: number, z: number) => { const e = w.entities.get(id)!; Object.assign(e.transform, { x, z }); if (id === 1) { w.physics.playerBody!.setTranslation({ x, y: e.transform.y, z }, true); w.physics.playerBody!.setNextKinematicTranslation({ x, y: e.transform.y, z }); Object.assign(w.previousPlayer!, e.transform); } w.spatial.set(id, x, z); };
+const place = (w: SimWorld, id: number, x: number, z: number) => {
+  const e = w.entities.get(id)!; Object.assign(e.transform, { x, z });
+  expect(w.solids.admit(e, 'test.l5.place', 4, false)).toBe(true);
+  if (id === 1) { w.physics.playerBody!.setTranslation(e.transform, true); w.physics.playerBody!.setNextKinematicTranslation(e.transform); Object.assign(w.previousPlayer!, e.transform); }
+  w.spatial.set(id, e.transform.x, e.transform.z);
+};
 const at = (w: SimWorld, name: string) => w.missions!.def.anchors[name];
 /** Walk the courier (placed) to a survivor's ring and stand there until found. */
 function visit(w: SimWorld, key: string, ticks = 75) { const ring = at(w, `l5-ring-${key}`); place(w, 1, ring.x, ring.z); step(w, ticks); }

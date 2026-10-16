@@ -1,0 +1,1049 @@
+{
+  "source": "test-results/collision-s3-deploy-browser.json",
+  "code": "e723998d0; pre-health-detour build",
+  "stats": {
+    "startTime": "2026-10-15T22:26:33.000Z",
+    "duration": 650712.3470000001,
+    "expected": 94,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "errors": [],
+  "tests": [
+    {
+      "name": "T-E07-crowd-visible-outbreak-webgl @E07 every on-screen living infected and pedestrian is drawn through an L1 outbreak fight (webgl)",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 24321,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E07-crowd-visible-outbreak-webgpu @E07 every on-screen living infected and pedestrian is drawn through an L1 outbreak fight (webgpu)",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 23678,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E03-01 @E03 @E03-AC01 cursor aims without moving",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 669,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E03-02 @E03 @E03-AC02 mouse buttons preserve down held up and prevent context menus",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 699,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E03-03 @E03 @E03-AC03 @E02-AC03 wheel zooms smoothly and never cycles weapons",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 988,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E03-12 @E03 @E03-AC12 middle-click F and E interact without browser autoscroll",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 589,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E03-14 @E03 @E03-AC14 click ground walks, retargets, stops and held ground follows cursor",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3413,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E03-ground-escape @E03 @E21 clear ground near a melee target stays movement; a near miss at its feet still targets it",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3475,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E03-15-left @E03 @E03-AC15 target click approaches then attacks left",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3480,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E03-16 @E03 @E03-AC16 Shift LMB distant ground swings stationary and cancels destination",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3326,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E03-17 @E03 @E03-AC17 RMB and Q cycle carried actions without attacking",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3293,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E03-12-car @E03 @E03-AC12 middle-click near car immediately enters; F exits",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3837,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E03-15-held @E03 @E03-AC15 held LMB target repeats and target death stops approach",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3538,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E03-17-pending @E03 @E03-AC15 @E03-AC17 Q during target command waits for swap then attacks once",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3472,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E03-15-live @E03 @E03-AC15 real LMB follows a moving infected and attacks it",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3599,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E03-chord @E03 @E03-AC02 @E03-AC13 releasing LMB before RMB clears both independently",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 540,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E03-AC05 @E03-AC17 M1-05 numbers and HUD clicks select either rack; Shift never attacks",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3726,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "PO #14 active numbers, Q, RMB and HUD follow weapon order after unordered pickups",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3726,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E22-cellar-pos @E22 L4 end: Harbor pavement, door, descent, brace; L5 start in the same yard (game camera captures)",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 27858,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E23-cellar-pos @E23 L5 start: the courier stands in the cellar yard under the game camera, the brace is reachable by keyboard and unbarring steps out on Kessler Lane",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 13869,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E19-unlock @E19 result screen, real click on Continue: straight to the next level, no upgrade/rack screens (PO decision 2026-10-07)",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 21045,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 32923,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 40420,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E20-18 @E20 @E20-AC18 @E20-AC16 @E20-AC19 real-input playthrough from the station to the closing gate, photo spots for the vision review",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 51629,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E20-14b @E20 @E20-AC14 campaign: the gate closes, no reward screen, L3 loads with the carried loadout",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 23272,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 no army-line rebuild prompts webgl high zoom 1",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 13300,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 no army-line rebuild prompts webgl high zoom 0.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 12916,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 no army-line rebuild prompts webgl low zoom 1",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5424,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 no army-line rebuild prompts webgl low zoom 0.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6039,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 no army-line rebuild prompts webgpu high zoom 1",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 13040,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 no army-line rebuild prompts webgpu high zoom 0.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 12608,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 no army-line rebuild prompts webgpu low zoom 1",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5250,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 no army-line rebuild prompts webgpu low zoom 0.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5631,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E22-blank @E22 L4 the walk along Lakeshore Avenue past the former cellar never leaves the viewport one flat colour (webgl)",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 20118,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E22-blank @E22 L4 the walk along Lakeshore Avenue past the former cellar never leaves the viewport one flat colour (webgpu)",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 19925,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E22-blank @E22 L4 the walk along Kessler Lane north of the store never leaves the viewport one flat colour (webgl)",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 19954,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E22-blank @E22 L4 the walk along Kessler Lane north of the store never leaves the viewport one flat colour (webgpu)",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 19895,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E22-blank @E22 L4 the walk along Harbor Street to the relocated cellar never leaves the viewport one flat colour (webgl)",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 20391,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E22-blank @E22 L4 the walk along Harbor Street to the relocated cellar never leaves the viewport one flat colour (webgpu)",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 20282,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 line-broken cellar guidance webgl high zoom 1",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 11480,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 line-broken cellar guidance webgl high zoom 0.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 11556,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 line-broken cellar guidance webgl low zoom 1",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4364,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 line-broken cellar guidance webgl low zoom 0.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4929,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 line-broken cellar guidance webgpu high zoom 1",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 11882,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 line-broken cellar guidance webgpu high zoom 0.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 11295,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 line-broken cellar guidance webgpu low zoom 1",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4221,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 line-broken cellar guidance webgpu low zoom 0.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4677,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 L4 plaza: mouse WASD stick webgl high zoom 1",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 15348,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 L4 war: mouse WASD stick webgl high zoom 1",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 16505,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 L4 respawn: mouse WASD stick webgl high zoom 1",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 16242,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 L4 plaza: mouse WASD stick webgl high zoom 0.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 15511,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 L4 war: mouse WASD stick webgl high zoom 0.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 16582,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 L4 respawn: mouse WASD stick webgl high zoom 0.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 17031,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 L4 plaza: mouse WASD stick webgl low zoom 1",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 7893,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 L4 war: mouse WASD stick webgl low zoom 1",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 9576,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 L4 respawn: mouse WASD stick webgl low zoom 1",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 9537,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 L4 plaza: mouse WASD stick webgl low zoom 0.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 8619,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 L4 war: mouse WASD stick webgl low zoom 0.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 10105,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 L4 respawn: mouse WASD stick webgl low zoom 0.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 10135,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 L4 plaza: mouse WASD stick webgpu high zoom 1",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 15287,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 L4 war: mouse WASD stick webgpu high zoom 1",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 16049,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 L4 respawn: mouse WASD stick webgpu high zoom 1",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 16056,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 L4 plaza: mouse WASD stick webgpu high zoom 0.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 15329,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 L4 war: mouse WASD stick webgpu high zoom 0.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 16310,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 L4 respawn: mouse WASD stick webgpu high zoom 0.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 16655,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 L4 plaza: mouse WASD stick webgpu low zoom 1",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 7618,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 L4 war: mouse WASD stick webgpu low zoom 1",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 9200,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 L4 respawn: mouse WASD stick webgpu low zoom 1",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 9188,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 L4 plaza: mouse WASD stick webgpu low zoom 0.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 8299,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 L4 war: mouse WASD stick webgpu low zoom 0.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 9661,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "@E22 L4 respawn: mouse WASD stick webgpu low zoom 0.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 9750,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "webgl high zoom 1",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 18965,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "webgl high zoom 0.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 19202,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "webgl high zoom 1.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 19602,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "webgl low zoom 1",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 9263,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "webgl low zoom 0.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 9744,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "webgl low zoom 1.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 9858,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "webgpu high zoom 1",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 18830,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "webgpu high zoom 1.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 19208,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "webgpu low zoom 1",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 9318,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "webgpu low zoom 1.5",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 9728,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E22-alarm @E22 @E22-AC07 real-input alarm has living visible infected within 10 seconds",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 15481,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E22-18 @E22 @E22-AC18 @E22-AC19 real-input playthrough: convoy, quartermaster, the turn, the war, the line break, Kessler Lane, the barred cellar door; photo spots and pair cameras",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 67614,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E22-15b @E22 @E22-AC15 campaign: the barred cellar door loads L5 with the carried loadout and no reward screen",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 8050,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E22-19 @E22 @E22-AC20 pedestrians, soldiers and infected are drawn on screen in L4 (webgl), not only their props",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 13336,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E22-19 @E22 @E22-AC20 pedestrians, soldiers and infected are drawn on screen in L4 (webgpu), not only their props",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 13194,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "ten level menu high @menu-10-levels",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 23490,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "ten level menu low @menu-10-levels",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 19178,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "L9 saved crossing row resumes and can restart @menu-10-levels",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 20426,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "E19 @E19 respawn after the bat: real-click pickup, die at the house with infected around, respawn on the pickup with the bat equipped",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 19498,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E02-webgpu-canvas @smoke @E02 WebGPU high mega health bars preserve the game frame at both zoom limits",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6860,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU high L1 L4 L8 game cameras render at both zoom limits",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 38205,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E02-webgpu-canvas @smoke @E02 WebGPU low mega health bars preserve the game frame at both zoom limits",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 3624,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "name": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU low L1 L4 L8 game cameras render at both zoom limits",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 7887,
+          "errors": []
+        }
+      ]
+    }
+  ]
+}

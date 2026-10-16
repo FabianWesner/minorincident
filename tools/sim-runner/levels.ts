@@ -25,6 +25,7 @@ export type RunnerLevel = MissionId | 'L7';
 export type CompletionPolicy = 'complete' | 'newbie';
 /** Same contract for individual levels and the fast completion battery. Times are simulation seconds. */
 export interface LevelReport {
+  collision?: ReturnType<SimWorld['solids']['snapshot']>;
   level: RunnerLevel; policy: CompletionPolicy; seed: number; completed: boolean;
   timerRemaining?: number; runovers?: number; smashed?: number; maxConcurrentInfected?: number;
   regions?: CureRegionTiming[];
@@ -196,7 +197,18 @@ export async function runLevel(level: RunnerLevel, policy: CompletionPolicy, see
       if(level==='L5')campaign.survivors=[...mission.state.result?.survivors??[]];
     }
     return report;
-  } finally { world.dispose(); }
+  } finally {
+    report.collision = world.solids.snapshot();
+    // A level can finish while an authored tunnel arrival is still walking to
+    // clear ground. Retained admission requests are valid deferred encounters;
+    // penetration failures, rather than the existence of a queue, fail the run.
+    if (report.collision.failures) {
+      report.failures['collision-invariant'] = report.collision.failures;
+      report.completed = false; report.outcome = 'mission-failed';
+      report.blocker = { objective: report.furthestObjective, detail: JSON.stringify(report.collision) };
+    }
+    world.dispose();
+  }
 }
 
 /** L7 deliberately has no mission graph: use its real pickup, encounter group and bus completion event. */
@@ -217,12 +229,12 @@ function runSeven(world: SimWorld, report: LevelReport, maxSeconds: number, onCo
       const p = world.entities.get(1)!, f = emptyInput();
       if (p.health.current <= 0) { report.deaths++; report.outcome = 'mission-failed'; break; }
       if (!world.storyLock) {
-        const pickup = [...world.entities.iterate()].find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === l7Rocket.action);
+        const pickup = world.l7Encounters!.state.started ? undefined : [...world.entities.iterate()].find(e => e.pickup && 'actionId' in e.pickup && e.pickup.actionId === l7Rocket.action);
         if (!pickup && waypoint < route.length - 1 && distance(p.transform, route[waypoint]) < 2) waypoint++;
         const goal = pickup?.transform ?? route[waypoint];
         report.furthestObjective = pickup ? 'rocket-pickup' : 'bus-departure';
         f.move = walker.step(world, goal, pickup ? .5 : 1, `${report.furthestObjective}-${waypoint}`) ?? f.move;
-        if (pickup && distance(p.transform, goal) < 1.5) f.interact = true;
+        if (pickup && distance(p.transform, goal) < 1.45) { f.move = { x: 0, z: 0 }; f.interact = true; }
         const rack = p.weapons!.RIGHT.rack, rocket = rack.findIndex(s => s.id === l7Rocket.action);
         if (rocket >= 0) f.selectedSlot = { side: 'RIGHT', index: rocket };
         const enemies = world.infected!.active.filter(e => e.health.current > 0 && !e.hidden && !e.emerging && !e.infectionRise && distance(e.transform, p.transform) < 24 && world.infected!.nav.visible(p.transform, e.transform, 0)).sort((a,b) => distance(a.transform, p.transform) - distance(b.transform, p.transform));

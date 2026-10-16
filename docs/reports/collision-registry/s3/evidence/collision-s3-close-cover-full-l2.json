@@ -1,0 +1,143 @@
+{
+  "source": "test-results/collision-s3-close-cover-full-l2.json",
+  "passed": 26,
+  "failed": 1,
+  "pending": 0,
+  "suites": [
+    {
+      "file": "levels/L2-escape-loop.test.ts",
+      "durationMs": 38185.7626953125,
+      "tests": [
+        {
+          "name": "L2 escape death loop the escape checkpoint waits for a calm moment (nothing within 10 m, health >= 70 %)",
+          "status": "passed"
+        },
+        {
+          "name": "L2 escape death loop a courier who dies twice at the same checkpoint respawns with fewer infected within 25 m (the shared respawn already pushes them out of 9 m)",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "file": "levels/L2.test.ts",
+      "durationMs": 351070.818359375,
+      "tests": [
+        {
+          "name": "L2 The Failed Rescue T-E20-01 @E20 @E20-AC01 mission graph calm -> board -> doors -> bridge checkpoint is completable, no fail timer",
+          "status": "passed"
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-02 @E20 @E20-AC02 complete bot finishes single seed from L2-default, median time in band",
+          "status": "passed"
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-03 @E20 @E20-AC03 newbie single seed, median in band, median deaths <= 1; bat escape single seed",
+          "status": "passed"
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-04 @E20 @E20-AC04 calm: no infected, no combat until the pickup alarm; crew at the truck within 8 s; axe rack live",
+          "status": "passed"
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-05 @E20 @E20-AC05 ride: passenger boarding, 15-25 s route with everyone seated, input inert, exits and control back on time",
+          "status": "passed"
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-06 @E20 @E20-AC06 set piece: event order, empty forecourt, release and ambush timing, three directions",
+          "status": "passed"
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-07 @E20 @E20-AC07 snowball: idle courier (observer, no damage), rescue infected >= 20 at +60 s and >= 30 at +120 s, all by bites",
+          "status": "passed"
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-08 @E20 @E20-AC08 firefighters fight, turn with identity continuity, >= 2 turned by +90 s when idle, no immunity",
+          "status": "passed"
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-09 @E20 @E20-AC09 lesson: the aggressive axe kills >= 10 yet the outbreak grows and the courier falls; the disengaging bot survives",
+          "status": "passed"
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-11 @E20 @E20-AC11 omniscience audit over single seed: sight or close hearing alerts with clear LOS, emergence at doors out of view",
+          "status": "passed"
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-12 @E20 @E20-AC12 escape population at the radio: >= 25 spread infected, >= 3 groups of >= 4, <= 20 % on the courier",
+          "status": "passed"
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-12b @E20 @E20-AC12 layout: two disjoint routes (< 30 % shared), sight blockers every <= 25 m, alarms and dumpsters on the routes",
+          "status": "passed"
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-13 @E20 @E20-AC13 cluster of 12-16 on the approach; complete passes killing <= 50 %; side path and car alarm each suffice",
+          "status": "passed"
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-14 @E20 @E20-AC14 checkpoint: line composition, gate closes <= 1.5 s behind the courier, nothing crosses after, straight on to L3",
+          "status": "failed",
+          "failureMessages": [
+            "AssertionError: expected 1 to be +0 // Object.is equality\n    at /srv/mi/jobs/collision-s1-d2c10a-74139-1792111705/tests/levels/L2.test.ts:196:149\n    at file:///srv/mi/jobs/collision-s1-d2c10a-74139-1792111705/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-21 @E20 rescued people never despawn: they flee for the checkpoint and end behind the line, at the gate, turned or down",
+          "status": "passed"
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-17 @E20 @E20-AC17 checkpoints doors, escape and cluster restore entities, outbreak, crew, gates and weapons",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "file": "levels/continuity.test.ts",
+      "durationMs": 52658.754638671875,
+      "tests": [
+        {
+          "name": "L1 -> L2 world-state continuity T-CONT-01S @continuity after the L1 lab blast the L2 town has the burned annex, the debris cells blocked, the outbreak house aftermath and this run's carryover",
+          "status": "passed"
+        },
+        {
+          "name": "L1 -> L2 world-state continuity T-CONT-02S @continuity player-caused toys carry over: a pushed dumpster blocks its passage, a closed gate stays shut, the bike is parked",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "file": "unit/bot/l2-recovery.test.ts",
+      "durationMs": 11.483642578125,
+      "tests": [
+        {
+          "name": "@E20 completion recovery ignores a collected health pickup: false",
+          "status": "passed"
+        },
+        {
+          "name": "@E20 completion recovery ignores a collected health pickup: true",
+          "status": "passed"
+        },
+        {
+          "name": "@E20 completion takes cover only at the gate: 69 HP, z 37.5, pursued true",
+          "status": "passed"
+        },
+        {
+          "name": "@E20 completion takes cover only at the gate: 69 HP, z 37.5, pursued false",
+          "status": "passed"
+        },
+        {
+          "name": "@E20 completion takes cover only at the gate: 100 HP, z 37.5, pursued true",
+          "status": "passed"
+        },
+        {
+          "name": "@E20 completion takes cover only at the gate: 70 HP, z 37.5, pursued false",
+          "status": "passed"
+        },
+        {
+          "name": "@E20 completion takes cover only at the gate: 100 HP, z 43.5, pursued true",
+          "status": "passed"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "name": "collision-l4-ride-camera",
+  "note": "Production first-bus passenger ride under the follow rig. Keep vehicle framing fixed across Fairhaven facade bounds; inspect both quality tiers and zooms .5/1 on both renderers. The foot camera retains its facade clearance. Hidden passengers intentionally ride inside their owner hull.",
+  "seed": 1,
+  "l4Convoy": true,
+  "ground": "district",
+  "time": "L4",
+  "tier": 3,
+  "layout": {
+    "level": "L4",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        -90,
+        -85
+      ],
+      [
+        90,
+        70
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -57.5,
+        43.9
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 720,
+  "sheet": 45,
+  "trace": true,
+  "expect": {
+    "convoyOverlapFramesMax": 0,
+    "collisionFailuresMax": 0,
+    "collisionPendingMax": 0,
+    "consoleErrors": 0
+  }
+}

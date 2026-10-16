@@ -1,5 +1,5 @@
-import { missionIds, type MissionId } from '../../src/levels/missions';
-import { runLevel, type CompletionPolicy } from './levels';
+import { missionIds } from '../../src/levels/missions';
+import { runLevel, type CompletionPolicy, type RunnerLevel } from './levels';
 import { measureHorde } from '../performance/sim';
 import { loadL1, runL1, type L1Profile } from './l1Bots';
 import { mkdir, writeFile } from 'node:fs/promises';
@@ -16,17 +16,18 @@ const { values } = parseArgs({ options: {
 } });
 const ticks = Number(values.ticks ?? '600'), seed = Number(values.seed);
 if (!Number.isSafeInteger(ticks) || ticks < 0 || !Number.isSafeInteger(seed)) throw new RangeError('Ticks must be nonnegative and seed an integer');
+const runnerLevels: RunnerLevel[] = [...missionIds, 'L7'];
 if (values.level) {
-  if (values.level !== 'all' && !missionIds.includes(values.level as MissionId)) throw new RangeError('Level must be a registered campaign mission or all');
+  if (values.level !== 'all' && !runnerLevels.includes(values.level as RunnerLevel)) throw new RangeError('Level must be a registered campaign mission or all');
   if (!['complete', 'newbie'].includes(values.policy!)) throw new RangeError('Policy must be complete or newbie');
   const seeds = Number(values.seeds);
   if (!Number.isSafeInteger(seeds) || seeds <= 0 || !Number.isSafeInteger(seed + seeds - 1)) throw new RangeError('Seeds must be a positive integer');
   if (values.route && !['auto', 'blvd', 'commerce', 'oak'].includes(values.route)) throw new RangeError('Route (L3 street) must be auto, blvd, commerce or oak');
   const reports = [];
-  for (const level of values.level === 'all' ? missionIds : [values.level as MissionId]) for (let i = 0; i < seeds; i++) {
+  for (const level of values.level === 'all' ? runnerLevels : [values.level as RunnerLevel]) for (let i = 0; i < seeds; i++) {
     const report = await runLevel(level, values.policy as CompletionPolicy, seed + i, values.ticks === undefined ? undefined : ticks / 60, values.route as 'auto' | 'blvd' | 'commerce' | 'oak' | undefined);
     reports.push(report);
-    console.log(JSON.stringify({ level, seed: seed + i, completed: report.completed, time: report.time, deaths: report.deaths, outcome: report.outcome, furthestObjective: report.furthestObjective }));
+    console.log(JSON.stringify({ level, seed: seed + i, completed: report.completed, time: report.time, deaths: report.deaths, outcome: report.outcome, furthestObjective: report.furthestObjective, collision: report.collision }));
   }
   const failures: Record<string, number> = {};
   for (const r of reports) for (const [reason, count] of Object.entries(r.failures)) failures[reason] = (failures[reason] ?? 0) + count;
@@ -34,7 +35,7 @@ if (values.level) {
   const output = values.out ?? `test-results/sim/${values.level}-${values.policy}.json`;
   await mkdir(dirname(output), { recursive: true }); await writeFile(output, JSON.stringify(report, null, 2) + '\n');
   console.log(JSON.stringify({ output, completed: report.completed, runs: report.runs, failures }));
-  if (values['completion-only'] && report.completed !== report.runs) process.exitCode = 1;
+  if (values['completion-only'] && (report.completed !== report.runs || report.failures['collision-invariant'])) process.exitCode = 1;
 } else if (values.scenario === 'perf-horde-200' || values.scenario === 'perf-horde-100') {
   const measurement = await measureHorde(values.scenario, ticks, seed);
   const output = values.out ?? `test-results/sim/${values.scenario}-seed-${seed}.json`;

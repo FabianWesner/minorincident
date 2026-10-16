@@ -1,5 +1,4 @@
 import { dogCoats, dogCoat } from '../data/dogAppearance';
-import { megaAlpha } from '../data/megaAlpha';
 import { regularInfectedModels } from '../data/crowdAppearance';
 import { resolveCrowdAppearance, crowdAppearanceColor, crowdShirt, markCrowdAppearance, writeCrowdAppearance, renderedCrowdLook, crowdVertexLayout, crowdHeadwearVisibility } from './characters/CrowdAppearance';
 import type { CrowdAccessories } from './characters/CrowdAccessories';
@@ -185,8 +184,7 @@ export class CrowdView extends Group {
       const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
       // E25 night readability: crowd silhouettes take the preset's moonlit rim.
       if ('figureRim' in material) material.figureRim.value = 1;
-      // E32 close camera: the Mega Alpha opens a courier-sized hole (SeeThrough.bossStrength) while it stands between the lens and the courier.
-      if (asset === megaAlpha.asset && 'seeThrough' in material) material.seeThrough('boss');
+      // The Alpha-sized Mega retains its silhouette at contact, like a regular Alpha.
       // Instances cannot be sorted independently in the transparent render list.
       // A shared 4x4 screen-door threshold keeps every surface of a corpse at
       // a pixel together, unlike a 3D hash that exposes its deeper body parts.
@@ -381,7 +379,12 @@ export class CrowdView extends Group {
         // inside the reserved contact space; distant windups retain their full coil and extension.
         const target = this.world.entities.get(e.infected?.heardTargetId || e.infected?.l1?.targetId || 1);
         if (target?.survivor && Math.hypot(x - target.transform.x, z - target.transform.z) < infectedContactDistance(e.combat!.radius) + .15) layers.lunge = Math.min(layers.lunge ?? 0, .04);
-        const layered = !crawling && (layers.lunge || layers.flinch || layers.lurch || layers.chestBeat || layers.trunkSwipe || layers.throwPose) ? layers : undefined;
+        if (!heavy && !specialAttack && b.state !== 'dead' && this.world.solids?.clear(e.transform, e.combat!.radius + .6, e.id) === false) {
+          // Keep the baked attack hunch over its planted feet at a hull, wall or body.
+          // Combat reach is unchanged; only the added forward body throw yields.
+          layers.lunge = Math.min(layers.lunge ?? 0, 0); layers.lean = -.25; layers.lurch = 0;
+        }
+        const layered = !crawling && (layers.lean || layers.lunge || layers.flinch || layers.lurch || layers.chestBeat || layers.trunkSwipe || layers.throwPose) ? layers : undefined;
         // Zoomed-out encounters retain planted feet inside the same 12 m action range; the footwork cap is unchanged.
         frame = batch.locomotion.present(e.id, batch.poses, frame, blend, clip, phase, this.transform, batch.strideScale, motion.speed, renderTick / 60, (band === 'lod1' || distance <= 12 || !moving || !!specialAttack || !!e.infected?.roar) && !crawling, layered, style, true, this.low && canHoldCrowdPose(e, this.world.tick) ? 2 : 1);
         if (!batch.animal) this.accessories?.place(e, batch.lod as 'lod0' | 'lod1' | 'lod2', batch.poses, frame, blend, this.transform, !!((feedback?.mask ?? 0) & 16));
