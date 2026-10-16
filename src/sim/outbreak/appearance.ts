@@ -17,6 +17,8 @@ export interface Appearance {
   tier: SpeedTier;
   /** E22: where this person came from (`L3-bus`: the evacuees from the L3 buses; two of them turn first). */
   origin?: string;
+  /** Dressed as an infected (never a living pedestrian): counts toward the infected accessory share. */
+  bornInfected?: boolean;
 }
 
 /** True for an infected (or turning pedestrian) that must render as its own former self, never as another model. */

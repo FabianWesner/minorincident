@@ -167,7 +167,7 @@ export class Outbreak {
       if (e.appearance?.entityId === e.id || e.health.current <= 0 || e.archetype !== 'infected.runner') continue;
       const asset = this.crowdModel(e.transform, true);
       const tier: SpeedTier = e.infected?.l1?.tier ?? (asset === 'npc.civilian-elderly' ? 'frail' : 'average');
-      e.appearance = { entityId: e.id, asset, tint: this.freeTint(e.transform, asset, this.shirtOf(e.id), e.id), accessories: [], handProp: null, tier };
+      e.appearance = { entityId: e.id, asset, tint: this.freeTint(e.transform, asset, this.shirtOf(e.id), e.id), accessories: [], handProp: null, tier, bornInfected: true };
     }
   }
   update(): void {

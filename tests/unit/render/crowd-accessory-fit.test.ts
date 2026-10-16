@@ -70,3 +70,19 @@ test('ordinary infected accessories keep the authored reference proportions on t
   }
   accessories.dispose();
 }, 120000);
+
+// Orchestrator 10-16: "infected should read as infected, not as a hat parade" - about 30% of ordinary infected wear a
+// shared head piece; civilians unchanged; a person who turned keeps the piece worn alive; dressed-as-infected counts.
+test('ordinary infected wear a shared head accessory at about 30%, turned people keep theirs @E07-AC13 @E08', async () => {
+  const { resolveCrowdAppearance } = await import('../../../src/render/characters/CrowdAppearance');
+  const ids = Array.from({ length: 2000 }, (_, i) => i + 10);
+  const share = (make: (id: number) => object) => ids.filter(id => resolveCrowdAppearance(make(id) as never).slot > 0).length / ids.length;
+  const look = (id: number, bornInfected?: boolean) => ({ entityId: id, asset: 'npc.civilian-man-a', tint: '#3178ac', accessories: [], handProp: null, tier: 'average', ...(bornInfected ? { bornInfected } : {}) });
+  const civilian = (id: number) => ({ id, archetype: 'civilian', civilian: { model: 'npc.civilian-man-a' }, appearance: look(id) });
+  const infected = share(id => ({ id, archetype: 'infected.runner', infected: { variant: 'inf.jogger' } }));
+  const dressed = share(id => ({ id, archetype: 'infected.runner', infected: {}, appearance: look(id, true) }));
+  expect(infected).toBeGreaterThan(.27); expect(infected).toBeLessThan(.33);
+  expect(dressed).toBeGreaterThan(.27); expect(dressed).toBeLessThan(.33);
+  expect(share(civilian)).toBeGreaterThan(.85);
+  for (const id of ids.slice(0, 200)) expect(resolveCrowdAppearance({ id, archetype: 'infected.runner', infected: {}, appearance: look(id) } as never).slot).toBe(resolveCrowdAppearance(civilian(id) as never).slot);
+});
