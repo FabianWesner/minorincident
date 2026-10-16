@@ -9,7 +9,7 @@ import { populateGrove } from '../outbreak/Population';
 import { allyState } from '../outbreak/Allies';
 import { emitEngine, stopEngine } from '../vehicles/ConvoySound';
 import { L4Spectacle, spawnSetPiece } from './L4Spectacle';
-import { L4ConvoyClearance } from './L4ConvoyClearance';
+import { convoyFootprint, L4ConvoyClearance } from './L4ConvoyClearance';
 import { respawnRule } from './Respawn';
 import { L4Collapse, freshDirector, postLine } from './L4Collapse';
 import type { Mission } from './Mission';
@@ -70,6 +70,17 @@ export class LevelFourWar {
     ai.director.pendingTurns = turning;
   }
   private get low(): boolean { return this.world.infected!.director.tier === 'low'; }
+  /** Legacy convoy riders have an explicit owner in the existing seated/roster state. */
+  passengerHull(e: EntitySnapshot): number | undefined {
+    const s = this.mission.state.l4;
+    if (!s?.seated || !e.hidden || e.pendingAdmission || !(e.id === 1 || e.companion || s.evacueeIds.includes(e.id))) return undefined;
+    return s.convoyIds[this.playerBus()];
+  }
+  /** The shared admission/contact owner preserves the convoy's existing posed clearance. */
+  clearOfConvoy(at: Point, e: EntitySnapshot, radius: number): boolean {
+    if (e.passengerOf !== undefined || e.attachedTo !== undefined || this.passengerHull(e) !== undefined) return true;
+    return !this.clearance.overlaps(at, Math.max(radius, convoyFootprint(e)));
+  }
   private snap(p: Point, r = .4): Point {
     const nav = this.world.infected!.nav;
     for (let d = 0; d <= 6; d += .5) for (let k = 0; k < (d ? 16 : 1); k++) {
@@ -314,6 +325,7 @@ export class LevelFourWar {
       // plus vehicle clearance, so their paths agree with the rendered-hull guard.
       const margin = .85;
       const wall: CoverWall = { x: e.transform.x, y: .9, z: e.transform.z, halfX: (c * v.len + n * v.wid) / 2 + margin, halfY: .9, halfZ: (n * v.len + c * v.wid) / 2 + margin, playerHalfX: (c * v.len + n * v.wid) / 2 + .3, playerHalfZ: (n * v.len + c * v.wid) / 2 + .3 };
+      world.solids.aliasBlocker(NAV_CONVOY + i, e.id);
       world.events.emit({ type: 'world.blocker.changed', tick: world.tick, id: NAV_CONVOY + i, blocked, wall });
     }
   }
@@ -329,19 +341,20 @@ export class LevelFourWar {
     const spec = l4.convoy.vehicles[this.playerBus()], off = spec.wid / 2 + .9, back = spec.len / 2 - .2, f = { x: Math.cos(bus.transform.yaw), z: -Math.sin(bus.transform.yaw) };
     const out = this.clearance.safePoint(this.snap({ x: bus.transform.x + side.x * off - f.x * back, z: bus.transform.z + side.z * off - f.z * back }, .45), .9);
     Object.assign(player.transform, { x: out.x, z: out.z }); player.hidden = false; s.seated = false;
+    world.solids.admit(player, 'l4.vehicle.exit');
     world.physics.playerBody!.setTranslation(player.transform, true); world.physics.playerBody!.setNextKinematicTranslation(player.transform); world.physics.playerCollider!.setEnabled(true);
     world.player!.locomotion.reset(); Object.assign(world.previousPlayer!, player.transform); world.spatial.set(1, out.x, out.z); world.player!.setCheckpoint(player.transform);
     world.storyLock = null; world.clearInput();
     world.events.emit({ type: 'vehicle.exited', tick, sourceId: s.convoyIds[this.playerBus()], targetId: 1, role: 'passenger' });
     // The corgi beside her, toward the camera (not behind her in the follow view).
-    for (const e of world.entities.iterate()) if (e.companion) { e.hidden = false; const p = this.clearance.safePoint(this.snap({ x: out.x + side.x * .9 - f.x * 1.2, z: out.z + side.z * .9 - f.z * 1.2 }, .4), .95); Object.assign(e.transform, p); world.spatial.set(e.id, p.x, p.z); }
+    for (const e of world.entities.iterate()) if (e.companion) { e.hidden = false; const p = this.clearance.safePoint(this.snap({ x: out.x + side.x * .9 - f.x * 1.2, z: out.z + side.z * .9 - f.z * 1.2 }, .4), .95); Object.assign(e.transform, p); world.solids.admit(e, 'l4.relocation'); }
     // Evacuees step off both buses (on the plaza side, along the doors) and walk to the registration queue.
     const buses = l4.convoy.vehicles.map((v, i) => ({ v, i })).filter(b => b.v.asset === 'veh.evac-bus').map(b => world.entities.get(s.convoyIds[b.i])!.transform);
     for (const [k, id] of s.evacueeIds.entries()) {
       const e = world.entities.get(id); if (!e) continue;
       const b = buses[k % buses.length], n = this.plazaSide(b), f = { x: Math.cos(b.yaw), z: -Math.sin(b.yaw) }, along = (k % 5 - 2) * 1.4, w = 2.6 + (k % 2) * .6;
       const p = this.clearance.safePoint(this.snap({ x: b.x + n.x * w + f.x * along, z: b.z + n.z * w + f.z * along }, .4), .9);
-      e.hidden = false; Object.assign(e.transform, p); world.spatial.set(id, p.x, p.z); e.civilian!.pauseUntil = 0;
+      e.hidden = false; Object.assign(e.transform, p); world.solids.admit(e, 'l4.passenger.exit'); e.civilian!.pauseUntil = 0;
     }
     this.clearance.parkRoutines();
     this.clearance.rememberUnloaded();
@@ -475,11 +488,11 @@ export class LevelFourWar {
     s.soldiersAtTurn = this.liveSoldiers().length; s.civiliansAtTurn = [...world.entities.iterate()].filter(e => this.human(e)).length;
     const ids: number[] = [];
     const courier = world.entities.get(1)!.transform, ai = world.infected!;
-    const entries = l4Inside.map((at, k) => ({ at: this.snap({ x: at[0], z: at[1] }, .45), origin: l4Emergence.length + k }))
+    const entries = l4Inside.map((at, k) => ({ at: { x: at[0], z: at[1] }, origin: l4Emergence.length + k }))
       .filter(({ at }) => dist(at, courier) >= l4.war.inside.minM && (ai.director.offscreen(at) || ai.director.occluded(at)));
     // A wide camera may see every camp door. Keep the alarm pressure by using the street mouths instead.
     if (entries.length * l4.war.group[1] < this.alarmInfected()) {
-      entries.push(...l4Emergence.map((entry, k) => ({ at: this.snap({ x: entry.at[0], z: entry.at[1] }, .45), origin: k, edge: entry.edge, door: entry.door }))
+      entries.push(...l4Emergence.map((entry, k) => ({ at: { x: entry.at[0], z: entry.at[1] }, origin: k, edge: entry.edge, door: entry.door }))
         .filter(({ at, edge, door }) => edge < l4Edges.length - 1 && dist(at, courier) >= (door ? l4.war.inside.minM : 30) && (ai.director.offscreen(at) || door && ai.director.occluded(at))));
     }
     // Nearby concealed exits reach the camp first; distant street mouths must not consume the whole alarm allocation.
@@ -489,6 +502,11 @@ export class LevelFourWar {
       const { at, origin } = entries[Math.floor(n / l4.war.group[1])];
       const id = this.emerge({ x: at.x + (n % 3 - 1) * .8, z: at.z + Math.floor(n % l4.war.group[1] / 3) * .8 }, true);
       if (!id) break;
+      const arrival = world.entities.get(id)!;
+      // Keep every alarm identity at its authored exit. A crowded/parked hull
+      // can defer an arrival here instead of displacing it beyond that mouth.
+      Object.assign(arrival.transform, at);
+      world.solids.admit(arrival, 'l4.alarm.exit', 1.9);
       ids.push(id); s.emergedIds.push(id); s.origin[id] = origin;
       const soldier = this.liveSoldiers().sort((a, b) => dist(a.transform, at) - dist(b.transform, at))[0];
       if (soldier) ai.rush(id, soldier.transform, tick + ticks(12));
@@ -541,7 +559,9 @@ export class LevelFourWar {
     const keep = streetSlot ? 0 : Math.max(0, headroom - this.streetReserve());
     const limit = Math.floor(ai.director.cap * (push ? 1 : this.director.aliveShare())) - reserved - keep - ai.director.pendingTurns;
     if (!this.spawnRoom(ai.director.reserved) || ai.director.count >= limit || !ai.pool.length || this.inGap(at)) return 0;
-    const out = this.snap(at, .45), id = o.spawnPedestrian(out), e = world.entities.get(id)!;
+    // Admit around the authored exit once, using exact hull/body clearance.
+    // A coarse nav snap followed by admission displaced arrivals twice.
+    const id = o.spawnPedestrian(at), e = world.entities.get(id)!;
     o.turnNow(e);
     if (!e.infected) return 0;
     if (e.combat) e.combat.staggerUntil = world.tick + 30;
@@ -827,6 +847,7 @@ export class LevelFourWar {
     s.phase = 'cellar'; s.descendAt = tick; s.soldiersAtCellar = this.liveSoldiers().length;
     const inn = this.anchor('l4-cellar-in');
     Object.assign(player.transform, { x: inn.x, z: inn.z });
+    world.solids.admit(player, 'l4.cellar');
     world.physics.playerBody!.setTranslation(player.transform, true); world.physics.playerBody!.setNextKinematicTranslation(player.transform);
     Object.assign(world.previousPlayer!, player.transform); world.spatial.set(1, inn.x, inn.z); world.player!.locomotion.reset(); world.player!.setCheckpoint(player.transform); world.clearInput();
     for (const e of world.entities.iterate()) if (e.companion) { const p = { x: inn.x + 1.2, z: inn.z - .6 }; Object.assign(e.transform, p); e.hidden = false; world.spatial.set(e.id, p.x, p.z); }

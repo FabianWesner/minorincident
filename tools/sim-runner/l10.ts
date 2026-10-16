@@ -42,7 +42,10 @@ export function runTen(world: SimWorld, policy: CompletionPolicy, maxSeconds: nu
       f.aim = { x: dx / d, z: dz / d }; f.aimPoint = { x: target.transform.x, z: target.transform.z };
       f.right.held = true;
       if (active.id === 'hold' && d < 10) {
-        f.move = walker.step(world, { x: anchor.x + (tick % 600 < 300 ? 18 : -18), z: anchor.z }, 1, 'dodge') ?? f.move;
+        // Circle through the hold area so the solid pursuing crowd trails the
+        // courier. Every step still uses ordinary navigation and movement input.
+        const angle = Math.atan2(p.z - anchor.z, p.x - anchor.x) + Math.PI / 4;
+        f.move = walker.step(world, { x: anchor.x + Math.cos(angle) * 18, z: anchor.z + Math.sin(angle) * 18 }, 1, 'dodge') ?? f.move;
       }
     }
     if (policy === 'newbie') { f.move.x *= .8; f.move.z *= .8; }

@@ -1,0 +1,98 @@
+{
+  "source": "d8aac5606",
+  "runner": "94.130.181.173",
+  "remoteSeconds": 621,
+  "staticChecks": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "diffCheck": "pass"
+  },
+  "passed": 1579,
+  "failed": 4,
+  "skipped": 7,
+  "files": [
+    {
+      "file": "tests/sim/explosions.test.ts",
+      "passed": 9,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "file": "tests/sim/ai/alpha-physical.test.ts",
+      "passed": 10,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "file": "tests/sim/ai/mega-moves.test.ts",
+      "passed": 16,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "file": "tests/sim/combat/l7-rocket.test.ts",
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "file": "tests/sim/world/solid-admission.test.ts",
+      "passed": 36,
+      "failed": 0,
+      "skipped": 0
+    },
+    {
+      "file": "tests/sim/world/solid-registry.test.ts",
+      "passed": 4,
+      "failed": 1,
+      "skipped": 0,
+      "failures": [
+        {
+          "name": "collision natural L4: tank excludes every living Alpha through audit tick 15662",
+          "error": "Error: Test timed out in 180000ms."
+        }
+      ]
+    },
+    {
+      "file": "tests/unit/assets/validate.test.ts",
+      "passed": 16,
+      "failed": 1,
+      "skipped": 0,
+      "failures": [
+        {
+          "name": "T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts",
+          "error": "Error: Test timed out in 300000ms."
+        }
+      ]
+    },
+    {
+      "file": "tests/unit/levels/placement-solids.test.ts",
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "failures": [
+        {
+          "name": "@E21 no placed prop cuts into a solid, L1-L9, every tier (new offenders only; backlog in the baseline)",
+          "error": "AssertionError: expected [ Array(1) ] to deeply equal []"
+        }
+      ]
+    },
+    {
+      "file": "tests/unit/render/occluder-footprint.test.ts",
+      "passed": 1,
+      "failed": 1,
+      "skipped": 0,
+      "failures": [
+        {
+          "name": "@E18 sampled lens and courier rays match the original transformed footprint checks",
+          "error": "TypeError: Cannot read properties of undefined (reading 'add')"
+        }
+      ]
+    }
+  ],
+  "units": {
+    "passed": 1498,
+    "failed": 3,
+    "skipped": 7
+  }
+}

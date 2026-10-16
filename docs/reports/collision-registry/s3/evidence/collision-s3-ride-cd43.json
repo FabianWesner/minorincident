@@ -1,0 +1,303 @@
+{
+  "source": "test-results/collision-s3-ride-cd43.json",
+  "stats": {
+    "startTime": "2026-10-15T23:11:53.033Z",
+    "duration": 120940.761,
+    "expected": 17,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "errors": [],
+  "tests": [
+    {
+      "title": "T-E22-ride-smooth-60hz @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz)",
+      "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+      "tests": [
+        {
+          "status": "expected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "passed",
+              "durationMs": 13556,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T-E22-ride-smooth-120hz @E22 the L4 convoy bus does not vibrate on screen during the ride (120hz)",
+      "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+      "tests": [
+        {
+          "status": "expected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "passed",
+              "durationMs": 23010,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T-E22-ride-smooth-uneven-120hz @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz)",
+      "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+      "tests": [
+        {
+          "status": "expected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "passed",
+              "durationMs": 22770,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T-E22-ride-smooth-30hz @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz)",
+      "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+      "tests": [
+        {
+          "status": "expected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "passed",
+              "durationMs": 8474,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T-E22-ride-smooth-uneven-phone @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone)",
+      "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+      "tests": [
+        {
+          "status": "expected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "passed",
+              "durationMs": 9050,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T-E22-ride-smooth-60hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz-webgl-low)",
+      "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+      "tests": [
+        {
+          "status": "expected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "passed",
+              "durationMs": 13273,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T-E22-ride-smooth-uneven-120hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz-webgl-low)",
+      "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+      "tests": [
+        {
+          "status": "expected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "passed",
+              "durationMs": 22706,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T-E22-ride-smooth-30hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz-webgl-low)",
+      "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+      "tests": [
+        {
+          "status": "expected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "passed",
+              "durationMs": 8452,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T-E22-ride-smooth-uneven-phone-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone-webgl-low)",
+      "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+      "tests": [
+        {
+          "status": "expected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "passed",
+              "durationMs": 9162,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T-E22-ride-smooth-60hz-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz-webgpu-high)",
+      "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+      "tests": [
+        {
+          "status": "expected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "passed",
+              "durationMs": 13207,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T-E22-ride-smooth-uneven-120hz-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz-webgpu-high)",
+      "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+      "tests": [
+        {
+          "status": "expected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "passed",
+              "durationMs": 22613,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T-E22-ride-smooth-30hz-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz-webgpu-high)",
+      "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+      "tests": [
+        {
+          "status": "expected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "passed",
+              "durationMs": 8237,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T-E22-ride-smooth-uneven-phone-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone-webgpu-high)",
+      "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+      "tests": [
+        {
+          "status": "expected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "passed",
+              "durationMs": 8968,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T-E22-ride-smooth-60hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz-webgpu-low)",
+      "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+      "tests": [
+        {
+          "status": "expected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "passed",
+              "durationMs": 12990,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T-E22-ride-smooth-uneven-120hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz-webgpu-low)",
+      "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+      "tests": [
+        {
+          "status": "expected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "passed",
+              "durationMs": 22698,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T-E22-ride-smooth-30hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz-webgpu-low)",
+      "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+      "tests": [
+        {
+          "status": "expected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "passed",
+              "durationMs": 8331,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T-E22-ride-smooth-uneven-phone-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone-webgpu-low)",
+      "file": "e2e/levels/l4-bus-ride-smooth.spec.ts",
+      "tests": [
+        {
+          "status": "expected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "passed",
+              "durationMs": 8925,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

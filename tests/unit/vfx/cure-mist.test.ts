@@ -9,7 +9,11 @@ for (const quality of ['high', 'low'] as const) test(`T-E32-23-mist-pool-${quali
   mission.begin(); mission.state.states['cure-released'] = true;
   const fx = new Vfx(world, { flash() {}, detach() {}, blood() {}, clearGore() {}, shake() {} }); fx.set({ quality });
   try {
+    // Reserve the console point for the dog before the zero-radius release.
+    const player = world.entities.get(1)!;
+    expect(world.solids.relocate(player, { x: 4, z: 4, y: player.transform.y }, 'test.cure-console', 4, false)).toBe(true);
     const id = world.infected!.spawn('infected.dog', { x: 0, z: 0 }, { offNav: true });
+    expect(world.entities.get(id)!.transform).toMatchObject({ x: 0, z: 0 });
     mission.l10!.cure.release(); expect(world.entities.get(id)!.health.current).toBe(0);
     const geometry = fx.blasts.children.map(mesh => ('geometry' in mesh ? mesh.geometry : null));
     mission.state.cureFront!.elapsed = 360; mission.state.cureFront!.radius = 60;

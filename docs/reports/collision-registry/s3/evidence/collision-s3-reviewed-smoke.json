@@ -1,0 +1,699 @@
+{
+  "code": "04c4c4bbe",
+  "source": "test-results/collision-s3-reviewed-smoke.json",
+  "stats": {
+    "startTime": "2026-10-15T23:49:07.768Z",
+    "duration": 105495.548,
+    "expected": 16,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "errors": [],
+  "suites": [
+    {
+      "title": "e2e/audio/smoke.spec.ts",
+      "file": "e2e/audio/smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E16",
+            "E16-AC21"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8592,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T23:49:12.076Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "43c1ee6d7c8a5e5dfbfa-97a3d61ff3acce718662",
+          "file": "e2e/audio/smoke.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/controls-playtest.spec.ts",
+      "file": "e2e/controls-playtest.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E03",
+            "E03-AC14",
+            "E03-AC16"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 23865,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T23:49:12.078Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "2750c3bdceeb5e094725-03dcd144480ffdfe041b",
+          "file": "e2e/controls-playtest.spec.ts",
+          "line": 8,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/crowd-drawn.spec.ts",
+      "file": "e2e/crowd-drawn.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E07"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 22650,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T23:49:44.618Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e77c0fb1ea48c182de9-fa1d6210c12952f68cb1",
+          "file": "e2e/crowd-drawn.spec.ts",
+          "line": 15,
+          "column": 3
+        },
+        {
+          "title": "T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E07"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 20920,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T23:49:50.914Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "0e77c0fb1ea48c182de9-e982f98dac5e1bfc9120",
+          "file": "e2e/crowd-drawn.spec.ts",
+          "line": 15,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "e2e/crowd-feel.spec.ts",
+      "file": "e2e/crowd-feel.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E07"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 4604,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T23:50:07.950Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "dc9b9d343168502a2e67-353d355a22e51454dc56",
+          "file": "e2e/crowd-feel.spec.ts",
+          "line": 87,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/driving.spec.ts",
+      "file": "e2e/driving.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E09"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4351,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T23:49:20.791Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5e6c768bb370cc6a9717-6d653d77642b28f98199",
+          "file": "e2e/driving.spec.ts",
+          "line": 22,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/l4-boot.spec.ts",
+      "file": "e2e/levels/l4-boot.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors",
+          "ok": true,
+          "tags": [
+            "E22",
+            "E22-AC18",
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13921,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T23:49:25.155Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "91bae058919b3638343a-5ef68a1f589b66b3ebd2",
+          "file": "e2e/levels/l4-boot.spec.ts",
+          "line": 5,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/menus-mouse.spec.ts",
+      "file": "e2e/menus-mouse.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only",
+          "ok": true,
+          "tags": [
+            "E14",
+            "E14-AC03",
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 5888,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T23:49:36.081Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "985816c1468952bd1927-cecdef361888236d9f37",
+          "file": "e2e/menus-mouse.spec.ts",
+          "line": 3,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/save.spec.ts",
+      "file": "e2e/save.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+          "ok": true,
+          "tags": [
+            "E13",
+            "E13-AC05",
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11031,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T23:49:39.171Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "4fc26a16ee2fb292eca8-e64e10e112418c30083b",
+          "file": "e2e/save.spec.ts",
+          "line": 76,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/smoke.spec.ts",
+      "file": "e2e/smoke.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 884,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T23:49:41.997Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-b06e96d7bc88dd69cb24",
+          "file": "e2e/smoke.spec.ts",
+          "line": 4,
+          "column": 1
+        },
+        {
+          "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+          "ok": true,
+          "tags": [
+            "smoke"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 981,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T23:49:42.896Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "aa58ad17b2d44b8d86cc-74fb4cb910bc7abe9421",
+          "file": "e2e/smoke.spec.ts",
+          "line": 14,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/webgpu-canvas.spec.ts",
+      "file": "e2e/webgpu-canvas.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU high mega health bars preserve the game frame at both zoom limits",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7617,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T23:50:12.520Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f74914b231a8740df10b-baa1ba2a41384d7d1b97",
+          "file": "e2e/webgpu-canvas.spec.ts",
+          "line": 11,
+          "column": 3
+        },
+        {
+          "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU high L1 L4 L8 game cameras render at both zoom limits",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 39817,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T23:50:13.225Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f74914b231a8740df10b-e4ef32c76084759b386b",
+          "file": "e2e/webgpu-canvas.spec.ts",
+          "line": 27,
+          "column": 3
+        },
+        {
+          "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU low mega health bars preserve the game frame at both zoom limits",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3663,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T23:50:20.232Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f74914b231a8740df10b-41b5266e0775c8ebbc36",
+          "file": "e2e/webgpu-canvas.spec.ts",
+          "line": 11,
+          "column": 3
+        },
+        {
+          "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU low L1 L4 L8 game cameras render at both zoom limits",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9265,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T23:50:23.911Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f74914b231a8740df10b-8eac85643e3dcd3f500e",
+          "file": "e2e/webgpu-canvas.spec.ts",
+          "line": 27,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "e2e/webgpu-level-transitions.spec.ts",
+      "file": "e2e/webgpu-level-transitions.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E02-webgpu-level-transitions @smoke @E02 title, L1, L2 and L3 in one WebGPU renderer log no GPU validation errors",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13677,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T23:50:33.740Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "7be80d8c19c0387a2a29-3bd0f8a63eef8d53b837",
+          "file": "e2e/webgpu-level-transitions.spec.ts",
+          "line": 15,
+          "column": 1
+        }
+      ]
+    }
+  ]
+}

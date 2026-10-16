@@ -20,7 +20,7 @@ async function load(roster?: EntitySnapshot[], tier: 'high' | 'low' = 'high') {
 }
 const step = (w: SimWorld, n: number) => { for (let i = 0; i < n; i++) w.update(); };
 function put(w: SimWorld, id: number, x: number, z: number) {
-  const e = w.entities.get(id)!; Object.assign(e.transform, { x, z, y: w.districts!.groundHeight(x, z) + .7 }); w.spatial.set(id, x, z);
+  const e = w.entities.get(id)!; Object.assign(e.transform, { x, z, y: w.districts!.groundHeight(x, z) + .7 }); expect(w.solids.admit(e, 'test.l7.put', 4, false)).toBe(true);
   if (id === 1) { w.physics.playerBody!.setTranslation(e.transform, true); w.physics.playerBody!.setNextKinematicTranslation(e.transform); }
 }
 /** Survivors a few metres east of the bus, on free cells of the corridor lane. */
@@ -62,6 +62,8 @@ test('T-E29-13-board @E29-AC13 the complete living roster boards before the bus 
   expect(d.state.phase).toBe('done');
   expect(ticks / 60).toBeGreaterThanOrEqual(6); expect(ticks / 60).toBeLessThanOrEqual(10);
   expect(Math.hypot(bus.transform.x - start.x, bus.transform.z - start.z)).toBeGreaterThanOrEqual(30);
+  expect(w.entities.get(1)!.transform.x).toBeCloseTo(bus.transform.x, 5);
+  expect(w.entities.get(1)!.transform.z).toBeCloseTo(bus.transform.z, 5);
   expect(completed!.id).toBe('L7');
   expect(completed!.result.escapedSurvivors!.map(e => e.id)).toEqual(d.state.boarded);
   expect(completed!.result.rescued).toBe(living.length);
@@ -136,10 +138,39 @@ test('T-E29-13-35 @E29-AC13 a full 35-person roster boards and every figure is a
   gather(w, incoming.map(e => e.id), -66);
   put(w, 1, boardingAnchor()!.x, boardingAnchor()!.z);
   for (let i = 0; i < 3000 && d.state.phase !== 'departing'; i++) step(w, 1);
-  expect(d.state.phase).toBe('departing');
+  expect(d.state.phase, JSON.stringify(incoming.filter(e => !d.state.boarded.includes(e.id)).map(e => {
+    const live = w.entities.get(e.id)!; return { id: e.id, at: live.transform, passengerOf: live.passengerOf, pending: live.pendingAdmission, entering: d.state.entering[e.id], path: live.civilian!.path, goal: live.civilian!.goal };
+  }))).toBe('departing');
   expect([...d.state.boarded].sort((a, b) => a - b)).toEqual(incoming.map(e => e.id));
   let done: { result: { escapedSurvivors: EntitySnapshot[] } } | null = null;
   w.events.on('level.completed', e => { if (e.type === 'level.completed') done = e as never; });
   step(w, 600);
   expect(done!.result.escapedSurvivors.map(e => [e.id, e.health.current]).sort((a, b) => a[0] - b[0])).toEqual(departureHealth);
+});
+
+test('a finished civilian retains its identity as a loss and never holds the boarding roster', async () => {
+  const w = await load(), c = w.l7Encounters!, d = w.l7Departure!;
+  const ids = c.state.roster.map(r => r.id), victim = w.entities.get(ids[0])!;
+  for (const id of ids.slice(1)) w.entities.get(id)!.health.current = 0;
+  // The outbreak finish lifecycle preserves positive civilian HP, as in L6.
+  victim.civilian!.state = 'finished';
+  expect(victim.health.current).toBeGreaterThan(0);
+  put(w, 1, boardingAnchor()!.x, boardingAnchor()!.z); step(w, 3);
+  expect(c.state.roster).toHaveLength(ids.length);
+  expect(c.state.roster.every(r => r.status === 'dead')).toBe(true);
+  expect(ids.every(id => w.entities.get(id))).toBe(true);
+  expect(d.state.phase).toBe('departing'); expect(d.state.boarded).toEqual([]);
+  expect(w.solids.snapshot().failures).toBe(0);
+});
+
+test('the last queue follower walks around a courier standing across its boarding approach', async () => {
+  const w = await load(), c = w.l7Encounters!, d = w.l7Departure!;
+  const last = c.state.roster[0]; last.injured = true;
+  for (const r of c.state.roster.slice(1)) w.entities.get(r.id)!.health.current = 0;
+  const e = w.entities.get(last.id)!; e.civilian!.survivor!.slot = 28;
+  put(w, 1, -69.62994384765625, 47.41989517211914);
+  put(w, e.id, -68.94034510767726, 47.54581013477008);
+  for (let i = 0; i < 1200 && d.state.phase !== 'departing'; i++) step(w, 1);
+  expect(d.state.boarded).toEqual([e.id]); expect(d.state.phase).toBe('departing');
+  expect(w.solids.snapshot()).toMatchObject({ failures: 0, pending: 0 });
 });

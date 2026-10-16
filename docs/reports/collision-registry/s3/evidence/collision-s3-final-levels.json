@@ -1,0 +1,122 @@
+{
+  "source": "2e0f14d72",
+  "passed": 20,
+  "failed": 0,
+  "skipped": 0,
+  "files": [
+    {
+      "name": "levels/L5-encounters.test.ts",
+      "passed": 9,
+      "failed": [],
+      "assertions": [
+        {
+          "title": "@E23 @E23-AC04 @E23-AC15 @E23-AC16 station identities/state survive checkpoint and L6 handover, high",
+          "status": "passed",
+          "ms": 2014.4885390000009
+        },
+        {
+          "title": "@E23 @E23-AC04 @E23-AC15 @E23-AC16 station identities/state survive checkpoint and L6 handover, low",
+          "status": "passed",
+          "ms": 883.3904789999988
+        },
+        {
+          "title": "@E23 @E23-AC01 L5 retains the carried racks instead of replacing them with its fallback arsenal",
+          "status": "passed",
+          "ms": 621.807925000001
+        },
+        {
+          "title": "@E23 @E23-AC07 Alphas investigate nearby gunfire and acquire visible civilians without omniscience",
+          "status": "passed",
+          "ms": 514.2076459999989
+        },
+        {
+          "title": "@E23 @E23-AC04 Alphas stay in town away from the Metro and final escort leg, high",
+          "status": "passed",
+          "ms": 645.7892510000001
+        },
+        {
+          "title": "@E23 @E23-AC04 Alphas stay in town away from the Metro and final escort leg, low",
+          "status": "passed",
+          "ms": 777.3770079999995
+        },
+        {
+          "title": "@E23 @E23-AC15 nearby infected do not stall ingress; the descending shutter sweeps intruders out and blocks return",
+          "status": "passed",
+          "ms": 1715.1996500000005
+        },
+        {
+          "title": "@E23 @E23-AC15 the five survivors cross the Metro opening from the real-input group photo",
+          "status": "passed",
+          "ms": 1568.5335670000004
+        },
+        {
+          "title": "@E23 @E23-AC11 @E23-AC15 a survivor turning during shutter closure cannot corrupt the L6 save",
+          "status": "passed",
+          "ms": 1819.0496759999987
+        }
+      ]
+    },
+    {
+      "name": "levels/L6.test.ts",
+      "passed": 11,
+      "failed": [],
+      "assertions": [
+        {
+          "title": "T-E24-01 @E24 @E24-AC01 graph shelter -> stop -> retreat -> exit has no fail timer or survivor fail",
+          "status": "passed",
+          "ms": 911.78276
+        },
+        {
+          "title": "T-E24-04 @E24 @E24-AC04 @E24-AC05 @E08-AC11 calm adult routines, carried ids, readable injury dialogue, no weapon pickup and no early combat",
+          "status": "passed",
+          "ms": 2032.1166899999998
+        },
+        {
+          "title": "T-E24-06 @E24 @E24-AC06 @E24-AC07 @E24-AC13 idle two breaches, bangs, immediate power failure, first-of abandonment and caps",
+          "status": "passed",
+          "ms": 4981.7528999999995
+        },
+        {
+          "title": "T-E24-16 @E24 @E24-AC16 death restores all four checkpoint snapshots, outbreak, gates and power",
+          "status": "passed",
+          "ms": 717.234441999999
+        },
+        {
+          "title": "T-E24-02 @E24 @E24-AC02 @E24-AC10 single-seed complete bot (PO: no batteries) protects and rejoins the community",
+          "status": "passed",
+          "ms": 35204.800691
+        },
+        {
+          "title": "T-E24-09 @E24 @E24-AC09 group pauses at a gate when the rear is under attack and the player is absent",
+          "status": "passed",
+          "ms": 111.32709600000089
+        },
+        {
+          "title": "T-E24-11 @E24 @E24-AC11 service leaf refuses to trap survivors, then blocks sight and motion",
+          "status": "passed",
+          "ms": 145.77873099999852
+        },
+        {
+          "title": "T-E24-13 @E24 @E24-AC13 bitten shelter adult retains identity through the shared 2.5-3.5 s infection",
+          "status": "passed",
+          "ms": 367.5899819999977
+        },
+        {
+          "title": "T-E24-zero @E24 @E24-AC01 all survivors lost still permits the physical exit",
+          "status": "passed",
+          "ms": 219.10418100000243
+        },
+        {
+          "title": "T-E24-11-siege @E24 @E24-AC11 five real infected break the closed service gate in 8-12 seconds",
+          "status": "passed",
+          "ms": 623.8794080000007
+        },
+        {
+          "title": "T-E24-03 @E24 @E24-AC03 single-seed newbie protects injured survivors within the original band",
+          "status": "passed",
+          "ms": 38222.19849
+        }
+      ]
+    }
+  ]
+}

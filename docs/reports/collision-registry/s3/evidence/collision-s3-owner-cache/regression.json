@@ -1,0 +1,582 @@
+{
+  "source": "test-results/collision-s3-owner-cache/regression.json",
+  "passed": 82,
+  "failed": 0,
+  "pending": 0,
+  "tests": [
+    {
+      "file": "sim/combat/encounter-balance.test.ts",
+      "name": "T-E05-encounter @E05 @E19 efficient clicker HP lost per encounter: one infected <= 5 HP (bat and unarmed), two/three with the bat <= 15/30",
+      "status": "passed",
+      "duration": 20065.031122,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "a fully reserved moving component needs no further rollback scans",
+      "status": "passed",
+      "duration": 175.17550299999994,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "contact repair respects infected-only exclusions while humans retain admission",
+      "status": "passed",
+      "duration": 20.104841000000306,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "body congestion cannot admit an actor through a thin wall",
+      "status": "passed",
+      "duration": 9.222107000000051,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "all moving and parked vehicle hulls use the contact commit: vehicle.sedan",
+      "status": "passed",
+      "duration": 13.250269000000117,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "all moving and parked vehicle hulls use the contact commit: vehicle.military-apc",
+      "status": "passed",
+      "duration": 5.000275000000329,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "all moving and parked vehicle hulls use the contact commit: vehicle.pickup",
+      "status": "passed",
+      "duration": 6.442494999999781,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "all moving and parked vehicle hulls use the contact commit: vehicle.suv",
+      "status": "passed",
+      "duration": 8.400837000000138,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "all moving and parked vehicle hulls use the contact commit: vehicle.police",
+      "status": "passed",
+      "duration": 18.4511779999998,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "all moving and parked vehicle hulls use the contact commit: vehicle.ambulance",
+      "status": "passed",
+      "duration": 19.053179999999884,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "all moving and parked vehicle hulls use the contact commit: vehicle.school-bus",
+      "status": "passed",
+      "duration": 9.515724999999748,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "all moving and parked vehicle hulls use the contact commit: vehicle.fire-engine",
+      "status": "passed",
+      "duration": 9.18880500000023,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "unsafe spawn retains identity and concurrency slot, then admits when the hull leaves",
+      "status": "passed",
+      "duration": 64.5676739999999,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "teleport and checkpoint allies reserve distinct radius-aware slots",
+      "status": "passed",
+      "duration": 25.612662999999884,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "a deferred checkpoint keeps its requested pose and restores collider and grace on admission",
+      "status": "passed",
+      "duration": 47.1359080000002,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "repeating a blocked checkpoint request does not turn its hidden courier into a passenger",
+      "status": "passed",
+      "duration": 24.773756999999932,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "a pooled body can return to its former position under its new identity",
+      "status": "passed",
+      "duration": 9.447407000000112,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "a safe explicit relocation releases an earlier deferred checkpoint request",
+      "status": "passed",
+      "duration": 26.28377300000011,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "a circular admission beside a box corner can walk away at its full radius",
+      "status": "passed",
+      "duration": 43.35294399999975,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "checkpoint restore discards a deferred player mask from the discarded timeline",
+      "status": "passed",
+      "duration": 1902.9840139999997,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "a checkpoint containing a deferred player restores the inactive collider until admission",
+      "status": "passed",
+      "duration": 1412.0842030000003,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "guard audits a stationary actor when a tank moves over it and retains bounded diagnostics",
+      "status": "passed",
+      "duration": 3.6186170000000857,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "vehicle exits wait for bodyless actors occupying both doors",
+      "status": "passed",
+      "duration": 17.432818999999654,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "a deferred casualty leaves admission and follows normal death cleanup",
+      "status": "passed",
+      "duration": 3.296346000000085,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "a stationary revived actor is admitted again after its attachment exemption ends",
+      "status": "passed",
+      "duration": 3.472776000000522,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "an explicit actor attachment alone exempts contact with its owner",
+      "status": "passed",
+      "duration": 3.2515519999997196,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "an attack windup faces its victim without residual steering rotating it into a neighbour",
+      "status": "passed",
+      "duration": 9.616823999999724,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "a clear formation can enter positions its neighbours vacate during the same tick",
+      "status": "passed",
+      "duration": 3.7462560000003577,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "an isolated blocked actor projects along contact instead of freezing at its prior pose",
+      "status": "passed",
+      "duration": 5.5577549999998155,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "a cached dense-crowd contact permits a formation to enter the space its blocker vacates",
+      "status": "passed",
+      "duration": 3.5423659999996744,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "a wider house resident keeps its identity and walks clear of the pedestrian doorstep",
+      "status": "passed",
+      "duration": 30.20263100000011,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "a queued house resident can leave a body-blocked doorstep without crossing its wall",
+      "status": "passed",
+      "duration": 41.52067699999952,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "same-id conversion keeps a legal circular pose beside a conservative route corner",
+      "status": "passed",
+      "duration": 2.8269420000005994,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "courier and corgi remain outside eight classic attackers through windup and knockback",
+      "status": "passed",
+      "duration": 82.8967249999996,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "courier and corgi remain outside eight L1 attackers through windup and knockback",
+      "status": "passed",
+      "duration": 72.86300300000039,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "the courier can push out of eight living bodies while every committed footprint stays clear",
+      "status": "passed",
+      "duration": 19.504211000000396,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "parked rotated hull admission uses its exact footprint rather than its coarse route box",
+      "status": "passed",
+      "duration": 4.19854899999973,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "courier contact projection sweeps the existing capsule instead of crossing a solid to a clear endpoint",
+      "status": "passed",
+      "duration": 1.6003030000001672,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "a stationary footprint change revalidates contact with its stationary neighbour",
+      "status": "passed",
+      "duration": 1.5960469999999987,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "a hidden courier without a passenger owner still needs clear hull admission",
+      "status": "passed",
+      "duration": 5.388408000000709,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "the legacy L4 seated courier exempts only its explicit convoy bus",
+      "status": "passed",
+      "duration": 327.2763879999993,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/world/solid-admission.test.ts",
+      "name": "a hull reappears with unchanged entity revision and excludes an actor admitted while it was hidden",
+      "status": "passed",
+      "duration": 3.1150989999996455,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/assets.test.ts",
+      "name": "E18 @E18 mobile GLB selection prefers declared .low export, preserves lod1 and releases its cache",
+      "status": "passed",
+      "duration": 57.35964299999978,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/deviceEvidence.test.ts",
+      "name": "E18 @E18 recording validation rejects emulation declarations, incorrect scenarios and invented summaries",
+      "status": "passed",
+      "duration": 4.846778000000086,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/deviceEvidence.test.ts",
+      "name": "E18 @E18-AC08 emulation evidence requires the authorized CPU profile and cannot masquerade as physical hardware",
+      "status": "passed",
+      "duration": 1.1510360000002038,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/event-bus-cache.test.ts",
+      "name": "T-E29-19-event-dispatch @E29-AC19 cached dispatch preserves phase snapshots, nested emits and reset",
+      "status": "passed",
+      "duration": 6.820059000000583,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/gibs.test.ts",
+      "name": "E18 @E18 low tier keeps at most 30 active gibs and resets removed physics slots",
+      "status": "passed",
+      "duration": 164.7839039999999,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/hit-query-grid.test.ts",
+      "name": "ray-cell traversal and unrolled slabs exactly match full scans, including corners, padding and moving walls",
+      "status": "passed",
+      "duration": 269.6439170000001,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/human-query.test.ts",
+      "name": "T-E29-19-human-query @E29-AC19 human queries match the original spatial filter through same-tick movement, bites, spawn, deletion and restore",
+      "status": "passed",
+      "duration": 45.97503300000017,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/human-query.test.ts",
+      "name": "T-E29-19-traffic-query @E29-AC19 cached traffic obstacles retain live movement, late components, deletion and restore",
+      "status": "passed",
+      "duration": 1.930370000000039,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/layouts.test.ts",
+      "name": "E18 @E18-AC05 level layouts retain shared districts and release documents outside the active level",
+      "status": "passed",
+      "duration": 61.000412000000324,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/nav-bake.test.ts",
+      "name": "@E31-AC12 rectangular streamed nav bake equals clearance queries at radius 0.35",
+      "status": "passed",
+      "duration": 228.54548699999987,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/nav-bake.test.ts",
+      "name": "@E31-AC12 rectangular streamed nav bake equals clearance queries at radius 0.5",
+      "status": "passed",
+      "duration": 124.18412599999965,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/nav-bake.test.ts",
+      "name": "@E31-AC12 rectangular streamed nav bake equals clearance queries at radius 0.65",
+      "status": "passed",
+      "duration": 71.06250499999987,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/nav-bake.test.ts",
+      "name": "@E31-AC12 rectangular streamed nav bake equals clearance queries at radius 1.4",
+      "status": "passed",
+      "duration": 44.57200499999999,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/nav-bake.test.ts",
+      "name": "@E31-AC12 streamed rectangle bucket traversal matches sampled exact wall sweeps",
+      "status": "passed",
+      "duration": 76.77228299999979,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/nav-bake.test.ts",
+      "name": "@E31-AC12 streamed nav recenter reuses bounded buffers and matches a fresh bake",
+      "status": "passed",
+      "duration": 57.391341999999895,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/nav-capsule-corners.test.ts",
+      "name": "@E22 capsule movement escapes a valid rounded collider corner in every quadrant",
+      "status": "passed",
+      "duration": 4.301411000000371,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/nav-capsule-corners.test.ts",
+      "name": "grid-only agents retain the conservative square corner margin",
+      "status": "passed",
+      "duration": 0.9290819999996529,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/nav-contact-index.test.ts",
+      "name": "route buckets retain ground navigation while solid queries keep all height layers and stable IDs",
+      "status": "passed",
+      "duration": 164.9611960000002,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/nav-reach-equivalence.test.ts",
+      "name": "@E18 @E32 reach flood preserves paths, ties and budgets at 0, perimeter false",
+      "status": "passed",
+      "duration": 176.48034599999994,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/nav-reach-equivalence.test.ts",
+      "name": "@E18 @E32 reach flood preserves paths, ties and budgets at 0, perimeter true",
+      "status": "passed",
+      "duration": 57.36696699999993,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/nav-reach-equivalence.test.ts",
+      "name": "@E18 @E32 reach flood preserves paths, ties and budgets at 3980.125, perimeter false",
+      "status": "passed",
+      "duration": 75.56463099999996,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/nav-reach-equivalence.test.ts",
+      "name": "@E18 @E32 reach flood preserves paths, ties and budgets at 3980.125, perimeter true",
+      "status": "passed",
+      "duration": 21.68153099999995,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/nav-reach-equivalence.test.ts",
+      "name": "@E18 resumed reach flood retains its original target and prepends its start when the player moves",
+      "status": "passed",
+      "duration": 0.9697579999999562,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/nav-reach-equivalence.test.ts",
+      "name": "@E32 repeated unbudgeted floods reuse only exact answers and copy the returned path",
+      "status": "passed",
+      "duration": 1.9313720000000103,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/nav-reach-equivalence.test.ts",
+      "name": "@E32 exact flood memo invalidates for blocker edits, perimeter changes, rebakes and recentering",
+      "status": "passed",
+      "duration": 4.688812999999982,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/nav-visibility.test.ts",
+      "name": "@E20 navigation visibility keeps the original sample and slab decisions",
+      "status": "passed",
+      "duration": 140.73314700000003,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/nav-visibility.test.ts",
+      "name": "@E20 blocker changes keep only unaffected nearest-cell answers",
+      "status": "passed",
+      "duration": 22.902458000000024,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/nav-visibility.test.ts",
+      "name": "@E18 morning route targets reuse exact nearest-cell answers across ticks",
+      "status": "passed",
+      "duration": 5.150444999999991,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/nav-visibility.test.ts",
+      "name": "@E18 nearest-cell pruning preserves the full scan and its tie order",
+      "status": "passed",
+      "duration": 33.50270499999999,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/nav-visibility.test.ts",
+      "name": "@E20 stamped A* matches the original routes and expansion budgets across retries and resets",
+      "status": "passed",
+      "duration": 86.07664399999999,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/nav-visibility.test.ts",
+      "name": "live furniture broad phase follows replacement, in-place movement, removal and rebake",
+      "status": "passed",
+      "duration": 1.4018939999999702,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/nav-visibility.test.ts",
+      "name": "@E21 elevated road blockers remain in navigation while overhead roofs stay clear",
+      "status": "passed",
+      "duration": 0.6355750000000171,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/quality.test.ts",
+      "name": "E18 quality policy T-E18-04 @E18-AC04 adapts within 6 seconds and recovers only at next level start",
+      "status": "passed",
+      "duration": 10.134358000000248,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/quality.test.ts",
+      "name": "E18 quality policy T-E18-04b @E18-AC04 defers degradation through a cinematic, ignores spikes and honors explicit settings",
+      "status": "passed",
+      "duration": 3.810265999999956,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/quality.test.ts",
+      "name": "E18 quality policy T-E18-04c @E18-AC04 an exact budget cadence does not degrade due to Float32 rounding",
+      "status": "passed",
+      "duration": 0.9254249999999047,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/quality.test.ts",
+      "name": "E18 quality policy T-E18-07 @E18-AC07 selects low for mobile profiles and enforces distinct tier budgets",
+      "status": "passed",
+      "duration": 0.6475470000000314,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/spatial-contact-cache.test.ts",
+      "name": "2 m cells retain exact circle queries across negative cell edges and moves",
+      "status": "passed",
+      "duration": 17.30043099999989,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/spatial-contact-cache.test.ts",
+      "name": "4 m cells retain exact circle queries across negative cell edges and moves",
+      "status": "passed",
+      "duration": 10.145779999999831,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/spatial-contact-cache.test.ts",
+      "name": "contact cache preserves horde state against unfiltered queries (mixed zoo: false)",
+      "status": "passed",
+      "duration": 3079.3461979999997,
+      "failureMessages": []
+    },
+    {
+      "file": "unit/performance/spatial-contact-cache.test.ts",
+      "name": "contact cache preserves horde state against unfiltered queries (mixed zoo: true)",
+      "status": "passed",
+      "duration": 2520.9566349999996,
+      "failureMessages": []
+    }
+  ]
+}

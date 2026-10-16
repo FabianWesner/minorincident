@@ -10,6 +10,8 @@ import type { AssetDef } from '../../assets/types';
  * the same convention as layout placements (a yaw-0 prop faces its authored forward, an actor at yaw 0 faces +X).
  */
 export interface SceneSpec {
+  /** Production L2 market release, or its bridge arrival after 20 s of rescue simulation. */
+  l2Release?: boolean | 'bridge' | 'checkpoint';
   /** Native campaign menu over the game camera; run with --query ui=1. */
   menuScreen?: 'title' | 'levels' | 'credits';
   /** Production L4 convoy, population, braking and unload controller on an uncropped Fairhaven layout. */
@@ -196,6 +198,9 @@ export type CameraSpec =
   | { mode: 'follow'; actor: string; zoom?: number };
 /** Optional pass/fail gates; the runner exits non-zero when one fails. */
 export interface Expectations {
+  /** Numerical committed-body invariant, independent of camera/mesh clipping. */
+  collisionFailuresMax?: number;
+  collisionPendingMax?: number;
   /** Trace the submitted appearance through LOD/pose/frozen-corpse transitions. */
   appearanceChangesMax?: number;
   appearanceActorsMin?: number;
@@ -249,6 +254,8 @@ export interface Expectations {
   footJitterRunMax?: number;
   /** Deepest torso/neck/head interpenetration between two living, standing actors, in cm (`metrics.bodies`; 2 cm slack). */
   bodyOverlapMaxCm?: number;
+  /** Attacker forearms against the courier's torso/backpack envelope; hands may make contact. */
+  attackBodyOverlapMaxCm?: number;
   /** Corgi trunk/head against the courier's drawn body, including both legs. */
   corgiCourierOverlapMaxCm?: number;
   /** Greatest trailing distance along the running courier's velocity (speed > 2.5 m/s). */
@@ -391,7 +398,10 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
   const bounds: Point[] = [[x0, z0], [x1, z0], [x1, z1], [x0, z1], [x0, z0]];
   const courier = spec.actors?.find(a => a.kind === 'courier');
   // Without a courier the (hidden) player waits in a corner, away from the subject.
-  const playerStart: Point = courier?.at ? [courier.at[0], courier.at[1]] : [x1 - 2, z1 - 2];
+  // L2 fixtures admit their requested courier pose after mission setup. Start
+  // the district at its authored safe spawn before that admission can run.
+  const start = spec.l2Release && source?.anchors['player-start']?.position;
+  const playerStart: Point = start ? [start[0] + shift[0], start[2] + shift[1]] : courier?.at ? [courier.at[0], courier.at[1]] : [x1 - 2, z1 - 2];
   const district: DistrictId = spec.layout?.district ?? 'D-GROVE';
   const solid = kept.filter(p => assets.get(p.assetId)?.world?.solid);
   const layout: DistrictLayout = {
@@ -422,9 +432,9 @@ export function buildScene(spec: SceneSpec, assets: Map<string, AssetDef>, sourc
     }
     layout.walkable.excluded = source.walkable.excluded.map(polygon => polygon.map(([x,z]) => [x+shift[0],z+shift[1]]));
   }
-  if ((spec.l4Convoy || spec.l3Rendezvous || spec.l6Subway) && source) layout.colliders = structuredClone(source.colliders);
+  if ((spec.l2Release || spec.l4Convoy || spec.l3Rendezvous || spec.l6Subway) && source) layout.colliders = structuredClone(source.colliders);
   if (spec.l6Subway && source) layout.lightGroups = structuredClone(source.lightGroups);
-  for (const name of (spec.l4Convoy || spec.l3Rendezvous || spec.l5Aftermath || spec.l6Subway) && source ? Object.keys(source.anchors) : spec.layout?.anchors ?? []) {
+  for (const name of (spec.l2Release || spec.l4Convoy || spec.l3Rendezvous || spec.l5Aftermath || spec.l6Subway) && source ? Object.keys(source.anchors) : spec.layout?.anchors ?? []) {
     const anchor = source?.anchors[name];
     if (!anchor) throw new Error(`Unknown layout anchor ${name}`);
     layout.anchors[name] = structuredClone(anchor);

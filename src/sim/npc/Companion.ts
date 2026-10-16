@@ -23,7 +23,7 @@ export class Companion {
     this.target.x = p.x; this.target.z = p.z + 2;
     if (!nav.clear(this.target.x, this.target.z, .35)) { this.target.x = p.x; this.target.z = p.z; }
     const e = this.world.entities.create({ kind: 'companion', archetype: 'char.corgi', faction: 'survivor', transform: { ...this.target, y: .3, yaw: 0 }, health: { current: 100, max: 100 }, companion: { state: 'follow', courage: 100, until: 0, barkAt: 0, hurtAt: 0, pickup: null, path: [], goal: -1, pathIndex: 0 } });
-    this.world.spatial.set(e.id, e.transform.x, e.transform.z); return e.id;
+    this.world.spatial.set(e.id, e.transform.x, e.transform.z); this.world.solids.admit(e, 'companion.spawn'); return e.id;
   }
   /** L1 v2 (D-GROVE): the corgi cannot be hurt, has no courage bar, and warns instead of fighting (spec 5.8). */
   /** Tests and scenarios without a D-GROVE district can force the L1 v2 behaviour. */
@@ -45,7 +45,7 @@ export class Companion {
       let spot: { x: number; z: number } | null = null;
       for (const [dx, dz] of [[0, 2], [2, 0], [-2, 0], [0, -2], [1.4, 1.4], [-1.4, -1.4], [0, 1], [0, 0]]) if (nav.clear(player.x + dx, player.z + dz, .35)) { spot = { x: player.x + dx, z: player.z + dz }; break; }
       spot ??= { x: player.x, z: player.z };
-      e.transform.x = spot.x; e.transform.z = spot.z; e.transform.y = .3 + (this.world.districts?.groundHeight(spot.x, spot.z) ?? 0); e.transform.yaw = -Math.atan2(player.z - spot.z, player.x - spot.x);
+      this.world.solids.relocate(e, { ...spot, y: .3 + (this.world.districts?.groundHeight(spot.x, spot.z) ?? 0) }, 'companion.respawn'); e.transform.yaw = -Math.atan2(player.z - spot.z, player.x - spot.x);
       delete e.locomotion; c.velocity = { x: 0, z: 0 }; c.path.length = 0; c.goal = -1; c.pathIndex = 0; c.following = false; c.pickup = null;
       if (e.motion) { e.motion.velocity.x = e.motion.velocity.z = 0; e.motion.speed = 0; e.motion.moving = false; }
       this.world.spatial.set(e.id, e.transform.x, e.transform.z);

@@ -1,0 +1,2852 @@
+{
+  "raw": "collision-s3-all.json",
+  "passed": 2946,
+  "failed": 11,
+  "skipped": 9,
+  "files": [
+    {
+      "name": "sim/player.test.ts",
+      "passed": 12,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/weapons.test.ts",
+      "passed": 73,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/weather.test.ts",
+      "passed": 15,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/interact/integration.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/ai/director.test.ts",
+      "passed": 11,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/ai/l1-perception.test.ts",
+      "passed": 15,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/combat/balance.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/missions/perf.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/levels/l10-arrival.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/levels/l10-assault.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/levels/l10-district.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/npc/campaign.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/performance/alpha-physical.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/performance/alpha-support.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/performance/alpha.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/performance/horde.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/performance/l10-finale.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/performance/l6-fixture.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/performance/mega-audio.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/performance/mega-moves.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/performance/zoo-s1.test.ts",
+      "passed": 1,
+      "failed": [
+        {
+          "name": "T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
+          "failure": "AssertionError: expected 4.213677000021562 to be less than or equal to 4\n    at /srv/mi/jobs/collision-s1-d2c10a-23251-1792094780/tests/sim/performance/zoo-s1.test.ts:30:101\n    at file:///srv/mi/jobs/collision-s1-d2c10a-23251-1792094780/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        }
+      ],
+      "skipped": 0
+    },
+    {
+      "name": "sim/performance/zoo-s2.test.ts",
+      "passed": 1,
+      "failed": [
+        {
+          "name": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+          "failure": "AssertionError: expected 4.258991000009701 to be less than or equal to 4\n    at /srv/mi/jobs/collision-s1-d2c10a-23251-1792094780/tests/sim/performance/zoo-s2.test.ts:26:68\n    at file:///srv/mi/jobs/collision-s1-d2c10a-23251-1792094780/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        }
+      ],
+      "skipped": 0
+    },
+    {
+      "name": "sim/performance/zoo-s3.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/vehicles/consequences.test.ts",
+      "passed": 13,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/world/chunk-residency.test.ts",
+      "passed": 11,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/progression/perf.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L1.test.ts",
+      "passed": 19,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L10-campaign.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L10.test.ts",
+      "passed": 0,
+      "failed": [
+        {
+          "name": "T-E32-04-complete @E32-AC04 one seed completes the full L10 route with ordinary inputs and regional timing",
+          "failure": "AssertionError: {\"level\":\"L10\",\"policy\":\"complete\",\"seed\":32,\"completed\":false,\"time\":981.3333333333334,\"deaths\":1,\"kills\":196,\"damageTaken\":331.0333333333334,\"failures\":{\"player-died\":1,\"tick-budget\":1},\"objectiveTimeline\":[{\"id\":\"crash\",\"t\":0.016666666666666666},{\"id\":\"residential-fringe\",\"t\":58.28333333333333},{\"id\":\"industrial-area\",\"t\":190.23333333333332},{\"id\":\"military-zone\",\"t\":355.5833333333333},{\"id\":\"research-campus\",\"t\":528.85},{\"id\":\"research\",\"t\":592.65},{\"id\":\"cure\",\"t\":594.0166666666667},{\"id\":\"research-exit\",\"t\":614.8666666666667},{\"id\":\"destroyed-corridor\",\"t\":654.2},{\"id\":\"dispersal-complex\",\"t\":870.65},{\"id\":\"install\",\"t\":946.0166666666667}],\"furthestObjective\":\"hold\",\"activeObjectives\":[\"hold\"],\"outcome\":\"tick-budget\",\"blocker\":{\"objective\":\"hold\",\"detail\":\"tick-budget: Charge the dispersal system and kill the Mega Alpha\",\"player\":{\"x\":3990.953125,\"z\":-27.992738723754883},\"distance\":11.091392042447488,\"actors\":{}},\"cureReleases\":0,\"regions\":[{\"id\":\"crash-outskirts\",\"seconds\":66.04999999999754,\"travelSeconds\":65.28333333333092,\"combatSeconds\":0.733333333333334,\"interactionSeconds\":0.03333333333333333,\"holdSeconds\":0,\"epilogueSeconds\":0,\"otherSeconds\":0,\"metres\":296.44077342764035},{\"id\":\"residential-fringe\",\"seconds\":120.81666666666109,\"travelSeconds\":94.96666666666256,\"combatSeconds\":25.849999999999813,\"interactionSeconds\":0,\"holdSeconds\":0,\"epilogueSeconds\":0,\"otherSeconds\":0,\"metres\":543.0182448895489},{\"id\":\"industrial-area\",\"seconds\":164.68333333335653,\"travelSeconds\":35.88333333333258,\"combatSeconds\":128.78333333332796,\"interactionSeconds\":0.016666666666666666,\"holdSeconds\":0,\"epilogueSeconds\":0,\"otherSeconds\":0,\"metres\":740.1355398536468},{\"id\":"
+        }
+      ],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L2-boarding.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L2-escape-loop.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L2-finale-pressure.test.ts",
+      "passed": 1,
+      "failed": [
+        {
+          "name": "PO #7b @E20 the arriving player sees police firing on a horde at the bridge",
+          "failure": "AssertionError: expected 3 to be greater than or equal to 4\n    at /srv/mi/jobs/collision-s1-d2c10a-23251-1792094780/tests/levels/L2-finale-pressure.test.ts:76:52\n    at file:///srv/mi/jobs/collision-s1-d2c10a-23251-1792094780/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        }
+      ],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L2.test.ts",
+      "passed": 14,
+      "failed": [
+        {
+          "name": "L2 The Failed Rescue T-E20-03 @E20 @E20-AC03 newbie single seed, median in band, median deaths <= 1; bat escape single seed",
+          "failure": "AssertionError: expected 3 to be less than or equal to 1\n    at /srv/mi/jobs/collision-s1-d2c10a-23251-1792094780/tests/levels/L2.test.ts:61:47\n    at file:///srv/mi/jobs/collision-s1-d2c10a-23251-1792094780/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        },
+        {
+          "name": "L2 The Failed Rescue T-E20-06 @E20 @E20-AC06 set piece: event order, empty forecourt, release and ambush timing, three directions",
+          "failure": "TypeError: actual value must be number or bigint, received \"object\"\n    at assertTypes (file:///srv/mi/jobs/collision-s1-d2c10a-23251-1792094780/node_modules/vitest/dist/chunks/pathe.M-eThtNZ.CknpM8Or.js:70:43)\n    at Proxy.<anonymous> (file:///srv/mi/jobs/collision-s1-d2c10a-23251-1792094780/node_modules/vitest/dist/chunks/index.C4tKZ0yW.js:2114:3)\n    at Proxy.<anonymous> (file:///srv/mi/jobs/collision-s1-d2c10a-23251-1792094780/node_modules/vitest/dist/chunks/index.C4tKZ0yW.js:1944:14)\n    at Proxy.methodWrapper (file:///srv/mi/jobs/collision-s1-d2c10a-23251-1792094780/node_modules/chai/index.js:1737:25)\n    at /srv/mi/jobs/collision-s1-d2c10a-23251-1792094780/tests/levels/L2.test.ts:105:26"
+        }
+      ],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L3-bridge.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L3-follow.test.ts",
+      "passed": 28,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L3-route.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L3.test.ts",
+      "passed": 21,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L4-barricade-prompts.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L4-battlefield-lifecycle.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L4-botprobe.test.ts",
+      "passed": 0,
+      "failed": [],
+      "skipped": 1
+    },
+    {
+      "name": "levels/L4-collapse.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L4-convoy.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L4-finale-pressure.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L4-guidance.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L4-movement.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L4-perimeter.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L4-po-round.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L4-probe.test.ts",
+      "passed": 0,
+      "failed": [],
+      "skipped": 1
+    },
+    {
+      "name": "levels/L4-refuge-visible.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L4-respawn.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L4.test.ts",
+      "passed": 23,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L5-encounters.test.ts",
+      "passed": 9,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L5.test.ts",
+      "passed": 15,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L6-campaign.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L6.test.ts",
+      "passed": 11,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L8.test.ts",
+      "passed": 7,
+      "failed": [
+        {
+          "name": "T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 12 survivors and exact APC transfer",
+          "failure": "AssertionError: {\"seed\":1,\"time\":90.26666666666667,\"breach\":60,\"outlets\":4,\"animalTurns\":[10395],\"alphas\":4,\"rescued\":12}: expected 1 to be greater than or equal to 2\n    at /srv/mi/jobs/collision-s1-d2c10a-23251-1792094780/tests/levels/L8.test.ts:92:85\n    at file:///srv/mi/jobs/collision-s1-d2c10a-23251-1792094780/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        }
+      ],
+      "skipped": 0
+    },
+    {
+      "name": "levels/L9-campaign.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/ally-combat-feel.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/camera-sightline.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/collision-invariant.test.ts",
+      "passed": 10,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/continuity.test.ts",
+      "passed": 1,
+      "failed": [
+        {
+          "name": "L1 -> L2 world-state continuity T-CONT-01S @continuity after the L1 lab blast the L2 town has the burned annex, the debris cells blocked, the outbreak house aftermath and this run's carryover",
+          "failure": "AssertionError: expected 325.8833333333333 to be less than or equal to 210\n    at /srv/mi/jobs/collision-s1-d2c10a-23251-1792094780/tests/levels/continuity.test.ts:45:30\n    at file:///srv/mi/jobs/collision-s1-d2c10a-23251-1792094780/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        }
+      ],
+      "skipped": 0
+    },
+    {
+      "name": "levels/corpse-grounding.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/l1-bench-exit.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/l1-firefighter.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/l1-forecourt.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/l1-medkits.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/l1-ride-input.test.ts",
+      "passed": 10,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/l2-start.test.ts",
+      "passed": 7,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/l4-convoy-people.test.ts",
+      "passed": 10,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/l5-district.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/l5-po-1015.test.ts",
+      "passed": 7,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/pickup-grounding.test.ts",
+      "passed": 9,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/pickup-solids.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/respawn-all-levels.test.ts",
+      "passed": 17,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/respawn-checkpoint.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/ring-clearance.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/run-out.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/story-bots.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/story-protection.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "levels/trap-pockets.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/arrival-stability.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/barricades.test.ts",
+      "passed": 22,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/bicycle-knockoff.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/bicycle-pavement.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/controls.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/determinism.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/districts.test.ts",
+      "passed": 1,
+      "failed": [
+        {
+          "name": "T-E10-runtime @E10 gameplay blockers have Rapier colliders, fires damage only in range, and unload releases resources",
+          "failure": "AssertionError: expected 100 to be less than 100\n    at /srv/mi/jobs/collision-s1-d2c10a-23251-1792094780/tests/sim/districts.test.ts:120:51\n    at file:///srv/mi/jobs/collision-s1-d2c10a-23251-1792094780/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        }
+      ],
+      "skipped": 0
+    },
+    {
+      "name": "sim/explosion-extinguisher.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/explosion-gas.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/explosions.test.ts",
+      "passed": 9,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/handover-door-route.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/l1-toys.test.ts",
+      "passed": 19,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/l1-walk.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/l9-campaign-continuity.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/l9-crash.test.ts",
+      "passed": 18,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/l9-encounters.test.ts",
+      "passed": 16,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/l9-greybox.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/l9-handover.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/l9-start.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/light-power.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/m1-world.test.ts",
+      "passed": 10,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/progression.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/props.test.ts",
+      "passed": 9,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/recorder.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/runner.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/selected-weapon.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/weapon-order.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/e2e-error-guard.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/health-bars.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/import-graph.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/l5-shotgun.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/physics-metadata.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/physics-preparation.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/physics-prop-contract.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/setup.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/static.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/stride-scale.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/survivor.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/traceability.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/ui-dom.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/ui-settings.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/ui-telegraphs.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/vehicles.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/ai/alpha-physical.test.ts",
+      "passed": 10,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/ai/alpha-support.test.ts",
+      "passed": 8,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/ai/alpha-tank.test.ts",
+      "passed": 10,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/ai/alpha.test.ts",
+      "passed": 30,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/ai/animals.test.ts",
+      "passed": 10,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/ai/checkpoint-human-targets.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/ai/crowd-variety.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/ai/infected-hearing.test.ts",
+      "passed": 95,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/ai/infected-pursuit.test.ts",
+      "passed": 7,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/ai/infected-recover.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/ai/infected-stuck-l2.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/ai/l10-alpha-contracts.test.ts",
+      "passed": 8,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/ai/l10-dogs.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/ai/l8-animals.test.ts",
+      "passed": 11,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/ai/mega-audio.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/ai/mega-moves.test.ts",
+      "passed": 16,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/ai/mega-pursuit.test.ts",
+      "passed": 12,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/ai/navigation.test.ts",
+      "passed": 14,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/ai/specials.test.ts",
+      "passed": 12,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/ai/turning.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/ai/zoo-s1.test.ts",
+      "passed": 11,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/ai/zoo-s2.test.ts",
+      "passed": 15,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/ai/zoo-s3.test.ts",
+      "passed": 15,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/combat/click-queue.test.ts",
+      "passed": 10,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/combat/click-rate.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/combat/combat.test.ts",
+      "passed": 19,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/combat/encounter-balance.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/combat/fast-clicks.test.ts",
+      "passed": 8,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/combat/fire-axe.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/combat/l1-crowd.test.ts",
+      "passed": 0,
+      "failed": [
+        {
+          "name": "E19 @E19 @E19-AC14 bat crowd battery: stand vs 4 wins (single seed); stand vs 10 dies within 30 s (single seed); evade vs 10 survives 60 s (single seed; PO 10-10)",
+          "failure": "AssertionError: expected 0 to be greater than or equal to 1\n    at /srv/mi/jobs/collision-s1-d2c10a-23251-1792094780/tests/sim/combat/l1-crowd.test.ts:27:39\n    at file:///srv/mi/jobs/collision-s1-d2c10a-23251-1792094780/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        }
+      ],
+      "skipped": 0
+    },
+    {
+      "name": "sim/combat/l1-duel.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/combat/l2-toughness.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/combat/l5-shotgun-click.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/combat/l5-shotgun.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/combat/l7-rocket.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/combat/m1-feel.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/combat/mounted-gun.test.ts",
+      "passed": 7,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/combat/roundhouse.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/combat/shot-cover.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/interact/devices.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/interact/gate-lockin.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/interact/hazards.test.ts",
+      "passed": 11,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/interact/infected-integration.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/interact/pickups.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/levels/l10-arena.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/levels/l10-campus-corridor.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/levels/l10-district-detours.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/levels/l10-encounters.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/levels/l10-mega-cruise.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/levels/l10-regression.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/missions/adapters.test.ts",
+      "passed": 13,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/missions/campaign.test.ts",
+      "passed": 18,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/missions/l10-cure-front.test.ts",
+      "passed": 9,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/missions/l10-cure.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/missions/l10-epilogue.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/missions/l10-finale.test.ts",
+      "passed": 14,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/missions/l10-progression.test.ts",
+      "passed": 9,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/missions/l2-axe-objective.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/missions/l2-reporting.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/missions/l2-ride-clearance.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/missions/l2-ride-vehicles.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/missions/l3-base-gates.test.ts",
+      "passed": 1,
+      "failed": [
+        {
+          "name": "PO-11 @E21 @E21-AC17 full horde attacks the base for 120 s without entering the perimeter",
+          "failure": "AssertionError: base breach at 28.233333333333334 s: expected [ { id: 214, \u2026(2) } ] to deeply equal []\n    at /srv/mi/jobs/collision-s1-d2c10a-23251-1792094780/tests/sim/missions/l3-base-gates.test.ts:58:114\n    at file:///srv/mi/jobs/collision-s1-d2c10a-23251-1792094780/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+        }
+      ],
+      "skipped": 0
+    },
+    {
+      "name": "sim/missions/l3-flee-speed.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/missions/l3-rescue.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/missions/l7-departure.test.ts",
+      "passed": 9,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/missions/l7-encounters.test.ts",
+      "passed": 15,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/missions/objectives.test.ts",
+      "passed": 30,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/missions/preparation.test.ts",
+      "passed": 9,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/missions/small-figure.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/missions/w6.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/npc/activity-anchors.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/npc/ally-defence.test.ts",
+      "passed": 12,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/npc/civilians.test.ts",
+      "passed": 7,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/npc/fetch-leash.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/npc/followers.test.ts",
+      "passed": 8,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/npc/integration.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/npc/l1-civilians.test.ts",
+      "passed": 7,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/npc/l1-motion-clips.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/npc/l4-systems.test.ts",
+      "passed": 12,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/npc/medkit-fetch.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/npc/permanence.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/npc/pet-height.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/npc/seat-follow.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/npc/traffic.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/npc/unreachable.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/npc/zoo-companion.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/vehicles/apc-durability.test.ts",
+      "passed": 12,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/vehicles/apc-floor.test.ts",
+      "passed": 9,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/vehicles/apc.test.ts",
+      "passed": 12,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/vehicles/handling.test.ts",
+      "passed": 14,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/vehicles/interact-integration.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/vehicles/interaction.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/vehicles/l9-terrain-speed.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/world/solid-admission.test.ts",
+      "passed": 37,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/world/solid-registry.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "sim/world/support-seams.test.ts",
+      "passed": 14,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/combat/elevated-melee.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/combat/events.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/combat/gun-raise.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/combat/loadout.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/combat/minigun.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/audio/acoustics.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/audio/ambience-guard.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/audio/assets.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/audio/base-alarm.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/audio/credits.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/audio/danger.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/audio/fight-music.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/audio/l1-arc.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/audio/l4-radio-mix.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/audio/levelSoundtracks.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/audio/mega-presentation.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/audio/music-beats.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/audio/noise.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/audio/pickup-fanfare.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/audio/policies.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/audio/registry.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/audio/streaming.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/accessories.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/alpha.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/army-boom.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/authored-lods.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/build.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/bus-hero.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/civilian-bake-build.test.ts",
+      "passed": 72,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/civilian-bake-worker.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/civilian-bake.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/commerce-pack.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/courier-bike.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/crowd.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/cure-kits.test.ts",
+      "passed": 46,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/delivery.test.ts",
+      "passed": 7,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/dispersal-kit.test.ts",
+      "passed": 30,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/elephant.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/gun-pose.test.ts",
+      "passed": 11,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/living-adults.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/load-pipeline.test.ts",
+      "passed": 8,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/lod-fidelity.test.ts",
+      "passed": 236,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/long-gun-aim.test.ts",
+      "passed": 8,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/long-gun-hold.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/mega-alpha-dog.test.ts",
+      "passed": 8,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/optimize.test.ts",
+      "passed": 12,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/png-pixels.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/prefetch-worker.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/production-gates.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/references.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/registry.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/runtime-integration.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/static-bakes.test.ts",
+      "passed": 141,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/static-batch-equivalence.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/static-collision.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/validate.test.ts",
+      "passed": 17,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/window-glow-lod.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/assets/zebra.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/core/foundation.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/data/action-assets.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/data/actions.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/data/checkpoint-names.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/data/explosions.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/data/l10-finale-anchors.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/data/l2-glass.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/data/player-text-dashes.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/input/bindings.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/input/buttons.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/input/click-pick.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/input/rack-selection.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/input/raised-floor.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/input/walk.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/input/wheel.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/layouts/build.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/layouts/clipping.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/layouts/crossval.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/layouts/d-grove-scaffold.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/layouts/d-grove.test.ts",
+      "passed": 11,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/layouts/districts.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/layouts/visual-bounds.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/layouts/w6.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/building-shells.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/campaign-nav-preparation.test.ts",
+      "passed": 9,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/continuity.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/decoration-surface.test.ts",
+      "passed": 14,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/l10-alpha-contracts.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/l10-arena.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/l10-campus-corridor.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/l10-district.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/l10-platform-supports.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/l2-roads.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/l2-static.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/l3-static.test.ts",
+      "passed": 8,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/l4-static.test.ts",
+      "passed": 11,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/l4-vehicle-solids.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/l5-footprints.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/l5-shutter.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/l5-static.test.ts",
+      "passed": 9,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/l6-static.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/l7-district.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/l8-district.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/l8-variants.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/l9-district.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/layout-overlap.test.ts",
+      "passed": 8,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/no-placeholder-assets.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/placement-clearance-cache.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/levels/placement-solids.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/missions/dialogue.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/missions/house-emergence.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/missions/marker-anchor.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/missions/schema.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/progression/aftermath.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/progression/campaign.test.ts",
+      "passed": 14,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/progression/cure.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/progression/next-level.test.ts",
+      "passed": 7,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/motionlab/motion.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/motionlab/skin.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/motionlab/stage1.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/performance/assets.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/performance/deviceEvidence.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/performance/event-bus-cache.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/performance/gibs.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/performance/hit-query-grid.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/performance/human-query.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/performance/layouts.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/performance/nav-bake.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/performance/nav-capsule-corners.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/performance/nav-reach-equivalence.test.ts",
+      "passed": 7,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/performance/nav-visibility.test.ts",
+      "passed": 7,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/performance/quality.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/performance/spatial-contact-cache.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/apc-damage.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/appearance-stable.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/authored-animation.test.ts",
+      "passed": 17,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/camera-jitter.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/car-transition.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/catalog-motion.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/character-loading.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/civilian-corpse-prewarm.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/civilian-grip.test.ts",
+      "passed": 8,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/civilian-material.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/civilian-residency.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/civilian-staging.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/corgi-feet.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/corgi-scale.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/corpse-placement.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/courier-rig-v2.test.ts",
+      "passed": 11,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/crowd-appearance.test.ts",
+      "passed": 8,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/crowd-arm-matrices.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/crowd-baked-pose.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/crowd-feet.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/crowd-footwork.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/crowd-gun-matrices.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/crowd-layer-matrices.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/crowd-lod-geometry.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/crowd-models.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/crowd-parent-inverses.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/crowd-register.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/crowd-sink.test.ts",
+      "passed": 7,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/crowd-store-matrices.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/crowd-topology.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/crowd-visibility.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/cure-animal-death.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/e25-hero.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/e25-lighting.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/e25-visibility.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/e25-windows.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/e27-blasts.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/environment-lifetime.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/figure-height.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/foliage.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/footprint-uploads.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/footprints.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/forecourt-seethrough.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/ground-field-cache.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/ik-matrix-reuse.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/infected-bake.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/inspection-camera.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/interaction-marker.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/l1-grade.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/l1-infection-overlay.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/l1-look.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/l10-lod-prefetch.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/l3-boom.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/l6-power.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/l7-memory.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/l7-perf.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/lod-policy.test.ts",
+      "passed": 9,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/lod-pop-gate.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/lod-residency.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/look-patch.test.ts",
+      "passed": 14,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/material-variants.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/mounted-gun-warmup.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/nested-scene-matrices.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/npc.test.ts",
+      "passed": 8,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/occluder-footprint.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/overlay.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/palette-cache-key.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/palette.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/perimeter-posts.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/pose-texture.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/post-fx-streaming.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/pre-render.test.ts",
+      "passed": 17,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/rig-translation-matrices.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/rocket-corpses.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/roof-cutaway.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/roundhouse-pose.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/scripted-wheels.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/seethrough.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/sit-pose.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/skin-pilot.test.ts",
+      "passed": 18,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/startup-background.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/static-corpses.test.ts",
+      "passed": 11,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/static-instance-attributes.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/terrain-streaming.test.ts",
+      "passed": 8,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/texture-ranges.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/texture-upload.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/transport.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/vehicle-glass.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/vehicle-matrix-reuse.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/vehicle-occupant-matrices.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/view-uniform-groups.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/view.test.ts",
+      "passed": 9,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/render/weather-materials.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/telemetry/client.test.ts",
+      "passed": 12,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/telemetry/codec.test.ts",
+      "passed": 8,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/telemetry/functions.test.ts",
+      "passed": 10,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/sim/police-range.test.ts",
+      "passed": 18,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/tools/remote-cache-gc.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/vfx/cure-mist.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/vfx/events.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/vfx/integration.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/vfx/lab-accident.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/vfx/pools.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/vfx/tracers.test.ts",
+      "passed": 5,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/vfx/zoo-s2.test.ts",
+      "passed": 9,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/vfx/zoo-s3.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/tooling/e2e-lock.test.ts",
+      "passed": 0,
+      "failed": [],
+      "skipped": 7
+    },
+    {
+      "name": "unit/tooling/headless-only.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/tooling/l10-q2-scene-catalog.test.ts",
+      "passed": 6,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/tooling/l10-scene-catalog.test.ts",
+      "passed": 7,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/tooling/l9-vehicle-camera.test.ts",
+      "passed": 1,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/tooling/night-read.test.ts",
+      "passed": 4,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/tooling/prop-penetration.test.ts",
+      "passed": 3,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/tooling/scenelab.test.ts",
+      "passed": 12,
+      "failed": [],
+      "skipped": 0
+    },
+    {
+      "name": "unit/tooling/seethrough-probe.test.ts",
+      "passed": 2,
+      "failed": [],
+      "skipped": 0
+    }
+  ]
+}

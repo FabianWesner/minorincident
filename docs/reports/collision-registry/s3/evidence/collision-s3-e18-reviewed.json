@@ -1,0 +1,271 @@
+{
+  "source": "test-results/collision-s3-e18-reviewed.json",
+  "stats": {
+    "startTime": "2026-10-15T23:25:28.478Z",
+    "duration": 225111.599,
+    "expected": 5,
+    "skipped": 4,
+    "unexpected": 4,
+    "flaky": 0
+  },
+  "errors": [],
+  "tests": [
+    {
+      "title": "T-E18-09 @E18-AC09 @perf local headless native-GPU Chrome high horde p95 frame <=16.7ms",
+      "file": "perf/e18-desktop.spec.ts",
+      "tests": [
+        {
+          "status": "expected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "passed",
+              "durationMs": 15495,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "E18 @E18 WebGPU low tier parity compiles two-mip bloom and capped crowds",
+      "file": "perf/e18-desktop.spec.ts",
+      "tests": [
+        {
+          "status": "skipped",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "skipped",
+              "durationMs": 116,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T-E18-08-physical @E18-AC08 @manual physical iOS and Android recordings at final verification",
+      "file": "perf/e18-devices.spec.ts",
+      "tests": [
+        {
+          "status": "skipped",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "skipped",
+              "durationMs": 128,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T-E18-08-android-webgl @E18-AC08 @perf emulated mobile L6 at 4x CPU p50 >=30fps",
+      "file": "perf/e18-devices.spec.ts",
+      "tests": [
+        {
+          "status": "expected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "passed",
+              "durationMs": 34528,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T-E18-08-android-webgpu @E18-AC08 @perf emulated mobile L6 at 4x CPU p50 >=30fps",
+      "file": "perf/e18-devices.spec.ts",
+      "tests": [
+        {
+          "status": "skipped",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "skipped",
+              "durationMs": 123,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T-E18-08-ios-webgl @E18-AC08 @perf emulated mobile L6 at 2x CPU p50 >=30fps",
+      "file": "perf/e18-devices.spec.ts",
+      "tests": [
+        {
+          "status": "expected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "passed",
+              "durationMs": 29214,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T-E18-08-ios-webgpu @E18-AC08 @perf emulated mobile L6 at 2x CPU p50 >=30fps",
+      "file": "perf/e18-devices.spec.ts",
+      "tests": [
+        {
+          "status": "skipped",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "skipped",
+              "durationMs": 120,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "horde budget high run 1 @E18-AC01 @E18-AC09 @perf",
+      "file": "perf/horde-budget.spec.ts",
+      "tests": [
+        {
+          "status": "expected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "passed",
+              "durationMs": 15385,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "horde budget low run 1 @E18-AC01 @E18-AC09 @perf",
+      "file": "perf/horde-budget.spec.ts",
+      "tests": [
+        {
+          "status": "expected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "passed",
+              "durationMs": 16928,
+              "errors": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "phone base L1 @E18 @perf @phone-base",
+      "file": "perf/phone-base.spec.ts",
+      "tests": [
+        {
+          "status": "unexpected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "failed",
+              "durationMs": 23537,
+              "errors": [
+                {
+                  "location": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/perf/phone-base.spec.ts",
+                    "column": 52,
+                    "line": 108
+                  },
+                  "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33\u001b[39m\nReceived:    \u001b[31m34.20000000000073\u001b[39m\n\n  106 |   expect(samples.filter(s => s.ticks > 0).length).toBeGreaterThan(100);\n  107 |   expect(proof.simP95).toBeGreaterThan(0);\n> 108 |   if (phase !== 'before') { expect(proof.frameP95).toBeLessThanOrEqual(33); expect(proof.simP95).toBeLessThanOrEqual(6); }\n      |                                                    ^\n  109 | });\n  110 |\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/perf/phone-base.spec.ts:108:52"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "phone base L3 @E18 @perf @phone-base",
+      "file": "perf/phone-base.spec.ts",
+      "tests": [
+        {
+          "status": "unexpected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "failed",
+              "durationMs": 26376,
+              "errors": [
+                {
+                  "location": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/perf/phone-base.spec.ts",
+                    "column": 52,
+                    "line": 108
+                  },
+                  "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33\u001b[39m\nReceived:    \u001b[31m34.19999999999709\u001b[39m\n\n  106 |   expect(samples.filter(s => s.ticks > 0).length).toBeGreaterThan(100);\n  107 |   expect(proof.simP95).toBeGreaterThan(0);\n> 108 |   if (phase !== 'before') { expect(proof.frameP95).toBeLessThanOrEqual(33); expect(proof.simP95).toBeLessThanOrEqual(6); }\n      |                                                    ^\n  109 | });\n  110 |\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/perf/phone-base.spec.ts:108:52"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "phone base L4 @E18 @perf @phone-base",
+      "file": "perf/phone-base.spec.ts",
+      "tests": [
+        {
+          "status": "unexpected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "failed",
+              "durationMs": 25669,
+              "errors": [
+                {
+                  "location": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/perf/phone-base.spec.ts",
+                    "column": 52,
+                    "line": 108
+                  },
+                  "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33\u001b[39m\nReceived:    \u001b[31m34.900000000001455\u001b[39m\n\n  106 |   expect(samples.filter(s => s.ticks > 0).length).toBeGreaterThan(100);\n  107 |   expect(proof.simP95).toBeGreaterThan(0);\n> 108 |   if (phase !== 'before') { expect(proof.frameP95).toBeLessThanOrEqual(33); expect(proof.simP95).toBeLessThanOrEqual(6); }\n      |                                                    ^\n  109 | });\n  110 |\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/perf/phone-base.spec.ts:108:52"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "phone base L5 @E18 @perf @phone-base",
+      "file": "perf/phone-base.spec.ts",
+      "tests": [
+        {
+          "status": "unexpected",
+          "project": "chromium",
+          "results": [
+            {
+              "status": "failed",
+              "durationMs": 26495,
+              "errors": [
+                {
+                  "location": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/perf/phone-base.spec.ts",
+                    "column": 52,
+                    "line": 108
+                  },
+                  "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33\u001b[39m\nReceived:    \u001b[31m33.80000000000291\u001b[39m\n\n  106 |   expect(samples.filter(s => s.ticks > 0).length).toBeGreaterThan(100);\n  107 |   expect(proof.simP95).toBeGreaterThan(0);\n> 108 |   if (phase !== 'before') { expect(proof.frameP95).toBeLessThanOrEqual(33); expect(proof.simP95).toBeLessThanOrEqual(6); }\n      |                                                    ^\n  109 | });\n  110 |\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/perf/phone-base.spec.ts:108:52"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

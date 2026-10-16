@@ -1,0 +1,12 @@
+{
+  "extends": "l5-po-metro-ingress.json",
+  "name": "collision-l5-metro-yield",
+  "note": "Production five-survivor ingress with the stationary courier in the narrow stair mouth. Her canonical physical radius participates in friendly separation so followers can push her aside and pass. Inspect planted feet, separate bodies and the standing corgi at both quality tiers and game zooms.",
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [37.7854, -49.13], "yaw": -90, "state": "idle", "loadout": ["weapon.fire-axe", "weapon.army-mg"] },
+    { "id": "corgi", "kind": "corgi", "at": [37.77191, -49.34055], "state": "idle" }
+  ],
+  "frames": 600,
+  "sheet": 30,
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "collisionFailuresMax": 0, "collisionPendingMax": 0, "bodyOverlapMaxCm": 2 }
+}

@@ -1,0 +1,348 @@
+{
+  "source": "Runtime of 2e0f14d72; snapshot before the callback return annotation was corrected to unknown (no JavaScript change)",
+  "passed": 61,
+  "failed": 0,
+  "skipped": 0,
+  "files": [
+    {
+      "name": "sim/combat/encounter-balance.test.ts",
+      "passed": 1,
+      "failed": [],
+      "assertions": [
+        {
+          "title": "T-E05-encounter @E05 @E19 efficient clicker HP lost per encounter: one infected <= 5 HP (bat and unarmed), two/three with the bat <= 15/30",
+          "status": "passed",
+          "ms": 30503.419414
+        }
+      ]
+    },
+    {
+      "name": "sim/ai/zoo-s3.test.ts",
+      "passed": 15,
+      "failed": [],
+      "assertions": [
+        {
+          "title": "T-E07-19-zebra.kick-timing @E07-AC05 @E07-AC19 pause, telegraph, recovery, serialized group/cooldown, exact next activation",
+          "status": "passed",
+          "ms": 669.8399730000001
+        },
+        {
+          "title": "T-E07-19-zebra.stampede-timing @E07-AC05 @E07-AC19 pause, telegraph, recovery, serialized group/cooldown, exact next activation",
+          "status": "passed",
+          "ms": 190.66079200000058
+        },
+        {
+          "title": "T-E07-19-flamingo.dive-timing @E07-AC05 @E07-AC19 pause, telegraph, recovery, serialized group/cooldown, exact next activation",
+          "status": "passed",
+          "ms": 122.95716999999968
+        },
+        {
+          "title": "T-E07-19-zebra-kick @E07-AC01 @E07-AC19 rear 90 degree/2m boundary, 20 damage, 3m shove and 36 tick stagger; front/cover/protected controls",
+          "status": "passed",
+          "ms": 65.23546100000021
+        },
+        {
+          "title": "T-E07-19-zebra-stampede @E07-AC19 existing 2-4 zebras, locked 10m/s, 15m, 1.5m sweep and one hit per zebra",
+          "status": "passed",
+          "ms": 130.61995899999965
+        },
+        {
+          "title": "T-E07-19-zebra-stampede-wall @E07-AC19 intact walls stop every participant and remain intact",
+          "status": "passed",
+          "ms": 82.06139600000006
+        },
+        {
+          "title": "T-E07-19-group-controls @E07-AC19 no phantom herd/flock, cap, 12m acquisition, busy/dead/occluded animals excluded",
+          "status": "passed",
+          "ms": 12.412823000000571
+        },
+        {
+          "title": "T-E07-19-flamingo-dive @E07-AC19 existing birds steer, locked 3m area, 5 HP/36 tick stagger once, 48 tick obstruction expiry",
+          "status": "passed",
+          "ms": 111.11780199999976
+        },
+        {
+          "title": "T-E07-19-flamingo-dive-wall @E07-AC19 flock cannot affect a target through solid geometry",
+          "status": "passed",
+          "ms": 56.83998599999995
+        },
+        {
+          "title": "T-E07-19-zebra.kick-checkpoint @E07-AC05 @E07-AC19 production checkpoint restores group, locked area, hit set and independent cooldowns",
+          "status": "passed",
+          "ms": 66.69518900000003
+        },
+        {
+          "title": "T-E07-19-zebra.stampede-checkpoint @E07-AC05 @E07-AC19 production checkpoint restores group, locked area, hit set and independent cooldowns",
+          "status": "passed",
+          "ms": 82.56848799999989
+        },
+        {
+          "title": "T-E07-19-flamingo.dive-checkpoint @E07-AC05 @E07-AC19 production checkpoint restores group, locked area, hit set and independent cooldowns",
+          "status": "passed",
+          "ms": 75.93850500000008
+        },
+        {
+          "title": "T-E07-19-zebra-stampede-player @E07-AC19 every distinct zebra deals 25HP even inside the ordinary hurt grace window",
+          "status": "passed",
+          "ms": 66.39098900000045
+        },
+        {
+          "title": "T-E07-19-flamingo-dive-lock @E07-AC19 moving target does not drag the marked area; small/absent flock cannot create a dive",
+          "status": "passed",
+          "ms": 30.295631999999387
+        },
+        {
+          "title": "T-E07-19-zoo-stagger-lethal @E07-AC19 lethal kick/dive finishes a civilian instead of leaving a zero-HP moving brain",
+          "status": "passed",
+          "ms": 66.8491980000008
+        }
+      ]
+    },
+    {
+      "name": "sim/world/solid-admission.test.ts",
+      "passed": 37,
+      "failed": [],
+      "assertions": [
+        {
+          "title": "all moving and parked vehicle hulls use the contact commit: vehicle.sedan",
+          "status": "passed",
+          "ms": 421.1903110000003
+        },
+        {
+          "title": "all moving and parked vehicle hulls use the contact commit: vehicle.military-apc",
+          "status": "passed",
+          "ms": 17.480924999999843
+        },
+        {
+          "title": "all moving and parked vehicle hulls use the contact commit: vehicle.pickup",
+          "status": "passed",
+          "ms": 22.621472000000722
+        },
+        {
+          "title": "all moving and parked vehicle hulls use the contact commit: vehicle.suv",
+          "status": "passed",
+          "ms": 11.731915999999728
+        },
+        {
+          "title": "all moving and parked vehicle hulls use the contact commit: vehicle.police",
+          "status": "passed",
+          "ms": 20.848352999999406
+        },
+        {
+          "title": "all moving and parked vehicle hulls use the contact commit: vehicle.ambulance",
+          "status": "passed",
+          "ms": 16.420053999999254
+        },
+        {
+          "title": "all moving and parked vehicle hulls use the contact commit: vehicle.school-bus",
+          "status": "passed",
+          "ms": 25.142381999999998
+        },
+        {
+          "title": "all moving and parked vehicle hulls use the contact commit: vehicle.fire-engine",
+          "status": "passed",
+          "ms": 10.380279999999402
+        },
+        {
+          "title": "unsafe spawn retains identity and concurrency slot, then admits when the hull leaves",
+          "status": "passed",
+          "ms": 76.4978340000007
+        },
+        {
+          "title": "teleport and checkpoint allies reserve distinct radius-aware slots",
+          "status": "passed",
+          "ms": 33.772226000000046
+        },
+        {
+          "title": "a deferred checkpoint keeps its requested pose and restores collider and grace on admission",
+          "status": "passed",
+          "ms": 40.2181529999998
+        },
+        {
+          "title": "repeating a blocked checkpoint request does not turn its hidden courier into a passenger",
+          "status": "passed",
+          "ms": 75.2024849999998
+        },
+        {
+          "title": "a pooled body can return to its former position under its new identity",
+          "status": "passed",
+          "ms": 31.421636000000035
+        },
+        {
+          "title": "a safe explicit relocation releases an earlier deferred checkpoint request",
+          "status": "passed",
+          "ms": 41.723197000000255
+        },
+        {
+          "title": "a circular admission beside a box corner can walk away at its full radius",
+          "status": "passed",
+          "ms": 82.9705410000006
+        },
+        {
+          "title": "checkpoint restore discards a deferred player mask from the discarded timeline",
+          "status": "passed",
+          "ms": 3920.1694529999995
+        },
+        {
+          "title": "a checkpoint containing a deferred player restores the inactive collider until admission",
+          "status": "passed",
+          "ms": 2329.739542000001
+        },
+        {
+          "title": "guard audits a stationary actor when a tank moves over it and retains bounded diagnostics",
+          "status": "passed",
+          "ms": 6.0367089999999735
+        },
+        {
+          "title": "vehicle exits wait for bodyless actors occupying both doors",
+          "status": "passed",
+          "ms": 27.365263000001505
+        },
+        {
+          "title": "a deferred casualty leaves admission and follows normal death cleanup",
+          "status": "passed",
+          "ms": 6.489577999998801
+        },
+        {
+          "title": "a stationary revived actor is admitted again after its attachment exemption ends",
+          "status": "passed",
+          "ms": 6.839355000000069
+        },
+        {
+          "title": "an explicit actor attachment alone exempts contact with its owner",
+          "status": "passed",
+          "ms": 9.163446000000476
+        },
+        {
+          "title": "an attack windup faces its victim without residual steering rotating it into a neighbour",
+          "status": "passed",
+          "ms": 19.659884000000602
+        },
+        {
+          "title": "a clear formation can enter positions its neighbours vacate during the same tick",
+          "status": "passed",
+          "ms": 6.155619999999544
+        },
+        {
+          "title": "an isolated blocked actor projects along contact instead of freezing at its prior pose",
+          "status": "passed",
+          "ms": 5.261443999999756
+        },
+        {
+          "title": "a cached dense-crowd contact permits a formation to enter the space its blocker vacates",
+          "status": "passed",
+          "ms": 7.990293999999267
+        },
+        {
+          "title": "a wider house resident keeps its identity and walks clear of the pedestrian doorstep",
+          "status": "passed",
+          "ms": 78.93067100000007
+        },
+        {
+          "title": "same-id conversion keeps a legal circular pose beside a conservative route corner",
+          "status": "passed",
+          "ms": 9.600664999999935
+        },
+        {
+          "title": "courier and corgi remain outside eight classic attackers through windup and knockback",
+          "status": "passed",
+          "ms": 245.6781489999994
+        },
+        {
+          "title": "courier and corgi remain outside eight L1 attackers through windup and knockback",
+          "status": "passed",
+          "ms": 184.75655299999926
+        },
+        {
+          "title": "the courier can push out of eight living bodies while every committed footprint stays clear",
+          "status": "passed",
+          "ms": 41.600618999998915
+        },
+        {
+          "title": "parked rotated hull admission uses its exact footprint rather than its coarse route box",
+          "status": "passed",
+          "ms": 11.156705999999758
+        },
+        {
+          "title": "courier contact projection sweeps the existing capsule instead of crossing a solid to a clear endpoint",
+          "status": "passed",
+          "ms": 3.8476510000000417
+        },
+        {
+          "title": "a stationary footprint change revalidates contact with its stationary neighbour",
+          "status": "passed",
+          "ms": 1.4807179999988875
+        },
+        {
+          "title": "a hidden courier without a passenger owner still needs clear hull admission",
+          "status": "passed",
+          "ms": 12.187511000000086
+        },
+        {
+          "title": "the legacy L4 seated courier exempts only its explicit convoy bus",
+          "status": "passed",
+          "ms": 868.0195299999996
+        },
+        {
+          "title": "a hull reappears with unchanged entity revision and excludes an actor admitted while it was hidden",
+          "status": "passed",
+          "ms": 6.11765000000014
+        }
+      ]
+    },
+    {
+      "name": "sim/world/solid-registry.test.ts",
+      "passed": 5,
+      "failed": [],
+      "assertions": [
+        {
+          "title": "collision admission: parked vehicle.sedan excludes an Alpha",
+          "status": "passed",
+          "ms": 534.3843690000003
+        },
+        {
+          "title": "collision admission: parked vehicle.school-bus excludes an Alpha",
+          "status": "passed",
+          "ms": 73.6644069999993
+        },
+        {
+          "title": "collision commit: full Alpha radius survives thin nav blocker knockback",
+          "status": "passed",
+          "ms": 16.946071000000302
+        },
+        {
+          "title": "collision admission: eight coincident Alphas keep all eight encounters without a committed stack",
+          "status": "passed",
+          "ms": 31.312269000000015
+        },
+        {
+          "title": "collision natural L4: tank excludes every living Alpha through audit tick 15662",
+          "status": "passed",
+          "ms": 78484.193504
+        }
+      ]
+    },
+    {
+      "name": "unit/performance/spatial-contact-cache.test.ts",
+      "passed": 3,
+      "failed": [],
+      "assertions": [
+        {
+          "title": "2 m cells retain exact circle queries across negative cell edges and moves",
+          "status": "passed",
+          "ms": 50.12375199999951
+        },
+        {
+          "title": "4 m cells retain exact circle queries across negative cell edges and moves",
+          "status": "passed",
+          "ms": 21.82529699999941
+        },
+        {
+          "title": "contact cache preserves full horde simulation state against unfiltered spatial queries",
+          "status": "passed",
+          "ms": 3039.4916620000004
+        }
+      ]
+    }
+  ]
+}

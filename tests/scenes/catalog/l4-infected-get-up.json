@@ -83,10 +83,7 @@
   ],
   "camera": {
     "mode": "game",
-    "target": [
-      0,
-      0
-    ],
+    "target": "courier",
     "zoom": 1
   },
   "frames": 1800,
@@ -96,6 +93,10 @@
     "undrawnFramesMax": 0,
     "courierAttacksMin": 1,
     "drawCallsMax": 300,
-    "trianglesMax": 500000
+    "trianglesMax": 500000,
+    "collisionFailuresMax": 0,
+    "collisionPendingMax": 0,
+    "bodyOverlapMaxCm": 2,
+    "attackBodyOverlapMaxCm": 2
   }
 }

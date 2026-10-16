@@ -27,7 +27,8 @@ test('L7 starts the courier on the authored raised night exit', async () => {
 function teleport(w: SimWorld, x: number, z: number) {
   const p = w.entities.get(1)!;
   Object.assign(p.transform, { x, z, y: w.districts!.groundHeight(x, z) + .7 });
-  w.physics.playerBody!.setTranslation(p.transform, true); w.spatial.set(1, x, z);
+  expect(w.solids.admit(p, 'test.l7.teleport', 4, false)).toBe(true);
+  w.physics.playerBody!.setTranslation(p.transform, true); w.physics.playerBody!.setNextKinematicTranslation(p.transform); w.spatial.set(1, p.transform.x, p.transform.z);
 }
 for (const tier of ['high', 'low'] as const) test(`T-E29-08 @E29-AC08 ${tier}: all arrivals, five Alphas, safe emergence and strict caps`, async () => {
   const w = await load(tier, []), c = w.l7Encounters!, ai = w.infected!, cap = tier === 'high' ? 200 : 100;
@@ -140,7 +141,7 @@ test('T-E29-12 @E29-AC12 rocket opening is traversed by a living follower while 
   c.start(); ai.director.update(); c.update();
   expect(c.state.finalReady).toBe(true);
   const follower = w.entities.get(base.id)!;
-  Object.assign(follower.transform, { x: -53, z: 46, y: .7 }); w.spatial.set(follower.id, -53, 46);
+  Object.assign(follower.transform, { x: -53, z: 46, y: .7 }); expect(w.solids.admit(follower, 'test.l7.follower')).toBe(true);
   // Keep this deterministic blast/path fixture in place; ordinary AI remains covered by production movement tests.
   for (const e of ai.active) { e.combat!.staggerUntil = 10000; e.infected!.until = 10000; }
   teleport(w, -79, 46); w.entities.get(1)!.transform.yaw = Math.PI;
