@@ -1,0 +1,31 @@
+{
+  "port": 63634,
+  "workers": 1,
+  "maxTotalSeconds": 1140,
+  "maxPreflightSeconds": 60,
+  "phonePerf": true,
+  "webgpuProxy": true,
+  "files": [
+    "tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+    "tests/perf/e18-desktop.spec.ts",
+    "tests/perf/e18-devices.spec.ts",
+    "tests/perf/l2-budgets.spec.ts",
+    "tests/perf/l3-budgets.spec.ts",
+    "tests/perf/l4-budgets.spec.ts",
+    "tests/perf/l5-budgets.spec.ts",
+    "tests/perf/l6-budgets.spec.ts",
+    "tests/perf/l10-cure-mist.spec.ts",
+    "tests/perf/l10-finale-budgets.spec.ts"
+  ],
+  "requestedSlots": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "admitted": false,
+  "heldSlots": [],
+  "exitCode": 75,
+  "reason": "Another headless browser is active; rejected before locks, no new queue wait.",
+  "observedLoad1": 2.45
+}

@@ -1,0 +1,6 @@
+- All five lane tips are integrated at `e9f81030b`; buffer-retirement correction and armed courier scenes are committed in `0cf73a31e`.
+- Typecheck/lint/build pass; remote A: 3,032 pass / 3 fail / 9 skip; remote B: 3,047 pass / 7 fail / 11 skip; all executed functional tests pass after isolated retries.
+- Isolated timing: 204 pass / 2 fail; L9 handover 3/3, L10 route 2/2 and final audio 6/6 pass, without budget/deadline changes.
+- Final E18 heap/counters: 9/9 pass, heap +2.98% high / +5.38% low; L5 low 488,127 female / 492,783 male triangles.
+- Canonical smoke 6 Node + 31 browser, matrix 960/960, browser 120/120; focused WebGL2/WebGPU 60/60 each, sheets opened and reviewed.
+- RED: Zoo S1/S2 p95 4.053/4.999 ms >4 ms; native timing unmeasured under the slot-wait cutoff. [Evidence and visual review](validation.md). No deployment or merge into main.

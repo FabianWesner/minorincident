@@ -1,0 +1,29 @@
+{
+  "sampleContext": "After isolated retries on the reference runner; Group B full functional sweep still active on its runner.",
+  "runners": [
+    {
+      "host": "94.130.181.173",
+      "node": "v26.0.0",
+      "arch": "x64",
+      "cpus": 4,
+      "model": "AMD EPYC-Rome Processor",
+      "load": [
+        0.03,
+        0.17,
+        1.26
+      ]
+    },
+    {
+      "host": "2.28.24.66",
+      "node": "v26.0.0",
+      "arch": "x64",
+      "cpus": 4,
+      "model": "AMD EPYC-Rome Processor",
+      "load": [
+        4.97,
+        5.11,
+        4.82
+      ]
+    }
+  ]
+}
