@@ -133,3 +133,13 @@ PO (verbatim): "L6 overall. Make the level darker. Let the user pickup a flashli
 - Efficiency: one spotlight (shadows on high only), no new render pass, E18 budgets hold at high and low.
 
 PO implementation clarification: the equipment pickup is beside the start lantern, requires E / middle-click, persists in checkpoint inventory and is worn on either courier. Reuse the existing warm beam and courier glow; outside its facing cone use grey material output while emissive eyes and sparse existing practical pools keep their colour. No additional render pass. Native scream frame maximum: <50 ms desktop / <100 ms low, with and without debug.
+
+
+## PO 2026-10-15: subway follow-up (spec audit)
+
+Source: `epics-pipeline/po-bugs-1015.md` in the main workspace.
+
+- #30, verbatim: "L6 - Tracks are disconnected". AC12 includes a continuous shared rail/sleeper/ballast kit from station to portal, rail endpoint seams ≤ 2 cm, and a station/portal Scene Lab view.
+- #33, verbatim: "I heard a scream and then the game froze for 3s". AC19 includes the scream cold-start frame maximum < 50 ms desktop / < 100 ms low, with and without `?debug`; warm outbreak assets behind loading and stage arrivals. The earlier breach2/abandon limits still apply.
+- #34, verbatim: "What is this?". For the service-gate task, AC11/17 require one understandable objective/progress bar, highlighted crates and target line, next-crate marker, first-push hint and gate occlusion treatment.
+- #35, verbatim: "L6 is too easy because Zombies are only coming from behind, but there could be more places where they enter the tunnel, so overall more action". AC06 includes telegraphed small groups ahead/beside the player from side accesses, route engagement measurements and the retained newbie death limit. This extends the original rear-pursuit pressure; darkness and escape paths remain binding.
