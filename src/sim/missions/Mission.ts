@@ -95,6 +95,7 @@ export class Mission {
   /** Install the initial cast while loading so its assets and shaders are ready at Begin. */
   prepare(): void {
     if (this.prepared || this.state.phase !== 'briefing') return;
+    if (this.def.id === 'L7') this.world.l7Encounters?.prepare();
     this.l1?.prepare(); this.l2?.prepare(); this.l3?.prepare(); this.l4?.prepare(); this.l5?.prepare(); this.l6?.prepare(); this.l8?.prepare(); this.l9?.prepare();
     this.prepared = true;
   }
@@ -230,7 +231,7 @@ export class Mission {
   }
   private finish(): void {
     if (this.finishApplied || this.state.phase !== 'playing' || !this.def.finish.every(id => this.state.steps[id].status === 'completed')) return;
-    if (!this.def.l9 && this.runOut()) return;
+    if (!this.def.l9 && this.def.id !== 'L7' && this.runOut()) return;
     this.finishApplied = true; this.run(this.def.onComplete);
     if (!this.state.cinematic) this.result();
   }
@@ -256,7 +257,7 @@ export class Mission {
     // The L10 route timing includes its playable epilogue; title and credits have their own presentation clock.
     if (this.state.epilogue && this.state.cureFront) this.state.stats.time -= Math.max(0, this.state.cureFront.elapsed - this.state.counters['epilogue-ticks']) / 60;
     const l5 = this.l5?.result();
-    this.state.result = { ...structuredClone(this.state.stats), ...this.l1?.result(), ...l5, ...this.l6?.result(), ...this.l8?.result() };
+    this.state.result = { ...structuredClone(this.state.stats), ...this.l1?.result(), ...l5, ...this.l6?.result(), ...(this.def.id === 'L7' ? this.world.l7Departure?.result() : {}), ...this.l8?.result() };
     this.l9?.end();
     this.emit({ type: 'level.completed', id: this.def.id, result: this.state.result });
     // E20/E21: no caption card or reward screen after L2 and L3; the campaign continues straight into the next level.
@@ -375,7 +376,16 @@ export class Mission {
     });
   }
   checkpoint(id: string, anchor: { x: number; z: number } = this.world.entities.get(1)!.transform): void { if (!this.def.checkpoints.includes(id)) throw new Error(`Unknown checkpoint: ${id}`); this.state.checkpoint = id; this.world.player!.setCheckpoint({ ...this.world.entities.get(1)!.transform, ...anchor }); this.checkpoints.set(id, this.capture()); this.emit({ type: 'checkpoint.set', id }); }
-  private capture(): MissionCheckpoint { return { tick: this.world.tick, state: structuredClone(this.state), entities: this.world.query({}), ...(this.def.id === 'L10' && this.world.progression?.campaign ? { combatSequence: this.world.combat?.runner.lastAttackId ?? 0, arsenal: structuredClone({ ownedActions: this.world.progression.campaign.ownedActions, racks: this.world.progression.campaign.racks }) } : {}), seams: captureSeams(this.world) }; }
+  private capture(): MissionCheckpoint {
+    const campaign = this.world.progression?.campaign, weapons = this.world.entities.get(1)?.weapons;
+    const arsenal = campaign && (this.def.id === 'L7' || this.def.id === 'L10') ? structuredClone({ ownedActions: campaign.ownedActions, racks: campaign.racks }) : undefined;
+    // Retained L7 pickups update the live racks; snapshot ownership in the same transaction as the pickup.
+    if (arsenal && this.def.id === 'L7' && weapons) {
+      arsenal.racks = { LEFT: weapons.LEFT.rack.map(s => s.id), RIGHT: weapons.RIGHT.rack.map(s => s.id) };
+      arsenal.ownedActions = [...new Set([...arsenal.ownedActions, ...arsenal.racks.LEFT, ...arsenal.racks.RIGHT])];
+    }
+    return { tick: this.world.tick, state: structuredClone(this.state), entities: this.world.query({}), ...(arsenal ? { combatSequence: this.world.combat?.runner.lastAttackId ?? 0, arsenal } : {}), seams: captureSeams(this.world) };
+  }
   /** Serializable live progress plus the last reached retry checkpoint, for the existing SaveStore. */
   saveResume(): { current: MissionCheckpoint; checkpoint: MissionCheckpoint } {
     const checkpoint = this.checkpoints.get(this.state.checkpoint ?? 'start');

@@ -6,7 +6,7 @@ export const checkpointNames: Readonly<Record<string, Readonly<Record<string, st
   L4: { start: 'the convoy', arrival: 'the military camp', turn: 'the plaza', 'line-1': 'the first defense line', nests: 'the gun nests', armor: 'the armored vehicles', 'line-break': 'the cellar entrance' },
   L5: { start: 'the neighborhood', outside: 'the safe house', 'survivor-1': 'the first survivor', 'survivor-2': 'the second survivor', 'survivor-3': 'the third survivor', 'survivor-4': 'the fourth survivor', 'survivor-5': 'the fifth survivor' },
   L6: { start: 'the shelter', shelter: 'the shelter', stop: 'the tunnel entrance', abandon: 'the tunnel entrance', retreat: 'the tunnel retreat', 'mid-tunnel': 'the middle of the tunnel', exit: 'the night exit', 'exit-platform': 'the station platform' },
-  L7: { start: 'the evacuation route' },
+  L7: { start: 'the night exit', 'night-exit': 'the night exit', rocket: 'the rocket launcher', corridor: 'the evacuation corridor' },
   L8: { start: 'the zoo entrance', sanctuary: 'the sanctuary', breach: 'the breached sanctuary', 'escape-route': 'the escape route' },
   L9: { start: 'the crossing', 'crossing-start': 'the crossing', 'outskirts-approach': 'the outskirts' },
   L10: {

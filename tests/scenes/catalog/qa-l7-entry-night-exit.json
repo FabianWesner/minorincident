@@ -1,0 +1,10 @@
+{
+  "extends": "../l7-district/northgate.json",
+  "name": "qa-l7-entry-night-exit",
+  "note": "L7 entry/checkpoint recovery visual regression; production death path is covered by T-E29-16-browser. Follow the courier during the approach so close zoom does not crop the subject; the bus departure retains its authored cinematic.",
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  }
+}

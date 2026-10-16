@@ -79,6 +79,7 @@ export class LevelSevenEncounters {
     this.prepare();
     if (this.state.started) return;
     this.state.started = true;
+    this.world.events.emit({ type: 'mission.signal', tick: this.world.tick, name: 'l7.armed' });
     const low = this.world.infected!.director.tier === 'low';
     // Final horde is present before approach. Its Alphas get slots before ordinary queued arrivals.
     this.group(l7Encounters.finalGroup, l7Encounters.horde, low ? 60 : 120, 2);
