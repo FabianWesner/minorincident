@@ -1,5 +1,5 @@
 import type { ScenarioDefinition } from '../../levels/loader';
-type Wall = NonNullable<ScenarioDefinition['walls']>[number];
+export type Wall = NonNullable<ScenarioDefinition['walls']>[number];
 /** Coarse look-ahead offsets (path nodes) for budgeted NPC steering. */
 const lookAhead = [40, 30, 22, 15, 10, 6, 3, 1, 0];
 /** Radius cuts (m) `move` tries, smallest first, for a body that already stands inside the baked wall margin. */
@@ -9,6 +9,9 @@ const marginSteps = [0.002, 0.005, 0.01, 0.02, 0.04, 0.06, 0.08, 0.1];
 const nearestMemoCapacity = 64;
 /** Collider-baked district grid (0.5 m by default). Fixed workspaces serve budgeted A* and shared reverse flow fields. */
 export class NavGrid {
+  get hasSolids(): boolean { return this.buckets.size > 0 || this.blockers.size > 0; }
+  /** Changes invalidate solid contact audits as well as routes. */
+  revision = 0;
   readonly width: number;
   readonly depth: number;
   readonly blocked: Uint8Array;
@@ -21,6 +24,7 @@ export class NavGrid {
   private pathStamp = 0;
   private readonly heap: { cell: number; score: number }[] = [];
   private readonly buckets = new Map<number, Map<number, Wall[]>>();
+  private readonly routeBuckets = new Map<number, Map<number, Wall[]>>();
   private searchFrom = -1;
   private searchTo = -1;
   private searching = false;
@@ -123,12 +127,15 @@ export class NavGrid {
   }
   x(cell: number): number { return (cell % this.width + 0.5) * this.cellSize - this.ground.width / 2 + this.center.x; }
   z(cell: number): number { return (Math.floor(cell / this.width) + 0.5) * this.cellSize - this.ground.depth / 2 + this.center.z; }
+  /** Navigation domain only. Exact physical admission uses the shared solid bake/hull registry. */
+  contains(x: number, z: number, radius = 0): boolean {
+    return (!this.mask || this.mask(x, z)) && Math.abs(x - this.center.x) + radius < this.ground.width / 2 && Math.abs(z - this.center.z) + radius < this.ground.depth / 2;
+  }
   clear(x: number, z: number, radius = 0, rounded = false, ignoreBlocker?: number): boolean {
-    if (this.mask && !this.mask(x, z)) return false;
-    if (Math.abs(x - this.center.x) + radius >= this.ground.width / 2 || Math.abs(z - this.center.z) + radius >= this.ground.depth / 2) return false;
-    if (!this.buckets.size && !this.blockers.size) return true;
+    if (!this.contains(x, z, radius)) return false;
+    if (!this.routeBuckets.size && !this.blockers.size) return true;
     const cellX = Math.floor(x / 4), cellZ = Math.floor(z / 4);
-    const walls = this.buckets.get(cellX)?.get(cellZ);
+    const walls = this.routeBuckets.get(cellX)?.get(cellZ);
     if (walls) for (const w of walls) if (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius) return false;
     const blockers = this.blockerBuckets.get(cellX)?.get(cellZ);
     if (blockers) for (const [id, w] of blockers) if (id !== ignoreBlocker && (rounded ? this.intersects(w, x, z, radius) : Math.abs(x - w.x) < w.halfX + radius && Math.abs(z - w.z) < w.halfZ + radius)) return false;
@@ -142,15 +149,34 @@ export class NavGrid {
     const outsideX = Math.max(0, dx - w.halfX), outsideZ = Math.max(0, dz - w.halfZ);
     return radius === 0 || outsideX * outsideX + outsideZ * outsideZ < radius * radius;
   }
-  private indexWalls(): void {
-    this.buckets.clear();
-    for (const wall of this.walls.filter(w => w.navBlocker || (w.y - w.halfY < 1.8 && w.y + w.halfY > .05))) for (let z = Math.floor((wall.z - wall.halfZ - 2) / 4); z <= Math.floor((wall.z + wall.halfZ + 2) / 4); z++) for (let x = Math.floor((wall.x - wall.halfX - 2) / 4); x <= Math.floor((wall.x + wall.halfX + 2) / 4); x++) {
-      let column = this.buckets.get(x);
-      if (!column) this.buckets.set(x, column = new Map());
-      let bucket = column.get(z);
-      if (!bucket) column.set(z, bucket = []);
-      bucket.push(wall);
+  /** Exact solid query over the existing bake buckets; no second static collision world.
+   * Buckets already include a 2 m body margin. Larger footprints visit adjoining buckets. */
+  visitSolids(x: number, z: number, radius: number, visit: (wall: Wall, id: string) => void): void {
+    if (!this.buckets.size && !this.blockers.size) return;
+    const reach = Math.max(0, radius - 2), seen = reach ? new Set<Wall>() : null;
+    for (let cx = Math.floor((x - reach) / 4); cx <= Math.floor((x + reach) / 4); cx++) for (let cz = Math.floor((z - reach) / 4); cz <= Math.floor((z + reach) / 4); cz++) {
+      for (const w of this.buckets.get(cx)?.get(cz) ?? []) if (!seen?.has(w)) { seen?.add(w); visit(w, this.wallIds.get(w)!); }
+      for (const [id, w] of this.blockerBuckets.get(cx)?.get(cz) ?? []) if (!seen?.has(w)) { seen?.add(w); visit(w, `blocker:${id}`); }
     }
+  }
+  private readonly wallIds = new WeakMap<Wall, string>();
+  private indexWalls(): void {
+    this.revision++;
+    this.walls.forEach((wall, i) => this.wallIds.set(wall, `static:${i}`));
+    // Both indexes borrow the same authored walls. Route queries keep their
+    // original ground-height subset; contact queries also inspect raised solids.
+    const index = (walls: readonly Wall[], buckets: typeof this.buckets) => {
+      buckets.clear();
+      for (const wall of walls) for (let z = Math.floor((wall.z - wall.halfZ - 2) / 4); z <= Math.floor((wall.z + wall.halfZ + 2) / 4); z++) for (let x = Math.floor((wall.x - wall.halfX - 2) / 4); x <= Math.floor((wall.x + wall.halfX + 2) / 4); x++) {
+        let column = buckets.get(x);
+        if (!column) buckets.set(x, column = new Map());
+        let bucket = column.get(z);
+        if (!bucket) column.set(z, bucket = []);
+        bucket.push(wall);
+      }
+    };
+    index(this.walls, this.buckets);
+    index(this.walls.filter(w => w.navBlocker || w.y - w.halfY < 1.8 && w.y + w.halfY > .05), this.routeBuckets);
   }
   /** The same walls, live blockers and mask baked for a wider body (E32 Mega Alpha); the caller forwards later blocker changes. */
   withClearance(clearance: number): NavGrid {
@@ -182,6 +208,7 @@ export class NavGrid {
   }
   /** E11 doors and broken props invalidate only their affected cells and cached searches. */
   setBlocker(id: number, wall: Wall, blocked: boolean): void {
+    this.revision++;
     this.playerRoutes?.setBlocker(id, this.playerWall(wall), blocked);
     this.reachMemo = null;
     const previousBounds = this.nearestBlockers.get(id);
@@ -238,7 +265,7 @@ export class NavGrid {
     const divisor = Math.max(1, steps);
     const walls = new Set<Wall>();
     const collect = (x: number, z: number) => {
-      const bucket = this.buckets.get(x)?.get(z); if (bucket) for (const wall of bucket) walls.add(wall);
+      const bucket = this.routeBuckets.get(x)?.get(z); if (bucket) for (const wall of bucket) walls.add(wall);
       const blockers = this.blockerBuckets.get(x)?.get(z); if (blockers) for (const wall of blockers.values()) walls.add(wall);
     };
     if (!this.mask) {
@@ -296,7 +323,9 @@ export class NavGrid {
   }
   /** Sweeps movement in subcell increments; axis fallback slides around collider corners. */
   move(position: { x: number; z: number }, dx: number, dz: number, radius: number, capsule = false): void {
-    const count = Math.max(1, Math.ceil(Math.hypot(dx, dz) / 0.2)); dx /= count; dz /= count;
+    // This square is strictly inside the 0.2 m step circle. Its common small
+    // moves have exactly one substep, without a hypotenuse calculation.
+    const count = Math.abs(dx) <= .125 && Math.abs(dz) <= .125 ? 1 : Math.max(1, Math.ceil(Math.hypot(dx, dz) / 0.2)); dx /= count; dz /= count;
     // Rapier contact or crowd pushes can leave a body inside the grid's conservative margin.
     // Recover enough clearance to slide out instead of rejecting every step along the face.
     // Checked only once a step is refused, so free movement costs nothing extra.

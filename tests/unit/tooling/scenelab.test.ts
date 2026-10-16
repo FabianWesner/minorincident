@@ -1,10 +1,12 @@
 import { matchesBackend } from '../../../tools/scenelab/run';
+import { readSpec } from '../../../tools/scenelab/session';
 import { readdirSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import manifest from '../../../src/assets/manifest.json';
 import type { AssetDef } from '../../../src/assets/types';
 import type { DistrictLayout } from '../../../src/levels/districts/types';
 import { DistrictWorld } from '../../../src/sim/world/DistrictWorld';
+import { levelTwoLayouts } from '../../../src/levels/L2/layout';
 import { buildScene, placementFor, validateSpec, type SceneSpec } from '../../../src/debug/scenelab/spec';
 import { boneClipping, boxOf, pointTriangleDistance2, segmentTriangle, staticClipping, trianglesIntersect, type TriangleSet } from '../../../src/debug/scenelab/geometry';
 import { summarizeMotion, torsoPitch, type MotionFrame } from '../../../src/debug/scenelab/motion';
@@ -46,6 +48,23 @@ describe('Scene Lab spec', () => {
     expect(built.layout.anchors['gate-1'].position).toEqual([0, 0, -.5]);
     expect(grove.anchors['gate-1']).toEqual(before);
     expect(() => buildScene({ layout: { district: 'D-GROVE', anchors: ['missing'] } }, assets, grove)).toThrow('Unknown layout anchor missing');
+  });
+  it('retains production L2 mission anchors and open market collision for its release scene', () => {
+    const spec = JSON.parse(readFileSync('tests/scenes/catalog/collision-l2-release.json', 'utf8')) as SceneSpec;
+    const [source] = levelTwoLayouts([grove]);
+    const built = buildScene(spec, assets, source);
+    expect(built.layout.anchors).toEqual(source.anchors);
+    expect(built.layout.anchors['l2-street-edge-1']).toBeDefined();
+    expect(built.layout.colliders).toEqual(source.colliders);
+  });
+  it('loads L2 bridge and closure fixtures from the authored safe start before courier admission', () => {
+    const [source] = levelTwoLayouts([grove]);
+    for (const name of ['collision-l2-bridge-arrivals', 'collision-l2-checkpoint-contact']) {
+      const spec = readSpec(`tests/scenes/catalog/${name}.json`);
+      const built = buildScene(spec, assets, source), start = source.anchors['player-start'].position;
+      expect(built.playerStart).toEqual([start[0], start[2]]);
+      expect(() => new DistrictWorld(built.composition, [built.layout], 1)).not.toThrow();
+    }
   });
   it('crops a shipped layout by bbox and asset filter, optionally recentred', () => {
     const spec: SceneSpec = { layout: { district: 'D-GROVE', bbox: [[0, 22], [5, 28]], assets: ['prop.flower-bed*', 'prop.picket-fence'], recenter: true } };

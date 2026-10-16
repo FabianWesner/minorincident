@@ -5,6 +5,8 @@ export interface Transform { x: number; y: number; z: number; yaw: number }
 /** Plain components only; physics handles and render objects are never serialized. */
 export interface EntitySnapshot {
   id: number;
+  /** Unsafe admission retains its identity and slot until a radius-aware placement succeeds. */
+  pendingAdmission?: Transform & { writer: string; hidden?: boolean; range?: number; navigation?: boolean; colliderEnabled?: boolean; graceTicks?: number };
   /** Settled persistent body: no brain, collision obstacle or physics updates. */
   corpse?: boolean;
   /** A retained death pose in flight; the crowd view follows its actual transform. */
@@ -129,6 +131,7 @@ export type GameEvent = import('../lighting/LightPower').LightPowerEvent | impor
   | { tick: number; type: 'scenario.loaded'; name: string; seed: number }
   | { tick: number; type: 'scenario.unloaded'; name: string };
 export interface GameStateSnapshot {
+  collision?: ReturnType<import('./SolidRegistry').SolidRegistry['snapshot']>;
   chunks?: import('./ChunkResidency').ChunkSnapshot;
   chunkResidency?: ReturnType<import('./ChunkResidency').ChunkResidency['stats']>;
   l9?: import('../missions/LevelNineCrash').L9CrashState;

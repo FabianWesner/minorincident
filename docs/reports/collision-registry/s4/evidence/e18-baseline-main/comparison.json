@@ -1,0 +1,58 @@
+{
+  "head": "3714fe54e",
+  "main": "3883a1679",
+  "baselineSourceFilesVerified": 513,
+  "sourceVerification": "Each baseline src/fixture/counter-test file matched its git blob on pinned main; memory tests and Playwright config extracted directly from main. assets/public have no branch diff. Fresh isolated baseline build; ownport3481/oneworker; same headless Metal config.",
+  "counterHead": {
+    "triangles": 565883,
+    "budget": 500000,
+    "actors": 100
+  },
+  "counterMain": "Fails before counters: Infected concurrency cap reached. Numerical triangle overrun attribution is unresolved; main E18 AC01 is already failing.",
+  "memory": [
+    {
+      "source": "head",
+      "tier": "high",
+      "firstMB": 79.757604,
+      "lastMB": 96.643024,
+      "growthPercent": 21.170921834612777,
+      "L6HeapMB": [
+        67.913108,
+        76.373288
+      ]
+    },
+    {
+      "source": "main",
+      "tier": "high",
+      "firstMB": 79.266408,
+      "lastMB": 96.179812,
+      "growthPercent": 21.337416979964587,
+      "L6HeapMB": [
+        67.728912,
+        76.140176
+      ]
+    },
+    {
+      "source": "head",
+      "tier": "low",
+      "firstMB": 68.16494,
+      "lastMB": 85.913688,
+      "growthPercent": 26.037942672582126,
+      "L6HeapMB": [
+        61.13022,
+        69.428416
+      ]
+    },
+    {
+      "source": "main",
+      "tier": "low",
+      "firstMB": 67.61116,
+      "lastMB": 85.435496,
+      "growthPercent": 26.36300871039634,
+      "L6HeapMB": [
+        60.932232,
+        69.213748
+      ]
+    }
+  ]
+}

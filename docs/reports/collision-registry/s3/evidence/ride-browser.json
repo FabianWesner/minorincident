@@ -1,0 +1,593 @@
+{
+  "source": "test-results/collision-s3-ride-browser.json",
+  "code": "e723998d0; pre-health-detour build",
+  "stats": {
+    "startTime": "2026-10-15T22:37:24.294Z",
+    "duration": 333342.20900000003,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 17,
+    "flaky": 0
+  },
+  "errors": [],
+  "tests": [
+    {
+      "name": "T-E22-ride-smooth-60hz @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz)",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 15858,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m48506.02510217891\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        },
+        {
+          "status": "failed",
+          "duration": 15883,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m48506.025102179796\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T-E22-ride-smooth-120hz @E22 the L4 convoy bus does not vibrate on screen during the ride (120hz)",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 25714,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m135571.85000247636\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        },
+        {
+          "status": "failed",
+          "duration": 25270,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m135571.85000177697\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T-E22-ride-smooth-uneven-120hz @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz)",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 25515,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m69413.89108960211\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        },
+        {
+          "status": "failed",
+          "duration": 25323,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m82721.88500210838\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T-E22-ride-smooth-30hz @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz)",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 11030,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m54962.346211518176\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        },
+        {
+          "status": "failed",
+          "duration": 10906,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m55080.02533368196\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T-E22-ride-smooth-uneven-phone @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone)",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 11687,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m285858.5559144919\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        },
+        {
+          "status": "failed",
+          "duration": 11654,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m35499.47891778581\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T-E22-ride-smooth-60hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz-webgl-low)",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 15805,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m48506.02510217891\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        },
+        {
+          "status": "failed",
+          "duration": 15803,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m48227.984130952354\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T-E22-ride-smooth-uneven-120hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz-webgl-low)",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 25756,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m139843.96177151686\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        },
+        {
+          "status": "failed",
+          "duration": 25283,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m165358.52294594838\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T-E22-ride-smooth-30hz-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz-webgl-low)",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 10627,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m38146.28015320164\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        },
+        {
+          "status": "failed",
+          "duration": 10837,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m55080.025333703634\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T-E22-ride-smooth-uneven-phone-webgl-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone-webgl-low)",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 11379,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m35499.478917776854\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        },
+        {
+          "status": "failed",
+          "duration": 11514,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m279789.6064170603\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T-E22-ride-smooth-60hz-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz-webgpu-high)",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 15510,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m48506.02510215105\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        },
+        {
+          "status": "failed",
+          "duration": 15615,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m48506.02510215849\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T-E22-ride-smooth-uneven-120hz-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz-webgpu-high)",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 25394,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m51863.735181823125\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        },
+        {
+          "status": "failed",
+          "duration": 25216,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m73481.3938082375\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T-E22-ride-smooth-30hz-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz-webgpu-high)",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 10872,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m55080.02533382872\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        },
+        {
+          "status": "failed",
+          "duration": 10475,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m59222.208374736394\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T-E22-ride-smooth-uneven-phone-webgpu-high @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone-webgpu-high)",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 11479,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m320629.7697312141\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        },
+        {
+          "status": "failed",
+          "duration": 11265,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m320629.76973175775\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T-E22-ride-smooth-60hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (60hz-webgpu-low)",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 15544,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m48506.02510214752\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        },
+        {
+          "status": "failed",
+          "duration": 15738,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m48506.02510215058\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T-E22-ride-smooth-uneven-120hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-120hz-webgpu-low)",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 25320,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m51863.735181823125\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        },
+        {
+          "status": "failed",
+          "duration": 25240,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m165358.52294584928\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T-E22-ride-smooth-30hz-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (30hz-webgpu-low)",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 11016,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m55080.02533379114\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        },
+        {
+          "status": "failed",
+          "duration": 10678,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m54423.20184963909\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "T-E22-ride-smooth-uneven-phone-webgpu-low @E22 the L4 convoy bus does not vibrate on screen during the ride (uneven-phone-webgpu-low)",
+      "status": "unexpected",
+      "results": [
+        {
+          "status": "failed",
+          "duration": 11086,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m38116.973414668304\u001b[39m\n\n  81 |     expect(samples.length).toBeGreaterThan(30);\n  82 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n> 83 |     expect(result.busJitterPx, 'bus screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n     |                                                              ^\n  84 |     if (result.apcJitterPx !== null) expect(result.apcJitterPx, 'lead vehicle screen jitter (px RMS)').toBeLessThanOrEqual(0.6);\n  85 |   });\n  86 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        },
+        {
+          "status": "failed",
+          "duration": 10809,
+          "errors": [
+            {
+              "location": {
+                "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts",
+                "column": 62,
+                "line": 83
+              },
+              "message": "Error: bus screen jitter (px RMS)\n\n\u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m0.6\u001b[39m\nReceived:    \u001b[31m39137.59987893524\u001b[39m\n\n  81 |     expect(wheelSpinDeltaRad).toHaveLength(4);\n  82 |     for (const delta of wheelSpinDeltaRad) expect(delta, 'every bus wheel rolls during the ride').toBeGreaterThan(1);\n> 83 |     const result = { wheelSpinDeltaRad, frames: samples.length, busJitterPx: jit(s => s.bus), apcJitterPx: onScreen ? jit(s => s.apc) : null, roadJitterPx: jit(s => s.prop) };\n     |                                                              ^\n  84 |     writeFileSync(`test-results/epics/E22/ride-smooth-${name}.json`, JSON.stringify({ ...result, samples: samples.map(s => ({ t: +s.t.toFixed(1), bus: s.bus.map(v => +v.toFixed(2)), apc: s.apc.map(v => +v.toFixed(2)) })) }));\n  85 |     expect(samples.length).toBeGreaterThan(30);\n  86 |     // The bus is the camera's subject: it stays put on screen (the earlier tick-snapped bus swung 10+ px against the interpolated camera).\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-s1/tests/e2e/levels/l4-bus-ride-smooth.spec.ts:83:62"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

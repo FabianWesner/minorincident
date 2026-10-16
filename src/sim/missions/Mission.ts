@@ -424,6 +424,10 @@ export class Mission {
     const checkpoint = this.checkpoints.get(id); if (!checkpoint) throw new Error(`Unknown checkpoint: ${id}`);
     const timeout = this.state.failure === 'timeout';
     const stats = this.state.stats, bosses=this.state.killedBosses, delta = this.world.tick - checkpoint.tick;
+    // Optional fields absent from the snapshot belong to the discarded timeline
+    // too (notably run-out, which otherwise prevents a fresh graph walk).
+    const previous = this.state as unknown as Record<string, unknown>;
+    for (const key of Object.keys(previous)) if (!(key in checkpoint.state)) delete previous[key];
     Object.assign(this.state, structuredClone(checkpoint.state)); this.state.stats = stats; this.state.killedBosses=bosses; this.state.failure = null; this.state.phase = 'playing'; this.state.cinematic = null; this.state.result = null;
     if (timeout && this.state.deadlineTicks !== null) this.state.deadlineTicks += Math.ceil((this.def.deadline?.retryGraceSeconds ?? 0) * 60);
     this.finishApplied = false; this.pendingCheckpoints.length=0; this.markerObjective=this.def.steps.find(s=>this.state.steps[s.id].status==='active')?.id??null; this.pendingMarker=null;
@@ -439,8 +443,12 @@ export class Mission {
     for (const [actor, entityId] of Object.entries(this.state.actors)) if (this.deadBosses.has(actor)) { const entity = entities.find(e => e.id === entityId); if (entity) entity.health.current = 0; }
     // Keep Player's live object because its controller holds that reference.
     const player = this.world.entities.get(1)!;
+    const pendingCollider = player.pendingAdmission?.colliderEnabled;
+    delete player.pendingAdmission; delete player.hidden; delete player.passengerOf; delete player.attachedTo;
     delete player.weapons; delete player.inventory;
     Object.assign(player, entities[0]); player.health.current = player.health.max; player.survivor!.diedAt = null;
+    if (player.pendingAdmission) this.world.physics.playerCollider!.setEnabled(false);
+    else if (pendingCollider !== undefined) this.world.physics.playerCollider!.setEnabled(pendingCollider);
     for (const entity of entities) if (entity.light && entity.light.startedAt >= 0) entity.light.startedAt += delta;
     for (const entity of entities) if (entity.vehicle) { if (entity.vehicle.explodeAt !== null) entity.vehicle.explodeAt += delta; if (entity.vehicle.recoveringUntil) entity.vehicle.recoveringUntil += delta; }
     if (!this.world.npcs && this.world.infected) { this.world.infected.pool.push(...this.world.infected.active); this.world.infected.active.length=0; }
@@ -481,6 +489,7 @@ export class Mission {
       player.health.current = checkpoint.entities.find(e => e.id === 1)!.health.current;
       this.state.failure = checkpoint.state.failure;
     } else this.emit({ type: 'checkpoint.restored', id });
+    this.world.solids.restore();
   }
-  dispose(): void { this.stops.forEach(stop => stop()); for(const handle of this.gateHandles.values()) {const collider=this.world.physics.world?.getCollider(handle);if(collider)this.world.physics.world!.removeCollider(collider,true);} this.gateHandles.clear(); }
+  dispose(): void { this.l2?.dispose(); this.stops.forEach(stop => stop()); for(const handle of this.gateHandles.values()) {const collider=this.world.physics.world?.getCollider(handle);if(collider)this.world.physics.world!.removeCollider(collider,true);} this.gateHandles.clear(); }
 }

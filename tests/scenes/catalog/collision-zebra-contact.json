@@ -1,0 +1,68 @@
+{
+  "name": "collision-zebra-contact",
+  "note": "PO contact-hit rule: charging zebra bodies contact living humans at sum of radii plus 2 cm. Two real herd members retain their locked path; inspect separate feet and bodies before and after contact at every quality and zoom.",
+  "seed": 1,
+  "ground": "asphalt",
+  "size": 60,
+  "time": "L4",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        5,
+        0
+      ],
+      "god": false,
+      "state": "idle"
+    },
+    {
+      "id": "zebra",
+      "kind": "infected",
+      "archetype": "infected.zebra",
+      "at": [
+        0,
+        0
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "herd",
+      "kind": "infected",
+      "archetype": "infected.zebra",
+      "at": [
+        -2,
+        0
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      5,
+      0
+    ],
+    "zoom": 1
+  },
+  "script": [
+    {
+      "frame": 0,
+      "actor": "zebra",
+      "do": {
+        "special": "zebra.stampede",
+        "target": "courier"
+      }
+    }
+  ],
+  "frames": 160,
+  "sheet": 15,
+  "expect": {
+    "consoleErrors": 0,
+    "collisionFailuresMax": 0,
+    "collisionPendingMax": 0,
+    "bodyOverlapMaxCm": 2,
+    "specialActiveMin": 2,
+    "specialActiveMove": "zebra.stampede"
+  }
+}

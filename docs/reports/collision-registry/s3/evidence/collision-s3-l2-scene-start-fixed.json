@@ -1,0 +1,84 @@
+{
+  "source": "test-results/collision-s3-l2-scene-start-fixed.json",
+  "passed": 14,
+  "failed": 0,
+  "pending": 0,
+  "suites": [
+    {
+      "file": "unit/tooling/scenelab.test.ts",
+      "durationMs": 2292.196044921875,
+      "tests": [
+        {
+          "name": "Scene Lab spec retains authored vehicle decay on static placements",
+          "status": "passed",
+          "durationMs": 2.1978090000000066
+        },
+        {
+          "name": "Scene Lab spec reports readable validation errors",
+          "status": "passed",
+          "durationMs": 0.7651960000000599
+        },
+        {
+          "name": "Scene Lab spec places props with the layout exporter footprint and loads as a real district",
+          "status": "passed",
+          "durationMs": 14.784491000000116
+        },
+        {
+          "name": "Scene Lab spec copies requested gameplay anchors with the crop shift, leaving the shipped layout intact",
+          "status": "passed",
+          "durationMs": 16.222491999999875
+        },
+        {
+          "name": "Scene Lab spec retains production L2 mission anchors and open market collision for its release scene",
+          "status": "passed",
+          "durationMs": 1059.066066
+        },
+        {
+          "name": "Scene Lab spec loads L2 bridge and closure fixtures from the authored safe start before courier admission",
+          "status": "passed",
+          "durationMs": 1178.3690899999997
+        },
+        {
+          "name": "Scene Lab spec crops a shipped layout by bbox and asset filter, optionally recentred",
+          "status": "passed",
+          "durationMs": 4.264724000000115
+        },
+        {
+          "name": "Scene Lab spec every shipped example spec validates",
+          "status": "passed",
+          "durationMs": 9.00531299999966
+        },
+        {
+          "name": "Scene Lab clipping geometry segment and triangle tests",
+          "status": "passed",
+          "durationMs": 0.9513339999998607
+        },
+        {
+          "name": "Scene Lab clipping geometry reports static pairs that cut through each other, not neighbours",
+          "status": "passed",
+          "durationMs": 2.2092389999997977
+        },
+        {
+          "name": "Scene Lab clipping geometry flags bones that pierce or sink into a prop, ignores clear ones",
+          "status": "passed",
+          "durationMs": 0.6762799999996787
+        },
+        {
+          "name": "Scene Lab motion metrics measures planted-foot slide against the known floor",
+          "status": "passed",
+          "durationMs": 1.2541879999998855
+        },
+        {
+          "name": "Scene Lab motion metrics torso pitch is signed toward the facing direction",
+          "status": "passed",
+          "durationMs": 0.21381000000019412
+        },
+        {
+          "name": "backend gate recognizes the WebGL2 label and rejects fallback to the wrong backend",
+          "status": "passed",
+          "durationMs": 0.1960060000001249
+        }
+      ]
+    }
+  ]
+}

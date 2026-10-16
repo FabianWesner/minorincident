@@ -7,12 +7,13 @@ import { arena, spawn, step } from './helpers';
 
 async function setup(x = 0, playerX = 6) {
   const w = await arena();
-  const e = spawn(w, 'alpha', x, 0, 'idle');
-  e.infected!.pursuit = true; e.infected!.variant = megaAlpha.asset;
-  e.combat!.radius = megaAlpha.radius; e.health = { current: megaAlpha.hp, max: megaAlpha.hp };
   const player = w.entities.get(1)!;
   Object.assign(player.transform, { x: playerX, z: 0, y: .705 });
   w.physics.playerBody!.setTranslation(player.transform, true); w.player!.locomotion.reset(); w.spatial.set(1, playerX, 0);
+  // Establish the observer first: admission must not move a boss spawned on her.
+  const e = spawn(w, 'alpha', x, 0, 'idle');
+  e.infected!.pursuit = true; e.infected!.variant = megaAlpha.asset;
+  e.combat!.radius = megaAlpha.radius; e.health = { current: megaAlpha.hp, max: megaAlpha.hp };
   return { w, e, player };
 }
 const area = { x: 0, z: 0, radius: 1, dx: 1, dz: 0 };

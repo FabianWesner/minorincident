@@ -1,0 +1,43 @@
+{
+  "source": "3714fe54e",
+  "projects": [
+    "timing",
+    "functional"
+  ],
+  "counts": {
+    "sim.passed": 1132,
+    "unit.passed": 1554,
+    "unit.skipped": 7
+  },
+  "totalCases": 2693,
+  "skips": [
+    {
+      "file": "unit/tooling/e2e-lock.test.ts",
+      "name": "machine browser capacity reserves units across concurrent jobs and releases them for waiting jobs"
+    },
+    {
+      "file": "unit/tooling/e2e-lock.test.ts",
+      "name": "machine browser capacity returns a child exit 75 exactly once and preserves its stderr"
+    },
+    {
+      "file": "unit/tooling/e2e-lock.test.ts",
+      "name": "machine browser capacity charges the Playwright worker count, including separated CLI arguments"
+    },
+    {
+      "file": "unit/tooling/e2e-lock.test.ts",
+      "name": "machine browser capacity rejects undersized and invalid reservations before launching a command"
+    },
+    {
+      "file": "unit/tooling/e2e-lock.test.ts",
+      "name": "machine browser capacity allows nesting within a reservation and rejects expansion"
+    },
+    {
+      "file": "unit/tooling/e2e-lock.test.ts",
+      "name": "machine browser capacity can acquire nonadjacent free slots without holding a partial reservation"
+    },
+    {
+      "file": "unit/tooling/e2e-lock.test.ts",
+      "name": "machine browser capacity quiet-run covers the legacy fourth slot even with E2E_SLOTS=1"
+    }
+  ]
+}

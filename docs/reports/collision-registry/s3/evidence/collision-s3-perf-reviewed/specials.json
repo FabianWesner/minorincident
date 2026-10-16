@@ -1,0 +1,164 @@
+{
+  "source": "test-results/collision-s3-perf-reviewed/specials.json",
+  "passed": 21,
+  "failed": 1,
+  "pending": 0,
+  "tests": [
+    {
+      "file": "sim/performance/alpha-physical.test.ts",
+      "name": "T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms",
+      "status": "passed",
+      "duration": 1570.377278,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/performance/alpha-physical.test.ts",
+      "name": "T-E07-11-alpha-physical-100 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 6ms",
+      "status": "passed",
+      "duration": 616.8819140000014,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/performance/alpha-support.test.ts",
+      "name": "T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms",
+      "status": "passed",
+      "duration": 1620.6928040000003,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/performance/alpha-support.test.ts",
+      "name": "T-E07-06-support-perf-100 @E18-AC02 @perf live Alpha support moves stay within 6ms",
+      "status": "passed",
+      "duration": 682.6665829999993,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/performance/alpha.test.ts",
+      "name": "T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms",
+      "status": "passed",
+      "duration": 1536.678175000001,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/performance/alpha.test.ts",
+      "name": "T-E07-11-alpha-100 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 6ms",
+      "status": "passed",
+      "duration": 558.567149999999,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/performance/horde.test.ts",
+      "name": "T-E18-02-200 @E18-AC02 @perf Node sim p95 200 living infected <= 4ms",
+      "status": "passed",
+      "duration": 1257.059865999996,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/performance/horde.test.ts",
+      "name": "T-E18-02-100 @E18-AC02 @perf Node sim p95 100 living infected <= 6ms",
+      "status": "passed",
+      "duration": 483.6975459999958,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/performance/horde.test.ts",
+      "name": "T-E18-tier-cap @E18-AC04 degradation keeps existing infected and caps future spawns without awarding kills",
+      "status": "passed",
+      "duration": 8.875332999996317,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/performance/l10-finale.test.ts",
+      "name": "T-E32-20-perf-200 @E32-AC20 @E32-AC31 @E18-AC02 full-cap active dispersal predicate",
+      "status": "passed",
+      "duration": 6453.5669960000005,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/performance/l10-finale.test.ts",
+      "name": "T-E32-20-perf-100 @E32-AC20 @E32-AC31 @E18-AC02 full-cap active dispersal predicate",
+      "status": "passed",
+      "duration": 3032.843973000001,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/performance/l6-fixture.test.ts",
+      "name": "E18 mobile L6 probe uses current shelter geometry and retains 100 admitted infected",
+      "status": "passed",
+      "duration": 2135.365958999995,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/performance/mega-audio.test.ts",
+      "name": "T-E32-13-perf-200 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling",
+      "status": "passed",
+      "duration": 3726.2157739999966,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/performance/mega-audio.test.ts",
+      "name": "T-E32-13-perf-100 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling",
+      "status": "passed",
+      "duration": 1574.5321790000016,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/performance/mega-moves.test.ts",
+      "name": "T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+      "status": "passed",
+      "duration": 1832.6083839999956,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/performance/mega-moves.test.ts",
+      "name": "T-E32-11-perf-100 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+      "status": "passed",
+      "duration": 756.5870480000012,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/performance/zoo-s1.test.ts",
+      "name": "T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
+      "status": "passed",
+      "duration": 2112.093597000003,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/performance/zoo-s1.test.ts",
+      "name": "T-E07-11-zoo-s1-100 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 6ms",
+      "status": "passed",
+      "duration": 831.7162200000021,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/performance/zoo-s2.test.ts",
+      "name": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+      "status": "failed",
+      "duration": 2582.2552079999987,
+      "failureMessages": [
+        "AssertionError: expected 4.358402000001661 to be less than or equal to 4\n    at /srv/mi/jobs/collision-s1-d2c10a-83388-1792106129/tests/sim/performance/zoo-s2.test.ts:26:68\n    at file:///srv/mi/jobs/collision-s1-d2c10a-83388-1792106129/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "sim/performance/zoo-s2.test.ts",
+      "name": "T-E07-11-zoo-s2-100 @E07-AC11 @E18-AC02 mixed zoo specials stay within 6ms",
+      "status": "passed",
+      "duration": 976.2331970000014,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/performance/zoo-s3.test.ts",
+      "name": "T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+      "status": "passed",
+      "duration": 1480.1335420000032,
+      "failureMessages": []
+    },
+    {
+      "file": "sim/performance/zoo-s3.test.ts",
+      "name": "T-E07-11-zoo-s3-100 @E07-AC11 @E18-AC02 mixed zoo specials stay within 6ms",
+      "status": "passed",
+      "duration": 581.7163959999998,
+      "failureMessages": []
+    }
+  ]
+}

@@ -11,7 +11,8 @@ const dist = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.z - b.z);
 const CELL = 5;
 /** Scripted actors (tank, helicopter, fuel truck) are plain rigid entities (`kind: 'setpiece'`, archetype = the manifest asset id); no combat component, never in the spatial hash. */
 export function spawnSetPiece(world: SimWorld, asset: string, at: { x: number; z: number; y?: number; yaw?: number }): EntitySnapshot {
-  return world.entities.create({ kind: 'setpiece', archetype: asset, faction: 'neutral', health: { current: 1000, max: 1000 }, transform: { x: at.x, y: at.y ?? .7, z: at.z, yaw: at.yaw ?? 0 } });
+  const e = world.entities.create({ kind: 'setpiece', archetype: asset, faction: 'neutral', health: { current: 1000, max: 1000 }, transform: { x: at.x, y: at.y ?? .7, z: at.z, yaw: at.yaw ?? 0 } });
+  world.solids.register(e); return e;
 }
 
 /**
@@ -84,9 +85,12 @@ export class L4Spectacle {
       return;
     }
     // Holding in the lake garden: turn the hull toward the next target, fire every 8-12 s.
-    if (tick < s.tankFireAt) return;
+    // Turn during the cooldown, so hull rotation does not get added to the
+    // authored 8–12 s firing interval when a separated cluster changes bearing.
+    if (tick < s.tankFireAt - Math.ceil(Math.PI / l4.tank.turnRate * 60)) return;
     const clear = (p: Point) => this.clearOfAllies(p, l4.tank.minDistM);
     let target = this.cluster(3, clear) ?? this.cluster(1, clear);
+    if (!target && tick < s.tankFireAt) return;
     // l4 merge fix: once the horde is locked in melee with the lines (every infected within minDistM of an ally) no cluster is safe to shell.
     // After one missed second the tank shells the busiest street mouth outside the safety radius instead of idling for 10+ s.
     if (!target && this.dueMisses++ >= 1) target = this.streetBarrage(clear);
@@ -95,6 +99,7 @@ export class L4Spectacle {
     const delta = Math.atan2(Math.sin(want - tank.transform.yaw), Math.cos(want - tank.transform.yaw));
     const step = l4.tank.turnRate / 60;
     if (Math.abs(delta) > step) { tank.transform.yaw += Math.sign(delta) * step; return; }
+    if (tick < s.tankFireAt) return;
     this.fireTank(tank, target.at);
   }
   /** The street mouth (no building doors) that is clear of the courier and every ally and has the most infected within 25 m (ties: nearest to the courier). */

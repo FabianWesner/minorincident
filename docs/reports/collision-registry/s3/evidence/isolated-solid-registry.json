@@ -1,0 +1,34 @@
+{
+  "source": "2e0f14d72",
+  "mode": "one file at a time, one worker; ordinary shared runner slot",
+  "passed": 5,
+  "failed": 0,
+  "skipped": 0,
+  "assertions": [
+    {
+      "title": "collision admission: parked vehicle.sedan excludes an Alpha",
+      "status": "passed",
+      "ms": 224.64088300000003
+    },
+    {
+      "title": "collision admission: parked vehicle.school-bus excludes an Alpha",
+      "status": "passed",
+      "ms": 19.804199999999582
+    },
+    {
+      "title": "collision commit: full Alpha radius survives thin nav blocker knockback",
+      "status": "passed",
+      "ms": 3.8302389999998923
+    },
+    {
+      "title": "collision admission: eight coincident Alphas keep all eight encounters without a committed stack",
+      "status": "passed",
+      "ms": 7.94520300000022
+    },
+    {
+      "title": "collision natural L4: tank excludes every living Alpha through audit tick 15662",
+      "status": "passed",
+      "ms": 52243.21899
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "passed": 36,
+  "failed": 2,
+  "failures": [
+    {
+      "name": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+      "failure": "AssertionError: expected 8.482705000000351 to be less than or equal to 4"
+    },
+    {
+      "name": "T-E32-11-alpha.charge @E32-AC11 windup, damage, recovery, nonoverlap and activation cooldown",
+      "failure": "AssertionError: expected 'active' to be 'recovery' // Object.is equality"
+    }
+  ]
+}

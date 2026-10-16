@@ -34,9 +34,9 @@ export class Civilians {
     const nav = this.world.infected!.nav;
     const animal = options.zooAnimal ? infectedDef(`infected.${options.zooAnimal}`) : undefined;
     if (animal && !this.outbreak) throw new Error('Zoo animals require the same-id outbreak lifecycle');
-    if (!nav.clear(position.x, position.z, animal?.radius ?? .35)) throw new RangeError('Civilian spawn outside navigation');
+    if (![position.x, position.z].every(Number.isFinite) || nav.cell(position.x, position.z) < 0) throw new RangeError('Civilian spawn outside navigation');
     const waypoints = options.waypoints ?? [position, { x: position.x + 3, z: position.z }, { x: position.x + 3, z: position.z + 3 }, { x: position.x, z: position.z + 3 }];
-    if (!waypoints.length || !waypoints.every(p => Number.isFinite(p.x) && Number.isFinite(p.z) && nav.clear(p.x, p.z, animal?.radius ?? .35))) throw new RangeError('Invalid civilian routine');
+    if (!waypoints.length || !waypoints.every(p => Number.isFinite(p.x) && Number.isFinite(p.z) && nav.cell(p.x, p.z) >= 0)) throw new RangeError('Invalid civilian routine');
     const civilian: Civilian = { zooAnimal: options.zooAnimal, state: 'calm', ambient: options.ambient ?? false, adult: !options.child, pet: options.pet ?? null, owner: options.owner ?? null, model: animal ? `amb.${options.zooAnimal}` : options.child ? 'npc.civilian-kid' : options.model ?? ['npc.civilian-man-a', 'npc.civilian-man-b', 'npc.civilian-woman-a', 'npc.civilian-woman-b', 'npc.civilian-elderly'][this.world.entities.size % 5], variant: animal ? animal.asset : options.pet ? `inf.${options.pet === 'dog' ? 'dog-retriever' : 'cat-tabby'}` : def.variant,
       panicReaction: options.panicReaction, schedule: options.schedule ? structuredClone(options.schedule) : undefined, scheduleStep: 0, activityUntil: 0, activityStarted: 0, lastTravelProgress: this.world.tick,
       routine: animal ? 'zoo' : options.pet ? 'pet' : options.child ? 'protected' : def.routine, waypoints: structuredClone(waypoints), waypoint: 1 % waypoints.length, pauseUntil: 0,
@@ -45,7 +45,7 @@ export class Civilians {
       combat: { radius: animal?.radius ?? .35, armor: 0, shield: false, staggerUntil: 0, attacking: false, damageMultiplier: 1, statuses: [] } });
     if (animal) civilian.l1 = { walkSpeed: 1, fleeSpeed: 2, startleTicks: 30, refuge: null, target: null, repickAt: 0, noticed: -1 };
     if (options.pet === 'dog') { civilian.model = dogModel(this.world.seed, e.id, false); civilian.variant = civilian.model.replace(/^amb\./, 'inf.'); }
-    this.world.spatial.set(e.id, position.x, position.z); return e.id;
+    this.world.spatial.set(e.id, position.x, position.z); this.world.solids.admit(e, 'civilian.spawn'); return e.id;
   }
   state(e: EntitySnapshot, state: CivilianState, duration = 0): void {
     const c = e.civilian!; if (c.state === 'grabbed' && state !== 'grabbed') this.held.delete(c.attacker); if (state !== 'calm' && state !== 'alarmed') leaveSeat(e);
@@ -105,7 +105,7 @@ export class Civilians {
     if (this.outbreak) this.outbreak.update();
     const ai = this.world.infected!, tick = this.world.tick;
     for (const e of this.world.entities.iterate()) {
-      const c = e.civilian; if (!c || c.l1 || c.state === 'infected' || c.state === 'finished') continue;
+      const c = e.civilian; if (e.pendingAdmission || !c || c.l1 || c.state === 'infected' || c.state === 'finished') continue;
       if (!c.adult) continue;
       if (e.combat && e.combat.staggerUntil > tick && c.knockedUntil <= tick) continue;
       if (c.vehicleYield && c.vehicleYield.until > tick && ['calm', 'hide', 'alarmed', 'flee'].includes(c.state)) {

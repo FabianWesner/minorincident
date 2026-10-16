@@ -1,0 +1,30 @@
+{
+  "source": "3714fe54e",
+  "command": "sh /Users/wesner/Workspace/minorincident/epics-pipeline/gate-browser.sh \"$PWD\"",
+  "stages": [
+    {
+      "stage": "smoke",
+      "startTime": "2026-10-16T06:28:20.869Z",
+      "duration": 105576.674,
+      "expected": 31,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    {
+      "stage": "matrix",
+      "rows": 608,
+      "passed": 608
+    },
+    {
+      "stage": "browser",
+      "startTime": "2026-10-16T06:56:37.971Z",
+      "duration": 865874.081,
+      "expected": 120,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    }
+  ],
+  "discoveryNote": "The separate --list E18 discovery invocation wrote a22-skip reporter file during the matrix stage. It did not run tests and is retained separately as e18-core-list-discovery.json; it is not counted as a gate stage."
+}
