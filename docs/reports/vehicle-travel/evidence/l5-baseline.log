@@ -1,0 +1,24 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › tests/e2e/levels/L5.spec.ts:150:3 › L5 Aftermath in the browser › T-E23-17 @E23 @E23-AC17 @E23-AC18 real-input playthrough: unbar the door, find the five by their signs of life, lead them to the Metro; photo spots; 0 console errors (3.6m)
+
+
+  1) [chromium] › tests/e2e/levels/L5.spec.ts:150:3 › L5 Aftermath in the browser › T-E23-17 @E23 @E23-AC17 @E23-AC18 real-input playthrough: unbar the door, find the five by their signs of life, lead them to the Metro; photo spots; 0 console errors
+
+    Error: Could not travel to {"x":-30.3699,"z":-44.4} from {"x":-52.53428649902344,"y":0.8500000238418579,"z":41.12894821166992,"yaw":9.599781568549108}
+
+      115 |       else { if (!lag) lagWait = 0; if (i % 4 === 3) await click(); }
+      116 |     }
+    > 117 |     throw new Error(`Could not travel to ${JSON.stringify(target)} from ${JSON.stringify((await player()).transform)}`);
+          |           ^
+      118 |   };
+      119 |   const interact = async () => { await page.keyboard.down('e'); await step(3); await page.keyboard.up('e'); await step(2); };
+      120 |   /** Wait (looking after the group) until every living follower is within 8 m, at most `maxS` seconds. */
+        at go (/Users/wesner/Workspace/minorincident/.claude/worktrees/vehicle-travel/tests/e2e/levels/L5.spec.ts:117:11)
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/vehicle-travel/tests/e2e/levels/L5.spec.ts:180:7
+
+    Error Context: test-results/playwright/run-34762/e2e-levels-L5-L5-Aftermath-41863-hoto-spots-0-console-errors-chromium/error-context.md
+
+  1 failed
+    [chromium] › tests/e2e/levels/L5.spec.ts:150:3 › L5 Aftermath in the browser › T-E23-17 @E23 @E23-AC17 @E23-AC18 real-input playthrough: unbar the door, find the five by their signs of life, lead them to the Metro; photo spots; 0 console errors
