@@ -14,6 +14,19 @@ type Fit = { scale: number[]; offset: number[]; hasHeadwear?: boolean };
 type Accessory = { slot: string; tint?: string; fits?: Record<string, Fit> };
 const definitions = new Map((manifest as unknown as { id: string; accessory?: Accessory }[]).map(a => [a.id, a.accessory]));
 const hairColors = hairTones.map(c => new Color(c));
+/** Base whose authored fits are retargeted to unauthored (ordinary infected) heads. */
+const referenceBase = 'npc.civilian-man-a';
+/** Its baked LOD1 skin skull in head-local metres (bakeInfected path; pinned by tests/unit/render/crowd-accessory-fit.test.ts). */
+export const referenceSkull = { size: new Vector3(.301, .334, .381), centre: new Vector3(.009, .118, 0) };
+/** Bounds of head-part skin vertices (`_parts.x` = head, `_parts.y` = -1) in head-local space. */
+export function bakedSkull(geometry: BufferGeometry): { size: Vector3; centre: Vector3 } | null {
+  const parts = geometry.getAttribute('_parts'), position = geometry.getAttribute('position'), bounds = new Box3(), point = new Vector3();
+  for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getY(i) === -1) bounds.expandByPoint(point.fromBufferAttribute(position, i));
+  return bounds.isEmpty() ? null : { size: bounds.getSize(new Vector3()), centre: bounds.getCenter(new Vector3()) };
+}
+function authoredFit(fit: Fit, out: Matrix4): Matrix4 {
+  return out.makeScale(...fit.scale as [number, number, number]).setPosition(...fit.offset as [number, number, number]);
+}
 export type AccessoryLod = 'lod0' | 'lod1' | 'lod2';
 /** Head-local assets, shared across both human crowds: at most one draw per accessory/LOD, never per figure/model.
  * LOD2 reuses the <=80 triangle LOD1 head piece so pose and quality changes preserve headwear. */
@@ -39,16 +52,18 @@ export class CrowdAccessories extends Group {
     const kind = definitions.get(id)?.slot;
     return kind === 'hat' || kind === 'hair' || id.startsWith('acc.placeholder-');
   }
-  /** Authored civilian fits win. Ordinary infected fit the same reference shell to their baked skin skull. */
+  /** Authored civilian fits win. Ordinary infected retarget the reference base's authored fit from its baked skin
+   * skull to theirs (spec audit 10-16: the old fixed shell sat ~10 cm below the measured reference skull and
+   * ignored the authored per-accessory proportions, so infected hats grew to 1.5-2x and swallowed face and
+   * shoulders, reading as multicoloured patches over the horde). */
   registerSkull(model: string, geometry: BufferGeometry): void {
     if (this.fits.has(model)) return;
-    const parts = geometry.getAttribute('_parts'), position = geometry.getAttribute('position'), bounds = new Box3(), point = new Vector3();
-    for (let i = 0; i < parts.count; i++) if (parts.getX(i) === characterNodes.indexOf('head') && parts.getY(i) === -1) bounds.expandByPoint(point.fromBufferAttribute(position, i));
-    if (bounds.isEmpty()) return;
-    const size = bounds.getSize(new Vector3()), centre = bounds.getCenter(new Vector3());
-    const scale = new Vector3(size.x / .3, size.y / .33, size.z / .444);
-    const offset = centre.sub(new Vector3(-.01, .215, 0).multiply(scale));
-    this.fits.set(model, new Matrix4().makeScale(scale.x, scale.y, scale.z).setPosition(offset));
+    const skull = bakedSkull(geometry); if (!skull) return;
+    const scale = skull.size.divide(referenceSkull.size);
+    // Map the reference skull onto this skull: centre to centre, per-axis size ratio.
+    this.fits.set(model, new Matrix4().makeTranslation(skull.centre.x, skull.centre.y, skull.centre.z)
+      .multiply(new Matrix4().makeScale(scale.x, scale.y, scale.z))
+      .multiply(new Matrix4().makeTranslation(-referenceSkull.centre.x, -referenceSkull.centre.y, -referenceSkull.centre.z)));
   }
   drawnSlot(e: EntitySnapshot, lod: string): string | null {
     void lod;
@@ -119,9 +134,14 @@ export class CrowdAccessories extends Group {
   }
   private fit(id: string, model: string): void {
     const base = model.replace(/\.aftermath$/, ''), authored = definitions.get(id)?.fits?.[base];
-    if (authored) this.fitTransform.makeScale(...authored.scale as [number, number, number]).setPosition(...authored.offset as [number, number, number]);
-    else { const fit = this.fits.get(model); if (fit) this.fitTransform.copy(fit); else this.fitTransform.identity(); }
+    if (authored) { authoredFit(authored, this.fitTransform); return; }
+    const skull = this.fits.get(model);
+    if (!skull) { this.fitTransform.identity(); return; }
+    // Retargeted reference fit: skull mapping x the reference base's authored fit of this accessory.
+    const reference = definitions.get(id)?.fits?.[referenceBase];
+    this.fitTransform.copy(skull); if (reference) this.fitTransform.multiply(authoredFit(reference, this.referenceFit));
   }
+  private readonly referenceFit = new Matrix4();
   /** Freeze the selected accessory into the body's head part and spatial pages, with no separate head draw. */
   corpseSource(e: EntitySnapshot, source: BufferGeometry, model: string, head: number): BufferGeometry {
     const look = resolveCrowdAppearance(e, this.ids);
