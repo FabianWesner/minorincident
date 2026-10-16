@@ -16,7 +16,7 @@ A weather system that changes how levels **look, sound, and play**. The states a
 
 > Rows rewritten for the PO's Level 2–6 redesign (2026-10-07). Weather is optional in the redesigned campaign: rain and the thunderstorm are no longer scheduled in a level (they remain in `weather-lab`, `storm-street` and the replay override) — orchestrator default, PO may change.
 
-**Snow:** the campaign day is late summer, so snow is not in the main story. It is available as a **weather override** when replaying completed levels (level select) and in the photo mode (decision W1, changeable). L5's ash fall reuses the snow system (gray-white flakes, ash accumulation on surfaces).
+**Snow:** the campaign day is late summer, so snow is not in the main story. It remains available as a **debug weather override**; the player-facing replay/photo selectors were removed by the later PO 2026-10-10 decision recorded below. L5's ash fall reuses the snow system (gray-white flakes, ash accumulation on surfaces).
 
 ## Systemic effects (data-driven, deterministic sim state)
 
@@ -36,7 +36,7 @@ Weather never hides the player: precipitation and fog are dithered near the came
 **In:**
 - `WeatherSystem` in the sim (state + timeline keyframes per level, seeded random gusts and lightning, wetness and accumulation values) with a render view: rain lines, splashes, puddle growth, snow and ash particles, accumulation masks in `PaletteMaterial`, lightning bolts and flashes, height fog, wind lines.
 - Coupling to E25 (sun intensity, shadow softness, wetness → reflections, fog → lit haze, lightning → light field), E16 (rain, thunder, wind, damping), E09/E26 (grip, gust forces on light props), E27 (fire and smoke modifiers, wind drift), and E07 (sight modifiers).
-- The weather override UI in level select and the photo mode.
+- The debug weather override; player menus retain story weather (PO 2026-10-10, below).
 - Quality tiers.
 - Scenarios `weather-lab` (cycles every state) and `storm-street`.
 
@@ -63,7 +63,7 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 | E28-AC05 | Fog: infected sight × 0.6 in fog (perception test from E07-AC02 repeated); the player stays readable (contrast ≥ 3:1 vs the 2 m ring) | sim/visual |
 | E28-AC06 | Wind: Molotov fire spread is biased downwind (≥ 60% of the new fire cells downwind over 20 trials); light props drift in strong gusts; smoke columns bend in the wind direction (column top offset aligns with wind ±20°) | sim/visual |
 | E28-AC07 | Snow / ash: the player and infected leave footprints (track texture coverage grows along their paths); accumulation on up-facing surfaces reaches visible coverage (≥ 60% of the roof and car-top pixels whitened in `weather-lab`); vehicle grip modifiers apply | visual/sim |
-| E28-AC08 | Override: completed levels can be replayed with any weather from level select; the override changes only the weather, not mission logic (graph walk passes with every override) | e2e/sim |
+| E28-AC08 | **PO 2026-10-10:** the old player-facing replay selector requirement is obsolete; level-select, campaign and pause menus retain story weather and expose no weather selector. Debug overrides remain and change only weather, not mission logic (graph walk passes with every override). Decision provenance below. | e2e/sim |
 | E28-AC09 | Audio coupling: rain bed level follows intensity; snow and fog apply reverb damping (offline render RT60 shorter than clear); wind gust one-shots fire with gusts (event → cue log) | e2e (offline) |
 | E28-AC10 | Performance: the heaviest weather (the storm in `storm-street`, ash at the L5 `pair-plaza`, fixture deferred to E23) stays within the E18 budgets (rain/snow particles: 20k high / 6k low) | perf |
 | E28-AC11 | Readability: precipitation within 6 m of the camera-to-player ray is dithered; the HUD weather icon shows the current state | visual/e2e |
@@ -71,8 +71,18 @@ Reuse first, per the [reuse map](08-bruno-reuse-map.md). Read these before writi
 
 ## Deviations
 
-- L5 `pair-plaza` performance evidence is pending E23: the baseline still has the legacy hold-line mission and does not contain the specified fixture.
-- Actual L6 tunnel-to-night-exit weather integration is pending E24: the baseline has no `night-exit` anchor; the weather system uses that anchor when present.
-- Photo weather selection uses the paused game controls because this baseline has no separate photo mode.
+### PO 2026-10-10: weather controls and live transitions
+
+The later decision is recorded by commit `57df1c8c633f860542bd5a1b1a6bfed31a1b5d3e`. Its **commit title**, quoted verbatim as a secondary decision record (not represented as the PO's original words), is:
+
+> fix(ui): remove the player weather selector from level select, campaign and pause menus (PO 10-10); debug override kept
+
+The supplied PO level addenda and 2026-10-15 intake do not contain the original selector request. Its original verbatim wording remains unavailable; the audit records that limitation rather than inventing a PO quote. `T-E28-08b/08c` enforce the resulting menu behaviour; `T-E28-08` retains debug-override graph invariance.
+
+The PO's in-level transition request is recorded in `epics-pipeline/backlog.md` (PO 10-10; secondary paraphrase) and implemented by commit `52d8b0a43`: L1 clear → clouds, L3 haze → ash and L5 ash → rising ground fog with ash retained. These transitions extend the older static mood table; no main-story snow or scheduled thunderstorm is added. Original verbatim request wording is likewise absent from the supplied primary PO sources.
+
+- Audit 2026-10-16: L5 `pair-plaza` now exists and `T-E23-19` is selected by E28 AC10. Fresh native performance remains unmeasured after the browser queue limit; the old missing-fixture deviation is resolved.
+- Audit 2026-10-16: actual L6 Northgate tunnel-to-night-exit weather integration passes in the E28 browser run; the old missing-anchor deviation is resolved.
+- The old paused-game photo weather selector deviation is superseded by PO 2026-10-10 above; player menus expose no weather selector.
 - Quiet L1/L2/L3 before/after frame comparison is pending a Mac load below 3; busy measurements are not accepted as proof.
-- Checklist G vision approval remains pending: golden-hour beams are absent, wet streaks are overly regular, and wall occlusion needs a dedicated E25 lighting capture.
+- Checklist G vision approval remains pending. Audit 2026-10-16: golden-hour shafts are present and the dedicated facade-spill check `T-E28-12-wall` passes; wet streaks remain regular and night-threat readability fails the fresh review. See `docs/reports/spec-audit/b.md`.

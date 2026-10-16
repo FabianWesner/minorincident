@@ -1,0 +1,167 @@
+
+> verify
+> tsx tools/verify.ts E28
+
+
+Verifying E28: npm run typecheck
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+
+Verifying E28: npm run lint
+
+> lint
+> eslint src tests tools functions *.config.ts eslint.config.js
+
+
+Verifying E28: sh tools/e2e-lock.sh npm run build
+
+> build
+> NODE_ENV=production vite build --configLoader runner
+
+vite v6.4.3 building for production...
+transforming...
+✓ 528 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/preview/index.html                             1.65 kB │ gzip:     0.72 kB
+dist/index.html                                     2.65 kB │ gzip:     0.91 kB
+dist/build/civilianBakeData-DRZjElYi.js             3.68 kB
+dist/build/BufferGeometryUtils-E8HioxtM.js          6.88 kB
+dist/build/civilianBake.worker-C13d_nt9.js          8.74 kB
+dist/build/basis_transcoder-o4Hde_L7.js            57.53 kB
+dist/build/three.module-B-nHBglW.js               206.11 kB
+dist/build/civilianSource-UMMueCh2.js             411.18 kB
+dist/build/basis_transcoder-VXdx5NbI.wasm         527.33 kB │ gzip:   244.57 kB
+dist/build/prefetch.worker--lwGsOcI.js          1,053.99 kB
+dist/build/prepareCivilianGeometry-PivjJtk0.js  2,020.30 kB
+dist/build/rapier-C6GCbKVJ.wasm                 3,082.10 kB │ gzip: 1,171.17 kB
+dist/build/index-BZx3BNCD.css                      36.72 kB │ gzip:     8.00 kB
+dist/build/lookViewpoints-BX-OEann.js               0.23 kB │ gzip:     0.16 kB
+dist/build/modulepreload-polyfill-B5Qt9EMX.js       0.71 kB │ gzip:     0.40 kB
+dist/build/preload-helper-BlTxHScW.js               1.11 kB │ gzip:     0.65 kB
+dist/build/crowdProbe-CLs7QHTp.js                   1.35 kB │ gzip:     0.78 kB
+dist/build/controls-DGdjkqyP.js                     1.40 kB │ gzip:     0.74 kB
+dist/build/worldLook-DT8mxh_z.js                    1.64 kB │ gzip:     0.76 kB
+dist/build/crowd-B3oba-p7.js                        2.35 kB │ gzip:     1.28 kB
+dist/build/l5-KCMD6j4i.js                           4.21 kB │ gzip:     1.95 kB
+dist/build/lookPatch-BT7ef7_D.js                    5.26 kB │ gzip:     2.69 kB
+dist/build/navigation-D5smqHUk.js                   5.30 kB │ gzip:     2.47 kB
+dist/build/probe-cH6419Ax.js                        7.46 kB │ gzip:     3.02 kB
+dist/build/index-DrSVsveQ.js                       12.12 kB │ gzip:     4.40 kB
+dist/build/Inspection-Bo-d0Br1.js                  12.83 kB │ gzip:     4.39 kB
+dist/build/meleeCombos-CKWE9C7V.js                 15.00 kB │ gzip:     4.94 kB
+dist/build/l4-cBdBvsfu.js                          15.72 kB │ gzip:     6.62 kB
+dist/build/MotionLab-_QLppypF.js                   20.03 kB │ gzip:     8.43 kB
+dist/build/LevelFiveBot-gECXFKV1.js                23.00 kB │ gzip:     6.21 kB
+dist/build/index-DSkXvcEQ.js                       27.23 kB │ gzip:     7.29 kB
+dist/build/testApi-Cf91sY3I.js                     28.91 kB │ gzip:    10.89 kB
+dist/build/Physics-D1AKIHqU.js                     69.38 kB │ gzip:    23.77 kB
+dist/build/Pickups-DWoyd96O.js                     78.01 kB │ gzip:    24.89 kB
+dist/build/light-anchors-DQGCSUUw.js               90.38 kB │ gzip:     6.79 kB
+dist/build/SceneLab-Dzr5FV67.js                    93.66 kB │ gzip:    32.54 kB
+dist/build/Debug-DoeeJH5i.js                      155.75 kB │ gzip:    32.99 kB
+dist/build/registry-Da9_89c3.js                   190.38 kB │ gzip:    65.27 kB
+dist/build/PropSystem-D1Qjfq4O.js                 209.76 kB │ gzip:    64.74 kB
+dist/build/rapier-ykuY6d4E.js                     212.13 kB │ gzip:    36.15 kB
+dist/build/three.module-BlJEN_py.js               290.37 kB │ gzip:    77.77 kB
+dist/build/install-DZHF0_e8.js                    689.93 kB │ gzip:   185.44 kB
+dist/build/WeatherView-DgXM-q0V.js              1,050.79 kB │ gzip:   232.14 kB
+dist/build/index-tVV3hz57.js                    1,161.07 kB │ gzip:   362.94 kB
+dist/build/character-clips-CGKWtM3S.js          1,939.70 kB │ gzip:   341.80 kB
+✓ built in 5.93s
+
+Verifying E28: sh tools/remote/run.sh /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b --pull test-results/epics/E28/vitest.json -- npx vitest run -t @(?:E28)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$) --maxWorkers=1 --reporter=default --reporter=json --outputFile=test-results/epics/E28/vitest.json
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/spec-audit-b -> 94.130.181.173:/srv/mi/ws/spec-audit-b-5b46d9
+[remote] cache-gc deleted:none
+[remote] sync 17s, 13911 files; job /srv/mi/jobs/spec-audit-b-5b46d9-53524-1792142088; queueing for a slot
+[runner] slot 0 acquired; load 0.15 0.05 0.20
+
+ RUN  v5.0.3 /srv/mi/jobs/spec-audit-b-5b46d9-53524-1792142088
+
+ ✓  timing  tests/sim/weather.test.ts (15 tests) 108381ms
+   ✓ live weather L1 @E28 seeded continuous authored blend 337ms
+   ✓ T-E28-08 @E28 @E28-AC08 every override preserves all registered mission graph walks 107510ms
+ ✓  timing  tests/sim/combat/balance.test.ts (3 tests | 2 skipped) 411ms
+   ✓ S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash 410ms
+ ✓  functional  tests/sim/combat/combat.test.ts (19 tests | 18 skipped) 274ms
+ ✓  functional  tests/unit/motionlab/stage1.test.ts (4 tests | 2 skipped) 341ms
+ ✓  functional  tests/unit/tooling/verify-quiet.test.ts (4 tests | 1 skipped) 1869ms
+   ✓ E28 CLI @E28 reserves quiet timing separately and retains functional/perf evidence 1011ms
+   ✓ @E26 @E28 a quiet timing failure keeps the verifier red and records its exit code 421ms
+   ✓ @E26 @E28 quiet admission refusal cannot reuse functional results or a previous GPU artifact 435ms
+ ✓  functional  tests/unit/render/weather-materials.test.ts (3 tests | 2 skipped) 55ms
+ ✓  functional  tests/sim/npc/permanence.test.ts (4 tests | 3 skipped) 2039ms
+   ✓ 20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07 2037ms
+ ✓  functional  tests/sim/determinism.test.ts (3 tests | 2 skipped) 297ms
+
+ Test Files  8 passed | 463 skipped (471)
+      Tests  25 passed | 2924 skipped (2949)
+   Start at  09:15:06
+   Duration  310.40s (tests 46%, import 42%, transform 11%, worker 1%)
+
+JSON report written to /srv/mi/jobs/spec-audit-b-5b46d9-53524-1792142088/test-results/epics/E28/vitest.json
+[remote] pulled test-results/epics/E28/vitest.json
+[remote] done exit=0 (runner 94.130.181.173, sync 17s, remote total 311s)
+
+Verifying E28: sh tools/e2e-lock.sh npx playwright test --grep @(?:E28)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$) --grep-invert @perf --workers=1
+
+Running 52 tests using 1 worker
+
+  ✓   1 [chromium] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.2s)
+  ✓   2 [chromium] › tests/e2e/controls-playtest.spec.ts:8:1 › S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB (22.5s)
+  ✓   3 [chromium] › tests/e2e/driving.spec.ts:22:1 › S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit (4.4s)
+  ✓   4 [chromium] › tests/e2e/levels/l4-boot.spec.ts:5:1 › T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors (13.0s)
+  ✓   5 [chromium] › tests/e2e/levels/L6.spec.ts:15:1 › T-E28-L6 @E28 @E28-AC01 @E24 @E24-AC14 actual Northgate exit changes underground haze to ground fog and night (6.3s)
+  ✓   6 [chromium] › tests/e2e/menus-mouse.spec.ts:3:1 › T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only (5.2s)
+  ✓   7 [chromium] › tests/e2e/save.spec.ts:76:1 › T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly (9.6s)
+  ✓   8 [chromium] › tests/e2e/smoke.spec.ts:4:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (774ms)
+  ✓   9 [chromium] › tests/e2e/smoke.spec.ts:14:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (885ms)
+  ✓  10 [chromium] › tests/e2e/weather.spec.ts:7:1 › T-E28-01b @E28 @E28-AC01 browser and Node weather stream agree (5.9s)
+  ✓  11 [chromium] › tests/e2e/weather.spec.ts:14:1 › T-E28-04b @E28 @E28-AC04 lightning flash reduction caps the visible flash (5.7s)
+  ✓  12 [chromium] › tests/e2e/weather.spec.ts:20:1 › T-E28-08b @E28 @E28-AC08 menus do not expose weather selection and debug override remains available (4.1s)
+  ✓  13 [chromium] › tests/e2e/weather.spec.ts:31:1 › T-E28-08c @E28 @E28-AC08 campaign level select keeps story weather (4.5s)
+  ✓  14 [chromium] › tests/e2e/weather.spec.ts:40:1 › T-E28-09 @E28 @E28-AC09 offline snow/fog reverb decay shorter than clear (3.6s)
+  ✓  15 [chromium] › tests/e2e/weather.spec.ts:49:1 › T-E28-11 @E28 @E28-AC11 HUD labels current weather and precipitation dithers within 6m (3.7s)
+  ✓  16 [chromium] › tests/e2e/weather.spec.ts:58:1 › T-E28-09b @E28 @E28-AC09 rain bed gain follows intensity and gust/thunder events reach cue log (8.0s)
+  ✓  17 [chromium] › tests/visual/weather.spec.ts:15:1 › T-E28-03b @E28 @E28-AC03 @visual wet mask follows accumulated rain and has a dry state (11.6s)
+  ✓  18 [chromium] › tests/visual/weather.spec.ts:24:1 › T-E28-05b @E28 @E28-AC05 @visual fog player contrast is at least 3:1 against the 2m ring (4.9s)
+  ✓  19 [chromium] › tests/visual/weather.spec.ts:34:1 › T-E28-06c @E28 @E28-AC06 @visual smoke columns bend along the weather wind (7.3s)
+  ✓  20 [chromium] › tests/visual/weather.spec.ts:40:1 › T-E28-07b @E28 @E28-AC07 @visual roof/car up-facing accumulation covers >=60% and track texels grow (9.3s)
+  ✓  21 [chromium] › tests/visual/weather.spec.ts:54:82 › T-E28-12-clear @E28 @E28-AC12 @vision game-camera weather mood clear (6.4s)
+  ✓  22 [chromium] › tests/visual/weather.spec.ts:54:82 › T-E28-12-overcast @E28 @E28-AC12 @vision game-camera weather mood overcast (9.0s)
+  ✓  23 [chromium] › tests/visual/weather.spec.ts:54:82 › T-E28-12-haze @E28 @E28-AC12 @vision game-camera weather mood haze (7.4s)
+  ✓  24 [chromium] › tests/visual/weather.spec.ts:54:82 › T-E28-12-thunderstorm @E28 @E28-AC12 @vision game-camera weather mood thunderstorm (12.2s)
+  ✓  25 [chromium] › tests/visual/weather.spec.ts:54:82 › T-E28-12-fog @E28 @E28-AC12 @vision game-camera weather mood fog (7.1s)
+  ✓  26 [chromium] › tests/visual/weather.spec.ts:54:82 › T-E28-12-snow @E28 @E28-AC12 @vision game-camera weather mood snow (6.7s)
+  ✓  27 [chromium] › tests/visual/weather.spec.ts:66:1 › T-E28-11b @E28 @E28-AC11 @visual precipitation dither leaves fewer ray pixels (5.4s)
+  ✓  28 [chromium] › tests/visual/weather.spec.ts:75:1 › T-E28-04c @E28 @E28-AC04 @visual scripted strike starts fire and powers down static lamps (10.3s)
+  ✓  29 [chromium] › tests/visual/weather.spec.ts:85:1 › T-E28-12-wall @E28 @E28-AC12 @vision window spill stays outside the house facade at the game camera (4.6s)
+  ✓  30 [chromium] › tests/e2e/crowd-drawn.spec.ts:15:3 › T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props (19.3s)
+  ✓  31 [chromium] › tests/e2e/crowd-drawn.spec.ts:15:3 › T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props (18.7s)
+  ✓  32 [chromium] › tests/e2e/crowd-feel.spec.ts:87:1 › 20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07 (4.5s)
+  ✓  33 [chromium] › tests/e2e/webgpu-canvas.spec.ts:25:3 › T-E02-webgpu-canvas @smoke @E02 WebGPU high mega health bars preserve the game frame at both zoom limits (6.7s)
+  ✓  34 [chromium] › tests/e2e/webgpu-canvas.spec.ts:41:3 › T-E02-webgpu-game-canvas @smoke @E02 WebGPU high L1 L4 L8 game cameras render at both zoom limits (40.9s)
+  ✓  35 [chromium] › tests/e2e/webgpu-canvas.spec.ts:25:3 › T-E02-webgpu-canvas @smoke @E02 WebGPU low mega health bars preserve the game frame at both zoom limits (3.7s)
+  ✓  36 [chromium] › tests/e2e/webgpu-canvas.spec.ts:41:3 › T-E02-webgpu-game-canvas @smoke @E02 WebGPU low L1 L4 L8 game cameras render at both zoom limits (8.3s)
+  ✓  37 [chromium] › tests/e2e/webgpu-level-transitions.spec.ts:15:1 › T-E02-webgpu-level-transitions @smoke @E02 title, L1, L2 and L3 in one WebGPU renderer log no GPU validation errors (10.5s)
+  ✓  38 [pixel-7] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.1s)
+  ✓  39 [pixel-7] › tests/e2e/smoke.spec.ts:4:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (508ms)
+  ✓  40 [pixel-7] › tests/e2e/smoke.spec.ts:14:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (613ms)
+  ✓  41 [pixel-7-landscape] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.1s)
+  ✓  42 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:4:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (524ms)
+  ✓  43 [pixel-7-landscape] › tests/e2e/smoke.spec.ts:14:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (615ms)
+  ✓  44 [iphone-14] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.0s)
+  ✓  45 [iphone-14] › tests/e2e/smoke.spec.ts:4:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (507ms)
+  ✓  46 [iphone-14] › tests/e2e/smoke.spec.ts:14:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (615ms)
+  ✓  47 [iphone-14-landscape] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (6.1s)
+  ✓  48 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:4:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (493ms)
+  ✓  49 [iphone-14-landscape] › tests/e2e/smoke.spec.ts:14:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (612ms)
+  ✓  50 [webkit] › tests/e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues (8.8s)
+  ✓  51 [webkit] › tests/e2e/smoke.spec.ts:4:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (1.6s)
+  ✓  52 [webkit] › tests/e2e/smoke.spec.ts:14:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (2.6s)
+
+  52 passed (6.2m)
+
+Verifying E28: sh tools/perf/quiet-run.sh npx playwright test --grep ^(?=.*(?:@(?:E28)(?:-AC\d+)?(?=\s|$)|@smoke(?=\s|$)))(?=.*@perf) --project=chromium --workers=1
