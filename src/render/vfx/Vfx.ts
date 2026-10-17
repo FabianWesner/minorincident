@@ -104,7 +104,14 @@ export class Vfx extends Group {
     // Player shots carry a ray rather than a victim id. Stop the visual at the
     // first body on that ray as well as cover, without changing projectile damage.
     const hit = target ?? (sourceId === 1 ? this.world.combat?.query.ray(sourceId, muzzle, ray, distance) : null);
-    if (hit) distance = Math.min(distance, Math.max(0, (hit.transform.x - muzzle.x) * direction.x + (hit.transform.z - muzzle.z) * direction.z));
+    const hardHit = hit?.faction === 'environment' || !!hit?.vehicle;
+    if (hit) {
+      const dx = hit.transform.x - muzzle.x, dz = hit.transform.z - muzzle.z, along = dx * direction.x + dz * direction.z;
+      // Destructible cover is returned as a body by HitQuery.ray. Match its entry
+      // sphere so metal feedback starts on the near side, rather than inside it.
+      const radius = hit.combat?.radius ?? .4, perpendicular = Math.max(0, dx * dx + dz * dz - along * along);
+      distance = Math.min(distance, Math.max(0, hardHit ? along - Math.sqrt(Math.max(0, radius * radius - perpendicular)) : along));
+    }
     const start = [muzzle.x, muzzle.y, muzzle.z];
     this.shots.push({ sourceId, tick: this.world.tick, muzzle: start, tracerStart: [...start], end: [muzzle.x + direction.x * distance, muzzle.y + slope * distance, muzzle.z + direction.z * distance] });
     if (this.shots.length > 64) this.shots.shift();
@@ -119,7 +126,7 @@ export class Vfx extends Group {
       this.particles.spawn(this.time, distance / speed + tracerLaunchS, muzzle.x, muzzle.y, muzzle.z,
         direction.x * speed, slope * speed, direction.z * speed, 1, particleShape.tracer, 0xffce78, distance * rayLength, .065);
     }
-    if (!hit && (dust === 'miss' || distance < range - .3)) {
+    if ((!hit || hardHit) && (dust === 'miss' || distance < range - .3)) {
       const x = muzzle.x + direction.x * distance, y = Math.max(.08, muzzle.y + slope * distance), z = muzzle.z + direction.z * distance;
       this.burst(x, y, z, 0xb9ab8e, 4, .32, .55, 1.5, particleShape.smoke);
       if (distance < range - .3) this.burst(x, y, z, 0xffdf94, 3, .035, .18, 5, particleShape.spark);
