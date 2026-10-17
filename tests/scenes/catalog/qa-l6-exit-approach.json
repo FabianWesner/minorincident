@@ -1,6 +1,6 @@
 {
   "name": "qa-l6-exit-approach",
-  "note": "L6 final barricade to Northgate: the dead escalator and its supports align with the tunnel centreline z=15. Follow camera must show a continuous ascent onto the street, without falling into the old gap between flights. The browser full-input test separately covers the complete mission and L7 handover.",
+  "note": "Northgate platform approach and aligned dead escalator. The courier walks straight along z=15; two pedestrians keep the north approach z=14.1 until the platform, then join the escalator at z=15. Inspect continuous planted feet, clear handrails and separate bodies on both tiers and zooms. The full browser route separately retains all rescue, gate, photo and L7 carryover checks.",
   "seed": 1,
   "ground": "district",
   "time": "L6",
@@ -17,9 +17,6 @@
         278,
         22
       ]
-    ],
-    "ids": [
-      "l6-24"
     ]
   },
   "actors": [
@@ -29,6 +26,24 @@
       "at": [
         234,
         15
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "approach-0",
+      "kind": "pedestrian",
+      "at": [
+        241,
+        14.1
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "approach-1",
+      "kind": "pedestrian",
+      "at": [
+        238.5,
+        14.1
       ],
       "state": "idle"
     }
@@ -53,6 +68,46 @@
           ]
         ]
       }
+    },
+    {
+      "frame": 30,
+      "actor": "approach-0",
+      "do": {
+        "run": [
+          [
+            246,
+            14.1
+          ],
+          [
+            250,
+            15
+          ],
+          [
+            263,
+            15
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 30,
+      "actor": "approach-1",
+      "do": {
+        "run": [
+          [
+            246,
+            14.1
+          ],
+          [
+            250,
+            15
+          ],
+          [
+            263,
+            15
+          ]
+        ]
+      }
     }
   ],
   "camera": {
@@ -72,6 +127,14 @@
       "courier": [
         271,
         275
+      ],
+      "approach-0": [
+        261,
+        265
+      ],
+      "approach-1": [
+        261,
+        265
       ]
     }
   }

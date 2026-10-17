@@ -1,3 +1,4 @@
+import { l6 } from '../../data/l6';
 import { emptyInput, type InputFrame } from '../../input/InputFrame';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { Walker } from './Walker';
@@ -31,7 +32,7 @@ export class LevelSixBot {
       const tail=friends.length?Math.min(...friends.map(r=>w.entities.get(r.id)!.transform.x)):s.leaderX;
       if(p.x>tail+6)return f;
     }
-    const destination=s.leaderZ<14?{x:6,z:15}:p.x>=246&&p.x<249.1?{x:250,z:15}:s.leaderX<252?{x:Math.max(25,s.leaderX-3),z:15}:{x:273,z:15};
+    const destination=s.leaderZ<14?{x:6,z:15}:p.x>=246&&p.x<249.1?{x:250,z:15}:s.leaderX<252?{x:Math.max(25,s.leaderX-3),z:15}:{x:273,z:p.x<246?l6.exit.approachZ:l6.tunnel.z};
     f.walk=this.profile==='newbie';go(destination,.8,'retreat');return f;
   }
 }

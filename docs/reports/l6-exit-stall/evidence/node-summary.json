@@ -1,0 +1,81 @@
+{
+  "aggregate": {
+    "numPassedTests": 3062,
+    "numFailedTests": 7,
+    "numPendingTests": 9,
+    "numTotalTests": 3078
+  },
+  "categories": {
+    "sim": {
+      "passed": 1139,
+      "failed": 4
+    },
+    "unit": {
+      "passed": 1585,
+      "failed": 2,
+      "skipped": 7
+    },
+    "levels": {
+      "passed": 338,
+      "skipped": 2,
+      "failed": 1
+    }
+  },
+  "failures": [
+    {
+      "file": "sim/ai/director.test.ts",
+      "name": "T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget",
+      "messages": [
+        "AssertionError: expected 5.634347000013804 to be less than or equal to 4\n    at /srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/tests/sim/ai/director.test.ts:44:520\n    at file:///srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "sim/levels/l10-assault.test.ts",
+      "name": "T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+      "messages": [
+        "AssertionError: expected 6.725456000014674 to be less than or equal to 4\n    at /srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/tests/sim/levels/l10-assault.test.ts:58:17\n    at file:///srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "sim/world/chunk-residency.test.ts",
+      "name": "T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95",
+      "messages": [
+        "AssertionError: expected 5.871563000007882 to be less than or equal to 4\n    at /srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/tests/sim/world/chunk-residency.test.ts:87:71\n    at file:///srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "levels/L6.test.ts",
+      "name": "T-E24-03 @E24 @E24-AC03 single-seed newbie protects injured survivors within the original band",
+      "messages": [
+        "AssertionError: expected 0.3793103448275862 to be greater than or equal to 0.4\n    at /srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/tests/levels/L6.test.ts:76:229\n    at file:///srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "unit/traceability.test.ts",
+      "name": "T-E01-traceability @E01 every active epic AC has a matching test tag",
+      "messages": [
+        "AssertionError: E29-AC01: expected 'import { mkdirSync } from \\'node:fs\\'\u2026' to contain '@E29-AC01'\n    at /srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/tests/unit/traceability.test.ts:14:84\n    at file:///srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1628:35\n    at file:///srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:26\n    at file:///srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3321:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3316:10)\n    at file:///srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3301:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3259:10)\n    at file:///srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3882:64"
+      ]
+    },
+    {
+      "file": "sim/missions/campaign.test.ts",
+      "name": "T-E12-07-L7 @E12 @E12-AC07 every cheat advances exactly one L7 step to level.completed",
+      "messages": [
+        "AssertionError: expected 'result' to be 'cinematic' // Object.is equality\n    at /srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/tests/sim/missions/campaign.test.ts:33:30\n    at file:///srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+      ]
+    },
+    {
+      "file": "unit/tooling/l7-runner-default.test.ts",
+      "name": "T-E29-02-cli @E29-AC02 explicit and all-level CLI registration include L7 in campaign order",
+      "messages": [
+        "AssertionError: expected [ 'L1', 'L2', 'L3', 'L4', 'L5', \u2026(6) ] to deeply equal [ 'L1', 'L2', 'L3', 'L4', 'L5', \u2026(5) ]\n    at /srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/tests/unit/tooling/l7-runner-default.test.ts:17:24\n    at file:///srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1628:35\n    at file:///srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:26\n    at file:///srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3321:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3316:10)\n    at file:///srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3301:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3259:10)\n    at file:///srv/mi/jobs/l6-exit-stall-e9a673-6853-1792156458/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3882:64"
+      ]
+    }
+  ],
+  "targetedReruns": {
+    "route": "19/19 pass, including newbie 12/29, zero deaths",
+    "L7Graph": "1/1 pass",
+    "runnerCLI": "2/2 pass"
+  },
+  "remainingFailures": "Three remote timing assertions and traceability guard missing existing E32-AC29, E31-AC18, E29-AC14/17/18/20 tags. Native E18 unmeasured."
+}

@@ -143,7 +143,7 @@ function pending(epic: string, method: string): never { throw new NotImplemented
 
 /** Called only by the query-gated dynamic import in main.ts. */
 export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
-  let physicalPlanner: LevelThreeBot | LevelFourBot | null = null, plannerLevel = '';
+  let physicalPlanner: LevelThreeBot | LevelFourBot | LevelSixBot | null = null, plannerLevel = '';
   const api: SSTestApi = {
     look: { get: () => structuredClone({ worldLook: game.view.look.values, palette: game.view.look.palette }), set: patch => game.view.setLook(patch), export: () => game.view.look.export(), reset: () => game.view.resetLook() },
     inspect: { enable: (...args) => game.inspect!.enable(...args), setCamera: pose => game.inspect!.setCamera(pose), follow: id => game.inspect!.follow(id), timeScale: x => game.inspect!.timeScale(x), anchors: () => game.inspect!.anchors(), state: () => game.inspect!.state(), jump: id => game.inspect!.jump(id), lod: mode => game.inspect!.lod(mode) },
@@ -223,7 +223,7 @@ export function installTestApi(game: Game, ready: Promise<void>): SSTestApi {
     physicsProps: { scriptedSequence: () => { propSequence(game.world); game.view.update(1); return stateHash(game.world.getState()); } },
     cheats: { god: (on) => { if (game.world.combat) game.world.combat.damage.god = on; }, infiniteCharges: (on) => { if (game.world.combat) game.world.combat.runner.infiniteCharges = on; }, killAll: () => { if (game.world.infected) for (const e of game.world.infected.active) {e.health.current = 0;e.infected!.recoverAt=-1;} }, completeObjective: (id) => { if (!game.world.missions) throw new Error('No mission loaded'); game.world.missions.completeObjective(id); game.view.update(1); } },
     bot: { plan: () => {
-      if (plannerLevel !== game.world.scenario || !physicalPlanner) { plannerLevel = game.world.scenario ?? ''; physicalPlanner = plannerLevel === 'L3' ? new LevelThreeBot(game.world,'complete') : new LevelFourBot(game.world,'complete'); }
+      if (plannerLevel !== game.world.scenario || !physicalPlanner) { plannerLevel = game.world.scenario ?? ''; physicalPlanner = plannerLevel === 'L3' ? new LevelThreeBot(game.world,'complete') : plannerLevel === 'L6' ? new LevelSixBot(game.world,'complete') : new LevelFourBot(game.world,'complete'); }
       const frame=physicalPlanner.sample(), target=frame.attackTarget?game.world.entities.get(frame.attackTarget.id):undefined;
       const loadout=game.world.combat!.runner.loadout, side=frame.attackTarget?.side;
       const slot=side?loadout.activeEntries().findIndex(entry=>entry.side===side&&entry.index===loadout.state[side].index):-1;
