@@ -33,13 +33,28 @@ test('T-E26-06 @E26-AC06 staged awake budget freezes farthest props after waking
   const player = w.entities.get(1)!.transform, distance = (p: typeof awake[number]) => Math.hypot(p.pose.p[0] - player.x, p.pose.p[2] - player.z);
   expect(Math.max(...awake.map(distance))).toBeLessThanOrEqual(Math.min(...w.props!.items.slice(0, 250).filter(p => !p.awake).map(distance)) + .001);
 });
-test('T-E26-07 @E26-AC07 fallen props without a reset flag recover above ground at their displaced position within one tick', async () => {
-  const w = await world('prop-yard'), p = w.props!.items[0], id = p.entityId, hp = w.entities.get(id)!.health.current;
-  // Preserve the legacy retain-body fallback; authored spawn/remove flags have separate checks.
-  p.metadata = { ...p.metadata, reset: undefined };
-  p.body.setTranslation({ x: 10, y: -6, z: 3 }, true); w.props!.postPhysics();
-  expect(p.pose.p).toEqual([10, Math.fround(Math.hypot(...p.half) * 2), 3]); expect(p.pose.q).toEqual(p.home.q);
-  expect(p.entityId).toBe(id); expect(w.entities.get(id)!.health.current).toBe(hp); expect(p.body.isEnabled()).toBe(true); expect(p.body.isSleeping()).toBe(false);
+test('T-E26-07 @E26-AC07 every production movable resets home or removes within one tick below -5m', async () => {
+  const { pushableProps } = await import('../../src/data/pushableProps');
+  const w = await world();
+  expect(Object.keys(pushableProps).length).toBeGreaterThanOrEqual(33);
+  for (const [assetId, definition] of Object.entries(pushableProps)) {
+    expect(['spawn', 'remove'], assetId).toContain(definition.reset);
+    const p = prop(w, assetId, 10, 20), id = p.entityId, hp = w.entities.get(id)!.health.current;
+    p.body.setTranslation({ x: 35, y: -6, z: -25 }, true);
+    p.body.setLinvel({ x: 2, y: -4, z: 3 }, true);
+    w.props!.postPhysics();
+    if (definition.reset === 'remove') {
+      expect(p.body.isEnabled(), assetId).toBe(false);
+      expect(w.entities.get(id)!.health.current).toBe(0);
+    } else {
+      expect(p.pose.p, assetId).toEqual(p.home.p);
+      expect(p.pose.q, assetId).toEqual(p.home.q);
+      expect(p.body.linvel()).toEqual({ x: 0, y: 0, z: 0 });
+      expect(p.body.isSleeping()).toBe(true);
+      expect(w.entities.get(id)!.health.current).toBe(hp);
+    }
+    expect(p.entityId).toBe(id);
+  }
 });
 test('T-E26-09 @E26-AC09 coverage rejects overlaps and low fill; 1.5s brace pins props and blocks navigation', async () => {
   const w = await world(), e = slot(w), p = w.props!.items[0];

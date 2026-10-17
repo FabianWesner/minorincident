@@ -16,7 +16,7 @@ for (const asset of manifest.filter(a => a.id in pushableProps)) {
     const validBounds = min.every((v, a) => Math.abs(v - bounds.min[a]) <= .15 * (bounds.max[a] - bounds.min[a])) && max.every((v, a) => Math.abs(v - bounds.max[a]) <= .15 * (bounds.max[a] - bounds.min[a]));
     const validCom = record.centerOfMass?.every((v, a) => v >= min[a] && v <= max[a]);
     const cartMass = asset.id === 'prop.shopping-cart' && record.mass !== 35;
-    if (record.class === validClass && validBounds && validCom && !cartMass) continue;
+    if (record.class === validClass && validBounds && validCom && !cartMass && record.reset) continue;
     const bytes = readFileSync(file), jsonLength = bytes.readUInt32LE(12);
     const json = JSON.parse(bytes.subarray(20, 20 + jsonLength).toString());
     const root = json.nodes.find((n: { extras?: { ss_physics?: unknown } }) => n.extras?.ss_physics);
