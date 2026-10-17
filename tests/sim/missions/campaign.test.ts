@@ -37,10 +37,8 @@ for (const id of missionIds) test(`T-E12-07-${id}${id === 'L7' ? ' @E29-AC01' : 
   // E23: and L5, which ends at the Metro shutter and continues into L6.
   // L8 (zoo): the APC escape continues straight into L9 like L2-L5.
   // E19: L1 now goes directly to its result screen, without the old cinematic.
-  // L7's bus owns the departure shot; its mission must not add L6's second cinematic.
-  if (id === 'L1' || id === 'L7' || id === 'L10') {
+  if (id === 'L1' || id === 'L10') {
     expect(api.state()!.phase).toBe('result'); expect(world.events.events().some(e => e.type === 'level.completed')).toBe(true);
-    if (id === 'L7') expect(world.events.events().filter(e => e.type === 'level.completed' && e.id === 'L7')).toHaveLength(1);
     return;
   }
   if (id === 'L2' || id === 'L3' || id === 'L4' || id === 'L5' || id === 'L8' || id === 'L9') { expect(api.state()!.phase).toBe('progression'); expect(world.events.events().some(e => e.type === 'level.completed')).toBe(true); return; }

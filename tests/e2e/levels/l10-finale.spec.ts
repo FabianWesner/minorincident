@@ -4,7 +4,7 @@ import { test, expect, boot } from '../fixtures';
 
 test.use({ channel: 'chrome', headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist'] } });
 for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high', 'low'] as const) for (const zoom of [1, .5]) {
-  test(`T-E32-20/22-S7 @E32-AC20 @E32-AC22 install and defend real E ${backend} ${quality} z${zoom}`, async ({ page }) => {
+  test(`T-E32-20/22-S7 @E32-AC20 @E32-AC29 @E32-AC22 install and defend real E ${backend} ${quality} z${zoom}`, async ({ page }) => {
     test.setTimeout(180_000);
     await boot(page, `/?test=1${backend === 'webgl' ? '&renderer=webgl' : ''}&quality=${quality}&audio=muted&dpr=1&ui=1`);
     await page.evaluate(async () => { const a = window.__SS__!; await a.loadLevel('L10', { seed: 327, checkpoint: 'cure-complex', progression: 'L10-default' }); a.pause(); a.cheats.god(true); a.camera.follow(); });

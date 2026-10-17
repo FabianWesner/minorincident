@@ -3,7 +3,7 @@ import { test, expect, boot } from '../fixtures';
 
 test.use({ channel: 'chrome', headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist'] } });
 for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high', 'low'] as const) for (const zoom of [1, .5]) {
-  test(`T-E32-25/26-S9 @E32-AC25 @E32-AC26 release, input, pull-out, title, credits and resume ${backend} ${quality} z${zoom}`, async ({ page }) => {
+  test(`T-E32-25/26-S9 @E32-AC25 @E32-AC29 @E32-AC26 release, input, pull-out, title, credits and resume ${backend} ${quality} z${zoom}`, async ({ page }) => {
     test.setTimeout(240_000);
     const out = `test-results/epics/E32/S9/input/${backend}-${quality}-z${zoom}`; mkdirSync(out, { recursive: true });
     await boot(page, `/?test=1${backend === 'webgl' ? '&renderer=webgl' : ''}&quality=${quality}&audio=muted&dpr=1&ui=1`);
