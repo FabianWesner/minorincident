@@ -33,7 +33,8 @@ for (const quality of ['high', 'low'] as const) test(`@E15 cover dust and glints
   const ray = vi.spyOn(world.combat!.query, 'ray').mockReturnValue(null);
   const hash = stateHash(world.getState());
   try {
-    world.events.emit({ type: 'combat.attack', tick: world.tick, attackId: 1, actionId: 'weapon.army-mg', sourceId: 1, side: 'LEFT', position: { x: 0, y: .7, z: 0, yaw: 0 }, direction: { x: 1, z: 0 } });
+    const shoot = () => world.events.emit({ type: 'combat.attack', tick: world.tick, attackId: 1, actionId: 'weapon.army-mg', sourceId: 1, side: 'LEFT', position: { x: 0, y: .7, z: 0, yaw: 0 }, direction: { x: 1, z: 0 } });
+    shoot();
     const g = fx.particles.mesh.geometry, o = g.getAttribute('fxOrigin'), s = g.getAttribute('fxStyle'), m = g.getAttribute('fxMotion');
     const contact = Array.from({ length: o.count }, (_, i) => i).filter(i => m.getW(i) > 0 && o.getX(i) > 1 && s.getY(i) !== particleShape.tracer);
     expect(contact.length).toBeGreaterThan(0);
@@ -43,5 +44,15 @@ for (const quality of ['high', 'low'] as const) test(`@E15 cover dust and glints
     for (const i of contact) expect([o.getX(i), o.getY(i), o.getZ(i)]).toEqual([5, 2.5, 0]);
     expect(stateHash(world.getState())).toBe(hash);
     fx.advance(1); expect(fx.particles.count).toBe(0);
+    // Damaged props can be ray victims even when they are not a static wall.
+    // The same feedback must start at their near surface, never their centre.
+    const source = world.entities.get(1)!;
+    clear.mockReturnValue(20);
+    ray.mockReturnValue({ ...source, faction: 'environment', transform: { x: 6, y: .7, z: 0, yaw: 0 }, combat: { ...source.combat!, radius: 1 } });
+    fx.particles.reset(fx.time); shoot();
+    const debris = Array.from({ length: o.count }, (_, i) => i).filter(i => m.getW(i) > 0 && o.getX(i) > 1 && s.getY(i) !== particleShape.tracer);
+    expect(debris.length).toBeGreaterThan(0);
+    for (const i of debris) expect([o.getX(i), o.getY(i), o.getZ(i)]).toEqual([5, 2.5, 0]);
+    expect(stateHash(world.getState())).toBe(hash);
   } finally { clear.mockRestore(); ray.mockRestore(); fx.dispose(); world.dispose(); }
 });
