@@ -1,6 +1,6 @@
 # VFX stunning — implementation and evidence
 
-Status: implementation complete; QA in progress. No deployment or merge. Native E18 timing and the blast-hitch comparison require the permitted quiet window and are not claimed here.
+Status: **committed WIP; deployment gate incomplete**. Seven pooled improvements are implemented. The reviewed shader matrix predates the final cover/contact spawn refinements; those refinements still need browser capture and remote unit verification. Native E18 timing and the blast-hitch comparison remain unmeasured. No deployment or merge.
 
 ## Research and changes
 
@@ -18,11 +18,41 @@ Scenes are automatically discovered in `tests/scenes/catalog/vfx-*.json` by `sce
 
 ## Visual review
 
-Final side-by-side sheets and per-effect costs are recorded below after QA completes. Early review: the baseline ring is a solid geometric band; the new ring feathers into the floor. Bright ballistic streaks give the blast a readable direction, and the existing fireball/afterfire timing stays legible. The close gore view shows the body still on the ground with accumulated blood; no corpse is removed.
+I opened the eight backend/tier/zoom overview sheets and the explosion, gore, cover and vehicle contact sequences. After the last sheet regeneration I reopened WebGL2/high/1 and WebGPU/low/.5, shown below. These are actual game-camera captures, composed side by side; they do **not** depict the final cover-ray fix or the final low-tier contact lift.
 
-## Validation and limitations
+| Backend / tier | Zoom 1 | Zoom .5 |
+| --- | --- | --- |
+| WebGL2 high | [comparison](sheets/webgl2-high-z1.jpg) | [comparison](sheets/webgl2-high-z0.5.jpg) |
+| WebGL2 low | [comparison](sheets/webgl2-low-z1.jpg) | [comparison](sheets/webgl2-low-z0.5.jpg) |
+| WebGPU high | [comparison](sheets/webgpu-high-z1.jpg) | [comparison](sheets/webgpu-high-z0.5.jpg) |
+| WebGPU low | [comparison](sheets/webgpu-low-z1.jpg) | [comparison](sheets/webgpu-low-z0.5.jpg) |
 
-Typecheck/lint/build logs are adjacent. Heavy unit/sim/level checks run on Hetzner; browser checks use fresh production builds on this Mac, headless Metal, at most two workers and shared browser locks. No quiet-run reservation has been taken at night. E18 limits are unchanged; Scene Lab draw/triangle checks are evidence for these isolated effects only. Native frame p95, GPU cost and blast hitch are unmeasured until an authorized quiet batch (maximum 20 minutes, release between batches). No atmosphere hook is required; distortion and extra muzzle light sources were deferred in the research because their render-pass/light cost needs measurement.
+| Effect sequence | What I saw / remaining limitation |
+| --- | --- |
+| [Explosion](sheets/vfx-explosion.jpg) | The baseline ring is a solid geometric band; the new ring feathers into the floor. High-tier sparks form bright short arcs around the unchanged hot core. Low retains the softened ring with fewer sparks. |
+| [Rifle](sheets/vfx-rifle-impact.jpg), [shotgun](sheets/vfx-shotgun-impact.jpg) | A narrow muzzle star replaces the fuzzy circular flash; yellow tracers remain readable at both zooms. The existing pale shotgun impact frame remains visible. |
+| [Cover](sheets/vfx-rifle-cover.jpg) | The dumpster and penetrated Alpha are visible. These captures exposed the missing hard-surface feedback for destructible ray victims. The subsequent near-entry fix is committed but its new glints are **not captured**. |
+| [Molotov/fire](sheets/vfx-molotov-fire.jpg) | The orange flame and light remain readable at night. High smoke resolves into rounded gray puffs; low retains a simpler orange/gray column. Fewer fire particles reduce the bright haze. |
+| [Alpha hit](sheets/vfx-alpha-hit.jpg), [gore](sheets/vfx-gore.jpg) | Red droplets read as directional strokes rather than a fuzzy red spot. The fallen body and blood on the floor remain in the later frames. |
+| [Vehicle wreck](sheets/vfx-vehicle-crash.jpg) | The burning red shell, panels and established fire column remain visible. The change is subtler than the blast ring. |
+| [Vehicle contact](sheets/vfx-vehicle-contact.jpg) | The APC rolls over the sedan in both builds. Early contact sparks are obscured by the overlapping hoods, especially on low. The final upward lift needs a new capture; visibility is not claimed. |
+
+## Cost and validation
+
+[Cost per effect](costs.md) records CPU submission p95 plus peak draws/triangles for every effect/backend/tier; [raw summary](scene-costs.json) includes both zooms and cold maxima. These concurrent shared-Mac runs measure Scene Lab sim + render submission, **not GPU frame time or E18 native certification**. General-pool capacity and draw topology are unchanged. Activating previously idle particle/decal pools in the new contact scene adds two active draws: high 54→56, low 49→51. High WebGPU contact CPU p95 is 15.7→16.2 ms. Explosion zoom-1 CPU p95 ranges 1.4–2.1 ms after, against 1.6–1.9 ms before. Its WebGL2/high cold maximum is 60.6 ms versus 57 ms; this does not establish equal blast hitch. No performance improvement is claimed.
+
+| Check | Result and scope |
+| --- | --- |
+| Latest source | [Typecheck](typecheck.log), [lint](lint.log), [production build](build-sparks.log) passed through implementation revision `2cd64ab49`. |
+| Initial shader matrix | Nine scenes × two backends × two tiers × two zooms: 72 cases per build completed with zero console errors. This was before the later dumpster/contact refinements. |
+| Saved comparison artifacts | **132/144 raw cases pass**, zero console errors. Twelve cover rows retain the obsolete draft expectation of 300 HP; captured HP is 265, matching existing MG penetration. Four WebGPU after rows still show an older cover fixture. The current exact-265 fixture has not been rerun. These mixed revision captures are explicitly not final-head certification. |
+| E15/E27 browser gates | **19 passed, 2 failed**. All ten E27 checks passed. Both E15 failures reproduce unchanged on baseline; details below. These gates precede the final spawn refinements. |
+| Broad deploy browser batch | **42 passed, 53 failed, 5 not run** out of 100 ([log](browser-deploy-gate.log)). The failed cases report Chromium launch/bootstrap error 141; this is a failed/incomplete gate, not evidence of gameplay correctness. Smoke checks S-01/S-10 passed before the browser failure. |
+| Latest cover/contact capture | Unmeasured. Replacement batches exceeded the 30-minute slot wait limit; when admitted, Chromium failed `bootstrap_check_in` with error 141 ([log](before-cover-impact.log)). No further batch was started. |
+| Remote unit/sim/levels | No completed result. Initial runner disappeared during upload; focused VFX job queued, then SSH reconnects failed. The serialized full retry ended with runner API TLS EOF / no runner available ([focused log](remote-vfx.log), [final retry](remote-regression-final.log)). No local Vitest sweep was substituted. |
+| E18 and blast hitch | Unmeasured: no authorized quiet window was available. Budgets and existing tests are unchanged. Native high/low timing must still use `tools/perf/quiet-run.sh` after 06:00 or explicit authorization, at most 20 minutes per reservation with release between batches. |
+
+Four new high/low unit cases cover bounded vehicle contact emission, pool reuse, expiry, disabled VFX, static cover, destructible cover near-entry, and unchanged simulation state. They are committed but lack a completed remote result. Final follow-up commands must rerun those plus full unit/sim/levels through `sh tools/remote/run.sh "$PWD" -- <cmd>`, rebuild, capture cover/contact across both backends/tiers/zooms through `tools/e2e-lock.sh`, and complete the unchanged deploy gate. The browser must remain headless with unique ports and at most two workers. No quiet-run reservation was taken at night. No atmosphere hook is required; distortion and extra muzzle lights remain deferred pending measured render-pass/light cost.
 
 ## Vehicle follow-up retained for the next lane
 
