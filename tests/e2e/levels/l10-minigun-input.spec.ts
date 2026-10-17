@@ -20,7 +20,7 @@ for (const touch of [false, true]) test.describe(touch ? 'phone minigun' : 'desk
       await cdp.send('Input.dispatchTouchEvent', { type: down ? 'touchStart' : 'touchEnd', touchPoints: down ? [{ id: 1, x: box.x + box.width / 2, y: box.y + box.height / 2 }] : [] });
     };
     const interact = async () => {
-      if (touch) await page.getByTestId('touch-interact').tap();
+      if (touch) { await expect(page.getByTestId('touch-interact')).toBeEnabled(); await page.getByTestId('touch-interact').tap(); }
       else await page.keyboard.press('e');
       await step(1);
     };

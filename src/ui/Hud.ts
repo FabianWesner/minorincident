@@ -233,7 +233,8 @@ export class Hud {
     if (gun) {
       const percent = Math.round(gun.heat * 100), state = gun.locked ? 'locked' : gun.heat >= .75 ? 'hot' : gun.mounted ? 'ready' : 'idle';
       style(this.heat.fill, 'width', `${percent}%`);
-      text(this.heat.label, near ? 'Press E to man the minigun' : gun.locked ? `OVERHEATED ${percent}%` : `Minigun heat ${percent}%`);
+      const mountHint = this.game.input.scheme === 'touch' ? 'Tap ACTION to man the minigun' : 'Press E to man the minigun';
+      text(this.heat.label, near ? mountHint : gun.locked ? `OVERHEATED ${percent}%` : `Minigun heat ${percent}%`);
       attribute(this.heat.root, 'aria-valuenow', String(percent)); attribute(this.heat.root, 'aria-valuetext', gun.locked ? `Overheated, ${percent} percent` : `${percent} percent`);
       attribute(this.heatPanel, 'data-state', state); attribute(this.heatPanel, 'data-mounted', String(gun.mounted));
     }

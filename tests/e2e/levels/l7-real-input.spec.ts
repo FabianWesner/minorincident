@@ -4,12 +4,12 @@ import { test, expect, boot } from '../fixtures';
 
 /** Full production route: setup loads the level; every subsequent action is a
  * DOM mouse/key event. No injected frame, teleport or mission completion. */
-test('T-E29-17 @E29-AC17 real mouse/keyboard carries the Northgate group through the horde and bus into L8', async ({ page }) => {
+test('T-E29-17 @E29-AC17 real mouse/keyboard completes Northgate, horde, bus and L8 handover', async ({ page }) => {
   test.setTimeout(1_200_000);
   const out = 'test-results/epics/E29/real-input'; mkdirSync(out, { recursive: true });
   await boot(page, '/?test=1&scenelab=1&renderer=webgl&ui=1&quality=high&audio=muted&dpr=1');
   await page.evaluate(async () => { const a = window.__SS__!; await a.loadLevel('L7', { seed: 1, progression: 'L7-default' }); a.pause(); a.camera.follow(); });
-  const step = (n: number) => page.evaluate(n => window.__SS__!.step(n), n);
+  const step = (n: number) => page.evaluate(async n => { const a = window.__SS__!; if (a.getState().scenario === 'L7') { a.pause(); await a.step(n); } }, n);
   const shot = async (name: string) => { await page.evaluate(() => window.__SS__!.screenshotReady()); await page.screenshot({ path: `${out}/${name}.png` }); };
   await shot('night-exit');
   const route = [{ x: 233, z: 15 }, { x: 173, z: 15 }, { x: 113, z: 15 }, { x: 88, z: 15 }, { x: 88, z: 46 }, { x: 30, z: 46 }, { x: -30, z: 46 }, { x: -70.5, z: 47.5 }];
