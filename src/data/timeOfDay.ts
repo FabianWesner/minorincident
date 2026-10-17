@@ -9,6 +9,8 @@ export interface TimeOfDayPreset {
   rim?: number; aura?: number;
   /** Night route read (E31-AC16): moon-pale sheen added to asphalt (0 = none). */
   roadLift?: number;
+  /** Authored route sheen; comparable luminance keeps navigation contrast stable. */
+  roadColor?: string;
   /** Render-only atmosphere; live look edits take precedence, with no extra post pass. */
   look?: Partial<WorldLook>;
   ambient?: { leaf: number; dust: number; bird: number };
@@ -29,7 +31,7 @@ const presets = {
     look: { skyAmbient: '#b5cde4', groundAmbient: '#d2b58d', bounce: '#ad9b70', vignette: .08, bloomStrength: .2 }, ambient: { leaf: 8, dust: 32, bird: 2 } },
   golden,
   // E23 sunset (PO: dark red, orange, increasingly gloomy): the sun sits on the horizon (polar 1.48 rad, hue ~19 deg) at 0.65x L4 (the low sun leaves roofs and ground in core shadow, so the shadow tint is bright: dusky rose beneath the ash, never black) and the level fades it further (gloom ramp); red-to-violet sky, long shadows, fires carry the image.
-  L5: { sun: '#ff7a38', intensity: 0.85, polar: 1.48, azimuth: -1.4, shadow: '#87465f', sky: '#514366', fog: '#a76762', fogNear: 34, fogFar: 105, practical: .8, rim: .25, aura: .25,
+  L5: { sun: '#ff7a38', intensity: 0.85, polar: 1.48, azimuth: -1.4, shadow: '#6e536e', sky: '#514366', fog: '#a76762', fogNear: 34, fogFar: 105, practical: .8, rim: .25, aura: .25,
     look: { skyAmbient: '#a9a4c3', groundAmbient: '#bb7965', vignette: .1, bloomStrength: .2 } },
   "L6-subway": { sun: "#9fb4ff", intensity: 0, polar: 1.55, azimuth: 2.2, shadow: "#252830", sky: "#0c1016", fog: "#181d25", fogNear: 30, fogFar: 85, practical: 1, rim: .25, aura: 1.3,
     look: { skyAmbient: '#8fabc2', groundAmbient: '#8a8077', vignette: .08, bloomStrength: .16 } },
@@ -37,10 +39,10 @@ const presets = {
   L6: { sun: '#9fb4ff', intensity: 0.38, polar: 1.55, azimuth: 2.2, shadow: '#39365f', sky: '#1b263f', fog: '#4b5268', fogNear: 45, fogFar: 120, practical: 1, rim: .4, aura: .45,
     look: { skyAmbient: '#99adc9', groundAmbient: '#8e7c83', vignette: .1, bloomStrength: .2 } },
   /** Open crossing: retain the journey's moonlight, with air clear enough for 150 m sight lines. `roadLift`: E31-AC16 night route read (the asphalt road is a pale moonlit band, 3:1 against the verge). */
-  'L9-crossing': { sun: '#9fb4ff', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#39365f', sky: '#1a3043', fog: '#4d657a', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, roadLift: 2,
+  'L9-crossing': { sun: '#9fb4ff', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#343b48', sky: '#1a3043', fog: '#4d657a', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, roadLift: 2, roadColor: '#92a7b2',
     look: { skyAmbient: '#a2bad2', groundAmbient: '#8f8a88', vignette: .08, bloomStrength: .18 } },
   /** L10 night run (E32): the L9 moonlight with a darker shadow tint (dark verges), a brighter horizon haze for building silhouettes and the asphalt `roadLift`, so R1-R6 read at 3:1 (E31-AC16) while the night stays night. */
-  'L10-night': { sun: '#9fb4ff', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#25243f', sky: '#302c50', fog: '#5b4f75', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, roadLift: 2.1,
+  'L10-night': { sun: '#9fb4ff', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#30203f', sky: '#302c50', fog: '#5b4f75', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, roadLift: 2.1, roadColor: '#a79ec7',
     look: { skyAmbient: '#b0accf', groundAmbient: '#978a95', vignette: .1, bloomStrength: .2 } },
   /** E30 intact zoo at night: cool moonlight, powered warm practicals; no mandatory blackout. */
   "L8-zoo": { sun: '#afc5ed', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#343e57', sky: '#182f3b', fog: '#36505c', fogNear: 45, fogFar: 120, practical: 1, rim: .4, aura: .45, lampInsects: true,

@@ -36,6 +36,7 @@ test('@E25 atmosphere changes preserve night aura, road lift and exit continuity
       lighting.set(preset);
       expect(lighting.heroFill.value).toBe(timeOfDay[preset].aura! * 3.2);
       expect(lighting.roadLift.value).toBe(timeOfDay[preset].roadLift ?? 0);
+      expect(lighting.roadLiftColor.value.getHexString()).toBe((timeOfDay[preset].roadColor ?? '#86a8c0').slice(1));
       expect(lighting.rim.value).toBe(timeOfDay[preset].rim);
       expect(lighting.look.values.bloomStrength).toBe(timeOfDay[preset].look!.bloomStrength);
     }
