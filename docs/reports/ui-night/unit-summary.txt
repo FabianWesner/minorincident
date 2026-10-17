@@ -1,0 +1,10 @@
+ FAIL   functional  tests/unit/traceability.test.ts > T-E01-traceability @E01 every active epic AC has a matching test tag
+AssertionError: E29-AC01: expected 'import { mkdirSync } from \'node:fs\'…' to contain '@E29-AC01'
+
+
+ Test Files  1 failed | 280 passed | 1 skipped (282)
+      Tests  1 failed | 1584 passed | 7 skipped (1592)
+   Start at  13:16:44
+   Duration  334.36s (tests 92%, import 6%, transform 2%)
+
+[remote] done exit=1 (runner 94.130.181.173, sync 134s, remote total 338s)

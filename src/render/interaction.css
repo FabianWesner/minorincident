@@ -3,6 +3,10 @@
   z-index: 5;
   transform: translate(-50%, -100%);
   width: 228px;
+  box-sizing: border-box;
+  max-width: calc(100vw - 16px);
+  max-height: calc(100dvh - 16px);
+  overflow: auto;
   padding: 10px 12px;
   border: 2px solid #f3f8ff;
   border-radius: 12px;
