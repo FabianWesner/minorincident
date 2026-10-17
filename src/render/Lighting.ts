@@ -150,6 +150,7 @@ export class Lighting {
     this.worldPaletteEnabled.value = Number(name === 'L1');
     this.preset = name; const p = timeOfDay[name];
     this.look.setPreset(p.look ?? {});
+    this.roadLiftColor.value.set(p.roadColor ?? '#86a8c0');
     if (this.environment) this.environmentNode.value = this.environment.get(name).texture;
     this.field.strength.value = p.practical ?? 0; this.rim.value = p.rim ?? 0; this.roadLift.value = p.roadLift ?? 0; this.heroFill.value = (p.aura ?? 0) * 3.2;
     this.direction.value.setFromSphericalCoords(1, p.polar, p.azimuth);
