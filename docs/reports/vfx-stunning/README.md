@@ -27,3 +27,9 @@ Typecheck/lint/build logs are adjacent. Heavy unit/sim/level checks run on Hetzn
 ## Vehicle follow-up retained for the next lane
 
 The APC-on-sedan roll/overlap exists in the unmodified baseline: [baseline full sequence](sheets/vehicle-roll-before.jpg) and [comparison full sequence](sheets/vehicle-roll-after.jpg), WebGL2/high/zoom .5, frames 0–180. I opened both. The APC drives onto the sedan and the wheel/body presentation separates during the roll; this is visible in both sequences. At the end the APC tilt reaches 35.5° and the sedan reaches 177.5°. [Recorded state](vehicle-followup.json) compares all eight backend/tier/zoom cases: vehicle metrics are identical before/after in 8/8 cases. The orchestrator explicitly assigned the physics/presentation issue to a follow-up lane; this change only supplies spark feedback.
+
+## Browser regression comparison
+
+The unchanged E15/E27 browser gates completed with **19 passed, 2 failed** ([log](browser-vfx.log)); all ten E27 checks passed, including seven beats, flash reduction, car panels, smoke readability and transient pool recovery. Both failures reproduce against the immutable pre-change build ([baseline log](browser-baseline-regressions.log)): `T-E15-lifecycle` expects 2 textures and sees 5 after unload (stable across cycles), and `T-E15-03` expects 1 decal but sees 4 after droplet landings. The baseline shockwave radius test passes. No assertions, budgets or existing tests were changed.
+
+The tall dumpster fixture also checks the existing MG penetration: the Alpha ends at exactly **265 HP** in both builds. Destructible cover is an environment ray victim, so the view now recognizes it as a hard impact and places dust/glints at the ray-entry surface. This changes only the visual endpoint; damage/penetration stays in the sim.
