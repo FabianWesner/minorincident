@@ -23,3 +23,7 @@ Final side-by-side sheets and per-effect costs are recorded below after QA compl
 ## Validation and limitations
 
 Typecheck/lint/build logs are adjacent. Heavy unit/sim/level checks run on Hetzner; browser checks use fresh production builds on this Mac, headless Metal, at most two workers and shared browser locks. No quiet-run reservation has been taken at night. E18 limits are unchanged; Scene Lab draw/triangle checks are evidence for these isolated effects only. Native frame p95, GPU cost and blast hitch are unmeasured until an authorized quiet batch (maximum 20 minutes, release between batches). No atmosphere hook is required; distortion and extra muzzle light sources were deferred in the research because their render-pass/light cost needs measurement.
+
+## Vehicle follow-up retained for the next lane
+
+The APC-on-sedan roll/overlap exists in the unmodified baseline: [baseline full sequence](sheets/vehicle-roll-before.jpg) and [comparison full sequence](sheets/vehicle-roll-after.jpg), WebGL2/high/zoom .5, frames 0–180. I opened both. The APC drives onto the sedan and the wheel/body presentation separates during the roll; this is visible in both sequences. At the end the APC tilt reaches 35.5° and the sedan reaches 177.5°. [Recorded state](vehicle-followup.json) compares all eight backend/tier/zoom cases: vehicle metrics are identical before/after in 8/8 cases. The orchestrator explicitly assigned the physics/presentation issue to a follow-up lane; this change only supplies spark feedback.
