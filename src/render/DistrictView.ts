@@ -45,6 +45,7 @@ import { resolvePosition } from "../levels/districts/validate";
 import type { CameraPose } from "./View";
 import type { View } from './View';
 import { AmbientLife } from './AmbientLife';
+import { timeOfDay } from '../data/timeOfDay';
 import { Foliage } from './Foliage';
 import { GroundField } from './GroundField';
 import { pickLod, propLod, initialDistrictLods, lodPolicy, type Lod } from './lodPolicy';
@@ -143,7 +144,8 @@ export class DistrictView extends Group {
   }
   async load(seed: number, focus?: { x: number; z: number }, heroAtSpawn = false): Promise<void> {
     this.phase.value = 0;
-    if (this.world.composition.id === 'L1') { this.ambient = new AmbientLife(this.materials); this.add(this.ambient); }
+    const ambient = timeOfDay[this.world.composition.timeOfDay].ambient;
+    if (ambient) { this.ambient = new AmbientLife(this.materials, ambient); this.ambient.setQuality(this.low); this.add(this.ambient); }
     // Backdrop reaches beyond the camera far plane; it is scenery outside the bounded town.
     // D-CROSSING (L9-A2): the collapsed-road gully (x 508..524, z -90..90, floor 5.5 m down) must not be covered by it.
     const gully = this.world.composition.districts.find(d => d.id === 'D-CROSSING');

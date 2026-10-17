@@ -23,6 +23,10 @@ export class PostFx {
   constructor(private readonly renderer: WebGPURenderer, scene: Scene, camera: Camera, tier: QualityTier = 'high', readonly look = new LookUniforms()) {
     this.scenePass = pass(scene, camera); const source = this.scenePass.getTextureNode('output');
     this.bloomPass = bloom(source, look.values.bloomStrength, look.values.bloomRadius, look.values.bloomThreshold);
+    // Bind level defaults directly so mission lighting changes update the existing pass.
+    this.bloomPass.strength = look.nodes.bloomStrength;
+    this.bloomPass.radius = look.nodes.bloomRadius;
+    this.bloomPass.threshold = look.nodes.bloomThreshold;
     this.tier = tier;
     (this.bloomPass as typeof this.bloomPass & { _nMips: number })._nMips = qualityBudgets[tier].bloomMips;
     // Current Three composites all five texture slots; inactive mips contribute zero.
