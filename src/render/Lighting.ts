@@ -149,6 +149,7 @@ export class Lighting {
     this.promoted = null; this.promotedAt = -Infinity; this.heroLight = null; this.promotionChanges = 0; this.heroTime = -1; this.spot.visible = false; this.sun.visible = true;
     this.worldPaletteEnabled.value = Number(name === 'L1');
     this.preset = name; const p = timeOfDay[name];
+    this.look.setPreset(p.look ?? {});
     if (this.environment) this.environmentNode.value = this.environment.get(name).texture;
     this.field.strength.value = p.practical ?? 0; this.rim.value = p.rim ?? 0; this.roadLift.value = p.roadLift ?? 0; this.heroFill.value = (p.aura ?? 0) * 3.2;
     this.direction.value.setFromSphericalCoords(1, p.polar, p.azimuth);
@@ -247,7 +248,7 @@ export class Lighting {
       this.spot.distance = Math.max(10, light.radius * 4); this.spot.angle = Math.atan2(light.radius * light.stretch, Math.max(1, light.y ?? 3));
       this.spot.intensity = .001 * this.fieldShadow.value;
     }
-    this.practicalEffects.update(this.lamps.state, this.field.strength.value, focus, this.quality === 'low');
+    this.practicalEffects.update(this.lamps.state, this.field.strength.value, focus, this.quality === 'low', timeOfDay[this.preset].lampInsects, time);
   }
   /** E27 keeps the survivor's capsule and rim readable inside an active smoke cloud. */
   setPlayerSmoke(covered: boolean): void {

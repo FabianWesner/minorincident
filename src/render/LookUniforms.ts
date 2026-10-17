@@ -11,13 +11,19 @@ export class LookUniforms {
   readonly palette: Record<PaletteToken, string> = { ...palette };
   readonly nodes = Object.fromEntries(Object.entries(worldLook).map(([key, value]) => [key, (typeof value === 'number' ? uniform(value) : uniform(new Color(value))).setGroup(renderGroup)])) as LookNodes;
   private overrides: Partial<WorldLook> = {};
-  has(key: keyof WorldLook): boolean { return Object.hasOwn(this.overrides, key); }
+  private preset: Partial<WorldLook> = {};
+  has(key: keyof WorldLook): boolean { return Object.hasOwn(this.overrides, key) || Object.hasOwn(this.preset, key); }
+  /** Rebase level defaults without losing live edits or replacing any GPU uniform. */
+  setPreset(preset: Partial<WorldLook>): void {
+    this.preset = { ...preset };
+    Object.assign(this.values, worldLook, this.preset, this.overrides); this.sync();
+  }
   set(input: LookPatch): void {
     const patch = validateLookPatch(input, this.values);
     Object.assign(this.values, patch.worldLook); Object.assign(this.overrides, patch.worldLook); Object.assign(this.palette, patch.palette);
     this.sync();
   }
-  reset(): void { Object.assign(this.values, worldLook); Object.assign(this.palette, palette); this.overrides = {}; this.sync(); }
+  reset(): void { Object.assign(this.values, worldLook, this.preset); Object.assign(this.palette, palette); this.overrides = {}; this.sync(); }
   private sync(): void {
     for (const key of Object.keys(this.values) as (keyof WorldLook)[]) {
       const node = this.nodes[key], value = this.values[key];

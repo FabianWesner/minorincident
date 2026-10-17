@@ -5,6 +5,7 @@ import { lightPalette } from '../../data/lights';
 import type { DistrictWorld } from '../../sim/world/DistrictWorld';
 import type { LightPower } from '../../sim/lighting/LightPower';
 import { weatherSurface } from '../WeatherView';
+import { LampInsects } from '../AmbientLife';
 
 /** Existing additive geometry path: soft spot volumes and wet-ground splats.
  * They read exactly the same fixed-tick anchor state as emissive meshes/pools. */
@@ -19,6 +20,7 @@ export class PracticalEffects extends Group {
   private readonly axis = new Vector3(0, 1, 0);
   private readonly direction = new Vector3();
   private readonly color = new Color();
+  private readonly insects = new LampInsects();
   constructor() {
     super();
     const beam = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false, side: DoubleSide, blending: AdditiveBlending });
@@ -35,13 +37,14 @@ export class PracticalEffects extends Group {
     streak.colorNode = vec3(1); streak.opacityNode = local.x.abs().oneMinus().pow(2).mul(local.y.abs().oneMinus()).mul(wet).mul(ripple).mul(.7);
     const plane = new PlaneGeometry(1, 1); plane.rotateX(-Math.PI / 2);
     this.streaks = new InstancedMesh(plane, streak, 128); this.streaks.count = 0; this.streaks.frustumCulled = false;
-    this.add(this.beams, this.streaks);
+    this.add(this.beams, this.streaks, this.insects);
   }
   install(world: DistrictWorld): void { this.lights = placedLights(world); }
-  update(power: LightPower | null, practical: number, focus: { x: number; z: number }, low: boolean): void {
+  update(power: LightPower | null, practical: number, focus: { x: number; z: number }, low: boolean, insects = false, seconds = 0): void {
     let beams = 0, reflections = 0;
-    if (practical <= 0) { this.beams.count = this.streaks.count = 0; return; }
+    if (practical <= 0) { this.beams.count = this.streaks.count = 0; this.insects.update([], seconds, false); return; }
     const nearby = this.lights.filter(light => (power ? power.isOn(light.id) : light.on) && Math.hypot(light.position[0] - focus.x, light.position[2] - focus.z) < 40).sort((a, b) => Math.hypot(a.position[0] - focus.x, a.position[2] - focus.z) - Math.hypot(b.position[0] - focus.x, b.position[2] - focus.z));
+    this.insects.update(nearby, seconds, insects && !low);
     if (practical > 0) for (const light of nearby) {
       const anchor = light.anchor, [x, y, z] = light.position;
       this.color.set(lightPalette[anchor.color]).multiplyScalar(anchor.intensity * practical * .3);
@@ -59,5 +62,5 @@ export class PracticalEffects extends Group {
     for (const [mesh, count] of [[this.beams, beams], [this.streaks, reflections]] as const) { mesh.count = count; mesh.instanceMatrix.needsUpdate = true; if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true; }
   }
   snapshot() { return { beams: this.beams.count, reflections: this.streaks.count }; }
-  dispose(): void { for (const mesh of [this.beams, this.streaks]) { mesh.geometry.dispose(); (mesh.material as MeshBasicNodeMaterial).dispose(); mesh.dispose(); } this.clear(); }
+  dispose(): void { this.insects.dispose(); for (const mesh of [this.beams, this.streaks]) { mesh.geometry.dispose(); (mesh.material as MeshBasicNodeMaterial).dispose(); mesh.dispose(); } this.clear(); }
 }
