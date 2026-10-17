@@ -30,3 +30,7 @@ Baseline limitations: L4's courier is inside the scripted bus; the entry still c
 - **Rain/ash, clouds, sky:** Reuse existing GPU weather particles/cloud response, authored weather timelines and sky gradient. Add sparse daylight dust/birds/paper through the existing AmbientLife draw path rather than duplicate rain/ash pools. No weather simulation, sight or traction modifiers change.
 
 Cost hypotheses are structural, not milliseconds: all palette/post edits reuse existing uniform operations; ambient motion adds up to three tiny draws in previously static daylight levels; insects add at most one draw/24 triangles on high and zero on low. Scene Lab must establish counters/readability. E18 native p95 cannot be certified before the permitted quiet timing window (06:00, or orchestrator authorization).
+
+## Foreground iteration after paired review
+
+The initial top-down L5, L9 and L10 pairs showed that distant-air changes alone were too subtle. Revision `68e108f24` adds cooler rose-violet sunset shadow and luminance-matched steel/violet night road/shadow tints via existing color uniforms. These add no pass, texture or shader operation. [Linear luminance checks](validation/color-luminance.json) support the hypothesis; final pixel readability and game-camera captures remain unmeasured after browser queue/startup failures. The README distinguishes observed initial-profile frames from authored final tints.
