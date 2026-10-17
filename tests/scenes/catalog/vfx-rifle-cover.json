@@ -1,0 +1,75 @@
+{
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L4",
+  "dof": false,
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 72,
+  "sheet": 4,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -2,
+        2
+      ],
+      "loadout": [
+        "weapon.army-mg",
+        "weapon.bat"
+      ]
+    },
+    {
+      "id": "target",
+      "kind": "infected",
+      "at": [
+        2,
+        -2
+      ],
+      "archetype": "infected.alpha",
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 8,
+      "actor": "courier",
+      "do": {
+        "attack": "target",
+        "seconds": 0.55,
+        "inPlace": true,
+        "move": [
+          0,
+          0
+        ]
+      }
+    }
+  ],
+  "note": "Rifle burst stops at solid masonry before reaching the Alpha. Look for warm glints and coherent dust at the actual cover surface.",
+  "name": "vfx-rifle-cover",
+  "props": [
+    {
+      "id": "cover",
+      "asset": "prop.jersey-barrier",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 45
+    }
+  ]
+}

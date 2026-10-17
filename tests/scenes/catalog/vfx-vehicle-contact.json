@@ -1,0 +1,55 @@
+{
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L4",
+  "dof": false,
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 180,
+  "sheet": 6,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000
+  },
+  "vehicles": [
+    {
+      "id": "apc",
+      "asset": "vehicle.military-apc",
+      "at": [
+        -10,
+        0
+      ],
+      "yaw": 0,
+      "health": 1000,
+      "floor": true,
+      "driven": true,
+      "path": [
+        [
+          10,
+          0
+        ]
+      ]
+    },
+    {
+      "id": "parked",
+      "asset": "vehicle.sedan",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 90
+    }
+  ],
+  "script": [],
+  "note": "Real APC hits a parked sedan. Contact event drives warm metal sparks without an explosion or infected blood.",
+  "name": "vfx-vehicle-contact"
+}

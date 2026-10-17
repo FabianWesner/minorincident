@@ -1,0 +1,44 @@
+{
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L4",
+  "dof": false,
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 150,
+  "sheet": 10,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000
+  },
+  "vehicles": [
+    {
+      "id": "car",
+      "asset": "vehicle.sedan",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 30
+    }
+  ],
+  "script": [
+    {
+      "frame": 8,
+      "effect": {
+        "wreck": "car"
+      }
+    }
+  ],
+  "note": "Real vehicle wreck: E27 blast, ballistic sparks, detached metal, fire and smoke.",
+  "name": "vfx-vehicle-crash"
+}

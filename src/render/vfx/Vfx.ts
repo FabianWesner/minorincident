@@ -6,7 +6,7 @@ import type { ActionDef } from '../../data/actions/schema';
 import { catalog, mountedActions } from '../../data/actions/catalog';
 import type { EffectKind, TelegraphKind, GameEvent } from '../../sim/world/types';
 import type { SimWorld } from '../../sim/world/SimWorld';
-import { FxPool, tracerLaunchS } from './FxPool';
+import { FxPool, groundShape, particleShape, tracerLaunchS } from './FxPool';
 import { GibPool } from './GibPool';
 import type { VehicleFeedbackEvent } from './VehicleFeedback';
 import { HitStop } from './HitStop';
@@ -40,7 +40,7 @@ export interface VfxTargets {
   ambient?: Node<'float'>;
   sunDirection?(): { x: number; y: number; z: number };
 }
-const eventTypes = ['ally.attack', 'combat.hit', 'combat.kill', 'combat.attack', 'combat.exploded', 'combat.effect', 'combat.hit-stop', 'telegraph', 'infected.special', 'attack.resolved', 'vfx.effect', 'vehicle.feedback', 'hazard.exploded', 'hazard.electrified', 'prop.ignited', 'vehicle.exploded', 'noise', 'pickup.collected', 'explosion', 'explosion.slowmo', 'outbreak.infection'] as const;
+const eventTypes = ['ally.attack', 'combat.hit', 'combat.kill', 'combat.attack', 'combat.exploded', 'combat.effect', 'combat.hit-stop', 'telegraph', 'infected.special', 'attack.resolved', 'vfx.effect', 'vehicle.feedback', 'vehicle.durability-hit', 'hazard.exploded', 'hazard.electrified', 'prop.ignited', 'vehicle.exploded', 'noise', 'pickup.collected', 'explosion', 'explosion.slowmo', 'outbreak.infection'] as const;
 const limbs = 5;
 const heavyBlade = /machete|axe|katana|shovel/;
 const telegraphShapes = { lunge: 3, charge: 2, splash: 1, bloated: 4 } as const;
@@ -108,20 +108,25 @@ export class Vfx extends Group {
     const start = [muzzle.x, muzzle.y, muzzle.z];
     this.shots.push({ sourceId, tick: this.world.tick, muzzle: start, tracerStart: [...start], end: [muzzle.x + direction.x * distance, muzzle.y + slope * distance, muzzle.z + direction.z * distance] });
     if (this.shots.length > 64) this.shots.shift();
-    this.burst(muzzle.x, muzzle.y, muzzle.z, 0xfff1b8, 8, .3, .12, 0);
-    this.particles.spawn(this.time, .1, muzzle.x, muzzle.y, muzzle.z, 0, 0, 0, .75, 0, 0xffffff);
+    this.burst(muzzle.x, muzzle.y, muzzle.z, 0xffe3a0, 3, .045, .12, 0, particleShape.spark);
+    this.particles.spawn(this.time, .065, muzzle.x, muzzle.y, muzzle.z, direction.x * .8, 0, direction.z * .8, .65, particleShape.flash, 0xffe8b0);
+    if (this.quality === 'high') this.particles.spawn(this.time, .35, muzzle.x, muzzle.y, muzzle.z, direction.x * .4, .6, direction.z * .4, .38, particleShape.smoke, 0x827a70);
     // Presentation-only cadence per shooter; entity keys disappear on level unload.
     const round = source ? this.tracerRounds.get(source) ?? 0 : 0;
     if (source) this.tracerRounds.set(source, round + 1);
     if ((sourceId === 1 || round % 3 === 0) && distance > .01) {
       const rayLength = Math.hypot(1, slope), speed = 320 / rayLength;
       this.particles.spawn(this.time, distance / speed + tracerLaunchS, muzzle.x, muzzle.y, muzzle.z,
-        direction.x * speed, slope * speed, direction.z * speed, 1, 11, 0xffce78, distance * rayLength, .065);
+        direction.x * speed, slope * speed, direction.z * speed, 1, particleShape.tracer, 0xffce78, distance * rayLength, .065);
+    }
+    if (!hit && (dust === 'miss' || distance < range - .3)) {
+      const x = muzzle.x + direction.x * distance, y = Math.max(.08, muzzle.y + slope * distance), z = muzzle.z + direction.z * distance;
+      this.burst(x, y, z, 0xb9ab8e, 4, .32, .55, 1.5, particleShape.smoke);
+      if (distance < range - .3) this.burst(x, y, z, 0xffdf94, 3, .035, .18, 5, particleShape.spark);
     }
     if (!dust) return;
     // ally-combat-feel: an ejected brass glint beside the shooter, and a dust puff where a miss (or cover) stops the round.
     this.particles.spawn(this.time, .35, muzzle.x - direction.z * .25, muzzle.y - .1, muzzle.z + direction.x * .25, -direction.z * 1.2, 1.4, direction.x * 1.2, .07, 0, 0xd8b45a, 9.81);
-    if (dust === 'miss' || distance < range - .3) this.burst(muzzle.x + direction.x * distance, Math.max(.08, muzzle.y + slope * distance - .5), muzzle.z + direction.z * distance, 0xb9ab8e, 6, .22, .55, 1.5);
   }
   constructor(private readonly world: SimWorld, private readonly targets: VfxTargets, geometries?: { limb: BufferGeometry; head: BufferGeometry }) {
     super();
@@ -152,7 +157,7 @@ export class Vfx extends Group {
       for (const tell of this.tells.values()) this.telegraphs.recolor(tell.slot, this.telegraphColor(tell.kind));
     }
     if (patch.vfx !== undefined) this.enabled = patch.vfx;
-    if (patch.flashReduction !== undefined) this.flashReduction = patch.flashReduction;
+    if (patch.flashReduction !== undefined) { this.flashReduction = patch.flashReduction; this.particles.emission.value = patch.flashReduction ? .35 : 1; }
     this.telegraphs.pulse.value = this.flashReduction ? 0 : 1;
     this.blasts.set(patch);
     if (patch.quality !== undefined && patch.quality !== this.quality) { this.quality = patch.quality; this.gibs.setQuality(this.quality); this.particles.reset(this.time); this.particles.budget = this.quality === 'low' ? 512 : 2048; this.particles.mesh.count = this.particles.budget; }
@@ -179,9 +184,9 @@ export class Vfx extends Group {
     }
     this.hitIds[slot] = id; this.hitUntil[slot] = this.time + 0.1; this.targets.flash(id, 0.45);
   }
-  private burst(x: number, y: number, z: number, color: number, count: number, size = 0.18, life = 0.7, gravity = 9.81): void {
+  private burst(x: number, y: number, z: number, color: number, count: number, size = 0.18, life = 0.7, gravity = 9.81, shape: number = 0): void {
     const n = this.quality === 'low' ? Math.ceil(count / 4) : count;
-    for (let i = 0; i < n; i++) this.particles.spawn(this.time, life, x, y, z, (this.rng.next() - 0.5) * 4, this.rng.next() * 3, (this.rng.next() - 0.5) * 4, size, 0, color, gravity);
+    for (let i = 0; i < n; i++) this.particles.spawn(this.time, life, x, y, z, (this.rng.next() - 0.5) * 4, this.rng.next() * 3, (this.rng.next() - 0.5) * 4, size, shape, color, gravity, shape === particleShape.spark ? .35 : 1);
   }
   /** Slow, rising ash-green wisps around a body (render RNG only). */
   private sickPuff(x: number, z: number, count: number, size: number, y: number): void {
@@ -212,7 +217,7 @@ export class Vfx extends Group {
       const landingTime = (vy + Math.sqrt(vy * vy + 2 * 9.81 * y)) / 9.81;
       const dropletSize = event.actionId === 'weapon.fists' ? .055 : heavy ? .13 : event.actionId === 'weapon.machete' ? .085 : .11;
       const size = chunk ? .17 + this.rng.next() * .08 : dropletSize + this.rng.next() * .055;
-      this.particles.spawn(this.time, landingTime, x, base + y, z, vx, vy, vz, size, 0, color, 9.81);
+      this.particles.spawn(this.time, landingTime, x, base + y, z, vx, vy, vz, size, this.gore === 'Off' || chunk ? 0 : particleShape.drop, color, 9.81, size * 2.4);
       if (this.gore !== 'Off' && i % (this.quality === 'low' ? 2 : 5) === 0) {
         const landing = this.landings[this.landingCursor++ % this.landings.length];
         landing.at = this.time + landingTime; landing.x = x + vx * landingTime; landing.z = z + vz * landingTime; landing.y = this.world.districts?.supportBelow(landing.x, landing.z, base) ?? 0; landing.size = chunk ? .5 : .18 + this.rng.next() * .15; landing.color = color;
@@ -239,6 +244,17 @@ export class Vfx extends Group {
       else if (event.type === 'ally.attack' && event.from && event.to) {
         const dx = event.to.x - event.from.x, dz = event.to.z - event.from.z, distance = Math.hypot(dx, dz) || 1;
         this.gunshot(event.sourceId, { x: dx / distance, z: dz / distance }, distance, event.from, event.targetId);
+      }
+      return;
+    }
+    if (event.type === 'vehicle.durability-hit') {
+      if (event.source === 'attack' || event.after >= event.before) return;
+      const car = this.world.entities.get(event.sourceId), contact = this.world.entities.get(event.targetId);
+      if (car && contact && (contact.faction === 'environment' || contact.kind === 'vehicle')) {
+        const dx = contact.transform.x - car.transform.x, dz = contact.transform.z - car.transform.z, distance = Math.max(.001, Math.hypot(dx, dz));
+        const def = this.world.vehicles?.cars.get(event.sourceId)?.physics.def, c = Math.cos(car.transform.yaw), s = Math.sin(car.transform.yaw);
+        const edge = def ? Math.min((def.length / 2 + .04) * distance / Math.max(.001, Math.abs(dx * c - dz * s)), (def.width / 2 + .04) * distance / Math.max(.001, Math.abs(dx * s + dz * c))) : 1.5;
+        this.burst(car.transform.x + dx / distance * edge, car.transform.y + .35, car.transform.z + dz / distance * edge, 0xffd998, 12, .045, .45, 9.81, particleShape.spark);
       }
       return;
     }
@@ -359,20 +375,22 @@ export class Vfx extends Group {
       // screen white for 0.1 s at any distance (gate 10-13: the L4 line break washed out the walk on Kessler Lane, 60 m away).
       const focus = this.targets.focus?.() ?? this.world.entities.get(1)?.transform, near = focus ? Math.max(0, Math.min(1, 1.4 - Math.hypot(focus.x - x, focus.z - z) / 18)) : 1;
       this.lastExplosionRadius = radius; if (near > 0) { this.flashUntil = this.time + 0.1; this.flashNear = near; }
-      this.waves.spawn(this.time, 0.8, x, ground + 0.035, z, 0, 0, 0, radius * 2, 1, 0xffe19a, 1);
+      this.waves.spawn(this.time, 0.8, x, ground + 0.035, z, 0, 0, 0, radius * 2, groundShape.pressure, 0xffe19a, 1);
       this.burst(x, ground + 1, z, 0xff8c32, 64, radius * 0.3, 0.65, 2);
-      this.burst(x, ground + 0.8, z, 0x685866, 32, radius * 0.4, 2, -0.5);
+      this.burst(x, ground + 0.8, z, 0x685866, 32, radius * 0.4, 2, -0.5, particleShape.smoke);
       this.burst(x, ground + 0.3, z, 0xb09b85, 16, 0.13, 1.6);
       if (this.gore !== 'Off') this.decals.spawn(this.time, 120, x, ground + 0.012, z, 0, 0, 0, radius, 0, 0x37323c);
       this.targets.shake(this.flashReduction ? 0.08 : Math.min(0.35, radius * 0.05));
     } else if (kind === 'screamer') this.waves.spawn(this.time, 1, x, 0.03, z, 0, 0, 0, radius * 2, 1, 0xef92ff, 1);
     else if (kind === 'electric') {
-      this.burst(x, height, z, 0x94ecff, 12, 0.07, 0.25, 0);
+      this.burst(x, height, z, 0x94ecff, 12, 0.07, 0.25, 0, particleShape.spark);
       for (let i = 0; i < 16; i++) this.particles.spawn(this.time, 0.25, x + i * 0.08, height + Math.sin(i * 0.7) * 0.15, z + (i % 2 ? 0.08 : -0.08), 0, 0, 0, 0.14, 0, 0x94ecff);
     }
     else {
-      const smoke = kind.includes('smoke') || kind === 'toxic', sparkle = kind === 'objective' || kind === 'pickup';
-      this.burst(x, kind === 'ash' ? 3 : smoke ? 1.7 : 0.5, z, effectColors[kind], sparkle ? 8 : 24, sparkle || kind === 'ash' ? 0.1 : radius * 0.6, smoke ? 4 : 1.2, smoke || kind.includes('fire') ? -1 : sparkle ? 0 : 0.5);
+      const smoke = kind.includes('smoke') || kind === 'toxic', sparkle = kind === 'objective' || kind === 'pickup', fire = kind.includes('fire');
+      const ground = this.world.districts?.groundHeight(x, z) ?? 0;
+      // Fire tongues are the Blasts flame cards. Their old large orange dots become small rising ember trails.
+      this.burst(x, ground + (kind === 'ash' ? 3 : smoke ? 1.7 : .5), z, effectColors[kind], sparkle ? 8 : fire ? 8 : 24, sparkle || kind === 'ash' ? .1 : fire ? .045 : radius * .6, smoke ? 4 : 1.2, smoke || fire ? -1 : sparkle ? 0 : .5, smoke ? particleShape.smoke : fire ? particleShape.spark : 0);
     }
   }
   /** Read fixed-tick veil state on every rendered frame, including paused test stepping. */
