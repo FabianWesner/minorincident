@@ -2,10 +2,13 @@
 import { Color, CustomBlending, OneFactor, OneMinusSrcAlphaFactor, DoubleSide, DynamicDrawUsage, InstancedBufferAttribute, InstancedMesh, Matrix4, MeshBasicNodeMaterial, PlaneGeometry, type Node, DepthTexture, ViewportDepthTextureNode, TextureLoader, SRGBColorSpace, type Texture } from 'three/webgpu';
 import manifest from '../../assets/manifest.json' with { type: 'json' };
 import type { AssetDef } from '../../assets/types';
-import { texture, attribute, cameraWorldMatrix, cos, float, Fn, mix, positionGeometry, sin, uniform, uv, vec3, vec4, linearDepth } from 'three/tsl';
+import { atan, texture, attribute, cameraWorldMatrix, cos, float, Fn, mix, positionGeometry, sin, uniform, uv, vec2, vec3, vec4, linearDepth } from 'three/tsl';
 
 /** Half a 60 Hz interval: a fresh shot remains in view on its first advancing frame at closest zoom. */
 export const tracerLaunchS = 1 / 120;
+/** Shared quad silhouettes. Spark/drop aspect is trail length in metres; gravity remains ballistic. */
+export const particleShape = { tracer: 11, spark: 12, flash: 13, smoke: 14, drop: 15 } as const;
+export const groundShape = { pressure: 12, scorch: 13 } as const;
 
 /** Track every canvas/render-target depth copy, including compiler-created node clones. */
 class OwnedDepth extends ViewportDepthTextureNode {
@@ -28,6 +31,7 @@ class OwnedDepth extends ViewportDepthTextureNode {
 export class FxPool {
   readonly clock = uniform(0);
   readonly pulse = uniform(1);
+  readonly emission = uniform(1);
   readonly mesh: InstancedMesh;
   private readonly origin: InstancedBufferAttribute;
   private readonly motion: InstancedBufferAttribute;
@@ -68,9 +72,20 @@ export class FxPool {
     material.positionNode = Fn(() => {
       const size = style.x.mul(alive);
       if (mode === 'particle') {
-        const billboard = cameraWorldMatrix.mul(vec4(positionGeometry.xy.mul(size), 0, 0)).xyz;
+        const shape = style.y.add(.5).floor();
+        const smokeSize = shape.equal(particleShape.smoke).select(progress.mul(.55).add(.45), 1);
+        const billboard = cameraWorldMatrix.mul(vec4(positionGeometry.xy.mul(size).mul(smokeSize), 0, 0)).xyz;
         const offset = motion.xyz.mul(age.max(0));
         const ordinary = origin.xyz.add(offset).add(vec3(0, age.max(0).pow(2).mul(style.z).mul(-0.5), 0)).add(billboard);
+        // Camera-plane ballistic tangent: no CPU updates, and no unstable cross product when viewed end-on.
+        const right = cameraWorldMatrix.mul(vec4(1, 0, 0, 0)).xyz;
+        const up = cameraWorldMatrix.mul(vec4(0, 1, 0, 0)).xyz;
+        const velocity = motion.xyz.sub(vec3(0, age.max(0).mul(style.z), 0));
+        const projected = vec2(velocity.dot(right), velocity.dot(up));
+        const axis = projected.add(vec2(.0001, 0)).normalize();
+        const trail = style.w.min(projected.length().mul(.045)).max(size);
+        const local = axis.mul(positionGeometry.x.mul(trail)).add(vec2(axis.y.negate(), axis.x).mul(positionGeometry.y.mul(size)));
+        const ballistic = ordinary.sub(billboard).add(right.mul(local.x)).add(up.mul(local.y));
         // Shape 11: one camera-facing ribbon along the 3D bullet ray. style.z is
         // the hit distance, style.w the width. Clip both ends to muzzle/hit.
         const speed = motion.xyz.length().max(.001), direction = motion.xyz.div(speed);
@@ -79,7 +94,7 @@ export class FxPool {
         const side = direction.cross(forward), across = side.div(side.length().max(.001));
         const streak = origin.xyz.add(direction.mul(head.sub(length.mul(.5)).add(positionGeometry.x.mul(length))))
           .add(across.mul(positionGeometry.y.mul(style.w))).mul(alive).add(origin.xyz.mul(float(1).sub(alive)));
-        return style.y.greaterThan(10.5).select(streak, ordinary);
+        return shape.equal(particleShape.tracer).select(streak, shape.equal(particleShape.spark).or(shape.equal(particleShape.drop)).select(ballistic, ordinary));
       }
       const growth = style.z.greaterThan(0).select(progress.mul(2).min(1), 1);
       const x = positionGeometry.x.mul(size).mul(growth), z = positionGeometry.y.mul(size).mul(style.w).mul(growth);
@@ -95,7 +110,15 @@ export class FxPool {
       if (mode === 'particle') {
         const edge = float(1).sub(r).max(0).pow(1.5);
         const depth = linearDepth(this.depthNode!).sub(linearDepth()).mul(150).clamp(0, 1);
-        mask = edge.mul(mix(0.65, 1, noise)).mul(depth);
+        const shape = style.y.add(.5).floor();
+        // Broad lobes move coherently; dust expands within its original maximum footprint.
+        const lobe = sin(p.x.mul(5).add(origin.x)).mul(sin(p.y.mul(5).add(origin.z))).mul(.1);
+        const billow = float(1).sub(r.add(lobe).smoothstep(.45, .98));
+        const star = float(1).sub(p.x.abs().mul(p.y.abs()).mul(32).add(r.mul(.7))).clamp(0, 1).pow(2);
+        const streakMask = float(1).sub(p.y.abs()).max(0).pow(1.5).mul(float(1).sub(p.x.abs()).max(0));
+        const drop = float(1).sub(vec2(p.x, p.y.mul(p.x.mul(.3).add(1.2))).length()).clamp(0, 1).smoothstep(0, .35);
+        mask = shape.equal(particleShape.smoke).select(billow, shape.equal(particleShape.flash).select(star,
+          shape.equal(particleShape.spark).select(streakMask, shape.equal(particleShape.drop).select(drop, edge.mul(mix(.65, 1, noise)))))).mul(depth);
       } else {
         const splat = r.lessThan(float(0.84).add(noise.mul(0.16))).select(1, 0);
         const thinRing = r.lessThan(1).and(r.greaterThan(float(1).sub(float(.4).div(style.x)))).select(1, 0);
@@ -108,6 +131,14 @@ export class FxPool {
         const rearArc = thinRing.mul(p.x.greaterThanEqual(r.mul(Math.SQRT1_2)).select(1, 0));
         const arc = thinRing.mul(p.x.greaterThanEqual(r.mul(.5)).select(1, 0));
         mask = shape.equal(10).select(rearArc, shape.equal(9).select(arc, shape.equal(8).select(thinRing, shape.equal(1).select(ring, shape.equal(2).select(lane, shape.equal(3).select(chevron, shape.equal(4).select(cross, splat)))))));
+        if (!warnings) {
+          const breakup = sin(p.x.mul(19).add(p.y.mul(11))).mul(.15).add(.85);
+          const pressure = r.smoothstep(.76, .88).mul(float(1).sub(r.smoothstep(.93, 1))).mul(breakup);
+          const angle = atan(p.y, p.x);
+          const radial = sin(angle.mul(13)).mul(sin(angle.mul(7).add(1))).mul(.16);
+          const scorch = float(1).sub(r.add(radial).smoothstep(.25, .96)).mul(.8);
+          mask = shape.equal(groundShape.pressure).select(pressure, shape.equal(groundShape.scorch).select(scorch, mask));
+        }
         if (warnings) {
           // World-sized fine strokes: the band marks the hit area without hiding the road.
           // +X is the locked charge direction; repeating open chevrons sweep toward its end.
@@ -129,19 +160,21 @@ export class FxPool {
         if (this.bloodTextures.length) {
           const [splats, pool, trail] = this.bloodTextures.map(map => texture(map));
           const blood = shape.equal(6).select(pool, shape.equal(7).select(trail, splats));
-          const isBlood = shape.greaterThanEqual(5);
+          const isBlood = shape.greaterThanEqual(5).and(shape.lessThanEqual(7));
           mask = isBlood.select(blood.a, mask); color = isBlood.select(blood.rgb, color);
         }
       }
       const fade = float(1).sub(progress).min(1).mul(alive);
       const lit = lightSample ?? vec3(1);
       if (mode === 'particle') {
-        const tracer = style.y.greaterThan(10.5);
+        const shape = style.y.add(.5).floor(), tracer = shape.equal(particleShape.tracer);
         const ribbon = float(1).sub(p.y.abs()).max(0).pow(.7).mul(uv().x.mul(.7).add(.3));
         const flight = age.sub(tracerLaunchS).max(0).div(life.sub(tracerLaunchS).max(.001)).clamp(0, 1);
         const endFade = float(1).sub(flight).mul(5).clamp(0, 1);
         const opacity = tracer.select(ribbon.mul(endFade).mul(alive), mask.mul(fade));
-        return vec4(color.mul(lit).mul(opacity), tracer.select(0, opacity));
+        const emissive = shape.equal(particleShape.spark).or(shape.equal(particleShape.flash));
+        const hot = color.r.greaterThan(color.b).select(mix(color, vec3(1, .16, .015), progress.mul(.85)), color).mul(this.emission).mul(2.2);
+        return vec4(emissive.select(hot, color.mul(lit)).mul(opacity), tracer.or(emissive).select(0, opacity));
       }
       return vec4(color.mul(lit), mask.mul(fade));
     })();

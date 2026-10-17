@@ -1,0 +1,48 @@
+{
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 40,
+  "time": "night",
+  "dof": false,
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 180,
+  "sheet": 12,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000
+  },
+  "note": "Incendiary burst then persistent fire, upward embers, smoke and scorch.",
+  "script": [
+    {
+      "frame": 8,
+      "effect": {
+        "blast": "explosion.molotov",
+        "at": [
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "frame": 8,
+      "effect": {
+        "fire": [
+          0,
+          0
+        ],
+        "radius": 1.5,
+        "duration": 10
+      }
+    }
+  ],
+  "name": "vfx-molotov-fire"
+}

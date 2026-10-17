@@ -11,7 +11,7 @@ import { blastFxPresets, type BlastFxPreset } from '../../data/explosions';
 import type { GameEvent } from '../../sim/world/types';
 import type { SimWorld } from '../../sim/world/SimWorld';
 import { seeThroughHole } from '../SeeThrough';
-import { FxPool } from './FxPool';
+import { FxPool, groundShape, particleShape } from './FxPool';
 import type { LightField } from '../LightField';
 
 type Blast = Extract<GameEvent, { type: 'explosion' }>;
@@ -245,17 +245,17 @@ export class Blasts extends Group {
     const dust = low ? Math.ceil(fx.dust / 3) : fx.dust;
     for (let i = 0; i < dust; i++) {
       const a = i / dust * Math.PI * 2 + this.rng.next() * .2, speed = r * (1.2 + this.rng.next() * .6);
-      this.host.particles.spawn(now, .9 + this.rng.next() * .5, x + Math.cos(a) * .6, ground + .25, z + Math.sin(a) * .6, Math.cos(a) * speed, .3 + this.rng.next() * .5, Math.sin(a) * speed, .5 + this.rng.next() * .5, 0, 0x8d7b68, .4);
+      this.host.particles.spawn(now, .9 + this.rng.next() * .5, x + Math.cos(a) * .6, ground + .25, z + Math.sin(a) * .6, Math.cos(a) * speed, .3 + this.rng.next() * .5, Math.sin(a) * speed, .5 + this.rng.next() * .5, particleShape.smoke, 0x8d7b68, .4);
     }
     // Beat 5 debris: bright spark streaks plus slower burning fragments.
     const sparks = low ? Math.ceil(fx.sparks / 4) : fx.sparks;
     for (let i = 0; i < sparks; i++) {
       const a = this.rng.next() * Math.PI * 2, out = 3 + this.rng.next() * r * 1.3, burning = i % 5 === 0;
-      this.host.particles.spawn(now, burning ? 1.6 + this.rng.next() : .5 + this.rng.next() * .6, x, ground + .8, z, Math.cos(a) * out, 4 + this.rng.next() * (burning ? 6 : 9), Math.sin(a) * out, burning ? .16 : .07, 0, burning ? 0xff7a26 : 0xffe9a8, 9.81);
+      this.host.particles.spawn(now, burning ? 1.6 + this.rng.next() : .5 + this.rng.next() * .6, x, ground + .8, z, Math.cos(a) * out, 4 + this.rng.next() * (burning ? 6 : 9), Math.sin(a) * out, burning ? .09 : .045, particleShape.spark, burning ? 0xff7a26 : 0xffe9a8, 9.81, burning ? .3 : .65);
     }
     // Beat 6 smoke column, beat 7 scorch decal (persists to the end of the level; independent of the gore setting).
     if (fx.smoke.seconds > 0) this.columns.push({ ground: ground || undefined, born: now, x, z, until: now + fx.smoke.seconds, rate: fx.smoke.rate * (low ? .5 : 1), size: fx.smoke.size, heat: fx.smoke.heat, acc: 2, shade: .17, cloud: 0 });
-    if (fx.scorch > 0) this.scorch.spawn(now, 900, x, ground + .014, z, this.rng.next() * Math.PI, 0, 0, r * fx.scorch * 2, 0, 0x16110f);
+    if (fx.scorch > 0) this.scorch.spawn(now, 900, x, ground + .014, z, this.rng.next() * Math.PI, 0, 0, r * fx.scorch * 2, groundShape.scorch, 0x16110f);
     // Camera: shake by size, Bruno's roll kick by distance from the focus.
     const focus = this.host.focus?.(), distance = focus ? Math.hypot(focus.x - x, focus.z - z) : 0;
     const near = Math.max(0, Math.min(1, 1 - (distance - 2) / (13 + r)));
@@ -373,7 +373,7 @@ export class Blasts extends Group {
       c.x = e.transform.x; c.z = e.transform.z;
       // Persistent fire needs embers even without a preceding blast. Reuse the
       // existing particle pool at 4 Hz (2 Hz on low), under its unchanged cap.
-      if (this.sourceVisible(c.x, c.z, c.size + 4) && (!low || Math.floor(now * 4) % 2 === 0)) this.host.particles.spawn(now, 1.2, c.x + (this.rng.next() - .5) * .6, .7, c.z + (this.rng.next() - .5) * .6, this.windNode.value.x * .5, 1.7 + this.rng.next(), this.windNode.value.z * .5, .06, 0, 0xffb04a, .3);
+      if (this.sourceVisible(c.x, c.z, c.size + 4) && (!low || Math.floor(now * 4) % 2 === 0)) this.host.particles.spawn(now, 1.2, c.x + (this.rng.next() - .5) * .6, (c.ground ?? 0) + .7, c.z + (this.rng.next() - .5) * .6, this.windNode.value.x * .5, 1.7 + this.rng.next(), this.windNode.value.z * .5, .045, particleShape.spark, 0xffb04a, .3, .24);
     }
     for (const id of this.vehicleColumns.keys()) if (!vehicles.has(id)) this.vehicleColumns.delete(id);
     for (const [id, c] of this.fireColumns) if (!seen.has(id)) { c.light?.remove(); this.fireColumns.delete(id); }
