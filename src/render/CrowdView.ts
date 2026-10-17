@@ -183,7 +183,7 @@ export class CrowdView extends Group {
       const base = healthy ? mix(sourceColor, vec3(.26, .3, .22), feedbackState.z.mul(.4)) : sourceColor, glow = attribute('color', 'vec3').div(luminance(attribute('color', 'vec3')).max(.25)).mul(parts.z).mul(1.2).add(feedbackState.w.mod(2));
       const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
       // E25 night readability: crowd silhouettes take the preset's moonlit rim.
-      if ('figureRim' in material) material.figureRim.value = 1;
+      if ('figureRim' in material) { material.figureRim.value = .25; material.figureFill.value = 1; }
       // The Alpha-sized Mega retains its silhouette at contact, like a regular Alpha.
       // Instances cannot be sorted independently in the transparent render list.
       // A shared 4x4 screen-door threshold keeps every surface of a corpse at

@@ -1,0 +1,76 @@
+{
+  "name": "ui-night-facing",
+  "ground": "asphalt",
+  "size": 30,
+  "time": "night",
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        -4
+      ]
+    },
+    {
+      "id": "threat-0",
+      "kind": "infected",
+      "at": [
+        -3,
+        0
+      ],
+      "yaw": -45,
+      "state": "idle"
+    },
+    {
+      "id": "threat-1",
+      "kind": "infected",
+      "at": [
+        -1,
+        0
+      ],
+      "yaw": 45,
+      "state": "idle"
+    },
+    {
+      "id": "threat-2",
+      "kind": "infected",
+      "at": [
+        1,
+        0
+      ],
+      "yaw": 135,
+      "state": "idle"
+    },
+    {
+      "id": "threat-3",
+      "kind": "infected",
+      "at": [
+        3,
+        0
+      ],
+      "yaw": 225,
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 60,
+  "shots": [
+    0,
+    60
+  ],
+  "sheet": 30,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0
+  },
+  "note": "Same production worker, four facings: distinguish real eye occlusion from shading. Red eyes only on camera-facing heads; every body must remain solid."
+}

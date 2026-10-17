@@ -5,9 +5,10 @@ import { test, expect, boot } from '../e2e/fixtures';
 import type { SceneSpec } from '../../src/debug/scenelab/spec';
 const out = 'test-results/epics/E28/visual';
 const spec = (kind: string): SceneSpec => JSON.parse(readFileSync(`specs/scenes/weather-lab-${kind}.json`, 'utf8'));
-async function lab(page: Page, scene: SceneSpec) {
-  await boot(page, '/?test=1&scenelab&renderer=webgl&quality=high&audio=muted&dpr=1&profile');
-  await page.evaluate(async scene => { await window.__SCENE__!.load(scene); await window.__SCENE__!.step(1); }, scene);
+async function lab(page: Page, scene: SceneSpec, backend: 'webgl' | 'webgpu' = 'webgl', tier: 'high' | 'low' = 'high') {
+  await boot(page, `/?test=1&scenelab&renderer=${backend}&quality=${tier}&audio=muted&dpr=1&profile`);
+  await page.evaluate(async ({ scene, tier }) => { window.__SS__!.settings.set({ quality: tier }); await window.__SCENE__!.load(scene); await window.__SCENE__!.step(1); }, { scene, tier });
+  expect(await page.evaluate(() => ({ backend: window.__SS__!.perf().backend, tier: window.__SS__!.perf().quality.tier }))).toEqual({ backend, tier });
 }
 async function shot(page: Page, name: string) { await page.evaluate(() => window.__SS__!.screenshotReady()); mkdirSync(out, { recursive: true }); return PNG.sync.read(await page.locator('canvas').screenshot({ path: `${out}/${name}.png` })); }
 const lum = (r: number, g: number, b: number) => { const c = (v: number) => (v / 255) <= .04045 ? v / 255 / 12.92 : ((v / 255 + .055) / 1.055) ** 2.4; return .2126 * c(r) + .7152 * c(g) + .0722 * c(b); };
@@ -51,15 +52,15 @@ test('T-E28-07b @E28 @E28-AC07 @visual roof/car up-facing accumulation covers >=
   await page.evaluate(() => window.__SCENE__!.step(119)); const after = await page.evaluate(() => window.__SS__!.getState().render.weather!.trackPixels);
   expect(after).toBeGreaterThan(before); await shot(page, 'snow-tracks'); writeFileSync(`${out}/snow-coverage.json`, JSON.stringify({ roof, car, before, after }));
 });
-for (const kind of ['clear', 'overcast', 'haze', 'thunderstorm', 'fog', 'snow']) test(`T-E28-12-${kind} @E28 @E28-AC12 @vision game-camera weather mood ${kind}`, async ({ page }) => {
-  await lab(page, spec(kind)); await page.evaluate(() => window.__SCENE__!.step(61));
+for (const backend of ['webgl', 'webgpu'] as const) for (const tier of ['high', 'low'] as const) for (const kind of ['clear', 'overcast', 'haze', 'thunderstorm', 'fog', 'snow']) test(`T-E28-12-${kind} @E28 @E28-AC12 @vision game-camera weather mood ${kind} ${backend} ${tier}`, async ({ page }) => {
+  await lab(page, spec(kind), backend, tier); await page.evaluate(() => window.__SCENE__!.step(61));
   if (kind === 'thunderstorm') {
     // Frame 60 is the scripted strike: retain its flash, then review the sustained mood.
-    await shot(page, 'mood-thunderstorm-flash');
+    await shot(page, `mood-thunderstorm-flash-${backend}-${tier}`);
     await page.evaluate(() => window.__SCENE__!.step(58));
     expect(await page.evaluate(() => window.__SS__!.getState().render.weather!.flash)).toBe(0);
   }
-  await shot(page, `mood-${kind}`);
+  await shot(page, `mood-${kind}-${backend}-${tier}`);
   expect(await page.evaluate(() => window.__SS__!.getState().weather!.kind)).toBe(kind);
 });
 
