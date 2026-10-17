@@ -1,0 +1,10 @@
+{
+  "extends": "qa-l6-po-gate.json",
+  "name": "qa-l6-shelter-reveal",
+  "note": "Power-failed production shelter at the exact courier contrast spot (0,-4). Review the full courier silhouette through the ticket counter; the ID mask must retain that same see-through geometry.",
+  "actors": [{ "id": "courier", "kind": "courier", "at": [0, -4], "loadout": ["weapon.fire-axe", "weapon.army-mg"] }],
+  "camera": { "mode": "game", "target": [0, -4], "zoom": 1 },
+  "frames": 30,
+  "shots": [1, 30],
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 }
+}
