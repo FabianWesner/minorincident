@@ -235,6 +235,7 @@ export default {
     "kickable": true,
     "flammable": false,
     "sounds": "prop.metal-light",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
@@ -250,7 +251,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.folding-chair.glb",
-    "hash": "e228c32e4f255ce19d85028f7a44869c421bf98b65a000a43c39b187d0ce93be"
+    "hash": "d9bd9a6e6a83bceb3cf7d6358f04a6a5cf546e7431f5b2e70db6db0bb9df8458"
   },
   "veh.sedan-red": {
     "class": "heavy",
@@ -1650,6 +1651,7 @@ export default {
     "flammable": false,
     "explosive": null,
     "sounds": "prop.metal-heavy",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
@@ -1665,7 +1667,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.dumpster.glb",
-    "hash": "0115c647dff86febb2b39466dbadb68517ccb70fd8b8c55c2f6ead941d1e562a"
+    "hash": "3c628def3d65cb515fd7234fa9321a922b378e6ecd505e84685ba5f94b993d72"
   },
   "prop.sofa": {
     "class": "medium",
@@ -1729,6 +1731,7 @@ export default {
       "debrisSet": "debris.wood-small"
     },
     "sounds": "prop.wood-medium",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
@@ -1744,7 +1747,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.pallet.glb",
-    "hash": "50eb26248e06700187a8e58f0463e76fd1e8ca05e63fbbaeaa5f071bb76c9a60"
+    "hash": "1a37b399aeaa9eb0f834e322c4fc30fc6c49d0f2baea0fea8b228d71c0f632f8"
   },
   "prop.vending-cart": {
     "class": "medium",
@@ -1796,6 +1799,7 @@ export default {
     "flammable": false,
     "explosive": null,
     "sounds": "prop.metal-light",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
@@ -1811,7 +1815,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.fire-extinguisher.glb",
-    "hash": "62e1657c595ed49431de6ba04f2b60db3a27559eca8d90dd90dfd7b0c12f56c2"
+    "hash": "f1b6ac771f7f477de7e0dab782b8cc746afc1c8fdab50b73de1bdeadf352afac"
   },
   "thr.smoke-grenade": {
     "class": "light",
@@ -1970,6 +1974,7 @@ export default {
     "vaultable": false,
     "flammable": false,
     "sounds": "prop.metal-heavy",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
@@ -1997,7 +2002,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.light-tower.glb",
-    "hash": "a8c6fc2286f2093500715a7ffe142e34a74f56d26a58b84f1463cd4c6a3abe21"
+    "hash": "737cd8dbe59ca40ccc8de9ce5507053ef8d9c1c78bf9cdd00e4d50532b928622"
   },
   "prop.porta-potty": {
     "class": "medium",
@@ -2080,6 +2085,7 @@ export default {
       "debrisSet": "debris.wood-small"
     },
     "sounds": "prop.wood-medium",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
@@ -2095,7 +2101,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.barricade.glb",
-    "hash": "084ac0f6c55ed9beaf95b76f038542295bb41be806b18804e639d3a68979d38b"
+    "hash": "f1e403b2c74a9603b2c3877a0a36fed441ca08e4f170646502d14b8ca80b2f3d"
   },
   "prop.bench": {
     "class": "medium",
@@ -2119,6 +2125,7 @@ export default {
       "debrisSet": "debris.wood-small"
     },
     "sounds": "prop.wood-medium",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
@@ -2158,7 +2165,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.bench.glb",
-    "hash": "7361d7622d92eaac38850564a7347aa899adbb3faac6bc1b75d6151c9773382e"
+    "hash": "2613806d58ca2d59ece3fe574094f9a2e8ac278b3faf99d610876cf2a151df67"
   },
   "prop.traffic-cone": {
     "class": "light",
@@ -2515,6 +2522,7 @@ export default {
     "barricadeValue": 0.1,
     "barricadeHP": 20,
     "sounds": "prop.cardboard",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
@@ -2542,7 +2550,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.package-courier.glb",
-    "hash": "6c00a2d3622e29fc36d05f49e94e8a6aab4b8d5b96abd8867c07e461a345f1d7"
+    "hash": "24c19fcdb22bfecefd325a2787dfa61bc73b09392b7019b33e61c55abfcf0c35"
   },
   "prop.flower-bed": {
     "class": "fixed",
@@ -2707,6 +2715,7 @@ export default {
     "burnTime": 20,
     "explosive": null,
     "sounds": "prop.metal-light",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
@@ -2722,7 +2731,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.bbq.glb",
-    "hash": "abdae5f987effb00092bf9d0873e1a1ae7393639d9f7cf004f2deffeb9bb0412"
+    "hash": "4bb245b9e8b15c1abd1ce540461f3798b2aae692eacd58d30531aa5b1e89034c"
   },
   "prop.lawn-chair-a": {
     "class": "light",
@@ -2743,6 +2752,7 @@ export default {
     "burnTime": 20,
     "explosive": null,
     "sounds": "prop.metal-light",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
@@ -2758,7 +2768,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.lawn-chair-a.glb",
-    "hash": "a3ece5b1a2d8050d8f034a7f2d88d4b8513bfe73d1a29c8875bb2c3fc563d155"
+    "hash": "977616e7d457bb45eab1f7eb162194e6ef5a57a5c5ddd3bb05b153118c0bf3f9"
   },
   "prop.lawn-chair-b": {
     "class": "light",
@@ -2779,6 +2789,7 @@ export default {
     "burnTime": 20,
     "explosive": null,
     "sounds": "prop.metal-light",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
@@ -2794,7 +2805,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.lawn-chair-b.glb",
-    "hash": "fb0ec2557643b1f213106def0bd44cebf3608b68d2034492f0a5c0746eb4a876"
+    "hash": "4a0ea7ecb845d843cb98d6eda6ef91ef34f5985826e1635f7c58e31667c1a96b"
   },
   "prop.kiddie-pool": {
     "class": "fixed",
@@ -2851,6 +2862,7 @@ export default {
     "burnTime": 20,
     "explosive": null,
     "sounds": "prop.metal-light",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
@@ -2866,7 +2878,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.gnome.glb",
-    "hash": "44a43f401aa4f761c15e337740f7578751c8bc510f35e4f9649401d839c46bdc"
+    "hash": "962fc3b2c9f07a532374ebc1010cd1517d5358aa1cbeec2b2bbd9dc03b10f363"
   },
   "prop.flamingo": {
     "class": "light",
@@ -2887,6 +2899,7 @@ export default {
     "burnTime": 20,
     "explosive": null,
     "sounds": "prop.metal-light",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
@@ -2902,7 +2915,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.flamingo.glb",
-    "hash": "002965f89596f09d7bd05cd0e4a928a9b2fe2ef092f1f55cfdcfeb118e4c2a20"
+    "hash": "8269cfd69a7c896a84bebfb100fa4a6c7bd1885d8037f10261cd129a3cf5f263"
   },
   "prop.sprinkler": {
     "class": "light",
@@ -2923,6 +2936,7 @@ export default {
     "burnTime": 20,
     "explosive": null,
     "sounds": "prop.metal-light",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
@@ -2938,7 +2952,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.sprinkler.glb",
-    "hash": "93b7b3b4acca39fc8764f765b9ce04835d1448b60ddbc99e9cdae884b02de5e3"
+    "hash": "bb360bc5f197426e5ebfb4d84483bc390461e21b9f7bd5088d77fc2bcb39fcda"
   },
   "prop.hose-reel": {
     "class": "light",
@@ -2959,6 +2973,7 @@ export default {
     "burnTime": 20,
     "explosive": null,
     "sounds": "prop.metal-light",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
@@ -2974,7 +2989,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.hose-reel.glb",
-    "hash": "28ce81a0cf51338160a2d987ab2f11f3c092aa16594a83b992aa119dfce989a2"
+    "hash": "08e260f1c093b3dfe79e18f4c1a49544d4da3957fe15ef8a782187d7cb523821"
   },
   "prop.wheelbarrow": {
     "class": "medium",
@@ -3032,6 +3047,7 @@ export default {
     "burnTime": 20,
     "explosive": null,
     "sounds": "prop.metal-light",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
@@ -3047,7 +3063,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.crates.glb",
-    "hash": "5576cd26ef0f08320472c0b4ce0dde6158d17557fb5d047545c2b606fbf37071"
+    "hash": "b2e2420ca395fa334e442106268c4a43cdd37e0cbc0302c8ed197bf05c1a40b3"
   },
   "prop.carpet": {
     "class": "light",
@@ -3068,6 +3084,7 @@ export default {
     "burnTime": 20,
     "explosive": null,
     "sounds": "prop.metal-light",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
@@ -3083,7 +3100,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.carpet.glb",
-    "hash": "c06ed089342358b66bc312d7c82f04b39486dc0483171354518ac9c4b804c41d"
+    "hash": "88ee66a3b9a3d6dfdd7ca76b33fbcfe2c48d018050ba359bd49d2e79d0ab98aa"
   },
   "prop.trash-bags": {
     "class": "light",
@@ -3104,6 +3121,7 @@ export default {
     "burnTime": 20,
     "explosive": null,
     "sounds": "prop.metal-light",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
@@ -3119,7 +3137,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.trash-bags.glb",
-    "hash": "a6cbc7108eba431184b35a19df6f96fac0db2f3391626a8da78551090457f51d"
+    "hash": "30fe7e5ad7deaa5844261ea48794539d0f87bf5762d5c19c3fcfa54f2b922017"
   },
   "prop.broken-chair": {
     "class": "light",
@@ -3140,6 +3158,7 @@ export default {
     "burnTime": 20,
     "explosive": null,
     "sounds": "prop.metal-light",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
@@ -3155,7 +3174,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.broken-chair.glb",
-    "hash": "f12bfacb972c292a229e50f16361d337f26940b1d2d5fcc812cba74ad33210a7"
+    "hash": "f8ef9e2fff205c743d82b9af64459ef68be17206b8d3847de729cf5a2f7b1a65"
   },
   "prop.recycling-bin": {
     "class": "light",
@@ -3176,6 +3195,7 @@ export default {
     "burnTime": 20,
     "explosive": null,
     "sounds": "prop.metal-light",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
@@ -3191,7 +3211,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.recycling-bin.glb",
-    "hash": "c390c5ba66df39e71602c4865cb9af5e5e0a23245b0bef4df2b769ed393862ea"
+    "hash": "5566429d6c85787d1bc385242ba63f843c1487b4d5894f477cf97f47d1e6f4d0"
   },
   "prop.laundry-line": {
     "class": "fixed",
@@ -3847,6 +3867,7 @@ export default {
     "kickable": false,
     "flammable": false,
     "sounds": "prop.metal-heavy",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
@@ -3862,7 +3883,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.crowd-fence.glb",
-    "hash": "9ea5dbcc2f7d3d0d9f32591f875a8ab5df5d99bf87af9fe015ee1cfd1e1cb577"
+    "hash": "6bfefd2bfc32e25afb7050b68cee010c1d4f415a7240e3e5f4b9acead3bb51ce"
   },
   "prop.armory-table": {
     "class": "heavy",
@@ -7496,6 +7517,7 @@ export default {
     "kickable": true,
     "flammable": false,
     "sounds": "prop.metal-medium",
+    "reset": "spawn",
     "boxes": [
       {
         "min": [
@@ -7511,7 +7533,7 @@ export default {
       }
     ],
     "source": "public/assets/models/prop.cure-canister.glb",
-    "hash": "cf06fecef26fbfe53bbb99562ef5f957381e0467ea21a3c99f494cb0e58df48c"
+    "hash": "c8500ddcd83c92ac85903fc6216d428937b41a6eabda3b93a11925e8f6a06068"
   },
   "prop.cure-canister-pedestal": {
     "class": "fixed",

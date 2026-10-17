@@ -78,12 +78,17 @@ export class LevelSixSubway {
       // pursuers behind closed gates must not consume the whole route budget.
       const reserved=(this.s.entries??[]).reduce((total,e)=>total+e.remaining,0);
       if(wave===3&&ai.director.count>=ai.director.cap-reserved)break;
-      const door=doors[i%doors.length],base=l6Doors[door],at={x:base.x+(i%2)*.8,z:base.z-1.4};
-      // Doorway arrivals are the maintenance source. Later side-passages only emerge outside the camera.
-      if(wave>2&&!ai.director.offscreen(at))continue;
+      const requested=doors[i%doors.length];
+      // A watched shelter doorway cannot pop an infected into view. Use a real
+      // tunnel access instead, rotating the alternatives so breach two retains
+      // at least two sources. Test the snapped pose, which is the actual spawn.
+      const candidates=wave<=2?[requested,...[2,3,4,5,6,7].map((_,j)=>2+(j+requested)%6)]:[requested];
+      const door=candidates.find(index=>{const base=l6Doors[index];return ai.director.offscreen(this.snap({x:base.x+(i%2)*.8,z:base.z-1.4}),.6);});
+      if(door===undefined)continue;
+      const base=l6Doors[door],at=this.snap({x:base.x+(i%2)*.8,z:base.z-1.4});
       const model=balancedCrowdModel(l6BreachModels,ai.active.filter(e=>e.health.current>0&&!e.hidden&&!e.infected?.hidden).map(e=>({model:e.appearance?.asset??e.infected!.variant,x:e.transform.x,z:e.transform.z})),at,w.entities.size);
-      const id=o.spawnPedestrian(this.snap(at),{model}),e=w.entities.get(id)!;o.turnNow(e);
-      spawned++;this.s.infectedIds.push(id);this.s.spawnLog.push({id,door,x:e.transform.x,z:e.transform.z,tick:w.tick,wave,offscreen:ai.director.offscreen(at)});
+      const id=o.spawnPedestrian(at,{model}),e=w.entities.get(id)!;o.turnNow(e);
+      spawned++;this.s.infectedIds.push(id);this.s.spawnLog.push({id,door,x:e.transform.x,z:e.transform.z,tick:w.tick,wave,offscreen:ai.director.offscreen(at,.6)});
     }
     return spawned;
   }

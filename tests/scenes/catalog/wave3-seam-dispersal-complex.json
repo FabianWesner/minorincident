@@ -1,0 +1,87 @@
+{
+  "name": "wave3-seam-dispersal-complex",
+  "seed": 32,
+  "ground": "district",
+  "time": "L10-night",
+  "dof": false,
+  "layout": {
+    "district": "D-CURE",
+    "bbox": [
+      [
+        3662,
+        -55
+      ],
+      [
+        3737,
+        5
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        3693,
+        -25
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.fire-axe"
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "courier",
+    "zoom": 1
+  },
+  "frames": 450,
+  "sheet": 75,
+  "script": [
+    {
+      "frame": 0,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            3703,
+            -25
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 150,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            3693,
+            -25
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 300,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            3703,
+            -25
+          ]
+        ]
+      }
+    }
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "lodPlaceholderFramesMax": 0
+  },
+  "note": "E32-AC28 game-camera region boundary and input reversals; delayed loads and persistence are tested in wave3-sim.spec.ts and l10-regression.test.ts."
+}
