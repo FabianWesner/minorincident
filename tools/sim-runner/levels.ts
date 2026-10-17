@@ -21,9 +21,9 @@ import { l7CorridorAnchors } from '../../src/levels/L7/corridor';
 import { runL1, Walker } from './l1Bots';
 import { runTen, type CureRegionTiming } from './l10';
 
-export type RunnerLevel = MissionId | 'L7';
-/** Playable campaign order, including L7's graph-free encounter/departure flow. */
-export const runnerLevels: readonly RunnerLevel[] = [...missionIds, 'L7' as const].sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)));
+export type RunnerLevel = MissionId;
+/** Playable campaign order; L7 now participates in the ordinary mission graph. */
+export const runnerLevels: readonly RunnerLevel[] = missionIds;
 export type CompletionPolicy = 'complete' | 'newbie';
 /** Same contract for individual levels and the fast completion battery. Times are simulation seconds. */
 export interface LevelReport {

@@ -1,0 +1,6 @@
+- Merged `lane/l7-entry` locally in `af295b940`; Northgate’s tunnel centreline crossed an unsupported gap between the two flights (3.9 m rise at the landing).
+- Shifted the drawn exit and its platform/treads/landing by 0.9 m, aligned the closing gate and escort/bot routes; maximum centreline rise is now 13.75 cm, with no teleport or controller-limit change.
+- [Full real-input witness](evidence/real-handover.json) reaches L7 in 292.417 sim seconds: zero deaths, gate closed, seven photos, exact 17 survivor IDs and arsenal; unchanged 60% rescue gate remains RED at 17/29 (58.62%).
+- Actual-tier browser crossings: 8/8; Scene Lab: 24/24 across WebGL/WebGPU, high/low and zoom 1/0.5 (+1.5 in catalog); [captures](evidence/game-camera-ascent-matrix.jpg), [vision review](review.md), [physical input action audit](evidence/full-input-trace-summary.json).
+- Typecheck, lint, production build and browser smoke pass; full unit/sim/tests/levels sweep and final focused L6 regressions run on Hetzner, ≤4 threads; final counts pending.
+- E18 native timing is [unmeasured](evidence/native-unmeasured.json): unused quiet reservations released within 4 and ~2.5 minutes; Mac load 11.3 exceeds <3 preflight, aggregate browser-slot waits >30 minutes; budgets/criteria unchanged, no deployment or merge into main.
