@@ -1,0 +1,203 @@
+{
+  "numPassedTests": 7,
+  "numFailedTests": 0,
+  "numPendingTests": 42,
+  "tests": [
+    {
+      "name": "T-E24-01 @E24 @E24-AC01 graph shelter -> stop -> retreat -> exit has no fail timer or survivor fail",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E24-04 @E24 @E24-AC04 @E24-AC05 @E08-AC11 calm adult routines, carried ids, readable injury dialogue, no weapon pickup and no early combat",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E24-06 @E24 @E24-AC06 @E24-AC07 @E24-AC13 idle two breaches, bangs, immediate power failure, first-of abandonment and caps",
+      "status": "passed"
+    },
+    {
+      "name": "T-E24-16 @E24 @E24-AC16 death restores all four checkpoint snapshots, outbreak, gates and power",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E24-02 @E24 @E24-AC02 @E24-AC10 single-seed complete bot (PO: no batteries) protects and rejoins the community",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E24-09 @E24 @E24-AC09 group pauses at a gate when the rear is under attack and the player is absent",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E24-11 @E24 @E24-AC11 service leaf refuses to trap survivors, then blocks sight and motion",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E24-13 @E24 @E24-AC13 bitten shelter adult retains identity through the shared 2.5-3.5 s infection",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E24-zero @E24 @E24-AC01 all survivors lost still permits the physical exit",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E24-11-siege @E24 @E24-AC11 five real infected break the closed service gate in 8-12 seconds",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E24-03 @E24 @E24-AC03 single-seed newbie protects injured survivors within the original band",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E30-04 T-E30-05 T-E30-07 @E30-AC04 @E30-AC05 @E30-AC07 high active-time calm and simultaneous inside emergence",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E30-04 T-E30-05 T-E30-07 @E30-AC04 @E30-AC05 @E30-AC07 low active-time calm and simultaneous inside emergence",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E30-08 T-E30-09 T-E30-11 @E30-AC08 @E30-AC09 @E30-AC11 seed 1 systemic zoo outbreak converts animals and humans",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E30-17 @E30-AC17 sanctuary and breach restore preserve remaining time, tunnel walks and animal identities",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 0 survivors and exact APC transfer",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 12 survivors and exact APC transfer",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 35 survivors and exact APC transfer",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E30-13-losses @E30-AC13 finished civilians and released former survivors cannot block an all-lost escape",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E30-06-calm-high @E30-AC06 exterior attackers cannot cross or hurt any occupant for all 60 seconds; routines face their task",
+      "status": "passed"
+    },
+    {
+      "name": "T-E30-06-calm-low @E30-AC06 exterior attackers cannot cross or hurt any occupant for all 60 seconds; routines face their task",
+      "status": "passed"
+    },
+    {
+      "name": "destructible cover marked non-buildable cannot auto-brace, repair or rebuild",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E26-02 @E26-AC02 prop-yard 300 authored bodies sleep after 1s without interaction",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E26-06 @E26-AC06 staged awake budget freezes farthest props after waking 250",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E26-07 @E26-AC07 every production movable resets home or removes within one tick below -5m",
+      "status": "passed"
+    },
+    {
+      "name": "T-E26-09 @E26-AC09 coverage rejects overlaps and low fill; 1.5s brace pins props and blocks navigation",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E26-10 @E26-AC10 ten spaced runners deal defined DPS; Brute fivefold; breaking releases props and nav in the same tick",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E26-12 @E26-AC12 stand 2s boards 200HP; repairs 25% per 2s; moving interrupts progress",
+      "status": "skipped"
+    },
+    {
+      "name": "E26 restore reconciles intact and broken braces with entity checkpoints",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E26-03 @E26-AC03 authored 35kg medium push slows to 55%; heavy requires shoulder upgrade",
+      "status": "skipped"
+    },
+    {
+      "name": "E26 a short detour goes around intact rails; long detours attack and break invalidates cached routes",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E26-04 @E26 @E26-AC04 real kick launches cone at 6m/s and momentum downs a runner",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E26-05 @E26 @E26-AC05 blast impulse is delayed, upward and linear; outside radius stays asleep",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E26-06b @E26 @E26-AC06 explosion wakes 250 bodies within both tier limits, farthest freeze first",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E26-07b @E26 @E26-AC07 remove flag disables a fallen prop without respawning it",
+      "status": "passed"
+    },
+    {
+      "name": "T-E26-08 @E26 @E26-AC08 displaced resting dumpster updates nav in 0.5s, short routes detour and long routes attack",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E26-11 @E26 @E26-AC11 runners vault low sandbags in 1.2s; crawlers/heavies cannot; cover stops front shots",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E26-13 @E26 @E26-AC13 parked car braces at 100% coverage and twice car HP; break releases it",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E26-11b @E26 @E26-AC11 pooled heavies cannot inherit an interrupted runner vault",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E26-15 @E26 @E26-AC15 60s push/kick/explosion tape has identical repeat state hashes",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E26-14 @E26 @E26-AC14 complete bot fills/braces two slots and defense reduces core arrivals >=40%",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E26-09b @E26 @E26-AC09 overlapping props do not double-count slot coverage",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E26-03b @E26 @E26-AC03 authored 35kg shopping cart moves along push direction at 55% speed",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E32-02-minute-high @E32-AC02 @E32-AC05 first minute remains axe-only despite historical unlocks",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E32-28-cure-high @E32-AC28 D-CURE prefetch reversal and five revisits retain corpse/pickup/boss state",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E32-02-minute-low @E32-AC02 @E32-AC05 first minute remains axe-only despite historical unlocks",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E32-28-cure-low @E32-AC28 D-CURE prefetch reversal and five revisits retain corpse/pickup/boss state",
+      "status": "skipped"
+    },
+    {
+      "name": "T-E32-28-seam-input-high @E32-AC28 every D-CURE region seam supports live reversal, nav and persistent identities",
+      "status": "passed"
+    },
+    {
+      "name": "T-E32-28-seam-input-low @E32-AC28 every D-CURE region seam supports live reversal, nav and persistent identities",
+      "status": "passed"
+    }
+  ]
+}
