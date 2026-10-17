@@ -1,3 +1,4 @@
+import { inside } from '../../levels/districts/validate';
 import { balancedCrowdModel } from '../../data/crowdAppearance';
 import { allyState, updateAlly } from '../outbreak/Allies';
 import { Outbreak } from '../outbreak/Outbreak';
@@ -17,6 +18,19 @@ export class LevelSixSubway {
   private get s() { return this.mission.state.l6!; }
   prepare(): void {
     const w=this.w, rng=new Rng(w.seed,'l6-story'), start=w.tick;
+    // The station/tunnel has no floor outside its authored rooms. The actor
+    // grid must share that domain: an apparent shortcut beside a service gate
+    // strands the physical courier at its barrier and splits the escort group.
+    const nav = w.infected!.nav, previousMask = nav.mask;
+    const excluded = w.districts!.districts.flatMap(d => d.layout.walkable.excluded.map(area => area.map(([x, z]): [number, number] => [x + d.origin[0], z + d.origin[1]])));
+    const point: [number, number] = [0, 0];
+    nav.mask = (x, z) => {
+      if (previousMask && !previousMask(x, z)) return false;
+      point[0] = x; point[1] = z;
+      for (const area of excluded) if (inside(point, area)) return false;
+      return true;
+    };
+    nav.rebake();
     const breach1=start+ticks(30+rng.next()*10), breach2=breach1+ticks(20+rng.next()*10);
     this.mission.state.l6={entries:l6Entries.map(e=>({door:e.door,warnedAt:0,remaining:e.count,nextAt:0})),phase:'shelter',startAt:start,breach1At:breach1,breach2At:breach2,abandonAt:0,nextWave:breach2+600,firstBang:false,secondBang:false,leaderX:6,leaderZ:-2,paused:false,survivors:[],gates:[],infectedIds:[],spawnLog:[],flashlight:false,mainPower:true,emergency:false,exitAt:0,gateAt:0,injuryLineAt:0,lastShot:0,mid:false,platform:false};
     w.npcs!.setAmbient(0);w.infected!.director.levelCap=60;w.infected!.director.strict=true;
