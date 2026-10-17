@@ -1,0 +1,136 @@
+
+Running 21 tests using 1 worker
+
+  ✓   1 [chromium] › tests/e2e/explosions.spec.ts:69:1 › T-E27-03 @E27 @E27-AC03 medium blast seven beats in order at fixed ticks: flash, fireball, shockwave, debris, smoke, scorch (6.5s)
+  ✓   2 [chromium] › tests/e2e/explosions.spec.ts:95:1 › T-E27-07 @E27 @E27-AC07 flash reduction keeps the full-screen luminance delta per frame ≤ 20 % for every blast class (36.4s)
+  ✓   3 [chromium] › tests/e2e/explosions.spec.ts:113:1 › T-E27-05v @E27 @E27-AC05 car explosion: wreck jumps, panels fly, burned variant, smoke column persists ≥ 20 s (5.4s)
+  ✓   4 [chromium] › tests/e2e/explosions.spec.ts:130:1 › T-E27-08v @E27 @E27-AC08 smoke grenade cloud reads at the game camera and dissipates with the zone (6.1s)
+  ✓   5 [chromium] › tests/e2e/explosions.spec.ts:147:1 › T-E27-14 @E27 @E27-AC14 mega + chain stays bounded at 30 s and pools recover within 30 s of the last source (4.3s)
+  ✓   6 [chromium] › tests/e2e/explosions.spec.ts:186:1 › T-E27-night @E27 fires and blasts light the night through the E25 light field (5.6s)
+  ✓   7 [chromium] › tests/e2e/vfx.spec.ts:25:1 › T-E15-01b @E15 @E15-AC01 60s browser combat agrees across VFX and gore settings (22.1s)
+  ✓   8 [chromium] › tests/e2e/vfx.spec.ts:57:1 › T-E15-06 @E15 @E15-AC06 render clock freezes 50ms independent of sim scale; crowds suppress (6.6s)
+  ✓   9 [chromium] › tests/e2e/vfx.spec.ts:76:1 › T-E15-09b @E15 @E15-AC09 real machete and explosion kills hide limbs, show stump caps, expire gibs; settings preserve hash (14.6s)
+  ✓  10 [chromium] › tests/e2e/vfx.spec.ts:101:1 › T-E15-10 @E15 @E15-AC10 player and held weapon masks reach 50%, reset on load, and disable with Off (6.8s)
+  ✘  11 [chromium] › tests/e2e/vfx.spec.ts:113:1 › T-E15-lifecycle @E15 pools, visual physics and event listeners unload without leaks; low tier reduces particles (8.6s)
+  ✘  12 [chromium] › tests/e2e/vfx.spec.ts:113:1 › T-E15-lifecycle @E15 pools, visual physics and event listeners unload without leaks; low tier reduces particles (retry #1) (6.9s)
+  ✓  13 [chromium] › tests/e2e/vfx.spec.ts:125:1 › T-E15-vehicle @E15 vehicle surfaces accumulate blood, obey Off and reset; smoke/fire are presentation only (6.4s)
+  ✓  14 [chromium] › tests/visual/e27-collapse.spec.ts:5:1 › T-E27-15 @E27 @E27-AC15 L4 collapse fuel-truck sequence and persistent town aftermath (19.1s)
+  ✓  15 [chromium] › tests/visual/e27-landmarks.spec.ts:4:1 › T-E27-13 @E27 @E27-AC13 L5 pair-plaza draws persistent smoke columns and directional ground strips (15.3s)
+  ✓  16 [chromium] › tests/visual/e27-smoke.spec.ts:12:1 › T-E27-11 @E27 @E27-AC11 a night fire lights the lower column orange and a police strobe lights its smoke (20.6s)
+  ✓  17 [chromium] › tests/visual/e27-smoke.spec.ts:88:1 › T-E27-12 @E27 @E27-AC12 smoke covering the player retains a 2:1 silhouette at night (4.5s)
+  ✘  18 [chromium] › tests/visual/vfx.spec.ts:32:1 › T-E15-03 @E15 @E15-AC03 @visual Full ground splat has palette red; Off has no red decal pixels (10.2s)
+  ✘  19 [chromium] › tests/visual/vfx.spec.ts:32:1 › T-E15-03 @E15 @E15-AC03 @visual Full ground splat has palette red; Off has no red decal pixels (retry #1) (8.7s)
+  ✓  20 [chromium] › tests/visual/vfx.spec.ts:53:1 › T-E15-04 @E15 @E15-AC04 @visual each sim telegraph appears in the next frame, stays until resolution, and has a distinct shape (5.2s)
+  ✓  21 [chromium] › tests/visual/vfx.spec.ts:89:1 › T-E15-05 @E15 @E15-AC05 @visual measured shockwave screen radius scales with splash radius ±15% (12.6s)
+  ✓  22 [chromium] › tests/visual/vfx.spec.ts:111:1 › T-E15-07 @E15 @E15-AC07 @vision golden-hour and night showcases have reviewed combat readability (12.5s)
+  ✓  23 [chromium] › tests/visual/vfx.spec.ts:123:1 › T-E15-08 @E15 @E15-AC08 @visual flash reduction keeps successive explosion brightness deltas within 20% (10.8s)
+
+
+  1) [chromium] › tests/e2e/vfx.spec.ts:113:1 › T-E15-lifecycle @E15 pools, visual physics and event listeners unload without leaks; low tier reduces particles 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2
+    Received: 5
+
+      119 |   });
+      120 |   save('lifecycle', data);
+    > 121 |   for (const cycle of data.cycles) { expect(cycle.low.particleCap).toBe(512); expect(cycle.low.particles).toBeLessThanOrEqual(512); expect(cycle.perf.geometries).toBe(data.baseline.geometries); expect(cycle.perf.textures).toBe(data.baseline.textures); expect(cycle.sim.listeners).toBe(0); expect(cycle.sim.bodies).toBe(0); }
+          |                                                                                                                                                                                                                               ^
+      122 |   save('lifecycle', data);
+      123 | });
+      124 |
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/tests/e2e/vfx.spec.ts:121:223
+
+    Error Context: test-results/playwright/run-46838/e2e-vfx-T-E15-lifecycle-E1-02ef9--low-tier-reduces-particles-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-46838/e2e-vfx-T-E15-lifecycle-E1-02ef9--low-tier-reduces-particles-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-46838/e2e-vfx-T-E15-lifecycle-E1-02ef9--low-tier-reduces-particles-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2
+    Received: 5
+
+      119 |   });
+      120 |   save('lifecycle', data);
+    > 121 |   for (const cycle of data.cycles) { expect(cycle.low.particleCap).toBe(512); expect(cycle.low.particles).toBeLessThanOrEqual(512); expect(cycle.perf.geometries).toBe(data.baseline.geometries); expect(cycle.perf.textures).toBe(data.baseline.textures); expect(cycle.sim.listeners).toBe(0); expect(cycle.sim.bodies).toBe(0); }
+          |                                                                                                                                                                                                                               ^
+      122 |   save('lifecycle', data);
+      123 | });
+      124 |
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/tests/e2e/vfx.spec.ts:121:223
+
+    Error Context: test-results/playwright/run-46838/e2e-vfx-T-E15-lifecycle-E1-02ef9--low-tier-reduces-particles-chromium-retry1/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-46838/e2e-vfx-T-E15-lifecycle-E1-02ef9--low-tier-reduces-particles-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-46838/e2e-vfx-T-E15-lifecycle-E1-02ef9--low-tier-reduces-particles-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/visual/vfx.spec.ts:32:1 › T-E15-03 @E15 @E15-AC03 @visual Full ground splat has palette red; Off has no red decal pixels 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 4
+
+      45 |     }
+      46 |     expect(sampled).toBeGreaterThan(30); expect(red).toBe(gore === 'Off' ? 0 : red); if (gore === 'Full') expect(red).toBeGreaterThan(10);
+    > 47 |     expect((await page.evaluate(() => window.__SS__!.getState().render.vfx!)).decals).toBe(gore === 'Off' ? 0 : 1);
+         |                                                                                       ^
+      48 |     results.push({ gore, red, sampled, polygon });
+      49 |   }
+      50 |   save('blood-pixels', results);
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/tests/visual/vfx.spec.ts:47:87
+
+    Error Context: test-results/playwright/run-46838/visual-vfx-T-E15-03-E15-E1-3f5e4-Off-has-no-red-decal-pixels-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-46838/visual-vfx-T-E15-03-E15-E1-3f5e4-Off-has-no-red-decal-pixels-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-46838/visual-vfx-T-E15-03-E15-E1-3f5e4-Off-has-no-red-decal-pixels-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Retry #1 ───────────────────────────────────────────────────────────────────────────────────────
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 4
+
+      45 |     }
+      46 |     expect(sampled).toBeGreaterThan(30); expect(red).toBe(gore === 'Off' ? 0 : red); if (gore === 'Full') expect(red).toBeGreaterThan(10);
+    > 47 |     expect((await page.evaluate(() => window.__SS__!.getState().render.vfx!)).decals).toBe(gore === 'Off' ? 0 : 1);
+         |                                                                                       ^
+      48 |     results.push({ gore, red, sampled, polygon });
+      49 |   }
+      50 |   save('blood-pixels', results);
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/tests/visual/vfx.spec.ts:47:87
+
+    Error Context: test-results/playwright/run-46838/visual-vfx-T-E15-03-E15-E1-3f5e4-Off-has-no-red-decal-pixels-chromium-retry1/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-46838/visual-vfx-T-E15-03-E15-E1-3f5e4-Off-has-no-red-decal-pixels-chromium-retry1/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-46838/visual-vfx-T-E15-03-E15-E1-3f5e4-Off-has-no-red-decal-pixels-chromium-retry1/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests/e2e/vfx.spec.ts:113:1 › T-E15-lifecycle @E15 pools, visual physics and event listeners unload without leaks; low tier reduces particles 
+    [chromium] › tests/visual/vfx.spec.ts:32:1 › T-E15-03 @E15 @E15-AC03 @visual Full ground splat has palette red; Off has no red decal pixels 
+  19 passed (4.3m)
