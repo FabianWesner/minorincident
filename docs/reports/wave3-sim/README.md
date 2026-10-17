@@ -1,6 +1,6 @@
-E26-AC07: all production movables now author spawn/remove; T-E26-07 exercises every definition below −5 m.
-E24-AC06: first/second waves use offscreen snapped maintenance/tunnel placements; real-frustum browser matrix in progress.
-E30-AC06: full 3,600-tick exterior-attack and routine-facing regression in progress on Hetzner.
-E32-AC28: all six D-CURE boundaries gain input reversal, residency/nav and identity proofs; delayed browser matrix in progress.
-QA: fresh build/typecheck/lint passed; WebGL high z1 frustum and all six delayed seams passed; Scene Lab matrix pending.
-Validation: remote full unit/sim/levels and four epic verify gates pending; no merge/deploy, L5 or collision registry edits.
+E26-AC07: all 33 movables explicitly reset home/remove; production-definition and remove regressions pass on Hetzner.
+E24-AC06: snapped offscreen maintenance/tunnel placement; wave/count/bang sim and WebGL high z1 real-frustum proof pass.
+E30-AC06: both tiers pass all 3,600 ticks: 51 occupants unharmed, four attackers outside, facing-away maximum 95/180 ticks.
+E32-AC28: both tiers pass all six seam input/nav/prefetch/identity regressions; WebGL high z1 delayed keyboard crossings pass.
+QA: build/typecheck/lint pass; game-camera captures reviewed in [evidence/review.md](evidence/review.md); remaining matrices pending.
+Validation: seven targeted sims pass; full unit/sim/levels and four epic verify gates pending; WIP 42d268c3f, no merge/deploy.
