@@ -27,7 +27,7 @@ test('T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes 
   const snap=async(name:string)=>{await page.evaluate(async name=>{const a=window.__SS__!;a.camera.preset(`D-SUBWAY/W0/${name}`);if(name!=='l6-first-breach'&&name!=='l6-shelter-fails')a.vfx.stepRender(.3);if(name==='l6-tunnel-retreat'){const s=a.missions.state()!.l6!,p=a.getState().player!.transform,front=Math.max(p.x,...s.survivors.filter(r=>r.status==='following').map(r=>a.getEntity(r.id)!.transform.x)),x=(p.x+front)/2;a.camera.cinematic({position:[x+34,40,49],target:[x,.6,15]},true);}await a.screenshotReady();},name);await page.screenshot({path:`${out}/real-${name}.png`});shots.add(name);await page.evaluate(()=>window.__SS__!.camera.follow());await step(1);};
   await step(30);await expect(page.locator('.story-bubble')).toContainText('Keep the wrap tight');await expect(page.locator('.story-bubble')).toBeVisible();await snap('l6-shelter-calm');await step(300);await expect(page.locator('.story-bubble')).toContainText('Please do not leave me behind');
   for(let i=0;i<3500;i++){
-    const obs=await page.evaluate(()=>{const a=window.__SS__!,m=a.missions.state()!,s=m.l6!,p=a.getState().player!.transform,all=a.query({}),friends=s.survivors.filter(r=>r.status==='following').map(r=>({...r,at:all.find(e=>e.id===r.id)!.transform})),close=all.filter(e=>e.infected&&e.health.current>0&&!e.hidden&&!e.infectionRise&&Math.hypot(e.transform.x-p.x,e.transform.z-p.z)<2.5).map(e=>e.transform);const enemy=all.filter(e=>e.infected&&e.health.current>0&&!e.hidden&&!e.infectionRise&&a.input.visible(e.transform)&&Math.hypot(e.transform.x-p.x,e.transform.z-p.z)<22).sort((a,b)=>Math.hypot(a.transform.x-p.x,a.transform.z-p.z)-Math.hypot(b.transform.x-p.x,b.transform.z-p.z))[0];const lamp=all.find(e=>e.archetype==='pickup.headlamp'&&e.pickup&&'collected' in e.pickup&&!e.pickup.collected);return{tick:a.getState().tick,m,s,p,rightRack:a.getEntity(1)!.weapons!.RIGHT.rack.map(slot=>slot.id),lamp:lamp?.transform,friends,input:a.getState().input,controls:a.getState().controls,close,enemy:enemy?{id:enemy.id,at:enemy.transform}:null};});
+    const obs=await page.evaluate(()=>{const a=window.__SS__!,m=a.missions.state()!,s=m.l6!,p=a.getState().player!.transform,all=a.query({}),friends=s.survivors.filter(r=>r.status==='following').map(r=>({...r,at:all.find(e=>e.id===r.id)!.transform})),close=all.filter(e=>e.infected&&e.health.current>0&&!e.hidden&&!e.infectionRise&&Math.hypot(e.transform.x-p.x,e.transform.z-p.z)<2.5).map(e=>e.transform);const enemy=all.filter(e=>e.infected&&e.health.current>0&&!e.hidden&&!e.infectionRise&&a.input.visible(e.transform)&&Math.hypot(e.transform.x-p.x,e.transform.z-p.z)<22).sort((a,b)=>Math.hypot(a.transform.x-p.x,a.transform.z-p.z)-Math.hypot(b.transform.x-p.x,b.transform.z-p.z))[0];const lamp=all.find(e=>e.archetype==='pickup.headlamp'&&e.pickup&&'collected' in e.pickup&&!e.pickup.collected);return{tick:a.getState().tick,m,s,p,rightRack:a.getEntity(1)!.weapons!.RIGHT.rack.map(slot=>slot.id),leftRack:a.getEntity(1)!.weapons!.LEFT.rack.map(slot=>slot.id),lamp:lamp?.transform,friends,input:a.getState().input,controls:a.getState().controls,close,enemy:enemy?{id:enemy.id,at:enemy.transform}:null};});
     if(i%100===0)writeFileSync(`${out}/real-progress.json`,JSON.stringify({i,obs},null,2));
     if(obs.m.phase==='result'){if(obs.p.x>263&&!shots.has('l6-exit-night'))await snap('l6-exit-night');writeFileSync(`${out}/real-input.json`,JSON.stringify({result:obs.m.result,shots:[...shots],state:obs.s},null,2));break;}
     if(obs.s.phase==='first'&&obs.tick>obs.s.breach1At+120&&!shots.has('l6-first-breach'))await snap('l6-first-breach');
@@ -37,27 +37,43 @@ test('T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes 
     if(obs.p.x>143&&!shots.has('l6-chokepoint'))await snap('l6-chokepoint');
     if(obs.p.x>263&&!shots.has('l6-exit-night'))await snap('l6-exit-night');
     if(obs.m.phase==='cinematic'){await step(60);continue;}
-    if(obs.enemy){await page.evaluate(p=>window.__SS__!.camera.cinematic({position:[p.x+24,29,p.z+24],target:[p.x,0,p.z]},true),obs.p);await step(1);const ndc=await page.evaluate(at=>window.__SS__!.camera.project(at.x,at.y,at.z),obs.enemy.at),view=page.viewportSize()!;await page.mouse.move((ndc[0]+1)*view.width/2,(1-ndc[1])*view.height/2);const gunSlot=[...obs.rightRack].sort(compareWeapons).indexOf('weapon.army-mg')+1;expect(gunSlot).toBeGreaterThan(0);expect(gunSlot).toBeLessThanOrEqual(3);await page.keyboard.down('Shift');await page.keyboard.press(String(gunSlot));await page.keyboard.up('Shift');await step(1);expect(await page.evaluate(()=>{const w=window.__SS__!.getEntity(1)!.weapons!;return w.RIGHT.rack[w.RIGHT.index].id;})).toBe('weapon.army-mg');await page.mouse.down();await step(20);await page.mouse.up();continue;}
-    let target={x:obs.s.leaderZ<14?6:Math.max(25,obs.s.leaderX-3),z:15};
-    const lag=obs.friends.filter(r=>r.straggler&&!r.rejoined).sort((a,b)=>a.at.x-b.at.x)[0];
-    if(lag&&!lag.collected)target=lag.at;else if(lag&&obs.p.x-lag.at.x>5){await step(12);continue;}
-    // Walking back up to 14 m to close a gate once the whole group is through is what a player does (the injured trail the pace).
+    // Reuse the shipping completion policy only to plan: all actions still cross DOM input.
+    expect(obs.m.phase).not.toBe('briefing');
+    const plan=await page.evaluate(()=>window.__SS__!.bot.plan());
+    let move=plan.frame.move;
+    if(obs.lamp){
+      const dx=obs.lamp.x-obs.p.x,dz=obs.lamp.z-obs.p.z;
+      if(Math.hypot(dx,dz)<1.7){await page.keyboard.down('e');await step(24);await page.keyboard.up('e');continue;}
+      move={x:dx,z:dz};
+    }
     const gate=obs.s.gates.find(g=>!g.closedAt&&obs.p.x<g.x+11&&obs.friends.every(r=>r.at.x>g.x+2));
-    if(gate)target={x:gate.x+1.4,z:15};
-    else if(obs.friends.length&&obs.p.x>Math.min(...obs.friends.map(r=>r.at.x))+6){await step(12);continue;}
-    if(obs.p.x>=246){target={x:273,z:15};if(obs.p.x<258&&Math.abs(obs.p.z-15)>.15)target={x:obs.p.x,z:15};}
-    if(obs.p.x<25&&obs.p.z<14)target={x:6,z:obs.p.x<5.5?obs.p.z:15};
-    if(['shelter','first','fails'].includes(obs.s.phase))target={x:0,z:4};
-    if(obs.close.length>=3){const cx=obs.close.reduce((n,e)=>n+e.x,0)/obs.close.length,cz=obs.close.reduce((n,e)=>n+e.z,0)/obs.close.length,scale=5/Math.max(.1,Math.hypot(obs.p.x-cx,obs.p.z-cz));target={x:obs.p.x+(obs.p.x-cx)*scale,z:obs.p.z+(obs.p.z-cz)*scale};}
-    if(obs.lamp)target=obs.lamp;
-    const dx=target.x-obs.p.x,dz=target.z-obs.p.z;
-    if(obs.lamp&&Math.hypot(dx,dz)<1.7){await page.keyboard.down('e');await step(24);await page.keyboard.up('e');continue;}
-    if(gate&&Math.hypot(dx,dz)<1.2){await page.keyboard.down('e');await step(60);await page.keyboard.up('e');continue;}
-    if(Math.hypot(dx,dz)<(obs.p.x>=246?.15:1)){await step(12);continue;}
-    // Keep the isometric pose stable while physical WASD crosses the authored route.
+    const closing=gate&&(!plan.target||Math.hypot(plan.target.x-obs.p.x,plan.target.z-obs.p.z)>2.2);
+    const holdGate=closing&&Math.hypot(gate!.x+1.4-obs.p.x,15-obs.p.z)<1.2;
+    if(closing&&!obs.lamp)move=holdGate?{x:0,z:0}:{x:gate!.x+1.4-obs.p.x,z:15-obs.p.z};
+    const attack=!obs.lamp&&!holdGate&&plan.target&&plan.frame.attackTarget;
+    if(attack&&plan.frame.attackTarget!.side==='LEFT'&&Math.hypot(plan.target!.x-obs.p.x,plan.target!.z-obs.p.z)>1.8)move={x:plan.target!.x-obs.p.x,z:plan.target!.z-obs.p.z};
     await page.evaluate(p=>window.__SS__!.camera.cinematic({position:[p.x+24,29,p.z+24],target:[p.x,0,p.z]},true),obs.p);await step(1);
-    const keys=Math.abs(dx)>Math.abs(dz)?dx>0?['s','d']:['w','a']:dz>0?['s','a']:['w','d'];
-    for(const key of keys)await page.keyboard.down(key);await step(Math.min(12,Math.max(2,Math.floor(Math.max(Math.abs(dx),Math.abs(dz))*10))));for(const key of keys)await page.keyboard.up(key);
+    const screenX=(move.x-move.z)/Math.SQRT2,screenY=(move.x+move.z)/Math.SQRT2,scale=Math.max(Math.abs(screenX),Math.abs(screenY)),keys:string[]=[];
+    if(scale>0){if(screenX>scale*.4)keys.push('d');if(screenX<-scale*.4)keys.push('a');if(screenY>scale*.4)keys.push('s');if(screenY<-scale*.4)keys.push('w');}
+    if((holdGate||(!closing&&plan.frame.interact))&&!obs.lamp)keys.push('e');
+    if(attack){
+      // Aim along the same ground-plane ray inside the canvas, even for a distant target.
+      // J/K are the shipped attack bindings, so an off-screen target cannot click the HUD.
+      const aim=await page.evaluate(at=>{const a=window.__SS__!,p=a.getEntity(1)!.transform;return{from:a.input.project(p,'player'),to:a.input.project(at,'player')};},plan.target!),view=page.viewportSize()!;
+      const dx=aim.to.x-aim.from.x,dy=aim.to.y-aim.from.y;
+      const t=Math.max(0,Math.min(1,dx>0?(view.width-8-aim.from.x)/dx:dx<0?(8-aim.from.x)/dx:1,dy>0?(view.height-8-aim.from.y)/dy:dy<0?(8-aim.from.y)/dy:1));
+      await page.mouse.move(aim.from.x+dx*t,aim.from.y+dy*t);
+      const right=plan.frame.attackTarget!.side==='RIGHT',id=right?'weapon.army-mg':'weapon.fire-axe';
+      const side:'RIGHT'|'LEFT'=right?'RIGHT':'LEFT';
+      const selected=()=>page.evaluate((side:'RIGHT'|'LEFT')=>{const w=window.__SS__!.getEntity(1)!.weapons![side];return w.rack[w.index].id;},side);
+      if(await selected()!==id){
+        const ids=right?[...obs.rightRack]:[...obs.leftRack,...obs.rightRack].map(id=>id==='weapon.kick'?'weapon.fists':id);
+        const slot=ids.sort(compareWeapons).indexOf(id)+1;expect(slot).toBeGreaterThan(0);expect(slot).toBeLessThanOrEqual(3);
+        if(right)await page.keyboard.down('Shift');await page.keyboard.press(String(slot));if(right)await page.keyboard.up('Shift');await step(16);
+      }
+      expect(await selected()).toBe(id);keys.push(right?'k':'j');
+    }
+    for(const key of keys)await page.keyboard.down(key);await step(6);for(const key of keys)await page.keyboard.up(key);
 
   }
   const m=await page.evaluate(()=>window.__SS__!.missions.state()!);expect(m.phase).toBe('result');expect(m.l6!.flashlight).toBe(true);await expect(page.getByRole('heading',{name:'Night. Still alive.'})).toBeVisible();await expect(page.getByTestId('result-rescued')).toHaveText(String(m.result!.rescued));await expect(page.getByTestId('result-survivorsIn')).toHaveText(String(m.result!.survivorsIn));await expect(page.getByTestId('mission-detail')).toContainText(`Rescued ${m.result!.rescued}`);await page.screenshot({path:`${out}/real-result.png`});// L6 is no longer the last level (PO 10-11 levels 4-9): the result button continues into L7; credits follow the last level.
