@@ -123,7 +123,7 @@ test('T-E29-13-wait @E29-AC13 a straggler holds the bus; the player is never tim
   step(w, 5); expect(['departing', 'done']).toContain(d.state.phase);
 });
 
-test('T-E29-13-zero @E29-AC13 zero survivors: the courier boards alone; leaving the bus pauses boarding', async () => {
+test('T-E29-13-zero @E29-AC01 @E29-AC13 zero survivors: the courier boards alone; leaving the bus pauses boarding', async () => {
   const w = await load([]), d = w.l7Departure!;
   expect(w.l7Encounters!.state.roster).toHaveLength(0);
   put(w, 1, -40, 47); step(w, 30); expect(d.state.phase).toBe('waiting');
@@ -150,7 +150,7 @@ test('T-E29-13-handover @E29-AC13 L7 completion unlocks L8 and carries the arsen
   expect(nextLevelAfter(7)).toBe(8); expect(nextLevelAfter(9)).toBe(10);
 });
 
-test('T-E29-13-35 @E29-AC13 a full 35-person roster boards and every figure is accounted for', async () => {
+test('T-E29-13-35 @E29-AC01 @E29-AC13 a full 35-person roster boards and every figure is accounted for', async () => {
   const source = await load(), base = source.entities.get(source.l7Encounters!.state.roster[0].id)!;
   const incoming = Array.from({ length: 35 }, (_, i) => { const e = structuredClone(base); e.id = 40 + i; e.health.current = 30 + i; e.civilian!.survivor!.key = `carry-${i}`; return e; });
   const w = await load(incoming, 'low'), d = w.l7Departure!;

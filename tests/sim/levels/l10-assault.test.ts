@@ -36,6 +36,8 @@ for (const tier of ['high', 'low'] as const) test(`T-E32-21-E3-${tier} @E32-AC06
       peak = Math.max(peak, w.infected!.director.count);
       expect(w.infected!.director.count).toBeLessThanOrEqual(tier === 'high' ? 200 : 100);
     }
+    // This local 60 m fixture checks continuous approach; the default ~143 s
+    // production checkpoint route is asserted by l10-arrival.test.ts (PO 10-16).
     expect(arrival).toBeGreaterThanOrEqual(10); expect(arrival).toBeLessThanOrEqual(40);
     const slots = cureEncounterSlots(cureEncounters.at(-1)!, tier);
     expect(slots.every(s => w.l10Encounters!.state.spawned[s.key])).toBe(true);
