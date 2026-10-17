@@ -1,0 +1,64 @@
+
+Running 3 tests using 1 worker
+
+  ✘  1 [chromium] › tests/e2e/vfx.spec.ts:113:1 › T-E15-lifecycle @E15 pools, visual physics and event listeners unload without leaks; low tier reduces particles (8.4s)
+  ✘  2 [chromium] › tests/visual/vfx.spec.ts:32:1 › T-E15-03 @E15 @E15-AC03 @visual Full ground splat has palette red; Off has no red decal pixels (9.5s)
+  ✓  3 [chromium] › tests/visual/vfx.spec.ts:89:1 › T-E15-05 @E15 @E15-AC05 @visual measured shockwave screen radius scales with splash radius ±15% (14.2s)
+
+
+  1) [chromium] › tests/e2e/vfx.spec.ts:113:1 › T-E15-lifecycle @E15 pools, visual physics and event listeners unload without leaks; low tier reduces particles 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2
+    Received: 5
+
+      119 |   });
+      120 |   save('lifecycle', data);
+    > 121 |   for (const cycle of data.cycles) { expect(cycle.low.particleCap).toBe(512); expect(cycle.low.particles).toBeLessThanOrEqual(512); expect(cycle.perf.geometries).toBe(data.baseline.geometries); expect(cycle.perf.textures).toBe(data.baseline.textures); expect(cycle.sim.listeners).toBe(0); expect(cycle.sim.bodies).toBe(0); }
+          |                                                                                                                                                                                                                               ^
+      122 |   save('lifecycle', data);
+      123 | });
+      124 |
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/tests/e2e/vfx.spec.ts:121:223
+
+    Error Context: test-results/playwright/vfx-46844/e2e-vfx-T-E15-lifecycle-E1-02ef9--low-tier-reduces-particles-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/vfx-46844/e2e-vfx-T-E15-lifecycle-E1-02ef9--low-tier-reduces-particles-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/vfx-46844/e2e-vfx-T-E15-lifecycle-E1-02ef9--low-tier-reduces-particles-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/visual/vfx.spec.ts:32:1 › T-E15-03 @E15 @E15-AC03 @visual Full ground splat has palette red; Off has no red decal pixels 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 4
+
+      45 |     }
+      46 |     expect(sampled).toBeGreaterThan(30); expect(red).toBe(gore === 'Off' ? 0 : red); if (gore === 'Full') expect(red).toBeGreaterThan(10);
+    > 47 |     expect((await page.evaluate(() => window.__SS__!.getState().render.vfx!)).decals).toBe(gore === 'Off' ? 0 : 1);
+         |                                                                                       ^
+      48 |     results.push({ gore, red, sampled, polygon });
+      49 |   }
+      50 |   save('blood-pixels', results);
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/tests/visual/vfx.spec.ts:47:87
+
+    Error Context: test-results/playwright/vfx-46844/visual-vfx-T-E15-03-E15-E1-3f5e4-Off-has-no-red-decal-pixels-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/vfx-46844/visual-vfx-T-E15-03-E15-E1-3f5e4-Off-has-no-red-decal-pixels-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/vfx-46844/visual-vfx-T-E15-03-E15-E1-3f5e4-Off-has-no-red-decal-pixels-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests/e2e/vfx.spec.ts:113:1 › T-E15-lifecycle @E15 pools, visual physics and event listeners unload without leaks; low tier reduces particles 
+    [chromium] › tests/visual/vfx.spec.ts:32:1 › T-E15-03 @E15 @E15-AC03 @visual Full ground splat has palette red; Off has no red decal pixels 
+  1 passed (34.2s)
