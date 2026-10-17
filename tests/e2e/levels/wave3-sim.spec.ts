@@ -16,7 +16,10 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
     });
     await page.evaluate(quality => window.__SS__!.settings.set({ quality }), quality);
     expect(await page.evaluate(() => window.__SS__!.getState().render.quality)).toBe(quality);
-    if (zoom === .5) await page.mouse.wheel(0, -4000);
+    if (zoom === .5) {
+      for (let notch = 0; notch < 5; notch++) await page.mouse.wheel(0, -100);
+      await page.waitForFunction(() => window.__SS__!.getState().render.camera.targetZoom === .5);
+    }
     await page.evaluate(() => window.__SS__!.step(120));
     expect(await page.evaluate(() => window.__SS__!.getState().render.camera.zoom)).toBeCloseTo(zoom, 2);
     expect(await page.evaluate(() => window.__SS__!.perf().backend)).toBe(backend);
@@ -53,7 +56,10 @@ for (const backend of ['webgl', 'webgpu'] as const) for (const quality of ['high
     await page.evaluate(async () => { const api = window.__SS__!; await api.loadLevel('L10', { seed: 32 }); api.missions.begin(); api.pause(); api.cheats.god(true); api.camera.follow();  });
     await page.evaluate(quality => window.__SS__!.settings.set({ quality }), quality);
     expect(await page.evaluate(() => window.__SS__!.getState().render.quality)).toBe(quality);
-    if (zoom === .5) await page.mouse.wheel(0, -4000);
+    if (zoom === .5) {
+      for (let notch = 0; notch < 5; notch++) await page.mouse.wheel(0, -100);
+      await page.waitForFunction(() => window.__SS__!.getState().render.camera.targetZoom === .5);
+    }
     await page.evaluate(() => window.__SS__!.step(120));
     expect(await page.evaluate(() => window.__SS__!.getState().render.camera.zoom)).toBeCloseTo(zoom, 2);
     expect(await page.evaluate(() => window.__SS__!.perf().backend)).toBe(backend);
