@@ -1,0 +1,37 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/atmosphere -> 94.130.181.173:/srv/mi/ws/atmosphere-2faa87
+[remote] cache-gc deleted:none
+[remote] sync 955s, 16566 files; job /srv/mi/jobs/atmosphere-2faa87-76530-1792266907; queueing for a slot
+{"scenario":"horde-arena","infected":200,"simMsP95":2.388937999989139,"budget":4}
+{"level":"L1","tier":"high","simMsP95":1.5255339999857824,"budget":4}
+{"level":"L2","tier":"high","simMsP95":1.399308000021847,"budget":4}
+{"level":"L3","tier":"high","simMsP95":1.1360440000134986,"budget":4}
+{"level":"L4","tier":"high","simMsP95":0.4890379999997094,"budget":4}
+{"level":"L5","tier":"high","simMsP95":0.413736999995308,"budget":4}
+{"level":"L1","tier":"low","simMsP95":1.1768889999948442,"budget":6}
+{"level":"L2","tier":"low","simMsP95":1.1107259999844246,"budget":6}
+{"level":"L3","tier":"low","simMsP95":0.9834569999948144,"budget":6}
+{"level":"L4","tier":"low","simMsP95":0.4116539999959059,"budget":6}
+{"level":"L5","tier":"low","simMsP95":0.40759499999694526,"budget":6}
+   ✓ T-E05-14 T-E06-10 @E05 @E05-AC14 @E06 @E06-AC10 measure every reference weapon × archetype TTK in authored bands 6577ms
+   × T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms 1889ms
+   × T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms 2696ms
+[remote] connection lost, reconnect 1/10 (log offset 19849)
+stdout | tests/sim/ai/mega-pursuit.test.ts > T-E32-10a @E32-AC10 cruise is 0.7 × the nominal run (±2%): a running player stays ahead, the gap grows ~1.35 m/s
+stdout | tests/sim/ai/mega-pursuit.test.ts > T-E32-10f @E32-AC10 off-region: coarse per-tick advance at cruise × sim-time (2 Hz route planning) along authored nodes, counts against the cap, keeps HP, detailed on entry
+   ✓ T-E32-10a @E32-AC10 cruise is 0.7 × the nominal run (±2%): a running player stays ahead, the gap grows ~1.35 m/s 804ms
+   ✓ T-E32-10f @E32-AC10 off-region: coarse per-tick advance at cruise × sim-time (2 Hz route planning) along authored nodes, counts against the cap, keeps HP, detailed on entry 839ms
+   × T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts 302156ms
+   × T-E23-12-kill PO #37 @E23 @E23-AC12 @E07-AC14 one shell kills regular infected through 8 m permanently; two close shells stop an Alpha 46490ms
+[remote] connection lost, reconnect 1/10 (log offset 104389)
+[remote] connection lost, reconnect 2/10 (log offset 104389)
+[remote] connection lost, reconnect 3/10 (log offset 104389)
+[remote] connection lost, reconnect 4/10 (log offset 104389)
+[remote] connection lost, reconnect 5/10 (log offset 104389)
+[remote] connection lost, reconnect 6/10 (log offset 104389)
+[remote] connection lost, reconnect 7/10 (log offset 104389)
+[remote] connection lost, reconnect 8/10 (log offset 104389)
+[remote] connection lost, reconnect 9/10 (log offset 104389)
+[remote] connection lost, reconnect 10/10 (log offset 104389)
+[remote] lost the connection to runner@94.130.181.173 for too long; killing the remote job
+[remote] could not pull test-results/atmosphere-vitest.json (missing?)
+[remote] done exit=255 (runner 94.130.181.173, sync 955s, remote total 3299s)
