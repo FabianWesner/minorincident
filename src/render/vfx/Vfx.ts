@@ -184,9 +184,9 @@ export class Vfx extends Group {
     }
     this.hitIds[slot] = id; this.hitUntil[slot] = this.time + 0.1; this.targets.flash(id, 0.45);
   }
-  private burst(x: number, y: number, z: number, color: number, count: number, size = 0.18, life = 0.7, gravity = 9.81, shape: number = 0): void {
+  private burst(x: number, y: number, z: number, color: number, count: number, size = 0.18, life = 0.7, gravity = 9.81, shape: number = 0, speed = 1): void {
     const n = this.quality === 'low' ? Math.ceil(count / 4) : count;
-    for (let i = 0; i < n; i++) this.particles.spawn(this.time, life, x, y, z, (this.rng.next() - 0.5) * 4, this.rng.next() * 3, (this.rng.next() - 0.5) * 4, size, shape, color, gravity, shape === particleShape.spark ? .35 : 1);
+    for (let i = 0; i < n; i++) this.particles.spawn(this.time, life, x, y, z, (this.rng.next() - 0.5) * 4 * speed, this.rng.next() * 3 * speed, (this.rng.next() - 0.5) * 4 * speed, size, shape, color, gravity, shape === particleShape.spark ? .35 : 1);
   }
   /** Slow, rising ash-green wisps around a body (render RNG only). */
   private sickPuff(x: number, z: number, count: number, size: number, y: number): void {
@@ -254,7 +254,7 @@ export class Vfx extends Group {
         const dx = contact.transform.x - car.transform.x, dz = contact.transform.z - car.transform.z, distance = Math.max(.001, Math.hypot(dx, dz));
         const def = this.world.vehicles?.cars.get(event.sourceId)?.physics.def, c = Math.cos(car.transform.yaw), s = Math.sin(car.transform.yaw);
         const edge = def ? Math.min((def.length / 2 + .04) * distance / Math.max(.001, Math.abs(dx * c - dz * s)), (def.width / 2 + .04) * distance / Math.max(.001, Math.abs(dx * s + dz * c))) : 1.5;
-        this.burst(car.transform.x + dx / distance * edge, car.transform.y + .35, car.transform.z + dz / distance * edge, 0xffd998, 12, .045, .45, 9.81, particleShape.spark);
+        this.burst(car.transform.x + dx / distance * edge, car.transform.y + .35, car.transform.z + dz / distance * edge, 0xffd998, 12, .06, .45, 9.81, particleShape.spark, 2.5);
       }
       return;
     }

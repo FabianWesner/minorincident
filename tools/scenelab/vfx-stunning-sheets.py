@@ -13,8 +13,8 @@ OUT = Path('docs/reports/vfx-stunning')
 (OUT / 'sheets').mkdir(parents=True, exist_ok=True)
 SCENES = {p.stem: json.loads(p.read_text()) for p in sorted(Path('tests/scenes/catalog').glob('vfx-*.json'))}
 PEAK = {'vfx-alpha-hit': 24, 'vfx-explosion': 24, 'vfx-gore': 24,
-        'vfx-molotov-fire': 60, 'vfx-rifle-cover': 16, 'vfx-rifle-impact': 16,
-        'vfx-shotgun-impact': 16, 'vfx-vehicle-contact': 78, 'vfx-vehicle-crash': 30}
+        'vfx-molotov-fire': 60, 'vfx-rifle-cover': 24, 'vfx-rifle-impact': 16,
+        'vfx-shotgun-impact': 16, 'vfx-vehicle-contact': 96, 'vfx-vehicle-crash': 30}
 
 
 def cell(phase, name, config, frame):
