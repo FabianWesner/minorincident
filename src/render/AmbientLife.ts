@@ -1,6 +1,6 @@
 // GPU-only environmental motion, following Bruno's shared Wind.js phase pattern (MIT).
 import { BufferGeometry, Color, DoubleSide, Float32BufferAttribute, Group, Mesh, MeshBasicNodeMaterial, Vector2, Vector4 } from 'three/webgpu';
-import { attribute, mix, cos, positionGeometry, sin, uniform, uniformArray, vec3 } from 'three/tsl';
+import { attribute, mix, cos, fract, positionGeometry, sin, uniform, uniformArray, vec3 } from 'three/tsl';
 import { Rng } from '../core/Rng';
 import { worldLook } from '../data/worldLook';
 import type { Materials } from './Materials';
@@ -20,7 +20,8 @@ export class AmbientLife extends Group {
       if (!count) continue;
       for (let i = 0; i < count; i++) {
         const offset = [rng.next() * 25, rng.next() * Math.PI * 2, rng.next() * 25];
-        const size = kind === 'bird' ? .23 : kind === 'leaf' ? .025 + rng.next() * .04 : .018;
+        // Atmosphere 2: sized to read at the default zoom (~3-5 px at 960x540), not only close in.
+        const size = kind === 'bird' ? .23 : kind === 'leaf' ? .06 + rng.next() * .06 : .05 + rng.next() * .03;
         const c = new Color(kind === 'leaf' && i % 3 === 0 ? worldLook.petal : worldLook[kind]);
         const vertices = kind === 'bird' ? [-size, 0, 0, 0, .06, .1, 0, 0, 0, 0, 0, 0, 0, .06, .1, size, 0, 0] : [-size, 0, 0, size, 0, 0, 0, size * 1.4, size * .6];
         positions.push(...vertices);
@@ -33,9 +34,12 @@ export class AmbientLife extends Group {
       geometry.setAttribute('_petal', new Float32BufferAttribute(petals, 1));
       const material = new MeshBasicNodeMaterial({ side: DoubleSide });
       const petal = attribute('_petal', 'float');
-      material.colorNode = mix(materials.look.nodes[kind], materials.look.nodes.petal, petal);
+      // `glow` lifts dust into HDR so embers/fireflies/motes catch the existing bloom at night (unlit basic material).
+      const glow = kind === 'dust' ? counts.glow ?? 1 : 1;
+      material.colorNode = mix(materials.look.nodes[kind], materials.look.nodes.petal, petal).mul(glow);
       const seed = attribute('_drift', 'vec3'), t = materials.wind, x = seed.x.add(t.mul(kind === 'bird' ? 1.6 : .22)).mod(25).sub(12.5), z = seed.z.add(t.mul(.12)).mod(25).sub(12.5);
-      const y = kind === 'bird' ? sin(t.mul(.3).add(seed.y)).mul(.5).add(4.5) : sin(t.mul(.5).add(seed.y)).mul(.6).add(kind === 'dust' ? 1.2 : .9);
+      // `rise`: dust climbs 0..6 m and wraps (embers above fires), otherwise it hovers.
+      const y = kind === 'bird' ? sin(t.mul(.3).add(seed.y)).mul(.5).add(4.5) : kind === 'dust' && counts.rise ? fract(seed.y.mul(.159).add(t.mul(.06))).mul(6).add(.2) : sin(t.mul(.5).add(seed.y)).mul(.6).add(kind === 'dust' ? 1.2 : .9);
       const flutter = sin(t.mul(kind === 'bird' ? 8 : 2).add(seed.y));
       material.positionNode = vec3(positionGeometry.x.mul(cos(t.add(seed.y))).add(x).add(this.focus.x), positionGeometry.y.add(y).add(positionGeometry.x.abs().mul(flutter)), positionGeometry.z.add(z).add(this.focus.y));
       const mesh = new Mesh(geometry, material); mesh.frustumCulled = false; this.meshes.push(mesh); this.add(mesh);
