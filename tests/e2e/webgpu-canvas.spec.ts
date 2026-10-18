@@ -20,7 +20,7 @@ for (const tier of ['high', 'low'] as const) {
       await lab.load(gate); await lab.step(250); await lab.ready();
       return { before, after: api.getState().render.character!.gearTier, draws: (await lab.metrics()).perf.drawCalls.max, backend: api.perf().backend };
     }, { geared, gate });
-    expect(result.backend).toBe(backend); expect(result.before).toBe(4); expect(result.after).toBe(0); expect(result.draws).toBeLessThanOrEqual(30);
+    expect(result.backend).toBe(backend); expect(result.before).toBe(4); expect(result.after).toBe(0); expect(result.draws).toBeLessThanOrEqual(33); // 30 + 3 ambient-life meshes (atmosphere, 10-18)
   });
   test(`T-E02-webgpu-canvas @smoke @E02 WebGPU ${tier} mega health bars preserve the game frame at both zoom limits`, async ({ page }) => {
     test.setTimeout(180_000);
