@@ -155,7 +155,8 @@ export type Action =
   | { boardCar: string } | { exitCar: string }
   | { mountBike: string }
   | { dismount: true }
-  | { interact: true }
+  /** One press by default; hold for `seconds` for progress interactions such as service gates. */
+  | { interact: true; seconds?: number }
   /** Courier: man the mounted minigun (the real interact press), fire it at an actor or point for `seconds` (trigger held), leave it (the quick rocket dismount). */
   | { mountGun: true } | { fireGun: { at?: string | Point; seconds?: number } } | { dismountGun: true }
   | { chase: string }
