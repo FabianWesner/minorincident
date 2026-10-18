@@ -1,0 +1,15 @@
+[runner] slot 1 acquired; load 5.18 4.72 4.60
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/merge-batch10-main-functional-control[39m
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/levels/l10-campus-corridor.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 61730[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex[33m 37661[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-03-D3-low @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex[33m 24066[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/static.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 129790[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E01-01b @E01 @E01-AC01 typecheck, lint and build exit zero without warnings[33m 129788[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m   Start at [22m 08:02:19
+[2m   Duration [22m 196.72s[2m (tests 98%, transform 2%)[22m
+

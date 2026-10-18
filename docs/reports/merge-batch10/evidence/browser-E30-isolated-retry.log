@@ -1,0 +1,67 @@
+
+Running 5 tests using 1 worker
+
+[scene] starting vite preview on http://127.0.0.1:3471
+  ✓  1 [chromium] › tests/e2e/health-bars.spec.ts:11:3 › T-E07-06-bars-1600 @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera high (31.2s)
+[scene] starting vite preview on http://127.0.0.1:3471
+  ✓  2 [chromium] › tests/e2e/health-bars.spec.ts:11:3 › T-E07-06-bars-390 @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera low (16.0s)
+[scene] starting vite preview on http://127.0.0.1:3471
+  ✓  3 [chromium] › tests/e2e/health-bars.spec.ts:11:3 › T-E07-06-bars-844 @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera low (14.2s)
+  ✘  4 [chromium] › tests/e2e/levels/L8.spec.ts:114:3 › phone escape input › T-E30-18-mobile @E30-AC18 touch stick reaches the APC ACTION with no HUD overflow (2.5m)
+  ✘  5 [chromium] › tests/e2e/zoo-s2.spec.ts:6:3 › T-E07-19-elephant-charge-browser @E07-AC05 @E07-AC19 @E30-AC10 production telegraph, pause, activation and shared bar (6.2s)
+
+
+  1) [chromium] › tests/e2e/levels/L8.spec.ts:114:3 › phone escape input › T-E30-18-mobile @E30-AC18 touch stick reaches the APC ACTION with no HUD overflow 
+
+    TimeoutError: page.waitForFunction: Timeout 120000ms exceeded.
+
+      138 |       await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+      139 |     }
+    > 140 |     await page.waitForFunction(() => window.__SS__!.getState().scenario === 'L9', undefined, { timeout: 120_000 });
+          |                ^
+      141 |     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+      142 |     mkdirSync(out, { recursive: true }); await page.screenshot({ path: `${out}/touch-l9-arrival.png` });
+      143 |   });
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/levels/L8.spec.ts:140:16
+
+    Error Context: test-results/playwright/run-3470/e2e-levels-L8-phone-escape-f8d11-ACTION-with-no-HUD-overflow-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3470/e2e-levels-L8-phone-escape-f8d11-ACTION-with-no-HUD-overflow-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3470/e2e-levels-L8-phone-escape-f8d11-ACTION-with-no-HUD-overflow-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/e2e/zoo-s2.spec.ts:6:3 › T-E07-19-elephant-charge-browser @E07-AC05 @E07-AC19 @E30-AC10 production telegraph, pause, activation and shared bar 
+
+    Error: expect(received).toHaveLength(expected)
+
+    Expected length: 1
+    Received length: 0
+    Received array:  []
+
+      28 |     await page.evaluate(async () => { await window.__SS__!.step(100); await window.__SCENE__!.ready(); });
+      29 |     const impact = await page.evaluate(() => ({ state: window.__SS__!.getState(), events: window.__SS__!.events() }));
+    > 30 |     expect(impact.events.filter(ev => ev.type === 'infected.attack' && ev.attackId === a.attackId && ev.targetId === 1)).toHaveLength(1);
+         |                                                                                                                          ^
+      31 |     expect(impact.state.player!.health.current).toBe(move === 'elephant.swipe' ? 75 : move === 'elephant.charge' ? 60 : 70);
+      32 |   });
+      33 | }
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/zoo-s2.spec.ts:30:122
+
+    Error Context: test-results/playwright/run-3470/e2e-zoo-s2-T-E07-19-elepha-6651a-e-activation-and-shared-bar-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3470/e2e-zoo-s2-T-E07-19-elepha-6651a-e-activation-and-shared-bar-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3470/e2e-zoo-s2-T-E07-19-elepha-6651a-e-activation-and-shared-bar-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests/e2e/levels/L8.spec.ts:114:3 › phone escape input › T-E30-18-mobile @E30-AC18 touch stick reaches the APC ACTION with no HUD overflow 
+    [chromium] › tests/e2e/zoo-s2.spec.ts:6:3 › T-E07-19-elephant-charge-browser @E07-AC05 @E07-AC19 @E30-AC10 production telegraph, pause, activation and shared bar 
+  3 passed (3.7m)

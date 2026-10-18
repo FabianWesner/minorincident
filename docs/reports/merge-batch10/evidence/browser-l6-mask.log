@@ -1,0 +1,33 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › tests/e2e/levels/L6.spec.ts:24:1 › T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes a gate and all seven photographs (55.0s)
+
+
+  1) [chromium] › tests/e2e/levels/L6.spec.ts:24:1 › T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes a gate and all seven photographs 
+
+    Test was interrupted.
+
+    Error: mouse.move: Test ended.
+
+      63 |       const dx=aim.to.x-aim.from.x,dy=aim.to.y-aim.from.y;
+      64 |       const t=Math.max(0,Math.min(1,dx>0?(view.width-8-aim.from.x)/dx:dx<0?(8-aim.from.x)/dx:1,dy>0?(view.height-8-aim.from.y)/dy:dy<0?(8-aim.from.y)/dy:1));
+    > 65 |       await page.mouse.move(aim.from.x+dx*t,aim.from.y+dy*t);
+         |                        ^
+      66 |       const right=plan.frame.attackTarget!.side==='RIGHT',id=right?'weapon.army-mg':'weapon.fire-axe';
+      67 |       const side:'RIGHT'|'LEFT'=right?'RIGHT':'LEFT';
+      68 |       const selected=()=>page.evaluate((side:'RIGHT'|'LEFT')=>{const w=window.__SS__!.getEntity(1)!.weapons![side];return w.rack[w.index].id;},side);
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/levels/L6.spec.ts:65:24
+
+    Error Context: test-results/playwright/run-3413/e2e-levels-L6-T-E24-17-E24-cae05-e-and-all-seven-photographs-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3413/e2e-levels-L6-T-E24-17-E24-cae05-e-and-all-seven-photographs-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3413/e2e-levels-L6-T-E24-17-E24-cae05-e-and-all-seven-photographs-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 interrupted
+    [chromium] › tests/e2e/levels/L6.spec.ts:24:1 › T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes a gate and all seven photographs 
