@@ -164,7 +164,6 @@ Actions work as an actor's initial `state`, as a `script` step (`{ "frame": 60, 
 | `"infect"` / `{ "infect": { "by": "<infected id>", "instant": false } }` | pedestrian | The 3 s transformation; the same entity turns into an infected. |
 | `{ "flee": [x, z] }` | pedestrian | Flee from that point. |
 | `{ "mountBike": "<vehicle id>" }`, `{ "dismount": true }` | courier | A real interact press next to the bike. |
-| `{ "interact": true, "seconds": 1 }` | courier | Hold the real interaction input for a progress action, such as closing an L6 service gate. Omitting `seconds` sends one tick. |
 | `{ "handover": { "building": "<placement or asset id>", "meet": "courier" or [x, z], "pauseS": 2.2 } }` | pedestrian | The L1 hand-over walk (`src/sim/missions/doorRoute.ts`): out of the building's street door (`src/data/buildingDoors.ts`) with the parcel, to arm's length in front of `meet`, give and wave, back in the same way. `"legacy": true` replays the pre-2026-10-08 straight-line walk (A/B with `--query doors=0`, which also freezes the animated doors). |
 
 ### Vehicles

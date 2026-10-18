@@ -70,7 +70,7 @@ type Plan =
   | { type: 'mount'; bike: string; at: number }
   | { type: 'click'; entity: number; at: number }
   | { type: 'drive'; throttle: number; steer: number; until: number }
-  | { type: 'interact'; until: number }
+  | { type: 'interact' }
   | { type: 'gun'; at: Point | string | null; until: number };
 interface LabActor { distanceM?: number; lastAt?: { x: number; z: number }; maxX?: number; id: string; kind: ActorSpec['kind']; entity: number; spec: ActorSpec; plan: Plan | null; track: MotionFrame[]; lod: Record<string, number>; drawn: number; /** Frames the living actor was inside the camera frustum, and how many of those it was not drawn. */ inView: number; missed: number; sole?: number;
   /** First drawn frame and sim position; for `emerge` residents also how far past the door threshold (m, + = outside). */
@@ -331,8 +331,12 @@ export class SceneLab {
       }
       if (spec.l6Subway === 'gate' || spec.l6Subway === 'entry') {
         mission.completeObjective('shelter'); mission.completeObjective('stop');
-        for (const r of mission.state.l6!.survivors) {
-          const e = world.entities.get(r.id)!; e.transform.x = 99 + r.hold; e.transform.z = 15;
+        for (const [index, r] of mission.state.l6!.survivors.entries()) {
+          const e = world.entities.get(r.id)!;
+          // Admit the fixture through the same solids authority as other scene
+          // teleports. Direct transform writes are rejected on the next tick and
+          // send part of the cast back behind the gate, correctly blocking it.
+          if (!world.solids.relocate(e, { x: 99 + index * 1.1, y: 1.3, z: 15 }, 'scene.l6-gate', 1.5)) throw new Error(`Cannot stage L6 gate survivor ${r.key}`);
         }
         mission.state.l6!.leaderX = 105; mission.state.l6!.leaderZ = 15;
       }
@@ -681,8 +685,8 @@ export class SceneLab {
       else if ('mountBike' in a) actor.plan = { type: 'mount', bike: a.mountBike, at: this.frame };
       else if ('dismount' in a) actor.plan = { type: 'mount', bike: '', at: this.frame };
       else if ('drive' in a) { this.game.input.scheme = 'keyboard'; actor.plan = { type: 'drive', throttle: a.drive.throttle, steer: a.drive.steer ?? 0, until: this.frame + ticks(a.drive.seconds ?? 1) }; }
-      else if ('interact' in a) actor.plan = { type: 'interact', until: this.frame + Math.max(1, ticks(a.seconds ?? 1 / 60)) };
-      else if ('mountGun' in a || 'dismountGun' in a) actor.plan = { type: 'interact', until: this.frame + 1 };
+      else if ('interact' in a) actor.plan = { type: 'interact' };
+      else if ('mountGun' in a || 'dismountGun' in a) actor.plan = { type: 'interact' };
       else if ('fireGun' in a) actor.plan = { type: 'gun', at: a.fireGun.at ?? null, until: this.frame + ticks(a.fireGun.seconds ?? 2) };
       else if ('hit' in a) world.player!.damage(a.hit.amount ?? 5, world.tick);
       return;
@@ -996,8 +1000,7 @@ export class SceneLab {
         frame.left = { down: false, held: true, up: false };
       }
     } else if (plan?.type === 'interact') {
-      if (this.frame >= plan.until) courier.plan = null;
-      else frame.interact = true;
+      frame.interact = true; courier.plan = null;
     } else if (plan?.type === 'mount') {
       // Mount/dismount is the real interact press next to the bicycle (one tick).
       const bike = plan.bike ? this.vehicles.get(plan.bike) : undefined;
