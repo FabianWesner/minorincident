@@ -42,7 +42,7 @@
     "scene:layout": "sh tools/e2e-lock.sh tsx tools/scenelab/cli.ts specs/scenes/layout-sweep/*.json",
     "scene:mcp": "tsx tools/scenelab/mcp.ts",
     "scene:catalog": "sh tools/e2e-lock.sh tsx tools/scenelab/catalog.ts",
-    "scene:matrix": "E2E_UNITS=2 sh tools/e2e-lock.sh tsx tools/scenelab/catalog.ts --matrix --backend webgpu --filter 'ui-night-*,qa-l6-gate-route,qa-l6-room-edge,qa-l6-shelter-reveal,qa-l6-exit-*,qa-l7-entry-*,alpha-awareness-*,inf-horde-headwear,qa-vehicle-travel-*,qa-l6-rested-shelter,qa-l6-audit-cohort,l2-finale-*,po-debug-*,po-shotgun-*,seat-*,ped-*,corgi-*,dog-*,area-grove-*,l10-q1-*,l10-q3-*,l10-e3b-*,l10-mega-speed-*,l10-mega-close-*,l10-lod-*,l10-minigun-heat,l10-cure-install-defend,l10-cure-mist,qa-l10-*,l10-region-seam,telegraph-*,interior-cull-*,seethrough-*,l3-highway-entry-medkit,l3-highway-melee-escape,ui-menu-*,l10-e2-terminal,collision-*,alphas-at-the-tank,e18-*,qa-late-*,spec-audit-b-*,wave3-*'",
+    "scene:matrix": "E2E_UNITS=2 sh tools/e2e-lock.sh tsx tools/scenelab/catalog.ts --matrix --backend webgpu --filter 'ui-night-*,qa-l6-gate-route,qa-l6-room-boundary,qa-l6-shelter-reveal,qa-l6-exit-*,qa-l7-entry-*,alpha-awareness-*,inf-horde-headwear,qa-vehicle-travel-*,qa-l6-rested-shelter,qa-l6-audit-cohort,l2-finale-*,po-debug-*,po-shotgun-*,seat-*,ped-*,corgi-*,dog-*,area-grove-*,l10-q1-*,l10-q3-*,l10-e3b-*,l10-mega-speed-*,l10-mega-close-*,l10-lod-*,l10-minigun-heat,l10-cure-install-defend,l10-cure-mist,qa-l10-*,l10-region-seam,telegraph-*,interior-cull-*,seethrough-*,l3-highway-entry-medkit,l3-highway-melee-escape,ui-menu-*,l10-e2-terminal,collision-*,alphas-at-the-tank,e18-*,qa-late-*,spec-audit-b-*,wave3-*'",
     "assets:bake-statics": "tsx tools/assets/bake-statics.ts"
   },
   "dependencies": {
