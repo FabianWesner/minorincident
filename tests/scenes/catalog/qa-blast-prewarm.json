@@ -49,6 +49,58 @@
       }
     }
   ],
-  "note": "Loading warm-up regression: a real wreck reveals detached panel/rib materials, followed by a fuel-truck blast and its delayed secondary beat. Game-camera visual coverage; cold native frame timing remains in tests/perf/explosions.spec.ts.",
-  "name": "qa-blast-prewarm"
+  "note": "Loading warm-up regression: a real wreck reveals detached panel/rib materials, followed by a fuel-truck blast and its delayed secondary beat. Game-camera visual coverage; cold native frame timing remains in tests/perf/explosions.spec.ts. Infected victims settle into retained LOD2 corpse pages during the blast sequence.",
+  "name": "qa-blast-prewarm",
+  "actors": [
+    {
+      "id": "victim-0",
+      "kind": "infected",
+      "at": [
+        2,
+        0
+      ],
+      "archetype": "infected.runner",
+      "state": "idle"
+    },
+    {
+      "id": "victim-1",
+      "kind": "infected",
+      "at": [
+        -2,
+        0
+      ],
+      "archetype": "infected.runner",
+      "state": "idle"
+    },
+    {
+      "id": "victim-2",
+      "kind": "infected",
+      "at": [
+        0,
+        2
+      ],
+      "archetype": "infected.runner",
+      "state": "idle"
+    },
+    {
+      "id": "victim-3",
+      "kind": "infected",
+      "at": [
+        4,
+        -6
+      ],
+      "archetype": "infected.runner",
+      "state": "idle"
+    },
+    {
+      "id": "victim-4",
+      "kind": "infected",
+      "at": [
+        -1,
+        -3
+      ],
+      "archetype": "infected.runner",
+      "state": "idle"
+    }
+  ]
 }
