@@ -1,0 +1,665 @@
+[
+  {
+    "sequence": [
+      "seethrough-door-gate"
+    ],
+    "before": 0,
+    "metrics": {
+      "drawCalls": {
+        "p50": 15,
+        "p95": 15,
+        "max": 15
+      },
+      "triangles": {
+        "p50": 89516,
+        "p95": 89516,
+        "max": 89516
+      },
+      "shadowDrawCalls": {
+        "p50": 14,
+        "p95": 14,
+        "max": 14
+      },
+      "shadowTriangles": {
+        "p50": 44633,
+        "p95": 44633,
+        "max": 44633
+      },
+      "stepMs": {
+        "p50": 1.2,
+        "p95": 4.7,
+        "max": 20.7
+      },
+      "lastFrame": {
+        "drawCalls": 15,
+        "triangles": 89516,
+        "shadowDrawCalls": 14,
+        "shadowTriangles": 44633,
+        "stepMs": 6.300000190734863,
+        "categories": {
+          "other": 15,
+          "shadows": 14
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "samples": [
+      {
+        "frame": 1,
+        "draws": 29,
+        "profile": {
+          "other": {
+            "drawCalls": 15,
+            "triangles": 89516
+          },
+          "shadows": {
+            "drawCalls": 14,
+            "triangles": 44633
+          }
+        },
+        "effects": {
+          "wind": {
+            "x": 0.55,
+            "z": 0.25
+          },
+          "blasts": 0,
+          "puffs": 0,
+          "puffCap": 400,
+          "fireballs": 0,
+          "fireballCap": 48,
+          "flames": 0,
+          "glows": 0,
+          "vehicleSmokeColumns": 0,
+          "columns": 0,
+          "transientColumns": 0,
+          "fireColumns": 0,
+          "columnShadows": 0,
+          "clouds": 0,
+          "scorch": 0,
+          "parts": 0,
+          "flash": 0,
+          "bulletTime": {
+            "scale": 1,
+            "remaining": 0,
+            "progress": 0
+          },
+          "slowMotion": true
+        },
+        "meshes": [
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "ConeGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "PlaneGeometry"
+          },
+          {
+            "name": "mesh_0",
+            "group": "body",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "mesh_2",
+            "group": "",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "mesh_2_1",
+            "group": "",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "mesh_2_2",
+            "group": "",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "mesh_1",
+            "group": "root",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "sunset-grove",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "PlaneGeometry"
+          },
+          {
+            "name": "grass-gpu-wind",
+            "group": "D-GROVE",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "courierSkin",
+            "group": "courierRig",
+            "type": "SkinnedMesh",
+            "count": 1,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "figure-contact-shadows",
+            "group": "",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "PlaneGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "npcs",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BoxGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "e27-blasts",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "e27-blasts",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "PlaneGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 80,
+            "castShadow": false,
+            "geometry": "SphereGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 80,
+            "castShadow": false,
+            "geometry": "BoxGeometry"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sequence": [
+      "seethrough-gear-four",
+      "seethrough-door-gate"
+    ],
+    "before": 0,
+    "metrics": {
+      "drawCalls": {
+        "p50": 15,
+        "p95": 15,
+        "max": 15
+      },
+      "triangles": {
+        "p50": 89516,
+        "p95": 89516,
+        "max": 89516
+      },
+      "shadowDrawCalls": {
+        "p50": 14,
+        "p95": 14,
+        "max": 14
+      },
+      "shadowTriangles": {
+        "p50": 44633,
+        "p95": 44633,
+        "max": 44633
+      },
+      "stepMs": {
+        "p50": 0.6,
+        "p95": 1.2,
+        "max": 5.3
+      },
+      "lastFrame": {
+        "drawCalls": 15,
+        "triangles": 89516,
+        "shadowDrawCalls": 14,
+        "shadowTriangles": 44633,
+        "stepMs": 3.1999998092651367,
+        "categories": {
+          "other": 15,
+          "shadows": 14
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "samples": [
+      {
+        "frame": 1,
+        "draws": 29,
+        "profile": {
+          "other": {
+            "drawCalls": 15,
+            "triangles": 89516
+          },
+          "shadows": {
+            "drawCalls": 14,
+            "triangles": 44633
+          }
+        },
+        "effects": {
+          "wind": {
+            "x": 0.55,
+            "z": 0.25
+          },
+          "blasts": 0,
+          "puffs": 0,
+          "puffCap": 400,
+          "fireballs": 0,
+          "fireballCap": 48,
+          "flames": 0,
+          "glows": 0,
+          "vehicleSmokeColumns": 0,
+          "columns": 0,
+          "transientColumns": 0,
+          "fireColumns": 0,
+          "columnShadows": 0,
+          "clouds": 0,
+          "scorch": 0,
+          "parts": 0,
+          "flash": 0,
+          "bulletTime": {
+            "scale": 1,
+            "remaining": 0,
+            "progress": 0
+          },
+          "slowMotion": true
+        },
+        "meshes": [
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "ConeGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "PlaneGeometry"
+          },
+          {
+            "name": "mesh_0",
+            "group": "body",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "mesh_2",
+            "group": "",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "mesh_2_1",
+            "group": "",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "mesh_2_2",
+            "group": "",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "mesh_1",
+            "group": "root",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "sunset-grove",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "PlaneGeometry"
+          },
+          {
+            "name": "grass-gpu-wind",
+            "group": "D-GROVE",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "courierSkin",
+            "group": "courierRig",
+            "type": "SkinnedMesh",
+            "count": 1,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "figure-contact-shadows",
+            "group": "",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "PlaneGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "npcs",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BoxGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "e27-blasts",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "e27-blasts",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "PlaneGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 80,
+            "castShadow": false,
+            "geometry": "SphereGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 80,
+            "castShadow": false,
+            "geometry": "BoxGeometry"
+          }
+        ]
+      }
+    ]
+  }
+]
