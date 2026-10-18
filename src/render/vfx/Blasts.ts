@@ -150,11 +150,13 @@ export class Blasts extends Group {
         const ambient = host.ambient ? host.ambient.clamp(.12, 1) : float(1);
         const base = vec3(st.w).mul(mix(.62, 1.12, sun)).mul(ambient);
         // Lit from below by the fire: low, young puffs glow orange on their undersides (spec 07 §6).
-        const ember = st.z.mul(float(1).sub(progress).pow(2.5)).mul(smoothstep(4.5, .6, positionWorld.y)).mul(normalWorld.y.negate().mul(.35).add(.75));
+        // Round 3: the glow hugs the flames (below 3 m) so the column above them stays dark instead of peach.
+        const ember = st.z.mul(float(1).sub(progress).pow(2.5)).mul(smoothstep(3, .5, positionWorld.y)).mul(normalWorld.y.negate().mul(.35).add(.75));
         const smokeColor = st.z.lessThan(-1.5).select(vec3(.55, .82, .8).mul(mix(.75, 1.12, sun)).mul(ambient.max(.6)), st.z.lessThan(0).select(vec3(.2, .48, .09).mul(mix(.62, 1.12, sun)).mul(ambient), base));
         // Practical radiance lights the cloud; damp the player-ray contribution so
         // the readability aura does not turn the foreground smoke into a bright veil.
-        const color = mix(smokeColor, vec3(1, .42, .12).mul(1.2), ember.clamp(0, .6)).add(host.field ? host.field.sample().mul(positionWorld.y.smoothstep(3.5, 1.5)).mul(nearRay.select(.25, 3)).mul(st.w.mul(2.5).min(1)) : vec3(0));
+        // Practical light scales with the smoke's albedo: dark soot reflects little of the fire's light.
+        const color = mix(smokeColor, vec3(1, .42, .12).mul(1.2), ember.clamp(0, .45)).add(host.field ? host.field.sample().mul(positionWorld.y.smoothstep(3.5, 1.5)).mul(nearRay.select(.25, 3)).mul(st.w.mul(1.4).min(1)) : vec3(0));
         const edge = normalView.z.abs().smoothstep(.05, .7);
         const grain = mx_noise_float(positionWorld.mul(.9).add(seed)).mul(.25).add(.85);
         // Dark (soot) puffs stay dense for most of their life and fade late, so a blast column reads as a solid dark plume.
@@ -281,7 +283,7 @@ export class Blasts extends Group {
     // The white-out belongs to blasts close to the player; a distant tank round or fuel chain only gets a weak flash.
     const focus0 = this.host.focus?.(), flashNear = focus0 ? Math.max(.15, Math.min(1, 1.4 - Math.hypot(focus0.x - x, focus0.z - z) / 18)) : 1;
     this.flashPeak = Math.max(this.flash, (this.flashReduction ? Math.min(.12, fx.flash) : fx.flash) * flashNear); this.flashAt = now;
-    this.glow(x, z, r * 1.6, fx.light.color, (this.flashReduction ? .45 : 1) * Math.min(1.6, fx.light.intensity / 100), fx.light.seconds, ground || undefined);
+    this.glow(x, z, r * 1.4, fx.light.color, (this.flashReduction ? .45 : 1) * Math.min(1.3, fx.light.intensity / 100), fx.light.seconds, ground || undefined);
     const hex = `#${fx.light.color.toString(16).padStart(6, '0')}`;
     this.host.light?.(x, z, hex, Math.min(10, fx.light.intensity / 20) * (this.flashReduction ? .5 : 1), fx.light.range, fx.light.seconds, true);
     // White-hot onset: a shattering core sphere plus a short, wide light pulse on the ground and nearby walls (light field).
@@ -293,7 +295,7 @@ export class Blasts extends Group {
       this.fireball(x, ground + .5 + fx.fireball.size * .25, z, fx.fireball.size * (.13 + .17 * punch), .09, 0, 0, 0, 0, 2);
       this.host.light?.(x, z, '#fff0d2', 6 * punch, fx.light.range * .5, .1, false);
     }
-    this.glow(x, z, Math.min(r * 1.1, 5.5), 0xffe6b8, (this.flashReduction ? .3 : 1.2) * punch, .18, ground || undefined);
+    this.glow(x, z, Math.min(r * .8, 4), 0xffe6b8, (this.flashReduction ? .3 : 1.1) * punch, .16, ground || undefined);
     // Mega blasts tint the whole town's light field orange for 5 s (spec 07 §5).
     if (event.cls === 'mega') this.host.light?.(x, z, '#ff7a30', 4, 90, 5, false);
     // Beat 3 fireball: overlapping noise spheres around the centre, staggered by up to 0.12 s.

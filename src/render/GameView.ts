@@ -457,14 +457,10 @@ export class GameView implements Lifecycle {
       void this.warming.catch(error => console.error(error));
       return;
     }
+    // Any scene with VFX takes the full warm-up on both backends (hidden blast/fireball/debris/puff/flame pools,
+    // and the PostFx heat-haze graph compile behind the loading card, WebGL programs and WebGPU pipelines alike).
     if (fullWarmUp) await warm();
-    else if (!this.vfx || this.renderer.selectedBackend === 'webgl') {
-      // Hidden VFX pools (fireball/soot, debris, puffs, flames, particles) are invisible until the first effect, so a plain
-      // compile skipped them and the first blast linked their programs in play (blast-stress / Scene Lab cold hitch).
-      const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
-      const restore = this.vfx?.prewarm(focus.x, focus.z);
-      try { await (this.postFx ? this.postFx.compile() : this.renderer.compileAsync(this.scene, this.camera)); } finally { restore?.(); }
-    }
+    else await (this.postFx ? this.postFx.compile() : this.renderer.compileAsync(this.scene, this.camera));
     // The horizon's rocks enter the view well after departure. Warm every coarse
     // material in the gameplay HDR context before control, rather than linking
     // a cold WebGL sidewalk shader synchronously at the first crossing seam.
@@ -739,7 +735,8 @@ export class GameView implements Lifecycle {
       this.heatEdge.set(s.x, s.y, s.z).addScaledVector(this.heatRight, s.radius).project(this.camera);
       // UV height units: half the NDC distance, scaled by aspect because NDC x spans the width.
       const radius = Math.abs(this.heatEdge.x - this.heatPoint.x) * .5 * this.camera.aspect;
-      postFx.heat[n++].set(this.heatPoint.x * .5 + .5, this.heatPoint.y * .5 + .5, radius, s.strength);
+      // Three's post quad UV has a top-left origin on both backends (GLSL flips render-target reads to match).
+      postFx.heat[n++].set(this.heatPoint.x * .5 + .5, .5 - this.heatPoint.y * .5, radius, s.strength);
     }
     for (let i = n; i < postFx.heat.length; i++) postFx.heat[i].w = 0;
   }
