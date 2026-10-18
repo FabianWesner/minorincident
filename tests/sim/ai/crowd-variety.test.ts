@@ -20,6 +20,9 @@ test('L6 maintenance arrivals use a balanced cast instead of one repeated afterm
   const { LevelSixSubway } = await import('../../../src/sim/missions/LevelSixSubway');
   const { l6BreachModels } = await import('../../../src/data/l6');
   const w = await arena();
+  // Appearance balancing requires eligible entrances; real-camera visibility is
+  // covered by T-E24-06-frustum. Keep both maintenance doors outside this fixture's frame.
+  Object.assign(w.infected!.director.camera, { halfWidth: 1, halfDepth: 1 });
   w.npcs!.civilians.outbreak = new Outbreak(w,{refuges:[]});
   const state = { infectedIds:[] as number[], spawnLog:[] };
   const controller = new LevelSixSubway({world:w,state:{l6:state}} as unknown as import('../../../src/sim/missions/Mission').Mission);

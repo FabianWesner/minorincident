@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { expect, test } from 'vitest';
 import { compositions } from '../../src/levels/compositions';
 import { resolveCampaignMission } from '../../src/levels/missions';
@@ -116,5 +116,46 @@ test('T-E30-13-losses @E30-AC13 finished civilians and released former survivors
     const bot = new LevelEightBot(w);
     for (let i = 0; i < 180 * 60 && !bot.finished; i++) { w.applyInput(bot.sample(), 'keyboard'); w.update(); }
     expect(w.missions!.state.phase).toBe('progression'); expect(w.missions!.state.result!.rescued).toBe(0);
+  } finally { w.dispose(); }
+}, 120_000);
+
+for (const tier of ['high', 'low'] as const) test(`T-E30-06-calm-${tier} @E30-AC06 exterior attackers cannot cross or hurt any occupant for all 60 seconds; routines face their task`, async () => {
+  const w = await load(tier);
+  try {
+    const occupants = w.entities.values().filter(e => e.civilian || e.id === 1);
+    const initial = new Map(occupants.map(e => [e.id, e.health.current]));
+    const routines = occupants.filter(e => e.civilian && !e.civilian.survivor && !e.civilian.zooAnimal);
+    expect(routines).toHaveLength(30);
+    expect(routines.filter(e => e.civilian!.ally?.role === 'soldier')).toHaveLength(6);
+    const animals = occupants.filter(e => e.civilian?.zooAnimal);
+    expect(animals).toHaveLength(8);
+    const outside = [[0, -88], [0, 88], [-118, 0], [118, 0]];
+    const attackers = outside.map(([x, z]) => w.entities.get(w.infected!.spawn('infected.runner', { x, z }, { state: 'chase' }))!);
+    const nowhere = new Map<number, number>(), longest = new Map<number, number>();
+    for (let tick = 0; tick < 3600; tick++) {
+      w.update();
+      for (const e of occupants) {
+        expect(e.health.current, `occupant ${e.id}, tick ${tick}`).toBe(initial.get(e.id));
+        expect(e.infected, `occupant ${e.id}`).toBeUndefined();
+        expect(e.infection, `occupant ${e.id}`).toBeUndefined();
+      }
+      for (const [i, e] of attackers.entries()) {
+        const [x, z] = outside[i];
+        expect(x ? Math.sign(x) * e.transform.x >= 115.6 : Math.sign(z) * e.transform.z >= 85.6, `wall ${i} tick ${tick}`).toBe(true);
+      }
+      for (const e of [...routines, ...animals]) {
+        const c = e.civilian!, activity = c.schedule?.[c.scheduleStep ?? 0];
+        const target = activity ? c.activityUntil ? activity.facing ?? activity.target : activity.target : c.waypoints[c.waypoint];
+        const dx = target.x - e.transform.x, dz = target.z - e.transform.z, distance = Math.hypot(dx, dz);
+        const facing = distance > .1 && (Math.cos(e.transform.yaw) * dx - Math.sin(e.transform.yaw) * dz) / distance > Math.cos(Math.PI / 4);
+        const duration = facing ? 0 : (nowhere.get(e.id) ?? 0) + 1;
+        nowhere.set(e.id, duration); longest.set(e.id, Math.max(longest.get(e.id) ?? 0, duration));
+        expect(duration, `routine ${e.id} tick ${tick}: ${JSON.stringify({ at: e.transform, activity, until: c.activityUntil })}`).toBeLessThanOrEqual(180);
+        expect(e.infected).toBeUndefined();
+      }
+    }
+    expect(w.missions!.l8!.state.breachedAt).toBe(3600);
+    mkdirSync('test-results/wave3-sim', { recursive: true });
+    writeFileSync(`test-results/wave3-sim/calm-${tier}.json`, JSON.stringify({ ticks: 3600, occupants: initial.size, attackers: attackers.map(e => ({ id: e.id, at: e.transform, hp: e.health.current })), longestFacingAwayTicks: Object.fromEntries(longest) }, null, 2));
   } finally { w.dispose(); }
 }, 120_000);

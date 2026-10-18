@@ -70,3 +70,44 @@ for (const tier of ['high', 'low'] as const) {
     } finally { w.dispose(); }
   });
 }
+
+for (const tier of ['high', 'low'] as const) test(`T-E32-28-seam-input-${tier} @E32-AC28 every D-CURE region seam supports live reversal, nav and persistent identities`, async () => {
+  const w = await loadLevel('L10', 32);
+  try {
+    w.chunks!.setQuality(tier); w.combat!.damage.god = true;
+    const boss = w.megaPursuit!.introduce({ x: cure.start[0] - 80, z: cure.start[1] });
+    w.entities.get(boss)!.health.current = 2400;
+    for (const region of cure.regions.slice(1)) {
+      const [x, z] = region.route[0], p = w.entities.get(1)!;
+      Object.assign(p.transform, { x: x - 4, z, y: .72 }); w.physics.playerBody!.setTranslation(p.transform, true); w.player!.locomotion.reset();
+      w.chunks!.update([x - 4, z]);
+      const dead = w.infected!.spawn('infected.runner', { x: x - 8, z: z + 5 });
+      const corpse = w.entities.get(dead)!; corpse.health.current = 0; w.infected!.settle(corpse);
+      const pickup = w.pickups!.spawn('medkit', { x: x - 10, z: z + 5 });
+      const pack = w.entities.get(pickup)!.pickup!; if ('kind' in pack) pack.collected = true;
+      for (const direction of [1, -1, 1]) {
+        w.setInput({ move: { x: direction, z: 0 } });
+        const before = p.transform.x;
+        for (let i = 0; i < 150; i++) {
+          w.update();
+          const { x: px, z: pz, y } = p.transform;
+          expect(y).toBeGreaterThanOrEqual(.65);
+          expect(w.physics.floorHeight(px, pz)).toBeGreaterThanOrEqual(0);
+          expect(w.infected!.nav.clear(px, pz, .3)).toBe(true);
+          expect(w.chunks!.resident(px + direction * 9, pz)).toBe(true);
+          expect(w.chunks!.stats().resident).toBeLessThanOrEqual(tier === 'high' ? 25 : 9);
+          expect(w.infected!.active.filter(e => e.infected!.pursuit)).toHaveLength(1);
+          expect(w.entities.get(boss)!.health.current).toBe(2400);
+        }
+        expect((p.transform.x - before) * direction, region.id).toBeGreaterThan(5);
+      }
+      w.clearInput();
+      // Retire the region, advance its clock, then restore the same corpse and pickup.
+      w.chunks!.update(cure.start);
+      if (Math.abs(x - cure.start[0]) > 300) expect(w.entities.get(dead)).toBeUndefined();
+      w.chunks!.update([x, z]);
+      expect(w.entities.get(dead)).toMatchObject({ id: dead, health: { current: 0 }, corpse: true });
+      expect(w.entities.get(pickup)!.pickup).toMatchObject({ collected: true });
+    }
+  } finally { w.dispose(); }
+}, 120_000);
