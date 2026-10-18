@@ -133,6 +133,7 @@ export class GameUI {
     const link = (id: string, label: string, href: string) => { const a = node('a', id, label); a.href = href; a.target = '_blank'; a.rel = 'noopener'; return a; };
     // Hand-authored makers first (PO 10-15), then the generated licence list, unchanged.
     list.append(node('h2', 'credits-made-heading', madeBy.headline));
+    list.append(node('p', 'credits-scope', 'All LLMs and harnesses, all libraries and all technologies used to make Minor Incident.'));
     const author = node('p', 'credits-made-author'); author.className = 'credit-row';
     author.append(link('credits-made-author-link', madeBy.author.name, madeBy.author.url), ' · ', madeBy.author.role);
     list.append(author);
@@ -154,9 +155,9 @@ export class GameUI {
         list.append(row);
       });
     };
-    section('code', 'Code libraries and technology', codeCredits);
-    section('toolchain', 'Build and test toolchain', toolchainCredits, 'Used to build and test the game; none of it is shipped to players unless listed above.');
-    section('technology', 'Other technology and services', technologyCredits);
+    section('code', 'Runtime libraries and references', codeCredits);
+    section('toolchain', 'Build, test and asset tools', toolchainCredits, 'Used to build and test the game; none of it is shipped to players unless listed above.');
+    section('technology', 'Technologies and platforms', technologyCredits);
     section('audio', 'Music, sound and voices', audioCredits, 'Recordings edited for the game: excerpts, EQ, pitch, fades, compression, loudness normalization and encoding.');
     section('original', 'Original work', [originalCredit]);
     credits.append(list);

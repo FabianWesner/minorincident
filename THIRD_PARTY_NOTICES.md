@@ -185,6 +185,7 @@ FFmpeg is a local asset/test tool, not bundled or redistributed with the game.
 
 - WebGPU — W3C GPU for the Web Working Group. Source: https://www.w3.org/TR/webgpu/. License: W3C Software and Document License (https://www.w3.org/copyright/software-license/). Browser API: the primary renderer backend.
 - WebGL 2 — Khronos Group. Source: https://registry.khronos.org/webgl/specs/latest/2.0/. License: Khronos specification (royalty-free web API) (https://registry.khronos.org/webgl/specs/latest/2.0/). Browser API: the fallback renderer backend.
+- Web Audio API — W3C Audio Working Group. Source: https://www.w3.org/TR/webaudio/. License: W3C Software and Document License (https://www.w3.org/copyright/software-license/). Browser API for spatial audio, music and sound playback.
 - three.js WebGPURenderer and TSL (Three Shading Language) — three.js authors. Source: https://threejs.org/docs/#api/en/renderers/WebGPURenderer. License: MIT (https://spdx.org/licenses/MIT.html). Ships inside the three package listed above: node materials, the WebGPU renderer and its WebGL 2 backend.
 - Rapier physics (WebAssembly build) — Dimforge. Source: https://rapier.rs/. License: Apache-2.0 (https://spdx.org/licenses/Apache-2.0.html). Ships as @dimforge/rapier3d-compat, listed above.
 - Blender (headless asset builds) — Blender Foundation and community. Source: https://www.blender.org/. License: GPL-3.0-or-later (tool only) (https://www.blender.org/about/license/). Used offline to build the 3D models; no Blender code ships, and the exported assets are the game's own.
@@ -192,6 +193,7 @@ FFmpeg is a local asset/test tool, not bundled or redistributed with the game.
 - Opus codec (libopus) and AAC — Xiph.Org Foundation and contributors; AAC via the platform encoder. Source: https://opus-codec.org/. License: BSD-3-Clause (https://opus-codec.org/license/). The shipped audio sprites are Opus (WebM) with an AAC (M4A) fallback.
 - Cloudflare Pages and Pages Functions — Cloudflare, Inc.. Source: https://pages.cloudflare.com/. License: Cloudflare Terms of Service (hosted service) (https://www.cloudflare.com/terms/). Hosting and the analytics endpoints (with D1 and R2 storage).
 - Hetzner Cloud — Hetzner Online GmbH. Source: https://www.hetzner.com/cloud/. License: Hetzner Terms and Conditions (hosted service) (https://www.hetzner.com/legal/terms-and-conditions/). Remote test runners for unit, simulation and end-to-end suites.
+- GitHub — GitHub, Inc.. Source: https://github.com/. License: GitHub Terms of Service (https://docs.github.com/en/site-policy/github-terms/github-terms-of-service). Source hosting and CI.
 
 ## Recorded music and sound credits
 
