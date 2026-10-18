@@ -227,7 +227,11 @@ export class CrowdView extends Group {
       mesh.userData.staticInstancePosition = material.positionNode;
       mesh.onAfterRender = () => probe.draw();
       this.batches.set(`${key}:${lod}`, { animal: !!model.getObjectByName('legFL'), locomotion, probe, poses, lod, role: key, mesh, state, tint, shirt: baked.shirtColor ?? new Color(1, 1, 1), strideScale: baked.strideScale, windup: def.windup, texture, count: 0, placeholders: fallback }); this.add(mesh);
-      if (this.world.scenario === 'L7' && lod === (this.low ? 'lod2' : 'lod1')) {
+      // Death always selects LOD2, on both tiers. Prepare its frozen shader in
+      // every combat scene so the first settled blast victims cannot link it
+      // synchronously during play. Waiting for this batch also guarantees the
+      // simplified corpse geometry exists before the loading draw.
+      if (lod === 'lod2') {
         this.staticCorpses.prepare(`${key}:death-back:0`, this.corpseGeometry.get(key) ?? mesh.geometry, material, baked.clip, infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1);
       }
       if (fallback) model.traverse((n) => { if (n instanceof Mesh) { n.geometry.dispose(); for (const m of Array.isArray(n.material) ? n.material : [n.material]) m.dispose(); } });

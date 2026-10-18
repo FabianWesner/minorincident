@@ -91,7 +91,7 @@ export class StaticCorpses extends Group {
     mesh.instanceMatrix.needsUpdate = page.tint.needsUpdate = page.overlay.needsUpdate = true;
     if (last > 0) mesh.computeBoundingSphere();
   }
-  /** L6 prepares the fixed cast's frozen death pages before shader warm-up. */
+  /** Prepare a cast member's frozen death page before shader warm-up. */
   prepare(key: string, source: BufferGeometry, material: MeshLambertNodeMaterial, clip: CrowdClip, frame: number, headwear = false): void {
     if (headwear) this.frozenPose(source, material, clip, frame, [], true);
     if (![...this.chunks.keys()].some(k => k === key || k.startsWith(`${key}/`))) this.createPage(key, source, material, clip, frame, []);
