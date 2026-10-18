@@ -196,6 +196,9 @@ export class Blasts extends Group {
       new MeshLambertNodeMaterial({ color: 0xb6bcc2 }),
       new MeshLambertNodeMaterial({ color: 0xb6bcc2 }),
     ], PARTS);
+    // Opaque scenery must not hide the first fragment draw from Metal's lazy
+    // pipeline specialization. Exercise every panel/rib material during loading.
+    this.parts.userData.preRenderSolo = true;
     this.parts.count = 0; this.parts.frustumCulled = false; this.parts.castShadow = true;
     const shadowGeometry = new PlaneGeometry(1, 1); shadowGeometry.rotateX(-Math.PI / 2);
     const shadowMaterial = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false });

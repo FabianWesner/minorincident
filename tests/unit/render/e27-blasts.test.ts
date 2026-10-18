@@ -5,6 +5,23 @@ import { FxPool } from '../../../src/render/vfx/FxPool';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
 import { LightField } from '../../../src/render/LightField';
 
+test('T-E27-14w @E27 @E18 blast fragment materials execute unoccluded during loading and reset before play', () => {
+  const world = new SimWorld(), particles = new FxPool(2048, 'particle');
+  const blasts = new Blasts(world, { particles, shake() {} });
+  try {
+    const parts = blasts.children.find(child => child instanceof InstancedMesh && Array.isArray(child.material)) as InstancedMesh;
+    expect(parts.userData.preRenderSolo).toBe(true);
+    expect(parts.material).toHaveLength(3);
+    expect(parts.count).toBe(0);
+    blasts.prewarm(4, 8);
+    expect(parts.count).toBeGreaterThan(0);
+    expect(blasts.blasts).toBe(0);
+    blasts.reset();
+    expect(parts.count).toBe(0);
+    expect(blasts.snapshot()).toMatchObject({ puffs: 0, fireballs: 0, flames: 0, glows: 0, scorch: 0, parts: 0 });
+  } finally { blasts.dispose(); particles.dispose(); world.dispose(); }
+});
+
 test('T-E27-06v @E27 @E27-AC06 mega lights the town orange for five seconds and slow motion can be disabled', () => {
   const world = new SimWorld(), particles = new FxPool(6000, 'particle'), field = new LightField();
   const lights: { hex: string; intensity: number; radius: number; ttl: number }[] = [];

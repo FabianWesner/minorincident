@@ -1,0 +1,54 @@
+{
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L4",
+  "dof": false,
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 420,
+  "sheet": 20,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000
+  },
+  "vehicles": [
+    {
+      "id": "car",
+      "asset": "vehicle.sedan",
+      "at": [
+        0,
+        0
+      ],
+      "yaw": 30
+    }
+  ],
+  "script": [
+    {
+      "frame": 8,
+      "effect": {
+        "wreck": "car"
+      }
+    },
+    {
+      "frame": 190,
+      "effect": {
+        "blast": "explosion.fuel-truck",
+        "at": [
+          4,
+          -8
+        ]
+      }
+    }
+  ],
+  "note": "Loading warm-up regression: a real wreck reveals detached panel/rib materials, followed by a fuel-truck blast and its delayed secondary beat. Game-camera visual coverage; cold native frame timing remains in tests/perf/explosions.spec.ts.",
+  "name": "qa-blast-prewarm"
+}
