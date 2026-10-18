@@ -79,8 +79,8 @@
     "observedIn": [
       "evidence/remote-pair1.log"
     ],
-    "redOnMain": "Unmeasured",
-    "mainEvidence": ""
+    "redOnMain": "No",
+    "mainEvidence": "evidence/remote-main-l6-complete-control.log"
   },
   {
     "test": "T-E24-03",
@@ -97,11 +97,12 @@
     "test": "T-E24-09-evade",
     "title": "T-E24-09-evade @E24 @E24-AC09 an unprotected group loses at least seventy percent in the single-seed evade run",
     "observedIn": [
+      "evidence/remote-pair1.log",
       "evidence/remote-pair2.log",
       "evidence/verify-E24.log"
     ],
-    "redOnMain": "Unmeasured",
-    "mainEvidence": ""
+    "redOnMain": "No",
+    "mainEvidence": "evidence/remote-main-campaign-control.log"
   },
   {
     "test": "T-E28-10-frame-high",
@@ -143,10 +144,11 @@
     "test": "T-E31-20",
     "title": "T-E31-20 @E31-AC20 continuous seed 1 L1 through L9 commits real campaign handovers and the axe reset",
     "observedIn": [
+      "evidence/remote-pair1.log",
       "evidence/remote-pair2.log"
     ],
-    "redOnMain": "Unmeasured",
-    "mainEvidence": ""
+    "redOnMain": "No",
+    "mainEvidence": "evidence/remote-main-campaign-control.log"
   },
   {
     "test": "T-E32-03-D3-high",
@@ -184,6 +186,16 @@
     ],
     "redOnMain": "No",
     "mainEvidence": "evidence/remote-main-campaign-control.log"
+  },
+  {
+    "test": "manual-phone-gate-HUD-overlap",
+    "title": "Gate prompt/roster/objective overlap in phone portrait",
+    "observedIn": [
+      "evidence/ui-final/l6-gate-390x844-f81-z1.png",
+      "sheets/phone-gate-overlap-main-control.jpg"
+    ],
+    "redOnMain": "Yes",
+    "mainEvidence": "sheets/phone-gate-overlap-main-control.jpg"
   },
   {
     "test": "wave3-zoo-routines@high-z1.5-webgl2",

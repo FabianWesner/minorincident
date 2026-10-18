@@ -21,7 +21,7 @@ for name in ['main-isolated.json','main-newbie.json']:
  for suite in d.get('testResults',[]):
   for t in suite.get('assertionResults',[]):
    if t.get('status') in ['passed','failed']:main[key(t.get('fullName',t.get('title','')))]=('Yes' if t['status']=='failed' else 'No',str(p.relative_to(root)))
-for name in ['remote-main-side-entry','remote-main-functional-control','remote-main-campaign-control','remote-main-extra','remote-main-timing-extra']:
+for name in ['remote-main-side-entry','remote-main-functional-control','remote-main-campaign-control','remote-main-extra','remote-main-timing-extra','remote-main-l6-complete-control']:
  p=root/'evidence'/(name+'.log')
  for mark,result in [('✓','No'),('×','Yes')]:
   for title in log_tests(p,mark):
@@ -58,6 +58,8 @@ for tier in ['high','low']:
  k=f'wave3-zoo-routines@{tier}-z1.5-webgl2'
  red[k]={'test':k,'title':'Wide zoo actor clipping: 2 > 0','observedIn':['evidence/matrix-final-webgl2.log']}
  main[k]=('Yes','evidence/main-zoo-catalog.log')
+red['manual-phone-gate-HUD-overlap']={'test':'manual-phone-gate-HUD-overlap','title':'Gate prompt/roster/objective overlap in phone portrait','observedIn':['evidence/ui-final/l6-gate-390x844-f81-z1.png','sheets/phone-gate-overlap-main-control.jpg']}
+main['manual-phone-gate-HUD-overlap']=('Yes','sheets/phone-gate-overlap-main-control.jpg')
 for k,row in red.items():
  result,evidence=main.get(k,('Unmeasured',''))
  row['redOnMain']=result;row['mainEvidence']=evidence

@@ -2554,3 +2554,90 @@ Verifying E07: sh tools/e2e-lock.sh npx playwright test --grep @(?:E07)(?:-AC\d+
 [90mstdout[2m | tests/levels/l5-po-2-balance.test.ts[2m > [22m[2mPO #29 @E23 seed 1 balance baseline: complete and newbie outcomes and deaths stay pinned
 [22m[39mPO29 complete {"outcome":"complete","deaths":0,"rescued":4,"fates":{"dale":"sheltered","rosa":"sheltered","okafor":"sheltered","mia":"sheltered","sam":"turned"},"infectedAtStart":18}
 
+[90mstdout[2m | tests/levels/l5-po-2-balance.test.ts[2m > [22m[2mPO #29 @E23 seed 1 balance baseline: complete and newbie outcomes and deaths stay pinned
+[22m[39mPO29 newbie {"outcome":"complete","deaths":0,"rescued":5,"fates":{"dale":"sheltered","rosa":"sheltered","okafor":"sheltered","mia":"sheltered","sam":"sheltered"},"infectedAtStart":18}
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/levels/l5-po-2-balance.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 34097[2mms[22m[39m
+   [33m[2m✓[22m[39m PO #29 @E23 seed 1 balance baseline: complete and newbie outcomes and deaths stay pinned[33m 34096[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/npc/pet-height.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 6329[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 a moving pet dog stays at the civilian height above the ground[33m 6328[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/performance/nav-capsule-corners.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/ai/turning.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 263[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/levels/L10.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 136398[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-04-complete @E32-AC04 one seed completes the full L10 route with ordinary inputs and regional timing[33m 136396[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/motionlab/motion.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 109[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/vehicles/l9-terrain-speed.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 24226[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-09-terrain-road-1000 @E31-AC09 L9 road uses its healthy cap and a single 60% floor[33m 5044[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-09-terrain-road-0 @E31-AC09 L9 road uses its healthy cap and a single 60% floor[33m 5036[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-09-terrain-rough-1000 @E31-AC09 L9 rough uses its healthy cap and a single 60% floor[33m 7066[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-09-terrain-rough-0 @E31-AC09 L9 rough uses its healthy cap and a single 60% floor[33m 7075[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/missions/l2-reporting.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 20407[2mms[22m[39m
+   [33m[2m✓[22m[39m @E20-AC05 ride control latency stays on its observed clock after checkpoint respawn[33m 20405[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/combat/l5-shotgun-click.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 1320[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E23-12-click @E23 @E23-AC12 clicking the cellar shelf shotgun walks over and collects it without E[33m 1318[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/character-foreground.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/tooling/po-late-level-contracts.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 20[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/missions/l2-gate-contact.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 2948[2mms[22m[39m
+   [33m[2m✓[22m[39m @E20 the closed south gate joins its fence and keeps permitted contact outside the checkpoint[33m 2946[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/environment-lifetime.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 29[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/performance/assets.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 43[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/tooling/late-level-shared-coverage.test.ts [2m([22m[2m7 tests[22m[2m)[22m[32m 18[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/levels/l6-headlamp.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 1242[2mms[22m[39m
+   [33m[2m✓[22m[39m @E24 PO31 L6 start headlamp requires collection before its existing beam switches on and survives checkpoint restore[33m 1241[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/tooling/late-level-scene-catalog.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 32[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/e25-visibility.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/overlay.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/corgi-scale.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 61[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/l3-boom.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 9[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/data/l2-glass.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/input/wheel.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 10[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/levels/l7-audit.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 173964[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-02 @E29-AC02 standalone seed 1 boards at least 60% of the starting group without cheats[33m 173962[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/missions/dialogue.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 12[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/civilian-residency.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 4[2mms[22m[39m
+ [2m[90m↓[39m[22m [30m[43m functional [49m[39m tests/levels/L4-botprobe.test.ts [2m([22m[2m1 test[22m[2m | [22m[33m1 skipped[39m[2m)[22m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/physics-metadata.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 347[2mms[22m[39m
+   [33m[2m✓[22m[39m @E26 authored GLB records are reproduced at layout build with masses, collision shapes and break rules[33m 345[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/ui-settings.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/performance/gibs.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 128[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/l5-shotgun.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 16[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/l6-scream-debug.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/lod-residency.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/ui-dom.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/army-boom.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 56[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/input/raised-floor.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/missions/small-figure.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 2886[2mms[22m[39m
+   [33m[2m✓[22m[39m L2 seed 1 protected children keep child models in sim and appearance at both quality tiers @E08 @E20[33m 2885[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/performance/layouts.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 67[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/lod-pop-gate.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/png-pixels.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 13[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/debug-physics.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 5[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/runner.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 2124[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E01-08 @E01 @E01-AC08 npm sim writes a headless JSON report[33m 2120[2mms[22m[39m
+[90mstdout[2m | tests/levels/L9-campaign.test.ts[2m > [22m[2mT-E31-20 @E31-AC20 continuous seed 1 L1 through L9 commits real campaign handovers and the axe reset
+[22m[39m{"level":"L7","completed":false,"time":1200,"deaths":0,"blocker":{"objective":"bus-departure","detail":"{\"phase\":\"boarding\",\"hp\":100,\"roster\":[{\"id\":117,\"key\":\"shelter-0\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":118,\"key\":\"shelter-1\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":119,\"key\":\"shelter-2\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":120,\"key\":\"shelter-3\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":121,\"key\":\"shelter-4\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":122,\"key\":\"shelter-5\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":123,\"key\":\"shelter-6\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":124,\"key\":\"shelter-7\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":125,\"key\":\"shelter-8\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":126,\"key\":\"shelter-9\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-69.09574113030666,\"z\":46.536906435158485,\"y\":0.7,\"yaw\":9.193293980664972}},{\"id\":127,\"key\":\"shelter-10\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":128,\"key\":\"shelter-11\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":129,\"key\":\"shelter-12\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":130,\"key\":\"shelter-13\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":132,\"key\":\"shelter-15\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":133,\"key\":\"shelter-16\",\"injured\":true,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":-62.4208234883381,\"z\":51.11025529016192,\"y\":0.83,\"yaw\":2.2371515466034366}},{\"id\":135,\"key\":\"shelter-18\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":136,\"key\":\"shelter-19\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":137,\"key\":\"shelter-20\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":138,\"key\":\"shelter-21\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":139,\"key\":\"shelter-22\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":140,\"key\":\"shelter-23\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":20,\"key\":\"dale\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":21,\"key\":\"rosa\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":22,\"key\":\"okafor\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":23,\"key\":\"mia\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}}]}","player":{"x":-70.49170684814453,"y":0.7049999833106995,"z":47.50030517578125,"yaw":0.902451766572879}}}
+
+ [31m❯[39m [30m[43m functional [49m[39m tests/levels/L9-campaign.test.ts [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 3873861[2mms[22m[39m
+[31m   [31m×[31m T-E31-20 @E31-AC20 continuous seed 1 L1 through L9 commits real campaign handovers and the axe reset[39m[33m 3873858[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/tooling/headless-only.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 291[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/view-uniform-groups.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 8[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/startup-background.test.ts [2m([22m[2m2 tests[22m[2m)[22m[32m 4[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/l7-night.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 4[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/window-glow-lod.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 1005[2mms[22m[39m
+   [32m✓[39m window glows stay in their windows in every LOD [2m(1)[22m
+     [33m[2m✓[22m[39m LOD1/LOD2 glow patches coincide with the LOD0 patches of every building[33m 1003[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/audio/l4-radio-mix.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 4[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/levels/collision-invariant.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 23123[2mms[22m[39m
+   [33m[2m✓[22m[39m L1: committed actor occupancy stays valid, including stationary full audits[33m 1155[2mms[22m[39m
+   [33m[2m✓[22m[39m L2: committed actor occupancy stays valid, including stationary full audits[33m 2119[2mms[22m[39m
+   [33m[2m✓[22m[39m L3: committed actor occupancy stays valid, including stationary full audits[33m 1680[2mms[22m[39m
+   [33m[2m✓[22m[39m L4: committed actor occupancy stays valid, including stationary full audits[33m 1360[2mms[22m[39m
+   [33m[2m✓[22m[39m L5: committed actor occupancy stays valid, including stationary full audits[33m 997[2mms[22m[39m
+   [33m[2m✓[22m[39m L6: committed actor occupancy stays valid, including stationary full audits[33m 1169[2mms[22m[39m
+   [33m[2m✓[22m[39m L7: committed actor occupancy stays valid, including stationary full audits[33m 994[2mms[22m[39m
+   [33m[2m✓[22m[39m L8: committed actor occupancy stays valid, including stationary full audits[33m 622[2mms[22m[39m
+   [33m[2m✓[22m[39m L9: committed actor occupancy stays valid, including stationary full audits[33m 3798[2mms[22m[39m
+   [33m[2m✓[22m[39m L10: committed actor occupancy stays valid, including stationary full audits[33m 8333[2mms[22m[39m
+   [33m[2m✓[22m[39m L7: committed actor occupancy stays valid, including stationary full audits[33m 889[2mms[22m[39m
+ [31m❯[39m [30m[43m functional [49m[39m tests/levels/L6-protection.test.ts [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 2314283[2mms[22m[39m
+[31m   [31m×[31m T-E24-09-evade @E24 @E24-AC09 an unprotected group loses at least seventy percent in the single-seed evade run[39m[33m 2314282[2mms[22m[39m
