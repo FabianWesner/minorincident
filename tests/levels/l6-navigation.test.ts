@@ -4,7 +4,7 @@ import { emptyInput } from '../../src/input/InputFrame';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
 let world: SimWorld | undefined;
 afterEach(() => world?.dispose());
-test('T-E24-17-route @E24-AC17 @E24-AC10 escort navigation stays in the authored tunnel around the first gate', async () => {
+test('T-E24-17-route @E24-AC17 @E24-AC10 courier navigation stays in the authored tunnel around the first gate', async () => {
   ({ world } = await loadL6());
   const nav = world.infected!.nav.forPlayer(.45);
   // Crowd perception retains its original domain; only player routes need
