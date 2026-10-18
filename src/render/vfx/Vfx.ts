@@ -117,8 +117,8 @@ export class Vfx extends Group {
     if (this.shots.length > 64) this.shots.shift();
     this.burst(muzzle.x, muzzle.y, muzzle.z, 0xffe3a0, 3, .045, .12, 0, particleShape.spark);
     // Round 3 punch: a bigger star with a white-hot centre a little ahead of the barrel, readable at zoom 1 and 0.5 on low too.
-    this.particles.spawn(this.time, .07, muzzle.x + direction.x * .1, muzzle.y, muzzle.z + direction.z * .1, direction.x * .8, 0, direction.z * .8, .85, particleShape.flash, 0xffd890);
-    if (this.quality === 'high') this.particles.spawn(this.time, .045, muzzle.x + direction.x * .15, muzzle.y, muzzle.z + direction.z * .15, 0, 0, 0, .36, particleShape.flash, 0xfff8e8);
+    this.particles.spawn(this.time, .07, muzzle.x + direction.x * .1, muzzle.y, muzzle.z + direction.z * .1, direction.x * .8, 0, direction.z * .8, 1.05, particleShape.flash, 0xffd890);
+    if (this.quality === 'high') this.particles.spawn(this.time, .045, muzzle.x + direction.x * .15, muzzle.y, muzzle.z + direction.z * .15, 0, 0, 0, .45, particleShape.flash, 0xfff8e8);
     // Muzzle tongue: a short hot streak out of the barrel, plus a brief warm pool on the ground (and the light field at night).
     this.particles.spawn(this.time, .06, muzzle.x + direction.x * .12, muzzle.y, muzzle.z + direction.z * .12, direction.x * 30, slope * 30, direction.z * 30, .11, particleShape.spark, 0xfff2c0, 0, 1.05);
     this.muzzleLight(muzzle.x + direction.x * .4, muzzle.z + direction.z * .4, muzzle.y);
