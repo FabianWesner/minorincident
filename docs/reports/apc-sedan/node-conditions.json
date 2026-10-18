@@ -1,0 +1,40 @@
+{
+  "observedAt": "2026-10-18T08:53:41.894077+00:00",
+  "host": "94.130.181.173",
+  "logicalCpus": 4,
+  "loadAverage": [
+    2.3447265625,
+    1.71142578125,
+    2.57177734375
+  ],
+  "exclusiveHost": false,
+  "method": "Serial maxWorkers=1 in one normal remote runner slot; original budgets retained; one other lane was active at start.",
+  "vitestProcesses": [
+    {
+      "pid": 2666326,
+      "job": "merge-batch10-267619-25836-1792304380",
+      "maxWorkers": [
+        "--maxWorkers=4"
+      ],
+      "workerThreads": [
+        {
+          "tid": 2756103,
+          "state": "R"
+        }
+      ]
+    },
+    {
+      "pid": 2775926,
+      "job": "apc-sedan-505fb3-72030-1792313462",
+      "maxWorkers": [
+        "--maxWorkers=1"
+      ],
+      "workerThreads": [
+        {
+          "tid": 2776764,
+          "state": "R"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,155 @@
+{
+  "phase": "timing",
+  "counts": {
+    "numTotalTests": 206,
+    "numPassedTests": 205,
+    "numFailedTests": 1,
+    "numPendingTests": 0
+  },
+  "files": [
+    {
+      "file": "tests/sim/player.test.ts",
+      "status": "passed",
+      "tests": 12
+    },
+    {
+      "file": "tests/sim/weapons.test.ts",
+      "status": "passed",
+      "tests": 73
+    },
+    {
+      "file": "tests/sim/weather.test.ts",
+      "status": "passed",
+      "tests": 15
+    },
+    {
+      "file": "tests/sim/ai/director.test.ts",
+      "status": "passed",
+      "tests": 11
+    },
+    {
+      "file": "tests/sim/ai/l1-perception.test.ts",
+      "status": "passed",
+      "tests": 15
+    },
+    {
+      "file": "tests/sim/combat/balance.test.ts",
+      "status": "passed",
+      "tests": 3
+    },
+    {
+      "file": "tests/sim/interact/integration.test.ts",
+      "status": "passed",
+      "tests": 6
+    },
+    {
+      "file": "tests/sim/levels/l10-arrival.test.ts",
+      "status": "passed",
+      "tests": 2
+    },
+    {
+      "file": "tests/sim/levels/l10-assault.test.ts",
+      "status": "passed",
+      "tests": 5
+    },
+    {
+      "file": "tests/sim/levels/l10-district.test.ts",
+      "status": "passed",
+      "tests": 3
+    },
+    {
+      "file": "tests/sim/missions/perf.test.ts",
+      "status": "passed",
+      "tests": 1
+    },
+    {
+      "file": "tests/sim/npc/campaign.test.ts",
+      "status": "passed",
+      "tests": 5
+    },
+    {
+      "file": "tests/sim/performance/alpha-physical.test.ts",
+      "status": "passed",
+      "tests": 2
+    },
+    {
+      "file": "tests/sim/performance/alpha-support.test.ts",
+      "status": "passed",
+      "tests": 2
+    },
+    {
+      "file": "tests/sim/performance/alpha.test.ts",
+      "status": "passed",
+      "tests": 2
+    },
+    {
+      "file": "tests/sim/performance/horde.test.ts",
+      "status": "passed",
+      "tests": 3
+    },
+    {
+      "file": "tests/sim/performance/l10-finale.test.ts",
+      "status": "passed",
+      "tests": 2
+    },
+    {
+      "file": "tests/sim/performance/l6-fixture.test.ts",
+      "status": "passed",
+      "tests": 1
+    },
+    {
+      "file": "tests/sim/performance/level-fixtures.test.ts",
+      "status": "passed",
+      "tests": 8
+    },
+    {
+      "file": "tests/sim/performance/mega-audio.test.ts",
+      "status": "passed",
+      "tests": 2
+    },
+    {
+      "file": "tests/sim/performance/mega-moves.test.ts",
+      "status": "passed",
+      "tests": 2
+    },
+    {
+      "file": "tests/sim/performance/zoo-s1.test.ts",
+      "status": "passed",
+      "tests": 2
+    },
+    {
+      "file": "tests/sim/performance/zoo-s2.test.ts",
+      "status": "failed",
+      "tests": 2
+    },
+    {
+      "file": "tests/sim/performance/zoo-s3.test.ts",
+      "status": "passed",
+      "tests": 2
+    },
+    {
+      "file": "tests/sim/vehicles/consequences.test.ts",
+      "status": "passed",
+      "tests": 13
+    },
+    {
+      "file": "tests/sim/world/chunk-residency.test.ts",
+      "status": "passed",
+      "tests": 11
+    },
+    {
+      "file": "tests/unit/progression/perf.test.ts",
+      "status": "passed",
+      "tests": 1
+    }
+  ],
+  "failures": [
+    {
+      "file": "tests/sim/performance/zoo-s2.test.ts",
+      "test": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+      "errors": [
+        "AssertionError: expected 4.179731999989599 to be less than or equal to 4"
+      ]
+    }
+  ]
+}

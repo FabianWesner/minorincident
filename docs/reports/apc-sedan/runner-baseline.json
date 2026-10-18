@@ -1,0 +1,20 @@
+{
+  "startingCommit": "fcf81b4da4cdea623c1ddd3c0f8620a41a457a46",
+  "files": [
+    {
+      "file": "src/levels/missions.ts",
+      "unchangedFromStartingCommit": true
+    },
+    {
+      "file": "tools/sim-runner/levels.ts",
+      "unchangedFromStartingCommit": true
+    },
+    {
+      "file": "tests/unit/tooling/l7-runner-default.test.ts",
+      "unchangedFromStartingCommit": true
+    }
+  ],
+  "cause": "missionIds contains L7; runnerLevels appends another L7. Sorted registration has 11 entries; the unchanged unit test expects L1 through L10 once each.",
+  "missionIdsLine": "export const missionIds = ['L1','L2','L3','L4','L5','L6','L7','L8','L9','L10'] as const;",
+  "runnerLevelsLine": "export const runnerLevels: readonly RunnerLevel[] = [...missionIds, 'L7' as const].sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)));"
+}

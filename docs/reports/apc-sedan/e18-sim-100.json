@@ -1,0 +1,20 @@
+{
+  "scenario": "perf-horde-100",
+  "seed": 1,
+  "warmup": 120,
+  "ticks": 600,
+  "minInfected": 100,
+  "minVisibleInfected": 100,
+  "collision": {
+    "failures": 0,
+    "pending": 0,
+    "admitted": 100,
+    "deferred": 0,
+    "requests": [],
+    "offenders": []
+  },
+  "cap": 100,
+  "simMsP50": 0.593061999999918,
+  "simMsP95": 0.827763999986928,
+  "simMsMax": 1.9710480000358075
+}
