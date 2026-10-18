@@ -26,16 +26,16 @@ test('T-E24-17-route @E24-AC17 @E24-AC10 escort navigation stays in the authored
 test('T-E24-17-room-boundary @E24-AC17 raw movement cannot leave the authored tunnel floor', async () => {
   ({ world } = await loadL6());
   const player = world.entities.get(1)!;
-  Object.assign(player.transform, { x: 84, y: 1.32, z: 15 });
+  Object.assign(player.transform, { x: 25, y: 1.32, z: 0 });
   world.physics.playerBody!.setTranslation(player.transform, true);
   const frame = emptyInput();
-  frame.move = { x: 0, z: -1 };
+  frame.move = { x: 1, z: 0 };
   for (let i = 0; i < 120; i++) {
     world.applyInput(frame, 'keyboard'); world.update();
-    expect(player.transform.z).toBeGreaterThanOrEqual(11.2);
-    expect(player.transform.y).toBeGreaterThan(1.2);
+    expect(world.infected!.nav.contains(player.transform.x, player.transform.z)).toBe(true);
+    expect(player.transform.x).toBeLessThan(30);
   }
   frame.move = { x: 0, z: 1 };
-  for (let i = 0; i < 30; i++) { world.applyInput(frame, 'keyboard'); world.update(); }
-  expect(player.transform.z).toBeGreaterThan(13);
+  for (let i = 0; i < 60; i++) { world.applyInput(frame, 'keyboard'); world.update(); }
+  expect(player.transform.z).toBeGreaterThan(4);
 });

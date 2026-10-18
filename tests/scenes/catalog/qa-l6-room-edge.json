@@ -1,14 +1,14 @@
 {
   "extends": "qa-l6-po-gate.json",
   "name": "qa-l6-room-edge",
-  "note": "Production L6 courier recovers from the southern authored floor edge and passes the first gate. Manual keyboard/joystick floor admission is covered by T-E24-17-room-boundary.",
+  "note": "Production shelter/tunnel boundary: from the shelter at x25,z0, follow the authored corner at x25,z15 before passing the first gate at x96. Scene Lab walk supplies direct segment inputs, so it needs the corner waypoint; it is not an automatic planner. The destination assertion remains x>=95. T-E24-17-room-boundary separately proves raw movement cannot cross excluded floor at x30,z0.",
   "actors": [
     {
       "id": "courier",
       "kind": "courier",
       "at": [
-        84,
-        11.3
+        25,
+        0
       ],
       "loadout": [
         "weapon.fire-axe",
@@ -16,6 +16,10 @@
       ],
       "state": {
         "walk": [
+          [
+            25,
+            15
+          ],
           [
             96,
             15
@@ -29,12 +33,12 @@
     "actor": "courier",
     "zoom": 1
   },
-  "frames": 420,
+  "frames": 1800,
   "shots": [
     1,
-    140,
-    280,
-    420
+    600,
+    1200,
+    1800
   ],
   "expect": {
     "consoleErrors": 0,
@@ -47,5 +51,6 @@
     },
     "collisionFailuresMax": 0,
     "collisionPendingMax": 0
-  }
+  },
+  "sheet": 180
 }
