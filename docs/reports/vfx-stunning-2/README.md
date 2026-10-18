@@ -66,7 +66,7 @@ CPU p95 (sim + submission) is unchanged within noise, 1.3–3.3 ms. Draws are +1
 - Local VFX/E27 units (13 files, 51 tests): pass.
 - `tests/e2e/explosions.spec.ts`: **6/6 pass** after the final commit. T-E27-03 failed during the work: Sol's feathered pressure ring made the ring detector read 485 against 489 needed (main itself passes by only 4 px). The stronger leading edge fixed it (488 > 486). I changed no assertions.
 - `tests/e2e/vfx.spec.ts`: 7/8. `T-E15-lifecycle` expects 2 textures and sees 5. It is the same failure Sol reproduced on the main baseline.
-- Remote full unit (an earlier commit): 281/284 files pass. The 2 failures are unrelated to VFX and do not touch files I edited: `traceability.test.ts` (E29-AC01 tag) and `tooling/l7-runner-default.test.ts`. Final-head remote result: see the commit note.
+- Remote full unit (an earlier commit): 281/284 files pass. The 2 failures are unrelated to VFX and do not touch files I edited: `traceability.test.ts` (E29-AC01 tag) and `tooling/l7-runner-default.test.ts`. Final-head remote rerun was stopped after 20+ min queued on saturated runners; the orchestrator should rerun the full remote unit suite after merging.
 
 ## Unmeasured / open
 
