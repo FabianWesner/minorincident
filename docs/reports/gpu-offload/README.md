@@ -21,24 +21,26 @@ No renderer, gameplay, asset, spec, visual threshold or performance budget chang
 | Focused tooling checks | 21 tests passed across GPU guard, lock, verifier quiet and remote tests; `/tmp/gpu-offload-tooling.log` |
 | WebGPU routing scene | 6/6 high/low × zoom 1.5/1/0.5 rows passed, 14 s, `test-results/gpu-offload-webgpu/index.json` |
 | Native canvas regression | 8/8 passed, 1.3 min, both qualities and both zoom limits; `/tmp/gpu-offload-webgpu.log` |
-| Mac WebGL2 comparison sample | 60 authored scenes, all existing matrix variants; running, `test-results/gpu-offload-mac-webgl2/` |
+| Mac WebGL2 comparison sample | **280/280 passed**, exactly 60 authored scenes, **1,493.209 s** wall time; [retained index](mac-sample-index.json), `test-results/gpu-offload-mac-webgl2/` |
 | Full remote WebGL2 matrix | Running: 1,026 rows, unchanged filter/size/gates; `test-results/gpu-offload-matrix/` will be pulled automatically |
-| Remote functional deploy e2e | Queued behind isolated timing; `/tmp/gpu-offload-e2e.log` |
+| Remote functional deploy e2e | Running 67 selected tests; first `crowd-visible-outbreak` attempt hit its unchanged 180 s deadline; retry pending; `/tmp/gpu-offload-e2e.log` |
 | Full unit + sim + tests/levels | Running on Hetzner, at most four workers; timing project owns both runner slots before functional work; `test-results/gpu-offload-final/` will be pulled |
 | E18 simulation | Isolated remote high 200-infected ≤4 ms and low 100-infected ≤6 ms checks passed inside the ongoing full suite |
-| E18 native frame timing | Queued through quiet-run, one worker, port 34867; `/tmp/gpu-offload-e18.log` |
+| E18 native frame timing | **Passed**, Apple M4/Metal high 200 infected, **p95 6.6 ms ≤16.7 ms**, p50 4.1 ms; 68 draws / 500,362 triangles; [full recording](desktop-gpu.json), `/tmp/gpu-offload-e18.log` |
 
-The first remote matrix rows passed but took **133–307 s each**. This is actual software-rendering evidence, not a completed wall-time measurement or native frame-time evidence. At the initial rate, the full matrix is an overnight run. No resolution, capture count, scene list, gate or budget was reduced to accelerate it. The full catalog must finish before claiming full remote success or 60-scene parity.
+The first remote matrix rows passed but took **133–307 s each**. This is actual software-rendering evidence, not a completed wall-time measurement or native frame-time evidence. At the initial rate, the full matrix is an overnight run. No resolution, capture count, scene list, gate or budget was reduced to accelerate it. The full catalog must finish before claiming full remote success or 60-scene parity. Functional tests whose rendered-frame workload exceeds existing software-rendering deadlines also remain red; no timeout was increased.
 
 The first CPU sweep began from an incomplete sync manifest while the helper was being added; its missing-helper errors are superseded by the stable full rerun. It also exposed two unchanged baseline failures: `runnerLevels` includes L7 twice (`tests/unit/tooling/l7-runner-default.test.ts`), and no test carries `@E29-AC01` (`tests/unit/traceability.test.ts`). Those files were not changed.
 
 ## Captures inspected
 
-`gpu-offload-courier` is added to the matrix catalog and inherits the existing geared-courier scene with zero console errors/undrawn frames and the low-tier E18 limits (300 draw calls, 500,000 triangles). It runs at both tiers and all three zooms on both backends.
+`gpu-offload-courier` is added to the matrix catalog and inherits the existing geared-courier scene with zero console errors/undrawn frames and the low-tier E18 limits (300 draw calls, 500,000 triangles). It runs at both tiers and all three zooms on both backends. The completed Mac sample has no failed row.
 
-I inspected the [WebGPU high z1](captures/webgpu-high-z1.jpg) and [low z0.5](captures/webgpu-low-z0.5.jpg) game-camera sheets: the cap, ponytail, backpack, blue clothing, shoes and contact shadow remain drawn against cracked asphalt; the closer view has no missing body or black frame. The full-level L4 high-z1 and low-z0.5 captures under `test-results/webgpu-blank/game/` show the evacuation bus, ground and HUD; the closer composition is bus-dominated, so this is canvas-rendering evidence rather than a character-readability claim.
+I inspected the [WebGL2 high z1](captures/webgl2-high-z1.jpg), [WebGL2 low z0.5](captures/webgl2-low-z0.5.jpg), [WebGPU high z1](captures/webgpu-high-z1.jpg) and [low z0.5](captures/webgpu-low-z0.5.jpg) game-camera sheets: the cap, ponytail, backpack, blue clothing, shoes and contact shadow remain drawn against cracked asphalt; the closer view has no missing body or black frame. The full-level L4 high-z1 and low-z0.5 captures under `test-results/webgpu-blank/game/` show the evacuation bus, ground and HUD; the closer composition is bus-dominated, so this is canvas-rendering evidence rather than a character-readability claim.
 
 I also inspected the returned [SwiftShader depot sheet](captures/swiftshader-depot-high-z1.jpg) beside the [Mac Metal sheet](captures/metal-depot-high-z1.jpg). Road markings, pavement, hydrant, lamps, houses, awning and shadows have consistent composition and color across the six camera frames. The JPEG files are not byte-identical; no pixel-identity claim is made. Both row gates passed. This one view does not establish 60-scene parity.
+
+The [native E18 capture](captures/e18-desktop.png) shows the full 200-infected cluster on the tiled test ground with visible heads, bodies and contact shadows; there is no blank frame. This recording proves the specified native frame-time check, not every E18 criterion. The Mac sample and native timing browsers have closed and released their reservations.
 
 ## Finish / reproduce the pending proof
 
@@ -53,7 +55,7 @@ After the full catalog and Mac sample have returned, run:
 
 ```sh
 python3 tools/scenelab/compare-catalog.py \
-  test-results/gpu-offload-mac-webgl2/index.json \
+  docs/reports/gpu-offload/mac-sample-index.json \
   test-results/gpu-offload-matrix/index.json \
   --out docs/reports/gpu-offload/comparison.json
 ```
