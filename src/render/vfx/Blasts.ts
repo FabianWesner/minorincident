@@ -468,7 +468,11 @@ export class Blasts extends Group {
       c.x = e.transform.x; c.z = e.transform.z;
       // Persistent fire needs embers even without a preceding blast. Reuse the
       // existing particle pool at 4 Hz (2 Hz on low), under its unchanged cap.
-      if (this.sourceVisible(c.x, c.z, c.size + 4) && (!low || Math.floor(now * 4) % 2 === 0)) this.host.particles.spawn(now, 1.2, c.x + (this.rng.next() - .5) * .6, (c.ground ?? 0) + .7, c.z + (this.rng.next() - .5) * .6, this.windNode.value.x * .5, 1.7 + this.rng.next(), this.windNode.value.z * .5, .045, particleShape.spark, 0xffb04a, .3, .24);
+      // High: two buoyant embers per tick spread over the fire, drifting with the wind; low keeps one at 2 Hz.
+      if (this.sourceVisible(c.x, c.z, c.size + 4) && (!low || Math.floor(now * 4) % 2 === 0)) for (let k = low ? 1 : 2; k > 0; k--) {
+        const spread = Math.max(.6, (e.hazard?.radius ?? .8) * 1.2);
+        this.host.particles.spawn(now, 1.2 + this.rng.next() * .8, c.x + (this.rng.next() - .5) * spread, (c.ground ?? 0) + .5 + this.rng.next() * .4, c.z + (this.rng.next() - .5) * spread, this.windNode.value.x * .5 + (this.rng.next() - .5) * .6, 1.5 + this.rng.next() * 1.2, this.windNode.value.z * .5 + (this.rng.next() - .5) * .6, .035 + this.rng.next() * .025, particleShape.spark, this.rng.next() < .3 ? 0xffe08a : 0xffa040, k === 1 ? .3 : -.15, .24);
+      }
     }
     for (const id of this.vehicleColumns.keys()) if (!vehicles.has(id)) this.vehicleColumns.delete(id);
     for (const [id, c] of this.fireColumns) if (!seen.has(id)) { c.light?.remove(); this.fireColumns.delete(id); }
