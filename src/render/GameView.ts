@@ -456,7 +456,13 @@ export class GameView implements Lifecycle {
       return;
     }
     if (fullWarmUp) await warm();
-    else if (!this.vfx || this.renderer.selectedBackend === 'webgl') await this.renderer.compileAsync(this.scene, this.camera);
+    else if (!this.vfx || this.renderer.selectedBackend === 'webgl') {
+      // Hidden VFX pools (fireball/soot, debris, puffs, flames, particles) are invisible until the first effect, so a plain
+      // compile skipped them and the first blast linked their programs in play (blast-stress / Scene Lab cold hitch).
+      const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
+      const restore = this.vfx?.prewarm(focus.x, focus.z);
+      try { await (this.postFx ? this.postFx.compile() : this.renderer.compileAsync(this.scene, this.camera)); } finally { restore?.(); }
+    }
     // The horizon's rocks enter the view well after departure. Warm every coarse
     // material in the gameplay HDR context before control, rather than linking
     // a cold WebGL sidewalk shader synchronously at the first crossing seam.
