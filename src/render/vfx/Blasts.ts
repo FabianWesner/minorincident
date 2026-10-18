@@ -123,7 +123,7 @@ export class Blasts extends Group {
         // Dark albedo reflects sun and practical light alike: field radiance multiplies it instead of adding a bright veil.
         const albedo = vec3(.046, .04, .037), lit = host.field ? host.field.sample().mul(.8) : vec3(0);
         const sootColor = mix(albedo.mul(mix(.42, 1.55, sun).mul(ambient).add(lit)).add(vec3(.95, .34, .08).mul(under.mul(.4).mul(heat))), orange.mul(2.2).mul(heat), pocket);
-        const flashColor = mix(vec3(1, .78, .4), white, n).mul(float(1).sub(progress).mul(2.5).add(1.5)).mul(heat);
+        const flashColor = mix(vec3(1, .78, .4), white, n).mul(float(1).sub(progress).mul(1.6).add(1.2)).mul(heat);
         return vec4(mix(mix(fire, sootColor, soot), flashColor, flashKind), 1);
       })();
     }
@@ -280,11 +280,13 @@ export class Blasts extends Group {
     this.host.light?.(x, z, hex, Math.min(10, fx.light.intensity / 20) * (this.flashReduction ? .5 : 1), fx.light.range, fx.light.seconds, true);
     // White-hot onset: a shattering core sphere plus a short, wide light pulse on the ground and nearby walls (light field).
     // Flash reduction keeps only a weak warm pool.
+    // Scaled by the preset flash: a barrel/propane gets a hot white core, a Molotov only a small one.
+    const punch = Math.min(1, fx.flash * 1.6);
     if (!this.flashReduction && fx.fireball.count > 0) {
-      this.fireball(x, ground + .5 + fx.fireball.size * .3, z, fx.fireball.size * .95, .16, 0, 0, 0, 0, 2);
-      this.host.light?.(x, z, '#fff0d2', 10, fx.light.range * 1.3, .22, false);
+      this.fireball(x, ground + .5 + fx.fireball.size * .3, z, fx.fireball.size * (.3 + .4 * punch), .15, 0, 0, 0, 0, 2);
+      this.host.light?.(x, z, '#fff0d2', 10 * punch, fx.light.range * 1.3, .22, false);
     }
-    this.glow(x, z, r * 3, 0xffe6b8, this.flashReduction ? .35 : 2.6, .26, ground || undefined);
+    this.glow(x, z, r * 3, 0xffe6b8, (this.flashReduction ? .35 : 2) * punch, .26, ground || undefined);
     // Mega blasts tint the whole town's light field orange for 5 s (spec 07 §5).
     if (event.cls === 'mega') this.host.light?.(x, z, '#ff7a30', 4, 90, 5, false);
     // Beat 3 fireball: overlapping noise spheres around the centre, staggered by up to 0.12 s.
@@ -301,7 +303,7 @@ export class Blasts extends Group {
       this.fireball(x + Math.cos(a) * d, ground + .6 + this.rng.next() * fx.fireball.size * .5, z + Math.sin(a) * d, fx.fireball.size * (.3 + this.rng.next() * .32), (1.5 + this.rng.next() * 1.3) * stretch, .05 + k * .22, fx.fireball.rise * (1.2 + k * 1.6 + this.rng.next() * .5), Math.cos(a) * out, Math.sin(a) * out, 1);
     }
     // Debris chunks: scrap/rubble on ballistic arcs, a third of them glowing hot.
-    const chunks = fx.fireball.count ? Math.min(24, Math.round((6 + r * 1.6) * (low ? .34 : 1))) : 0;
+    const chunks = fx.fireball.count && fx.dust ? Math.min(24, Math.round((6 + r * 1.6) * (low ? .34 : 1))) : 0;
     for (let i = 0; i < chunks; i++) this.chunk(x, ground, z, r, i);
     // Beat 4 shockwave: a ground dust ring pushing outward (the E15 ring wave draws the 2r ring).
     const dust = low ? Math.ceil(fx.dust / 3) : fx.dust;
@@ -363,6 +365,8 @@ export class Blasts extends Group {
     this.puffExpiry[slot] = born + life;
     this.pf.pOrigin.needsUpdate = this.pf.pMotion.needsUpdate = this.pf.pStyle.needsUpdate = true; this.puffs.visible = true;
   }
+  /** Short transient ground pool (muzzle flashes, impact glints): shares the 12-entry glow list. */
+  flashPool(x: number, z: number, radius: number, color: number, intensity: number, life: number, ground?: number): void { this.glow(x, z, radius, color, intensity, life, ground); }
   private glow(x: number, z: number, radius: number, color: number, intensity: number, life: number, ground?: number): void {
     if (this.glowList.length >= 12) this.glowList.shift();
     this.glowList.push({ ground, x, z, radius, color, intensity, born: this.time, life });

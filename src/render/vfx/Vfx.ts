@@ -117,6 +117,9 @@ export class Vfx extends Group {
     if (this.shots.length > 64) this.shots.shift();
     this.burst(muzzle.x, muzzle.y, muzzle.z, 0xffe3a0, 3, .045, .12, 0, particleShape.spark);
     this.particles.spawn(this.time, .065, muzzle.x, muzzle.y, muzzle.z, direction.x * .8, 0, direction.z * .8, .65, particleShape.flash, 0xffe8b0);
+    // Muzzle tongue: a short hot streak out of the barrel, plus a brief warm pool on the ground (and the light field at night).
+    this.particles.spawn(this.time, .055, muzzle.x + direction.x * .12, muzzle.y, muzzle.z + direction.z * .12, direction.x * 26, slope * 26, direction.z * 26, .085, particleShape.spark, 0xfff2c0, 0, .75);
+    this.muzzleLight(muzzle.x + direction.x * .4, muzzle.z + direction.z * .4, muzzle.y);
     if (this.quality === 'high') this.particles.spawn(this.time, .35, muzzle.x, muzzle.y, muzzle.z, direction.x * .4, .6, direction.z * .4, .38, particleShape.smoke, 0x827a70);
     // Presentation-only cadence per shooter; entity keys disappear on level unload.
     const round = source ? this.tracerRounds.get(source) ?? 0 : 0;
@@ -124,16 +127,37 @@ export class Vfx extends Group {
     if ((sourceId === 1 || round % 3 === 0) && distance > .01) {
       const rayLength = Math.hypot(1, slope), speed = 320 / rayLength;
       this.particles.spawn(this.time, distance / speed + tracerLaunchS, muzzle.x, muzzle.y, muzzle.z,
-        direction.x * speed, slope * speed, direction.z * speed, 1, particleShape.tracer, 0xffce78, distance * rayLength, .065);
+        direction.x * speed, slope * speed, direction.z * speed, 1, particleShape.tracer, 0xffd88a, distance * rayLength, .065);
     }
+    const ix = muzzle.x + direction.x * distance, iy = Math.max(.08, muzzle.y + slope * distance), iz = muzzle.z + direction.z * distance;
     if ((!hit || hardHit) && (dust === 'miss' || distance < range - .3)) {
-      const x = muzzle.x + direction.x * distance, y = Math.max(.08, muzzle.y + slope * distance), z = muzzle.z + direction.z * distance;
-      this.burst(x, y, z, 0xb9ab8e, 4, .32, .55, 1.5, particleShape.smoke);
-      if (distance < range - .3) this.burst(x, y, z, 0xffdf94, 3, .035, .18, 5, particleShape.spark);
+      const metal = !!hit?.vehicle;
+      // Per surface: metal throws a bright glint and a fan of sparks; stone/asphalt a dust puff with chips; cover gets both.
+      // Seven contact slots on high (two on low, dust + spark only), all born at the bullet stop.
+      const high = this.quality === 'high';
+      if (!metal) this.burst(ix, iy, iz, 0xb9ab8e, high ? 2 : 1, .36, .6, 1.5, particleShape.smoke);
+      if (!metal && high) this.burst(ix, iy, iz, 0x4d4640, 2, .055, .5, 9.81, 0, .7, 1.5);
+      if (distance < range - .3) {
+        this.burst(ix, iy, iz, 0xffdf94, metal ? 6 : 2, .035, metal ? .3 : .18, 5, particleShape.spark, metal ? 1.6 : 1, metal ? 1.5 : 0);
+        if (high) this.particles.spawn(this.time, .07, ix, iy, iz, 0, 0, 0, metal ? .5 : .32, particleShape.flash, metal ? 0xfff6d8 : 0xffe2a8);
+      }
+    } else if (hit && !hardHit) {
+      // Flesh: a short wet mist where the round enters (grey with gore Off), under the blood spray from the hit event.
+      const mist = this.gore === 'Off' ? 0x6f676c : this.colorblind ? 0xc7903a : 0x8e1822;
+      for (let i = 0; i < (this.quality === 'low' ? 1 : 2); i++) this.particles.spawn(this.time, .28, ix - direction.x * .1, iy, iz - direction.z * .1, -direction.x * .8 + (this.rng.next() - .5), .3 + this.rng.next() * .4, -direction.z * .8 + (this.rng.next() - .5), .28 + this.rng.next() * .12, particleShape.smoke, mist, 0);
     }
     if (!dust) return;
     // ally-combat-feel: an ejected brass glint beside the shooter, and a dust puff where a miss (or cover) stops the round.
     this.particles.spawn(this.time, .35, muzzle.x - direction.z * .25, muzzle.y - .1, muzzle.z + direction.x * .25, -direction.z * 1.2, 1.4, direction.x * 1.2, .07, 0, 0xd8b45a, 9.81);
+  }
+  private lastMuzzleLight = -1;
+  /** Shared muzzle light, at most every 50 ms: a brief ground pool always, the E25 light field only when practical lights are on (dusk/night). */
+  private muzzleLight(x: number, z: number, y: number): void {
+    if (this.time - this.lastMuzzleLight < .05) return;
+    this.lastMuzzleLight = this.time;
+    const ground = this.world.districts?.supportBelow(x, z, y - .3) ?? 0;
+    this.blasts.flashPool(x, z, 1.6, 0xffc070, this.flashReduction ? .25 : .9, .07, ground);
+    if (this.quality === 'high' && (this.targets.field?.strength.value ?? 0) > .2) this.targets.light?.(x, z, '#ffc878', this.flashReduction ? 1.5 : 4, 5, .06, false);
   }
   constructor(private readonly world: SimWorld, private readonly targets: VfxTargets, geometries?: { limb: BufferGeometry; head: BufferGeometry }) {
     super();
