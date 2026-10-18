@@ -40,26 +40,29 @@ test('T-E25-moods @E25 @vision game-camera mood per time-of-day preset: readable
   expect(moods.L1.lighting.lightPools).toBe(0); expect(moods.night.lighting.lightPools).toBeGreaterThan(40);
 });
 
-test('T-E25-13 @E25 @E25-AC13 night-street: player contrast against its 2 m ring with no practical light nearby; infected eyes are their brightest pixels', async ({ page }) => {
+for (const backend of ['webgl', 'webgpu'] as const) for (const tier of ['high', 'low'] as const) test(`T-E25-13 @E25 @E25-AC13 night-street: player contrast against its 2 m ring with no practical light nearby; infected eyes are their brightest pixels ${backend} ${tier}`, async ({ page }) => {
   test.setTimeout(180_000);
-  await boot(page);
-  const setup = await page.evaluate(async () => {
-    const a = window.__SS__!; await a.loadLevel('night-street'); a.pause(); a.cheats.god(true);
+  await boot(page, `/?test=1&renderer=${backend}&quality=${tier}&audio=muted&dpr=1`);
+  const setup = await page.evaluate(async tier => {
+    const a = window.__SS__!; a.settings.set({ quality: tier }); await a.loadLevel('night-street'); a.pause(); a.cheats.god(true);
     const spot = { x: 51, z: -32.5 }; a.teleport('player', spot);
-    // The AI turns idle threats towards the courier during the warm-up. Keep them
-    // southwest on the open road, outside the contrast ring, with faces in the viewport.
+    // Warm the camera before spawning the eye probes. Simulating a chase here
+    // turns faces away from the camera and can move them into lamps/each other.
+    // Frozen, camera-facing idle figures isolate the shipped eye/material read.
+    a.camera.follow(); await a.step(90);
     const ids = [0, 1, 2].map(i => a.spawn('infected.runner', { x: spot.x - 4 - i * .6, z: spot.z + 2.5 }, { state: 'idle', yaw: -Math.PI / 4 }));
-    a.camera.follow(); await a.step(90); await a.screenshotReady();
+    await a.screenshotReady();
     const p = a.query({ kind: 'player' })[0]?.transform ?? a.getEntity(1)!.transform;
     const ring = [0, 1, 2, 3, 4, 5, 6, 7].map(k => a.camera.project(p.x + 2 * Math.cos(k * Math.PI / 4), .05, p.z + 2 * Math.sin(k * Math.PI / 4)));
     const heads = ids.map(id => { const t = a.getEntity(id)!.transform; return { head: a.camera.project(t.x, t.y + .75, t.z), feet: a.camera.project(t.x, t.y - .7, t.z) }; });
-    return { ring, heads, lighting: a.perf().lighting, pools: a.lights.state() };
-  });
+    return { ring, heads, backend: a.perf().backend, tier: a.perf().quality.tier, lighting: a.perf().lighting, pools: a.lights.state() };
+  }, tier);
   expect(setup.lighting!.preset).toBe('night');
+  expect(setup.backend).toBe(backend); expect(setup.tier).toBe(tier);
   for (const { head } of setup.heads) for (const ndc of head.slice(0, 2)) expect(Math.abs(ndc), 'Eyes must be inside the camera viewport').toBeLessThan(.95);
-  const image = await shot(page, 'night-street');
+  const image = await shot(page, `night-street-${backend}-${tier}`);
   await page.evaluate(async () => { window.__SS__!.settings.set({ idPass: true }); await window.__SS__!.screenshotReady(); });
-  const mask = PNG.sync.read(await page.locator('canvas').screenshot({ path: `${out}/night-street-player-mask.png` }));
+  const mask = PNG.sync.read(await page.locator('canvas').screenshot({ path: `${out}/night-street-player-mask-${backend}-${tier}.png` }));
   await page.evaluate(async () => { window.__SS__!.settings.set({ idPass: false }); await window.__SS__!.screenshotReady(); });
   let sum = 0, n = 0;
   for (let i = 0; i < mask.data.length; i += 4) if (mask.data[i] > 240 && mask.data[i + 1] < 20 && mask.data[i + 2] > 240) { sum += lum(image.data[i], image.data[i + 1], image.data[i + 2]); n++; }
@@ -74,7 +77,7 @@ test('T-E25-13 @E25 @E25-AC13 night-street: player contrast against its 2 m ring
     for (let y = y0 - half; y <= y1; y++) for (let x = x0 - half; x <= x0 + half; x++) { const i = (y * image.width + x) * 4, l = lum(image.data[i], image.data[i + 1], image.data[i + 2]); if (l > best.l) best = { l, r: image.data[i], g: image.data[i + 1], b: image.data[i + 2] }; }
     return best;
   });
-  writeFileSync(`${out}/night-readability.json`, JSON.stringify({ playerPixels: n, player, ring, contrast, ringPatches, ringNdc: setup.ring, eyes, lighting: setup.lighting, pools: setup.pools }, null, 2) + '\n');
+  writeFileSync(`${out}/night-readability-${backend}-${tier}.json`, JSON.stringify({ playerPixels: n, player, ring, contrast, ringPatches, ringNdc: setup.ring, eyes, lighting: setup.lighting, pools: setup.pools }, null, 2) + '\n');
   expect(n).toBeGreaterThan(800);
   expect(contrast).toBeGreaterThanOrEqual(3);
   // Bloomed eye centres saturate towards pink-white; the brightest pixel must still be clearly red (hue 330-20°).

@@ -42,7 +42,7 @@ export function civilianMaterial(shading: Materials | undefined, doubleSided: bo
       .add(vec3(.22, .4, .08).mul(turning).mul(pulse.mul(.7).add(.3)).mul(parts.y.equal(-1).select(1, 0)));
     const material = shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial(), { colorNode: base, emissiveNode: glow });
     // E25 night readability: crowd silhouettes take the preset's moonlit rim.
-    if ('figureRim' in material) material.figureRim.value = 1;
+    if ('figureRim' in material) { material.figureRim.value = .25; material.figureFill.value = 1; }
     material.side = doubleSided ? DoubleSide : FrontSide;
     const instance = mat4(attribute('_crowd0', 'vec4'), attribute('_crowd1', 'vec4'), attribute('_crowd2', 'vec4'), attribute('_crowd3', 'vec4')), part = parts.x;
     const outgoing = variant.w.div(2).floor(), weight = variant.w.mod(2);

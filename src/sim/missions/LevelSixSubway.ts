@@ -1,3 +1,4 @@
+import { inside } from '../../levels/districts/validate';
 import { balancedCrowdModel } from '../../data/crowdAppearance';
 import { allyState, updateAlly } from '../outbreak/Allies';
 import { Outbreak } from '../outbreak/Outbreak';
@@ -17,6 +18,19 @@ export class LevelSixSubway {
   private get s() { return this.mission.state.l6!; }
   prepare(): void {
     const w=this.w, rng=new Rng(w.seed,'l6-story'), start=w.tick;
+    // The station/tunnel has no floor outside its authored rooms. The actor
+    // grid must share that domain: an apparent shortcut beside a service gate
+    // strands the physical courier at its barrier and splits the escort group.
+    const nav = w.infected!.nav, previousMask = nav.mask;
+    const excluded = w.districts!.districts.flatMap(d => d.layout.walkable.excluded.map(area => area.map(([x, z]): [number, number] => [x + d.origin[0], z + d.origin[1]])));
+    const point: [number, number] = [0, 0];
+    nav.mask = (x, z) => {
+      if (previousMask && !previousMask(x, z)) return false;
+      point[0] = x; point[1] = z;
+      for (const area of excluded) if (inside(point, area)) return false;
+      return true;
+    };
+    nav.rebake();
     const breach1=start+ticks(30+rng.next()*10), breach2=breach1+ticks(20+rng.next()*10);
     this.mission.state.l6={entries:l6Entries.map(e=>({door:e.door,warnedAt:0,remaining:e.count,nextAt:0})),phase:'shelter',startAt:start,breach1At:breach1,breach2At:breach2,abandonAt:0,nextWave:breach2+600,firstBang:false,secondBang:false,leaderX:6,leaderZ:-2,paused:false,survivors:[],gates:[],infectedIds:[],spawnLog:[],flashlight:false,mainPower:true,emergency:false,exitAt:0,gateAt:0,injuryLineAt:0,lastShot:0,mid:false,platform:false};
     w.npcs!.setAmbient(0);w.infected!.director.levelCap=60;w.infected!.director.strict=true;
@@ -110,7 +124,8 @@ export class LevelSixSubway {
     if(r.status!=='following')return false;
     const live=this.living(),slot=Math.max(0,live.findIndex(q=>q.id===e.id));
     const target=r.collected?this.w.entities.get(1)!.transform:{x:s.leaderX-Math.floor(slot/3)*1.4,z:s.leaderZ+(slot%3-1)*1.2};
-    const goal=target.x<25?{x:target.x,z:target.z}: {x:target.x,z:target.x>=246&&target.x<258?14.1:15+(r.collected?0:(slot%3-1)*.75)};
+    // Keep the authored tunnel approach until this walker reaches the platform; then align with the escalator.
+    const goal=target.x<25?{x:target.x,z:target.z}: {x:target.x,z:target.x>=246&&target.x<258?(e.transform.x<246?l6.exit.approachZ:l6.tunnel.z):15+(r.collected?0:(slot%3-1)*.75)};
     const reach=r.collected?1.8:.4;
     if(r.injured&&!r.collected&&s.leaderX<e.transform.x&&s.leaderX<25)return true;
     if(distance(e.transform,goal)>reach+.15)this.w.npcs!.move(e,goal,r.injured?1.4:2.2,e.civilian!,reach);
@@ -160,7 +175,7 @@ export class LevelSixSubway {
     if(!s.mid&&p.x>=150){s.mid=true;this.mission.requestCheckpoint('mid-tunnel');}
     if(!s.platform&&p.x>=240){s.platform=true;this.mission.requestCheckpoint('exit-platform');this.mission.setState('platform',true);s.phase='exit';}
     if(s.phase==='exit'&&p.x>=263){if(!s.exitAt){s.exitAt=t;this.mission.state.timeOfDay='L6';w.events.emit({type:'l6.exit',tick:t});}
-      if(live.length===0){s.gateAt=t;const gate=w.barricades!.spawn({id:'l6-night-exit',groupId:'l6-exit',a:{x:258,z:12.85},b:{x:258,z:17.15},height:2.5,initialHp:10000});w.entities.get(gate)!.archetype='l6.service-gate';w.entities.get(gate)!.transform.y=3.9;s.phase='done';this.mission.setState('exited',true);}}
+      if(live.length===0){s.gateAt=t;const gate=w.barricades!.spawn({id:'l6-night-exit',groupId:'l6-exit',a:{x:258,z:l6.exit.centerZ-2.15},b:{x:258,z:l6.exit.centerZ+2.15},height:2.5,initialHp:10000});w.entities.get(gate)!.archetype='l6.service-gate';w.entities.get(gate)!.transform.y=3.9;s.phase='done';this.mission.setState('exited',true);}}
   }
   completed(id:string):void {if(id==='shelter'&&this.s.phase==='shelter')this.breach(false);if(id==='stop'&&!this.s.abandonAt){if(this.s.phase==='first')this.breach(true);this.abandon();}if(id==='retreat'){this.s.platform=true;this.mission.setState('platform',true);if(this.s.phase!=='done')this.s.phase='exit';}if(id==='exit'){this.s.phase='done';this.s.gateAt=this.w.tick;this.mission.state.timeOfDay='L6';}}
   advance():boolean{return false;}

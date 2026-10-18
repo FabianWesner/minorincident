@@ -3,6 +3,8 @@ import {expect,test} from 'vitest';
 import {l6,l6Doors,l6PhotoSpots} from '../../../src/data/l6';
 import {timeOfDay} from '../../../src/data/timeOfDay';
 import {worldAssets} from '../../../src/assets/worldDefinitions';
+import { DistrictWorld } from '../../../src/sim/world/DistrictWorld';
+import { compositions } from '../../../src/levels/compositions';
 import {validateLayout} from '../../../src/levels/districts/validate';
 import type {DistrictLayout} from '../../../src/levels/districts/types';
 const layout=JSON.parse(readFileSync('public/assets/layouts/D-SUBWAY.layout.json','utf8')) as DistrictLayout;
@@ -26,4 +28,20 @@ test('T-E24-seam @E24 PO 10-15 "Tracks are disconnected": one continuous D-SUBWA
       for(let k=0;k<3;k++)expect(Math.abs(end[k]-start[k]),`${a.id} -> ${b.id} rail ${side} axis ${'xyz'[k]}`).toBeLessThanOrEqual(.02);}}
   // The station platform track modules lie on the tunnel's line and the tunnel-start anchor is on it.
   expect(layout.anchors['tunnel-start'].position[2]).toBeCloseTo(run[0].z,2);
+});
+
+test('T-E24-exit-route @E24 @E24-AC17 tunnel centreline climbs the drawn escalator to Northgate without a step above autostep', () => {
+  const world = new DistrictWorld(compositions.L6, [layout], 1);
+  const exit = layout.placements.find(p => p.assetId === 'int.metro-exit')!;
+  // The delivered escalator centre is 0.9 m to the left of the asset origin after its half-turn.
+  expect(exit.position[2] - .9).toBeCloseTo(l6.tunnel.z, 6);
+  let feet = .6;
+  for (let x = 246; x <= 261; x += .05) {
+    const top = world.groundHeight(x, l6.tunnel.z);
+    expect(top, `unsupported approach at x=${x}`).toBeGreaterThanOrEqual(feet - .01);
+    expect(top - feet, `unclimbable step at x=${x}`).toBeLessThanOrEqual(.4);
+    expect(world.groundBelow(x, l6.tunnel.z, feet, .4)).toBeCloseTo(top, 6);
+    feet = top;
+  }
+  expect(feet).toBeCloseTo(3.9, 6);
 });

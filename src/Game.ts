@@ -377,9 +377,19 @@ export class Game {
   private wasDead = false;
   private simTick(): void {
     this.input.setDriving(this.world.vehicles?.active != null);
+    this.input.setMountedGun(this.world.mountedGun?.mounted === true);
     const mission = this.world.missions, at = this.world.entities.get(1)?.transform;
     const missionInteract = !!mission && !!at && mission.def.steps.some(step => step.type === 'interact' && mission.state.steps[step.id].status === 'active' && Math.hypot(at.x - mission.def.anchors[step.anchor].x, at.z - mission.def.anchors[step.anchor].z) <= mission.def.anchors[step.anchor].radius);
-    this.input.touch.setInteractable(this.world.vehicles?.canInteract() === true || this.world.interactables?.activeId != null || missionInteract);
+    const gun = this.world.mountedGun;
+    const gunInteract = !!gun && (gun.mounted || gun.canMount());
+    // Retained campaign weapons use Pickups' stand-to-interact hold rather than
+    // an Interactable entity. Offer the same action on touch within its 1.5 m reach.
+    let pickupInteract = false;
+    if (at && this.input.scheme === 'touch') for (const e of this.world.entities.iterate()) {
+      const pickup = e.pickup;
+      if (pickup && 'actionId' in pickup && pickup.armed && pickup.interactTicks && Math.hypot(at.x - e.transform.x, at.z - e.transform.z) <= 1.5) { pickupInteract = true; break; }
+    }
+    this.input.touch.setInteractable(this.world.vehicles?.canInteract() === true || this.world.interactables?.activeId != null || missionInteract || gunInteract || pickupInteract);
     const player = this.world.entities.get(1)?.transform;
     // PO: after a respawn, held buttons/targets/modifiers from the fight before death must not carry over.
     const dead = this.world.entities.get(1)?.survivor?.diedAt != null;
