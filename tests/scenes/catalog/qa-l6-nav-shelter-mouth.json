@@ -1,0 +1,51 @@
+{
+  "extends": "qa-l6-po-gate.json",
+  "name": "qa-l6-nav-shelter-mouth",
+  "note": "Production courier leaves the shelter through the tunnel mouth while the indexed room mask rejects the empty strip beside it. Game-camera route capture for the postmerge-10 navigation regression.",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        25,
+        4
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.army-mg"
+      ],
+      "state": {
+        "walk": [
+          [
+            45,
+            15
+          ]
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 600,
+  "shots": [
+    1,
+    200,
+    400,
+    600
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "actorMaxX": {
+      "courier": [
+        44,
+        46
+      ]
+    },
+    "collisionFailuresMax": 0,
+    "collisionPendingMax": 0
+  }
+}

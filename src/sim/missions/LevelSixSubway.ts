@@ -1,4 +1,3 @@
-import { inside } from '../../levels/districts/validate';
 import { balancedCrowdModel } from '../../data/crowdAppearance';
 import { allyState, updateAlly } from '../outbreak/Allies';
 import { Outbreak } from '../outbreak/Outbreak';
@@ -18,20 +17,28 @@ export class LevelSixSubway {
   private get s() { return this.mission.state.l6!; }
   prepare(): void {
     const w=this.w, rng=new Rng(w.seed,'l6-story'), start=w.tick;
-    // The station/tunnel has no floor outside its authored rooms. The actor
-    // grid must share that domain: an apparent shortcut beside a service gate
-    // strands the physical courier at its barrier and splits the escort group.
+    // The courier needs the authored floor boundary for physical/click routes.
+    // Applying it to the shared crowd grid changes pursuit and strands the
+    // retreat; keep the existing actor domain and its maintenance approaches.
     const nav = w.infected!.nav, previousMask = nav.mask;
-    const excluded = w.districts!.districts.flatMap(d => d.layout.walkable.excluded.map(area => area.map(([x, z]): [number, number] => [x + d.origin[0], z + d.origin[1]])));
-    const point: [number, number] = [0, 0];
-    nav.mask = (x, z) => {
+    // Subway exclusions are axis-aligned rectangles. Index their exact bounds
+    // by x so every 20 cm steering sample checks only its neighbouring strips.
+    const excluded = new Map<number, { x0: number; x1: number; z0: number; z1: number }[]>();
+    for (const d of w.districts!.districts) for (const area of d.layout.walkable.excluded) {
+      const x0 = Math.min(...area.map(p => p[0])) + d.origin[0], x1 = Math.max(...area.map(p => p[0])) + d.origin[0];
+      const z0 = Math.min(...area.map(p => p[1])) + d.origin[1], z1 = Math.max(...area.map(p => p[1])) + d.origin[1];
+      for (let x = Math.floor(x0 / 4); x <= Math.floor(x1 / 4); x++) {
+        let bucket = excluded.get(x); if (!bucket) excluded.set(x, bucket = []);
+        bucket.push({ x0, x1, z0, z1 });
+      }
+    }
+    const playerMask = (x: number, z: number) => {
       if (previousMask && !previousMask(x, z)) return false;
-      point[0] = x; point[1] = z;
-      for (const area of excluded) if (inside(point, area)) return false;
+      for (const area of excluded.get(Math.floor(x / 4)) ?? []) if (x >= area.x0 && x < area.x1 && z >= area.z0 && z < area.z1) return false;
       return true;
     };
-    nav.rebake();
-    w.player!.locomotion.movementMask = nav.mask;
+    nav.setPlayerMask(playerMask);
+    w.player!.locomotion.movementMask = playerMask;
     const breach1=start+ticks(30+rng.next()*10), breach2=breach1+ticks(20+rng.next()*10);
     this.mission.state.l6={entries:l6Entries.map(e=>({door:e.door,warnedAt:0,remaining:e.count,nextAt:0})),phase:'shelter',startAt:start,breach1At:breach1,breach2At:breach2,abandonAt:0,nextWave:breach2+600,firstBang:false,secondBang:false,leaderX:6,leaderZ:-2,paused:false,survivors:[],gates:[],infectedIds:[],spawnLog:[],flashlight:false,mainPower:true,emergency:false,exitAt:0,gateAt:0,injuryLineAt:0,lastShot:0,mid:false,platform:false};
     w.npcs!.setAmbient(0);w.infected!.director.levelCap=60;w.infected!.director.strict=true;

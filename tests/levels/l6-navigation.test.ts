@@ -6,7 +6,10 @@ let world: SimWorld | undefined;
 afterEach(() => world?.dispose());
 test('T-E24-17-route @E24-AC17 @E24-AC10 escort navigation stays in the authored tunnel around the first gate', async () => {
   ({ world } = await loadL6());
-  const nav = world.infected!.nav;
+  const nav = world.infected!.nav.forPlayer(.45);
+  // Crowd perception retains its original domain; only player routes need
+  // the physical floor boundary (the shared mask broke retreat balance).
+  expect(world.infected!.nav.contains(88, 10.8)).toBe(true);
   // This unmodelled strip was accepted as a shortcut beside the tunnel. The
   // physical courier then hit the south face of the service-gate barrier.
   expect(nav.clear(88, 10.8, .45)).toBe(false);
@@ -32,7 +35,7 @@ test('T-E24-17-room-boundary @E24-AC17 raw movement cannot leave the authored tu
   frame.move = { x: 1, z: 0 };
   for (let i = 0; i < 120; i++) {
     world.applyInput(frame, 'keyboard'); world.update();
-    expect(world.infected!.nav.contains(player.transform.x, player.transform.z)).toBe(true);
+    expect(world.player!.locomotion.movementMask!(player.transform.x, player.transform.z)).toBe(true);
     expect(player.transform.x).toBeLessThan(30);
   }
   frame.move = { x: 0, z: 1 };
