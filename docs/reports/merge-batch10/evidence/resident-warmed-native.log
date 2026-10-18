@@ -1,0 +1,12 @@
+ 9:23  up 70 days,  8:17, 3 users, load averages: 2.51 3.98 4.67
+Quiet-run preflight: load < 3; no local Vitest or headless Chrome processes; all configured browser slots held.
+
+Running 4 tests using 1 worker
+
+  ✓  1 [chromium] › tests/perf/e18-desktop.spec.ts:6:1 › T-E18-09 @E18-AC09 @perf local headless native-GPU Chrome high horde p95 frame <=16.7ms (15.8s)
+  -  2 [chromium] › tests/perf/e18-desktop.spec.ts:31:1 › E18 @E18 WebGPU low tier parity compiles two-mip bloom and capped crowds
+  ✓  3 [chromium] › tests/perf/explosions.spec.ts:5:46 › E27 @E27 @perf high mega + car chain + fire + smoke column + 30 infected frame measurement (16.0s)
+  ✓  4 [chromium] › tests/perf/explosions.spec.ts:5:46 › E27 @E27 @perf low mega + car chain + fire + smoke column + 30 infected frame measurement (20.2s)
+
+  1 skipped
+  3 passed (54.0s)

@@ -1,0 +1,76 @@
+10:00  up 70 days,  8:53, 3 users, load averages: 2.53 4.34 4.21
+Quiet-run preflight: load < 3; no local Vitest or headless Chrome processes; all configured browser slots held.
+
+Running 12 tests using 1 worker
+
+  ✓   1 [chromium] › tests/perf/e18-desktop.spec.ts:6:1 › T-E18-09 @E18-AC09 @perf local headless native-GPU Chrome high horde p95 frame <=16.7ms (16.1s)
+  -   2 [chromium] › tests/perf/e18-desktop.spec.ts:31:1 › E18 @E18 WebGPU low tier parity compiles two-mip bloom and capped crowds
+  ✓   3 [chromium] › tests/perf/e25-light-lab.spec.ts:10:3 › high › T-E25-14c @E25 @E25-AC14 @perf trailer light-lab high within unchanged E18 budgets (16.5s)
+  ✓   4 [chromium] › tests/perf/e25-light-lab.spec.ts:10:3 › low › T-E25-14c @E25 @E25-AC14 @perf trailer light-lab low within unchanged E18 budgets (23.5s)
+  ✓   5 [chromium] › tests/perf/e25-lighting.spec.ts:29:1 › T-E25-14 @E25 @E25-AC14 @perf desktop high: L1 morning and night street (41 lamps in the field window, 60 infected) within E18 budgets (30.7s)
+  ✓   6 [chromium] › tests/perf/e25-lighting.spec.ts:46:3 › Pixel 7 emulated low › T-E25-14b @E25 @E25-AC14 @perf phone low (4x CPU throttle): L1 morning and night street within the low budget (51.3s)
+  ✓   7 [chromium] › tests/perf/explosions.spec.ts:5:46 › E27 @E27 @perf high mega + car chain + fire + smoke column + 30 infected frame measurement (16.0s)
+  ✓   8 [chromium] › tests/perf/explosions.spec.ts:5:46 › E27 @E27 @perf low mega + car chain + fire + smoke column + 30 infected frame measurement (20.1s)
+  ✓   9 [chromium] › tests/perf/weather.spec.ts:6:46 › T-E28-10 @E28 @E28-AC10 @perf storm-street precipitation high (5.8s)
+  ✓  10 [chromium] › tests/perf/weather.spec.ts:6:46 › T-E28-10 @E28 @E28-AC10 @perf storm-street precipitation low (2.9s)
+  ✘  11 [chromium] › tests/perf/weather.spec.ts:15:46 › T-E28-10-frame @E28 @E28-AC10 @perf storm-street high native E18 frame, sim and heap budgets (17.3s)
+  ✘  12 [chromium] › tests/perf/weather.spec.ts:15:46 › T-E28-10-frame @E28 @E28-AC10 @perf storm-street low native E18 frame, sim and heap budgets (23.1s)
+
+
+  1) [chromium] › tests/perf/weather.spec.ts:15:46 › T-E28-10-frame @E28 @E28-AC10 @perf storm-street high native E18 frame, sim and heap budgets 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 400
+    Received:    547.6567325592041
+
+      42 |   expect(result.frameP95).toBeLessThanOrEqual(qualityBudgets[tier].frameMs);
+      43 |   expect(result.simP95).toBeLessThanOrEqual(qualityBudgets[tier].simMs);
+    > 44 |   expect(result.perf.heapBytes).not.toBeNull(); expect(result.perf.heapBytes! / 1024 ** 2).toBeLessThanOrEqual(qualityBudgets[tier].heapMB);
+         |                                                                                            ^
+      45 |   expect(result.weather!.particles).toBe(tier === 'high' ? 20_000 : 6000);
+      46 |   expect(result.perf.drawCalls).toBeLessThanOrEqual(qualityBudgets[tier].drawCalls); expect(result.perf.triangles).toBeLessThanOrEqual(qualityBudgets[tier].triangles);
+      47 | });
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/perf/weather.spec.ts:44:92
+
+    Error Context: test-results/playwright/vfx-3483/perf-weather-T-E28-10-fram-dd358--frame-sim-and-heap-budgets-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/vfx-3483/perf-weather-T-E28-10-fram-dd358--frame-sim-and-heap-budgets-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/vfx-3483/perf-weather-T-E28-10-fram-dd358--frame-sim-and-heap-budgets-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/perf/weather.spec.ts:15:46 › T-E28-10-frame @E28 @E28-AC10 @perf storm-street low native E18 frame, sim and heap budgets 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 250
+    Received:    263.778244972229
+
+      42 |   expect(result.frameP95).toBeLessThanOrEqual(qualityBudgets[tier].frameMs);
+      43 |   expect(result.simP95).toBeLessThanOrEqual(qualityBudgets[tier].simMs);
+    > 44 |   expect(result.perf.heapBytes).not.toBeNull(); expect(result.perf.heapBytes! / 1024 ** 2).toBeLessThanOrEqual(qualityBudgets[tier].heapMB);
+         |                                                                                            ^
+      45 |   expect(result.weather!.particles).toBe(tier === 'high' ? 20_000 : 6000);
+      46 |   expect(result.perf.drawCalls).toBeLessThanOrEqual(qualityBudgets[tier].drawCalls); expect(result.perf.triangles).toBeLessThanOrEqual(qualityBudgets[tier].triangles);
+      47 | });
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/perf/weather.spec.ts:44:92
+
+    Error Context: test-results/playwright/vfx-3483/perf-weather-T-E28-10-fram-c21da--frame-sim-and-heap-budgets-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/vfx-3483/perf-weather-T-E28-10-fram-c21da--frame-sim-and-heap-budgets-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/vfx-3483/perf-weather-T-E28-10-fram-c21da--frame-sim-and-heap-budgets-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests/perf/weather.spec.ts:15:46 › T-E28-10-frame @E28 @E28-AC10 @perf storm-street high native E18 frame, sim and heap budgets 
+    [chromium] › tests/perf/weather.spec.ts:15:46 › T-E28-10-frame @E28 @E28-AC10 @perf storm-street low native E18 frame, sim and heap budgets 
+  1 skipped
+  9 passed (3.9m)

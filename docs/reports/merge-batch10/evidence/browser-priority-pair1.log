@@ -1,0 +1,65 @@
+
+Running 5 tests using 2 workers
+
+  ✓  1 [chromium] › tests/e2e/levels/l10-minigun-input.spec.ts:7:3 › phone minigun › T-E32-29-minigun @E32-AC29 @E32-AC18 @E32-AC19 real mount, overheat, cooldown and rocket dismount touch (13.1s)
+  ✘  3 [chromium] › tests/e2e/levels/L6.spec.ts:105:104 › T-E24-15 @E24 @E24-AC15 l6-shelter-fails mask contrast, red eye maxima and flashlight shadow (13.7s)
+  ✓  4 [chromium] › tests/e2e/levels/l7-real-input.spec.ts:7:1 › T-E29-17 @E29-AC17 real mouse/keyboard completes Northgate, horde, bus and L8 handover (2.7m)
+  ✓  5 [chromium] › tests/e2e/levels/l7-real-input.spec.ts:63:3 › L7 phone controls › T-E29-17-touch @E29-AC17 touch pickup and corridor checkpoint retain a bounded HUD (6.7s)
+  ✘  2 [chromium] › tests/e2e/levels/L6.spec.ts:24:1 › T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes a gate and all seven photographs (4.2m)
+
+
+  1) [chromium] › tests/e2e/levels/L6.spec.ts:24:1 › T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes a gate and all seven photographs 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "result"
+    Received: "playing"
+
+      77 |
+      78 |   }
+    > 79 |   const m=await page.evaluate(()=>window.__SS__!.missions.state()!);expect(m.phase).toBe('result');expect(m.l6!.flashlight).toBe(true);await expect(page.getByRole('heading',{name:'Night. Still alive.'})).toBeVisible();await expect(page.getByTestId('result-rescued')).toHaveText(String(m.result!.rescued));await expect(page.getByTestId('result-survivorsIn')).toHaveText(String(m.result!.survivorsIn));await expect(page.getByTestId('mission-detail')).toContainText(`Rescued ${m.result!.rescued}`);await page.screenshot({path:`${out}/real-result.png`});// L6 is no longer the last level (PO 10-11 levels 4-9): the result button continues into L7; credits follow the last level.
+         |                                                                                     ^
+      80 |   const carriedArsenal=await page.evaluate(()=>{const w=window.__SS__!.getEntity(1)!.weapons!;return [...w.LEFT.rack,...w.RIGHT.rack].map(s=>s.id).sort();});
+      81 |   const exitCamera=await page.evaluate(async()=>{const a=window.__SS__!;a.camera.preset('D-SUBWAY/W0/l6-exit-night');await a.screenshotReady();return a.getState().render.camera;});await page.screenshot({path:`${out}/pair-northgate-l6.png`});
+      82 |   await page.getByRole('button',{name:'Continue',exact:true}).click();await page.waitForFunction(()=>window.__SS__!.getState().scenario==='L7',undefined,{timeout:60_000});
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/levels/L6.spec.ts:79:85
+
+    Error Context: test-results/playwright/run-3413/e2e-levels-L6-T-E24-17-E24-cae05-e-and-all-seven-photographs-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3413/e2e-levels-L6-T-E24-17-E24-cae05-e-and-all-seven-photographs-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3413/e2e-levels-L6-T-E24-17-E24-cae05-e-and-all-seven-photographs-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/e2e/levels/L6.spec.ts:105:104 › T-E24-15 @E24 @E24-AC15 l6-shelter-fails mask contrast, red eye maxima and flashlight shadow 
+
+    Error: expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 60
+    Received:    0
+
+      131 |   for(let i=0;i<mask.data.length;i+=4)if(mask.data[i]>240&&mask.data[i+1]<20&&mask.data[i+2]>240){sum+=lum(image.data[i],image.data[i+1],image.data[i+2]);n++;}
+      132 |   const covered=(p:number[])=>{const i=(Math.round((1-p[1])/2*mask.height)*mask.width+Math.round((p[0]+1)/2*mask.width))*4;return mask.data[i]>240&&mask.data[i+1]<20;};const rings=setup.ring.filter(p=>!covered(p)).map(p=>patch(image,p,5).l),player=sum/n,ring=rings.reduce((a,b)=>a+b,0)/rings.length,contrast=(player+.05)/(ring+.05);
+    > 133 |   const eyes=setup.heads.map(({head,feet})=>{const x0=Math.round((head[0]+1)/2*image.width),y0=Math.round((1-head[1])/2*image.height),y1=Math.round((1-feet[1])/2*image.height),half=Math.max(8,Math.round((y1-y0)*.45));let best={l:-1,r:0,g:0,b:0};for(let y=y0-half;y<=y1;y++)for(let x=x0-half;x<=x0+half;x++){if(setup.bars.some(b=>Math.abs(x-b.x)<=b.width/2+2&&Math.abs(y-b.y)<=b.height/2+2))continue;const i=(y*image.width+x)*4,l=lum(image.data[i],image.data[i+1],image.data[i+2]);if(l>best.l)best={l,r:image.data[i],g:image.data[i+1],b:image.data[i+2]};}return best;});writeFileSync(`${out}/${name}-readability.json`,JSON.stringify({n,player,ring,contrast,eyes,setup},null,2));expect(n).toBeGreaterThan(200);expect(contrast).toBeGreaterThanOrEqual(3);expect(setup.lighting!.heroShadow).toBe(1);for(const e of eyes){expect(e.r-Math.max(e.g,e.b)).toBeGreaterThanOrEqual(60);expect(hue(e.r,e.g,e.b)>=330||hue(e.r,e.g,e.b)<=20).toBe(true);}
+          |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ^
+      134 | });
+      135 |
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/levels/L6.spec.ts:133:846
+
+    Error Context: test-results/playwright/run-3413/e2e-levels-L6-T-E24-15-E24-2f217-axima-and-flashlight-shadow-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3413/e2e-levels-L6-T-E24-15-E24-2f217-axima-and-flashlight-shadow-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3413/e2e-levels-L6-T-E24-15-E24-2f217-axima-and-flashlight-shadow-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests/e2e/levels/L6.spec.ts:24:1 › T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes a gate and all seven photographs 
+    [chromium] › tests/e2e/levels/L6.spec.ts:105:104 › T-E24-15 @E24 @E24-AC15 l6-shelter-fails mask contrast, red eye maxima and flashlight shadow 
+  3 passed (4.4m)

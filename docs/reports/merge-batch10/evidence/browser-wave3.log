@@ -1,0 +1,69 @@
+
+Running 16 tests using 2 workers
+
+{"seam":"residential-fringe","backend":"webgl","quality":"high","zoom":1,"delayed":2,"minX":743.010009765625,"maxX":754.2517700195312}
+{"seam":"industrial-area","backend":"webgl","quality":"high","zoom":1,"delayed":12,"minX":1233.074951171875,"maxX":1244.48779296875}
+  ✓   2 [chromium] › tests/e2e/levels/wave3-sim.spec.ts:10:3 › T-E24-06-frustum @E24-AC06 webgl high z1 first and second appearances use offscreen maintenance accesses (20.9s)
+  ✓   3 [chromium] › tests/e2e/levels/wave3-sim.spec.ts:10:3 › T-E24-06-frustum @E24-AC06 webgl high z0.5 first and second appearances use offscreen maintenance accesses (11.2s)
+{"seam":"military-zone","backend":"webgl","quality":"high","zoom":1,"delayed":37,"minX":1833.074951171875,"maxX":1844.48779296875}
+{"seam":"residential-fringe","backend":"webgl","quality":"high","zoom":0.5,"delayed":2,"minX":743.010009765625,"maxX":754.2517700195312}
+{"seam":"industrial-area","backend":"webgl","quality":"high","zoom":0.5,"delayed":12,"minX":1233.074951171875,"maxX":1244.48779296875}
+{"seam":"research-campus","backend":"webgl","quality":"high","zoom":1,"delayed":64,"minX":2463.074951171875,"maxX":2474.487060546875}
+{"seam":"military-zone","backend":"webgl","quality":"high","zoom":0.5,"delayed":37,"minX":1833.074951171875,"maxX":1844.48779296875}
+{"seam":"destroyed-corridor","backend":"webgl","quality":"high","zoom":1,"delayed":91,"minX":2913.074951171875,"maxX":2924.487060546875}
+{"seam":"research-campus","backend":"webgl","quality":"high","zoom":0.5,"delayed":64,"minX":2463.074951171875,"maxX":2474.487060546875}
+{"seam":"dispersal-complex","backend":"webgl","quality":"high","zoom":1,"delayed":116,"minX":3693.074951171875,"maxX":3704.487060546875}
+{"seam":"destroyed-corridor","backend":"webgl","quality":"high","zoom":0.5,"delayed":91,"minX":2913.074951171875,"maxX":2924.487060546875}
+  ✓   1 [chromium] › tests/e2e/levels/wave3-sim.spec.ts:53:3 › T-E32-28-all-seams @E32-AC28 webgl high z1 D-CURE delayed loads and live input reversals (2.0m)
+{"seam":"dispersal-complex","backend":"webgl","quality":"high","zoom":0.5,"delayed":116,"minX":3693.074951171875,"maxX":3704.487060546875}
+  ✓   5 [chromium] › tests/e2e/levels/wave3-sim.spec.ts:10:3 › T-E24-06-frustum @E24-AC06 webgl low z1 first and second appearances use offscreen maintenance accesses (17.2s)
+{"seam":"residential-fringe","backend":"webgl","quality":"low","zoom":1,"delayed":2,"minX":743.010009765625,"maxX":754.2517700195312}
+{"seam":"industrial-area","backend":"webgl","quality":"low","zoom":1,"delayed":8,"minX":1233.074951171875,"maxX":1244.48779296875}
+  ✓   4 [chromium] › tests/e2e/levels/wave3-sim.spec.ts:53:3 › T-E32-28-all-seams @E32-AC28 webgl high z0.5 D-CURE delayed loads and live input reversals (2.0m)
+{"seam":"military-zone","backend":"webgl","quality":"low","zoom":1,"delayed":19,"minX":1833.074951171875,"maxX":1844.48779296875}
+  ✓   7 [chromium] › tests/e2e/levels/wave3-sim.spec.ts:10:3 › T-E24-06-frustum @E24-AC06 webgl low z0.5 first and second appearances use offscreen maintenance accesses (11.1s)
+{"seam":"research-campus","backend":"webgl","quality":"low","zoom":1,"delayed":30,"minX":2463.074951171875,"maxX":2474.487060546875}
+{"seam":"residential-fringe","backend":"webgl","quality":"low","zoom":0.5,"delayed":2,"minX":743.010009765625,"maxX":754.2517700195312}
+{"seam":"industrial-area","backend":"webgl","quality":"low","zoom":0.5,"delayed":8,"minX":1233.074951171875,"maxX":1244.48779296875}
+{"seam":"destroyed-corridor","backend":"webgl","quality":"low","zoom":1,"delayed":41,"minX":2913.074951171875,"maxX":2924.487060546875}
+{"seam":"military-zone","backend":"webgl","quality":"low","zoom":0.5,"delayed":19,"minX":1833.074951171875,"maxX":1844.48779296875}
+{"seam":"dispersal-complex","backend":"webgl","quality":"low","zoom":1,"delayed":52,"minX":3693.074951171875,"maxX":3704.487060546875}
+{"seam":"research-campus","backend":"webgl","quality":"low","zoom":0.5,"delayed":30,"minX":2463.074951171875,"maxX":2474.487060546875}
+  ✓   6 [chromium] › tests/e2e/levels/wave3-sim.spec.ts:53:3 › T-E32-28-all-seams @E32-AC28 webgl low z1 D-CURE delayed loads and live input reversals (58.3s)
+{"seam":"destroyed-corridor","backend":"webgl","quality":"low","zoom":0.5,"delayed":41,"minX":2913.074951171875,"maxX":2924.487060546875}
+{"seam":"dispersal-complex","backend":"webgl","quality":"low","zoom":0.5,"delayed":52,"minX":3693.074951171875,"maxX":3704.487060546875}
+  ✓   9 [chromium] › tests/e2e/levels/wave3-sim.spec.ts:10:3 › T-E24-06-frustum @E24-AC06 webgpu high z1 first and second appearances use offscreen maintenance accesses (22.3s)
+  ✓   8 [chromium] › tests/e2e/levels/wave3-sim.spec.ts:53:3 › T-E32-28-all-seams @E32-AC28 webgl low z0.5 D-CURE delayed loads and live input reversals (58.8s)
+{"seam":"residential-fringe","backend":"webgpu","quality":"high","zoom":1,"delayed":2,"minX":743.010009765625,"maxX":754.2517700195312}
+{"seam":"industrial-area","backend":"webgpu","quality":"high","zoom":1,"delayed":12,"minX":1233.074951171875,"maxX":1244.48779296875}
+  ✓  11 [chromium] › tests/e2e/levels/wave3-sim.spec.ts:10:3 › T-E24-06-frustum @E24-AC06 webgpu high z0.5 first and second appearances use offscreen maintenance accesses (14.7s)
+{"seam":"residential-fringe","backend":"webgpu","quality":"high","zoom":0.5,"delayed":2,"minX":743.010009765625,"maxX":754.2517700195312}
+{"seam":"industrial-area","backend":"webgpu","quality":"high","zoom":0.5,"delayed":12,"minX":1233.074951171875,"maxX":1244.48779296875}
+{"seam":"military-zone","backend":"webgpu","quality":"high","zoom":1,"delayed":37,"minX":1833.074951171875,"maxX":1844.48779296875}
+{"seam":"military-zone","backend":"webgpu","quality":"high","zoom":0.5,"delayed":37,"minX":1833.074951171875,"maxX":1844.48779296875}
+{"seam":"research-campus","backend":"webgpu","quality":"high","zoom":1,"delayed":64,"minX":2463.074951171875,"maxX":2474.487060546875}
+{"seam":"research-campus","backend":"webgpu","quality":"high","zoom":0.5,"delayed":64,"minX":2463.074951171875,"maxX":2474.487060546875}
+{"seam":"destroyed-corridor","backend":"webgpu","quality":"high","zoom":1,"delayed":91,"minX":2913.074951171875,"maxX":2924.487060546875}
+{"seam":"destroyed-corridor","backend":"webgpu","quality":"high","zoom":0.5,"delayed":91,"minX":2913.074951171875,"maxX":2924.487060546875}
+{"seam":"dispersal-complex","backend":"webgpu","quality":"high","zoom":1,"delayed":116,"minX":3693.074951171875,"maxX":3704.487060546875}
+{"seam":"dispersal-complex","backend":"webgpu","quality":"high","zoom":0.5,"delayed":116,"minX":3693.074951171875,"maxX":3704.487060546875}
+  ✓  10 [chromium] › tests/e2e/levels/wave3-sim.spec.ts:53:3 › T-E32-28-all-seams @E32-AC28 webgpu high z1 D-CURE delayed loads and live input reversals (2.0m)
+  ✓  12 [chromium] › tests/e2e/levels/wave3-sim.spec.ts:53:3 › T-E32-28-all-seams @E32-AC28 webgpu high z0.5 D-CURE delayed loads and live input reversals (2.0m)
+  ✓  13 [chromium] › tests/e2e/levels/wave3-sim.spec.ts:10:3 › T-E24-06-frustum @E24-AC06 webgpu low z1 first and second appearances use offscreen maintenance accesses (18.5s)
+{"seam":"residential-fringe","backend":"webgpu","quality":"low","zoom":1,"delayed":2,"minX":743.010009765625,"maxX":754.2517700195312}
+  ✓  15 [chromium] › tests/e2e/levels/wave3-sim.spec.ts:10:3 › T-E24-06-frustum @E24-AC06 webgpu low z0.5 first and second appearances use offscreen maintenance accesses (10.6s)
+{"seam":"industrial-area","backend":"webgpu","quality":"low","zoom":1,"delayed":8,"minX":1233.074951171875,"maxX":1244.48779296875}
+{"seam":"residential-fringe","backend":"webgpu","quality":"low","zoom":0.5,"delayed":2,"minX":743.010009765625,"maxX":754.2517700195312}
+{"seam":"military-zone","backend":"webgpu","quality":"low","zoom":1,"delayed":19,"minX":1833.074951171875,"maxX":1844.48779296875}
+{"seam":"industrial-area","backend":"webgpu","quality":"low","zoom":0.5,"delayed":8,"minX":1233.074951171875,"maxX":1244.48779296875}
+{"seam":"research-campus","backend":"webgpu","quality":"low","zoom":1,"delayed":30,"minX":2463.074951171875,"maxX":2474.487060546875}
+{"seam":"military-zone","backend":"webgpu","quality":"low","zoom":0.5,"delayed":19,"minX":1833.074951171875,"maxX":1844.48779296875}
+{"seam":"destroyed-corridor","backend":"webgpu","quality":"low","zoom":1,"delayed":41,"minX":2913.074951171875,"maxX":2924.487060546875}
+{"seam":"research-campus","backend":"webgpu","quality":"low","zoom":0.5,"delayed":30,"minX":2463.074951171875,"maxX":2474.487060546875}
+{"seam":"dispersal-complex","backend":"webgpu","quality":"low","zoom":1,"delayed":52,"minX":3693.074951171875,"maxX":3704.487060546875}
+{"seam":"destroyed-corridor","backend":"webgpu","quality":"low","zoom":0.5,"delayed":41,"minX":2913.074951171875,"maxX":2924.487060546875}
+  ✓  14 [chromium] › tests/e2e/levels/wave3-sim.spec.ts:53:3 › T-E32-28-all-seams @E32-AC28 webgpu low z1 D-CURE delayed loads and live input reversals (57.5s)
+{"seam":"dispersal-complex","backend":"webgpu","quality":"low","zoom":0.5,"delayed":52,"minX":3693.074951171875,"maxX":3704.487060546875}
+  ✓  16 [chromium] › tests/e2e/levels/wave3-sim.spec.ts:53:3 › T-E32-28-all-seams @E32-AC28 webgpu low z0.5 D-CURE delayed loads and live input reversals (57.4s)
+
+  16 passed (7.1m)

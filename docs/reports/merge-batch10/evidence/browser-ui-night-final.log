@@ -1,0 +1,156 @@
+
+Running 41 tests using 2 workers
+
+  ✘   1 [chromium] › tests/e2e/interaction-viewport.spec.ts:6:3 › @E26-AC16 @E24 interaction panel stays inside all viewport edges webgl low (21.1s)
+  ✘   2 [chromium] › tests/e2e/interaction-viewport.spec.ts:6:3 › @E26-AC16 @E24 interaction panel stays inside all viewport edges webgl high (27.4s)
+  ✘   4 [chromium] › tests/e2e/interaction-viewport.spec.ts:6:3 › @E26-AC16 @E24 interaction panel stays inside all viewport edges webgpu low (30.4s)
+  ✘   3 [chromium] › tests/e2e/interaction-viewport.spec.ts:6:3 › @E26-AC16 @E24 interaction panel stays inside all viewport edges webgpu high (41.3s)
+  ✓   5 [chromium] › tests/visual/e25-lighting.spec.ts:23:1 › T-E25-moods @E25 @vision game-camera mood per time-of-day preset: readable player, infected and pickups (12.5s)
+  ✓   6 [chromium] › tests/visual/e25-lighting.spec.ts:43:98 › T-E25-13 @E25 @E25-AC13 night-street: player contrast against its 2 m ring with no practical light nearby; infected eyes are their brightest pixels webgpu high (11.1s)
+  ✓   7 [chromium] › tests/visual/e25-lighting.spec.ts:43:98 › T-E25-13 @E25 @E25-AC13 night-street: player contrast against its 2 m ring with no practical light nearby; infected eyes are their brightest pixels webgl high (8.7s)
+  ✓   8 [chromium] › tests/visual/e25-lighting.spec.ts:43:98 › T-E25-13 @E25 @E25-AC13 night-street: player contrast against its 2 m ring with no practical light nearby; infected eyes are their brightest pixels webgpu low (5.3s)
+  ✓   9 [chromium] › tests/visual/e25-lighting.spec.ts:43:98 › T-E25-13 @E25 @E25-AC13 night-street: player contrast against its 2 m ring with no practical light nearby; infected eyes are their brightest pixels webgl low (6.1s)
+  ✓  10 [chromium] › tests/visual/e25-lighting.spec.ts:87:1 › T-E25-06 @E25 @E25-AC06 hero shadow: under a promoted hero lamp the survivor shadow is >=35% darker than beside it and tinted, not black (9.9s)
+  ✓  12 [chromium] › tests/visual/weather.spec.ts:25:1 › T-E28-05b @E28 @E28-AC05 @visual fog player contrast is at least 3:1 against the 2m ring (7.5s)
+  ✓  11 [chromium] › tests/visual/weather.spec.ts:16:1 › T-E28-03b @E28 @E28-AC03 @visual wet mask follows accumulated rain and has a dry state (15.9s)
+  ✓  13 [chromium] › tests/visual/weather.spec.ts:35:1 › T-E28-06c @E28 @E28-AC06 @visual smoke columns bend along the weather wind (10.3s)
+  ✓  14 [chromium] › tests/visual/weather.spec.ts:41:1 › T-E28-07b @E28 @E28-AC07 @visual roof/car up-facing accumulation covers >=60% and track texels grow (11.6s)
+  ✓  15 [chromium] › tests/visual/weather.spec.ts:55:179 › T-E28-12-clear @E28 @E28-AC12 @vision game-camera weather mood clear webgl high (8.1s)
+  ✓  16 [chromium] › tests/visual/weather.spec.ts:55:179 › T-E28-12-overcast @E28 @E28-AC12 @vision game-camera weather mood overcast webgl high (8.7s)
+  ✓  17 [chromium] › tests/visual/weather.spec.ts:55:179 › T-E28-12-haze @E28 @E28-AC12 @vision game-camera weather mood haze webgl high (8.9s)
+  ✓  18 [chromium] › tests/visual/weather.spec.ts:55:179 › T-E28-12-thunderstorm @E28 @E28-AC12 @vision game-camera weather mood thunderstorm webgl high (10.8s)
+  ✓  19 [chromium] › tests/visual/weather.spec.ts:55:179 › T-E28-12-fog @E28 @E28-AC12 @vision game-camera weather mood fog webgl high (8.8s)
+  ✓  21 [chromium] › tests/visual/weather.spec.ts:55:179 › T-E28-12-clear @E28 @E28-AC12 @vision game-camera weather mood clear webgl low (5.3s)
+  ✓  20 [chromium] › tests/visual/weather.spec.ts:55:179 › T-E28-12-snow @E28 @E28-AC12 @vision game-camera weather mood snow webgl high (8.2s)
+  ✓  22 [chromium] › tests/visual/weather.spec.ts:55:179 › T-E28-12-overcast @E28 @E28-AC12 @vision game-camera weather mood overcast webgl low (4.9s)
+  ✓  23 [chromium] › tests/visual/weather.spec.ts:55:179 › T-E28-12-haze @E28 @E28-AC12 @vision game-camera weather mood haze webgl low (5.4s)
+  ✓  25 [chromium] › tests/visual/weather.spec.ts:55:179 › T-E28-12-fog @E28 @E28-AC12 @vision game-camera weather mood fog webgl low (4.7s)
+  ✓  24 [chromium] › tests/visual/weather.spec.ts:55:179 › T-E28-12-thunderstorm @E28 @E28-AC12 @vision game-camera weather mood thunderstorm webgl low (6.7s)
+  ✓  26 [chromium] › tests/visual/weather.spec.ts:55:179 › T-E28-12-snow @E28 @E28-AC12 @vision game-camera weather mood snow webgl low (4.8s)
+  ✓  27 [chromium] › tests/visual/weather.spec.ts:55:179 › T-E28-12-clear @E28 @E28-AC12 @vision game-camera weather mood clear webgpu high (8.3s)
+  ✓  28 [chromium] › tests/visual/weather.spec.ts:55:179 › T-E28-12-overcast @E28 @E28-AC12 @vision game-camera weather mood overcast webgpu high (12.8s)
+  ✓  29 [chromium] › tests/visual/weather.spec.ts:55:179 › T-E28-12-haze @E28 @E28-AC12 @vision game-camera weather mood haze webgpu high (14.0s)
+  ✓  31 [chromium] › tests/visual/weather.spec.ts:55:179 › T-E28-12-fog @E28 @E28-AC12 @vision game-camera weather mood fog webgpu high (7.9s)
+  ✓  30 [chromium] › tests/visual/weather.spec.ts:55:179 › T-E28-12-thunderstorm @E28 @E28-AC12 @vision game-camera weather mood thunderstorm webgpu high (14.3s)
+  ✓  33 [chromium] › tests/visual/weather.spec.ts:55:179 › T-E28-12-clear @E28 @E28-AC12 @vision game-camera weather mood clear webgpu low (5.3s)
+  ✓  34 [chromium] › tests/visual/weather.spec.ts:55:179 › T-E28-12-overcast @E28 @E28-AC12 @vision game-camera weather mood overcast webgpu low (4.2s)
+  ✓  32 [chromium] › tests/visual/weather.spec.ts:55:179 › T-E28-12-snow @E28 @E28-AC12 @vision game-camera weather mood snow webgpu high (13.0s)
+  ✓  35 [chromium] › tests/visual/weather.spec.ts:55:179 › T-E28-12-haze @E28 @E28-AC12 @vision game-camera weather mood haze webgpu low (4.4s)
+  ✓  37 [chromium] › tests/visual/weather.spec.ts:55:179 › T-E28-12-fog @E28 @E28-AC12 @vision game-camera weather mood fog webgpu low (4.5s)
+  ✓  36 [chromium] › tests/visual/weather.spec.ts:55:179 › T-E28-12-thunderstorm @E28 @E28-AC12 @vision game-camera weather mood thunderstorm webgpu low (11.2s)
+  ✓  38 [chromium] › tests/visual/weather.spec.ts:55:179 › T-E28-12-snow @E28 @E28-AC12 @vision game-camera weather mood snow webgpu low (10.1s)
+  ✓  39 [chromium] › tests/visual/weather.spec.ts:67:1 › T-E28-11b @E28 @E28-AC11 @visual precipitation dither leaves fewer ray pixels (7.5s)
+  ✓  41 [chromium] › tests/visual/weather.spec.ts:86:1 › T-E28-12-wall @E28 @E28-AC12 @vision window spill stays outside the house facade at the game camera (6.9s)
+  ✓  40 [chromium] › tests/visual/weather.spec.ts:76:1 › T-E28-04c @E28 @E28-AC04 @visual scripted strike starts fire and powers down static lamps (12.8s)
+
+
+  1) [chromium] › tests/e2e/interaction-viewport.spec.ts:6:3 › @E26-AC16 @E24 interaction panel stays inside all viewport edges webgl high 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      23 |           if (name === 'l6-gate' && frame > 0) {
+      24 |             const gate = await page.evaluate(() => window.__SS__!.barricades.slots().find(s => s.state.slot.id === 'l6-gate-90')!);
+    > 25 |             expect(gate.state.intact).toBe(frame < 100);
+         |                                       ^
+      26 |           }
+      27 |           for (const zoom of [.5, 1, 1.5]) {
+      28 |             await page.evaluate(async ({ zoom, camera }) => {
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts:25:39
+
+    Error Context: test-results/playwright/run-3454/e2e-interaction-viewport---a354b-l-viewport-edges-webgl-high-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3454/e2e-interaction-viewport---a354b-l-viewport-edges-webgl-high-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3454/e2e-interaction-viewport---a354b-l-viewport-edges-webgl-high-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/e2e/interaction-viewport.spec.ts:6:3 › @E26-AC16 @E24 interaction panel stays inside all viewport edges webgl low 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      23 |           if (name === 'l6-gate' && frame > 0) {
+      24 |             const gate = await page.evaluate(() => window.__SS__!.barricades.slots().find(s => s.state.slot.id === 'l6-gate-90')!);
+    > 25 |             expect(gate.state.intact).toBe(frame < 100);
+         |                                       ^
+      26 |           }
+      27 |           for (const zoom of [.5, 1, 1.5]) {
+      28 |             await page.evaluate(async ({ zoom, camera }) => {
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts:25:39
+
+    Error Context: test-results/playwright/run-3454/e2e-interaction-viewport---617ab-ll-viewport-edges-webgl-low-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3454/e2e-interaction-viewport---617ab-ll-viewport-edges-webgl-low-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3454/e2e-interaction-viewport---617ab-ll-viewport-edges-webgl-low-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/e2e/interaction-viewport.spec.ts:6:3 › @E26-AC16 @E24 interaction panel stays inside all viewport edges webgpu high 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      23 |           if (name === 'l6-gate' && frame > 0) {
+      24 |             const gate = await page.evaluate(() => window.__SS__!.barricades.slots().find(s => s.state.slot.id === 'l6-gate-90')!);
+    > 25 |             expect(gate.state.intact).toBe(frame < 100);
+         |                                       ^
+      26 |           }
+      27 |           for (const zoom of [.5, 1, 1.5]) {
+      28 |             await page.evaluate(async ({ zoom, camera }) => {
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts:25:39
+
+    Error Context: test-results/playwright/run-3454/e2e-interaction-viewport---57782--viewport-edges-webgpu-high-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3454/e2e-interaction-viewport---57782--viewport-edges-webgpu-high-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3454/e2e-interaction-viewport---57782--viewport-edges-webgpu-high-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests/e2e/interaction-viewport.spec.ts:6:3 › @E26-AC16 @E24 interaction panel stays inside all viewport edges webgpu low 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      23 |           if (name === 'l6-gate' && frame > 0) {
+      24 |             const gate = await page.evaluate(() => window.__SS__!.barricades.slots().find(s => s.state.slot.id === 'l6-gate-90')!);
+    > 25 |             expect(gate.state.intact).toBe(frame < 100);
+         |                                       ^
+      26 |           }
+      27 |           for (const zoom of [.5, 1, 1.5]) {
+      28 |             await page.evaluate(async ({ zoom, camera }) => {
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts:25:39
+
+    Error Context: test-results/playwright/run-3454/e2e-interaction-viewport---a05ff-l-viewport-edges-webgpu-low-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3454/e2e-interaction-viewport---a05ff-l-viewport-edges-webgpu-low-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3454/e2e-interaction-viewport---a05ff-l-viewport-edges-webgpu-low-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [chromium] › tests/e2e/interaction-viewport.spec.ts:6:3 › @E26-AC16 @E24 interaction panel stays inside all viewport edges webgl high 
+    [chromium] › tests/e2e/interaction-viewport.spec.ts:6:3 › @E26-AC16 @E24 interaction panel stays inside all viewport edges webgl low 
+    [chromium] › tests/e2e/interaction-viewport.spec.ts:6:3 › @E26-AC16 @E24 interaction panel stays inside all viewport edges webgpu high 
+    [chromium] › tests/e2e/interaction-viewport.spec.ts:6:3 › @E26-AC16 @E24 interaction panel stays inside all viewport edges webgpu low 
+  37 passed (3.9m)

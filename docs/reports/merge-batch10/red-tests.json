@@ -1,0 +1,206 @@
+[
+  {
+    "test": "E24-PO35-side-entries",
+    "title": "@E24 PO35 tunnel entries telegraph, alternate sides, and stagger small groups ahead of the courier",
+    "observedIn": [
+      "evidence/remote-pair1.log",
+      "evidence/remote-pair2.log",
+      "evidence/verify-E24.log"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/remote-main-side-entry.log"
+  },
+  {
+    "test": "T-E01-01b",
+    "title": "T-E01-01b @E01 @E01-AC01 typecheck, lint and build exit zero without warnings",
+    "observedIn": [
+      "evidence/remote-pair1.log"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/remote-main-functional-control.log"
+  },
+  {
+    "test": "T-E07-06-support-perf-200",
+    "title": "T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms",
+    "observedIn": [
+      "evidence/remote-pair2.log"
+    ],
+    "redOnMain": "Unmeasured",
+    "mainEvidence": ""
+  },
+  {
+    "test": "T-E07-11",
+    "title": "T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget",
+    "observedIn": [
+      "evidence/remote-pair2.log"
+    ],
+    "redOnMain": "Unmeasured",
+    "mainEvidence": ""
+  },
+  {
+    "test": "T-E07-11-alpha-physical-200",
+    "title": "T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms",
+    "observedIn": [
+      "evidence/remote-pair2.log"
+    ],
+    "redOnMain": "Yes",
+    "mainEvidence": "evidence/main-isolated.json"
+  },
+  {
+    "test": "T-E07-11-zoo-s1-200",
+    "title": "T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
+    "observedIn": [
+      "evidence/remote-pair2.log"
+    ],
+    "redOnMain": "Yes",
+    "mainEvidence": "evidence/main-isolated.json"
+  },
+  {
+    "test": "T-E07-11-zoo-s2-200",
+    "title": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+    "observedIn": [
+      "evidence/remote-pair2.log"
+    ],
+    "redOnMain": "Yes",
+    "mainEvidence": "evidence/main-isolated.json"
+  },
+  {
+    "test": "T-E07-19-elephant-charge-browser",
+    "title": "T-E07-19-elephant-charge-browser @E07-AC05 @E07-AC19 @E30-AC10 production telegraph, pause, activation and shared bar",
+    "observedIn": [
+      "evidence/E30-isolated-retry-playwright.json"
+    ],
+    "redOnMain": "Yes",
+    "mainEvidence": "evidence/browser-main-controls-playwright.json"
+  },
+  {
+    "test": "T-E24-02",
+    "title": "T-E24-02 @E24 @E24-AC02 @E24-AC10 single-seed complete bot (PO: no batteries) protects and rejoins the community",
+    "observedIn": [
+      "evidence/remote-pair1.log"
+    ],
+    "redOnMain": "Unmeasured",
+    "mainEvidence": ""
+  },
+  {
+    "test": "T-E24-03",
+    "title": "T-E24-03 @E24 @E24-AC03 single-seed newbie protects injured survivors within the original band",
+    "observedIn": [
+      "evidence/remote-pair1.log",
+      "evidence/remote-pair2.log",
+      "evidence/verify-E24.log"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-newbie.json"
+  },
+  {
+    "test": "T-E24-09-evade",
+    "title": "T-E24-09-evade @E24 @E24-AC09 an unprotected group loses at least seventy percent in the single-seed evade run",
+    "observedIn": [
+      "evidence/remote-pair2.log",
+      "evidence/verify-E24.log"
+    ],
+    "redOnMain": "Unmeasured",
+    "mainEvidence": ""
+  },
+  {
+    "test": "T-E28-10-frame-high",
+    "title": "T-E28-10-frame @E28 @E28-AC10 @perf storm-street high native E18 frame, sim and heap budgets",
+    "observedIn": [
+      "perf/final/playwright.json"
+    ],
+    "redOnMain": "Unmeasured",
+    "mainEvidence": ""
+  },
+  {
+    "test": "T-E28-10-frame-low",
+    "title": "T-E28-10-frame @E28 @E28-AC10 @perf storm-street low native E18 frame, sim and heap budgets",
+    "observedIn": [
+      "perf/final/playwright.json"
+    ],
+    "redOnMain": "Unmeasured",
+    "mainEvidence": ""
+  },
+  {
+    "test": "T-E30-18-mobile",
+    "title": "T-E30-18-mobile @E30-AC18 touch stick reaches the APC ACTION with no HUD overflow",
+    "observedIn": [
+      "evidence/E30-isolated-retry-playwright.json"
+    ],
+    "redOnMain": "Yes",
+    "mainEvidence": "evidence/browser-main-controls-playwright.json"
+  },
+  {
+    "test": "T-E31-19-S4-200",
+    "title": "T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95",
+    "observedIn": [
+      "evidence/remote-pair2.log"
+    ],
+    "redOnMain": "Unmeasured",
+    "mainEvidence": ""
+  },
+  {
+    "test": "T-E31-20",
+    "title": "T-E31-20 @E31-AC20 continuous seed 1 L1 through L9 commits real campaign handovers and the axe reset",
+    "observedIn": [
+      "evidence/remote-pair2.log"
+    ],
+    "redOnMain": "Unmeasured",
+    "mainEvidence": ""
+  },
+  {
+    "test": "T-E32-03-D3-high",
+    "title": "T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex",
+    "observedIn": [
+      "evidence/remote-pair1.log"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/remote-main-functional-control.log"
+  },
+  {
+    "test": "T-E32-11-perf-200",
+    "title": "T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+    "observedIn": [
+      "evidence/remote-pair2.log"
+    ],
+    "redOnMain": "Yes",
+    "mainEvidence": "evidence/main-isolated.json"
+  },
+  {
+    "test": "T-E32-21-E3-high",
+    "title": "T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+    "observedIn": [
+      "evidence/remote-pair2.log"
+    ],
+    "redOnMain": "Unmeasured",
+    "mainEvidence": ""
+  },
+  {
+    "test": "T-E32-32",
+    "title": "T-E32-32 @E32-AC32 continuous seed 1 L1 through L10 reaches credits with real campaign handovers",
+    "observedIn": [
+      "evidence/remote-pair1.log",
+      "evidence/remote-pair2.log"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/remote-main-campaign-control.log"
+  },
+  {
+    "test": "wave3-zoo-routines@high-z1.5-webgl2",
+    "title": "Wide zoo actor clipping: 2 > 0",
+    "observedIn": [
+      "evidence/matrix-final-webgl2.log"
+    ],
+    "redOnMain": "Yes",
+    "mainEvidence": "evidence/main-zoo-catalog.log"
+  },
+  {
+    "test": "wave3-zoo-routines@low-z1.5-webgl2",
+    "title": "Wide zoo actor clipping: 2 > 0",
+    "observedIn": [
+      "evidence/matrix-final-webgl2.log"
+    ],
+    "redOnMain": "Yes",
+    "mainEvidence": "evidence/main-zoo-catalog.log"
+  }
+]
