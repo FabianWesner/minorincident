@@ -142,7 +142,20 @@ export class CrowdView extends Group {
     }
     // The low tier only ever draws LOD2 (see update); it never loads LOD0/LOD1.
     const lods: ('lod0' | 'lod1' | 'lod2')[] = this.low ? ['lod2'] : grove ? ['lod0', 'lod1', 'lod2'] : ['lod1', 'lod2'];
-    await Promise.all(definitions.flatMap(def => lods.map(lod => this.loadBatch(def, lod))));
+    // Resident infected can reach the close band immediately after a blast.
+    // Bake their hero batches behind the loading card, rather than interrupting
+    // play when the first survivor approaches. Low keeps its existing LOD2 set.
+    const residents = new Set<string>();
+    for (const entity of this.world.entities.iterate()) {
+      const role = entity.civilian?.zooAnimal ? `healthy.${entity.civilian.zooAnimal}` : entity.archetype;
+      const variant = entity.infected?.model ?? entity.infected?.variant;
+      const key = variant && this.modelAliases.get(variant) || this.modelAliases.get(role);
+      if (key) residents.add(key);
+    }
+    await Promise.all(definitions.flatMap(def => {
+      const warmHero = !this.low && !grove && residents.has(this.modelAliases.get(def.id)!);
+      return (warmHero ? ['lod0' as const, ...lods] : lods).map(lod => this.loadBatch(def, lod));
+    }));
     loadMeasure('view:infected-crowd', started);
     this.update();
   }
