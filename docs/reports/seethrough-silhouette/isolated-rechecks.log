@@ -1,0 +1,102 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/seethrough-silhouette -> 2.31.10.108:/srv/mi/ws/seethrough-silhouette-58aa6c
+[remote] cache-gc deleted:none
+[remote] sync 482s, 19340 files; job /srv/mi/jobs/seethrough-silhouette-58aa6c-15141-1792352299; queueing for a slot
+[runner] slot 0 acquired; load 1.17 1.06 0.59
+[runner] npm ci (lockfile hash cd0a65d85b558a89)
+
+added 247 packages in 4s
+[runner] waiting for both slots to isolate wall-clock timing
+[runner] both slots held for the timing project
+
+> sim
+> tsx tools/sim-runner/index.ts --scenario perf-horde-200 --out docs/reports/seethrough-silhouette/e18-isolated-200.json
+
+{"output":"docs/reports/seethrough-silhouette/e18-isolated-200.json","outcome":"tick-budget","scenario":"perf-horde-200","seed":1,"warmup":120,"ticks":600,"minInfected":200,"minVisibleInfected":200,"collision":{"failures":0,"pending":0,"admitted":200,"deferred":0,"requests":[],"offenders":[]},"cap":200,"simMsP50":1.0006619999999202,"simMsP95":1.6442929999998341,"simMsMax":4.672880999999961,"maxConcurrentInfected":200}
+
+> sim
+> tsx tools/sim-runner/index.ts --scenario perf-horde-100 --out docs/reports/seethrough-silhouette/e18-isolated-100.json
+
+{"output":"docs/reports/seethrough-silhouette/e18-isolated-100.json","outcome":"tick-budget","scenario":"perf-horde-100","seed":1,"warmup":120,"ticks":600,"minInfected":100,"minVisibleInfected":100,"collision":{"failures":0,"pending":0,"admitted":100,"deferred":0,"requests":[],"offenders":[]},"cap":100,"simMsP50":0.686019999999985,"simMsP95":1.1272709999999506,"simMsMax":3.979957000000013,"maxConcurrentInfected":100}
+
+ RUN  v5.0.3 /srv/mi/jobs/seethrough-silhouette-58aa6c-15141-1792352299
+
+ ✓  functional  tests/unit/assets/validate.test.ts (17 tests) 146979ms
+[runner] functional phase reached; extra slot released
+   ✓ T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts 138772ms
+   ✓ distance cap for veh.test LODNaN cannot be relaxed by the manifest 594ms
+   ✓ distance cap for bld.house-test LODNaN cannot be relaxed by the manifest 2217ms
+   ✓ distance cap for bld.safe-house LODNaN cannot be relaxed by the manifest 2329ms
+   ✓ @E17-AC02 decay caps apply to variants without changing the integrated base budget 1249ms
+   ✓ @E17-AC02 burned budgets reject oversized siblings without altering existing wreck limits 1190ms
+ ✓  functional  tests/unit/render/vehicle-occlusion.test.ts (4 tests) 15ms
+ ✓  functional  tests/unit/render/seethrough.test.ts (4 tests) 12ms
+ ✓  functional  tests/unit/tooling/seethrough-probe.test.ts (3 tests) 28ms
+
+ Test Files  4 passed (4)
+      Tests  28 passed (28)
+   Start at  19:52:02
+   Duration  149.58s (tests 99%, import 1%, transform 1%)
+
+JSON report written to /srv/mi/jobs/seethrough-silhouette-58aa6c-15141-1792352299/docs/reports/seethrough-silhouette/rechecked-unit.json
+
+ RUN  v5.0.3 /srv/mi/jobs/seethrough-silhouette-58aa6c-15141-1792352299
+
+ ✓  timing  tests/sim/world/chunk-residency.test.ts (11 tests | 9 skipped) 6971ms
+   ✓ T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95 4020ms
+   ✓ T-E31-19-S4-100 @E31-AC19 @E18-AC02 resident crossing horde sim p95 2948ms
+ ✓  timing  tests/sim/levels/l10-assault.test.ts (5 tests | 4 skipped) 12745ms
+   ✓ T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets 12744ms
+ ✓  timing  tests/sim/performance/level-fixtures.test.ts (8 tests) 1720ms
+   ✓ @E18-AC01 perf-l5-aftermath high prepared=false retains campaign cast and measures the exact stress population 531ms
+ ✓  timing  tests/sim/performance/alpha-support.test.ts (2 tests) 2061ms
+   ✓ T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms 1438ms
+   ✓ T-E07-06-support-perf-100 @E18-AC02 @perf live Alpha support moves stay within 6ms 621ms
+ ✓  timing  tests/sim/performance/l10-finale.test.ts (2 tests) 8450ms
+   ✓ T-E32-20-perf-200 @E32-AC20 @E32-AC31 @E18-AC02 full-cap active dispersal predicate 5675ms
+   ✓ T-E32-20-perf-100 @E32-AC20 @E32-AC31 @E18-AC02 full-cap active dispersal predicate 2774ms
+ ✓  timing  tests/sim/performance/zoo-s1.test.ts (2 tests) 2587ms
+   ✓ T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms 1889ms
+   ✓ T-E07-11-zoo-s1-100 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 6ms 697ms
+ ✓  timing  tests/sim/performance/alpha.test.ts (2 tests) 1836ms
+   ✓ T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms 1291ms
+   ✓ T-E07-11-alpha-100 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 6ms 544ms
+ ✓  timing  tests/sim/performance/alpha-physical.test.ts (2 tests) 1898ms
+   ✓ T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms 1408ms
+   ✓ T-E07-11-alpha-physical-100 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 6ms 488ms
+ ✓  timing  tests/sim/performance/zoo-s2.test.ts (2 tests) 2796ms
+   ✓ T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms 1944ms
+   ✓ T-E07-11-zoo-s2-100 @E07-AC11 @E18-AC02 mixed zoo specials stay within 6ms 850ms
+ ✓  timing  tests/sim/performance/zoo-s3.test.ts (2 tests) 1980ms
+   ✓ T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms 1438ms
+   ✓ T-E07-11-zoo-s3-100 @E07-AC11 @E18-AC02 mixed zoo specials stay within 6ms 540ms
+ ✓  timing  tests/sim/performance/mega-moves.test.ts (2 tests) 2727ms
+   ✓ T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18 1959ms
+   ✓ T-E32-11-perf-100 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18 766ms
+ ✓  timing  tests/sim/performance/horde.test.ts (3 tests) 1596ms
+   ✓ T-E18-02-200 @E18-AC02 @perf Node sim p95 200 living infected <= 4ms 1146ms
+   ✓ T-E18-02-100 @E18-AC02 @perf Node sim p95 100 living infected <= 6ms 440ms
+ ✓  timing  tests/sim/performance/mega-audio.test.ts (2 tests) 4745ms
+   ✓ T-E32-13-perf-200 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling 3324ms
+   ✓ T-E32-13-perf-100 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling 1420ms
+ ↓  timing  tests/sim/performance/l6-fixture.test.ts (1 test | 1 skipped)
+ ✓  functional  tests/sim/combat/l5-shotgun.test.ts (6 tests | 5 skipped) 18210ms
+   ✓ T-E23-12-kill PO #37 @E23 @E23-AC12 @E07-AC14 one shell kills regular infected through 8 m permanently; two close shells stop an Alpha 18208ms
+ ✓  functional  tests/sim/levels/l10-campus-corridor.test.ts (2 tests | 1 skipped) 28130ms
+   ✓ T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex 28128ms
+ ✓  functional  tests/sim/world/solid-registry.test.ts (5 tests | 4 skipped) 45198ms
+   ✓ collision natural L4: tank excludes every living Alpha through audit tick 15662 45196ms
+ ✓  functional  tests/sim/l9-campaign-continuity.test.ts (1 test) 8921ms
+   ✓ T-E31-20-L1-prop @E31-AC20 @E20-AC04 L1 carried bin cannot strand the seated L2 truck on its station apron 8919ms
+
+ Test Files  17 passed | 1 skipped (18)
+      Tests  36 passed | 24 skipped (60)
+   Start at  19:54:32
+   Duration  162.80s (tests 95%, import 3%, transform 2%)
+
+JSON report written to /srv/mi/jobs/seethrough-silhouette-58aa6c-15141-1792352299/docs/reports/seethrough-silhouette/rechecked-sim.json
+RECHECK_EXIT perf=0 unit=0 sim=0
+[remote] pulled docs/reports/seethrough-silhouette/e18-isolated-200.json
+[remote] pulled docs/reports/seethrough-silhouette/e18-isolated-100.json
+[remote] pulled docs/reports/seethrough-silhouette/rechecked-unit.json
+[remote] pulled docs/reports/seethrough-silhouette/rechecked-sim.json
+[remote] done exit=0 (runner 2.31.10.108, sync 482s, remote total 657s)

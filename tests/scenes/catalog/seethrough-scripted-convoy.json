@@ -1,0 +1,15 @@
+{
+  "name": "seethrough-scripted-convoy",
+  "extends": "qa-vehicle-travel-convoy.json",
+  "note": "Production scripted bus and convoy actors use camera-to-subject eligibility. The complete player bus stays visible behind the Fairhaven facades while nearby scripted vehicles remain whole. Follow-camera sheets cover the facade crossing at both tiers and all game zooms.",
+  "hud": false,
+  "shots": [],
+  "expect": {
+    "consoleErrors": 0,
+    "courierVisibleShareMin": 0.6,
+    "seeThroughCutPixelsMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000
+  }
+}

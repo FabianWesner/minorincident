@@ -101,6 +101,31 @@ export async function measureCourierShare(session: SceneSession, compareAlpha = 
   return { alphaPixels, alphaBodyPixels, bossReveal: hole, megaAlphaRatio: alphaPixels > 0 ? mega / alphaPixels : alphaBodyPixels > 0 ? 1 : 0, megaM: all.d, visible, reference, share: reference > 0 ? Math.min(1, visible / reference) : 0, megaPixels: mega, megaShare: mega / (all.png.width * all.png.height) };
 }
 
+/** Coverage uses the unfaded body's own pixel mask, with the selected vehicle's shadows disabled in all passes. */
+export async function measureVehicleSilhouette(session: SceneSession, id: string) {
+  // Settle pending vehicle/LOD loads before changing the selected model's shadow flags.
+  await session.ready();
+  const shot = async (mode: 'normal' | 'full' | 'hidden') => {
+    const blocking = await session.page.evaluate(([id, mode]) => window.__SCENE__!.vehicleSilhouetteProbe(id, mode), [id, mode] as const);
+    const png = await session.page.evaluate(async () => { await window.__SCENE__!.ready(); return document.querySelector('canvas')!.toDataURL('image/png'); });
+    const frame = PNG.sync.read(Buffer.from(png.slice(png.indexOf(',') + 1), 'base64'));
+    if (!frame.data.some(value => value !== 0)) throw new Error('Vehicle silhouette probe: empty drawing buffer');
+    return { blocking, png: frame };
+  };
+  try {
+    const normal = await shot('normal'), full = await shot('full'), hidden = await shot('hidden');
+    let reference = 0, retained = 0;
+    for (let i = 0; i < full.png.data.length; i += 4) {
+      if (!changedPixel(full.png, hidden.png, i)) continue;
+      reference++; if (changedPixel(normal.png, hidden.png, i)) retained++;
+    }
+    return { id, blocking: normal.blocking, reference, retained, share: reference ? retained / reference : 1 };
+  } finally {
+    await session.page.evaluate(id => window.__SCENE__!.vehicleSilhouetteProbe(id, 'restore'), id);
+    await session.ready();
+  }
+}
+
 export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOptions) {
   const name = spec.name ?? (o.file ? basename(o.file, '.json') : 'scene'), out = o.out;
   const video = o.video ?? spec.video ?? 0, sheet = o.sheet ?? spec.sheet ?? 0;
@@ -117,10 +142,13 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   // Step in batches inside the page; stop only where a capture happens.
   const stops = new Set([...shots, ...sheetAt]);
   if (video) for (let f = 0; f <= video * 60; f += 3) stops.add(f);
+  const captureStops = new Set(stops);
+  if (spec.vehicleSilhouettes?.length) for (let f = 0; f <= frames; f++) stops.add(f);
   let frame = 0;
   const shares: ({ frame: number } & Awaited<ReturnType<typeof measureCourierShare>>)[] = [];
   const cutExpected = spec.expect?.seeThroughCutPixelsMax !== undefined || spec.expect?.seeThroughCutInsideMin !== undefined || spec.expect?.seeThroughCutInsideMax !== undefined;
   const cuts: ({ frame: number } & Awaited<ReturnType<typeof measureCut>>)[] = [];
+  const silhouettes: ({ frame: number } & Awaited<ReturnType<typeof measureVehicleSilhouette>>)[] = [];
   const contrast: { frame: number; result: ContrastResult }[] = [], measure = async (f: number) => {
     if (spec.expect?.courierVisibleShareMin !== undefined || spec.expect?.megaAlphaVisibleRatioMin !== undefined) shares.push({ frame: f, ...await measureCourierShare(session, spec.expect?.megaAlphaVisibleRatioMin !== undefined) });
     if (cutExpected) cuts.push({ frame: f, ...await measureCut(session) });
@@ -131,7 +159,8 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   for (const stop of [...stops].sort((a, b) => a - b)) {
     if (stop > frames) break;
     if (stop > frame) frame = await session.step(stop - frame);
-    pixels.push({ frame: stop, pixels: await canvasFrame(session.page) });
+    if (captureStops.has(stop)) pixels.push({ frame: stop, pixels: await canvasFrame(session.page) });
+    for (const id of spec.vehicleSilhouettes ?? []) silhouettes.push({ frame: stop, ...await measureVehicleSilhouette(session, id) });
     if (spec.edgeNoise) edgeSamples.push({ frame: stop, ...await canvasEdgeNoise(session.page, spec.edgeNoise.rect) });
     if (shots.includes(stop)) { const path = `${out}/shot-${String(stop).padStart(4, '0')}.png`; await session.screenshot(path); written.push(path); }
     if (sheetAt.has(stop)) { cells.push({ frame: stop, jpeg: await session.snapshot() }); await measure(stop); }
@@ -189,6 +218,12 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
     if (spec.expect?.megaAlphaVisibleRatioMin !== undefined) result.checks.push({ name: 'megaAlphaVisibleRatio', pass: contact.length > 0 && contact.every(s => s.alphaBodyPixels > 0 && s.megaPixels >= spec.expect!.megaAlphaVisibleRatioMin! * s.alphaPixels), value: contact.length ? Math.min(...contact.map(s => +s.megaAlphaRatio.toFixed(4))) : 0, limit: spec.expect.megaAlphaVisibleRatioMin });
     result.checks.push({ name: spec.megaAlpha ? 'courierShareSampledNearMega' : 'courierShareSampled', pass: near.length > 0, value: near.length, limit: 1 });
   }
+  for (const id of spec.vehicleSilhouettes ?? []) for (const blocking of [false, true]) {
+    const samples = silhouettes.filter(sample => sample.id === id && sample.blocking === blocking);
+    if (!samples.length) continue;
+    const limit = blocking ? .3 : .6, value = Math.min(...samples.map(sample => sample.share));
+    result.checks.push({ name: `vehicleSilhouette:${id}:${blocking ? 'blocking' : 'clear'}`, pass: value >= limit, value, limit });
+  }
   if (cutPixels) {
     if (spec.expect?.seeThroughCutInsideMax !== undefined) result.checks.push({ name: 'seeThroughCutPixelsInsideMax', pass: cutPixels.insideMax <= spec.expect.seeThroughCutInsideMax, value: cutPixels.insideMax, limit: spec.expect.seeThroughCutInsideMax });
     if (spec.expect?.seeThroughCutPixelsMax !== undefined) result.checks.push({ name: 'seeThroughCutPixelsOutside', pass: cutPixels.outside <= spec.expect.seeThroughCutPixelsMax, value: cutPixels.outside, limit: spec.expect.seeThroughCutPixelsMax });
@@ -201,7 +236,7 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
   result.checks.push({ name: 'requestedQuality', pass: actualTier === session.options.tier && metrics.quality === actualTier, value: Number(actualTier === session.options.tier && metrics.quality === actualTier), limit: 1 });
   result.pass = result.checks.every(c => c.pass);
   const timing = { openMs: o.openMs ?? 0, loadMs, runMs: Date.now() - t0 - loadMs, sceneMs: Date.now() - t0 };
-  writeJson(`${out}/metrics.json`, { spec: o.file, backend: metrics.backend, requestedBackend: session.options.backend, tier: session.options.tier, actualTier, frames: metrics.frame, timing, checks: result, seeThroughCut: cutPixels, seeThroughCutSamples: cuts, courierShares: shares, pixels, edgeSamples, ring, contrast: contrast.map(c => ({ frame: c.frame, candidates: c.result.candidates, pairs: c.result.pairs, median: +c.result.median.toFixed(2), wcag05: +c.result.wcag.toFixed(2), min: +c.result.min.toFixed(2), routeL: +c.result.routeL.toFixed(4), vergeL: +c.result.vergeL.toFixed(4), player: c.result.player && +c.result.player.toFixed(2), landmarks: c.result.landmarks && +c.result.landmarks.toFixed(2) })), consoleErrors: errors, scene, metrics, clipping });
+  writeJson(`${out}/metrics.json`, { spec: o.file, backend: metrics.backend, requestedBackend: session.options.backend, tier: session.options.tier, actualTier, frames: metrics.frame, timing, checks: result, seeThroughCut: cutPixels, seeThroughCutSamples: cuts, courierShares: shares, vehicleSilhouettes: silhouettes, pixels, edgeSamples, ring, contrast: contrast.map(c => ({ frame: c.frame, candidates: c.result.candidates, pairs: c.result.pairs, median: +c.result.median.toFixed(2), wcag05: +c.result.wcag.toFixed(2), min: +c.result.min.toFixed(2), routeL: +c.result.routeL.toFixed(4), vergeL: +c.result.vergeL.toFixed(4), player: c.result.player && +c.result.player.toFixed(2), landmarks: c.result.landmarks && +c.result.landmarks.toFixed(2) })), consoleErrors: errors, scene, metrics, clipping });
   written.push(`${out}/metrics.json`);
   return { name, pass: result.pass, checks: result.checks, backend: metrics.backend, actualTier, frames: metrics.frame, seconds: timing.sceneMs / 1000, failed: result.checks.filter(c => !c.pass), clipping: clipping.summary, sheet: sheetInfo?.path, sheetKb: sheetInfo?.kb, files: written, consoleErrors: errors };
 }

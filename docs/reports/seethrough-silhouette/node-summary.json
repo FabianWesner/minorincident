@@ -1,0 +1,115 @@
+{
+  "fullUnit": {
+    "passed": 1620,
+    "failed": 1,
+    "skipped": 9
+  },
+  "fullSim": {
+    "passed": 1168,
+    "failed": 14,
+    "skipped": 0
+  },
+  "fullLevels": {
+    "passed": 344,
+    "failed": 0,
+    "skipped": 2
+  },
+  "isolatedUnit": {
+    "numPassedTests": 28,
+    "numFailedTests": 0,
+    "numPendingTests": 0
+  },
+  "isolatedSim": {
+    "numPassedTests": 36,
+    "numFailedTests": 0,
+    "numPendingTests": 24
+  },
+  "initialFailuresResolved": [
+    {
+      "file": "tests/unit/assets/validate.test.ts",
+      "title": "T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts",
+      "isolated": "passed"
+    },
+    {
+      "file": "tests/sim/levels/l10-assault.test.ts",
+      "title": "T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+      "isolated": "passed"
+    },
+    {
+      "file": "tests/sim/performance/alpha-physical.test.ts",
+      "title": "T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms",
+      "isolated": "passed"
+    },
+    {
+      "file": "tests/sim/performance/alpha-support.test.ts",
+      "title": "T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms",
+      "isolated": "passed"
+    },
+    {
+      "file": "tests/sim/performance/alpha.test.ts",
+      "title": "T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms",
+      "isolated": "passed"
+    },
+    {
+      "file": "tests/sim/performance/horde.test.ts",
+      "title": "T-E18-02-200 @E18-AC02 @perf Node sim p95 200 living infected <= 4ms",
+      "isolated": "passed"
+    },
+    {
+      "file": "tests/sim/performance/mega-moves.test.ts",
+      "title": "T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+      "isolated": "passed"
+    },
+    {
+      "file": "tests/sim/performance/zoo-s1.test.ts",
+      "title": "T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
+      "isolated": "passed"
+    },
+    {
+      "file": "tests/sim/performance/zoo-s2.test.ts",
+      "title": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+      "isolated": "passed"
+    },
+    {
+      "file": "tests/sim/performance/zoo-s3.test.ts",
+      "title": "T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+      "isolated": "passed"
+    },
+    {
+      "file": "tests/sim/world/chunk-residency.test.ts",
+      "title": "T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95",
+      "isolated": "passed"
+    },
+    {
+      "file": "tests/sim/l9-campaign-continuity.test.ts",
+      "title": "T-E31-20-L1-prop @E31-AC20 @E20-AC04 L1 carried bin cannot strand the seated L2 truck on its station apron",
+      "isolated": "passed"
+    },
+    {
+      "file": "tests/sim/combat/l5-shotgun.test.ts",
+      "title": "T-E23-12-kill PO #37 @E23 @E23-AC12 @E07-AC14 one shell kills regular infected through 8 m permanently; two close shells stop an Alpha",
+      "isolated": "passed"
+    },
+    {
+      "file": "tests/sim/levels/l10-campus-corridor.test.ts",
+      "title": "T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex",
+      "isolated": "passed"
+    },
+    {
+      "file": "tests/sim/world/solid-registry.test.ts",
+      "title": "collision natural L4: tank excludes every living Alpha through audit tick 15662",
+      "isolated": "passed"
+    }
+  ],
+  "retrySelection": "All original failures; both runner slots held, Vitest maxWorkers=1. Focused sim pending cases are excluded by the retry pattern and remain covered by the full run.",
+  "runner": "2.31.10.108 / cx33; both slots held",
+  "hordeP95Ms": {
+    "200": 1.6442929999998341,
+    "100": 1.1272709999999506
+  },
+  "finalToolingUnit": {
+    "numPassedTests": 3,
+    "numFailedTests": 0,
+    "numPendingTests": 0
+  }
+}
