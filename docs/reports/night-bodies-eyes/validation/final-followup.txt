@@ -1,0 +1,55 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/night-bodies-eyes -> 2.31.10.108:/srv/mi/ws/night-bodies-eyes-a331e9
+[remote] cache-gc deleted:none
+[remote] sync 22s, 19393 files; job /srv/mi/jobs/night-bodies-eyes-a331e9-84027-1792355615; queueing for a slot
+[runner] slot 1 acquired; load 1.41 1.15 1.10
+
+ RUN  v5.0.3 /srv/mi/jobs/night-bodies-eyes-a331e9-84027-1792355615
+
+stdout | tests/unit/render/crowd-lod-geometry.test.ts > @E18-AC01 @perf far worker reduces geometry while retaining every vertex channel and rigid-part ownership
+{ before: 3782, after: 2946 }
+
+ ✓  functional  tests/unit/render/crowd-lod-geometry.test.ts (2 tests) 1253ms
+   ✓ @E18-AC01 @perf far worker reduces geometry while retaining every vertex channel and rigid-part ownership 623ms
+   ✓ T-E25-14g @E25 @E25-AC14 gripped far civilian remains within its authored triangle count and retains vertex channels 625ms
+ ✓  functional  tests/unit/assets/alpha.test.ts (4 tests) 1208ms
+   ✓ T-E07-01-alpha-asset-lod0 @E07-AC01 @E18-AC01 derived Alpha validates budgets and shared crowd animation 791ms
+ ✓  functional  tests/unit/render/infected-eyes.test.ts (14 tests) 2497ms
+   ✓ @E25 @E25-AC13 inf.common-worker lod1: body surfaces and red eye cores survive the low bake 610ms
+   ✓ @E25 @E25-AC13 inf.jogger lod1: body surfaces and red eye cores survive the low bake 309ms
+ ✓  functional  tests/unit/assets/civilian-bake-build.test.ts (72 tests) 23778ms
+   ✓ npc.civilian-elderly:lod0: shipped bake exactly matches runtime preparation 1848ms
+   ✓ npc.civilian-elderly:lod1: shipped bake exactly matches runtime preparation 355ms
+   ✓ npc.civilian-man-a:lod0: shipped bake exactly matches runtime preparation 837ms
+   ✓ npc.civilian-man-a:lod1: shipped bake exactly matches runtime preparation 325ms
+   ✓ npc.civilian-man-a.aftermath:lod0: shipped bake exactly matches runtime preparation 428ms
+   ✓ npc.civilian-man-a.aftermath:lod1: shipped bake exactly matches runtime preparation 372ms
+   ✓ npc.civilian-man-b:lod0: shipped bake exactly matches runtime preparation 792ms
+   ✓ npc.civilian-man-b.aftermath:lod0: shipped bake exactly matches runtime preparation 400ms
+   ✓ npc.civilian-woman-a:lod0: shipped bake exactly matches runtime preparation 730ms
+   ✓ npc.civilian-woman-b:lod0: shipped bake exactly matches runtime preparation 870ms
+   ✓ npc.depot-clerk:lod0: shipped bake exactly matches runtime preparation 705ms
+   ✓ npc.depot-clerk:lod1: shipped bake exactly matches runtime preparation 303ms
+   ✓ npc.firefighter-alive:lod0: shipped bake exactly matches runtime preparation 707ms
+   ✓ npc.lab-guard:lod0: shipped bake exactly matches runtime preparation 884ms
+   ✓ npc.lab-guard:lod1: shipped bake exactly matches runtime preparation 300ms
+   ✓ npc.lab-tech-a:lod0: shipped bake exactly matches runtime preparation 582ms
+   ✓ npc.lab-tech-b:lod0: shipped bake exactly matches runtime preparation 580ms
+   ✓ npc.marcus.aftermath:lod0: shipped bake exactly matches runtime preparation 407ms
+   ✓ npc.mia.aftermath:lod0: shipped bake exactly matches runtime preparation 373ms
+   ✓ npc.mr-okafor.aftermath:lod0: shipped bake exactly matches runtime preparation 406ms
+   ✓ npc.national-guard:lod0: shipped bake exactly matches runtime preparation 633ms
+   ✓ npc.police-officer:lod0: shipped bake exactly matches runtime preparation 580ms
+   ✓ npc.sam.aftermath:lod0: shipped bake exactly matches runtime preparation 330ms
+   ✓ npc.shelter-survivor.bandaged:lod0: shipped bake exactly matches runtime preparation 372ms
+   ✓ npc.shelter-survivor.bandaged:lod1: shipped bake exactly matches runtime preparation 335ms
+   ✓ npc.shelter-survivor.lying:lod0: shipped bake exactly matches runtime preparation 380ms
+   ✓ npc.shelter-survivor.sitting:lod0: shipped bake exactly matches runtime preparation 464ms
+
+ Test Files  4 passed (4)
+      Tests  92 passed (92)
+   Start at  20:33:59
+   Duration  24.52s (tests 92%, transform 4%, import 3%)
+
+JSON report written to /srv/mi/jobs/night-bodies-eyes-a331e9-84027-1792355615/test-results/night-bodies-final-followup.json
+[remote] pulled test-results/night-bodies-final-followup.json
+[remote] done exit=0 (runner 2.31.10.108, sync 22s, remote total 29s)

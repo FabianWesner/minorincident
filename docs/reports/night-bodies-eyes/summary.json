@@ -1,0 +1,61 @@
+{
+  "eyeRows": 24,
+  "eyeSamples": 72,
+  "minimumRedMargin": 91,
+  "requiredRedMargin": 60,
+  "catalogRows": 24,
+  "catalogPassed": 24,
+  "nativeHorde": {
+    "high": {
+      "frameMsP95": 6.100000000000364,
+      "triangles": 640297,
+      "drawCalls": 71,
+      "infected": 200,
+      "civilians": 40,
+      "simMsP95": 0.9000005722045898,
+      "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+    },
+    "low": {
+      "frameMsP95": 12,
+      "triangles": 266796,
+      "drawCalls": 69,
+      "infected": 100,
+      "civilians": 40,
+      "simMsP95": 2.5,
+      "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+    }
+  },
+  "fullSuites": {
+    "total": 3171,
+    "passed": 3140,
+    "failed": 22,
+    "skipped": 9,
+    "timingFailures": 14,
+    "civilianBakeFailures": 8,
+    "exitCode": 1
+  },
+  "verifyE25": {
+    "exitCode": 0,
+    "nodePassed": 50,
+    "browserPassed": 49,
+    "browserSkipped": 2,
+    "nativePerformancePassed": 4
+  },
+  "isolatedTiming": {
+    "passed": 206,
+    "failed": 0
+  },
+  "windowProbe": {
+    "baselineBefore": "0 / 200 samples, failed",
+    "baselineAfter": "passed with original pixel limits"
+  },
+  "finalFollowup": {
+    "total": 92,
+    "passed": 92,
+    "failed": 0,
+    "fix": "surface retention opt-in for infected runtime bakes; civilian deterministic bakes unchanged"
+  },
+  "desktopFrameMsP95": 5.8,
+  "finalMatrixRecaptured": true,
+  "finalEyeProbeRecaptured": true
+}

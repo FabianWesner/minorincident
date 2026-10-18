@@ -1,0 +1,14 @@
+22:37  up 70 days, 21:30, 3 users, load averages: 2.45 1.95 1.88
+Quiet-run preflight: load < 3; no local Vitest or headless Chrome processes; all configured browser slots held.
+
+Running 4 tests using 1 worker
+
+  ✓  1 [chromium] › tests/perf/e18-desktop.spec.ts:6:1 › T-E18-09 @E18-AC09 @perf local headless native-GPU Chrome high horde p95 frame <=16.7ms (15.8s)
+  -  2 [chromium] › tests/perf/e18-desktop.spec.ts:31:1 › E18 @E18 WebGPU low tier parity compiles two-mip bloom and capped crowds
+{"phase":"after","run":1,"tier":"high","p95":6.100000000000364,"sim":0.9000005722045898,"update":3.3999996185302734,"render":2.1999998092651367,"triangles":640297,"draws":71,"profile":{"other":{"drawCalls":38,"triangles":44945},"shadows":{"drawCalls":20,"triangles":31147},"crowd":{"drawCalls":13,"triangles":564205}}}
+  ✓  3 [chromium] › tests/perf/horde-budget.spec.ts:11:41 › high › horde budget high run 1 @E18-AC01 @E18-AC09 @perf (15.7s)
+{"phase":"after","run":1,"tier":"low","p95":12,"sim":2.5,"update":5.300000190734863,"render":4.200000762939453,"triangles":266796,"draws":69,"profile":{"other":{"drawCalls":37,"triangles":10508},"shadows":{"drawCalls":20,"triangles":4275},"crowd":{"drawCalls":12,"triangles":252013}}}
+  ✓  4 [chromium] › tests/perf/horde-budget.spec.ts:11:41 › low › horde budget low run 1 @E18-AC01 @E18-AC09 @perf (17.2s)
+
+  1 skipped
+  3 passed (50.6s)
