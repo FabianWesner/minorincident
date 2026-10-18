@@ -1,0 +1,36 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/apc-sedan -> 94.130.181.173:/srv/mi/ws/apc-sedan-505fb3
+[remote] cache-gc deleted:none
+[remote] sync 16s, 16481 files; job /srv/mi/jobs/apc-sedan-505fb3-54248-1792305946; queueing for a slot
+[runner] slot 1 acquired; load 4.43 3.05 1.62
+
+ RUN  v5.0.3 /srv/mi/jobs/apc-sedan-505fb3-54248-1792305946
+
+ ✓  functional  tests/sim/vehicles/handling.test.ts (14 tests) 962ms
+   ✓ T-E09-03 @E09-AC03 sedan acceleration, full-lock radius and slalom stability 420ms
+stdout | tests/sim/vehicles/apc-sedan.test.ts > T-E09-apc-sedan @E09 @E31 normal rams preserve upright vehicles and push dynamic sedans
+┌─────────┬───────────┬─────┬─────────────────────┬────────────────────┬──────────────────────┬──────────────────────┬──────────┬────────────────┬────────────────────┐
+│ (index) │ kind      │ kmh │ apcTilt             │ sedanTilt          │ sedanRoll            │ sedanYaw             │ contacts │ wheelOnVehicle │ sedanTravel        │
+├─────────┼───────────┼─────┼─────────────────────┼────────────────────┼──────────────────────┼──────────────────────┼──────────┼────────────────┼────────────────────┤
+│ 0       │ 'head-on' │ 10  │ 0.38304312372084065 │ 1.9005787679003294 │ 0.03052851847621533  │ 0.060883801378869534 │ 952      │ 0              │ 0.3988446084021109 │
+│ 1       │ 'head-on' │ 20  │ 0.47344045077823627 │ 2.0796085997650104 │ 0.10269529453696126  │ 0.09176148187282332  │ 956      │ 0              │ 1.5237673386605284 │
+│ 2       │ 'head-on' │ 30  │ 0.5890066073366974  │ 2.6276753603451586 │ 0.046247386048933393 │ 0.13911559039684124  │ 956      │ 0              │ 3.42572888204864   │
+│ 3       │ 'oblique' │ 10  │ 0.2847476126141802  │ 1.7526399643677575 │ 0.8931873260542685   │ 6.4196269107192565   │ 952      │ 0              │ 0.5917405285285252 │
+│ 4       │ 'oblique' │ 20  │ 0.4416755928917281  │ 2.6352783672769653 │ 1.6826936333203477   │ 35.91124772880608    │ 958      │ 0              │ 2.0782264485057    │
+│ 5       │ 'oblique' │ 30  │ 0.6789959404778313  │ 4.194125404162956  │ 4.162759197028133    │ 39.52368668332733    │ 956      │ 0              │ 4.423647739147411  │
+│ 6       │ 'side'    │ 10  │ 0.24122913979201518 │ 2.410013455706648  │ 2.4100135320342617   │ 0.008632406988010785 │ 952      │ 0              │ 0.8759700068670587 │
+│ 7       │ 'side'    │ 20  │ 0.36410282979937164 │ 3.9818316525391673 │ 3.981831681848886    │ 0.006651317190371246 │ 956      │ 0              │ 2.2855837346083145 │
+│ 8       │ 'side'    │ 30  │ 0.5626492265737496  │ 6.58764114596689   │ 6.58764118944854     │ 0.026678887341136288 │ 956      │ 0              │ 4.2747527137928    │
+└─────────┴───────────┴─────┴─────────────────────┴────────────────────┴──────────────────────┴──────────────────────┴──────────┴────────────────┴────────────────────┘
+
+ ✓  functional  tests/sim/vehicles/apc-sedan.test.ts (2 tests) 5247ms
+   ✓ T-E09-apc-sedan @E09 @E31 normal rams preserve upright vehicles and push dynamic sedans 711ms
+   ✓ T-E31-apc-sedan-contact @E31 @E09 driven APC stays level while ramming a parked sedan 4531ms
+
+ Test Files  2 passed (2)
+      Tests  16 passed (16)
+   Start at  06:46:05
+   Duration  7.15s (tests 93%, transform 4%, import 3%)
+
+[remote] pulled test-results/apc-sedan
+[remote] pulled test-results/epics/E09/handling-metrics.json
+[remote] done exit=0 (runner 94.130.181.173, sync 16s, remote total 10s)

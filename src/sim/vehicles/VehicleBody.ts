@@ -5,6 +5,9 @@ import * as RAPIER from '@dimforge/rapier3d-compat';
 import { FIXED_DT } from '../../core/Clock';
 import type { VehicleDef } from '../../data/vehicles';
 import type { Transform } from '../world/types';
+// Compliant lateral tyres let a rammed car skid. Rigid side impulses pin its
+// wheels to the road, rolling it into a ramp that lifts the heavier vehicle.
+const sideFrictionStiffness = .2;
 export interface DriveIntent { throttle: number; steer: number; brake: boolean; boost: boolean; handbrake?: boolean }
 /** Native resources belong to the owning Rapier world. All timing uses fixed simulation ticks. */
 export class VehicleBody {
@@ -43,7 +46,7 @@ export class VehicleBody {
       this.controller.setWheelSuspensionStiffness(i, def.stiffness);
       this.controller.setWheelSuspensionCompression(i, def.handling.compression); this.controller.setWheelSuspensionRelaxation(i, def.handling.relaxation);
       this.controller.setWheelMaxSuspensionForce(i, def.mass * 20); this.controller.setWheelMaxSuspensionTravel(i, def.handling.suspensionTravel);
-      this.controller.setWheelFrictionSlip(i, def.handling.grip); this.controller.setWheelSideFrictionStiffness(i, 1);
+      this.controller.setWheelFrictionSlip(i, def.handling.grip); this.controller.setWheelSideFrictionStiffness(i, sideFrictionStiffness);
       this.wheels[i].suspension = this.previousWheels[i].suspension = def.suspension;
     }
   }
@@ -65,7 +68,7 @@ export class VehicleBody {
       this.controller.setWheelEngineForce(i, rearDrift ? 0 : force);
       this.controller.setWheelBrake(i, this.def.mass * (brake || reversing ? h.brake : rearDrift ? h.handbrake : Math.abs(throttle) < .05 ? h.idleBrake : 0));
       this.controller.setWheelFrictionSlip(i, (rearDrift ? h.driftGrip : h.grip) * this.gripScale);
-      this.controller.setWheelSideFrictionStiffness(i, rearDrift ? h.driftGrip / h.grip : 1);
+      this.controller.setWheelSideFrictionStiffness(i, sideFrictionStiffness * (rearDrift ? h.driftGrip / h.grip : 1));
     }
     if (this.speedCap < 1) {
       // Momentum carried in from above the cap bleeds off smoothly; no second damage-speed penalty stacks on top.

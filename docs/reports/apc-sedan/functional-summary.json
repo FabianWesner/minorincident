@@ -1,0 +1,142 @@
+{
+  "project": "functional",
+  "environment": "shared Hetzner runner, maxWorkers=4",
+  "counts": {
+    "numTotalTests": 2914,
+    "numPassedTests": 2900,
+    "numFailedTests": 5,
+    "numPendingTests": 9
+  },
+  "fileCount": 471,
+  "failures": [
+    {
+      "file": "tests/unit/traceability.test.ts",
+      "test": "T-E01-traceability @E01 every active epic AC has a matching test tag",
+      "durationMs": 1354.5116360001266,
+      "errorSummary": [
+        "AssertionError: E29-AC01: expected 'import { mkdirSync } from \\'node:fs\\'…' to contain '@E29-AC01'"
+      ]
+    },
+    {
+      "file": "tests/sim/combat/l5-shotgun.test.ts",
+      "test": "T-E23-12-kill PO #37 @E23 @E23-AC12 @E07-AC14 one shell kills regular infected through 8 m permanently; two close shells stop an Alpha",
+      "durationMs": 46127.822004999965,
+      "errorSummary": [
+        "Error: Test timed out in 30000ms."
+      ]
+    },
+    {
+      "file": "tests/sim/levels/l10-campus-corridor.test.ts",
+      "test": "T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex",
+      "durationMs": 86314.6220780001,
+      "errorSummary": [
+        "AssertionError: expected 7.146201999858022 to be less than or equal to 4"
+      ]
+    },
+    {
+      "file": "tests/unit/assets/validate.test.ts",
+      "test": "T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts",
+      "durationMs": 300567.7243090002,
+      "errorSummary": [
+        "Error: Test timed out in 300000ms."
+      ]
+    },
+    {
+      "file": "tests/unit/tooling/l7-runner-default.test.ts",
+      "test": "T-E29-02-cli @E29-AC02 explicit and all-level CLI registration include L7 in campaign order",
+      "durationMs": 19.392193000763655,
+      "errorSummary": [
+        "AssertionError: expected [ 'L1', 'L2', 'L3', 'L4', 'L5', …(6) ] to deeply equal [ 'L1', 'L2', 'L3', 'L4', 'L5', …(5) ]"
+      ]
+    }
+  ],
+  "vehicleFiles": [
+    {
+      "file": "tests/sim/vehicles/apc-durability.test.ts",
+      "status": "passed",
+      "tests": 12
+    },
+    {
+      "file": "tests/sim/vehicles/apc-floor.test.ts",
+      "status": "passed",
+      "tests": 9
+    },
+    {
+      "file": "tests/sim/vehicles/apc-sedan.test.ts",
+      "status": "passed",
+      "tests": 2
+    },
+    {
+      "file": "tests/sim/vehicles/apc.test.ts",
+      "status": "passed",
+      "tests": 12
+    },
+    {
+      "file": "tests/sim/vehicles/handling.test.ts",
+      "status": "passed",
+      "tests": 14
+    },
+    {
+      "file": "tests/sim/vehicles/interact-integration.test.ts",
+      "status": "passed",
+      "tests": 3
+    },
+    {
+      "file": "tests/sim/vehicles/interaction.test.ts",
+      "status": "passed",
+      "tests": 4
+    },
+    {
+      "file": "tests/sim/vehicles/l9-terrain-speed.test.ts",
+      "status": "passed",
+      "tests": 4
+    }
+  ],
+  "skipped": [
+    {
+      "file": "tests/levels/L4-botprobe.test.ts",
+      "test": "L4 complete bot probe",
+      "status": "skipped"
+    },
+    {
+      "file": "tests/levels/L4-probe.test.ts",
+      "test": "L4 collapse probe (idle player, god)",
+      "status": "skipped"
+    },
+    {
+      "file": "tests/unit/tooling/e2e-lock.test.ts",
+      "test": "machine browser capacity reserves units across concurrent jobs and releases them for waiting jobs",
+      "status": "skipped"
+    },
+    {
+      "file": "tests/unit/tooling/e2e-lock.test.ts",
+      "test": "machine browser capacity returns a child exit 75 exactly once and preserves its stderr",
+      "status": "skipped"
+    },
+    {
+      "file": "tests/unit/tooling/e2e-lock.test.ts",
+      "test": "machine browser capacity charges the Playwright worker count, including separated CLI arguments",
+      "status": "skipped"
+    },
+    {
+      "file": "tests/unit/tooling/e2e-lock.test.ts",
+      "test": "machine browser capacity rejects undersized and invalid reservations before launching a command",
+      "status": "skipped"
+    },
+    {
+      "file": "tests/unit/tooling/e2e-lock.test.ts",
+      "test": "machine browser capacity allows nesting within a reservation and rejects expansion",
+      "status": "skipped"
+    },
+    {
+      "file": "tests/unit/tooling/e2e-lock.test.ts",
+      "test": "machine browser capacity can acquire nonadjacent free slots without holding a partial reservation",
+      "status": "skipped"
+    },
+    {
+      "file": "tests/unit/tooling/e2e-lock.test.ts",
+      "test": "machine browser capacity quiet-run covers the legacy fourth slot even with E2E_SLOTS=1",
+      "status": "skipped"
+    }
+  ]
+}

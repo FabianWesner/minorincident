@@ -1,0 +1,197 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/apc-sedan -> 94.130.181.173:/srv/mi/ws/apc-sedan-505fb3
+[remote] cache-gc deleted:none
+[remote] sync 15s, 16493 files; job /srv/mi/jobs/apc-sedan-505fb3-72030-1792313462; queueing for a slot
+[runner] slot 1 acquired; load 1.28 1.18 2.58
+
+ RUN  v5.0.3 /srv/mi/jobs/apc-sedan-505fb3-72030-1792313462
+
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-10 @E19 @E19-AC10 search 10-18 s, probe points, double-back, then wander
+[AC10] 200 episodes mean 14.01 s std 2.29 s, double-back 122/200, probes min 3 median 5
+
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-10c @E19 @E19-AC10 real survivor input: break line of sight behind a house, the chaser searches (no hearing, no omniscience)
+[AC10c] lost sight -> search on 8/8 seeds; found again by sight on 3
+
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-herd @E19 @E19-AC26 herd cue: an infected that sees a chasing infected turns to its heading and acquires the victim (sight only)
+[herd] acquired after 0.42-0.42 s on 1/1 seed
+
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-yard @E19 @E19-AC10 PO-QA #12: an infected in a fenced yard paths out through the gap, or gives up instead of pressing on the fence
+[yard] open yard escaped 10/10, closed yard gave up 10/10
+
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-12 @E19 @E19-AC12 speed tiers ordered, mostly faster than the running player, persistent spread per entity
+[AC12] frail 4.43-4.84 average 4.68-5.50 athletic 4.75-5.80 m/s; close 10 m median 12.3 s (min 12.3, max 12.3)
+
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-12b @E19 @E19-AC12 a group of 10 chasing from one start strings out: arrivals spread >= 2.0 s, deterministic per seed
+[AC12b] seed 1 arrival spread 4.68 s
+
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-12b @E19 @E19-AC12 a group of 10 chasing from one start strings out: arrivals spread >= 2.0 s, deterministic per seed
+[AC12b] seed 2 arrival spread 2.37 s
+
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-12b @E19 @E19-AC12 a group of 10 chasing from one start strings out: arrivals spread >= 2.0 s, deterministic per seed
+[AC12b] seed 3 arrival spread 4.30 s
+
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-12b @E19 @E19-AC12 a group of 10 chasing from one start strings out: arrivals spread >= 2.0 s, deterministic per seed
+[AC12b] seed 4 arrival spread 2.70 s
+
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-12b @E19 @E19-AC12 a group of 10 chasing from one start strings out: arrivals spread >= 2.0 s, deterministic per seed
+[AC12b] seed 5 arrival spread 3.08 s
+
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-perf @E19 @E18-AC02 @perf 200 L1 infected with 40 humans: Node sim p95 <= 4 ms
+[perf] 200 L1 infected p50 1.17 ms p95 1.48 ms max 3.19 ms; modes {"chase":144,"attracted":24,"search":18,"wander":6,"bite":8}; bites 16
+
+stdout | tests/sim/ai/l1-perception.test.ts > L1 v2 infected perception > T-E19-perf @E19 @E18-AC02 @perf 200 L1 infected with 40 humans: Node sim p95 <= 4 ms
+[perf] E18 reference p95 1.81 ms
+
+ ✓  timing  tests/sim/ai/l1-perception.test.ts (15 tests) 10839ms
+   ✓ L1 v2 infected perception (15)
+     ✓ T-E19-08b @E19 @E19-AC08 detection beyond 2 m follows sight; footsteps, attacks and the bicycle create no perception events 482ms
+     ✓ T-E19-10 @E19 @E19-AC10 search 10-18 s, probe points, double-back, then wander 2235ms
+     ✓ T-E19-10c @E19 @E19-AC10 real survivor input: break line of sight behind a house, the chaser searches (no hearing, no omniscience) 570ms
+     ✓ T-E19-yard @E19 @E19-AC10 PO-QA #12: an infected in a fenced yard paths out through the gap, or gives up instead of pressing on the fence 659ms
+     ✓ T-E19-11 @E19 @E19-AC11 car alarm attracts non-chasing infected within 30 m; 20 s, then search and wander 3048ms
+     ✓ T-E19-12b @E19 @E19-AC12 a group of 10 chasing from one start strings out: arrivals spread >= 2.0 s, deterministic per seed 741ms
+     ✓ T-E19-perf @E19 @E18-AC02 @perf 200 L1 infected with 40 humans: Node sim p95 <= 4 ms 1870ms
+ ✓  timing  tests/sim/weapons.test.ts (73 tests) 1855ms
+   ✓ T-E06-03 @E06 @E06-AC03 close shotgun / distant SMG role differentiation and heavy ranges 419ms
+   ✓ T-E06-perf @E06 @perf sustained weapons, fire and 200 reactive infected stay below 4ms sim p95 849ms
+ ✓  timing  tests/sim/weather.test.ts (15 tests) 35991ms
+   ✓ live weather L1 @E28 seeded continuous authored blend 340ms
+   ✓ T-E28-08 @E28 @E28-AC08 every override preserves all registered mission graph walks 35066ms
+ ✓  timing  tests/sim/world/chunk-residency.test.ts (11 tests) 37303ms
+   ✓ T-E31-13-S4-high @E31-AC12 @E31-AC13 @E31-AC14 revisit preserves HP, corpse/pickup IDs and remaining timers 3091ms
+   ✓ T-E31-12-S4-high @E31-AC12 @E31-AC13 predictive support remains loaded on forward/reverse seams 2939ms
+   ✓ T-E31-13-S4-low @E31-AC12 @E31-AC13 @E31-AC14 revisit preserves HP, corpse/pickup IDs and remaining timers 3500ms
+   ✓ T-E31-12-S4-low @E31-AC12 @E31-AC13 predictive support remains loaded on forward/reverse seams 3530ms
+   ✓ T-E32-28-S4 @E31-AC13 @E32-AC10 @E32-AC28 Mega crosses coarse/detailed residency without >0.5 m tick jumps 2990ms
+   ✓ T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95 4521ms
+   ✓ T-E31-19-S4-100 @E31-AC19 @E18-AC02 resident crossing horde sim p95 4446ms
+   ✓ T-E31-12-colliders-S4 @E31-AC12 @E31-AC13 seam-spanning collider is shared, unloaded and restored with nav 1635ms
+   ✓ T-E31-19-quality-S4 @E31-AC12 @E31-AC13 @E31-AC19 low cap serializes excess brains and high restores the same IDs/HP 1869ms
+   ✓ T-E31-14-clock-S4 @E31-AC13 @E31-AC14 inactive recovery survives loading into a fresh tick-zero world 6102ms
+   ✓ T-E31-13-prop-S4 @E31-AC12 @E31-AC13 inactive movable prop releases its body and restores pose, HP and ID 2676ms
+ ✓  timing  tests/sim/vehicles/consequences.test.ts (13 tests) 1105ms
+stdout | tests/sim/ai/director.test.ts > T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget
+{"scenario":"horde-arena","infected":200,"simMsP95":2.5368669999879785,"budget":4}
+
+ ✓  timing  tests/sim/ai/director.test.ts (11 tests) 57413ms
+   ✓ T-E07-09 @E07 @E07-AC09 150-infected stream follows spline on time and fans out 998ms
+   ✓ T-E07-10 @E07 @E07-AC10 five-minute spawn/kill cycle reuses prewarmed entity objects 54752ms
+   ✓ T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget 1290ms
+ ✓  timing  tests/sim/player.test.ts (12 tests) 2437ms
+   ✓ T-E04-02 @E04 @E04-AC02 200-direction capsule sweep never penetrates the static wall ring over 0.02m 1966ms
+ ✓  timing  tests/sim/levels/l10-assault.test.ts (5 tests) 52556ms
+   ✓ T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets 14474ms
+   ✓ T-E32-21-E3-low @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets 13369ms
+   ✓ T-E32-21-E3-overlap-high @E32-AC06 @E32-AC21 full cap defers assault, dead bodies survive replenishment and revisit 8225ms
+   ✓ T-E32-21-E3-overlap-low @E32-AC06 @E32-AC21 full cap defers assault, dead bodies survive replenishment and revisit 9099ms
+   ✓ T-E32-10-E3 @E32-AC10 production composition introduces one reserved pursuer behind R1 7387ms
+stdout | tests/sim/npc/campaign.test.ts > T-E08-11-high @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity
+{"level":"L1","tier":"high","simMsP95":1.5089309999893885,"budget":4}
+{"level":"L2","tier":"high","simMsP95":1.3314179999870248,"budget":4}
+{"level":"L3","tier":"high","simMsP95":1.1788510000042152,"budget":4}
+{"level":"L4","tier":"high","simMsP95":0.49720199999865144,"budget":4}
+{"level":"L5","tier":"high","simMsP95":0.4438320000190288,"budget":4}
+
+stdout | tests/sim/npc/campaign.test.ts > T-E08-11-low @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity
+{"level":"L1","tier":"low","simMsP95":1.1996710000094026,"budget":6}
+{"level":"L2","tier":"low","simMsP95":1.1560389999649487,"budget":6}
+{"level":"L3","tier":"low","simMsP95":1.038347999972757,"budget":6}
+{"level":"L4","tier":"low","simMsP95":0.3997899999958463,"budget":6}
+{"level":"L5","tier":"low","simMsP95":0.4623670000000857,"budget":6}
+
+ ✓  timing  tests/sim/npc/campaign.test.ts (5 tests) 86069ms
+   ✓ @E08 campaign steering mask preserves polygon edges, offsets, winding and irregular bounds 901ms
+   ✓ T-E08-11-high @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity 44755ms
+   ✓ T-E08-11-low @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity 39429ms
+   ✓ T-E08-17 @E08 @E08-AC17 100 seeds use data pet probability and 2–4s down before dog rise 963ms
+ ✓  timing  tests/sim/levels/l10-district.test.ts (3 tests) 51322ms
+   ✓ T-E32-03-D1-D2-high @E32-AC02 @E32-AC05 @E32-AC03 @E32-AC27 @E32-AC28 route through R1–R4 acquires the ordered arsenal and retains ground/nav/checkpoint support 23810ms
+   ✓ T-E32-03-D1-D2-low @E32-AC02 @E32-AC05 @E32-AC03 @E32-AC27 @E32-AC28 route through R1–R4 acquires the ordered arsenal and retains ground/nav/checkpoint support 18947ms
+   ✓ T-E32-28-D1 @E32-AC10 @E32-AC28 authored pursuit crosses the R1/R2 seam using shared residency 8561ms
+ ✓  timing  tests/sim/interact/integration.test.ts (6 tests) 869ms
+   ✓ T-E11-perf @E11 @perf 100 infected and 200 flammable props stay below 6ms sim p95; debris remains <=32 408ms
+ ✓  timing  tests/sim/combat/balance.test.ts (3 tests) 6401ms
+   ✓ T-E05-14 T-E06-10 @E05 @E05-AC14 @E06 @E06-AC10 measure every reference weapon × archetype TTK in authored bands 6065ms
+ ✓  timing  tests/sim/performance/level-fixtures.test.ts (8 tests) 2060ms
+   ✓ @E18-AC01 perf-l5-aftermath high prepared=false retains campaign cast and measures the exact stress population 611ms
+   ✓ @E18-AC01 perf-l5-aftermath high prepared=true retains campaign cast and measures the exact stress population 345ms
+ ✓  timing  tests/sim/performance/alpha-support.test.ts (2 tests) 2236ms
+   ✓ T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms 1602ms
+   ✓ T-E07-06-support-perf-100 @E18-AC02 @perf live Alpha support moves stay within 6ms 632ms
+ ✓  timing  tests/sim/performance/l10-finale.test.ts (2 tests) 9390ms
+   ✓ T-E32-20-perf-200 @E32-AC20 @E32-AC31 @E18-AC02 full-cap active dispersal predicate 6605ms
+   ✓ T-E32-20-perf-100 @E32-AC20 @E32-AC31 @E18-AC02 full-cap active dispersal predicate 2782ms
+ ✓  timing  tests/sim/performance/zoo-s1.test.ts (2 tests) 2849ms
+   ✓ T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms 2066ms
+   ✓ T-E07-11-zoo-s1-100 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 6ms 781ms
+ ✓  timing  tests/sim/performance/alpha.test.ts (2 tests) 2328ms
+   ✓ T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms 1697ms
+   ✓ T-E07-11-alpha-100 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 6ms 630ms
+ ✓  timing  tests/sim/performance/alpha-physical.test.ts (2 tests) 2133ms
+   ✓ T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms 1533ms
+   ✓ T-E07-11-alpha-physical-100 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 6ms 599ms
+ ❯  timing  tests/sim/performance/zoo-s2.test.ts (2 tests | 1 failed) 3552ms
+   × T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms 2584ms
+   ✓ T-E07-11-zoo-s2-100 @E07-AC11 @E18-AC02 mixed zoo specials stay within 6ms 967ms
+ ✓  timing  tests/sim/performance/zoo-s3.test.ts (2 tests) 2285ms
+   ✓ T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms 1664ms
+   ✓ T-E07-11-zoo-s3-100 @E07-AC11 @E18-AC02 mixed zoo specials stay within 6ms 619ms
+ ✓  timing  tests/sim/performance/mega-moves.test.ts (2 tests) 2955ms
+   ✓ T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18 2186ms
+   ✓ T-E32-11-perf-100 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18 765ms
+ ✓  timing  tests/sim/performance/horde.test.ts (3 tests) 1882ms
+   ✓ T-E18-02-200 @E18-AC02 @perf Node sim p95 200 living infected <= 4ms 1387ms
+   ✓ T-E18-02-100 @E18-AC02 @perf Node sim p95 100 living infected <= 6ms 485ms
+ ✓  timing  tests/sim/performance/mega-audio.test.ts (2 tests) 4923ms
+   ✓ T-E32-13-perf-200 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling 3308ms
+   ✓ T-E32-13-perf-100 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling 1613ms
+ ✓  timing  tests/sim/missions/perf.test.ts (1 test) 602ms
+   ✓ @E12 mission-sandbox fixed-step p95 stays within the 4ms high-tier sim budget 601ms
+ ✓  timing  tests/sim/levels/l10-arrival.test.ts (2 tests) 55804ms
+   ✓ T-E32-21-E3b @E32-AC21 seed-32 rocket checkpoint route arrival high 36392ms
+   ✓ T-E32-21-E3b @E32-AC21 seed-32 rocket checkpoint route arrival low 19411ms
+ ✓  timing  tests/unit/progression/perf.test.ts (1 test) 235ms
+ ✓  timing  tests/sim/performance/l6-fixture.test.ts (1 test) 1911ms
+   ✓ E18 mobile L6 probe uses current shelter geometry and retains 100 admitted infected 1909ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   timing  tests/sim/performance/zoo-s2.test.ts > T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms
+AssertionError: expected 4.179731999989599 to be less than or equal to 4
+ ❯ tests/sim/performance/zoo-s2.test.ts:26:68
+     24|     const proof = { count, zoo: ids.length, activations, simMsP95: tim…
+     25|     mkdirSync('docs/reports/zoo-s2', { recursive: true }); writeFileSy…
+     26|     expect(activations).toBeGreaterThan(0); expect(proof.simMsP95).toB…
+       |                                                                    ^
+     27|   } finally { w.dispose(); }
+     28| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 26 passed (27)
+      Tests  1 failed | 205 passed (206)
+   Start at  08:51:19
+   Duration  457.46s (tests 97%, import 2%, transform 1%)
+
+JSON report written to /srv/mi/jobs/apc-sedan-505fb3-72030-1792313462/test-results/apc-sedan-timing.json
+
+ RUN  v5.0.3 /srv/mi/jobs/apc-sedan-505fb3-72030-1792313462
+
+ ✓  functional  tests/unit/assets/validate.test.ts (17 tests | 16 skipped) 163043ms
+   ✓ T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts 163039ms
+ ✓  functional  tests/sim/combat/l5-shotgun.test.ts (6 tests | 5 skipped) 19653ms
+   ✓ T-E23-12-kill PO #37 @E23 @E23-AC12 @E07-AC14 one shell kills regular infected through 8 m permanently; two close shells stop an Alpha 19650ms
+ ✓  functional  tests/sim/levels/l10-campus-corridor.test.ts (2 tests | 1 skipped) 30641ms
+   ✓ T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex 30639ms
+
+ Test Files  3 passed (3)
+      Tests  3 passed | 22 skipped (25)
+   Start at  08:58:57
+   Duration  218.63s (tests 98%, transform 2%, import 1%)
+
+JSON report written to /srv/mi/jobs/apc-sedan-505fb3-72030-1792313462/test-results/apc-sedan-recheck.json
+[remote] pulled test-results/apc-sedan-timing.json
+[remote] pulled test-results/apc-sedan-recheck.json
+[remote] pulled test-results/epics/E18
+[remote] pulled test-results/epics/E32/D3/route-high.json
+[remote] done exit=1 (runner 94.130.181.173, sync 15s, remote total 681s)

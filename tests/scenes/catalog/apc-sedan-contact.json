@@ -1,0 +1,13 @@
+{
+  "extends": "vfx-vehicle-contact.json",
+  "name": "apc-sedan-contact",
+  "note": "Dynamic APC side ram of a parked dynamic sedan. Both chassis stay upright; sedan slides ahead of the heavy APC. Sim regression covers head-on, oblique and side impacts at 10/20/30 km/h.",
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000,
+    "vehicleHealthMax": 990,
+    "vehicleTiltMaxDeg": 45
+  }
+}

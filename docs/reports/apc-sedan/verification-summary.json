@@ -1,0 +1,154 @@
+{
+  "sourceFixCommit": "3143a8ef0",
+  "startingCommit": "fcf81b4da4cdea623c1ddd3c0f8620a41a457a46",
+  "node": {
+    "files": 498,
+    "total": 3120,
+    "passedAfterTargetedRechecks": 3109,
+    "remainingBaselineFailures": 2,
+    "originalSkipped": 9,
+    "originalFailures": [
+      {
+        "file": "tests/unit/traceability.test.ts",
+        "test": "T-E01-traceability @E01 every active epic AC has a matching test tag",
+        "error": "AssertionError: E29-AC01: expected 'import { mkdirSync } from \\'node:fs\\'\u2026' to contain '@E29-AC01'"
+      },
+      {
+        "file": "tests/sim/combat/l5-shotgun.test.ts",
+        "test": "T-E23-12-kill PO #37 @E23 @E23-AC12 @E07-AC14 one shell kills regular infected through 8 m permanently; two close shells stop an Alpha",
+        "error": "Error: Test timed out in 30000ms."
+      },
+      {
+        "file": "tests/sim/levels/l10-campus-corridor.test.ts",
+        "test": "T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex",
+        "error": "AssertionError: expected 7.146201999858022 to be less than or equal to 4"
+      },
+      {
+        "file": "tests/unit/assets/validate.test.ts",
+        "test": "T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts",
+        "error": "Error: Test timed out in 300000ms."
+      },
+      {
+        "file": "tests/unit/tooling/l7-runner-default.test.ts",
+        "test": "T-E29-02-cli @E29-AC02 explicit and all-level CLI registration include L7 in campaign order",
+        "error": "AssertionError: expected [ 'L1', 'L2', 'L3', 'L4', 'L5', \u2026(6) ] to deeply equal [ 'L1', 'L2', 'L3', 'L4', 'L5', \u2026(5) ]"
+      },
+      {
+        "file": "tests/sim/performance/zoo-s2.test.ts",
+        "test": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+        "error": "AssertionError: expected 4.179731999989599 to be less than or equal to 4"
+      }
+    ],
+    "resolvedByRechecks": [
+      {
+        "file": "tests/sim/combat/l5-shotgun.test.ts",
+        "test": "T-E23-12-kill PO #37 @E23 @E23-AC12 @E07-AC14 one shell kills regular infected through 8 m permanently; two close shells stop an Alpha",
+        "error": "Error: Test timed out in 30000ms."
+      },
+      {
+        "file": "tests/sim/levels/l10-campus-corridor.test.ts",
+        "test": "T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex",
+        "error": "AssertionError: expected 7.146201999858022 to be less than or equal to 4"
+      },
+      {
+        "file": "tests/unit/assets/validate.test.ts",
+        "test": "T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts",
+        "error": "Error: Test timed out in 300000ms."
+      },
+      {
+        "file": "tests/sim/performance/zoo-s2.test.ts",
+        "test": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+        "error": "AssertionError: expected 4.179731999989599 to be less than or equal to 4"
+      }
+    ],
+    "remainingFailures": [
+      {
+        "file": "tests/unit/traceability.test.ts",
+        "test": "T-E01-traceability @E01 every active epic AC has a matching test tag",
+        "error": "AssertionError: E29-AC01: expected 'import { mkdirSync } from \\'node:fs\\'\u2026' to contain '@E29-AC01'"
+      },
+      {
+        "file": "tests/unit/tooling/l7-runner-default.test.ts",
+        "test": "T-E29-02-cli @E29-AC02 explicit and all-level CLI registration include L7 in campaign order",
+        "error": "AssertionError: expected [ 'L1', 'L2', 'L3', 'L4', 'L5', \u2026(6) ] to deeply equal [ 'L1', 'L2', 'L3', 'L4', 'L5', \u2026(5) ]"
+      }
+    ]
+  },
+  "rechecks": {
+    "runtime": {
+      "passed": 3,
+      "failed": 0,
+      "filteredOnRerun": 22
+    },
+    "zooControl": {
+      "scenario": {
+        "scenario": "perf-horde-200",
+        "carBodies": 0,
+        "vehicleEntities": 0,
+        "infected": 200
+      },
+      "baseline": {
+        "count": 200,
+        "zoo": 20,
+        "activations": 51,
+        "simMsP95": 3.991841000000022,
+        "budgetMs": 4
+      },
+      "current": {
+        "count": 200,
+        "zoo": 20,
+        "activations": 51,
+        "simMsP95": 3.544050999999854,
+        "budgetMs": 4
+      },
+      "outcomes": {
+        "baselineExit": 0,
+        "currentExit": 0
+      }
+    }
+  },
+  "measuredBudgets": {
+    "horde200": {
+      "p95Ms": 1.9432859999942593,
+      "limitMs": 4
+    },
+    "horde100": {
+      "p95Ms": 0.827763999986928,
+      "limitMs": 6
+    },
+    "campusHigh": {
+      "p95Ms": 1.299187000025995,
+      "limitMs": 4
+    },
+    "zoo200Current": {
+      "p95Ms": 3.544050999999854,
+      "limitMs": 4
+    },
+    "browserHigh": {
+      "draws": 54,
+      "drawLimit": 600,
+      "triangles": 120810,
+      "triangleLimit": 1500000
+    },
+    "browserLow": {
+      "draws": 49,
+      "drawLimit": 300,
+      "triangles": 54770,
+      "triangleLimit": 500000
+    }
+  },
+  "measurementConditions": "Node: serial maxWorkers=1 on shared 4-core runner, see node-conditions.json. Browser: headless Metal, one 128-second quiet-run batch. Original test limits retained.",
+  "limitations": [
+    "Pre-existing literal-tag traceability gaps and duplicate L7 CLI registration remain.",
+    "Retained sedan transparency limits the later visible silhouette; physical quaternion metrics confirm upright attitude.",
+    "Native GPU frame time, phones, heap/download budgets and the full browser deploy gate were not measured."
+  ],
+  "baselineProofs": [
+    "traceability-baseline.json",
+    "runner-baseline.json"
+  ],
+  "coverageFiles": [
+    "functional-files.json",
+    "timing-summary.json"
+  ]
+}

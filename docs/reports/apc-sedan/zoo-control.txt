@@ -1,0 +1,33 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/apc-sedan -> 94.130.181.173:/srv/mi/ws/apc-sedan-505fb3
+[remote] cache-gc deleted:none
+[remote] sync 16s, 16500 files; job /srv/mi/jobs/apc-sedan-505fb3-7979-1792314429; queueing for a slot
+[runner] slot 1 acquired; load 1.40 1.74 2.21
+[runner] npm ci (lockfile hash 4be0005f2d869428)
+
+added 247 packages in 4s
+
+ RUN  v5.0.3 /srv/mi/jobs/apc-sedan-505fb3-7979-1792314429
+
+ ✓  timing  tests/sim/performance/zoo-s2.test.ts (2 tests | 1 skipped) 2366ms
+   ✓ T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms 2363ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 1 skipped (2)
+   Start at  09:07:38
+   Duration  6.05s (transform 51%, tests 40%, import 9%)
+
+JSON report written to /srv/mi/jobs/apc-sedan-505fb3-7979-1792314429/test-results/apc-sedan-zoo-control/baseline-tests.json
+
+ RUN  v5.0.3 /srv/mi/jobs/apc-sedan-505fb3-7979-1792314429
+
+ ✓  timing  tests/sim/performance/zoo-s2.test.ts (2 tests | 1 skipped) 2243ms
+   ✓ T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms 2241ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 1 skipped (2)
+   Start at  09:07:45
+   Duration  5.86s (transform 52%, tests 39%, import 9%)
+
+JSON report written to /srv/mi/jobs/apc-sedan-505fb3-7979-1792314429/test-results/apc-sedan-zoo-control/current-tests.json
+[remote] pulled test-results/apc-sedan-zoo-control
+[remote] done exit=0 (runner 94.130.181.173, sync 16s, remote total 26s)
