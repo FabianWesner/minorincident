@@ -18,6 +18,7 @@ with mock.patch.object(g.sys, 'platform', 'darwin'), mock.patch.object(g.sys, 'a
 test('WindowServer admission uses the measured ten second CPU delta and a strict 60% threshold', () => {
   expect(guard({ '10': 100 }, { '10': 106 }, 0)).toBe('0');
   expect(guard({ '10': 100 }, { '10': 106.01 }, 0)).toBe('75');
+  expect(guard({ '10': 100 }, { '10': 99 }, 0)).toBe('75');
   expect(guard({}, {}, 0)).toBe('75');
   expect(guard({ '10': 100 }, { '11': 100 }, 0)).toBe('75');
 });
@@ -38,9 +39,10 @@ processes = '''10 12:03.50 /System/Library/PrivateFrameworks/SkyLight.framework/
 14 0:01.00 /usr/bin/python scheduler /cache/chrome-headless-shell --headless
 15 0:01.00 /cache/chrome --type=renderer --headless
 16 0:01.00 /cache/Chromium --headless
+17 1-02:03:04.50 /System/Library/PrivateFrameworks/SkyLight.framework/Resources/WindowServer
 '''
 with mock.patch.object(g.subprocess, 'check_output', return_value=processes):
-    assert g.snapshot() == ({'10': 723.5}, 3), g.snapshot()
+    assert g.snapshot() == ({'10': 723.5, '17': 93784.5}, 3), g.snapshot()
 print('ok')
 `], { encoding: 'utf8' });
   expect(output.trim()).toBe('ok');
