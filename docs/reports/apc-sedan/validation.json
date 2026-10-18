@@ -8,8 +8,11 @@
   },
   "commands": {
     "targeted": "MI_RUNNER_IP=94.130.181.173 sh tools/remote/run.sh \"$PWD\" --pull test-results/apc-sedan -- npx vitest run tests/sim/vehicles/apc-sedan.test.ts tests/sim/vehicles/handling.test.ts --maxWorkers=1",
-    "full": "MI_RUNNER_IP=94.130.181.173 sh tools/remote/run.sh \"$PWD\" --pull test-results/apc-sedan --pull test-results/epics/E18 --pull test-results/epics/E09/handling-metrics.json --pull test-results/apc-sedan-suite.json -- bash tools/remote/timing-isolated.sh npx vitest run tests/unit tests/sim tests/levels --maxWorkers=4 --reporter=default --reporter=json --outputFile=test-results/apc-sedan-suite.json",
-    "browser": "SCENE_PORT=3467 E2E_PORT=3468 SCENE_SERVER=preview E2E_UNITS=2 sh tools/perf/quiet-run.sh <single batch: sh tools/e2e-lock.sh npx tsx tools/scenelab/catalog.ts --matrix --filter apc-sedan-contact --backend webgl2|webgpu --jobs 1 --out docs/reports/apc-sedan/<backend>>"
+    "browser": "SCENE_PORT=3467 E2E_PORT=3468 SCENE_SERVER=preview E2E_UNITS=2 sh tools/perf/quiet-run.sh <single batch: sh tools/e2e-lock.sh npx tsx tools/scenelab/catalog.ts --matrix --filter apc-sedan-contact --backend webgl2|webgpu --jobs 1 --out docs/reports/apc-sedan/<backend>>",
+    "fullFunctional": "npx vitest run tests/unit tests/sim tests/levels --project=functional --maxWorkers=4 --reporter=default --reporter=json --outputFile=test-results/apc-sedan-functional.json",
+    "fullTiming": "npx vitest run tests/unit tests/sim tests/levels --project=timing --maxWorkers=1 --reporter=default --reporter=json --outputFile=test-results/apc-sedan-timing.json",
+    "runtimeRecheck": "npx vitest run tests/unit/assets/validate.test.ts tests/sim/combat/l5-shotgun.test.ts tests/sim/levels/l10-campus-corridor.test.ts --project=functional --maxWorkers=1 -t \"T-E17-02b|T-E23-12-kill|T-E32-03-D3-high\" --reporter=default --reporter=json --outputFile=test-results/apc-sedan-recheck.json",
+    "zooControl": "Private runner copy: run original T-E07-11-zoo-s2-200 once with sideFrictionStiffness=1, restore 0.2, run once again; maxWorkers=1, original test and 4ms limit. Scene probe records zero vehicle bodies."
   },
   "local": {
     "typecheck": "pass",
@@ -48,5 +51,27 @@
     "ramCases": 9,
     "apcTiltMax": 0.6789959404778313,
     "sedanRollMax": 6.58764118944854
-  }
+  },
+  "remote": {
+    "host": "94.130.181.173",
+    "wrapper": "sh tools/remote/run.sh \"$PWD\" -- <command>",
+    "functional": {
+      "numTotalTests": 2914,
+      "numPassedTests": 2900,
+      "numFailedTests": 5,
+      "numPendingTests": 9
+    },
+    "functionalEvidence": "functional-summary.json",
+    "timing": "completed: 205/206 initial pass; single zoo budget miss passes fresh-process current check",
+    "baselineFailures": [
+      "traceability-baseline.json",
+      "runner-baseline.json"
+    ],
+    "runtimeRecheck": "3/3 pass at original limits, maxWorkers=1",
+    "conditions": "node-conditions.json",
+    "capacity": "Additional runner request rejected by Primary IP quota; superseded exclusive-slot queues cancelled after the serial run started. Functional raw results preserved before cancellation.",
+    "effectiveResults": "verification-summary.json",
+    "zooControl": "zoo-control: baseline and current pass unchanged 4 ms gate; fixture has zero vehicles"
+  },
+  "matrixRegistration": "matrix-registration.txt; default scene:matrix filter now includes apc-sedan-*"
 }

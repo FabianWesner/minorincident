@@ -1,0 +1,48 @@
+{
+  "phase": "recheck",
+  "counts": {
+    "numTotalTests": 25,
+    "numPassedTests": 3,
+    "numFailedTests": 0,
+    "numPendingTests": 22
+  },
+  "files": [
+    {
+      "file": "tests/sim/combat/l5-shotgun.test.ts",
+      "status": "passed",
+      "tests": 6
+    },
+    {
+      "file": "tests/sim/levels/l10-campus-corridor.test.ts",
+      "status": "passed",
+      "tests": 2
+    },
+    {
+      "file": "tests/unit/assets/validate.test.ts",
+      "status": "passed",
+      "tests": 17
+    }
+  ],
+  "failures": [],
+  "executed": [
+    {
+      "file": "tests/sim/combat/l5-shotgun.test.ts",
+      "test": "T-E23-12-kill PO #37 @E23 @E23-AC12 @E07-AC14 one shell kills regular infected through 8 m permanently; two close shells stop an Alpha",
+      "status": "passed",
+      "durationMs": 19650.256850999984
+    },
+    {
+      "file": "tests/sim/levels/l10-campus-corridor.test.ts",
+      "test": "T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex",
+      "status": "passed",
+      "durationMs": 30638.655125999998
+    },
+    {
+      "file": "tests/unit/assets/validate.test.ts",
+      "test": "T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts",
+      "status": "passed",
+      "durationMs": 163038.992737
+    }
+  ],
+  "note": "22 cases filtered only on this failure-specific rerun; those cases already ran in the full functional sweep."
+}
