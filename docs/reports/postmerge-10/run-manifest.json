@@ -1,0 +1,70 @@
+{
+  "branch": "lane/merge-batch10",
+  "suppliedTip": "5a2ea113c",
+  "sourceCommit": "0caecab8d86efce627201623ead2e83c019ad309",
+  "browserSlotCap": 2,
+  "e2ePort": 3411,
+  "scenePort": 3412,
+  "fullRemoteCommand": "npx vitest run tests/unit tests/levels tests/sim --maxWorkers=4",
+  "mergedTips": [
+    "28c129d3f",
+    "ccda7d718",
+    "e5965cc33"
+  ],
+  "capCherryPick": "68f83ae44",
+  "temporaryControlWorktree": "/tmp/postmerge-10-control",
+  "temporaryControlRemoved": true,
+  "nativeQuietReservationSeconds": 443.25,
+  "quietBatchWatchdogSeconds": 1180,
+  "admissionLimitSeconds": 1800,
+  "testToolingCommit": "0761ff077",
+  "fullRemoteResults": {
+    "vehiclePair": {
+      "passed": 3138,
+      "failed": 0,
+      "skipped": 11
+    },
+    "vfx": {
+      "passed": 3137,
+      "failed": 1,
+      "skipped": 11,
+      "fixedFileRecheckPassed": 6
+    },
+    "finalAfterRngFix": {
+      "passed": 3138,
+      "failed": 0,
+      "skipped": 11
+    }
+  },
+  "finalGameSourceCommit": "0caecab8d",
+  "cureMistMainControlCommit": "68f83ae44",
+  "finalSourceCommit": "0caecab8d",
+  "mainAtCleanup": "6af482a6b",
+  "pinnedMainGameAndComparedTestsMatchCleanupMain": true,
+  "finalFocusedMatrix": {
+    "passed": 204,
+    "failed": 0
+  },
+  "finalGateMatrix": {
+    "passed": 1228,
+    "failed": 2
+  },
+  "finalSelectedBrowser": {
+    "passed": 122,
+    "failed": 3,
+    "flaky": 0
+  },
+  "legacyL1GradeLook": {
+    "executed": 0,
+    "existingSkipped": 6
+  },
+  "remainingMeasuredReds": {
+    "redOnMainYes": 3,
+    "redOnMainNo": 2
+  },
+  "nativeFinal": {
+    "passed": 6,
+    "failed": 0
+  },
+  "preRngGameSourceCommit": "740be23602c3f0cf4c8abeeee973f07a20e8297b"
+}

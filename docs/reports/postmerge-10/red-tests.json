@@ -1,0 +1,42 @@
+[
+  {
+    "test": "wave3-zoo-routines@high-z1.5-webgpu",
+    "redOnMain": "Yes",
+    "candidate": "clipping 2 > 0",
+    "main": "clipping 2 > 0",
+    "candidateEvidence": "evidence/gate-final-matrix-index.json",
+    "mainEvidence": "matrix/main-zoo-final/index.json"
+  },
+  {
+    "test": "wave3-zoo-routines@low-z1.5-webgpu",
+    "redOnMain": "Yes",
+    "candidate": "clipping 2 > 0",
+    "main": "clipping 2 > 0",
+    "candidateEvidence": "evidence/gate-final-matrix-index.json",
+    "mainEvidence": "matrix/main-zoo-final/index.json"
+  },
+  {
+    "test": "T-E15-lifecycle",
+    "redOnMain": "Yes",
+    "candidate": "5 textures, expected 2; both attempts",
+    "main": "5 textures, expected 2; both attempts",
+    "candidateEvidence": "evidence/selected-final-playwright.json",
+    "mainEvidence": "evidence/main-lifecycle-final-playwright.json"
+  },
+  {
+    "test": "Scene Lab reload isolates courier gear webgl high",
+    "redOnMain": "No",
+    "candidate": "32 draw calls > 30; both attempts; gear resets 4\u21920",
+    "main": "passes; independent profile: 29 total draws",
+    "candidateEvidence": "evidence/selected-final-playwright.json",
+    "mainEvidence": "evidence/main-gear-final-playwright.json"
+  },
+  {
+    "test": "Scene Lab reload isolates courier gear webgpu high",
+    "redOnMain": "No",
+    "candidate": "32 draw calls > 30; both attempts; gear resets 4\u21920",
+    "main": "passes",
+    "candidateEvidence": "evidence/selected-final-playwright.json",
+    "mainEvidence": "evidence/main-gear-final-playwright.json"
+  }
+]

@@ -1,0 +1,1367 @@
+[
+  {
+    "sequence": [
+      "seethrough-door-gate"
+    ],
+    "before": 0,
+    "metrics": {
+      "drawCalls": {
+        "p50": 18,
+        "p95": 18,
+        "max": 18
+      },
+      "triangles": {
+        "p50": 89580,
+        "p95": 89580,
+        "max": 89580
+      },
+      "shadowDrawCalls": {
+        "p50": 14,
+        "p95": 14,
+        "max": 14
+      },
+      "shadowTriangles": {
+        "p50": 44633,
+        "p95": 44633,
+        "max": 44633
+      },
+      "stepMs": {
+        "p50": 2.7,
+        "p95": 3.6,
+        "max": 7
+      },
+      "lastFrame": {
+        "drawCalls": 18,
+        "triangles": 89580,
+        "shadowDrawCalls": 14,
+        "shadowTriangles": 44633,
+        "stepMs": 1.1999998092651367,
+        "categories": {
+          "other": 18,
+          "shadows": 14,
+          "crowd": 0
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "samples": [
+      {
+        "frame": 1,
+        "draws": 32,
+        "profile": {
+          "other": {
+            "drawCalls": 18,
+            "triangles": 89580
+          },
+          "shadows": {
+            "drawCalls": 14,
+            "triangles": 44633
+          },
+          "crowd": {
+            "drawCalls": 0,
+            "triangles": 0
+          }
+        },
+        "effects": {
+          "wind": {
+            "x": 0.55,
+            "z": 0.25
+          },
+          "blasts": 0,
+          "puffs": 0,
+          "puffCap": 400,
+          "fireballs": 0,
+          "fireballCap": 96,
+          "chunks": 0,
+          "chunkCap": 64,
+          "flames": 0,
+          "glows": 0,
+          "vehicleSmokeColumns": 0,
+          "columns": 0,
+          "transientColumns": 0,
+          "fireColumns": 0,
+          "columnShadows": 0,
+          "clouds": 0,
+          "scorch": 0,
+          "parts": 0,
+          "flash": 0,
+          "bulletTime": {
+            "scale": 1,
+            "remaining": 0,
+            "progress": 0
+          },
+          "slowMotion": true
+        },
+        "meshes": [
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "ConeGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "PlaneGeometry"
+          },
+          {
+            "name": "mesh_0",
+            "group": "body",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "mesh_2",
+            "group": "",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "mesh_2_1",
+            "group": "",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "mesh_2_2",
+            "group": "",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "mesh_1",
+            "group": "root",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "ambient-gpu-life",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "ambient-gpu-life",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "ambient-gpu-life",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "sunset-grove",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "PlaneGeometry"
+          },
+          {
+            "name": "grass-gpu-wind",
+            "group": "D-GROVE",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "courierSkin",
+            "group": "courierRig",
+            "type": "SkinnedMesh",
+            "count": 1,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "figure-contact-shadows",
+            "group": "",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "PlaneGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "npcs",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BoxGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "e27-blasts",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "e27-blasts",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "PlaneGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 80,
+            "castShadow": false,
+            "geometry": "SphereGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 80,
+            "castShadow": false,
+            "geometry": "BoxGeometry"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sequence": [
+      "seethrough-gear-four",
+      "seethrough-door-gate"
+    ],
+    "before": 0,
+    "metrics": {
+      "drawCalls": {
+        "p50": 18,
+        "p95": 18,
+        "max": 18
+      },
+      "triangles": {
+        "p50": 89580,
+        "p95": 89580,
+        "max": 89580
+      },
+      "shadowDrawCalls": {
+        "p50": 14,
+        "p95": 14,
+        "max": 14
+      },
+      "shadowTriangles": {
+        "p50": 44633,
+        "p95": 44633,
+        "max": 44633
+      },
+      "stepMs": {
+        "p50": 1,
+        "p95": 3.8,
+        "max": 6.6
+      },
+      "lastFrame": {
+        "drawCalls": 18,
+        "triangles": 89580,
+        "shadowDrawCalls": 14,
+        "shadowTriangles": 44633,
+        "stepMs": 2.3999996185302734,
+        "categories": {
+          "other": 18,
+          "shadows": 14,
+          "crowd": 0
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "samples": [
+      {
+        "frame": 1,
+        "draws": 32,
+        "profile": {
+          "other": {
+            "drawCalls": 18,
+            "triangles": 89580
+          },
+          "shadows": {
+            "drawCalls": 14,
+            "triangles": 44633
+          },
+          "crowd": {
+            "drawCalls": 0,
+            "triangles": 0
+          }
+        },
+        "effects": {
+          "wind": {
+            "x": 0.55,
+            "z": 0.25
+          },
+          "blasts": 0,
+          "puffs": 0,
+          "puffCap": 400,
+          "fireballs": 0,
+          "fireballCap": 96,
+          "chunks": 0,
+          "chunkCap": 64,
+          "flames": 0,
+          "glows": 0,
+          "vehicleSmokeColumns": 0,
+          "columns": 0,
+          "transientColumns": 0,
+          "fireColumns": 0,
+          "columnShadows": 0,
+          "clouds": 0,
+          "scorch": 0,
+          "parts": 0,
+          "flash": 0,
+          "bulletTime": {
+            "scale": 1,
+            "remaining": 0,
+            "progress": 0
+          },
+          "slowMotion": true
+        },
+        "meshes": [
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "ConeGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "PlaneGeometry"
+          },
+          {
+            "name": "mesh_0",
+            "group": "body",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "mesh_2",
+            "group": "",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "mesh_2_1",
+            "group": "",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "mesh_2_2",
+            "group": "",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "mesh_1",
+            "group": "root",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "ambient-gpu-life",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "ambient-gpu-life",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "ambient-gpu-life",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "sunset-grove",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "PlaneGeometry"
+          },
+          {
+            "name": "grass-gpu-wind",
+            "group": "D-GROVE",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "courierSkin",
+            "group": "courierRig",
+            "type": "SkinnedMesh",
+            "count": 1,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "figure-contact-shadows",
+            "group": "",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "PlaneGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "morning-props",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "npcs",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BoxGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 1,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "e27-blasts",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": true,
+            "geometry": "BufferGeometry"
+          },
+          {
+            "name": "",
+            "group": "e27-blasts",
+            "type": "Mesh",
+            "count": 0,
+            "castShadow": false,
+            "geometry": "PlaneGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 80,
+            "castShadow": false,
+            "geometry": "SphereGeometry"
+          },
+          {
+            "name": "",
+            "group": "",
+            "type": "Mesh",
+            "count": 80,
+            "castShadow": false,
+            "geometry": "BoxGeometry"
+          }
+        ]
+      }
+    ]
+  }
+]

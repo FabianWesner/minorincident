@@ -1,0 +1,6 @@
+- Fixed L6 shared navigation masking (`94a11e123`) and the discovered VFX warmup RNG regression (`0caecab8d`); [cause and proof](QA.md).
+- Merged APC/sedan `28c129d3f`, see-through `ccda7d718`, VFX2 `e5965cc33`; browser cap `68f83ae44` cherry-picked first.
+- Final strict L6: **27/29 rescued, zero deaths**, unchanged assertions; focused sim **15/15** and both continuous campaigns pass.
+- Final remote **3,138 pass / 0 fail**; targeted matrix **204/204**, native E18 **6/6**; full gate matrix **1,228/1,230**, selected e2e **122/125**.
+- Remaining reds, red-on-main: zoo high/low z1.5 **Yes/Yes**; lifecycle **Yes**; high gear reload WebGL2/WebGPU **No/No** (32 draws >30)—[all evidence](red-tests.md).
+- Legacy L1 grade/look: **6 existing skips**; temporary worktree removed, generated artifacts restored; no deployment or main merge. [Limits and controls](QA.md).

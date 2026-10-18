@@ -1,0 +1,317 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/private/tmp/postmerge-10-control/node_modules/.bin/playwright",
+      "test",
+      "tests/e2e/vfx.spec.ts",
+      "--project=chromium",
+      "--workers=1",
+      "--retries=1",
+      "--grep",
+      "T-E15-lifecycle"
+    ],
+    "configFile": "/private/tmp/postmerge-10-control/playwright.config.ts",
+    "rootDir": "/private/tmp/postmerge-10-control/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/private/tmp/postmerge-10-control/test-results/playwright/run-3419",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/private/tmp/postmerge-10-control/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/private/tmp/postmerge-10-control/test-results/playwright/run-3419",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/private/tmp/postmerge-10-control/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/private/tmp/postmerge-10-control/test-results/playwright/run-3419",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/private/tmp/postmerge-10-control/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/private/tmp/postmerge-10-control/test-results/playwright/run-3419",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/private/tmp/postmerge-10-control/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/private/tmp/postmerge-10-control/test-results/playwright/run-3419",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/private/tmp/postmerge-10-control/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/private/tmp/postmerge-10-control/test-results/playwright/run-3419",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/private/tmp/postmerge-10-control/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3419 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3419",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/vfx.spec.ts",
+      "file": "e2e/vfx.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E15-lifecycle @E15 pools, visual physics and event listeners unload without leaks; low tier reduces particles",
+          "ok": false,
+          "tags": [
+            "E15"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6219,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m5\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m5\u001b[39m\n    at /private/tmp/postmerge-10-control/tests/e2e/vfx.spec.ts:121:223",
+                    "location": {
+                      "file": "/private/tmp/postmerge-10-control/tests/e2e/vfx.spec.ts",
+                      "column": 223,
+                      "line": 121
+                    },
+                    "snippet": "  119 |   });\n  120 |   save('lifecycle', data);\n> 121 |   for (const cycle of data.cycles) { expect(cycle.low.particleCap).toBe(512); expect(cycle.low.particles).toBeLessThanOrEqual(512); expect(cycle.perf.geometries).toBe(data.baseline.geometries); expect(cycle.perf.textures).toBe(data.baseline.textures); expect(cycle.sim.listeners).toBe(0); expect(cycle.sim.bodies).toBe(0); }\n      |                                                                                                                                                                                                                               ^\n  122 |   save('lifecycle', data);\n  123 | });\n  124 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/private/tmp/postmerge-10-control/tests/e2e/vfx.spec.ts",
+                        "column": 223,
+                        "line": 121
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m5\u001b[39m\n\n  119 |   });\n  120 |   save('lifecycle', data);\n> 121 |   for (const cycle of data.cycles) { expect(cycle.low.particleCap).toBe(512); expect(cycle.low.particles).toBeLessThanOrEqual(512); expect(cycle.perf.geometries).toBe(data.baseline.geometries); expect(cycle.perf.textures).toBe(data.baseline.textures); expect(cycle.sim.listeners).toBe(0); expect(cycle.sim.bodies).toBe(0); }\n      |                                                                                                                                                                                                                               ^\n  122 |   save('lifecycle', data);\n  123 | });\n  124 |\n    at /private/tmp/postmerge-10-control/tests/e2e/vfx.spec.ts:121:223"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T16:41:45.011Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/private/tmp/postmerge-10-control/test-results/playwright/run-3419/e2e-vfx-T-E15-lifecycle-E1-02ef9--low-tier-reduces-particles-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/private/tmp/postmerge-10-control/test-results/playwright/run-3419/e2e-vfx-T-E15-lifecycle-E1-02ef9--low-tier-reduces-particles-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/private/tmp/postmerge-10-control/tests/e2e/vfx.spec.ts",
+                    "column": 223,
+                    "line": 121
+                  }
+                },
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 7822,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m5\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m5\u001b[39m\n    at /private/tmp/postmerge-10-control/tests/e2e/vfx.spec.ts:121:223",
+                    "location": {
+                      "file": "/private/tmp/postmerge-10-control/tests/e2e/vfx.spec.ts",
+                      "column": 223,
+                      "line": 121
+                    },
+                    "snippet": "  119 |   });\n  120 |   save('lifecycle', data);\n> 121 |   for (const cycle of data.cycles) { expect(cycle.low.particleCap).toBe(512); expect(cycle.low.particles).toBeLessThanOrEqual(512); expect(cycle.perf.geometries).toBe(data.baseline.geometries); expect(cycle.perf.textures).toBe(data.baseline.textures); expect(cycle.sim.listeners).toBe(0); expect(cycle.sim.bodies).toBe(0); }\n      |                                                                                                                                                                                                                               ^\n  122 |   save('lifecycle', data);\n  123 | });\n  124 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/private/tmp/postmerge-10-control/tests/e2e/vfx.spec.ts",
+                        "column": 223,
+                        "line": 121
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m5\u001b[39m\n\n  119 |   });\n  120 |   save('lifecycle', data);\n> 121 |   for (const cycle of data.cycles) { expect(cycle.low.particleCap).toBe(512); expect(cycle.low.particles).toBeLessThanOrEqual(512); expect(cycle.perf.geometries).toBe(data.baseline.geometries); expect(cycle.perf.textures).toBe(data.baseline.textures); expect(cycle.sim.listeners).toBe(0); expect(cycle.sim.bodies).toBe(0); }\n      |                                                                                                                                                                                                                               ^\n  122 |   save('lifecycle', data);\n  123 | });\n  124 |\n    at /private/tmp/postmerge-10-control/tests/e2e/vfx.spec.ts:121:223"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 1,
+                  "startTime": "2026-10-18T16:41:51.802Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/private/tmp/postmerge-10-control/test-results/playwright/run-3419/e2e-vfx-T-E15-lifecycle-E1-02ef9--low-tier-reduces-particles-chromium-retry1/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/private/tmp/postmerge-10-control/test-results/playwright/run-3419/e2e-vfx-T-E15-lifecycle-E1-02ef9--low-tier-reduces-particles-chromium-retry1/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/private/tmp/postmerge-10-control/tests/e2e/vfx.spec.ts",
+                    "column": 223,
+                    "line": 121
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ec6e762950f9b5bd924e-4668a6bd9bfaa90d9ca6",
+          "file": "e2e/vfx.spec.ts",
+          "line": 113,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-18T16:41:44.350Z",
+    "duration": 15648.354,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  }
+}

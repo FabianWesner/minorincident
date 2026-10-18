@@ -1,0 +1,578 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/node_modules/.bin/playwright",
+      "test",
+      "tests/e2e/l1-grade.spec.ts",
+      "tests/e2e/l1-look.spec.ts",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3411",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3411",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3411",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3411",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3411",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3411",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3411 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3411",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/l1-grade.spec.ts",
+      "file": "e2e/l1-grade.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "desktop high",
+          "file": "e2e/l1-grade.spec.ts",
+          "line": 8,
+          "column": 42,
+          "specs": [
+            {
+              "title": "@E19 grade uses one lit material model and HDR diner emitters in WebGL2",
+              "ok": true,
+              "tags": [
+                "E19"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "old L1 diner flow retired (L1 v2)",
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l1-grade.spec.ts",
+                        "line": 5,
+                        "column": 30
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 50,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T16:59:21.646Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "old L1 diner flow retired (L1 v2)",
+                          "location": {
+                            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l1-grade.spec.ts",
+                            "line": 5,
+                            "column": 30
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "89aea232fa69c2402249-04944ff390800521a787",
+              "file": "e2e/l1-grade.spec.ts",
+              "line": 10,
+              "column": 3
+            },
+            {
+              "title": "@E19 @perf grade holds frame/draw/triangle budgets with 200 infected",
+              "ok": true,
+              "tags": [
+                "E19",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "old L1 diner flow retired (L1 v2)",
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l1-grade.spec.ts",
+                        "line": 5,
+                        "column": 30
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 31,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T16:59:21.764Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "old L1 diner flow retired (L1 v2)",
+                          "location": {
+                            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l1-grade.spec.ts",
+                            "line": 5,
+                            "column": 30
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "89aea232fa69c2402249-bf7cb9f56775c82d60c9",
+              "file": "e2e/l1-grade.spec.ts",
+              "line": 28,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "portrait low",
+          "file": "e2e/l1-grade.spec.ts",
+          "line": 8,
+          "column": 42,
+          "specs": [
+            {
+              "title": "@E19 grade uses one lit material model and HDR diner emitters in WebGL2",
+              "ok": true,
+              "tags": [
+                "E19"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "old L1 diner flow retired (L1 v2)",
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l1-grade.spec.ts",
+                        "line": 5,
+                        "column": 30
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 32,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T16:59:21.800Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "old L1 diner flow retired (L1 v2)",
+                          "location": {
+                            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l1-grade.spec.ts",
+                            "line": 5,
+                            "column": 30
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "89aea232fa69c2402249-98df12b8c50fb75b5c19",
+              "file": "e2e/l1-grade.spec.ts",
+              "line": 10,
+              "column": 3
+            },
+            {
+              "title": "@E19 @perf grade holds frame/draw/triangle budgets with 100 infected",
+              "ok": true,
+              "tags": [
+                "E19",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "old L1 diner flow retired (L1 v2)",
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l1-grade.spec.ts",
+                        "line": 5,
+                        "column": 30
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 33,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T16:59:21.838Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "old L1 diner flow retired (L1 v2)",
+                          "location": {
+                            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l1-grade.spec.ts",
+                            "line": 5,
+                            "column": 30
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "89aea232fa69c2402249-4dade95b57fb4ed655e4",
+              "file": "e2e/l1-grade.spec.ts",
+              "line": 28,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e/l1-look.spec.ts",
+      "file": "e2e/l1-look.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "desktop",
+          "file": "e2e/l1-look.spec.ts",
+          "line": 18,
+          "column": 42,
+          "specs": [
+            {
+              "title": "@E19 @M1-14 L1 close-camera surfaces, dressing, ambient motion and GPU budget",
+              "ok": true,
+              "tags": [
+                "E19",
+                "M1-14"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "old L1 diner flow retired (L1 v2)",
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l1-look.spec.ts",
+                        "line": 5,
+                        "column": 30
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 49,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T16:59:22.093Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "old L1 diner flow retired (L1 v2)",
+                          "location": {
+                            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l1-look.spec.ts",
+                            "line": 5,
+                            "column": 30
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "f3dbbedafeb25978c2e3-15bb9dfee53ef528e256",
+              "file": "e2e/l1-look.spec.ts",
+              "line": 20,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "iPhone portrait",
+          "file": "e2e/l1-look.spec.ts",
+          "line": 18,
+          "column": 42,
+          "specs": [
+            {
+              "title": "@E19 @M1-14 L1 close-camera surfaces, dressing, ambient motion and GPU budget",
+              "ok": true,
+              "tags": [
+                "E19",
+                "M1-14"
+              ],
+              "tests": [
+                {
+                  "timeout": 60000,
+                  "annotations": [
+                    {
+                      "type": "fixme",
+                      "description": "old L1 diner flow retired (L1 v2)",
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l1-look.spec.ts",
+                        "line": 5,
+                        "column": 30
+                      }
+                    }
+                  ],
+                  "expectedStatus": "skipped",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "skipped",
+                      "duration": 31,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T16:59:22.208Z",
+                      "annotations": [
+                        {
+                          "type": "fixme",
+                          "description": "old L1 diner flow retired (L1 v2)",
+                          "location": {
+                            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l1-look.spec.ts",
+                            "line": 5,
+                            "column": 30
+                          }
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "skipped"
+                }
+              ],
+              "id": "f3dbbedafeb25978c2e3-73abf2cf9c4f251ef011",
+              "file": "e2e/l1-look.spec.ts",
+              "line": 20,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-18T16:59:21.046Z",
+    "duration": 1212.888,
+    "expected": 0,
+    "skipped": 6,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
