@@ -50,7 +50,7 @@ test('passenger reveal follows the authoritative L2 truck and L4 bus instead of 
   const geometry = new BoxGeometry(2, 2, 6), material = new MeshBasicNodeMaterial();
   const model = new Mesh(geometry, material); model.position.x = 10;
   const world = { vehicles: { active: null }, missions: { state: { l2: { seated: true, truckId: 7 }, l4: { seated: true, convoyIds: l4.convoy.vehicles.map((_, i) => 20 + i) } } } };
-  const vehicles = Object.assign(Object.create(VehicleView.prototype), { world, records: new Map([[7, { model }]]) }) as VehicleView;
+  const vehicles = Object.assign(Object.create(VehicleView.prototype), { world, records: new Map([[7, { model, parent: model, bounds: new Box3(new Vector3(-1, -1, -3), new Vector3(1, 1, 3)) }]]) }) as VehicleView;
   const bus = world.missions.state.l4.convoyIds[l4.convoy.vehicles.findIndex(v => v.player)];
   const entities = Object.assign(Object.create(EntityAssets.prototype), { world, records: new Map([[999, { model: new Mesh(geometry, material) }], [bus, { model }]]) }) as EntityAssets;
   const bounds = new Box3();

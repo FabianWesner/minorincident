@@ -1,0 +1,61 @@
+{
+  "baseCommit": "fcf81b4da4cdea623c1ddd3c0f8620a41a457a46",
+  "typecheck": {
+    "command": "npm run typecheck",
+    "exitCode": 0
+  },
+  "lint": {
+    "command": "npm run lint",
+    "exitCode": 0
+  },
+  "build": {
+    "command": "npm run build",
+    "exitCode": 0,
+    "served": "production preview"
+  },
+  "focusedTests": {
+    "command": "npx vitest run tests/unit/render/vehicle-occlusion.test.ts tests/unit/render/occluder-footprint.test.ts tests/unit/render/seethrough.test.ts tests/unit/render/forecourt-seethrough.test.ts --maxWorkers=1",
+    "exitCode": 0,
+    "filesPassed": 4,
+    "testsPassed": 10
+  },
+  "sceneMatrix": {
+    "filter": "seethrough-apc-*",
+    "backends": [
+      "webgl2",
+      "webgpu"
+    ],
+    "tiers": [
+      "high",
+      "low"
+    ],
+    "zooms": [
+      1.5,
+      1,
+      0.5
+    ],
+    "passed": 36,
+    "total": 36,
+    "consoleErrors": 0,
+    "headless": true,
+    "angle": "metal",
+    "SCENE_PORT": 3431,
+    "E2E_PORT": 3432,
+    "browserReservationMinutesApprox": 11
+  },
+  "nativeFrameTime": "unmeasured: shared Mac busy; one browser batch allowance",
+  "heavyTests": {
+    "status": "unmeasured",
+    "waitSeconds": 1807,
+    "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit tests/sim tests/levels --maxWorkers=4",
+    "reason": "All Hetzner slots occupied; autoscaling failed with Primary IP limit exceeded; cancelled queue request at 30-minute cap."
+  },
+  "sourceSha256": {
+    "src/render/GameView.ts": "5f5034e52ad11df64239c94db6164a0afefcd7bee23922ed331d07e5593ddd76",
+    "src/render/VehicleView.ts": "f571df832e8ad8f1e76c8a5c53ee35a54f74fb96ac34bad3ca8abd7a3d359607",
+    "src/render/SubjectOcclusion.ts": "48545cea805837b4b13f7cc64197ba4463f0f7d4d08d43e8804177a1ee12b65b",
+    "tests/scenes/catalog/seethrough-apc-behind-building.json": "aaa090114ab7a629f807b403c88514bc34508d8491618ab87f02f3111a856f00",
+    "tests/scenes/catalog/seethrough-apc-behind-truck.json": "3369f087a8ddff139e15caf9b62ceecb373f7136dac4576fa0370f6ebeda5c90",
+    "tests/scenes/catalog/seethrough-apc-beside-sedans.json": "1d5859614a11f4cfa5150e14b7e1ceb78594e693e3e816d025c9e363d1bea7d4"
+  }
+}
