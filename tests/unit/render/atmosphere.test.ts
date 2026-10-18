@@ -74,7 +74,10 @@ test('@E25 atmosphere 2: every campaign level has its own grade, haze and visibl
   for (const preset of campaign) {
     const look = { ...worldLook, ...timeOfDay[preset].look };
     expect(look.gradeAmount, preset).toBeGreaterThanOrEqual(.5);
-    expect(look.hazeAmount, preset).toBeGreaterThan(0);
+    // L9/L10 navigation routes: any haze over the verge cut the night-read road contrast from 2.7 to 2.0-2.4
+    // (Scene Lab night-read-* matrix), so those two carry their mood with grade and motes only.
+    if (preset === 'L9-crossing' || preset === 'L10-night') expect(look.hazeAmount, preset).toBe(0);
+    else expect(look.hazeAmount, preset).toBeGreaterThan(0);
     signatures.add(`${look.gradeShadow}/${look.gradeHighlight}`);
     const day = timeOfDay[preset].intensity >= 1;
     if (day) expect(look.cloudShadow, preset).toBeGreaterThan(0); else expect(look.cloudShadow, preset).toBe(0);

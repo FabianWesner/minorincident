@@ -16,7 +16,7 @@ export const worldLook = {
   // Atmosphere 2 (render only, neutral defaults): analytic split-tone grade in the existing PostFx composite,
   // camera-relative low haze (start/end in multiples of the camera distance), drifting cloud shadows, lamp beam weight.
   gradeShadow: '#ffffff', gradeHighlight: '#ffffff', gradeAmount: 0, gradeContrast: 1, gradeSaturation: 1,
-  haze: '#ffffff', hazeAmount: 0, hazeStart: 1.02, hazeEnd: 1.7, hazeHeight: 6,
+  haze: '#ffffff', hazeAmount: 0, hazeStart: 1.25, hazeEnd: 2, hazeHeight: 6,
   cloudShadow: 0, cloudScale: 22, cloudSpeed: 1, beamStrength: 1,
   worldSurvivorRed: '#cf6565', worldBlood: '#994d55', worldRedDark: '#994854', worldSirenRed: '#dc6974',
 } as const;
