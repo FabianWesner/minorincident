@@ -3,12 +3,30 @@
     "tick": 60,
     "sameTick": 60,
     "start": {
+      "obstruction": {
+        "remainingTicks": 0,
+        "opacity": 0
+      },
+      "shots": [],
       "enabled": true,
+      "colorblind": false,
       "gore": "Full",
       "quality": "high",
       "flashReduction": false,
       "time": 0,
-      "particles": 60,
+      "lastSpray": {
+        "actionId": "weapon.machete",
+        "direction": {
+          "x": 1,
+          "z": 0
+        },
+        "droplets": 44,
+        "chunks": 4,
+        "gravity": 9.81
+      },
+      "surfaceSplats": 0,
+      "pendingSplats": 15,
+      "particles": 72,
       "particleCap": 2048,
       "decals": 2,
       "decalCap": 600,
@@ -22,6 +40,36 @@
         "suppressed": 0
       },
       "flash": 0,
+      "blasts": {
+        "wind": {
+          "x": 0.55,
+          "z": 0.25
+        },
+        "blasts": 0,
+        "puffs": 0,
+        "puffCap": 400,
+        "fireballs": 0,
+        "fireballCap": 96,
+        "chunks": 0,
+        "chunkCap": 64,
+        "flames": 0,
+        "glows": 0,
+        "vehicleSmokeColumns": 0,
+        "columns": 0,
+        "transientColumns": 0,
+        "fireColumns": 0,
+        "columnShadows": 0,
+        "clouds": 0,
+        "scorch": 0,
+        "parts": 0,
+        "flash": 0,
+        "bulletTime": {
+          "scale": 1,
+          "remaining": 0,
+          "progress": 0
+        },
+        "slowMotion": true
+      },
       "coverage": 0.025,
       "detached": 0,
       "dismemberedKills": 0,
@@ -29,12 +77,30 @@
       "explosionRadius": 0
     },
     "before": {
+      "obstruction": {
+        "remainingTicks": 0,
+        "opacity": 0
+      },
+      "shots": [],
       "enabled": true,
+      "colorblind": false,
       "gore": "Full",
       "quality": "high",
       "flashReduction": false,
       "time": 0.039,
-      "particles": 60,
+      "lastSpray": {
+        "actionId": "weapon.machete",
+        "direction": {
+          "x": 1,
+          "z": 0
+        },
+        "droplets": 44,
+        "chunks": 4,
+        "gravity": 9.81
+      },
+      "surfaceSplats": 0,
+      "pendingSplats": 15,
+      "particles": 72,
       "particleCap": 2048,
       "decals": 2,
       "decalCap": 600,
@@ -48,6 +114,36 @@
         "suppressed": 0
       },
       "flash": 0,
+      "blasts": {
+        "wind": {
+          "x": 0.55,
+          "z": 0.25
+        },
+        "blasts": 0,
+        "puffs": 0,
+        "puffCap": 400,
+        "fireballs": 0,
+        "fireballCap": 96,
+        "chunks": 0,
+        "chunkCap": 64,
+        "flames": 0,
+        "glows": 0,
+        "vehicleSmokeColumns": 0,
+        "columns": 0,
+        "transientColumns": 0,
+        "fireColumns": 0,
+        "columnShadows": 0,
+        "clouds": 0,
+        "scorch": 0,
+        "parts": 0,
+        "flash": 0,
+        "bulletTime": {
+          "scale": 1,
+          "remaining": 0,
+          "progress": 0
+        },
+        "slowMotion": true
+      },
       "coverage": 0.025,
       "detached": 0,
       "dismemberedKills": 0,
@@ -55,12 +151,30 @@
       "explosionRadius": 0
     },
     "after": {
+      "obstruction": {
+        "remainingTicks": 0,
+        "opacity": 0
+      },
+      "shots": [],
       "enabled": true,
+      "colorblind": false,
       "gore": "Full",
       "quality": "high",
       "flashReduction": false,
       "time": 0.05,
-      "particles": 60,
+      "lastSpray": {
+        "actionId": "weapon.machete",
+        "direction": {
+          "x": 1,
+          "z": 0
+        },
+        "droplets": 44,
+        "chunks": 4,
+        "gravity": 9.81
+      },
+      "surfaceSplats": 0,
+      "pendingSplats": 15,
+      "particles": 72,
       "particleCap": 2048,
       "decals": 2,
       "decalCap": 600,
@@ -74,6 +188,36 @@
         "suppressed": 0
       },
       "flash": 0,
+      "blasts": {
+        "wind": {
+          "x": 0.55,
+          "z": 0.25
+        },
+        "blasts": 0,
+        "puffs": 0,
+        "puffCap": 400,
+        "fireballs": 0,
+        "fireballCap": 96,
+        "chunks": 0,
+        "chunkCap": 64,
+        "flames": 0,
+        "glows": 0,
+        "vehicleSmokeColumns": 0,
+        "columns": 0,
+        "transientColumns": 0,
+        "fireColumns": 0,
+        "columnShadows": 0,
+        "clouds": 0,
+        "scorch": 0,
+        "parts": 0,
+        "flash": 0,
+        "bulletTime": {
+          "scale": 1,
+          "remaining": 0,
+          "progress": 0
+        },
+        "slowMotion": true
+      },
       "coverage": 0.025,
       "detached": 0,
       "dismemberedKills": 0,
@@ -82,12 +226,30 @@
     }
   },
   "crowd": {
+    "obstruction": {
+      "remainingTicks": 0,
+      "opacity": 0
+    },
+    "shots": [],
     "enabled": true,
+    "colorblind": false,
     "gore": "Full",
     "quality": "high",
     "flashReduction": false,
     "time": 0,
-    "particles": 576,
+    "lastSpray": {
+      "actionId": "ability.ground-slam",
+      "direction": {
+        "x": 1,
+        "z": 0
+      },
+      "droplets": 44,
+      "chunks": 4,
+      "gravity": 9.81
+    },
+    "surfaceSplats": 0,
+    "pendingSplats": 120,
+    "particles": 768,
     "particleCap": 2048,
     "decals": 16,
     "decalCap": 600,
@@ -101,6 +263,36 @@
       "suppressed": 1
     },
     "flash": 0,
+    "blasts": {
+      "wind": {
+        "x": 0.55,
+        "z": 0.25
+      },
+      "blasts": 0,
+      "puffs": 0,
+      "puffCap": 400,
+      "fireballs": 0,
+      "fireballCap": 96,
+      "chunks": 0,
+      "chunkCap": 64,
+      "flames": 0,
+      "glows": 0,
+      "vehicleSmokeColumns": 0,
+      "columns": 0,
+      "transientColumns": 0,
+      "fireColumns": 0,
+      "columnShadows": 0,
+      "clouds": 0,
+      "scorch": 0,
+      "parts": 0,
+      "flash": 0,
+      "bulletTime": {
+        "scale": 1,
+        "remaining": 0,
+        "progress": 0
+      },
+      "slowMotion": true
+    },
     "coverage": 0,
     "detached": 40,
     "dismemberedKills": 8,

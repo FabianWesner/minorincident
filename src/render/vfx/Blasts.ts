@@ -5,7 +5,7 @@ import { epiloguePull } from '../../sim/missions/LevelTenEpilogue';
 import { AdditiveBlending, BoxGeometry, DoubleSide, DynamicDrawUsage, Frustum, Group, IcosahedronGeometry, InstancedBufferAttribute, InstancedMesh, Matrix4, MeshBasicNodeMaterial, MeshLambertNodeMaterial, PlaneGeometry, Quaternion, SphereGeometry, Vector3, type BufferGeometry, type Camera, type Node } from 'three/webgpu';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
-import { attribute, cameraPosition, cameraWorldMatrix, dot, float, Fn, fract, mix, mx_noise_float, normalView, normalWorld, positionGeometry, positionWorld, screenCoordinate, smoothstep, uniform, uv, vec2, vec3, vec4 } from 'three/tsl';
+import { attribute, cameraPosition, cameraWorldMatrix, cos, dot, exp, float, Fn, fract, mix, mx_noise_float, normalView, normalWorld, positionGeometry, positionWorld, screenCoordinate, sin, smoothstep, uniform, uv, vec2, vec3, vec4 } from 'three/tsl';
 import { Rng } from '../../core/Rng';
 import { blastFxPresets, type BlastFxPreset } from '../../data/explosions';
 import type { GameEvent } from '../../sim/world/types';
@@ -22,7 +22,7 @@ export type BlastLight = (x: number, z: number, hex: string, intensity: number, 
 export interface BlastHost { camera?(): Camera; particles: FxPool; shake(strength: number): void; roll?(strength: number): void; focus?(): { x: number; z: number }; light?: BlastLight; field?: LightField; ambient?: Node<'float'>; sunDirection?(): { x: number; y: number; z: number } }
 
 /** Spec 07 §8 budgets: smoke puffs 400 high / 120 low; fireball spheres; flame cards; ground light pools. */
-const PUFFS = 400, PUFFS_LOW = 120, FIREBALLS = 48, FLAMES = 128, GLOWS = 40, PARTS = 12;
+const PUFFS = 400, PUFFS_LOW = 120, FIREBALLS = 96, FIREBALLS_LOW = 56, DEBRIS = 64, FLAMES = 128, GLOWS = 40, PARTS = 12;
 const wind = { x: .55, z: .25 };
 const identity = new Matrix4();
 const up = new Vector3(0, 1, 0);
@@ -44,15 +44,18 @@ export class Blasts extends Group {
   private readonly heat = uniform(1);
   private readonly windNode = uniform(new Vector3(wind.x, 0, wind.z));
   private readonly playerNode = uniform(new Vector3(-1000, 1, -1000));
+  private readonly sunNode = uniform(new Vector3(.45, .78, .43).normalize());
   private readonly fireballs; private readonly fb;
   private readonly puffs; private readonly pf;
   private readonly flames; private readonly fl;
   private readonly glows; private readonly gl;
+  private readonly debris; private readonly db;
   private readonly parts: InstancedMesh;
   private readonly columnShadows: InstancedMesh;
   readonly scorch = new FxPool(64, 'ground');
   private readonly rng: Rng;
-  private fbCursor = 0; private puffCursor = 0;
+  private fbCursor = 0; private puffCursor = 0; private debrisCursor = 0;
+  private readonly debrisExpiry = new Float64Array(DEBRIS);
   private puffExpiry = new Float64Array(PUFFS); private fbExpiry = new Float64Array(FIREBALLS);
   private readonly frustum = new Frustum();
   private readonly projection = new Matrix4();
@@ -76,29 +79,52 @@ export class Blasts extends Group {
   constructor(private readonly world: SimWorld, private readonly host: BlastHost) {
     super(); this.name = 'e27-blasts'; this.rng = new Rng(world.seed, 'blasts');
     const clock = this.clock, heat = this.heat;
-    // Fireballs: origin(x,y,z,birth), params(size, life, delay, rise).
+    // Fireballs: origin(x,y,z,birth), params(size, life, delay, rise), style(drift x, drift z, kind, unused).
+    // Kind 0 fire: hot noise-eroded lobes that spread outward, cool to red and break apart.
+    // Kind 1 soot: dark, sun/ember-lit billows that overtake the fire and erode late (the contrast that sells the blast).
+    // Kind 2 flash: the white-hot core of the first frames, shattering as it fades.
     const fbMaterial = new MeshBasicNodeMaterial();
-    ({ mesh: this.fireballs, attrs: this.fb } = instanced(new SphereGeometry(1, 20, 14), fbMaterial, FIREBALLS, { fbOrigin: 4, fbParams: 4 }));
+    ({ mesh: this.fireballs, attrs: this.fb } = instanced(new SphereGeometry(1, 20, 14), fbMaterial, FIREBALLS, { fbOrigin: 4, fbParams: 4, fbStyle: 4 }));
     {
-      const o = attribute('fbOrigin', 'vec4'), prm = attribute('fbParams', 'vec4');
+      const o = attribute('fbOrigin', 'vec4'), prm = attribute('fbParams', 'vec4'), st = attribute('fbStyle', 'vec4');
+      const kind = st.z.add(.5).floor(), soot = kind.equal(1).select(1, 0), flashKind = kind.equal(2).select(1, 0);
       const age = clock.sub(o.w).sub(prm.z), progress = age.div(prm.y.max(.001)).clamp(0, 1);
       const alive = age.greaterThanEqual(0).and(age.lessThan(prm.y)).select(1, 0);
       const seed = vec3(o.x.mul(1.7), o.z.mul(1.3), o.w.mul(5.1).fract().mul(10));
       fbMaterial.positionNode = Fn(() => {
-        const grow = float(1).sub(float(1).sub(progress).pow(3)).mul(.85).add(.15);
-        const bump = mx_noise_float(positionGeometry.mul(1.8).add(seed).add(vec3(0, clock.mul(-1.2), 0))).mul(.28).add(1);
-        return o.xyz.add(vec3(0, prm.w.mul(progress), 0)).add(positionGeometry.mul(prm.x.mul(grow).mul(bump).mul(alive)));
+        const out = float(1).sub(float(1).sub(progress).pow(2.2));
+        const fireGrow = float(1).sub(float(1).sub(progress).pow(3)).mul(.85).add(.15);
+        const sootGrow = float(1).sub(float(1).sub(progress).pow(2)).mul(.7).add(.3).mul(float(1).sub(smoothstep(.65, 1, progress).mul(.45)));
+        const flashGrow = float(1).sub(float(1).sub(progress).pow(5)).mul(.6).add(.4);
+        const grow = mix(mix(fireGrow, sootGrow, soot), flashGrow, flashKind);
+        const bump = mx_noise_float(positionGeometry.mul(1.8).add(seed).add(vec3(0, clock.mul(-1.2), 0))).mul(mix(.3, .45, soot)).add(1);
+        const rise = mix(progress, progress.pow(.6), soot);
+        return o.xyz.add(vec3(st.x, 0, st.y).mul(out)).add(vec3(0, prm.w.mul(rise), 0)).add(positionGeometry.mul(prm.x.mul(grow).mul(bump).mul(alive)));
       })();
       fbMaterial.outputNode = Fn(() => {
         const n = mx_noise_float(positionGeometry.mul(2.3).add(seed).add(vec3(0, clock.mul(-2), 0))).mul(.5).add(.5);
-        n.lessThan(progress.mul(.95).sub(.05)).or(alive.lessThan(.5)).discard();
-        const h = n.mul(float(1).sub(progress)).mul(1.4);
-        const soot = vec3(.07, .055, .05), red = vec3(.85, .16, .04), orange = vec3(1, .45, .08), yellow = vec3(1, .82, .32), white = vec3(1, .97, .85);
-        let c = mix(soot, red, smoothstep(.05, .2, h));
+        const erode = mix(mix(progress.mul(.95).sub(.05), progress.pow(1.6).mul(.85).add(float(1).sub(normalView.z.abs()).mul(.4).mul(progress)), soot), progress.mul(1.2).sub(.15), flashKind);
+        n.lessThan(erode).or(alive.lessThan(.5)).discard();
+        // Readability: soot billows dither away in the player's see-through hole like every other occluder.
+        const dither = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
+        soot.greaterThan(.5).and(dither.greaterThan(seeThroughHole(1.15).mul(.7).add(.3))).discard();
+        const h = n.mul(float(1).sub(progress).pow(1.25)).mul(1.45);
+        const sootTone = vec3(.07, .055, .05), red = vec3(.85, .16, .04), orange = vec3(1, .45, .08), yellow = vec3(1, .82, .32), white = vec3(1, .97, .85);
+        let c = mix(sootTone, red, smoothstep(.05, .2, h));
         c = mix(c, orange, smoothstep(.2, .42, h)); c = mix(c, yellow, smoothstep(.42, .7, h)); c = mix(c, white, smoothstep(.7, 1, h));
         // Self-occlusion: darker at the silhouette, glowing core facing the camera.
         const facing = normalView.z.abs().smoothstep(0, .8).mul(.5).add(.5);
-        return vec4(c.mul(facing).mul(mix(1, 2.6, smoothstep(.25, .8, h))).mul(heat), 1);
+        const fire = c.mul(facing).mul(mix(1, 2.6, smoothstep(.25, .8, h))).mul(heat);
+        // Soot: sun-shaded dark volume, lit orange from below while the fire is young, with hot pockets in the first moments.
+        const sun = normalWorld.dot(this.sunNode).mul(.5).add(.5);
+        const ambient = host.ambient ? host.ambient.clamp(.18, 1) : float(1);
+        const under = float(1).sub(progress).pow(2).mul(normalWorld.y.negate().mul(.5).add(.5));
+        const pocket = smoothstep(.74, .96, n).mul(float(1).sub(progress.mul(3.2)).clamp(0, 1));
+        // Dark albedo reflects sun and practical light alike: field radiance multiplies it instead of adding a bright veil.
+        const albedo = vec3(.046, .04, .037), lit = host.field ? host.field.sample().mul(.8) : vec3(0);
+        const sootColor = mix(albedo.mul(mix(.42, 1.55, sun).mul(ambient).add(lit)).add(vec3(.95, .34, .08).mul(under.mul(.4).mul(heat))), orange.mul(2.2).mul(heat), pocket);
+        const flashColor = mix(vec3(1, .78, .4), white, n).mul(float(1).sub(progress).mul(1.6).add(1.2)).mul(heat);
+        return vec4(mix(mix(fire, sootColor, soot), flashColor, flashKind), 1);
       })();
     }
     // Smoke puffs: origin(x,y,z,birth), motion(vx,vy,vz,life), style(size0,size1,heat,shade).
@@ -127,7 +153,7 @@ export class Blasts extends Group {
         const smokeColor = st.z.lessThan(-1.5).select(vec3(.55, .82, .8).mul(mix(.75, 1.12, sun)).mul(ambient.max(.6)), st.z.lessThan(0).select(vec3(.2, .48, .09).mul(mix(.62, 1.12, sun)).mul(ambient), base));
         // Practical radiance lights the cloud; damp the player-ray contribution so
         // the readability aura does not turn the foreground smoke into a bright veil.
-        const color = mix(smokeColor, vec3(1, .42, .12).mul(1.2), ember.clamp(0, .6)).add(host.field ? host.field.sample().mul(positionWorld.y.smoothstep(3.5, 1.5)).mul(nearRay.select(.25, 3)) : vec3(0));
+        const color = mix(smokeColor, vec3(1, .42, .12).mul(1.2), ember.clamp(0, .6)).add(host.field ? host.field.sample().mul(positionWorld.y.smoothstep(3.5, 1.5)).mul(nearRay.select(.25, 3)).mul(st.w.mul(2.5).min(1)) : vec3(0));
         const edge = normalView.z.abs().smoothstep(.05, .7);
         const grain = mx_noise_float(positionWorld.mul(.9).add(seed)).mul(.25).add(.85);
         const fade = age.div(.45).min(1).mul(float(1).sub(progress).pow(1.3));
@@ -185,6 +211,25 @@ export class Blasts extends Group {
       })();
       this.glows.renderOrder = 1;
     }
+    // Debris chunks: flat-shaded rocks/scrap on analytic ballistic arcs (no physics bodies), tumbling until they land,
+    // glowing hot for the first second. origin(x,y,z,birth), velocity(vx,vy,vz,life), spin(axis xyz, rad/s), params(size, landing s, unused, heat), color.
+    const debrisMaterial = new MeshLambertNodeMaterial({ flatShading: true });
+    ({ mesh: this.debris, attrs: this.db } = instanced(new IcosahedronGeometry(1, 0), debrisMaterial, DEBRIS, { dOrigin: 4, dVelocity: 4, dSpin: 4, dParams: 4, dColor: 3 }));
+    {
+      const o = attribute('dOrigin', 'vec4'), v = attribute('dVelocity', 'vec4'), sp = attribute('dSpin', 'vec4'), prm = attribute('dParams', 'vec4');
+      const age = clock.sub(o.w), alive = age.greaterThanEqual(0).and(age.lessThan(v.w)).select(1, 0);
+      const flight = age.max(0).min(prm.y), after = age.sub(prm.y).max(0);
+      debrisMaterial.positionNode = Fn(() => {
+        const h = o.w.mul(7.31).add(o.x.mul(.37)).fract();
+        const scale = vec3(h.mul(.8).add(.6), h.mul(.5).add(.38), float(1.3).sub(h.mul(.6))).mul(prm.x).mul(alive).mul(float(1).sub(smoothstep(v.w.sub(.6), v.w, age)));
+        const local = positionGeometry.mul(scale), theta = sp.w.mul(flight.add(after.min(.25).mul(.4))), c = cos(theta), s = sin(theta), axis = sp.xyz;
+        const turned = local.mul(c).add(axis.cross(local).mul(s)).add(axis.mul(axis.dot(local)).mul(float(1).sub(c)));
+        const slide = float(1).sub(exp(after.mul(-5))).mul(.05);
+        return o.xyz.add(v.xyz.mul(flight)).add(vec3(0, flight.mul(flight).mul(-4.905), 0)).add(vec3(v.x, 0, v.z).mul(slide)).add(turned);
+      })();
+      debrisMaterial.colorNode = attribute('dColor', 'vec3');
+      (debrisMaterial as unknown as { emissiveNode: Node }).emissiveNode = vec3(1, .38, .07).mul(prm.w).mul(float(1).sub(age.div(1.3)).clamp(0, 1).pow(2)).mul(2.4).mul(heat);
+    }
     // Detached sheet metal has rolled edges and raised reinforcement, readable
     // while tumbling. The normalized volume still follows each sim body's bounds.
     const panel = new RoundedBoxGeometry(.96, .96, .86, 1, .065);
@@ -206,11 +251,11 @@ export class Blasts extends Group {
     shadowMaterial.outputNode = vec4(vec3(.16, .12, .25), q.x.abs().smoothstep(1, .3).mul(q.y.abs().smoothstep(1, .5)).mul(.24));
     this.columnShadows = new InstancedMesh(shadowGeometry, shadowMaterial, 64);
     this.columnShadows.count = 0; this.columnShadows.frustumCulled = false; this.columnShadows.renderOrder = 1;
-    this.add(this.scorch.mesh, this.glows, this.fireballs, this.puffs, this.flames, this.parts, this.columnShadows);
+    this.add(this.scorch.mesh, this.glows, this.fireballs, this.debris, this.puffs, this.flames, this.parts, this.columnShadows);
   }
   get flash(): number { return this.flashAt < 0 ? 0 : this.flashPeak * Math.max(0, 1 - (this.time - this.flashAt) / .16); }
   set(patch: { quality?: 'high' | 'low'; flashReduction?: boolean; slowMotion?: boolean }): void {
-    if (patch.quality) { this.quality = patch.quality; this.puffs.count = patch.quality === 'low' ? PUFFS_LOW : PUFFS; }
+    if (patch.quality) { this.quality = patch.quality; this.puffs.count = patch.quality === 'low' ? PUFFS_LOW : PUFFS; this.fireballs.count = patch.quality === 'low' ? FIREBALLS_LOW : FIREBALLS; }
     if (patch.flashReduction !== undefined) { this.flashReduction = patch.flashReduction; this.heat.value = patch.flashReduction ? .6 : 1; }
     if (patch.slowMotion !== undefined) { this.slowMotion = patch.slowMotion; if (!this.slowMotion) this.bullet = { scale: 1, remaining: 0, progress: 0 }; }
   }
@@ -236,16 +281,35 @@ export class Blasts extends Group {
     this.glow(x, z, r * 2.2, fx.light.color, (this.flashReduction ? .45 : 1) * Math.min(2.2, fx.light.intensity / 100), fx.light.seconds, ground || undefined);
     const hex = `#${fx.light.color.toString(16).padStart(6, '0')}`;
     this.host.light?.(x, z, hex, Math.min(10, fx.light.intensity / 20) * (this.flashReduction ? .5 : 1), fx.light.range, fx.light.seconds, true);
+    // White-hot onset: a shattering core sphere plus a short, wide light pulse on the ground and nearby walls (light field).
+    // Flash reduction keeps only a weak warm pool.
+    // Scaled by the preset flash: a barrel/propane gets a hot white core, a Molotov only a small one.
+    const punch = Math.min(1, fx.flash * 1.6);
+    if (!this.flashReduction && fx.fireball.count > 0) {
+      this.fireball(x, ground + .5 + fx.fireball.size * .3, z, fx.fireball.size * (.2 + .3 * punch), .12, 0, 0, 0, 0, 2);
+      this.host.light?.(x, z, '#fff0d2', 7 * punch, fx.light.range * .7, .12, false);
+    }
+    this.glow(x, z, Math.min(r * 1.8, 9), 0xffe6b8, (this.flashReduction ? .3 : 1.3) * punch, .22, ground || undefined);
     // Mega blasts tint the whole town's light field orange for 5 s (spec 07 §5).
     if (event.cls === 'mega') this.host.light?.(x, z, '#ff7a30', 4, 90, 5, false);
     // Beat 3 fireball: overlapping noise spheres around the centre, staggered by up to 0.12 s.
     const count = low ? Math.ceil(fx.fireball.count / 2) : fx.fireball.count;
+    // Lobes start near the centre and spread outward, so the fireball breaks into separate tongues instead of one blob.
     for (let i = 0; i < count; i++) {
-      const a = this.rng.next() * Math.PI * 2, d = this.rng.next() * fx.fireball.size * .55, size = fx.fireball.size * (.5 + this.rng.next() * .5);
-      this.fireball(x + Math.cos(a) * d, ground + .4 + this.rng.next() * fx.fireball.size * .5, z + Math.sin(a) * d, size, fx.fireball.seconds * (.75 + this.rng.next() * .5), i ? this.rng.next() * .12 : 0, fx.fireball.rise * (.6 + this.rng.next() * .6));
+      const a = this.rng.next() * Math.PI * 2, d = this.rng.next() * fx.fireball.size * .3, size = fx.fireball.size * (.45 + this.rng.next() * .5), out = fx.fireball.size * (.25 + this.rng.next() * .65);
+      this.fireball(x + Math.cos(a) * d, ground + .4 + this.rng.next() * fx.fireball.size * .5, z + Math.sin(a) * d, size, fx.fireball.seconds * (.7 + this.rng.next() * .5), i ? this.rng.next() * .12 : 0, fx.fireball.rise * (.6 + this.rng.next() * .6), Math.cos(a) * out, Math.sin(a) * out);
     }
+    // Dark soot billows roll out of the fire just behind it and keep rising: the dark/hot contrast and the column's first seconds.
+    const sootCount = low ? Math.ceil(fx.fireball.count * .4) : Math.ceil(fx.fireball.count * 1.2), stretch = Math.sqrt(fx.fireball.seconds / .9);
+    for (let i = 0; i < sootCount; i++) {
+      const a = this.rng.next() * Math.PI * 2, d = this.rng.next() * fx.fireball.size * .35, out = fx.fireball.size * (.4 + this.rng.next() * .9), k = i / Math.max(1, sootCount - 1);
+      this.fireball(x + Math.cos(a) * d, ground + .6 + this.rng.next() * fx.fireball.size * .5, z + Math.sin(a) * d, fx.fireball.size * (.3 + this.rng.next() * .32), (1.5 + this.rng.next() * 1.3) * stretch, .05 + k * .22, fx.fireball.rise * (1.2 + k * 1.6 + this.rng.next() * .5), Math.cos(a) * out, Math.sin(a) * out, 1);
+    }
+    // Debris chunks: scrap/rubble on ballistic arcs, a third of them glowing hot.
+    const chunks = fx.fireball.count && fx.dust ? Math.min(24, Math.round((6 + r * 1.6) * (low ? .34 : 1))) : 0;
+    for (let i = 0; i < chunks; i++) this.chunk(x, ground, z, r, i);
     // Beat 4 shockwave: a ground dust ring pushing outward (the E15 ring wave draws the 2r ring).
-    const dust = low ? Math.ceil(fx.dust / 3) : fx.dust;
+    const dust = low ? Math.ceil(fx.dust / 2) : Math.round(fx.dust * 1.6);
     for (let i = 0; i < dust; i++) {
       const a = i / dust * Math.PI * 2 + this.rng.next() * .2, speed = r * (1.2 + this.rng.next() * .6);
       this.host.particles.spawn(now, .9 + this.rng.next() * .5, x + Math.cos(a) * .6, ground + .25, z + Math.sin(a) * .6, Math.cos(a) * speed, .3 + this.rng.next() * .5, Math.sin(a) * speed, .5 + this.rng.next() * .5, particleShape.smoke, 0x8d7b68, .4);
@@ -257,7 +321,7 @@ export class Blasts extends Group {
       this.host.particles.spawn(now, burning ? 1.6 + this.rng.next() : .5 + this.rng.next() * .6, x, ground + .8, z, Math.cos(a) * out, 4 + this.rng.next() * (burning ? 6 : 9), Math.sin(a) * out, burning ? .09 : .045, particleShape.spark, burning ? 0xff7a26 : 0xffe9a8, 9.81, burning ? .3 : .65);
     }
     // Beat 6 smoke column, beat 7 scorch decal (persists to the end of the level; independent of the gore setting).
-    if (fx.smoke.seconds > 0) this.columns.push({ ground: ground || undefined, born: now, x, z, until: now + fx.smoke.seconds, rate: fx.smoke.rate * (low ? .5 : 1), size: fx.smoke.size, heat: fx.smoke.heat, acc: 2, shade: .17, cloud: 0 });
+    if (fx.smoke.seconds > 0) this.columns.push({ ground: ground || undefined, born: now, x, z, until: now + fx.smoke.seconds, rate: fx.smoke.rate * (low ? .5 : 1), size: fx.smoke.size, heat: fx.smoke.heat, acc: 2, shade: .085, cloud: 0 });
     if (fx.scorch > 0) this.scorch.spawn(now, 900, x, ground + .014, z, this.rng.next() * Math.PI, 0, 0, r * fx.scorch * 2, groundShape.scorch, 0x16110f);
     // Camera: shake by size, Bruno's roll kick by distance from the focus.
     const focus = this.host.focus?.(), distance = focus ? Math.hypot(focus.x - x, focus.z - z) : 0;
@@ -265,12 +329,39 @@ export class Blasts extends Group {
     this.host.shake((this.flashReduction ? .3 : 1) * fx.shake * near);
     if (fx.roll) this.host.roll?.(fx.roll * near * (this.rng.next() < .5 ? -1 : 1));
   }
-  private fireball(x: number, y: number, z: number, size: number, life: number, delay: number, rise: number): void {
-    let slot = this.fbCursor++ % FIREBALLS;
-    for (let n = 0; n < FIREBALLS && this.fbExpiry[slot] > this.time; n++) slot = this.fbCursor++ % FIREBALLS;
-    this.fb.fbOrigin.setXYZW(slot, x, y, z, this.time); this.fb.fbParams.setXYZW(slot, size, life, delay, rise);
+  /** Base (E15) blast core for every explosion, including those without an E27 preset (bloated infected): two to four lobes and soot. */
+  core(x: number, ground: number, z: number, radius: number): void {
+    const low = this.quality === 'low', size = Math.min(2.2, .5 + radius * .25);
+    for (let i = 0; i < (low ? 2 : 4); i++) {
+      const a = this.rng.next() * Math.PI * 2, out = size * (.3 + this.rng.next() * .5);
+      this.fireball(x, ground + .5 + this.rng.next() * size * .4, z, size * (.45 + this.rng.next() * .35), .5 + this.rng.next() * .25, i ? this.rng.next() * .08 : 0, size * .8, Math.cos(a) * out, Math.sin(a) * out);
+    }
+    for (let i = 0; i < (low ? 1 : 3); i++) {
+      const a = this.rng.next() * Math.PI * 2, out = size * (.5 + this.rng.next() * .6);
+      this.fireball(x, ground + .6, z, size * (.45 + this.rng.next() * .3), 1.3 + this.rng.next() * .7, .08 + this.rng.next() * .1, size * 1.6, Math.cos(a) * out, Math.sin(a) * out, 1);
+    }
+  }
+  private fireball(x: number, y: number, z: number, size: number, life: number, delay: number, rise: number, driftX = 0, driftZ = 0, kind = 0): void {
+    const cap = this.fireballs.count;
+    let slot = this.fbCursor++ % cap;
+    for (let n = 0; n < cap && this.fbExpiry[slot] > this.time; n++) slot = this.fbCursor++ % cap;
+    this.fb.fbOrigin.setXYZW(slot, x, y, z, this.time); this.fb.fbParams.setXYZW(slot, size, life, delay, rise); this.fb.fbStyle.setXYZW(slot, driftX, driftZ, kind, 0);
     this.fbExpiry[slot] = this.time + life + delay;
-    this.fb.fbOrigin.needsUpdate = this.fb.fbParams.needsUpdate = true; this.fireballs.visible = true;
+    this.fb.fbOrigin.needsUpdate = this.fb.fbParams.needsUpdate = this.fb.fbStyle.needsUpdate = true; this.fireballs.visible = true;
+  }
+  private static readonly debrisColors = [0x2a2422, 0x4b4038, 0x6e6a64, 0x7c3a22, 0x3b3a3d];
+  private chunk(x: number, ground: number, z: number, r: number, i: number): void {
+    const slot = this.debrisCursor++ % DEBRIS, rng = this.rng;
+    const a = rng.next() * Math.PI * 2, out = 3 + rng.next() * r * 1.5, vy = 3.5 + rng.next() * 7.5, size = .07 + rng.next() * (i % 4 === 0 ? .22 : .12);
+    const y = ground + .5 + rng.next() * .5, floor = ground + size * .35, land = (vy + Math.sqrt(vy * vy + 2 * 9.81 * Math.max(0, y - floor))) / 9.81;
+    const ax = rng.next() - .5, ay = rng.next() - .5, az = rng.next() - .5, al = Math.hypot(ax, ay, az) || 1, life = land + 2.5 + rng.next() * 2;
+    const color = Blasts.debrisColors[Math.floor(rng.next() * Blasts.debrisColors.length)];
+    this.db.dOrigin.setXYZW(slot, x + Math.cos(a) * .3, y, z + Math.sin(a) * .3, this.time); this.db.dVelocity.setXYZW(slot, Math.cos(a) * out, vy, Math.sin(a) * out, life);
+    this.db.dSpin.setXYZW(slot, ax / al, ay / al, az / al, 6 + rng.next() * 14); this.db.dParams.setXYZW(slot, size, land, 0, i % 3 === 0 ? 1 : 0);
+    this.db.dColor.setXYZ(slot, (color >> 16 & 255) / 255, (color >> 8 & 255) / 255, (color & 255) / 255);
+    this.debrisExpiry[slot] = this.time + life;
+    for (const attr of Object.values(this.db)) attr.needsUpdate = true;
+    this.debris.visible = true;
   }
   private puff(x: number, y: number, z: number, vx: number, vy: number, vz: number, life: number, size0: number, size1: number, heat: number, shade: number, born = this.time): void {
     const cap = this.puffs.count, slot = this.puffCursor++ % cap;
@@ -278,6 +369,8 @@ export class Blasts extends Group {
     this.puffExpiry[slot] = born + life;
     this.pf.pOrigin.needsUpdate = this.pf.pMotion.needsUpdate = this.pf.pStyle.needsUpdate = true; this.puffs.visible = true;
   }
+  /** Short transient ground pool (muzzle flashes, impact glints): shares the 12-entry glow list. */
+  flashPool(x: number, z: number, radius: number, color: number, intensity: number, life: number, ground?: number): void { this.glow(x, z, radius, color, intensity, life, ground); }
   private glow(x: number, z: number, radius: number, color: number, intensity: number, life: number, ground?: number): void {
     if (this.glowList.length >= 12) this.glowList.shift();
     this.glowList.push({ ground, x, z, radius, color, intensity, born: this.time, life });
@@ -289,6 +382,7 @@ export class Blasts extends Group {
     const weather = this.world.weather;
     if (weather && (weather.kind === 'wind' || weather.kind === 'haze' || weather.kind === 'thunderstorm')) this.windNode.value.set(weather.wind.x, 0, weather.wind.z);
     this.time = now; this.clock.value = now; this.scorch.advance(now);
+    const sunDirection = this.host.sunDirection?.(); if (sunDirection) this.sunNode.value.set(sunDirection.x, sunDirection.y, sunDirection.z).normalize();
     const tick = Math.floor(now * 4);
     if (tick !== this.flames4Hz) { this.flames4Hz = tick; this.syncSources(now); }
     for (let i = this.columns.length - 1; i >= 0; i--) {
@@ -311,7 +405,9 @@ export class Blasts extends Group {
     let fb = false, pf = false;
     for (let i = 0; i < FIREBALLS && !fb; i++) fb = this.fbExpiry[i] > now;
     for (let i = 0; i < this.puffs.count && !pf; i++) pf = this.puffExpiry[i] > now;
-    this.fireballs.visible = fb; this.puffs.visible = pf;
+    let db = false;
+    for (let i = 0; i < DEBRIS && !db; i++) db = this.debrisExpiry[i] > now;
+    this.fireballs.visible = fb; this.puffs.visible = pf; this.debris.visible = db;
   }
   private emit(c: Column, seconds: number): void {
     // Keep the emitter alive in the sim; distant columns must not consume the
@@ -376,7 +472,11 @@ export class Blasts extends Group {
       c.x = e.transform.x; c.z = e.transform.z;
       // Persistent fire needs embers even without a preceding blast. Reuse the
       // existing particle pool at 4 Hz (2 Hz on low), under its unchanged cap.
-      if (this.sourceVisible(c.x, c.z, c.size + 4) && (!low || Math.floor(now * 4) % 2 === 0)) this.host.particles.spawn(now, 1.2, c.x + (this.rng.next() - .5) * .6, (c.ground ?? 0) + .7, c.z + (this.rng.next() - .5) * .6, this.windNode.value.x * .5, 1.7 + this.rng.next(), this.windNode.value.z * .5, .045, particleShape.spark, 0xffb04a, .3, .24);
+      // High: two buoyant embers per tick spread over the fire, drifting with the wind; low keeps one at 2 Hz.
+      if (this.sourceVisible(c.x, c.z, c.size + 4) && (!low || Math.floor(now * 4) % 2 === 0)) for (let k = low ? 1 : 2; k > 0; k--) {
+        const spread = Math.max(.6, (e.hazard?.radius ?? .8) * 1.2);
+        this.host.particles.spawn(now, 1.2 + this.rng.next() * .8, c.x + (this.rng.next() - .5) * spread, (c.ground ?? 0) + .5 + this.rng.next() * .4, c.z + (this.rng.next() - .5) * spread, this.windNode.value.x * .5 + (this.rng.next() - .5) * .6, 1.5 + this.rng.next() * 1.2, this.windNode.value.z * .5 + (this.rng.next() - .5) * .6, .035 + this.rng.next() * .025, particleShape.spark, this.rng.next() < .3 ? 0xffe08a : 0xffa040, k === 1 ? .3 : -.15, .24);
+      }
     }
     for (const id of this.vehicleColumns.keys()) if (!vehicles.has(id)) this.vehicleColumns.delete(id);
     for (const [id, c] of this.fireColumns) if (!seen.has(id)) { c.light?.remove(); this.fireColumns.delete(id); }
@@ -462,7 +562,7 @@ export class Blasts extends Group {
   }
   /** Compile every pipeline during loading: one live instance of each, then clear. */
   prewarm(x: number, z: number): void {
-    this.fireball(x, 1, z, 1, .5, 0, 0); this.puff(x, 1, z, 0, 0, 0, 1, 1, 1, .5, .3);
+    this.fireball(x, 1, z, 1, .5, 0, 0); this.puff(x, 1, z, 0, 0, 0, 1, 1, 1, .5, .3); this.chunk(x, 0, z, 1, 0);
     this.fl.fOrigin.setXYZW(0, x, 0, z, 0); this.fl.fStyle.setXYZW(0, 1, 1, 1, 1); this.flames.count = 1; this.flames.visible = true;
     this.gl.gOrigin.setXYZW(0, x, .03, z, 1); this.gl.gColor.setXYZW(0, 1, .5, .2, 1); this.glows.count = 1; this.glows.visible = true;
     this.fl.fOrigin.needsUpdate = this.fl.fStyle.needsUpdate = this.gl.gOrigin.needsUpdate = this.gl.gColor.needsUpdate = true;
@@ -472,7 +572,7 @@ export class Blasts extends Group {
   }
   reset(): void {
     for (const c of this.fireColumns.values()) c.light?.remove();
-    this.fbExpiry.fill(0); this.puffExpiry.fill(0); this.columns.length = 0; this.fireColumns.clear(); this.cloudColumns.clear(); this.vehicleColumns.clear(); this.glowList.length = 0;
+    this.fbExpiry.fill(0); this.puffExpiry.fill(0); this.debrisExpiry.fill(0); this.db.dVelocity.array.fill(0); this.db.dVelocity.needsUpdate = true; this.debris.visible = false; this.columns.length = 0; this.fireColumns.clear(); this.cloudColumns.clear(); this.vehicleColumns.clear(); this.glowList.length = 0;
     for (const attr of [this.fb.fbParams, this.pf.pMotion]) { attr.array.fill(0); attr.needsUpdate = true; }
     this.scorch.reset(this.time); this.fireballs.visible = this.puffs.visible = this.flames.visible = this.glows.visible = false; this.parts.count = 0;
     this.columnShadows.count = 0;
@@ -482,12 +582,13 @@ export class Blasts extends Group {
     let puffs = 0, fireballs = 0;
     for (let i = 0; i < this.puffs.count; i++) if (this.puffExpiry[i] > this.time) puffs++;
     for (let i = 0; i < FIREBALLS; i++) if (this.fbExpiry[i] > this.time) fireballs++;
-    return { wind: { x: this.windNode.value.x, z: this.windNode.value.z }, blasts: this.blasts, puffs, puffCap: this.puffs.count, fireballs, fireballCap: FIREBALLS, flames: this.flames.visible ? this.flames.count : 0, glows: this.glows.visible ? this.glows.count : 0,
+    let chunks = 0; for (let i = 0; i < DEBRIS; i++) if (this.debrisExpiry[i] > this.time) chunks++;
+    return { wind: { x: this.windNode.value.x, z: this.windNode.value.z }, blasts: this.blasts, puffs, puffCap: this.puffs.count, fireballs, fireballCap: FIREBALLS, chunks, chunkCap: DEBRIS, flames: this.flames.visible ? this.flames.count : 0, glows: this.glows.visible ? this.glows.count : 0,
       vehicleSmokeColumns: this.vehicleColumns.size, columns: this.columns.length + this.fireColumns.size + this.vehicleColumns.size, transientColumns: this.columns.length, fireColumns: this.fireColumns.size, columnShadows: this.columnShadows.count, clouds: this.cloudColumns.size, scorch: this.scorch.count, parts: this.parts.count, flash: this.flash, bulletTime: { ...this.bullet }, slowMotion: this.slowMotion };
   }
   dispose(): void {
     this.reset(); this.scorch.dispose();
-    for (const mesh of [this.fireballs, this.puffs, this.flames, this.glows, this.parts, this.columnShadows]) { mesh.dispose(); mesh.geometry.dispose(); for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) material.dispose(); }
+    for (const mesh of [this.fireballs, this.debris, this.puffs, this.flames, this.glows, this.parts, this.columnShadows]) { mesh.dispose(); mesh.geometry.dispose(); for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) material.dispose(); }
     this.clear();
   }
 }
