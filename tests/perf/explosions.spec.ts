@@ -35,5 +35,8 @@ for (const tier of ['high', 'low'] as const) test(`E27 @E27 @perf ${tier} mega +
   expect(result.blasts).toContain('explosion.gas-tanks');
   expect(result.maxParticles + result.maxPuffs).toBeLessThanOrEqual(tier === 'high' ? 6000 : 2000);
   expect(result.initialInfected).toBe(30); expect(result.fires).toBeGreaterThan(0);
+  // Include first-use compilation and delayed secondary beats in E18's desktop
+  // hitch limit; steady p95 alone can hide a cold 180–290 ms frame.
+  if (tier === 'high') expect(result.frameMax, 'cold blast obeys the E18 50 ms desktop hitch budget').toBeLessThanOrEqual(50);
   expect(result.frameP95).toBeLessThanOrEqual(tier === 'high' ? 16.7 : 33.4); expect(result.simP95).toBeLessThanOrEqual(tier === 'high' ? 4 : 6);
 });
