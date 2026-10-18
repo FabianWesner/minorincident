@@ -1,3 +1,4 @@
+import { uncappedArgs } from '../perf/uncapped';
 import { spawn, execFileSync, type ChildProcess } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
@@ -56,7 +57,7 @@ export class SceneSession {
     // macOS: ANGLE/Metal gives real-GPU WebGL2 headless. WebGPU needs the unsafe flag and may still fall back.
     const args = webgpu ? ['--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--use-angle=metal'] : process.platform === 'darwin' ? ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist'] : ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'];
     // Native frame-budget probes measure uncapped cadence, as the E18 browser specs do.
-    if (process.env.SCENE_UNCAPPED === '1' || this.options.nativeFrameTiming) args.push('--disable-frame-rate-limit', '--disable-gpu-vsync');
+    if (process.env.SCENE_UNCAPPED === '1' || this.options.nativeFrameTiming) args.push(...uncappedArgs());
     this.ownsBrowser = !browser;
     this.browser = browser ?? await chromium.launch({ headless: true, args, ...(this.options.nativeFrameTiming ? { channel: 'chrome' } : {}) });
     const context = await this.browser.newContext({ ...(this.options.phone ? devices['Pixel 7'] : {}), viewport: this.options.viewport, deviceScaleFactor: 1 });

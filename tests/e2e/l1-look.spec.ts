@@ -17,7 +17,7 @@ const spots = [
 ];
 for (const mobile of [false, true]) test.describe(mobile ? 'iPhone portrait' : 'desktop', () => {
   test.use({ viewport: mobile ? { width: 390, height: 844 } : { width: 1600, height: 900 }, isMobile: mobile, hasTouch: mobile, deviceScaleFactor: 1 });
-  test('@E19 @M1-14 L1 close-camera surfaces, dressing, ambient motion and GPU budget', async ({ page }) => {
+  test('@gpu @E19 @M1-14 L1 close-camera surfaces, dressing, ambient motion and GPU budget', async ({ page }) => {
     test.setTimeout(240_000);
     const stage = process.env.M1_LOOK_CAPTURE ?? 'after';
     const output = `test-results/m1-look/${stage}/${mobile ? 'iphone' : 'desktop'}`;

@@ -8,7 +8,8 @@ import { afterEach, describe, expect, it } from 'vitest';
 const exec = promisify(execFile), script = resolve('tools/e2e-lock.sh'), dirs: string[] = [];
 function environment(units = '1') {
   const dir = mkdtempSync(`${tmpdir()}/mi-capacity-test-`); dirs.push(dir);
-  return { dir, env: { ...process.env, MI_E2E_LOCK_HELD: '', MI_E2E_UNITS_HELD: '', E2E_LOCK: `${dir}/lock`, E2E_SLOTS: '3', E2E_UNITS: units } };
+  writeFileSync(`${dir}/python3`, '#!/bin/sh\ncase \"$1\" in *mac-gpu-guard.py) exit 0;; esac\nexec /usr/bin/python3 \"$@\"\n'); chmodSync(`${dir}/python3`, 0o755);
+  return { dir, env: { ...process.env, PATH: `${dir}:${process.env.PATH}`, MI_E2E_LOCK_HELD: '', MI_E2E_UNITS_HELD: '', E2E_LOCK: `${dir}/lock`, E2E_SLOTS: '3', E2E_UNITS: units } };
 }
 afterEach(() => { for (const dir of dirs.splice(0)) rmSync(dir, { recursive: true, force: true }); });
 describe.skipIf(process.platform !== 'darwin')('machine browser capacity', () => {
@@ -20,8 +21,8 @@ describe.skipIf(process.platform !== 'darwin')('machine browser capacity', () =>
     let active = 0, peak = 0;
     const events = readFileSync(log, 'utf8').trim().split('\n').map(line => JSON.parse(line) as { units: number });
     expect(events).toHaveLength(12);
-    for (const { units } of events) { active += units; peak = Math.max(peak, active); expect(active).toBeGreaterThanOrEqual(0); expect(active).toBeLessThanOrEqual(3); }
-    expect(peak).toBe(3); expect(active).toBe(0);
+    for (const { units } of events) { active += units; peak = Math.max(peak, active); expect(active).toBeGreaterThanOrEqual(0); expect(active).toBeLessThanOrEqual(2); }
+    expect(peak).toBe(2); expect(active).toBe(0);
   }, 20_000);
 
   it('returns a child exit 75 exactly once and preserves its stderr', async () => {
@@ -59,25 +60,26 @@ describe.skipIf(process.platform !== 'darwin')('machine browser capacity', () =>
     await expect(exec('sh', [script, 'env', 'E2E_UNITS=2', 'sh', script, 'true'], { env })).rejects.toMatchObject({ code: 2 });
   });
 
-  it('can acquire nonadjacent free slots without holding a partial reservation', async () => {
+  it('does not use a legacy third slot when E2E_SLOTS exceeds two', async () => {
     const { env } = environment('2');
     const blocker = spawn('lockf', ['-k', `${env.E2E_LOCK}.1`, 'sh', '-c', 'printf ready; cat >/dev/null'], { stdio: ['pipe', 'pipe', 'pipe'] });
     try {
       await new Promise<void>((resolve, reject) => { blocker.stdout.once('data', () => resolve()); blocker.once('error', reject); });
-      expect((await exec('sh', [script, 'printf', 'paired'], { env, timeout: 2000 })).stdout).toBe('paired');
+      await expect(exec('sh', [script, 'printf', 'paired'], { env, timeout: 500 })).rejects.toMatchObject({ killed: true });
     } finally { blocker.stdin.end(); await new Promise<void>(resolve => blocker.once('close', () => resolve())); }
   });
 
   it('quiet-run covers the legacy fourth slot even with E2E_SLOTS=1', async () => {
     const { dir, env } = environment();
     // Stub only the unrelated host-load checks; exercise real kernel locks in a private namespace.
+    writeFileSync(`${dir}/python3`, '#!/bin/sh\ncase \"$1\" in *mac-gpu-guard.py) exit 0;; esac\nexec /usr/bin/python3 \"$@\"\n'); chmodSync(`${dir}/python3`, 0o755);
     writeFileSync(`${dir}/pgrep`, '#!/bin/sh\nexit 1\n'); chmodSync(`${dir}/pgrep`, 0o755);
     writeFileSync(`${dir}/node`, '#!/bin/sh\ncase "$*" in *process.exit*loadavg*) exit 0;; esac\nexec "$MI_TEST_NODE_BIN" "$@"\n'); chmodSync(`${dir}/node`, 0o755);
     const blocker = spawn('lockf', ['-k', `${env.E2E_LOCK}.3`, 'sh', '-c', 'printf ready; cat >/dev/null'], { stdio: ['pipe', 'pipe', 'pipe'] });
     try {
       await new Promise<void>((resolve, reject) => { blocker.stdout.once('data', () => resolve()); blocker.once('error', reject); });
       let admitted = false;
-      const quiet = exec('sh', ['tools/perf/quiet-run.sh', 'printf', 'admitted'], { env: { ...env, E2E_SLOTS: '1', MI_PERF_LOCK_HELD: '', MI_TEST_NODE_BIN: process.execPath, PERF_CONDITIONS_LOG: `${dir}/conditions`, PATH: `${dir}:${process.env.PATH}` }, timeout: 3000 }).then(result => { admitted = true; return result; });
+      const quiet = exec('sh', ['tools/perf/quiet-run.sh', 'printf', 'admitted'], { env: { ...env, E2E_SLOTS: '1', MI_PERF_LOCK_HELD: '', MI_TEST_NODE_BIN: process.execPath, PERF_CONDITIONS_LOG: `${dir}/conditions`, PATH: `${dir}:${process.env.PATH}` }, timeout: 5000 }).then(result => { admitted = true; return result; });
       await new Promise(resolve => setTimeout(resolve, 200));
       expect(admitted).toBe(false);
       blocker.stdin.end();

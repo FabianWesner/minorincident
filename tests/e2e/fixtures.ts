@@ -29,7 +29,18 @@ export function attachErrorGuard(page: Page): { errors: string[]; dispose(): voi
     page.off('console', consoleListener); page.off('pageerror', errorListener); page.off('requestfailed', requestListener); page.off('requestfinished', finishedListener); page.off('response', responseListener);
   } };
 }
-export const test = base.extend<{ errorGuard: void }>({
+export const test = base.extend<{ errorGuard: void }, { browserPolicy: void }>({
+  // Automatic worker fixtures run before the browser fixture launches Chrome. Per-file
+  // launchOptions still pass through this policy, including old native ANGLE overrides.
+  browserPolicy: [async ({ launchOptions }, use) => {
+    if (launchOptions.args?.some(arg => arg === '--disable-frame-rate-limit' || arg === '--disable-gpu-vsync') && process.env.MI_PERF_LOCK_HELD !== '1')
+      throw new Error('Uncapped rendering requires tools/perf/quiet-run.sh');
+    if (process.platform !== 'darwin' && launchOptions.args?.includes('--use-angle=metal')) {
+      launchOptions.args = launchOptions.args.filter(arg => !arg.startsWith('--use-angle='));
+      launchOptions.args.push('--use-angle=swiftshader', '--enable-unsafe-swiftshader');
+    }
+    await use();
+  }, { scope: 'worker', auto: true }],
   errorGuard: [async ({ page, context }, use) => {
     if (process.env.PHONE_PERF === '1') {
       const cdp = await context.newCDPSession(page); await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 });

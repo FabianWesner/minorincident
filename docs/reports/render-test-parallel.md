@@ -1,5 +1,8 @@
 # Rendering test capacity on the Mac mini
 
+> **2026-10-18 operational correction:** The capacity recommendations below were superseded after WindowServer watchdog session losses. The current Mac hard limit is **two headless browsers**, regardless of `E2E_SLOTS`; WebGL2 matrix and functional e2e run on Hetzner with SwiftShader. WindowServer CPU admission uses a ten-second measurement (wait above 60%). Uncapped timing runs require quiet-run, at most 20 minutes per batch, with a 30-minute admission deadline. Preserve local WebGPU and E18 native timing coverage. See [GPU offload report](gpu-offload/README.md) and [deploy gate](../qa/deploy-gate.md). Earlier throughput measurements are historical evidence, not permission to run three/four browsers.
+
+
 Research and measured prototype, 2026-10-13. Branch `lane/render-test-parallel`; source build `cbdba3f0`. Apple M4 Mac mini, 10 CPU cores, 16 GiB unified memory. Playwright 1.63.0, bundled Chromium revision 1243, three.js 0.186.0, Node 26.0.0, macOS 26.5.1 (25F80). No deployment or merge.
 
 ## Method
@@ -61,7 +64,7 @@ The OS shell Metal cache was 428 MiB at initial inventory, approximately 430 MiB
 
 ## Recommendation
 
-Use **three machine-wide browser units by default**, with one unit per Scene Lab browser or Playwright worker. This permits three one-browser jobs, or a two-worker Playwright job alongside one Scene Lab job. A two-worker suite keeps its measured speed-up without pretending to cost one slot. Four simultaneous sessions are the **highest measured capacity**, not a new per-process Playwright worker limit; opt into four units for a coordinated throughput sweep when desktop latency and memory permit. Timing/perf gates always reserve the whole range and run alone with one worker.
+Historical recommendation (superseded 2026-10-18): use **three machine-wide browser units by default**, with one unit per Scene Lab browser or Playwright worker. This permits three one-browser jobs, or a two-worker Playwright job alongside one Scene Lab job. A two-worker suite keeps its measured speed-up without pretending to cost one slot. Four simultaneous sessions are the **highest measured capacity**, not a new per-process Playwright worker limit; opt into four units for a coordinated throughput sweep when desktop latency and memory permit. Timing/perf gates always reserve the whole range and run alone with one worker.
 
 Keep the existing headless shell and Metal flags, multi-file Scene Lab batches and ordinary Playwright browser-per-worker lifecycle. Avoid a global warm browser/CDP daemon on these numbers. Keep the macOS Metal cache shared and writable; monitor growth and retire owned browser batches at natural boundaries rather than modifying a host-wide cache while lanes run. Preserve each lane's own sources/server; use the immutable-preview prototype only for an explicitly identical built snapshot. Use Dawn as a future narrow shader/material test path if the coverage is worth implementing, with browser integration tests retained.
 
@@ -115,13 +118,13 @@ Proposed addition to **CLAUDE.local.md** (orchestrator applies it; deploy the lo
 
 ```text
 Browser capacity on the M4/16 GiB Mac is budgeted per live browser, not per lane command.
-Use tools/e2e-lock.sh for every normal browser job. Default E2E_SLOTS=3.
+Use tools/e2e-lock.sh for every normal browser job. Default E2E_SLOTS=2; hard maximum two on Mac.
 Scene Lab / look / replay / single-browser MCP cost one unit. Keep related scene specs in one batch.
 Playwright commands cost their worker count; never exceed two workers. Prefer --workers=1 for small jobs;
 use --workers=2 for full suites (the wrapper reserves two units automatically).
 Opaque sh/npm wrappers must declare their maximum E2E_UNITS=1 or 2; reserve that capacity at the outer wrapper.
 Nested wrappers can reuse a reservation but cannot expand it. Close idle retained browsers and release their reservations.
-Coordinate E2E_SLOTS=4 only for a throughput sweep; four was the highest measured session count.
+Do not raise Mac capacity for throughput sweeps; offload WebGL2/functional work to Hetzner.
 Native timing/perf: invoke tools/perf/quiet-run.sh directly, --workers=1, with no outer e2e wrapper.
 Quiet-run reserves at least all four legacy slots; E2E_SLOTS=1 on an ordinary wrapper is not a quiet-machine guarantee.
 Each lane has a unique E2E_PORT and SCENE_PORT; never use 3300. Reuse another server only for an explicitly
