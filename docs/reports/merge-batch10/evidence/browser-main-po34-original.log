@@ -1,0 +1,154 @@
+
+Running 4 tests using 1 worker
+
+  ✘  1 [chromium] › docs/reports/merge-batch10/evidence/po34-original.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgl high (12.9s)
+  ✘  2 [chromium] › docs/reports/merge-batch10/evidence/po34-original.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgl low (10.9s)
+  ✘  3 [chromium] › docs/reports/merge-batch10/evidence/po34-original.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgpu high (14.4s)
+  ✘  4 [chromium] › docs/reports/merge-batch10/evidence/po34-original.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgpu low (11.9s)
+
+
+  1) [chromium] › docs/reports/merge-batch10/evidence/po34-original.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgl high 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('interaction-prompt')
+    Expected substring: "Push glowing crates onto the line"
+    Received string:    "Block the tunnelLet everyone pass · E to close the gate"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" getByTestId('interaction-prompt') with timeout 5000ms
+      - waiting for getByTestId('interaction-prompt')
+        14 × locator resolved to <div data-hint="" data-entity-id="39" class="interaction-prompt" data-testid="interaction-prompt">…</div>
+           - unexpected value "Block the tunnelLet everyone pass · E to close the gate"
+
+
+      12 |   const prompt = page.getByTestId('interaction-prompt');
+      13 |   await expect(prompt).toContainText('Block the tunnel');
+    > 14 |   await expect(prompt).toContainText('Push glowing crates onto the line');
+         |                        ^
+      15 |   await expect(prompt.locator('[role="progressbar"]:visible')).toHaveCount(1);
+      16 |   await expect(prompt.locator('[role="meter"]:visible')).toHaveCount(0);
+      17 |   await expect(prompt).not.toContainText('coverage');
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/po34-original.spec.ts:14:24
+
+    Error Context: test-results/playwright/po34-original-main/po34-original--E24-PO34-se-3eadf-ask-with-one-bar-webgl-high-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/po34-original-main/po34-original--E24-PO34-se-3eadf-ask-with-one-bar-webgl-high-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/po34-original-main/po34-original--E24-PO34-se-3eadf-ask-with-one-bar-webgl-high-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › docs/reports/merge-batch10/evidence/po34-original.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgl low 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('interaction-prompt')
+    Expected substring: "Push glowing crates onto the line"
+    Received string:    "Block the tunnelLet everyone pass · E to close the gate"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" getByTestId('interaction-prompt') with timeout 5000ms
+      - waiting for getByTestId('interaction-prompt')
+        14 × locator resolved to <div data-hint="" data-entity-id="39" class="interaction-prompt" data-testid="interaction-prompt">…</div>
+           - unexpected value "Block the tunnelLet everyone pass · E to close the gate"
+
+
+      12 |   const prompt = page.getByTestId('interaction-prompt');
+      13 |   await expect(prompt).toContainText('Block the tunnel');
+    > 14 |   await expect(prompt).toContainText('Push glowing crates onto the line');
+         |                        ^
+      15 |   await expect(prompt.locator('[role="progressbar"]:visible')).toHaveCount(1);
+      16 |   await expect(prompt.locator('[role="meter"]:visible')).toHaveCount(0);
+      17 |   await expect(prompt).not.toContainText('coverage');
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/po34-original.spec.ts:14:24
+
+    Error Context: test-results/playwright/po34-original-main/po34-original--E24-PO34-se-d1e41-task-with-one-bar-webgl-low-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/po34-original-main/po34-original--E24-PO34-se-d1e41-task-with-one-bar-webgl-low-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/po34-original-main/po34-original--E24-PO34-se-d1e41-task-with-one-bar-webgl-low-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › docs/reports/merge-batch10/evidence/po34-original.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgpu high 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('interaction-prompt')
+    Expected substring: "Push glowing crates onto the line"
+    Received string:    "Block the tunnelLet everyone pass · E to close the gate"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" getByTestId('interaction-prompt') with timeout 5000ms
+      - waiting for getByTestId('interaction-prompt')
+        14 × locator resolved to <div data-hint="" data-entity-id="39" class="interaction-prompt" data-testid="interaction-prompt">…</div>
+           - unexpected value "Block the tunnelLet everyone pass · E to close the gate"
+
+
+      12 |   const prompt = page.getByTestId('interaction-prompt');
+      13 |   await expect(prompt).toContainText('Block the tunnel');
+    > 14 |   await expect(prompt).toContainText('Push glowing crates onto the line');
+         |                        ^
+      15 |   await expect(prompt.locator('[role="progressbar"]:visible')).toHaveCount(1);
+      16 |   await expect(prompt.locator('[role="meter"]:visible')).toHaveCount(0);
+      17 |   await expect(prompt).not.toContainText('coverage');
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/po34-original.spec.ts:14:24
+
+    Error Context: test-results/playwright/po34-original-main/po34-original--E24-PO34-se-c8f40-sk-with-one-bar-webgpu-high-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/po34-original-main/po34-original--E24-PO34-se-c8f40-sk-with-one-bar-webgpu-high-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/po34-original-main/po34-original--E24-PO34-se-c8f40-sk-with-one-bar-webgpu-high-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › docs/reports/merge-batch10/evidence/po34-original.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgpu low 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('interaction-prompt')
+    Expected substring: "Push glowing crates onto the line"
+    Received string:    "Block the tunnelLet everyone pass · E to close the gate"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" getByTestId('interaction-prompt') with timeout 5000ms
+      - waiting for getByTestId('interaction-prompt')
+        14 × locator resolved to <div data-hint="" data-entity-id="39" class="interaction-prompt" data-testid="interaction-prompt">…</div>
+           - unexpected value "Block the tunnelLet everyone pass · E to close the gate"
+
+
+      12 |   const prompt = page.getByTestId('interaction-prompt');
+      13 |   await expect(prompt).toContainText('Block the tunnel');
+    > 14 |   await expect(prompt).toContainText('Push glowing crates onto the line');
+         |                        ^
+      15 |   await expect(prompt.locator('[role="progressbar"]:visible')).toHaveCount(1);
+      16 |   await expect(prompt.locator('[role="meter"]:visible')).toHaveCount(0);
+      17 |   await expect(prompt).not.toContainText('coverage');
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/po34-original.spec.ts:14:24
+
+    Error Context: test-results/playwright/po34-original-main/po34-original--E24-PO34-se-e8969-ask-with-one-bar-webgpu-low-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/po34-original-main/po34-original--E24-PO34-se-e8969-ask-with-one-bar-webgpu-low-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/po34-original-main/po34-original--E24-PO34-se-e8969-ask-with-one-bar-webgpu-low-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [chromium] › docs/reports/merge-batch10/evidence/po34-original.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgl high 
+    [chromium] › docs/reports/merge-batch10/evidence/po34-original.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgl low 
+    [chromium] › docs/reports/merge-batch10/evidence/po34-original.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgpu high 
+    [chromium] › docs/reports/merge-batch10/evidence/po34-original.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgpu low 

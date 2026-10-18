@@ -1,48 +1,556 @@
 [
   {
+    "test": "20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07 [chromium]",
+    "id": "20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07",
+    "title": "20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07",
+    "project": "chromium",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "@E24 PO34 service gate explains the crate task with one bar webgl high [chromium]",
+    "id": "@E24 PO34 service gate explains the crate task with one bar webgl high",
+    "title": "@E24 PO34 service gate explains the crate task with one bar webgl high",
+    "project": "chromium",
+    "observedIn": [
+      "evidence/E24-remaining-playwright.json"
+    ],
+    "passingRerunEvidence": [
+      "evidence/PO34-final-playwright.json"
+    ],
+    "redOnMain": "Yes",
+    "mainEvidence": "evidence/PO34-original-main-playwright.json"
+  },
+  {
+    "test": "@E24 PO34 service gate explains the crate task with one bar webgl low [chromium]",
+    "id": "@E24 PO34 service gate explains the crate task with one bar webgl low",
+    "title": "@E24 PO34 service gate explains the crate task with one bar webgl low",
+    "project": "chromium",
+    "observedIn": [
+      "evidence/E24-remaining-playwright.json"
+    ],
+    "passingRerunEvidence": [
+      "evidence/PO34-final-playwright.json"
+    ],
+    "redOnMain": "Yes",
+    "mainEvidence": "evidence/PO34-original-main-playwright.json"
+  },
+  {
+    "test": "@E24 PO34 service gate explains the crate task with one bar webgpu high [chromium]",
+    "id": "@E24 PO34 service gate explains the crate task with one bar webgpu high",
+    "title": "@E24 PO34 service gate explains the crate task with one bar webgpu high",
+    "project": "chromium",
+    "observedIn": [
+      "evidence/E24-remaining-playwright.json"
+    ],
+    "passingRerunEvidence": [
+      "evidence/PO34-final-playwright.json"
+    ],
+    "redOnMain": "Yes",
+    "mainEvidence": "evidence/PO34-original-main-playwright.json"
+  },
+  {
+    "test": "@E24 PO34 service gate explains the crate task with one bar webgpu low [chromium]",
+    "id": "@E24 PO34 service gate explains the crate task with one bar webgpu low",
+    "title": "@E24 PO34 service gate explains the crate task with one bar webgpu low",
+    "project": "chromium",
+    "observedIn": [
+      "evidence/E24-remaining-playwright.json"
+    ],
+    "passingRerunEvidence": [
+      "evidence/PO34-final-playwright.json"
+    ],
+    "redOnMain": "Yes",
+    "mainEvidence": "evidence/PO34-original-main-playwright.json"
+  },
+  {
+    "test": "@E26-AC16 @E24 interaction panel stays inside all viewport edges webgl high [chromium]",
+    "id": "@E26-AC16 @E24 interaction panel stays inside all viewport edges webgl high",
+    "title": "@E26-AC16 @E24 interaction panel stays inside all viewport edges webgl high",
+    "project": "chromium",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json",
+      "evidence/ui-night-final-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/ui-staging-final-playwright.json"
+    ],
+    "redOnMain": "Yes",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "@E26-AC16 @E24 interaction panel stays inside all viewport edges webgl low [chromium]",
+    "id": "@E26-AC16 @E24 interaction panel stays inside all viewport edges webgl low",
+    "title": "@E26-AC16 @E24 interaction panel stays inside all viewport edges webgl low",
+    "project": "chromium",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json",
+      "evidence/ui-night-final-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/ui-staging-final-playwright.json"
+    ],
+    "redOnMain": "Yes",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "@E26-AC16 @E24 interaction panel stays inside all viewport edges webgpu high [chromium]",
+    "id": "@E26-AC16 @E24 interaction panel stays inside all viewport edges webgpu high",
+    "title": "@E26-AC16 @E24 interaction panel stays inside all viewport edges webgpu high",
+    "project": "chromium",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json",
+      "evidence/ui-night-final-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/ui-staging-final-playwright.json"
+    ],
+    "redOnMain": "Yes",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "@E26-AC16 @E24 interaction panel stays inside all viewport edges webgpu low [chromium]",
+    "id": "@E26-AC16 @E24 interaction panel stays inside all viewport edges webgpu low",
+    "title": "@E26-AC16 @E24 interaction panel stays inside all viewport edges webgpu low",
+    "project": "chromium",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json",
+      "evidence/ui-night-final-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/ui-staging-final-playwright.json"
+    ],
+    "redOnMain": "Yes",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
     "test": "E24-PO35-side-entries",
     "title": "@E24 PO35 tunnel entries telegraph, alternate sides, and stagger small groups ahead of the courier",
     "observedIn": [
       "evidence/remote-pair1.log",
       "evidence/remote-pair2.log",
-      "evidence/verify-E24.log"
+      "evidence/verify-E24.log",
+      "evidence/pair1-vitest.json",
+      "evidence/pair2-vitest.json",
+      "evidence/E24-verify-vitest.json"
     ],
+    "failureSummary": "Error: Test timed out in 30000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\n    at task (file:///srv/mi/jobs/merge-batch10-267619-58614-1792306098/node_modules/vit",
     "redOnMain": "No",
     "mainEvidence": "evidence/remote-main-side-entry.log"
+  },
+  {
+    "test": "S-01 @smoke foundation boots, ready resolves and a screenshot is available [chromium]",
+    "id": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "project": "chromium",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "S-01 @smoke foundation boots, ready resolves and a screenshot is available [iphone-14-landscape]",
+    "id": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "project": "iphone-14-landscape",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "S-01 @smoke foundation boots, ready resolves and a screenshot is available [iphone-14]",
+    "id": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "project": "iphone-14",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "S-01 @smoke foundation boots, ready resolves and a screenshot is available [pixel-7-landscape]",
+    "id": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "project": "pixel-7-landscape",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "S-01 @smoke foundation boots, ready resolves and a screenshot is available [pixel-7]",
+    "id": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "project": "pixel-7",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "S-01 @smoke foundation boots, ready resolves and a screenshot is available [webkit]",
+    "id": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "project": "webkit",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies [chromium]",
+    "id": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "project": "chromium",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies [iphone-14-landscape]",
+    "id": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "project": "iphone-14-landscape",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies [iphone-14]",
+    "id": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "project": "iphone-14",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies [pixel-7-landscape]",
+    "id": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "project": "pixel-7-landscape",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies [pixel-7]",
+    "id": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "project": "pixel-7",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies [webkit]",
+    "id": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "project": "webkit",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues [iphone-14-landscape]",
+    "id": "T-E16-21",
+    "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+    "project": "iphone-14-landscape",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues [iphone-14]",
+    "id": "T-E16-21",
+    "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+    "project": "iphone-14",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues [pixel-7-landscape]",
+    "id": "T-E16-21",
+    "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+    "project": "pixel-7-landscape",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues [pixel-7]",
+    "id": "T-E16-21",
+    "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+    "project": "pixel-7",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues [webkit]",
+    "id": "T-E16-21",
+    "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+    "project": "webkit",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
   },
   {
     "test": "T-E01-01b",
     "title": "T-E01-01b @E01 @E01-AC01 typecheck, lint and build exit zero without warnings",
     "observedIn": [
-      "evidence/remote-pair1.log"
+      "evidence/remote-pair1.log",
+      "evidence/pair1-vitest.json"
+    ],
+    "failureSummary": "Error: Test timed out in 180000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\n    at task (file:///srv/mi/jobs/merge-batch10-267619-25836-1792304380/node_modules/vi",
+    "passingRerunEvidence": [
+      "evidence/remote-pair2.log",
+      "evidence/pair2-vitest.json"
     ],
     "redOnMain": "No",
     "mainEvidence": "evidence/remote-main-functional-control.log"
   },
   {
+    "test": "T-E02-webgpu-canvas @smoke @E02 WebGPU high mega health bars preserve the game frame at both zoom limits [chromium]",
+    "id": "T-E02-webgpu-canvas",
+    "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU high mega health bars preserve the game frame at both zoom limits",
+    "project": "chromium",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "T-E02-webgpu-canvas @smoke @E02 WebGPU low mega health bars preserve the game frame at both zoom limits [chromium]",
+    "id": "T-E02-webgpu-canvas",
+    "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU low mega health bars preserve the game frame at both zoom limits",
+    "project": "chromium",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU high L1 L4 L8 game cameras render at both zoom limits [chromium]",
+    "id": "T-E02-webgpu-game-canvas",
+    "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU high L1 L4 L8 game cameras render at both zoom limits",
+    "project": "chromium",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU low L1 L4 L8 game cameras render at both zoom limits [chromium]",
+    "id": "T-E02-webgpu-game-canvas",
+    "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU low L1 L4 L8 game cameras render at both zoom limits",
+    "project": "chromium",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "T-E02-webgpu-level-transitions @smoke @E02 title, L1, L2 and L3 in one WebGPU renderer log no GPU validation errors [chromium]",
+    "id": "T-E02-webgpu-level-transitions",
+    "title": "T-E02-webgpu-level-transitions @smoke @E02 title, L1, L2 and L3 in one WebGPU renderer log no GPU validation errors",
+    "project": "chromium",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "T-E07-06-bars-1600 @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera high [chromium]",
+    "id": "T-E07-06-bars-1600",
+    "title": "T-E07-06-bars-1600 @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera high",
+    "project": "chromium",
+    "observedIn": [
+      "evidence/E30-initial-playwright.json"
+    ],
+    "passingRerunEvidence": [
+      "evidence/E30-isolated-retry-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/browser-main-controls-playwright.json"
+  },
+  {
     "test": "T-E07-06-support-perf-200",
     "title": "T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms",
     "observedIn": [
-      "evidence/remote-pair2.log"
+      "evidence/remote-pair2.log",
+      "evidence/pair2-vitest.json"
     ],
-    "redOnMain": "Unmeasured",
-    "mainEvidence": ""
+    "failureSummary": "AssertionError: expected 4.1810540000442415 to be less than or equal to 4\n    at /srv/mi/jobs/merge-batch10-267619-41058-1792305478/tests/sim/performance/alpha-support.test.ts:29:147\n    at file:///srv/mi/jobs/merge-batch10-267619-41058-179",
+    "redOnMain": "Yes",
+    "mainEvidence": "evidence/remote-main-timing-extra.log"
   },
   {
     "test": "T-E07-11",
     "title": "T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget",
     "observedIn": [
-      "evidence/remote-pair2.log"
+      "evidence/remote-pair2.log",
+      "evidence/pair2-vitest.json"
     ],
-    "redOnMain": "Unmeasured",
-    "mainEvidence": ""
+    "failureSummary": "AssertionError: expected 4.904420999984723 to be less than or equal to 4\n    at /srv/mi/jobs/merge-batch10-267619-41058-1792305478/tests/sim/ai/director.test.ts:44:520\n    at file:///srv/mi/jobs/merge-batch10-267619-41058-1792305478/node_mo",
+    "redOnMain": "No",
+    "mainEvidence": "evidence/remote-main-timing-extra.log"
+  },
+  {
+    "test": "T-E07-11-alpha-200",
+    "title": "T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms",
+    "observedIn": [
+      "evidence/remote-candidate-isolated.log",
+      "evidence/candidate-isolated-vitest.json"
+    ],
+    "failureSummary": "AssertionError: expected 4.194729999999254 to be less than or equal to 4\n    at /srv/mi/jobs/merge-batch10-267619-43596-1792305568/tests/sim/performance/alpha.test.ts:29:61\n    at file:///srv/mi/jobs/merge-batch10-267619-43596-1792305568/no",
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-isolated.json"
   },
   {
     "test": "T-E07-11-alpha-physical-200",
     "title": "T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms",
     "observedIn": [
-      "evidence/remote-pair2.log"
+      "evidence/remote-pair2.log",
+      "evidence/remote-candidate-isolated.log",
+      "evidence/pair2-vitest.json",
+      "evidence/candidate-isolated-vitest.json"
     ],
+    "failureSummary": "AssertionError: expected 4.131049999999959 to be less than or equal to 4\n    at /srv/mi/jobs/merge-batch10-267619-43596-1792305568/tests/sim/performance/alpha-physical.test.ts:29:101\n    at file:///srv/mi/jobs/merge-batch10-267619-43596-179",
     "redOnMain": "Yes",
     "mainEvidence": "evidence/main-isolated.json"
   },
@@ -50,8 +558,12 @@
     "test": "T-E07-11-zoo-s1-200",
     "title": "T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
     "observedIn": [
-      "evidence/remote-pair2.log"
+      "evidence/remote-pair2.log",
+      "evidence/remote-candidate-isolated.log",
+      "evidence/pair2-vitest.json",
+      "evidence/candidate-isolated-vitest.json"
     ],
+    "failureSummary": "AssertionError: expected 4.216631000000234 to be less than or equal to 4\n    at /srv/mi/jobs/merge-batch10-267619-43596-1792305568/tests/sim/performance/zoo-s1.test.ts:30:101\n    at file:///srv/mi/jobs/merge-batch10-267619-43596-1792305568/",
     "redOnMain": "Yes",
     "mainEvidence": "evidence/main-isolated.json"
   },
@@ -59,25 +571,126 @@
     "test": "T-E07-11-zoo-s2-200",
     "title": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
     "observedIn": [
-      "evidence/remote-pair2.log"
+      "evidence/remote-pair2.log",
+      "evidence/remote-candidate-isolated.log",
+      "evidence/pair2-vitest.json",
+      "evidence/candidate-isolated-vitest.json"
     ],
+    "failureSummary": "AssertionError: expected 4.929087000000436 to be less than or equal to 4\n    at /srv/mi/jobs/merge-batch10-267619-43596-1792305568/tests/sim/performance/zoo-s2.test.ts:26:68\n    at file:///srv/mi/jobs/merge-batch10-267619-43596-1792305568/n",
     "redOnMain": "Yes",
     "mainEvidence": "evidence/main-isolated.json"
   },
   {
-    "test": "T-E07-19-elephant-charge-browser",
+    "test": "T-E07-19-elephant-charge-browser @E07-AC05 @E07-AC19 @E30-AC10 production telegraph, pause, activation and shared bar [chromium]",
+    "id": "T-E07-19-elephant-charge-browser",
     "title": "T-E07-19-elephant-charge-browser @E07-AC05 @E07-AC19 @E30-AC10 production telegraph, pause, activation and shared bar",
+    "project": "chromium",
     "observedIn": [
-      "evidence/E30-isolated-retry-playwright.json"
+      "evidence/E30-isolated-retry-playwright.json",
+      "evidence/E30-initial-playwright.json"
     ],
     "redOnMain": "Yes",
     "mainEvidence": "evidence/browser-main-controls-playwright.json"
   },
   {
+    "test": "T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props [chromium]",
+    "id": "T-E07-crowd-drawn-webgl",
+    "title": "T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props",
+    "project": "chromium",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props [chromium]",
+    "id": "T-E07-crowd-drawn-webgpu",
+    "title": "T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props",
+    "project": "chromium",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly [chromium]",
+    "id": "T-E13-05",
+    "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+    "project": "chromium",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only [chromium]",
+    "id": "T-E14-03-mouse",
+    "title": "T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only",
+    "project": "chromium",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
+    "test": "T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review [chromium]",
+    "id": "T-E19-23",
+    "title": "T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review",
+    "project": "chromium",
+    "observedIn": [
+      "evidence/full-gate-browser-interrupted-playwright.json"
+    ],
+    "redOnMain": "Unmeasured",
+    "mainEvidence": ""
+  },
+  {
+    "test": "T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors [chromium]",
+    "id": "T-E22-boot",
+    "title": "T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors",
+    "project": "chromium",
+    "observedIn": [
+      "evidence/E26-initial-playwright.json"
+    ],
+    "hadPreviewCrashFailure": true,
+    "passingRerunEvidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ],
+    "redOnMain": "No",
+    "mainEvidence": "evidence/main-E26-playwright.json"
+  },
+  {
     "test": "T-E24-02",
     "title": "T-E24-02 @E24 @E24-AC02 @E24-AC10 single-seed complete bot (PO: no batteries) protects and rejoins the community",
     "observedIn": [
-      "evidence/remote-pair1.log"
+      "evidence/remote-pair1.log",
+      "evidence/pair1-vitest.json"
+    ],
+    "failureSummary": "Error: Test timed out in 1800000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\n    at task (file:///srv/mi/jobs/merge-batch10-267619-25836-1792304380/node_modules/v",
+    "passingRerunEvidence": [
+      "evidence/remote-pair2.log",
+      "evidence/verify-E24.log",
+      "evidence/pair2-vitest.json",
+      "evidence/E24-verify-vitest.json"
     ],
     "redOnMain": "No",
     "mainEvidence": "evidence/remote-main-l6-complete-control.log"
@@ -88,10 +701,44 @@
     "observedIn": [
       "evidence/remote-pair1.log",
       "evidence/remote-pair2.log",
-      "evidence/verify-E24.log"
+      "evidence/verify-E24.log",
+      "evidence/pair1-vitest.json",
+      "evidence/pair2-vitest.json",
+      "evidence/E24-verify-vitest.json"
     ],
+    "failureSummary": "AssertionError: expected 0.27586206896551724 to be greater than or equal to 0.4\n    at /srv/mi/jobs/merge-batch10-267619-58614-1792306098/tests/levels/L6.test.ts:76:229\n    at file:///srv/mi/jobs/merge-batch10-267619-58614-1792306098/node_m",
     "redOnMain": "No",
     "mainEvidence": "evidence/main-newbie.json"
+  },
+  {
+    "test": "T-E24-08-complete",
+    "title": "T-E24-08 @E24 @E24-AC08 continuous complete campaign on one seed with real L5 handover",
+    "observedIn": [
+      "evidence/remote-pair2.log",
+      "evidence/pair2-vitest.json"
+    ],
+    "failureSummary": "Error: Test timed out in 1800000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\n    at task (file:///srv/mi/jobs/merge-batch10-267619-41058-1792305478/node_modules/v",
+    "passingRerunEvidence": [
+      "evidence/verify-E24.log",
+      "evidence/E24-verify-vitest.json"
+    ],
+    "redOnMain": "Unmeasured",
+    "mainEvidence": ""
+  },
+  {
+    "test": "T-E24-08-newbie",
+    "title": "T-E24-08 @E24 @E24-AC08 continuous newbie campaign on one seed with real L5 handover",
+    "observedIn": [
+      "evidence/remote-pair2.log",
+      "evidence/pair2-vitest.json"
+    ],
+    "failureSummary": "Error: Test timed out in 1800000ms.\nIf this is a long-running test, pass a timeout value as the last argument or configure it globally with \"testTimeout\".\n    at task (file:///srv/mi/jobs/merge-batch10-267619-41058-1792305478/node_modules/v",
+    "passingRerunEvidence": [
+      "evidence/verify-E24.log",
+      "evidence/E24-verify-vitest.json"
+    ],
+    "redOnMain": "Unmeasured",
+    "mainEvidence": ""
   },
   {
     "test": "T-E24-09-evade",
@@ -99,14 +746,20 @@
     "observedIn": [
       "evidence/remote-pair1.log",
       "evidence/remote-pair2.log",
-      "evidence/verify-E24.log"
+      "evidence/verify-E24.log",
+      "evidence/pair1-vitest.json",
+      "evidence/pair2-vitest.json",
+      "evidence/E24-verify-vitest.json"
     ],
+    "failureSummary": "AssertionError: expected 0.5517241379310345 to be less than or equal to 0.3\n    at /srv/mi/jobs/merge-batch10-267619-58614-1792306098/tests/levels/L6-protection.test.ts:23:47\n    at file:///srv/mi/jobs/merge-batch10-267619-58614-1792306098/",
     "redOnMain": "No",
     "mainEvidence": "evidence/remote-main-campaign-control.log"
   },
   {
-    "test": "T-E28-10-frame-high",
+    "test": "T-E28-10-frame @E28 @E28-AC10 @perf storm-street high native E18 frame, sim and heap budgets [chromium]",
+    "id": "T-E28-10-frame-high",
     "title": "T-E28-10-frame @E28 @E28-AC10 @perf storm-street high native E18 frame, sim and heap budgets",
+    "project": "chromium",
     "observedIn": [
       "perf/final/playwright.json"
     ],
@@ -114,8 +767,10 @@
     "mainEvidence": ""
   },
   {
-    "test": "T-E28-10-frame-low",
+    "test": "T-E28-10-frame @E28 @E28-AC10 @perf storm-street low native E18 frame, sim and heap budgets [chromium]",
+    "id": "T-E28-10-frame-low",
     "title": "T-E28-10-frame @E28 @E28-AC10 @perf storm-street low native E18 frame, sim and heap budgets",
+    "project": "chromium",
     "observedIn": [
       "perf/final/playwright.json"
     ],
@@ -123,10 +778,13 @@
     "mainEvidence": ""
   },
   {
-    "test": "T-E30-18-mobile",
+    "test": "T-E30-18-mobile @E30-AC18 touch stick reaches the APC ACTION with no HUD overflow [chromium]",
+    "id": "T-E30-18-mobile",
     "title": "T-E30-18-mobile @E30-AC18 touch stick reaches the APC ACTION with no HUD overflow",
+    "project": "chromium",
     "observedIn": [
-      "evidence/E30-isolated-retry-playwright.json"
+      "evidence/E30-isolated-retry-playwright.json",
+      "evidence/E30-initial-playwright.json"
     ],
     "redOnMain": "Yes",
     "mainEvidence": "evidence/browser-main-controls-playwright.json"
@@ -135,18 +793,23 @@
     "test": "T-E31-19-S4-200",
     "title": "T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95",
     "observedIn": [
-      "evidence/remote-pair2.log"
+      "evidence/remote-pair2.log",
+      "evidence/pair2-vitest.json"
     ],
-    "redOnMain": "Unmeasured",
-    "mainEvidence": ""
+    "failureSummary": "AssertionError: expected 4.418783000000985 to be less than or equal to 4\n    at /srv/mi/jobs/merge-batch10-267619-41058-1792305478/tests/sim/world/chunk-residency.test.ts:87:71\n    at file:///srv/mi/jobs/merge-batch10-267619-41058-179230547",
+    "redOnMain": "No",
+    "mainEvidence": "evidence/remote-main-extra.log"
   },
   {
     "test": "T-E31-20",
     "title": "T-E31-20 @E31-AC20 continuous seed 1 L1 through L9 commits real campaign handovers and the axe reset",
     "observedIn": [
       "evidence/remote-pair1.log",
-      "evidence/remote-pair2.log"
+      "evidence/remote-pair2.log",
+      "evidence/pair1-vitest.json",
+      "evidence/pair2-vitest.json"
     ],
+    "failureSummary": "AssertionError: {\"level\":\"L7\",\"policy\":\"complete\",\"seed\":1,\"completed\":false,\"time\":1200,\"deaths\":0,\"kills\":0,\"damageTaken\":0,\"failures\":{\"tick-budget\":1},\"objectiveTimeline\":[],\"furthestObjective\":\"bus-departure\",\"activeObjectives\":[],\"out",
     "redOnMain": "No",
     "mainEvidence": "evidence/remote-main-campaign-control.log"
   },
@@ -154,7 +817,13 @@
     "test": "T-E32-03-D3-high",
     "title": "T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex",
     "observedIn": [
-      "evidence/remote-pair1.log"
+      "evidence/remote-pair1.log",
+      "evidence/pair1-vitest.json"
+    ],
+    "failureSummary": "AssertionError: expected 7.070880000013858 to be less than or equal to 4\n    at /srv/mi/jobs/merge-batch10-267619-25836-1792304380/tests/sim/levels/l10-campus-corridor.test.ts:59:89\n    at file:///srv/mi/jobs/merge-batch10-267619-25836-1792",
+    "passingRerunEvidence": [
+      "evidence/remote-pair2.log",
+      "evidence/pair2-vitest.json"
     ],
     "redOnMain": "No",
     "mainEvidence": "evidence/remote-main-functional-control.log"
@@ -163,7 +832,13 @@
     "test": "T-E32-11-perf-200",
     "title": "T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
     "observedIn": [
-      "evidence/remote-pair2.log"
+      "evidence/remote-pair2.log",
+      "evidence/pair2-vitest.json"
+    ],
+    "failureSummary": "AssertionError: expected 4.006271999969613 to be less than or equal to 4\n    at /srv/mi/jobs/merge-batch10-267619-41058-1792305478/tests/sim/performance/mega-moves.test.ts:24:104\n    at file:///srv/mi/jobs/merge-batch10-267619-41058-1792305",
+    "passingRerunEvidence": [
+      "evidence/remote-candidate-isolated.log",
+      "evidence/candidate-isolated-vitest.json"
     ],
     "redOnMain": "Yes",
     "mainEvidence": "evidence/main-isolated.json"
@@ -172,18 +847,23 @@
     "test": "T-E32-21-E3-high",
     "title": "T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
     "observedIn": [
-      "evidence/remote-pair2.log"
+      "evidence/remote-pair2.log",
+      "evidence/pair2-vitest.json"
     ],
-    "redOnMain": "Unmeasured",
-    "mainEvidence": ""
+    "failureSummary": "AssertionError: expected 4.390439999988303 to be less than or equal to 4\n    at /srv/mi/jobs/merge-batch10-267619-41058-1792305478/tests/sim/levels/l10-assault.test.ts:60:17\n    at file:///srv/mi/jobs/merge-batch10-267619-41058-1792305478/n",
+    "redOnMain": "Yes",
+    "mainEvidence": "evidence/remote-main-timing-extra.log"
   },
   {
     "test": "T-E32-32",
     "title": "T-E32-32 @E32-AC32 continuous seed 1 L1 through L10 reaches credits with real campaign handovers",
     "observedIn": [
       "evidence/remote-pair1.log",
-      "evidence/remote-pair2.log"
+      "evidence/remote-pair2.log",
+      "evidence/pair1-vitest.json",
+      "evidence/pair2-vitest.json"
     ],
+    "failureSummary": "AssertionError: {\"level\":\"L7\",\"policy\":\"complete\",\"seed\":1,\"completed\":false,\"time\":1200,\"deaths\":0,\"kills\":0,\"damageTaken\":0,\"failures\":{\"tick-budget\":1},\"objectiveTimeline\":[],\"furthestObjective\":\"bus-departure\",\"activeObjectives\":[],\"out",
     "redOnMain": "No",
     "mainEvidence": "evidence/remote-main-campaign-control.log"
   },
@@ -199,7 +879,7 @@
   },
   {
     "test": "wave3-zoo-routines@high-z1.5-webgl2",
-    "title": "Wide zoo actor clipping: 2 > 0",
+    "title": "Two hand/held-prop grip intersections: 2 > 0",
     "observedIn": [
       "evidence/matrix-final-webgl2.log"
     ],
@@ -207,12 +887,30 @@
     "mainEvidence": "evidence/main-zoo-catalog.log"
   },
   {
+    "test": "wave3-zoo-routines@high-z1.5-webgpu",
+    "title": "Full gate matrix: wave3-zoo-routines@high-z1.5",
+    "observedIn": [
+      "matrix/full-gate-failed/wave3-zoo-routines@high-z1.5/metrics.json"
+    ],
+    "redOnMain": "Yes",
+    "mainEvidence": "matrix/main-zoo-webgpu/index.json"
+  },
+  {
     "test": "wave3-zoo-routines@low-z1.5-webgl2",
-    "title": "Wide zoo actor clipping: 2 > 0",
+    "title": "Two hand/held-prop grip intersections: 2 > 0",
     "observedIn": [
       "evidence/matrix-final-webgl2.log"
     ],
     "redOnMain": "Yes",
     "mainEvidence": "evidence/main-zoo-catalog.log"
+  },
+  {
+    "test": "wave3-zoo-routines@low-z1.5-webgpu",
+    "title": "Full gate matrix: wave3-zoo-routines@low-z1.5",
+    "observedIn": [
+      "matrix/full-gate-failed/wave3-zoo-routines@low-z1.5/metrics.json"
+    ],
+    "redOnMain": "Yes",
+    "mainEvidence": "matrix/main-zoo-webgpu/index.json"
   }
 ]

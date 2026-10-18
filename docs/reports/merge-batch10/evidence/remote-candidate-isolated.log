@@ -3,3 +3,88 @@
 [remote] sync 31s, 17240 files; job /srv/mi/jobs/merge-batch10-267619-43596-1792305568; queueing for a slot
 [runner] slot 1 acquired; load 2.09 1.16 0.51
 [runner] waiting for both slots to isolate wall-clock timing
+[runner] both slots held for the timing project
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/merge-batch10-267619-43596-1792305568[39m
+
+ [31m❯[39m [30m[45m timing [49m[39m tests/sim/performance/zoo-s1.test.ts [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 2488[2mms[22m[39m
+[31m   [31m×[31m T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms[39m[33m 2486[2mms[22m[39m
+   [2m[90m↓[39m[22m T-E07-11-zoo-s1-100 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 6ms
+ [31m❯[39m [30m[45m timing [49m[39m tests/sim/performance/alpha.test.ts [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 2446[2mms[22m[39m
+[31m   [31m×[31m T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms[39m[33m 2444[2mms[22m[39m
+   [2m[90m↓[39m[22m T-E07-11-alpha-100 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 6ms
+ [31m❯[39m [30m[45m timing [49m[39m tests/sim/performance/alpha-physical.test.ts [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 2029[2mms[22m[39m
+[31m   [31m×[31m T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms[39m[33m 2028[2mms[22m[39m
+   [2m[90m↓[39m[22m T-E07-11-alpha-physical-100 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 6ms
+ [31m❯[39m [30m[45m timing [49m[39m tests/sim/performance/zoo-s2.test.ts [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 2900[2mms[22m[39m
+[31m   [31m×[31m T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms[39m[33m 2898[2mms[22m[39m
+   [2m[90m↓[39m[22m T-E07-11-zoo-s2-100 @E07-AC11 @E18-AC02 mixed zoo specials stay within 6ms
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/zoo-s3.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 2354[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms[33m 2351[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/mega-moves.test.ts [2m([22m[2m2 tests[22m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 2514[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18[33m 2512[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/validate.test.ts [2m([22m[2m17 tests[22m[2m | [22m[33m16 skipped[39m[2m)[22m[33m 196066[2mms[22m[39m
+[runner] functional phase reached; extra slot released
+   [33m[2m✓[22m[39m T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts[33m 196061[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/combat/l5-shotgun.test.ts [2m([22m[2m6 tests[22m[2m | [22m[33m5 skipped[39m[2m)[22m[33m 25043[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E23-12-kill PO #37 @E23 @E23-AC12 @E07-AC14 one shell kills regular infected through 8 m permanently; two close shells stop an Alpha[33m 25041[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 4 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[45m timing [49m[39m tests/sim/performance/alpha-physical.test.ts[2m > [22mT-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms
+[31m[1mAssertionError[22m: expected 4.131049999999959 to be less than or equal to 4[39m
+[36m [2m❯[22m tests/sim/performance/alpha-physical.test.ts:[2m29:101[22m[39m
+    [90m 27|[39m     const proof = { count, alphas: ids.length, minInfected, activation…
+    [90m 28|[39m     mkdirSync('test-results/alpha-s2', { recursive: true }); writeFile…
+    [90m 29|[39m     expect(activations).toBeGreaterThan(0); expect(minInfected).toBe(c…
+    [90m   |[39m                                                                                                     [31m^[39m
+    [90m 30|[39m   } finally { w.dispose(); }
+    [90m 31|[39m });
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[45m timing [49m[39m tests/sim/performance/alpha.test.ts[2m > [22mT-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms
+[31m[1mAssertionError[22m: expected 4.194729999999254 to be less than or equal to 4[39m
+[36m [2m❯[22m tests/sim/performance/alpha.test.ts:[2m29:61[22m[39m
+    [90m 27|[39m     const proof = { count, alphas: ids.length, minInfected, cap: ai.di…
+    [90m 28|[39m     mkdirSync('test-results/alpha-s1', { recursive: true }); writeFile…
+    [90m 29|[39m     expect(minInfected).toBe(count); expect(proof.simMsP95).toBeLessTh…
+    [90m   |[39m                                                             [31m^[39m
+    [90m 30|[39m   } finally { w.dispose(); }
+    [90m 31|[39m });
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[45m timing [49m[39m tests/sim/performance/zoo-s1.test.ts[2m > [22mT-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms
+[31m[1mAssertionError[22m: expected 4.216631000000234 to be less than or equal to 4[39m
+[36m [2m❯[22m tests/sim/performance/zoo-s1.test.ts:[2m30:101[22m[39m
+    [90m 28|[39m     const proof = { count, animals: ids.length, minInfected, activatio…
+    [90m 29|[39m     mkdirSync('test-results/zoo-s1', { recursive: true }); writeFileSy…
+    [90m 30|[39m     expect(activations).toBeGreaterThan(0); expect(minInfected).toBe(c…
+    [90m   |[39m                                                                                                     [31m^[39m
+    [90m 31|[39m   } finally { w.dispose(); }
+    [90m 32|[39m });
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[45m timing [49m[39m tests/sim/performance/zoo-s2.test.ts[2m > [22mT-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms
+[31m[1mAssertionError[22m: expected 4.929087000000436 to be less than or equal to 4[39m
+[36m [2m❯[22m tests/sim/performance/zoo-s2.test.ts:[2m26:68[22m[39m
+    [90m 24|[39m     const proof = { count, zoo: ids.length, activations, simMsP95: tim…
+    [90m 25|[39m     mkdirSync('docs/reports/zoo-s2', { recursive: true }); writeFileSy…
+    [90m 26|[39m     expect(activations).toBeGreaterThan(0); expect(proof.simMsP95).toB…
+    [90m   |[39m                                                                    [31m^[39m
+    [90m 27|[39m   } finally { w.dispose(); }
+    [90m 28|[39m });
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m4 failed[39m[22m[2m | [22m[1m[32m4 passed[39m[22m[90m (8)[39m
+[2m      Tests [22m [1m[31m4 failed[39m[22m[2m | [22m[1m[32m4 passed[39m[22m[2m | [22m[33m27 skipped[39m[90m (35)[39m
+[2m   Start at [22m 09:08:54
+[2m   Duration [22m 243.94s[2m (tests 97%, transform 2%, import 1%)[22m
+
+JSON report written to /srv/mi/jobs/merge-batch10-267619-43596-1792305568/test-results/batch10-candidate-isolated.json
+[remote] pulled test-results/batch10-candidate-isolated.json
+[remote] done exit=1 (runner 2.28.24.66, sync 31s, remote total 9180s)

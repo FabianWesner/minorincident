@@ -1,0 +1,918 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "tools/scenelab/vfx-stunning.config.ts",
+      "tests/e2e/l6-po-gate.spec.ts",
+      "tests/e2e/levels/l6-exit-approach.spec.ts",
+      "tests/e2e/levels/l7-entry.spec.ts",
+      "tests/e2e/levels/L6.spec.ts",
+      "--grep",
+      "PO34|T-E24-exit-input|T-E24-18|T-E28-L6|T-E29-16-browser|T-E24-15.*l6-tunnel-retreat",
+      "--workers=1"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tools/scenelab/vfx-stunning.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/vfx-3495",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/vfx-3495",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/vfx-3495",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/vfx-3495",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/vfx-3495",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/vfx-3495",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/vfx-stunning/browser-3495.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "node '/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/node_modules/vite/bin/vite.js' preview --outDir '/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/merge-batch10/gate-stage-dist' --host 127.0.0.1 --port 3495 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3495",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/l6-po-gate.spec.ts",
+      "file": "e2e/l6-po-gate.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "@E24 PO34 service gate explains the crate task with one bar webgl high",
+          "ok": false,
+          "tags": [
+            "E24"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 19253,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('interaction-prompt')\nExpected substring: \u001b[32m\"\u001b[7mPush glowing crates onto\u001b[27m the \u001b[7mlin\u001b[27me\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBlock the tunnelLet everyone pass · E to close\u001b[27m the \u001b[7mgat\u001b[27me\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('interaction-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('interaction-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div data-hint=\"\" data-entity-id=\"39\" class=\"interaction-prompt\" data-testid=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"Block the tunnelLet everyone pass · E to close the gate\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('interaction-prompt')\nExpected substring: \u001b[32m\"\u001b[7mPush glowing crates onto\u001b[27m the \u001b[7mlin\u001b[27me\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBlock the tunnelLet everyone pass · E to close\u001b[27m the \u001b[7mgat\u001b[27me\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('interaction-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('interaction-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div data-hint=\"\" data-entity-id=\"39\" class=\"interaction-prompt\" data-testid=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"Block the tunnelLet everyone pass · E to close the gate\"\u001b[22m\n\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l6-po-gate.spec.ts:14:24",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l6-po-gate.spec.ts",
+                      "column": 24,
+                      "line": 14
+                    },
+                    "snippet": "  12 |   const prompt = page.getByTestId('interaction-prompt');\n  13 |   await expect(prompt).toContainText('Block the tunnel');\n> 14 |   await expect(prompt).toContainText('Push glowing crates onto the line');\n     |                        ^\n  15 |   await expect(prompt.locator('[role=\"progressbar\"]:visible')).toHaveCount(1);\n  16 |   await expect(prompt.locator('[role=\"meter\"]:visible')).toHaveCount(0);\n  17 |   await expect(prompt).not.toContainText('coverage');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l6-po-gate.spec.ts",
+                        "column": 24,
+                        "line": 14
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('interaction-prompt')\nExpected substring: \u001b[32m\"\u001b[7mPush glowing crates onto\u001b[27m the \u001b[7mlin\u001b[27me\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBlock the tunnelLet everyone pass · E to close\u001b[27m the \u001b[7mgat\u001b[27me\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('interaction-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('interaction-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div data-hint=\"\" data-entity-id=\"39\" class=\"interaction-prompt\" data-testid=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"Block the tunnelLet everyone pass · E to close the gate\"\u001b[22m\n\n\n  12 |   const prompt = page.getByTestId('interaction-prompt');\n  13 |   await expect(prompt).toContainText('Block the tunnel');\n> 14 |   await expect(prompt).toContainText('Push glowing crates onto the line');\n     |                        ^\n  15 |   await expect(prompt.locator('[role=\"progressbar\"]:visible')).toHaveCount(1);\n  16 |   await expect(prompt.locator('[role=\"meter\"]:visible')).toHaveCount(0);\n  17 |   await expect(prompt).not.toContainText('coverage');\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l6-po-gate.spec.ts:14:24"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T09:10:54.817Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/vfx-3495/e2e-l6-po-gate--E24-PO34-s-30513-ask-with-one-bar-webgl-high-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/vfx-3495/e2e-l6-po-gate--E24-PO34-s-30513-ask-with-one-bar-webgl-high-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l6-po-gate.spec.ts",
+                    "column": 24,
+                    "line": 14
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "90f4b89b9303247a79b0-74d38f10aa134b9809d6",
+          "file": "e2e/l6-po-gate.spec.ts",
+          "line": 3,
+          "column": 80
+        },
+        {
+          "title": "@E24 PO34 service gate explains the crate task with one bar webgl low",
+          "ok": false,
+          "tags": [
+            "E24"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 14104,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('interaction-prompt')\nExpected substring: \u001b[32m\"\u001b[7mPush glowing crates onto\u001b[27m the \u001b[7mlin\u001b[27me\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBlock the tunnelLet everyone pass · E to close\u001b[27m the \u001b[7mgat\u001b[27me\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('interaction-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('interaction-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div data-hint=\"\" data-entity-id=\"39\" class=\"interaction-prompt\" data-testid=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"Block the tunnelLet everyone pass · E to close the gate\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('interaction-prompt')\nExpected substring: \u001b[32m\"\u001b[7mPush glowing crates onto\u001b[27m the \u001b[7mlin\u001b[27me\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBlock the tunnelLet everyone pass · E to close\u001b[27m the \u001b[7mgat\u001b[27me\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('interaction-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('interaction-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div data-hint=\"\" data-entity-id=\"39\" class=\"interaction-prompt\" data-testid=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"Block the tunnelLet everyone pass · E to close the gate\"\u001b[22m\n\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l6-po-gate.spec.ts:14:24",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l6-po-gate.spec.ts",
+                      "column": 24,
+                      "line": 14
+                    },
+                    "snippet": "  12 |   const prompt = page.getByTestId('interaction-prompt');\n  13 |   await expect(prompt).toContainText('Block the tunnel');\n> 14 |   await expect(prompt).toContainText('Push glowing crates onto the line');\n     |                        ^\n  15 |   await expect(prompt.locator('[role=\"progressbar\"]:visible')).toHaveCount(1);\n  16 |   await expect(prompt.locator('[role=\"meter\"]:visible')).toHaveCount(0);\n  17 |   await expect(prompt).not.toContainText('coverage');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l6-po-gate.spec.ts",
+                        "column": 24,
+                        "line": 14
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('interaction-prompt')\nExpected substring: \u001b[32m\"\u001b[7mPush glowing crates onto\u001b[27m the \u001b[7mlin\u001b[27me\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBlock the tunnelLet everyone pass · E to close\u001b[27m the \u001b[7mgat\u001b[27me\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('interaction-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('interaction-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div data-hint=\"\" data-entity-id=\"39\" class=\"interaction-prompt\" data-testid=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"Block the tunnelLet everyone pass · E to close the gate\"\u001b[22m\n\n\n  12 |   const prompt = page.getByTestId('interaction-prompt');\n  13 |   await expect(prompt).toContainText('Block the tunnel');\n> 14 |   await expect(prompt).toContainText('Push glowing crates onto the line');\n     |                        ^\n  15 |   await expect(prompt.locator('[role=\"progressbar\"]:visible')).toHaveCount(1);\n  16 |   await expect(prompt.locator('[role=\"meter\"]:visible')).toHaveCount(0);\n  17 |   await expect(prompt).not.toContainText('coverage');\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l6-po-gate.spec.ts:14:24"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T09:11:16.877Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/vfx-3495/e2e-l6-po-gate--E24-PO34-s-f30a0-task-with-one-bar-webgl-low-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/vfx-3495/e2e-l6-po-gate--E24-PO34-s-f30a0-task-with-one-bar-webgl-low-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l6-po-gate.spec.ts",
+                    "column": 24,
+                    "line": 14
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "90f4b89b9303247a79b0-4d0a05837d1790f6aba6",
+          "file": "e2e/l6-po-gate.spec.ts",
+          "line": 3,
+          "column": 80
+        },
+        {
+          "title": "@E24 PO34 service gate explains the crate task with one bar webgpu high",
+          "ok": false,
+          "tags": [
+            "E24"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 18586,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('interaction-prompt')\nExpected substring: \u001b[32m\"\u001b[7mPush glowing crates onto\u001b[27m the \u001b[7mlin\u001b[27me\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBlock the tunnelLet everyone pass · E to close\u001b[27m the \u001b[7mgat\u001b[27me\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('interaction-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('interaction-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div data-hint=\"\" data-entity-id=\"39\" class=\"interaction-prompt\" data-testid=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"Block the tunnelLet everyone pass · E to close the gate\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('interaction-prompt')\nExpected substring: \u001b[32m\"\u001b[7mPush glowing crates onto\u001b[27m the \u001b[7mlin\u001b[27me\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBlock the tunnelLet everyone pass · E to close\u001b[27m the \u001b[7mgat\u001b[27me\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('interaction-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('interaction-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div data-hint=\"\" data-entity-id=\"39\" class=\"interaction-prompt\" data-testid=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"Block the tunnelLet everyone pass · E to close the gate\"\u001b[22m\n\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l6-po-gate.spec.ts:14:24",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l6-po-gate.spec.ts",
+                      "column": 24,
+                      "line": 14
+                    },
+                    "snippet": "  12 |   const prompt = page.getByTestId('interaction-prompt');\n  13 |   await expect(prompt).toContainText('Block the tunnel');\n> 14 |   await expect(prompt).toContainText('Push glowing crates onto the line');\n     |                        ^\n  15 |   await expect(prompt.locator('[role=\"progressbar\"]:visible')).toHaveCount(1);\n  16 |   await expect(prompt.locator('[role=\"meter\"]:visible')).toHaveCount(0);\n  17 |   await expect(prompt).not.toContainText('coverage');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l6-po-gate.spec.ts",
+                        "column": 24,
+                        "line": 14
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('interaction-prompt')\nExpected substring: \u001b[32m\"\u001b[7mPush glowing crates onto\u001b[27m the \u001b[7mlin\u001b[27me\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBlock the tunnelLet everyone pass · E to close\u001b[27m the \u001b[7mgat\u001b[27me\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('interaction-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('interaction-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div data-hint=\"\" data-entity-id=\"39\" class=\"interaction-prompt\" data-testid=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"Block the tunnelLet everyone pass · E to close the gate\"\u001b[22m\n\n\n  12 |   const prompt = page.getByTestId('interaction-prompt');\n  13 |   await expect(prompt).toContainText('Block the tunnel');\n> 14 |   await expect(prompt).toContainText('Push glowing crates onto the line');\n     |                        ^\n  15 |   await expect(prompt.locator('[role=\"progressbar\"]:visible')).toHaveCount(1);\n  16 |   await expect(prompt.locator('[role=\"meter\"]:visible')).toHaveCount(0);\n  17 |   await expect(prompt).not.toContainText('coverage');\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l6-po-gate.spec.ts:14:24"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T09:11:32.767Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/vfx-3495/e2e-l6-po-gate--E24-PO34-s-bbab2-sk-with-one-bar-webgpu-high-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/vfx-3495/e2e-l6-po-gate--E24-PO34-s-bbab2-sk-with-one-bar-webgpu-high-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l6-po-gate.spec.ts",
+                    "column": 24,
+                    "line": 14
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "90f4b89b9303247a79b0-feda5b423c479877444d",
+          "file": "e2e/l6-po-gate.spec.ts",
+          "line": 3,
+          "column": 80
+        },
+        {
+          "title": "@E24 PO34 service gate explains the crate task with one bar webgpu low",
+          "ok": false,
+          "tags": [
+            "E24"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 14755,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('interaction-prompt')\nExpected substring: \u001b[32m\"\u001b[7mPush glowing crates onto\u001b[27m the \u001b[7mlin\u001b[27me\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBlock the tunnelLet everyone pass · E to close\u001b[27m the \u001b[7mgat\u001b[27me\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('interaction-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('interaction-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div data-hint=\"\" data-entity-id=\"39\" class=\"interaction-prompt\" data-testid=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"Block the tunnelLet everyone pass · E to close the gate\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('interaction-prompt')\nExpected substring: \u001b[32m\"\u001b[7mPush glowing crates onto\u001b[27m the \u001b[7mlin\u001b[27me\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBlock the tunnelLet everyone pass · E to close\u001b[27m the \u001b[7mgat\u001b[27me\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('interaction-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('interaction-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div data-hint=\"\" data-entity-id=\"39\" class=\"interaction-prompt\" data-testid=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"Block the tunnelLet everyone pass · E to close the gate\"\u001b[22m\n\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l6-po-gate.spec.ts:14:24",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l6-po-gate.spec.ts",
+                      "column": 24,
+                      "line": 14
+                    },
+                    "snippet": "  12 |   const prompt = page.getByTestId('interaction-prompt');\n  13 |   await expect(prompt).toContainText('Block the tunnel');\n> 14 |   await expect(prompt).toContainText('Push glowing crates onto the line');\n     |                        ^\n  15 |   await expect(prompt.locator('[role=\"progressbar\"]:visible')).toHaveCount(1);\n  16 |   await expect(prompt.locator('[role=\"meter\"]:visible')).toHaveCount(0);\n  17 |   await expect(prompt).not.toContainText('coverage');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l6-po-gate.spec.ts",
+                        "column": 24,
+                        "line": 14
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('interaction-prompt')\nExpected substring: \u001b[32m\"\u001b[7mPush glowing crates onto\u001b[27m the \u001b[7mlin\u001b[27me\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBlock the tunnelLet everyone pass · E to close\u001b[27m the \u001b[7mgat\u001b[27me\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('interaction-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('interaction-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div data-hint=\"\" data-entity-id=\"39\" class=\"interaction-prompt\" data-testid=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"Block the tunnelLet everyone pass · E to close the gate\"\u001b[22m\n\n\n  12 |   const prompt = page.getByTestId('interaction-prompt');\n  13 |   await expect(prompt).toContainText('Block the tunnel');\n> 14 |   await expect(prompt).toContainText('Push glowing crates onto the line');\n     |                        ^\n  15 |   await expect(prompt.locator('[role=\"progressbar\"]:visible')).toHaveCount(1);\n  16 |   await expect(prompt.locator('[role=\"meter\"]:visible')).toHaveCount(0);\n  17 |   await expect(prompt).not.toContainText('coverage');\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l6-po-gate.spec.ts:14:24"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T09:11:54.129Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/vfx-3495/e2e-l6-po-gate--E24-PO34-s-1a992-ask-with-one-bar-webgpu-low-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/vfx-3495/e2e-l6-po-gate--E24-PO34-s-1a992-ask-with-one-bar-webgpu-low-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l6-po-gate.spec.ts",
+                    "column": 24,
+                    "line": 14
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "90f4b89b9303247a79b0-9c5633cb2799994e55c4",
+          "file": "e2e/l6-po-gate.spec.ts",
+          "line": 3,
+          "column": 80
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/l6-exit-approach.spec.ts",
+      "file": "e2e/levels/l6-exit-approach.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E24-exit-input @E24-AC17 high zoom 1: last barricade to raised exit and L7",
+          "ok": true,
+          "tags": [
+            "E24-AC17"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 19034,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T09:12:11.082Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "470084bb6853486e62fc-e86c8ad794437d789043",
+          "file": "e2e/levels/l6-exit-approach.spec.ts",
+          "line": 6,
+          "column": 77
+        },
+        {
+          "title": "T-E24-exit-input @E24-AC17 high zoom 0.5: last barricade to raised exit and L7",
+          "ok": true,
+          "tags": [
+            "E24-AC17"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17596,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T09:12:30.245Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "470084bb6853486e62fc-79b1a5e2a311ff7416bc",
+          "file": "e2e/levels/l6-exit-approach.spec.ts",
+          "line": 6,
+          "column": 77
+        },
+        {
+          "title": "T-E24-exit-input @E24-AC17 low zoom 1: last barricade to raised exit and L7",
+          "ok": true,
+          "tags": [
+            "E24-AC17"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17900,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T09:12:47.857Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "470084bb6853486e62fc-4551949cec5ab2eaff00",
+          "file": "e2e/levels/l6-exit-approach.spec.ts",
+          "line": 6,
+          "column": 77
+        },
+        {
+          "title": "T-E24-exit-input @E24-AC17 low zoom 0.5: last barricade to raised exit and L7",
+          "ok": true,
+          "tags": [
+            "E24-AC17"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16808,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T09:13:05.766Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "470084bb6853486e62fc-640e77a014a9ab480c91",
+          "file": "e2e/levels/l6-exit-approach.spec.ts",
+          "line": 6,
+          "column": 77
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/L6.spec.ts",
+      "file": "e2e/levels/L6.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E24-18 @E24 @E24-AC18 shelter and emergency photo spots render the shipped adults and lights",
+          "ok": true,
+          "tags": [
+            "E24",
+            "E24-AC18"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6822,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T09:13:22.653Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8acabee6798f4f7fce91-58bb9a386edb078ec00b",
+          "file": "e2e/levels/L6.spec.ts",
+          "line": 7,
+          "column": 1
+        },
+        {
+          "title": "T-E28-L6 @E28 @E28-AC01 @E24 @E24-AC14 actual Northgate exit changes underground haze to ground fog and night",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC01",
+            "E24",
+            "E24-AC14"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5484,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T09:13:29.490Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8acabee6798f4f7fce91-87581410baebcf1d9568",
+          "file": "e2e/levels/L6.spec.ts",
+          "line": 17,
+          "column": 1
+        },
+        {
+          "title": "T-E24-15 @E24 @E24-AC15 l6-tunnel-retreat mask contrast, red eye maxima and flashlight shadow",
+          "ok": true,
+          "tags": [
+            "E24",
+            "E24-AC15"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6400,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T09:13:34.985Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8acabee6798f4f7fce91-3e275b635697768319a0",
+          "file": "e2e/levels/L6.spec.ts",
+          "line": 105,
+          "column": 104
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/l7-entry.spec.ts",
+      "file": "e2e/levels/l7-entry.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 1: entry, real rocket pickup and checkpoint death",
+          "ok": true,
+          "tags": [
+            "E29-AC16",
+            "E24-AC14",
+            "E29-AC03"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13068,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T09:13:41.398Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ea386935d491294bf511-f63f2ffc5f70c14f1e54",
+          "file": "e2e/levels/l7-entry.spec.ts",
+          "line": 6,
+          "column": 74
+        },
+        {
+          "title": "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 0.5: entry, real rocket pickup and checkpoint death",
+          "ok": true,
+          "tags": [
+            "E29-AC16",
+            "E24-AC14",
+            "E29-AC03"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12951,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T09:13:54.481Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ea386935d491294bf511-1f1670ea954a821890e3",
+          "file": "e2e/levels/l7-entry.spec.ts",
+          "line": 6,
+          "column": 74
+        },
+        {
+          "title": "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 1: entry, real rocket pickup and checkpoint death",
+          "ok": true,
+          "tags": [
+            "E29-AC16",
+            "E24-AC14",
+            "E29-AC03"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13133,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T09:14:07.452Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ea386935d491294bf511-985a5ed533c447b3cbce",
+          "file": "e2e/levels/l7-entry.spec.ts",
+          "line": 6,
+          "column": 74
+        },
+        {
+          "title": "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 0.5: entry, real rocket pickup and checkpoint death",
+          "ok": true,
+          "tags": [
+            "E29-AC16",
+            "E24-AC14",
+            "E29-AC03"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16390,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T09:14:20.599Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ea386935d491294bf511-74f02afe8fef11c4378c",
+          "file": "e2e/levels/l7-entry.spec.ts",
+          "line": 6,
+          "column": 74
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-18T09:10:54.022Z",
+    "duration": 223352.816,
+    "expected": 11,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

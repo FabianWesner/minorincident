@@ -1,4 +1,8 @@
 #!/bin/sh
+if ! /usr/bin/id -un >/dev/null 2>&1 || ! /bin/ps -p "$$" >/dev/null 2>&1; then
+  printf '%s\n' 'Host identity/process services are unavailable; native measurements are unmeasured.' >&2
+  exit 125
+fi
 mkdir -p docs/reports/merge-batch10/perf/main-weather docs/reports/merge-batch10/perf/l8-final
 E2E_PORT=3485 VFX_DIST="$PWD/test-results/merge-batch10/main-weather-dist" npx playwright test --config tools/scenelab/vfx-stunning.config.ts tests/perf/weather.spec.ts --grep T-E28-10-frame --project=chromium --workers=1
 weather_rc=$?

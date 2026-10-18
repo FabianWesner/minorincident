@@ -3,3 +3,52 @@
 [remote] sync 22s, 16442 files; job /srv/mi/jobs/merge-batch10-main-control-7bc09a-60204-1792306148; queueing for a slot
 [runner] slot 1 acquired; load 1.41 1.39 0.98
 [runner] waiting for both slots to isolate wall-clock timing
+[runner] both slots held for the timing project
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/merge-batch10-main-control-7bc09a-60204-1792306148[39m
+
+[90mstdout[2m | tests/sim/ai/director.test.ts[2m > [22m[2mT-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget
+[22m[39m{"scenario":"horde-arena","infected":200,"simMsP95":3.137952000000041,"budget":4}
+
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/ai/director.test.ts [2m([22m[2m11 tests[22m[2m | [22m[33m10 skipped[39m[2m)[22m[33m 1893[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget[33m 1890[2mms[22m[39m
+ [31m❯[39m [30m[45m timing [49m[39m tests/sim/levels/l10-assault.test.ts [2m([22m[2m5 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m4 skipped[39m[2m)[22m[33m 18283[2mms[22m[39m
+[31m   [31m×[31m T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets[39m[33m 18279[2mms[22m[39m
+   [2m[90m↓[39m[22m T-E32-21-E3-low @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets
+   [2m[90m↓[39m[22m T-E32-21-E3-overlap-high @E32-AC06 @E32-AC21 full cap defers assault, dead bodies survive replenishment and revisit
+   [2m[90m↓[39m[22m T-E32-21-E3-overlap-low @E32-AC06 @E32-AC21 full cap defers assault, dead bodies survive replenishment and revisit
+   [2m[90m↓[39m[22m T-E32-10-E3 @E32-AC10 production composition introduces one reserved pursuer behind R1
+ [31m❯[39m [30m[45m timing [49m[39m tests/sim/performance/alpha-support.test.ts [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 2416[2mms[22m[39m
+[31m   [31m×[31m T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms[39m[33m 2414[2mms[22m[39m
+   [2m[90m↓[39m[22m T-E07-06-support-perf-100 @E18-AC02 @perf live Alpha support moves stay within 6ms
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 2 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[45m timing [49m[39m tests/sim/levels/l10-assault.test.ts[2m > [22mT-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets
+[31m[1mAssertionError[22m: expected 4.735291999997571 to be less than or equal to 4[39m
+[36m [2m❯[22m tests/sim/levels/l10-assault.test.ts:[2m58:17[22m[39m
+    [90m 56|[39m     mkdirSync('test-results/epics/E32/E3', { recursive: true });
+    [90m 57|[39m     writeFileSync(`test-results/epics/E32/E3/assault-${tier}.json`, JS…
+    [90m 58|[39m     expect(p95).toBeLessThanOrEqual(tier === 'high' ? 4 : 6);
+    [90m   |[39m                 [31m^[39m
+    [90m 59|[39m   } finally { w.dispose(); }
+    [90m 60|[39m });
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[45m timing [49m[39m tests/sim/performance/alpha-support.test.ts[2m > [22mT-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms
+[31m[1mAssertionError[22m: expected 4.370412000000215 to be less than or equal to 4[39m
+[36m [2m❯[22m tests/sim/performance/alpha-support.test.ts:[2m29:147[22m[39m
+
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m1 passed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[31m2 failed[39m[22m[2m | [22m[1m[32m1 passed[39m[22m[2m | [22m[33m15 skipped[39m[90m (18)[39m
+[2m   Start at [22m 09:13:12
+[2m   Duration [22m 27.67s[2m (tests 83%, transform 12%, import 5%)[22m
+
+JSON report written to /srv/mi/jobs/merge-batch10-main-control-7bc09a-60204-1792306148/test-results/batch10-main-timing-extra.json
+[remote] pulled test-results/batch10-main-timing-extra.json
+[remote] done exit=1 (runner 2.28.24.66, sync 22s, remote total 8650s)

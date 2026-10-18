@@ -3,3 +3,37 @@
 [remote] sync 31s, 16442 files; job /srv/mi/jobs/merge-batch10-main-control-7bc09a-47905-1792305720; queueing for a slot
 [runner] slot 1 acquired; load 1.76 1.43 0.73
 [runner] waiting for both slots to isolate wall-clock timing
+[runner] both slots held for the timing project
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/merge-batch10-main-control-7bc09a-47905-1792305720[39m
+
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/world/chunk-residency.test.ts [2m([22m[2m11 tests[22m[2m | [22m[33m10 skipped[39m[2m)[22m[33m 5559[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95[33m 5556[2mms[22m[39m
+ [31m❯[39m [30m[43m functional [49m[39m tests/levels/batch10-boundary-control.test.ts [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m | [22m[33m1 skipped[39m[2m)[22m[33m 558[2mms[22m[39m
+[runner] functional phase reached; extra slot released
+   [2m[90m↓[39m[22m T-E24-17-route @E24-AC17 @E24-AC10 escort navigation stays in the authored tunnel around the first gate
+[31m   [31m×[31m T-E24-17-room-boundary @E24-AC17 raw movement cannot leave the authored tunnel floor[39m[33m 557[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/levels/batch10-boundary-control.test.ts[2m > [22mT-E24-17-room-boundary @E24-AC17 raw movement cannot leave the authored tunnel floor
+[31m[1mAssertionError[22m: expected 30.005048751831055 to be less than 30[39m
+[36m [2m❯[22m tests/levels/batch10-boundary-control.test.ts:[2m36:32[22m[39m
+    [90m 34|[39m     world.applyInput(frame, 'keyboard'); world.update();
+    [90m 35|[39m     expect(world.infected!.nav.contains(player.transform.x, player.tra…
+    [90m 36|[39m     expect(player.transform.x).toBeLessThan(30);
+    [90m   |[39m                                [31m^[39m
+    [90m 37|[39m   }
+    [90m 38|[39m   frame.move = { x: 0, z: 1 };
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m1 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m1 passed[39m[22m[2m | [22m[33m11 skipped[39m[90m (13)[39m
+[2m   Start at [22m 09:12:59
+[2m   Duration [22m 10.69s[2m (tests 59%, transform 32%, import 9%)[22m
+
+JSON report written to /srv/mi/jobs/merge-batch10-main-control-7bc09a-47905-1792305720/test-results/batch10-main-extra.json
+[remote] pulled test-results/batch10-main-extra.json
+[remote] done exit=1 (runner 2.28.24.66, sync 31s, remote total 9041s)
