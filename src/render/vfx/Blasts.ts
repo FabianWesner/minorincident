@@ -283,10 +283,10 @@ export class Blasts extends Group {
     // Scaled by the preset flash: a barrel/propane gets a hot white core, a Molotov only a small one.
     const punch = Math.min(1, fx.flash * 1.6);
     if (!this.flashReduction && fx.fireball.count > 0) {
-      this.fireball(x, ground + .5 + fx.fireball.size * .3, z, fx.fireball.size * (.3 + .4 * punch), .15, 0, 0, 0, 0, 2);
-      this.host.light?.(x, z, '#fff0d2', 10 * punch, fx.light.range * 1.3, .22, false);
+      this.fireball(x, ground + .5 + fx.fireball.size * .3, z, fx.fireball.size * (.2 + .3 * punch), .12, 0, 0, 0, 0, 2);
+      this.host.light?.(x, z, '#fff0d2', 7 * punch, fx.light.range * 1.2, .2, false);
     }
-    this.glow(x, z, r * 3, 0xffe6b8, (this.flashReduction ? .35 : 2) * punch, .26, ground || undefined);
+    this.glow(x, z, Math.min(r * 1.8, 9), 0xffe6b8, (this.flashReduction ? .3 : 1.3) * punch, .22, ground || undefined);
     // Mega blasts tint the whole town's light field orange for 5 s (spec 07 §5).
     if (event.cls === 'mega') this.host.light?.(x, z, '#ff7a30', 4, 90, 5, false);
     // Beat 3 fireball: overlapping noise spheres around the centre, staggered by up to 0.12 s.
