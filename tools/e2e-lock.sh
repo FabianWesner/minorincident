@@ -5,7 +5,14 @@
 # For an opaque wrapper, declare E2E_UNITS=1 or 2 explicitly. All lanes must agree on E2E_SLOTS.
 command -v lockf >/dev/null 2>&1 || exec "$@"
 slots="${E2E_SLOTS:-2}"
+root=$(cd "$(dirname "$0")/.." && pwd)
+if [ "${MI_E2E_JOB_HELD:-}" != 1 ]; then
+  export MI_E2E_JOB_HELD=1
+  exec python3 "$root/tools/browser-job.py" -- sh "$0" "$@"
+fi
+deadline=$(($(date +%s) + 1800))
 case "$slots" in ''|*[!0-9]*|0) printf '%s\n' 'E2E_SLOTS must be a positive integer' >&2; exit 2;; esac
+[ "$(uname -s)" != Darwin ] || [ "$slots" -le 2 ] || slots=2
 workers=''; playwright=0; next_workers=0
 for arg in "$@"; do
   if [ "$next_workers" -eq 1 ]; then workers="$arg"; next_workers=0; fi
@@ -35,7 +42,6 @@ if [ -n "${MI_E2E_LOCK_HELD:-}" ]; then
 fi
 export MI_E2E_LOCK_HELD=1 MI_E2E_UNITS_HELD="$units"
 base="${E2E_LOCK:-/tmp/minor-incident-e2e.lock}"
-if [ "$slots" -eq 1 ]; then exec lockf -k "$base.0" "$@"; fi
 # The command may itself return 75. Record admission so that it is never mistaken for
 # lockf's busy status and executed again. Keep command stderr; -s silences only lockf.
 started=$(mktemp "${TMPDIR:-/tmp}/minor-incident-e2e-start.XXXXXX") || exit 1
@@ -48,6 +54,9 @@ attempt() {
   if [ -s "$started" ] || [ "$rc" -ne 75 ]; then exit "$rc"; fi
 }
 while :; do
+  [ "$(date +%s)" -lt "$deadline" ] || { echo 'Browser admission exceeded 30 minutes; report unmeasured coverage.' >&2; exit 75; }
+  # Sample before acquiring slots so waiting for host recovery does not reserve GPU capacity.
+  if ! python3 "$root/tools/mac-gpu-guard.py" "$units"; then sleep 2; continue; fi
   i=0
   while [ "$i" -lt "$slots" ]; do
     if [ "$units" -eq 1 ]; then
