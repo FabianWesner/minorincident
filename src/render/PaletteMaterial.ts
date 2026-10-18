@@ -34,7 +34,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
   private outputFor: (mode: number) => Node;
   private readonly newCopy: () => PaletteMaterial;
   private weatherMode = -1;
-  constructor(readonly token: PaletteToken, palette: Texture, lighting: Lighting, emissive = 0, swatch?: Color, vertexSwatches = false, nodes?: { base: Node<'vec3'>; /** 1 where a merged batch draws asphalt (palette attribute): the night road lift applies there. */ road?: Node<'float'>; glow?: Node<'vec3'>; opacity?: Node<'float'>; surface?: Node<'float'>; interior?: Node<'float'> }) {
+  constructor(readonly token: PaletteToken, palette: Texture, lighting: Lighting, emissive = 0, swatch?: Color, vertexSwatches = false, nodes?: { base: Node<'vec3'>; /** 1 where a merged batch draws asphalt (palette attribute): the night road lift applies there. */ road?: Node<'float'>; glow?: Node<'vec3'>; /** Exclude lit surface/bounce/rim on emissive eye vertices in a merged figure. */ emissiveOnly?: Node<'float'>; opacity?: Node<'float'>; surface?: Node<'float'>; interior?: Node<'float'> }) {
     super(); this.newCopy = () => new PaletteMaterial(token, palette, lighting, emissive, swatch, vertexSwatches, nodes); this.name = `${emissive ? 'emi' : 'pal'}_${token}`;
     this.normalNode = normalView;
     // The swatch is data: palette colors share shader source instead of embedding
@@ -102,8 +102,11 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       const fill = lighting.heroFillColor.mul(heroMask.mul(lighting.heroFill).mul(normalWorld.y.mul(.3).add(.7)));
       // A narrow Fresnel alone turns dark clothing into disconnected pale seams.
       // Moon bounce carries the whole crowd surface; a restrained rim keeps its outline.
-      const figureFill = lighting.rimColor.mul(this.figureFill).mul(lighting.rim).mul(.9);
-      const shaded = mix(lit, surface.mul(lighting.shadow), shadow).add(surface.mul(field.add(fill).add(figureFill))).add(rim).toVar();
+      // Near-black jackets otherwise disappear into the night road between
+      // their bright creases. Keep a continuous moonlit surface on figures,
+      // including the dark swatches; ordinary world surfaces keep their albedo.
+      const figureFill = surface.max(vec3(.12)).mul(lighting.rimColor).mul(this.figureFill).mul(lighting.rim).mul(.9);
+      const shaded = mix(lit, surface.mul(lighting.shadow), shadow).add(surface.mul(field.add(fill))).add(figureFill).add(rim).toVar();
       // Night route read (E31-AC16): asphalt keeps a moon-pale sheen that no shadow removes, so the road is a pale band between dark verges.
       const road = nodes?.road ?? (token === 'asphalt' && !emissive ? float(1) : undefined);
       // Strongest around the camera focus (the survivor, or the vehicle being driven: the route ahead reads), easing to 40 % towards the screen edge so the night stays dark.
@@ -118,7 +121,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         const highlight = normalWorld.dot(half).max(0).pow(70).mul(lighting.intensity).mul(.8);
         shaded.assign(mix(shaded, environment.rgb.mul(mix(vec3(1), surface, metal)), metal.mul(.75).add(.18)).add(highlight));
       });
-      const controlled = mix(luminance(shaded), shaded, lighting.look.nodes.saturation);
+      const controlled = mix(luminance(shaded), shaded, lighting.look.nodes.saturation).mul(nodes?.emissiveOnly?.oneMinus() ?? 1);
       const output = emissive > 0 ? base.div(luminance(base).max(0.001)).mul(emissive).mul(this.emissivePower) : mix(controlled.add(nodes?.glow ? nodes.glow.mul(this.emissivePower) : 0), lighting.radialFog, rangeFogFactor(lighting.fogNear, lighting.fogFar));
       const result = output.toVar();
       if (mode & flags.flash) result.addAssign(weatherSurface.flash);

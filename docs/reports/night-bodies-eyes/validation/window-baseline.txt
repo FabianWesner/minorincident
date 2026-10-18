@@ -1,0 +1,35 @@
+
+Running 1 test using 1 worker
+
+  ✘  1 [chromium] › tests/visual/e25-closure.spec.ts:157:1 › T-E25-11 T-E25-12 @E25 @E25-AC11 @E25-AC12 camera angles expose car environment highlights and measured window depth (16.9s)
+
+
+  1) [chromium] › tests/visual/e25-closure.spec.ts:157:1 › T-E25-11 T-E25-12 @E25 @E25-AC11 @E25-AC12 camera angles expose car environment highlights and measured window depth
+
+    Error: expect(received).toHaveLength(expected)
+
+    Expected length: 200
+    Received length: 0
+    Received array:  []
+
+      166 |     evidence.push({ subject: subject.name, angle, lighting: await page.evaluate(() => window.__SS__!.getState().render.lighting) });
+      167 |     if (subject === house) {
+    > 168 |       const line = await windowLine(page); expect(line).toHaveLength(200);
+          |                                                         ^
+      169 |       const luminance = line.map(point => patch(image, point, 1));
+      170 |       // Exclude the physical perimeter/middle mullion. The room's far wall
+      171 |       // ends at a bright-to-dark boundary inside the central panes.
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/night-bodies-eyes/tests/visual/e25-closure.spec.ts:168:57
+
+    Error Context: test-results/playwright/night-bodies-baseline/visual-e25-closure-T-E25-1-fc9bf-s-and-measured-window-depth-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/night-bodies-baseline/visual-e25-closure-T-E25-1-fc9bf-s-and-measured-window-depth-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/night-bodies-baseline/visual-e25-closure-T-E25-1-fc9bf-s-and-measured-window-depth-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/visual/e25-closure.spec.ts:157:1 › T-E25-11 T-E25-12 @E25 @E25-AC11 @E25-AC12 camera angles expose car environment highlights and measured window depth
