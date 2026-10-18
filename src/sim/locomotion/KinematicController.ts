@@ -16,6 +16,8 @@ export class KinematicController {
   readonly displacement = { x: 0, y: 0, z: 0 };
   private readonly next = { x: 0, y: 0, z: 0 };
   navigationGrid: NavGrid | null = null;
+  /** Confined authored floors also bound keyboard/joystick motion, including crowd push. */
+  movementMask: ((x: number, z: number) => boolean) | null = null;
   speedScale = 1;
   private clearance = .005;
   crowd: readonly CrowdObstacle[] = [];
@@ -100,6 +102,15 @@ export class KinematicController {
       this.next.x = transform.x; this.next.z = transform.z;
       this.navigationGrid.move(this.next, this.displacement.x, this.displacement.z, survivor.radius, true);
       this.displacement.x = this.next.x - transform.x; this.displacement.z = this.next.z - transform.z;
+    }
+    if (this.movementMask) {
+      const x = transform.x + this.displacement.x, z = transform.z + this.displacement.z;
+      if (!this.movementMask(x, z)) {
+        // Slide along the room edge so a diagonal key does not strand the
+        // courier outside the floor and beyond every valid route start.
+        if (!this.movementMask(x, transform.z)) this.displacement.x = 0;
+        if (!this.movementMask(transform.x + this.displacement.x, z)) this.displacement.z = 0;
+      }
     }
     const controller = this.physics.characterController!, collider = this.physics.playerCollider!;
     controller.computeColliderMovement(collider, this.displacement, undefined, collider.collisionGroups());

@@ -1,0 +1,51 @@
+{
+  "extends": "qa-l6-po-gate.json",
+  "name": "qa-l6-room-edge",
+  "note": "Production L6 courier recovers from the southern authored floor edge and passes the first gate. Manual keyboard/joystick floor admission is covered by T-E24-17-room-boundary.",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        84,
+        11.3
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.army-mg"
+      ],
+      "state": {
+        "walk": [
+          [
+            96,
+            15
+          ]
+        ]
+      }
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 420,
+  "shots": [
+    1,
+    140,
+    280,
+    420
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "actorMaxX": {
+      "courier": [
+        95,
+        97
+      ]
+    },
+    "collisionFailuresMax": 0,
+    "collisionPendingMax": 0
+  }
+}
