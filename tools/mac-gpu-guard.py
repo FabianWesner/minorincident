@@ -15,11 +15,11 @@ def snapshot():
             continue
         pid, cpu, command = fields
         if command.endswith('/WindowServer') or '/WindowServer ' in command:
-            parts = cpu.replace('-', ':').split(':')
+            days, clock = cpu.split('-', 1) if '-' in cpu else ('0', cpu)
             seconds = 0.0
-            for part in parts:
+            for part in clock.split(':'):
                 seconds = seconds * 60 + float(part)
-            servers[pid] = seconds
+            servers[pid] = int(days) * 86400 + seconds
         # Browser roots only: renderer/GPU/utility processes carry --type=.
         if (re.match(r'^/(?:[^ \t]+/(?:chrome-headless-shell|headless_shell|Chromium|chrome)|Applications/Google Chrome[.]app/Contents/MacOS/Google Chrome|[^ \t]+/Google Chrome for Testing[.]app/Contents/MacOS/Google Chrome for Testing)(?:\s|$)', command)
                 and '--type=' not in command
@@ -41,7 +41,7 @@ def main():
         print('GPU guard: WindowServer sample unavailable; waiting', file=sys.stderr)
         return 75
     cpu = sum(after[pid] - before[pid] for pid in before) * 100 / elapsed
-    if cpu > 60 or browsers + units > 2:
+    if cpu < 0 or cpu > 60 or browsers + units > 2:
         print(f'GPU guard: WindowServer {cpu:.1f}% / 10 s; {browsers} headless browsers + {units} requested; waiting', file=sys.stderr)
         return 75
     return 0

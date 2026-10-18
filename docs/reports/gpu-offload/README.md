@@ -11,7 +11,7 @@ Implementation on `lane/gpu-offload`. Full remote proof is **in progress**, not 
 - `tools/e2e-lock.sh` hard-caps Mac capacity at two, independently of `E2E_SLOTS`. Before admission it samples WindowServer CPU time over ten seconds; >60%, an unavailable/restarted sample, or existing headless browser roots plus the reservation exceeding two cause waiting. GPU/renderer subprocesses and scheduler text are excluded. Admission stops after 30 minutes.
 - Uncapped Scene Lab probes require quiet-run. Native verifier phases that selected uncapped tests now use it. Quiet-run releases partial reservations during contention, reserves all legacy slots, and bounds its held batch to 20 minutes including cleanup. A shared one-minute cooldown gives functional lanes an admission opportunity between quiet batches. Timeout/cancellation cleanup signals only descendants of the owned command, including detached browser roots; PID start times guard against reuse.
 
-No renderer, gameplay, asset, spec, visual threshold or performance budget changes. `src/assets/staticCollision.ts` has no diff. Admission protection cannot guarantee that macOS or browsers launched outside the wrappers will never hang.
+No renderer, gameplay, asset, spec, visual threshold or performance budget changes. `src/assets/staticCollision.ts` has no diff. The guard must be integrated into every active worktree before relying on it across lanes; the ignored gate change alone does not update their tracked scripts. Admission protection cannot guarantee that macOS or browsers launched outside the wrappers will never hang.
 
 ## Validation
 
@@ -23,12 +23,12 @@ No renderer, gameplay, asset, spec, visual threshold or performance budget chang
 | Native canvas regression | 8/8 passed, 1.3 min, both qualities and both zoom limits; `/tmp/gpu-offload-webgpu.log` |
 | Mac WebGL2 comparison sample | **280/280 passed**, exactly 60 authored scenes, **1,493.209 s** wall time; [retained index](mac-sample-index.json), `test-results/gpu-offload-mac-webgl2/` |
 | Full remote WebGL2 matrix | Running: 1,026 rows, unchanged filter/size/gates; `test-results/gpu-offload-matrix/` will be pulled automatically |
-| Remote functional deploy e2e | Running 67 selected tests; first `crowd-visible-outbreak` attempt hit its unchanged 180 s deadline; retry pending; `/tmp/gpu-offload-e2e.log` |
+| Remote functional deploy e2e | Running 67 selected tests; `crowd-visible-outbreak` hit its unchanged 180 s deadline on both attempts; input checks are passing; `/tmp/gpu-offload-e2e.log` |
 | Full unit + sim + tests/levels | Running on Hetzner, at most four workers; timing project owns both runner slots before functional work; `test-results/gpu-offload-final/` will be pulled |
 | E18 simulation | Isolated remote high 200-infected ≤4 ms and low 100-infected ≤6 ms checks passed inside the ongoing full suite |
 | E18 native frame timing | **Passed**, Apple M4/Metal high 200 infected, **p95 6.6 ms ≤16.7 ms**, p50 4.1 ms; 68 draws / 500,362 triangles; [full recording](desktop-gpu.json), `/tmp/gpu-offload-e18.log` |
 
-The first remote matrix rows passed but took **133–307 s each**. This is actual software-rendering evidence, not a completed wall-time measurement or native frame-time evidence. At the initial rate, the full matrix is an overnight run. No resolution, capture count, scene list, gate or budget was reduced to accelerate it. The full catalog must finish before claiming full remote success or 60-scene parity. Functional tests whose rendered-frame workload exceeds existing software-rendering deadlines also remain red; no timeout was increased.
+The first remote matrix rows passed but took **133–385 s each**. This is actual software-rendering evidence, not a completed wall-time measurement or native frame-time evidence. At the initial rate, the full matrix is an overnight run. No resolution, capture count, scene list, gate or budget was reduced to accelerate it. The full catalog must finish before claiming full remote success or 60-scene parity. Functional tests whose rendered-frame workload exceeds existing software-rendering deadlines also remain red; no timeout was increased.
 
 The first CPU sweep began from an incomplete sync manifest while the helper was being added; its missing-helper errors are superseded by the stable full rerun. It also exposed two unchanged baseline failures: `runnerLevels` includes L7 twice (`tests/unit/tooling/l7-runner-default.test.ts`), and no test carries `@E29-AC01` (`tests/unit/traceability.test.ts`). Those files were not changed.
 
@@ -51,7 +51,9 @@ Active local followers (remote jobs run in detached sessions and results are pul
 - Selected functional e2e: `/tmp/gpu-offload-e2e.log`; runner `2.28.24.66`, job `/srv/mi/jobs/gpu-offload-6f8d83-68252-1792327626`.
 - New routing scene on remote SwiftShader: `/tmp/gpu-offload-remote-proof.log`; output `test-results/gpu-offload-remote-proof/`.
 
-After the full catalog and Mac sample have returned, run:
+A background finalizer (`/tmp/gpu-offload-finalize.py`, log `/tmp/gpu-offload-finalize.log`) is waiting for the matrix, CPU and functional e2e followers. It will run the comparison below, write `completion.json` with actual exit codes/totals/wall time, update this report, and commit only those result files if this worktree is still on `lane/gpu-offload` with no staged changes. It never starts more browsers or changes thresholds. The current full proof remains pending.
+
+To reproduce the comparison manually after the full catalog has returned, run:
 
 ```sh
 python3 tools/scenelab/compare-catalog.py \
