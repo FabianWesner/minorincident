@@ -1,0 +1,57 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/seethrough-silhouette -> 2.28.24.66:/srv/mi/ws/seethrough-silhouette-58aa6c
+[remote] cache-gc deleted:none
+[remote] sync 149s, 19249 files; job /srv/mi/jobs/seethrough-silhouette-58aa6c-85119-1792348758; queueing for a slot
+[runner] slot 0 acquired; load 9.64 9.68 7.89
+
+ RUN  v5.0.3 /srv/mi/jobs/seethrough-silhouette-58aa6c-85119-1792348758
+
+ ✓  functional  tests/unit/tooling/seethrough-probe.test.ts (3 tests) 49ms
+ ❯  functional  tests/unit/render/vehicle-occlusion.test.ts (4 tests | 1 failed) 31ms
+   ✓ @E18 adjacent non-occluding vehicle stays opaque at every game zoom 5ms
+   ✓ @E18 a foreground sedan hides an on-foot courier; elevated, rotated bounds follow the chassis 2ms
+   ✓ @E18 VehicleView enables only blocking cars and keeps the driven APC opaque 8ms
+   × @E18 scripted props and convoy vehicles reveal only when they block the subject 14ms
+ ✓  functional  tests/unit/render/seethrough.test.ts (4 tests) 25ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/unit/render/vehicle-occlusion.test.ts > @E18 scripted props and convoy vehicles reveal only when they block the subject
+AssertionError: expected last "vi.fn()" call to have been called with [ false ]
+
+- Expected
++ Received
+
+  [
+-   false,
++   true,
+  ]
+
+ ❯ tests/unit/render/vehicle-occlusion.test.ts:84:29
+     82|   });
+     83|   context.updateReveal(apc);
+     84|   expect(ridden.seeThrough).toHaveBeenLastCalledWith(false);
+       |                             ^
+     85|   expect(beside.seeThrough).toHaveBeenLastCalledWith(false);
+     86|   expect(foreground.seeThrough).toHaveBeenLastCalledWith(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 10 passed (11)
+   Start at  19:03:50
+   Duration  2.29s (transform 61%, import 37%, tests 2%)
+
+
+> sim
+> tsx tools/sim-runner/index.ts --scenario perf-horde-200 --out docs/reports/seethrough-silhouette/e18-200.json
+
+{"output":"docs/reports/seethrough-silhouette/e18-200.json","outcome":"tick-budget","scenario":"perf-horde-200","seed":1,"warmup":120,"ticks":600,"minInfected":200,"minVisibleInfected":200,"collision":{"failures":0,"pending":0,"admitted":200,"deferred":0,"requests":[],"offenders":[]},"cap":200,"simMsP50":1.642985000000408,"simMsP95":4.371822000000066,"simMsMax":10.752290000000357,"maxConcurrentInfected":200}
+
+> sim
+> tsx tools/sim-runner/index.ts --scenario perf-horde-100 --out docs/reports/seethrough-silhouette/e18-100.json
+
+{"output":"docs/reports/seethrough-silhouette/e18-100.json","outcome":"tick-budget","scenario":"perf-horde-100","seed":1,"warmup":120,"ticks":600,"minInfected":100,"minVisibleInfected":100,"collision":{"failures":0,"pending":0,"admitted":100,"deferred":0,"requests":[],"offenders":[]},"cap":100,"simMsP50":0.9807539999997061,"simMsP95":7.468793999999889,"simMsMax":15.61155400000007,"maxConcurrentInfected":100}
+[remote] pulled docs/reports/seethrough-silhouette/e18-200.json
+[remote] pulled docs/reports/seethrough-silhouette/e18-100.json
+[remote] done exit=1 (runner 2.28.24.66, sync 149s, remote total 1336s)

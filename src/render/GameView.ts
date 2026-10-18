@@ -87,6 +87,7 @@ export class GameView implements Lifecycle {
   private readonly revealSubject = new Box3();
   private readonly revealVehicle = new Box3();
   private probeVisibilityPending = false;
+  private solidCutProbeOff = false;
   private probeHide = { courier: false, crowd: false, environment: false, bars: false };
   private readonly storyFocus = new Vector3();
   private readonly storyOffset = new Vector3();
@@ -712,6 +713,8 @@ export class GameView implements Lifecycle {
     for (const e of this.world.entities.iterate()) if (e.infected?.pursuit && !e.hidden && !e.infected.hidden && e.health.current > 0) best = Math.min(best, Math.hypot(e.transform.x - at.x, e.transform.z - at.z));
     return best;
   }
+  /** Scene Lab reference: disable only solid discard, retaining placement eligibility and interior visibility. */
+  probeSolidCut(off: boolean): void { this.solidCutProbeOff = off; this.update(1); }
   /** Scene Lab: hide the courier / the crowd (Mega included) and redraw, for the courier-visible-share probe. */
   probeVisibility(hide: { courier: boolean; crowd: boolean; environment?: boolean; bars?: boolean }): number {
     this.probeHide = { ...hide, environment: hide.environment ?? false, bars: hide.bars ?? false }; this.probeVisibilityPending = true; this.update(1);
@@ -880,6 +883,7 @@ export class GameView implements Lifecycle {
       subject = this.revealSubject;
     }
     this.vehicles?.updateReveal(subject);
+    this.entityAssets?.updateReveal(subject);
     this.districts?.updateFoliage(this.view, current, lockedEntity && lockedEntity.health.current > 0 ? lockedEntity.transform : undefined, subject);
     // Scenes without a DistrictView (Scene Lab asphalt scenes with asset occluders) open the same bounded, immediate reveal.
     if (!this.districts) {
@@ -887,7 +891,10 @@ export class GameView implements Lifecycle {
       seeThrough.strength.value = subject ? 1 : 0;
       if (subject) projectReveal(this.camera, subject); else seeThrough.center.value.set(-10, -10);
     }
-    this.courierForeground = !!current && this.megaDistance(current) < 14;
+    if (this.solidCutProbeOff) seeThrough.strength.value = 0;
+    // Retained roof/wall pixels must not hide the courier through several overlapping surfaces.
+    // Reuse the existing foreground silhouette only when the camera segments found an actual blocker.
+    this.courierForeground = !!current && (this.megaDistance(current) < 14 || !!this.districts?.occluderId);
     this.character?.setForeground(this.courierForeground);
     this.healthBars?.update(this.camera, this.view.viewportHeight * this.camera.aspect, this.view.viewportHeight, this.barOccluded);
     if (this.world.missions?.state.l3) {
@@ -1050,6 +1057,7 @@ export class GameView implements Lifecycle {
   }
   /** Same-district transitions reuse decoded prototypes; leaving the district retires the cache. */
   reset(nextDistricts?: string): void {
+    this.solidCutProbeOff = false;
     const retain = !!nextDistricts && nextDistricts === this.resourceDistricts;
     this.weatherProbeAsset = null; this.weatherPowerRevision = 0;
     if (this.weather) { this.scene.remove(this.weather); this.weather.dispose(); this.weather = null; }
