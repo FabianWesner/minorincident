@@ -443,10 +443,12 @@ export class GameView implements Lifecycle {
       this.missionUI?.prepare();
       this.startPreparation();
     };
+    // Combat scenes can reveal pooled blast materials long after loading (including
+    // delayed secondary blasts). Warm their HDR/MSAA draws before accepting input.
     // E20/E21: L2 and L3 run the same crowd and outbreak look, so they use the same full shader warm-up.
     // L10 also reveals hidden movement/mission meshes on approach. Compile their
     // graphs behind the loading card, rather than linking cold WebGL programs in play.
-    const fullWarmUp = this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6' || this.world.scenario === 'L7' || this.world.scenario === 'L10' || !!this.world.missions?.l9;
+    const fullWarmUp = !!this.vfx || this.world.scenario === 'L1' || this.world.scenario === 'L2' || this.world.scenario === 'L3' || this.world.scenario === 'L4' || this.world.scenario === 'L5' || this.world.scenario === 'L6' || this.world.scenario === 'L7' || this.world.scenario === 'L10' || !!this.world.missions?.l9;
     if (fullWarmUp && this.background) {
       const generation = this.generation;
       this.warming = warm().then(() => {
