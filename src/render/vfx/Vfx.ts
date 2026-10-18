@@ -409,11 +409,11 @@ export class Vfx extends Group {
       this.lastExplosionRadius = radius; if (near > 0) { this.flashUntil = this.time + 0.1; this.flashNear = near; }
       this.waves.spawn(this.time, 0.8, x, ground + 0.035, z, 0, 0, 0, radius * 2, groundShape.pressure, 0xffe19a, 1);
       // Shock front: a thin bright pressure ring racing ahead of the dust ring in the first quarter second.
-      this.waves.spawn(this.time, .3, x, ground + .04, z, 0, 0, 0, radius * 2.6, groundShape.pressure, 0xfff6e2, 1);
+      this.waves.spawn(this.time, .24, x, ground + .04, z, 0, 0, 0, radius * 2, groundShape.pressure, 0xfff6e2, 1);
       // Hot core lobes and soot (E27 fireball shader); the old 64 flat orange discs merged into one blob.
       this.blasts.core(x, ground, z, radius);
       this.burst(x, ground + 1, z, 0xffa040, 24, .06, .6, 6, particleShape.spark, 2.2, 3);
-      this.burst(x, ground + 0.8, z, 0x3e3539, 20, radius * 0.4, 2, -0.5, particleShape.smoke);
+      this.burst(x, ground + 0.8, z, 0x685866, 32, radius * 0.4, 2, -0.5, particleShape.smoke);
       this.burst(x, ground + 0.3, z, 0xb09b85, 16, 0.13, 1.6);
       if (this.gore !== 'Off') this.decals.spawn(this.time, 120, x, ground + 0.012, z, 0, 0, 0, radius, 0, 0x37323c);
       this.targets.shake(this.flashReduction ? 0.08 : Math.min(0.35, radius * 0.05));
