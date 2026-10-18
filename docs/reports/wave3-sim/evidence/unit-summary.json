@@ -1,0 +1,41 @@
+{
+  "wave3-unit.json": {
+    "numPassedTests": 1586,
+    "numFailedTests": 3,
+    "numPendingTests": 9,
+    "failures": [
+      {
+        "name": "T-E01-traceability @E01 every active epic AC has a matching test tag",
+        "message": "AssertionError: E29-AC01: expected 'import { mkdirSync } from \\'node:fs\\'\u2026' to contain '@E29-AC01'"
+      },
+      {
+        "name": "@E19 M1-07 baked static collision is current with delivered GLBs and has finite body-height geometry",
+        "message": "AssertionError: prop.folding-chair: run npm run assets:collision after changing GLBs: expected 'd9bd9a6e6a83bceb3cf7d6358f04a6a5cf546\u2026' to be 'e228c32e4f255ce19d85028f7a44869c421bf\u2026' // Object.is equality"
+      },
+      {
+        "name": "T-E29-02-cli @E29-AC02 explicit and all-level CLI registration include L7 in campaign order",
+        "message": "AssertionError: expected [ 'L1', 'L2', 'L3', 'L4', 'L5', \u2026(6) ] to deeply equal [ 'L1', 'L2', 'L3', 'L4', 'L5', \u2026(5) ]"
+      }
+    ]
+  },
+  "wave3-unit-rerun.json": {
+    "numPassedTests": 7,
+    "numFailedTests": 2,
+    "numPendingTests": 0,
+    "failures": [
+      {
+        "name": "T-E01-traceability @E01 every active epic AC has a matching test tag",
+        "message": "AssertionError: E29-AC01: expected 'import { mkdirSync } from \\'node:fs\\'\u2026' to contain '@E29-AC01'"
+      },
+      {
+        "name": "T-E29-02-cli @E29-AC02 explicit and all-level CLI registration include L7 in campaign order",
+        "message": "AssertionError: expected [ 'L1', 'L2', 'L3', 'L4', 'L5', \u2026(6) ] to deeply equal [ 'L1', 'L2', 'L3', 'L4', 'L5', \u2026(5) ]"
+      }
+    ]
+  },
+  "base": "6e4e37634",
+  "baselineEvidence": {
+    "traceability": "E29-AC01 is absent from test sources at base as well as current HEAD.",
+    "runnerLevels": "Base already constructs [...missionIds, L7] although missionIds includes L7; the CLI assertion expects ten entries."
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "command": "MI_RUNNER_IP=2.28.24.66 sh tools/remote/run.sh \"$PWD\" --pull test-results/wave3-sim-full.json -- npx vitest run tests/sim tests/levels --maxWorkers=4 --reporter=default --reporter=json --outputFile=test-results/wave3-sim-full.json",
+  "status": "incomplete; launcher exit 255, final JSON not retrieved",
+  "failure": "Local SSH exits: No user exists for uid 501",
+  "streamedFailures": [
+    "\u00d7 T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95 7047ms",
+    "\u00d7 T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget 1839ms",
+    "\u00d7 T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets 20472ms",
+    "\u00d7 T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms 3473ms",
+    "\u00d7 T-E32-20-perf-200 @E32-AC20 @E32-AC31 @E18-AC02 full-cap active dispersal predicate 10027ms",
+    "\u00d7 T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms 4703ms",
+    "\u00d7 T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms 3128ms",
+    "\u00d7 T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms 2994ms",
+    "\u00d7 T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms 4244ms",
+    "\u00d7 T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms 3235ms",
+    "\u00d7 T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18 4257ms",
+    "\u00d7 T-E18-02-200 @E18-AC02 @perf Node sim p95 200 living infected <= 4ms 2509ms",
+    "\u00d7 T-E32-13-perf-200 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling 6748ms",
+    "\u00d7 L6 maintenance arrivals use a balanced cast instead of one repeated aftermath model @E24 @E07 11ms"
+  ],
+  "confirmedLevelSuites": {
+    "tests/levels/L6.test.ts": "11 passed, including complete and newbie bots",
+    "tests/levels/L8.test.ts": "10 passed"
+  },
+  "remoteHost": "runner@2.28.24.66",
+  "remoteFullJob": "/srv/mi/jobs/wave3-sim-bd98b7-6608-1792267712",
+  "remoteIsolatedJob": "/srv/mi/jobs/wave3-sim-bd98b7-41718-1792268403",
+  "recovery": "After local SSH account lookup is repaired, inspect those job directories and adjacent .run/log/.run/exit files; retrieve any final JSON before cleanup. Remote termination was attempted by the launcher but could not be confirmed through the broken SSH client.",
+  "resolvedAfterStream": [
+    {
+      "test": "L6 maintenance arrivals use a balanced cast instead of one repeated aftermath model",
+      "commit": "30e5ed436",
+      "change": "Give the isolated appearance fixture offscreen entrances; original 20-spawn and four-of-each-model assertions unchanged.",
+      "verification": "One local targeted case passed in a 785 ms total Vitest run; no local sweep, remote SSH unavailable."
+    }
+  ],
+  "unresolvedTimingProjectCases": [
+    "\u00d7 T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95 7047ms",
+    "\u00d7 T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget 1839ms",
+    "\u00d7 T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets 20472ms",
+    "\u00d7 T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms 3473ms",
+    "\u00d7 T-E32-20-perf-200 @E32-AC20 @E32-AC31 @E18-AC02 full-cap active dispersal predicate 10027ms",
+    "\u00d7 T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms 4703ms",
+    "\u00d7 T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms 3128ms",
+    "\u00d7 T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms 2994ms",
+    "\u00d7 T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms 4244ms",
+    "\u00d7 T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms 3235ms",
+    "\u00d7 T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18 4257ms",
+    "\u00d7 T-E18-02-200 @E18-AC02 @perf Node sim p95 200 living infected <= 4ms 2509ms",
+    "\u00d7 T-E32-13-perf-200 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling 6748ms"
+  ],
+  "assertionDetails": "Final reporter JSON was not retrieved; exact failure assertions for timing-project cases are unavailable."
+}
