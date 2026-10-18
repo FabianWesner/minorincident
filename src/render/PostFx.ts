@@ -67,7 +67,10 @@ export class PostFx {
     const toned = c.mul(tone.div(luminance(tone).max(1e-3)));
     const contrasted = toned.mul(l.div(.18).pow(n.gradeContrast.sub(1)));
     const saturated = mix(vec3(luminance(contrasted)), contrasted, n.gradeSaturation);
-    const top = max(max(c.r, c.g), c.b), chroma = top.sub(min(min(c.r, c.g), c.b)).div(top.max(1e-4));
+    // Channels via dot products: chained swizzles of the sampled colour trip a Tint lowering bug on WebGPU/Metal
+    // ("swizzle view instruction still has usages after lowering").
+    const r = c.dot(vec3(1, 0, 0)), g = c.dot(vec3(0, 1, 0)), b = c.dot(vec3(0, 0, 1));
+    const top = max(max(r, g), b), chroma = top.sub(min(min(r, g), b)).div(top.max(1e-4));
     const protect = max(chroma.smoothstep(.62, .9), l.smoothstep(.9, 1.6)).mul(.75);
     return vec4(mix(c, saturated, n.gradeAmount.mul(protect.oneMinus())), input.a);
   }
