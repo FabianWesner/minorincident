@@ -1,0 +1,2078 @@
+{
+  "rows": [
+    {
+      "name": "seethrough-apc-behind-building@high-z0.5",
+      "backend": "webgl",
+      "requestedBackend": "webgl2",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 190415,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "bld.house-a@6.0,6.0",
+        "insideMax": 190623
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 53,
+          "p95": 53,
+          "max": 53
+        },
+        "triangles": {
+          "p50": 123254,
+          "p95": 123254,
+          "max": 123254
+        },
+        "shadowDrawCalls": {
+          "p50": 21,
+          "p95": 21,
+          "max": 21
+        },
+        "shadowTriangles": {
+          "p50": 49955,
+          "p95": 49955,
+          "max": 49955
+        },
+        "stepMs": {
+          "p50": 23.5,
+          "p95": 23.9,
+          "max": 24.8
+        },
+        "lastFrame": {
+          "drawCalls": 53,
+          "triangles": 123254,
+          "shadowDrawCalls": 21,
+          "shadowTriangles": 49955,
+          "stepMs": 23.300000190734863,
+          "categories": {
+            "other": 50,
+            "shadows": 21,
+            "buildings": 3
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgl2/seethrough-apc-behind-building@high-z0.5/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-behind-building@high-z1",
+      "backend": "webgl",
+      "requestedBackend": "webgl2",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 66799,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "bld.house-a@6.0,6.0",
+        "insideMax": 67695
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 94,
+          "p95": 94,
+          "max": 94
+        },
+        "triangles": {
+          "p50": 183540,
+          "p95": 183540,
+          "max": 183540
+        },
+        "shadowDrawCalls": {
+          "p50": 21,
+          "p95": 21,
+          "max": 21
+        },
+        "shadowTriangles": {
+          "p50": 49955,
+          "p95": 49955,
+          "max": 49955
+        },
+        "stepMs": {
+          "p50": 24,
+          "p95": 24.5,
+          "max": 26.6
+        },
+        "lastFrame": {
+          "drawCalls": 94,
+          "triangles": 183540,
+          "shadowDrawCalls": 21,
+          "shadowTriangles": 49955,
+          "stepMs": 23.699999809265137,
+          "categories": {
+            "other": 89,
+            "shadows": 21,
+            "buildings": 5
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgl2/seethrough-apc-behind-building@high-z1/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-behind-building@high-z1.5",
+      "backend": "webgl",
+      "requestedBackend": "webgl2",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 26699,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "bld.house-a@6.0,6.0",
+        "insideMax": 27130
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 94,
+          "p95": 94,
+          "max": 94
+        },
+        "triangles": {
+          "p50": 183540,
+          "p95": 183540,
+          "max": 183540
+        },
+        "shadowDrawCalls": {
+          "p50": 21,
+          "p95": 21,
+          "max": 21
+        },
+        "shadowTriangles": {
+          "p50": 49955,
+          "p95": 49955,
+          "max": 49955
+        },
+        "stepMs": {
+          "p50": 23.9,
+          "p95": 28.3,
+          "max": 40.5
+        },
+        "lastFrame": {
+          "drawCalls": 94,
+          "triangles": 183540,
+          "shadowDrawCalls": 21,
+          "shadowTriangles": 49955,
+          "stepMs": 23.800000190734863,
+          "categories": {
+            "other": 89,
+            "shadows": 21,
+            "buildings": 5
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgl2/seethrough-apc-behind-building@high-z1.5/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-behind-building@low-z0.5",
+      "backend": "webgl",
+      "requestedBackend": "webgl2",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 201600,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "bld.house-a@6.0,6.0",
+        "insideMax": 202005
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 50,
+          "p95": 50,
+          "max": 50
+        },
+        "triangles": {
+          "p50": 60852,
+          "p95": 60852,
+          "max": 60852
+        },
+        "shadowDrawCalls": {
+          "p50": 15,
+          "p95": 15,
+          "max": 15
+        },
+        "shadowTriangles": {
+          "p50": 49949,
+          "p95": 49949,
+          "max": 49949
+        },
+        "stepMs": {
+          "p50": 2.5,
+          "p95": 2.8,
+          "max": 3.2
+        },
+        "lastFrame": {
+          "drawCalls": 50,
+          "triangles": 60852,
+          "shadowDrawCalls": 15,
+          "shadowTriangles": 49949,
+          "stepMs": 2.40000057220459,
+          "categories": {
+            "other": 47,
+            "shadows": 15,
+            "buildings": 3
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgl2/seethrough-apc-behind-building@low-z0.5/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-behind-building@low-z1",
+      "backend": "webgl",
+      "requestedBackend": "webgl2",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 67886,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "bld.house-a@6.0,6.0",
+        "insideMax": 68891
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 84,
+          "p95": 84,
+          "max": 84
+        },
+        "triangles": {
+          "p50": 63532,
+          "p95": 63532,
+          "max": 63532
+        },
+        "shadowDrawCalls": {
+          "p50": 15,
+          "p95": 15,
+          "max": 15
+        },
+        "shadowTriangles": {
+          "p50": 49949,
+          "p95": 49949,
+          "max": 49949
+        },
+        "stepMs": {
+          "p50": 2.4,
+          "p95": 2.8,
+          "max": 3
+        },
+        "lastFrame": {
+          "drawCalls": 84,
+          "triangles": 63532,
+          "shadowDrawCalls": 15,
+          "shadowTriangles": 49949,
+          "stepMs": 2.40000057220459,
+          "categories": {
+            "other": 79,
+            "shadows": 15,
+            "buildings": 5
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgl2/seethrough-apc-behind-building@low-z1/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-behind-building@low-z1.5",
+      "backend": "webgl",
+      "requestedBackend": "webgl2",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 26810,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "bld.house-a@6.0,6.0",
+        "insideMax": 27157
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 84,
+          "p95": 84,
+          "max": 84
+        },
+        "triangles": {
+          "p50": 63532,
+          "p95": 63532,
+          "max": 63532
+        },
+        "shadowDrawCalls": {
+          "p50": 15,
+          "p95": 15,
+          "max": 15
+        },
+        "shadowTriangles": {
+          "p50": 49949,
+          "p95": 49949,
+          "max": 49949
+        },
+        "stepMs": {
+          "p50": 2.8,
+          "p95": 3.6,
+          "max": 8.4
+        },
+        "lastFrame": {
+          "drawCalls": 84,
+          "triangles": 63532,
+          "shadowDrawCalls": 15,
+          "shadowTriangles": 49949,
+          "stepMs": 2.6999998092651367,
+          "categories": {
+            "other": 79,
+            "shadows": 15,
+            "buildings": 5
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgl2/seethrough-apc-behind-building@low-z1.5/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-behind-truck@high-z0.5",
+      "backend": "webgl",
+      "requestedBackend": "webgl2",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 167630,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "",
+        "insideMax": 174993
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 75,
+          "p95": 75,
+          "max": 75
+        },
+        "triangles": {
+          "p50": 171769,
+          "p95": 171769,
+          "max": 171769
+        },
+        "shadowDrawCalls": {
+          "p50": 18,
+          "p95": 18,
+          "max": 18
+        },
+        "shadowTriangles": {
+          "p50": 44689,
+          "p95": 44689,
+          "max": 44689
+        },
+        "stepMs": {
+          "p50": 27.6,
+          "p95": 28.2,
+          "max": 30.7
+        },
+        "lastFrame": {
+          "drawCalls": 75,
+          "triangles": 171769,
+          "shadowDrawCalls": 18,
+          "shadowTriangles": 44689,
+          "stepMs": 27.600000381469727,
+          "categories": {
+            "other": 75,
+            "shadows": 18
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgl2/seethrough-apc-behind-truck@high-z0.5/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-behind-truck@high-z1",
+      "backend": "webgl",
+      "requestedBackend": "webgl2",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 62341,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "",
+        "insideMax": 62720
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 136,
+          "p95": 136,
+          "max": 136
+        },
+        "triangles": {
+          "p50": 243383,
+          "p95": 243383,
+          "max": 243383
+        },
+        "shadowDrawCalls": {
+          "p50": 18,
+          "p95": 18,
+          "max": 18
+        },
+        "shadowTriangles": {
+          "p50": 44689,
+          "p95": 44689,
+          "max": 44689
+        },
+        "stepMs": {
+          "p50": 28.6,
+          "p95": 29.8,
+          "max": 32
+        },
+        "lastFrame": {
+          "drawCalls": 136,
+          "triangles": 243383,
+          "shadowDrawCalls": 18,
+          "shadowTriangles": 44689,
+          "stepMs": 28.399999618530273,
+          "categories": {
+            "other": 136,
+            "shadows": 18
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgl2/seethrough-apc-behind-truck@high-z1/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-behind-truck@high-z1.5",
+      "backend": "webgl",
+      "requestedBackend": "webgl2",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 24664,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "",
+        "insideMax": 24754
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 139,
+          "p95": 139,
+          "max": 139
+        },
+        "triangles": {
+          "p50": 246635,
+          "p95": 246635,
+          "max": 246635
+        },
+        "shadowDrawCalls": {
+          "p50": 18,
+          "p95": 18,
+          "max": 18
+        },
+        "shadowTriangles": {
+          "p50": 44689,
+          "p95": 44689,
+          "max": 44689
+        },
+        "stepMs": {
+          "p50": 28.5,
+          "p95": 31.4,
+          "max": 35.1
+        },
+        "lastFrame": {
+          "drawCalls": 139,
+          "triangles": 246635,
+          "shadowDrawCalls": 18,
+          "shadowTriangles": 44689,
+          "stepMs": 29.59999942779541,
+          "categories": {
+            "other": 139,
+            "shadows": 18
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgl2/seethrough-apc-behind-truck@high-z1.5/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-behind-truck@low-z0.5",
+      "backend": "webgl",
+      "requestedBackend": "webgl2",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 167319,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "",
+        "insideMax": 174891
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 75,
+          "p95": 75,
+          "max": 75
+        },
+        "triangles": {
+          "p50": 59396,
+          "p95": 59396,
+          "max": 59396
+        },
+        "shadowDrawCalls": {
+          "p50": 12,
+          "p95": 12,
+          "max": 12
+        },
+        "shadowTriangles": {
+          "p50": 44683,
+          "p95": 44683,
+          "max": 44683
+        },
+        "stepMs": {
+          "p50": 2.8,
+          "p95": 3.3,
+          "max": 3.6
+        },
+        "lastFrame": {
+          "drawCalls": 75,
+          "triangles": 59396,
+          "shadowDrawCalls": 12,
+          "shadowTriangles": 44683,
+          "stepMs": 3.6000003814697266,
+          "categories": {
+            "other": 75,
+            "shadows": 12
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgl2/seethrough-apc-behind-truck@low-z0.5/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-behind-truck@low-z1",
+      "backend": "webgl",
+      "requestedBackend": "webgl2",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 62517,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "",
+        "insideMax": 62933
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 123,
+          "p95": 123,
+          "max": 123
+        },
+        "triangles": {
+          "p50": 62660,
+          "p95": 62660,
+          "max": 62660
+        },
+        "shadowDrawCalls": {
+          "p50": 12,
+          "p95": 12,
+          "max": 12
+        },
+        "shadowTriangles": {
+          "p50": 44683,
+          "p95": 44683,
+          "max": 44683
+        },
+        "stepMs": {
+          "p50": 3,
+          "p95": 3.5,
+          "max": 4.1
+        },
+        "lastFrame": {
+          "drawCalls": 123,
+          "triangles": 62660,
+          "shadowDrawCalls": 12,
+          "shadowTriangles": 44683,
+          "stepMs": 3.1000003814697266,
+          "categories": {
+            "other": 123,
+            "shadows": 12
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgl2/seethrough-apc-behind-truck@low-z1/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-behind-truck@low-z1.5",
+      "backend": "webgl",
+      "requestedBackend": "webgl2",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 24857,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "",
+        "insideMax": 24933
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 125,
+          "p95": 125,
+          "max": 125
+        },
+        "triangles": {
+          "p50": 62944,
+          "p95": 62944,
+          "max": 62944
+        },
+        "shadowDrawCalls": {
+          "p50": 12,
+          "p95": 12,
+          "max": 12
+        },
+        "shadowTriangles": {
+          "p50": 44683,
+          "p95": 44683,
+          "max": 44683
+        },
+        "stepMs": {
+          "p50": 3,
+          "p95": 3.7,
+          "max": 4.4
+        },
+        "lastFrame": {
+          "drawCalls": 125,
+          "triangles": 62944,
+          "shadowDrawCalls": 12,
+          "shadowTriangles": 44683,
+          "stepMs": 2.8000001907348633,
+          "categories": {
+            "other": 125,
+            "shadows": 12
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgl2/seethrough-apc-behind-truck@low-z1.5/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-beside-sedans@high-z0.5",
+      "backend": "webgl",
+      "requestedBackend": "webgl2",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "",
+        "insideMax": 0
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 56,
+          "p95": 56,
+          "max": 56
+        },
+        "triangles": {
+          "p50": 134256,
+          "p95": 134256,
+          "max": 134256
+        },
+        "shadowDrawCalls": {
+          "p50": 18,
+          "p95": 18,
+          "max": 18
+        },
+        "shadowTriangles": {
+          "p50": 44689,
+          "p95": 44689,
+          "max": 44689
+        },
+        "stepMs": {
+          "p50": 33.5,
+          "p95": 34,
+          "max": 36.6
+        },
+        "lastFrame": {
+          "drawCalls": 56,
+          "triangles": 134256,
+          "shadowDrawCalls": 18,
+          "shadowTriangles": 44689,
+          "stepMs": 33.19999980926514,
+          "categories": {
+            "other": 56,
+            "shadows": 18
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgl2/seethrough-apc-beside-sedans@high-z0.5/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-beside-sedans@high-z1",
+      "backend": "webgl",
+      "requestedBackend": "webgl2",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "",
+        "insideMax": 0
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 119,
+          "p95": 119,
+          "max": 119
+        },
+        "triangles": {
+          "p50": 225434,
+          "p95": 225434,
+          "max": 225434
+        },
+        "shadowDrawCalls": {
+          "p50": 18,
+          "p95": 18,
+          "max": 18
+        },
+        "shadowTriangles": {
+          "p50": 44689,
+          "p95": 44689,
+          "max": 44689
+        },
+        "stepMs": {
+          "p50": 33.6,
+          "p95": 34.3,
+          "max": 35
+        },
+        "lastFrame": {
+          "drawCalls": 119,
+          "triangles": 225434,
+          "shadowDrawCalls": 18,
+          "shadowTriangles": 44689,
+          "stepMs": 33.80000019073486,
+          "categories": {
+            "other": 119,
+            "shadows": 18
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgl2/seethrough-apc-beside-sedans@high-z1/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-beside-sedans@high-z1.5",
+      "backend": "webgl",
+      "requestedBackend": "webgl2",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "",
+        "insideMax": 0
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 124,
+          "p95": 124,
+          "max": 124
+        },
+        "triangles": {
+          "p50": 235498,
+          "p95": 235498,
+          "max": 235498
+        },
+        "shadowDrawCalls": {
+          "p50": 18,
+          "p95": 18,
+          "max": 18
+        },
+        "shadowTriangles": {
+          "p50": 44689,
+          "p95": 44689,
+          "max": 44689
+        },
+        "stepMs": {
+          "p50": 34.4,
+          "p95": 34.8,
+          "max": 36.9
+        },
+        "lastFrame": {
+          "drawCalls": 124,
+          "triangles": 235498,
+          "shadowDrawCalls": 18,
+          "shadowTriangles": 44689,
+          "stepMs": 33.80000019073486,
+          "categories": {
+            "other": 124,
+            "shadows": 18
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgl2/seethrough-apc-beside-sedans@high-z1.5/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-beside-sedans@low-z0.5",
+      "backend": "webgl",
+      "requestedBackend": "webgl2",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "",
+        "insideMax": 0
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 53,
+          "p95": 53,
+          "max": 53
+        },
+        "triangles": {
+          "p50": 57578,
+          "p95": 57578,
+          "max": 57578
+        },
+        "shadowDrawCalls": {
+          "p50": 12,
+          "p95": 12,
+          "max": 12
+        },
+        "shadowTriangles": {
+          "p50": 44683,
+          "p95": 44683,
+          "max": 44683
+        },
+        "stepMs": {
+          "p50": 2.7,
+          "p95": 3.2,
+          "max": 4.3
+        },
+        "lastFrame": {
+          "drawCalls": 53,
+          "triangles": 57578,
+          "shadowDrawCalls": 12,
+          "shadowTriangles": 44683,
+          "stepMs": 2.6999998092651367,
+          "categories": {
+            "other": 53,
+            "shadows": 12
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgl2/seethrough-apc-beside-sedans@low-z0.5/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-beside-sedans@low-z1",
+      "backend": "webgl",
+      "requestedBackend": "webgl2",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "",
+        "insideMax": 0
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 103,
+          "p95": 103,
+          "max": 103
+        },
+        "triangles": {
+          "p50": 60922,
+          "p95": 60922,
+          "max": 60922
+        },
+        "shadowDrawCalls": {
+          "p50": 12,
+          "p95": 12,
+          "max": 12
+        },
+        "shadowTriangles": {
+          "p50": 44683,
+          "p95": 44683,
+          "max": 44683
+        },
+        "stepMs": {
+          "p50": 2.9,
+          "p95": 3.6,
+          "max": 5.2
+        },
+        "lastFrame": {
+          "drawCalls": 103,
+          "triangles": 60922,
+          "shadowDrawCalls": 12,
+          "shadowTriangles": 44683,
+          "stepMs": 2.90000057220459,
+          "categories": {
+            "other": 103,
+            "shadows": 12
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgl2/seethrough-apc-beside-sedans@low-z1/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-beside-sedans@low-z1.5",
+      "backend": "webgl",
+      "requestedBackend": "webgl2",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "",
+        "insideMax": 0
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 109,
+          "p95": 109,
+          "max": 109
+        },
+        "triangles": {
+          "p50": 61522,
+          "p95": 61522,
+          "max": 61522
+        },
+        "shadowDrawCalls": {
+          "p50": 12,
+          "p95": 12,
+          "max": 12
+        },
+        "shadowTriangles": {
+          "p50": 44683,
+          "p95": 44683,
+          "max": 44683
+        },
+        "stepMs": {
+          "p50": 2.7,
+          "p95": 3,
+          "max": 3.5
+        },
+        "lastFrame": {
+          "drawCalls": 109,
+          "triangles": 61522,
+          "shadowDrawCalls": 12,
+          "shadowTriangles": 44683,
+          "stepMs": 2.8000001907348633,
+          "categories": {
+            "other": 109,
+            "shadows": 12
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgl2/seethrough-apc-beside-sedans@low-z1.5/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-behind-building@high-z0.5",
+      "backend": "webgpu",
+      "requestedBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 190513,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "bld.house-a@6.0,6.0",
+        "insideMax": 190726
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 53,
+          "p95": 53,
+          "max": 53
+        },
+        "triangles": {
+          "p50": 123254,
+          "p95": 123254,
+          "max": 123254
+        },
+        "shadowDrawCalls": {
+          "p50": 21,
+          "p95": 21,
+          "max": 21
+        },
+        "shadowTriangles": {
+          "p50": 49955,
+          "p95": 49955,
+          "max": 49955
+        },
+        "stepMs": {
+          "p50": 26.5,
+          "p95": 27.7,
+          "max": 37.4
+        },
+        "lastFrame": {
+          "drawCalls": 53,
+          "triangles": 123254,
+          "shadowDrawCalls": 21,
+          "shadowTriangles": 49955,
+          "stepMs": 26,
+          "categories": {
+            "other": 50,
+            "shadows": 21,
+            "buildings": 3
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgpu/seethrough-apc-behind-building@high-z0.5/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-behind-building@high-z1",
+      "backend": "webgpu",
+      "requestedBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 66857,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "bld.house-a@6.0,6.0",
+        "insideMax": 67690
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 94,
+          "p95": 94,
+          "max": 94
+        },
+        "triangles": {
+          "p50": 183540,
+          "p95": 183540,
+          "max": 183540
+        },
+        "shadowDrawCalls": {
+          "p50": 21,
+          "p95": 21,
+          "max": 21
+        },
+        "shadowTriangles": {
+          "p50": 49955,
+          "p95": 49955,
+          "max": 49955
+        },
+        "stepMs": {
+          "p50": 26.7,
+          "p95": 30.7,
+          "max": 50.4
+        },
+        "lastFrame": {
+          "drawCalls": 94,
+          "triangles": 183540,
+          "shadowDrawCalls": 21,
+          "shadowTriangles": 49955,
+          "stepMs": 28.5,
+          "categories": {
+            "other": 89,
+            "shadows": 21,
+            "buildings": 5
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgpu/seethrough-apc-behind-building@high-z1/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-behind-building@high-z1.5",
+      "backend": "webgpu",
+      "requestedBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 26716,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "bld.house-a@6.0,6.0",
+        "insideMax": 27147
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 94,
+          "p95": 94,
+          "max": 94
+        },
+        "triangles": {
+          "p50": 183540,
+          "p95": 183540,
+          "max": 183540
+        },
+        "shadowDrawCalls": {
+          "p50": 21,
+          "p95": 21,
+          "max": 21
+        },
+        "shadowTriangles": {
+          "p50": 49955,
+          "p95": 49955,
+          "max": 49955
+        },
+        "stepMs": {
+          "p50": 27.6,
+          "p95": 33.3,
+          "max": 94.7
+        },
+        "lastFrame": {
+          "drawCalls": 94,
+          "triangles": 183540,
+          "shadowDrawCalls": 21,
+          "shadowTriangles": 49955,
+          "stepMs": 28.199999809265137,
+          "categories": {
+            "other": 89,
+            "shadows": 21,
+            "buildings": 5
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgpu/seethrough-apc-behind-building@high-z1.5/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-behind-building@low-z0.5",
+      "backend": "webgpu",
+      "requestedBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 201715,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "bld.house-a@6.0,6.0",
+        "insideMax": 202093
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 50,
+          "p95": 50,
+          "max": 50
+        },
+        "triangles": {
+          "p50": 60852,
+          "p95": 60852,
+          "max": 60852
+        },
+        "shadowDrawCalls": {
+          "p50": 15,
+          "p95": 15,
+          "max": 15
+        },
+        "shadowTriangles": {
+          "p50": 49949,
+          "p95": 49949,
+          "max": 49949
+        },
+        "stepMs": {
+          "p50": 2.5,
+          "p95": 3.2,
+          "max": 3.5
+        },
+        "lastFrame": {
+          "drawCalls": 50,
+          "triangles": 60852,
+          "shadowDrawCalls": 15,
+          "shadowTriangles": 49949,
+          "stepMs": 2.3999996185302734,
+          "categories": {
+            "other": 47,
+            "shadows": 15,
+            "buildings": 3
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgpu/seethrough-apc-behind-building@low-z0.5/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-behind-building@low-z1",
+      "backend": "webgpu",
+      "requestedBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 67912,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "bld.house-a@6.0,6.0",
+        "insideMax": 68906
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 84,
+          "p95": 84,
+          "max": 84
+        },
+        "triangles": {
+          "p50": 63532,
+          "p95": 63532,
+          "max": 63532
+        },
+        "shadowDrawCalls": {
+          "p50": 15,
+          "p95": 15,
+          "max": 15
+        },
+        "shadowTriangles": {
+          "p50": 49949,
+          "p95": 49949,
+          "max": 49949
+        },
+        "stepMs": {
+          "p50": 2.6,
+          "p95": 3,
+          "max": 3.4
+        },
+        "lastFrame": {
+          "drawCalls": 84,
+          "triangles": 63532,
+          "shadowDrawCalls": 15,
+          "shadowTriangles": 49949,
+          "stepMs": 2.40000057220459,
+          "categories": {
+            "other": 79,
+            "shadows": 15,
+            "buildings": 5
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgpu/seethrough-apc-behind-building@low-z1/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-behind-building@low-z1.5",
+      "backend": "webgpu",
+      "requestedBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 26837,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "bld.house-a@6.0,6.0",
+        "insideMax": 27204
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 84,
+          "p95": 84,
+          "max": 84
+        },
+        "triangles": {
+          "p50": 63532,
+          "p95": 63532,
+          "max": 63532
+        },
+        "shadowDrawCalls": {
+          "p50": 15,
+          "p95": 15,
+          "max": 15
+        },
+        "shadowTriangles": {
+          "p50": 49949,
+          "p95": 49949,
+          "max": 49949
+        },
+        "stepMs": {
+          "p50": 2.5,
+          "p95": 3.9,
+          "max": 8.9
+        },
+        "lastFrame": {
+          "drawCalls": 84,
+          "triangles": 63532,
+          "shadowDrawCalls": 15,
+          "shadowTriangles": 49949,
+          "stepMs": 2.6999998092651367,
+          "categories": {
+            "other": 79,
+            "shadows": 15,
+            "buildings": 5
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgpu/seethrough-apc-behind-building@low-z1.5/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-behind-truck@high-z0.5",
+      "backend": "webgpu",
+      "requestedBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 167451,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "",
+        "insideMax": 174804
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 75,
+          "p95": 75,
+          "max": 75
+        },
+        "triangles": {
+          "p50": 171769,
+          "p95": 171769,
+          "max": 171769
+        },
+        "shadowDrawCalls": {
+          "p50": 18,
+          "p95": 18,
+          "max": 18
+        },
+        "shadowTriangles": {
+          "p50": 44689,
+          "p95": 44689,
+          "max": 44689
+        },
+        "stepMs": {
+          "p50": 30.7,
+          "p95": 35.8,
+          "max": 41.1
+        },
+        "lastFrame": {
+          "drawCalls": 75,
+          "triangles": 171769,
+          "shadowDrawCalls": 18,
+          "shadowTriangles": 44689,
+          "stepMs": 30,
+          "categories": {
+            "other": 75,
+            "shadows": 18
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgpu/seethrough-apc-behind-truck@high-z0.5/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-behind-truck@high-z1",
+      "backend": "webgpu",
+      "requestedBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 62291,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "",
+        "insideMax": 62644
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 136,
+          "p95": 136,
+          "max": 136
+        },
+        "triangles": {
+          "p50": 243383,
+          "p95": 243383,
+          "max": 243383
+        },
+        "shadowDrawCalls": {
+          "p50": 18,
+          "p95": 18,
+          "max": 18
+        },
+        "shadowTriangles": {
+          "p50": 44689,
+          "p95": 44689,
+          "max": 44689
+        },
+        "stepMs": {
+          "p50": 30.7,
+          "p95": 32,
+          "max": 35.1
+        },
+        "lastFrame": {
+          "drawCalls": 136,
+          "triangles": 243383,
+          "shadowDrawCalls": 18,
+          "shadowTriangles": 44689,
+          "stepMs": 32.19999980926514,
+          "categories": {
+            "other": 136,
+            "shadows": 18
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgpu/seethrough-apc-behind-truck@high-z1/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-behind-truck@high-z1.5",
+      "backend": "webgpu",
+      "requestedBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 24622,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "",
+        "insideMax": 24759
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 139,
+          "p95": 139,
+          "max": 139
+        },
+        "triangles": {
+          "p50": 246635,
+          "p95": 246635,
+          "max": 246635
+        },
+        "shadowDrawCalls": {
+          "p50": 18,
+          "p95": 18,
+          "max": 18
+        },
+        "shadowTriangles": {
+          "p50": 44689,
+          "p95": 44689,
+          "max": 44689
+        },
+        "stepMs": {
+          "p50": 30.9,
+          "p95": 36.5,
+          "max": 75.4
+        },
+        "lastFrame": {
+          "drawCalls": 139,
+          "triangles": 246635,
+          "shadowDrawCalls": 18,
+          "shadowTriangles": 44689,
+          "stepMs": 31.600000381469727,
+          "categories": {
+            "other": 139,
+            "shadows": 18
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgpu/seethrough-apc-behind-truck@high-z1.5/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-behind-truck@low-z0.5",
+      "backend": "webgpu",
+      "requestedBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 167250,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "",
+        "insideMax": 174794
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 75,
+          "p95": 75,
+          "max": 75
+        },
+        "triangles": {
+          "p50": 59396,
+          "p95": 59396,
+          "max": 59396
+        },
+        "shadowDrawCalls": {
+          "p50": 12,
+          "p95": 12,
+          "max": 12
+        },
+        "shadowTriangles": {
+          "p50": 44683,
+          "p95": 44683,
+          "max": 44683
+        },
+        "stepMs": {
+          "p50": 2.8,
+          "p95": 3.3,
+          "max": 3.3
+        },
+        "lastFrame": {
+          "drawCalls": 75,
+          "triangles": 59396,
+          "shadowDrawCalls": 12,
+          "shadowTriangles": 44683,
+          "stepMs": 3,
+          "categories": {
+            "other": 75,
+            "shadows": 12
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgpu/seethrough-apc-behind-truck@low-z0.5/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-behind-truck@low-z1",
+      "backend": "webgpu",
+      "requestedBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 62456,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "",
+        "insideMax": 62858
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 123,
+          "p95": 123,
+          "max": 123
+        },
+        "triangles": {
+          "p50": 62660,
+          "p95": 62660,
+          "max": 62660
+        },
+        "shadowDrawCalls": {
+          "p50": 12,
+          "p95": 12,
+          "max": 12
+        },
+        "shadowTriangles": {
+          "p50": 44683,
+          "p95": 44683,
+          "max": 44683
+        },
+        "stepMs": {
+          "p50": 3,
+          "p95": 3.6,
+          "max": 4.9
+        },
+        "lastFrame": {
+          "drawCalls": 123,
+          "triangles": 62660,
+          "shadowDrawCalls": 12,
+          "shadowTriangles": 44683,
+          "stepMs": 2.6999998092651367,
+          "categories": {
+            "other": 123,
+            "shadows": 12
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgpu/seethrough-apc-behind-truck@low-z1/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-behind-truck@low-z1.5",
+      "backend": "webgpu",
+      "requestedBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 24826,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "",
+        "insideMax": 24953
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 125,
+          "p95": 125,
+          "max": 125
+        },
+        "triangles": {
+          "p50": 62944,
+          "p95": 62944,
+          "max": 62944
+        },
+        "shadowDrawCalls": {
+          "p50": 12,
+          "p95": 12,
+          "max": 12
+        },
+        "shadowTriangles": {
+          "p50": 44683,
+          "p95": 44683,
+          "max": 44683
+        },
+        "stepMs": {
+          "p50": 2.9,
+          "p95": 3.5,
+          "max": 5.6
+        },
+        "lastFrame": {
+          "drawCalls": 125,
+          "triangles": 62944,
+          "shadowDrawCalls": 12,
+          "shadowTriangles": 44683,
+          "stepMs": 2.8000001907348633,
+          "categories": {
+            "other": 125,
+            "shadows": 12
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgpu/seethrough-apc-behind-truck@low-z1.5/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-beside-sedans@high-z0.5",
+      "backend": "webgpu",
+      "requestedBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "",
+        "insideMax": 0
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 56,
+          "p95": 56,
+          "max": 56
+        },
+        "triangles": {
+          "p50": 134256,
+          "p95": 134256,
+          "max": 134256
+        },
+        "shadowDrawCalls": {
+          "p50": 18,
+          "p95": 18,
+          "max": 18
+        },
+        "shadowTriangles": {
+          "p50": 44689,
+          "p95": 44689,
+          "max": 44689
+        },
+        "stepMs": {
+          "p50": 36.4,
+          "p95": 37.1,
+          "max": 38.2
+        },
+        "lastFrame": {
+          "drawCalls": 56,
+          "triangles": 134256,
+          "shadowDrawCalls": 18,
+          "shadowTriangles": 44689,
+          "stepMs": 36,
+          "categories": {
+            "other": 56,
+            "shadows": 18
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgpu/seethrough-apc-beside-sedans@high-z0.5/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-beside-sedans@high-z1",
+      "backend": "webgpu",
+      "requestedBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "",
+        "insideMax": 0
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 119,
+          "p95": 119,
+          "max": 119
+        },
+        "triangles": {
+          "p50": 225434,
+          "p95": 225434,
+          "max": 225434
+        },
+        "shadowDrawCalls": {
+          "p50": 18,
+          "p95": 18,
+          "max": 18
+        },
+        "shadowTriangles": {
+          "p50": 44689,
+          "p95": 44689,
+          "max": 44689
+        },
+        "stepMs": {
+          "p50": 36.8,
+          "p95": 37.8,
+          "max": 40.7
+        },
+        "lastFrame": {
+          "drawCalls": 119,
+          "triangles": 225434,
+          "shadowDrawCalls": 18,
+          "shadowTriangles": 44689,
+          "stepMs": 36.59999942779541,
+          "categories": {
+            "other": 119,
+            "shadows": 18
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgpu/seethrough-apc-beside-sedans@high-z1/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-beside-sedans@high-z1.5",
+      "backend": "webgpu",
+      "requestedBackend": "webgpu",
+      "tier": "high",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "",
+        "insideMax": 0
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 124,
+          "p95": 124,
+          "max": 124
+        },
+        "triangles": {
+          "p50": 235498,
+          "p95": 235498,
+          "max": 235498
+        },
+        "shadowDrawCalls": {
+          "p50": 18,
+          "p95": 18,
+          "max": 18
+        },
+        "shadowTriangles": {
+          "p50": 44689,
+          "p95": 44689,
+          "max": 44689
+        },
+        "stepMs": {
+          "p50": 36.8,
+          "p95": 37.6,
+          "max": 38.1
+        },
+        "lastFrame": {
+          "drawCalls": 124,
+          "triangles": 235498,
+          "shadowDrawCalls": 18,
+          "shadowTriangles": 44689,
+          "stepMs": 36.30000019073486,
+          "categories": {
+            "other": 124,
+            "shadows": 18
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgpu/seethrough-apc-beside-sedans@high-z1.5/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-beside-sedans@low-z0.5",
+      "backend": "webgpu",
+      "requestedBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "",
+        "insideMax": 0
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 53,
+          "p95": 53,
+          "max": 53
+        },
+        "triangles": {
+          "p50": 57578,
+          "p95": 57578,
+          "max": 57578
+        },
+        "shadowDrawCalls": {
+          "p50": 12,
+          "p95": 12,
+          "max": 12
+        },
+        "shadowTriangles": {
+          "p50": 44683,
+          "p95": 44683,
+          "max": 44683
+        },
+        "stepMs": {
+          "p50": 2.4,
+          "p95": 2.9,
+          "max": 4.5
+        },
+        "lastFrame": {
+          "drawCalls": 53,
+          "triangles": 57578,
+          "shadowDrawCalls": 12,
+          "shadowTriangles": 44683,
+          "stepMs": 2.5,
+          "categories": {
+            "other": 53,
+            "shadows": 12
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgpu/seethrough-apc-beside-sedans@low-z0.5/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-beside-sedans@low-z1",
+      "backend": "webgpu",
+      "requestedBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "",
+        "insideMax": 0
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 103,
+          "p95": 103,
+          "max": 103
+        },
+        "triangles": {
+          "p50": 60922,
+          "p95": 60922,
+          "max": 60922
+        },
+        "shadowDrawCalls": {
+          "p50": 12,
+          "p95": 12,
+          "max": 12
+        },
+        "shadowTriangles": {
+          "p50": 44683,
+          "p95": 44683,
+          "max": 44683
+        },
+        "stepMs": {
+          "p50": 2.5,
+          "p95": 3,
+          "max": 3
+        },
+        "lastFrame": {
+          "drawCalls": 103,
+          "triangles": 60922,
+          "shadowDrawCalls": 12,
+          "shadowTriangles": 44683,
+          "stepMs": 2.6999998092651367,
+          "categories": {
+            "other": 103,
+            "shadows": 12
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgpu/seethrough-apc-beside-sedans@low-z1/sheet.jpg"
+    },
+    {
+      "name": "seethrough-apc-beside-sedans@low-z1.5",
+      "backend": "webgpu",
+      "requestedBackend": "webgpu",
+      "tier": "low",
+      "pass": true,
+      "consoleErrors": 0,
+      "cut": {
+        "frame": 0,
+        "outside": 0,
+        "inside": 0,
+        "strength": 1,
+        "cover": 0,
+        "occluder": "",
+        "insideMax": 0
+      },
+      "perf": {
+        "drawCalls": {
+          "p50": 109,
+          "p95": 109,
+          "max": 109
+        },
+        "triangles": {
+          "p50": 61522,
+          "p95": 61522,
+          "max": 61522
+        },
+        "shadowDrawCalls": {
+          "p50": 12,
+          "p95": 12,
+          "max": 12
+        },
+        "shadowTriangles": {
+          "p50": 44683,
+          "p95": 44683,
+          "max": 44683
+        },
+        "stepMs": {
+          "p50": 2.8,
+          "p95": 3.3,
+          "max": 4
+        },
+        "lastFrame": {
+          "drawCalls": 109,
+          "triangles": 61522,
+          "shadowDrawCalls": 12,
+          "shadowTriangles": 44683,
+          "stepMs": 2.90000057220459,
+          "categories": {
+            "other": 109,
+            "shadows": 12
+          }
+        },
+        "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+      },
+      "sheet": "webgpu/seethrough-apc-beside-sedans@low-z1.5/sheet.jpg"
+    }
+  ],
+  "passed": 36,
+  "total": 36,
+  "high": {
+    "drawCallsMax": 139,
+    "trianglesMax": 246635
+  },
+  "low": {
+    "drawCallsMax": 125,
+    "trianglesMax": 63532
+  }
+}

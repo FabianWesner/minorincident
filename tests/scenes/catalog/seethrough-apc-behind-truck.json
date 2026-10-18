@@ -1,0 +1,69 @@
+{
+  "name": "seethrough-apc-behind-truck",
+  "note": "Positive vehicle control: tall fire engine between camera and APC opens the reveal; same camera and subject as opaque-sedan control.",
+  "ground": "asphalt",
+  "size": 60,
+  "time": "L3",
+  "dof": false,
+  "vehicles": [
+    {
+      "id": "apc",
+      "asset": "vehicle.military-apc",
+      "at": [
+        0,
+        0
+      ],
+      "driven": true,
+      "floor": true
+    },
+    {
+      "id": "sedan-left",
+      "asset": "vehicle.sedan",
+      "at": [
+        -4,
+        4
+      ]
+    },
+    {
+      "id": "sedan-right",
+      "asset": "vehicle.sedan",
+      "at": [
+        4,
+        -4
+      ]
+    },
+    {
+      "id": "foreground-truck",
+      "asset": "vehicle.fire-engine",
+      "at": [
+        4,
+        4
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "apc",
+    "zoom": 1
+  },
+  "frames": 30,
+  "sheet": 15,
+  "expect": {
+    "consoleErrors": 0,
+    "seeThroughCutPixelsMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000,
+    "seeThroughCutInsideMin": 10
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "state": "idle"
+    }
+  ]
+}

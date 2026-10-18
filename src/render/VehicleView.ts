@@ -3,6 +3,7 @@ import { carDoorWeight, carTransitionTicks } from './characters/carTransition';
 import { VehicleOccupant } from './characters/VehicleOccupant';
 import { tyreSurface, updateTyreMatrices } from './TyreContact';
 import { modelLod } from './lodPolicy';
+import { SubjectOcclusion } from './SubjectOcclusion';
 import { paletteTokens } from '../data/palette';
 // Adapted from Bruno Simon folio-2025 VisualVehicle.js (MIT, 41046b5): wheel pivots/suspension and lamps.
 import { Box3, BoxGeometry, Group, Matrix4, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, Quaternion, SphereGeometry, TorusGeometry, Vector3, type Object3D } from 'three/webgpu';
@@ -22,7 +23,7 @@ import { lerp } from '../core/maths';
 import { anchorsFor } from './WorldLights';
 import { footprint, type LightField } from './LightField';
 const lampPosition = new Vector3(), lampDirection = new Vector3();
-interface Record { apc?: ApcDamage; doorHeldAt: number; decay?: string; lod: AssetQuality; parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number; contacts: Vector3[]; contactPose: Matrix4; contactOffset: number; contactGround: VehicleView['ground'] }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh; paint: (import('three').Material & { bloodCoverage: { value: number } })[]; blood: number; charred: boolean; feel: { tick: number; speed: number; accel: number; roll: number; pitch: number; restRoll: number; restPitch: number } }
+interface Record { bounds: Box3; apc?: ApcDamage; doorHeldAt: number; decay?: string; lod: AssetQuality; parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number; contacts: Vector3[]; contactPose: Matrix4; contactOffset: number; contactGround: VehicleView['ground'] }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh; paint: (import('three').Material & { bloodCoverage: { value: number } })[]; blood: number; charred: boolean; feel: { tick: number; speed: number; accel: number; roll: number; pitch: number; restRoll: number; restPitch: number } }
 /** Registry models follow authoritative chassis/wheel snapshots; no render state feeds physics. */
 export class VehicleView extends Group {
   private readonly registry: AssetRegistry;
@@ -83,7 +84,6 @@ export class VehicleView extends Group {
           copy = this.materials.uniqueWorld(token, material.vertexColors);
           copy.transparent = material.transparent; copy.opacity = material.opacity; copy.depthWrite = material.depthWrite; copy.forceSinglePass = material.forceSinglePass; copy.side = material.side;
           (copy as PaletteMaterial).fade.value = material.fade.value;
-          (copy as PaletteMaterial).seeThrough();
         }
         else {
           const owned = Object.assign(material.clone(), { bloodCoverage: uniform(0), char: uniform(0) });
@@ -119,20 +119,20 @@ export class VehicleView extends Group {
       if (!decay && !anchor?.userData.damagedLightOff) anchor?.traverse(child => { if (child instanceof Mesh) child.material = material; }); return material;
     };
     const brake = lamp('lightsBrake', '#ff2d2d'), sirens = def.emergency ? [lamp('sirenL', '#ff2d2d'), lamp('sirenR', '#2f6bff')] : [];
+    // Only the chassis is a reveal subject/occluder: the hidden entry ring extends beyond its body.
+    const bounds = new Box3().setFromObject(model);
     const door = new Mesh(new TorusGeometry(.7, .025, 6, 32), this.materials.get('windowGlow', 1.5)); door.rotation.x = -Math.PI / 2; door.position.set(.2, .025, def.width / 2 + .55); door.position.x = def.doorX; model.add(door);
     const smoke = new Group(); parent.add(smoke);
     for (let i = 0; i < 5; i++) { const mesh = new Mesh(this.puffGeometry, this.smokeMaterial); mesh.position.set(def.length * .3, 1 + i * .32, (i % 2 ? 1 : -1) * .12); mesh.scale.setScalar(1 + i * .25); smoke.add(mesh); }
     const fire = new Mesh(this.puffGeometry, this.fireMaterial); fire.position.set(def.length * .3, .9, 0); fire.scale.set(1.8, 2.8, 1.3); parent.add(fire);
     const apc = car.entity.vehicle!.floor && def.asset === 'veh.military-apc' ? new ApcDamage(model) : undefined;
     const previous = this.records.get(id); if (previous) { previous.parent.removeFromParent(); this.releaseRecord(previous); }
-    this.records.set(id, { apc, doorHeldAt: -carTransitionTicks, decay, lod, parent, model, wheels, brake, sirens, smoke, fire, door, paint, blood: 0, charred: false, feel: { tick: this.world.tick, speed: car.entity.vehicle!.speed, accel: 0, roll: 0, pitch: 0, restRoll: model.rotation.x, restPitch: model.rotation.z } });
+    this.records.set(id, { bounds, apc, doorHeldAt: -carTransitionTicks, decay, lod, parent, model, wheels, brake, sirens, smoke, fire, door, paint, blood: 0, charred: false, feel: { tick: this.world.tick, speed: car.entity.vehicle!.speed, accel: 0, roll: 0, pitch: 0, restRoll: model.rotation.x, restPitch: model.rotation.z } });
     const feedback = this.feedbackEvents.get(id); if (feedback) this.feedback(feedback, this.bloodEnabled);
   }
   update(alpha: number): void {
-    const ridden = this.playerVehicle();
     for (const [id, car] of this.world.vehicles!.cars) {
       const record = this.records.get(id);
-      if (record) for (const material of record.paint) if (material instanceof PaletteMaterial) material.seeThrough(ridden !== id);
       const distance = Math.hypot(car.entity.transform.x - this.view.cameraTarget.x, car.entity.transform.z - this.view.cameraTarget.z);
       const lod = modelLod(distance, record?.lod, this.low);
       const decay = car.entity.vehicle!.decay;
@@ -346,11 +346,23 @@ export class VehicleView extends Group {
   probeVisibility(courier: boolean, environment: boolean): void {
     for (const [id, record] of this.records) record.parent.visible = !(this.playerVehicle() === id ? courier : environment);
   }
+  private readonly occlusion = new SubjectOcclusion();
+  /** Select cars after the camera and the complete reveal subject have their current frame poses. */
+  updateReveal(subject?: Box3): void {
+    if (subject) this.occlusion.setSubject(this.view.camera.position, subject);
+    const ridden = this.playerVehicle();
+    for (const [id, record] of this.records) {
+      record.parent.updateWorldMatrix(true, false);
+      const enabled = !!subject && id !== ridden && this.occlusion.blockedBy(record.bounds, record.parent.matrixWorld);
+      for (const material of record.paint) if (material instanceof PaletteMaterial) material.seeThrough(enabled);
+    }
+  }
   /** Complete drawn chassis, including wheels, for the player's bounded reveal. */
   playerBounds(out: Box3): boolean {
     const record = this.records.get(this.playerVehicle() ?? -1);
     if (!record) return false;
-    out.setFromObject(record.model); return !out.isEmpty();
+    record.parent.updateWorldMatrix(true, false);
+    out.copy(record.bounds).applyMatrix4(record.parent.matrixWorld); return !out.isEmpty();
   }
   wheelNodes(): Map<number, Object3D[]> { return new Map([...this.records].map(([id, r]) => [id, r.wheels.map(w => w.node)])); }
   snapshot() { return [...this.records].map(([id, r]) => ({ id, apcDamage: r.apc?.snapshot() ?? null, transitionCouriers: [...this.occupants.values()].filter(o => o.parent === r.parent && o.visible).map(o => ({ actorId: o.actorId, asset: o.asset, phase: 'exit', position: o.position.toArray() })), doors: ['doorL','doorR','door_near_0','door_near_1','door_far_0','door_far_1'].flatMap(name => { const node = r.model.getObjectByName(name); let meshes = 0; node?.traverse(child => { if (child instanceof Mesh) meshes++; }); return node ? [{ name, yaw: node.rotation.y, meshes }] : []; }), decay: r.decay ?? null, bloodCoverage: this.bloodEnabled ? r.blood : 0, windshieldBloodCoverage: this.bloodEnabled ? r.blood : 0, wheels: r.wheels.map(w => ({ spin: w.node.rotation.z, steer: w.node.rotation.y })), brake: r.brake.color.r, sirens: r.sirens.map(s => s.color.toArray()), placeholder: !!r.model.userData.placeholder, occupants: [...this.occupants.values()].filter(o => o.parent === r.model && o.visible).map(o => ({ actorId: o.actorId, asset: o.asset, seated: true, position: o.position.toArray(), handGapM: [...o.handGapM] })) })); }
