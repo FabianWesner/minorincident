@@ -2554,3 +2554,183 @@ Verifying E07: sh tools/e2e-lock.sh npx playwright test --grep @(?:E07)(?:-AC\d+
    [33m[2m✓[22m[39m L7: committed actor occupancy stays valid, including stationary full audits[33m 1018[2mms[22m[39m
  [31m❯[39m [30m[43m functional [49m[39m tests/levels/L6-protection.test.ts [2m([22m[2m1 test[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 1738478[2mms[22m[39m
 [31m   [31m×[31m T-E24-09-evade @E24 @E24-AC09 an unprotected group loses at least seventy percent in the single-seed evade run[39m[33m 1738476[2mms[22m[39m
+ [31m❯[39m [30m[43m functional [49m[39m tests/levels/L6-campaign.test.ts [2m([22m[2m2 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[33m 4023515[2mms[22m[39m
+[31m   [31m×[31m T-E24-08 @E24 @E24-AC08 continuous complete campaign on one seed with real L5 handover[39m[33m 1911023[2mms[22m[39m
+[31m   [31m×[31m T-E24-08 @E24 @E24-AC08 continuous newbie campaign on one seed with real L5 handover[39m[33m 2112490[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 15 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[45m timing [49m[39m tests/sim/ai/director.test.ts[2m > [22mT-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget
+[31m[1mAssertionError[22m: expected 4.904420999984723 to be less than or equal to 4[39m
+[36m [2m❯[22m tests/sim/ai/director.test.ts:[2m44:520[22m[39m
+
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[45m timing [49m[39m tests/sim/levels/l10-assault.test.ts[2m > [22mT-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets
+[31m[1mAssertionError[22m: expected 4.390439999988303 to be less than or equal to 4[39m
+[36m [2m❯[22m tests/sim/levels/l10-assault.test.ts:[2m60:17[22m[39m
+    [90m 58|[39m     mkdirSync('test-results/epics/E32/E3', { recursive: true });
+    [90m 59|[39m     writeFileSync(`test-results/epics/E32/E3/assault-${tier}.json`, JS…
+    [90m 60|[39m     expect(p95).toBeLessThanOrEqual(tier === 'high' ? 4 : 6);
+    [90m   |[39m                 [31m^[39m
+    [90m 61|[39m   } finally { w.dispose(); }
+    [90m 62|[39m });
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[45m timing [49m[39m tests/sim/performance/alpha-physical.test.ts[2m > [22mT-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms
+[31m[1mAssertionError[22m: expected 4.521597000013571 to be less than or equal to 4[39m
+[36m [2m❯[22m tests/sim/performance/alpha-physical.test.ts:[2m29:101[22m[39m
+    [90m 27|[39m     const proof = { count, alphas: ids.length, minInfected, activation…
+    [90m 28|[39m     mkdirSync('test-results/alpha-s2', { recursive: true }); writeFile…
+    [90m 29|[39m     expect(activations).toBeGreaterThan(0); expect(minInfected).toBe(c…
+    [90m   |[39m                                                                                                     [31m^[39m
+    [90m 30|[39m   } finally { w.dispose(); }
+    [90m 31|[39m });
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[45m timing [49m[39m tests/sim/performance/alpha-support.test.ts[2m > [22mT-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms
+[31m[1mAssertionError[22m: expected 4.1810540000442415 to be less than or equal to 4[39m
+[36m [2m❯[22m tests/sim/performance/alpha-support.test.ts:[2m29:147[22m[39m
+
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[45m timing [49m[39m tests/sim/performance/mega-moves.test.ts[2m > [22mT-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18
+[31m[1mAssertionError[22m: expected 4.006271999969613 to be less than or equal to 4[39m
+[36m [2m❯[22m tests/sim/performance/mega-moves.test.ts:[2m24:104[22m[39m
+    [90m 22|[39m     const proof = { count, activations, simMsP95: times[Math.ceil(time…
+    [90m 23|[39m     mkdirSync('test-results/epics/E32', { recursive: true }); writeFil…
+    [90m 24|[39m     expect(activations).toBeGreaterThan(0); expect(proof.infected).toB…
+    [90m   |[39m                                                                                                        [31m^[39m
+    [90m 25|[39m   } finally { w.dispose(); }
+    [90m 26|[39m });
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[45m timing [49m[39m tests/sim/performance/zoo-s1.test.ts[2m > [22mT-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms
+[31m[1mAssertionError[22m: expected 6.414374999993015 to be less than or equal to 4[39m
+[36m [2m❯[22m tests/sim/performance/zoo-s1.test.ts:[2m30:101[22m[39m
+    [90m 28|[39m     const proof = { count, animals: ids.length, minInfected, activatio…
+    [90m 29|[39m     mkdirSync('test-results/zoo-s1', { recursive: true }); writeFileSy…
+    [90m 30|[39m     expect(activations).toBeGreaterThan(0); expect(minInfected).toBe(c…
+    [90m   |[39m                                                                                                     [31m^[39m
+    [90m 31|[39m   } finally { w.dispose(); }
+    [90m 32|[39m });
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[45m timing [49m[39m tests/sim/performance/zoo-s2.test.ts[2m > [22mT-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms
+[31m[1mAssertionError[22m: expected 8.170112999971025 to be less than or equal to 4[39m
+[36m [2m❯[22m tests/sim/performance/zoo-s2.test.ts:[2m26:68[22m[39m
+    [90m 24|[39m     const proof = { count, zoo: ids.length, activations, simMsP95: tim…
+    [90m 25|[39m     mkdirSync('docs/reports/zoo-s2', { recursive: true }); writeFileSy…
+    [90m 26|[39m     expect(activations).toBeGreaterThan(0); expect(proof.simMsP95).toB…
+    [90m   |[39m                                                                    [31m^[39m
+    [90m 27|[39m   } finally { w.dispose(); }
+    [90m 28|[39m });
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[45m timing [49m[39m tests/sim/world/chunk-residency.test.ts[2m > [22mT-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95
+[31m[1mAssertionError[22m: expected 4.418783000000985 to be less than or equal to 4[39m
+[36m [2m❯[22m tests/sim/world/chunk-residency.test.ts:[2m87:71[22m[39m
+
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/levels/L10-campaign.test.ts[2m > [22mT-E32-32 @E32-AC32 continuous seed 1 L1 through L10 reaches credits with real campaign handovers
+[31m[1mAssertionError[22m: {"level":"L7","policy":"complete","seed":1,"completed":false,"time":1200,"deaths":0,"kills":0,"damageTaken":0,"failures":{"tick-budget":1},"objectiveTimeline":[],"furthestObjective":"bus-departure","activeObjectives":[],"outcome":"tick-budget","blocker":{"objective":"bus-departure","detail":"{\"phase\":\"boarding\",\"hp\":100,\"roster\":[{\"id\":117,\"key\":\"shelter-0\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":118,\"key\":\"shelter-1\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":119,\"key\":\"shelter-2\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":120,\"key\":\"shelter-3\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":121,\"key\":\"shelter-4\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":122,\"key\":\"shelter-5\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":123,\"key\":\"shelter-6\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":124,\"key\":\"shelter-7\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":125,\"key\":\"shelter-8\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":126,\"key\":\"shelter-9\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-69.09574113030666,\"z\":46.536906435158485,\"y\":0.7,\"yaw\":9.193293980664972}},{\"id\":127,\"key\":\"shelter-10\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":128,\"key\":\"shelter-11\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":129,\"key\":\"shelter-12\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":130,\"key\":\"shelter-13\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":132,\"key\":\"shelter-15\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":133,\"key\":\"shelter-16\",\"injured\":true,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":-62.4208234883381,\"z\":51.11025529016192,\"y\":0.83,\"yaw\":2.2371515466034366}},{\"id\":135,\"key\":\"shelter-18\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":136,\"key\":\"shelter-19\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":137,\"key\":\"shelter-20\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":138,\"key\":\"shelter-21\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":139,\"key\":\"shelter-22\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":140,\"key\":\"shelter-23\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":20,\"key\":\"dale\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":21,\"key\":\"rosa\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":22,\"key\":\"okafor\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":23,\"key\":\"mia\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}}]}","player":{"x":-70.49170684814453,"y":0.7049999833106995,"z":47.50030517578125,"yaw":0.902451766572879}},"collision":{"failures":0,"pending":0,"admitted":434,"deferred":0,"requests":[],"offenders":[]}}: expected false to be true // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+[36m [2m❯[22m tests/levels/L10-campaign.test.ts:[2m47:56[22m[39m
+    [90m 45|[39m       reports.push({ ...report, racks: structuredClone(save.racks), su…
+    [90m 46|[39m       console.log(JSON.stringify({ level, completed: report.completed,…
+    [90m 47|[39m       expect(report.completed, JSON.stringify(report)).toBe(true);
+    [90m   |[39m                                                        [31m^[39m
+    [90m 48|[39m       if (n === 10) expect(report.cureReleases).toBe(1);
+    [90m 49|[39m       expect(save.completedLevels).toBe(n); expect(save.unlockedLevel)…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[9/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/levels/L6-campaign.test.ts[2m > [22mT-E24-08 @E24 @E24-AC08 continuous complete campaign on one seed with real L5 handover
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/levels/L6-campaign.test.ts[2m > [22mT-E24-08 @E24 @E24-AC08 continuous newbie campaign on one seed with real L5 handover
+[31m[1mError[22m: Test timed out in 1800000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+[36m [2m❯[22m tests/levels/L6-campaign.test.ts:[2m4:52[22m[39m
+    [90m  2|[39m import {test,expect} from 'vitest';
+    [90m  3|[39m import {runSubwayCampaign} from '../../tools/l6/campaignRun';
+    [90m  4|[39m for(const policy of ['complete','newbie'] as const)test(`T-E24-08 @E24…
+    [90m   |[39m                                                    [31m^[39m
+    [90m  5|[39m   const result=await runSubwayCampaign(1,policy);
+    [90m  6|[39m   mkdirSync('test-results/epics/E24',{recursive:true});
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[10/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/levels/L6-protection.test.ts[2m > [22mT-E24-09-evade @E24 @E24-AC09 an unprotected group loses at least seventy percent in the single-seed evade run
+[31m[1mAssertionError[22m: expected 0.5517241379310345 to be less than or equal to 0.3[39m
+[36m [2m❯[22m tests/levels/L6-protection.test.ts:[2m23:47[22m[39m
+    [90m 21|[39m     expect(attacks).toBe(0);
+    [90m 22|[39m     expect(escaped / report.total).toBeLessThanOrEqual(.3);
+    [90m 23|[39m     expect(potentiallyRescued / report.total).toBeLessThanOrEqual(.3);
+    [90m   |[39m                                               [31m^[39m
+    [90m 24|[39m   } finally { world.dispose(); }
+    [90m 25|[39m }, 1_800_000);
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[11/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/levels/L6.test.ts[2m > [22mT-E24-03 @E24 @E24-AC03 single-seed newbie protects injured survivors within the original band
+[31m[1mAssertionError[22m: expected 0.27586206896551724 to be greater than or equal to 0.4[39m
+[36m [2m❯[22m tests/levels/L6.test.ts:[2m76:229[22m[39m
+
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[12/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/levels/L9-campaign.test.ts[2m > [22mT-E31-20 @E31-AC20 continuous seed 1 L1 through L9 commits real campaign handovers and the axe reset
+[31m[1mAssertionError[22m: {"level":"L7","policy":"complete","seed":1,"completed":false,"time":1200,"deaths":0,"kills":0,"damageTaken":0,"failures":{"tick-budget":1},"objectiveTimeline":[],"furthestObjective":"bus-departure","activeObjectives":[],"outcome":"tick-budget","blocker":{"objective":"bus-departure","detail":"{\"phase\":\"boarding\",\"hp\":100,\"roster\":[{\"id\":117,\"key\":\"shelter-0\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":118,\"key\":\"shelter-1\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":119,\"key\":\"shelter-2\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":120,\"key\":\"shelter-3\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":121,\"key\":\"shelter-4\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":122,\"key\":\"shelter-5\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":123,\"key\":\"shelter-6\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":124,\"key\":\"shelter-7\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":125,\"key\":\"shelter-8\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":126,\"key\":\"shelter-9\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-69.09574113030666,\"z\":46.536906435158485,\"y\":0.7,\"yaw\":9.193293980664972}},{\"id\":127,\"key\":\"shelter-10\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":128,\"key\":\"shelter-11\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":129,\"key\":\"shelter-12\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":130,\"key\":\"shelter-13\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":132,\"key\":\"shelter-15\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":133,\"key\":\"shelter-16\",\"injured\":true,\"status\":\"turned\",\"passed\":false,\"at\":{\"x\":-62.4208234883381,\"z\":51.11025529016192,\"y\":0.83,\"yaw\":2.2371515466034366}},{\"id\":135,\"key\":\"shelter-18\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":136,\"key\":\"shelter-19\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":137,\"key\":\"shelter-20\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":138,\"key\":\"shelter-21\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":139,\"key\":\"shelter-22\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":140,\"key\":\"shelter-23\",\"injured\":false,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":20,\"key\":\"dale\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":21,\"key\":\"rosa\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":22,\"key\":\"okafor\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}},{\"id\":23,\"key\":\"mia\",\"injured\":true,\"status\":\"following\",\"passed\":false,\"at\":{\"x\":-74.4,\"z\":47,\"y\":0.7,\"yaw\":3.141592653589793}}]}","player":{"x":-70.49170684814453,"y":0.7049999833106995,"z":47.50030517578125,"yaw":0.902451766572879}},"collision":{"failures":0,"pending":0,"admitted":434,"deferred":0,"requests":[],"offenders":[]}}: expected false to be true // Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+[36m [2m❯[22m tests/levels/L9-campaign.test.ts:[2m32:56[22m[39m
+    [90m 30|[39m       reports.push({ ...report, racks: structuredClone(save.racks), su…
+    [90m 31|[39m       console.log(JSON.stringify({ level, completed: report.completed,…
+    [90m 32|[39m       expect(report.completed, JSON.stringify(report)).toBe(true);
+    [90m   |[39m                                                        [31m^[39m
+    [90m 33|[39m       expect(save.completedLevels).toBe(n); expect(save.unlockedLevel)…
+    [90m 34|[39m       expect(save.pending).toBeUndefined(); expect(validateSave(save))…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[13/15]⎯[22m[39m
+
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/levels/l6-side-entries.test.ts[2m > [22m@E24 PO35 tunnel entries telegraph, alternate sides, and stagger small groups ahead of the courier
+[31m[1mError[22m: Test timed out in 30000ms.
+If this is a long-running test, pass a timeout value as the last argument or configure it globally with "testTimeout".[39m
+[36m [2m❯[22m tests/levels/l6-side-entries.test.ts:[2m5:1[22m[39m
+    [90m  3|[39m import { followFrustum } from '../../tools/sim-runner/l3Bots';
+    [90m  4|[39m import { l6Doors, l6Entries } from '../../src/data/l6';
+    [90m  5|[39m test('@E24 PO35 tunnel entries telegraph, alternate sides, and stagger…
+    [90m   |[39m [31m^[39m
+    [90m  6|[39m   const { world: w, mission: m } = await loadL6();
+    [90m  7|[39m   try {
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[14/15]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m14 failed[39m[22m[2m | [22m[1m[32m484 passed[39m[22m[2m | [22m[33m3 skipped[39m[90m (501)[39m
+[2m      Tests [22m [1m[31m15 failed[39m[22m[2m | [22m[1m[32m3108 passed[39m[22m[2m | [22m[33m11 skipped[39m[90m (3134)[39m
+[2m   Start at [22m 06:39:13
+[2m   Duration [22m 8979.11s[2m (tests 99%, import 1%)[22m
+
+JSON report written to /srv/mi/jobs/merge-batch10-267619-41058-1792305478/test-results/batch10-pair2.json
+[remote] pulled test-results/batch10-pair2.json
+[remote] done exit=1 (runner 2.28.24.66, sync 57s, remote total 9001s)

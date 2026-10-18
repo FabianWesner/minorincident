@@ -1,0 +1,166 @@
+
+Running 15 tests using 1 worker
+
+  ✘   1 [chromium] › tests/e2e/l6-po-gate.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgl high (19.3s)
+  ✘   2 [chromium] › tests/e2e/l6-po-gate.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgl low (14.1s)
+  ✘   3 [chromium] › tests/e2e/l6-po-gate.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgpu high (18.6s)
+  ✘   4 [chromium] › tests/e2e/l6-po-gate.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgpu low (14.8s)
+  ✓   5 [chromium] › tests/e2e/levels/l6-exit-approach.spec.ts:6:77 › T-E24-exit-input @E24-AC17 high zoom 1: last barricade to raised exit and L7 (19.0s)
+  ✓   6 [chromium] › tests/e2e/levels/l6-exit-approach.spec.ts:6:77 › T-E24-exit-input @E24-AC17 high zoom 0.5: last barricade to raised exit and L7 (17.6s)
+  ✓   7 [chromium] › tests/e2e/levels/l6-exit-approach.spec.ts:6:77 › T-E24-exit-input @E24-AC17 low zoom 1: last barricade to raised exit and L7 (17.9s)
+  ✓   8 [chromium] › tests/e2e/levels/l6-exit-approach.spec.ts:6:77 › T-E24-exit-input @E24-AC17 low zoom 0.5: last barricade to raised exit and L7 (16.8s)
+  ✓   9 [chromium] › tests/e2e/levels/L6.spec.ts:7:1 › T-E24-18 @E24 @E24-AC18 shelter and emergency photo spots render the shipped adults and lights (6.8s)
+  ✓  10 [chromium] › tests/e2e/levels/L6.spec.ts:17:1 › T-E28-L6 @E28 @E28-AC01 @E24 @E24-AC14 actual Northgate exit changes underground haze to ground fog and night (5.5s)
+  ✓  11 [chromium] › tests/e2e/levels/L6.spec.ts:105:104 › T-E24-15 @E24 @E24-AC15 l6-tunnel-retreat mask contrast, red eye maxima and flashlight shadow (6.4s)
+  ✓  12 [chromium] › tests/e2e/levels/l7-entry.spec.ts:6:74 › T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 1: entry, real rocket pickup and checkpoint death (13.1s)
+  ✓  13 [chromium] › tests/e2e/levels/l7-entry.spec.ts:6:74 › T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 0.5: entry, real rocket pickup and checkpoint death (13.0s)
+  ✓  14 [chromium] › tests/e2e/levels/l7-entry.spec.ts:6:74 › T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 1: entry, real rocket pickup and checkpoint death (13.1s)
+  ✓  15 [chromium] › tests/e2e/levels/l7-entry.spec.ts:6:74 › T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 0.5: entry, real rocket pickup and checkpoint death (16.4s)
+
+
+  1) [chromium] › tests/e2e/l6-po-gate.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgl high 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('interaction-prompt')
+    Expected substring: "Push glowing crates onto the line"
+    Received string:    "Block the tunnelLet everyone pass · E to close the gate"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" getByTestId('interaction-prompt') with timeout 5000ms
+      - waiting for getByTestId('interaction-prompt')
+        14 × locator resolved to <div data-hint="" data-entity-id="39" class="interaction-prompt" data-testid="interaction-prompt">…</div>
+           - unexpected value "Block the tunnelLet everyone pass · E to close the gate"
+
+
+      12 |   const prompt = page.getByTestId('interaction-prompt');
+      13 |   await expect(prompt).toContainText('Block the tunnel');
+    > 14 |   await expect(prompt).toContainText('Push glowing crates onto the line');
+         |                        ^
+      15 |   await expect(prompt.locator('[role="progressbar"]:visible')).toHaveCount(1);
+      16 |   await expect(prompt.locator('[role="meter"]:visible')).toHaveCount(0);
+      17 |   await expect(prompt).not.toContainText('coverage');
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l6-po-gate.spec.ts:14:24
+
+    Error Context: test-results/playwright/vfx-3495/e2e-l6-po-gate--E24-PO34-s-30513-ask-with-one-bar-webgl-high-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/vfx-3495/e2e-l6-po-gate--E24-PO34-s-30513-ask-with-one-bar-webgl-high-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/vfx-3495/e2e-l6-po-gate--E24-PO34-s-30513-ask-with-one-bar-webgl-high-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/e2e/l6-po-gate.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgl low 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('interaction-prompt')
+    Expected substring: "Push glowing crates onto the line"
+    Received string:    "Block the tunnelLet everyone pass · E to close the gate"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" getByTestId('interaction-prompt') with timeout 5000ms
+      - waiting for getByTestId('interaction-prompt')
+        14 × locator resolved to <div data-hint="" data-entity-id="39" class="interaction-prompt" data-testid="interaction-prompt">…</div>
+           - unexpected value "Block the tunnelLet everyone pass · E to close the gate"
+
+
+      12 |   const prompt = page.getByTestId('interaction-prompt');
+      13 |   await expect(prompt).toContainText('Block the tunnel');
+    > 14 |   await expect(prompt).toContainText('Push glowing crates onto the line');
+         |                        ^
+      15 |   await expect(prompt.locator('[role="progressbar"]:visible')).toHaveCount(1);
+      16 |   await expect(prompt.locator('[role="meter"]:visible')).toHaveCount(0);
+      17 |   await expect(prompt).not.toContainText('coverage');
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l6-po-gate.spec.ts:14:24
+
+    Error Context: test-results/playwright/vfx-3495/e2e-l6-po-gate--E24-PO34-s-f30a0-task-with-one-bar-webgl-low-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/vfx-3495/e2e-l6-po-gate--E24-PO34-s-f30a0-task-with-one-bar-webgl-low-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/vfx-3495/e2e-l6-po-gate--E24-PO34-s-f30a0-task-with-one-bar-webgl-low-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/e2e/l6-po-gate.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgpu high 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('interaction-prompt')
+    Expected substring: "Push glowing crates onto the line"
+    Received string:    "Block the tunnelLet everyone pass · E to close the gate"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" getByTestId('interaction-prompt') with timeout 5000ms
+      - waiting for getByTestId('interaction-prompt')
+        14 × locator resolved to <div data-hint="" data-entity-id="39" class="interaction-prompt" data-testid="interaction-prompt">…</div>
+           - unexpected value "Block the tunnelLet everyone pass · E to close the gate"
+
+
+      12 |   const prompt = page.getByTestId('interaction-prompt');
+      13 |   await expect(prompt).toContainText('Block the tunnel');
+    > 14 |   await expect(prompt).toContainText('Push glowing crates onto the line');
+         |                        ^
+      15 |   await expect(prompt.locator('[role="progressbar"]:visible')).toHaveCount(1);
+      16 |   await expect(prompt.locator('[role="meter"]:visible')).toHaveCount(0);
+      17 |   await expect(prompt).not.toContainText('coverage');
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l6-po-gate.spec.ts:14:24
+
+    Error Context: test-results/playwright/vfx-3495/e2e-l6-po-gate--E24-PO34-s-bbab2-sk-with-one-bar-webgpu-high-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/vfx-3495/e2e-l6-po-gate--E24-PO34-s-bbab2-sk-with-one-bar-webgpu-high-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/vfx-3495/e2e-l6-po-gate--E24-PO34-s-bbab2-sk-with-one-bar-webgpu-high-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests/e2e/l6-po-gate.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgpu low 
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: getByTestId('interaction-prompt')
+    Expected substring: "Push glowing crates onto the line"
+    Received string:    "Block the tunnelLet everyone pass · E to close the gate"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" getByTestId('interaction-prompt') with timeout 5000ms
+      - waiting for getByTestId('interaction-prompt')
+        14 × locator resolved to <div data-hint="" data-entity-id="39" class="interaction-prompt" data-testid="interaction-prompt">…</div>
+           - unexpected value "Block the tunnelLet everyone pass · E to close the gate"
+
+
+      12 |   const prompt = page.getByTestId('interaction-prompt');
+      13 |   await expect(prompt).toContainText('Block the tunnel');
+    > 14 |   await expect(prompt).toContainText('Push glowing crates onto the line');
+         |                        ^
+      15 |   await expect(prompt.locator('[role="progressbar"]:visible')).toHaveCount(1);
+      16 |   await expect(prompt.locator('[role="meter"]:visible')).toHaveCount(0);
+      17 |   await expect(prompt).not.toContainText('coverage');
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/l6-po-gate.spec.ts:14:24
+
+    Error Context: test-results/playwright/vfx-3495/e2e-l6-po-gate--E24-PO34-s-1a992-ask-with-one-bar-webgpu-low-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/vfx-3495/e2e-l6-po-gate--E24-PO34-s-1a992-ask-with-one-bar-webgpu-low-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/vfx-3495/e2e-l6-po-gate--E24-PO34-s-1a992-ask-with-one-bar-webgpu-low-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [chromium] › tests/e2e/l6-po-gate.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgl high 
+    [chromium] › tests/e2e/l6-po-gate.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgl low 
+    [chromium] › tests/e2e/l6-po-gate.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgpu high 
+    [chromium] › tests/e2e/l6-po-gate.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgpu low 
+  11 passed (3.7m)

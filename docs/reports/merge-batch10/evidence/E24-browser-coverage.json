@@ -1,0 +1,542 @@
+[
+  {
+    "project": "chromium",
+    "file": "e2e/audio/smoke.spec.ts",
+    "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/controls-playtest.spec.ts",
+    "title": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/crowd-drawn.spec.ts",
+    "title": "T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/crowd-drawn.spec.ts",
+    "title": "T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/crowd-feel.spec.ts",
+    "title": "20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/driving.spec.ts",
+    "title": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/interaction-viewport.spec.ts",
+    "title": "@E26-AC16 @E24 interaction panel stays inside all viewport edges webgl high",
+    "pass": true,
+    "evidence": [
+      "evidence/ui-staging-final-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/interaction-viewport.spec.ts",
+    "title": "@E26-AC16 @E24 interaction panel stays inside all viewport edges webgl low",
+    "pass": true,
+    "evidence": [
+      "evidence/ui-staging-final-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/interaction-viewport.spec.ts",
+    "title": "@E26-AC16 @E24 interaction panel stays inside all viewport edges webgpu high",
+    "pass": true,
+    "evidence": [
+      "evidence/ui-staging-final-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/interaction-viewport.spec.ts",
+    "title": "@E26-AC16 @E24 interaction panel stays inside all viewport edges webgpu low",
+    "pass": true,
+    "evidence": [
+      "evidence/ui-staging-final-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/l6-po-gate.spec.ts",
+    "title": "@E24 PO34 service gate explains the crate task with one bar webgl high",
+    "pass": true,
+    "evidence": [
+      "evidence/PO34-final-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/l6-po-gate.spec.ts",
+    "title": "@E24 PO34 service gate explains the crate task with one bar webgl low",
+    "pass": true,
+    "evidence": [
+      "evidence/PO34-final-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/l6-po-gate.spec.ts",
+    "title": "@E24 PO34 service gate explains the crate task with one bar webgpu high",
+    "pass": true,
+    "evidence": [
+      "evidence/PO34-final-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/l6-po-gate.spec.ts",
+    "title": "@E24 PO34 service gate explains the crate task with one bar webgpu low",
+    "pass": true,
+    "evidence": [
+      "evidence/PO34-final-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/levels/l4-boot.spec.ts",
+    "title": "T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/levels/l6-exit-approach.spec.ts",
+    "title": "T-E24-exit-input @E24-AC17 high zoom 1: last barricade to raised exit and L7",
+    "pass": true,
+    "evidence": [
+      "evidence/E24-remaining-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/levels/l6-exit-approach.spec.ts",
+    "title": "T-E24-exit-input @E24-AC17 high zoom 0.5: last barricade to raised exit and L7",
+    "pass": true,
+    "evidence": [
+      "evidence/E24-remaining-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/levels/l6-exit-approach.spec.ts",
+    "title": "T-E24-exit-input @E24-AC17 low zoom 1: last barricade to raised exit and L7",
+    "pass": true,
+    "evidence": [
+      "evidence/E24-remaining-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/levels/l6-exit-approach.spec.ts",
+    "title": "T-E24-exit-input @E24-AC17 low zoom 0.5: last barricade to raised exit and L7",
+    "pass": true,
+    "evidence": [
+      "evidence/E24-remaining-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/levels/L6.spec.ts",
+    "title": "T-E24-18 @E24 @E24-AC18 shelter and emergency photo spots render the shipped adults and lights",
+    "pass": true,
+    "evidence": [
+      "evidence/E24-remaining-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/levels/L6.spec.ts",
+    "title": "T-E28-L6 @E28 @E28-AC01 @E24 @E24-AC14 actual Northgate exit changes underground haze to ground fog and night",
+    "pass": true,
+    "evidence": [
+      "evidence/E24-remaining-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/levels/L6.spec.ts",
+    "title": "T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes a gate and all seven photographs",
+    "pass": true,
+    "evidence": [
+      "evidence/browser-l6-retreat-gate.log"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/levels/L6.spec.ts",
+    "title": "T-E24-15 @E24 @E24-AC15 l6-shelter-fails mask contrast, red eye maxima and flashlight shadow",
+    "pass": true,
+    "evidence": [
+      "evidence/priority-final/shelter-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/levels/L6.spec.ts",
+    "title": "T-E24-15 @E24 @E24-AC15 l6-tunnel-retreat mask contrast, red eye maxima and flashlight shadow",
+    "pass": true,
+    "evidence": [
+      "evidence/E24-remaining-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/levels/l7-entry.spec.ts",
+    "title": "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 1: entry, real rocket pickup and checkpoint death",
+    "pass": true,
+    "evidence": [
+      "evidence/E24-remaining-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/levels/l7-entry.spec.ts",
+    "title": "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 0.5: entry, real rocket pickup and checkpoint death",
+    "pass": true,
+    "evidence": [
+      "evidence/E24-remaining-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/levels/l7-entry.spec.ts",
+    "title": "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 1: entry, real rocket pickup and checkpoint death",
+    "pass": true,
+    "evidence": [
+      "evidence/E24-remaining-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/levels/l7-entry.spec.ts",
+    "title": "T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 0.5: entry, real rocket pickup and checkpoint death",
+    "pass": true,
+    "evidence": [
+      "evidence/E24-remaining-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/levels/wave3-sim.spec.ts",
+    "title": "T-E24-06-frustum @E24-AC06 webgl high z1 first and second appearances use offscreen maintenance accesses",
+    "pass": true,
+    "evidence": [
+      "evidence/wave3-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/levels/wave3-sim.spec.ts",
+    "title": "T-E24-06-frustum @E24-AC06 webgl high z0.5 first and second appearances use offscreen maintenance accesses",
+    "pass": true,
+    "evidence": [
+      "evidence/wave3-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/levels/wave3-sim.spec.ts",
+    "title": "T-E24-06-frustum @E24-AC06 webgl low z1 first and second appearances use offscreen maintenance accesses",
+    "pass": true,
+    "evidence": [
+      "evidence/wave3-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/levels/wave3-sim.spec.ts",
+    "title": "T-E24-06-frustum @E24-AC06 webgl low z0.5 first and second appearances use offscreen maintenance accesses",
+    "pass": true,
+    "evidence": [
+      "evidence/wave3-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/levels/wave3-sim.spec.ts",
+    "title": "T-E24-06-frustum @E24-AC06 webgpu high z1 first and second appearances use offscreen maintenance accesses",
+    "pass": true,
+    "evidence": [
+      "evidence/wave3-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/levels/wave3-sim.spec.ts",
+    "title": "T-E24-06-frustum @E24-AC06 webgpu high z0.5 first and second appearances use offscreen maintenance accesses",
+    "pass": true,
+    "evidence": [
+      "evidence/wave3-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/levels/wave3-sim.spec.ts",
+    "title": "T-E24-06-frustum @E24-AC06 webgpu low z1 first and second appearances use offscreen maintenance accesses",
+    "pass": true,
+    "evidence": [
+      "evidence/wave3-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/levels/wave3-sim.spec.ts",
+    "title": "T-E24-06-frustum @E24-AC06 webgpu low z0.5 first and second appearances use offscreen maintenance accesses",
+    "pass": true,
+    "evidence": [
+      "evidence/wave3-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/menus-mouse.spec.ts",
+    "title": "T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/save.spec.ts",
+    "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/smoke.spec.ts",
+    "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/smoke.spec.ts",
+    "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/webgpu-canvas.spec.ts",
+    "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU high mega health bars preserve the game frame at both zoom limits",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/webgpu-canvas.spec.ts",
+    "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU high L1 L4 L8 game cameras render at both zoom limits",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/webgpu-canvas.spec.ts",
+    "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU low mega health bars preserve the game frame at both zoom limits",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/webgpu-canvas.spec.ts",
+    "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU low L1 L4 L8 game cameras render at both zoom limits",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "chromium",
+    "file": "e2e/webgpu-level-transitions.spec.ts",
+    "title": "T-E02-webgpu-level-transitions @smoke @E02 title, L1, L2 and L3 in one WebGPU renderer log no GPU validation errors",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "pixel-7",
+    "file": "e2e/audio/smoke.spec.ts",
+    "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "pixel-7",
+    "file": "e2e/smoke.spec.ts",
+    "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "pixel-7",
+    "file": "e2e/smoke.spec.ts",
+    "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "pixel-7-landscape",
+    "file": "e2e/audio/smoke.spec.ts",
+    "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "pixel-7-landscape",
+    "file": "e2e/smoke.spec.ts",
+    "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "pixel-7-landscape",
+    "file": "e2e/smoke.spec.ts",
+    "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "iphone-14",
+    "file": "e2e/audio/smoke.spec.ts",
+    "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "iphone-14",
+    "file": "e2e/smoke.spec.ts",
+    "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "iphone-14",
+    "file": "e2e/smoke.spec.ts",
+    "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "iphone-14-landscape",
+    "file": "e2e/audio/smoke.spec.ts",
+    "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "iphone-14-landscape",
+    "file": "e2e/smoke.spec.ts",
+    "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "iphone-14-landscape",
+    "file": "e2e/smoke.spec.ts",
+    "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "webkit",
+    "file": "e2e/audio/smoke.spec.ts",
+    "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "webkit",
+    "file": "e2e/smoke.spec.ts",
+    "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  },
+  {
+    "project": "webkit",
+    "file": "e2e/smoke.spec.ts",
+    "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+    "pass": true,
+    "evidence": [
+      "evidence/full-gate-smoke-playwright.json"
+    ]
+  }
+]

@@ -1,0 +1,62 @@
+Listing tests:
+  [chromium] › e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues
+  [chromium] › e2e/controls-playtest.spec.ts:8:1 › S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB
+  [chromium] › e2e/crowd-drawn.spec.ts:15:3 › T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props
+  [chromium] › e2e/crowd-drawn.spec.ts:15:3 › T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props
+  [chromium] › e2e/crowd-feel.spec.ts:87:1 › 20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07
+  [chromium] › e2e/driving.spec.ts:22:1 › S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit
+  [chromium] › e2e/interaction-viewport.spec.ts:6:3 › @E26-AC16 @E24 interaction panel stays inside all viewport edges webgl high
+  [chromium] › e2e/interaction-viewport.spec.ts:6:3 › @E26-AC16 @E24 interaction panel stays inside all viewport edges webgl low
+  [chromium] › e2e/interaction-viewport.spec.ts:6:3 › @E26-AC16 @E24 interaction panel stays inside all viewport edges webgpu high
+  [chromium] › e2e/interaction-viewport.spec.ts:6:3 › @E26-AC16 @E24 interaction panel stays inside all viewport edges webgpu low
+  [chromium] › e2e/l6-po-gate.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgl high
+  [chromium] › e2e/l6-po-gate.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgl low
+  [chromium] › e2e/l6-po-gate.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgpu high
+  [chromium] › e2e/l6-po-gate.spec.ts:3:80 › @E24 PO34 service gate explains the crate task with one bar webgpu low
+  [chromium] › e2e/levels/l4-boot.spec.ts:5:1 › T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors
+  [chromium] › e2e/levels/l6-exit-approach.spec.ts:6:77 › T-E24-exit-input @E24-AC17 high zoom 1: last barricade to raised exit and L7
+  [chromium] › e2e/levels/l6-exit-approach.spec.ts:6:77 › T-E24-exit-input @E24-AC17 high zoom 0.5: last barricade to raised exit and L7
+  [chromium] › e2e/levels/l6-exit-approach.spec.ts:6:77 › T-E24-exit-input @E24-AC17 low zoom 1: last barricade to raised exit and L7
+  [chromium] › e2e/levels/l6-exit-approach.spec.ts:6:77 › T-E24-exit-input @E24-AC17 low zoom 0.5: last barricade to raised exit and L7
+  [chromium] › e2e/levels/L6.spec.ts:7:1 › T-E24-18 @E24 @E24-AC18 shelter and emergency photo spots render the shipped adults and lights
+  [chromium] › e2e/levels/L6.spec.ts:17:1 › T-E28-L6 @E28 @E28-AC01 @E24 @E24-AC14 actual Northgate exit changes underground haze to ground fog and night
+  [chromium] › e2e/levels/L6.spec.ts:24:1 › T-E24-17 @E24 @E24-AC17 keyboard/mouse only escort to Northgate, E closes a gate and all seven photographs
+  [chromium] › e2e/levels/L6.spec.ts:105:104 › T-E24-15 @E24 @E24-AC15 l6-shelter-fails mask contrast, red eye maxima and flashlight shadow
+  [chromium] › e2e/levels/L6.spec.ts:105:104 › T-E24-15 @E24 @E24-AC15 l6-tunnel-retreat mask contrast, red eye maxima and flashlight shadow
+  [chromium] › e2e/levels/l7-entry.spec.ts:6:74 › T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 1: entry, real rocket pickup and checkpoint death
+  [chromium] › e2e/levels/l7-entry.spec.ts:6:74 › T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 high zoom 0.5: entry, real rocket pickup and checkpoint death
+  [chromium] › e2e/levels/l7-entry.spec.ts:6:74 › T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 1: entry, real rocket pickup and checkpoint death
+  [chromium] › e2e/levels/l7-entry.spec.ts:6:74 › T-E29-16-browser @E29-AC16 @E24-AC14 @E29-AC03 low zoom 0.5: entry, real rocket pickup and checkpoint death
+  [chromium] › e2e/levels/wave3-sim.spec.ts:10:3 › T-E24-06-frustum @E24-AC06 webgl high z1 first and second appearances use offscreen maintenance accesses
+  [chromium] › e2e/levels/wave3-sim.spec.ts:10:3 › T-E24-06-frustum @E24-AC06 webgl high z0.5 first and second appearances use offscreen maintenance accesses
+  [chromium] › e2e/levels/wave3-sim.spec.ts:10:3 › T-E24-06-frustum @E24-AC06 webgl low z1 first and second appearances use offscreen maintenance accesses
+  [chromium] › e2e/levels/wave3-sim.spec.ts:10:3 › T-E24-06-frustum @E24-AC06 webgl low z0.5 first and second appearances use offscreen maintenance accesses
+  [chromium] › e2e/levels/wave3-sim.spec.ts:10:3 › T-E24-06-frustum @E24-AC06 webgpu high z1 first and second appearances use offscreen maintenance accesses
+  [chromium] › e2e/levels/wave3-sim.spec.ts:10:3 › T-E24-06-frustum @E24-AC06 webgpu high z0.5 first and second appearances use offscreen maintenance accesses
+  [chromium] › e2e/levels/wave3-sim.spec.ts:10:3 › T-E24-06-frustum @E24-AC06 webgpu low z1 first and second appearances use offscreen maintenance accesses
+  [chromium] › e2e/levels/wave3-sim.spec.ts:10:3 › T-E24-06-frustum @E24-AC06 webgpu low z0.5 first and second appearances use offscreen maintenance accesses
+  [chromium] › e2e/menus-mouse.spec.ts:3:1 › T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only
+  [chromium] › e2e/save.spec.ts:76:1 › T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly
+  [chromium] › e2e/smoke.spec.ts:4:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available
+  [chromium] › e2e/smoke.spec.ts:14:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies
+  [chromium] › e2e/webgpu-canvas.spec.ts:25:3 › T-E02-webgpu-canvas @smoke @E02 WebGPU high mega health bars preserve the game frame at both zoom limits
+  [chromium] › e2e/webgpu-canvas.spec.ts:41:3 › T-E02-webgpu-game-canvas @smoke @E02 WebGPU high L1 L4 L8 game cameras render at both zoom limits
+  [chromium] › e2e/webgpu-canvas.spec.ts:25:3 › T-E02-webgpu-canvas @smoke @E02 WebGPU low mega health bars preserve the game frame at both zoom limits
+  [chromium] › e2e/webgpu-canvas.spec.ts:41:3 › T-E02-webgpu-game-canvas @smoke @E02 WebGPU low L1 L4 L8 game cameras render at both zoom limits
+  [chromium] › e2e/webgpu-level-transitions.spec.ts:15:1 › T-E02-webgpu-level-transitions @smoke @E02 title, L1, L2 and L3 in one WebGPU renderer log no GPU validation errors
+  [pixel-7] › e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues
+  [pixel-7] › e2e/smoke.spec.ts:4:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available
+  [pixel-7] › e2e/smoke.spec.ts:14:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies
+  [pixel-7-landscape] › e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues
+  [pixel-7-landscape] › e2e/smoke.spec.ts:4:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available
+  [pixel-7-landscape] › e2e/smoke.spec.ts:14:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies
+  [iphone-14] › e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues
+  [iphone-14] › e2e/smoke.spec.ts:4:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available
+  [iphone-14] › e2e/smoke.spec.ts:14:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies
+  [iphone-14-landscape] › e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues
+  [iphone-14-landscape] › e2e/smoke.spec.ts:4:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available
+  [iphone-14-landscape] › e2e/smoke.spec.ts:14:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies
+  [webkit] › e2e/audio/smoke.spec.ts:5:1 › S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues
+  [webkit] › e2e/smoke.spec.ts:4:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available
+  [webkit] › e2e/smoke.spec.ts:14:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies
+Total: 60 tests in 17 files

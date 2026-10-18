@@ -1,0 +1,72 @@
+# Every observed red
+
+Historical failures remain listed after a passing rerun. “Main” is an actual matched control; Unmeasured means no exact control. Full failure messages and evidence paths are in [red-tests.json](red-tests.json).
+
+| Case | Red on main | Candidate passing measurement also recorded | Evidence |
+|---|---|---|---|
+| 20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07 [chromium] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| @E24 PO34 service gate explains the crate task with one bar webgl high [chromium] | Yes | Yes — see JSON for run | [E24-remaining-playwright.json](evidence/E24-remaining-playwright.json) |
+| @E24 PO34 service gate explains the crate task with one bar webgl low [chromium] | Yes | Yes — see JSON for run | [E24-remaining-playwright.json](evidence/E24-remaining-playwright.json) |
+| @E24 PO34 service gate explains the crate task with one bar webgpu high [chromium] | Yes | Yes — see JSON for run | [E24-remaining-playwright.json](evidence/E24-remaining-playwright.json) |
+| @E24 PO34 service gate explains the crate task with one bar webgpu low [chromium] | Yes | Yes — see JSON for run | [E24-remaining-playwright.json](evidence/E24-remaining-playwright.json) |
+| @E26-AC16 @E24 interaction panel stays inside all viewport edges webgl high [chromium] | Yes | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json); [ui-night-final-playwright.json](evidence/ui-night-final-playwright.json) |
+| @E26-AC16 @E24 interaction panel stays inside all viewport edges webgl low [chromium] | Yes | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json); [ui-night-final-playwright.json](evidence/ui-night-final-playwright.json) |
+| @E26-AC16 @E24 interaction panel stays inside all viewport edges webgpu high [chromium] | Yes | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json); [ui-night-final-playwright.json](evidence/ui-night-final-playwright.json) |
+| @E26-AC16 @E24 interaction panel stays inside all viewport edges webgpu low [chromium] | Yes | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json); [ui-night-final-playwright.json](evidence/ui-night-final-playwright.json) |
+| E24-PO35-side-entries | No | No passing rerun recorded | [remote-pair1.log](evidence/remote-pair1.log); [remote-pair2.log](evidence/remote-pair2.log); [verify-E24.log](evidence/verify-E24.log); [pair1-vitest.json](evidence/pair1-vitest.json); [pair2-vitest.json](evidence/pair2-vitest.json); [E24-verify-vitest.json](evidence/E24-verify-vitest.json) |
+| S-01 @smoke foundation boots, ready resolves and a screenshot is available [chromium] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| S-01 @smoke foundation boots, ready resolves and a screenshot is available [iphone-14-landscape] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| S-01 @smoke foundation boots, ready resolves and a screenshot is available [iphone-14] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| S-01 @smoke foundation boots, ready resolves and a screenshot is available [pixel-7-landscape] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| S-01 @smoke foundation boots, ready resolves and a screenshot is available [pixel-7] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| S-01 @smoke foundation boots, ready resolves and a screenshot is available [webkit] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies [chromium] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies [iphone-14-landscape] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies [iphone-14] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies [pixel-7-landscape] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies [pixel-7] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies [webkit] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues [iphone-14-landscape] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues [iphone-14] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues [pixel-7-landscape] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues [pixel-7] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues [webkit] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| T-E01-01b | No | Yes — see JSON for run | [remote-pair1.log](evidence/remote-pair1.log); [pair1-vitest.json](evidence/pair1-vitest.json) |
+| T-E02-webgpu-canvas @smoke @E02 WebGPU high mega health bars preserve the game frame at both zoom limits [chromium] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| T-E02-webgpu-canvas @smoke @E02 WebGPU low mega health bars preserve the game frame at both zoom limits [chromium] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| T-E02-webgpu-game-canvas @smoke @E02 WebGPU high L1 L4 L8 game cameras render at both zoom limits [chromium] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| T-E02-webgpu-game-canvas @smoke @E02 WebGPU low L1 L4 L8 game cameras render at both zoom limits [chromium] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| T-E02-webgpu-level-transitions @smoke @E02 title, L1, L2 and L3 in one WebGPU renderer log no GPU validation errors [chromium] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| T-E07-06-bars-1600 @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera high [chromium] | No | Yes — see JSON for run | [E30-initial-playwright.json](evidence/E30-initial-playwright.json) |
+| T-E07-06-support-perf-200 | Yes | No passing rerun recorded | [remote-pair2.log](evidence/remote-pair2.log); [pair2-vitest.json](evidence/pair2-vitest.json) |
+| T-E07-11 | No | No passing rerun recorded | [remote-pair2.log](evidence/remote-pair2.log); [pair2-vitest.json](evidence/pair2-vitest.json) |
+| T-E07-11-alpha-200 | No | No passing rerun recorded | [remote-candidate-isolated.log](evidence/remote-candidate-isolated.log); [candidate-isolated-vitest.json](evidence/candidate-isolated-vitest.json) |
+| T-E07-11-alpha-physical-200 | Yes | No passing rerun recorded | [remote-pair2.log](evidence/remote-pair2.log); [remote-candidate-isolated.log](evidence/remote-candidate-isolated.log); [pair2-vitest.json](evidence/pair2-vitest.json); [candidate-isolated-vitest.json](evidence/candidate-isolated-vitest.json) |
+| T-E07-11-zoo-s1-200 | Yes | No passing rerun recorded | [remote-pair2.log](evidence/remote-pair2.log); [remote-candidate-isolated.log](evidence/remote-candidate-isolated.log); [pair2-vitest.json](evidence/pair2-vitest.json); [candidate-isolated-vitest.json](evidence/candidate-isolated-vitest.json) |
+| T-E07-11-zoo-s2-200 | Yes | No passing rerun recorded | [remote-pair2.log](evidence/remote-pair2.log); [remote-candidate-isolated.log](evidence/remote-candidate-isolated.log); [pair2-vitest.json](evidence/pair2-vitest.json); [candidate-isolated-vitest.json](evidence/candidate-isolated-vitest.json) |
+| T-E07-19-elephant-charge-browser @E07-AC05 @E07-AC19 @E30-AC10 production telegraph, pause, activation and shared bar [chromium] | Yes | No passing rerun recorded | [E30-isolated-retry-playwright.json](evidence/E30-isolated-retry-playwright.json); [E30-initial-playwright.json](evidence/E30-initial-playwright.json) |
+| T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props [chromium] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props [chromium] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly [chromium] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only [chromium] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review [chromium] | Unmeasured | No passing rerun recorded | [full-gate-browser-interrupted-playwright.json](evidence/full-gate-browser-interrupted-playwright.json) |
+| T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors [chromium] | No | Yes — see JSON for run | [E26-initial-playwright.json](evidence/E26-initial-playwright.json) |
+| T-E24-02 | No | Yes — see JSON for run | [remote-pair1.log](evidence/remote-pair1.log); [pair1-vitest.json](evidence/pair1-vitest.json) |
+| T-E24-03 | No | No passing rerun recorded | [remote-pair1.log](evidence/remote-pair1.log); [remote-pair2.log](evidence/remote-pair2.log); [verify-E24.log](evidence/verify-E24.log); [pair1-vitest.json](evidence/pair1-vitest.json); [pair2-vitest.json](evidence/pair2-vitest.json); [E24-verify-vitest.json](evidence/E24-verify-vitest.json) |
+| T-E24-08-complete | Unmeasured | Yes — see JSON for run | [remote-pair2.log](evidence/remote-pair2.log); [pair2-vitest.json](evidence/pair2-vitest.json) |
+| T-E24-08-newbie | Unmeasured | Yes — see JSON for run | [remote-pair2.log](evidence/remote-pair2.log); [pair2-vitest.json](evidence/pair2-vitest.json) |
+| T-E24-09-evade | No | No passing rerun recorded | [remote-pair1.log](evidence/remote-pair1.log); [remote-pair2.log](evidence/remote-pair2.log); [verify-E24.log](evidence/verify-E24.log); [pair1-vitest.json](evidence/pair1-vitest.json); [pair2-vitest.json](evidence/pair2-vitest.json); [E24-verify-vitest.json](evidence/E24-verify-vitest.json) |
+| T-E28-10-frame @E28 @E28-AC10 @perf storm-street high native E18 frame, sim and heap budgets [chromium] | Unmeasured | No passing rerun recorded | [playwright.json](perf/final/playwright.json) |
+| T-E28-10-frame @E28 @E28-AC10 @perf storm-street low native E18 frame, sim and heap budgets [chromium] | Unmeasured | No passing rerun recorded | [playwright.json](perf/final/playwright.json) |
+| T-E30-18-mobile @E30-AC18 touch stick reaches the APC ACTION with no HUD overflow [chromium] | Yes | No passing rerun recorded | [E30-isolated-retry-playwright.json](evidence/E30-isolated-retry-playwright.json); [E30-initial-playwright.json](evidence/E30-initial-playwright.json) |
+| T-E31-19-S4-200 | No | No passing rerun recorded | [remote-pair2.log](evidence/remote-pair2.log); [pair2-vitest.json](evidence/pair2-vitest.json) |
+| T-E31-20 | No | No passing rerun recorded | [remote-pair1.log](evidence/remote-pair1.log); [remote-pair2.log](evidence/remote-pair2.log); [pair1-vitest.json](evidence/pair1-vitest.json); [pair2-vitest.json](evidence/pair2-vitest.json) |
+| T-E32-03-D3-high | No | Yes — see JSON for run | [remote-pair1.log](evidence/remote-pair1.log); [pair1-vitest.json](evidence/pair1-vitest.json) |
+| T-E32-11-perf-200 | Yes | Yes — see JSON for run | [remote-pair2.log](evidence/remote-pair2.log); [pair2-vitest.json](evidence/pair2-vitest.json) |
+| T-E32-21-E3-high | Yes | No passing rerun recorded | [remote-pair2.log](evidence/remote-pair2.log); [pair2-vitest.json](evidence/pair2-vitest.json) |
+| T-E32-32 | No | No passing rerun recorded | [remote-pair1.log](evidence/remote-pair1.log); [remote-pair2.log](evidence/remote-pair2.log); [pair1-vitest.json](evidence/pair1-vitest.json); [pair2-vitest.json](evidence/pair2-vitest.json) |
+| manual-phone-gate-HUD-overlap | Yes | No passing rerun recorded | [l6-gate-390x844-f81-z1.png](evidence/ui-final/l6-gate-390x844-f81-z1.png); [phone-gate-overlap-main-control.jpg](sheets/phone-gate-overlap-main-control.jpg) |
+| wave3-zoo-routines@high-z1.5-webgl2 | Yes | No passing rerun recorded | [matrix-final-webgl2.log](evidence/matrix-final-webgl2.log) |
+| wave3-zoo-routines@high-z1.5-webgpu | Yes | No passing rerun recorded | [metrics.json](matrix/full-gate-failed/wave3-zoo-routines@high-z1.5/metrics.json) |
+| wave3-zoo-routines@low-z1.5-webgl2 | Yes | No passing rerun recorded | [matrix-final-webgl2.log](evidence/matrix-final-webgl2.log) |
+| wave3-zoo-routines@low-z1.5-webgpu | Yes | No passing rerun recorded | [metrics.json](matrix/full-gate-failed/wave3-zoo-routines@low-z1.5/metrics.json) |

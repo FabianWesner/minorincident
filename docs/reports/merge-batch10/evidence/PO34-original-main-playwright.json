@@ -1,0 +1,480 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "docs/reports/merge-batch10/evidence/po34-original.config.ts",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/po34-original.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/po34-original-main",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "po34-original.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/po34-original-main",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/po34-original-main",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/po34-original-main",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/po34-original-main",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/po34-original-main",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/PO34-original-main-playwright.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "node '/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/node_modules/vite/bin/vite.js' preview --outDir '/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/merge-batch10/main-weather-dist' --host 127.0.0.1 --port 3499 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3499",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "po34-original.spec.ts",
+      "file": "po34-original.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "@E24 PO34 service gate explains the crate task with one bar webgl high",
+          "ok": false,
+          "tags": [
+            "E24"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 12870,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('interaction-prompt')\nExpected substring: \u001b[32m\"\u001b[7mPush glowing crates onto\u001b[27m the \u001b[7mlin\u001b[27me\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBlock the tunnelLet everyone pass · E to close\u001b[27m the \u001b[7mgat\u001b[27me\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('interaction-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('interaction-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div data-hint=\"\" data-entity-id=\"39\" class=\"interaction-prompt\" data-testid=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"Block the tunnelLet everyone pass · E to close the gate\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('interaction-prompt')\nExpected substring: \u001b[32m\"\u001b[7mPush glowing crates onto\u001b[27m the \u001b[7mlin\u001b[27me\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBlock the tunnelLet everyone pass · E to close\u001b[27m the \u001b[7mgat\u001b[27me\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('interaction-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('interaction-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div data-hint=\"\" data-entity-id=\"39\" class=\"interaction-prompt\" data-testid=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"Block the tunnelLet everyone pass · E to close the gate\"\u001b[22m\n\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/po34-original.spec.ts:14:24",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/po34-original.spec.ts",
+                      "column": 24,
+                      "line": 14
+                    },
+                    "snippet": "  12 |   const prompt = page.getByTestId('interaction-prompt');\n  13 |   await expect(prompt).toContainText('Block the tunnel');\n> 14 |   await expect(prompt).toContainText('Push glowing crates onto the line');\n     |                        ^\n  15 |   await expect(prompt.locator('[role=\"progressbar\"]:visible')).toHaveCount(1);\n  16 |   await expect(prompt.locator('[role=\"meter\"]:visible')).toHaveCount(0);\n  17 |   await expect(prompt).not.toContainText('coverage');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/po34-original.spec.ts",
+                        "column": 24,
+                        "line": 14
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('interaction-prompt')\nExpected substring: \u001b[32m\"\u001b[7mPush glowing crates onto\u001b[27m the \u001b[7mlin\u001b[27me\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBlock the tunnelLet everyone pass · E to close\u001b[27m the \u001b[7mgat\u001b[27me\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('interaction-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('interaction-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div data-hint=\"\" data-entity-id=\"39\" class=\"interaction-prompt\" data-testid=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"Block the tunnelLet everyone pass · E to close the gate\"\u001b[22m\n\n\n  12 |   const prompt = page.getByTestId('interaction-prompt');\n  13 |   await expect(prompt).toContainText('Block the tunnel');\n> 14 |   await expect(prompt).toContainText('Push glowing crates onto the line');\n     |                        ^\n  15 |   await expect(prompt.locator('[role=\"progressbar\"]:visible')).toHaveCount(1);\n  16 |   await expect(prompt.locator('[role=\"meter\"]:visible')).toHaveCount(0);\n  17 |   await expect(prompt).not.toContainText('coverage');\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/po34-original.spec.ts:14:24"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T09:17:42.448Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/po34-original-main/po34-original--E24-PO34-se-3eadf-ask-with-one-bar-webgl-high-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/po34-original-main/po34-original--E24-PO34-se-3eadf-ask-with-one-bar-webgl-high-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/po34-original.spec.ts",
+                    "column": 24,
+                    "line": 14
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "c826bd3a6dc19873a429-c7876c737f761a73c6ce",
+          "file": "po34-original.spec.ts",
+          "line": 3,
+          "column": 80
+        },
+        {
+          "title": "@E24 PO34 service gate explains the crate task with one bar webgl low",
+          "ok": false,
+          "tags": [
+            "E24"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 10895,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('interaction-prompt')\nExpected substring: \u001b[32m\"\u001b[7mPush glowing crates onto\u001b[27m the \u001b[7mlin\u001b[27me\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBlock the tunnelLet everyone pass · E to close\u001b[27m the \u001b[7mgat\u001b[27me\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('interaction-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('interaction-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div data-hint=\"\" data-entity-id=\"39\" class=\"interaction-prompt\" data-testid=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"Block the tunnelLet everyone pass · E to close the gate\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('interaction-prompt')\nExpected substring: \u001b[32m\"\u001b[7mPush glowing crates onto\u001b[27m the \u001b[7mlin\u001b[27me\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBlock the tunnelLet everyone pass · E to close\u001b[27m the \u001b[7mgat\u001b[27me\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('interaction-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('interaction-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div data-hint=\"\" data-entity-id=\"39\" class=\"interaction-prompt\" data-testid=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"Block the tunnelLet everyone pass · E to close the gate\"\u001b[22m\n\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/po34-original.spec.ts:14:24",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/po34-original.spec.ts",
+                      "column": 24,
+                      "line": 14
+                    },
+                    "snippet": "  12 |   const prompt = page.getByTestId('interaction-prompt');\n  13 |   await expect(prompt).toContainText('Block the tunnel');\n> 14 |   await expect(prompt).toContainText('Push glowing crates onto the line');\n     |                        ^\n  15 |   await expect(prompt.locator('[role=\"progressbar\"]:visible')).toHaveCount(1);\n  16 |   await expect(prompt.locator('[role=\"meter\"]:visible')).toHaveCount(0);\n  17 |   await expect(prompt).not.toContainText('coverage');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/po34-original.spec.ts",
+                        "column": 24,
+                        "line": 14
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('interaction-prompt')\nExpected substring: \u001b[32m\"\u001b[7mPush glowing crates onto\u001b[27m the \u001b[7mlin\u001b[27me\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBlock the tunnelLet everyone pass · E to close\u001b[27m the \u001b[7mgat\u001b[27me\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('interaction-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('interaction-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div data-hint=\"\" data-entity-id=\"39\" class=\"interaction-prompt\" data-testid=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"Block the tunnelLet everyone pass · E to close the gate\"\u001b[22m\n\n\n  12 |   const prompt = page.getByTestId('interaction-prompt');\n  13 |   await expect(prompt).toContainText('Block the tunnel');\n> 14 |   await expect(prompt).toContainText('Push glowing crates onto the line');\n     |                        ^\n  15 |   await expect(prompt.locator('[role=\"progressbar\"]:visible')).toHaveCount(1);\n  16 |   await expect(prompt.locator('[role=\"meter\"]:visible')).toHaveCount(0);\n  17 |   await expect(prompt).not.toContainText('coverage');\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/po34-original.spec.ts:14:24"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T09:17:59.154Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/po34-original-main/po34-original--E24-PO34-se-d1e41-task-with-one-bar-webgl-low-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/po34-original-main/po34-original--E24-PO34-se-d1e41-task-with-one-bar-webgl-low-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/po34-original.spec.ts",
+                    "column": 24,
+                    "line": 14
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "c826bd3a6dc19873a429-2e7719f98812ad5fc486",
+          "file": "po34-original.spec.ts",
+          "line": 3,
+          "column": 80
+        },
+        {
+          "title": "@E24 PO34 service gate explains the crate task with one bar webgpu high",
+          "ok": false,
+          "tags": [
+            "E24"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 14360,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('interaction-prompt')\nExpected substring: \u001b[32m\"\u001b[7mPush glowing crates onto\u001b[27m the \u001b[7mlin\u001b[27me\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBlock the tunnelLet everyone pass · E to close\u001b[27m the \u001b[7mgat\u001b[27me\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('interaction-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('interaction-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div data-hint=\"\" data-entity-id=\"39\" class=\"interaction-prompt\" data-testid=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"Block the tunnelLet everyone pass · E to close the gate\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('interaction-prompt')\nExpected substring: \u001b[32m\"\u001b[7mPush glowing crates onto\u001b[27m the \u001b[7mlin\u001b[27me\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBlock the tunnelLet everyone pass · E to close\u001b[27m the \u001b[7mgat\u001b[27me\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('interaction-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('interaction-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div data-hint=\"\" data-entity-id=\"39\" class=\"interaction-prompt\" data-testid=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"Block the tunnelLet everyone pass · E to close the gate\"\u001b[22m\n\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/po34-original.spec.ts:14:24",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/po34-original.spec.ts",
+                      "column": 24,
+                      "line": 14
+                    },
+                    "snippet": "  12 |   const prompt = page.getByTestId('interaction-prompt');\n  13 |   await expect(prompt).toContainText('Block the tunnel');\n> 14 |   await expect(prompt).toContainText('Push glowing crates onto the line');\n     |                        ^\n  15 |   await expect(prompt.locator('[role=\"progressbar\"]:visible')).toHaveCount(1);\n  16 |   await expect(prompt.locator('[role=\"meter\"]:visible')).toHaveCount(0);\n  17 |   await expect(prompt).not.toContainText('coverage');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/po34-original.spec.ts",
+                        "column": 24,
+                        "line": 14
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('interaction-prompt')\nExpected substring: \u001b[32m\"\u001b[7mPush glowing crates onto\u001b[27m the \u001b[7mlin\u001b[27me\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBlock the tunnelLet everyone pass · E to close\u001b[27m the \u001b[7mgat\u001b[27me\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('interaction-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('interaction-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div data-hint=\"\" data-entity-id=\"39\" class=\"interaction-prompt\" data-testid=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"Block the tunnelLet everyone pass · E to close the gate\"\u001b[22m\n\n\n  12 |   const prompt = page.getByTestId('interaction-prompt');\n  13 |   await expect(prompt).toContainText('Block the tunnel');\n> 14 |   await expect(prompt).toContainText('Push glowing crates onto the line');\n     |                        ^\n  15 |   await expect(prompt.locator('[role=\"progressbar\"]:visible')).toHaveCount(1);\n  16 |   await expect(prompt.locator('[role=\"meter\"]:visible')).toHaveCount(0);\n  17 |   await expect(prompt).not.toContainText('coverage');\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/po34-original.spec.ts:14:24"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T09:18:12.526Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/po34-original-main/po34-original--E24-PO34-se-c8f40-sk-with-one-bar-webgpu-high-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/po34-original-main/po34-original--E24-PO34-se-c8f40-sk-with-one-bar-webgpu-high-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/po34-original.spec.ts",
+                    "column": 24,
+                    "line": 14
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "c826bd3a6dc19873a429-a2bfab6e0438d05afb28",
+          "file": "po34-original.spec.ts",
+          "line": 3,
+          "column": 80
+        },
+        {
+          "title": "@E24 PO34 service gate explains the crate task with one bar webgpu low",
+          "ok": false,
+          "tags": [
+            "E24"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 11890,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('interaction-prompt')\nExpected substring: \u001b[32m\"\u001b[7mPush glowing crates onto\u001b[27m the \u001b[7mlin\u001b[27me\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBlock the tunnelLet everyone pass · E to close\u001b[27m the \u001b[7mgat\u001b[27me\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('interaction-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('interaction-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div data-hint=\"\" data-entity-id=\"39\" class=\"interaction-prompt\" data-testid=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"Block the tunnelLet everyone pass · E to close the gate\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('interaction-prompt')\nExpected substring: \u001b[32m\"\u001b[7mPush glowing crates onto\u001b[27m the \u001b[7mlin\u001b[27me\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBlock the tunnelLet everyone pass · E to close\u001b[27m the \u001b[7mgat\u001b[27me\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('interaction-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('interaction-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div data-hint=\"\" data-entity-id=\"39\" class=\"interaction-prompt\" data-testid=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"Block the tunnelLet everyone pass · E to close the gate\"\u001b[22m\n\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/po34-original.spec.ts:14:24",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/po34-original.spec.ts",
+                      "column": 24,
+                      "line": 14
+                    },
+                    "snippet": "  12 |   const prompt = page.getByTestId('interaction-prompt');\n  13 |   await expect(prompt).toContainText('Block the tunnel');\n> 14 |   await expect(prompt).toContainText('Push glowing crates onto the line');\n     |                        ^\n  15 |   await expect(prompt.locator('[role=\"progressbar\"]:visible')).toHaveCount(1);\n  16 |   await expect(prompt.locator('[role=\"meter\"]:visible')).toHaveCount(0);\n  17 |   await expect(prompt).not.toContainText('coverage');"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/po34-original.spec.ts",
+                        "column": 24,
+                        "line": 14
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoContainText\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m failed\n\nLocator: getByTestId('interaction-prompt')\nExpected substring: \u001b[32m\"\u001b[7mPush glowing crates onto\u001b[27m the \u001b[7mlin\u001b[27me\"\u001b[39m\nReceived string:    \u001b[31m\"\u001b[7mBlock the tunnelLet everyone pass · E to close\u001b[27m the \u001b[7mgat\u001b[27me\"\u001b[39m\nTimeout: 5000ms\n\nCall log:\n\u001b[2m  - Expect \"toContainText\" getByTestId('interaction-prompt') with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for getByTestId('interaction-prompt')\u001b[22m\n\u001b[2m    14 × locator resolved to <div data-hint=\"\" data-entity-id=\"39\" class=\"interaction-prompt\" data-testid=\"interaction-prompt\">…</div>\u001b[22m\n\u001b[2m       - unexpected value \"Block the tunnelLet everyone pass · E to close the gate\"\u001b[22m\n\n\n  12 |   const prompt = page.getByTestId('interaction-prompt');\n  13 |   await expect(prompt).toContainText('Block the tunnel');\n> 14 |   await expect(prompt).toContainText('Push glowing crates onto the line');\n     |                        ^\n  15 |   await expect(prompt.locator('[role=\"progressbar\"]:visible')).toHaveCount(1);\n  16 |   await expect(prompt.locator('[role=\"meter\"]:visible')).toHaveCount(0);\n  17 |   await expect(prompt).not.toContainText('coverage');\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/po34-original.spec.ts:14:24"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T09:18:30.029Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/po34-original-main/po34-original--E24-PO34-se-e8969-ask-with-one-bar-webgpu-low-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/po34-original-main/po34-original--E24-PO34-se-e8969-ask-with-one-bar-webgpu-low-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/docs/reports/merge-batch10/evidence/po34-original.spec.ts",
+                    "column": 24,
+                    "line": 14
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "c826bd3a6dc19873a429-aa965ffe6570032b2a15",
+          "file": "po34-original.spec.ts",
+          "line": 3,
+          "column": 80
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-18T09:17:41.751Z",
+    "duration": 62125.591,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

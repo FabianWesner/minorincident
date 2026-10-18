@@ -1,0 +1,12 @@
+{
+  "at": "2026-10-18T09:55:35.428973+00:00",
+  "runner": "19328 19317 23349 node",
+  "reason": "Supplied filename filters include native perf files; terminate concurrent browser phase under Mac load ~34, then preserve all functional cases at one worker and rerun timing in quiet reservations.",
+  "preservedStages": [
+    "typecheck",
+    "lint",
+    "build",
+    "smoke",
+    "1146-row matrix"
+  ]
+}
