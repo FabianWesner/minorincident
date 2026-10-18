@@ -1,0 +1,390 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/node_modules/.bin/playwright",
+      "test",
+      "--config",
+      "tools/scenelab/vfx-stunning.config.ts",
+      "tests/e2e/vfx.spec.ts",
+      "tests/visual/vfx.spec.ts",
+      "--grep",
+      "T-E15-lifecycle|T-E15-03|T-E15-05",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/tools/scenelab/vfx-stunning.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/test-results/playwright/vfx-46844",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/test-results/playwright/vfx-46844",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/test-results/playwright/vfx-46844",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/test-results/playwright/vfx-46844",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/test-results/playwright/vfx-46844",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/test-results/playwright/vfx-46844",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/vfx-stunning/browser-46844.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "node '/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/node_modules/vite/bin/vite.js' preview --outDir '/tmp/minor-incident-vfx-stunning-before' --host 127.0.0.1 --port 46844 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:46844",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/vfx.spec.ts",
+      "file": "e2e/vfx.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E15-lifecycle @E15 pools, visual physics and event listeners unload without leaks; low tier reduces particles",
+          "ok": false,
+          "tags": [
+            "E15"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 8439,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m5\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m5\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/tests/e2e/vfx.spec.ts:121:223",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/tests/e2e/vfx.spec.ts",
+                      "column": 223,
+                      "line": 121
+                    },
+                    "snippet": "  119 |   });\n  120 |   save('lifecycle', data);\n> 121 |   for (const cycle of data.cycles) { expect(cycle.low.particleCap).toBe(512); expect(cycle.low.particles).toBeLessThanOrEqual(512); expect(cycle.perf.geometries).toBe(data.baseline.geometries); expect(cycle.perf.textures).toBe(data.baseline.textures); expect(cycle.sim.listeners).toBe(0); expect(cycle.sim.bodies).toBe(0); }\n      |                                                                                                                                                                                                                               ^\n  122 |   save('lifecycle', data);\n  123 | });\n  124 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/tests/e2e/vfx.spec.ts",
+                        "column": 223,
+                        "line": 121
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m2\u001b[39m\nReceived: \u001b[31m5\u001b[39m\n\n  119 |   });\n  120 |   save('lifecycle', data);\n> 121 |   for (const cycle of data.cycles) { expect(cycle.low.particleCap).toBe(512); expect(cycle.low.particles).toBeLessThanOrEqual(512); expect(cycle.perf.geometries).toBe(data.baseline.geometries); expect(cycle.perf.textures).toBe(data.baseline.textures); expect(cycle.sim.listeners).toBe(0); expect(cycle.sim.bodies).toBe(0); }\n      |                                                                                                                                                                                                                               ^\n  122 |   save('lifecycle', data);\n  123 | });\n  124 |\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/tests/e2e/vfx.spec.ts:121:223"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T20:15:12.131Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/test-results/playwright/vfx-46844/e2e-vfx-T-E15-lifecycle-E1-02ef9--low-tier-reduces-particles-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/test-results/playwright/vfx-46844/e2e-vfx-T-E15-lifecycle-E1-02ef9--low-tier-reduces-particles-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/tests/e2e/vfx.spec.ts",
+                    "column": 223,
+                    "line": 121
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ec6e762950f9b5bd924e-4668a6bd9bfaa90d9ca6",
+          "file": "e2e/vfx.spec.ts",
+          "line": 113,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "visual/vfx.spec.ts",
+      "file": "visual/vfx.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E15-03 @E15 @E15-AC03 @visual Full ground splat has palette red; Off has no red decal pixels",
+          "ok": false,
+          "tags": [
+            "E15",
+            "E15-AC03",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 9488,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m4\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m4\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/tests/visual/vfx.spec.ts:47:87",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/tests/visual/vfx.spec.ts",
+                      "column": 87,
+                      "line": 47
+                    },
+                    "snippet": "  45 |     }\n  46 |     expect(sampled).toBeGreaterThan(30); expect(red).toBe(gore === 'Off' ? 0 : red); if (gore === 'Full') expect(red).toBeGreaterThan(10);\n> 47 |     expect((await page.evaluate(() => window.__SS__!.getState().render.vfx!)).decals).toBe(gore === 'Off' ? 0 : 1);\n     |                                                                                       ^\n  48 |     results.push({ gore, red, sampled, polygon });\n  49 |   }\n  50 |   save('blood-pixels', results);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/tests/visual/vfx.spec.ts",
+                        "column": 87,
+                        "line": 47
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m1\u001b[39m\nReceived: \u001b[31m4\u001b[39m\n\n  45 |     }\n  46 |     expect(sampled).toBeGreaterThan(30); expect(red).toBe(gore === 'Off' ? 0 : red); if (gore === 'Full') expect(red).toBeGreaterThan(10);\n> 47 |     expect((await page.evaluate(() => window.__SS__!.getState().render.vfx!)).decals).toBe(gore === 'Off' ? 0 : 1);\n     |                                                                                       ^\n  48 |     results.push({ gore, red, sampled, polygon });\n  49 |   }\n  50 |   save('blood-pixels', results);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/tests/visual/vfx.spec.ts:47:87"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T20:15:21.185Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/test-results/playwright/vfx-46844/visual-vfx-T-E15-03-E15-E1-3f5e4-Off-has-no-red-decal-pixels-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/test-results/playwright/vfx-46844/visual-vfx-T-E15-03-E15-E1-3f5e4-Off-has-no-red-decal-pixels-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/vfx-stunning/tests/visual/vfx.spec.ts",
+                    "column": 87,
+                    "line": 47
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "ef9dd85e08440d82a269-c52b92419b2420dccbc1",
+          "file": "visual/vfx.spec.ts",
+          "line": 32,
+          "column": 1
+        },
+        {
+          "title": "T-E15-05 @E15 @E15-AC05 @visual measured shockwave screen radius scales with splash radius ±15%",
+          "ok": true,
+          "tags": [
+            "E15",
+            "E15-AC05",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14167,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-17T20:15:31.356Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "ef9dd85e08440d82a269-4e209b536f70fb3d3583",
+          "file": "visual/vfx.spec.ts",
+          "line": 89,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-17T20:15:11.461Z",
+    "duration": 34192.237,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

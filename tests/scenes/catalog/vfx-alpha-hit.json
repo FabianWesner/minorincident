@@ -1,0 +1,70 @@
+{
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L4",
+  "dof": false,
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 90,
+  "sheet": 6,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000,
+    "actorHealth": {
+      "alpha": [
+        0,
+        299
+      ]
+    }
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -1,
+        1
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.bat"
+      ]
+    },
+    {
+      "id": "alpha",
+      "kind": "infected",
+      "at": [
+        0,
+        0
+      ],
+      "archetype": "infected.alpha",
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 8,
+      "actor": "courier",
+      "do": {
+        "attack": "alpha",
+        "seconds": 0.7,
+        "inPlace": true,
+        "move": [
+          0,
+          0
+        ]
+      }
+    }
+  ],
+  "note": "Actual axe strike on Alpha; directional blood, existing hit flash and hit-stop.",
+  "name": "vfx-alpha-hit"
+}
