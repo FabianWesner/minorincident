@@ -116,9 +116,11 @@ export class Vfx extends Group {
     this.shots.push({ sourceId, tick: this.world.tick, muzzle: start, tracerStart: [...start], end: [muzzle.x + direction.x * distance, muzzle.y + slope * distance, muzzle.z + direction.z * distance] });
     if (this.shots.length > 64) this.shots.shift();
     this.burst(muzzle.x, muzzle.y, muzzle.z, 0xffe3a0, 3, .045, .12, 0, particleShape.spark);
-    this.particles.spawn(this.time, .065, muzzle.x, muzzle.y, muzzle.z, direction.x * .8, 0, direction.z * .8, .65, particleShape.flash, 0xffe8b0);
+    // Round 3 punch: a bigger star with a white-hot centre a little ahead of the barrel, readable at zoom 1 and 0.5 on low too.
+    this.particles.spawn(this.time, .07, muzzle.x + direction.x * .1, muzzle.y, muzzle.z + direction.z * .1, direction.x * .8, 0, direction.z * .8, .85, particleShape.flash, 0xffd890);
+    if (this.quality === 'high') this.particles.spawn(this.time, .045, muzzle.x + direction.x * .15, muzzle.y, muzzle.z + direction.z * .15, 0, 0, 0, .36, particleShape.flash, 0xfff8e8);
     // Muzzle tongue: a short hot streak out of the barrel, plus a brief warm pool on the ground (and the light field at night).
-    this.particles.spawn(this.time, .055, muzzle.x + direction.x * .12, muzzle.y, muzzle.z + direction.z * .12, direction.x * 26, slope * 26, direction.z * 26, .085, particleShape.spark, 0xfff2c0, 0, .75);
+    this.particles.spawn(this.time, .06, muzzle.x + direction.x * .12, muzzle.y, muzzle.z + direction.z * .12, direction.x * 30, slope * 30, direction.z * 30, .11, particleShape.spark, 0xfff2c0, 0, 1.05);
     this.muzzleLight(muzzle.x + direction.x * .4, muzzle.z + direction.z * .4, muzzle.y);
     if (this.quality === 'high') this.particles.spawn(this.time, .35, muzzle.x, muzzle.y, muzzle.z, direction.x * .4, .6, direction.z * .4, .38, particleShape.smoke, 0x827a70);
     // Presentation-only cadence per shooter; entity keys disappear on level unload.
@@ -135,16 +137,18 @@ export class Vfx extends Group {
       // Per surface: metal throws a bright glint and a fan of sparks; stone/asphalt a dust puff with chips; cover gets both.
       // Seven contact slots on high (two on low, dust + spark only), all born at the bullet stop.
       const high = this.quality === 'high';
-      if (!metal) this.burst(ix, iy, iz, 0xb9ab8e, high ? 2 : 1, .36, .6, 1.5, particleShape.smoke);
-      if (!metal && high) this.burst(ix, iy, iz, 0x4d4640, 2, .055, .5, 9.81, 0, .7, 1.5);
+      // Round 3 punch within the same slots: a bigger dust kick and chips, faster longer sparks, a larger impact star and a metal glint pool.
+      if (!metal) this.burst(ix, iy, iz, 0xb9ab8e, high ? 2 : 1, .5, .7, 1.5, particleShape.smoke);
+      if (!metal && high) this.burst(ix, iy, iz, 0x4d4640, 2, .07, .55, 9.81, 0, .8, 1.8);
       if (distance < range - .3) {
-        this.burst(ix, iy, iz, 0xffdf94, metal ? 6 : 2, .035, metal ? .3 : .18, 5, particleShape.spark, metal ? 1.6 : 1, metal ? 1.5 : 0);
-        if (high) this.particles.spawn(this.time, .07, ix, iy, iz, 0, 0, 0, metal ? .5 : .32, particleShape.flash, metal ? 0xfff6d8 : 0xffe2a8);
+        this.burst(ix, iy, iz, 0xffdf94, metal ? 6 : 2, .05, metal ? .34 : .24, 5, particleShape.spark, metal ? 1.9 : 1.4, metal ? 1.6 : .6);
+        if (high) this.particles.spawn(this.time, .08, ix, iy, iz, 0, 0, 0, metal ? .75 : .5, particleShape.flash, metal ? 0xfff6d8 : 0xffe2a8);
+        if (metal && high) this.blasts.flashPool(ix, iz, .9, 0xffe0a0, this.flashReduction ? .2 : .6, .06, this.world.districts?.supportBelow(ix, iz, iy) ?? 0);
       }
     } else if (hit && !hardHit) {
       // Flesh: a short wet mist where the round enters (grey with gore Off), under the blood spray from the hit event.
       const mist = this.gore === 'Off' ? 0x6f676c : this.colorblind ? 0xc7903a : 0x8e1822;
-      for (let i = 0; i < (this.quality === 'low' ? 1 : 2); i++) this.particles.spawn(this.time, .28, ix - direction.x * .1, iy, iz - direction.z * .1, -direction.x * .8 + (this.rng.next() - .5), .3 + this.rng.next() * .4, -direction.z * .8 + (this.rng.next() - .5), .28 + this.rng.next() * .12, particleShape.smoke, mist, 0);
+      for (let i = 0; i < (this.quality === 'low' ? 1 : 2); i++) this.particles.spawn(this.time, .32, ix - direction.x * .1, iy, iz - direction.z * .1, -direction.x * .8 + (this.rng.next() - .5), .3 + this.rng.next() * .4, -direction.z * .8 + (this.rng.next() - .5), .36 + this.rng.next() * .14, particleShape.smoke, mist, 0);
     }
     if (!dust) return;
     // ally-combat-feel: an ejected brass glint beside the shooter, and a dust puff where a miss (or cover) stops the round.
@@ -156,7 +160,7 @@ export class Vfx extends Group {
     if (this.time - this.lastMuzzleLight < .05) return;
     this.lastMuzzleLight = this.time;
     const ground = this.world.districts?.supportBelow(x, z, y - .3) ?? 0;
-    this.blasts.flashPool(x, z, 1.6, 0xffc070, this.flashReduction ? .25 : .9, .07, ground);
+    this.blasts.flashPool(x, z, 1.9, 0xffc070, this.flashReduction ? .25 : 1.15, .07, ground);
     if (this.quality === 'high' && (this.targets.field?.strength.value ?? 0) > .2) this.targets.light?.(x, z, '#ffc878', this.flashReduction ? 1.5 : 4, 5, .06, false);
   }
   constructor(private readonly world: SimWorld, private readonly targets: VfxTargets, geometries?: { limb: BufferGeometry; head: BufferGeometry }) {
@@ -413,7 +417,8 @@ export class Vfx extends Group {
       // Hot core lobes and soot (E27 fireball shader); the old 64 flat orange discs merged into one blob.
       this.blasts.core(x, ground, z, radius);
       this.burst(x, ground + 1, z, 0xffa040, 24, .06, .6, 6, particleShape.spark, 2.2, 3);
-      this.burst(x, ground + 0.8, z, 0x685866, 32, radius * 0.4, 2, -0.5, particleShape.smoke);
+      // Round 3: sooty grey-brown instead of the pale lavender that washed out the first seconds of the column.
+      this.burst(x, ground + 0.8, z, 0x3a3234, 32, radius * 0.4, 2, -0.5, particleShape.smoke);
       this.burst(x, ground + 0.3, z, 0xb09b85, 16, 0.13, 1.6);
       if (this.gore !== 'Off') this.decals.spawn(this.time, 120, x, ground + 0.012, z, 0, 0, 0, radius, 0, 0x37323c);
       this.targets.shake(this.flashReduction ? 0.08 : Math.min(0.35, radius * 0.05));

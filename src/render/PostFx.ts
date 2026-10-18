@@ -1,12 +1,14 @@
 import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from folio-2025 Rendering.js / Passes/cheapDOF.js by Bruno Simon (MIT), commit 41046b5.
-import { ColorManagement, NoToneMapping, RenderPipeline, type Camera, type Scene, type WebGPURenderer, type RenderTarget, type Object3D } from 'three/webgpu';
-import { pass, uv, uniform, mix, vec2, rtt } from 'three/tsl';
+import { ColorManagement, NoToneMapping, RenderPipeline, Vector4, type Node, type Camera, type Scene, type WebGPURenderer, type RenderTarget, type Object3D } from 'three/webgpu';
+import { pass, uv, uniform, uniformArray, mix, vec2, rtt, float, sin } from 'three/tsl';
 import { bloom } from 'three/addons/tsl/display/BloomNode.js';
 import { hashBlur } from 'three/addons/tsl/display/hashBlur.js';
 import { LookUniforms } from './LookUniforms';
 
 let nextDiagnosticId = 0;
+/** Screen-space heat haze slots (vfx-stunning-3): fires and fresh blasts, high tier only. */
+export const HEAT_SOURCES = 8;
 
 /** HDR bloom, soft vignette and optional miniature blur; central 40% stays sharp. */
 export class PostFx {
@@ -20,9 +22,18 @@ export class PostFx {
   private readonly scenePass;
   private readonly lowBlur;
   private readonly bloomPass;
+  /** Heat haze sources in UV space: x, y (0..1), radius (UV height units), strength 0..1. Empty slots have strength 0. */
+  readonly heat = Array.from({ length: HEAT_SOURCES }, () => new Vector4());
+  readonly heatTime = uniform(0);
+  readonly heatAspect = uniform(16 / 9);
+  readonly haze: boolean;
   constructor(private readonly renderer: WebGPURenderer, scene: Scene, camera: Camera, tier: QualityTier = 'high', readonly look = new LookUniforms()) {
-    this.scenePass = pass(scene, camera); const source = this.scenePass.getTextureNode('output');
-    this.bloomPass = bloom(source, look.values.bloomStrength, look.values.bloomRadius, look.values.bloomThreshold);
+    this.scenePass = pass(scene, camera); const scene0 = this.scenePass.getTextureNode('output');
+    // Heat haze: one dependent fetch of the scene colour with a small rippling UV offset inside each source's disc.
+    // Low tier builds no haze node at all. Bloom keeps reading the undistorted scene.
+    this.haze = tier === 'high';
+    const source = this.haze ? scene0.sample(uv().add(this.hazeOffset())) : scene0;
+    this.bloomPass = bloom(scene0, look.values.bloomStrength, look.values.bloomRadius, look.values.bloomThreshold);
     // Bind level defaults directly so mission lighting changes update the existing pass.
     this.bloomPass.strength = look.nodes.bloomStrength;
     this.bloomPass.radius = look.nodes.bloomRadius;
@@ -44,6 +55,20 @@ export class PostFx {
       target.addEventListener('dispose', () => this.targetDisposals.set(target, (this.targetDisposals.get(target) ?? 0) + 1));
     }
   }
+  private hazeOffset(): Node<'vec2'> {
+    const sources = uniformArray<'vec4'>(this.heat, 'vec4'), p = uv(), t = this.heatTime;
+    let offset: Node<'vec2'> = vec2(0, 0);
+    for (let i = 0; i < HEAT_SOURCES; i++) {
+      const h = sources.element(i), radius = h.z.max(.0001);
+      const local = p.sub(h.xy).mul(vec2(this.heatAspect, 1)).div(radius);
+      const mask = float(1).sub(local.length().smoothstep(.25, 1)).mul(h.w);
+      // Rising shimmer: two crossed ripples scaled to the source size, so the cells keep their look at every zoom.
+      const wave = sin(local.y.mul(11).sub(t.mul(7.5)).add(sin(local.x.mul(7).add(t.mul(2.3))).mul(1.6)));
+      const sway = sin(local.x.mul(9).add(t.mul(5.1)).add(local.y.mul(4)));
+      offset = offset.add(vec2(wave.mul(.6), sway.mul(.4).add(wave.mul(.3))).mul(mask).mul(radius.mul(.035)));
+    }
+    return offset;
+  }
   private diagnosticTargets(): RenderTarget[] {
     const bloom = this.bloomPass as typeof this.bloomPass & { _renderTargetBright: RenderTarget; _renderTargetsHorizontal: RenderTarget[]; _renderTargetsVertical: RenderTarget[] };
     return [this.scenePass.renderTarget, bloom._renderTargetBright, ...bloom._renderTargetsHorizontal, ...bloom._renderTargetsVertical];
@@ -62,7 +87,7 @@ export class PostFx {
   }
   private tier: QualityTier = 'high';
   setDof(enabled: boolean): void { this.pipeline.outputNode = enabled ? this.blurredOutput : this.sharpOutput; this.pipeline.needsUpdate = true; }
-  snapshot() { return { bloomMips: qualityBudgets[this.tier].bloomMips, dof: this.pipeline.outputNode === this.blurredOutput, dofRepeats: this.tier === 'high' ? this.look.nodes.dofRepeats.value : this.look.nodes.dofRepeatsLow.value, dofResolution: this.tier === 'high' ? 1 : .5, bloomStrength: this.bloomPass.strength.value }; }
+  snapshot() { return { bloomMips: qualityBudgets[this.tier].bloomMips, dof: this.pipeline.outputNode === this.blurredOutput, dofRepeats: this.tier === 'high' ? this.look.nodes.dofRepeats.value : this.look.nodes.dofRepeatsLow.value, dofResolution: this.tier === 'high' ? 1 : .5, bloomStrength: this.bloomPass.strength.value, haze: this.haze, heatSources: this.heat.filter(h => h.w > 0).length }; }
   /** Compile in the gameplay HDR/MSAA target. `root` warms a streamed subtree with the scene's lights. */
   async compile(partitions?: (() => void)[], root?: Object3D): Promise<void> {
     const renderer = this.renderer, target = renderer.getRenderTarget(), mrt = renderer.getMRT();

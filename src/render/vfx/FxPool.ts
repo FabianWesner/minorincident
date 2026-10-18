@@ -175,7 +175,9 @@ export class FxPool {
         const opacity = tracer.select(ribbon.mul(endFade).mul(alive), mask.mul(fade));
         const emissive = shape.equal(particleShape.spark).or(shape.equal(particleShape.flash));
         const hot = color.r.greaterThan(color.b).select(mix(color, vec3(1, .16, .015), progress.mul(.85)), color).mul(this.emission).mul(2.2);
-        return vec4(emissive.select(hot, color.mul(lit)).mul(opacity), tracer.or(emissive).select(0, opacity));
+        // Round 3: the tracer ribbon is HDR with a white-hot centre line, so bloom gives it punch at the pinned length and width.
+        const bolt = mix(color, vec3(1, .97, .9), float(1).sub(p.y.abs()).pow(5)).mul(this.emission.max(.5)).mul(2.6);
+        return vec4(tracer.select(bolt, emissive.select(hot, color.mul(lit))).mul(opacity), tracer.or(emissive).select(0, opacity));
       }
       return vec4(color.mul(lit), mask.mul(fade));
     })();
