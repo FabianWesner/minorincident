@@ -1,7 +1,7 @@
 {
   "extends": "qa-l6-po-gate.json",
-  "name": "qa-l6-room-edge",
-  "note": "Production shelter/tunnel boundary: from the shelter at x25,z0, follow the authored corner at x25,z15 before passing the first gate at x96. Scene Lab walk supplies direct segment inputs, so it needs the corner waypoint; it is not an automatic planner. The destination assertion remains x>=95. T-E24-17-room-boundary separately proves raw movement cannot cross excluded floor at x30,z0.",
+  "name": "qa-l6-room-boundary",
+  "note": "Raw segment input toward x36,z0 must stop at the authored shelter floor boundary x30. The courier must reach x29 but never cross x30; T-E24-17-room-boundary proves the same via raw input, and qa-l6-gate-route separately retains the x>=95 tunnel/gate route assertion.",
   "actors": [
     {
       "id": "courier",
@@ -17,12 +17,8 @@
       "state": {
         "walk": [
           [
-            25,
-            15
-          ],
-          [
-            96,
-            15
+            36,
+            0
           ]
         ]
       }
@@ -33,24 +29,24 @@
     "actor": "courier",
     "zoom": 1
   },
-  "frames": 1800,
+  "frames": 300,
   "shots": [
     1,
-    600,
-    1200,
-    1800
+    100,
+    200,
+    300
   ],
   "expect": {
     "consoleErrors": 0,
     "undrawnFramesMax": 0,
     "actorMaxX": {
       "courier": [
-        95,
-        97
+        29,
+        30
       ]
     },
     "collisionFailuresMax": 0,
     "collisionPendingMax": 0
   },
-  "sheet": 180
+  "sheet": 60
 }
