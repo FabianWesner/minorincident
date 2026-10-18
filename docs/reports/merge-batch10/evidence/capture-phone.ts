@@ -5,7 +5,7 @@ import { runSpec } from '../../../../tools/scenelab/run';
 const backend = (process.argv[2] ?? 'webgpu') as Backend;
 const prefix = process.env.PHONE_SCENE_PREFIX ?? 'ui-night-';
 const rows = [];
-const root = `docs/reports/merge-batch10/matrix/phone-${backend}${process.env.PHONE_SCENE_PREFIX ? '-gate-final' : ''}`;
+const root = process.env.PHONE_OUT ?? `docs/reports/merge-batch10/matrix/phone-${backend}${process.env.PHONE_SCENE_PREFIX ? '-gate-final' : ''}`;
 try {
   for (const viewport of [{ width: 390, height: 844 }, { width: 844, height: 390 }]) {
     const session = new SceneSession({ backend, tier: 'low', phone: true, viewport });
