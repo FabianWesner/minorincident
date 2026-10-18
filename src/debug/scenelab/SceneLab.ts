@@ -1608,8 +1608,15 @@ export class SceneLab {
   /** Cut-pixel gate: force the solid-occluder cut off (or back on) and report the hole as last drawn (centre in screen UV, top-left origin). */
   cutProbe(off: boolean): { center: [number, number]; solidRadius: number; strength: number; cover: number; occluder: string } | null {
     const audit = this.game.view.labProbes().districts?.seeThroughAudit() ?? null;
-    this.game.view.settings({ seeThroughOff: off });
+    this.game.view.probeSolidCut(off);
     return audit && { center: audit.center, solidRadius: audit.solidRadius, strength: audit.strength, cover: audit.cover, occluder: audit.occluder };
+  }
+  /** Isolate a named vehicle's body coverage without advancing simulation. */
+  vehicleSilhouetteProbe(name: string, mode: 'normal' | 'full' | 'hidden' | 'restore'): boolean {
+    const id = this.vehicles.get(name);
+    const vehicles = this.game.view.labProbes().vehicles;
+    if (id === undefined || !vehicles) throw new Error(`Vehicle silhouette probe: unknown vehicle ${name}`);
+    return vehicles.silhouetteProbe(id, mode);
   }
   /** Courier-visible-share probe: redraw with the courier and/or the crowd (Mega included) hidden; returns the courier-to-Mega distance in metres (Infinity when none). */
   hideProbe(courier: boolean, crowd: boolean, environment = false, bars = false): number { return this.game.view.probeVisibility({ courier, crowd, environment, bars }); }

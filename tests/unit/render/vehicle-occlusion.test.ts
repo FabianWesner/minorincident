@@ -3,6 +3,7 @@ import { Box3, BoxGeometry, Group, Matrix4, Mesh, Vector3 } from 'three/webgpu';
 import { SubjectOcclusion } from '../../../src/render/SubjectOcclusion';
 import { VehicleView } from '../../../src/render/VehicleView';
 import { PaletteMaterial } from '../../../src/render/PaletteMaterial';
+import { l4 } from '../../../src/data/l4';
 
 const apc = new Box3(new Vector3(-3, 0, -1.5), new Vector3(3, 3, 1.5));
 const sedan = new Box3(new Vector3(-2.1, 0, -.9), new Vector3(2.1, 1.5, .9));
@@ -63,4 +64,29 @@ test('@E18 VehicleView enables only blocking cars and keeps the driven APC opaqu
   expect(foreground.seeThrough).toHaveBeenLastCalledWith(false);
   context.updateReveal();
   expect(beside.seeThrough).toHaveBeenLastCalledWith(false);
+});
+
+test('@E18 scripted props and convoy vehicles reveal only when they block the subject', async () => {
+  const { EntityAssets } = await import('../../../src/render/EntityAssets');
+  const paint = () => ({ seeThrough: vi.fn() });
+  const ridden = paint(), beside = paint(), foreground = paint();
+  const neighbour = new Group(); neighbour.position.set(4, 0, -4);
+  const truck = new Group(); truck.position.set(4, 0, 4);
+  const tall = sedan.clone(); tall.max.y = 6;
+  const context = Object.assign(Object.create(EntityAssets.prototype), {
+    world: { missions: { state: { l4: { seated: true, convoyIds: l4.convoy.vehicles.map((vehicle, i) => vehicle.player ? 1 : 10 + i) } } } }, view: { camera: { position: new Vector3(10, 12, 10) } },
+    occlusion: new SubjectOcclusion(), records: new Map([
+      [1, { model: new Group(), bounds: apc, reveal: [ridden] }],
+      [2, { model: neighbour, bounds: sedan, reveal: [beside] }],
+      [3, { model: truck, bounds: tall, reveal: [foreground] }],
+    ]),
+  });
+  context.updateReveal(apc);
+  expect(ridden.seeThrough).toHaveBeenLastCalledWith(false);
+  expect(beside.seeThrough).toHaveBeenLastCalledWith(false);
+  expect(foreground.seeThrough).toHaveBeenLastCalledWith(true);
+  truck.position.set(-10, 0, -10); context.updateReveal(apc);
+  expect(foreground.seeThrough).toHaveBeenLastCalledWith(false);
+  context.updateReveal();
+  expect(foreground.seeThrough).toHaveBeenLastCalledWith(false);
 });

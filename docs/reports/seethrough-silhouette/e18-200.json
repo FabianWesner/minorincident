@@ -1,0 +1,22 @@
+{
+  "outcome": "tick-budget",
+  "scenario": "perf-horde-200",
+  "seed": 1,
+  "warmup": 120,
+  "ticks": 600,
+  "minInfected": 200,
+  "minVisibleInfected": 200,
+  "collision": {
+    "failures": 0,
+    "pending": 0,
+    "admitted": 200,
+    "deferred": 0,
+    "requests": [],
+    "offenders": []
+  },
+  "cap": 200,
+  "simMsP50": 1.642985000000408,
+  "simMsP95": 4.371822000000066,
+  "simMsMax": 10.752290000000357,
+  "maxConcurrentInfected": 200
+}

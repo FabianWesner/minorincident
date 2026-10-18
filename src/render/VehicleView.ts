@@ -347,6 +347,25 @@ export class VehicleView extends Group {
     for (const [id, record] of this.records) record.parent.visible = !(this.playerVehicle() === id ? courier : environment);
   }
   private readonly occlusion = new SubjectOcclusion();
+  private silhouette: { id: number; mode: 'normal' | 'full' | 'hidden'; shadows: Map<Mesh, boolean> } | undefined;
+  /** Same-frame vehicle coverage probe. Disable its shadows in every pass so only body pixels differ. */
+  silhouetteProbe(id: number, mode: 'normal' | 'full' | 'hidden' | 'restore'): boolean {
+    const record = this.records.get(id);
+    if (!record) throw new Error(`Vehicle silhouette probe: missing record ${id}`);
+    const blocking = record.paint.some(material => material.userData.seeThrough === true);
+    if (mode === 'restore') {
+      for (const [mesh, cast] of this.silhouette?.shadows ?? []) mesh.castShadow = cast;
+      record.parent.visible = true; this.silhouette = undefined;
+    } else {
+      if (!this.silhouette) {
+        const shadows = new Map<Mesh, boolean>();
+        record.model.traverse(node => { if (node instanceof Mesh) { shadows.set(node, node.castShadow); node.castShadow = false; } });
+        this.silhouette = { id, mode, shadows };
+      }
+      this.silhouette.mode = mode;
+    }
+    return blocking;
+  }
   /** Select cars after the camera and the complete reveal subject have their current frame poses. */
   updateReveal(subject?: Box3): void {
     if (subject) this.occlusion.setSubject(this.view.camera.position, subject);
@@ -354,7 +373,8 @@ export class VehicleView extends Group {
     for (const [id, record] of this.records) {
       record.parent.updateWorldMatrix(true, false);
       const enabled = !!subject && id !== ridden && this.occlusion.blockedBy(record.bounds, record.parent.matrixWorld);
-      for (const material of record.paint) if (material instanceof PaletteMaterial) material.seeThrough(enabled);
+      for (const material of record.paint) if (material instanceof PaletteMaterial) material.seeThrough(enabled && !(this.silhouette?.id === id && this.silhouette.mode === 'full'));
+      if (this.silhouette?.id === id) record.parent.visible = this.silhouette.mode !== 'hidden';
     }
   }
   /** Complete drawn chassis, including wheels, for the player's bounded reveal. */
