@@ -30,7 +30,7 @@ export function civilianMaterial(shading: Materials | undefined, doubleSided: bo
     const skin = mix(grimy, sunken, skinShift);
     const bloody = mix(skin, vec3(.36, .02, .03), blood.mul(dirt).mul(.9));
     const base = mix(bloody, mix(vec3(.02), vec3(1, .015, .025), eyeGlow), eye);
-    const eyeColor = vec3(1, .005, .02);
+    const eyeColor = vec3(1, .25 / 3, .22 / 3);
     // Red glowing eyes in dark sockets. Kept below the bloom whiteout point: the emissive is a pure red (no luminance
     // normalisation, which pushed it to ~14x and bloomed the whole head white) at a capped strength.
     // The sockets glow a dim red around the eyes so the read survives 10-15 m, still far below the bloom whiteout.
@@ -38,9 +38,9 @@ export function civilianMaterial(shading: Materials | undefined, doubleSided: bo
     // E19-AC23: while turning, a sickly ash-green pulse throbs on the skin only (hair and clothes keep the person's own
     // colours, so it stays recognisably the same person); it reads at the game camera even when the body is down.
     const pulse = sin(time.mul(7.5).add(variant.x.mod(2).mul(9))).mul(.5).add(.5);
-    const glow = eyeColor.mul(eye.mul(2.2).add(socket.mul(.75))).mul(eyeGlow).add(vec3(.05, .1, .03).mul(skinShift).mul(dirt))
+    const glow = eyeColor.mul(eye.mul(3).add(socket.mul(.75))).mul(eyeGlow).add(vec3(.05, .1, .03).mul(skinShift).mul(dirt))
       .add(vec3(.22, .4, .08).mul(turning).mul(pulse.mul(.7).add(.3)).mul(parts.y.equal(-1).select(1, 0)));
-    const material = shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial(), { colorNode: base, emissiveNode: glow });
+    const material = shading?.shaded(base, glow, undefined, undefined, undefined, eye.mul(eyeGlow)) ?? Object.assign(new MeshLambertNodeMaterial(), { colorNode: base, emissiveNode: glow });
     // E25 night readability: crowd silhouettes take the preset's moonlit rim.
     if ('figureRim' in material) { material.figureRim.value = .25; material.figureFill.value = 1; }
     material.side = doubleSided ? DoubleSide : FrontSide;

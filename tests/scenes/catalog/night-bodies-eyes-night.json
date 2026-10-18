@@ -1,0 +1,132 @@
+{
+  "name": "night-bodies-eyes-night",
+  "note": "Game-camera body continuity and red eyes: all seven ordinary infected models, motion across every LOD at high/low and zoom .5/1/1.5. Review intact torso/limbs and camera-facing red eyes. The compact isometric grid keeps all seven full bodies in frame at the closest zoom.",
+  "ground": "asphalt",
+  "size": 40,
+  "time": "night",
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        1.8031,
+        -1.3789
+      ]
+    },
+    {
+      "id": "inf.common-worker",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "look": {
+        "model": "inf.common-worker"
+      },
+      "at": [
+        -1.591,
+        0.7425
+      ],
+      "yaw": -45,
+      "state": "idle"
+    },
+    {
+      "id": "inf.jogger",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "look": {
+        "model": "inf.jogger"
+      },
+      "at": [
+        -0.8132,
+        -0.0354
+      ],
+      "yaw": -45,
+      "state": "idle"
+    },
+    {
+      "id": "inf.cashier",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "look": {
+        "model": "inf.cashier"
+      },
+      "at": [
+        -0.0354,
+        -0.8132
+      ],
+      "yaw": -45,
+      "state": "idle"
+    },
+    {
+      "id": "inf.delivery-driver",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "look": {
+        "model": "inf.delivery-driver"
+      },
+      "at": [
+        0.7425,
+        -1.591
+      ],
+      "yaw": -45,
+      "state": "idle"
+    },
+    {
+      "id": "inf.suburban-mom",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "look": {
+        "model": "inf.suburban-mom"
+      },
+      "at": [
+        -0.4596,
+        1.8738
+      ],
+      "yaw": -45,
+      "state": "idle"
+    },
+    {
+      "id": "inf.bbq-dad",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "look": {
+        "model": "inf.bbq-dad"
+      },
+      "at": [
+        0.3182,
+        1.096
+      ],
+      "yaw": -45,
+      "state": "idle"
+    },
+    {
+      "id": "inf.bathrobe-neighbor",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "look": {
+        "model": "inf.bathrobe-neighbor"
+      },
+      "at": [
+        1.096,
+        0.3182
+      ],
+      "yaw": -45,
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 30,
+  "sheet": 15,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}

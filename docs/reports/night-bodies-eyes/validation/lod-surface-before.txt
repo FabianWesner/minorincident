@@ -1,0 +1,103 @@
+
+ RUN  v5.0.3 /Users/wesner/Workspace/minorincident/.claude/worktrees/night-bodies-eyes
+
+ ❯ |functional| tests/unit/render/infected-eyes.test.ts (14 tests | 7 failed) 561ms
+   × @E25 @E25-AC13 inf.common-worker lod2: white eye cores emit red; teeth and skin retain their surfaces 52ms
+   × @E25 @E25-AC13 inf.jogger lod2: white eye cores emit red; teeth and skin retain their surfaces 39ms
+   × @E25 @E25-AC13 inf.cashier lod2: white eye cores emit red; teeth and skin retain their surfaces 33ms
+   × @E25 @E25-AC13 inf.delivery-driver lod2: white eye cores emit red; teeth and skin retain their surfaces 42ms
+   × @E25 @E25-AC13 inf.suburban-mom lod2: white eye cores emit red; teeth and skin retain their surfaces 34ms
+   × @E25 @E25-AC13 inf.bbq-dad lod2: white eye cores emit red; teeth and skin retain their surfaces 31ms
+   × @E25 @E25-AC13 inf.bathrobe-neighbor lod2: white eye cores emit red; teeth and skin retain their surfaces 30ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 7 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  |functional| tests/unit/render/infected-eyes.test.ts > @E25 @E25-AC13 inf.common-worker lod2: white eye cores emit red; teeth and skin retain their surfaces
+AssertionError: inf.common-worker torso surface retention: expected 0.8470315947034871 to be greater than or equal to 0.85
+ ❯ tests/unit/render/infected-eyes.test.ts:43:96
+     41|     for (const name of ['torso', 'armL', 'armR', 'foreArmL', 'foreArmR…
+     42|       const part = baked.clip.parts.indexOf(name);
+     43|       expect((after.get(part) ?? 0) / before.get(part)!, `${model} ${n…
+       |                                                                                                ^
+     44|     }
+     45|     const retained = new Set(Array.from(geometry.index!.array));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/7]⎯
+
+ FAIL  |functional| tests/unit/render/infected-eyes.test.ts > @E25 @E25-AC13 inf.jogger lod2: white eye cores emit red; teeth and skin retain their surfaces
+AssertionError: inf.jogger torso surface retention: expected 0.710577789899662 to be greater than or equal to 0.85
+ ❯ tests/unit/render/infected-eyes.test.ts:43:96
+     41|     for (const name of ['torso', 'armL', 'armR', 'foreArmL', 'foreArmR…
+     42|       const part = baked.clip.parts.indexOf(name);
+     43|       expect((after.get(part) ?? 0) / before.get(part)!, `${model} ${n…
+       |                                                                                                ^
+     44|     }
+     45|     const retained = new Set(Array.from(geometry.index!.array));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/7]⎯
+
+ FAIL  |functional| tests/unit/render/infected-eyes.test.ts > @E25 @E25-AC13 inf.cashier lod2: white eye cores emit red; teeth and skin retain their surfaces
+AssertionError: inf.cashier torso surface retention: expected 0.8114251585994576 to be greater than or equal to 0.85
+ ❯ tests/unit/render/infected-eyes.test.ts:43:96
+     41|     for (const name of ['torso', 'armL', 'armR', 'foreArmL', 'foreArmR…
+     42|       const part = baked.clip.parts.indexOf(name);
+     43|       expect((after.get(part) ?? 0) / before.get(part)!, `${model} ${n…
+       |                                                                                                ^
+     44|     }
+     45|     const retained = new Set(Array.from(geometry.index!.array));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/7]⎯
+
+ FAIL  |functional| tests/unit/render/infected-eyes.test.ts > @E25 @E25-AC13 inf.delivery-driver lod2: white eye cores emit red; teeth and skin retain their surfaces
+AssertionError: inf.delivery-driver armL surface retention: expected 0.8150248848745768 to be greater than or equal to 0.85
+ ❯ tests/unit/render/infected-eyes.test.ts:43:96
+     41|     for (const name of ['torso', 'armL', 'armR', 'foreArmL', 'foreArmR…
+     42|       const part = baked.clip.parts.indexOf(name);
+     43|       expect((after.get(part) ?? 0) / before.get(part)!, `${model} ${n…
+       |                                                                                                ^
+     44|     }
+     45|     const retained = new Set(Array.from(geometry.index!.array));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/7]⎯
+
+ FAIL  |functional| tests/unit/render/infected-eyes.test.ts > @E25 @E25-AC13 inf.suburban-mom lod2: white eye cores emit red; teeth and skin retain their surfaces
+AssertionError: inf.suburban-mom foreArmR surface retention: expected 0.8071796204202811 to be greater than or equal to 0.85
+ ❯ tests/unit/render/infected-eyes.test.ts:43:96
+     41|     for (const name of ['torso', 'armL', 'armR', 'foreArmL', 'foreArmR…
+     42|       const part = baked.clip.parts.indexOf(name);
+     43|       expect((after.get(part) ?? 0) / before.get(part)!, `${model} ${n…
+       |                                                                                                ^
+     44|     }
+     45|     const retained = new Set(Array.from(geometry.index!.array));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/7]⎯
+
+ FAIL  |functional| tests/unit/render/infected-eyes.test.ts > @E25 @E25-AC13 inf.bbq-dad lod2: white eye cores emit red; teeth and skin retain their surfaces
+AssertionError: inf.bbq-dad torso surface retention: expected 0.8071750414859143 to be greater than or equal to 0.85
+ ❯ tests/unit/render/infected-eyes.test.ts:43:96
+     41|     for (const name of ['torso', 'armL', 'armR', 'foreArmL', 'foreArmR…
+     42|       const part = baked.clip.parts.indexOf(name);
+     43|       expect((after.get(part) ?? 0) / before.get(part)!, `${model} ${n…
+       |                                                                                                ^
+     44|     }
+     45|     const retained = new Set(Array.from(geometry.index!.array));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/7]⎯
+
+ FAIL  |functional| tests/unit/render/infected-eyes.test.ts > @E25 @E25-AC13 inf.bathrobe-neighbor lod2: white eye cores emit red; teeth and skin retain their surfaces
+AssertionError: inf.bathrobe-neighbor torso surface retention: expected 0.7943163487686561 to be greater than or equal to 0.85
+ ❯ tests/unit/render/infected-eyes.test.ts:43:96
+     41|     for (const name of ['torso', 'armL', 'armR', 'foreArmL', 'foreArmR…
+     42|       const part = baked.clip.parts.indexOf(name);
+     43|       expect((after.get(part) ?? 0) / before.get(part)!, `${model} ${n…
+       |                                                                                                ^
+     44|     }
+     45|     const retained = new Set(Array.from(geometry.index!.array));
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/7]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  7 failed | 7 passed (14)
+   Start at  21:02:03
+   Duration  729ms (tests 83%, transform 9%, import 8%)
