@@ -1,0 +1,70 @@
+{
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L4",
+  "dof": false,
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 72,
+  "sheet": 4,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000,
+    "actorHealth": {
+      "target": [
+        0,
+        299
+      ]
+    }
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -2,
+        2
+      ],
+      "loadout": [
+        "weapon.shotgun",
+        "weapon.bat"
+      ]
+    },
+    {
+      "id": "target",
+      "kind": "infected",
+      "at": [
+        2,
+        -2
+      ],
+      "archetype": "infected.alpha",
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 8,
+      "actor": "courier",
+      "do": {
+        "attack": "target",
+        "seconds": 0.55,
+        "inPlace": true,
+        "move": [
+          0,
+          0
+        ]
+      }
+    }
+  ],
+  "note": "Actual weapon fire at Alpha: muzzle, flying tracer, impact and blood, game camera.",
+  "name": "vfx-shotgun-impact"
+}

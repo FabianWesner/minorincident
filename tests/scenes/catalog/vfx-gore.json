@@ -1,0 +1,69 @@
+{
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 40,
+  "time": "L4",
+  "dof": false,
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 120,
+  "sheet": 8,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000,
+    "actorHealth": {
+      "target": [
+        0,
+        0
+      ]
+    }
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -1,
+        1
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.bat"
+      ]
+    },
+    {
+      "id": "target",
+      "kind": "infected",
+      "at": [
+        0,
+        0
+      ],
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 8,
+      "actor": "courier",
+      "do": {
+        "attack": "target",
+        "seconds": 1,
+        "inPlace": true,
+        "move": [
+          0,
+          0
+        ]
+      }
+    }
+  ],
+  "note": "Existing Full gore rating: droplets, blood decals, retained corpse and pooled gibs.",
+  "name": "vfx-gore"
+}

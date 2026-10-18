@@ -1,0 +1,32 @@
+{
+  "implementationRevision": "2cd64ab49",
+  "typecheck": "passed",
+  "lint": "passed",
+  "build": "passed",
+  "deployReady": false,
+  "sceneRows": {
+    "total": 144,
+    "rawPass": 132,
+    "consoleErrors": 0,
+    "latestCoverContactVerified": false
+  },
+  "e15e27": {
+    "passed": 19,
+    "failed": 2,
+    "e27Passed": 10,
+    "failuresReproducedOnBaseline": [
+      "T-E15-lifecycle texture count 5 vs expected 2",
+      "T-E15-03 decal count 4 vs expected 1"
+    ]
+  },
+  "deployBrowser": {
+    "passed": 42,
+    "failed": 53,
+    "didNotRun": 5,
+    "failure": "Chromium bootstrap launch failure 141"
+  },
+  "remoteUnitSimLevels": "No completed results: runner disappeared/SSH reconnects failed; final retry runner API TLS EOF",
+  "nativeE18": "Not measured: no permitted quiet window",
+  "blastHitchNonRegression": "Not established",
+  "followup": "APC roll/overlap remains assigned to another lane; captures preserved"
+}
