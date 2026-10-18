@@ -1,0 +1,307 @@
+[
+  {
+    "build": "main",
+    "tier": "high",
+    "frameP95": 8.099999999998545,
+    "frameMax": 180.79999999999927,
+    "simP95": 0.6000003814697266,
+    "spikes": [
+      {
+        "at": 54,
+        "ms": 62
+      },
+      {
+        "at": 1957,
+        "ms": 181
+      },
+      {
+        "at": 3999,
+        "ms": 41
+      },
+      {
+        "at": 4129,
+        "ms": 114
+      }
+    ],
+    "frames": 1444,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+  },
+  {
+    "build": "main",
+    "tier": "low",
+    "frameP95": 13.399999999999636,
+    "frameMax": 79.09999999999854,
+    "simP95": 2.3000001907348633,
+    "spikes": [
+      {
+        "at": 1989,
+        "ms": 79
+      },
+      {
+        "at": 2196,
+        "ms": 45
+      },
+      {
+        "at": 2540,
+        "ms": 60
+      }
+    ],
+    "frames": 691,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+  },
+  {
+    "build": "candidate",
+    "tier": "high",
+    "frameP95": 6.600000000000364,
+    "frameMax": 290.39999999999964,
+    "simP95": 0.6000003814697266,
+    "spikes": [
+      {
+        "at": 37,
+        "ms": 38
+      },
+      {
+        "at": 1962,
+        "ms": 290
+      }
+    ],
+    "frames": 1544,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+  },
+  {
+    "build": "candidate",
+    "tier": "low",
+    "frameP95": 11.600000000000364,
+    "frameMax": 80.79999999999927,
+    "simP95": 2.1999998092651367,
+    "spikes": [
+      {
+        "at": 1986,
+        "ms": 81
+      },
+      {
+        "at": 2021,
+        "ms": 35
+      },
+      {
+        "at": 2529,
+        "ms": 60
+      }
+    ],
+    "frames": 776,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+  },
+  {
+    "build": "bisect-pair1",
+    "tier": "high",
+    "frameP95": 8,
+    "frameMax": 181,
+    "simP95": 0.5999994277954102,
+    "spikes": [
+      {
+        "at": 35,
+        "ms": 35
+      },
+      {
+        "at": 1969,
+        "ms": 181
+      },
+      {
+        "at": 4130,
+        "ms": 109
+      }
+    ],
+    "frames": 1471,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+  },
+  {
+    "build": "bisect-pair1",
+    "tier": "low",
+    "frameP95": 11.5,
+    "frameMax": 77.69999999999891,
+    "simP95": 2,
+    "spikes": [
+      {
+        "at": 1989,
+        "ms": 78
+      },
+      {
+        "at": 2534,
+        "ms": 60
+      }
+    ],
+    "frames": 780,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+  },
+  {
+    "build": "bisect-vfx",
+    "tier": "high",
+    "frameP95": 6.800000000001091,
+    "frameMax": 162.89999999999964,
+    "simP95": 0.6000003814697266,
+    "spikes": [
+      {
+        "at": 52,
+        "ms": 62
+      },
+      {
+        "at": 1937,
+        "ms": 163
+      },
+      {
+        "at": 4369,
+        "ms": 109
+      }
+    ],
+    "frames": 1569,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+  },
+  {
+    "build": "bisect-vfx",
+    "tier": "low",
+    "frameP95": 12.199999999998909,
+    "frameMax": 78.89999999999964,
+    "simP95": 2.1999998092651367,
+    "spikes": [
+      {
+        "at": 1994,
+        "ms": 79
+      },
+      {
+        "at": 2541,
+        "ms": 60
+      }
+    ],
+    "frames": 770,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+  },
+  {
+    "build": "bisect-atmosphere",
+    "tier": "high",
+    "frameP95": 7,
+    "frameMax": 164.89999999999964,
+    "simP95": 0.6000003814697266,
+    "spikes": [
+      {
+        "at": 38,
+        "ms": 46
+      },
+      {
+        "at": 1951,
+        "ms": 165
+      },
+      {
+        "at": 4386,
+        "ms": 108
+      }
+    ],
+    "frames": 1568,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+  },
+  {
+    "build": "bisect-atmosphere",
+    "tier": "low",
+    "frameP95": 11.600000000000364,
+    "frameMax": 78.70000000000073,
+    "simP95": 2.1000003814697266,
+    "spikes": [
+      {
+        "at": 20,
+        "ms": 36
+      },
+      {
+        "at": 1991,
+        "ms": 79
+      },
+      {
+        "at": 2542,
+        "ms": 62
+      }
+    ],
+    "frames": 787,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+  },
+  {
+    "build": "warmed",
+    "tier": "high",
+    "frameP95": 7.299999999999272,
+    "frameMax": 171.10000000000036,
+    "simP95": 0.6000003814697266,
+    "spikes": [
+      {
+        "at": 2176,
+        "ms": 171
+      },
+      {
+        "at": 4602,
+        "ms": 113
+      }
+    ],
+    "frames": 1541,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+  },
+  {
+    "build": "warmed",
+    "tier": "low",
+    "frameP95": 12.700000000000728,
+    "frameMax": 84,
+    "simP95": 2.1999998092651367,
+    "spikes": [
+      {
+        "at": 2065,
+        "ms": 84
+      },
+      {
+        "at": 2613,
+        "ms": 64
+      }
+    ],
+    "frames": 718,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+  },
+  {
+    "build": "corpse-warmed",
+    "tier": "high",
+    "frameP95": 6.399999999999636,
+    "frameMax": 111.70000000000073,
+    "simP95": 0.6000003814697266,
+    "spikes": [
+      {
+        "at": 4647,
+        "ms": 112
+      }
+    ],
+    "frames": 1543,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+  },
+  {
+    "build": "corpse-warmed",
+    "tier": "low",
+    "frameP95": 13.100000000000364,
+    "frameMax": 28.69999999999891,
+    "simP95": 2.3000001907348633,
+    "spikes": [],
+    "frames": 707,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+  },
+  {
+    "build": "resident-warmed",
+    "tier": "high",
+    "frameP95": 6.600000000000364,
+    "frameMax": 12.699999999998909,
+    "simP95": 0.6000003814697266,
+    "spikes": [],
+    "frames": 1554,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+  },
+  {
+    "build": "resident-warmed",
+    "tier": "low",
+    "frameP95": 12.699999999998909,
+    "frameMax": 26.799999999999272,
+    "simP95": 2.1000003814697266,
+    "spikes": [],
+    "frames": 726,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)"
+  }
+]

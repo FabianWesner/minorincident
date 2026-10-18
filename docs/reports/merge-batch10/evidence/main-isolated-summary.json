@@ -1,0 +1,58 @@
+[
+  {
+    "file": "sim/performance/alpha-physical.test.ts",
+    "name": "T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms",
+    "status": "failed",
+    "failure": [
+      "AssertionError: expected 4.118073999999979 to be less than or equal to 4\n    at /srv/mi/jobs/merge-batch10-main-control-7bc09a-28556-1792304566/tests/sim/performance/alpha-physical.test.ts:29:101\n    at file:///srv/mi/jobs/merge-batch10-main-control-7bc09a-28556-1792304566/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  },
+  {
+    "file": "sim/performance/alpha.test.ts",
+    "name": "T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms",
+    "status": "passed",
+    "failure": []
+  },
+  {
+    "file": "sim/performance/mega-moves.test.ts",
+    "name": "T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+    "status": "failed",
+    "failure": [
+      "AssertionError: expected 4.047681000000011 to be less than or equal to 4\n    at /srv/mi/jobs/merge-batch10-main-control-7bc09a-28556-1792304566/tests/sim/performance/mega-moves.test.ts:24:104\n    at file:///srv/mi/jobs/merge-batch10-main-control-7bc09a-28556-1792304566/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  },
+  {
+    "file": "sim/performance/zoo-s1.test.ts",
+    "name": "T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
+    "status": "failed",
+    "failure": [
+      "AssertionError: expected 4.893640999999661 to be less than or equal to 4\n    at /srv/mi/jobs/merge-batch10-main-control-7bc09a-28556-1792304566/tests/sim/performance/zoo-s1.test.ts:30:101\n    at file:///srv/mi/jobs/merge-batch10-main-control-7bc09a-28556-1792304566/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  },
+  {
+    "file": "sim/performance/zoo-s2.test.ts",
+    "name": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+    "status": "failed",
+    "failure": [
+      "AssertionError: expected 4.664134999999078 to be less than or equal to 4\n    at /srv/mi/jobs/merge-batch10-main-control-7bc09a-28556-1792304566/tests/sim/performance/zoo-s2.test.ts:26:68\n    at file:///srv/mi/jobs/merge-batch10-main-control-7bc09a-28556-1792304566/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  },
+  {
+    "file": "sim/performance/zoo-s3.test.ts",
+    "name": "T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+    "status": "passed",
+    "failure": []
+  },
+  {
+    "file": "sim/combat/l5-shotgun.test.ts",
+    "name": "T-E23-12-kill PO #37 @E23 @E23-AC12 @E07-AC14 one shell kills regular infected through 8 m permanently; two close shells stop an Alpha",
+    "status": "passed",
+    "failure": []
+  },
+  {
+    "file": "unit/assets/validate.test.ts",
+    "name": "T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts",
+    "status": "passed",
+    "failure": []
+  }
+]
