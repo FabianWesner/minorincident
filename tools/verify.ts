@@ -56,29 +56,29 @@ const commands: string[][] = [
     ? [
       ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@E10-AC06', '--workers=2'],
       // Native GPU load timing stays headless: run once, after the other browser checks.
-      ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/district-load.spec.ts', '--grep', '@E10-AC06', '--project=chromium', '--workers=2'],
+      ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/district-load.spec.ts', '--grep', '@E10-AC06', '--project=chromium', '--workers=1'],
     ]
     : target === 'E19'
       ? [
-        ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', 'M1-22|T-E19-24', '--workers=2'],
+        ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', 'M1-22|T-E19-24', '--workers=1'],
         // Transition frame budgets must not compete with another context loading GPU programs.
-        ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/l1-transitions.spec.ts', 'tests/perf/l1-spots.spec.ts', '--project=chromium', '--workers=1'],
+        ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/l1-transitions.spec.ts', 'tests/perf/l1-spots.spec.ts', '--project=chromium', '--workers=1'],
       ]
     : target === 'E18'
       ? [
         ...(process.env.MI_VERIFY_REMOTE_BROWSER === '1' ? [
           ['sh', 'tools/remote/run.sh', process.cwd(), '--pull', `${output}/playwright-remote.json`, '--env', `E2E_PORT=${process.env.E2E_PORT ?? 33793}`, '--', 'sh', '-c', `npm run build && npx playwright test --grep '${selection.pattern}' --grep-invert '${e18GpuPattern}|@E18-AC08|@E18-AC09|[Ww]eb[Gg][Pp][Uu]' --project=chromium --workers=1; status=$?; cp test-results/playwright/results.json ${output}/playwright-remote.json; exit $status`],
-          ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', `^(?=.*(?:${selection.pattern}))(?=.*(?:${e18GpuPattern}))`, '--grep-invert', '@E18-AC08|@E18-AC09|[Ww]eb[Gg][Pp][Uu]|@phone-base', '--workers=1'],
-        ] : [['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@E18-AC08|@E18-AC09|[Ww]eb[Gg][Pp][Uu]|@phone-base', '--workers=1']]),
+          ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', '--grep', `^(?=.*(?:${selection.pattern}))(?=.*(?:${e18GpuPattern}))`, '--grep-invert', '@E18-AC08|@E18-AC09|[Ww]eb[Gg][Pp][Uu]|@phone-base', '--workers=1'],
+        ] : [['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', '@E18-AC08|@E18-AC09|[Ww]eb[Gg][Pp][Uu]|@phone-base', '--workers=1']]),
         // Frame budgets and CPU-throttled profiles use native GPU headless Chrome, one worker.
-        ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/e18-desktop.spec.ts', 'tests/perf/e18-devices.spec.ts', 'tests/perf/horde-budget.spec.ts', '--project=chromium', '--workers=1'],
+        ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/e18-desktop.spec.ts', 'tests/perf/e18-devices.spec.ts', 'tests/perf/horde-budget.spec.ts', '--project=chromium', '--workers=1'],
         ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/phone-base.spec.ts', '--project=chromium', '--workers=1'],
       ]
       : target === 'E20'
         ? [
           ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', '--grep', selection.pattern, '--grep-invert', 'T-E20-20', '--workers=2'],
           // The rescue-peak frame budgets (desktop high, throttled phone low) run alone on the native GPU.
-          ['sh', 'tools/e2e-lock.sh', 'npx', 'playwright', 'test', 'tests/perf/l2-budgets.spec.ts', '--project=chromium', '--workers=1'],
+          ['sh', 'tools/perf/quiet-run.sh', 'npx', 'playwright', 'test', 'tests/perf/l2-budgets.spec.ts', '--project=chromium', '--workers=1'],
         ]
       : target === 'E21'
         ? [
