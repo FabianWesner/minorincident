@@ -1,0 +1,1901 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/node_modules/.bin/playwright",
+      "test",
+      "tests/visual/e25-lighting.spec.ts",
+      "tests/e2e/interaction-viewport.spec.ts",
+      "tests/visual/weather.spec.ts",
+      "--project=chromium",
+      "--workers=2"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3454",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3454",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3454",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3454",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3454",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3454",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 2,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3454 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3454",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/interaction-viewport.spec.ts",
+      "file": "e2e/interaction-viewport.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "@E26-AC16 @E24 interaction panel stays inside all viewport edges webgl high",
+          "ok": false,
+          "tags": [
+            "E26-AC16",
+            "E24"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 27419,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts:25:39",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts",
+                      "column": 39,
+                      "line": 25
+                    },
+                    "snippet": "  23 |           if (name === 'l6-gate' && frame > 0) {\n  24 |             const gate = await page.evaluate(() => window.__SS__!.barricades.slots().find(s => s.state.slot.id === 'l6-gate-90')!);\n> 25 |             expect(gate.state.intact).toBe(frame < 100);\n     |                                       ^\n  26 |           }\n  27 |           for (const zoom of [.5, 1, 1.5]) {\n  28 |             await page.evaluate(async ({ zoom, camera }) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts",
+                        "column": 39,
+                        "line": 25
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  23 |           if (name === 'l6-gate' && frame > 0) {\n  24 |             const gate = await page.evaluate(() => window.__SS__!.barricades.slots().find(s => s.state.slot.id === 'l6-gate-90')!);\n> 25 |             expect(gate.state.intact).toBe(frame < 100);\n     |                                       ^\n  26 |           }\n  27 |           for (const zoom of [.5, 1, 1.5]) {\n  28 |             await page.evaluate(async ({ zoom, camera }) => {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts:25:39"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:24:38.251Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3454/e2e-interaction-viewport---a354b-l-viewport-edges-webgl-high-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3454/e2e-interaction-viewport---a354b-l-viewport-edges-webgl-high-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts",
+                    "column": 39,
+                    "line": 25
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "39236701ba838005ac17-3dbd586ad73ac9d289ad",
+          "file": "e2e/interaction-viewport.spec.ts",
+          "line": 6,
+          "column": 3
+        },
+        {
+          "title": "@E26-AC16 @E24 interaction panel stays inside all viewport edges webgl low",
+          "ok": false,
+          "tags": [
+            "E26-AC16",
+            "E24"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 21142,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts:25:39",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts",
+                      "column": 39,
+                      "line": 25
+                    },
+                    "snippet": "  23 |           if (name === 'l6-gate' && frame > 0) {\n  24 |             const gate = await page.evaluate(() => window.__SS__!.barricades.slots().find(s => s.state.slot.id === 'l6-gate-90')!);\n> 25 |             expect(gate.state.intact).toBe(frame < 100);\n     |                                       ^\n  26 |           }\n  27 |           for (const zoom of [.5, 1, 1.5]) {\n  28 |             await page.evaluate(async ({ zoom, camera }) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts",
+                        "column": 39,
+                        "line": 25
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  23 |           if (name === 'l6-gate' && frame > 0) {\n  24 |             const gate = await page.evaluate(() => window.__SS__!.barricades.slots().find(s => s.state.slot.id === 'l6-gate-90')!);\n> 25 |             expect(gate.state.intact).toBe(frame < 100);\n     |                                       ^\n  26 |           }\n  27 |           for (const zoom of [.5, 1, 1.5]) {\n  28 |             await page.evaluate(async ({ zoom, camera }) => {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts:25:39"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:24:38.251Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3454/e2e-interaction-viewport---617ab-ll-viewport-edges-webgl-low-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3454/e2e-interaction-viewport---617ab-ll-viewport-edges-webgl-low-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts",
+                    "column": 39,
+                    "line": 25
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "39236701ba838005ac17-4e6c82cace1e54214989",
+          "file": "e2e/interaction-viewport.spec.ts",
+          "line": 6,
+          "column": 3
+        },
+        {
+          "title": "@E26-AC16 @E24 interaction panel stays inside all viewport edges webgpu high",
+          "ok": false,
+          "tags": [
+            "E26-AC16",
+            "E24"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 41283,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts:25:39",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts",
+                      "column": 39,
+                      "line": 25
+                    },
+                    "snippet": "  23 |           if (name === 'l6-gate' && frame > 0) {\n  24 |             const gate = await page.evaluate(() => window.__SS__!.barricades.slots().find(s => s.state.slot.id === 'l6-gate-90')!);\n> 25 |             expect(gate.state.intact).toBe(frame < 100);\n     |                                       ^\n  26 |           }\n  27 |           for (const zoom of [.5, 1, 1.5]) {\n  28 |             await page.evaluate(async ({ zoom, camera }) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts",
+                        "column": 39,
+                        "line": 25
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  23 |           if (name === 'l6-gate' && frame > 0) {\n  24 |             const gate = await page.evaluate(() => window.__SS__!.barricades.slots().find(s => s.state.slot.id === 'l6-gate-90')!);\n> 25 |             expect(gate.state.intact).toBe(frame < 100);\n     |                                       ^\n  26 |           }\n  27 |           for (const zoom of [.5, 1, 1.5]) {\n  28 |             await page.evaluate(async ({ zoom, camera }) => {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts:25:39"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:25:01.989Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3454/e2e-interaction-viewport---57782--viewport-edges-webgpu-high-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3454/e2e-interaction-viewport---57782--viewport-edges-webgpu-high-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts",
+                    "column": 39,
+                    "line": 25
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "39236701ba838005ac17-fac1363ada2fadd5d0d8",
+          "file": "e2e/interaction-viewport.spec.ts",
+          "line": 6,
+          "column": 3
+        },
+        {
+          "title": "@E26-AC16 @E24 interaction panel stays inside all viewport edges webgpu low",
+          "ok": false,
+          "tags": [
+            "E26-AC16",
+            "E24"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 30351,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts:25:39",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts",
+                      "column": 39,
+                      "line": 25
+                    },
+                    "snippet": "  23 |           if (name === 'l6-gate' && frame > 0) {\n  24 |             const gate = await page.evaluate(() => window.__SS__!.barricades.slots().find(s => s.state.slot.id === 'l6-gate-90')!);\n> 25 |             expect(gate.state.intact).toBe(frame < 100);\n     |                                       ^\n  26 |           }\n  27 |           for (const zoom of [.5, 1, 1.5]) {\n  28 |             await page.evaluate(async ({ zoom, camera }) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts",
+                        "column": 39,
+                        "line": 25
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  23 |           if (name === 'l6-gate' && frame > 0) {\n  24 |             const gate = await page.evaluate(() => window.__SS__!.barricades.slots().find(s => s.state.slot.id === 'l6-gate-90')!);\n> 25 |             expect(gate.state.intact).toBe(frame < 100);\n     |                                       ^\n  26 |           }\n  27 |           for (const zoom of [.5, 1, 1.5]) {\n  28 |             await page.evaluate(async ({ zoom, camera }) => {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts:25:39"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:25:09.280Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3454/e2e-interaction-viewport---a05ff-l-viewport-edges-webgpu-low-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3454/e2e-interaction-viewport---a05ff-l-viewport-edges-webgpu-low-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts",
+                    "column": 39,
+                    "line": 25
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "39236701ba838005ac17-1f6b922a8026e219109e",
+          "file": "e2e/interaction-viewport.spec.ts",
+          "line": 6,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "visual/e25-lighting.spec.ts",
+      "file": "visual/e25-lighting.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E25-moods @E25 @vision game-camera mood per time-of-day preset: readable player, infected and pickups",
+          "ok": true,
+          "tags": [
+            "E25",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12526,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:25:42.281Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9f82599f157bce570465-a5a939b36cc25bf8b498",
+          "file": "visual/e25-lighting.spec.ts",
+          "line": 23,
+          "column": 1
+        },
+        {
+          "title": "T-E25-13 @E25 @E25-AC13 night-street: player contrast against its 2 m ring with no practical light nearby; infected eyes are their brightest pixels webgl high",
+          "ok": true,
+          "tags": [
+            "E25",
+            "E25-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8731,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:25:54.908Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9f82599f157bce570465-1156ddbd92bb5e69034a",
+          "file": "visual/e25-lighting.spec.ts",
+          "line": 43,
+          "column": 98
+        },
+        {
+          "title": "T-E25-13 @E25 @E25-AC13 night-street: player contrast against its 2 m ring with no practical light nearby; infected eyes are their brightest pixels webgl low",
+          "ok": true,
+          "tags": [
+            "E25",
+            "E25-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6057,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:26:03.664Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9f82599f157bce570465-bc59bcde1cc23eb6dbce",
+          "file": "visual/e25-lighting.spec.ts",
+          "line": 43,
+          "column": 98
+        },
+        {
+          "title": "T-E25-13 @E25 @E25-AC13 night-street: player contrast against its 2 m ring with no practical light nearby; infected eyes are their brightest pixels webgpu high",
+          "ok": true,
+          "tags": [
+            "E25",
+            "E25-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 11106,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:25:48.679Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9f82599f157bce570465-32ce731152c9b063df19",
+          "file": "visual/e25-lighting.spec.ts",
+          "line": 43,
+          "column": 98
+        },
+        {
+          "title": "T-E25-13 @E25 @E25-AC13 night-street: player contrast against its 2 m ring with no practical light nearby; infected eyes are their brightest pixels webgpu low",
+          "ok": true,
+          "tags": [
+            "E25",
+            "E25-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 5340,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:25:59.884Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9f82599f157bce570465-85edf2a1dd8a16114d46",
+          "file": "visual/e25-lighting.spec.ts",
+          "line": 43,
+          "column": 98
+        },
+        {
+          "title": "T-E25-06 @E25 @E25-AC06 hero shadow: under a promoted hero lamp the survivor shadow is >=35% darker than beside it and tinted, not black",
+          "ok": true,
+          "tags": [
+            "E25",
+            "E25-AC06"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 9947,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:26:05.236Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "9f82599f157bce570465-e37be2a8089fca292c8c",
+          "file": "visual/e25-lighting.spec.ts",
+          "line": 87,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "visual/weather.spec.ts",
+      "file": "visual/weather.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E28-03b @E28 @E28-AC03 @visual wet mask follows accumulated rain and has a dry state",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC03",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15915,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:26:09.760Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-a6725d1fa58be820c18e",
+          "file": "visual/weather.spec.ts",
+          "line": 16,
+          "column": 1
+        },
+        {
+          "title": "T-E28-05b @E28 @E28-AC05 @visual fog player contrast is at least 3:1 against the 2m ring",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC05",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 7461,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:26:15.215Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-a630c3c254f173a6d3df",
+          "file": "visual/weather.spec.ts",
+          "line": 25,
+          "column": 1
+        },
+        {
+          "title": "T-E28-06c @E28 @E28-AC06 @visual smoke columns bend along the weather wind",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC06",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 10319,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:26:22.697Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-5e9432b657d3ad2814f0",
+          "file": "visual/weather.spec.ts",
+          "line": 35,
+          "column": 1
+        },
+        {
+          "title": "T-E28-07b @E28 @E28-AC07 @visual roof/car up-facing accumulation covers >=60% and track texels grow",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC07",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11612,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:26:25.695Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-850e23f663f7055ce264",
+          "file": "visual/weather.spec.ts",
+          "line": 41,
+          "column": 1
+        },
+        {
+          "title": "T-E28-12-clear @E28 @E28-AC12 @vision game-camera weather mood clear webgl high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 8137,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:26:33.039Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-6617e7dda668ab824f2c",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-overcast @E28 @E28-AC12 @vision game-camera weather mood overcast webgl high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8682,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:26:37.359Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-efac004e7ac9d27f8c72",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-haze @E28 @E28-AC12 @vision game-camera weather mood haze webgl high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 8895,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:26:41.208Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-1a5ba322b28c636198d7",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-thunderstorm @E28 @E28-AC12 @vision game-camera weather mood thunderstorm webgl high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10798,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:26:46.060Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-181863d3a2718d537c10",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-fog @E28 @E28-AC12 @vision game-camera weather mood fog webgl high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 8844,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:26:50.150Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-636252855d86b52a8ee6",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-snow @E28 @E28-AC12 @vision game-camera weather mood snow webgl high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8173,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:26:56.872Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-42f0ad87ff4a65d4d7bb",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-clear @E28 @E28-AC12 @vision game-camera weather mood clear webgl low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 5268,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:26:59.039Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-8ca6671fced5296f921e",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-overcast @E28 @E28-AC12 @vision game-camera weather mood overcast webgl low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 4932,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:27:04.322Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-ab6872ef6e82064c58b1",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-haze @E28 @E28-AC12 @vision game-camera weather mood haze webgl low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5356,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:27:05.064Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-20fd35e1799fbe2ce8c1",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-thunderstorm @E28 @E28-AC12 @vision game-camera weather mood thunderstorm webgl low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 6739,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:27:09.269Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-13685c5f874d962e7179",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-fog @E28 @E28-AC12 @vision game-camera weather mood fog webgl low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4735,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:27:10.436Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-26708f6e6f160a2b549c",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-snow @E28 @E28-AC12 @vision game-camera weather mood snow webgl low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4805,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:27:15.183Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-c701425da6521f389386",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-clear @E28 @E28-AC12 @vision game-camera weather mood clear webgpu high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 8265,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:27:16.030Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-ac8d1e2f9852f6be49ec",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-overcast @E28 @E28-AC12 @vision game-camera weather mood overcast webgpu high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12847,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:27:20.017Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-9073347a4473732be366",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-haze @E28 @E28-AC12 @vision game-camera weather mood haze webgpu high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 14020,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:27:24.316Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-f2fd61aaf6cd56ba3a58",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-thunderstorm @E28 @E28-AC12 @vision game-camera weather mood thunderstorm webgpu high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14341,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:27:32.903Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-bc169bef1764dfcc8396",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-fog @E28 @E28-AC12 @vision game-camera weather mood fog webgpu high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 7940,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:27:38.353Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-6e5fb800dbe3810c41c5",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-snow @E28 @E28-AC12 @vision game-camera weather mood snow webgpu high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 13045,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:27:46.312Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-db3f4e65bb0486454b8b",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-clear @E28 @E28-AC12 @vision game-camera weather mood clear webgpu low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5277,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:27:47.325Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-5adfa7a4b4031154a5c0",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-overcast @E28 @E28-AC12 @vision game-camera weather mood overcast webgpu low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4180,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:27:52.636Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-aee49ac717ee7266211d",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-haze @E28 @E28-AC12 @vision game-camera weather mood haze webgpu low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4409,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:27:56.828Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-e0d1d540df8a5988f3cb",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-thunderstorm @E28 @E28-AC12 @vision game-camera weather mood thunderstorm webgpu low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 11195,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:27:59.440Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-feb16c699b688718629a",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-fog @E28 @E28-AC12 @vision game-camera weather mood fog webgpu low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4532,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:28:01.248Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-df130fa7faa7cfa43be0",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-12-snow @E28 @E28-AC12 @vision game-camera weather mood snow webgpu low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10135,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:28:05.791Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-8ce3a4b3b9bdf81a46f4",
+          "file": "visual/weather.spec.ts",
+          "line": 55,
+          "column": 179
+        },
+        {
+          "title": "T-E28-11b @E28 @E28-AC11 @visual precipitation dither leaves fewer ray pixels",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC11",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 7523,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:28:10.660Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-4d0232a0b6254ade6395",
+          "file": "visual/weather.spec.ts",
+          "line": 67,
+          "column": 1
+        },
+        {
+          "title": "T-E28-04c @E28 @E28-AC04 @visual scripted strike starts fire and powers down static lamps",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC04",
+            "visual"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12824,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:28:15.943Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-eae05482c7ab7b730dd6",
+          "file": "visual/weather.spec.ts",
+          "line": 76,
+          "column": 1
+        },
+        {
+          "title": "T-E28-12-wall @E28 @E28-AC12 @vision window spill stays outside the house facade at the game camera",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC12",
+            "vision"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 6877,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:28:18.199Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "a8c2a72c633e50dfadb4-cb34dc2ed797b5d60924",
+          "file": "visual/weather.spec.ts",
+          "line": 86,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-18T07:24:37.631Z",
+    "duration": 231450.43300000002,
+    "expected": 37,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

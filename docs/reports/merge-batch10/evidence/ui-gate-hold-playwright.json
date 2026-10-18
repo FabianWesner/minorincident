@@ -1,0 +1,483 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/node_modules/.bin/playwright",
+      "test",
+      "tests/e2e/interaction-viewport.spec.ts",
+      "--project=chromium",
+      "--workers=2"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3463",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3463",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3463",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3463",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3463",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3463",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 2,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3463 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3463",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/interaction-viewport.spec.ts",
+      "file": "e2e/interaction-viewport.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "@E26-AC16 @E24 interaction panel stays inside all viewport edges webgl high",
+          "ok": false,
+          "tags": [
+            "E26-AC16",
+            "E24"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 28000,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts:25:39",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts",
+                      "column": 39,
+                      "line": 25
+                    },
+                    "snippet": "  23 |           if (name === 'l6-gate' && frame > 0) {\n  24 |             const gate = await page.evaluate(() => window.__SS__!.barricades.slots().find(s => s.state.slot.id === 'l6-gate-90')!);\n> 25 |             expect(gate.state.intact).toBe(frame < 100);\n     |                                       ^\n  26 |           }\n  27 |           for (const zoom of [.5, 1, 1.5]) {\n  28 |             await page.evaluate(async ({ zoom, camera }) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts",
+                        "column": 39,
+                        "line": 25
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  23 |           if (name === 'l6-gate' && frame > 0) {\n  24 |             const gate = await page.evaluate(() => window.__SS__!.barricades.slots().find(s => s.state.slot.id === 'l6-gate-90')!);\n> 25 |             expect(gate.state.intact).toBe(frame < 100);\n     |                                       ^\n  26 |           }\n  27 |           for (const zoom of [.5, 1, 1.5]) {\n  28 |             await page.evaluate(async ({ zoom, camera }) => {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts:25:39"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:40:00.896Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3463/e2e-interaction-viewport---a354b-l-viewport-edges-webgl-high-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3463/e2e-interaction-viewport---a354b-l-viewport-edges-webgl-high-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts",
+                    "column": 39,
+                    "line": 25
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "39236701ba838005ac17-3dbd586ad73ac9d289ad",
+          "file": "e2e/interaction-viewport.spec.ts",
+          "line": 6,
+          "column": 3
+        },
+        {
+          "title": "@E26-AC16 @E24 interaction panel stays inside all viewport edges webgl low",
+          "ok": false,
+          "tags": [
+            "E26-AC16",
+            "E24"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 21325,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts:25:39",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts",
+                      "column": 39,
+                      "line": 25
+                    },
+                    "snippet": "  23 |           if (name === 'l6-gate' && frame > 0) {\n  24 |             const gate = await page.evaluate(() => window.__SS__!.barricades.slots().find(s => s.state.slot.id === 'l6-gate-90')!);\n> 25 |             expect(gate.state.intact).toBe(frame < 100);\n     |                                       ^\n  26 |           }\n  27 |           for (const zoom of [.5, 1, 1.5]) {\n  28 |             await page.evaluate(async ({ zoom, camera }) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts",
+                        "column": 39,
+                        "line": 25
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  23 |           if (name === 'l6-gate' && frame > 0) {\n  24 |             const gate = await page.evaluate(() => window.__SS__!.barricades.slots().find(s => s.state.slot.id === 'l6-gate-90')!);\n> 25 |             expect(gate.state.intact).toBe(frame < 100);\n     |                                       ^\n  26 |           }\n  27 |           for (const zoom of [.5, 1, 1.5]) {\n  28 |             await page.evaluate(async ({ zoom, camera }) => {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts:25:39"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:40:00.893Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3463/e2e-interaction-viewport---617ab-ll-viewport-edges-webgl-low-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3463/e2e-interaction-viewport---617ab-ll-viewport-edges-webgl-low-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts",
+                    "column": 39,
+                    "line": 25
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "39236701ba838005ac17-4e6c82cace1e54214989",
+          "file": "e2e/interaction-viewport.spec.ts",
+          "line": 6,
+          "column": 3
+        },
+        {
+          "title": "@E26-AC16 @E24 interaction panel stays inside all viewport edges webgpu high",
+          "ok": false,
+          "tags": [
+            "E26-AC16",
+            "E24"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 1,
+                  "status": "failed",
+                  "duration": 29496,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts:25:39",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts",
+                      "column": 39,
+                      "line": 25
+                    },
+                    "snippet": "  23 |           if (name === 'l6-gate' && frame > 0) {\n  24 |             const gate = await page.evaluate(() => window.__SS__!.barricades.slots().find(s => s.state.slot.id === 'l6-gate-90')!);\n> 25 |             expect(gate.state.intact).toBe(frame < 100);\n     |                                       ^\n  26 |           }\n  27 |           for (const zoom of [.5, 1, 1.5]) {\n  28 |             await page.evaluate(async ({ zoom, camera }) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts",
+                        "column": 39,
+                        "line": 25
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  23 |           if (name === 'l6-gate' && frame > 0) {\n  24 |             const gate = await page.evaluate(() => window.__SS__!.barricades.slots().find(s => s.state.slot.id === 'l6-gate-90')!);\n> 25 |             expect(gate.state.intact).toBe(frame < 100);\n     |                                       ^\n  26 |           }\n  27 |           for (const zoom of [.5, 1, 1.5]) {\n  28 |             await page.evaluate(async ({ zoom, camera }) => {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts:25:39"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:40:25.018Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3463/e2e-interaction-viewport---57782--viewport-edges-webgpu-high-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3463/e2e-interaction-viewport---57782--viewport-edges-webgpu-high-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts",
+                    "column": 39,
+                    "line": 25
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "39236701ba838005ac17-fac1363ada2fadd5d0d8",
+          "file": "e2e/interaction-viewport.spec.ts",
+          "line": 6,
+          "column": 3
+        },
+        {
+          "title": "@E26-AC16 @E24 interaction panel stays inside all viewport edges webgpu low",
+          "ok": false,
+          "tags": [
+            "E26-AC16",
+            "E24"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 28456,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts:25:39",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts",
+                      "column": 39,
+                      "line": 25
+                    },
+                    "snippet": "  23 |           if (name === 'l6-gate' && frame > 0) {\n  24 |             const gate = await page.evaluate(() => window.__SS__!.barricades.slots().find(s => s.state.slot.id === 'l6-gate-90')!);\n> 25 |             expect(gate.state.intact).toBe(frame < 100);\n     |                                       ^\n  26 |           }\n  27 |           for (const zoom of [.5, 1, 1.5]) {\n  28 |             await page.evaluate(async ({ zoom, camera }) => {"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts",
+                        "column": 39,
+                        "line": 25
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32mtrue\u001b[39m\nReceived: \u001b[31mfalse\u001b[39m\n\n  23 |           if (name === 'l6-gate' && frame > 0) {\n  24 |             const gate = await page.evaluate(() => window.__SS__!.barricades.slots().find(s => s.state.slot.id === 'l6-gate-90')!);\n> 25 |             expect(gate.state.intact).toBe(frame < 100);\n     |                                       ^\n  26 |           }\n  27 |           for (const zoom of [.5, 1, 1.5]) {\n  28 |             await page.evaluate(async ({ zoom, camera }) => {\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts:25:39"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:40:32.713Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3463/e2e-interaction-viewport---a05ff-l-viewport-edges-webgpu-low-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3463/e2e-interaction-viewport---a05ff-l-viewport-edges-webgpu-low-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/interaction-viewport.spec.ts",
+                    "column": 39,
+                    "line": 25
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "39236701ba838005ac17-1f6b922a8026e219109e",
+          "file": "e2e/interaction-viewport.spec.ts",
+          "line": 6,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-18T07:40:00.277Z",
+    "duration": 63221.092,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  }
+}

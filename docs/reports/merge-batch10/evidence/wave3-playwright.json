@@ -1,0 +1,923 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/node_modules/.bin/playwright",
+      "test",
+      "tests/e2e/levels/wave3-sim.spec.ts",
+      "--project=chromium",
+      "--workers=2"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3415",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3415",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3415",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3415",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3415",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3415",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 2,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3415 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3415",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/levels/wave3-sim.spec.ts",
+      "file": "e2e/levels/wave3-sim.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E24-06-frustum @E24-AC06 webgl high z1 first and second appearances use offscreen maintenance accesses",
+          "ok": true,
+          "tags": [
+            "E24-AC06"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 20942,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T06:25:02.191Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e308a069401da7f571cf-1d6adaed6c7ffd424e1b",
+          "file": "e2e/levels/wave3-sim.spec.ts",
+          "line": 10,
+          "column": 3
+        },
+        {
+          "title": "T-E32-28-all-seams @E32-AC28 webgl high z1 D-CURE delayed loads and live input reversals",
+          "ok": true,
+          "tags": [
+            "E32-AC28"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 121603,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "{\"seam\":\"residential-fringe\",\"backend\":\"webgl\",\"quality\":\"high\",\"zoom\":1,\"delayed\":2,\"minX\":743.010009765625,\"maxX\":754.2517700195312}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"industrial-area\",\"backend\":\"webgl\",\"quality\":\"high\",\"zoom\":1,\"delayed\":12,\"minX\":1233.074951171875,\"maxX\":1244.48779296875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"military-zone\",\"backend\":\"webgl\",\"quality\":\"high\",\"zoom\":1,\"delayed\":37,\"minX\":1833.074951171875,\"maxX\":1844.48779296875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"research-campus\",\"backend\":\"webgl\",\"quality\":\"high\",\"zoom\":1,\"delayed\":64,\"minX\":2463.074951171875,\"maxX\":2474.487060546875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"destroyed-corridor\",\"backend\":\"webgl\",\"quality\":\"high\",\"zoom\":1,\"delayed\":91,\"minX\":2913.074951171875,\"maxX\":2924.487060546875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"dispersal-complex\",\"backend\":\"webgl\",\"quality\":\"high\",\"zoom\":1,\"delayed\":116,\"minX\":3693.074951171875,\"maxX\":3704.487060546875}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T06:25:02.186Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e308a069401da7f571cf-267c06e6b6dc23ea0de9",
+          "file": "e2e/levels/wave3-sim.spec.ts",
+          "line": 53,
+          "column": 3
+        },
+        {
+          "title": "T-E24-06-frustum @E24-AC06 webgl high z0.5 first and second appearances use offscreen maintenance accesses",
+          "ok": true,
+          "tags": [
+            "E24-AC06"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11202,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T06:25:23.247Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e308a069401da7f571cf-4d30960c39a87278bf4e",
+          "file": "e2e/levels/wave3-sim.spec.ts",
+          "line": 10,
+          "column": 3
+        },
+        {
+          "title": "T-E32-28-all-seams @E32-AC28 webgl high z0.5 D-CURE delayed loads and live input reversals",
+          "ok": true,
+          "tags": [
+            "E32-AC28"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 120803,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "{\"seam\":\"residential-fringe\",\"backend\":\"webgl\",\"quality\":\"high\",\"zoom\":0.5,\"delayed\":2,\"minX\":743.010009765625,\"maxX\":754.2517700195312}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"industrial-area\",\"backend\":\"webgl\",\"quality\":\"high\",\"zoom\":0.5,\"delayed\":12,\"minX\":1233.074951171875,\"maxX\":1244.48779296875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"military-zone\",\"backend\":\"webgl\",\"quality\":\"high\",\"zoom\":0.5,\"delayed\":37,\"minX\":1833.074951171875,\"maxX\":1844.48779296875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"research-campus\",\"backend\":\"webgl\",\"quality\":\"high\",\"zoom\":0.5,\"delayed\":64,\"minX\":2463.074951171875,\"maxX\":2474.487060546875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"destroyed-corridor\",\"backend\":\"webgl\",\"quality\":\"high\",\"zoom\":0.5,\"delayed\":91,\"minX\":2913.074951171875,\"maxX\":2924.487060546875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"dispersal-complex\",\"backend\":\"webgl\",\"quality\":\"high\",\"zoom\":0.5,\"delayed\":116,\"minX\":3693.074951171875,\"maxX\":3704.487060546875}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T06:25:34.469Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e308a069401da7f571cf-f3029e7c79051380d403",
+          "file": "e2e/levels/wave3-sim.spec.ts",
+          "line": 53,
+          "column": 3
+        },
+        {
+          "title": "T-E24-06-frustum @E24-AC06 webgl low z1 first and second appearances use offscreen maintenance accesses",
+          "ok": true,
+          "tags": [
+            "E24-AC06"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 17203,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T06:27:03.899Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e308a069401da7f571cf-3056f36e57a366e2b57e",
+          "file": "e2e/levels/wave3-sim.spec.ts",
+          "line": 10,
+          "column": 3
+        },
+        {
+          "title": "T-E32-28-all-seams @E32-AC28 webgl low z1 D-CURE delayed loads and live input reversals",
+          "ok": true,
+          "tags": [
+            "E32-AC28"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 58292,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "{\"seam\":\"residential-fringe\",\"backend\":\"webgl\",\"quality\":\"low\",\"zoom\":1,\"delayed\":2,\"minX\":743.010009765625,\"maxX\":754.2517700195312}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"industrial-area\",\"backend\":\"webgl\",\"quality\":\"low\",\"zoom\":1,\"delayed\":8,\"minX\":1233.074951171875,\"maxX\":1244.48779296875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"military-zone\",\"backend\":\"webgl\",\"quality\":\"low\",\"zoom\":1,\"delayed\":19,\"minX\":1833.074951171875,\"maxX\":1844.48779296875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"research-campus\",\"backend\":\"webgl\",\"quality\":\"low\",\"zoom\":1,\"delayed\":30,\"minX\":2463.074951171875,\"maxX\":2474.487060546875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"destroyed-corridor\",\"backend\":\"webgl\",\"quality\":\"low\",\"zoom\":1,\"delayed\":41,\"minX\":2913.074951171875,\"maxX\":2924.487060546875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"dispersal-complex\",\"backend\":\"webgl\",\"quality\":\"low\",\"zoom\":1,\"delayed\":52,\"minX\":3693.074951171875,\"maxX\":3704.487060546875}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T06:27:21.113Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e308a069401da7f571cf-853edc6d13dad5e42223",
+          "file": "e2e/levels/wave3-sim.spec.ts",
+          "line": 53,
+          "column": 3
+        },
+        {
+          "title": "T-E24-06-frustum @E24-AC06 webgl low z0.5 first and second appearances use offscreen maintenance accesses",
+          "ok": true,
+          "tags": [
+            "E24-AC06"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11128,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T06:27:35.297Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e308a069401da7f571cf-967c9ef9a942be140ba5",
+          "file": "e2e/levels/wave3-sim.spec.ts",
+          "line": 10,
+          "column": 3
+        },
+        {
+          "title": "T-E32-28-all-seams @E32-AC28 webgl low z0.5 D-CURE delayed loads and live input reversals",
+          "ok": true,
+          "tags": [
+            "E32-AC28"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 58838,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "{\"seam\":\"residential-fringe\",\"backend\":\"webgl\",\"quality\":\"low\",\"zoom\":0.5,\"delayed\":2,\"minX\":743.010009765625,\"maxX\":754.2517700195312}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"industrial-area\",\"backend\":\"webgl\",\"quality\":\"low\",\"zoom\":0.5,\"delayed\":8,\"minX\":1233.074951171875,\"maxX\":1244.48779296875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"military-zone\",\"backend\":\"webgl\",\"quality\":\"low\",\"zoom\":0.5,\"delayed\":19,\"minX\":1833.074951171875,\"maxX\":1844.48779296875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"research-campus\",\"backend\":\"webgl\",\"quality\":\"low\",\"zoom\":0.5,\"delayed\":30,\"minX\":2463.074951171875,\"maxX\":2474.487060546875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"destroyed-corridor\",\"backend\":\"webgl\",\"quality\":\"low\",\"zoom\":0.5,\"delayed\":41,\"minX\":2913.074951171875,\"maxX\":2924.487060546875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"dispersal-complex\",\"backend\":\"webgl\",\"quality\":\"low\",\"zoom\":0.5,\"delayed\":52,\"minX\":3693.074951171875,\"maxX\":3704.487060546875}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T06:27:46.445Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e308a069401da7f571cf-f399f1eadb3cdcf76e8a",
+          "file": "e2e/levels/wave3-sim.spec.ts",
+          "line": 53,
+          "column": 3
+        },
+        {
+          "title": "T-E24-06-frustum @E24-AC06 webgpu high z1 first and second appearances use offscreen maintenance accesses",
+          "ok": true,
+          "tags": [
+            "E24-AC06"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 22310,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T06:28:19.417Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e308a069401da7f571cf-fc0202737d814663fa13",
+          "file": "e2e/levels/wave3-sim.spec.ts",
+          "line": 10,
+          "column": 3
+        },
+        {
+          "title": "T-E32-28-all-seams @E32-AC28 webgpu high z1 D-CURE delayed loads and live input reversals",
+          "ok": true,
+          "tags": [
+            "E32-AC28"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 120884,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "{\"seam\":\"residential-fringe\",\"backend\":\"webgpu\",\"quality\":\"high\",\"zoom\":1,\"delayed\":2,\"minX\":743.010009765625,\"maxX\":754.2517700195312}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"industrial-area\",\"backend\":\"webgpu\",\"quality\":\"high\",\"zoom\":1,\"delayed\":12,\"minX\":1233.074951171875,\"maxX\":1244.48779296875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"military-zone\",\"backend\":\"webgpu\",\"quality\":\"high\",\"zoom\":1,\"delayed\":37,\"minX\":1833.074951171875,\"maxX\":1844.48779296875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"research-campus\",\"backend\":\"webgpu\",\"quality\":\"high\",\"zoom\":1,\"delayed\":64,\"minX\":2463.074951171875,\"maxX\":2474.487060546875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"destroyed-corridor\",\"backend\":\"webgpu\",\"quality\":\"high\",\"zoom\":1,\"delayed\":91,\"minX\":2913.074951171875,\"maxX\":2924.487060546875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"dispersal-complex\",\"backend\":\"webgpu\",\"quality\":\"high\",\"zoom\":1,\"delayed\":116,\"minX\":3693.074951171875,\"maxX\":3704.487060546875}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T06:28:41.738Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e308a069401da7f571cf-ad000fbba6311baf4b39",
+          "file": "e2e/levels/wave3-sim.spec.ts",
+          "line": 53,
+          "column": 3
+        },
+        {
+          "title": "T-E24-06-frustum @E24-AC06 webgpu high z0.5 first and second appearances use offscreen maintenance accesses",
+          "ok": true,
+          "tags": [
+            "E24-AC06"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14688,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T06:28:45.299Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e308a069401da7f571cf-6b51c9cd12872ad44c77",
+          "file": "e2e/levels/wave3-sim.spec.ts",
+          "line": 10,
+          "column": 3
+        },
+        {
+          "title": "T-E32-28-all-seams @E32-AC28 webgpu high z0.5 D-CURE delayed loads and live input reversals",
+          "ok": true,
+          "tags": [
+            "E32-AC28"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 120648,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "{\"seam\":\"residential-fringe\",\"backend\":\"webgpu\",\"quality\":\"high\",\"zoom\":0.5,\"delayed\":2,\"minX\":743.010009765625,\"maxX\":754.2517700195312}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"industrial-area\",\"backend\":\"webgpu\",\"quality\":\"high\",\"zoom\":0.5,\"delayed\":12,\"minX\":1233.074951171875,\"maxX\":1244.48779296875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"military-zone\",\"backend\":\"webgpu\",\"quality\":\"high\",\"zoom\":0.5,\"delayed\":37,\"minX\":1833.074951171875,\"maxX\":1844.48779296875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"research-campus\",\"backend\":\"webgpu\",\"quality\":\"high\",\"zoom\":0.5,\"delayed\":64,\"minX\":2463.074951171875,\"maxX\":2474.487060546875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"destroyed-corridor\",\"backend\":\"webgpu\",\"quality\":\"high\",\"zoom\":0.5,\"delayed\":91,\"minX\":2913.074951171875,\"maxX\":2924.487060546875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"dispersal-complex\",\"backend\":\"webgpu\",\"quality\":\"high\",\"zoom\":0.5,\"delayed\":116,\"minX\":3693.074951171875,\"maxX\":3704.487060546875}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T06:29:00.001Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e308a069401da7f571cf-bee50aa7afe9491fbff4",
+          "file": "e2e/levels/wave3-sim.spec.ts",
+          "line": 53,
+          "column": 3
+        },
+        {
+          "title": "T-E24-06-frustum @E24-AC06 webgpu low z1 first and second appearances use offscreen maintenance accesses",
+          "ok": true,
+          "tags": [
+            "E24-AC06"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 18539,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T06:30:42.636Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e308a069401da7f571cf-15150238fbb73db6b0c8",
+          "file": "e2e/levels/wave3-sim.spec.ts",
+          "line": 10,
+          "column": 3
+        },
+        {
+          "title": "T-E32-28-all-seams @E32-AC28 webgpu low z1 D-CURE delayed loads and live input reversals",
+          "ok": true,
+          "tags": [
+            "E32-AC28"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 57494,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "{\"seam\":\"residential-fringe\",\"backend\":\"webgpu\",\"quality\":\"low\",\"zoom\":1,\"delayed\":2,\"minX\":743.010009765625,\"maxX\":754.2517700195312}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"industrial-area\",\"backend\":\"webgpu\",\"quality\":\"low\",\"zoom\":1,\"delayed\":8,\"minX\":1233.074951171875,\"maxX\":1244.48779296875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"military-zone\",\"backend\":\"webgpu\",\"quality\":\"low\",\"zoom\":1,\"delayed\":19,\"minX\":1833.074951171875,\"maxX\":1844.48779296875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"research-campus\",\"backend\":\"webgpu\",\"quality\":\"low\",\"zoom\":1,\"delayed\":30,\"minX\":2463.074951171875,\"maxX\":2474.487060546875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"destroyed-corridor\",\"backend\":\"webgpu\",\"quality\":\"low\",\"zoom\":1,\"delayed\":41,\"minX\":2913.074951171875,\"maxX\":2924.487060546875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"dispersal-complex\",\"backend\":\"webgpu\",\"quality\":\"low\",\"zoom\":1,\"delayed\":52,\"minX\":3693.074951171875,\"maxX\":3704.487060546875}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T06:31:00.662Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e308a069401da7f571cf-1b643ee020993d7fb94d",
+          "file": "e2e/levels/wave3-sim.spec.ts",
+          "line": 53,
+          "column": 3
+        },
+        {
+          "title": "T-E24-06-frustum @E24-AC06 webgpu low z0.5 first and second appearances use offscreen maintenance accesses",
+          "ok": true,
+          "tags": [
+            "E24-AC06"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 10610,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T06:31:01.189Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e308a069401da7f571cf-5fa31eec966cdd5c7397",
+          "file": "e2e/levels/wave3-sim.spec.ts",
+          "line": 10,
+          "column": 3
+        },
+        {
+          "title": "T-E32-28-all-seams @E32-AC28 webgpu low z0.5 D-CURE delayed loads and live input reversals",
+          "ok": true,
+          "tags": [
+            "E32-AC28"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 1,
+                  "status": "passed",
+                  "duration": 57362,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "{\"seam\":\"residential-fringe\",\"backend\":\"webgpu\",\"quality\":\"low\",\"zoom\":0.5,\"delayed\":2,\"minX\":743.010009765625,\"maxX\":754.2517700195312}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"industrial-area\",\"backend\":\"webgpu\",\"quality\":\"low\",\"zoom\":0.5,\"delayed\":8,\"minX\":1233.074951171875,\"maxX\":1244.48779296875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"military-zone\",\"backend\":\"webgpu\",\"quality\":\"low\",\"zoom\":0.5,\"delayed\":19,\"minX\":1833.074951171875,\"maxX\":1844.48779296875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"research-campus\",\"backend\":\"webgpu\",\"quality\":\"low\",\"zoom\":0.5,\"delayed\":30,\"minX\":2463.074951171875,\"maxX\":2474.487060546875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"destroyed-corridor\",\"backend\":\"webgpu\",\"quality\":\"low\",\"zoom\":0.5,\"delayed\":41,\"minX\":2913.074951171875,\"maxX\":2924.487060546875}\n"
+                    },
+                    {
+                      "text": "{\"seam\":\"dispersal-complex\",\"backend\":\"webgpu\",\"quality\":\"low\",\"zoom\":0.5,\"delayed\":52,\"minX\":3693.074951171875,\"maxX\":3704.487060546875}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T06:31:11.812Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e308a069401da7f571cf-1bf6de9d4f1475f47052",
+          "file": "e2e/levels/wave3-sim.spec.ts",
+          "line": 53,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-18T06:25:00.932Z",
+    "duration": 428609.886,
+    "expected": 16,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

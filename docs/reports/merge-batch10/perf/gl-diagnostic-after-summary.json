@@ -1,0 +1,222 @@
+{
+  "frameMax": 131,
+  "spikes": [
+    {
+      "at": 4623,
+      "ms": 131
+    }
+  ],
+  "runtimeLinks": [],
+  "lateCpu": [
+    [
+      [
+        "loadBatch",
+        "index-C9S8-D5W.js",
+        8
+      ],
+      29.708
+    ],
+    [
+      [
+        "bufferSubData",
+        "",
+        -1
+      ],
+      13.043
+    ],
+    [
+      [
+        "zi",
+        "Physics-BywFY9e1.js",
+        0
+      ],
+      8.794
+    ],
+    [
+      [
+        "",
+        "Physics-BywFY9e1.js",
+        0
+      ],
+      8.738
+    ],
+    [
+      [
+        "_o",
+        "registry-tmCKZxLn.js",
+        0
+      ],
+      8.618
+    ],
+    [
+      [
+        "(program)",
+        "",
+        -1
+      ],
+      6.04
+    ],
+    [
+      [
+        "_renderObjectDirect",
+        "WeatherView-B-JaJt4L.js",
+        43
+      ],
+      5.842
+    ],
+    [
+      [
+        "updateMatrixWorld",
+        "three.module-BSnTNmqF.js",
+        4
+      ],
+      5.614
+    ],
+    [
+      [
+        "multiplyMatrices",
+        "three.module-BSnTNmqF.js",
+        4
+      ],
+      5.496
+    ],
+    [
+      [
+        "query",
+        "index-C9S8-D5W.js",
+        11
+      ],
+      4.517
+    ],
+    [
+      [
+        "update",
+        "WeatherView-B-JaJt4L.js",
+        26
+      ],
+      4.496
+    ],
+    [
+      [
+        "(garbage collector)",
+        "",
+        -1
+      ],
+      3.105
+    ],
+    [
+      [
+        "getX",
+        "three.module-BSnTNmqF.js",
+        4
+      ],
+      3.03
+    ],
+    [
+      [
+        "",
+        "index-C9S8-D5W.js",
+        8
+      ],
+      2.996
+    ],
+    [
+      [
+        "os",
+        "PropSystem-G5SIbvhF.js",
+        0
+      ],
+      2.94
+    ],
+    [
+      [
+        "updateAttribute",
+        "WeatherView-B-JaJt4L.js",
+        232
+      ],
+      2.868
+    ],
+    [
+      [
+        "getComponent",
+        "three.module-BSnTNmqF.js",
+        4
+      ],
+      1.905
+    ],
+    [
+      [
+        "t",
+        "three.module-BSnTNmqF.js",
+        4
+      ],
+      1.592
+    ],
+    [
+      [
+        "traverse",
+        "three.module-BSnTNmqF.js",
+        4
+      ],
+      1.591
+    ],
+    [
+      [
+        "get",
+        "registry-tmCKZxLn.js",
+        0
+      ],
+      1.563
+    ]
+  ],
+  "stacks": [
+    [
+      "loadBatch <- (root)",
+      29708
+    ],
+    [
+      "bufferSubData <- updateAttribute <- updateAttribute <- update <- updateAttribute <- updateAttributes <- updateForRender <- _renderObjectDirect",
+      10477
+    ],
+    [
+      "zi <- loadBatch <- (root)",
+      8794
+    ],
+    [
+      "_o <- loadBatch <- (root)",
+      8618
+    ],
+    [
+      " <- traverse <- traverse <- traverse <- traverse <- traverse <- traverse <- traverse",
+      7864
+    ],
+    [
+      "(program) <- (root)",
+      6040
+    ],
+    [
+      "_renderObjectDirect <- renderObject <- _renderObjects <- _renderScene <- render <- render <- update <- ",
+      5842
+    ],
+    [
+      "query <- getState <- getState <-  <- (root)",
+      4517
+    ],
+    [
+      "update <- updateNode <- updateForRender <- _renderObjectDirect <- renderObject <- _renderObjects <- _renderScene <- render",
+      4496
+    ],
+    [
+      "(garbage collector) <- (root)",
+      3105
+    ],
+    [
+      " <- traverse <- traverse <- traverse <- traverse <- getState <- getState <- ",
+      2996
+    ],
+    [
+      "os <-  <- getState <- getState <- getState <-  <- (root)",
+      2940
+    ]
+  ]
+}

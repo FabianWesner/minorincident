@@ -1,0 +1,548 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/node_modules/.bin/playwright",
+      "test",
+      "tests/e2e/health-bars.spec.ts",
+      "tests/e2e/zoo-s2.spec.ts",
+      "tests/e2e/levels/L8.spec.ts",
+      "--project=chromium",
+      "--workers=1",
+      "-g",
+      "T-E07-06-bars|T-E07-19-elephant-charge-browser|T-E30-18-mobile"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3470",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3470",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3470",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3470",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3470",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3470",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3470 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3470",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/health-bars.spec.ts",
+      "file": "e2e/health-bars.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E07-06-bars-1600 @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera high",
+          "ok": true,
+          "tags": [
+            "E07-AC06",
+            "E07-AC19",
+            "E30-AC15"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/health-bars.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 31245,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "text": "[scene] starting vite preview on http://127.0.0.1:3471\n"
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:40:00.909Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/health-bars.spec.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "724a316ba1c6537a3c77-4944cce867f12f682308",
+          "file": "e2e/health-bars.spec.ts",
+          "line": 11,
+          "column": 3
+        },
+        {
+          "title": "T-E07-06-bars-390 @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera low",
+          "ok": true,
+          "tags": [
+            "E07-AC06",
+            "E07-AC19",
+            "E30-AC15"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/health-bars.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16043,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "text": "[scene] starting vite preview on http://127.0.0.1:3471\n"
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:40:32.172Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/health-bars.spec.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "724a316ba1c6537a3c77-df2d0d7c9856d9480138",
+          "file": "e2e/health-bars.spec.ts",
+          "line": 11,
+          "column": 3
+        },
+        {
+          "title": "T-E07-06-bars-844 @E07-AC06 @E07-AC19 @E30-AC15 shared bars at game camera low",
+          "ok": true,
+          "tags": [
+            "E07-AC06",
+            "E07-AC19",
+            "E30-AC15"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [
+                {
+                  "type": "serial",
+                  "location": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/health-bars.spec.ts",
+                    "line": 0,
+                    "column": 0
+                  }
+                }
+              ],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14237,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [
+                    {
+                      "text": "[scene] starting vite preview on http://127.0.0.1:3471\n"
+                    }
+                  ],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:40:48.221Z",
+                  "annotations": [
+                    {
+                      "type": "serial",
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/health-bars.spec.ts",
+                        "line": 0,
+                        "column": 0
+                      }
+                    }
+                  ],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "724a316ba1c6537a3c77-f1e653c361b8ba655796",
+          "file": "e2e/health-bars.spec.ts",
+          "line": 11,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/L8.spec.ts",
+      "file": "e2e/levels/L8.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "phone escape input",
+          "file": "e2e/levels/L8.spec.ts",
+          "line": 112,
+          "column": 6,
+          "specs": [
+            {
+              "title": "T-E30-18-mobile @E30-AC18 touch stick reaches the APC ACTION with no HUD overflow",
+              "ok": false,
+              "tags": [
+                "E30-AC18"
+              ],
+              "tests": [
+                {
+                  "timeout": 600000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 152522,
+                      "error": {
+                        "message": "TimeoutError: page.waitForFunction: Timeout 120000ms exceeded.",
+                        "stack": "TimeoutError: page.waitForFunction: Timeout 120000ms exceeded.\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/levels/L8.spec.ts:140:16",
+                        "location": {
+                          "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/levels/L8.spec.ts",
+                          "column": 16,
+                          "line": 140
+                        },
+                        "snippet": "  138 |       await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });\n  139 |     }\n> 140 |     await page.waitForFunction(() => window.__SS__!.getState().scenario === 'L9', undefined, { timeout: 120_000 });\n      |                ^\n  141 |     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);\n  142 |     mkdirSync(out, { recursive: true }); await page.screenshot({ path: `${out}/touch-l9-arrival.png` });\n  143 |   });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/levels/L8.spec.ts",
+                            "column": 16,
+                            "line": 140
+                          },
+                          "message": "TimeoutError: page.waitForFunction: Timeout 120000ms exceeded.\n\n  138 |       await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });\n  139 |     }\n> 140 |     await page.waitForFunction(() => window.__SS__!.getState().scenario === 'L9', undefined, { timeout: 120_000 });\n      |                ^\n  141 |     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);\n  142 |     mkdirSync(out, { recursive: true }); await page.screenshot({ path: `${out}/touch-l9-arrival.png` });\n  143 |   });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/levels/L8.spec.ts:140:16"
+                        }
+                      ],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T07:41:02.471Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3470/e2e-levels-L8-phone-escape-f8d11-ACTION-with-no-HUD-overflow-chromium/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3470/e2e-levels-L8-phone-escape-f8d11-ACTION-with-no-HUD-overflow-chromium/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/levels/L8.spec.ts",
+                        "column": 16,
+                        "line": 140
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "fb9079c4d0f79de043c4-7aabd832f819459b91bf",
+              "file": "e2e/levels/L8.spec.ts",
+              "line": 114,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e/zoo-s2.spec.ts",
+      "file": "e2e/zoo-s2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E07-19-elephant-charge-browser @E07-AC05 @E07-AC19 @E30-AC10 production telegraph, pause, activation and shared bar",
+          "ok": false,
+          "tags": [
+            "E07-AC05",
+            "E07-AC19",
+            "E30-AC10"
+          ],
+          "tests": [
+            {
+              "timeout": 120000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 6246,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoHaveLength\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected length: \u001b[32m1\u001b[39m\nReceived length: \u001b[31m0\u001b[39m\nReceived array:  \u001b[31m[]\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoHaveLength\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected length: \u001b[32m1\u001b[39m\nReceived length: \u001b[31m0\u001b[39m\nReceived array:  \u001b[31m[]\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/zoo-s2.spec.ts:30:122",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/zoo-s2.spec.ts",
+                      "column": 122,
+                      "line": 30
+                    },
+                    "snippet": "  28 |     await page.evaluate(async () => { await window.__SS__!.step(100); await window.__SCENE__!.ready(); });\n  29 |     const impact = await page.evaluate(() => ({ state: window.__SS__!.getState(), events: window.__SS__!.events() }));\n> 30 |     expect(impact.events.filter(ev => ev.type === 'infected.attack' && ev.attackId === a.attackId && ev.targetId === 1)).toHaveLength(1);\n     |                                                                                                                          ^\n  31 |     expect(impact.state.player!.health.current).toBe(move === 'elephant.swipe' ? 75 : move === 'elephant.charge' ? 60 : 70);\n  32 |   });\n  33 | }"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/zoo-s2.spec.ts",
+                        "column": 122,
+                        "line": 30
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoHaveLength\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected length: \u001b[32m1\u001b[39m\nReceived length: \u001b[31m0\u001b[39m\nReceived array:  \u001b[31m[]\u001b[39m\n\n  28 |     await page.evaluate(async () => { await window.__SS__!.step(100); await window.__SCENE__!.ready(); });\n  29 |     const impact = await page.evaluate(() => ({ state: window.__SS__!.getState(), events: window.__SS__!.events() }));\n> 30 |     expect(impact.events.filter(ev => ev.type === 'infected.attack' && ev.attackId === a.attackId && ev.targetId === 1)).toHaveLength(1);\n     |                                                                                                                          ^\n  31 |     expect(impact.state.player!.health.current).toBe(move === 'elephant.swipe' ? 75 : move === 'elephant.charge' ? 60 : 70);\n  32 |   });\n  33 | }\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/zoo-s2.spec.ts:30:122"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T07:43:37.138Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3470/e2e-zoo-s2-T-E07-19-elepha-6651a-e-activation-and-shared-bar-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/test-results/playwright/run-3470/e2e-zoo-s2-T-E07-19-elepha-6651a-e-activation-and-shared-bar-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch10/tests/e2e/zoo-s2.spec.ts",
+                    "column": 122,
+                    "line": 30
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "41b5f9db99a44c260d74-56b57945226b97f644fa",
+          "file": "e2e/zoo-s2.spec.ts",
+          "line": 6,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-18T07:40:00.277Z",
+    "duration": 224257.451,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}
