@@ -24,7 +24,7 @@ async function ensureServer(log: (line: string) => void): Promise<void> {
   const preview = process.env.SCENE_SERVER === 'preview';
   log(`starting ${preview ? 'vite preview' : 'vite dev'} on ${origin}`);
   // Own the Vite process directly so stopServer does not leave an npx child serving a deleted remote job.
-  server = spawn(process.execPath, [resolve('node_modules/vite/bin/vite.js'), ...(preview ? ['preview'] : []), '--host', '127.0.0.1', '--port', String(port), '--strictPort', '--configLoader', 'runner'], { stdio: 'ignore', detached: false });
+  server = spawn(process.execPath, [resolve('node_modules/vite/bin/vite.js'), ...(preview ? ['preview', ...(process.env.SCENE_DIST ? ['--outDir', process.env.SCENE_DIST] : [])] : []), '--host', '127.0.0.1', '--port', String(port), '--strictPort', '--configLoader', 'runner'], { stdio: 'ignore', detached: false });
   for (let i = 0; i < 120 && !(await up()); i++) await new Promise(r => setTimeout(r, 500));
   if (!(await up())) { server.kill(); server = null; throw new Error(`Scene Lab server did not start on ${port}`); }
 }

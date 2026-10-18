@@ -1,0 +1,21 @@
+{
+  "baselineRevision": "fcf81b4da4cdea623c1ddd3c0f8620a41a457a46",
+  "firstProfileRevision": "e3b6138e7",
+  "finalRendererRevision": "68e108f24",
+  "baseline": {
+    "webgl2": "60 valid images, all levels/tiers/zooms",
+    "webgpu": "60 valid images, all levels/tiers/zooms"
+  },
+  "firstProfileCaptures": {
+    "webgpu": "60 valid images, all levels/tiers/zooms",
+    "webgl2": "20 valid images, zoom 1 only; invalid paused-camera variants removed"
+  },
+  "finalProfileCaptures": "unmeasured: browser queue exceeded 30 minutes; Chromium SIGTRAP/closed contexts on eventual startup",
+  "matrix": {
+    "initialWebGL2": "114/114 pass",
+    "finalWebGL2": "0/60 executed; browser startup/context failure",
+    "finalWebGPU": "0/114 executed; browser startup/context failure"
+  },
+  "nativeFrameTiming": "unmeasured: pre-06:00 restriction, no quiet-window authorization",
+  "fullRemoteRun": "incomplete: connection lost after ten reconnect attempts, exit 255; no final JSON retrieved"
+}
