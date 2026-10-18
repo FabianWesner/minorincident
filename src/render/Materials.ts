@@ -103,8 +103,8 @@ export class Materials {
     return material;
   }
   /** Owned GPU crowd/prop graph: same light as heroes, with caller-authored swatches/eyes. */
-  shaded(base: Node<'vec3'>, glow?: Node<'vec3'>, opacity?: Node<'float'>, surface?: Node<'float'>, road?: Node<'float'>): PaletteMaterial {
-    return new PaletteMaterial('picketWhite', this.texture, this.lighting, 0, undefined, false, { base, glow, opacity, surface, road });
+  shaded(base: Node<'vec3'>, glow?: Node<'vec3'>, opacity?: Node<'float'>, surface?: Node<'float'>, road?: Node<'float'>, emissiveOnly?: Node<'float'>): PaletteMaterial {
+    return new PaletteMaterial('picketWhite', this.texture, this.lighting, 0, undefined, false, { base, glow, opacity, surface, road, emissiveOnly });
   }
   /** One shared material for every tree/hedge LOD; bottom vertices remain rooted. */
   foliage(world = false): PaletteMaterial {

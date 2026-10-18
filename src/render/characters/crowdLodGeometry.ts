@@ -1,9 +1,11 @@
-import { BufferAttribute, type BufferGeometry } from 'three';
+import { BufferAttribute, Vector3, type BufferGeometry } from 'three';
 import { MeshoptSimplifier } from 'meshoptimizer/simplifier';
 
 /** Rigid-part figures: only indices change. Original vertices, colors, eyes
- * and animation ownership survive; no triangle can span two animated parts. */
-export async function simplifyCrowdLod(geometry: BufferGeometry, maxError = .01, ratio = .35): Promise<void> {
+ * and animation ownership survive; no triangle can span two animated parts.
+ * Infected runtime bakes opt into surface retention; civilian shipped bakes
+ * retain their existing deterministic reduction. */
+export async function simplifyCrowdLod(geometry: BufferGeometry, maxError = .01, ratio = .35, preserveSurface = false): Promise<void> {
   if (!geometry.index) return;
   await MeshoptSimplifier.ready;
   const position = geometry.getAttribute('position'), part = geometry.getAttribute('_part_index');
@@ -32,6 +34,15 @@ export async function simplifyCrowdLod(geometry: BufferGeometry, maxError = .01,
   }
   const weights = [.001, .001, .001, .05, .05, .05, .1, 1, ...(geometry.hasAttribute('_vein') ? [1] : []), ...(geometry.hasAttribute('_gripPosition') ? [1, 1, 1] : [])];
   const result: number[] = [];
+  const a = new Vector3(), b = new Vector3(), c = new Vector3();
+  const area = (indices: ArrayLike<number>) => {
+    let sum = 0;
+    for (let i = 0; i < indices.length; i += 3) {
+      a.fromBufferAttribute(position, indices[i]); b.fromBufferAttribute(position, indices[i + 1]).sub(a); c.fromBufferAttribute(position, indices[i + 2]).sub(a);
+      sum += b.cross(c).length() / 2;
+    }
+    return sum;
+  };
   let maximumError = 0;
   for (const [owner, indices] of groups) {
     // The grip tessellator adds thousands of coplanar hand triangles. Let the
@@ -41,8 +52,12 @@ export async function simplifyCrowdLod(geometry: BufferGeometry, maxError = .01,
     const [reduced, error] = MeshoptSimplifier.simplifyWithAttributes(new Uint32Array(indices), position.array as Float32Array, 3, values, stride,
       weights, locks, Math.max(3, Math.floor(indices.length * targetRatio / 3) * 3), gripped ? Math.min(maxError, .001) : maxError,
       ['Permissive', 'Sparse', 'ErrorAbsolute']);
-    maximumError = Math.max(maximumError, error);
-    for (const index of reduced) result.push(index);
+    // Position error alone permits thin clothing/limb shells to collapse into
+    // disconnected patches. Keep the authored part if its surface erodes;
+    // bounds and eye locks cannot detect those missing interior surfaces.
+    const keep = preserveSurface && area(reduced) < area(indices) * .85;
+    if (!keep) maximumError = Math.max(maximumError, error);
+    for (const index of keep ? indices : reduced) result.push(index);
   }
   geometry.setIndex(new BufferAttribute(new Uint32Array(result), 1));
   geometry.userData.crowdLodError = maximumError;

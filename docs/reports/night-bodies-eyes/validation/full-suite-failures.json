@@ -1,0 +1,156 @@
+[
+  {
+    "file": "sim/ai/director.test.ts",
+    "title": "T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget",
+    "messages": [
+      "AssertionError: expected 5.884932999993907 to be less than or equal to 4\n    at /srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/tests/sim/ai/director.test.ts:44:520\n    at file:///srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  },
+  {
+    "file": "sim/levels/l10-assault.test.ts",
+    "title": "T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+    "messages": [
+      "AssertionError: expected 6.346849000023212 to be less than or equal to 4\n    at /srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/tests/sim/levels/l10-assault.test.ts:60:17\n    at file:///srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  },
+  {
+    "file": "sim/npc/campaign.test.ts",
+    "title": "T-E08-11-high @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity",
+    "messages": [
+      "AssertionError: L1 high: expected 4.838506000000052 to be less than or equal to 4\n    at /srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/tests/sim/npc/campaign.test.ts:57:43\n    at file:///srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  },
+  {
+    "file": "sim/performance/alpha-physical.test.ts",
+    "title": "T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms",
+    "messages": [
+      "AssertionError: expected 6.746178000001237 to be less than or equal to 4\n    at /srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/tests/sim/performance/alpha-physical.test.ts:29:101\n    at file:///srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  },
+  {
+    "file": "sim/performance/alpha-support.test.ts",
+    "title": "T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms",
+    "messages": [
+      "AssertionError: expected 7.8075710000121035 to be less than or equal to 4\n    at /srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/tests/sim/performance/alpha-support.test.ts:29:147\n    at file:///srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  },
+  {
+    "file": "sim/performance/alpha.test.ts",
+    "title": "T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms",
+    "messages": [
+      "AssertionError: expected 6.271224999974947 to be less than or equal to 4\n    at /srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/tests/sim/performance/alpha.test.ts:29:61\n    at file:///srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  },
+  {
+    "file": "sim/performance/horde.test.ts",
+    "title": "T-E18-02-200 @E18-AC02 @perf Node sim p95 200 living infected <= 4ms",
+    "messages": [
+      "AssertionError: expected 5.844354000000749 to be less than or equal to 4\n    at /srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/tests/sim/performance/horde.test.ts:9:98\n    at file:///srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  },
+  {
+    "file": "sim/performance/l10-finale.test.ts",
+    "title": "T-E32-20-perf-200 @E32-AC20 @E32-AC31 @E18-AC02 full-cap active dispersal predicate",
+    "messages": [
+      "AssertionError: expected 5.340668999997433 to be less than or equal to 4\n    at /srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/tests/sim/performance/l10-finale.test.ts:30:23\n    at file:///srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  },
+  {
+    "file": "sim/performance/mega-audio.test.ts",
+    "title": "T-E32-13-perf-200 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling",
+    "messages": [
+      "AssertionError: expected 4.787870000000112 to be less than or equal to 4\n    at /srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/tests/sim/performance/mega-audio.test.ts:14:94\n    at file:///srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  },
+  {
+    "file": "sim/performance/mega-moves.test.ts",
+    "title": "T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+    "messages": [
+      "AssertionError: expected 5.503002999990713 to be less than or equal to 4\n    at /srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/tests/sim/performance/mega-moves.test.ts:24:104\n    at file:///srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  },
+  {
+    "file": "sim/performance/zoo-s1.test.ts",
+    "title": "T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
+    "messages": [
+      "AssertionError: expected 9.404830000014044 to be less than or equal to 4\n    at /srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/tests/sim/performance/zoo-s1.test.ts:30:101\n    at file:///srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  },
+  {
+    "file": "sim/performance/zoo-s2.test.ts",
+    "title": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+    "messages": [
+      "AssertionError: expected 8.049454999971204 to be less than or equal to 4\n    at /srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/tests/sim/performance/zoo-s2.test.ts:26:68\n    at file:///srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  },
+  {
+    "file": "sim/performance/zoo-s3.test.ts",
+    "title": "T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+    "messages": [
+      "AssertionError: expected 5.420037999982014 to be less than or equal to 4\n    at /srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/tests/sim/performance/zoo-s3.test.ts:26:68\n    at file:///srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  },
+  {
+    "file": "sim/world/chunk-residency.test.ts",
+    "title": "T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95",
+    "messages": [
+      "AssertionError: expected 6.256050000010873 to be less than or equal to 4\n    at /srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/tests/sim/world/chunk-residency.test.ts:87:71\n    at file:///srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  },
+  {
+    "file": "unit/assets/civilian-bake-build.test.ts",
+    "title": "npc.civilian-elderly:lod1: shipped bake exactly matches runtime preparation",
+    "messages": [
+      "AssertionError: expected false to be true // Object.is equality\n    at /srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/tests/unit/assets/civilian-bake-build.test.ts:19:69\n    at file:///srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  },
+  {
+    "file": "unit/assets/civilian-bake-build.test.ts",
+    "title": "npc.civilian-elderly:lod2: shipped bake exactly matches runtime preparation",
+    "messages": [
+      "AssertionError: expected false to be true // Object.is equality\n    at /srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/tests/unit/assets/civilian-bake-build.test.ts:19:69\n    at file:///srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  },
+  {
+    "file": "unit/assets/civilian-bake-build.test.ts",
+    "title": "npc.civilian-man-a:lod2: shipped bake exactly matches runtime preparation",
+    "messages": [
+      "AssertionError: expected false to be true // Object.is equality\n    at /srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/tests/unit/assets/civilian-bake-build.test.ts:19:69\n    at file:///srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  },
+  {
+    "file": "unit/assets/civilian-bake-build.test.ts",
+    "title": "npc.civilian-man-b:lod2: shipped bake exactly matches runtime preparation",
+    "messages": [
+      "AssertionError: expected false to be true // Object.is equality\n    at /srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/tests/unit/assets/civilian-bake-build.test.ts:19:69\n    at file:///srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  },
+  {
+    "file": "unit/assets/civilian-bake-build.test.ts",
+    "title": "npc.civilian-woman-a:lod2: shipped bake exactly matches runtime preparation",
+    "messages": [
+      "AssertionError: expected false to be true // Object.is equality\n    at /srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/tests/unit/assets/civilian-bake-build.test.ts:19:69\n    at file:///srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  },
+  {
+    "file": "unit/assets/civilian-bake-build.test.ts",
+    "title": "npc.firefighter-alive:lod2: shipped bake exactly matches runtime preparation",
+    "messages": [
+      "AssertionError: expected false to be true // Object.is equality\n    at /srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/tests/unit/assets/civilian-bake-build.test.ts:19:69\n    at file:///srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  },
+  {
+    "file": "unit/assets/civilian-bake-build.test.ts",
+    "title": "npc.national-guard:lod2: shipped bake exactly matches runtime preparation",
+    "messages": [
+      "AssertionError: expected false to be true // Object.is equality\n    at /srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/tests/unit/assets/civilian-bake-build.test.ts:19:69\n    at file:///srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  },
+  {
+    "file": "unit/assets/civilian-bake-build.test.ts",
+    "title": "npc.police-officer:lod2: shipped bake exactly matches runtime preparation",
+    "messages": [
+      "AssertionError: expected false to be true // Object.is equality\n    at /srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/tests/unit/assets/civilian-bake-build.test.ts:19:69\n    at file:///srv/mi/jobs/night-bodies-eyes-a331e9-42963-1792350364/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+    ]
+  }
+]
