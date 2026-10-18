@@ -1,10 +1,10 @@
 #!/bin/sh
 # Machine-wide browser capacity. One unit = one live browser / Scene Lab session.
-# Three units retain most measured throughput while leaving room for the user's desktop.
+# Two units (10-18): three or more GPU browsers starved WindowServer (watchdog kill, user session lost on 10-16, 10-17, 10-18).
 # Playwright commands charge their worker count (default 2); other commands default to 1.
 # For an opaque wrapper, declare E2E_UNITS=1 or 2 explicitly. All lanes must agree on E2E_SLOTS.
 command -v lockf >/dev/null 2>&1 || exec "$@"
-slots="${E2E_SLOTS:-3}"
+slots="${E2E_SLOTS:-2}"
 case "$slots" in ''|*[!0-9]*|0) printf '%s\n' 'E2E_SLOTS must be a positive integer' >&2; exit 2;; esac
 workers=''; playwright=0; next_workers=0
 for arg in "$@"; do

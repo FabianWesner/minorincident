@@ -7,7 +7,7 @@ if [ "${MI_PERF_LOCK_HELD:-}" != 1 ]; then
     printf '%s\n' 'Run quiet-run directly, without an outer e2e-lock (it owns the browser locks).' >&2
     exit 1
   fi
-  slots="${E2E_SLOTS:-3}"
+  slots="${E2E_SLOTS:-2}"
   case "$slots" in ''|*[!0-9]*|0) printf '%s\n' 'E2E_SLOTS must be a positive integer' >&2; exit 2;; esac
   # Cover the legacy four-slot range during rollout and explicit four-unit runs too.
   # E2E_SLOTS=1 only serializes that caller; it does not make the whole Mac quiet.
