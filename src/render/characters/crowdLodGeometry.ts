@@ -1,5 +1,5 @@
 import { BufferAttribute, Vector3, type BufferGeometry } from 'three';
-import { MeshoptSimplifier } from 'meshoptimizer/simplifier';
+import { MeshoptSimplifier, type SimplifierFlags } from 'meshoptimizer/simplifier';
 
 /** Rigid-part figures: only indices change. Original vertices, colors, eyes
  * and animation ownership survive; no triangle can span two animated parts.
@@ -33,6 +33,8 @@ export async function simplifyCrowdLod(geometry: BufferGeometry, maxError = .01,
     groups.get(owner)!.push(a, b, c);
   }
   const weights = [.001, .001, .001, .05, .05, .05, .1, 1, ...(geometry.hasAttribute('_vein') ? [1] : []), ...(geometry.hasAttribute('_gripPosition') ? [1, 1, 1] : [])];
+  const flags: SimplifierFlags[] = ['Permissive', 'Sparse', 'ErrorAbsolute'];
+  if (preserveSurface) flags.push('PreserveFolds');
   const result: number[] = [];
   const a = new Vector3(), b = new Vector3(), c = new Vector3();
   const area = (indices: ArrayLike<number>) => {
@@ -49,13 +51,27 @@ export async function simplifyCrowdLod(geometry: BufferGeometry, maxError = .01,
     // error bound determine their density, with a tighter 1 mm skin margin.
     const gripped = grippedParts.has(owner);
     const targetRatio = gripped ? .01 : ratio;
-    const [reduced, error] = MeshoptSimplifier.simplifyWithAttributes(new Uint32Array(indices), position.array as Float32Array, 3, values, stride,
-      weights, locks, Math.max(3, Math.floor(indices.length * targetRatio / 3) * 3), gripped ? Math.min(maxError, .001) : maxError,
-      ['Permissive', 'Sparse', 'ErrorAbsolute']);
+    const sourceIndices = new Uint32Array(indices), target = Math.max(3, Math.floor(indices.length * targetRatio / 3) * 3);
+    const surface = preserveSurface ? area(indices) * .85 : 0;
+    const tolerance = gripped ? Math.min(maxError, .001) : maxError;
+    let [reduced, error] = MeshoptSimplifier.simplifyWithAttributes(sourceIndices, position.array as Float32Array, 3, values, stride,
+      weights, locks, target, tolerance, flags);
     // Position error alone permits thin clothing/limb shells to collapse into
-    // disconnected patches. Keep the authored part if its surface erodes;
-    // bounds and eye locks cannot detect those missing interior surfaces.
-    const keep = preserveSurface && area(reduced) < area(indices) * .85;
+    // disconnected patches. Search for the smallest retained part before restoring
+    // every authored triangle, which breaks the low-tier L5 budget.
+    // Bounds and eye locks cannot detect those missing interior surfaces.
+    if (preserveSurface && area(reduced) < surface) {
+      let low = target, high = indices.length;
+      let best: Uint32Array = sourceIndices, bestError = 0;
+      for (let retry = 0; retry < 7 && high - low > 3; retry++) {
+        const middle = Math.floor((low + high) / 6) * 3;
+        const [candidate, candidateError] = MeshoptSimplifier.simplifyWithAttributes(sourceIndices, position.array as Float32Array, 3, values, stride,
+          weights, locks, middle, tolerance, flags);
+        if (area(candidate) >= surface) { best = candidate; bestError = candidateError; high = middle; } else low = middle + 3;
+      }
+      reduced = best; error = bestError;
+    }
+    const keep = preserveSurface && area(reduced) < surface;
     if (!keep) maximumError = Math.max(maximumError, error);
     for (const index of keep ? indices : reduced) result.push(index);
   }

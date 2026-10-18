@@ -1,0 +1,1435 @@
+{
+  "name": "e18-infected-surface-lod",
+  "note": "Integration regression: 100 regular infected exercise runtime LOD2 at both tiers, all game zooms and both backends. Review continuous torsos/limbs, small red eyes and stable clothing silhouettes; retain the E18 low-tier 500k triangle and 300 draw limits. The real L5 counter test additionally covers the dense district budget.",
+  "ground": "asphalt",
+  "size": 40,
+  "time": "night",
+  "dof": false,
+  "infectedCap": 200,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        2
+      ]
+    },
+    {
+      "id": "inf-0",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -4.05,
+        0.0
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.common-worker"
+      }
+    },
+    {
+      "id": "inf-1",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -3.15,
+        0.0
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.jogger"
+      }
+    },
+    {
+      "id": "inf-2",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -2.25,
+        0.0
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.cashier"
+      }
+    },
+    {
+      "id": "inf-3",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -1.35,
+        0.0
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.delivery-driver"
+      }
+    },
+    {
+      "id": "inf-4",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -0.45,
+        0.0
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.suburban-mom"
+      }
+    },
+    {
+      "id": "inf-5",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        0.45,
+        0.0
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bbq-dad"
+      }
+    },
+    {
+      "id": "inf-6",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        1.35,
+        0.0
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bathrobe-neighbor"
+      }
+    },
+    {
+      "id": "inf-7",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        2.25,
+        0.0
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.common-worker"
+      }
+    },
+    {
+      "id": "inf-8",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        3.15,
+        0.0
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.jogger"
+      }
+    },
+    {
+      "id": "inf-9",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        4.05,
+        0.0
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.cashier"
+      }
+    },
+    {
+      "id": "inf-10",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -4.05,
+        -0.9
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.delivery-driver"
+      }
+    },
+    {
+      "id": "inf-11",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -3.15,
+        -0.9
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.suburban-mom"
+      }
+    },
+    {
+      "id": "inf-12",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -2.25,
+        -0.9
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bbq-dad"
+      }
+    },
+    {
+      "id": "inf-13",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -1.35,
+        -0.9
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bathrobe-neighbor"
+      }
+    },
+    {
+      "id": "inf-14",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -0.45,
+        -0.9
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.common-worker"
+      }
+    },
+    {
+      "id": "inf-15",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        0.45,
+        -0.9
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.jogger"
+      }
+    },
+    {
+      "id": "inf-16",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        1.35,
+        -0.9
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.cashier"
+      }
+    },
+    {
+      "id": "inf-17",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        2.25,
+        -0.9
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.delivery-driver"
+      }
+    },
+    {
+      "id": "inf-18",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        3.15,
+        -0.9
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.suburban-mom"
+      }
+    },
+    {
+      "id": "inf-19",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        4.05,
+        -0.9
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bbq-dad"
+      }
+    },
+    {
+      "id": "inf-20",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -4.05,
+        -1.8
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bathrobe-neighbor"
+      }
+    },
+    {
+      "id": "inf-21",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -3.15,
+        -1.8
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.common-worker"
+      }
+    },
+    {
+      "id": "inf-22",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -2.25,
+        -1.8
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.jogger"
+      }
+    },
+    {
+      "id": "inf-23",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -1.35,
+        -1.8
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.cashier"
+      }
+    },
+    {
+      "id": "inf-24",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -0.45,
+        -1.8
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.delivery-driver"
+      }
+    },
+    {
+      "id": "inf-25",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        0.45,
+        -1.8
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.suburban-mom"
+      }
+    },
+    {
+      "id": "inf-26",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        1.35,
+        -1.8
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bbq-dad"
+      }
+    },
+    {
+      "id": "inf-27",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        2.25,
+        -1.8
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bathrobe-neighbor"
+      }
+    },
+    {
+      "id": "inf-28",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        3.15,
+        -1.8
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.common-worker"
+      }
+    },
+    {
+      "id": "inf-29",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        4.05,
+        -1.8
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.jogger"
+      }
+    },
+    {
+      "id": "inf-30",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -4.05,
+        -2.7
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.cashier"
+      }
+    },
+    {
+      "id": "inf-31",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -3.15,
+        -2.7
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.delivery-driver"
+      }
+    },
+    {
+      "id": "inf-32",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -2.25,
+        -2.7
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.suburban-mom"
+      }
+    },
+    {
+      "id": "inf-33",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -1.35,
+        -2.7
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bbq-dad"
+      }
+    },
+    {
+      "id": "inf-34",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -0.45,
+        -2.7
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bathrobe-neighbor"
+      }
+    },
+    {
+      "id": "inf-35",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        0.45,
+        -2.7
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.common-worker"
+      }
+    },
+    {
+      "id": "inf-36",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        1.35,
+        -2.7
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.jogger"
+      }
+    },
+    {
+      "id": "inf-37",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        2.25,
+        -2.7
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.cashier"
+      }
+    },
+    {
+      "id": "inf-38",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        3.15,
+        -2.7
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.delivery-driver"
+      }
+    },
+    {
+      "id": "inf-39",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        4.05,
+        -2.7
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.suburban-mom"
+      }
+    },
+    {
+      "id": "inf-40",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -4.05,
+        -3.6
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bbq-dad"
+      }
+    },
+    {
+      "id": "inf-41",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -3.15,
+        -3.6
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bathrobe-neighbor"
+      }
+    },
+    {
+      "id": "inf-42",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -2.25,
+        -3.6
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.common-worker"
+      }
+    },
+    {
+      "id": "inf-43",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -1.35,
+        -3.6
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.jogger"
+      }
+    },
+    {
+      "id": "inf-44",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -0.45,
+        -3.6
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.cashier"
+      }
+    },
+    {
+      "id": "inf-45",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        0.45,
+        -3.6
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.delivery-driver"
+      }
+    },
+    {
+      "id": "inf-46",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        1.35,
+        -3.6
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.suburban-mom"
+      }
+    },
+    {
+      "id": "inf-47",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        2.25,
+        -3.6
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bbq-dad"
+      }
+    },
+    {
+      "id": "inf-48",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        3.15,
+        -3.6
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bathrobe-neighbor"
+      }
+    },
+    {
+      "id": "inf-49",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        4.05,
+        -3.6
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.common-worker"
+      }
+    },
+    {
+      "id": "inf-50",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -4.05,
+        -4.5
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.jogger"
+      }
+    },
+    {
+      "id": "inf-51",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -3.15,
+        -4.5
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.cashier"
+      }
+    },
+    {
+      "id": "inf-52",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -2.25,
+        -4.5
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.delivery-driver"
+      }
+    },
+    {
+      "id": "inf-53",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -1.35,
+        -4.5
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.suburban-mom"
+      }
+    },
+    {
+      "id": "inf-54",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -0.45,
+        -4.5
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bbq-dad"
+      }
+    },
+    {
+      "id": "inf-55",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        0.45,
+        -4.5
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bathrobe-neighbor"
+      }
+    },
+    {
+      "id": "inf-56",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        1.35,
+        -4.5
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.common-worker"
+      }
+    },
+    {
+      "id": "inf-57",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        2.25,
+        -4.5
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.jogger"
+      }
+    },
+    {
+      "id": "inf-58",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        3.15,
+        -4.5
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.cashier"
+      }
+    },
+    {
+      "id": "inf-59",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        4.05,
+        -4.5
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.delivery-driver"
+      }
+    },
+    {
+      "id": "inf-60",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -4.05,
+        -5.4
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.suburban-mom"
+      }
+    },
+    {
+      "id": "inf-61",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -3.15,
+        -5.4
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bbq-dad"
+      }
+    },
+    {
+      "id": "inf-62",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -2.25,
+        -5.4
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bathrobe-neighbor"
+      }
+    },
+    {
+      "id": "inf-63",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -1.35,
+        -5.4
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.common-worker"
+      }
+    },
+    {
+      "id": "inf-64",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -0.45,
+        -5.4
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.jogger"
+      }
+    },
+    {
+      "id": "inf-65",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        0.45,
+        -5.4
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.cashier"
+      }
+    },
+    {
+      "id": "inf-66",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        1.35,
+        -5.4
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.delivery-driver"
+      }
+    },
+    {
+      "id": "inf-67",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        2.25,
+        -5.4
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.suburban-mom"
+      }
+    },
+    {
+      "id": "inf-68",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        3.15,
+        -5.4
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bbq-dad"
+      }
+    },
+    {
+      "id": "inf-69",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        4.05,
+        -5.4
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bathrobe-neighbor"
+      }
+    },
+    {
+      "id": "inf-70",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -4.05,
+        -6.3
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.common-worker"
+      }
+    },
+    {
+      "id": "inf-71",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -3.15,
+        -6.3
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.jogger"
+      }
+    },
+    {
+      "id": "inf-72",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -2.25,
+        -6.3
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.cashier"
+      }
+    },
+    {
+      "id": "inf-73",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -1.35,
+        -6.3
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.delivery-driver"
+      }
+    },
+    {
+      "id": "inf-74",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -0.45,
+        -6.3
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.suburban-mom"
+      }
+    },
+    {
+      "id": "inf-75",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        0.45,
+        -6.3
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bbq-dad"
+      }
+    },
+    {
+      "id": "inf-76",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        1.35,
+        -6.3
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bathrobe-neighbor"
+      }
+    },
+    {
+      "id": "inf-77",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        2.25,
+        -6.3
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.common-worker"
+      }
+    },
+    {
+      "id": "inf-78",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        3.15,
+        -6.3
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.jogger"
+      }
+    },
+    {
+      "id": "inf-79",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        4.05,
+        -6.3
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.cashier"
+      }
+    },
+    {
+      "id": "inf-80",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -4.05,
+        -7.2
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.delivery-driver"
+      }
+    },
+    {
+      "id": "inf-81",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -3.15,
+        -7.2
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.suburban-mom"
+      }
+    },
+    {
+      "id": "inf-82",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -2.25,
+        -7.2
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bbq-dad"
+      }
+    },
+    {
+      "id": "inf-83",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -1.35,
+        -7.2
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bathrobe-neighbor"
+      }
+    },
+    {
+      "id": "inf-84",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -0.45,
+        -7.2
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.common-worker"
+      }
+    },
+    {
+      "id": "inf-85",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        0.45,
+        -7.2
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.jogger"
+      }
+    },
+    {
+      "id": "inf-86",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        1.35,
+        -7.2
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.cashier"
+      }
+    },
+    {
+      "id": "inf-87",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        2.25,
+        -7.2
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.delivery-driver"
+      }
+    },
+    {
+      "id": "inf-88",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        3.15,
+        -7.2
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.suburban-mom"
+      }
+    },
+    {
+      "id": "inf-89",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        4.05,
+        -7.2
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bbq-dad"
+      }
+    },
+    {
+      "id": "inf-90",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -4.05,
+        -8.1
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bathrobe-neighbor"
+      }
+    },
+    {
+      "id": "inf-91",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -3.15,
+        -8.1
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.common-worker"
+      }
+    },
+    {
+      "id": "inf-92",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -2.25,
+        -8.1
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.jogger"
+      }
+    },
+    {
+      "id": "inf-93",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -1.35,
+        -8.1
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.cashier"
+      }
+    },
+    {
+      "id": "inf-94",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        -0.45,
+        -8.1
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.delivery-driver"
+      }
+    },
+    {
+      "id": "inf-95",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        0.45,
+        -8.1
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.suburban-mom"
+      }
+    },
+    {
+      "id": "inf-96",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        1.35,
+        -8.1
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bbq-dad"
+      }
+    },
+    {
+      "id": "inf-97",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        2.25,
+        -8.1
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.bathrobe-neighbor"
+      }
+    },
+    {
+      "id": "inf-98",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        3.15,
+        -8.1
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.common-worker"
+      }
+    },
+    {
+      "id": "inf-99",
+      "kind": "infected",
+      "archetype": "infected.sprinter",
+      "at": [
+        4.05,
+        -8.1
+      ],
+      "yaw": -45,
+      "state": "idle",
+      "look": {
+        "model": "inf.jogger"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 30,
+  "sheet": 15,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000
+  }
+}
