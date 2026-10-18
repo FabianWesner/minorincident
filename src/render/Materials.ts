@@ -10,13 +10,15 @@ import type { Lighting } from './Lighting';
 
 /** Shared palette texture/material cache. Occluders request owned copies so fading cannot affect other props. */
 export class Materials {
-  readonly wind = uniform(0);
+  /** Shared render clock (Lighting.clock): the district view advances it once per frame. */
+  readonly wind;
   readonly texture: DataTexture;
   private readonly cache = new Map<string, PaletteMaterial>();
   private readonly nearestCache = new Map<string, number>();
   private readonly swatches = paletteTokens.map(token => new Color(palette[token]));
   private readonly owned: PaletteMaterial[] = [];
   constructor(private readonly lighting: Lighting) {
+    this.wind = lighting.clock;
     const data = new Uint8Array(paletteTokens.length * 8);
     const sheets: Partial<Record<PaletteToken, string>>[] = [{}, worldPalette];
     for (const [sheet, overrides] of sheets.entries()) paletteTokens.forEach((token, i) => {

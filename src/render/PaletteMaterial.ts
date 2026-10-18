@@ -53,7 +53,12 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
         return vec4(mask, this.fade.mul(nodes?.opacity ?? 1));
       }
       const core = normalWorld.dot(lighting.direction).smoothstep(lighting.coreShadowEdgeHigh, lighting.coreShadowEdgeLow);
-      const shadow = max(core, caughtShadow.oneMinus()).clamp(0, 1).mul(lighting.look.nodes.shadowIntensity);
+      // Atmosphere 2: drifting cloud shadows on day levels (look.cloudShadow, 0 at night) join the sun shadow term,
+      // so cloud patches take the authored shadow tint. Two crossed sines: ALU only, no texture fetch.
+      const look = lighting.look.nodes, cloudUv = positionWorld.xz.div(look.cloudScale).mul(6.283).add(vec2(lighting.clock.mul(look.cloudSpeed).mul(.3), lighting.clock.mul(look.cloudSpeed).mul(.18)));
+      const cloudField = cloudUv.x.add(cloudUv.y.mul(.7).sin().mul(1.3)).sin().mul(cloudUv.y.mul(.9).add(cloudUv.x.mul(.6).add(1.7).sin().mul(1.1)).sin());
+      const cloud = cloudField.smoothstep(0, .55).mul(look.cloudShadow);
+      const shadow = max(max(core, caughtShadow.oneMinus()), cloud).clamp(0, 1).mul(lighting.look.nodes.shadowIntensity);
       const bounce = normalWorld.y.negate().smoothstep(-.2, 1).mul(positionWorld.y.max(0).div(2).oneMinus().max(0).pow(2)).mul(lighting.look.nodes.bounceStrength);
       // A few soft-edged splats in part-local space follow the animated surface.
       // A fragment hash here turned even one kill into pixel noise on skin/hair.
@@ -121,6 +126,12 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       const controlled = mix(luminance(shaded), shaded, lighting.look.nodes.saturation);
       const output = emissive > 0 ? base.div(luminance(base).max(0.001)).mul(emissive).mul(this.emissivePower) : mix(controlled.add(nodes?.glow ? nodes.glow.mul(this.emissivePower) : 0), lighting.radialFog, rangeFogFactor(lighting.fogNear, lighting.fogFar));
       const result = output.toVar();
+      // Atmosphere 2: low camera-relative haze. Starts beyond the focus (the courier never hazes), thickest near the
+      // ground so roofs and lamp heads stand out of it; emissive eyes/lamps skip it (threat readability).
+      if (!emissive) {
+        const low = positionWorld.y.div(lighting.look.nodes.hazeHeight).clamp(0, 1).oneMinus().mul(.6).add(.4);
+        result.assign(mix(result, lighting.look.nodes.haze, rangeFogFactor(lighting.hazeNear, lighting.hazeFar).mul(low).mul(lighting.look.nodes.hazeAmount)));
+      }
       if (mode & flags.flash) result.addAssign(weatherSurface.flash);
       if (mode & flags.wet) If(weatherSurface.wetness.greaterThan(.3), () => {
         const wet = weatherSurface.wetness.mul(normalWorld.y.max(0));

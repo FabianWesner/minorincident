@@ -5,8 +5,12 @@ import { resolve } from 'node:path';
 import { SceneSession, stopServer, port, origin, type Backend } from '../scenelab/session';
 
 const phase = process.argv[2] ?? 'before', backend = (process.argv[3] ?? 'webgl2') as Backend;
-const root = `docs/reports/atmosphere/${phase}/${backend}`;
+const root = `${process.env.ATMOSPHERE_OUT ?? 'docs/reports/atmosphere'}/${phase}/${backend}`;
+const zooms = (process.env.ATMOSPHERE_ZOOMS ?? '0.5,1,1.5').split(',').map(Number);
+const tiers = (process.env.ATMOSPHERE_TIERS ?? 'high,low').split(',') as ('high' | 'low')[];
+const levels = (process.env.ATMOSPHERE_LEVELS ?? '1,2,3,4,5,6,7,8,9,10').split(',').map(Number);
 const rows: object[] = [];
+const look = JSON.parse(process.env.ATMOSPHERE_LOOK ?? '{}') as Record<string, Record<string, string | number>>;
 let baselineServer: ReturnType<typeof spawn> | undefined;
 try {
   if (process.env.ATMOSPHERE_BASELINE_DIST) {
@@ -18,25 +22,27 @@ try {
       await new Promise(resolve => setTimeout(resolve, 100));
     }
   }
-  for (const tier of ['high', 'low'] as const) {
+  for (const tier of tiers) {
     const session = new SceneSession({ backend, tier, viewport: { width: 960, height: 540 } });
     try {
       await session.open();
-      for (let n = 1; n <= 10; n++) {
+      for (const n of levels) {
         const level = `L${n}`;
         try {
-          await session.page.evaluate(async level => {
+          await session.page.evaluate(async ({ level, look }) => {
             const api = window.__SS__!;
             await api.loadLevel(level, { seed: 1 }); api.pause(); api.cheats.god(true);
             api.settings.set({ cameraShake: false });
             const game = (window.__SCENE__ as unknown as { game: import('../../src/Game').Game }).game;
             // Keep the real follow rig, bypassing only the opening cinematic for this still audit.
             game.view.view.follow(); game.view.view.pull(0, 0, 0);
+            // Tuning aid: ATMOSPHERE_LOOK applies a live look patch per level ({"L1": {...worldLook keys}}).
+            if (look[level]) game.view.setLook({ version: 1, worldLook: look[level], palette: {} });
             for (let i = 0; i < 4; i++) game.view.update(1);
             await api.screenshotReady();
-          }, level);
+          }, { level, look });
           await session.page.addStyleTag({ content: 'body > :not(#game), #game > :not(canvas) { visibility: hidden !important; }' });
-          for (const zoom of [0.5, 1, 1.5]) {
+          for (const zoom of zooms) {
             const state = await session.page.evaluate(async zoom => {
               const game = (window.__SCENE__ as unknown as { game: import('../../src/Game').Game }).game;
               const rig = game.view.view, target = { x: rig.focus.x, y: rig.focus.y + .72, z: rig.focus.z }, driving = rig.driving, convoy = rig.convoy;
