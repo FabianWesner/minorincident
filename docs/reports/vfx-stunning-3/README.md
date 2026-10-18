@@ -76,7 +76,7 @@ Low is back under main. High is well under the 50 ms E18 hitch budget.
 
 - `npm run typecheck`, `npm run lint`: pass.
 - Local VFX/E27/PostFx units (11 files, 45 tests): pass. That includes tracers, contact-slot budgets and T-E27-03p (I fitted the work to them; no assertion was changed).
-- Remote full `tests/unit tests/levels tests/sim`: see the report line below.
+- Remote full `tests/unit tests/levels tests/sim` (Hetzner, commit ebe001b): 503 files pass, 3 skipped, 1 failed. The failure is `static.test.ts` T-E01-01b (typecheck + lint + build), which **timed out at 184 s against its 180 s limit** on a runner at load ~7. The same three commands pass locally without warnings.
 - Browser: 120/120 Scene Lab runs; first-blast perf 28/28 runs pass; explosions.spec perf 4/4 pass.
 
 ## Open / unmeasured
