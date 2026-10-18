@@ -1,0 +1,296 @@
+{
+  "target": "E26",
+  "success": true,
+  "startTime": 1792356983518,
+  "passed": 34,
+  "failed": 0,
+  "pending": 3123,
+  "total": 3157,
+  "selectedAssertions": [
+    {
+      "fullName": "S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash",
+      "status": "passed",
+      "duration": 467.87282900000037,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E26-02 @E26-AC02 prop-yard 300 authored bodies sleep after 1s without interaction",
+      "status": "passed",
+      "duration": 320.091586999999,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E26-06 @E26-AC06 staged awake budget freezes farthest props after waking 250",
+      "status": "passed",
+      "duration": 32.534449000002496,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E26-07 @E26-AC07 every production movable resets home or removes within one tick below -5m",
+      "status": "passed",
+      "duration": 41.36056800000006,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E26-09 @E26-AC09 coverage rejects overlaps and low fill; 1.5s brace pins props and blocks navigation",
+      "status": "passed",
+      "duration": 70.96269499999835,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E26-10 @E26-AC10 ten spaced runners deal defined DPS; Brute fivefold; breaking releases props and nav in the same tick",
+      "status": "passed",
+      "duration": 157.82572599999912,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E26-12 @E26-AC12 stand 2s boards 200HP; repairs 25% per 2s; moving interrupts progress",
+      "status": "passed",
+      "duration": 55.613860000001296,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E26-03 @E26-AC03 authored 35kg medium push slows to 55%; heavy requires shoulder upgrade",
+      "status": "passed",
+      "duration": 11.094568000000436,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E26-04 @E26 @E26-AC04 real kick launches cone at 6m/s and momentum downs a runner",
+      "status": "passed",
+      "duration": 19.652996000000712,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E26-05 @E26 @E26-AC05 blast impulse is delayed, upward and linear; outside radius stays asleep",
+      "status": "passed",
+      "duration": 31.320596000001387,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E26-06b @E26 @E26-AC06 explosion wakes 250 bodies within both tier limits, farthest freeze first",
+      "status": "passed",
+      "duration": 31.923452999999427,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E26-07b @E26 @E26-AC07 remove flag disables a fallen prop without respawning it",
+      "status": "passed",
+      "duration": 10.928035000000818,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E26-08 @E26 @E26-AC08 displaced resting dumpster updates nav in 0.5s, short routes detour and long routes attack",
+      "status": "passed",
+      "duration": 32.17280099999698,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E26-11 @E26 @E26-AC11 runners vault low sandbags in 1.2s; crawlers/heavies cannot; cover stops front shots",
+      "status": "passed",
+      "duration": 42.23185000000012,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E26-13 @E26 @E26-AC13 parked car braces at 100% coverage and twice car HP; break releases it",
+      "status": "passed",
+      "duration": 98.13176600000224,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E26-11b @E26 @E26-AC11 pooled heavies cannot inherit an interrupted runner vault",
+      "status": "passed",
+      "duration": 5.881024999998772,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E26-15 @E26 @E26-AC15 60s push/kick/explosion tape has identical repeat state hashes",
+      "status": "passed",
+      "duration": 1354.4029139999984,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E26-14 @E26 @E26-AC14 complete bot fills/braces two slots and defense reduces core arrivals >=40%",
+      "status": "passed",
+      "duration": 5810.373701000004,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E26-09b @E26 @E26-AC09 overlapping props do not double-count slot coverage",
+      "status": "passed",
+      "duration": 1.8079769999967539,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E26-03b @E26 @E26-AC03 authored 35kg shopping cart moves along push direction at 55% speed",
+      "status": "passed",
+      "duration": 13.935869000000821,
+      "failureMessages": []
+    },
+    {
+      "fullName": "S-05-foundation @smoke empty scripted 1800-tick golden hash",
+      "status": "passed",
+      "duration": 387.58959700000014,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-02b @E27 @E27-AC02 @E26-AC05 the radial impulse has an upward bias, scales with mass and lands one tick later",
+      "status": "passed",
+      "duration": 178.34370300000228,
+      "failureMessages": []
+    },
+    {
+      "fullName": "E26 authored pushable props @E26 a moved prop frozen by the awake cap blocks its resting footprint in the same tick",
+      "status": "passed",
+      "duration": 384.50933200000145,
+      "failureMessages": []
+    },
+    {
+      "fullName": "E26 authored pushable props @E26 resting authored benches block civilian, infected and ally navigation from the first frame",
+      "status": "passed",
+      "duration": 253.47244900000078,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E26 authored GLB records are reproduced at layout build with masses, collision shapes and break rules",
+      "status": "passed",
+      "duration": 126.78527300000133,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E26-01 @E26 @E26-AC01 every movable prop GLB validates mass band, collider bounds, COM and explosion references",
+      "status": "passed",
+      "duration": 262.33434900000066,
+      "failureMessages": []
+    },
+    {
+      "fullName": "S-06 @E05 @smoke each category fires/hits; swept projectile cannot tunnel through a dummy",
+      "status": "passed",
+      "duration": 291.26909700000033,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E26 mission barricade actors use real HP/blockers, emit filtered break events and restore at checkpoints",
+      "status": "passed",
+      "duration": 220.48578600000474,
+      "failureMessages": []
+    },
+    {
+      "fullName": "20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07",
+      "status": "passed",
+      "duration": 2911.223795,
+      "failureMessages": []
+    },
+    {
+      "fullName": "stage1 navigation capsule and NPC traces meet motion budgets @smoke",
+      "status": "passed",
+      "duration": 231.61790199999996,
+      "failureMessages": []
+    },
+    {
+      "fullName": "crowd fades preserve head position when clips change or interrupt @smoke",
+      "status": "passed",
+      "duration": 192.53766899999937,
+      "failureMessages": []
+    },
+    {
+      "fullName": "E26 CLI @E26 reserves quiet timing separately and retains functional/perf evidence",
+      "status": "passed",
+      "duration": 473.94034199998714,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E26 @E28 a quiet timing failure keeps the verifier red and records its exit code",
+      "status": "passed",
+      "duration": 364.712612000003,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E26 @E28 quiet admission refusal cannot reuse functional results or a previous GPU artifact",
+      "status": "passed",
+      "duration": 379.1185370000021,
+      "failureMessages": []
+    }
+  ],
+  "checks": {
+    "target": "E26",
+    "epics": [
+      "E26"
+    ],
+    "pattern": "@(?:E26)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+    "browserOmitted": true,
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/sim-lock.sh",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "@(?:E26)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--maxWorkers=4",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E26/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "@(?:E26)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--grep-invert",
+          "@perf",
+          "--workers=1"
+        ],
+        "exitCode": null
+      },
+      {
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "^(?=.*(?:@(?:E26)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)))(?=.*@perf)",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": null
+      }
+    ]
+  }
+}

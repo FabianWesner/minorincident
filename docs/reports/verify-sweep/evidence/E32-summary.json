@@ -1,0 +1,1443 @@
+{
+  "target": "E32",
+  "success": true,
+  "startTime": 1792358407548,
+  "passed": 225,
+  "failed": 0,
+  "pending": 2932,
+  "total": 3157,
+  "selectedAssertions": [
+    {
+      "fullName": "S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash",
+      "status": "passed",
+      "duration": 404.9424939999999,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-21-E3b @E32-AC21 seed-32 rocket checkpoint route arrival high",
+      "status": "passed",
+      "duration": 32526.773486,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-21-E3b @E32-AC21 seed-32 rocket checkpoint route arrival low",
+      "status": "passed",
+      "duration": 18222.949841,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+      "status": "passed",
+      "duration": 12143.113881000005,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-21-E3-low @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+      "status": "passed",
+      "duration": 10888.921942,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-21-E3-overlap-high @E32-AC06 @E32-AC21 full cap defers assault, dead bodies survive replenishment and revisit",
+      "status": "passed",
+      "duration": 8573.480767000001,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-21-E3-overlap-low @E32-AC06 @E32-AC21 full cap defers assault, dead bodies survive replenishment and revisit",
+      "status": "passed",
+      "duration": 7539.459268000006,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-10-E3 @E32-AC10 production composition introduces one reserved pursuer behind R1",
+      "status": "passed",
+      "duration": 6079.613614999995,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-03-D1-D2-high @E32-AC02 @E32-AC05 @E32-AC03 @E32-AC27 @E32-AC28 route through R1–R4 acquires the ordered arsenal and retains ground/nav/checkpoint support",
+      "status": "passed",
+      "duration": 21889.270554999996,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-03-D1-D2-low @E32-AC02 @E32-AC05 @E32-AC03 @E32-AC27 @E32-AC28 route through R1–R4 acquires the ordered arsenal and retains ground/nav/checkpoint support",
+      "status": "passed",
+      "duration": 17710.376265999992,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-28-D1 @E32-AC10 @E32-AC28 authored pursuit crosses the R1/R2 seam using shared residency",
+      "status": "passed",
+      "duration": 7348.476116000005,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-20-perf-200 @E32-AC20 @E32-AC31 @E18-AC02 full-cap active dispersal predicate",
+      "status": "passed",
+      "duration": 5316.180122999998,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-20-perf-100 @E32-AC20 @E32-AC31 @E18-AC02 full-cap active dispersal predicate",
+      "status": "passed",
+      "duration": 2614.409222999995,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-13-perf-200 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling",
+      "status": "passed",
+      "duration": 3339.6755499999854,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-13-perf-100 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling",
+      "status": "passed",
+      "duration": 1364.1905449999904,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+      "status": "passed",
+      "duration": 1643.9245949999895,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-11-perf-100 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+      "status": "passed",
+      "duration": 701.53923699999,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-28-S4 @E31-AC13 @E32-AC10 @E32-AC28 Mega crosses coarse/detailed residency without >0.5 m tick jumps",
+      "status": "passed",
+      "duration": 3043.959996,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-32 @E32-AC32 continuous seed 1 L1 through L10 reaches credits with real campaign handovers",
+      "status": "passed",
+      "duration": 547979.305312,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-04-complete @E32-AC04 one seed completes the full L10 route with ordinary inputs and regional timing",
+      "status": "passed",
+      "duration": 106932.14022499998,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-09-bars @E32 @E32-AC09 regular Alpha bars remain smaller than Mega bars on desktop and phone",
+      "status": "passed",
+      "duration": 2.851381999993464,
+      "failureMessages": []
+    },
+    {
+      "fullName": "S-05-foundation @smoke empty scripted 1800-tick golden hash",
+      "status": "passed",
+      "duration": 250.84227200000896,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-13-audio @E32-AC13 bands increase the same recorded cue by at least 6 dB per band",
+      "status": "passed",
+      "duration": 2.858574999991106,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-14-ring @E32-AC14 ring exposes only a band, centered on the player; HUD excludes Mega pins",
+      "status": "passed",
+      "duration": 1.361696000007214,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-15-recording @E32-AC15 campus recording reuses an instrumental stock slice and carries all story facts",
+      "status": "passed",
+      "duration": 0.8758680000028107,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E32-AC13 finale music reuses licensed L6 recordings, tempo and the existing director transitions",
+      "status": "passed",
+      "duration": 0.7411969999957364,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E32-AC13 processed cues retain the original sprite buffer/offset and their own captions/priority",
+      "status": "passed",
+      "duration": 1.7096460000029765,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-18a @E32-AC18 spin-up comes before the first round, then 20 rounds/s",
+      "status": "passed",
+      "duration": 6.811446999985492,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-19-heat @E32-AC19 heat rises 12.5%/s and locks the gun at 100% after 8 s of fire",
+      "status": "passed",
+      "duration": 2.6325630000210367,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-19-cooling @E32-AC19 cooling starts 0.5 s after the last round at 20%/s; unlock only below 40%",
+      "status": "passed",
+      "duration": 2.2762560000119265,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-19-tapping @E32-AC19 tapping the trigger cannot shed heat inside the 0.5 s delay",
+      "status": "passed",
+      "duration": 0.4529460000048857,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-19-snapshot @E32-AC19 snapshot keeps heat and lock, barrels start still after a reload",
+      "status": "passed",
+      "duration": 0.9390650000132155,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-09a @E32 @E32-AC09 regular Alpha region ranges and high/low assault limits match the epic",
+      "status": "passed",
+      "duration": 3.8969470000010915,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-07-coats @E32 @E32-AC07 seeded dog coats are stable, cover all assets and preserve healthy/infected identity",
+      "status": "passed",
+      "duration": 4.295021999976598,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-17-D4 @E32-AC03 @E32-AC17 R7 route, installation and three dodge lanes connect to the console",
+      "status": "passed",
+      "duration": 3121.777193999995,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-03-D3 @E32-AC03 @E32-AC15 @E32-AC28 campus and corridor story anchors and full route are walkable",
+      "status": "passed",
+      "duration": 2871.571253000002,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-06-D3 @E32-AC06 regional threat is authored by route depth with shared-cap headroom",
+      "status": "passed",
+      "duration": 0.8622619999805465,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-15-D3 @E32-AC15 terminal operator socket faces the reachable interaction anchor",
+      "status": "passed",
+      "duration": 0.21207700000377372,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-03-D1-D2 @E32-AC03 @E32-AC28 R1–R4 geometry, route lengths and pickup anchors agree",
+      "status": "passed",
+      "duration": 2821.0754370000213,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-28-D1-ground @E32-AC28 exported cells retain shared 100 m edges within 2 cm",
+      "status": "passed",
+      "duration": 169.76669499999844,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E18 @E32 reach flood preserves paths, ties and budgets at 0, perimeter false",
+      "status": "passed",
+      "duration": 165.09638699999778,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E18 @E32 reach flood preserves paths, ties and budgets at 0, perimeter true",
+      "status": "passed",
+      "duration": 39.77081400001771,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E18 @E32 reach flood preserves paths, ties and budgets at 3980.125, perimeter false",
+      "status": "passed",
+      "duration": 85.58104099999764,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E18 @E32 reach flood preserves paths, ties and budgets at 3980.125, perimeter true",
+      "status": "passed",
+      "duration": 23.910753999982262,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E32 repeated unbudgeted floods reuse only exact answers and copy the returned path",
+      "status": "passed",
+      "duration": 5.321212000009837,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E32 exact flood memo invalidates for blocker edits, perimeter changes, rebakes and recentering",
+      "status": "passed",
+      "duration": 9.602857999998378,
+      "failureMessages": []
+    },
+    {
+      "fullName": "stage1 navigation capsule and NPC traces meet motion budgets @smoke",
+      "status": "passed",
+      "duration": 147.06501000002027,
+      "failureMessages": []
+    },
+    {
+      "fullName": "crowd fades preserve head position when clips change or interrupt @smoke",
+      "status": "passed",
+      "duration": 162.54536899999948,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-02 @E32 @E32-AC02 standalone preset has axe only and retains nonweapon progression",
+      "status": "passed",
+      "duration": 7.588351000013063,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-05-ammo @E32 @E32-AC05 all reacquired campaign firearms are bottomless with their existing cooldowns",
+      "status": "passed",
+      "duration": 4.191789999982575,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-01-data @E32 @E32-AC01 graph validates, including when later geometry has not landed",
+      "status": "passed",
+      "duration": 5.549509000004036,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-27-invalid @E32 @E32-AC27 malformed persisted checkpoint is rejected",
+      "status": "passed",
+      "duration": 2.237494000000879,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L10-Q2 finale Scene Lab @E32 T-E32-Q2-matrix-options lets npm script callers select WebGL2 and the Q2 subset",
+      "status": "passed",
+      "duration": 5.4934139999968465,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L10-Q2 finale Scene Lab @E32 T-E32-Q2-catalog @E32-AC30 reuses shipped fixtures and resolves all numeric gates in the matrix",
+      "status": "passed",
+      "duration": 6.476882999995723,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L10-Q2 finale Scene Lab @E32 T-E32-Q2-mist @E32-AC08 @E32-AC23 rejects an unreleased front, a surviving species and a harmed control",
+      "status": "passed",
+      "duration": 7.923397999984445,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L10-Q2 finale Scene Lab @E32 T-E32-Q2-heat-hud @E32-AC19 rejects an absent heat HUD or a stale heat value",
+      "status": "passed",
+      "duration": 0.6897199999948498,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L10-Q2 finale Scene Lab @E32 T-E32-Q2-seam @E32-AC28 rejects a courier that never crosses the terrain seam",
+      "status": "passed",
+      "duration": 0.39278499997453764,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L10-Q2 finale Scene Lab @E32 T-E32-Q2-charge @E32-AC20 rejects missing boundary coverage, lost charge and advance outside the radius",
+      "status": "passed",
+      "duration": 0.49758999998448417,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L10-Q1 Scene Lab catalog @E32 compares Mega and Alpha outside the same courier reveal, including its dither rim",
+      "status": "passed",
+      "duration": 6.089848999981768,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L10-Q1 Scene Lab catalog @E32 keeps the Mega readable relative to an Alpha without requiring a larger body",
+      "status": "passed",
+      "duration": 1.351236999995308,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L10-Q1 Scene Lab catalog @E32 Q3 verifier admits one functional browser while other lanes occupy two slots",
+      "status": "passed",
+      "duration": 0.39822499998263083,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L10-Q1 Scene Lab catalog @E32 T-E32-30-catalog @E32-AC30 resolves every fixture at the game camera and includes it in scene:matrix",
+      "status": "passed",
+      "duration": 8.129122000013012,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L10-Q1 Scene Lab catalog @E32 T-E32-30-regions @E32-AC30 covers all seven production district regions without scaling props",
+      "status": "passed",
+      "duration": 0.7799789999844506,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L10-Q1 Scene Lab catalog @E32 T-E32-07-dog @E32-AC07 retains seeded runtime coats and the real chase telegraph",
+      "status": "passed",
+      "duration": 0.5762070000055246,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L10-Q1 Scene Lab catalog @E32 T-E32-10/11/14-fixtures @E32-AC10 @E32-AC11 @E32-AC14 uses one persistent pursuit and the production move scheduler/HUD",
+      "status": "passed",
+      "duration": 1.433591000008164,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L10-Q1 Scene Lab catalog @E32 T-E32-16-carry @E32-AC16 restores the real carried checkpoint for both courier rigs",
+      "status": "passed",
+      "duration": 0.3381309999967925,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L10-Q1 Scene Lab catalog @E32 T-E32-09-edge-noise @E32-AC09 rejects black/white triangles while accepting a continuous dark silhouette",
+      "status": "passed",
+      "duration": 2.6653450000158045,
+      "failureMessages": []
+    },
+    {
+      "fullName": "E32 verifier selects every tagged native performance case @E32-AC31",
+      "status": "passed",
+      "duration": 6.96712899999693,
+      "failureMessages": []
+    },
+    {
+      "fullName": "every human crowd model keeps its complete identity through poses, tiers, LODs and restore @E07 @E08 @E32",
+      "status": "passed",
+      "duration": 488.22993299999507,
+      "failureMessages": []
+    },
+    {
+      "fullName": "LOD2 and frozen bodies keep hood/cap/hat geometry, colour and head transform without stacking authored headwear @E07 @E18 @E32",
+      "status": "passed",
+      "duration": 35.576361999992514,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-07-pet-preload @E32 @E32-AC07 seeded healthy dog palettes are never registered as human crowd skins",
+      "status": "passed",
+      "duration": 2.213119000021834,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-23-fall-inf.dog @E32-AC23 shared death rolls the whole animal rig and rests on the ground",
+      "status": "passed",
+      "duration": 55.141422999993665,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-23-fall-inf.lion @E32-AC23 shared death rolls the whole animal rig and rests on the ground",
+      "status": "passed",
+      "duration": 19.413266999996267,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-23-fall-inf.gorilla @E32-AC23 shared death rolls the whole animal rig and rests on the ground",
+      "status": "passed",
+      "duration": 14.860463000019081,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-23-fall-inf.elephant @E32-AC23 shared death rolls the whole animal rig and rests on the ground",
+      "status": "passed",
+      "duration": 5.910655000014231,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-23-fall-inf.zebra @E32-AC23 shared death rolls the whole animal rig and rests on the ground",
+      "status": "passed",
+      "duration": 5.201067999994848,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-23-fall-inf.flamingo @E32-AC23 shared death rolls the whole animal rig and rests on the ground",
+      "status": "passed",
+      "duration": 13.787865999998758,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-28-lods-high @E32-AC28 two-second walking horizon loads off-screen near tiers without drawing them",
+      "status": "passed",
+      "duration": 7.996444999997038,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-28-lods-low @E32-AC28 two-second walking horizon loads off-screen near tiers without drawing them",
+      "status": "passed",
+      "duration": 0.8814180000044871,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-28-residency @E32-AC28 production L10 tier swaps use the load gate from the first playable frame",
+      "status": "passed",
+      "duration": 3.1307859999942593,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E32 @E18 streamed gun waits for HDR compilation; disposed false",
+      "status": "passed",
+      "duration": 6.609452000004239,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E32 @E18 streamed gun waits for HDR compilation; disposed true",
+      "status": "passed",
+      "duration": 0.730435999983456,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-26-camera-S9 @E32-AC26 epilogue pull widens the follow rig while wheel zoom, player tracking and resize keep working",
+      "status": "passed",
+      "duration": 8.247143999993568,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-23-mist-pool-high @E32-AC23 @E18-AC06 cure shares the fixed smoke pool and deaths make no blood/gibs",
+      "status": "passed",
+      "duration": 174.65801000001375,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-23-mist-pool-low @E32-AC23 @E18-AC06 cure shares the fixed smoke pool and deaths make no blood/gibs",
+      "status": "passed",
+      "duration": 44.72025899999426,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L10 research-campus seed 1 Alpha paths around a parked hull @E32-AC09",
+      "status": "passed",
+      "duration": 230.64253300000564,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L10 destroyed-corridor seed 1 Alpha paths around a parked hull @E32-AC09",
+      "status": "passed",
+      "duration": 143.87720499999705,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-01-alpha @E07-AC01 @E29-AC07 @E30-AC10 @E32-AC09 Alpha has 300 effective HP and authored ordinary contact tuning",
+      "status": "passed",
+      "duration": 81.32064499999979,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-handgun @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 resistance landed hits and permanence",
+      "status": "passed",
+      "duration": 10.853559999988647,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-army-mg @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 resistance landed hits and permanence",
+      "status": "passed",
+      "duration": 5.613800000021001,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-shotgun @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 resistance landed hits and permanence",
+      "status": "passed",
+      "duration": 3.758279000001494,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-rocket-launcher @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 resistance landed hits and permanence",
+      "status": "passed",
+      "duration": 2.683328999992227,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-melee @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 kick preserves Alpha HP and upright reaction; ordinary contact knocks a soldier down for 72 ticks",
+      "status": "passed",
+      "duration": 57.48161899999832,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-alpha.charge @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 33.49794199998723,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-alpha.ground-slam @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 27.542742000019643,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-alpha.grab-throw @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 41.24604399999953,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-alpha.roar @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 45.04578000001493,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-lion.pounce @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 14.832712000003085,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-lion.flank @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 11.088779999990948,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-gorilla.roar @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 15.188064999994822,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-gorilla.pound @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 11.313630999997258,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-gorilla.grab-throw @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 9.226927000010619,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-elephant.charge @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 9.192844000004698,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-elephant.swipe @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 12.993853000021772,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-zebra.kick @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 8.37936200000695,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-zebra.stampede @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 18.63980299999821,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-flamingo.dive @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 14.398489999992307,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-alpha-checkpoint-false @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 checkpoint rebases pending specials and cooldowns",
+      "status": "passed",
+      "duration": 21.76799399999436,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-alpha-checkpoint-true @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 checkpoint rebases pending specials and cooldowns",
+      "status": "passed",
+      "duration": 13.429116999992402,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-alpha-independent @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 another move has its own cooldown and retargeting never resets the first",
+      "status": "passed",
+      "duration": 19.106234999984736,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-live-handgun @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 real sustained firing reaches the authored resistance fixture",
+      "status": "passed",
+      "duration": 130.4209790000168,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-live-army-mg @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 real sustained firing reaches the authored resistance fixture",
+      "status": "passed",
+      "duration": 38.37081500000204,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-live-shotgun @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 real sustained firing reaches the authored resistance fixture",
+      "status": "passed",
+      "duration": 5.666688000026625,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-selection-alpha.charge @E07-AC0 @E29-AC07 @E30-AC10 @E32-AC095 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 chase selects each available move through the merged scheduler",
+      "status": "passed",
+      "duration": 4.970716000010725,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-selection-alpha.ground-slam @E07-AC0 @E29-AC07 @E30-AC10 @E32-AC095 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 chase selects each available move through the merged scheduler",
+      "status": "passed",
+      "duration": 7.938106999994488,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-selection-alpha.grab-throw @E07-AC0 @E29-AC07 @E30-AC10 @E32-AC095 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 chase selects each available move through the merged scheduler",
+      "status": "passed",
+      "duration": 10.55789499997627,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-selection-alpha.roar @E07-AC0 @E29-AC07 @E30-AC10 @E32-AC095 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 chase selects each available move through the merged scheduler",
+      "status": "passed",
+      "duration": 8.995774999988498,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-09-count-high @E32 @E32-AC09 authored regional quotas include dead records and exclude Mega; mixed infected share the global cap",
+      "status": "passed",
+      "duration": 212.7433810000075,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-09-count-low @E32 @E32-AC09 authored regional quotas include dead records and exclude Mega; mixed infected share the global cap",
+      "status": "passed",
+      "duration": 39.011343999998644,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-09-queue @E32 @E32-AC09 queued Alpha admission waits at the regional assault cap and retains ownership",
+      "status": "passed",
+      "duration": 4.677578000002541,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-09-specials @E32 @E32-AC09 L10 regular Alphas use all four stock specials, cooldowns and conventional resistance",
+      "status": "passed",
+      "duration": 4.337273000011919,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-07-spawn-coats @E32 @E32-AC07 actual dog spawns choose seeded palette assets and preserve explicit overrides",
+      "status": "passed",
+      "duration": 65.01373799997964,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-09-stream-high @E32 @E32-AC09 serialized Alpha ownership and dog coat survive five revisits and save/load",
+      "status": "passed",
+      "duration": 3412.9294119999686,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-09-stream-low @E32 @E32-AC09 serialized Alpha ownership and dog coat survive five revisits and save/load",
+      "status": "passed",
+      "duration": 3376.4184910000185,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-07-pet-turn @E32 @E32-AC07 a scheduled healthy dog turns on the dog brain and retains its seeded infected coat",
+      "status": "passed",
+      "duration": 131.7720959999715,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-07a @E32 @E32-AC07 inf.dog data: 1.1x run, >= 0.6 s telegraph, <= 2 m reach, >= 2 s cooldown, 10 HP, non-corgi asset",
+      "status": "passed",
+      "duration": 2.7803100000019185,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-07b @E32 @E32-AC07 a dog telegraphs >= 0.6 s before each bite and waits >= 2 s between its own bites",
+      "status": "passed",
+      "duration": 331.20619700002135,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-07c @E32 @E32-AC07 a dog bite costs the courier 10 HP",
+      "status": "passed",
+      "duration": 23.289428999996744,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-08a @E32 @E32-AC08 the companion corgi can neither be infected nor turned, and is never an enemy target",
+      "status": "passed",
+      "duration": 75.30089800001588,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-08b @E32 @E32-AC08 no infected spawn may substitute for or be drawn as the corgi; real infected are valid cure targets",
+      "status": "passed",
+      "duration": 6.53785599998082,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-07-los @E32-AC07 a solid wall blocks dog acquisition beyond close hearing; ordinary damage staggers and kills it",
+      "status": "passed",
+      "duration": 8.763452000013785,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-13-schedule @E32-AC13 sim-time roar/impact, steps <60m, checkpoint timing and death",
+      "status": "passed",
+      "duration": 683.2385390000127,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-15-terminal @E32-AC15 existing radio action shows all research facts for 14 seconds without audio",
+      "status": "passed",
+      "duration": 56.30706299998565,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-12a @E32-AC12 nine direct rockets survive, tenth kills permanently, once per projectile",
+      "status": "passed",
+      "duration": 76.12361800001236,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-12b @E32-AC12 1000 MG/minigun rounds, melee, statuses and props never cross 90% floor or finish a wounded boss",
+      "status": "passed",
+      "duration": 12.79119299998274,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-12c @E32-AC12 splash is 2.5% max and cannot also apply as direct damage",
+      "status": "passed",
+      "duration": 3.024476999999024,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-12d @E32-AC12 shared stagger cooldown survives floor hits and checkpoint timer rebasing; no heavy blast knockdown",
+      "status": "passed",
+      "duration": 3.672288000001572,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-11-alpha.charge @E32-AC11 windup, damage, recovery, nonoverlap and activation cooldown",
+      "status": "passed",
+      "duration": 95.5222519999952,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-11-dodge-alpha.charge @E32-AC11 move only inside 12m, windup allows a safe dodge",
+      "status": "passed",
+      "duration": 24.483132000023033,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-11-alpha.ground-slam @E32-AC11 windup, damage, recovery, nonoverlap and activation cooldown",
+      "status": "passed",
+      "duration": 25.931080000009388,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-11-dodge-alpha.ground-slam @E32-AC11 move only inside 12m, windup allows a safe dodge",
+      "status": "passed",
+      "duration": 31.051508000004105,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-11-alpha.grab-throw @E32-AC11 windup, damage, recovery, nonoverlap and activation cooldown",
+      "status": "passed",
+      "duration": 37.14432500000112,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-11-dodge-alpha.grab-throw @E32-AC11 move only inside 12m, windup allows a safe dodge",
+      "status": "passed",
+      "duration": 19.778274000040255,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-11-grab-release-false @E32-AC11 stagger/death always releases grab",
+      "status": "passed",
+      "duration": 11.22493399999803,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-11-grab-release-true @E32-AC11 stagger/death always releases grab",
+      "status": "passed",
+      "duration": 13.369926000013947,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-11-walls @E32-AC11 oversized arm envelope stops charge and refuses specials near side/back cover",
+      "status": "passed",
+      "duration": 11.809607999981381,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-12-projectile @E32-AC12 real stock rocket ray contact attributes direct damage once through Explosions",
+      "status": "passed",
+      "duration": 169.97602599998936,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-12-pressure @E32-AC12 sustained minigun fire at the damage floor cannot extend a stagger or pin movement",
+      "status": "passed",
+      "duration": 27.03357299999334,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-12-crowd-impact @E32-AC12 kicked infected cannot bypass the shared Mega stagger cooldown",
+      "status": "passed",
+      "duration": 2.1529169999994338,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-10a @E32-AC10 cruise is 0.7 × the nominal run (±2%): a running player stays ahead, the gap grows ~1.35 m/s",
+      "status": "passed",
+      "duration": 323.1415159999742,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-10b @E32-AC10 no sight, hearing or lure: it closes on a player hidden behind a wall, through a lure and smoke, and attacks",
+      "status": "passed",
+      "duration": 393.17051600001287,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-10c @E32-AC10 a player who stops is always caught: arrival time matches route length / cruise",
+      "status": "passed",
+      "duration": 304.32843900000444,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-10d @E32-AC10 obstacle recovery: a U-trap opening away from the player and a door closing on its path never trap it",
+      "status": "passed",
+      "duration": 308.3220300000394,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-10e @E32-AC10 a sealed pocket escalates replan → alternate → Alpha breach brain and keeps cycling (never a permanent stop)",
+      "status": "passed",
+      "duration": 249.65533300000243,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-10f @E32-AC10 off-region: coarse per-tick advance at cruise × sim-time (2 Hz route planning) along authored nodes, counts against the cap, keeps HP, detailed on entry",
+      "status": "passed",
+      "duration": 398.3237810000428,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-10g @E32-AC10 an authored blocked street takes the detour; with no alternate it breaches after breachS (no border stop)",
+      "status": "passed",
+      "duration": 373.77765100001125,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-10h @E32-AC10 introduced once by 2:00, ≥ 80 m behind along the route; introduce() is idempotent",
+      "status": "passed",
+      "duration": 172.85172000003513,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-10i @E32-AC10 checkpoint restore: same id, HP, route state and cooldown timers; ≥ respawnGapM from the player; a kill stays a kill",
+      "status": "passed",
+      "duration": 511.517611999996,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-10j @E32-AC10 the pursuit seam round-trips through captureSeams and the world snapshot",
+      "status": "passed",
+      "duration": 97.95911299996078,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-10k @E32-AC10 removed without dying (restore from a pre-install snapshot): it is introduced again, still exactly one",
+      "status": "passed",
+      "duration": 6.318098000017926,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-10-E3b @E32-AC10 coarse to detailed handoff retains cruise on the first tick and next second",
+      "status": "passed",
+      "duration": 18.746341999969445,
+      "failureMessages": []
+    },
+    {
+      "fullName": "S-06 @E05 @smoke each category fires/hits; swept projectile cannot tunnel through a dummy",
+      "status": "passed",
+      "duration": 229.9004319999949,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-18f @E32-AC18 interact next to the gun mounts, interact again leaves in one tick with the rocket launcher ready",
+      "status": "passed",
+      "duration": 113.16523099999176,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-18g @E32-AC18 too far cannot mount; a deck gun lifts the gunner to the deck and a dismount stays on it",
+      "status": "passed",
+      "duration": 11.594786999979988,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-18h @E32-AC18 spin-up first, then an ordinary infected (40 HP) falls within 0.25 s of landed fire; no carried weapon fires",
+      "status": "passed",
+      "duration": 11.909396000031848,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-18i @E32-AC18 a regular Alpha (200 HP) falls to landed fire in at most 4 s, inside the heat budget",
+      "status": "passed",
+      "duration": 31.088999999978114,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-19-remount @E32-AC19 heat persists through dismount and remount, locks at 100%, a checkpoint restores it",
+      "status": "passed",
+      "duration": 48.842677999986336,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-18k @E32-AC18 choosing a weapon slot leaves the gun at once; dying drops the player off it",
+      "status": "passed",
+      "duration": 4.235281999979634,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-18l @E32-AC18 minigun-only against the Mega Alpha never takes it below 90%, whatever the heat cycles",
+      "status": "passed",
+      "duration": 116.25357599998824,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-17-D4-play @E32-AC17 @E32-AC18 walk from the R7 checkpoint to console, climb stairs and mount the shipped gun",
+      "status": "passed",
+      "duration": 4088.294189999986,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex",
+      "status": "passed",
+      "duration": 31986.553654999996,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-03-D3-low @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex",
+      "status": "passed",
+      "duration": 20114.47459700005,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-03-D2-detours-high @E32-AC03 @E32-AC28 service road and motor pool alternatives retain collision/nav support",
+      "status": "passed",
+      "duration": 6951.139250000007,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-03-D2-detours-low @E32-AC03 @E32-AC28 service road and motor pool alternatives retain collision/nav support",
+      "status": "passed",
+      "duration": 6016.601024999982,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-06-E2-high @E32-AC02 @E32-AC06 @E32-AC09 @E32-AC15 @E32-AC16 @E32-AC27 depth population, health detours and checkpoint slot persistence",
+      "status": "passed",
+      "duration": 5568.363927000028,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-06-E2-low @E32-AC02 @E32-AC06 @E32-AC09 @E32-AC15 @E32-AC16 @E32-AC27 depth population, health detours and checkpoint slot persistence",
+      "status": "passed",
+      "duration": 7352.02335600002,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-10-production-pressure-high @E32-AC10 R6 coarse pursuit cruises at 0.7× run and the courier outruns it",
+      "status": "passed",
+      "duration": 5036.244753000035,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-10-shortcuts-high @E32-AC10 pursuit corner cuts clear the existing district at Mega radius",
+      "status": "passed",
+      "duration": 6968.802943000046,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-10-production-pressure-low @E32-AC10 R6 coarse pursuit cruises at 0.7× run and the courier outruns it",
+      "status": "passed",
+      "duration": 9214.823017999995,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-10-shortcuts-low @E32-AC10 pursuit corner cuts clear the existing district at Mega radius",
+      "status": "passed",
+      "duration": 8182.247412000026,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-02-minute-high @E32-AC02 @E32-AC05 first minute remains axe-only despite historical unlocks",
+      "status": "passed",
+      "duration": 5086.710049000045,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-28-cure-high @E32-AC28 D-CURE prefetch reversal and five revisits retain corpse/pickup/boss state",
+      "status": "passed",
+      "duration": 6894.435529999959,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-02-minute-low @E32-AC02 @E32-AC05 first minute remains axe-only despite historical unlocks",
+      "status": "passed",
+      "duration": 9512.035697000043,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-28-cure-low @E32-AC28 D-CURE prefetch reversal and five revisits retain corpse/pickup/boss state",
+      "status": "passed",
+      "duration": 8142.5907200000365,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-28-seam-input-high @E32-AC28 every D-CURE region seam supports live reversal, nav and persistent identities",
+      "status": "passed",
+      "duration": 8321.674547000031,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-28-seam-input-low @E32-AC28 every D-CURE region seam supports live reversal, nav and persistent identities",
+      "status": "passed",
+      "duration": 8184.725100999989,
+      "failureMessages": []
+    },
+    {
+      "fullName": "20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07",
+      "status": "passed",
+      "duration": 2845.79561999999,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-23-S8 @E32-AC23 explicit expanding front kills every infected species, downed and remaining Mega; no recovery or conversion",
+      "status": "passed",
+      "duration": 584.4862919999869,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-23-exclusions-S8 @E32-AC23 healthy people/animals, player and corgi excluded; particles/quality never decide death",
+      "status": "passed",
+      "duration": 39.58534200000577,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-24/25-once-S8 @E32-AC24 @E32-AC25 release/retry/load permanent, campaign cleared once, approaching attacks/spawners suppressed",
+      "status": "passed",
+      "duration": 40.37727300002007,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-24-unloaded-S8 @E32-AC24 sleeping infected die in snapshots and survive five revisits without loading regions",
+      "status": "passed",
+      "duration": 4628.667570999998,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-24-zoo-S8 @E32-AC24 cleared campaign kills subsequently visited zoo infected without harming healthy animals",
+      "status": "passed",
+      "duration": 20.044803000055254,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-23-front-S8 @E32-AC23 route branch delay and boundary use authoritative metre distance",
+      "status": "passed",
+      "duration": 0.36950099997920915,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-23-flag-S8 @E32-AC23 infected flag governs future types and retained civilian appearances",
+      "status": "passed",
+      "duration": 48.247180000005756,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-24-fresh-clock-S8 @E32-AC24 early fall resumes on a fresh clock without replaying death/release",
+      "status": "passed",
+      "duration": 33.20737000001827,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-25-pending-S8 @E32-AC25 pending lion pins and civilian grabs cannot continue beyond release before mist contact",
+      "status": "passed",
+      "duration": 34.818175000022165,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-15/16/27-E2 @E32-AC05 @E32-AC15 @E32-AC16 @E32-AC27 terminal, unique backpack and death at every approach checkpoint",
+      "status": "passed",
+      "duration": 536.1858639999991,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-16-before-exit @E32-AC16 death before the exit returns the sole canister to the terminal",
+      "status": "passed",
+      "duration": 28.35072200000286,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-16-speed @E32-AC16 carried cure leaves both weapon racks and running speed unchanged",
+      "status": "passed",
+      "duration": 37.70329099998344,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-25/26-S9 @E32-AC25 @E32-AC26 150 s playable reversal, last 36 s eased pull retains walk/run; title then credits and once-only victory",
+      "status": "passed",
+      "duration": 1413.4758239999646,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-26-resume-S9 @E32-AC26 fresh-clock save/load at mid-pull, title, credits and completed ending never replays combat or victory",
+      "status": "passed",
+      "duration": 272.63814599998295,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-25-cast-S9 @E32-AC25 @E32-AC31 production safe anchors emerge and bounded approaches collapse on both E18 tiers",
+      "status": "passed",
+      "duration": 10011.164466999995,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-22 truth table installed=false charge=false dead=false @E32-AC22",
+      "status": "passed",
+      "duration": 145.84948199999053,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-22 truth table installed=false charge=false dead=true @E32-AC22",
+      "status": "passed",
+      "duration": 14.35872499999823,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-22 truth table installed=false charge=true dead=false @E32-AC22",
+      "status": "passed",
+      "duration": 12.178095999988727,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-22 truth table installed=false charge=true dead=true @E32-AC22",
+      "status": "passed",
+      "duration": 10.678348999994341,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-22 truth table installed=true charge=false dead=false @E32-AC22",
+      "status": "passed",
+      "duration": 11.487674999982119,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-22 truth table installed=true charge=false dead=true @E32-AC22",
+      "status": "passed",
+      "duration": 6.1185870000044815,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-22 truth table installed=true charge=true dead=false @E32-AC22",
+      "status": "passed",
+      "duration": 8.094504999986384,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-22 truth table installed=true charge=true dead=true @E32-AC22",
+      "status": "passed",
+      "duration": 36.34428899997147,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-20/22 seed 327 install, pause, boundary, early rockets and explicit once-only release @E32-AC17 @E32-AC20 @E32-AC22",
+      "status": "passed",
+      "duration": 310.7776539999759,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-20/27 death restores ready boss/enemy/heat and zero charge; live save resumes exactly @E32-AC20 @E32-AC27",
+      "status": "passed",
+      "duration": 66.64722600003006,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-16/27 pre-S7 save migration retains its reached cure checkpoint @E32-AC16 @E32-AC27",
+      "status": "passed",
+      "duration": 11.8926709999796,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-22 living boss blocks at 60 s; held input cannot release after its death @E32-AC22",
+      "status": "passed",
+      "duration": 443.3049310000497,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-20 early kill captured at ready remains dead after death @E32-AC20 @E32-AC22",
+      "status": "passed",
+      "duration": 24.348346000013407,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-20 live save resumes accrued charge and captured living boss exactly @E32-AC20 @E32-AC27",
+      "status": "passed",
+      "duration": 20.794204999983776,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-01 @E32 @E32-AC01 ordered graph prevents skipping arsenal, cure and release prerequisites",
+      "status": "passed",
+      "duration": 128.6901599999983,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-27 @E32 @E32-AC27 every region retries with its arsenal, mission items, chunk and Mega seam",
+      "status": "passed",
+      "duration": 21.737441000004765,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-05 @E32 @E32-AC05 arsenal additions/removals and retry checkpoint survive JSON SaveStore round trip",
+      "status": "passed",
+      "duration": 10.116207999992184,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-27b @E32 @E32-AC27 live progress reload retains the prior retry snapshot",
+      "status": "passed",
+      "duration": 3.3302020000410266,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-27-chunks-high @E32 @E32-AC27 @E32-AC28 region retry and fresh reload restore inactive chunks and the same Mega",
+      "status": "passed",
+      "duration": 6274.009741000016,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-27-chunks-low @E32 @E32-AC27 @E32-AC28 region retry and fresh reload restore inactive chunks and the same Mega",
+      "status": "passed",
+      "duration": 7900.39392599999,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-27-death @E32 @E32-AC27 death returns to the reached industrial checkpoint with both acquired guns",
+      "status": "passed",
+      "duration": 37.44841999997152,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-27-death-save @E32 @E32-AC27 saving during death resumes at the retry checkpoint",
+      "status": "passed",
+      "duration": 3.37429400003748,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-27-attack-ids @E32 @E32-AC27 fresh reload preserves attack IDs for the Mega rocket ledger",
+      "status": "passed",
+      "duration": 20.055265999981202,
+      "failureMessages": []
+    }
+  ],
+  "checks": {
+    "target": "E32",
+    "epics": [
+      "E32"
+    ],
+    "pattern": "@(?:E32)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+    "browserOmitted": true,
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/sim-lock.sh",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "@(?:E32)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--maxWorkers=4",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E32/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "@(?:E32)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--grep-invert",
+          "@perf",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": null
+      },
+      {
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "^(?=.*(?:@(?:E32)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)))(?=.*@perf)",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": null
+      }
+    ]
+  }
+}

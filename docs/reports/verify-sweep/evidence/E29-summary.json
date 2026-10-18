@@ -1,0 +1,682 @@
+{
+  "target": "E29",
+  "success": true,
+  "startTime": 1792357427519,
+  "passed": 101,
+  "failed": 0,
+  "pending": 3056,
+  "total": 3157,
+  "selectedAssertions": [
+    {
+      "fullName": "S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash",
+      "status": "passed",
+      "duration": 426.05717000000004,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-02 @E29-AC02 standalone seed 1 boards at least 60% of the starting group without cheats",
+      "status": "passed",
+      "duration": 131109.02848,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-16-night-exit @E29-AC16 production checkpoint restores after actual death",
+      "status": "passed",
+      "duration": 1192.6165440000004,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-16-rocket @E29-AC16 production checkpoint restores after actual death",
+      "status": "passed",
+      "duration": 1750.990264,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-16-corridor @E29-AC16 production checkpoint restores after actual death",
+      "status": "passed",
+      "duration": 1663.845349000003,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-16-west @E29-AC16 west alley arrival records corridor and resumes a partially boarded bus",
+      "status": "passed",
+      "duration": 1508.8912729999975,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E24-14-handover @E24-AC14 @E29-AC03 L6 reachability is disposed before L7 places its exit pickup",
+      "status": "passed",
+      "duration": 578.0987879999993,
+      "failureMessages": []
+    },
+    {
+      "fullName": "S-05-foundation @smoke empty scripted 1800-tick golden hash",
+      "status": "passed",
+      "duration": 312.25132699999995,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-09-decay-lod @E29-AC09 ruined LODs use declared decay dimensions and still reject malformed geometry",
+      "status": "passed",
+      "duration": 31.65564699999959,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-09-contract @E29-AC09 W0–W6 serialize exact layer ranges without extending W5 lifetimes",
+      "status": "passed",
+      "duration": 15.638316999997187,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-09-validation @E29-AC09 W6 is accepted and invalid tiers/ranges/variants rejected",
+      "status": "passed",
+      "duration": 11.862223999996786,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-09-scene @E29-AC09 W6 Scene Lab props retain visuals, compound collision and reviewed asset URLs",
+      "status": "passed",
+      "duration": 32.83608000000095,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-09-district @E29-AC09 W6 explicitly retains Fairhaven landmarks and reviewed W5 derivatives",
+      "status": "passed",
+      "duration": 115.45104999999603,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-10-district @E29-AC10 heavier dressing, dead defenses and passable Northgate branches",
+      "status": "passed",
+      "duration": 188.04798400000436,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-10-fires @E29-AC10 production district installs persistent fires and shared rocket hooks",
+      "status": "passed",
+      "duration": 764.7640209999954,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-09-assets @E29-AC09 W6 deliveries satisfy the existing geometry and LOD contracts",
+      "status": "passed",
+      "duration": 9158.336252000001,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-10-corridor @E29-AC10 @E29-AC13 two routes reach the corridor and its working bus; no blocker seals it",
+      "status": "passed",
+      "duration": 300.69287299999996,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-13-lane @E29-AC13 the departure lane east of the bus is free of solid corridor items and fires",
+      "status": "passed",
+      "duration": 1.6454159999993863,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-14-night @E29-AC14 Northgate uses the identical night lighting across the L6/L7 handover",
+      "status": "passed",
+      "duration": 2.382027999999991,
+      "failureMessages": []
+    },
+    {
+      "fullName": "stage1 navigation capsule and NPC traces meet motion budgets @smoke",
+      "status": "passed",
+      "duration": 410.56202499999927,
+      "failureMessages": []
+    },
+    {
+      "fullName": "crowd fades preserve head position when clips change or interrupt @smoke",
+      "status": "passed",
+      "duration": 177.87616499999967,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-19-event-dispatch @E29-AC19 cached dispatch preserves phase snapshots, nested emits and reset",
+      "status": "passed",
+      "duration": 7.320825000002515,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-19-human-query @E29-AC19 human queries match the original spatial filter through same-tick movement, bites, spawn, deletion and restore",
+      "status": "passed",
+      "duration": 30.446359000001394,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-19-traffic-query @E29-AC19 cached traffic obstacles retain live movement, late components, deletion and restore",
+      "status": "passed",
+      "duration": 1.3653510000003735,
+      "failureMessages": []
+    },
+    {
+      "fullName": "weather footprints T-E29-19-tracks @E29-AC19 low resolution retains both height layers and lifetime",
+      "status": "passed",
+      "duration": 7.144423999998253,
+      "failureMessages": []
+    },
+    {
+      "fullName": "weather footprints T-E29-19-track-raster @E29-AC19 cached crowd probes preserve the shipped mask bytes",
+      "status": "passed",
+      "duration": 55.04716200000257,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-19-memory @E29-AC19 district cache drops unused RGB while preserving palette and figure color graphs",
+      "status": "passed",
+      "duration": 26.892272000004596,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-19-grouping @E29-AC19 L7 LOD batches share only their model figures and retain every corpse",
+      "status": "passed",
+      "duration": 138.1602800000037,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-19-fire-culling @E29-AC19 offscreen fires retain lifetime/light and render again when the camera returns",
+      "status": "passed",
+      "duration": 35.62081699999544,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-19-static-uploads @E29-AC19 camera motion preserves unchanged collapse/wreck buffers and updates moved or culled instances",
+      "status": "passed",
+      "duration": 66.82498900000064,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-19-dressing-culling @E29-AC19 distant collapse placements leave the batch and return without losing authored transforms",
+      "status": "passed",
+      "duration": 19.133946999994805,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-19-foot-probe @E29-AC19 partial foot probes match full rig probes during a blended pose",
+      "status": "passed",
+      "duration": 192.954018000004,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-19-corpses @E29-AC19 settled crowd bodies keep positions/colors/rig ownership with fewer triangles",
+      "status": "passed",
+      "duration": 397.7151809999996,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-02-preset @E29-AC02 L7-default retains the five prior weapons and leaves the rocket to its pickup",
+      "status": "passed",
+      "duration": 6.2639019999915035,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-02-cli @E29-AC02 explicit and all-level CLI registration include L7 in campaign order",
+      "status": "passed",
+      "duration": 3541.4522260000085,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-01-alpha @E07-AC01 @E29-AC07 @E30-AC10 @E32-AC09 Alpha has 300 effective HP and authored ordinary contact tuning",
+      "status": "passed",
+      "duration": 84.8106059999991,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-handgun @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 resistance landed hits and permanence",
+      "status": "passed",
+      "duration": 6.754832999999053,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-army-mg @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 resistance landed hits and permanence",
+      "status": "passed",
+      "duration": 3.3135970000003,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-shotgun @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 resistance landed hits and permanence",
+      "status": "passed",
+      "duration": 2.744057999996585,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-rocket-launcher @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 resistance landed hits and permanence",
+      "status": "passed",
+      "duration": 2.6993249999941327,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-melee @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 kick preserves Alpha HP and upright reaction; ordinary contact knocks a soldier down for 72 ticks",
+      "status": "passed",
+      "duration": 58.2308989999874,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-alpha.charge @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 38.70565699999861,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-alpha.ground-slam @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 40.440543000004254,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-alpha.grab-throw @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 25.57996099999582,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-alpha.roar @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 20.69597000000067,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-lion.pounce @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 19.977259000006597,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-lion.flank @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 16.38556100000278,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-gorilla.roar @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 24.000768000012613,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-gorilla.pound @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 16.676868000009563,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-gorilla.grab-throw @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 14.091497000001254,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-elephant.charge @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 21.615002000005916,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-elephant.swipe @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 11.730128000010154,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-zebra.kick @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 11.206714999992982,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-zebra.stampede @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 22.51286699999764,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-flamingo.dive @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 16.855113000012352,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-alpha-checkpoint-false @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 checkpoint rebases pending specials and cooldowns",
+      "status": "passed",
+      "duration": 22.285138999999617,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-alpha-checkpoint-true @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 checkpoint rebases pending specials and cooldowns",
+      "status": "passed",
+      "duration": 11.292897000006633,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-alpha-independent @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 another move has its own cooldown and retargeting never resets the first",
+      "status": "passed",
+      "duration": 25.09869900000922,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-live-handgun @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 real sustained firing reaches the authored resistance fixture",
+      "status": "passed",
+      "duration": 105.48560400000133,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-live-army-mg @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 real sustained firing reaches the authored resistance fixture",
+      "status": "passed",
+      "duration": 40.244974999994156,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-live-shotgun @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 real sustained firing reaches the authored resistance fixture",
+      "status": "passed",
+      "duration": 7.35228300000017,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-selection-alpha.charge @E07-AC0 @E29-AC07 @E30-AC10 @E32-AC095 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 chase selects each available move through the merged scheduler",
+      "status": "passed",
+      "duration": 7.653648999999859,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-selection-alpha.ground-slam @E07-AC0 @E29-AC07 @E30-AC10 @E32-AC095 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 chase selects each available move through the merged scheduler",
+      "status": "passed",
+      "duration": 9.11917999999423,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-selection-alpha.grab-throw @E07-AC0 @E29-AC07 @E30-AC10 @E32-AC095 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 chase selects each available move through the merged scheduler",
+      "status": "passed",
+      "duration": 10.612009000004036,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-selection-alpha.roar @E07-AC0 @E29-AC07 @E30-AC10 @E32-AC095 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 chase selects each available move through the merged scheduler",
+      "status": "passed",
+      "duration": 13.311285000003409,
+      "failureMessages": []
+    },
+    {
+      "fullName": "S-06 @E05 @smoke each category fires/hits; swept projectile cannot tunnel through a dummy",
+      "status": "passed",
+      "duration": 352.42714199999864,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-04 @E29-AC04 exit-relative pickup retains all five previous weapons, equips once after 0.6s / E",
+      "status": "passed",
+      "duration": 165.35384000001068,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-05 @E29-AC05 600 rockets have no reload/empty/charges and exactly 75 tick cadence",
+      "status": "passed",
+      "duration": 1708.6840949999896,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-06-24 @E29-AC06 one real projectile permanently clears 24 infected in its blast tick",
+      "status": "passed",
+      "duration": 218.39049600000726,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-06-los @E29-AC06 E27 full cover shields a crowd member from a real rocket",
+      "status": "passed",
+      "duration": 21.272500999999465,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-07-rocket @E29-AC07 shared Alpha takes two center rocket blasts",
+      "status": "passed",
+      "duration": 25.60356600000523,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-06-200 @E29-AC06 one real rocket clears 200 admitted full footprints inside its unchanged blast",
+      "status": "passed",
+      "duration": 291.10035300000163,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E12-07-L7 @E29-AC01 @E12 @E12-AC07 every cheat advances exactly one L7 step to level.completed",
+      "status": "passed",
+      "duration": 673.399894999995,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-15-bus @E29-AC15 departure emits positional cab engine updates and stops once before handover",
+      "status": "passed",
+      "duration": 1173.970690999995,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-13-board @E29-AC13 the complete living roster boards before the bus leaves; the bus moves >= 30 m in 6-10 s; L8 gets the exact roster",
+      "status": "passed",
+      "duration": 1522.525622999994,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-13-bite-loss @E29-AC13 fatal-bite bodies with positive HP never hold or board the bus",
+      "status": "passed",
+      "duration": 469.11984200000006,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-13-wait @E29-AC13 a straggler holds the bus; the player is never timed out",
+      "status": "passed",
+      "duration": 1213.8896309999982,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-13-zero @E29-AC01 @E29-AC13 zero survivors: the courier boards alone; leaving the bus pauses boarding",
+      "status": "passed",
+      "duration": 557.2663059999904,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-13-bus-blocks @E29-AC13 the waiting bus blocks the player and navigation; the lane is free once it leaves",
+      "status": "passed",
+      "duration": 714.0764149999886,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-13-handover @E29-AC13 L7 completion unlocks L8 and carries the arsenal; L9 continues to L10",
+      "status": "passed",
+      "duration": 2.7244919999939157,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-13-35 @E29-AC01 @E29-AC13 a full 35-person roster boards and every figure is accounted for",
+      "status": "passed",
+      "duration": 1873.3031939999928,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-08 @E29-AC08 high: all arrivals, five Alphas, safe emergence and strict caps",
+      "status": "passed",
+      "duration": 849.7700389999954,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-08 @E29-AC08 low: all arrivals, five Alphas, safe emergence and strict caps",
+      "status": "passed",
+      "duration": 575.3673979999876,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-08-visible @E29-AC08 visible final emergence stays queued with both Alphas",
+      "status": "passed",
+      "duration": 543.1038980000012,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-11-roster @E29-AC11 incoming ids, appearance and injury survive; health recovers; 0–35 followers use bounded motion",
+      "status": "passed",
+      "duration": 2490.902086999995,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-11-L6-result @E29-AC11 L6 serializes effective injury speed without mutating the escaped resident",
+      "status": "passed",
+      "duration": 1016.4123780000082,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-11-stragglers @E29-AC11 cross-city followers use staggered partial routes and keep walking",
+      "status": "passed",
+      "duration": 719.3344320000033,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-11-loss @E29-AC11 combat losses are logged without deleting the roster",
+      "status": "passed",
+      "duration": 503.45291500000167,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-12 @E29-AC12 rocket opening is traversed by a living follower while street infected remain",
+      "status": "passed",
+      "duration": 2050.05421799999,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-16-encounters @E29-AC16 checkpoint seam retains queues, Alpha requests, identities and passage state",
+      "status": "passed",
+      "duration": 474.9047250000003,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-11-zero @E29-AC11 zero living survivors can reach passage without a kill-all requirement",
+      "status": "passed",
+      "duration": 380.1031090000033,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-19-dying @E29-AC19 high: rocket death animations retain active-pool slots",
+      "status": "passed",
+      "duration": 1120.2158789999958,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-19-dying @E29-AC19 low: rocket death animations retain active-pool slots",
+      "status": "passed",
+      "duration": 681.8375839999935,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-08-turning @E29-AC08 pending survivor transformations reserve a slot before queued arrivals",
+      "status": "passed",
+      "duration": 1129.2762559999974,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-20-armed-roster @E31-AC20 @E29-AC11 carried armed shelter resident follows the L7 group instead of holding an old post",
+      "status": "passed",
+      "duration": 962.9948580000055,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E29-16-tier @E29-AC16 checkpoint restores W6 mission/world tier, navigation and weapon ownership",
+      "status": "passed",
+      "duration": 362.837142999997,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E08 @E29 authored interaction pickup is never fetched: {\"interactTicks\":36}",
+      "status": "passed",
+      "duration": 242.73039300000528,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E08 @E29 authored interaction pickup is never fetched: {\"retain\":true}",
+      "status": "passed",
+      "duration": 122.69038200000068,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E08 @E29 authored interaction pickup is never fetched: {\"interactTicks\":36,\"retain\":true}",
+      "status": "passed",
+      "duration": 104.82696599999326,
+      "failureMessages": []
+    },
+    {
+      "fullName": "20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07",
+      "status": "passed",
+      "duration": 2876.6590810000016,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E29 @E30 bus passenger keeps the same corgi identity at zoo arrival",
+      "status": "passed",
+      "duration": 1044.2626860000018,
+      "failureMessages": []
+    }
+  ],
+  "checks": {
+    "target": "E29",
+    "epics": [
+      "E29"
+    ],
+    "pattern": "@(?:E29)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+    "browserOmitted": true,
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/sim-lock.sh",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "@(?:E29)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--maxWorkers=4",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E29/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "@(?:E29)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--grep-invert",
+          "@perf",
+          "--workers=1"
+        ],
+        "exitCode": null
+      }
+    ]
+  }
+}

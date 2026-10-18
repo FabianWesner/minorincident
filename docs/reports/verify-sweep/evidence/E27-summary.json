@@ -1,0 +1,307 @@
+{
+  "target": "E27",
+  "success": true,
+  "startTime": 1792357122466,
+  "passed": 36,
+  "failed": 0,
+  "pending": 3121,
+  "total": 3157,
+  "selectedAssertions": [
+    {
+      "fullName": "S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash",
+      "status": "passed",
+      "duration": 460.377528,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E09-01-wreck @E09-AC01 @E27-AC05 fire-engine damage tiers preserve wheels/seats and disable authored lamps",
+      "status": "passed",
+      "duration": 338.2786359999991,
+      "failureMessages": []
+    },
+    {
+      "fullName": "S-05-foundation @smoke empty scripted 1800-tick golden hash",
+      "status": "passed",
+      "duration": 407.4104179999995,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-10-bullet @E27 @E27-AC10 extinguisher extinguishes within 3 m and stuns its forward cone for exactly one second (bullet)",
+      "status": "passed",
+      "duration": 277.7236129999983,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-10-melee @E27 @E27-AC10 extinguisher extinguishes within 3 m and stuns its forward cone for exactly one second (melee)",
+      "status": "passed",
+      "duration": 64.0543519999992,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-09b @E27 @E27-AC09 a toxic blast creates the defined six metre, twelve second gas hazard",
+      "status": "passed",
+      "duration": 308.27942699999767,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-09 @E27 @E27-AC09 toxic DoT excludes Hazmat; tear gas slows infected by 30% and the player by 15%, then clears",
+      "status": "passed",
+      "duration": 11.71046700000079,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-02 @E27 @E27-AC02 per class the sim damage at 0 / 50 / 100 % radius matches the curve within 2 %",
+      "status": "passed",
+      "duration": 135.05119000000195,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-02b @E27 @E27-AC02 @E26-AC05 the radial impulse has an upward bias, scales with mass and lands one tick later",
+      "status": "passed",
+      "duration": 50.08735099999831,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-02c @E27 @E27-AC02 full cover shields a target; barricade rails take blast damage",
+      "status": "passed",
+      "duration": 6.74417899999753,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-04 @E27 @E27-AC04 five propane tanks 3 m apart chain in sequence at 0.15–0.3 s per link; ≤ 8 links per second",
+      "status": "passed",
+      "duration": 91.46275700000115,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-05 @E27 @E27-AC05 a car explosion lifts the body ≥ 0.5 m, detaches doors and hood, chars the wreck and leaves fires ≥ 20 s",
+      "status": "passed",
+      "duration": 436.72284200000286,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-06 @E27 @E27-AC06 explosion.gas-station mega sequence: cab/pump → rupture → tanker, ≥ 80% kills in 12 m, slow-mo only within 15 m",
+      "status": "passed",
+      "duration": 92.1620789999979,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-06 @E27 @E27-AC06 explosion.fuel-truck mega sequence: cab/pump → rupture → tanker, ≥ 80% kills in 12 m, slow-mo only within 15 m",
+      "status": "passed",
+      "duration": 46.81186499999967,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-08 @E27 @E27-AC08 infected inside a 6 m smoke cloud lose their target within 0.5 s, wander, and the cloud ends at 12 s",
+      "status": "passed",
+      "duration": 118.72565799999938,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-fires @E27 aftermath fires damage, spread once under the cap and burn out",
+      "status": "passed",
+      "duration": 105.30254299999797,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E09-06d @E09-AC06 @E27-AC05 variant-less vehicles retain meshes, darken damage and extinguish lamps at every LOD",
+      "status": "passed",
+      "duration": 44.24108400000114,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-01 @E27 @E27-AC01 every ExplosionDef and BlastFxPreset validates and every explosive source references one",
+      "status": "passed",
+      "duration": 9.443519000000379,
+      "failureMessages": []
+    },
+    {
+      "fullName": "stage1 navigation capsule and NPC traces meet motion budgets @smoke",
+      "status": "passed",
+      "duration": 320.3990419999991,
+      "failureMessages": []
+    },
+    {
+      "fullName": "crowd fades preserve head position when clips change or interrupt @smoke",
+      "status": "passed",
+      "duration": 201.73091299999942,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-14w @E27 @E18 blast fragment materials execute unoccluded during loading and reset before play",
+      "status": "passed",
+      "duration": 37.965454000004684,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-06v @E27 @E27-AC06 mega lights the town orange for five seconds and slow motion can be disabled",
+      "status": "passed",
+      "duration": 21.261818999999377,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-06d @E27 @E27-AC06 daylight transients clear the field after expiry without enabling practical lamps",
+      "status": "passed",
+      "duration": 4.272667999997793,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-15f @E27 @E27-AC15 persistent fire emits pooled embers without an explosion on both tiers",
+      "status": "passed",
+      "duration": 11.156989999995858,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-03p @E27 @E27-AC03 a fixed-tick jump retains distributed smoke births and upward motion",
+      "status": "passed",
+      "duration": 5.730289999999513,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-14c @E27 @E18 blast-stress high prepares the actual LOD2 infected corpse before play",
+      "status": "passed",
+      "duration": 470.34255100000155,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-14c @E27 @E18 blast-stress low prepares the actual LOD2 infected corpse before play",
+      "status": "passed",
+      "duration": 59.12644600000203,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-14c @E27 @E18 L4 high prepares the actual LOD2 infected corpse before play",
+      "status": "passed",
+      "duration": 95.26818300000014,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-14c @E27 @E18 L4 low prepares the actual LOD2 infected corpse before play",
+      "status": "passed",
+      "duration": 51.75495999999839,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-14c @E27 @E18 L7 high prepares the actual LOD2 infected corpse before play",
+      "status": "passed",
+      "duration": 93.44375299999956,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-14c @E27 @E18 L7 low prepares the actual LOD2 infected corpse before play",
+      "status": "passed",
+      "duration": 44.317402000000584,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-14h @E27 @E18 high loads resident close-detail models before play",
+      "status": "passed",
+      "duration": 28.44197500000155,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E27-14h @E27 @E18 low retains LOD2 before play",
+      "status": "passed",
+      "duration": 9.454108999998425,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-recover-02 @E05 @E27 explosives kill for good and leave a persistent corpse; a blast or a lethal burn finishes a downed infected",
+      "status": "passed",
+      "duration": 478.5249330000006,
+      "failureMessages": []
+    },
+    {
+      "fullName": "S-06 @E05 @smoke each category fires/hits; swept projectile cannot tunnel through a dummy",
+      "status": "passed",
+      "duration": 256.08371799999986,
+      "failureMessages": []
+    },
+    {
+      "fullName": "20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07",
+      "status": "passed",
+      "duration": 2974.3256649999985,
+      "failureMessages": []
+    }
+  ],
+  "checks": {
+    "target": "E27",
+    "epics": [
+      "E27"
+    ],
+    "pattern": "@(?:E27)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+    "browserOmitted": true,
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/sim-lock.sh",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "@(?:E27)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--maxWorkers=4",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E27/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "@(?:E27)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--grep-invert",
+          "@perf",
+          "--workers=1"
+        ],
+        "exitCode": null
+      },
+      {
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "npx",
+          "playwright",
+          "test",
+          "tests/perf/explosions.spec.ts",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": null
+      }
+    ]
+  }
+}

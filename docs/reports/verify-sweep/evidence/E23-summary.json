@@ -1,0 +1,487 @@
+{
+  "target": "E23",
+  "success": true,
+  "startTime": 1792356065170,
+  "passed": 66,
+  "failed": 0,
+  "pending": 3091,
+  "total": 3157,
+  "selectedAssertions": [
+    {
+      "fullName": "S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash",
+      "status": "passed",
+      "duration": 468.1512700000003,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E23 @E23-AC04 @E23-AC15 @E23-AC16 station identities/state survive checkpoint and L6 handover, high",
+      "status": "passed",
+      "duration": 1219.620669,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E23 @E23-AC04 @E23-AC15 @E23-AC16 station identities/state survive checkpoint and L6 handover, low",
+      "status": "passed",
+      "duration": 711.2106949999979,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E23 @E23-AC01 L5 retains the carried racks instead of replacing them with its fallback arsenal",
+      "status": "passed",
+      "duration": 405.2580330000019,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E23 @E23-AC07 Alphas investigate nearby gunfire and acquire visible civilians without omniscience",
+      "status": "passed",
+      "duration": 538.302716000002,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E23 @E23-AC04 Alphas stay in town away from the Metro and final escort leg, high",
+      "status": "passed",
+      "duration": 387.02468200000294,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E23 @E23-AC04 Alphas stay in town away from the Metro and final escort leg, low",
+      "status": "passed",
+      "duration": 399.69555500000206,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E23 @E23-AC15 nearby infected do not stall ingress; the descending shutter sweeps intruders out and blocks return",
+      "status": "passed",
+      "duration": 1011.3628289999979,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E23 @E23-AC15 the five survivors cross the Metro opening from the real-input group photo",
+      "status": "passed",
+      "duration": 694.0208610000009,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E23 @E23-AC11 @E23-AC15 a survivor turning during shutter closure cannot corrupt the L6 save",
+      "status": "passed",
+      "duration": 1038.375081000002,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L5 Aftermath T-E23-01 @E23 @E23-AC01 mission graph emerge -> look -> metro is completable for every find order, with no fail timer and no fail on a survivor's death",
+      "status": "passed",
+      "duration": 12843.350555999998,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L5 Aftermath T-E23-02 @E23 @E23-AC02 the complete bot finishes a single seed from L5-default without cheats, in the time band, rescuing at least 4",
+      "status": "passed",
+      "duration": 12561.409660999998,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L5 Aftermath T-E23-03 @E23 @E23-AC03 the newbie bot finishes a single seed with at most one death, rescuing at least 3",
+      "status": "passed",
+      "duration": 14641.785534999995,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L5 Aftermath T-E23-04 @E23 @E23-AC04 the opening is empty: no allied fighter, no living civilian but the five survivors (hidden) and the lookout, no helicopter or moving vehicle, no gunfire but the courier's; 12-20 infected in ones and twos",
+      "status": "passed",
+      "duration": 5655.269128000007,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L5 Aftermath T-E23-07 @E23 @E23-AC07 sparse and never omniscient: no director spawn or emergence, at most 30 at once, sight-only alerts; a machine-gun burst pulls non-chasing infected within 30 m to the shot",
+      "status": "passed",
+      "duration": 8748.252517,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L5 Aftermath T-E23-08 @E23 @E23-AC08 signs of life: a positional cue with a subtitle within 25 m of each hiding place, none beyond 30 m; no objective marker ever points at a survivor",
+      "status": "passed",
+      "duration": 2911.594054000001,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L5 Aftermath T-E23-09 @E23 @E23-AC09 the group grows and follows: stand-to-interact 1.0 s, the counter steps 0 to 5, followers within 8 m, no jump above 1 m per tick, slower than the courier's run",
+      "status": "passed",
+      "duration": 10889.093378999998,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L5 Aftermath T-E23-10 @E23 @E23-AC10 protection matters: an infected that reaches an unprotected survivor grabs and bites within 1.5 s, a hit during the grab saves them, a bitten survivor turns in 2.5-3.5 s as the same person",
+      "status": "passed",
+      "duration": 27927.911772000007,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L5 Aftermath T-E23-11 @E23 @E23-AC11 losses do not stop the level: killing 1, 3 or all 5 survivors at random points still lets the complete bot finish; the result reports the rescued count",
+      "status": "passed",
+      "duration": 18324.287671000013,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L5 Aftermath T-E23-12 @E23 @E23-AC12 optional basement shotgun auto-equips and retains the L4 arsenal",
+      "status": "passed",
+      "duration": 490.372715000005,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L5 Aftermath T-E23-16-shotgun @E23 @E23-AC16 checkpoint restores owned shotgun or available pickup without duplication",
+      "status": "passed",
+      "duration": 548.0460829999938,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L5 Aftermath T-E23-13 @E23 @E23-AC13 sunset and gloom: the sun intensity falls monotonically over the level and is at least 30 % lower at the Metro than at the basement exit",
+      "status": "passed",
+      "duration": 9702.843128999986,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L5 Aftermath T-E23-15 @E23 @E23-AC15 every living follower crosses before visible closure; the grace period regroups stragglers; occupants persist",
+      "status": "passed",
+      "duration": 1660.7550630000187,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L5 Aftermath T-E23-16 @E23 @E23-AC16 checkpoints: dying right after outside and each survivor-n restores the snapshot (followers, lost survivors stay lost, infected)",
+      "status": "passed",
+      "duration": 8064.176084000006,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L5 Aftermath T-E23-bots @E23 the idle bot unbars the door and waits (the level never fails, nobody dies of the level); the low tier finishes too",
+      "status": "passed",
+      "duration": 13992.357887999999,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E23-12d @E23 @E23-AC12 basement shotgun rests on the shelf within 3 m, can be reached from the aisle and disappears on collection",
+      "status": "passed",
+      "duration": 889.7255250000017,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E23-15d @E23 @E23-AC15 metro closure enables the matching passage collider at the end of the visible descent",
+      "status": "passed",
+      "duration": 1711.1283760000006,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO #21 @E23 @E23-AC08 @E23-AC09 survivor-2 restore: walking to the sound reveals survivors 3, 4 and 5, then reaches the ending",
+      "status": "passed",
+      "duration": 20735.939162,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO #21 @E23 @E23-AC09 discovery is available from every reachable side within 2.5 m of each sound",
+      "status": "passed",
+      "duration": 2189.3190019999965,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO #20b @E23 @E23-AC09 survivor-1 restore: Alpha at 15 m engages, follower reacts briefly and keeps following",
+      "status": "passed",
+      "duration": 2316.5896009999997,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO #19c @E23 @E23-AC14 music follows the first find and survivor checkpoint restores, never elapsed time",
+      "status": "passed",
+      "duration": 7937.181822999999,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO #18 @E23 @E23-AC16 every L5 safe-space exit returns to its entry door, faces out and rejects occupied exit spots",
+      "status": "passed",
+      "duration": 310.5632489999989,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO #18 @E23 L4 records the doorway actually entered and carries it into L5",
+      "status": "passed",
+      "duration": 781.6484439999986,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO #20b @E23 @E23-AC07 a visible player at 15 m is acquired beyond the former Alpha territory",
+      "status": "passed",
+      "duration": 2013.456468999997,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO #29 @E23 seed 1 balance baseline: complete and newbie outcomes and deaths stay pinned",
+      "status": "passed",
+      "duration": 27940.386749999998,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO #26 @E23 three followers at 99/60/30 percent: only the most injured reserves and walks to the medkit; unsafe medicine waits",
+      "status": "passed",
+      "duration": 1827.395625000001,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO #25 @E07 @E23 an Alpha 5 m from the courier behind cover turns, roars and engages without sight; regular infected hear too",
+      "status": "passed",
+      "duration": 1217.1537779999999,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E23-17-travel @E23 @E23-AC17 one ground click routes from the Sam corner to Mia without repeated cancellation",
+      "status": "passed",
+      "duration": 4106.588583999997,
+      "failureMessages": []
+    },
+    {
+      "fullName": "story protection L5 @E23 : every required actor resists bites, damage and collapse, then releases",
+      "status": "passed",
+      "duration": 885.7948079999987,
+      "failureMessages": []
+    },
+    {
+      "fullName": "S-05-foundation @smoke empty scripted 1800-tick golden hash",
+      "status": "passed",
+      "duration": 225.15092599999844,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E23-12-campaign @E23 @E23-AC12 campaign shotgun removes reference ammunition while retaining ballistics",
+      "status": "passed",
+      "duration": 8.960090999993554,
+      "failureMessages": []
+    },
+    {
+      "fullName": "S-06 @E05 @smoke each category fires/hits; swept projectile cannot tunnel through a dummy",
+      "status": "passed",
+      "duration": 190.43864100000064,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E23-12-click @E23 @E23-AC12 clicking the cellar shelf shotgun walks over and collects it without E",
+      "status": "passed",
+      "duration": 787.7911920000042,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E23-12-role @E23 @E23-AC12 close shell, distance falloff and 600 shells without reload",
+      "status": "passed",
+      "duration": 1020.3894690000016,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E23-12-stand @E23 @E23-AC12 standing over the shotgun for 0.6 seconds collects it without E",
+      "status": "passed",
+      "duration": 13.646222999988822,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E23-12-kill PO #37 @E23 @E23-AC12 @E07-AC14 one shell kills regular infected through 8 m permanently; two close shells stop an Alpha",
+      "status": "passed",
+      "duration": 18909.088111000005,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E23-12-group @E23 @E23-AC12 machine gun clears ten spread targets at least 1.5 times faster",
+      "status": "passed",
+      "duration": 89.97548700000334,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E23-12-alpha-data @E23 @E23-AC12 shared E07 resistance applies once after falloff",
+      "status": "passed",
+      "duration": 1.1338359999936074,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E23-12-alpha @E23 @E23-AC12 real Alpha: two close shells versus 43 army MG rounds",
+      "status": "passed",
+      "duration": 668.6897230000031,
+      "failureMessages": []
+    },
+    {
+      "fullName": "20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07",
+      "status": "passed",
+      "duration": 2788.0475899999983,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E23-05c @E23 @E23-AC05 shipped W5 hero geometry retains a top-down footprint mask IoU >= 0.9",
+      "status": "passed",
+      "duration": 609.4184260000038,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E23-shutter @E23 @E23-AC15 the authored Metro shutter closes vertically at every W5 LOD and retains its pose after repartition",
+      "status": "passed",
+      "duration": 140.36590299999807,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L5 static T-E23-05a @E23 @E23-AC05 same city: every L4 placement keeps its transform, the road graph is identical and every hero building footprint has IoU >= 0.9 with L4",
+      "status": "passed",
+      "duration": 218.4533800000063,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L5 static T-E23-05b @E23 @E23-AC05 nav differs from the clean city by at most 3 debris-narrowed street segments, each with a detour of at most 1.5x; every door and anchor stays reachable",
+      "status": "passed",
+      "duration": 167.5658420000109,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L5 static T-E23-05c @E23 @E23-AC05 the cellar yard is the only island: the courier starts in it and the door brace is inside it",
+      "status": "passed",
+      "duration": 4.249198000004981,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L5 static T-E23-06a @E23 @E23-AC06 devastation: >= 10 burned cars, >= 3 wrecked military vehicles (tank and an HMG vehicle), >= 6 fires, >= 4 smoke columns, >= 4 collapsed facades, >= 30 corpses with >= 10 in uniform, destroyed barricades",
+      "status": "passed",
+      "duration": 3.206990999999107,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L5 static T-E23-06b @E23 @E23-AC06 broken glass on every street frontage (>= 70 %), the power is out, nothing of the army's intact dressing remains, every plaza facade carries its w5 shell or a broken shopfront",
+      "status": "passed",
+      "duration": 2.280938000010792,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L5 static T-E23-08a @E23 @E23-AC08 five hiding places >= 25 m apart, at least 4 inside or behind buildings (hidden from every street), each ring reachable, no objective marker on a survivor",
+      "status": "passed",
+      "duration": 53.92797000000428,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L5 static T-E23-04a @E23 @E23-AC04 the infected are laid out in ones and twos (no group above 3) and 12-20 of them at the start on both tiers",
+      "status": "passed",
+      "duration": 2.172346999999718,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L5 static T-E23-13a @E23 @E23-AC13 sunset: polar 1.45-1.55 rad, sun hue 0-25 degrees, intensity <= 0.7x L4, a gloom ramp of at least 30 % at the end",
+      "status": "passed",
+      "duration": 1.0046080000029178,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L5 static T-E23-17a @E23 @E23-AC17 @E23-AC18 photo spots: the four L4 pair cameras (same anchors and offsets) plus the L5 spots and closing-door view resolve to walkable points",
+      "status": "passed",
+      "duration": 1.325249999994412,
+      "failureMessages": []
+    },
+    {
+      "fullName": "stage1 navigation capsule and NPC traces meet motion budgets @smoke",
+      "status": "passed",
+      "duration": 266.01195599999846,
+      "failureMessages": []
+    },
+    {
+      "fullName": "crowd fades preserve head position when clips change or interrupt @smoke",
+      "status": "passed",
+      "duration": 150.8917169999986,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E23 @E23-AC15 L4 completion carries the actual arsenal into L5 before automatic navigation",
+      "status": "passed",
+      "duration": 82.61271600000327,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E22 @E23 the Fairhaven follow lens stays outside the opposite building at the cellar exit",
+      "status": "passed",
+      "duration": 12.066286999997828,
+      "failureMessages": []
+    },
+    {
+      "fullName": "weather surface graphs @E23 @E23-AC15 a solid shutter copy keeps weather graphs without the player cutaway",
+      "status": "passed",
+      "duration": 24.24783199999365,
+      "failureMessages": []
+    }
+  ],
+  "checks": {
+    "target": "E23",
+    "epics": [
+      "E23"
+    ],
+    "pattern": "@(?:E23)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+    "browserOmitted": true,
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/sim-lock.sh",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "@(?:E23)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--maxWorkers=4",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E23/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "@(?:E23)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--grep-invert",
+          "@perf",
+          "--workers=1"
+        ],
+        "exitCode": null
+      },
+      {
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "npx",
+          "playwright",
+          "test",
+          "tests/perf/l5-budgets.spec.ts",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": null
+      }
+    ]
+  }
+}

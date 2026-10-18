@@ -1,0 +1,865 @@
+{
+  "target": "E30",
+  "success": true,
+  "startTime": 1792357652949,
+  "passed": 129,
+  "failed": 0,
+  "pending": 3028,
+  "total": 3157,
+  "selectedAssertions": [
+    {
+      "fullName": "S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash",
+      "status": "passed",
+      "duration": 451.92447200000015,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-04 T-E30-05 T-E30-07 @E30-AC04 @E30-AC05 @E30-AC07 high active-time calm and simultaneous inside emergence",
+      "status": "passed",
+      "duration": 5510.816904000003,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-04 T-E30-05 T-E30-07 @E30-AC04 @E30-AC05 @E30-AC07 low active-time calm and simultaneous inside emergence",
+      "status": "passed",
+      "duration": 4236.928680999998,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-08 T-E30-09 T-E30-11 @E30-AC08 @E30-AC09 @E30-AC11 seed 1 systemic zoo outbreak converts animals and humans",
+      "status": "passed",
+      "duration": 28770.420079000003,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-17 @E30-AC17 sanctuary and breach restore preserve remaining time, tunnel walks and animal identities",
+      "status": "passed",
+      "duration": 7053.9086920000045,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 0 survivors and exact APC transfer",
+      "status": "passed",
+      "duration": 8424.108424000005,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 12 survivors and exact APC transfer",
+      "status": "passed",
+      "duration": 11593.974773000009,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 35 survivors and exact APC transfer",
+      "status": "passed",
+      "duration": 11726.862523999996,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-13-losses @E30-AC13 finished civilians and released former survivors cannot block an all-lost escape",
+      "status": "passed",
+      "duration": 5150.111703999995,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-06-calm-high @E30-AC06 exterior attackers cannot cross or hurt any occupant for all 60 seconds; routines face their task",
+      "status": "passed",
+      "duration": 8044.619213999991,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-06-calm-low @E30-AC06 exterior attackers cannot cross or hurt any occupant for all 60 seconds; routines face their task",
+      "status": "passed",
+      "duration": 7999.28177500001,
+      "failureMessages": []
+    },
+    {
+      "fullName": "S-05-foundation @smoke empty scripted 1800-tick golden hash",
+      "status": "passed",
+      "duration": 244.94440699999905,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-bars @E07-AC19 @E30-AC15 fill clamps, phone sizes and palette contrast",
+      "status": "passed",
+      "duration": 4.036685999999463,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-01-alpha @E07-AC01 @E29-AC07 @E30-AC10 @E32-AC09 Alpha has 300 effective HP and authored ordinary contact tuning",
+      "status": "passed",
+      "duration": 122.39780799999971,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-handgun @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 resistance landed hits and permanence",
+      "status": "passed",
+      "duration": 13.16254299999855,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-army-mg @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 resistance landed hits and permanence",
+      "status": "passed",
+      "duration": 12.521450000000186,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-shotgun @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 resistance landed hits and permanence",
+      "status": "passed",
+      "duration": 18.09231499999987,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-rocket-launcher @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 resistance landed hits and permanence",
+      "status": "passed",
+      "duration": 9.313858999999866,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-melee @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 kick preserves Alpha HP and upright reaction; ordinary contact knocks a soldier down for 72 ticks",
+      "status": "passed",
+      "duration": 129.41560799999934,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-alpha.charge @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 59.28597399999853,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-alpha.ground-slam @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 80.01913299999796,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-alpha.grab-throw @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 52.87712599999941,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-alpha.roar @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 44.677238000000216,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-lion.pounce @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 34.90279300000111,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-lion.flank @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 22.80137200000172,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-gorilla.roar @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 23.995953999998164,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-gorilla.pound @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 40.45157599999948,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-gorilla.grab-throw @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 25.1649780000007,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-elephant.charge @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 29.475738000001,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-elephant.swipe @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 41.48480600000039,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-zebra.kick @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 34.76786899999934,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-zebra.stampede @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 22.081492000001163,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-flamingo.dive @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 42.317809000000125,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-alpha-checkpoint-false @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 checkpoint rebases pending specials and cooldowns",
+      "status": "passed",
+      "duration": 21.610106000000087,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-alpha-checkpoint-true @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 checkpoint rebases pending specials and cooldowns",
+      "status": "passed",
+      "duration": 28.64887699999963,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-alpha-independent @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 another move has its own cooldown and retargeting never resets the first",
+      "status": "passed",
+      "duration": 19.480579999999463,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-live-handgun @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 real sustained firing reaches the authored resistance fixture",
+      "status": "passed",
+      "duration": 70.07393000000229,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-live-army-mg @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 real sustained firing reaches the authored resistance fixture",
+      "status": "passed",
+      "duration": 44.63003899999967,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-live-shotgun @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 real sustained firing reaches the authored resistance fixture",
+      "status": "passed",
+      "duration": 12.179989000000205,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-selection-alpha.charge @E07-AC0 @E29-AC07 @E30-AC10 @E32-AC095 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 chase selects each available move through the merged scheduler",
+      "status": "passed",
+      "duration": 11.69373700000142,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-selection-alpha.ground-slam @E07-AC0 @E29-AC07 @E30-AC10 @E32-AC095 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 chase selects each available move through the merged scheduler",
+      "status": "passed",
+      "duration": 9.323167000002286,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-selection-alpha.grab-throw @E07-AC0 @E29-AC07 @E30-AC10 @E32-AC095 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 chase selects each available move through the merged scheduler",
+      "status": "passed",
+      "duration": 11.490183000001707,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-selection-alpha.roar @E07-AC0 @E29-AC07 @E30-AC10 @E32-AC095 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 chase selects each available move through the merged scheduler",
+      "status": "passed",
+      "duration": 7.396551000001637,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-09-routine @E30-AC09 healthy animals walk their authored enclosure loop without a hostile brain",
+      "status": "passed",
+      "duration": 183.0897030000051,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-09-lion @E30-AC09 @E30-AC08 natural perceived bite, same-id 2.5–3.5s conversion and shared bar eligibility",
+      "status": "passed",
+      "duration": 65.13646699999663,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-09-gorilla @E30-AC09 @E30-AC08 natural perceived bite, same-id 2.5–3.5s conversion and shared bar eligibility",
+      "status": "passed",
+      "duration": 68.8640149999992,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-09-elephant @E30-AC09 @E30-AC08 natural perceived bite, same-id 2.5–3.5s conversion and shared bar eligibility",
+      "status": "passed",
+      "duration": 52.95589800000016,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-09-zebra @E30-AC09 @E30-AC08 natural perceived bite, same-id 2.5–3.5s conversion and shared bar eligibility",
+      "status": "passed",
+      "duration": 49.834861000003,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-09-flamingo @E30-AC09 @E30-AC08 natural perceived bite, same-id 2.5–3.5s conversion and shared bar eligibility",
+      "status": "passed",
+      "duration": 45.16924399999698,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-08-targets @E30-AC08 civilian/soldier/staff/animal bites use local perception, pets/children/corgi excluded",
+      "status": "passed",
+      "duration": 145.3429099999994,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-09-rescue @E30-AC09 @E30-AC10 rescuing the grab prevents conversion; solid walls block animal acquisition and bites outside L5",
+      "status": "passed",
+      "duration": 55.41957199999888,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-17-animal @E30-AC17 serialized bitten state resumes remaining timer once; duplicate bite does not restart it",
+      "status": "passed",
+      "duration": 22.955182999998215,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-09-cap @E30-AC09 @E30-AC11 bitten zoo victims cannot create duplicate entities or exceed the shared infected cap",
+      "status": "passed",
+      "duration": 77.52014899999631,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-09-healthy-hit @E30-AC09 @E30-AC06 healthy animals stay huntable after a harmless player hit, without human protest or magical infection",
+      "status": "passed",
+      "duration": 12.522322999997414,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-lion-pounce @E07-AC05 @E07-AC19 @E30-AC10 telegraph, cooldown, recovery, restore",
+      "status": "passed",
+      "duration": 159.71450300000288,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-lion-flank @E07-AC05 @E07-AC19 @E30-AC10 telegraph, cooldown, recovery, restore",
+      "status": "passed",
+      "duration": 37.21322300000611,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-gorilla-roar @E07-AC05 @E07-AC19 @E30-AC10 telegraph, cooldown, recovery, restore",
+      "status": "passed",
+      "duration": 38.8637499999968,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-gorilla-pound @E07-AC05 @E07-AC19 @E30-AC10 telegraph, cooldown, recovery, restore",
+      "status": "passed",
+      "duration": 43.962258999999904,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-lion-pounce-impact @E07-AC19 @E30-AC10 10m/s, locked target, 30 damage once, 90 tick pin and mash rescue",
+      "status": "passed",
+      "duration": 16.61492200000066,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-lion-pounce-wall @E07-AC19 @E30-AC10 maximum 8m, no homing, intact wall, rescue by hitting lion",
+      "status": "passed",
+      "duration": 46.61717199999839,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-lion-flank-path @E07-AC19 @E30-AC10 75 degree side approach, 10m/s cap, no damage, expires to base speed",
+      "status": "passed",
+      "duration": 100.12275299999601,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-gorilla-pound-boundary @E07-AC19 @E30-AC10 exact 5m radius, occlusion, 30 damage and 72 tick knockdown",
+      "status": "passed",
+      "duration": 12.336752999995952,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-gorilla-roar-origin @E07-AC19 @E30-AC10 20m convergence, no zoo/Alpha buff, no speed stacking or live-player revelation, 5s expiry",
+      "status": "passed",
+      "duration": 102.1973450000005,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-lion-pounce-dodge @E07-AC19 @E30-AC10 a moving target cannot bend the telegraphed leap",
+      "status": "passed",
+      "duration": 11.524068999999145,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-gorilla-roar-overlap @E07-AC19 @E30-AC10 convergence never stacks or extends Alpha speed boost",
+      "status": "passed",
+      "duration": 47.750287999995635,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-gorilla-grab-throw-timing @E07-AC05 @E07-AC19 @E30-AC10 telegraph, pause, recovery and exact restored activation interval",
+      "status": "passed",
+      "duration": 176.50748100000055,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant-charge-timing @E07-AC05 @E07-AC19 @E30-AC10 telegraph, pause, recovery and exact restored activation interval",
+      "status": "passed",
+      "duration": 74.44429699999455,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant-swipe-timing @E07-AC05 @E07-AC19 @E30-AC10 telegraph, pause, recovery and exact restored activation interval",
+      "status": "passed",
+      "duration": 52.00778900000296,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant-charge @E07-AC19 @E30-AC10 locked 8m/s, 16m range, exact 3.5m sweep, 40 HP and 90 tick knockdown once",
+      "status": "passed",
+      "duration": 39.454508000002534,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant-charge-wall @E07-AC19 @E30-AC10 wall stops the body and blocks sweep damage",
+      "status": "passed",
+      "duration": 23.257249000002048,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant-charge-barricade @E07-AC19 @E30-AC10 400 HP slot damage clears nav in the impact tick, keeps debris and source logs",
+      "status": "passed",
+      "duration": 26.044580000001588,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant-charge-vehicle @E07-AC19 @E30-AC10 light E09 chassis takes 80 HP and physical lateral impulse; heavy vehicle unaffected",
+      "status": "passed",
+      "duration": 66.28659799999878,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant-swipe @E07-AC19 @E30-AC10 exact forward 120 degree/3m arc, 25 damage, 3m knockback, 48 tick down, wall and protected controls",
+      "status": "passed",
+      "duration": 16.453780999996525,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-gorilla-throw @E07-AC14 @E07-AC19 @E30-AC10 nearest corpse within 3m, retained pose/id, 12m/s, first impact 30HP and 48 tick down",
+      "status": "passed",
+      "duration": 23.394368000001123,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-gorilla-throw-controls @E07-AC19 @E30-AC10 nearest medium only, 15m range, locked target and no-object cancellation",
+      "status": "passed",
+      "duration": 30.930281000000832,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-gorilla.grab-throw-checkpoint @E07-AC05 @E07-AC19 @E30-AC10 production checkpoint restores active state and cooldown",
+      "status": "passed",
+      "duration": 24.11965699999564,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant.charge-checkpoint @E07-AC05 @E07-AC19 @E30-AC10 production checkpoint restores active state and cooldown",
+      "status": "passed",
+      "duration": 17.223376999994798,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant.swipe-checkpoint @E07-AC05 @E07-AC19 @E30-AC10 production checkpoint restores active state and cooldown",
+      "status": "passed",
+      "duration": 12.59361699999863,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-gorilla-throw-wall @E07-AC19 @E30-AC10 intact cover stops a thrown corpse and rejects hidden pickups",
+      "status": "passed",
+      "duration": 18.19509800000378,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant-charge-slot-boundary @E07-AC19 @E30-AC10 full telegraphed width contacts an offset E26 slot",
+      "status": "passed",
+      "duration": 14.166207000002032,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-zebra.kick-timing @E07-AC05 @E07-AC19 @E30-AC10 pause, telegraph, recovery, serialized group/cooldown, exact next activation",
+      "status": "passed",
+      "duration": 179.27827100000286,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-zebra.stampede-timing @E07-AC05 @E07-AC19 @E30-AC10 pause, telegraph, recovery, serialized group/cooldown, exact next activation",
+      "status": "passed",
+      "duration": 73.59891300000163,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-flamingo.dive-timing @E07-AC05 @E07-AC19 @E30-AC10 pause, telegraph, recovery, serialized group/cooldown, exact next activation",
+      "status": "passed",
+      "duration": 58.39506600000459,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-zebra-kick @E07-AC01 @E07-AC19 @E30-AC10 rear 90 degree/2m boundary, 20 damage, 3m shove and 36 tick stagger; front/cover/protected controls",
+      "status": "passed",
+      "duration": 20.87115199999971,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-zebra-stampede @E07-AC19 @E30-AC10 existing 2-4 zebras, locked 10m/s, 15m, 1.5m sweep and one hit per zebra",
+      "status": "passed",
+      "duration": 56.02774300000601,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-zebra-stampede-wall @E07-AC19 @E30-AC10 intact walls stop every participant and remain intact",
+      "status": "passed",
+      "duration": 31.87670600000274,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-group-controls @E07-AC19 @E30-AC10 no phantom herd/flock, cap, 12m acquisition, busy/dead/occluded animals excluded",
+      "status": "passed",
+      "duration": 4.2193999999944936,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-flamingo-dive @E07-AC19 @E30-AC10 existing birds steer, locked 3m area, 5 HP/36 tick stagger once, 48 tick obstruction expiry",
+      "status": "passed",
+      "duration": 25.154098999999405,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-flamingo-dive-wall @E07-AC19 @E30-AC10 flock cannot affect a target through solid geometry",
+      "status": "passed",
+      "duration": 11.218455000001995,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-zebra.kick-checkpoint @E07-AC05 @E07-AC19 @E30-AC10 production checkpoint restores group, locked area, hit set and independent cooldowns",
+      "status": "passed",
+      "duration": 23.41098800000327,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-zebra.stampede-checkpoint @E07-AC05 @E07-AC19 @E30-AC10 production checkpoint restores group, locked area, hit set and independent cooldowns",
+      "status": "passed",
+      "duration": 20.144767999998294,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-flamingo.dive-checkpoint @E07-AC05 @E07-AC19 @E30-AC10 production checkpoint restores group, locked area, hit set and independent cooldowns",
+      "status": "passed",
+      "duration": 13.852127999998629,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-zebra-stampede-player @E07-AC19 @E30-AC10 every distinct zebra deals 25HP even inside the ordinary hurt grace window",
+      "status": "passed",
+      "duration": 23.29147300000477,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-flamingo-dive-lock @E07-AC19 @E30-AC10 moving target does not drag the marked area; small/absent flock cannot create a dive",
+      "status": "passed",
+      "duration": 11.718754000001354,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-zoo-stagger-lethal @E07-AC19 @E30-AC10 lethal kick/dive finishes a civilian instead of leaving a zero-HP moving brain",
+      "status": "passed",
+      "duration": 32.26394299999811,
+      "failureMessages": []
+    },
+    {
+      "fullName": "S-06 @E05 @smoke each category fires/hits; swept projectile cannot tunnel through a dummy",
+      "status": "passed",
+      "duration": 178.34663999999975,
+      "failureMessages": []
+    },
+    {
+      "fullName": "20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07",
+      "status": "passed",
+      "duration": 2911.9812079999992,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E30 @E31 corgi follows in zoo and survives APC handover/checkpoint: high",
+      "status": "passed",
+      "duration": 4726.2609090000005,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E30 @E31 corgi follows in zoo and survives APC handover/checkpoint: low",
+      "status": "passed",
+      "duration": 4752.6243829999985,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E29 @E30 bus passenger keeps the same corgi identity at zoo arrival",
+      "status": "passed",
+      "duration": 903.1901809999981,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E30 zoo stress photo spot keeps the corgi with the courier and the full infected cap",
+      "status": "passed",
+      "duration": 271.4946689999997,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-13-apc @E30-AC13 complete 0-person roster boards without a seat cap",
+      "status": "passed",
+      "duration": 114.45338099999935,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-13-apc @E30-AC13 complete 1-person roster boards without a seat cap",
+      "status": "passed",
+      "duration": 32.12157699999807,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-13-apc @E30-AC13 complete 35-person roster boards without a seat cap",
+      "status": "passed",
+      "duration": 234.7007769999982,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-14-apc @E30-AC14 shared APC transfer keeps identity, roster, health, weapons and durability",
+      "status": "passed",
+      "duration": 67.54905900000449,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-14-unarmed @E30-AC14 APC only attacks through mass; both firing inputs are suspended",
+      "status": "passed",
+      "duration": 29.836708000002545,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-13-exit @E30-AC13 safe passenger exit resumes following, with continuous doorway movement",
+      "status": "passed",
+      "duration": 15.60793399999966,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-17-apc @E30-AC17 checkpoint keeps remaining boarding time, occupant roster and vehicle health",
+      "status": "passed",
+      "duration": 37.221989999998186,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-14-windup @E30-AC14 boarding cancels a personal weapon already preparing to fire",
+      "status": "passed",
+      "duration": 11.521624000000884,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-13-loss @E30-AC13 departure carries living occupants without a phantom seat for a lost survivor",
+      "status": "passed",
+      "duration": 18.964192999999796,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-17-save @E30-AC17 campaign save serializes the shared APC payload without resetting health or roster",
+      "status": "passed",
+      "duration": 24.74474299999565,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-13-motion @E30-AC13 even hidden boarding and exit keep passenger motion below 1m per tick",
+      "status": "passed",
+      "duration": 26.330258000001777,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-13-companion @E30-AC13 companion identity and courage survive boarding, transfer and a grounded exit",
+      "status": "passed",
+      "duration": 24.26074299999891,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E30 @E30-AC16 L8 stays calm until its saved breach state, then uses tension below local combat pressure",
+      "status": "passed",
+      "duration": 2.6822839999949792,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-05-district @E30-AC05 intact zoo facilities, named enclosures, public lights and service infrastructure",
+      "status": "passed",
+      "duration": 202.09058899999945,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-06-walls @E30-AC06 continuous four-metre perimeter blocks exterior navigation on all four faces",
+      "status": "passed",
+      "duration": 94.76907999999821,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-12-district @E30-AC12 each enclosure has two independent public escape routes with 2.5 m clear width",
+      "status": "passed",
+      "duration": 163.23029300000053,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-06-sight @E30-AC06 shipped district registers perimeter as actual attack/sight cover",
+      "status": "passed",
+      "duration": 608.5246469999984,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-06-scene @E30-AC06 district Scene Lab crops retain/recenter masonry collision and excluded pond",
+      "status": "passed",
+      "duration": 98.23653800001193,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-05-foot-probe @E30-AC05 paused/raised scene starts cannot change the measured asset shoe depth",
+      "status": "passed",
+      "duration": 260.4985539999907,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-07-outlets @E30-AC07 at least three occluded tunnel outlets, >= 20 m apart, inside the perimeter, on the path network",
+      "status": "passed",
+      "duration": 255.09408100000292,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-07-doors @E30-AC07 each outlet is a HouseEmergence door: closed masonry shell, spawn point behind the door inside the collider, door faces the apron",
+      "status": "passed",
+      "duration": 64.30031299999973,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-07-asset @E30-AC07 tunnel mouth budgets, derived looks and unarmed APC variant are registered",
+      "status": "passed",
+      "duration": 2.4471129999874393,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-05-staff @E30-AC05 zoo staff are civilian bases with a uniform tint no visitor uses, plus cap and a work prop",
+      "status": "passed",
+      "duration": 2.7084840000024997,
+      "failureMessages": []
+    },
+    {
+      "fullName": "stage1 navigation capsule and NPC traces meet motion budgets @smoke",
+      "status": "passed",
+      "duration": 203.53540200000134,
+      "failureMessages": []
+    },
+    {
+      "fullName": "crowd fades preserve head position when clips change or interrupt @smoke",
+      "status": "passed",
+      "duration": 156.86538500000097,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E30 @E30-AC03 L8 standalone keeps all six acquired weapons selectable and saves them",
+      "status": "passed",
+      "duration": 7.682841000001645,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-14-model @E30-AC14 transport derivative has seats/exits and removes every weapon node on all LODs",
+      "status": "passed",
+      "duration": 48.37701900000684,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E30-14-loader @E30-AC14 unarmed shell loads using its own node contract",
+      "status": "passed",
+      "duration": 117.53917199998978,
+      "failureMessages": []
+    }
+  ],
+  "checks": {
+    "target": "E30",
+    "epics": [
+      "E30"
+    ],
+    "pattern": "@(?:E30)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+    "browserOmitted": true,
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/sim-lock.sh",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "@(?:E30)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--maxWorkers=4",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E30/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "@(?:E30)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--grep-invert",
+          "@perf",
+          "--workers=1"
+        ],
+        "exitCode": null
+      },
+      {
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "npx",
+          "playwright",
+          "test",
+          "tests/perf/l8-budgets.spec.ts",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": null
+      }
+    ]
+  }
+}

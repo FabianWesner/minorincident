@@ -1,0 +1,12 @@
+#!/bin/sh
+mkdir -p docs/reports/verify-sweep/evidence
+for epic in E07 E22 E23 E24 E25 E26 E27 E28 E29 E30 E31 E32; do
+  npx tsx tools/verify-sweep-temporary.ts "$epic" > "docs/reports/verify-sweep/evidence/$epic.log" 2>&1
+  rc=$?
+  echo "$epic verify without browser exit=$rc"
+  cp "test-results/epics/$epic/checks.json" "docs/reports/verify-sweep/evidence/$epic-checks.json"
+  if [ -f "test-results/epics/$epic/vitest.json" ]; then cp "test-results/epics/$epic/vitest.json" "docs/reports/verify-sweep/evidence/$epic-vitest.json"; fi
+  tail -n 8 "docs/reports/verify-sweep/evidence/$epic.log"
+done
+npm run test:unit -- --maxWorkers=4 --reporter=json --outputFile=docs/reports/verify-sweep/evidence/unit.json > docs/reports/verify-sweep/evidence/unit.log 2>&1
+echo "unit exit=$?"

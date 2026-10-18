@@ -1,0 +1,2209 @@
+{
+  "target": "E07",
+  "success": true,
+  "startTime": 1792353954376,
+  "passed": 356,
+  "failed": 0,
+  "pending": 2801,
+  "total": 3157,
+  "selectedAssertions": [
+    {
+      "fullName": "T-E07-07 @E07 @E07-AC07 director excludes player radius, expanded camera footprint and colliders",
+      "status": "passed",
+      "duration": 154.5477350000001,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-08 @E07 @E07-AC08 scripted waves queue and resume within both tier caps",
+      "status": "passed",
+      "duration": 61.99700500000017,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-09 @E07 @E07-AC09 150-infected stream follows spline on time and fans out",
+      "status": "passed",
+      "duration": 900.5572179999999,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-10 @E07 @E07-AC10 five-minute spawn/kill cycle reuses prewarmed entity objects",
+      "status": "passed",
+      "duration": 47451.229244,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget",
+      "status": "passed",
+      "duration": 1073.2772929999992,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-10b @E07 @E07-AC10 recycled archetypes refresh borrowed player-collision radii",
+      "status": "passed",
+      "duration": 137.33309599999484,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-08b @E07 @E07-AC08 revival respects cap and retries instead of exceeding it",
+      "status": "passed",
+      "duration": 13.037607999998727,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-08c @E07 @E07-AC08 a capped scripted migration remains queued and begins when capacity returns",
+      "status": "passed",
+      "duration": 4.93993600000249,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-07b @E07 @E07-AC07 supplied camera volume uses the 10 percent expanded frustum",
+      "status": "passed",
+      "duration": 2.1079290000052424,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-max-zoom @E07-AC07 @E18-AC01 max zoom defers a spawn newly revealed by the wider simulation camera",
+      "status": "passed",
+      "duration": 4.788324000001012,
+      "failureMessages": []
+    },
+    {
+      "fullName": "S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash",
+      "status": "passed",
+      "duration": 438.23728200000187,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms",
+      "status": "passed",
+      "duration": 1510.2713969999968,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-11-alpha-physical-100 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 6ms",
+      "status": "passed",
+      "duration": 615.8207149999944,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms",
+      "status": "passed",
+      "duration": 1280.82733,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-11-alpha-100 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 6ms",
+      "status": "passed",
+      "duration": 534.9387659999993,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
+      "status": "passed",
+      "duration": 1871.1093099999998,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-11-zoo-s1-100 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 6ms",
+      "status": "passed",
+      "duration": 723.1010040000037,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+      "status": "passed",
+      "duration": 1986.4550410000084,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-11-zoo-s2-100 @E07-AC11 @E18-AC02 mixed zoo specials stay within 6ms",
+      "status": "passed",
+      "duration": 795.8138960000069,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+      "status": "passed",
+      "duration": 1323.1321360000002,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-11-zoo-s3-100 @E07-AC11 @E18-AC02 mixed zoo specials stay within 6ms",
+      "status": "passed",
+      "duration": 540.7671719999926,
+      "failureMessages": []
+    },
+    {
+      "fullName": "S-05-foundation @smoke empty scripted 1800-tick golden hash",
+      "status": "passed",
+      "duration": 315.0845279999776,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO #25 @E07 @E23 an Alpha 5 m from the courier behind cover turns, roars and engages without sight; regular infected hear too",
+      "status": "passed",
+      "duration": 1310.749251000001,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-bars @E07-AC06 @E07-AC19 visibility boundary, damage, conversion and recovery are truthful",
+      "status": "passed",
+      "duration": 2.2653129999816883,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-bars @E07-AC19 @E30-AC15 fill clamps, phone sizes and palette contrast",
+      "status": "passed",
+      "duration": 1.4708490000048187,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-bars-bounds @E07-AC06 bounds follow displayed poses, interpolation and same-id conversion, without stale invisible figures",
+      "status": "passed",
+      "duration": 1.7646369999856688,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L1 Alpha hears courier through cover and turns/roars",
+      "status": "passed",
+      "duration": 165.16655199998058,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L1 Alpha hears companion through cover and turns/roars",
+      "status": "passed",
+      "duration": 13.546455000003334,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L1 Alpha hears ally through cover and turns/roars",
+      "status": "passed",
+      "duration": 11.564183000009507,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L2 Alpha hears courier through cover and turns/roars",
+      "status": "passed",
+      "duration": 9.768930999998702,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L2 Alpha hears companion through cover and turns/roars",
+      "status": "passed",
+      "duration": 11.143066999997245,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L2 Alpha hears ally through cover and turns/roars",
+      "status": "passed",
+      "duration": 11.460379000025569,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L3 Alpha hears courier through cover and turns/roars",
+      "status": "passed",
+      "duration": 9.339578999992227,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L3 Alpha hears companion through cover and turns/roars",
+      "status": "passed",
+      "duration": 9.750365999992937,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L3 Alpha hears ally through cover and turns/roars",
+      "status": "passed",
+      "duration": 9.873717000009492,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L4 Alpha hears courier through cover and turns/roars",
+      "status": "passed",
+      "duration": 10.393267000006745,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L4 Alpha hears companion through cover and turns/roars",
+      "status": "passed",
+      "duration": 9.250192000006791,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L4 Alpha hears ally through cover and turns/roars",
+      "status": "passed",
+      "duration": 8.990185999980895,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L5 Alpha hears courier through cover and turns/roars",
+      "status": "passed",
+      "duration": 8.299556999991182,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L5 Alpha hears companion through cover and turns/roars",
+      "status": "passed",
+      "duration": 7.720185000012862,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L5 Alpha hears ally through cover and turns/roars",
+      "status": "passed",
+      "duration": 6.597097999998368,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L6 Alpha hears courier through cover and turns/roars",
+      "status": "passed",
+      "duration": 7.5429650000005495,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L6 Alpha hears companion through cover and turns/roars",
+      "status": "passed",
+      "duration": 5.909855999983847,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L6 Alpha hears ally through cover and turns/roars",
+      "status": "passed",
+      "duration": 5.884828000009293,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L7 Alpha hears courier through cover and turns/roars",
+      "status": "passed",
+      "duration": 5.745879000023706,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L7 Alpha hears companion through cover and turns/roars",
+      "status": "passed",
+      "duration": 5.8860899999854155,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L7 Alpha hears ally through cover and turns/roars",
+      "status": "passed",
+      "duration": 6.042982999992091,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L8 Alpha hears courier through cover and turns/roars",
+      "status": "passed",
+      "duration": 5.579037000017706,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L8 Alpha hears companion through cover and turns/roars",
+      "status": "passed",
+      "duration": 6.60967200002051,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L8 Alpha hears ally through cover and turns/roars",
+      "status": "passed",
+      "duration": 5.747720999992453,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L9 Alpha hears courier through cover and turns/roars",
+      "status": "passed",
+      "duration": 4.467051999992691,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L9 Alpha hears companion through cover and turns/roars",
+      "status": "passed",
+      "duration": 5.034030000009807,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L9 Alpha hears ally through cover and turns/roars",
+      "status": "passed",
+      "duration": 5.894674999988638,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L10 Alpha hears courier through cover and turns/roars",
+      "status": "passed",
+      "duration": 7.2821790000016335,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L10 Alpha hears companion through cover and turns/roars",
+      "status": "passed",
+      "duration": 6.173266999976477,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-awareness @E07 @E07-AC06 L10 Alpha hears ally through cover and turns/roars",
+      "status": "passed",
+      "duration": 6.097876000014367,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-noise @E07 @E07-AC06 quiet/walk/run/shot radii scale without changing ordinary infected or L5",
+      "status": "passed",
+      "duration": 2.1889269999810494,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-mega @E07 @E07-AC06 Mega notices an ally through cover then resumes its courier pursuit",
+      "status": "passed",
+      "duration": 14.941317999997409,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-human-noise @E07 @E07-AC06 ally gunfire and companion movement scale hearing; cowering shrinks it",
+      "status": "passed",
+      "duration": 1.4643529999884777,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-chasing @E07 @E07-AC06 a chasing Alpha notices a nearby ally instead of ignoring it for the distant courier",
+      "status": "passed",
+      "duration": 2.371417999995174,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-known-target @E07 @E07-AC06 proximity does not restart discovery for a courier already being chased",
+      "status": "passed",
+      "duration": 3.372257000009995,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-charge @E07-AC05 @E07-AC06 locked 9m/s, 12m sweep, once per human, windup and 72 tick knockdown",
+      "status": "passed",
+      "duration": 202.8304310000094,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-charge-wall @E07-AC06 intact solid wall stops body and shields humans across sweep",
+      "status": "passed",
+      "duration": 26.26722300000256,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-ground-slam @E07-AC05 @E07-AC06 exact 4m boundary, wall occlusion, 25 damage and 72 ticks, no windup effects",
+      "status": "passed",
+      "duration": 23.911206000004313,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-alpha-line-ordinary @E07-AC19 E26 HP, source/slot log, nav and debris lifecycle",
+      "status": "passed",
+      "duration": 52.083692000000156,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-alpha-line-charge @E07-AC19 E26 HP, source/slot log, nav and debris lifecycle",
+      "status": "passed",
+      "duration": 23.909763000003295,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-alpha.charge-cooldown @E07-AC05 activation interval survives serialized cooldown and recovery",
+      "status": "passed",
+      "duration": 39.83491800000775,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-alpha.ground-slam-cooldown @E07-AC05 activation interval survives serialized cooldown and recovery",
+      "status": "passed",
+      "duration": 20.60727200000838,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-alpha-charge-props @E07-AC19 braced E26 furniture retains identity and becomes physical debris at rail break",
+      "status": "passed",
+      "duration": 50.27021899999818,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-ground-slam-protected @E07-AC06 protected child and companion never take physical special effects",
+      "status": "passed",
+      "duration": 16.44780900000478,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-ground-slam-escort @E07-AC06 adult follower uses the existing fall pose and pauses for exactly 72 ticks",
+      "status": "passed",
+      "duration": 21.619610000008834,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-grab-throw @E07-AC05 @E07-AC06 @E07-AC14 locked 12m/s corpse flight, first human impact once, retained pose/id, 0.8s knockdown",
+      "status": "passed",
+      "duration": 224.01410400000168,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-grab-throw-target @E07-AC06 locked target, <=15m range, wall control and no valid object cancellation",
+      "status": "passed",
+      "duration": 90.37229999998817,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-grab-throw-prop @E07-AC06 nearest medium prop, first soldier hit and exact authored knockdown",
+      "status": "passed",
+      "duration": 20.232602999996743,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-roar @E07-AC05 @E07-AC06 18m regular-only convergence, 1.25x for exactly 300 ticks, overlap does not stack",
+      "status": "passed",
+      "duration": 93.46541200000502,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha.grab-throw-restore @E07-AC05 checkpoint restores flight/buff and activation-to-activation cooldown",
+      "status": "passed",
+      "duration": 18.10166700000991,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha.roar-restore @E07-AC05 checkpoint restores flight/buff and activation-to-activation cooldown",
+      "status": "passed",
+      "duration": 15.32897599998978,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-roar-wall @E07-AC06 a large occluded horde routes toward the roar without consuming the unseen-player flow field",
+      "status": "passed",
+      "duration": 94.57259799999883,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-grab-throw-e26 @E07-AC06 authored medium body keeps entity identity and synchronized pose",
+      "status": "passed",
+      "duration": 24.864122999992105,
+      "failureMessages": []
+    },
+    {
+      "fullName": "Alpha routes to its soldier, not the courier flow field (high) @E07",
+      "status": "passed",
+      "duration": 408.29325299998163,
+      "failureMessages": []
+    },
+    {
+      "fullName": "recoverable infected cannot become a static corpse (L1, high) @E07",
+      "status": "passed",
+      "duration": 83.31127199999173,
+      "failureMessages": []
+    },
+    {
+      "fullName": "recoverable infected cannot become a static corpse (L3, high) @E07",
+      "status": "passed",
+      "duration": 73.94193800000357,
+      "failureMessages": []
+    },
+    {
+      "fullName": "recoverable infected cannot become a static corpse (L4, high) @E07",
+      "status": "passed",
+      "duration": 47.45095900000888,
+      "failureMessages": []
+    },
+    {
+      "fullName": "Alpha routes to its soldier, not the courier flow field (low) @E07",
+      "status": "passed",
+      "duration": 162.29989299998851,
+      "failureMessages": []
+    },
+    {
+      "fullName": "recoverable infected cannot become a static corpse (L1, low) @E07",
+      "status": "passed",
+      "duration": 47.52794199998607,
+      "failureMessages": []
+    },
+    {
+      "fullName": "recoverable infected cannot become a static corpse (L3, low) @E07",
+      "status": "passed",
+      "duration": 53.04257200000575,
+      "failureMessages": []
+    },
+    {
+      "fullName": "recoverable infected cannot become a static corpse (L4, low) @E07",
+      "status": "passed",
+      "duration": 37.783339000015985,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-01-alpha @E07-AC01 @E29-AC07 @E30-AC10 @E32-AC09 Alpha has 300 effective HP and authored ordinary contact tuning",
+      "status": "passed",
+      "duration": 134.880548000001,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-handgun @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 resistance landed hits and permanence",
+      "status": "passed",
+      "duration": 5.569929999997839,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-army-mg @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 resistance landed hits and permanence",
+      "status": "passed",
+      "duration": 3.2177410000003874,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-shotgun @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 resistance landed hits and permanence",
+      "status": "passed",
+      "duration": 2.169505999991088,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-rocket-launcher @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 resistance landed hits and permanence",
+      "status": "passed",
+      "duration": 1.8512340000015683,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-melee @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 kick preserves Alpha HP and upright reaction; ordinary contact knocks a soldier down for 72 ticks",
+      "status": "passed",
+      "duration": 49.12084699999832,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-alpha.charge @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 30.51802800000587,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-alpha.ground-slam @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 30.139601000002585,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-alpha.grab-throw @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 21.49832199999946,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-alpha.roar @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 26.140893000003416,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-lion.pounce @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 13.54238099999202,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-lion.flank @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 12.538818000000902,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-gorilla.roar @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 18.31256900000153,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-gorilla.pound @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 13.885559999995166,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-gorilla.grab-throw @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 11.847769999993034,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-elephant.charge @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 13.019134999995003,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-elephant.swipe @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 14.24433100000897,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-zebra.kick @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 9.095696999997017,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-zebra.stampede @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 14.829121000002488,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-scheduler-flamingo.dive @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 locked telegraph, independent cooldown, recovery and serialized state",
+      "status": "passed",
+      "duration": 14.376016999987769,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-alpha-checkpoint-false @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 checkpoint rebases pending specials and cooldowns",
+      "status": "passed",
+      "duration": 20.100244000001112,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-alpha-checkpoint-true @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 checkpoint rebases pending specials and cooldowns",
+      "status": "passed",
+      "duration": 12.031985000008717,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05-alpha-independent @E07-AC05 @E29-AC07 @E30-AC10 @E32-AC09 another move has its own cooldown and retargeting never resets the first",
+      "status": "passed",
+      "duration": 19.57835100000375,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-live-handgun @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 real sustained firing reaches the authored resistance fixture",
+      "status": "passed",
+      "duration": 83.37839199999871,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-live-army-mg @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 real sustained firing reaches the authored resistance fixture",
+      "status": "passed",
+      "duration": 32.8479640000005,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-live-shotgun @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 real sustained firing reaches the authored resistance fixture",
+      "status": "passed",
+      "duration": 5.940893999999389,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-selection-alpha.charge @E07-AC0 @E29-AC07 @E30-AC10 @E32-AC095 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 chase selects each available move through the merged scheduler",
+      "status": "passed",
+      "duration": 5.836167000001296,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-selection-alpha.ground-slam @E07-AC0 @E29-AC07 @E30-AC10 @E32-AC095 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 chase selects each available move through the merged scheduler",
+      "status": "passed",
+      "duration": 7.212314000003971,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-selection-alpha.grab-throw @E07-AC0 @E29-AC07 @E30-AC10 @E32-AC095 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 chase selects each available move through the merged scheduler",
+      "status": "passed",
+      "duration": 8.345648000002257,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06-alpha-selection-alpha.roar @E07-AC0 @E29-AC07 @E30-AC10 @E32-AC095 @E07-AC06 @E29-AC07 @E30-AC10 @E32-AC09 chase selects each available move through the merged scheduler",
+      "status": "passed",
+      "duration": 7.089343999992707,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-16 @E07 @E07-AC16 four dogs flank from at least two directions and telegraph 0.6 s knockdown pounces",
+      "status": "passed",
+      "duration": 312.11524400000053,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-17 @E07 @E07-AC17 cat remains hidden beyond 5 m then leaps/clings with three escape paths",
+      "status": "passed",
+      "duration": 40.23645900000702,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-18 @E07 @E07-AC18 flock circles, telegraphs wave dives, individual birds die and survivors scatter at least 5 seconds",
+      "status": "passed",
+      "duration": 67.40339500000118,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19a @E07 @E07-AC19 gorilla throws nearest medium E26 body with authored damage and sixfold barricade damage",
+      "status": "passed",
+      "duration": 37.09531000000425,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19b @E07 @E07-AC19 lion pounce pins for 1.5 seconds unless interrupted by two attack inputs",
+      "status": "passed",
+      "duration": 29.144146000006003,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-floor @E07 the large arena keeps a stationary survivor grounded",
+      "status": "passed",
+      "duration": 46.14106800001173,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-17b @E07 @E07-AC17 cat uses layout-authored perch points",
+      "status": "passed",
+      "duration": 3.4432639999868115,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-17c @E07 @E07-AC14 perched and clinging cats leave visible grounded corpses",
+      "status": "passed",
+      "duration": 15.030824000001303,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-18b @E07 @E07-AC18 rays and shotgun cones hit individual birds rather than deleting the flock",
+      "status": "passed",
+      "duration": 2.5197410000109812,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-18c @E07 @E07-AC18 force-killed flocks clear bird masks before capacity is reused",
+      "status": "passed",
+      "duration": 7.008605999988504,
+      "failureMessages": []
+    },
+    {
+      "fullName": "ordinary spawns share seven looks within 25%, scripted variants stay authored and pool reuse gets a fresh look @E07",
+      "status": "passed",
+      "duration": 137.60916399999405,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L6 maintenance arrivals use a balanced cast instead of one repeated aftermath model @E24 @E07",
+      "status": "passed",
+      "duration": 11.73183499998413,
+      "failureMessages": []
+    },
+    {
+      "fullName": "dressing regular infected balances their own cohort even beside an authored pedestrian crowd @E07 @E08",
+      "status": "passed",
+      "duration": 4.306282999983523,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.runner hears a player behind it (archetype brain)",
+      "status": "passed",
+      "duration": 183.98216799998772,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.crawler hears a player behind it (archetype brain)",
+      "status": "passed",
+      "duration": 10.557001000008313,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.brute hears a player behind it (archetype brain)",
+      "status": "passed",
+      "duration": 9.585546999995131,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.screamer hears a player behind it (archetype brain)",
+      "status": "passed",
+      "duration": 9.97034599998733,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.sprinter hears a player behind it (archetype brain)",
+      "status": "passed",
+      "duration": 11.270934000000125,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.riot hears a player behind it (archetype brain)",
+      "status": "passed",
+      "duration": 10.007114000007277,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.bloated hears a player behind it (archetype brain)",
+      "status": "passed",
+      "duration": 9.095693999988725,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.firefighter hears a player behind it (archetype brain)",
+      "status": "passed",
+      "duration": 9.610834999999497,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.hazmat hears a player behind it (archetype brain)",
+      "status": "passed",
+      "duration": 8.753154999983963,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.armored hears a player behind it (archetype brain)",
+      "status": "passed",
+      "duration": 9.073581999982707,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.butcher hears a player behind it (archetype brain)",
+      "status": "passed",
+      "duration": 7.536982999998145,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.nurse hears a player behind it (archetype brain)",
+      "status": "passed",
+      "duration": 6.8151749999960884,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.alpha hears a player behind it (archetype brain)",
+      "status": "passed",
+      "duration": 12.240335000009509,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.dog hears a player behind it (archetype brain)",
+      "status": "passed",
+      "duration": 6.962359999975888,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.cat hears a player behind it (archetype brain)",
+      "status": "passed",
+      "duration": 6.414526999986265,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.crow hears a player behind it (archetype brain)",
+      "status": "passed",
+      "duration": 10.387073999998393,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.lion hears a player behind it (archetype brain)",
+      "status": "passed",
+      "duration": 6.540903000015533,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.gorilla hears a player behind it (archetype brain)",
+      "status": "passed",
+      "duration": 7.187318999989657,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.elephant hears a player behind it (archetype brain)",
+      "status": "passed",
+      "duration": 6.22979199999827,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.zebra hears a player behind it (archetype brain)",
+      "status": "passed",
+      "duration": 6.135718000004999,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.flamingo hears a player behind it (archetype brain)",
+      "status": "passed",
+      "duration": 6.689752000005683,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.runner hears a civilian behind it (archetype brain)",
+      "status": "passed",
+      "duration": 11.92945399999735,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.crawler hears a civilian behind it (archetype brain)",
+      "status": "passed",
+      "duration": 6.717313000001013,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.brute hears a civilian behind it (archetype brain)",
+      "status": "passed",
+      "duration": 9.36012599998503,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.screamer hears a civilian behind it (archetype brain)",
+      "status": "passed",
+      "duration": 6.6798520000011194,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.sprinter hears a civilian behind it (archetype brain)",
+      "status": "passed",
+      "duration": 6.860190000006696,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.riot hears a civilian behind it (archetype brain)",
+      "status": "passed",
+      "duration": 6.43832200000179,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.bloated hears a civilian behind it (archetype brain)",
+      "status": "passed",
+      "duration": 6.087767000019085,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.firefighter hears a civilian behind it (archetype brain)",
+      "status": "passed",
+      "duration": 6.130786000023363,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.hazmat hears a civilian behind it (archetype brain)",
+      "status": "passed",
+      "duration": 5.168059999996331,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.armored hears a civilian behind it (archetype brain)",
+      "status": "passed",
+      "duration": 5.224142999999458,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.butcher hears a civilian behind it (archetype brain)",
+      "status": "passed",
+      "duration": 8.844064000004437,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.nurse hears a civilian behind it (archetype brain)",
+      "status": "passed",
+      "duration": 6.2496289999980945,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.alpha hears a civilian behind it (archetype brain)",
+      "status": "passed",
+      "duration": 5.723105999990366,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.dog hears a civilian behind it (archetype brain)",
+      "status": "passed",
+      "duration": 4.229166000004625,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.cat hears a civilian behind it (archetype brain)",
+      "status": "passed",
+      "duration": 5.388420000002952,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.crow hears a civilian behind it (archetype brain)",
+      "status": "passed",
+      "duration": 7.138489000004483,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.lion hears a civilian behind it (archetype brain)",
+      "status": "passed",
+      "duration": 4.439469000004465,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.gorilla hears a civilian behind it (archetype brain)",
+      "status": "passed",
+      "duration": 4.446361999987857,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.elephant hears a civilian behind it (archetype brain)",
+      "status": "passed",
+      "duration": 4.535888999991585,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.zebra hears a civilian behind it (archetype brain)",
+      "status": "passed",
+      "duration": 7.36724600000889,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.flamingo hears a civilian behind it (archetype brain)",
+      "status": "passed",
+      "duration": 7.5656769999768585,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.runner hears a player behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 9.979182999988552,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.crawler hears a player behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 8.332208000007086,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.brute hears a player behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 6.216617999976734,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.screamer hears a player behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 6.066837999998825,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.sprinter hears a player behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 6.409597999998368,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.riot hears a player behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 5.8907190000172704,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.bloated hears a player behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 6.147938000009162,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.firefighter hears a player behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 6.5587759999907576,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.hazmat hears a player behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 6.647182000015164,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.armored hears a player behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 7.020366999990074,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.butcher hears a player behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 7.711128000024473,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.nurse hears a player behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 6.220744999998715,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.alpha hears a player behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 8.333168999990448,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.dog hears a player behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 6.1370590000005905,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.cat hears a player behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 5.325152999983402,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.crow hears a player behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 8.47181799999089,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.lion hears a player behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 5.275801000010688,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.gorilla hears a player behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 5.240244000015082,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.elephant hears a player behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 5.123917999997502,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.zebra hears a player behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 5.429738000006182,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.flamingo hears a player behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 4.368176999996649,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.runner hears a civilian behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 5.131370999995852,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.crawler hears a civilian behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 6.251351999992039,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.brute hears a civilian behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 4.008032999990974,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.screamer hears a civilian behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 3.770931000006385,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.sprinter hears a civilian behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 4.024764000001596,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.riot hears a civilian behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 3.917354000004707,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.bloated hears a civilian behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 3.581747999996878,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.firefighter hears a civilian behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 3.591176000016276,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.hazmat hears a civilian behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 3.2947109999950044,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.armored hears a civilian behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 3.5900340000225697,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.butcher hears a civilian behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 3.6442239999887533,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.nurse hears a civilian behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 3.674572000018088,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.alpha hears a civilian behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 6.674171999999089,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.dog hears a civilian behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 4.245135999983177,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.cat hears a civilian behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 4.696368999982951,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.crow hears a civilian behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 4.74237500000163,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.lion hears a civilian behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 3.598319000011543,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.gorilla hears a civilian behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 3.612184999976307,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.elephant hears a civilian behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 3.4140339999867138,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.zebra hears a civilian behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 3.778976000001421,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.flamingo hears a civilian behind it (outbreak brain)",
+      "status": "passed",
+      "duration": 4.544374999997672,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 6.5 m behind does not trigger hearing (archetype)",
+      "status": "passed",
+      "duration": 6.583172000013292,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 a building wall blocks sight but proximity still alerts (archetype)",
+      "status": "passed",
+      "duration": 6.275717999989865,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 scripted held infected waits until released (archetype)",
+      "status": "passed",
+      "duration": 9.721110999991652,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 6.5 m behind does not trigger hearing (outbreak)",
+      "status": "passed",
+      "duration": 5.591671000001952,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 a building wall blocks sight but proximity still alerts (outbreak)",
+      "status": "passed",
+      "duration": 5.260092000011355,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 scripted held infected waits until released (outbreak)",
+      "status": "passed",
+      "duration": 7.914617000002181,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.cat releases a vanished heard victim without grabbing the distant player",
+      "status": "passed",
+      "duration": 2.767407000006642,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 infected.lion releases a vanished heard victim without grabbing the distant player",
+      "status": "passed",
+      "duration": 2.1425299999827985,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 an infected already searching reacquires a heard victim without another notice pause",
+      "status": "passed",
+      "duration": 3.9671870000020135,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 a gorilla hearing a civilian locks its throw onto that victim without targeting the distant courier",
+      "status": "passed",
+      "duration": 37.92741800000658,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 closed dynamic blocker blocks sight while proximity still alerts; opening it retains the target",
+      "status": "passed",
+      "duration": 11.420794000005117,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 L1 retains sight-blocked close hearing",
+      "status": "passed",
+      "duration": 6.146876999991946,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 L2 retains sight-blocked close hearing",
+      "status": "passed",
+      "duration": 5.858747999998741,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 L3 retains sight-blocked close hearing",
+      "status": "passed",
+      "duration": 5.780845000001136,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO 2026-10-15 L5 close infected hearing @E07 L8 retains sight-blocked close hearing",
+      "status": "passed",
+      "duration": 5.692098999978043,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-01 @E07 @E07-AC01 all human and animal roles validate and spawn",
+      "status": "passed",
+      "duration": 162.89835499999754,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-02 @E07 @E07-AC02 sight cone and facing-independent gunshot perception",
+      "status": "passed",
+      "duration": 43.699642999999924,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-03 @E07 @E07-AC03 maze path covers 40 m without crossing static colliders in 15 s",
+      "status": "passed",
+      "duration": 186.92630500000087,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-04 @E07 @E07-AC04 spatial separation keeps deep overlaps below 2 percent",
+      "status": "passed",
+      "duration": 525.6985699999932,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-03b @E07 @E07-AC03 grid A* resumes unfinished work without exceeding its per-tick budget",
+      "status": "passed",
+      "duration": 4.156151999995927,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-03c @E07 @E07-AC03 collider-baked AI navigation honors E10 offset ground bounds",
+      "status": "passed",
+      "duration": 48.02882000000682,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-02b @E07 @E07-AC02 @E06-AC04 actual infected consume catalog noise, with silent melee misses and bounded kill noise",
+      "status": "passed",
+      "duration": 15.18882300000405,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-07c @E07 @E07-AC07 scripted cats validate the actual selected perch before spawning",
+      "status": "passed",
+      "duration": 3.9567300000053365,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E07 melee ring: five infected hold 1.08 m from the courier yet keep landing hits (QA qa-courier-attack-bat pile-up)",
+      "status": "passed",
+      "duration": 36.140414999987115,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E07 @E07-AC04 larger infected keep contact clearance and still damage the courier",
+      "status": "passed",
+      "duration": 115.86006899998756,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-05 @E07 @E07-AC05 every archetype attack including death explosion has a sufficient telegraph",
+      "status": "passed",
+      "duration": 695.3501410000026,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06a @E07 @E07-AC06 screamer alerts every infected within 20 m, not beyond",
+      "status": "passed",
+      "duration": 10.294091999996454,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06b @E07 @E07-AC06 bloated burst damages both factions only within 3 m",
+      "status": "passed",
+      "duration": 14.760482999990927,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06c @E07 @E07-AC06 riot frontal bullets block while flank and explosives hit",
+      "status": "passed",
+      "duration": 1.9756900000211317,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06d @E07 @E07-AC06 nurse revives one downed runner once",
+      "status": "passed",
+      "duration": 21.9774519999919,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E07 a nurse can revive a settled static corpse with its original ID",
+      "status": "passed",
+      "duration": 23.281124000001,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06e @E07 @E07-AC06 brute charge displaces player at least 3 m after 0.8 s",
+      "status": "passed",
+      "duration": 13.172017999982927,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-06f @E07 @E07-AC06 crawler slow ends after 3 hits or 1.5 s",
+      "status": "passed",
+      "duration": 14.391505000006873,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-14 @E07 @E07-AC14 settled corpses persist past 60 seconds and beyond 100 bodies",
+      "status": "passed",
+      "duration": 239.06687199999578,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-15 @E07 @E07-AC15 leg-targeted explosions make surviving runners crawl with identical gameplay in every gore mode",
+      "status": "passed",
+      "duration": 5.092750999989221,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E07 dead flock birds keep their individual corpse positions after brain retirement",
+      "status": "passed",
+      "duration": 163.89225200001965,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-role-extras @E07 hazmat aura, fire immunity, armor and butcher combo are mechanical roles",
+      "status": "passed",
+      "duration": 11.919647999980953,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-turning @E07 adult-only E08 grab hook is deterministic and preserves mapped variants within caps",
+      "status": "passed",
+      "duration": 155.10515200003283,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-lion-pounce @E07-AC05 @E07-AC19 @E30-AC10 telegraph, cooldown, recovery, restore",
+      "status": "passed",
+      "duration": 199.5077910000109,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-lion-flank @E07-AC05 @E07-AC19 @E30-AC10 telegraph, cooldown, recovery, restore",
+      "status": "passed",
+      "duration": 38.25031000000308,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-gorilla-roar @E07-AC05 @E07-AC19 @E30-AC10 telegraph, cooldown, recovery, restore",
+      "status": "passed",
+      "duration": 33.445684999998775,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-gorilla-pound @E07-AC05 @E07-AC19 @E30-AC10 telegraph, cooldown, recovery, restore",
+      "status": "passed",
+      "duration": 23.6047830000025,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-lion-pounce-impact @E07-AC19 @E30-AC10 10m/s, locked target, 30 damage once, 90 tick pin and mash rescue",
+      "status": "passed",
+      "duration": 15.136452999999165,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-lion-pounce-wall @E07-AC19 @E30-AC10 maximum 8m, no homing, intact wall, rescue by hitting lion",
+      "status": "passed",
+      "duration": 49.84487200000149,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-lion-flank-path @E07-AC19 @E30-AC10 75 degree side approach, 10m/s cap, no damage, expires to base speed",
+      "status": "passed",
+      "duration": 50.63280300000042,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-gorilla-pound-boundary @E07-AC19 @E30-AC10 exact 5m radius, occlusion, 30 damage and 72 tick knockdown",
+      "status": "passed",
+      "duration": 13.045540999999503,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-gorilla-roar-origin @E07-AC19 @E30-AC10 20m convergence, no zoo/Alpha buff, no speed stacking or live-player revelation, 5s expiry",
+      "status": "passed",
+      "duration": 57.2089030000061,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-lion-pounce-dodge @E07-AC19 @E30-AC10 a moving target cannot bend the telegraphed leap",
+      "status": "passed",
+      "duration": 10.725082000004477,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-gorilla-roar-overlap @E07-AC19 @E30-AC10 convergence never stacks or extends Alpha speed boost",
+      "status": "passed",
+      "duration": 29.39808300000732,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-gorilla-grab-throw-timing @E07-AC05 @E07-AC19 @E30-AC10 telegraph, pause, recovery and exact restored activation interval",
+      "status": "passed",
+      "duration": 217.9712189999991,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant-charge-timing @E07-AC05 @E07-AC19 @E30-AC10 telegraph, pause, recovery and exact restored activation interval",
+      "status": "passed",
+      "duration": 51.27307899999141,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant-swipe-timing @E07-AC05 @E07-AC19 @E30-AC10 telegraph, pause, recovery and exact restored activation interval",
+      "status": "passed",
+      "duration": 30.740514999997686,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant-charge @E07-AC19 @E30-AC10 locked 8m/s, 16m range, exact 3.5m sweep, 40 HP and 90 tick knockdown once",
+      "status": "passed",
+      "duration": 36.8658679999935,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant-charge-wall @E07-AC19 @E30-AC10 wall stops the body and blocks sweep damage",
+      "status": "passed",
+      "duration": 18.626620999988518,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant-charge-barricade @E07-AC19 @E30-AC10 400 HP slot damage clears nav in the impact tick, keeps debris and source logs",
+      "status": "passed",
+      "duration": 23.767427999991924,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant-charge-vehicle @E07-AC19 @E30-AC10 light E09 chassis takes 80 HP and physical lateral impulse; heavy vehicle unaffected",
+      "status": "passed",
+      "duration": 45.2959520000004,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant-swipe @E07-AC19 @E30-AC10 exact forward 120 degree/3m arc, 25 damage, 3m knockback, 48 tick down, wall and protected controls",
+      "status": "passed",
+      "duration": 16.38384799999767,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-gorilla-throw @E07-AC14 @E07-AC19 @E30-AC10 nearest corpse within 3m, retained pose/id, 12m/s, first impact 30HP and 48 tick down",
+      "status": "passed",
+      "duration": 25.447702999998,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-gorilla-throw-controls @E07-AC19 @E30-AC10 nearest medium only, 15m range, locked target and no-object cancellation",
+      "status": "passed",
+      "duration": 40.134387000012794,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-gorilla.grab-throw-checkpoint @E07-AC05 @E07-AC19 @E30-AC10 production checkpoint restores active state and cooldown",
+      "status": "passed",
+      "duration": 24.718894999998156,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant.charge-checkpoint @E07-AC05 @E07-AC19 @E30-AC10 production checkpoint restores active state and cooldown",
+      "status": "passed",
+      "duration": 15.011988999991445,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant.swipe-checkpoint @E07-AC05 @E07-AC19 @E30-AC10 production checkpoint restores active state and cooldown",
+      "status": "passed",
+      "duration": 10.918736000006902,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-gorilla-throw-wall @E07-AC19 @E30-AC10 intact cover stops a thrown corpse and rejects hidden pickups",
+      "status": "passed",
+      "duration": 13.416714000006323,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant-charge-slot-boundary @E07-AC19 @E30-AC10 full telegraphed width contacts an offset E26 slot",
+      "status": "passed",
+      "duration": 13.621935999995912,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-zebra.kick-timing @E07-AC05 @E07-AC19 @E30-AC10 pause, telegraph, recovery, serialized group/cooldown, exact next activation",
+      "status": "passed",
+      "duration": 205.5570000000007,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-zebra.stampede-timing @E07-AC05 @E07-AC19 @E30-AC10 pause, telegraph, recovery, serialized group/cooldown, exact next activation",
+      "status": "passed",
+      "duration": 59.77359100000467,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-flamingo.dive-timing @E07-AC05 @E07-AC19 @E30-AC10 pause, telegraph, recovery, serialized group/cooldown, exact next activation",
+      "status": "passed",
+      "duration": 43.89897200000996,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-zebra-kick @E07-AC01 @E07-AC19 @E30-AC10 rear 90 degree/2m boundary, 20 damage, 3m shove and 36 tick stagger; front/cover/protected controls",
+      "status": "passed",
+      "duration": 18.246544000008726,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-zebra-stampede @E07-AC19 @E30-AC10 existing 2-4 zebras, locked 10m/s, 15m, 1.5m sweep and one hit per zebra",
+      "status": "passed",
+      "duration": 32.41103400000429,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-zebra-stampede-wall @E07-AC19 @E30-AC10 intact walls stop every participant and remain intact",
+      "status": "passed",
+      "duration": 22.807881999993697,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-group-controls @E07-AC19 @E30-AC10 no phantom herd/flock, cap, 12m acquisition, busy/dead/occluded animals excluded",
+      "status": "passed",
+      "duration": 2.679187000001548,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-flamingo-dive @E07-AC19 @E30-AC10 existing birds steer, locked 3m area, 5 HP/36 tick stagger once, 48 tick obstruction expiry",
+      "status": "passed",
+      "duration": 21.47659000000567,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-flamingo-dive-wall @E07-AC19 @E30-AC10 flock cannot affect a target through solid geometry",
+      "status": "passed",
+      "duration": 11.04250699999102,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-zebra.kick-checkpoint @E07-AC05 @E07-AC19 @E30-AC10 production checkpoint restores group, locked area, hit set and independent cooldowns",
+      "status": "passed",
+      "duration": 16.487704999992275,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-zebra.stampede-checkpoint @E07-AC05 @E07-AC19 @E30-AC10 production checkpoint restores group, locked area, hit set and independent cooldowns",
+      "status": "passed",
+      "duration": 13.864772000000812,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-flamingo.dive-checkpoint @E07-AC05 @E07-AC19 @E30-AC10 production checkpoint restores group, locked area, hit set and independent cooldowns",
+      "status": "passed",
+      "duration": 12.220724999991944,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-zebra-stampede-player @E07-AC19 @E30-AC10 every distinct zebra deals 25HP even inside the ordinary hurt grace window",
+      "status": "passed",
+      "duration": 18.726511000000755,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-flamingo-dive-lock @E07-AC19 @E30-AC10 moving target does not drag the marked area; small/absent flock cannot create a dive",
+      "status": "passed",
+      "duration": 11.143194999996922,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-zoo-stagger-lethal @E07-AC19 @E30-AC10 lethal kick/dive finishes a civilian instead of leaving a zero-HP moving brain",
+      "status": "passed",
+      "duration": 20.172507000010228,
+      "failureMessages": []
+    },
+    {
+      "fullName": "S-06 @E05 @smoke each category fires/hits; swept projectile cannot tunnel through a dummy",
+      "status": "passed",
+      "duration": 226.07179400000314,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E23-12-kill PO #37 @E23 @E23-AC12 @E07-AC14 one shell kills regular infected through 8 m permanently; two close shells stop an Alpha",
+      "status": "passed",
+      "duration": 19037.702682999996,
+      "failureMessages": []
+    },
+    {
+      "fullName": "M1 E07/E11 @E07 @E07-AC06 enemy bloated bursts retain full player damage beside reduced environmental blasts",
+      "status": "passed",
+      "duration": 189.56595200000447,
+      "failureMessages": []
+    },
+    {
+      "fullName": "quality and density never recycle a visible pedestrian or pet @E07",
+      "status": "passed",
+      "duration": 401.92433900001924,
+      "failureMessages": []
+    },
+    {
+      "fullName": "decay parks existing traffic without deleting its identity or pose @E07",
+      "status": "passed",
+      "duration": 487.86430200000177,
+      "failureMessages": []
+    },
+    {
+      "fullName": "20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07",
+      "status": "passed",
+      "duration": 1934.4177250000066,
+      "failureMessages": []
+    },
+    {
+      "fullName": "a dropped hand prop and an uncollected weapon persist for the level @E07",
+      "status": "passed",
+      "duration": 2590.9150819999923,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-01-alpha-asset-lod0 @E07-AC01 @E18-AC01 derived Alpha validates budgets and shared crowd animation",
+      "status": "passed",
+      "duration": 331.67746000000625,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-01-alpha-asset-lod1 @E07-AC01 @E18-AC01 derived Alpha validates budgets and shared crowd animation",
+      "status": "passed",
+      "duration": 127.6535000000149,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-01-alpha-asset-lod2 @E07-AC01 @E18-AC01 derived Alpha validates budgets and shared crowd animation",
+      "status": "passed",
+      "duration": 93.64752200001385,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-alpha-line-asset @E07-AC19 fixture reuses the real Fairhaven anchors and crowd model override",
+      "status": "passed",
+      "duration": 1.9697310000192374,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-01-elephant-asset-lod0 @E07-AC01 @E18-AC01 normal/infected share rig and closed silhouette within budgets",
+      "status": "passed",
+      "duration": 295.7580880000023,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-01-elephant-asset-lod1 @E07-AC01 @E18-AC01 normal/infected share rig and closed silhouette within budgets",
+      "status": "passed",
+      "duration": 228.00755499998922,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-01-elephant-asset-lod2 @E07-AC01 @E18-AC01 normal/infected share rig and closed silhouette within budgets",
+      "status": "passed",
+      "duration": 144.44665099997655,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-01-elephant-derivation @E07-AC01 infected build executes normal base and LODs are authored without collapse",
+      "status": "passed",
+      "duration": 3.0780509999895003,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-01-zebra-asset-lod0 @E07-AC01 @E18-AC01 shared zebra anatomy, closed LOD, stripe palette and crowd rig",
+      "status": "passed",
+      "duration": 436.10704600000463,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-01-zebra-asset-lod1 @E07-AC01 @E18-AC01 shared zebra anatomy, closed LOD, stripe palette and crowd rig",
+      "status": "passed",
+      "duration": 192.56509599999117,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-01-zebra-asset-lod2 @E07-AC01 @E18-AC01 shared zebra anatomy, closed LOD, stripe palette and crowd rig",
+      "status": "passed",
+      "duration": 114.85349100000167,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-01-zebra-derivation @E07-AC01 Z-D2 reuses the base builder and actual D-ZOO anchors",
+      "status": "passed",
+      "duration": 3.090127000003122,
+      "failureMessages": []
+    },
+    {
+      "fullName": "stage1 navigation capsule and NPC traces meet motion budgets @smoke",
+      "status": "passed",
+      "duration": 206.39246000000276,
+      "failureMessages": []
+    },
+    {
+      "fullName": "crowd fades preserve head position when clips change or interrupt @smoke",
+      "status": "passed",
+      "duration": 85.90855200000806,
+      "failureMessages": []
+    },
+    {
+      "fullName": "every human crowd model keeps its complete identity through poses, tiers, LODs and restore @E07 @E08 @E32",
+      "status": "passed",
+      "duration": 467.0419149999798,
+      "failureMessages": []
+    },
+    {
+      "fullName": "LOD2 and frozen bodies keep hood/cap/hat geometry, colour and head transform without stacking authored headwear @E07 @E18 @E32",
+      "status": "passed",
+      "duration": 30.188280000002123,
+      "failureMessages": []
+    },
+    {
+      "fullName": "corgi paws remain planted below the cadence cap in walk, trot and gallop @E07",
+      "status": "passed",
+      "duration": 1013.1175130000047,
+      "failureMessages": []
+    },
+    {
+      "fullName": "instanced infected dog paws remain planted while the root travels @E07",
+      "status": "passed",
+      "duration": 167.38206599999103,
+      "failureMessages": []
+    },
+    {
+      "fullName": "corgi idle, sit and warning poses keep every paw and the rump on the floor (QA: sit hind paw 17.8 cm under) @E07",
+      "status": "passed",
+      "duration": 1214.9619979999989,
+      "failureMessages": []
+    },
+    {
+      "fullName": "corgi paws do not skate by the Scene Lab rule through gaits, gait changes and stops (QA: corgi-follow slideMax 88 cm) @E07",
+      "status": "passed",
+      "duration": 423.89798999999766,
+      "failureMessages": []
+    },
+    {
+      "fullName": "ordinary infected accessories keep the authored reference proportions on their own skull @E07-AC13 @E08",
+      "status": "passed",
+      "duration": 1664.3679880000127,
+      "failureMessages": []
+    },
+    {
+      "fullName": "ordinary infected wear a shared head accessory at about 30%, turned people keep theirs @E07-AC13 @E08",
+      "status": "passed",
+      "duration": 12.453458000003593,
+      "failureMessages": []
+    },
+    {
+      "fullName": "crowd appearance: packed float32 choices and shirt colour survive all LODs and checkpoint IDs @E07 @E08",
+      "status": "passed",
+      "duration": 138.16759699999238,
+      "failureMessages": []
+    },
+    {
+      "fullName": "crowd model balancing holds locally after clustered waves and deaths, excluding distant figures @E07",
+      "status": "passed",
+      "duration": 4.192991999996593,
+      "failureMessages": []
+    },
+    {
+      "fullName": "crowd stance ankles travel at most 3 cm at actual walk/run speeds and headings @E07",
+      "status": "passed",
+      "duration": 746.6345319999964,
+      "failureMessages": []
+    },
+    {
+      "fullName": "distance phase stays continuous when speed and stride change @E07",
+      "status": "passed",
+      "duration": 0.5747930000070482,
+      "failureMessages": []
+    },
+    {
+      "fullName": "crowd footwork entering mid-run never produces a non-finite pose @E07",
+      "status": "passed",
+      "duration": 243.7207440000202,
+      "failureMessages": []
+    },
+    {
+      "fullName": "pedestrian footwork: planted feet ≤ 3 cm slide, ≤ 8° yaw drift, steps through turns @E07",
+      "status": "passed",
+      "duration": 5419.034337999998,
+      "failureMessages": []
+    },
+    {
+      "fullName": "baked crowd standing and gait frames keep both soles on the floor: inf.common-worker.lod1 @E07",
+      "status": "passed",
+      "duration": 139.4264189999958,
+      "failureMessages": []
+    },
+    {
+      "fullName": "baked crowd standing and gait frames keep both soles on the floor: inf.bbq-dad.lod1 @E07",
+      "status": "passed",
+      "duration": 92.15824300001259,
+      "failureMessages": []
+    },
+    {
+      "fullName": "baked crowd standing and gait frames keep both soles on the floor: inf.brute.lod1 @E07",
+      "status": "passed",
+      "duration": 85.62787700002082,
+      "failureMessages": []
+    },
+    {
+      "fullName": "baked crowd standing and gait frames keep both soles on the floor: inf.cashier.lod1 @E07",
+      "status": "passed",
+      "duration": 59.37854099998367,
+      "failureMessages": []
+    },
+    {
+      "fullName": "baked crowd standing and gait frames keep both soles on the floor: npc.civilian-man-a @E07",
+      "status": "passed",
+      "duration": 132.28980899997987,
+      "failureMessages": []
+    },
+    {
+      "fullName": "baked crowd standing and gait frames keep both soles on the floor: npc.civilian-woman-b @E07",
+      "status": "passed",
+      "duration": 129.56902900000568,
+      "failureMessages": []
+    },
+    {
+      "fullName": "baked crowd standing and gait frames keep both soles on the floor: npc.civilian-elderly @E07",
+      "status": "passed",
+      "duration": 113.27291300002253,
+      "failureMessages": []
+    },
+    {
+      "fullName": "common-worker crowd triangles keep one rigid owner and bounded posed edges at every LOD @E07",
+      "status": "passed",
+      "duration": 707.0334030000085,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-bake @E07 @E07-AC12 merged infected geometry excludes hidden ancestor stumps and preserves rigid part poses",
+      "status": "passed",
+      "duration": 90.55520000000251,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-bake-quantized @E07 @E07-AC12 quantized GLB vertices retain part-local offsets when baked",
+      "status": "passed",
+      "duration": 36.11189900001045,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-bars-overlay @E07-AC19 @E18-AC01 overlays preserve the single-sample postprocessed canvas",
+      "status": "passed",
+      "duration": 4.32645799999591,
+      "failureMessages": []
+    },
+    {
+      "fullName": "dropped accessories grow beyond their initial instance capacity @E07",
+      "status": "passed",
+      "duration": 15.588288999992074,
+      "failureMessages": []
+    },
+    {
+      "fullName": "static corpse pages grow beyond the old population cap and survive camera movement @E07",
+      "status": "passed",
+      "duration": 89.91324199999508,
+      "failureMessages": []
+    },
+    {
+      "fullName": "distant corpse pages cull independently while every body persists @E07",
+      "status": "passed",
+      "duration": 40.79751099999703,
+      "failureMessages": []
+    },
+    {
+      "fullName": "opposing crowd rotations keep full size during clip fades @E07",
+      "status": "passed",
+      "duration": 1.097076999998535,
+      "failureMessages": []
+    },
+    {
+      "fullName": "static bodies preserve flock instances and removed body parts @E07",
+      "status": "passed",
+      "duration": 52.10981600001105,
+      "failureMessages": []
+    },
+    {
+      "fullName": "covered hair in triangle soup removes complete triangles instead of shifting the remaining faces @E07 @E18",
+      "status": "passed",
+      "duration": 44.380982000002405,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-gorilla.grab-throw-marker-1 @E07-AC05 @E07-AC19 ground marker aligns with the locked direction under reduced flash/off gore",
+      "status": "passed",
+      "duration": 134.58562399999937,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-gorilla.grab-throw-marker--1 @E07-AC05 @E07-AC19 ground marker aligns with the locked direction under reduced flash/off gore",
+      "status": "passed",
+      "duration": 10.896496000001207,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-gorilla.grab-throw-marker-0.7071067811865476 @E07-AC05 @E07-AC19 ground marker aligns with the locked direction under reduced flash/off gore",
+      "status": "passed",
+      "duration": 11.813140000012936,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant.charge-marker-1 @E07-AC05 @E07-AC19 ground marker aligns with the locked direction under reduced flash/off gore",
+      "status": "passed",
+      "duration": 11.650345000001835,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant.charge-marker--1 @E07-AC05 @E07-AC19 ground marker aligns with the locked direction under reduced flash/off gore",
+      "status": "passed",
+      "duration": 11.762346000003163,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant.charge-marker-0.7071067811865476 @E07-AC05 @E07-AC19 ground marker aligns with the locked direction under reduced flash/off gore",
+      "status": "passed",
+      "duration": 8.62507499998901,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant.swipe-marker-1 @E07-AC05 @E07-AC19 ground marker aligns with the locked direction under reduced flash/off gore",
+      "status": "passed",
+      "duration": 8.657176000007894,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant.swipe-marker--1 @E07-AC05 @E07-AC19 ground marker aligns with the locked direction under reduced flash/off gore",
+      "status": "passed",
+      "duration": 7.764616000000387,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-elephant.swipe-marker-0.7071067811865476 @E07-AC05 @E07-AC19 ground marker aligns with the locked direction under reduced flash/off gore",
+      "status": "passed",
+      "duration": 8.381541000009747,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-zebra.kick-cue @E07-AC19 exact rear arc/flock area remains visible with particles/flash/gore off",
+      "status": "passed",
+      "duration": 153.40159399999538,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E07-19-flamingo.dive-cue @E07-AC19 exact rear arc/flock area remains visible with particles/flash/gore off",
+      "status": "passed",
+      "duration": 13.49580900001456,
+      "failureMessages": []
+    }
+  ],
+  "checks": {
+    "target": "E07",
+    "epics": [
+      "E07"
+    ],
+    "pattern": "@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+    "browserOmitted": true,
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/sim-lock.sh",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--maxWorkers=1",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E07/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "@(?:E07)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)"
+        ],
+        "exitCode": null
+      }
+    ]
+  }
+}

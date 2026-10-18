@@ -1,0 +1,812 @@
+{
+  "target": "E31",
+  "success": true,
+  "startTime": 1792357847938,
+  "passed": 120,
+  "failed": 0,
+  "pending": 3037,
+  "total": 3157,
+  "selectedAssertions": [
+    {
+      "fullName": "S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash",
+      "status": "passed",
+      "duration": 451.3244460000001,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-13-S4-high @E31-AC12 @E31-AC13 @E31-AC14 revisit preserves HP, corpse/pickup IDs and remaining timers",
+      "status": "passed",
+      "duration": 2579.0827710000012,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-12-S4-high @E31-AC12 @E31-AC13 predictive support remains loaded on forward/reverse seams",
+      "status": "passed",
+      "duration": 2549.8793149999983,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-13-S4-low @E31-AC12 @E31-AC13 @E31-AC14 revisit preserves HP, corpse/pickup IDs and remaining timers",
+      "status": "passed",
+      "duration": 3119.4393530000016,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-12-S4-low @E31-AC12 @E31-AC13 predictive support remains loaded on forward/reverse seams",
+      "status": "passed",
+      "duration": 3145.9598339999975,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E32-28-S4 @E31-AC13 @E32-AC10 @E32-AC28 Mega crosses coarse/detailed residency without >0.5 m tick jumps",
+      "status": "passed",
+      "duration": 2770.057191,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95",
+      "status": "passed",
+      "duration": 3961.2534610000002,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-19-S4-100 @E31-AC19 @E18-AC02 resident crossing horde sim p95",
+      "status": "passed",
+      "duration": 2985.751945,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-12-colliders-S4 @E31-AC12 @E31-AC13 seam-spanning collider is shared, unloaded and restored with nav",
+      "status": "passed",
+      "duration": 1315.4160330000013,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-19-quality-S4 @E31-AC12 @E31-AC13 @E31-AC19 low cap serializes excess brains and high restores the same IDs/HP",
+      "status": "passed",
+      "duration": 1467.2608429999964,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-14-clock-S4 @E31-AC13 @E31-AC14 inactive recovery survives loading into a fresh tick-zero world",
+      "status": "passed",
+      "duration": 4926.494157000001,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-13-prop-S4 @E31-AC12 @E31-AC13 inactive movable prop releases its body and restores pose, HP and ID",
+      "status": "passed",
+      "duration": 2104.218937999998,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-20 @E31-AC20 continuous seed 1 L1 through L9 commits real campaign handovers and the axe reset",
+      "status": "passed",
+      "duration": 435142.00563900004,
+      "failureMessages": []
+    },
+    {
+      "fullName": "S-05-foundation @smoke empty scripted 1800-tick golden hash",
+      "status": "passed",
+      "duration": 205.6923009999955,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-20-L1-prop @E31-AC20 @E20-AC04 L1 carried bin cannot strand the seated L2 truck on its station apron",
+      "status": "passed",
+      "duration": 11714.519849999997,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-15-crash @E31-AC01 @E31-AC10 @E31-AC15 one forced crash at 1000 durability",
+      "status": "passed",
+      "duration": 3862.3769449999963,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-15-crash @E31-AC01 @E31-AC10 @E31-AC15 one forced crash at 0 durability",
+      "status": "passed",
+      "duration": 3668.029468000008,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-10-bypass @E31-AC10 outskirts bypass 470,100 still crashes",
+      "status": "passed",
+      "duration": 4694.041251000002,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-10-bypass @E31-AC10 outskirts bypass 550,0 still crashes",
+      "status": "passed",
+      "duration": 3991.0027680000057,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-10-bypass @E31-AC10 outskirts bypass 550,-100 still crashes",
+      "status": "passed",
+      "duration": 3257.034230999998,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-10-bypass @E31-AC10 outskirts bypass 470,-390 still crashes",
+      "status": "passed",
+      "duration": 3464.7961810000124,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-10-bypass @E31-AC10 outskirts bypass 470,390 still crashes",
+      "status": "passed",
+      "duration": 3264.0211220000056,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-14-crash @E31-AC14 checkpoint restore at crash tick 60 resumes without another explosion",
+      "status": "passed",
+      "duration": 3304.487451000008,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-14-crash @E31-AC14 checkpoint restore at crash tick 240 resumes without another explosion",
+      "status": "passed",
+      "duration": 3184.866764000006,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-14-crash @E31-AC14 checkpoint restore at crash tick 330 resumes without another explosion",
+      "status": "passed",
+      "duration": 3087.4163589999953,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-14-crash @E31-AC14 checkpoint restore at crash tick 600 resumes without another explosion",
+      "status": "passed",
+      "duration": 3144.072886000009,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-10-fallback @E31-AC10 blocked primary crawl anchor uses authored fallback",
+      "status": "passed",
+      "duration": 3056.8821850000095,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-14-load @E31-AC14 serialized campaign resumes crash at tick 60",
+      "status": "passed",
+      "duration": 6363.439553999997,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-14-load @E31-AC14 serialized campaign resumes crash at tick 240",
+      "status": "passed",
+      "duration": 5868.74964699999,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-14-load @E31-AC14 serialized campaign resumes crash at tick 330",
+      "status": "passed",
+      "duration": 5658.844435000006,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-14-load @E31-AC14 serialized campaign resumes crash at tick 600",
+      "status": "passed",
+      "duration": 5877.148568000004,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-14-load @E31-AC14 serialized campaign resumes crash at tick 841",
+      "status": "passed",
+      "duration": 6111.987813999993,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-16-dress @E31-AC16 L9 uses dry light wind with clear moonlit sightlines",
+      "status": "passed",
+      "duration": 2908.692282999982,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-05-groups @E31-AC05 @E31-AC11 groups sit on every risk anchor; the shortcut has 3x the road risk; every group is avoidable",
+      "status": "passed",
+      "duration": 3797.832512000001,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-12-groups @E31-AC12 @E31-AC13 groups spawn once on first residency, keep ids/HP on revisit and restore from a checkpoint without duplicates",
+      "status": "passed",
+      "duration": 3598.7318249999953,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-11-road @E31-AC01 @E31-AC10 @E31-AC11 @E31-AC15 preserved-HP detour keeps full durability and reaches the forced crash",
+      "status": "passed",
+      "duration": 7221.782896000004,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-11-countryside @E31-AC01 @E31-AC10 @E31-AC11 @E31-AC15 preserved-HP detour keeps full durability and reaches the forced crash",
+      "status": "passed",
+      "duration": 5867.082628999997,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-11-dry-shortcut @E31-AC01 @E31-AC10 @E31-AC11 @E31-AC15 preserved-HP detour keeps full durability and reaches the forced crash",
+      "status": "passed",
+      "duration": 6595.8609949999955,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-11-risk-road @E31-AC11 driving through the groups costs durability and still reaches the same crash",
+      "status": "passed",
+      "duration": 6656.012998000006,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-11-risk-countryside @E31-AC11 driving through the groups costs durability and still reaches the same crash",
+      "status": "passed",
+      "duration": 5829.693358000004,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-11-risk-dry-shortcut @E31-AC11 driving through the groups costs durability and still reaches the same crash",
+      "status": "passed",
+      "duration": 6183.473790999997,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-11-early-zero-road @E31-AC09 @E31-AC10 @E31-AC11 @E31-AC15 early zero (15% progress) keeps driving at 60% speed and reaches the same crash",
+      "status": "passed",
+      "duration": 6035.738954999993,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-11-early-zero-countryside @E31-AC09 @E31-AC10 @E31-AC11 @E31-AC15 early zero (15% progress) keeps driving at 60% speed and reaches the same crash",
+      "status": "passed",
+      "duration": 7129.951731999987,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-11-early-zero-dry-shortcut @E31-AC09 @E31-AC10 @E31-AC11 @E31-AC15 early zero (15% progress) keeps driving at 60% speed and reaches the same crash",
+      "status": "passed",
+      "duration": 7076.857766999994,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-11-late-zero-road @E31-AC09 @E31-AC10 @E31-AC11 @E31-AC15 late zero (85% progress) keeps driving at 60% speed and reaches the same crash",
+      "status": "passed",
+      "duration": 5341.645713999984,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-11-late-zero-countryside @E31-AC09 @E31-AC10 @E31-AC11 @E31-AC15 late zero (85% progress) keeps driving at 60% speed and reaches the same crash",
+      "status": "passed",
+      "duration": 5712.335877000005,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-11-late-zero-dry-shortcut @E31-AC09 @E31-AC10 @E31-AC11 @E31-AC15 late zero (85% progress) keeps driving at 60% speed and reaches the same crash",
+      "status": "passed",
+      "duration": 6104.480839000025,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-11-compare @E31-AC11 the risky dry shortcut ends with less durability than the safe detour of the same route",
+      "status": "passed",
+      "duration": 12034.532562000008,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-12-low @E31-AC12 low tier keeps the shortcut inside the 100-infected and 9-chunk budgets",
+      "status": "passed",
+      "duration": 5007.542193000001,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-05-road @E31-AC05 existing E09 physics completes road and its off-road detour",
+      "status": "passed",
+      "duration": 6293.360631999996,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-05-countryside @E31-AC05 existing E09 physics completes countryside and its off-road detour",
+      "status": "passed",
+      "duration": 7107.643802000006,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-05-dry-shortcut @E31-AC05 existing E09 physics completes dry-shortcut and its off-road detour",
+      "status": "passed",
+      "duration": 6788.110025000002,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-15-handover @E31-AC14 @E31-AC15 1000 HP crash commits axe-only L10, save and retry",
+      "status": "passed",
+      "duration": 10616.936434000003,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-15-handover @E31-AC14 @E31-AC15 0 HP crash commits axe-only L10, save and retry",
+      "status": "passed",
+      "duration": 11948.028403999997,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-14-legacy @E31-AC14 broken pre-finale save migrates at its saved location to the driveable floor",
+      "status": "passed",
+      "duration": 2834.635997999998,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-02 @E31-AC02 actual L9 start restores the same APC, arsenal and living occupants at 730 HP",
+      "status": "passed",
+      "duration": 3097.431794999997,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-02 @E31-AC02 actual L9 start restores the same APC, arsenal and living occupants at 0 HP",
+      "status": "passed",
+      "duration": 2919.4097159999947,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-03-model @E31-AC03 shared APC and every unarmed LOD contain no mounted gun",
+      "status": "passed",
+      "duration": 38.644707000028575,
+      "failureMessages": []
+    },
+    {
+      "fullName": "S-06 @E05 @smoke each category fires/hits; swept projectile cannot tunnel through a dummy",
+      "status": "passed",
+      "duration": 166.2878139999957,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-20-armed-roster @E31-AC20 @E29-AC11 carried armed shelter resident follows the L7 group instead of holding an old post",
+      "status": "passed",
+      "duration": 1331.577479999978,
+      "failureMessages": []
+    },
+    {
+      "fullName": "20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07",
+      "status": "passed",
+      "duration": 3108.878875999995,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E30 @E31 corgi follows in zoo and survives APC handover/checkpoint: high",
+      "status": "passed",
+      "duration": 4799.114206000006,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E30 @E31 corgi follows in zoo and survives APC handover/checkpoint: low",
+      "status": "passed",
+      "duration": 4772.050839999996,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E31 standalone crossing start keeps the protected corgi aboard the APC",
+      "status": "passed",
+      "duration": 3260.315180999998,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-06 @E31-AC06 ten distinct contacts cost 100 at any speed, overlap is billed once",
+      "status": "passed",
+      "duration": 207.03259699998307,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-06-repeat @E31-AC06 re-contact requires 0.5m separation for 0.25s, downed active infected count",
+      "status": "passed",
+      "duration": 11.444982000015443,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-07 @E31-AC07 four stopped hull attackers wind up and keep damaging for five seconds",
+      "status": "passed",
+      "duration": 37.95234299998265,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-07-surrounded @E31-AC07 moving hull needs four aware attackers in three quadrants",
+      "status": "passed",
+      "duration": 38.18816200000583,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-07-cancel @E31-AC07 unaware, staggered and out-of-reach infected cannot finish hull attacks",
+      "status": "passed",
+      "duration": 20.750086999993073,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-03-1000 @E31-AC03 300 driving firing ticks at 1000 HP emit no attacks, projectiles or blasts, mass still hits",
+      "status": "passed",
+      "duration": 91.48703499999829,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-03-0 @E31-AC03 300 driving firing ticks at 0 HP emit no attacks, projectiles or blasts, mass still hits",
+      "status": "passed",
+      "duration": 57.55498899999657,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-06-groups @E31-AC06 full durability allows twelve rammed groups of eight before exhaustion",
+      "status": "passed",
+      "duration": 40.25363799999468,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-06-checkpoint @E31-AC06 @E31-AC07 checkpoint rebuild retains overlap and remaining hull windup",
+      "status": "passed",
+      "duration": 32.30616399997962,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-06-attack @E31-AC06 @E31-AC07 one overlap has distinct contact/attack IDs and can ram after accelerating",
+      "status": "passed",
+      "duration": 6.299162000010256,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-07-driver @E31-AC07 ordinary infected melee cannot bypass the occupied APC hull",
+      "status": "passed",
+      "duration": 95.49468000000343,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-07-hull @E31-AC06 @E31-AC07 stopped infected remain outside the rotated hull without repeat contact billing",
+      "status": "passed",
+      "duration": 6.93565500000841,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-09 @E31-AC09 zero HP caps terrain top speed to 60% of healthy and keeps driving",
+      "status": "passed",
+      "duration": 442.8384209999931,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-09-policy @E31-AC09 zero HP never explodes or exits; the exit input is ignored; extra hits log before=after=0",
+      "status": "passed",
+      "duration": 67.41939399999683,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-09-ram @E31-AC09 mass-contact ramming still damages infected at zero HP",
+      "status": "passed",
+      "duration": 104.44796200000565,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-21 @E31-AC21 obstacle and wreck contacts bill 10 per onset, aliases bill once, floor clamps at zero",
+      "status": "passed",
+      "duration": 45.409035999997286,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-22 @E31-AC22 boundary percentages select cumulative stages, each announced once; reload replays nothing",
+      "status": "passed",
+      "duration": 68.56305799999973,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-09-scope @E31-AC09 other vehicles keep the ordinary zero rules",
+      "status": "passed",
+      "duration": 10.619146999990335,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-09-controls @E31-AC09 zero APC still brakes, reverses and steers with its original driver",
+      "status": "passed",
+      "duration": 81.15161400000216,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-08-no-repair-500 @E31-AC08 medkit healing and elapsed time never repair 500-HP APC durability",
+      "status": "passed",
+      "duration": 59.418611999979476,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-08-no-repair-0 @E31-AC08 medkit healing and elapsed time never repair 0-HP APC durability",
+      "status": "passed",
+      "duration": 39.09763100001146,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E09-apc-sedan @E09 @E31 normal rams preserve upright vehicles and push dynamic sedans",
+      "status": "passed",
+      "duration": 219.40643999999156,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-apc-sedan-contact @E31 @E09 driven APC stays level while ramming a parked sedan",
+      "status": "passed",
+      "duration": 365.32226499999524,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-09-terrain-road-1000 @E31-AC09 L9 road uses its healthy cap and a single 60% floor",
+      "status": "passed",
+      "duration": 3468.722336000006,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-09-terrain-road-0 @E31-AC09 L9 road uses its healthy cap and a single 60% floor",
+      "status": "passed",
+      "duration": 3429.488210999989,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-09-terrain-rough-1000 @E31-AC09 L9 rough uses its healthy cap and a single 60% floor",
+      "status": "passed",
+      "duration": 4606.735004999995,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-09-terrain-rough-0 @E31-AC09 L9 rough uses its healthy cap and a single 60% floor",
+      "status": "passed",
+      "duration": 4271.673321000009,
+      "failureMessages": []
+    },
+    {
+      "fullName": "stage1 navigation capsule and NPC traces meet motion budgets @smoke",
+      "status": "passed",
+      "duration": 136.340062999996,
+      "failureMessages": []
+    },
+    {
+      "fullName": "crowd fades preserve head position when clips change or interrupt @smoke",
+      "status": "passed",
+      "duration": 163.0931449999989,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E31-AC12 rectangular streamed nav bake equals clearance queries at radius 0.35",
+      "status": "passed",
+      "duration": 92.24507299999823,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E31-AC12 rectangular streamed nav bake equals clearance queries at radius 0.5",
+      "status": "passed",
+      "duration": 57.09692900002119,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E31-AC12 rectangular streamed nav bake equals clearance queries at radius 0.65",
+      "status": "passed",
+      "duration": 50.277416999975685,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E31-AC12 rectangular streamed nav bake equals clearance queries at radius 1.4",
+      "status": "passed",
+      "duration": 49.67802200000733,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E31-AC12 streamed rectangle bucket traversal matches sampled exact wall sweeps",
+      "status": "passed",
+      "duration": 86.33872699999483,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E31-AC12 streamed nav recenter reuses bounded buffers and matches a fresh bake",
+      "status": "passed",
+      "duration": 58.06982699999935,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-04 @E31-AC04 greybox extent, connected materially different routes and skyline",
+      "status": "passed",
+      "duration": 2657.7642140000244,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-05-district @E31-AC05 open road departure/reentry, shortcut ratio and avoidable risk anchors",
+      "status": "passed",
+      "duration": 3078.745924000017,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-04-ground @E31-AC04 locally authored chunks have continuous road/off-road support",
+      "status": "passed",
+      "duration": 153.55419999998412,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-04-dress @E31-AC04 route landmarks reuse countryside stock and leave detours open",
+      "status": "passed",
+      "duration": 0.7832559999951627,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-22-art @E31-AC22 cumulative overlays restore directly and lamps stay local to their APC",
+      "status": "passed",
+      "duration": 8.555770000006305,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-22-engine @E31-AC16 @E31-AC22 four E16 engine variants become slower, duller and rougher",
+      "status": "passed",
+      "duration": 0.7051600000122562,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-22-budget @E31-AC22 @E31-AC19 every derived APC LOD includes cab and overlays within inventory budgets",
+      "status": "passed",
+      "duration": 61.041511999996146,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-22-smoke @E31-AC22 @E31-AC19 moving floor APCs reuse the bounded E27 pool without fire",
+      "status": "passed",
+      "duration": 468.4438690000097,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-12-S3 @E31-AC12 selection covers current and 2s predicted cells within quality bounds",
+      "status": "passed",
+      "duration": 27.829120000009425,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-12-unload-S3 @E31-AC12 @E31-AC19 repeated traversals release cell arrays/buffers and tier drops bound residency",
+      "status": "passed",
+      "duration": 108.47399300002144,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-12-delay-S3 @E31-AC12 delayed stale loads cannot mount after teleport/dispose",
+      "status": "passed",
+      "duration": 3.3733899999933783,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-12-error-S3 @E31-AC12 load failure releases ownership and readiness reports the failure",
+      "status": "passed",
+      "duration": 3.861447000002954,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-19-shaders-S3 @E31-AC19 terrain leases share the static shader graph and last release evicts geometry",
+      "status": "passed",
+      "duration": 40.23762500000885,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-13-assets-S3 @E31-AC13 streamed cells stay below LOD2 cap, coarse horizon below 10k",
+      "status": "passed",
+      "duration": 1.5612829999881797,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-13-seams-S3 @E31-AC13 independently loaded local cells and coarse terrain preserve seam heights",
+      "status": "passed",
+      "duration": 473.90405199999805,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-19-height-S3 @E31-AC13 @E31-AC19 grounding skips unrelated cells while retaining seam support",
+      "status": "passed",
+      "duration": 48.247386000002734,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-camera-S3 @E31-AC13 vehicle matrix cameras mirror the driving pull-back at both zooms",
+      "status": "passed",
+      "duration": 58.15353199999663,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-16 @E31 @E31-AC16 the night presets lift asphalt so the route reads against the verge, and L10 has its own night preset",
+      "status": "passed",
+      "duration": 2.6147409999975935,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-16b @E31 @E31-AC16 every D-CURE Scene Lab scene is lit by the L10 night preset (no stale L9 look in R1-R6)",
+      "status": "passed",
+      "duration": 1.0065709999762475,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-16c @E31 @E31-AC16 the navigation contrast catalog covers R1-R6 and the L9 road with the 3:1 gates",
+      "status": "passed",
+      "duration": 1.3096950000035577,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E31-16d @E31 @E31-AC16 route sampling follows the authored routes and respects the scene bounds",
+      "status": "passed",
+      "duration": 15.720392999995966,
+      "failureMessages": []
+    }
+  ],
+  "checks": {
+    "target": "E31",
+    "epics": [
+      "E31"
+    ],
+    "pattern": "@(?:E31)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+    "browserOmitted": true,
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/sim-lock.sh",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "@(?:E31)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--maxWorkers=4",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E31/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "@(?:E31)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--grep-invert",
+          "@perf",
+          "--workers=1"
+        ],
+        "exitCode": null
+      },
+      {
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "^(?=.*(?:@(?:E31)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)))(?=.*@perf)",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": null
+      }
+    ]
+  }
+}
