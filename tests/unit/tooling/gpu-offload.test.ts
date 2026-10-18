@@ -67,14 +67,6 @@ test('quiet-run bounds its owned batch and remote browser setup only marks succe
   expect(setup).toContain('set -euo pipefail');
 });
 
-test('routing proof is catalogued with a game camera and the E18 low-tier counter budgets', async () => {
-  const { readSpec } = await import('../../../tools/scenelab/session');
-  const spec = readSpec('tests/scenes/catalog/gpu-offload-courier.json');
-  expect(spec.camera?.mode).toBe('game');
-  expect(spec.expect).toMatchObject({ consoleErrors: 0, undrawnFramesMax: 0, drawCallsMax: 300, trianglesMax: 500000 });
-  expect(JSON.parse(readFileSync('package.json', 'utf8')).scripts['scene:matrix']).toContain('gpu-offload-*');
-});
-
 test('owned browser batches enforce their timeout and preserve the child exit code', () => {
   expect(execFileSync('python3', ['tools/browser-job.py', '--', 'python3', '-c', 'print("owned")'], { encoding: 'utf8' }).trim()).toBe('owned');
   const result = spawnSync('python3', ['tools/browser-job.py', '--seconds', '1', '--', 'python3', '-c', 'import subprocess,sys,time; p=subprocess.Popen([sys.executable,"-c","import signal,time; signal.signal(signal.SIGTERM,signal.SIG_IGN); time.sleep(60)"],start_new_session=True); print(p.pid,flush=True); time.sleep(60)'], { timeout: 8000, encoding: 'utf8' });
@@ -101,19 +93,15 @@ test('catalog routing honors the last backend and copies the requested result di
 });
 
 
-test('the 60-scene comparison rejects missing matrix rows and pass/fail differences', () => {
-  const dir = mkdtempSync(`${tmpdir()}/mi-offload-compare-`);
-  try {
-    const rows = Array.from({ length: 60 }, (_, i) => ({ name: `scene-${i}@high-z1`, pass: true }));
-    writeFileSync(`${dir}/mac.json`, JSON.stringify({ seconds: 10, rows }));
-    const compare = (remote: typeof rows) => {
-      writeFileSync(`${dir}/remote.json`, JSON.stringify({ seconds: 20, rows: remote }));
-      return spawnSync('python3', ['tools/scenelab/compare-catalog.py', `${dir}/mac.json`, `${dir}/remote.json`, '--out', `${dir}/comparison.json`], { encoding: 'utf8' }).status;
-    };
-    expect(compare(rows)).toBe(0);
-    expect(compare(rows.slice(1))).toBe(1);
-    expect(JSON.parse(readFileSync(`${dir}/comparison.json`, 'utf8')).missing).toEqual(['scene-0@high-z1']);
-    expect(compare(rows.map((r, i) => i === 5 ? { ...r, pass: false } : r))).toBe(1);
-    expect(JSON.parse(readFileSync(`${dir}/comparison.json`, 'utf8')).differences[0].name).toBe('scene-5@high-z1');
-  } finally { rmSync(dir, { recursive: true, force: true }); }
+test('browser scripts default to local admission and expose remote runs only by opt-in', () => {
+  const { scripts } = JSON.parse(readFileSync('package.json', 'utf8'));
+  expect(scripts['test:e2e']).toBe('sh tools/e2e-lock.sh playwright test --project=chromium');
+  expect(scripts['scene:catalog']).toBe('sh tools/e2e-lock.sh tsx tools/scenelab/catalog.ts');
+  expect(scripts['scene:matrix']).toContain('E2E_UNITS=2 sh tools/e2e-lock.sh');
+  expect(scripts['scene:matrix']).toContain('--backend webgpu');
+  expect(scripts['scene:matrix']).not.toContain('gpu-offload-*');
+  expect(scripts['scene:matrix:remote']).toBe(scripts['scene:matrix']
+    .replace('E2E_UNITS=2 sh tools/e2e-lock.sh tsx tools/scenelab/catalog.ts', 'sh tools/remote/scene.sh')
+    .replace('--backend webgpu', '--backend webgl2'));
+  expect(scripts['test:e2e:remote']).toBe('sh tools/remote/e2e.sh');
 });

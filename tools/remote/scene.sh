@@ -1,5 +1,5 @@
 #!/bin/sh
-# Route CPU-rendered catalogs to Hetzner; WebGPU stays on the reference Mac.
+# Opt-in software-rendered catalogs on Hetzner; WebGPU stays on the reference Mac.
 set -eu
 export SCENE_PORT=${SCENE_PORT:-$((44000 + $$ % 10000))} SCENE_SERVER=${SCENE_SERVER:-preview}
 backend=webgl2

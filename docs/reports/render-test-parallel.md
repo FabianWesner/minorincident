@@ -1,6 +1,6 @@
 # Rendering test capacity on the Mac mini
 
-> **2026-10-18 operational correction:** The capacity recommendations below were superseded after WindowServer watchdog session losses. The current Mac hard limit is **two headless browsers**, regardless of `E2E_SLOTS`; WebGL2 matrix and functional e2e run on Hetzner with SwiftShader. WindowServer CPU admission uses a ten-second measurement (wait above 60%). Uncapped timing runs require quiet-run, at most 20 minutes per batch, with a 30-minute admission deadline. Preserve local WebGPU and E18 native timing coverage. See [GPU offload report](gpu-offload/README.md) and [deploy gate](../qa/deploy-gate.md). Earlier throughput measurements are historical evidence, not permission to run three/four browsers.
+> **2026-10-18 operational correction:** The capacity recommendations below were superseded after WindowServer watchdog session losses. The current Mac hard limit is **two headless browsers**, regardless of `E2E_SLOTS`; the browser gate runs locally. Hetzner handles CPU suites; SwiftShader browser runs are opt-in. WindowServer CPU admission uses a ten-second measurement (wait above 60%). Uncapped timing runs require quiet-run, at most 20 minutes per batch, with a 30-minute admission deadline. Preserve local WebGPU and E18 native timing coverage. See [GPU offload report](gpu-offload/README.md) and [deploy gate](../qa/deploy-gate.md). Earlier throughput measurements are historical evidence, not permission to run three/four browsers.
 
 
 Research and measured prototype, 2026-10-13. Branch `lane/render-test-parallel`; source build `cbdba3f0`. Apple M4 Mac mini, 10 CPU cores, 16 GiB unified memory. Playwright 1.63.0, bundled Chromium revision 1243, three.js 0.186.0, Node 26.0.0, macOS 26.5.1 (25F80). No deployment or merge.
@@ -124,7 +124,7 @@ Playwright commands cost their worker count; never exceed two workers. Prefer --
 use --workers=2 for full suites (the wrapper reserves two units automatically).
 Opaque sh/npm wrappers must declare their maximum E2E_UNITS=1 or 2; reserve that capacity at the outer wrapper.
 Nested wrappers can reuse a reservation but cannot expand it. Close idle retained browsers and release their reservations.
-Do not raise Mac capacity for throughput sweeps; offload WebGL2/functional work to Hetzner.
+Do not raise Mac capacity for throughput sweeps; offload CPU suites to Hetzner. Remote browser runs are opt-in.
 Native timing/perf: invoke tools/perf/quiet-run.sh directly, --workers=1, with no outer e2e wrapper.
 Quiet-run reserves at least all four legacy slots; E2E_SLOTS=1 on an ordinary wrapper is not a quiet-machine guarantee.
 Each lane has a unique E2E_PORT and SCENE_PORT; never use 3300. Reuse another server only for an explicitly

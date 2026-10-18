@@ -1,5 +1,5 @@
 #!/bin/sh
-# Functional Chromium tests use software rendering; native-only rows are a separate local gate.
+# Opt-in functional Chromium tests with software rendering; the deploy gate stays local.
 set -eu
 if [ "${MI_REMOTE:-}" != 1 ]; then
   exec sh tools/remote/run.sh "$PWD" --pull test-results/playwright --env "E2E_PORT=${E2E_PORT:-$((34000 + $$ % 10000))}" -- sh tools/remote/e2e.sh "$@"
