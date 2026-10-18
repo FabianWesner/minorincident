@@ -1,0 +1,52 @@
+{
+  "rootCause": "Rigid lateral tyre impulses resist side slip and roll the sedan into a ramp under the APC.",
+  "fix": "sideFrictionStiffness = 0.2, preserving relative rear handbrake stiffness.",
+  "ablation": {
+    "stiffness1": "baseline-rams.json and baseline-production.json; two regressions fail",
+    "wheelFilterOnly": "filter-only-production.json; APC tilt 19.37 degrees, sedan tilt 180 degrees; insufficient",
+    "stiffness0_2": "fixed-rams.json and fixed-production.json; all regression and handling tests pass"
+  },
+  "commands": {
+    "targeted": "MI_RUNNER_IP=94.130.181.173 sh tools/remote/run.sh \"$PWD\" --pull test-results/apc-sedan -- npx vitest run tests/sim/vehicles/apc-sedan.test.ts tests/sim/vehicles/handling.test.ts --maxWorkers=1",
+    "full": "MI_RUNNER_IP=94.130.181.173 sh tools/remote/run.sh \"$PWD\" --pull test-results/apc-sedan --pull test-results/epics/E18 --pull test-results/epics/E09/handling-metrics.json --pull test-results/apc-sedan-suite.json -- bash tools/remote/timing-isolated.sh npx vitest run tests/unit tests/sim tests/levels --maxWorkers=4 --reporter=default --reporter=json --outputFile=test-results/apc-sedan-suite.json",
+    "browser": "SCENE_PORT=3467 E2E_PORT=3468 SCENE_SERVER=preview E2E_UNITS=2 sh tools/perf/quiet-run.sh <single batch: sh tools/e2e-lock.sh npx tsx tools/scenelab/catalog.ts --matrix --filter apc-sedan-contact --backend webgl2|webgpu --jobs 1 --out docs/reports/apc-sedan/<backend>>"
+  },
+  "local": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "build": "pass"
+  },
+  "browser": {
+    "pass": 12,
+    "total": 12,
+    "elapsedSecondsIncludingWait": 128,
+    "workers": 1,
+    "headless": true,
+    "actualBackends": [
+      "webgl",
+      "webgpu"
+    ],
+    "tiers": [
+      "high",
+      "low"
+    ],
+    "zooms": [
+      1.5,
+      1,
+      0.5
+    ]
+  },
+  "unmeasured": [
+    "Full npm run verify -- E09/browser deploy-gate suite (single short contact batch requested)",
+    "Native GPU frame times, phone, heap and initial download budgets",
+    "Fully opaque sedan silhouette after contact (retained transparency issue)"
+  ],
+  "targeted": {
+    "passed": 16,
+    "failed": 0,
+    "files": 2,
+    "ramCases": 9,
+    "apcTiltMax": 0.6789959404778313,
+    "sedanRollMax": 6.58764118944854
+  }
+}

@@ -1,0 +1,60 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/apc-sedan -> 94.130.181.173:/srv/mi/ws/apc-sedan-505fb3
+[remote] cache-gc deleted:none
+[remote] sync 16s, 16447 files; job /srv/mi/jobs/apc-sedan-505fb3-41133-1792305480; queueing for a slot
+[runner] slot 1 acquired; load 2.01 1.22 0.57
+
+ RUN  v5.0.3 /srv/mi/jobs/apc-sedan-505fb3-41133-1792305480
+
+stdout | tests/sim/vehicles/apc-sedan.test.ts > T-E09-apc-sedan @E09 @E31 normal rams preserve upright vehicles and push dynamic sedans
+┌─────────┬───────────┬─────┬─────────────────────┬────────────────────┬─────────────────────┬──────────────────────┬──────────┬────────────────┬─────────────────────┐
+│ (index) │ kind      │ kmh │ apcTilt             │ sedanTilt          │ sedanRoll           │ sedanYaw             │ contacts │ wheelOnVehicle │ sedanTravel         │
+├─────────┼───────────┼─────┼─────────────────────┼────────────────────┼─────────────────────┼──────────────────────┼──────────┼────────────────┼─────────────────────┤
+│ 0       │ 'head-on' │ 10  │ 0.38420214679272485 │ 1.897389153943038  │ 0.03623969062887411 │ 0.07528966158831733  │ 952      │ 0              │ 0.3993551582006048  │
+│ 1       │ 'head-on' │ 20  │ 0.473454183387859   │ 2.089692598204771  │ 0.06100124483750965 │ 0.123075337035455    │ 956      │ 0              │ 1.5240028058976185  │
+│ 2       │ 'head-on' │ 30  │ 0.5888622347296494  │ 2.6288226925732507 │ 0.08634905512491385 │ 0.18558637278768997  │ 956      │ 0              │ 3.4260352290731415  │
+│ 3       │ 'oblique' │ 10  │ 0.4007734394609056  │ 1.501082791191431  │ 0.8085972358066205  │ 4.921603433859021    │ 952      │ 0              │ 0.36929523372784695 │
+│ 4       │ 'oblique' │ 20  │ 0.46248366237393124 │ 2.1270888752881336 │ 1.9017378787629866  │ 37.47579047317175    │ 956      │ 0              │ 1.5022081856607041  │
+│ 5       │ 'oblique' │ 30  │ 0.9055645117667306  │ 10.677190947342533 │ 10.67339140595841   │ 43.19703388913324    │ 956      │ 0              │ 2.7735313776192867  │
+│ 6       │ 'side'    │ 10  │ 0.4591779015261499  │ 4.936327357347847  │ 4.936325676482488   │ 0.008632406988010785 │ 952      │ 0              │ 0.3301440768958204  │
+│ 7       │ 'side'    │ 20  │ 0.9885139493414032  │ 11.136063744754127 │ 11.136063647110905  │ 0.006651317190371246 │ 956      │ 0              │ 0.9546243202892105  │
+│ 8       │ 'side'    │ 30  │ 12.471241586374527  │ 60.2701683448869   │ 60.27016764110158   │ 0.023550441206764552 │ 768      │ 0              │ 1.7463073282414023  │
+└─────────┴───────────┴─────┴─────────────────────┴────────────────────┴─────────────────────┴──────────────────────┴──────────┴────────────────┴─────────────────────┘
+
+ ❯  functional  tests/sim/vehicles/apc-sedan.test.ts (2 tests | 2 failed) 3485ms
+   × T-E09-apc-sedan @E09 @E31 normal rams preserve upright vehicles and push dynamic sedans 406ms
+   × T-E31-apc-sedan-contact @E31 @E09 driven APC stays level while ramming a parked sedan 3076ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/sim/vehicles/apc-sedan.test.ts > T-E09-apc-sedan @E09 @E31 normal rams preserve upright vehicles and push dynamic sedans
+AssertionError: side 30: APC tilt: expected 12.471241586374527 to be less than 5
+ ❯ tests/sim/vehicles/apc-sedan.test.ts:44:61
+     42|     expect(row.contacts, `${row.kind} ${row.kmh}: chassis contact rema…
+     43|     expect(row.sedanTravel, `${row.kind} ${row.kmh}: sedan is pushed`)…
+     44|     expect(row.apcTilt, `${row.kind} ${row.kmh}: APC tilt`).toBeLessTh…
+       |                                                             ^
+     45|     expect(row.sedanTilt, `${row.kind} ${row.kmh}: sedan tilt`).toBeLe…
+     46|     expect(row.sedanRoll, `${row.kind} ${row.kmh}: sedan roll`).toBeLe…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL   functional  tests/sim/vehicles/apc-sedan.test.ts > T-E31-apc-sedan-contact @E31 @E09 driven APC stays level while ramming a parked sedan
+AssertionError: expected 35.27197228185448 to be less than 5
+ ❯ tests/sim/vehicles/apc-sedan.test.ts:71:21
+     69|     expect(apc.entity.health.current).toBeLessThan(1000);
+     70|     expect(Math.hypot(sedan.entity.transform.x, sedan.entity.transform…
+     71|     expect(maxTilt).toBeLessThan(5); expect(maxSedanTilt).toBeLessThan…
+       |                     ^
+     72|   } finally { world.dispose(); }
+     73| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  2 failed (2)
+   Start at  06:38:17
+   Duration  3.91s (tests 93%, transform 4%, import 2%)
+
+[remote] pulled test-results/apc-sedan-baseline
+[remote] done exit=1 (runner 94.130.181.173, sync 16s, remote total 7s)
