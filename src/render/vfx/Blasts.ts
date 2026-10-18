@@ -350,8 +350,8 @@ export class Blasts extends Group {
     this.fb.fbOrigin.needsUpdate = this.fb.fbParams.needsUpdate = this.fb.fbStyle.needsUpdate = true; this.fireballs.visible = true;
   }
   private static readonly debrisColors = [0x2a2422, 0x4b4038, 0x6e6a64, 0x7c3a22, 0x3b3a3d];
-  private chunk(x: number, ground: number, z: number, r: number, i: number): void {
-    const slot = this.debrisCursor++ % DEBRIS, rng = this.rng;
+  private chunk(x: number, ground: number, z: number, r: number, i: number, rng = this.rng): void {
+    const slot = this.debrisCursor++ % DEBRIS;
     const a = rng.next() * Math.PI * 2, out = 3 + rng.next() * r * 1.5, vy = 3.5 + rng.next() * 7.5, size = .07 + rng.next() * (i % 4 === 0 ? .22 : .12);
     const y = ground + .5 + rng.next() * .5, floor = ground + size * .35, land = (vy + Math.sqrt(vy * vy + 2 * 9.81 * Math.max(0, y - floor))) / 9.81;
     const ax = rng.next() - .5, ay = rng.next() - .5, az = rng.next() - .5, al = Math.hypot(ax, ay, az) || 1, life = land + 2.5 + rng.next() * 2;
@@ -562,7 +562,9 @@ export class Blasts extends Group {
   }
   /** Compile every pipeline during loading: one live instance of each, then clear. */
   prewarm(x: number, z: number): void {
-    this.fireball(x, 1, z, 1, .5, 0, 0); this.puff(x, 1, z, 0, 0, 0, 1, 1, 1, .5, .3); this.chunk(x, 0, z, 1, 0);
+    this.fireball(x, 1, z, 1, .5, 0, 0); this.puff(x, 1, z, 0, 0, 0, 1, 1, 1, .5, .3);
+    // Loading must not consume the live stream also used by cure mist.
+    this.chunk(x, 0, z, 1, 0, new Rng(this.world.seed, 'blasts-prewarm'));
     this.fl.fOrigin.setXYZW(0, x, 0, z, 0); this.fl.fStyle.setXYZW(0, 1, 1, 1, 1); this.flames.count = 1; this.flames.visible = true;
     this.gl.gOrigin.setXYZW(0, x, .03, z, 1); this.gl.gColor.setXYZW(0, 1, .5, .2, 1); this.glows.count = 1; this.glows.visible = true;
     this.fl.fOrigin.needsUpdate = this.fl.fStyle.needsUpdate = this.gl.gOrigin.needsUpdate = this.gl.gColor.needsUpdate = true;

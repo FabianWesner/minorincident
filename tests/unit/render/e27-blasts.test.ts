@@ -4,6 +4,7 @@ import { Blasts } from '../../../src/render/vfx/Blasts';
 import { FxPool } from '../../../src/render/vfx/FxPool';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
 import { LightField } from '../../../src/render/LightField';
+import type { Rng } from '../../../src/core/Rng';
 
 test('T-E27-14w @E27 @E18 blast fragment materials execute unoccluded during loading and reset before play', () => {
   const world = new SimWorld(), particles = new FxPool(2048, 'particle');
@@ -13,7 +14,9 @@ test('T-E27-14w @E27 @E18 blast fragment materials execute unoccluded during loa
     expect(parts.userData.preRenderSolo).toBe(true);
     expect(parts.material).toHaveLength(3);
     expect(parts.count).toBe(0);
+    const rng = Reflect.get(blasts, 'rng') as Rng, before = rng.snapshot();
     blasts.prewarm(4, 8);
+    expect(rng.snapshot()).toEqual(before);
     expect(parts.count).toBeGreaterThan(0);
     expect(blasts.blasts).toBe(0);
     blasts.reset();
