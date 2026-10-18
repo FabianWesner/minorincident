@@ -1,0 +1,6 @@
+{
+  "status": "unmeasured",
+  "waitSeconds": 1807,
+  "command": "sh tools/remote/run.sh \"$PWD\" -- npx vitest run tests/unit tests/sim tests/levels --maxWorkers=4",
+  "reason": "All Hetzner slots occupied; autoscaling failed with Primary IP limit exceeded; cancelled queue request at 30-minute cap."
+}

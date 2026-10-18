@@ -1,0 +1,69 @@
+{
+  "name": "seethrough-apc-beside-sedans",
+  "note": "Driven APC beside two sedans, plus a low sedan toward the camera whose roof is below the camera-to-APC rays. All three must stay opaque at every tier/zoom.",
+  "ground": "asphalt",
+  "size": 60,
+  "time": "L3",
+  "dof": false,
+  "vehicles": [
+    {
+      "id": "apc",
+      "asset": "vehicle.military-apc",
+      "at": [
+        0,
+        0
+      ],
+      "driven": true,
+      "floor": true
+    },
+    {
+      "id": "sedan-left",
+      "asset": "vehicle.sedan",
+      "at": [
+        -4,
+        4
+      ]
+    },
+    {
+      "id": "sedan-right",
+      "asset": "vehicle.sedan",
+      "at": [
+        4,
+        -4
+      ]
+    },
+    {
+      "id": "sedan-front",
+      "asset": "vehicle.sedan",
+      "at": [
+        5,
+        5
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": "apc",
+    "zoom": 1
+  },
+  "frames": 30,
+  "sheet": 15,
+  "expect": {
+    "consoleErrors": 0,
+    "seeThroughCutPixelsMax": 0,
+    "seeThroughCutInsideMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "state": "idle"
+    }
+  ]
+}
