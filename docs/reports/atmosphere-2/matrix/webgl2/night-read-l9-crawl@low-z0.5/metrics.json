@@ -1,0 +1,601 @@
+{
+  "spec": "tests/scenes/catalog/night-read-l9-crawl.json",
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "low",
+  "actualTier": "low",
+  "frames": 240,
+  "timing": {
+    "openMs": 0,
+    "loadMs": 2200,
+    "runMs": 1481,
+    "sceneMs": 3681
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "clipping",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "drawCallsMax",
+        "pass": true,
+        "value": 26,
+        "limit": 300
+      },
+      {
+        "name": "trianglesMax",
+        "pass": true,
+        "value": 48158,
+        "limit": 500000
+      },
+      {
+        "name": "canvas.f0.varianceMin",
+        "pass": true,
+        "value": 468.8841505335113,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f0.variedTilesMin",
+        "pass": true,
+        "value": 25,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f40.varianceMin",
+        "pass": true,
+        "value": 331.1462834999784,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f40.variedTilesMin",
+        "pass": true,
+        "value": 13,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f80.varianceMin",
+        "pass": true,
+        "value": 438.628564500219,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f80.variedTilesMin",
+        "pass": true,
+        "value": 16,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f120.varianceMin",
+        "pass": true,
+        "value": 1151.2984006588968,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f120.variedTilesMin",
+        "pass": true,
+        "value": 15,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f160.varianceMin",
+        "pass": true,
+        "value": 849.4676672703613,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f160.variedTilesMin",
+        "pass": true,
+        "value": 13,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f200.varianceMin",
+        "pass": true,
+        "value": 694.9442324892971,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f200.variedTilesMin",
+        "pass": true,
+        "value": 17,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f240.varianceMin",
+        "pass": true,
+        "value": 477.96670625374736,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f240.variedTilesMin",
+        "pass": true,
+        "value": 15,
+        "limit": 8
+      },
+      {
+        "name": "requestedBackend",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      },
+      {
+        "name": "requestedQuality",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      }
+    ]
+  },
+  "seeThroughCut": null,
+  "seeThroughCutSamples": [],
+  "courierShares": [],
+  "pixels": [
+    {
+      "frame": 0,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          57.21711805555555,
+          67.54403163580247,
+          106.82831983024691
+        ],
+        "variance": 468.8841505335113,
+        "variedTiles": 25,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 40,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          59.55807870370371,
+          70.26315586419753,
+          111.49549768518519
+        ],
+        "variance": 331.1462834999784,
+        "variedTiles": 13,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 80,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          60.39257716049383,
+          71.12856095679012,
+          112.30530092592592
+        ],
+        "variance": 438.628564500219,
+        "variedTiles": 16,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 120,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          64.27581983024692,
+          74.94355324074074,
+          115.13882523148148
+        ],
+        "variance": 1151.2984006588968,
+        "variedTiles": 15,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 160,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          62.37268132716049,
+          73.00995949074074,
+          113.54494598765432
+        ],
+        "variance": 849.4676672703613,
+        "variedTiles": 13,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 200,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          61.56469714506173,
+          72.3560976080247,
+          112.95158950617284
+        ],
+        "variance": 694.9442324892971,
+        "variedTiles": 17,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 240,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          60.21378279320987,
+          71.01075038580247,
+          111.71727044753086
+        ],
+        "variance": 477.96670625374736,
+        "variedTiles": 15,
+        "tiles": 64
+      }
+    }
+  ],
+  "edgeSamples": [],
+  "ring": null,
+  "contrast": [],
+  "consoleErrors": [],
+  "scene": {
+    "name": "night-read-l9-crawl",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "bld.apartment-block-a:84",
+        "asset": "bld.apartment-block-a",
+        "at": [
+          565,
+          -65
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "kit.crossing-crash:88",
+        "asset": "kit.crossing-crash",
+        "at": [
+          516,
+          0
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "veh.wreck:89",
+        "asset": "veh.wreck",
+        "at": [
+          486,
+          -8.4
+        ],
+        "yawDeg": 28.6
+      },
+      {
+        "id": "veh.wreck:90",
+        "asset": "veh.wreck",
+        "at": [
+          482,
+          8.6
+        ],
+        "yawDeg": -34.4
+      },
+      {
+        "id": "veh.school-bus:92",
+        "asset": "veh.school-bus",
+        "at": [
+          490,
+          9.7
+        ],
+        "yawDeg": -24.1
+      },
+      {
+        "id": "veh.sedan-red:93",
+        "asset": "veh.sedan-red",
+        "at": [
+          494,
+          -9.3
+        ],
+        "yawDeg": 51.6
+      },
+      {
+        "id": "prop.barricade:98",
+        "asset": "prop.barricade",
+        "at": [
+          505,
+          -7.7
+        ],
+        "yawDeg": 17.2
+      },
+      {
+        "id": "veh.wreck:99",
+        "asset": "veh.wreck",
+        "at": [
+          515,
+          -11
+        ],
+        "yawDeg": 85.9
+      },
+      {
+        "id": "veh.wreck:100",
+        "asset": "veh.wreck",
+        "at": [
+          518,
+          9.5
+        ],
+        "yawDeg": 97.4
+      },
+      {
+        "id": "apc-wreck",
+        "asset": "veh.military-apc",
+        "at": [
+          517.7,
+          0
+        ],
+        "yawDeg": 90
+      }
+    ],
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "entity": 1
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 0,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    },
+    "marketDoors": null,
+    "armyBoom": null,
+    "scene": "night-read-l9-crawl",
+    "frame": 240,
+    "tick": 240,
+    "backend": "webgl",
+    "quality": "low",
+    "convoyOverlapFrames": 0,
+    "propPenetration": {
+      "samples": 240,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "attackOverlap": {
+      "depthCm": 0,
+      "frame": 0,
+      "actor": ""
+    },
+    "wheels": {},
+    "lodPlaceholders": {
+      "frames": 0,
+      "firstFrame": -1,
+      "assets": []
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 24,
+        "p95": 26,
+        "max": 26
+      },
+      "triangles": {
+        "p50": 44128,
+        "p95": 48158,
+        "max": 48158
+      },
+      "shadowDrawCalls": {
+        "p50": 13,
+        "p95": 14,
+        "max": 14
+      },
+      "shadowTriangles": {
+        "p50": 29231,
+        "p95": 31419,
+        "max": 31419
+      },
+      "stepMs": {
+        "p50": 1.1,
+        "p95": 1.7,
+        "max": 2.3
+      },
+      "lastFrame": {
+        "drawCalls": 24,
+        "triangles": 44128,
+        "shadowDrawCalls": 13,
+        "shadowTriangles": 29231,
+        "stepMs": 0.9000005722045898,
+        "categories": {
+          "other": 23,
+          "shadows": 13,
+          "props": 1
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "grounding": {
+      "corpses": 0,
+      "corpseOffMaxCm": 0,
+      "pickups": 0,
+      "pickupOffMaxCm": 0,
+      "worst": []
+    },
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "hullWindups": 0,
+      "hullHits": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "cure": null,
+    "megaAlpha": null,
+    "minigun": null,
+    "specials": [],
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0,
+      "holds": {}
+    },
+    "seeThrough": {
+      "frames": 240,
+      "solidRadiusMax": 0.44,
+      "occluders": [
+        "kit.crossing-crash@516.0,0.0"
+      ],
+      "cutLowProps": [],
+      "cutPlacements": [
+        "kit.crossing-crash@516.0,0.0"
+      ]
+    },
+    "appearance": [],
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "variety": {
+      "infected": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      },
+      "pedestrian": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      }
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          545.034,
+          0.159
+        ],
+        "yawDeg": 4.6,
+        "travelM": 17.745797441753595,
+        "maxX": 545.0342407226562,
+        "state": "run",
+        "health": 100,
+        "drawnFrames": 240,
+        "inViewFrames": 240,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 240
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            527.51,
+            2.598
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 240,
+          "torsoPitchMinDeg": 2.9,
+          "torsoPitchMaxDeg": 11,
+          "contacts": 25,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 37.1,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 217
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 240,
+      "sim": {
+        "courier": 1,
+        "actors": 1
+      },
+      "drawn": {
+        "vehicle": 0,
+        "courier": 1
+      }
+    },
+    "lods": {
+      "bld.apartment-block-a:84": "culled",
+      "kit.crossing-crash:88": "lod2",
+      "veh.wreck:89": "culled",
+      "veh.wreck:90": "culled",
+      "veh.school-bus:92": "culled",
+      "veh.sedan-red:93": "culled",
+      "prop.barricade:98": "culled",
+      "veh.wreck:99": "culled",
+      "veh.wreck:100": "culled",
+      "apc-wreck": "culled"
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [],
+    "actors": [],
+    "gunBodies": [],
+    "heldProps": [],
+    "summary": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}
