@@ -13,13 +13,14 @@ import { zoomLimits } from '../../src/render/View';
  * (`bld-grove-*`, `fight-*,ped-*`). Exit 1 when any gate fails or a scene throws. Docs: docs/tools/scene-lab.md.
  * `--matrix` (PO 10-13 low tier / close zoom): every scene runs at the high and the low quality tier, and scenes with a
  * game/follow camera also at zoom 1 and the closest player zoom (`zoomLimits[0]`), as `<scene>@<tier>-z<zoom>` rows. */
+// With --matrix, --tier limits the quality pass while retaining every zoom (bounded browser batches).
 const args = process.argv.slice(2), flag = (name: string) => catalogFlag(args, name);
 const dirs = (flag('dir') ? [resolve(flag('dir')!)] : [resolve('specs/scenes/catalog'), resolve('tests/scenes/catalog')]).filter(existsSync);
 const out = resolve(flag('out') ?? 'test-results/scene-catalog');
 const query = Object.fromEntries(args.flatMap((a, i) => a === '--query' ? [args[i + 1].split('=') as [string, string]] : []));
 const throttle = Number(flag('throttle') ?? 1); // CPU slow-down factor: reproduces load-dependent races (async LOD loads) on an idle machine
 const backend = (flag('backend') ?? 'webgl2') as Backend, matrix = args.includes('--matrix');
-const tiers = (matrix ? ['high', 'low'] : [flag('tier') ?? 'high']) as ('high' | 'low')[];
+const tiers = (matrix && !flag('tier') ? ['high', 'low'] : [flag('tier') ?? 'high']) as ('high' | 'low')[];
 const [width, height] = (flag('size') ?? '960x540').split('x').map(Number);
 const jobs = Math.max(1, Math.min(2, Number(flag('jobs') ?? 2)));
 const globs = (flag('filter') ?? '*').split(',').map(g => new RegExp(`^${g.trim().replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*').replace(/\?/g, '.')}$`));

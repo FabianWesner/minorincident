@@ -1,6 +1,6 @@
 import { afterEach, expect, test, vi } from 'vitest';
 import { PNG } from 'pngjs';
-import { measureCourierShare, measureCut } from '../../../tools/scenelab/run';
+import { measureCourierShare, measureCut, measureVehicleSilhouette } from '../../../tools/scenelab/run';
 import type { SceneSession } from '../../../tools/scenelab/session';
 afterEach(() => vi.unstubAllGlobals());
 
@@ -48,4 +48,26 @@ test('cut probe compares the same simulation frame and never exempts screen-wide
   } as unknown as SceneSession;
   const result = await measureCut(session);
   expect(session.step).not.toHaveBeenCalled(); expect(result.inside).toBe(1); expect(result.outside).toBe(1);
+});
+
+test('vehicle coverage counts only the unfaded body mask and restores presentation after measuring', async () => {
+  let mode = 'restore', empty = false;
+  const modes: string[] = [];
+  vi.stubGlobal('window', { __SCENE__: {
+    ready: async () => {},
+    vehicleSilhouetteProbe: (_id: string, next: string) => { mode = next; modes.push(next); return true; },
+  } });
+  vi.stubGlobal('document', { querySelector: () => ({ toDataURL: () => {
+    const png = PNG.sync.read(pixels(mode === 'hidden' ? 0 : mode === 'full' ? 100 : 35));
+    // A changed pixel outside the full body's mask must not inflate retained coverage.
+    if (mode === 'normal') png.data[399 * 4] = 255;
+    return `data:image/png;base64,${PNG.sync.write(empty ? new PNG({ width: 20, height: 20 }) : png).toString('base64')}`;
+  } }) });
+  const session = { ready: vi.fn(), page: { evaluate: vi.fn((callback: (arg?: unknown) => unknown, flags?: unknown) => callback(flags)) } } as unknown as SceneSession;
+  expect(await measureVehicleSilhouette(session, 'sedan')).toEqual({ id: 'sedan', blocking: true, reference: 100, retained: 35, share: .35 });
+  expect(modes).toEqual(['normal', 'full', 'hidden', 'restore']);
+  expect(session.ready).toHaveBeenCalledTimes(2);
+  empty = true;
+  await expect(measureVehicleSilhouette(session, 'sedan')).rejects.toThrow('empty drawing buffer');
+  expect(modes.at(-1)).toBe('restore');
 });

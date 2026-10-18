@@ -10,6 +10,8 @@ import type { AssetDef } from '../../assets/types';
  * the same convention as layout placements (a yaw-0 prop faces its authored forward, an actor at yaw 0 faces +X).
  */
 export interface SceneSpec {
+  /** Measure each named vehicle's retained body pixels against the identical unfaded frame. */
+  vehicleSilhouettes?: string[];
   /** Production L2 market release, or its bridge arrival after 20 s of rescue simulation. */
   l2Release?: boolean | 'bridge' | 'checkpoint';
   /** Native campaign menu over the game camera; run with --query ui=1. */

@@ -1,5 +1,6 @@
 import { l4 } from '../data/l4';
 import { PaletteMaterial } from './PaletteMaterial';
+import { SubjectOcclusion } from './SubjectOcclusion';
 import { modelLod } from './lodPolicy';
 import { Box3, Group, Mesh, Vector3, type Object3D, type BufferGeometry, type Material } from 'three/webgpu';
 import { AssetRegistry } from '../assets/registry';
@@ -28,7 +29,7 @@ interface Pose { tick: number; px: number; py: number; pz: number; pyaw: number;
 export class EntityAssets extends Group {
   private readonly logs: { id: string; reason: string }[] = [];
   private readonly registry: AssetRegistry;
-  private readonly records = new Map<number, { model: Object3D; lod: AssetQuality; reveal: PaletteMaterial[]; pose?: Pose; wheels: { node: Object3D; radius: number; spin: number; steer: number; front: boolean }[] }>();
+  private readonly records = new Map<number, { model: Object3D; lod: AssetQuality; reveal: PaletteMaterial[]; bounds: Box3; pose?: Pose; wheels: { node: Object3D; radius: number; spin: number; steer: number; front: boolean }[] }>();
   private view?: View;
   private readonly prototypes = new Map<string, Promise<Group>>();
   private readonly geometries = new Set<BufferGeometry>();
@@ -92,7 +93,7 @@ export class EntityAssets extends Group {
             };
             node.material = Array.isArray(node.material) ? node.material.map(cut) : cut(node.material);
           });
-          this.records.set(entity.id, { model, lod, reveal, pose: previous?.pose, wheels });
+          this.records.set(entity.id, { model, lod, reveal, bounds: new Box3().setFromObject(model), pose: previous?.pose, wheels });
           model.position.set(entity.transform.x, entity.kind === 'obstacle' ? 0 : Math.max(0, entity.transform.y - .7), entity.transform.z);
           model.rotation.y = entity.transform.yaw;
           // Phone tier: flat scripted dressing (glass shards, craters) never casts a shadow.
@@ -127,13 +128,23 @@ export class EntityAssets extends Group {
       }
     }
   }
+  private readonly occlusion = new SubjectOcclusion();
+  /** Scripted convoy vehicles and props use the same camera segments as physical cars. */
+  updateReveal(subject?: Box3): void {
+    if (subject && this.view) this.occlusion.setSubject(this.view.camera.position, subject);
+    const ridden = this.playerVehicle();
+    for (const [id, rec] of this.records) {
+      if (!rec.reveal.length) continue;
+      rec.model.updateWorldMatrix(true, false);
+      const enabled = !!subject && !!this.view && id !== ridden && this.occlusion.blockedBy(rec.bounds, rec.model.matrixWorld);
+      for (const material of rec.reveal) material.seeThrough(enabled);
+    }
+  }
   update(alpha = 1): void {
     this.advance();
     void this.ready();
     const player0 = this.world.entities.get(1)?.transform;
-    const ridden = this.playerVehicle();
     for (const [id, rec] of this.records) {
-      for (const material of rec.reveal) material.seeThrough(id !== ridden);
       const model = rec.model, entity = this.world.entities.get(id);
       if (!entity) { model.removeFromParent(); this.records.delete(id); continue; }
       const flat = entity.kind === 'obstacle', pose = rec.pose!;
