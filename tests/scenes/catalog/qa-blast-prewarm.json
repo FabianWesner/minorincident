@@ -18,7 +18,29 @@
     "consoleErrors": 0,
     "drawCallsMax": 300,
     "trianglesMax": 1500000,
-    "trianglesMaxLow": 500000
+    "trianglesMaxLow": 500000,
+    "actorHealth": {
+      "victim-0": [
+        0,
+        0
+      ],
+      "victim-1": [
+        0,
+        0
+      ],
+      "victim-2": [
+        0,
+        0
+      ],
+      "victim-3": [
+        0,
+        0
+      ],
+      "victim-4": [
+        0,
+        0
+      ]
+    }
   },
   "vehicles": [
     {
@@ -66,7 +88,7 @@
       "id": "victim-1",
       "kind": "infected",
       "at": [
-        -2,
+        -0.8,
         0
       ],
       "archetype": "infected.runner",
