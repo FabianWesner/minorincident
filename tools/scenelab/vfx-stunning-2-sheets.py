@@ -69,4 +69,14 @@ for name, keys in KEYS.items():
         canvas.save(OUT / 'sheets' / f'{name.replace("vfx-", "")}-{backend}.jpg', quality=86)
 
 (OUT / 'scene-costs.json').write_text(json.dumps(dict(note='Scene Lab CPU sim + render submission (stepMs), shared Mac, not native GPU frame time.', rows=rows), indent=2) + '\n')
+lines = ['| Scene | Backend | Tier | CPU p95 ms before → after | Max frame ms before → after | Draws before → after | Triangles before → after |', '| --- | --- | --- | --- | --- | --- | --- |']
+for name in KEYS:
+    for backend in ['webgl2', 'webgpu']:
+        for tier in ['high', 'low']:
+            pair = [next((r for r in rows if r['scene'] == name and r['backend'] == backend and r['tier'] == tier and r['zoom'] == 1 and r['phase'] == p), None) for p in ['before', 'after']]
+            if None in pair:
+                continue
+            a, b = pair
+            lines.append(f"| {name[4:]} | {backend} | {tier} | {a['cpuP95']} → {b['cpuP95']} | {a['cpuMax']} → {b['cpuMax']} | {a['draws']} → {b['draws']} | {a['triangles']} → {b['triangles']} |")
+(OUT / 'costs.md').write_text('# Scene Lab cost per effect (zoom 1)\n\nCPU sim + render submission per frame (stepMs), shared Mac, not native GPU time. Max frame of the first scene in each session (explosion) is the cold first blast.\n\n' + '\n'.join(lines) + '\n')
 print(f'{len(rows)} measurements; {sum(r["passed"] for r in rows)} passed')

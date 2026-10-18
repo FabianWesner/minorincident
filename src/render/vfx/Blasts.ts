@@ -22,7 +22,7 @@ export type BlastLight = (x: number, z: number, hex: string, intensity: number, 
 export interface BlastHost { camera?(): Camera; particles: FxPool; shake(strength: number): void; roll?(strength: number): void; focus?(): { x: number; z: number }; light?: BlastLight; field?: LightField; ambient?: Node<'float'>; sunDirection?(): { x: number; y: number; z: number } }
 
 /** Spec 07 §8 budgets: smoke puffs 400 high / 120 low; fireball spheres; flame cards; ground light pools. */
-const PUFFS = 400, PUFFS_LOW = 120, FIREBALLS = 96, DEBRIS = 64, FLAMES = 128, GLOWS = 40, PARTS = 12;
+const PUFFS = 400, PUFFS_LOW = 120, FIREBALLS = 96, FIREBALLS_LOW = 56, DEBRIS = 64, FLAMES = 128, GLOWS = 40, PARTS = 12;
 const wind = { x: .55, z: .25 };
 const identity = new Matrix4();
 const up = new Vector3(0, 1, 0);
@@ -252,7 +252,7 @@ export class Blasts extends Group {
   }
   get flash(): number { return this.flashAt < 0 ? 0 : this.flashPeak * Math.max(0, 1 - (this.time - this.flashAt) / .16); }
   set(patch: { quality?: 'high' | 'low'; flashReduction?: boolean; slowMotion?: boolean }): void {
-    if (patch.quality) { this.quality = patch.quality; this.puffs.count = patch.quality === 'low' ? PUFFS_LOW : PUFFS; }
+    if (patch.quality) { this.quality = patch.quality; this.puffs.count = patch.quality === 'low' ? PUFFS_LOW : PUFFS; this.fireballs.count = patch.quality === 'low' ? FIREBALLS_LOW : FIREBALLS; }
     if (patch.flashReduction !== undefined) { this.flashReduction = patch.flashReduction; this.heat.value = patch.flashReduction ? .6 : 1; }
     if (patch.slowMotion !== undefined) { this.slowMotion = patch.slowMotion; if (!this.slowMotion) this.bullet = { scale: 1, remaining: 0, progress: 0 }; }
   }
@@ -339,8 +339,9 @@ export class Blasts extends Group {
     }
   }
   private fireball(x: number, y: number, z: number, size: number, life: number, delay: number, rise: number, driftX = 0, driftZ = 0, kind = 0): void {
-    let slot = this.fbCursor++ % FIREBALLS;
-    for (let n = 0; n < FIREBALLS && this.fbExpiry[slot] > this.time; n++) slot = this.fbCursor++ % FIREBALLS;
+    const cap = this.fireballs.count;
+    let slot = this.fbCursor++ % cap;
+    for (let n = 0; n < cap && this.fbExpiry[slot] > this.time; n++) slot = this.fbCursor++ % cap;
     this.fb.fbOrigin.setXYZW(slot, x, y, z, this.time); this.fb.fbParams.setXYZW(slot, size, life, delay, rise); this.fb.fbStyle.setXYZW(slot, driftX, driftZ, kind, 0);
     this.fbExpiry[slot] = this.time + life + delay;
     this.fb.fbOrigin.needsUpdate = this.fb.fbParams.needsUpdate = this.fb.fbStyle.needsUpdate = true; this.fireballs.visible = true;
