@@ -1,5 +1,6 @@
 import { afterEach, expect, test } from 'vitest';
 import { loadL6 } from '../../tools/sim-runner/l6Bots';
+import { emptyInput } from '../../src/input/InputFrame';
 import type { SimWorld } from '../../src/sim/world/SimWorld';
 let world: SimWorld | undefined;
 afterEach(() => world?.dispose());
@@ -20,4 +21,21 @@ test('T-E24-17-route @E24-AC17 @E24-AC10 escort navigation stays in the authored
     expect(p.z).toBeLessThan(18.8);
   }
   expect(p.x).toBeGreaterThanOrEqual(95);
+});
+
+test('T-E24-17-room-boundary @E24-AC17 raw movement cannot leave the authored tunnel floor', async () => {
+  ({ world } = await loadL6());
+  const player = world.entities.get(1)!;
+  Object.assign(player.transform, { x: 84, y: 1.32, z: 15 });
+  world.physics.playerBody!.setTranslation(player.transform, true);
+  const frame = emptyInput();
+  frame.move = { x: 0, z: -1 };
+  for (let i = 0; i < 120; i++) {
+    world.applyInput(frame, 'keyboard'); world.update();
+    expect(player.transform.z).toBeGreaterThanOrEqual(11.2);
+    expect(player.transform.y).toBeGreaterThan(1.2);
+  }
+  frame.move = { x: 0, z: 1 };
+  for (let i = 0; i < 30; i++) { world.applyInput(frame, 'keyboard'); world.update(); }
+  expect(player.transform.z).toBeGreaterThan(13);
 });
