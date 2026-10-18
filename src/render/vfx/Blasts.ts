@@ -284,7 +284,7 @@ export class Blasts extends Group {
     const punch = Math.min(1, fx.flash * 1.6);
     if (!this.flashReduction && fx.fireball.count > 0) {
       this.fireball(x, ground + .5 + fx.fireball.size * .3, z, fx.fireball.size * (.2 + .3 * punch), .12, 0, 0, 0, 0, 2);
-      this.host.light?.(x, z, '#fff0d2', 7 * punch, fx.light.range * 1.2, .2, false);
+      this.host.light?.(x, z, '#fff0d2', 7 * punch, fx.light.range * .7, .12, false);
     }
     this.glow(x, z, Math.min(r * 1.8, 9), 0xffe6b8, (this.flashReduction ? .3 : 1.3) * punch, .22, ground || undefined);
     // Mega blasts tint the whole town's light field orange for 5 s (spec 07 §5).
@@ -306,7 +306,7 @@ export class Blasts extends Group {
     const chunks = fx.fireball.count && fx.dust ? Math.min(24, Math.round((6 + r * 1.6) * (low ? .34 : 1))) : 0;
     for (let i = 0; i < chunks; i++) this.chunk(x, ground, z, r, i);
     // Beat 4 shockwave: a ground dust ring pushing outward (the E15 ring wave draws the 2r ring).
-    const dust = low ? Math.ceil(fx.dust / 3) : fx.dust;
+    const dust = low ? Math.ceil(fx.dust / 2) : Math.round(fx.dust * 1.6);
     for (let i = 0; i < dust; i++) {
       const a = i / dust * Math.PI * 2 + this.rng.next() * .2, speed = r * (1.2 + this.rng.next() * .6);
       this.host.particles.spawn(now, .9 + this.rng.next() * .5, x + Math.cos(a) * .6, ground + .25, z + Math.sin(a) * .6, Math.cos(a) * speed, .3 + this.rng.next() * .5, Math.sin(a) * speed, .5 + this.rng.next() * .5, particleShape.smoke, 0x8d7b68, .4);
@@ -348,7 +348,7 @@ export class Blasts extends Group {
   private static readonly debrisColors = [0x2a2422, 0x4b4038, 0x6e6a64, 0x7c3a22, 0x3b3a3d];
   private chunk(x: number, ground: number, z: number, r: number, i: number): void {
     const slot = this.debrisCursor++ % DEBRIS, rng = this.rng;
-    const a = rng.next() * Math.PI * 2, out = 2.5 + rng.next() * r * 1.1, vy = 3.5 + rng.next() * 7.5, size = .07 + rng.next() * (i % 4 === 0 ? .22 : .12);
+    const a = rng.next() * Math.PI * 2, out = 3 + rng.next() * r * 1.5, vy = 3.5 + rng.next() * 7.5, size = .07 + rng.next() * (i % 4 === 0 ? .22 : .12);
     const y = ground + .5 + rng.next() * .5, floor = ground + size * .35, land = (vy + Math.sqrt(vy * vy + 2 * 9.81 * Math.max(0, y - floor))) / 9.81;
     const ax = rng.next() - .5, ay = rng.next() - .5, az = rng.next() - .5, al = Math.hypot(ax, ay, az) || 1, life = land + 2.5 + rng.next() * 2;
     const color = Blasts.debrisColors[Math.floor(rng.next() * Blasts.debrisColors.length)];

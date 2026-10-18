@@ -132,8 +132,9 @@ export class FxPool {
         const arc = thinRing.mul(p.x.greaterThanEqual(r.mul(.5)).select(1, 0));
         mask = shape.equal(10).select(rearArc, shape.equal(9).select(arc, shape.equal(8).select(thinRing, shape.equal(1).select(ring, shape.equal(2).select(lane, shape.equal(3).select(chevron, shape.equal(4).select(cross, splat)))))));
         if (!warnings) {
-          const breakup = sin(p.x.mul(19).add(p.y.mul(11))).mul(.15).add(.85);
-          const pressure = r.smoothstep(.76, .88).mul(float(1).sub(r.smoothstep(.93, 1))).mul(breakup);
+          const breakup = sin(p.x.mul(19).add(p.y.mul(11))).mul(.1).add(.9);
+          // Bright leading edge over a broader feathered dust band behind it.
+          const pressure = r.smoothstep(.6, .86).mul(.5).add(r.smoothstep(.8, .88).mul(.5)).mul(float(1).sub(r.smoothstep(.965, 1))).mul(breakup);
           const angle = atan(p.y, p.x);
           const radial = sin(angle.mul(13)).mul(sin(angle.mul(7).add(1))).mul(.16);
           const scorch = float(1).sub(r.add(radial).smoothstep(.25, .96)).mul(.8);
