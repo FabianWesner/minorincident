@@ -1,0 +1,596 @@
+{
+  "spec": "tests/scenes/catalog/night-read-l9-road.json",
+  "backend": "webgpu",
+  "requestedBackend": "webgpu",
+  "tier": "high",
+  "actualTier": "high",
+  "frames": 240,
+  "timing": {
+    "openMs": 0,
+    "loadMs": 4331,
+    "runMs": 1573,
+    "sceneMs": 5904
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "clipping",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "drawCallsMax",
+        "pass": true,
+        "value": 23,
+        "limit": 300
+      },
+      {
+        "name": "trianglesMax",
+        "pass": true,
+        "value": 63663,
+        "limit": 500000
+      },
+      {
+        "name": "canvas.f0.varianceMin",
+        "pass": true,
+        "value": 1223.5015629521122,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f0.variedTilesMin",
+        "pass": true,
+        "value": 27,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f40.varianceMin",
+        "pass": true,
+        "value": 1162.8850944833675,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f40.variedTilesMin",
+        "pass": true,
+        "value": 25,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f80.varianceMin",
+        "pass": true,
+        "value": 868.0801182508349,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f80.variedTilesMin",
+        "pass": true,
+        "value": 21,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f120.varianceMin",
+        "pass": true,
+        "value": 632.3059056604457,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f120.variedTilesMin",
+        "pass": true,
+        "value": 18,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f160.varianceMin",
+        "pass": true,
+        "value": 390.56860202998405,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f160.variedTilesMin",
+        "pass": true,
+        "value": 16,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f200.varianceMin",
+        "pass": true,
+        "value": 345.5927644880735,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f200.variedTilesMin",
+        "pass": true,
+        "value": 16,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f240.varianceMin",
+        "pass": true,
+        "value": 549.6974646746598,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f240.variedTilesMin",
+        "pass": true,
+        "value": 15,
+        "limit": 8
+      },
+      {
+        "name": "requestedBackend",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      },
+      {
+        "name": "requestedQuality",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      }
+    ]
+  },
+  "seeThroughCut": null,
+  "seeThroughCutSamples": [],
+  "courierShares": [],
+  "pixels": [
+    {
+      "frame": 0,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          64.33767361111111,
+          75.06333140432099,
+          114.62628279320988
+        ],
+        "variance": 1223.5015629521122,
+        "variedTiles": 27,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 40,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          63.686778549382716,
+          74.29005208333334,
+          114.04373842592592
+        ],
+        "variance": 1162.8850944833675,
+        "variedTiles": 25,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 80,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          62.175306712962964,
+          72.87286072530864,
+          112.94913580246913
+        ],
+        "variance": 868.0801182508349,
+        "variedTiles": 21,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 120,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          60.97732638888889,
+          71.76460455246914,
+          112.10036072530865
+        ],
+        "variance": 632.3059056604457,
+        "variedTiles": 18,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 160,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          59.57678819444445,
+          70.32806134259259,
+          110.99251736111111
+        ],
+        "variance": 390.56860202998405,
+        "variedTiles": 16,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 200,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          59.29780864197531,
+          70.0601350308642,
+          110.81203703703704
+        ],
+        "variance": 345.5927644880735,
+        "variedTiles": 16,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 240,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          60.503489583333334,
+          71.30396797839506,
+          111.76403356481481
+        ],
+        "variance": 549.6974646746598,
+        "variedTiles": 15,
+        "tiles": 64
+      }
+    }
+  ],
+  "edgeSamples": [],
+  "ring": null,
+  "contrast": [],
+  "consoleErrors": [],
+  "scene": {
+    "name": "night-read-l9-road",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "bld.gas-station:18",
+        "asset": "bld.gas-station",
+        "at": [
+          12,
+          -351
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.garage-detached:19",
+        "asset": "bld.garage-detached",
+        "at": [
+          32,
+          -350
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "veh.pickup-red:20",
+        "asset": "veh.pickup-red",
+        "at": [
+          19,
+          -342
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "veh.wreck:21",
+        "asset": "veh.wreck",
+        "at": [
+          -18,
+          -349
+        ],
+        "yawDeg": 11.5
+      },
+      {
+        "id": "prop.tree:58",
+        "asset": "prop.tree",
+        "at": [
+          -25,
+          -351
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.tree:59",
+        "asset": "prop.tree",
+        "at": [
+          -17,
+          -346
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.tree:60",
+        "asset": "prop.tree",
+        "at": [
+          -31,
+          -342
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.tree:61",
+        "asset": "prop.tree",
+        "at": [
+          55,
+          -354
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.tree:62",
+        "asset": "prop.tree",
+        "at": [
+          63,
+          -349
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.tree:63",
+        "asset": "prop.tree",
+        "at": [
+          49,
+          -345
+        ],
+        "yawDeg": 0
+      }
+    ],
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "entity": 1
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 0,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    },
+    "marketDoors": null,
+    "armyBoom": null,
+    "scene": "night-read-l9-road",
+    "frame": 240,
+    "tick": 240,
+    "backend": "webgpu",
+    "quality": "high",
+    "convoyOverlapFrames": 0,
+    "propPenetration": {
+      "samples": 240,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "attackOverlap": {
+      "depthCm": 0,
+      "frame": 0,
+      "actor": ""
+    },
+    "wheels": {},
+    "lodPlaceholders": {
+      "frames": 0,
+      "firstFrame": -1,
+      "assets": []
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 22,
+        "p95": 22,
+        "max": 23
+      },
+      "triangles": {
+        "p50": 63661,
+        "p95": 63661,
+        "max": 63663
+      },
+      "shadowDrawCalls": {
+        "p50": 23,
+        "p95": 23,
+        "max": 23
+      },
+      "shadowTriangles": {
+        "p50": 54186,
+        "p95": 54186,
+        "max": 54186
+      },
+      "stepMs": {
+        "p50": 1.1,
+        "p95": 1.8,
+        "max": 2.1
+      },
+      "lastFrame": {
+        "drawCalls": 23,
+        "triangles": 63663,
+        "shadowDrawCalls": 23,
+        "shadowTriangles": 54186,
+        "stepMs": 1,
+        "categories": {
+          "other": 23,
+          "shadows": 23
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "grounding": {
+      "corpses": 0,
+      "corpseOffMaxCm": 0,
+      "pickups": 0,
+      "pickupOffMaxCm": 0,
+      "worst": []
+    },
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "hullWindups": 0,
+      "hullHits": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "cure": null,
+    "megaAlpha": null,
+    "minigun": null,
+    "specials": [],
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0,
+      "holds": {}
+    },
+    "seeThrough": {
+      "frames": 240,
+      "solidRadiusMax": 0.44,
+      "occluders": [],
+      "cutLowProps": [],
+      "cutPlacements": []
+    },
+    "appearance": [],
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "variety": {
+      "infected": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      },
+      "pedestrian": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      }
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          -7.245,
+          -330
+        ],
+        "yawDeg": 0,
+        "travelM": 17.74506664276123,
+        "maxX": -7.244933128356934,
+        "state": "run",
+        "health": 100,
+        "drawnFrames": 240,
+        "inViewFrames": 240,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 240
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -24.99,
+            -330
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 240,
+          "torsoPitchMinDeg": 2.9,
+          "torsoPitchMaxDeg": 11,
+          "contacts": 25,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 37,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 217
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 240,
+      "sim": {
+        "courier": 1,
+        "actors": 1
+      },
+      "drawn": {
+        "vehicle": 0,
+        "courier": 1
+      }
+    },
+    "lods": {
+      "bld.gas-station:18": "culled",
+      "bld.garage-detached:19": "culled",
+      "veh.pickup-red:20": "culled",
+      "veh.wreck:21": "culled",
+      "prop.tree:58": "culled",
+      "prop.tree:59": "culled",
+      "prop.tree:60": "culled",
+      "prop.tree:61": "culled",
+      "prop.tree:62": "culled",
+      "prop.tree:63": "culled"
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [],
+    "actors": [],
+    "gunBodies": [],
+    "heldProps": [],
+    "summary": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}
