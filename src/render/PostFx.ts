@@ -57,17 +57,18 @@ export class PostFx {
   }
   private hazeOffset(): Node<'vec2'> {
     const sources = uniformArray<'vec4'>(this.heat, 'vec4'), p = uv(), t = this.heatTime;
-    let offset: Node<'vec2'> = vec2(0, 0);
+    // Per source only a disc mask (cheap); the ripple is evaluated once, at the mask-weighted source scale.
+    let weight: Node<'float'> = float(0), scaled: Node<'float'> = float(0);
     for (let i = 0; i < HEAT_SOURCES; i++) {
       const h = sources.element(i), radius = h.z.max(.0001);
-      const local = p.sub(h.xy).mul(vec2(this.heatAspect, 1)).div(radius);
-      const mask = float(1).sub(local.length().smoothstep(.25, 1)).mul(h.w);
-      // Rising shimmer: two crossed ripples scaled to the source size, so the cells keep their look at every zoom.
-      const wave = sin(local.y.mul(11).sub(t.mul(7.5)).add(sin(local.x.mul(7).add(t.mul(2.3))).mul(1.6)));
-      const sway = sin(local.x.mul(9).add(t.mul(5.1)).add(local.y.mul(4)));
-      offset = offset.add(vec2(wave.mul(.6), sway.mul(.4).add(wave.mul(.3))).mul(mask).mul(radius.mul(.035)));
+      const mask = float(1).sub(p.sub(h.xy).mul(vec2(this.heatAspect, 1)).div(radius).length().smoothstep(.25, 1)).mul(h.w);
+      weight = weight.add(mask); scaled = scaled.add(mask.mul(radius));
     }
-    return offset;
+    const radius = scaled.div(weight.max(.0001)).max(.0001), local = p.mul(vec2(this.heatAspect, 1)).div(radius);
+    // Rising shimmer: two crossed ripples scaled to the source size, so the cells keep their look at every zoom.
+    const wave = sin(local.y.mul(11).sub(t.mul(7.5)).add(sin(local.x.mul(7).add(t.mul(2.3))).mul(1.6)));
+    const sway = sin(local.x.mul(9).add(t.mul(5.1)).add(local.y.mul(4)));
+    return vec2(wave.mul(.6), sway.mul(.4).add(wave.mul(.3))).mul(weight.min(1)).mul(radius.mul(.035));
   }
   private diagnosticTargets(): RenderTarget[] {
     const bloom = this.bloomPass as typeof this.bloomPass & { _renderTargetBright: RenderTarget; _renderTargetsHorizontal: RenderTarget[]; _renderTargetsVertical: RenderTarget[] };
