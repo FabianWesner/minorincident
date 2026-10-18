@@ -1,0 +1,9 @@
+/Users/wesner/Workspace/minorincident/.claude/worktrees/atmosphere/tools/atmosphere/eye-probe.ts:20
+      if (Date.now() > deadline) throw new Error('Baseline preview failed to start');
+                                       ^
+
+Error: Baseline preview failed to start
+    at <anonymous> (/Users/wesner/Workspace/minorincident/.claude/worktrees/atmosphere/tools/atmosphere/eye-probe.ts:20:40)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+Node.js v26.0.0

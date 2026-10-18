@@ -1,0 +1,59 @@
+
+> build
+> NODE_ENV=production vite build --configLoader runner --outDir /tmp/mi-atmosphere-final-dist
+
+vite v6.4.3 building for production...
+
+(!) outDir /tmp/mi-atmosphere-final-dist is not inside project root and will not be emptied.
+Use --emptyOutDir to override.
+
+transforming...
+✓ 531 modules transformed.
+rendering chunks...
+computing gzip size...
+../../../../../../../tmp/mi-atmosphere-final-dist/preview/index.html                             1.65 kB │ gzip:     0.72 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/index.html                                     2.65 kB │ gzip:     0.90 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/civilianBakeData-DRZjElYi.js             3.68 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/BufferGeometryUtils-E8HioxtM.js          6.88 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/civilianBake.worker-C13d_nt9.js          8.74 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/basis_transcoder-o4Hde_L7.js            57.53 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/three.module-B-nHBglW.js               206.11 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/civilianSource-UMMueCh2.js             411.18 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/basis_transcoder-VXdx5NbI.wasm         527.33 kB │ gzip:   244.57 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/prefetch.worker-C3cFJ5TC.js          1,054.14 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/prepareCivilianGeometry-PivjJtk0.js  2,020.30 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/rapier-C6GCbKVJ.wasm                 3,082.10 kB │ gzip: 1,171.17 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/index-BZx3BNCD.css                      36.72 kB │ gzip:     8.00 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/lookViewpoints-BX-OEann.js               0.23 kB │ gzip:     0.16 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/modulepreload-polyfill-B5Qt9EMX.js       0.71 kB │ gzip:     0.40 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/preload-helper-BlTxHScW.js               1.11 kB │ gzip:     0.65 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/crowdProbe-C9haYFhk.js                   1.35 kB │ gzip:     0.78 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/controls-BD2KGrGS.js                     1.40 kB │ gzip:     0.75 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/worldLook-DT8mxh_z.js                    1.64 kB │ gzip:     0.76 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/crowd-BM2l-e_r.js                        2.35 kB │ gzip:     1.28 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/l5-CNFqEop7.js                           3.76 kB │ gzip:     1.70 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/navigation-BUiytbpr.js                   5.21 kB │ gzip:     2.45 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/lookPatch-BT7ef7_D.js                    5.26 kB │ gzip:     2.69 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/probe-cH6419Ax.js                        7.46 kB │ gzip:     3.02 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/index-Gl7G6lCQ.js                       12.12 kB │ gzip:     4.40 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/Inspection-Co_xpVQj.js                  12.83 kB │ gzip:     4.39 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/meleeCombos-CqnQWDHi.js                 15.00 kB │ gzip:     4.94 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/l4-cBdBvsfu.js                          15.72 kB │ gzip:     6.62 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/MotionLab-DaptAgoF.js                   20.03 kB │ gzip:     8.43 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/LevelFiveBot-BmbC0OTm.js                23.76 kB │ gzip:     6.41 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/index-DpoC0kVR.js                       27.23 kB │ gzip:     7.29 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/testApi-Bdz5yapT.js                     28.90 kB │ gzip:    10.89 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/Physics-CyTjMXD9.js                     69.73 kB │ gzip:    23.88 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/Pickups-CDX0tpKP.js                     78.02 kB │ gzip:    24.89 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/light-anchors-DQGCSUUw.js               90.38 kB │ gzip:     6.79 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/SceneLab-DqZsUeEG.js                    96.04 kB │ gzip:    33.32 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/Debug-bQNchBCD.js                      155.75 kB │ gzip:    32.99 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/registry-BnT-Hl-4.js                   193.45 kB │ gzip:    66.37 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/rapier-ykuY6d4E.js                     212.13 kB │ gzip:    36.15 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/PropSystem-BvuAW_Bg.js                 214.97 kB │ gzip:    66.13 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/three.module-BSnTNmqF.js               290.82 kB │ gzip:    77.95 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/install-uuyd4H-F.js                    719.32 kB │ gzip:   194.97 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/WeatherView-DOybqn-r.js              1,051.88 kB │ gzip:   232.53 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/index-C_hbksp6.js                    1,163.31 kB │ gzip:   363.22 kB
+../../../../../../../tmp/mi-atmosphere-final-dist/build/character-clips-CGKWtM3S.js          1,939.70 kB │ gzip:   341.80 kB
+✓ built in 8.94s

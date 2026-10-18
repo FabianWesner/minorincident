@@ -1,0 +1,34 @@
+{
+  "numTotalTests": 1602,
+  "numPassedTests": 1590,
+  "numFailedTests": 3,
+  "numPendingTests": 9,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 326,
+  "numFailedTestSuites": 3,
+  "startTime": 1792268101341,
+  "success": false,
+  "failures": [
+    {
+      "file": "unit/traceability.test.ts",
+      "name": "T-E01-traceability @E01 every active epic AC has a matching test tag",
+      "messages": [
+        "AssertionError: E29-AC01: expected 'import { mkdirSync } from \\'node:fs\\'\u2026' to contain '@E29-AC01'\n    at /srv/mi/jobs/atmosphere-2faa87-21128-1792268036/tests/unit/traceability.test.ts:14:84\n    at file:///srv/mi/jobs/atmosphere-2faa87-21128-1792268036/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1628:35\n    at file:///srv/mi/jobs/atmosphere-2faa87-21128-1792268036/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:26\n    at file:///srv/mi/jobs/atmosphere-2faa87-21128-1792268036/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3321:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///srv/mi/jobs/atmosphere-2faa87-21128-1792268036/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3316:10)\n    at file:///srv/mi/jobs/atmosphere-2faa87-21128-1792268036/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3301:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///srv/mi/jobs/atmosphere-2faa87-21128-1792268036/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3259:10)\n    at file:///srv/mi/jobs/atmosphere-2faa87-21128-1792268036/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3882:64"
+      ]
+    },
+    {
+      "file": "unit/render/l1-grade.test.ts",
+      "name": "@E19 golden morning has radial two-color fog and shadow bounds follow actual desktop/portrait views",
+      "messages": [
+        "AssertionError: expected '6c56ac' to be '6b4fc2' // Object.is equality\n    at /srv/mi/jobs/atmosphere-2faa87-21128-1792268036/tests/unit/render/l1-grade.test.ts:66:108\n    at file:///srv/mi/jobs/atmosphere-2faa87-21128-1792268036/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1628:35\n    at file:///srv/mi/jobs/atmosphere-2faa87-21128-1792268036/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:26\n    at file:///srv/mi/jobs/atmosphere-2faa87-21128-1792268036/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3321:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///srv/mi/jobs/atmosphere-2faa87-21128-1792268036/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3316:10)\n    at file:///srv/mi/jobs/atmosphere-2faa87-21128-1792268036/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3301:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///srv/mi/jobs/atmosphere-2faa87-21128-1792268036/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3259:10)\n    at file:///srv/mi/jobs/atmosphere-2faa87-21128-1792268036/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3882:64"
+      ]
+    },
+    {
+      "file": "unit/tooling/l7-runner-default.test.ts",
+      "name": "T-E29-02-cli @E29-AC02 explicit and all-level CLI registration include L7 in campaign order",
+      "messages": [
+        "AssertionError: expected [ 'L1', 'L2', 'L3', 'L4', 'L5', \u2026(6) ] to deeply equal [ 'L1', 'L2', 'L3', 'L4', 'L5', \u2026(5) ]\n    at /srv/mi/jobs/atmosphere-2faa87-21128-1792268036/tests/unit/tooling/l7-runner-default.test.ts:17:24\n    at file:///srv/mi/jobs/atmosphere-2faa87-21128-1792268036/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:1628:35\n    at file:///srv/mi/jobs/atmosphere-2faa87-21128-1792268036/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:26\n    at file:///srv/mi/jobs/atmosphere-2faa87-21128-1792268036/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3321:20\n    at new Promise (<anonymous>)\n    at runWithCancel (file:///srv/mi/jobs/atmosphere-2faa87-21128-1792268036/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3316:10)\n    at file:///srv/mi/jobs/atmosphere-2faa87-21128-1792268036/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3301:20\n    at new Promise (<anonymous>)\n    at runWithTimeout (file:///srv/mi/jobs/atmosphere-2faa87-21128-1792268036/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3259:10)\n    at file:///srv/mi/jobs/atmosphere-2faa87-21128-1792268036/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:3882:64"
+      ]
+    }
+  ]
+}

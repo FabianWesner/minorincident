@@ -1,20 +1,23 @@
 // GPU-only environmental motion, following Bruno's shared Wind.js phase pattern (MIT).
-import { BufferGeometry, Color, DoubleSide, Float32BufferAttribute, Group, Mesh, MeshBasicNodeMaterial, Vector2 } from 'three/webgpu';
-import { attribute, mix, cos, positionGeometry, sin, uniform, vec3 } from 'three/tsl';
+import { BufferGeometry, Color, DoubleSide, Float32BufferAttribute, Group, Mesh, MeshBasicNodeMaterial, Vector2, Vector4 } from 'three/webgpu';
+import { attribute, mix, cos, positionGeometry, sin, uniform, uniformArray, vec3 } from 'three/tsl';
 import { Rng } from '../core/Rng';
 import { worldLook } from '../data/worldLook';
 import type { Materials } from './Materials';
+import type { TimeOfDayPreset } from '../data/timeOfDay';
+import type { PlacedLight } from '../data/placedLights';
 
 /** One local field: drifting leaves/petals, warm dust and a small flock. No per-particle CPU updates. */
 export class AmbientLife extends Group {
   readonly focus = uniform(new Vector2());
   private readonly meshes: Mesh[] = [];
-  constructor(materials: Materials) {
+  constructor(materials: Materials, counts: NonNullable<TimeOfDayPreset['ambient']> = { leaf: 100, dust: 100, bird: 3 }) {
     super(); this.name = 'ambient-gpu-life';
     const rng = new Rng(14, 'morning-air');
     for (const kind of ['leaf', 'dust', 'bird'] as const) {
       const positions: number[] = [], offsets: number[] = [], colors: number[] = [], petals: number[] = [];
-      const count = kind === 'bird' ? 3 : 100;
+      const count = counts[kind];
+      if (!count) continue;
       for (let i = 0; i < count; i++) {
         const offset = [rng.next() * 25, rng.next() * Math.PI * 2, rng.next() * 25];
         const size = kind === 'bird' ? .23 : kind === 'leaf' ? .025 + rng.next() * .04 : .018;
@@ -38,6 +41,40 @@ export class AmbientLife extends Group {
       const mesh = new Mesh(geometry, material); mesh.frustumCulled = false; this.meshes.push(mesh); this.add(mesh);
     }
   }
-  setQuality(low: boolean): void { for (const mesh of this.meshes) mesh.geometry.setDrawRange(0, low && mesh.geometry.getAttribute('position').count > 100 ? 90 : Infinity); }
+  setQuality(low: boolean): void { for (const mesh of this.meshes) mesh.geometry.setDrawRange(0, low ? Math.min(90, mesh.geometry.getAttribute('position').count) : Infinity); }
   dispose(): void { for (const mesh of this.meshes) { mesh.geometry.dispose(); (mesh.material as MeshBasicNodeMaterial).dispose(); } this.clear(); }
+}
+
+/** Twenty-four tiny moths at at most six powered lamps. Orbiting happens on the GPU;
+ * low tier omits the draw and power-off clears the associated swarm immediately. */
+export class LampInsects extends Mesh<BufferGeometry, MeshBasicNodeMaterial> {
+  private readonly positions = Array.from({ length: 6 }, () => new Vector4(0, -100, 0, 0));
+  private readonly anchors = uniformArray<'vec4'>(this.positions, 'vec4');
+  private readonly clock = uniform(0);
+  constructor() {
+    const geometry = new BufferGeometry(), positions: number[] = [], indices: number[] = [];
+    for (let i = 0; i < 24; i++) { positions.push(-.025, 0, 0, .025, 0, 0, 0, .025, .02); indices.push(i, i, i); }
+    geometry.setAttribute('position', new Float32BufferAttribute(positions, 3));
+    geometry.setAttribute('_insect', new Float32BufferAttribute(indices, 1));
+    const material = new MeshBasicNodeMaterial({ color: '#b6a37c', side: DoubleSide, transparent: true, depthWrite: false });
+    super(geometry, material);
+    const seed = attribute('_insect', 'float'), anchor = this.anchors.element(seed.div(4).floor());
+    const phase = this.clock.mul(1.6).add(seed.mul(2.4));
+    material.positionNode = positionGeometry.add(anchor.xyz).add(vec3(sin(phase).mul(.35), sin(phase.mul(1.7)).mul(.18), cos(phase.mul(.9)).mul(.3)));
+    material.opacityNode = anchor.w.mul(.65);
+    this.name = 'lamp-insects'; this.frustumCulled = false; this.visible = false;
+  }
+  update(lights: readonly PlacedLight[], seconds: number, enabled: boolean): void {
+    this.clock.value = seconds;
+    let count = 0;
+    if (enabled) for (const light of lights) {
+      if (!light.assetId.includes('lamp') || light.position[1] - light.ground < 2) continue;
+      this.positions[count++].set(light.position[0], light.position[1] - .35, light.position[2], 1);
+      if (count === 6) break;
+    }
+    for (let i = count; i < 6; i++) this.positions[i].set(0, -100, 0, 0);
+    this.visible = count > 0;
+    this.geometry.setDrawRange(0, count * 4 * 3);
+  }
+  dispose(): void { this.geometry.dispose(); this.material.dispose(); }
 }
