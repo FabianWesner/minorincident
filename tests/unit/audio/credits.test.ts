@@ -56,7 +56,7 @@ test('every dependency, devDependency, non-npm technology and audio source is cr
         expect(codeCredits.some(c => c.title.startsWith(`${name} `)), `dependency ${name}`).toBe(true);
     for (const name of Object.keys(pkg.devDependencies))
         expect([...codeCredits, ...toolchainCredits].some(c => c.title.startsWith(`${name} `)), `devDependency ${name}`).toBe(true);
-    for (const title of ['WebGPU', 'WebGL 2', 'three.js WebGPURenderer', 'Rapier', 'Blender', 'FFmpeg', 'Basis Universal', 'meshoptimizer', 'Cloudflare Pages', 'Hetzner Cloud', 'Mesh2Motion'])
+    for (const title of ['WebGPU', 'WebGL 2', 'Web Audio API', 'three.js WebGPURenderer', 'Rapier', 'Blender', 'FFmpeg', 'Basis Universal', 'meshoptimizer', 'Cloudflare Pages', 'Hetzner Cloud', 'GitHub', 'Mesh2Motion'])
         expect(shown.some(c => c.title.includes(title)), title).toBe(true);
     // Every source the audio ledger ships (music streams, cue recordings, fanfare layers) is credited by author, page and license.
     const sources = imports.sources as Record<string, { title: string; author: string; url: string; license: string }>;
@@ -76,6 +76,10 @@ test('credits open with the makers: Fabian Wesner (LinkedIn), every AI model, ha
     const names = madeBy.groups.flatMap(g => g.names).join(' | ');
     for (const name of ['Claude Opus 5.5', 'Claude Sonnet 5.5', 'Claude Haiku 5.5', 'Claude Fable 5.1', 'GPT-6.1 Sol', 'GPT-6 Luna', 'GPT-6 Astra', 'Claude Code', 'Codex CLI', 'codex-scheduler', 'Blender'])
         expect(names, name).toContain(name);
+    const ui = readFileSync('src/ui/GameUI.ts', 'utf8');
+    for (const heading of ['Runtime libraries and references', 'Build, test and asset tools', 'Technologies and platforms', 'Music, sound and voices'])
+        expect(ui, heading).toContain(heading);
+    expect(ui).toContain('All LLMs and harnesses, all libraries and all technologies');
     // Both credit screens render the makers before the generated licence list.
     for (const [file, then] of [['src/ui/GameUI.ts', "section('code'"], ['src/ui/CampaignUI.ts', 'Bruno Simon']] as const) {
         const source = readFileSync(file, 'utf8'), first = source.indexOf('madeBy.headline');
