@@ -1,6 +1,6 @@
 import { test, expect, boot } from '../fixtures';
 
-for (const quality of ['high', 'low']) test(`T-E32-16-E2 @E32-AC15 @E32-AC16 @E32-AC27 ${quality} real terminal input and unique backpack retry`, async ({ page }) => {
+for (const quality of ['high', 'low']) test(`T-E32-16-E2 @E32-AC15 @E32-AC16 @E32-AC29 @E32-AC27 ${quality} real terminal input and unique backpack retry`, async ({ page }) => {
   test.setTimeout(180_000);
   await boot(page, `/?test=1&renderer=webgl&quality=${quality}&audio=muted&seed=32`);
   await page.evaluate(async quality => { window.__SS__!.settings.set({ quality: quality as 'high' | 'low' }); await window.__SS__!.loadLevel('L10', { seed: 32, checkpoint: 'cure-research-entry', progression: 'L10-default' }); window.__SS__!.pause(); }, quality);

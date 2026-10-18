@@ -1,0 +1,790 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch9 -> 94.130.181.173:/srv/mi/ws/merge-batch9-620a80
+[remote] cache-gc deleted: alpha-aware-all-a05f09 l6-exit-stall-e9a673 merge-batch8-0e5485 ui-night-3e0a0e
+[remote] sync 1227s, 16564 files; job /srv/mi/jobs/merge-batch9-620a80-68324-1792266600; queueing for a slot
+[runner] slot 0 acquired; load 0.41 0.18 0.11
+[runner] npm ci (lockfile hash 803b35227185cdca)
+
+added 247 packages in 5s
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/merge-batch9-620a80-68324-1792266600[39m
+
+[90mstdout[2m | tests/sim/ai/l1-perception.test.ts[2m > [22m[2mL1 v2 infected perception[2m > [22m[2mT-E19-10 @E19 @E19-AC10 search 10-18 s, probe points, double-back, then wander
+[22m[39m[AC10] 200 episodes mean 14.01 s std 2.29 s, double-back 122/200, probes min 3 median 5
+
+[90mstdout[2m | tests/sim/ai/l1-perception.test.ts[2m > [22m[2mL1 v2 infected perception[2m > [22m[2mT-E19-10c @E19 @E19-AC10 real survivor input: break line of sight behind a house, the chaser searches (no hearing, no omniscience)
+[22m[39m[AC10c] lost sight -> search on 8/8 seeds; found again by sight on 3
+
+[90mstdout[2m | tests/sim/ai/l1-perception.test.ts[2m > [22m[2mL1 v2 infected perception[2m > [22m[2mT-E19-herd @E19 @E19-AC26 herd cue: an infected that sees a chasing infected turns to its heading and acquires the victim (sight only)
+[22m[39m[herd] acquired after 0.42-0.42 s on 1/1 seed
+
+[90mstdout[2m | tests/sim/ai/l1-perception.test.ts[2m > [22m[2mL1 v2 infected perception[2m > [22m[2mT-E19-yard @E19 @E19-AC10 PO-QA #12: an infected in a fenced yard paths out through the gap, or gives up instead of pressing on the fence
+[22m[39m[yard] open yard escaped 10/10, closed yard gave up 10/10
+
+[90mstdout[2m | tests/sim/ai/l1-perception.test.ts[2m > [22m[2mL1 v2 infected perception[2m > [22m[2mT-E19-12 @E19 @E19-AC12 speed tiers ordered, mostly faster than the running player, persistent spread per entity
+[22m[39m[AC12] frail 4.43-4.84 average 4.68-5.50 athletic 4.75-5.80 m/s; close 10 m median 12.3 s (min 12.3, max 12.3)
+
+[90mstdout[2m | tests/sim/ai/l1-perception.test.ts[2m > [22m[2mL1 v2 infected perception[2m > [22m[2mT-E19-12b @E19 @E19-AC12 a group of 10 chasing from one start strings out: arrivals spread >= 2.0 s, deterministic per seed
+[22m[39m[AC12b] seed 1 arrival spread 4.68 s
+
+[90mstdout[2m | tests/sim/ai/l1-perception.test.ts[2m > [22m[2mL1 v2 infected perception[2m > [22m[2mT-E19-12b @E19 @E19-AC12 a group of 10 chasing from one start strings out: arrivals spread >= 2.0 s, deterministic per seed
+[22m[39m[AC12b] seed 2 arrival spread 2.37 s
+
+[90mstdout[2m | tests/sim/ai/l1-perception.test.ts[2m > [22m[2mL1 v2 infected perception[2m > [22m[2mT-E19-12b @E19 @E19-AC12 a group of 10 chasing from one start strings out: arrivals spread >= 2.0 s, deterministic per seed
+[22m[39m[AC12b] seed 3 arrival spread 4.30 s
+
+[90mstdout[2m | tests/sim/ai/l1-perception.test.ts[2m > [22m[2mL1 v2 infected perception[2m > [22m[2mT-E19-12b @E19 @E19-AC12 a group of 10 chasing from one start strings out: arrivals spread >= 2.0 s, deterministic per seed
+[22m[39m[AC12b] seed 4 arrival spread 2.70 s
+
+[90mstdout[2m | tests/sim/ai/l1-perception.test.ts[2m > [22m[2mL1 v2 infected perception[2m > [22m[2mT-E19-12b @E19 @E19-AC12 a group of 10 chasing from one start strings out: arrivals spread >= 2.0 s, deterministic per seed
+[22m[39m[AC12b] seed 5 arrival spread 3.08 s
+
+[90mstdout[2m | tests/sim/ai/l1-perception.test.ts[2m > [22m[2mL1 v2 infected perception[2m > [22m[2mT-E19-perf @E19 @E18-AC02 @perf 200 L1 infected with 40 humans: Node sim p95 <= 4 ms
+[22m[39m[perf] 200 L1 infected p50 1.19 ms p95 1.51 ms max 2.68 ms; modes {"chase":144,"attracted":24,"search":18,"wander":6,"bite":8}; bites 16
+
+[90mstdout[2m | tests/sim/ai/l1-perception.test.ts[2m > [22m[2mL1 v2 infected perception[2m > [22m[2mT-E19-perf @E19 @E18-AC02 @perf 200 L1 infected with 40 humans: Node sim p95 <= 4 ms
+[22m[39m[perf] E18 reference p95 2.07 ms
+
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/ai/l1-perception.test.ts [2m([22m[2m15 tests[22m[2m)[22m[33m 10685[2mms[22m[39m
+   [32m✓[39m L1 v2 infected perception [2m(15)[22m
+     [33m[2m✓[22m[39m T-E19-08b @E19 @E19-AC08 detection beyond 2 m follows sight; footsteps, attacks and the bicycle create no perception events[33m 462[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-10 @E19 @E19-AC10 search 10-18 s, probe points, double-back, then wander[33m 2169[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-10c @E19 @E19-AC10 real survivor input: break line of sight behind a house, the chaser searches (no hearing, no omniscience)[33m 554[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-yard @E19 @E19-AC10 PO-QA #12: an infected in a fenced yard paths out through the gap, or gives up instead of pressing on the fence[33m 673[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-11 @E19 @E19-AC11 car alarm attracts non-chasing infected within 30 m; 20 s, then search and wander[33m 3007[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-12b @E19 @E19-AC12 a group of 10 chasing from one start strings out: arrivals spread >= 2.0 s, deterministic per seed[33m 764[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-perf @E19 @E18-AC02 @perf 200 L1 infected with 40 humans: Node sim p95 <= 4 ms[33m 1861[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/weapons.test.ts [2m([22m[2m73 tests[22m[2m)[22m[33m 2021[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E06-03 @E06 @E06-AC03 close shotgun / distant SMG role differentiation and heavy ranges[33m 564[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E06-perf @E06 @perf sustained weapons, fire and 200 reactive infected stay below 4ms sim p95[33m 799[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/weather.test.ts [2m([22m[2m15 tests[22m[2m)[22m[33m 37086[2mms[22m[39m
+   [33m[2m✓[22m[39m live weather L1 @E28 seeded continuous authored blend[33m 320[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E28-08 @E28 @E28-AC08 every override preserves all registered mission graph walks[33m 36165[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/world/chunk-residency.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 37858[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-13-S4-high @E31-AC12 @E31-AC13 @E31-AC14 revisit preserves HP, corpse/pickup IDs and remaining timers[33m 3270[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-12-S4-high @E31-AC12 @E31-AC13 predictive support remains loaded on forward/reverse seams[33m 3132[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-13-S4-low @E31-AC12 @E31-AC13 @E31-AC14 revisit preserves HP, corpse/pickup IDs and remaining timers[33m 3478[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-12-S4-low @E31-AC12 @E31-AC13 predictive support remains loaded on forward/reverse seams[33m 3447[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-28-S4 @E31-AC13 @E32-AC10 @E32-AC28 Mega crosses coarse/detailed residency without >0.5 m tick jumps[33m 3069[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95[33m 4554[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-19-S4-100 @E31-AC19 @E18-AC02 resident crossing horde sim p95[33m 4579[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-12-colliders-S4 @E31-AC12 @E31-AC13 seam-spanning collider is shared, unloaded and restored with nav[33m 1606[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-19-quality-S4 @E31-AC12 @E31-AC13 @E31-AC19 low cap serializes excess brains and high restores the same IDs/HP[33m 1870[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-14-clock-S4 @E31-AC13 @E31-AC14 inactive recovery survives loading into a fresh tick-zero world[33m 6182[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-13-prop-S4 @E31-AC12 @E31-AC13 inactive movable prop releases its body and restores pose, HP and ID[33m 2667[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/vehicles/consequences.test.ts [2m([22m[2m13 tests[22m[2m)[22m[33m 941[2mms[22m[39m
+[90mstdout[2m | tests/sim/ai/director.test.ts[2m > [22m[2mT-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget
+[22m[39m{"scenario":"horde-arena","infected":200,"simMsP95":2.6166659999871626,"budget":4}
+
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/ai/director.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 63676[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-09 @E07 @E07-AC09 150-infected stream follows spline on time and fans out[33m 1059[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-10 @E07 @E07-AC10 five-minute spawn/kill cycle reuses prewarmed entity objects[33m 60943[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget[33m 1284[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/player.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 2586[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E04-02 @E04 @E04-AC02 200-direction capsule sweep never penetrates the static wall ring over 0.02m[33m 2117[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/levels/l10-assault.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 52602[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets[33m 13679[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-21-E3-low @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets[33m 12449[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-21-E3-overlap-high @E32-AC06 @E32-AC21 full cap defers assault, dead bodies survive replenishment and revisit[33m 10108[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-21-E3-overlap-low @E32-AC06 @E32-AC21 full cap defers assault, dead bodies survive replenishment and revisit[33m 9073[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-10-E3 @E32-AC10 production composition introduces one reserved pursuer behind R1[33m 7290[2mms[22m[39m
+[90mstdout[2m | tests/sim/npc/campaign.test.ts[2m > [22m[2mT-E08-11-high @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity
+[22m[39m{"level":"L1","tier":"high","simMsP95":1.646112999995239,"budget":4}
+{"level":"L2","tier":"high","simMsP95":1.3287060000002384,"budget":4}
+{"level":"L3","tier":"high","simMsP95":1.0166089999838732,"budget":4}
+{"level":"L4","tier":"high","simMsP95":0.505418999993708,"budget":4}
+{"level":"L5","tier":"high","simMsP95":0.41771400001016445,"budget":4}
+
+[90mstdout[2m | tests/sim/npc/campaign.test.ts[2m > [22m[2mT-E08-11-low @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity
+[22m[39m{"level":"L1","tier":"low","simMsP95":1.2302710000076331,"budget":6}
+{"level":"L2","tier":"low","simMsP95":1.1507320000091568,"budget":6}
+{"level":"L3","tier":"low","simMsP95":0.9822159999748692,"budget":6}
+{"level":"L4","tier":"low","simMsP95":0.38562400004593655,"budget":6}
+{"level":"L5","tier":"low","simMsP95":0.4015639999997802,"budget":6}
+
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/npc/campaign.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 87043[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 campaign steering mask preserves polygon edges, offsets, winding and irregular bounds[33m 938[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E08-11-high @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity[33m 45553[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E08-11-low @E08 @E08-AC11 @E08-AC17 L1-L5 first three-minute objective-patrol runs: density and immunity[33m 39589[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E08-17 @E08 @E08-AC17 100 seeds use data pet probability and 2–4s down before dog rise[33m 942[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/levels/l10-district.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 50260[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-03-D1-D2-high @E32-AC02 @E32-AC05 @E32-AC03 @E32-AC27 @E32-AC28 route through R1–R4 acquires the ordered arsenal and retains ground/nav/checkpoint support[33m 23381[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-03-D1-D2-low @E32-AC02 @E32-AC05 @E32-AC03 @E32-AC27 @E32-AC28 route through R1–R4 acquires the ordered arsenal and retains ground/nav/checkpoint support[33m 18636[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-28-D1 @E32-AC10 @E32-AC28 authored pursuit crosses the R1/R2 seam using shared residency[33m 8240[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/interact/integration.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 730[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E11-perf @E11 @perf 100 infected and 200 flammable props stay below 6ms sim p95; debris remains <=32[33m 389[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/combat/balance.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 6669[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E05-14 T-E06-10 @E05 @E05-AC14 @E06 @E06-AC10 measure every reference weapon × archetype TTK in authored bands[33m 6277[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/level-fixtures.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 2184[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18-AC01 perf-l5-aftermath high prepared=false retains campaign cast and measures the exact stress population[33m 689[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18-AC01 perf-l5-aftermath high prepared=true retains campaign cast and measures the exact stress population[33m 352[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18-AC01 perf-l5-aftermath low prepared=true retains campaign cast and measures the exact stress population[33m 339[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/alpha-support.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 2324[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms[33m 1629[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-06-support-perf-100 @E18-AC02 @perf live Alpha support moves stay within 6ms[33m 693[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/l10-finale.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 9624[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-20-perf-200 @E32-AC20 @E32-AC31 @E18-AC02 full-cap active dispersal predicate[33m 6644[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-20-perf-100 @E32-AC20 @E32-AC31 @E18-AC02 full-cap active dispersal predicate[33m 2979[2mms[22m[39m
+ [31m❯[39m [30m[45m timing [49m[39m tests/sim/performance/zoo-s1.test.ts [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 3157[2mms[22m[39m
+[31m   [31m×[31m T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms[39m[33m 2200[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11-zoo-s1-100 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 6ms[33m 955[2mms[22m[39m
+ [31m❯[39m [30m[45m timing [49m[39m tests/sim/performance/alpha.test.ts [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 2408[2mms[22m[39m
+[31m   [31m×[31m T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms[39m[33m 1776[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11-alpha-100 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 6ms[33m 629[2mms[22m[39m
+ [31m❯[39m [30m[45m timing [49m[39m tests/sim/performance/alpha-physical.test.ts [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 2598[2mms[22m[39m
+[31m   [31m×[31m T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms[39m[33m 1912[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11-alpha-physical-100 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 6ms[33m 683[2mms[22m[39m
+ [31m❯[39m [30m[45m timing [49m[39m tests/sim/performance/zoo-s2.test.ts [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 3552[2mms[22m[39m
+[31m   [31m×[31m T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms[39m[33m 2592[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11-zoo-s2-100 @E07-AC11 @E18-AC02 mixed zoo specials stay within 6ms[33m 958[2mms[22m[39m
+ [31m❯[39m [30m[45m timing [49m[39m tests/sim/performance/zoo-s3.test.ts [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 2499[2mms[22m[39m
+[31m   [31m×[31m T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms[39m[33m 1862[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11-zoo-s3-100 @E07-AC11 @E18-AC02 mixed zoo specials stay within 6ms[33m 636[2mms[22m[39m
+ [31m❯[39m [30m[45m timing [49m[39m tests/sim/performance/mega-moves.test.ts [2m([22m[2m2 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 3320[2mms[22m[39m
+[31m   [31m×[31m T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18[39m[33m 2396[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-11-perf-100 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18[33m 922[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/horde.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 1936[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E18-02-200 @E18-AC02 @perf Node sim p95 200 living infected <= 4ms[33m 1313[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E18-02-100 @E18-AC02 @perf Node sim p95 100 living infected <= 6ms[33m 605[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/mega-audio.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 5380[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-13-perf-200 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling[33m 3789[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-13-perf-100 @E32-AC13 @E18-AC02 full horde and off-region audio scheduling[33m 1589[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/missions/perf.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 521[2mms[22m[39m
+   [33m[2m✓[22m[39m @E12 mission-sandbox fixed-step p95 stays within the 4ms high-tier sim budget[33m 520[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/levels/l10-arrival.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 58398[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-21-E3b @E32-AC21 seed-32 rocket checkpoint route arrival high[33m 38422[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-21-E3b @E32-AC21 seed-32 rocket checkpoint route arrival low[33m 19973[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/unit/progression/perf.test.ts [2m([22m[2m1 test[22m[2m)[22m[32m 253[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/l6-fixture.test.ts [2m([22m[2m1 test[22m[2m)[22m[33m 1975[2mms[22m[39m
+   [33m[2m✓[22m[39m E18 mobile L6 probe uses current shelter geometry and retains 100 admitted infected[33m 1972[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/world/solid-admission.test.ts [2m([22m[2m41 tests[22m[2m)[22m[33m 7538[2mms[22m[39m
+   [33m[2m✓[22m[39m a fully reserved moving component needs no further rollback scans[33m 306[2mms[22m[39m
+   [33m[2m✓[22m[39m checkpoint restore discards a deferred player mask from the discarded timeline[33m 2866[2mms[22m[39m
+   [33m[2m✓[22m[39m a checkpoint containing a deferred player restores the inactive collider until admission[33m 2517[2mms[22m[39m
+   [33m[2m✓[22m[39m the legacy L4 seated courier exempts only its explicit convoy bus[33m 828[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/levels/L5.test.ts [2m([22m[2m15 tests[22m[2m)[22m[33m 371889[2mms[22m[39m
+   [32m✓[39m L5 Aftermath [2m(15)[22m
+     [33m[2m✓[22m[39m T-E23-01 @E23 @E23-AC01 mission graph emerge -> look -> metro is completable for every find order, with no fail timer and no fail on a survivor's death[33m 18267[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E23-02 @E23 @E23-AC02 the complete bot finishes a single seed from L5-default without cheats, in the time band, rescuing at least 4[33m 27752[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E23-03 @E23 @E23-AC03 the newbie bot finishes a single seed with at most one death, rescuing at least 3[33m 36317[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E23-04 @E23 @E23-AC04 the opening is empty: no allied fighter, no living civilian but the five survivors (hidden) and the lookout, no helicopter or moving vehicle, no gunfire but the courier's; 12-20 infected in ones and twos[33m 17763[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E23-07 @E23 @E23-AC07 sparse and never omniscient: no director spawn or emergence, at most 30 at once, sight-only alerts; a machine-gun burst pulls non-chasing infected within 30 m to the shot[33m 26780[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E23-08 @E23 @E23-AC08 signs of life: a positional cue with a subtitle within 25 m of each hiding place, none beyond 30 m; no objective marker ever points at a survivor[33m 8763[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E23-09 @E23 @E23-AC09 the group grows and follows: stand-to-interact 1.0 s, the counter steps 0 to 5, followers within 8 m, no jump above 1 m per tick, slower than the courier's run[33m 28755[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E23-10 @E23 @E23-AC10 protection matters: an infected that reaches an unprotected survivor grabs and bites within 1.5 s, a hit during the grab saves them, a bitten survivor turns in 2.5-3.5 s as the same person[33m 68561[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E23-11 @E23 @E23-AC11 losses do not stop the level: killing 1, 3 or all 5 survivors at random points still lets the complete bot finish; the result reports the rescued count[33m 50109[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E23-12 @E23 @E23-AC12 optional basement shotgun auto-equips and retains the L4 arsenal[33m 857[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E23-16-shotgun @E23 @E23-AC16 checkpoint restores owned shotgun or available pickup without duplication[33m 863[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E23-13 @E23 @E23-AC13 sunset and gloom: the sun intensity falls monotonically over the level and is at least 30 % lower at the Metro than at the basement exit[33m 22790[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E23-15 @E23 @E23-AC15 every living follower crosses before visible closure; the grace period regroups stragglers; occupants persist[33m 4018[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E23-16 @E23 @E23-AC16 checkpoints: dying right after outside and each survivor-n restores the snapshot (followers, lost survivors stay lost, infected)[33m 22426[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E23-bots @E23 the idle bot unbars the door and waits (the level never fails, nobody dies of the level); the low tier finishes too[33m 37865[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/skin-pilot.test.ts [2m([22m[2m18 tests[22m[2m)[22m[33m 7526[2mms[22m[39m
+   [33m[2m✓[22m[39m courier female walks and runs on world-locked feet with a readable knee arc @E04[33m 835[2mms[22m[39m
+   [33m[2m✓[22m[39m courier male walks and runs on world-locked feet with a readable knee arc @E04[33m 480[2mms[22m[39m
+   [33m[2m✓[22m[39m courier female turns with steps instead of pivoting or skating @E04[33m 682[2mms[22m[39m
+   [33m[2m✓[22m[39m courier male turns with steps instead of pivoting or skating @E04[33m 636[2mms[22m[39m
+   [33m[2m✓[22m[39m skin rollout female hands and soles follow bike sockets under heading, lean, steering and crank rotation @E04[33m 441[2mms[22m[39m
+   [33m[2m✓[22m[39m skin rollout male hands and soles follow bike sockets under heading, lean, steering and crank rotation @E04[33m 371[2mms[22m[39m
+   [33m[2m✓[22m[39m courier female mount and dismount preserve the last presented position across the sim seat/exit snap @E04[33m 385[2mms[22m[39m
+   [33m[2m✓[22m[39m courier female chest and head stay over the hips through idle, gait, start, stop and 90/180 turns @E04[33m 1407[2mms[22m[39m
+   [33m[2m✓[22m[39m courier male chest and head stay over the hips through idle, gait, start, stop and 90/180 turns @E04[33m 1156[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/levels/L3-follow.test.ts [2m([22m[2m28 tests[22m[2m)[22m[33m 232189[2mms[22m[39m
+   [32m✓[39m L3 squad and checkpoint [2m(28)[22m
+     [33m[2m✓[22m[39m @E21 retry relief also covers a street segment first populated after the respawn[33m 7323[2mms[22m[39m
+     [33m[2m✓[22m[39m @E21 a distant failed encounter keeps retry pursuit relief until the courier approaches, retaining every actor[33m 3038[2mms[22m[39m
+     [33m[2m✓[22m[39m @E21 a returning body keeps its timer and the L3 pursuit delay when it gets up after respawn[33m 4819[2mms[22m[39m
+     [33m[2m✓[22m[39m @E21 second-retry relief thins the living crowd while retaining each downed body and recovery slot[33m 2906[2mms[22m[39m
+     [33m[2m✓[22m[39m @E21 @E21-AC17 fatal bites at the infected cap retain a dead officer without blocking rescue or allied fire[33m 3038[2mms[22m[39m
+     [33m[2m✓[22m[39m @E21 @E21-AC17 HMG post can fire down the approach and into the resting compound[33m 3125[2mms[22m[39m
+     [33m[2m✓[22m[39m @E21 @E21-AC17 rescued officers at the compound edge stay inside after boom closure[33m 29328[2mms[22m[39m
+     [33m[2m✓[22m[39m @E21 army compound is walkable before the rendezvous and does not finish while the courier rests[33m 5083[2mms[22m[39m
+     [33m[2m✓[22m[39m @E21 @E21-AC17 arrival finishes with stalled officer[33m 41551[2mms[22m[39m
+     [33m[2m✓[22m[39m @E21 @E21-AC17 arrival finishes with dead officer[33m 22960[2mms[22m[39m
+     [33m[2m✓[22m[39m @E21 @E21-AC17 arrival finishes with turning officer[33m 22301[2mms[22m[39m
+     [33m[2m✓[22m[39m @E21 @E21-AC17 arrival finishes with occupied boom[33m 23509[2mms[22m[39m
+     [33m[2m✓[22m[39m closed checkpoint boom stops a walking courier and shared NPC navigation; opening restores the lane[33m 3362[2mms[22m[39m
+     [33m[2m✓[22m[39m fallback recruits every living human officer, including the yard posts[33m 3043[2mms[22m[39m
+     [33m[2m✓[22m[39m @E21 the Boulevard wreck passing line collects its existing sidewalk medkits[33m 4681[2mms[22m[39m
+     [33m[2m✓[22m[39m @E21 the first Boulevard turn medkit is collected on the walking line[33m 3916[2mms[22m[39m
+     [33m[2m✓[22m[39m @E21 the Boulevard corner medkit is collected on the walking line[33m 3194[2mms[22m[39m
+     [33m[2m✓[22m[39m @E21 the last street turn medkit is collected on the walking line[33m 3073[2mms[22m[39m
+     [33m[2m✓[22m[39m @E21 the bus passing-line end medkit is collected on the walking line[33m 3149[2mms[22m[39m
+     [33m[2m✓[22m[39m @E21 the entry ramp medkit is collected on the walking line[33m 4251[2mms[22m[39m
+     [33m[2m✓[22m[39m @E21 the upper ramp medkit is collected on the walking line[33m 2786[2mms[22m[39m
+     [33m[2m✓[22m[39m @E21 the exit ramp medkit is collected on the walking line[33m 3127[2mms[22m[39m
+     [33m[2m✓[22m[39m all three routes have sidewalk med packs within 40 m and reachable from the street[33m 2951[2mms[22m[39m
+     [33m[2m✓[22m[39m boom waits for the last living officer; a dead officer cannot prevent closure[33m 2734[2mms[22m[39m
+     [33m[2m✓[22m[39m living officers regroup on commerce instead of being marked separated[33m 6843[2mms[22m[39m
+     [33m[2m✓[22m[39m living officers regroup on blvd instead of being marked separated[33m 9943[2mms[22m[39m
+     [33m[2m✓[22m[39m living officers regroup on oak instead of being marked separated[33m 6129[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/l1-toys.test.ts [2m([22m[2m19 tests[22m[2m)[22m[33m 12922[2mms[22m[39m
+   [32m✓[39m L1 v2 bicycle [2m(8)[22m
+     [33m[2m✓[22m[39m T-E19-16a @E19 @E19-AC16 mount by interact, 7.5 m/s above every infected tier, dismount keeps the bicycle in place[33m 1935[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-16f @E19 @E19-AC16 mounting beside the parked bike steps onto the apron; a stopped rider can pull away from a wall[33m 1379[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-16g @E19 @E19-AC16 arriving at the depot parks on clear ground and permits remount after the parcel hand-over[33m 876[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-16b @E19 @E19-AC16 stand still next to it for 0.4 s to mount; attacks are disabled while riding[33m 384[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-16c @E19 @E19-AC16 riding into the facility forecourt auto-dismounts at the edge; no mounting inside[33m 540[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-16d @E19 @E19-AC16 an infected touching the rider stops the bicycle and dismounts, with zero damage[33m 512[2mms[22m[39m
+   [32m✓[39m L1 v2 toys [2m(5)[22m
+     [33m[2m✓[22m[39m T-E19-20a @E19 @E19-AC20 a closed yard gate blocks movement and sight, an open one does not[33m 516[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-20b @E19 @E19-AC20 dumpster push slides it along its rail and then closes the passage for movement, not sight[33m 422[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-20c @E19 @E19-AC11 @E19-AC20 car alarm: 20 s, DistractionEvent, re-arms after 30 s[33m 2222[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-20d @E19 @E19-AC20 car wash curtain blocks sight for 15 s and slows infected inside the bay to 50 %[33m 1331[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-20e @E19 @E19-AC20 toys are optional: the level boots without touching any[33m 419[2mms[22m[39m
+   [32m✓[39m L1 v2 corgi [2m(6)[22m
+     [33m[2m✓[22m[39m T-E19-17a @E19 @E19-AC17 never damaged, no courage loss, not a target of the infected[33m 524[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-17b @E19 @E19-AC17 warning ladder: stiffen at 20 m, growl at 14 m, bark at 9 m (1 per 2 s), then nervous 6 s[33m 585[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-17c @E19 @E19-AC17 the corgi keeps up with the bicycle (speed cap 7.5 m/s while riding)[33m 373[2mms[22m[39m
+     [33m[2m✓[22m[39m the moving corgi faces its travel direction (no crab-walk) even with an off-screen threat to the side[33m 443[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/levels/L1.test.ts [2m([22m[2m19 tests[22m[2m)[22m[33m 1208083[2mms[22m[39m
+   [32m✓[39m L1 v2 mission [2m(19)[22m
+     [33m[2m✓[22m[39m T-E19-01 @E19 @E19-AC01 mission graph is completable, no fail timer[33m 846[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-02 @E19 @E19-AC02 complete bot finishes single seed, median 1:15-3:00[33m 42729[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-03 @E19 @E19-AC03 newbie bot finishes single seed, median 1:30-3:30, deaths <= 1[33m 42648[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-10 @E19 the weapon objective and its garage-door marker are live right after the exits, zombies keep acting[33m 26867[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-evade @E19 @E19-AC03 evade-only bot never attacks and still finishes[33m 94703[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-06 @E19 @E19-AC06 systemic spread, unopposed observer=false[33m 91981[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-06 @E19 @E19-AC06 systemic spread, unopposed observer=true[33m 95006[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-07 @E19 @E19-AC07 accident releases exactly 5 infected, >= 3 headings, technician entity[33m 23512[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-07b @E19 @E19-AC07 robust start: each of the five exit victims leaves a bite within 60 s on single seed[33m 119751[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-15 @E19 @E19-AC15 bat only via the garage interaction, empty starting loadout[33m 32812[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-05b @E19 grace: a newbie standing still at the door keeps >= 60 HP for 8 s after the infected exit[33m 151543[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-respawn @E19 death at the door after the exits respawns on the checkpoint anchor with 2 s invulnerability and no infected within 9 m[33m 74667[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-house @E19 @E19-AC25 beat 9: ten residents come out of ONE house front door near the garage, one by one, 1.5-4 s apart[33m 43938[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-provenance @E19 PO 10-10: infected provenance is lab exits, house residents, authored street groups or bitten pedestrians[33m 124834[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-05 @E19 fair accident: the blast pushes a player at the door back, front-door infected wait 2.5 s, staff are varied[33m 19277[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-19 @E19 @E19-AC19 accident beat order flicker -> blast -> ringing -> smoke -> screams within 8 s after a 4-6 s calm[33m 125082[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-respawn-world @E19 PO rule: a death after the bat keeps the world (corpses, infected, pedestrians, props, objectives, bat)[33m 48379[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-end @E19 fire station: shutter closes, caption, result fields (delivered, infected, turned, escaped)[33m 44287[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-14 @E19 @E19-AC14 duel bot harness: 1 infected is beatable, 5 unarmed are lethal once lane G tuning lands[33m 5220[2mms[22m[39m
+[90mstdout[2m | tests/sim/barricades.test.ts[2m > [22m[2mT-E26-14 @E26 @E26-AC14 complete bot fills/braces two slots and defense reduces core arrivals >=40%
+[22m[39m{"barricadeAB":[{"seed":1,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":2,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":3,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":4,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":5,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":6,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":7,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":8,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":9,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100},{"seed":10,"braced":2,"withBarricades":0,"withoutBarricades":8,"hp":100}]}
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/barricades.test.ts [2m([22m[2m22 tests[22m[2m)[22m[33m 15857[2mms[22m[39m
+   [33m[2m✓[22m[39m destructible cover marked non-buildable cannot auto-brace, repair or rebuild[33m 342[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E26-15 @E26 @E26-AC15 60s push/kick/explosion tape has identical repeat state hashes[33m 2836[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E26-14 @E26 @E26-AC14 complete bot fills/braces two slots and defense reduces core arrivals >=40%[33m 11670[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/l5-static.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 721[2mms[22m[39m
+   [32m✓[39m L5 static [2m(9)[22m
+     [33m[2m✓[22m[39m T-E23-05a @E23 @E23-AC05 same city: every L4 placement keeps its transform, the road graph is identical and every hero building footprint has IoU >= 0.9 with L4[33m 333[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/static-corpses.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 1437[2mms[22m[39m
+   [33m[2m✓[22m[39m static corpse pages grow beyond the old population cap and survive camera movement @E07[33m 366[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/authored-animation.test.ts [2m([22m[2m17 tests[22m[2m)[22m[33m 8841[2mms[22m[39m
+   [33m[2m✓[22m[39m M1-25 @E04 grounded locomotion retains support across survivor and civilian rigs (source)[33m 2863[2mms[22m[39m
+   [33m[2m✓[22m[39m M1-25 @E04 grounded locomotion retains support across survivor and civilian rigs (production)[33m 2586[2mms[22m[39m
+   [33m[2m✓[22m[39m M1-23 @E19 infection collapse and rise share a low pose, then rise into infected posture[33m 383[2mms[22m[39m
+   [33m[2m✓[22m[39m VQA-13 @E19 settled infected death poses contact the floor across delivered rigs[33m 1915[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/l3-static.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 8812[2mms[22m[39m
+   [32m✓[39m L3 static [2m(6)[22m
+     [33m[2m✓[22m[39m T-E21-11a @E21 @E21-AC11 corridor layout: valid, 280-340 m, three parallel streets, >= 6 cross-links <= 60 m apart[33m 2929[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E21-11b @E21 @E21-AC11 sight blockers every <= 25 m on every street, no dead end longer than 30 m, edges sealed by visible geometry[33m 5781[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/combat/combat.test.ts [2m([22m[2m19 tests[22m[2m)[22m[33m 822[2mms[22m[39m
+[90mstdout[2m | tests/sim/ai/mega-pursuit.test.ts[2m > [22m[2mT-E32-10a @E32-AC10 cruise is 0.7 × the nominal run (±2%): a running player stays ahead, the gap grows ~1.35 m/s
+[22m[39m[mega-cruise] speed 3.150 m/s (target 3.150), player 134.8 m; distance by second 5s:67.66 10s:74.41 15s:81.16 20s:87.91 25s:94.66 30s:101.41
+
+[90mstdout[2m | tests/sim/ai/mega-pursuit.test.ts[2m > [22m[2mT-E32-10b @E32-AC10 no sight, hearing or lure: it closes on a player hidden behind a wall, through a lure and smoke, and attacks
+[22m[39m[mega-hidden] distance every 5 s 70 55.9 41.3 27.8 13.7 4 1.4 1.3; first telegraph at 20.6 s
+
+[90mstdout[2m | tests/sim/ai/mega-pursuit.test.ts[2m > [22m[2mT-E32-10c @E32-AC10 a player who stops is always caught: arrival time matches route length / cruise
+[22m[39m[mega-catch] reached 12 m at 45 s (ideal 43.8 s)
+
+[90mstdout[2m | tests/sim/ai/mega-pursuit.test.ts[2m > [22m[2mT-E32-10d @E32-AC10 obstacle recovery: a U-trap opening away from the player and a door closing on its path never trap it
+[22m[39m[mega-trap] 1s:43.72m/detailed 5s:53.77m/detailed 3s:44.78m/detailed 7s:37.14m/detailed 11s:32.73m/detailed 15s:32.18m/detailed 19s:20.1m/detailed 23s:7.52m/close 27s:4m/close 31s:1.39m/close 35s:1.28m/close 39s:1.28m/close 43s:1.28m/close 47s:1.28m/close
+
+[90mstdout[2m | tests/sim/ai/mega-pursuit.test.ts[2m > [22m[2mT-E32-10f @E32-AC10 off-region: coarse per-tick advance at cruise × sim-time (2 Hz route planning) along authored nodes, counts against the cap, keeps HP, detailed on entry
+[22m[39m[mega-coarse] coarse 31 s at 3.150 m/s, detailed from 32 s at x -99.2; 10s:-168.5/coarse 20s:-137/coarse 30s:-105.5/coarse 40s:-74/detailed 50s:-42.5/detailed 60s:-12/close 70s:-1.3/close 80s:-1.3/close
+
+[90mstdout[2m | tests/sim/ai/mega-pursuit.test.ts[2m > [22m[2mT-E32-10g @E32-AC10 an authored blocked street takes the detour; with no alternate it breaches after breachS (no border stop)
+[22m[39m[mega-breach] breach 240 ticks, final x 0.0
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/ai/mega-pursuit.test.ts [2m([22m[2m13 tests[22m[2m)[22m[33m 7201[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-10a @E32-AC10 cruise is 0.7 × the nominal run (±2%): a running player stays ahead, the gap grows ~1.35 m/s[33m 980[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-10b @E32-AC10 no sight, hearing or lure: it closes on a player hidden behind a wall, through a lure and smoke, and attacks[33m 839[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-10c @E32-AC10 a player who stops is always caught: arrival time matches route length / cruise[33m 633[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-10d @E32-AC10 obstacle recovery: a U-trap opening away from the player and a door closing on its path never trap it[33m 710[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-10e @E32-AC10 a sealed pocket escalates replan → alternate → Alpha breach brain and keeps cycling (never a permanent stop)[33m 564[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-10f @E32-AC10 off-region: coarse per-tick advance at cruise × sim-time (2 Hz route planning) along authored nodes, counts against the cap, keeps HP, detailed on entry[33m 742[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-10g @E32-AC10 an authored blocked street takes the detour; with no alternate it breaches after breachS (no border stop)[33m 746[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-10h @E32-AC10 introduced once by 2:00, ≥ 80 m behind along the route; introduce() is idempotent[33m 522[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-10i @E32-AC10 checkpoint restore: same id, HP, route state and cooldown timers; ≥ respawnGapM from the player; a kill stays a kill[33m 1099[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/levels/L2.test.ts [2m([22m[2m16 tests[22m[2m)[22m[33m 793551[2mms[22m[39m
+   [32m✓[39m L2 The Failed Rescue [2m(16)[22m
+     [33m[2m✓[22m[39m T-E20-01 @E20 @E20-AC01 mission graph calm -> board -> doors -> bridge checkpoint is completable, no fail timer[33m 3173[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E20-02 @E20 @E20-AC02 complete bot finishes single seed from L2-default, median time in band[33m 73910[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E20-03 @E20 @E20-AC03 newbie single seed, median in band, median deaths <= 1; bat escape single seed[33m 113501[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E20-05 @E20 @E20-AC05 ride: passenger boarding, 15-25 s route with everyone seated, input inert, exits and control back on time[33m 7975[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E20-07 @E20 @E20-AC07 snowball: idle courier (observer, no damage), rescue infected >= 20 at +60 s and >= 30 at +120 s, all by bites[33m 78673[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E20-08 @E20 @E20-AC08 firefighters fight, turn with identity continuity, >= 2 turned by +90 s when idle, no immunity[33m 25746[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E20-09 @E20 @E20-AC09 lesson: the aggressive axe kills >= 10 yet the outbreak grows and the courier falls; the disengaging bot survives[33m 83764[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E20-12b @E20 @E20-AC12 layout: two disjoint routes (< 30 % shared), sight blockers every <= 25 m, alarms and dumpsters on the routes[33m 4111[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E20-13 @E20 @E20-AC13 cluster of 12-16 on the approach; complete passes killing <= 50 %; side path and car alarm each suffice[33m 58781[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E20-14 @E20 @E20-AC14 checkpoint: line composition, gate closes <= 1.5 s behind the courier, nothing crosses after, straight on to L3[33m 67330[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E20-21 @E20 rescued people never despawn: they flee for the checkpoint and end behind the line, at the gate, turned or down[33m 221369[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E20-17 @E20 @E20-AC17 checkpoints doors, escape and cluster restore entities, outbreak, crew, gates and weapons[33m 55214[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/missions/l7-encounters.test.ts [2m([22m[2m15 tests[22m[2m)[22m[33m 28969[2mms[22m[39m
+   [33m[2m✓[22m[39m L7 starts the courier on the authored raised night exit[33m 1487[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-08 @E29-AC08 high: all arrivals, five Alphas, safe emergence and strict caps[33m 1149[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-08 @E29-AC08 low: all arrivals, five Alphas, safe emergence and strict caps[33m 824[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-08-visible @E29-AC08 visible final emergence stays queued with both Alphas[33m 792[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-11-roster @E29-AC11 incoming ids, appearance and injury survive; health recovers; 0–35 followers use bounded motion[33m 4564[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-11-L6-result @E29-AC11 L6 serializes effective injury speed without mutating the escaped resident[33m 2085[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-11-stragglers @E29-AC11 cross-city followers use staggered partial routes and keep walking[33m 1497[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-11-loss @E29-AC11 combat losses are logged without deleting the roster[33m 918[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-12 @E29-AC12 rocket opening is traversed by a living follower while street infected remain[33m 4498[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-16-encounters @E29-AC16 checkpoint seam retains queues, Alpha requests, identities and passage state[33m 1173[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-11-zero @E29-AC11 zero living survivors can reach passage without a kill-all requirement[33m 1116[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-19-dying @E29-AC19 high: rocket death animations retain active-pool slots[33m 2281[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-19-dying @E29-AC19 low: rocket death animations retain active-pool slots[33m 1835[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-08-turning @E29-AC08 pending survivor transformations reserve a slot before queued arrivals[33m 2730[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-20-armed-roster @E31-AC20 @E29-AC11 carried armed shelter resident follows the L7 group instead of holding an old post[33m 2014[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/levels/L5-encounters.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 11997[2mms[22m[39m
+   [33m[2m✓[22m[39m @E23 @E23-AC04 @E23-AC15 @E23-AC16 station identities/state survive checkpoint and L6 handover, high[33m 1907[2mms[22m[39m
+   [33m[2m✓[22m[39m @E23 @E23-AC04 @E23-AC15 @E23-AC16 station identities/state survive checkpoint and L6 handover, low[33m 1086[2mms[22m[39m
+   [33m[2m✓[22m[39m @E23 @E23-AC01 L5 retains the carried racks instead of replacing them with its fallback arsenal[33m 866[2mms[22m[39m
+   [33m[2m✓[22m[39m @E23 @E23-AC07 Alphas investigate nearby gunfire and acquire visible civilians without omniscience[33m 1140[2mms[22m[39m
+   [33m[2m✓[22m[39m @E23 @E23-AC04 Alphas stay in town away from the Metro and final escort leg, high[33m 822[2mms[22m[39m
+   [33m[2m✓[22m[39m @E23 @E23-AC04 Alphas stay in town away from the Metro and final escort leg, low[33m 645[2mms[22m[39m
+   [33m[2m✓[22m[39m @E23 @E23-AC15 nearby infected do not stall ingress; the descending shutter sweeps intruders out and blocks return[33m 1794[2mms[22m[39m
+   [33m[2m✓[22m[39m @E23 @E23-AC15 the five survivors cross the Metro opening from the real-input group photo[33m 1493[2mms[22m[39m
+   [33m[2m✓[22m[39m @E23 @E23-AC11 @E23-AC15 a survivor turning during shutter closure cannot corrupt the L6 save[33m 2236[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/pre-render.test.ts [2m([22m[2m17 tests[22m[2m)[22m[32m 201[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/levels/l5-po-1015.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 75938[2mms[22m[39m
+   [33m[2m✓[22m[39m PO #21 @E23 @E23-AC08 @E23-AC09 survivor-2 restore: walking to the sound reveals survivors 3, 4 and 5, then reaches the ending[33m 42151[2mms[22m[39m
+   [33m[2m✓[22m[39m PO #21 @E23 @E23-AC09 discovery is available from every reachable side within 2.5 m of each sound[33m 4927[2mms[22m[39m
+   [33m[2m✓[22m[39m PO #20b @E23 @E23-AC09 survivor-1 restore: Alpha at 15 m engages, follower reacts briefly and keeps following[33m 5669[2mms[22m[39m
+   [33m[2m✓[22m[39m PO #19c @E23 @E23-AC14 music follows the first find and survivor checkpoint restores, never elapsed time[33m 16879[2mms[22m[39m
+   [33m[2m✓[22m[39m PO #18 @E23 @E23-AC16 every L5 safe-space exit returns to its entry door, faces out and rejects occupied exit spots[33m 601[2mms[22m[39m
+   [33m[2m✓[22m[39m PO #18 @E23 L4 records the doorway actually entered and carries it into L5[33m 1623[2mms[22m[39m
+   [33m[2m✓[22m[39m PO #20b @E23 @E23-AC07 a visible player at 15 m is acquired beyond the former Alpha territory[33m 4086[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/layouts/d-grove.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 1176[2mms[22m[39m
+   [32m✓[39m D-GROVE layout [2m(11)[22m
+     [33m[2m✓[22m[39m T-E19-04 @E19 @E19-AC04 no overlapping solid props (colliders, 0.15 m tolerance)[33m 487[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-04 @E19 @E19-AC04 no footprint overlaps between buildings, vehicles, props and tree trunks (asset QA P1-P9)[33m 550[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/courier-bike.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 12594[2mms[22m[39m
+   [33m[2m✓[22m[39m @regression courier bike tyres touch the drawn D-GROVE road, paving, kerbs and road paint (-0.5..+1 cm)[33m 12278[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/l4-static.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 8325[2mms[22m[39m
+   [32m✓[39m L4 static [2m(11)[22m
+     [33m[2m✓[22m[39m T-E22-13-district @E22 @E22-AC12 @E22-AC13 breakable-line anchors match existing sandbags; each pallet can open a clear crossing without moving other dressing[33m 705[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-04b @E22 @E22-AC04 convoy vehicles never overlap each other, and never touch a static collider (any height), over the whole scripted ride and when parked[33m 6769[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/missions/l10-cure-front.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 12772[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-23-S8 @E32-AC23 explicit expanding front kills every infected species, downed and remaining Mega; no recovery or conversion[33m 1053[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-24-unloaded-S8 @E32-AC24 sleeping infected die in snapshots and survive five revisits without loading regions[33m 11343[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/telemetry/functions.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 734[2mms[22m[39m
+   [32m✓[39m POST /api/t [2m(4)[22m
+     [33m[2m✓[22m[39m enforces per-session event and request quotas and per-player session count[33m 449[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/ai/zoo-s2.test.ts [2m([22m[2m15 tests[22m[2m)[22m[33m 1195[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-19-gorilla-grab-throw-timing @E07-AC05 @E07-AC19 @E30-AC10 telegraph, pause, recovery and exact restored activation interval[33m 363[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/vehicles/apc-durability.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 1084[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-06 @E31-AC06 ten distinct contacts cost 100 at any speed, overlap is billed once[33m 374[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/missions/adapters.test.ts [2m([22m[2m13 tests[22m[2m)[22m[33m 7713[2mms[22m[39m
+   [33m[2m✓[22m[39m @E12 @L3-legacy a single 12-minute deadline; graph transitions do not reset it[33m 6851[2mms[22m[39m
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-03 @E17-AC03 join/quantize/meshopt preserve named parts and world pivots through roundtrip
+[22m[39mprune: Removed types... Accessor (1)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-03 @E17-AC03 join/quantize/meshopt preserve named parts and world pivots through roundtrip
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-03 @E17-AC03 join/quantize/meshopt preserve named parts and world pivots through roundtrip
+[22m[39mprune: Removed types... Accessor (3)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+[22m[39mprune: Removed types... Accessor (1)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+[22m[39mprune: Removed types... Mesh (1), Primitive (2), Accessor (4)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-03b @E17-AC03 static siblings join while their named assembly pivot stays fixed
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-02d @E17-AC02 optimization removes zero-area faces through compressed roundtrip
+[22m[39mprune: Removed types... Accessor (1)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-02d @E17-AC02 optimization removes zero-area faces through compressed roundtrip
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-02d @E17-AC02 optimization removes zero-area faces through compressed roundtrip
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-scale @E17-AC03 uniform scale preserves local joints and applies once
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-scale @E17-AC03 uniform scale preserves local joints and applies once
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-scale @E17-AC03 uniform scale preserves local joints and applies once
+[22m[39mprune: Removed types... Accessor (1)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-scale @E17-AC03 uniform scale preserves local joints and applies once
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-scale @E17-AC03 uniform scale preserves local joints and applies once
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side
+[22m[39mprune: Removed types... Accessor (95)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side
+[22m[39mprune: Removed types... Mesh (1), Primitive (4), Accessor (12)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side
+[22m[39mprune: Removed types... Accessor (389)
+
+[90mstdout[2m | tests/unit/assets/optimize.test.ts[2m > [22m[2mT-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side
+[22m[39mprune: Removed types... Mesh (49), Primitive (49), Accessor (513)
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/optimize.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 13550[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E17-caps @E17-AC11 exported caps survive compression and stay on the surviving joint side[33m 1145[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E17-height @E17-AC02 ordinary adults stay 1.75–1.85 m, Alpha stays 1.35–1.5x worker and elephant stays 3 m at every LOD[33m 6056[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E17-lanes @E17-AC02 road vehicle envelopes including mirrors fit district lanes at every LOD[33m 3430[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E17-aircraft @E17-AC02 helicopter preserves authored scale and rotor pivots at every LOD[33m 2525[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/missions/l7-departure.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 16878[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-15-bus @E29-AC15 departure emits positional cab engine updates and stops once before handover[33m 1852[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-13-board @E29-AC13 the complete living roster boards before the bus leaves; the bus moves >= 30 m in 6-10 s; L8 gets the exact roster[33m 3036[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-13-bite-loss @E29-AC13 fatal-bite bodies with positive HP never hold or board the bus[33m 1078[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-13-wait @E29-AC13 a straggler holds the bus; the player is never timed out[33m 2819[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-13-zero @E29-AC13 zero survivors: the courier boards alone; leaving the bus pauses boarding[33m 1116[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-13-bus-blocks @E29-AC13 the waiting bus blocks the player and navigation; the lane is free once it leaves[33m 1355[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-13-35 @E29-AC13 a full 35-person roster boards and every figure is accounted for[33m 3715[2mms[22m[39m
+   [33m[2m✓[22m[39m a finished civilian retains its identity as a loss and never holds the boarding roster[33m 868[2mms[22m[39m
+   [33m[2m✓[22m[39m the last queue follower walks around a courier standing across its boarding approach[33m 1029[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/mega-alpha-dog.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 4658[2mms[22m[39m
+   [33m[2m✓[22m[39m T-L10-mega-alpha-lod0 @L10 Mega Alpha stays inside its 16k/6k/2k caps, keeps the Alpha rig contract and bakes the shared clips[33m 1125[2mms[22m[39m
+   [33m[2m✓[22m[39m T-L10-mega-alpha-lod1 @L10 Mega Alpha stays inside its 16k/6k/2k caps, keeps the Alpha rig contract and bakes the shared clips[33m 510[2mms[22m[39m
+   [33m[2m✓[22m[39m T-L10-dog-assets-lod0 @L10 dogs: budgets, closed authored tiers, palette coats, shared quadruped contract and clips[33m 1487[2mms[22m[39m
+   [33m[2m✓[22m[39m T-L10-dog-assets-lod1 @L10 dogs: budgets, closed authored tiers, palette coats, shared quadruped contract and clips[33m 724[2mms[22m[39m
+   [33m[2m✓[22m[39m T-L10-dog-assets-lod2 @L10 dogs: budgets, closed authored tiers, palette coats, shared quadruped contract and clips[33m 556[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/performance/nav-visibility.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 655[2mms[22m[39m
+   [33m[2m✓[22m[39m @E20 navigation visibility keeps the original sample and slab decisions[33m 335[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/ai/zoo-s3.test.ts [2m([22m[2m15 tests[22m[2m)[22m[33m 798[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/missions/objectives.test.ts [2m([22m[2m30 tests[22m[2m)[22m[33m 4088[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E12-04 @E12 @E12-AC04 timeout at exactly 120s, retry restores timer, completing cancels timeout[33m 2138[2mms[22m[39m
+   [33m[2m✓[22m[39m @E12 @E12-AC04 a completed timed objective cannot fail while another parallel task continues[33m 1181[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/ai/navigation.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 2945[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-03 @E07 @E07-AC03 maze path covers 40 m without crossing static colliders in 15 s[33m 406[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-04 @E07 @E07-AC04 spatial separation keeps deep overlaps below 2 percent[33m 1559[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/ai/alpha.test.ts [2m([22m[2m30 tests[22m[2m)[22m[33m 1355[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/ai/alpha-support.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 1166[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-06-grab-throw @E07-AC05 @E07-AC06 @E07-AC14 locked 12m/s corpse flight, first human impact once, retained pose/id, 0.8s knockdown[33m 340[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/levels/L4-po-round.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 433999[2mms[22m[39m
+   [32m✓[39m L4 PO round 10-13 [2m(5)[22m
+     [33m[2m✓[22m[39m T-E22-po-1 @E22 @E22-AC04 the courier gets off the first bus inside the military area and cannot walk out before the line breaks[33m 50601[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-po-2 @E22 @E22-AC05 @E22-AC07 soldiers relaxed before the alarm and at their posts within 10 s of it; people in routines, then fleeing and hiding[33m 27984[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-civilians-stay-high @E22 @E22-AC07 pre-alarm camp civilians remain human and panic/hide; incoming infected are new entities[33m 151029[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-civilians-stay-low @E22 @E22-AC07 pre-alarm camp civilians remain human and panic/hide; incoming infected are new entities[33m 65911[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-po-3 @E22 @E22-AC10 @E22-AC12 infected come spread from all sides (and from inside the camp); six to eight Alphas reach the lines and nests; the beats hold[33m 138474[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/vehicles/apc.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 1282[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E30-13-apc @E30-AC13 complete 0-person roster boards without a seat cap[33m 301[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E30-13-apc @E30-AC13 complete 35-person roster boards without a seat cap[33m 416[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/crowd-appearance.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 5948[2mms[22m[39m
+   [33m[2m✓[22m[39m crowd appearance: packed float32 choices and shirt colour survive all LODs and checkpoint IDs @E07 @E08[33m 361[2mms[22m[39m
+   [33m[2m✓[22m[39m crowd appearance lod0: real infected/civilian layouts fit BOTH WebGPU eight buffers and WebGL2 sixteen locations @E18-AC01[33m 3468[2mms[22m[39m
+   [33m[2m✓[22m[39m crowd appearance lod1: real infected/civilian layouts fit BOTH WebGPU eight buffers and WebGL2 sixteen locations @E18-AC01[33m 915[2mms[22m[39m
+   [33m[2m✓[22m[39m crowd appearance lod2: real infected/civilian layouts fit BOTH WebGPU eight buffers and WebGL2 sixteen locations @E18-AC01[33m 746[2mms[22m[39m
+[90mstdout[2m | tests/sim/npc/l1-civilians.test.ts[2m > [22m[2mL1 v2 civilians and infection[2m > [22m[2mT-E19-06 @E19 @E19-AC06 every new infected is caused by a bite event (idle player, systemic spread, lane C AI)
+[22m[39mAC06 infected at +120 s: 57; at +240 s: 57
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/missions/l10-progression.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 31085[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-27-chunks-high @E32 @E32-AC27 @E32-AC28 region retry and fresh reload restore inactive chunks and the same Mega[33m 12934[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-27-chunks-low @E32 @E32-AC27 @E32-AC28 region retry and fresh reload restore inactive chunks and the same Mega[33m 17709[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/npc/l1-civilians.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 105819[2mms[22m[39m
+   [32m✓[39m L1 v2 civilians and infection [2m(7)[22m
+     [33m[2m✓[22m[39m T-E19-05 @E19 @E19-AC05 50-60 civilians, no idling, startle 0.3-0.8 s, flee slower than infected[33m 16568[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-06 @E19 @E19-AC06 every new infected is caused by a bite event (idle player, systemic spread, lane C AI)[33m 63706[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E19-18 @E19 @E19-AC18 infection continuity: id, asset, tint, accessories, 2.5-3.5 s, phases, speed tier[33m 21895[2mms[22m[39m
+     [33m[2m✓[22m[39m @E19 @E19-AC05 grab rescue window: any hit on the grabber within 1.0 s saves the pedestrian[33m 496[2mms[22m[39m
+     [33m[2m✓[22m[39m @E19 @E19-AC06 at the infected cap a bite kills instead of turning (60 high / 30 low)[33m 2294[2mms[22m[39m
+     [33m[2m✓[22m[39m @E19 @E19-AC18 scripted turns keep the pedestrian look[33m 451[2mms[22m[39m
+     [33m[2m✓[22m[39m @E19 @E19-AC18 director/stream spawns get a pedestrian look too (no plain runner in L1)[33m 387[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/levels/L6.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 108236[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E24-01 @E24 @E24-AC01 graph shelter -> stop -> retreat -> exit has no fail timer or survivor fail[33m 613[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E24-04 @E24 @E24-AC04 @E24-AC05 @E08-AC11 calm adult routines, carried ids, readable injury dialogue, no weapon pickup and no early combat[33m 2079[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E24-06 @E24 @E24-AC06 @E24-AC07 @E24-AC13 idle two breaches, bangs, immediate power failure, first-of abandonment and caps[33m 5997[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E24-16 @E24 @E24-AC16 death restores all four checkpoint snapshots, outbreak, gates and power[33m 920[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E24-02 @E24 @E24-AC02 @E24-AC10 single-seed complete bot (PO: no batteries) protects and rejoins the community[33m 48789[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E24-13 @E24 @E24-AC13 bitten shelter adult retains identity through the shared 2.5-3.5 s infection[33m 660[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E24-11-siege @E24 @E24-AC11 five real infected break the closed service gate in 8-12 seconds[33m 871[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E24-03 @E24 @E24-AC03 single-seed newbie protects injured survivors within the original band[33m 47478[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/corgi-feet.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 10505[2mms[22m[39m
+   [33m[2m✓[22m[39m moving corgi keeps the drawn toe vertices above its floor through turns and gait changes[33m 2423[2mms[22m[39m
+   [33m[2m✓[22m[39m corgi paws remain planted below the cadence cap in walk, trot and gallop @E07[33m 1784[2mms[22m[39m
+   [33m[2m✓[22m[39m instanced infected dog paws remain planted while the root travels @E07[33m 500[2mms[22m[39m
+   [33m[2m✓[22m[39m corgi idle, sit and warning poses keep every paw and the rump on the floor (QA: sit hind paw 17.8 cm under) @E07[33m 2314[2mms[22m[39m
+   [33m[2m✓[22m[39m corgi paws do not skate by the Scene Lab rule through gaits, gait changes and stops (QA: corgi-follow slideMax 88 cm) @E07[33m 809[2mms[22m[39m
+   [33m[2m✓[22m[39m corgi settles from spawn height, seats its visible rump/paws and resumes its bind leg scale @E08-AC10[33m 2666[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/props.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 7366[2mms[22m[39m
+   [32m✓[39m E26 authored pushable props [2m(9)[22m
+     [33m[2m✓[22m[39m far infected cull prop WASM reads; entering contact refreshes the bound immediately[33m 694[2mms[22m[39m
+     [33m[2m✓[22m[39m a fallen knocked prop with the spawn flag resets to spawn and keeps its ID and health[33m 448[2mms[22m[39m
+     [33m[2m✓[22m[39m authored movable props are dynamic, sleeping bodies outside the static collision and nav bake[33m 388[2mms[22m[39m
+     [33m[2m✓[22m[39m @E26 resting authored benches block civilian, infected and ally navigation from the first frame[33m 382[2mms[22m[39m
+     [33m[2m✓[22m[39m walking into a trash bin shoves it along, it settles and sleeps; the courier keeps moving[33m 1291[2mms[22m[39m
+     [33m[2m✓[22m[39m push is deterministic (identical prop poses and state hash across runs)[33m 1106[2mms[22m[39m
+     [33m[2m✓[22m[39m infected shove props on contact; awake bodies stay capped[33m 308[2mms[22m[39m
+     [33m[2m✓[22m[39m checkpoint seam restores displaced props and survives a tier rebuild[33m 2464[2mms[22m[39m
+[90mstderr[2m | tests/unit/render/npc.test.ts[2m > [22m[2m@E19 civilian variety keeps authored gait, sim idle hysteresis and raised ground with shared shading
+[22m[39m[assets] npc.civilian-man-b fell back to a PLACEHOLDER BOX (TypeError: Failed to parse URL from /assets/models/npc.civilian-man-b.glb). Never ship this.
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/npc.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 8675[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18 phone civilians retain four full footwork slots and restore all desktop slots[33m 671[2mms[22m[39m
+   [33m[2m✓[22m[39m @E19 civilian variety keeps authored gait, sim idle hysteresis and raised ground with shared shading[33m 3834[2mms[22m[39m
+   [33m[2m✓[22m[39m @transition prepared civilian geometry survives scene disposal without sharing instance attributes[33m 3826[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/ai/animals.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 1272[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-16 @E07 @E07-AC16 four dogs flank from at least two directions and telegraph 0.6 s knockdown pounces[33m 661[2mms[22m[39m
+[90mstdout[2m | tests/sim/ai/infected-pursuit.test.ts[2m > [22m[2minfected pursuit (PO 2026-10-09)[2m > [22m[2mzigzag and circling courier: the runner stays on her, never runs past (< 2 m ahead), never drops her while she is near
+[22m[39m[pursuit] zigzag#1 swings 4 overshoot 1.17 m lostNear 0; circle#1 swings 2 overshoot 0.00 m lostNear 0; zigzag#2 swings 3 overshoot 1.61 m lostNear 0; circle#2 swings 0 overshoot 0.00 m lostNear 0; zigzag#3 swings 3 overshoot 1.61 m lostNear 0; circle#3 swings 1 overshoot 0.00 m lostNear 0; zigzag#4 swings 3 overshoot 1.26 m lostNear 0; circle#4 swings 2 overshoot 0.00 m lostNear 0; zigzag#5 swings 3 overshoot 1.16 m lostNear 0; circle#5 swings 2 overshoot 0.00 m lostNear 0
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/ai/infected-pursuit.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 3620[2mms[22m[39m
+   [32m✓[39m infected pursuit (PO 2026-10-09) [2m(7)[22m
+     [33m[2m✓[22m[39m zigzag and circling courier: the runner stays on her, never runs past (< 2 m ahead), never drops her while she is near[33m 2028[2mms[22m[39m
+     [33m[2m✓[22m[39m after its attack and her knockback it stays on her (no walking away while she is in reach)[33m 372[2mms[22m[39m
+     [33m[2m✓[22m[39m D-GROVE porch gate (catalog inf-door-emerge): a resident turned in the 2-cell gate pocket walks out into the yard[33m 781[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/levels/L3.test.ts [2m([22m[2m21 tests[22m[2m)[22m[33m 1905122[2mms[22m[39m
+   [32m✓[39m L3 The Police Collapse [2m(21)[22m
+     [33m[2m✓[22m[39m T-E21-01 @E21 @E21-AC01 mission graph armory -> defend -> fallback -> army checkpoint is completable, no fail timer[33m 3497[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E21-02 @E21 @E21-AC02 complete bot finishes single seed from L3-default (bat + axe), median time in band[33m 306588[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2[33m 188330[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E21-04 @E21 @E21-AC04 handgun: only at the armory (complete bot within 40 s), one target per shot, two hits per 40 HP, 22 m, no ammunition[33m 190832[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E21-06 @E21 @E21-AC06 gunfire: non-chasing infected within 20 m reach the shot within 10 s and search; beyond 20 m or chasing unaffected; omniscience audit[33m 4971[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E21-07 @E21 @E21-AC07 station attack: 8-10 officers, three directions >= 60 degrees apart, an officer turns on single seed, first-of fallback, idle still falls back[33m 14092[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E21-07d @E21 @E21-AC07 PO 10-12 the police lose without the courier: 50 % police guns, spread streams, police zombies from the station[33m 49147[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E21-13 @E21 @E21-AC13 forward pressure: idling 20 s behind the furthest line starts emergences 15-35 m behind it, advancing stops them[33m 93442[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E21-14 @E21 @E21-AC14 medkits: >= 2 per street, >= 7 total, +40 HP capped and consumed; newbie picks >= 2, < 10 % time below 20 % HP[33m 3372[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E21-17 @E21 @E21-AC17 army checkpoint: >= 8 soldiers, the rendezvous ends the level straight into progression[33m 329942[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E21-18 @E21 @E21-AC18 checkpoints armory, fallback, segment-2, segment-3 restore squad, outbreak layer and picked medkits[33m 190638[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E21-bots @E21 evade-only never attacks and still reaches the army zone[33m 530258[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/m1-world.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 10220[2mms[22m[39m
+   [33m[2m✓[22m[39m @E19 M1-07 every solid L1 prop family stops a real survivor capsule outside its GLB compound[33m 1186[2mms[22m[39m
+   [33m[2m✓[22m[39m @E19 M1-08 gas forecourt is reachable from the road and canopy legs/pumps still block[33m 1802[2mms[22m[39m
+   [33m[2m✓[22m[39m @E19 M1-08 gentle joystick pulses step onto raised forecourt paving instead of snagging at its edge[33m 1052[2mms[22m[39m
+   [33m[2m✓[22m[39m @E19 M1-07 click navigation string-pulls a path around a hedge, arriving without oscillation[33m 865[2mms[22m[39m
+   [33m[2m✓[22m[39m @E19 M1-04 corgi settles after turns/stops with stable yaw, zero idle speed and no follow-state chatter[33m 2060[2mms[22m[39m
+   [33m[2m✓[22m[39m @E19 M1-06 neighbors use five models, safe sidewalk routines and actual movement/idle states[33m 2123[2mms[22m[39m
+   [33m[2m✓[22m[39m @E19 M1-10 all character bodies separate, even in stationary infected attack states[33m 555[2mms[22m[39m
+   [33m[2m✓[22m[39m @E19 VQA-08 combat spacing still lets broad armored fighters enter melee range[33m 560[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/levels/l7-district.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 25569[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-10-district @E29-AC10 heavier dressing, dead defenses and passable Northgate branches[33m 510[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-10-fires @E29-AC10 production district installs persistent fires and shared rocket hooks[33m 1449[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-09-assets @E29-AC09 W6 deliveries satisfy the existing geometry and LOD contracts[33m 22664[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-10-corridor @E29-AC10 @E29-AC13 two routes reach the corridor and its working bus; no blocker seals it[33m 662[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/courier-rig-v2.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 6405[2mms[22m[39m
+   [33m[2m✓[22m[39m courier female skeleton v2 carries the Mesh2Motion chain and the clips retarget onto it[33m 753[2mms[22m[39m
+   [33m[2m✓[22m[39m courier male skeleton v2 carries the Mesh2Motion chain and the clips retarget onto it[33m 326[2mms[22m[39m
+   [33m[2m✓[22m[39m courier female living layer is frozen-frame exact and deterministic across runs @E04[33m 853[2mms[22m[39m
+   [33m[2m✓[22m[39m courier male living layer is frozen-frame exact and deterministic across runs @E04[33m 802[2mms[22m[39m
+   [33m[2m✓[22m[39m courier male glances at a threat within ±70°, at most 360°/s, never while striking @E04[33m 353[2mms[22m[39m
+   [33m[2m✓[22m[39m courier female ponytail and bag settle after a run-to-stop and stay outside their colliders @E04[33m 441[2mms[22m[39m
+   [33m[2m✓[22m[39m courier male ponytail and bag settle after a run-to-stop and stay outside their colliders @E04[33m 351[2mms[22m[39m
+   [33m[2m✓[22m[39m courier blinks every 2–6 s with the lids closed for about 0.1 s @E04[33m 1635[2mms[22m[39m
+   [33m[2m✓[22m[39m courier male bat swings keep the hand within 90° of its twist bone (no wrist candy-wrap) @E04[33m 326[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/view.test.ts [2m([22m[2m11 tests[22m[2m)[22m[32m 239[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/ai/zoo-s1.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 1275[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-19-lion-pounce @E07-AC05 @E07-AC19 @E30-AC10 telegraph, cooldown, recovery, restore[33m 359[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/explosions.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 2180[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E27-02 @E27 @E27-AC02 per class the sim damage at 0 / 50 / 100 % radius matches the curve within 2 %[33m 309[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E27-05 @E27 @E27-AC05 a car explosion lifts the body ≥ 0.5 m, detaches doors and hood, chars the wreck and leaves fires ≥ 20 s[33m 799[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/l9-encounters.test.ts [2m([22m[2m16 tests[22m[2m)[22m[33m 243260[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-05-groups @E31-AC05 @E31-AC11 groups sit on every risk anchor; the shortcut has 3x the road risk; every group is avoidable[33m 8051[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-12-groups @E31-AC12 @E31-AC13 groups spawn once on first residency, keep ids/HP on revisit and restore from a checkpoint without duplicates[33m 7840[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-11-road @E31-AC01 @E31-AC10 @E31-AC11 @E31-AC15 preserved-HP detour keeps full durability and reaches the forced crash[33m 14835[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-11-countryside @E31-AC01 @E31-AC10 @E31-AC11 @E31-AC15 preserved-HP detour keeps full durability and reaches the forced crash[33m 13796[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-11-dry-shortcut @E31-AC01 @E31-AC10 @E31-AC11 @E31-AC15 preserved-HP detour keeps full durability and reaches the forced crash[33m 15614[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-11-risk-road @E31-AC11 driving through the groups costs durability and still reaches the same crash[33m 14607[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-11-risk-countryside @E31-AC11 driving through the groups costs durability and still reaches the same crash[33m 13780[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-11-risk-dry-shortcut @E31-AC11 driving through the groups costs durability and still reaches the same crash[33m 14853[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-11-early-zero-road @E31-AC09 @E31-AC10 @E31-AC11 @E31-AC15 early zero (15% progress) keeps driving at 60% speed and reaches the same crash[33m 13827[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-11-early-zero-countryside @E31-AC09 @E31-AC10 @E31-AC11 @E31-AC15 early zero (15% progress) keeps driving at 60% speed and reaches the same crash[33m 18373[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-11-early-zero-dry-shortcut @E31-AC09 @E31-AC10 @E31-AC11 @E31-AC15 early zero (15% progress) keeps driving at 60% speed and reaches the same crash[33m 18733[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-11-late-zero-road @E31-AC09 @E31-AC10 @E31-AC11 @E31-AC15 late zero (85% progress) keeps driving at 60% speed and reaches the same crash[33m 14134[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-11-late-zero-countryside @E31-AC09 @E31-AC10 @E31-AC11 @E31-AC15 late zero (85% progress) keeps driving at 60% speed and reaches the same crash[33m 16300[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-11-late-zero-dry-shortcut @E31-AC09 @E31-AC10 @E31-AC11 @E31-AC15 late zero (85% progress) keeps driving at 60% speed and reaches the same crash[33m 15845[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-11-compare @E31-AC11 the risky dry shortcut ends with less durability than the safe detour of the same route[33m 31345[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-12-low @E31-AC12 low tier keeps the shortcut inside the 100-infected and 9-chunk budgets[33m 11301[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/ai/alpha-physical.test.ts [2m([22m[2m10 tests[22m[2m)[22m[33m 934[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-06-charge @E07-AC05 @E07-AC06 locked 9m/s, 12m sweep, once per human, windup and 72 tick knockdown[33m 387[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/missions/l10-finale.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 2278[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-20/22 seed 327 install, pause, boundary, early rockets and explicit once-only release @E32-AC17 @E32-AC20 @E32-AC22[33m 555[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-22 living boss blocks at 60 s; held input cannot release after its death @E32-AC22[33m 926[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/ai/mega-moves.test.ts [2m([22m[2m16 tests[22m[2m)[22m[33m 1026[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/progression/campaign.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 1187[2mms[22m[39m
+   [32m✓[39m campaign [2m(10)[22m
+     [33m[2m✓[22m[39m T-E13-01 @E13 @E13-AC01 1000 seeds give three distinct prerequisite-valid reproducible offers[33m 851[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/ai/l8-animals.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 1602[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E30-09-routine @E30-AC09 healthy animals walk their authored enclosure loop without a hostile brain[33m 482[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/telemetry/client.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 1416[2mms[22m[39m
+   [32m✓[39m replay recorder [2m(3)[22m
+     [33m[2m✓[22m[39m retries a failed chunk, then gives up without blocking later ones[33m 1003[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/missions/l2-ride-clearance.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 59290[2mms[22m[39m
+   [32m✓[39m L2 truck ride clearance [2m(3)[22m
+     [33m[2m✓[22m[39m @E20 route polyline stays on clear (drivable) cells for the whole truck width[33m 5121[2mms[22m[39m
+     [33m[2m✓[22m[39m @E20 single seed (natural): no body or static collider overlaps the truck footprint during the ride; ride stays in the time band[33m 27986[2mms[22m[39m
+     [33m[2m✓[22m[39m @E20 single seed (planted): no body or static collider overlaps the truck footprint during the ride; ride stays in the time band[33m 26137[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/vehicles/apc-floor.test.ts [2m([22m[2m9 tests[22m[2m)[22m[33m 1983[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-09 @E31-AC09 zero HP caps terrain top speed to 60% of healthy and keeps driving[33m 945[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/interact/hazards.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 836[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/terrain-streaming.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 1384[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-13-seams-S3 @E31-AC13 independently loaded local cells and coarse terrain preserve seam heights[33m 915[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/tooling/scenelab.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 7367[2mms[22m[39m
+   [32m✓[39m Scene Lab spec [2m(8)[22m
+     [33m[2m✓[22m[39m retains production L2 mission anchors and open market collision for its release scene[33m 2750[2mms[22m[39m
+     [33m[2m✓[22m[39m loads L2 bridge and closure fixtures from the authored safe start before courier admission[33m 4409[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/npc/l4-systems.test.ts [2m([22m[2m12 tests[22m[2m)[22m[33m 1081[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E22-13-gap @E22-AC12 @E22-AC13 a real Alpha charge destroys E26 HP and three regular infected traverse its gap[33m 362[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E22-12-line-focus @E22-AC12 @E22-AC13 soldiers focus on the Alpha while three regular infected cross the line it breaks[33m 316[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/npc/civilians.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 25336[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E08-03 @E08 @E08-AC03 50 seeded cycles retain clothes/body position and exact tick timings/eyes[33m 5255[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 @E08-AC13 melee and shots both finish the vulnerable rising body[33m 393[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E08-12 @E08 @E08-AC12 kill/knockback rescue only during grab[33m 538[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E08-13 @E08 @E08-AC13 finishing eyes only; 100 real crowd shots pass through living people[33m 680[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E08-14 @E08 @E08-AC14 full cap postpones rising; mass turning never exceeds L1 cap/chain[33m 2463[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E08-01 @E08 @E08-AC01 W0 civ-street 30 routines never stuck over five minutes[33m 15964[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/levels/L4.test.ts [2m([22m[2m23 tests[22m[2m)[22m[33m 2181897[2mms[22m[39m
+   [32m✓[39m L4 The Safe City Falls [2m(23)[22m
+     [33m[2m✓[22m[39m T-E22-01 @E22 @E22-AC01 mission graph ride -> quartermaster -> hold -> hide -> bar is completable, no fail timer[33m 9468[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-02 @E22 @E22-AC02 the complete bot finishes a single seed from L4-default (bat, axe, handgun) with few deaths, in the time band[33m 214543[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-04 @E22 @E22-AC04 convoy: five vehicles, the courier a seated passenger of a bus, 20-35 s ride, control back <= 0.5 s after the stop[33m 11894[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-05 @E22 @E22-AC05 false safety until the first turn: zero infected, zero combat events, >= 40 civilians in routines, >= 16 soldiers on posts[33m 20934[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-06 @E22 @E22-AC06 machine gun: 14 per round, 10/s, 4 degrees, 26 m, pierce 1, no ammunition; 5 infected at 10 m fall in <= 3 s (handgun >= 2x slower)[33m 124084[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-07 @E22 @E22-AC07 the alarm: 40-50 s after the gun (or arrival + 100 s), 15-25 new infected enter from camp buildings or street mouths with >= 10 humans near the alarm[33m 121019[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-08 @E22 @E22-AC08 scale: 18-22 soldiers and 60-70 civilians (24 evacuees from the buses), >= 40 % armed with pistols, hunting rifles and melee (>= 3 each); the low tier halves; caps hold[33m 1388[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-09 @E22 @E22-AC09 allied fighters: shots from soldiers, armed civilians fight, everyone can turn (same id, look kept, weapon dropped), nobody is immune[33m 48850[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-10 @E22 @E22-AC10 from all sides: six street and alley mouths (>= 3 mutually >= 60 degrees apart around the plaza), emergence out of view[33m 68073[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-11 @E22 @E22-AC11 military spectacle: two HMG positions fire, trucks and an armoured vehicle stand in the plaza, the tank fires every 8-12 s away from the player and allies, the helicopter orbits and withdraws without landing[33m 82328[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-13 @E22 @E22-AC13 the line breaks after the third lost line ("Fall back!", also with the idle bot): fuel-truck mega chain, objective "Run to the cellar", the helicopter withdraws[33m 186185[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-14 @E22 @E22-AC14 live damage at the cellar: >= 4 fires, >= 2 burning vehicles, >= 10 broken windows, >= 6 blast scorches, all traceable to explosion/fire events of the run[33m 189991[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-15 @E22 @E22-AC15 cellar: only the courier (and the corgi) go down, nobody can path in, the door bars, battle events go on >= 6 s, then level.completed[33m 15260[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-16 @E22 @E22-AC16 light: L4 polar 1.15-1.30 rad, fog far >= L3 + 20 m; no smoke column before the first turn, >= 3 at the line break[33m 21703[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-17 @E22 @E22-AC17 checkpoints preserve the live battlefield across deaths, with only live infection losses[33m 140582[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-bots @E22 evade-only never attacks and still reaches the cellar; the low tier finishes too[33m 297237[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-03 @E22 @E22-AC03 the newbie bot finishes (single seed; the 20-seed battery is dropped as a gate, PO 10-09) with few deaths[33m 218668[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-12 @E22 @E22-AC12 still not enough: soldiers thin out and the infected outgrow the kills by the line break (single seed)[33m 215948[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-12-alphas-high @E22 @E22-AC12 first Alphas use the district mouths after the internal turn, inside both caps[33m 121616[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-12-alphas-low @E22 @E22-AC12 first Alphas use the district mouths after the internal turn, inside both caps[33m 60693[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-13-authored-gap @E22 @E22-AC12 @E22-AC13 the authored line replaces static pallets and breaks through logged Alpha HP damage[33m 1378[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-15-carry @E22 @E22-AC15 solitary basement completion carries the actual arsenal to L5 without pending rewards[33m 9492[2mms[22m[39m
+     [33m[2m✓[22m[39m T-E22-anchors @E22 every authored L4 anchor resolves in the layout copy[33m 557[2mms[22m[39m
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Accessor (18)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Accessor (56)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Mesh (7), Primitive (7), Accessor (77)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Primitive (2), Accessor (63)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Accessor (204)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Mesh (33), Primitive (33), Accessor (307)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Primitive (1), Accessor (59)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Accessor (260)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery bundling quantizes shared material primitives once and preserves LOD0 silhouette
+[22m[39mprune: Removed types... Mesh (32), Primitive (32), Accessor (358)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery keeps skin joints and morph animation channels on the geometry node
+[22m[39mprune: Removed types... Accessor (6)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery keeps skin joints and morph animation channels on the geometry node
+[22m[39mprune: Removed types... Skin (1), Accessor (5)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdistance tiers preserve disconnected thin panels inside a large assembly
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdistance tiers preserve disconnected thin panels inside a large assembly
+[22m[39mprune: Removed types... Accessor (3)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdistance tiers preserve disconnected thin panels inside a large assembly
+[22m[39mprune: Removed types... Accessor (2)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery preserves optional source roof geometry before manifest registration
+[22m[39mprune: Removed types... Accessor (1)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery preserves optional source roof geometry before manifest registration
+[22m[39mprune: Removed types... Accessor (3)
+
+[90mstdout[2m | tests/unit/assets/delivery.test.ts[2m > [22m[2mdelivery preserves optional source roof geometry before manifest registration
+[22m[39mprune: Removed types... Accessor (3)
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/delivery.test.ts [2m([22m[2m7 tests[22m[2m)[22m[33m 3288[2mms[22m[39m
+   [33m[2m✓[22m[39m delivery bundling quantizes shared material primitives once and preserves LOD0 silhouette[33m 2968[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/static-batch-equivalence.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 4146[2mms[22m[39m
+   [33m[2m✓[22m[39m optimized static batch attributes equal the reference loop @load[33m 4134[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/camera-jitter.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 244[2mms[22m[39m
+[90mstdout[2m | tests/unit/telemetry/codec.test.ts[2m > [22m[2minput log codec[2m > [22m[2mrecording cost stays far below 0.1 ms per tick
+[22m[39minput log encode cost: 3.33 us per tick
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/telemetry/codec.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 4321[2mms[22m[39m
+   [32m✓[39m input log codec [2m(8)[22m
+     [33m[2m✓[22m[39m round-trips every InputFrame field exactly, including absent vs false vs null[33m 826[2mms[22m[39m
+     [33m[2m✓[22m[39m cuts independent chunks (keyframe each) under the upload cap and decodes them in order[33m 1526[2mms[22m[39m
+     [33m[2m✓[22m[39m rejects a chunk gap and garbage[33m 816[2mms[22m[39m
+     [33m[2m✓[22m[39m an idle player costs almost nothing and gzip shrinks active play[33m 338[2mms[22m[39m
+     [33m[2m✓[22m[39m recording cost stays far below 0.1 ms per tick[33m 743[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/missions/l10-epilogue.test.ts [2m([22m[2m3 tests[22m[2m)[22m[33m 28580[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-25/26-S9 @E32-AC25 @E32-AC26 150 s playable reversal, last 36 s eased pull retains walk/run; title then credits and once-only victory[33m 2960[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-26-resume-S9 @E32-AC26 fresh-clock save/load at mid-pull, title, credits and completed ending never replays combat or victory[33m 631[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-25-cast-S9 @E32-AC25 @E32-AC31 production safe anchors emerge and bounded approaches collapse on both E18 tiers[33m 24972[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/l7-perf.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 502[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-19-foot-probe @E29-AC19 partial foot probes match full rig probes during a blended pose[33m 316[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/zebra.test.ts [2m([22m[2m4 tests[22m[2m)[22m[33m 2623[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-01-zebra-asset-lod0 @E07-AC01 @E18-AC01 shared zebra anatomy, closed LOD, stripe palette and crowd rig[33m 1538[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-01-zebra-asset-lod1 @E07-AC01 @E18-AC01 shared zebra anatomy, closed LOD, stripe palette and crowd rig[33m 590[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-01-zebra-asset-lod2 @E07-AC01 @E18-AC01 shared zebra anatomy, closed LOD, stripe palette and crowd rig[33m 472[2mms[22m[39m
+ [31m❯[39m [30m[43m functional [49m[39m tests/unit/assets/validate.test.ts [2m([22m[2m17 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 321297[2mms[22m[39m
+   [32m✓[39m cheap LODs retain silhouettes while dense scenery still has a ratio budget[32m 11[2mms[22m[39m
+   [32m✓[39m living skins count animated materials and compare only their shipped group member[32m 9[2mms[22m[39m
+   [32m✓[39m living skins retain the base crowd animation and infection classifications[32m 6[2mms[22m[39m
+   [32m✓[39m T-E17-02 @E17-AC02 validates geometry and rejects independent contract violations[32m 16[2mms[22m[39m
+   [32m✓[39m T-E17-06 @E17-AC06 current manifest status meets every inventory snapshot stage[32m 20[2mms[22m[39m
+[31m   [31m×[31m T-E17-02b @E17-AC02 production outputs satisfy orientation, palette, LOD, stump and geometry contracts[39m[33m 300539[2mms[22m[39m
+   [33m[2m✓[22m[39m distance cap for veh.test LODNaN cannot be relaxed by the manifest[33m 1478[2mms[22m[39m
+   [32m✓[39m distance cap for veh.test LODNaN cannot be relaxed by the manifest[32m 108[2mms[22m[39m
+   [33m[2m✓[22m[39m distance cap for bld.house-test LODNaN cannot be relaxed by the manifest[33m 5561[2mms[22m[39m
+   [33m[2m✓[22m[39m distance cap for bld.house-test LODNaN cannot be relaxed by the manifest[33m 757[2mms[22m[39m
+   [33m[2m✓[22m[39m distance cap for house.test LODNaN cannot be relaxed by the manifest[33m 662[2mms[22m[39m
+   [33m[2m✓[22m[39m distance cap for bld.safe-house LODNaN cannot be relaxed by the manifest[33m 4062[2mms[22m[39m
+   [33m[2m✓[22m[39m @E17-AC02 decay caps apply to variants without changing the integrated base budget[33m 4446[2mms[22m[39m
+   [33m[2m✓[22m[39m @E17-AC02 burned budgets reject oversized siblings without altering existing wreck limits[33m 3597[2mms[22m[39m
+   [32m✓[39m living skins count animated material draws and reject duplicate attachment batches[32m 1[2mms[22m[39m
+   [32m✓[39m living adult draw cap counts geometry under animated owners[32m 1[2mms[22m[39m
+   [32m✓[39m integrated non-model presentation requires a shipped implementation[32m 7[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/combat/l7-rocket.test.ts [2m([22m[2m6 tests[22m[2m)[22m[33m 5578[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-04 @E29-AC04 exit-relative pickup retains all five previous weapons, equips once after 0.6s / E[33m 325[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-05 @E29-AC05 600 rockets have no reload/empty/charges and exactly 75 tick cadence[33m 4051[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-06-24 @E29-AC06 one real projectile permanently clears 24 infected in its blast tick[33m 347[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E29-06-200 @E29-AC06 one real rocket clears 200 admitted full footprints inside its unchanged blast[33m 767[2mms[22m[39m
+[90mstdout[2m | tests/levels/L8.test.ts[2m > [22m[2mT-E30-01 T-E30-02 T-E30-13 T-E30-14 @E30-AC01 @E30-AC02 @E30-AC13 @E30-AC14 seed 1 complete with 12 survivors and exact APC transfer
+[22m[39m{"seed":1,"time":90.26666666666667,"breach":60,"outlets":4,"animalTurns":[10395,10397,10396],"alphas":4,"rescued":12}
+
+ [31m❯[39m [30m[43m functional [49m[39m tests/sim/combat/l5-shotgun.test.ts [2m([22m[2m6 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 51615[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E23-12-role @E23 @E23-AC12 close shell, distance falloff and 600 shells without reload[33m 2067[2mms[22m[39m
+   [32m✓[39m T-E23-12-stand @E23 @E23-AC12 standing over the shotgun for 0.6 seconds collects it without E[32m 13[2mms[22m[39m
+[31m   [31m×[31m T-E23-12-kill PO #37 @E23 @E23-AC12 @E07-AC14 one shell kills regular infected through 8 m permanently; two close shells stop an Alpha[39m[33m 47937[2mms[22m[39m
+   [32m✓[39m T-E23-12-group @E23 @E23-AC12 machine gun clears ten spread targets at least 1.5 times faster[32m 181[2mms[22m[39m
+   [32m✓[39m T-E23-12-alpha-data @E23 @E23-AC12 shared E07 resistance applies once after falloff[32m 4[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E23-12-alpha @E23 @E23-AC12 real Alpha: two close shells versus 43 army MG rounds[33m 1411[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/sim/combat/fast-clicks.test.ts [2m([22m[2m8 tests[22m[2m)[22m[33m 667[2mms[22m[39m
+   [33m[2m✓[22m[39m @E05 @E05-AC14 @E06 @E06-AC10 click TTK measurement[33m 318[2mms[22m[39m
+[remote] connection lost, reconnect 1/10 (log offset 102807)
+[remote] connection lost, reconnect 2/10 (log offset 102807)
+[remote] connection lost, reconnect 3/10 (log offset 102807)
+[remote] connection lost, reconnect 4/10 (log offset 102807)
+[remote] connection lost, reconnect 5/10 (log offset 102807)
+[remote] connection lost, reconnect 6/10 (log offset 102807)
+[remote] connection lost, reconnect 7/10 (log offset 102807)
+[remote] connection lost, reconnect 8/10 (log offset 102807)
+[remote] connection lost, reconnect 9/10 (log offset 102807)
+[remote] connection lost, reconnect 10/10 (log offset 102807)
+[remote] lost the connection to runner@94.130.181.173 for too long; killing the remote job
+[remote] done exit=255 (runner 94.130.181.173, sync 1227s, remote total 3334s)

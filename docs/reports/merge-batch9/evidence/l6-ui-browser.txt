@@ -1,0 +1,3 @@
+{"timeoutSeconds": 1800, "command": ["sh", "tools/e2e-lock.sh", "npx", "playwright", "test", "tests/e2e/levels/L6.spec.ts", "tests/e2e/interaction-viewport.spec.ts", "tests/visual/e25-lighting.spec.ts", "tests/visual/weather.spec.ts", "--project=chromium", "--workers=1", "--grep", "T-E24-17|T-E24-15|T-E25-13|interaction panel|T-E28-12"]}
+Terminated: 15
+{"exit": 124, "seconds": 1802.29}

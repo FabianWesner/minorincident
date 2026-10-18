@@ -1,0 +1,23 @@
+import { afterEach, expect, test } from 'vitest';
+import { loadL6 } from '../../tools/sim-runner/l6Bots';
+import type { SimWorld } from '../../src/sim/world/SimWorld';
+let world: SimWorld | undefined;
+afterEach(() => world?.dispose());
+test('T-E24-17-route @E24-AC17 @E24-AC10 escort navigation stays in the authored tunnel around the first gate', async () => {
+  ({ world } = await loadL6());
+  const nav = world.infected!.nav;
+  // This unmodelled strip was accepted as a shortcut beside the tunnel. The
+  // physical courier then hit the south face of the service-gate barrier.
+  expect(nav.clear(88, 10.8, .45)).toBe(false);
+  expect(nav.visible({ x: 86, z: 15 }, { x: 94, z: 10.8 }, .45)).toBe(false);
+  const route = { path: [] as number[], goal: -1, pathIndex: 0 };
+  const p = { x: 84, z: 15 }, waypoint = { x: 0, z: 0 };
+  for (let i = 0; i < 600 && p.x < 95; i++) {
+    expect(nav.steer(p, { x: 96, z: 15 }, route, .45, waypoint, Infinity, true)).toBe(true);
+    const dx = waypoint.x - p.x, dz = waypoint.z - p.z, d = Math.hypot(dx, dz);
+    if (d) nav.move(p, dx / d * .05, dz / d * .05, .45);
+    expect(p.z).toBeGreaterThan(11.2);
+    expect(p.z).toBeLessThan(18.8);
+  }
+  expect(p.x).toBeGreaterThanOrEqual(95);
+});

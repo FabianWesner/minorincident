@@ -1,6 +1,6 @@
 import { mkdirSync } from 'node:fs';
 import { test, expect, boot } from '../fixtures';
-for (const quality of ['high', 'low'] as const) test(`T-E32-05-D2-browser @E32-AC05 @E32-AC27 @E32-AC28 ${quality} shotgun and MG checkpoint input retains arsenal on retry`, async ({ page }) => {
+for (const quality of ['high', 'low'] as const) test(`T-E32-05-D2-browser @E32-AC05 @E32-AC29 @E32-AC27 @E32-AC28 ${quality} shotgun and MG checkpoint input retains arsenal on retry`, async ({ page }) => {
   test.setTimeout(180_000);
   const requests: string[] = [];
   page.on('request', r => { if (r.url().includes('D-CURE')) requests.push(r.url()); });

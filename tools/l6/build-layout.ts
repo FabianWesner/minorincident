@@ -31,12 +31,14 @@ place('int.metro-station',0,SZ);
 for(let i=0;i<18;i++) place('kit.metro-tunnel',36+i*12,15,.35);
 for(const x of [54,126,198]) place('kit.maintenance-corridor',x,6.2,.4,Math.PI/2);
 for(const x of [78,174]) place('kit.maintenance-corridor',x,23.8,.4,-Math.PI/2);
-place('int.metro-exit',252,15,.4,Math.PI);
-layout.colliders.push({id:'northgate-platform',aabb:{min:[246,.4,11.2],max:[249.4,.6,18.8]},walkable:true,minTier:0,maxTier:5});
+// Centre the dead escalator on the tunnel route (z=15), rather than its unwalkable gap.
+const exitZ = l6.exit.centerZ;
+place('int.metro-exit',252,exitZ,.4,Math.PI);
+layout.colliders.push({id:'northgate-platform',aabb:{min:[246,.4,exitZ-3.8],max:[249.4,.6,exitZ+3.8]},walkable:true,minTier:0,maxTier:5});
 // Match the delivered recipe's 24 stone/escalator treads after its root half-turn.
 // The exported helper boxes rotate their dimensions twice; use the actual tread tops.
-for(const [z,width]of [[16.4,1.5],[14.1,1.35]])for(let i=0;i<24;i++)layout.colliders.push({id:`northgate-tread-${z}-${i}`,aabb:{min:[249.4+i*.25,.4,z-width/2],max:[249.4+(i+1)*.25,.6+3.3*(i+1)/24,z+width/2]},walkable:true,minTier:0,maxTier:5});
-layout.colliders.push({id:'northgate-landing',aabb:{min:[255.4,.4,12.2],max:[258,3.9,17.8]},walkable:true,minTier:0,maxTier:5});
+for(const [z,width]of [[exitZ+1.4,1.5],[exitZ-.9,1.35]])for(let i=0;i<24;i++)layout.colliders.push({id:`northgate-tread-${z}-${i}`,aabb:{min:[249.4+i*.25,.4,z-width/2],max:[249.4+(i+1)*.25,.6+3.3*(i+1)/24,z+width/2]},walkable:true,minTier:0,maxTier:5});
+layout.colliders.push({id:'northgate-landing',aabb:{min:[255.4,.4,exitZ-2.8],max:[258,3.9,exitZ+2.8]},walkable:true,minTier:0,maxTier:5});
 
 for(const [x,z] of [[-8,-2+SZ],[0,-2+SZ],[-24,15+SZ],[-12,15+SZ],[0,15+SZ],[20,15+SZ]]) place('kit.shelter-camp',x,z,.6,0,'shelter-camp');
 for(const [x,z] of [[269,3],[282,26],[283,6]]) place('prop.jersey-barrier',x,z,3.9);

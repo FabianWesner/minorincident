@@ -24,7 +24,7 @@ async function homeClear(page: Page) {
   }
 }
 for (const backend of ['webgl', 'webgpu'] as const) for (const zoom of [1, .5]) for (const hp of [1000, 0]) {
-  test(`T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 ${backend} zoom=${zoom} HP=${hp}`, async ({ page, context }, info) => {
+  test(`T-E31-17-input @E31-AC08 @E31-AC09 @E31-AC12 @E31-AC15 @E31-AC16 @E31-AC17 @E31-AC18 ${backend} zoom=${zoom} HP=${hp}`, async ({ page, context }, info) => {
     test.setTimeout(300_000);
     const touch = info.project.name.startsWith('pixel'), quality = touch ? 'low' : 'high';
     // Both projects leave/rejoin the road; keyboard takes the long road, touch the open countryside.

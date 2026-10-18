@@ -1,0 +1,10 @@
+
+Running 8 tests using 1 worker
+
+  ✓  1 [chromium] › tests/e2e/levels/l10-minigun-input.spec.ts:7:3 › desktop minigun › T-E32-29-minigun @E32-AC29 @E32-AC18 @E32-AC19 real mount, overheat, cooldown and rocket dismount keyboard/mouse (12.6s)
+  ✘  2 [chromium] › tests/e2e/levels/l10-minigun-input.spec.ts:7:3 › phone minigun › T-E32-29-minigun @E32-AC29 @E32-AC18 @E32-AC19 real mount, overheat, cooldown and rocket dismount touch (3.0m)
+  ✘  3 [chromium] › tests/e2e/levels/l7-real-input.spec.ts:7:1 › T-E29-17 @E29-AC17 real mouse/keyboard carries the Northgate group through the horde and bus into L8 (3.0m)
+  ✘  4 [chromium] › tests/e2e/levels/l7-real-input.spec.ts:63:3 › L7 phone controls › T-E29-17-touch @E29-AC17 touch pickup and corridor checkpoint retain a bounded HUD (3.0m)
+{"timeoutSeconds": 1200, "command": ["sh", "tools/e2e-lock.sh", "npx", "playwright", "test", "tests/e2e/levels/l10-minigun-input.spec.ts", "tests/e2e/levels/l7-real-input.spec.ts", "tests/visual/l7-night.spec.ts", "tests/visual/l7-pairs.spec.ts", "--project=chromium", "--workers=1"]}
+Terminated: 15
+{"exit": 124, "seconds": 1237.73}

@@ -1,0 +1,80 @@
+{
+  "at": "2026-10-16T15:37:06+0200",
+  "reason": "Binding browser-slot fairness stop: cumulative admission waits exceed 30 min. No quiet reservation held.",
+  "stopped": [
+    {
+      "pid": 38430,
+      "command": "npm run verify E25"
+    },
+    {
+      "pid": 43896,
+      "command": "sh tools/e2e-lock.sh npx playwright test tests/visual/e25-lighting.spec.ts tests/e2e/interaction-viewport.spec.ts tests/visual/weather.spec.ts --project=chromium --workers=1"
+    },
+    {
+      "pid": 44413,
+      "command": "sh tools/e2e-lock.sh npx tsx tools/scenelab/catalog.ts --matrix --filter ui-night-* --backend webgpu --jobs 1 --size 1600x900 --out test-results/ui-night/catalog-webgpu"
+    }
+  ],
+  "unmeasured": [
+    "final WebGPU matrix",
+    "corrected E25 eye assertions",
+    "final viewport assertions including L6 damage/break",
+    "native E18 timing",
+    "E26/E28 full verifier repeats"
+  ],
+  "admissionWaits": [
+    {
+      "run": "matrix-gpu",
+      "createdEpoch": 1792156901.4914873,
+      "cancelledEpoch": 1792157485.5982394,
+      "queueLowerBoundSeconds": 579,
+      "log": "Terminated: 15"
+    },
+    {
+      "run": "focused-final",
+      "createdEpoch": 1792157469.8734372,
+      "cancelledEpoch": 1792157826.6434417,
+      "queueLowerBoundSeconds": 351,
+      "log": "Terminated: 15"
+    },
+    {
+      "run": "matrix-gpu-final",
+      "createdEpoch": 1792157485.6000092,
+      "cancelledEpoch": 1792157826.643495,
+      "queueLowerBoundSeconds": 336,
+      "log": "Terminated: 15"
+    },
+    {
+      "run": "focused",
+      "createdEpoch": 1792156789.4152322,
+      "lastObservedEmptyEpoch": 1792157296.0,
+      "queueLowerBoundSeconds": 501,
+      "note": "Admitted shortly before cancellation; only the earlier observed-empty interval is counted."
+    },
+    {
+      "run": "eye",
+      "createdEpoch": 1792156410.181945,
+      "finishedEpoch": 1792156477.8819518,
+      "testDurationsSeconds": [
+        10.0
+      ],
+      "queueLowerBoundSeconds": 27,
+      "note": "Subtract all test durations plus 30 s of startup/teardown; conservative wait estimate."
+    },
+    {
+      "run": "eye-fixed",
+      "createdEpoch": 1792156555.0451348,
+      "finishedEpoch": 1792156754.030183,
+      "testDurationsSeconds": [
+        9.8,
+        6.0,
+        10.0,
+        5.0
+      ],
+      "queueLowerBoundSeconds": 138,
+      "note": "Subtract all test durations plus 30 s of startup/teardown; conservative wait estimate."
+    }
+  ],
+  "cumulativeQueueLowerBoundSeconds": 1932,
+  "conservativeAllowance": "Exclude completed catalog and panel queues, the verifier queue and diagnostic queues. Count only observed-empty time for the first focused attempt."
+}

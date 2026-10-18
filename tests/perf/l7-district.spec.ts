@@ -9,7 +9,7 @@ const backend = process.env.L7_PERF_BACKEND === 'webgpu' ? 'webgpu' : 'webgl';
 test.use({ channel: 'chrome', headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-unsafe-webgpu', '--enable-gpu', '--ignore-gpu-blocklist', '--disable-frame-rate-limit', '--disable-gpu-vsync', '--js-flags=--expose-gc', '--enable-precise-memory-info'] } });
 for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
   if (tier === 'low') test.use({ userAgent: devices['Pixel 7'].userAgent, isMobile: true, hasTouch: true, viewport: { width: 390, height: 844 }, deviceScaleFactor: 1 });
-  test(`T-E29-19-district @E29-AC19 @perf W6 district ${tier} fire and rocket stress`, async ({ page, context }) => {
+  test(`T-E29-19-district @E29-AC19 @E29-AC20 @perf W6 district ${tier} fire and rocket stress`, async ({ page, context }) => {
   test.setTimeout(180_000);
   if (tier === 'low') {
     await page.setViewportSize({ width: 390, height: 844 });
@@ -121,6 +121,7 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
   expect(result.peakPuffs).toBeLessThanOrEqual(tier === 'high' ? 400 : 120); expect(result.peakParts).toBeLessThanOrEqual(tier === 'high' ? 120 : 40);
   expect(result.peakParticles).toBeLessThanOrEqual(tier === 'high' ? 6000 : 2000); expect(result.heroLights).toBeLessThanOrEqual(tier === 'high' ? 8 : 3); expect(result.awakeProps).toBeLessThanOrEqual(tier === 'high' ? 150 : 60);
   expect(result.frameP95).toBeLessThanOrEqual(tier === 'high' ? 16.7 : 33.3);
+  if (tier === 'high') expect(result.hitch).toBeLessThanOrEqual(50);
   if (tier === 'low' && process.env.L7_PHONE_MARGIN === '1') expect(result.frameP95, 'Phone stress needs at least 10% frame headroom').toBeLessThanOrEqual(33.3 * .9);
 });
 });

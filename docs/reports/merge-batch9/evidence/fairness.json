@@ -1,0 +1,22 @@
+{
+  "browserFairnessCapMinutes": 30,
+  "traceBatch": {
+    "wallSeconds": 1237.73,
+    "boundedSeconds": 1200,
+    "result": "one desktop pass, three observed failures; timed out before visual pair/contrast tests completed"
+  },
+  "l6UiBatch": {
+    "wallSeconds": 1802.29,
+    "admitted": false,
+    "result": "no Running line, no tests started; admission exceeded 30 minutes"
+  },
+  "furtherBrowserRuns": "stopped by binding admission cap",
+  "quietReservationsHeld": 0,
+  "nativeE18": "unmeasured",
+  "deployGate": "not started after cap; prepared port-corrected copy only",
+  "macLoadObserved": [
+    26.61,
+    31.8,
+    29.44
+  ]
+}

@@ -34,6 +34,9 @@ export class InputSystem implements Lifecycle {
   readonly frame = emptyInput();
   scheme: Scheme = 'mouse-only';
   private drivingContext = false;
+  private mountedGunContext = false;
+  /** Mounted fire holds the touch trigger; carried weapons keep release-to-fire. */
+  setMountedGun(on: boolean): void { this.mountedGunContext = on; }
   setDriving(on: boolean): void { if (on !== this.drivingContext) { this.drivingContext = on; this.touch.setDriving(on); } }
   private readonly left = new Buttons();
   private readonly right = new Buttons();
@@ -255,7 +258,7 @@ export class InputSystem implements Lifecycle {
       frame.pointerGround = true;
       if (this.pointerGround === 'move' && frame.left.held && frame.aimPoint && !this.moving()) frame.moveTarget = { ...frame.aimPoint };
     }
-    if (this.drivingContext && this.scheme === 'touch') {
+    if ((this.drivingContext || this.mountedGunContext) && this.scheme === 'touch') {
       if (this.touch.holdingLeft) frame.left.held = true;
       frame.right.held = this.touch.holdingRight;
     }
@@ -317,7 +320,7 @@ export class InputSystem implements Lifecycle {
     this.pointerTarget = false; this.selectors.length = 0; this.interact = false; this.pause = false;
   };
   update(): void { /* Input is sampled in the fixed input phase, not the render update. */ }
-  reset(preserveRelease = false): void { this.setDriving(false); this.release(); this.left.reset(preserveRelease); this.right.reset(preserveRelease); this.space.reset(preserveRelease); this.injected = null; this.recorder.reset(); this.aimAngle = 0; this.manualAim = false; this.setScheme(navigator.maxTouchPoints > 0 ? 'touch' : 'mouse-only'); this.frameNeutral(); }
+  reset(preserveRelease = false): void { this.setDriving(false); this.setMountedGun(false); this.release(); this.left.reset(preserveRelease); this.right.reset(preserveRelease); this.space.reset(preserveRelease); this.injected = null; this.recorder.reset(); this.aimAngle = 0; this.manualAim = false; this.setScheme(navigator.maxTouchPoints > 0 ? 'touch' : 'mouse-only'); this.frameNeutral(); }
   dispose(): void {
     this.reset(); this.keyboard.dispose(); this.pointer.dispose(); this.wheel.dispose(); this.touch.dispose();
     window.removeEventListener('blur', this.release); window.removeEventListener('pagehide', this.release); document.removeEventListener('visibilitychange', this.visibility);
