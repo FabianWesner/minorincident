@@ -35,6 +35,9 @@ export class NavGrid {
   /** Optional active-district footprint, supplied by campaign assembly without importing render data. */
   mask: ((x: number, z: number) => boolean) | null = null;
   private playerRoutes: NavGrid | null = null;
+  private playerMask: NavGrid['mask'] = null;
+  /** A player floor boundary must not change the crowd's routing or sight domain. */
+  setPlayerMask(mask: NavGrid['mask']): void { this.playerMask = mask; this.playerRoutes = null; }
   private exactPlayerDestination = false;
   private playerBounds: { x0: number; x1: number; z0: number; z1: number } | null = null;
   /** Story perimeters constrain player routes without closing the battle to infected or soldiers. */
@@ -50,9 +53,9 @@ export class NavGrid {
   private playerWall(wall: Wall): Wall { return { ...wall, halfX: wall.playerHalfX ?? wall.halfX, halfZ: wall.playerHalfZ ?? wall.halfZ }; }
   /** Player routes use capsule clearance; NPC-only body margins never become invisible player walls. */
   forPlayer(radius: number, cellSize = .5): NavGrid {
-    if (radius >= this.clearance - 1e-6) return this;
+    if (radius >= this.clearance - 1e-6 && !this.playerMask) return this;
     if (!this.playerRoutes || Math.abs(this.playerRoutes.clearance - radius) > 1e-6 || this.playerRoutes.cellSize !== cellSize) {
-      this.playerRoutes = new NavGrid(this.ground, this.walls, radius, this.center, this.mask, cellSize); this.playerRoutes.exactPlayerDestination = true;
+      this.playerRoutes = new NavGrid(this.ground, this.walls, radius, this.center, this.playerMask ?? this.mask, cellSize); this.playerRoutes.exactPlayerDestination = true;
       for (const [id, wall] of this.blockers) this.playerRoutes.setBlocker(id, this.playerWall(wall), true);
       this.playerRoutes.setPlayerBounds(this.playerBounds);
     }
@@ -386,6 +389,7 @@ export class NavGrid {
   /** Shared string-pulled route: skip all visible waypoints, so actors do not zig-zag on the grid. */
   /** `nearest`: when the target is unreachable (a click into a fenced yard), route to the reachable cell closest to it. */
   steer(position: { x: number; z: number }, target: { x: number; z: number }, route: { path: number[]; goal: number; pathIndex: number; hold?: number }, radius: number, waypoint: { x: number; z: number }, budget = 1600, nearest = false): boolean {
+    if (nearest && this.playerMask) return this.forPlayer(radius).steer(position, target, route, radius, waypoint, budget, nearest);
     if (nearest && this.playerBounds) {
       const b = this.playerBounds, margin = Math.max(radius, this.clearance);
       target = { x: Math.max(b.x0 + margin, Math.min(b.x1 - margin, target.x)), z: Math.max(b.z0 + margin, Math.min(b.z1 - margin, target.z)) };

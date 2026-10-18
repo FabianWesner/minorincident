@@ -15,7 +15,7 @@ export class ControlIntent {
   private attack: { id: number; side: 'LEFT' | 'RIGHT'; started: boolean; mouseAttack?: boolean; until?: number; ground?: boolean } | null = null;
   /** The infected the current click command attacks (melee resolves it first, so a downed target takes the ground hit). */
   get targetId(): number | null { return this.attack?.id ?? null; }
-  private get nav() { const nav = this.world.infected?.nav; return this.world.missions?.state.l4 ? nav?.forPlayer(survivor.radius + .02, .25) : nav; }
+  private get nav() { const nav = this.world.infected?.nav; return this.world.missions?.state.l4 ? nav?.forPlayer(survivor.radius + .02, .25) : this.world.missions?.state.l6 ? nav?.forPlayer(this.routeClearance) : nav; }
   private get routeClearance(): number { return survivor.radius + (this.world.missions?.state.l4 ? .02 : .1); }
   constructor(private readonly world: SimWorld) {}
   snapshot() { return this.moveTarget || this.attack ? structuredClone({ moveTarget: this.moveTarget, attack: this.attack }) : null; }
