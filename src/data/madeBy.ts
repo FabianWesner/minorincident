@@ -6,8 +6,8 @@ export const madeBy = {
   headline: 'Made by Fabian Wesner, with a crew of AI agents',
   author: { name: 'Fabian Wesner', role: 'Idea, direction and product owner', url: 'https://www.linkedin.com/in/fabian-wesner/' },
   groups: [
-    { id: 'models', heading: 'AI models by Anthropic', names: ['Claude Opus 5.5', 'Claude Sonnet 5.5', 'Claude Haiku 5.5', 'Claude Fable 5.1'] },
-    { id: 'models-openai', heading: 'AI models by OpenAI', names: ['GPT-6.1 Sol', 'GPT-6 Luna', 'GPT-6 Astra'] },
+    { id: 'models', heading: 'LLMs by Anthropic', names: ['Claude Opus 5.5', 'Claude Sonnet 5.5', 'Claude Haiku 5.5', 'Claude Fable 5.1'] },
+    { id: 'models-openai', heading: 'LLMs by OpenAI', names: ['GPT-6.1 Sol', 'GPT-6 Luna', 'GPT-6 Astra'] },
     { id: 'harnesses', heading: 'Harnesses', names: ['Claude Code (Anthropic)', 'OpenAI Codex CLI', 'codex-scheduler (lane orchestration)'] },
     { id: 'tools', heading: 'Tools', names: ['Blender (headless asset builds)'] },
   ] as readonly MadeByGroup[],
