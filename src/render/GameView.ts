@@ -458,14 +458,10 @@ export class GameView implements Lifecycle {
       void this.warming.catch(error => console.error(error));
       return;
     }
+    // Any scene with VFX takes the full warm-up on both backends (hidden blast/fireball/debris/puff/flame pools,
+    // and the PostFx heat-haze graph compile behind the loading card, WebGL programs and WebGPU pipelines alike).
     if (fullWarmUp) await warm();
-    else if (!this.vfx || this.renderer.selectedBackend === 'webgl') {
-      // Hidden VFX pools (fireball/soot, debris, puffs, flames, particles) are invisible until the first effect, so a plain
-      // compile skipped them and the first blast linked their programs in play (blast-stress / Scene Lab cold hitch).
-      const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
-      const restore = this.vfx?.prewarm(focus.x, focus.z);
-      try { await (this.postFx ? this.postFx.compile() : this.renderer.compileAsync(this.scene, this.camera)); } finally { restore?.(); }
-    }
+    else await (this.postFx ? this.postFx.compile() : this.renderer.compileAsync(this.scene, this.camera));
     // The horizon's rocks enter the view well after departure. Warm every coarse
     // material in the gameplay HDR context before control, rather than linking
     // a cold WebGL sidewalk shader synchronously at the first crossing seam.
@@ -727,6 +723,26 @@ export class GameView implements Lifecycle {
   /** Drawn ground of the current district view (roads 5 cm above the sim plane, paving, road paint) for tyre contacts. */
   private readonly drawnGround = (x: number, z: number) => this.districts?.groundAt(x, z) ?? null;
   labProbes() { return { gunMeshes: [...(this.actions?.gunMeshes() ?? []), ...(this.npcs?.gunMeshes() ?? [])], heldProps: this.npcs?.heldProps() ?? [], districts: this.districts, character: this.character, npcs: this.npcs, bicycle: this.bicycle, vehicles: this.vehicles, drawnCorpses: () => [...(this.crowd?.drawnCorpses() ?? []), ...(this.npcs?.drawnCorpses() ?? [])], drawnPickups: () => this.interactions?.drawnPickups() ?? [] }; }
+  private readonly heatPoint = new Vector3(); private readonly heatEdge = new Vector3(); private readonly heatRight = new Vector3();
+  /** High-tier heat haze: project the Blasts heat sources (fires, fresh blasts) to UV discs for the PostFx shimmer. */
+  private updateHeatHaze(postFx: PostFx): void {
+    if (!postFx.haze) return;
+    const sources = this.vfx?.visible ? this.vfx.blasts.heatSources() : [];
+    postFx.heatTime.value = this.vfx?.time ?? 0; postFx.heatAspect.value = this.camera.aspect;
+    this.heatRight.setFromMatrixColumn(this.camera.matrixWorld, 0);
+    let n = 0;
+    for (const s of sources) {
+      if (n >= postFx.heat.length) break;
+      this.heatPoint.set(s.x, s.y, s.z).project(this.camera);
+      if (this.heatPoint.z > 1 || Math.abs(this.heatPoint.x) > 1.4 || Math.abs(this.heatPoint.y) > 1.4) continue;
+      this.heatEdge.set(s.x, s.y, s.z).addScaledVector(this.heatRight, s.radius).project(this.camera);
+      // UV height units: half the NDC distance, scaled by aspect because NDC x spans the width.
+      const radius = Math.abs(this.heatEdge.x - this.heatPoint.x) * .5 * this.camera.aspect;
+      // Three's post quad UV has a top-left origin on both backends (GLSL flips render-target reads to match).
+      postFx.heat[n++].set(this.heatPoint.x * .5 + .5, .5 - this.heatPoint.y * .5, radius, s.strength);
+    }
+    for (let i = n; i < postFx.heat.length; i++) postFx.heat[i].w = 0;
+  }
   renderDiagnostics() { return { renderer: this.renderer.diagnostics(), postFx: this.postFx?.diagnostics() ?? null, retiredPostFx: this.retiredPostFx, generation: this.generation }; }
   renderProbe() {
     const c = this.camera, finite = (m: { elements: number[] }) => m.elements.every(Number.isFinite);
@@ -970,7 +986,7 @@ export class GameView implements Lifecycle {
       this.renderer.render(this.scene, this.camera);
       for (const [mesh, material] of this.savedMaterials) mesh.material = material;
       this.savedMaterials.clear(); this.scene.background = background; this.scene.backgroundNode = backgroundNode; this.scene.fog = fog; this.renderer.shadowMap.enabled = shadow;
-    } else if (this.postFx) this.postFx.render(); else this.renderer.render(this.scene, this.camera);
+    } else if (this.postFx) { this.updateHeatHaze(this.postFx); this.postFx.render(); } else this.renderer.render(this.scene, this.camera);
     // Health bars keep their CSS size and contrast through DOF, bloom and vignette.
     if (this.healthBars?.count && !this.probeHide.bars && !this.idPass && !this.windowMask && !this.foliageMask) {
       this.renderBars();
