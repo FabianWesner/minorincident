@@ -35,8 +35,11 @@ for (const model of regularInfectedModels) for (const lod of ['lod1', 'lod2']) t
   const lowestEye = Math.min(...original.flatMap((value, i) => value ? [position.getY(i)] : []));
   for (let i = 0; i < emissive.count; i++) if (skin.getX(i) === -1 || position.getY(i) < lowestEye - .004) expect(emissive.getX(i)).toBe(original[i]);
   if (lod === 'lod2') {
-    const before = surfaceAreas(geometry);
-    await simplifyCrowdLod(geometry, .025, .2, true);
+    const before = surfaceAreas(geometry), originalIndices = geometry.index!.count;
+    await simplifyCrowdLod(geometry, .025, .1, true);
+    // Whole-part fallback preserves the skin but pushes L5 beyond E18's
+    // 500k low-tier limit. Keep a useful reduction alongside the surface gate.
+    expect(geometry.index!.count, `${model} low-tier triangle reduction`).toBeLessThanOrEqual(originalIndices * .7);
     const after = surfaceAreas(geometry);
     for (const name of ['torso', 'armL', 'armR', 'foreArmL', 'foreArmR', 'handL', 'handR', 'legL', 'legR', 'shinL', 'shinR']) {
       const part = baked.clip.parts.indexOf(name);

@@ -178,7 +178,7 @@ export class CrowdView extends Group {
       if (!healthy) markInfectedEyeCores(baked.geometry);
       if (lod === 'lod2' && !fallback) {
         // Preserve colors, eyes, rigid-part ownership and each part's surface.
-        await simplifyCrowdLod(baked.geometry, this.low ? .025 : .01, this.low ? .2 : .35, !healthy);
+        await simplifyCrowdLod(baked.geometry, this.low ? .025 : .01, this.low ? (healthy ? .2 : .1) : .35, !healthy);
         // Settled bodies retain identity and color but need no living figure detail.
         const corpse = baked.geometry.clone(); await simplifyCrowdLod(corpse, .04, .1, !healthy);
         if (this.disposed) { corpse.dispose(); baked.geometry.dispose(); return; }
