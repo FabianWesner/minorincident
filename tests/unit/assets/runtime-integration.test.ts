@@ -36,7 +36,8 @@ test('chair distance LODs preserve the reviewed solid slats instead of decimatin
   }
 });
 test('production runtime exports are integrated, while missing exports retain their status @E17-AC09', () => {
-  const files = new Set(execFileSync('git', ['ls-files', '-z'], { encoding: 'utf8' }).split('\0'));
+  const paths = manifest.flatMap(def => 'sourceGlb' in def && def.sourceGlb ? [def.sourceGlb, def.glb] : []);
+  const files = new Set(execFileSync('git', ['ls-files', '-z', '--', ...paths], { encoding: 'utf8' }).split('\0'));
   for (const def of manifest) if ('sourceGlb' in def && def.sourceGlb && files.has(def.sourceGlb) && files.has(def.glb)) expect(def.status, def.id).toBe('integrated');
 });
 test('runtime survivor rigs accept normalized heights and keep ground contact @E17-AC05 @E04-AC08', async () => {
