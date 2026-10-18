@@ -7,7 +7,7 @@ test.beforeEach(() => { test.fixme(true, 'old L1 diner flow retired (L1 v2)'); }
 test.use({ headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--disable-frame-rate-limit', '--disable-gpu-vsync'] } });
 for (const mobile of [false, true]) test.describe(mobile ? 'portrait low' : 'desktop high', () => {
   test.use({ viewport: mobile ? { width: 390, height: 844 } : { width: 1600, height: 900 }, isMobile: mobile, hasTouch: mobile });
-  test('@E19 grade uses one lit material model and HDR diner emitters in WebGL2', async ({ page }) => {
+  test('@gpu @E19 grade uses one lit material model and HDR diner emitters in WebGL2', async ({ page }) => {
     test.setTimeout(120_000);
     await menuStart(page);
     await page.evaluate(async mobile => {

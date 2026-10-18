@@ -32,13 +32,16 @@ if [ ! -f "/srv/mi/nm/$H/.ok" ]; then
     echo "[runner] npm ci (lockfile hash $H)"
     rm -rf "/srv/mi/nm/$H"; mkdir -p "/srv/mi/nm/$H"
     cp package.json package-lock.json "/srv/mi/nm/$H/"
-    (cd "/srv/mi/nm/$H" && npm ci --no-audit --no-fund --loglevel=error && npx playwright install chromium >/dev/null; sudo -n env PATH=$PATH npx playwright install-deps chromium >/dev/null 2>&1 || true; touch .ok) || { echo "[runner] npm ci failed" >&2; rm -rf "/srv/mi/nm/$H"; exit 70; }
+    (cd "/srv/mi/nm/$H" && npm ci --no-audit --no-fund --loglevel=error && touch .ok) || { echo "[runner] npm ci failed" >&2; rm -rf "/srv/mi/nm/$H"; exit 70; }
   fi
   flock -u 8
 fi
 if [ "$(cat .mi-nmhash 2>/dev/null)" != "$H" ] || [ ! -d node_modules ]; then
   rm -rf node_modules && cp -al "/srv/mi/nm/$H/node_modules" node_modules && echo "$H" > .mi-nmhash
 fi
+setup="$PWD/tools/remote/browser-setup.sh"
+# Repair old snapshots as well as provisioning new caches. Never certify a failed install.
+(cd "/srv/mi/nm/$H" && bash "$setup") || exit 70
 # 3. run
 eval "for e in $MI_ENVS; do export \"\$e\"; done"
 export MI_REMOTE=1 CI=1
