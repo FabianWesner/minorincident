@@ -1,0 +1,30 @@
+{
+  "sourceCommit": "c31833b2539bf74c0d5ff80402a0a13ba36d93de",
+  "runner": "2.31.10.108",
+  "job": "/srv/mi/jobs/verify-sweep-78b389-56152-1792353835",
+  "browserPolicy": "No browser commands executed, locally or remotely; command guard records null exits for omitted Playwright stages.",
+  "nodeWorkersPerEpic": {
+    "E07": 1,
+    "E22": 1,
+    "E23": 4,
+    "E24": 4,
+    "E25": 4,
+    "E26": 4,
+    "E27": 4,
+    "E28": 4,
+    "E29": 4,
+    "E30": 4,
+    "E31": 4,
+    "E32": 4
+  },
+  "unitWorkers": 4,
+  "verifySourceSha256": "b2dba94da87f74285f33905eb9a0a43a04dccb0415f9f435212c102a7eb0a789",
+  "entryCopyInitialSha256": "7d099ff6107dcf4da9bd16ae262a597953bb4de2d8f024ffe7071701d1861b7b",
+  "entryCopySha256": "b555787c53c64b3a1733abd9c46559820eab45e634cb876e34302687881139c8",
+  "timingConcurrency": "vitest timing project fileParallelism=false, groupOrder=1; functional project groupOrder=2",
+  "adapterChange": "After E22 Vitest launched: raise subsequent functional selections from one to four workers within the repository cap. Exact checked commands are authoritative.",
+  "routeArtifacts": "Copy E31/E32 campaign/route/residency reports after the checks before remote cleanup.",
+  "completed": true,
+  "allNodeSelectionsPassed": true,
+  "unitPassed": 1620
+}

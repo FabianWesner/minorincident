@@ -1,0 +1,81 @@
+{
+  "target": "E26",
+  "epics": [
+    "E26"
+  ],
+  "pattern": "@(?:E26)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+  "browserOmitted": true,
+  "checks": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/sim-lock.sh",
+        "npx",
+        "vitest",
+        "run",
+        "-t",
+        "@(?:E26)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--maxWorkers=4",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/epics/E26/vitest.json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "npx",
+        "playwright",
+        "test",
+        "--grep",
+        "@(?:E26)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--grep-invert",
+        "@perf",
+        "--workers=1"
+      ],
+      "exitCode": null
+    },
+    {
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "npx",
+        "playwright",
+        "test",
+        "--grep",
+        "^(?=.*(?:@(?:E26)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)))(?=.*@perf)",
+        "--project=chromium",
+        "--workers=1"
+      ],
+      "exitCode": null
+    }
+  ]
+}

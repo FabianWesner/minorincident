@@ -1,0 +1,242 @@
+{
+  "target": "E28",
+  "success": true,
+  "startTime": 1792357259494,
+  "passed": 25,
+  "failed": 0,
+  "pending": 3132,
+  "total": 3157,
+  "selectedAssertions": [
+    {
+      "fullName": "live weather L1 @E28 seeded continuous authored blend",
+      "status": "passed",
+      "duration": 246.15788900000007,
+      "failureMessages": []
+    },
+    {
+      "fullName": "live weather L3 @E28 seeded continuous authored blend",
+      "status": "passed",
+      "duration": 173.9841320000005,
+      "failureMessages": []
+    },
+    {
+      "fullName": "live weather L5 @E28 seeded continuous authored blend",
+      "status": "passed",
+      "duration": 148.2251069999993,
+      "failureMessages": []
+    },
+    {
+      "fullName": "live rain @E28 blend onset, wetness and clearing stay continuous",
+      "status": "passed",
+      "duration": 11.783913000000211,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E28-01 @E28 @E28-AC01 seeded gust/lightning/wetness timeline and campaign keys",
+      "status": "passed",
+      "duration": 16.051676000000043,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E28-02 @E28 @E28-AC02 rain changes real noise, Molotov duration and wheel friction",
+      "status": "passed",
+      "duration": 38.75359900000058,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E28-03 @E28 @E28-AC03 heavy rain saturates in 60 seconds and dries with 90s half-life",
+      "status": "passed",
+      "duration": 11.071928999999727,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E28-04 @E28 @E28-AC04 lightning reveals only within 40m for 30 ticks and delays thunder by distance",
+      "status": "passed",
+      "duration": 1.7570339999992939,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E28-05 @E28 @E28-AC05 fog perception uses 60% of the ordinary sight range",
+      "status": "passed",
+      "duration": 1.313452000000325,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E28-06 @E28 @E28-AC06 wind biases at least 60% of spread cells downwind over 20 trials",
+      "status": "passed",
+      "duration": 5.035851999999977,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E28-07 @E28 @E28-AC07 moving player/infected record tracks and snow/ash apply grip",
+      "status": "passed",
+      "duration": 2.6506799999997384,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E28-08 @E28 @E28-AC08 every override preserves all registered mission graph walks",
+      "status": "passed",
+      "duration": 29401.049976,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E28-06b @E28 @E28-AC06 strong gusts move light Rapier props",
+      "status": "passed",
+      "duration": 45.92574400000012,
+      "failureMessages": []
+    },
+    {
+      "fullName": "footprints @E28 @E28-AC07 alternate at stride distance and reject airborne/teleported steps",
+      "status": "passed",
+      "duration": 1.625028000002203,
+      "failureMessages": []
+    },
+    {
+      "fullName": "footprints @E28 @E28-AC07 stay on bridge support and do not offset through its barrier",
+      "status": "passed",
+      "duration": 0.9034539999993285,
+      "failureMessages": []
+    },
+    {
+      "fullName": "S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash",
+      "status": "passed",
+      "duration": 438.5156860000002,
+      "failureMessages": []
+    },
+    {
+      "fullName": "S-05-foundation @smoke empty scripted 1800-tick golden hash",
+      "status": "passed",
+      "duration": 250.66083799999615,
+      "failureMessages": []
+    },
+    {
+      "fullName": "S-06 @E05 @smoke each category fires/hits; swept projectile cannot tunnel through a dummy",
+      "status": "passed",
+      "duration": 210.14972399999533,
+      "failureMessages": []
+    },
+    {
+      "fullName": "20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07",
+      "status": "passed",
+      "duration": 2849.348340000004,
+      "failureMessages": []
+    },
+    {
+      "fullName": "stage1 navigation capsule and NPC traces meet motion budgets @smoke",
+      "status": "passed",
+      "duration": 312.9489160000012,
+      "failureMessages": []
+    },
+    {
+      "fullName": "crowd fades preserve head position when clips change or interrupt @smoke",
+      "status": "passed",
+      "duration": 146.62759899999946,
+      "failureMessages": []
+    },
+    {
+      "fullName": "weather surface graphs @E28 cached graphs keep see-through and frozen corpses following weather after the source is disposed",
+      "status": "passed",
+      "duration": 28.004891000004136,
+      "failureMessages": []
+    },
+    {
+      "fullName": "E28 CLI @E28 reserves quiet timing separately and retains functional/perf evidence",
+      "status": "passed",
+      "duration": 430.03420700000424,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E26 @E28 a quiet timing failure keeps the verifier red and records its exit code",
+      "status": "passed",
+      "duration": 350.63775299998815,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E26 @E28 quiet admission refusal cannot reuse functional results or a previous GPU artifact",
+      "status": "passed",
+      "duration": 387.3679790000024,
+      "failureMessages": []
+    }
+  ],
+  "checks": {
+    "target": "E28",
+    "epics": [
+      "E28"
+    ],
+    "pattern": "@(?:E28)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+    "browserOmitted": true,
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/sim-lock.sh",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "@(?:E28)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--maxWorkers=4",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E28/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "@(?:E28)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--grep-invert",
+          "@perf",
+          "--workers=1"
+        ],
+        "exitCode": null
+      },
+      {
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "^(?=.*(?:@(?:E28)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)))(?=.*@perf)",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": null
+      }
+    ]
+  }
+}

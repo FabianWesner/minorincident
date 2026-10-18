@@ -132,6 +132,8 @@ Reuse existing ports first per `08-bruno-reuse-map.md`: `InstancedGroup`, `Quali
 
 ## 8. Acceptance criteria
 
+**Acceptance decision (verify-sweep, 2026-10-18): E32-AC04 is obsolete as a gate: PO 2026-10-09 forbids long bot batteries; the orchestrator drops the novice 45–50 min proof, while E32-AC32 continuous campaign completion remains required.**
+
 All rows **NEW 2026-10-13**, each tagged `@E32-ACxx`; expected test IDs `T-E32-xx`. Defaults in §4–5 are measurable starting targets.
 
 | ID | Criterion | Verification |

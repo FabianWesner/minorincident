@@ -1,0 +1,308 @@
+{
+  "target": "E25",
+  "success": true,
+  "startTime": 1792356846212,
+  "passed": 36,
+  "failed": 0,
+  "pending": 3121,
+  "total": 3157,
+  "selectedAssertions": [
+    {
+      "fullName": "S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash",
+      "status": "passed",
+      "duration": 433.3697589999997,
+      "failureMessages": []
+    },
+    {
+      "fullName": "S-05-foundation @smoke empty scripted 1800-tick golden hash",
+      "status": "passed",
+      "duration": 301.76011899999867,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E25-07s @E25 @E25-AC07 generator interaction starts three emissive transitions in 1.5 seconds; power.off is immediate",
+      "status": "passed",
+      "duration": 165.68587900000057,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E25-08s @E25 @E25-AC08 one pistol hit breaks a lamp once, emits sparks, and lowers darkness sight by exactly 40%",
+      "status": "passed",
+      "duration": 37.553523999999015,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E25-08p @E25 @E25-AC08 darkness feeds both detection and tracking in the production perception path",
+      "status": "passed",
+      "duration": 7.675251999997272,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E25-07c @E25 @E25-AC07 power and broken-lamp state rebind from plain entity checkpoint components",
+      "status": "passed",
+      "duration": 7.171308999997564,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E25-07i @E25 authored lamps preserve gameplay IDs across creation and checkpoint restore",
+      "status": "passed",
+      "duration": 3.602991000003385,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E25-07m @E25 @E25-AC07 authored emergency power survives a district power revision",
+      "status": "passed",
+      "duration": 364.0334569999977,
+      "failureMessages": []
+    },
+    {
+      "fullName": "S-06 @E05 @smoke each category fires/hits; swept projectile cannot tunnel through a dummy",
+      "status": "passed",
+      "duration": 178.7304640000002,
+      "failureMessages": []
+    },
+    {
+      "fullName": "20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07",
+      "status": "passed",
+      "duration": 2830.9532550000004,
+      "failureMessages": []
+    },
+    {
+      "fullName": "stage1 navigation capsule and NPC traces meet motion budgets @smoke",
+      "status": "passed",
+      "duration": 209.0518490000013,
+      "failureMessages": []
+    },
+    {
+      "fullName": "crowd fades preserve head position when clips change or interrupt @smoke",
+      "status": "passed",
+      "duration": 189.41981300000043,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E25 atmosphere defaults rebase through campaign transitions and live edits retain uniform identity",
+      "status": "passed",
+      "duration": 8.401433999999426,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E25 preset edits round trip without leaking into source data",
+      "status": "passed",
+      "duration": 3.6101960000014515,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E25 atmosphere changes preserve night aura, road lift and exit continuity",
+      "status": "passed",
+      "duration": 13.004909000002954,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E25 lamp insects stay bounded, follow powered anchors and disappear on low/power-off",
+      "status": "passed",
+      "duration": 0.6922950000007404,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E25-14g @E25 @E25-AC14 gripped far civilian remains within its authored triangle count and retains vertex channels",
+      "status": "passed",
+      "duration": 424.655270999996,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E25-05 @E25 @E25-AC05 sixty-second walk past forty anchors holds promotions below two per second on both tiers",
+      "status": "passed",
+      "duration": 180.74217900000076,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E25-05l @E25 @E25-AC05 hero transitions preserve cached shadow nodes and render only one source",
+      "status": "passed",
+      "duration": 5.791968999998062,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E25-02 @E25 @E25-AC02 every light:* anchor in the shipped GLBs parses into a valid ss_light and the runtime table is current",
+      "status": "passed",
+      "duration": 1149.4332490000015,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E25-02b @E25 @E25-AC02 the validator rejects §6 violations: tokens, intensity, sky-pointing spots, missing emissive nodes",
+      "status": "passed",
+      "duration": 4.0178390000000945,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E25-U1 @E25 layout assembly places authored lights in world space and follows decay power groups",
+      "status": "passed",
+      "duration": 122.57626399999572,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E25-U2 @E25 light field budget, spot footprints and the E27 transient hook",
+      "status": "passed",
+      "duration": 19.45111299999553,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E25-U3 @E25 level moods: morning, midday and afternoon skip the field; dusk and night are lit and readable",
+      "status": "passed",
+      "duration": 0.5716299999985495,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E25-03u @E25 @E25-AC03 static visibility polygon ends at the fence and retains the unobstructed pool",
+      "status": "passed",
+      "duration": 6.320317999998224,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E25-03b @E25 @E25-AC03 ignore the source pole footprint, but clip against other buildings",
+      "status": "passed",
+      "duration": 0.34510600000066916,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E25-12s @E25 @E25-AC12 real house windows retain power indices and normalized room coordinates in every LOD",
+      "status": "passed",
+      "duration": 477.73772100000497,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E25-11s @E25 @E25-AC11 shipped car primitives preserve gloss paint, environment-dominant chrome, and matte tyres",
+      "status": "passed",
+      "duration": 25.417178999996395,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E25-05p @E25 tinted and plain instances use one warmed vertex-input layout and clear old tint",
+      "status": "passed",
+      "duration": 8.32413799999631,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E25-11p T-E25-12p @E25 shared district materials preserve window and polished-floor shader graphs",
+      "status": "passed",
+      "duration": 27.565589000005275,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E25-13b @E25 @E25-AC13 shared light-bearing dressing keeps the player see-through graph",
+      "status": "passed",
+      "duration": 3.8155799999949522,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E25-14g @E25 warm-up preserves the active gameplay light list",
+      "status": "passed",
+      "duration": 13.882301999998163,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E09-AC10 @E25-AC11 glass and opaque paint sharing a palette token stay distinct (false, false)",
+      "status": "passed",
+      "duration": 21.15372099999513,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E09-AC10 @E25-AC11 glass and opaque paint sharing a palette token stay distinct (false, true)",
+      "status": "passed",
+      "duration": 5.954976000008173,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E09-AC10 @E25-AC11 glass and opaque paint sharing a palette token stay distinct (true, false)",
+      "status": "passed",
+      "duration": 6.466852999990806,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E09-AC10 @E25-AC11 glass and opaque paint sharing a palette token stay distinct (true, true)",
+      "status": "passed",
+      "duration": 3.320144999990589,
+      "failureMessages": []
+    }
+  ],
+  "checks": {
+    "target": "E25",
+    "epics": [
+      "E25"
+    ],
+    "pattern": "@(?:E25)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+    "browserOmitted": true,
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/sim-lock.sh",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "@(?:E25)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--maxWorkers=4",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E25/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "@(?:E25)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--grep-invert",
+          "T-E25-14",
+          "--workers=1"
+        ],
+        "exitCode": null
+      },
+      {
+        "command": [
+          "sh",
+          "tools/perf/quiet-run.sh",
+          "npx",
+          "playwright",
+          "test",
+          "tests/perf/e25-lighting.spec.ts",
+          "tests/perf/e25-light-lab.spec.ts",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": null
+      }
+    ]
+  }
+}

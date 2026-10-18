@@ -1,0 +1,80 @@
+{
+  "target": "E23",
+  "epics": [
+    "E23"
+  ],
+  "pattern": "@(?:E23)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+  "browserOmitted": true,
+  "checks": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "typecheck"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "npm",
+        "run",
+        "build"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/sim-lock.sh",
+        "npx",
+        "vitest",
+        "run",
+        "-t",
+        "@(?:E23)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--maxWorkers=4",
+        "--reporter=default",
+        "--reporter=json",
+        "--outputFile=test-results/epics/E23/vitest.json"
+      ],
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "sh",
+        "tools/e2e-lock.sh",
+        "npx",
+        "playwright",
+        "test",
+        "--grep",
+        "@(?:E23)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+        "--grep-invert",
+        "@perf",
+        "--workers=1"
+      ],
+      "exitCode": null
+    },
+    {
+      "command": [
+        "sh",
+        "tools/perf/quiet-run.sh",
+        "npx",
+        "playwright",
+        "test",
+        "tests/perf/l5-budgets.spec.ts",
+        "--project=chromium",
+        "--workers=1"
+      ],
+      "exitCode": null
+    }
+  ]
+}

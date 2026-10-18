@@ -1,0 +1,737 @@
+{
+  "target": "E22",
+  "success": true,
+  "startTime": 1792354312988,
+  "passed": 110,
+  "failed": 0,
+  "pending": 3047,
+  "total": 3157,
+  "selectedAssertions": [
+    {
+      "fullName": "S-05-combat @E05 @smoke 1800 combat ticks match a pinned golden gameplay hash",
+      "status": "passed",
+      "duration": 472.70538100000067,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E22 broken army lines stay destructible cover without a player rebuild interaction in war and collapse",
+      "status": "passed",
+      "duration": 6530.094105000004,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 war tank Alphas resume combat and bodies persist (high, seed 1) @E22-AC12 @E22-AC14",
+      "status": "passed",
+      "duration": 2888.060501,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 war tank Alphas resume combat and bodies persist (high, seed 2) @E22-AC12 @E22-AC14",
+      "status": "passed",
+      "duration": 3110.311499999996,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 war tank Alphas resume combat and bodies persist (high, seed 3) @E22-AC12 @E22-AC14",
+      "status": "passed",
+      "duration": 2692.2324630000003,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 war tank Alphas resume combat and bodies persist (low, seed 1) @E22-AC12 @E22-AC14",
+      "status": "passed",
+      "duration": 1614.6628370000035,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 war tank Alphas resume combat and bodies persist (low, seed 2) @E22-AC12 @E22-AC14",
+      "status": "passed",
+      "duration": 1563.9129909999974,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 war tank Alphas resume combat and bodies persist (low, seed 3) @E22-AC12 @E22-AC14",
+      "status": "passed",
+      "duration": 1500.5046780000048,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 collapse director T-E22-13-collapse @E22 @E22-AC13 idle courier: 15-25 new infected enter inside the perimeter, the three lines fall on their beats, Alphas break a slot and knock crews down",
+      "status": "passed",
+      "duration": 51969.16134,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 collapse director T-E22-13-escape @E22 @E22-AC13 @E22-AC15 l4-collapse-2: at \"Fall back!\" the horde leaves a gap on the escape street; corpses persist throughout the war and no stack surrounds a still courier",
+      "status": "passed",
+      "duration": 48699.845155999996,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 collapse director T-E22-13-collapse-shooter @E22 @E22-AC13 an optimal machine gunner (one down every 0.1 s in 26 m) cannot save the lines: the beats keep their windows",
+      "status": "passed",
+      "duration": 41457.549738,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 collapse director T-E22-13-collapse-low @E22 @E22-AC13 the low tier keeps the beats inside its caps",
+      "status": "passed",
+      "duration": 25675.493879999995,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 convoy ride collisions T-E22-04c @E22 @E22-AC04 during the live ride no convoy vehicle overlaps another vehicle entity (convoy, real cars, traffic)",
+      "status": "passed",
+      "duration": 4050.857289000007,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 convoy ride collisions T-E22-04f @E22 PO 10-12 \"move this soldier away, all busses drive through him\": during the live ride no actor stands inside a convoy vehicle hull",
+      "status": "passed",
+      "duration": 4084.4813180000056,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 convoy ride collisions T-E22-04e @E22 PO 10-12 \"sound when the bus is driving\": every convoy vehicle emits engine events following speed, the courier bus is the muffled one, engines stop after the idle",
+      "status": "passed",
+      "duration": 4696.5353490000125,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 convoy ride collisions T-E22-04d @E22 PO 10-12 \"Bus is extremely vibrating\": the player bus pose has no high-frequency jitter over the whole ride",
+      "status": "passed",
+      "duration": 3916.571502000006,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO #17 @E22 the collapse walk has steady sight-driven action and preserves the newbie death limit and E18 cap",
+      "status": "passed",
+      "duration": 104435.51879899998,
+      "failureMessages": []
+    },
+    {
+      "fullName": "PO #17b @E22 the route to the farther cellar lasts two to three minutes through Fairhaven",
+      "status": "passed",
+      "duration": 0.4518590000225231,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E22 the line break immediately names and marks the cellar and retains its escape checkpoint after death",
+      "status": "passed",
+      "duration": 4790.888757999986,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E22 L4 plaza permits mouse and direct movement on open plaza tiles",
+      "status": "passed",
+      "duration": 6369.814917000011,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E22 L4 war permits mouse and direct movement on open plaza tiles",
+      "status": "passed",
+      "duration": 13047.48206499999,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E22 L4 respawn permits mouse and direct movement on open plaza tiles",
+      "status": "passed",
+      "duration": 12902.300541000033,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E22 a real L4 armory-table corner cannot trap an outward click",
+      "status": "passed",
+      "duration": 4293.35116999998,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E22 PO16b visible perimeter holds courier at the reported south edge, infected vault it; one-metre plaza gate",
+      "status": "passed",
+      "duration": 20638.338647000026,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 PO round 10-13 T-E22-po-1 @E22 @E22-AC04 the courier gets off the first bus inside the military area and cannot walk out before the line breaks",
+      "status": "passed",
+      "duration": 16519.997681999987,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 PO round 10-13 T-E22-po-2 @E22 @E22-AC05 @E22-AC07 soldiers relaxed before the alarm and at their posts within 10 s of it; people in routines, then fleeing and hiding",
+      "status": "passed",
+      "duration": 10078.310159999994,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 PO round 10-13 T-E22-civilians-stay-high @E22 @E22-AC07 pre-alarm camp civilians remain human and panic/hide; incoming infected are new entities",
+      "status": "passed",
+      "duration": 50612.81857900001,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 PO round 10-13 T-E22-civilians-stay-low @E22 @E22-AC07 pre-alarm camp civilians remain human and panic/hide; incoming infected are new entities",
+      "status": "passed",
+      "duration": 25839.305798000016,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 PO round 10-13 T-E22-po-3 @E22 @E22-AC10 @E22-AC12 infected come spread from all sides (and from inside the camp); six to eight Alphas reach the lines and nests; the beats hold",
+      "status": "passed",
+      "duration": 46695.610144999984,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E22 PO15 closed refuge doors keep the entire fleeing group visibly in the world, across L1–L10",
+      "status": "passed",
+      "duration": 17430.041558000026,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 @E22 @E22-AC17 three deaths after Fall back still reach the cellar from the escape checkpoint",
+      "status": "passed",
+      "duration": 78910.09485700005,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 @E22 @E22-AC17 a mid-war death keeps lost lines, soldiers, and the collapse clock",
+      "status": "passed",
+      "duration": 48050.960450999904,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 @E22 @E22-AC17 director goals respect the shared respawn pause and resume when it expires",
+      "status": "passed",
+      "duration": 306.8128879999276,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 @E22 @E22-AC17 respawn clears live and recovering infected when cover blocks the outward ray",
+      "status": "passed",
+      "duration": 240.05532899999525,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 @E22 @E22-AC17 a falling line anchors at the nearest safe camp post rather than an overrun post",
+      "status": "passed",
+      "duration": 245.0090060000075,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 @E22 @E22-AC17 camp perimeter constrains player retreat routes until the gate opens, without blocking infected",
+      "status": "passed",
+      "duration": 1.427557999966666,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 The Safe City Falls T-E22-01 @E22 @E22-AC01 mission graph ride -> quartermaster -> hold -> hide -> bar is completable, no fail timer",
+      "status": "passed",
+      "duration": 3897.2949109999463,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 The Safe City Falls T-E22-02 @E22 @E22-AC02 the complete bot finishes a single seed from L4-default (bat, axe, handgun) with few deaths, in the time band",
+      "status": "passed",
+      "duration": 71601.12161400006,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 The Safe City Falls T-E22-04 @E22 @E22-AC04 convoy: five vehicles, the courier a seated passenger of a bus, 20-35 s ride, control back <= 0.5 s after the stop",
+      "status": "passed",
+      "duration": 4344.356891000061,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 The Safe City Falls T-E22-05 @E22 @E22-AC05 false safety until the first turn: zero infected, zero combat events, >= 40 civilians in routines, >= 16 soldiers on posts",
+      "status": "passed",
+      "duration": 7867.031641999958,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 The Safe City Falls T-E22-06 @E22 @E22-AC06 machine gun: 14 per round, 10/s, 4 degrees, 26 m, pierce 1, no ammunition; 5 infected at 10 m fall in <= 3 s (handgun >= 2x slower)",
+      "status": "passed",
+      "duration": 48898.77400199999,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 The Safe City Falls T-E22-07 @E22 @E22-AC07 the alarm: 40-50 s after the gun (or arrival + 100 s), 15-25 new infected enter from camp buildings or street mouths with >= 10 humans near the alarm",
+      "status": "passed",
+      "duration": 46049.41291099996,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 The Safe City Falls T-E22-08 @E22 @E22-AC08 scale: 18-22 soldiers and 60-70 civilians (24 evacuees from the buses), >= 40 % armed with pistols, hunting rifles and melee (>= 3 each); the low tier halves; caps hold",
+      "status": "passed",
+      "duration": 395.7251039999537,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 The Safe City Falls T-E22-09 @E22 @E22-AC09 allied fighters: shots from soldiers, armed civilians fight, everyone can turn (same id, look kept, weapon dropped), nobody is immune",
+      "status": "passed",
+      "duration": 19918.441733999993,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 The Safe City Falls T-E22-10 @E22 @E22-AC10 from all sides: six street and alley mouths (>= 3 mutually >= 60 degrees apart around the plaza), emergence out of view",
+      "status": "passed",
+      "duration": 23686.12536299997,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 The Safe City Falls T-E22-11 @E22 @E22-AC11 military spectacle: two HMG positions fire, trucks and an armoured vehicle stand in the plaza, the tank fires every 8-12 s away from the player and allies, the helicopter orbits and withdraws without landing",
+      "status": "passed",
+      "duration": 28032.22794000001,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 The Safe City Falls T-E22-13 @E22 @E22-AC13 the line breaks after the third lost line (\"Fall back!\", also with the idle bot): fuel-truck mega chain, objective \"Run to the cellar\", the helicopter withdraws",
+      "status": "passed",
+      "duration": 68124.05601599999,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 The Safe City Falls T-E22-14 @E22 @E22-AC14 live damage at the cellar: >= 4 fires, >= 2 burning vehicles, >= 10 broken windows, >= 6 blast scorches, all traceable to explosion/fire events of the run",
+      "status": "passed",
+      "duration": 73617.49231800006,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 The Safe City Falls T-E22-15 @E22 @E22-AC15 cellar: only the courier (and the corgi) go down, nobody can path in, the door bars, battle events go on >= 6 s, then level.completed",
+      "status": "passed",
+      "duration": 5790.05975200003,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 The Safe City Falls T-E22-16 @E22 @E22-AC16 light: L4 polar 1.15-1.30 rad, fog far >= L3 + 20 m; no smoke column before the first turn, >= 3 at the line break",
+      "status": "passed",
+      "duration": 8240.115592000075,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 The Safe City Falls T-E22-17 @E22 @E22-AC17 checkpoints preserve the live battlefield across deaths, with only live infection losses",
+      "status": "passed",
+      "duration": 54007.72627900005,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 The Safe City Falls T-E22-bots @E22 evade-only never attacks and still reaches the cellar; the low tier finishes too",
+      "status": "passed",
+      "duration": 103577.95617400017,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 The Safe City Falls T-E22-03 @E22 @E22-AC03 the newbie bot finishes (single seed; the 20-seed battery is dropped as a gate, PO 10-09) with few deaths",
+      "status": "passed",
+      "duration": 85956.4464730001,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 The Safe City Falls T-E22-12 @E22 @E22-AC12 still not enough: soldiers thin out and the infected outgrow the kills by the line break (single seed)",
+      "status": "passed",
+      "duration": 79186.94885799987,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 The Safe City Falls T-E22-12-alphas-high @E22 @E22-AC12 first Alphas use the district mouths after the internal turn, inside both caps",
+      "status": "passed",
+      "duration": 42127.264166000066,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 The Safe City Falls T-E22-12-alphas-low @E22 @E22-AC12 first Alphas use the district mouths after the internal turn, inside both caps",
+      "status": "passed",
+      "duration": 21665.063340999885,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 The Safe City Falls T-E22-13-authored-gap @E22 @E22-AC12 @E22-AC13 the authored line replaces static pallets and breaks through logged Alpha HP damage",
+      "status": "passed",
+      "duration": 421.2706730000209,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 The Safe City Falls T-E22-15-carry @E22 @E22-AC15 solitary basement completion carries the actual arsenal to L5 without pending rewards",
+      "status": "passed",
+      "duration": 3562.5524119997863,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 The Safe City Falls T-E22-anchors @E22 every authored L4 anchor resolves in the layout copy",
+      "status": "passed",
+      "duration": 201.405020999955,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, high, seed 1",
+      "status": "passed",
+      "duration": 5255.119724000106,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, high, seed 2",
+      "status": "passed",
+      "duration": 5057.003841000143,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, high, seed 3",
+      "status": "passed",
+      "duration": 5171.2949840000365,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, low, seed 1",
+      "status": "passed",
+      "duration": 3178.0298089999706,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, low, seed 2",
+      "status": "passed",
+      "duration": 3199.008219000185,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E22-04g @E22 @E22-AC04 every tick of drive/stop/unload clears posed actor footprints, low, seed 3",
+      "status": "passed",
+      "duration": 2995.00904000015,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E22-04h @E22 convoy yields to an immobile infected and resumes after clearance, high",
+      "status": "passed",
+      "duration": 2182.568716000067,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E22-04i @E22 cowering woman and pet leave the convoy route by walking, high",
+      "status": "passed",
+      "duration": 2277.995957000181,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E22-04h @E22 convoy yields to an immobile infected and resumes after clearance, low",
+      "status": "passed",
+      "duration": 1394.5418320000172,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E22-04i @E22 cowering woman and pet leave the convoy route by walking, low",
+      "status": "passed",
+      "duration": 1474.8979120000731,
+      "failureMessages": []
+    },
+    {
+      "fullName": "story protection L4 @E22 : every required actor resists bites, damage and collapse, then releases",
+      "status": "passed",
+      "duration": 579.2908029998653,
+      "failureMessages": []
+    },
+    {
+      "fullName": "S-05-foundation @smoke empty scripted 1800-tick golden hash",
+      "status": "passed",
+      "duration": 304.18198699999994,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 static T-E22-12-district @E22 @E22-AC10 @E22-AC12 Alpha approach anchors (PO 10-13: six to eight, from different directions) are on separated, reachable streets outside the defensive ring",
+      "status": "passed",
+      "duration": 59.065085999900475,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 static T-E22-13-district @E22 @E22-AC12 @E22-AC13 breakable-line anchors match existing sandbags; each pallet can open a clear crossing without moving other dressing",
+      "status": "passed",
+      "duration": 210.76266300003044,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 static T-E22-05a @E22 @E22-AC05 D-FAIR layout: valid, about 170 x 130 m, the five streets and Kessler Lane, clean W0 (no wrecks, decals or damage variants)",
+      "status": "passed",
+      "duration": 4.315300999907777,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 static T-E22-05b @E22 @E22-AC05 shops: >= 6 open shopfronts with lit interiors, apartment blocks, the town hall, the church, Kessler's Hardware and the Metro entrance stand",
+      "status": "passed",
+      "duration": 0.5406910001765937,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 static T-E22-05c @E22 @E22-AC05 army reception: sandbag line (>= 24 pallets), two HMG nests, light towers, barriers at the army gate and the street ends",
+      "status": "passed",
+      "duration": 1.1168459998443723,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 static T-E22-18a @E22 @E22-AC18 photo spots and the four pair cameras resolve to walkable points of the layout copy",
+      "status": "passed",
+      "duration": 33.94798200018704,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 static T-E22-01a @E22 @E22-AC01 two routes from the plaza to Kessler's cellar door (Harbor Street and Lakeshore), each walkable with the other closed",
+      "status": "passed",
+      "duration": 83.05972500005737,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 static T-E22-04a @E22 @E22-AC04 the convoy route is clear of every collider (bus, truck and APC footprints along the lanes) and the parked column does not overlap props",
+      "status": "passed",
+      "duration": 61.65612900000997,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 static T-E22-04b @E22 @E22-AC04 convoy vehicles never overlap each other, and never touch a static collider (any height), over the whole scripted ride and when parked",
+      "status": "passed",
+      "duration": 2666.7828280001413,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 static T-E22-16a @E22 @E22-AC16 light: polar 1.15-1.30, fog far >= L3 + 20, less haze and a cleaner sky than L3",
+      "status": "passed",
+      "duration": 0.652765000006184,
+      "failureMessages": []
+    },
+    {
+      "fullName": "L4 static T-E22-nav @E22 every refuge door is reachable from the convoy start and the cellar yard is the only island",
+      "status": "passed",
+      "duration": 24.906736999982968,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E22-04j @E22 @E22-AC04 convoy stop poses and parked military vehicles clear static solids and the closing gate",
+      "status": "passed",
+      "duration": 18.128154000034556,
+      "failureMessages": []
+    },
+    {
+      "fullName": "stage1 navigation capsule and NPC traces meet motion budgets @smoke",
+      "status": "passed",
+      "duration": 205.47846799999752,
+      "failureMessages": []
+    },
+    {
+      "fullName": "crowd fades preserve head position when clips change or interrupt @smoke",
+      "status": "passed",
+      "duration": 103.29845800000112,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E22 capsule movement escapes a valid rounded collider corner in every quadrant",
+      "status": "passed",
+      "duration": 3.346798999933526,
+      "failureMessages": []
+    },
+    {
+      "fullName": "l4-collapse-2: gore masks and death frames share one frozen material (no new shader per dismemberment combination) @E22",
+      "status": "passed",
+      "duration": 94.88689199999862,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E22 @E23 the Fairhaven follow lens stays outside the opposite building at the cellar exit",
+      "status": "passed",
+      "duration": 8.916973000159487,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E22 vehicle follow framing stays fixed across facade bounds at both zooms",
+      "status": "passed",
+      "duration": 13.095347000053152,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E22 camera clearance beside the moved Lakeshore apartment preserves framing throughout the lane",
+      "status": "passed",
+      "duration": 1.1162870000116527,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E22 seated convoy keeps a constant lens offset while passing Fairhaven facades",
+      "status": "passed",
+      "duration": 3.4842899998184294,
+      "failureMessages": []
+    },
+    {
+      "fullName": "S-06 @E05 @smoke each category fires/hits; swept projectile cannot tunnel through a dummy",
+      "status": "passed",
+      "duration": 248.7824470000014,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E12 @E22-AC04 breaker: stand progress, damage notch, no instant press, checkpoint restore",
+      "status": "passed",
+      "duration": 182.22861499991268,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E12 @E22-AC04 lever: stand progress, damage notch, no instant press, checkpoint restore",
+      "status": "passed",
+      "duration": 44.7322329999879,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E12 @E22-AC04 radio: stand progress, damage notch, no instant press, checkpoint restore",
+      "status": "passed",
+      "duration": 32.15264800004661,
+      "failureMessages": []
+    },
+    {
+      "fullName": "@E12 @E12-AC07 @E22-AC01 L4 ride -> quartermaster -> hold -> hide -> bar -> wait completes straight into progression (no cinematic, no reward screen)",
+      "status": "passed",
+      "duration": 2140.704893999966,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E22-12-focus @E22-AC12 two soldiers sustain visible Alpha fire for three seconds while closer runners are ignored",
+      "status": "passed",
+      "duration": 157.22670100000687,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E22-12-visible-range @E22-AC12 soldiers cannot prioritize an unavailable Alpha",
+      "status": "passed",
+      "duration": 3.2926099998876452,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E22-12-visible-hidden @E22-AC12 soldiers cannot prioritize an unavailable Alpha",
+      "status": "passed",
+      "duration": 2.2799590001814067,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E22-12-visible-wall @E22-AC12 soldiers cannot prioritize an unavailable Alpha",
+      "status": "passed",
+      "duration": 2.269319999963045,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E22-09-shot-block-rifle @E22-AC09 a panicking human suppresses allied shots, including a pending shot, until clear",
+      "status": "passed",
+      "duration": 7.081642000004649,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E22-09-shot-block-hmg @E22-AC09 a panicking human suppresses allied shots, including a pending shot, until clear",
+      "status": "passed",
+      "duration": 5.296470000175759,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E22-09-shot-block-pistol @E22-AC09 a panicking human suppresses allied shots, including a pending shot, until clear",
+      "status": "passed",
+      "duration": 4.772277999902144,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E22-09-shot-block-legacy @E22-AC09 a panicking human suppresses allied shots, including a pending shot, until clear",
+      "status": "passed",
+      "duration": 3.7313759999815375,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E22-09-segment @E22-AC09 humans beyond or beside the shot, hidden/dead humans and infected do not obstruct it",
+      "status": "passed",
+      "duration": 1.9952159998938441,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E22-13-gap @E22-AC12 @E22-AC13 a real Alpha charge destroys E26 HP and three regular infected traverse its gap",
+      "status": "passed",
+      "duration": 169.8501470000483,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E22-12-line-focus @E22-AC12 @E22-AC13 soldiers focus on the Alpha while three regular infected cross the line it breaks",
+      "status": "passed",
+      "duration": 122.38530399999581,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E22-09-prone @E22-AC09 a human knocked down by the shared Alpha slam blocks low shots, while rifles clear the body until it stands",
+      "status": "passed",
+      "duration": 12.19198099989444,
+      "failureMessages": []
+    },
+    {
+      "fullName": "20 corpses keep their IDs and positions after leaving 60 m and returning @smoke @E07",
+      "status": "passed",
+      "duration": 2312.420739000001,
+      "failureMessages": []
+    },
+    {
+      "fullName": "T-E22-20-unreachable @E22 @E22-AC20 an unreachable NPC target is searched once a second, a new target at once",
+      "status": "passed",
+      "duration": 240.65950299985707,
+      "failureMessages": []
+    }
+  ],
+  "checks": {
+    "target": "E22",
+    "epics": [
+      "E22"
+    ],
+    "pattern": "@(?:E22)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+    "browserOmitted": true,
+    "checks": [
+      {
+        "command": [
+          "npm",
+          "run",
+          "typecheck"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "lint"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/sim-lock.sh",
+          "npx",
+          "vitest",
+          "run",
+          "-t",
+          "@(?:E22)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--maxWorkers=1",
+          "--reporter=default",
+          "--reporter=json",
+          "--outputFile=test-results/epics/E22/vitest.json"
+        ],
+        "exitCode": 0
+      },
+      {
+        "command": [
+          "sh",
+          "tools/e2e-lock.sh",
+          "npx",
+          "playwright",
+          "test",
+          "--grep",
+          "@(?:E22)(?:-AC\\d+)?(?=\\s|$)|@smoke(?=\\s|$)",
+          "--grep-invert",
+          "@perf",
+          "--project=chromium",
+          "--workers=1"
+        ],
+        "exitCode": null
+      }
+    ]
+  }
+}
