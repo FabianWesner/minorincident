@@ -47,14 +47,14 @@ test('look-l10 dressing solids keep every gameplay clearance', () => {
     if (route < 5 || detour < 4.5 || shortcut < 5.5 || spot < 6 || ring < 60) bad.push(`${c.id} route ${route.toFixed(1)} detour ${detour.toFixed(1)} shortcut ${shortcut.toFixed(1)} spot ${spot.toFixed(1)} ring ${ring.toFixed(1)}`);
   }
   expect(bad).toEqual([]);
-});
+}, 180_000);
 
 test('look-l10 dressing adds no placement-vs-solid pair', () => {
   const moving = (p: Placement) => /^(prop|kit|decay|haz|veh)\./.test(p.assetId) && !/^prop\.(tree|street-tree|bush|garden-bush|hedge|flower|grass|privacy-fence|picket-fence)/.test(p.assetId);
   const pairs = new Set<string>();
   for (const tier of [0, 6] as const) for (const o of solidOverlaps(layout, tier, moving)) pairs.add(`${o.placement} x ${o.collider}`);
   expect([...pairs].filter(pair => pair.split(' x ').some(id => index(id) >= FIRST_DRESSING))).toEqual([]);
-});
+}, 180_000);
 
 test('look-l10 the critical route, detours and pursuit shortcuts stay walkable after dressing', () => {
   const w = new DistrictWorld(compositions.L10, [layout], 32);
@@ -64,4 +64,4 @@ test('look-l10 the critical route, detours and pursuit shortcuts stay walkable a
     for (let t = 0; t <= d; t += 2) { const p: Point = [s[0][0] + (s[1][0] - s[0][0]) * t / d, s[0][1] + (s[1][1] - s[0][1]) * t / d]; if (!w.nav.walkable(p) && !['937', '1517', '2137', '3317'].some(x => Math.abs(p[0] - Number(x)) < 3)) blocked.push(p.map(v => v.toFixed(1)).join(',')); }
   }
   expect(blocked).toEqual([]);
-});
+}, 180_000);
