@@ -178,15 +178,27 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
           .mul(normalWorld.y.smoothstep(.5, .9)).mul(this.movingFigure.oneMinus())
           .mul(lighting.heroSurfaceFill.greaterThan(0).select(1, 0));
         result.mulAssign(contact.mul(-.6).add(1));
-        // Soft local fill preserves dark fabric detail; its bounded peak stays below bloom.
+        // The same local shade reaches the figures pressed around her (followers, corgi), so the
+        // courier's own key light separates her from the crowd instead of a whitening lift.
+        const crowded = positionWorld.xz.sub(lighting.hero.xz).length().smoothstep(3, 1.5)
+          .mul(this.figureFill.greaterThan(0).select(1, 0)).mul(this.heroFigure.oneMinus())
+          .mul(lighting.heroSurfaceFill.greaterThan(0).select(1, 0));
+        result.mulAssign(crowded.mul(-.45).add(1));
         If(courierRead.greaterThan(0), () => {
-          const soft = result.max(vec3(0)).sqrt().mul(1.35);
-          const filled = mix(vec3(luminance(soft)), soft, 1.3).add(vec3(.25).mul(luminance(surface).smoothstep(.025, .1))).max(vec3(0));
-          result.assign(filled.mul(float(.9).div(max(max(filled.r, filled.g), filled.b).max(.9))));
-          // A mint edge carries the distant silhouette without whitening hair/skin.
-          const edge = lighting.heroRimEdge;
-          const band = facing.smoothstep(edge.sub(.08), edge).oneMinus();
-          result.assign(mix(result, vec3(.55, .92, .8), band.mul(lighting.heroRim).mul(3).clamp(0, .7)));
+          // Daylight-like key on her albedo: a camera-relative warm key and cool fill keep the
+          // authored hues (auburn hair, teal/yellow outfit, peach skin); a little of the night
+          // light (practical pools, moon) still tints her so she belongs to the scene.
+          const key = normalView.dot(vec3(-.42, .62, .66)).mul(.5).add(.5);
+          const keyed = surface.max(vec3(.015)).mul(mix(vec3(.55, .55, .62), vec3(1, .96, .88), key.mul(key))).add(result.max(vec3(0)).mul(.25)).toVar();
+          // Hue-preserving value lift: scale RGB together so HSV hue/saturation stay authored
+          // while the darkest swatches climb out of the night; the peak stays below clipping/bloom.
+          const peak = max(max(keyed.r, keyed.g), keyed.b).max(1e-4);
+          keyed.mulAssign(peak.min(.9).div(.9).pow(.42).mul(.9).div(peak));
+          // Narrow back rim in her own (brightened) colours, warm-white biased: the outline reads at
+          // every zoom without a mint/grey veil over the face and clothes.
+          const band = facing.smoothstep(0, lighting.heroRimEdge.mul(.45)).oneMinus();
+          const tint = mix(surface.div(max(max(surface.r, surface.g), surface.b).max(.02)), vec3(1, .9, .75), .45).mul(.9);
+          result.assign(mix(keyed, tint, band.mul(lighting.heroRim.add(lighting.subwayDarkness.mul(.2)).mul(2.6)).clamp(0, .65)));
         });
       }
       result.addAssign(this.hitFlash);
