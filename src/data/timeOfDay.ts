@@ -7,6 +7,10 @@ export interface TimeOfDayPreset {
   practical?: number;
   /** E25 night readability: survivor/infected rim strength and the player's light-field aura (§6 2). */
   rim?: number; aura?: number;
+  /** Survivor surface fill, independent of the ground light-field aura. */
+  heroFill?: number;
+  /** Courier-only rim, widened with camera distance for a legible silhouette. */
+  heroRim?: number;
   /** Night route read (E31-AC16): moon-pale sheen added to asphalt (0 = none). */
   roadLift?: number;
   /** Authored route sheen; comparable luminance keeps navigation contrast stable. */
@@ -37,7 +41,7 @@ const presets = {
   "L6-subway": { sun: "#9fb4ff", intensity: 0, polar: 1.55, azimuth: 2.2, shadow: "#252830", sky: "#0c1016", fog: "#181d25", fogNear: 30, fogFar: 85, practical: 1, rim: .25, aura: 1.3,
     look: { skyAmbient: '#8fabc2', groundAmbient: '#8a8077', vignette: .08, bloomStrength: .16, gradeShadow: '#4e6676', gradeHighlight: '#ffa640', gradeAmount: .85, gradeContrast: 1.1, gradeSaturation: .9, haze: '#26282c', hazeAmount: .28, beamStrength: 2.6, dust: '#dcc79a' }, ambient: { leaf: 0, dust: 30, bird: 0, glow: 1.5 } },
   // Shared Northgate air keeps the L6 exit -> L7 handover continuous; W6 fires/ash supply the ruined-city contrast.
-  L6: { sun: '#9fb4ff', intensity: 0.38, polar: 1.55, azimuth: 2.2, shadow: '#39365f', sky: '#1b263f', fog: '#4b5268', fogNear: 45, fogFar: 120, practical: 1, rim: .4, aura: .45,
+  L6: { sun: '#9fb4ff', intensity: 0.38, polar: 1.55, azimuth: 2.2, shadow: '#39365f', sky: '#1b263f', fog: '#4b5268', fogNear: 45, fogFar: 120, practical: 1, rim: .4, aura: .45, heroFill: 3.5, heroRim: .35,
     look: { skyAmbient: '#99adc9', groundAmbient: '#8e7c83', vignette: .1, bloomStrength: .2, gradeShadow: '#7a6080', gradeHighlight: '#ffa060', gradeAmount: .75, gradeContrast: 1.12, gradeSaturation: .95, haze: '#a0503a', hazeAmount: .45, hazeHeight: 12, beamStrength: 2, dust: '#ff8638' }, ambient: { leaf: 0, dust: 80, bird: 0, glow: 3, rise: true } },
   /** Open crossing: retain the journey's moonlight, with air clear enough for 150 m sight lines. `roadLift`: E31-AC16 night route read (the asphalt road is a pale moonlit band, 3:1 against the verge). */
   'L9-crossing': { sun: '#9fb4ff', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#343b48', sky: '#1a3043', fog: '#4d657a', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, roadLift: 2, roadColor: '#92a7b2',

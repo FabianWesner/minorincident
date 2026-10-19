@@ -1,8 +1,8 @@
 import { Box3, Group, InstancedMesh, Matrix4, MeshBasicNodeMaterial, PlaneGeometry, Vector3, NoToneMapping, SRGBColorSpace, type PerspectiveCamera } from 'three/webgpu';
-import { color as colorNode, vec4, renderOutput } from 'three/tsl';
+import { color as colorNode, vec4, renderOutput, uniform } from 'three/tsl';
 import { Ray, ShapeType, type Collider } from '@dimforge/rapier3d-compat';
 import { infectedDefinitions } from '../data/infected';
-import { healthBarColors, healthFraction } from '../ui/health';
+import { healthBarColors, healthFraction, nightHealthBarGains } from '../ui/health';
 import type { EntitySnapshot } from '../sim/world/types';
 import type { SimWorld } from '../sim/world/SimWorld';
 import { pickBodies } from './characters/PickBodies';
@@ -22,6 +22,8 @@ export function barSize(width: number, height: number, mega = false): { width: n
  * HP is read every presentation frame; nothing here writes simulation state. */
 export class HealthBars extends Group {
   private readonly meshes: InstancedMesh[];
+  private readonly outlineGain = uniform(1);
+  private readonly fillGain = uniform(1);
   private readonly bounds = new Box3();
   private readonly screenBounds = new Box3();
   private readonly projection = new Matrix4();
@@ -40,12 +42,14 @@ export class HealthBars extends Group {
     this.meshes = [healthBarColors.outline, healthBarColors.background, healthBarColors.fill].map((color, i) => {
       const material = new MeshBasicNodeMaterial({ depthTest: false, depthWrite: false, toneMapped: false, fog: false });
       // Convert each bar fragment directly; a full-screen output transform would overwrite the game image.
-      material.fragmentNode = renderOutput(vec4(colorNode(color), 1), NoToneMapping, SRGBColorSpace);
+      material.fragmentNode = renderOutput(vec4(colorNode(color).mul(i === 0 ? this.outlineGain : i === 2 ? this.fillGain : 1), 1), NoToneMapping, SRGBColorSpace);
       const mesh = new InstancedMesh(new PlaneGeometry(1, 1), material, 350);
       mesh.frustumCulled = false; mesh.count = 0; mesh.renderOrder = 100 + i; this.add(mesh); return mesh;
     });
   }
-  update(camera: PerspectiveCamera, width: number, height: number, occluded?: (target: Vector3) => boolean): void {
+  update(camera: PerspectiveCamera, width: number, height: number, occluded?: (target: Vector3) => boolean, cityNight = false): void {
+    this.outlineGain.value = cityNight ? nightHealthBarGains.outline : 1;
+    this.fillGain.value = cityNight ? nightHealthBarGains.fill : 1;
     this.probes.length = 0;
     for (const layer of this.meshes) layer.count = 0;
     const player = this.world.entities.get(1); if (!player) return;
