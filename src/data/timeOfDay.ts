@@ -46,7 +46,7 @@ const presets = {
   L6: { sun: '#9fb4ff', intensity: 0.38, polar: 1.55, azimuth: 2.2, shadow: '#39365f', sky: '#1b263f', fog: '#4b5268', fogNear: 45, fogFar: 120, practical: 1, rim: .4, aura: .45, heroFill: .8, heroRim: .22,
     look: { skyAmbient: '#99adc9', groundAmbient: '#8e7c83', vignette: .1, bloomStrength: .2, gradeShadow: '#7a6080', gradeHighlight: '#ffa060', gradeAmount: .75, gradeContrast: 1.12, gradeSaturation: .95, haze: '#a0503a', hazeAmount: .45, hazeHeight: 12, beamStrength: 2, dust: '#ff8638' }, ambient: { leaf: 0, dust: 80, bird: 0, glow: 3, rise: true } },
   /** Open crossing: retain the journey's moonlight, with air clear enough for 150 m sight lines. `roadLift`: E31-AC16 night route read (the asphalt road is a pale moonlit band, 3:1 against the verge). */
-  'L9-crossing': { sun: '#c6d3f2', intensity: .38, polar: 1.12, azimuth: 3.0, shadow: '#141a2c', sky: '#0d1727', fog: '#2b3c52', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, roadLift: 1, roadColor: '#95acc6', headlightBeams: true,
+  'L9-crossing': { sun: '#c6d3f2', intensity: .38, polar: 1.12, azimuth: 3.0, shadow: '#141a2c', sky: '#0d1727', fog: '#2b3c52', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, roadLift: 2, roadColor: '#aebfd3', headlightBeams: true,
     // E31 art addendum: a low moon (~26 deg) in the north (screen upper right), so trees/poles/fences throw long soft
     // shadows south across the east-west lanes (screen lower left, clear of the casters' own silhouettes); the ground takes the moon fully (coreLightEdge), only turned-away walls
     // fall into core shade. The burning city glows warm from the east (glow*), growing as the route nears it.
