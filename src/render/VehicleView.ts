@@ -6,7 +6,7 @@ import { modelLod } from './lodPolicy';
 import { SubjectOcclusion } from './SubjectOcclusion';
 import { paletteTokens } from '../data/palette';
 // Adapted from Bruno Simon folio-2025 VisualVehicle.js (MIT, 41046b5): wheel pivots/suspension and lamps.
-import { Box3, BoxGeometry, Group, Matrix4, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, Quaternion, SphereGeometry, TorusGeometry, Vector3, type Object3D } from 'three/webgpu';
+import { Box3, BoxGeometry, Color, Group, Matrix4, Mesh, MeshBasicNodeMaterial, MeshLambertNodeMaterial, Quaternion, SphereGeometry, TorusGeometry, Vector3, type Object3D } from 'three/webgpu';
 import { productionObstacleAssets } from './EntityAssets';
 import { AssetRegistry } from '../assets/registry';
 import { atLeast } from '../assets/types';
@@ -22,7 +22,8 @@ import type { Materials } from './Materials';
 import { lerp } from '../core/maths';
 import { anchorsFor } from './WorldLights';
 import { footprint, type LightField } from './LightField';
-const lampPosition = new Vector3(), lampDirection = new Vector3();
+import { lightPalette } from '../data/lights';
+const lampPosition = new Vector3(), lampDirection = new Vector3(), beamColor = new Color();
 interface Record { bounds: Box3; apc?: ApcDamage; doorHeldAt: number; decay?: string; lod: AssetQuality; parent: Group; model: Object3D; wheels: { node: Object3D; y: number; steer: number; spin: number; contacts: Vector3[]; contactPose: Matrix4; contactOffset: number; contactGround: VehicleView['ground'] }[]; brake: MeshBasicNodeMaterial; sirens: MeshBasicNodeMaterial[]; smoke: Group; fire: Mesh; door: Mesh; paint: (import('three').Material & { bloodCoverage: { value: number } })[]; blood: number; charred: boolean; feel: { tick: number; speed: number; accel: number; roll: number; pitch: number; restRoll: number; restPitch: number } }
 /** Registry models follow authoritative chassis/wheel snapshots; no render state feeds physics. */
 export class VehicleView extends Group {
@@ -296,7 +297,7 @@ export class VehicleView extends Group {
   }
   /** E25: the driven car's headlights/brake lights and emergency light bars, from the asset's authored anchors.
    * `aura` is the preset's survivor aura: while she drives, it becomes a soft pool around the hull. */
-  pushLights(field: LightField, aura = 0): void {
+  pushLights(field: LightField, aura = 0, beam?: (position: Vector3, direction: Vector3, length: number, angleDeg: number, color: Color) => void): void {
     for (const [id, car] of this.world.vehicles!.cars) {
       const record = this.records.get(id), driven = this.world.vehicles!.active === id;
       if (record && driven && aura > 0) {
@@ -317,6 +318,8 @@ export class VehicleView extends Group {
         if (level) { light.r *= .6; light.g *= .6; light.b *= .6; }
         if (/brake/i.test(a.name) && !car.entity.vehicle!.braking) { light.r *= .3; light.g *= .3; light.b *= .3; }
         field.push(light);
+        // E31 addendum: the driven hull's low beams also draw a soft visible cone (and its dust motes) in the night air.
+        if (level && driven && beam) beam(lampPosition, lampDirection, Math.min(14, a.range * .6), Math.min(36, a.angle ?? 36), beamColor.set(lightPalette.light_led_white).multiplyScalar(a.intensity * .9));
       }
     }
   }

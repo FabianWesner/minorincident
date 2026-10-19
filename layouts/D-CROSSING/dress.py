@@ -740,4 +740,42 @@ for rect in [[[-BX - SKIRT, -BZ - SKIRT], [BX + SKIRT, -BZ - SKIRT], [BX + SKIRT
     raw_quad('apron', rect, 'grass', -.006)
 for sx in (-1, 1):
     raw_quad('road-beyond', [[sx * 600, -6], [sx * 900, -6], [sx * 900, 6], [sx * 600, 6]], 'asphalt', .002)
-print('L9 dress:', dict(sorted(stats.items(), key=lambda kv: -kv[1])[:30]), 'placements', len(l.data['placements']))
+# ---- E31 art addendum (look-l9): who still has power, and two radio masts -----------------------------------------
+# Own RNG: the dressing above keeps its exact random sequence. Farms run generators (lit windows and porch lamps), the diner
+# sign still burns, the army floods and the lamps at the city edge stay on; the abandoned highway stop stays dark.
+NIGHT = random.Random(9319)
+l.data['lightGroups'].append(dict(id='crossing-lit', offAt=6))
+inst = {o.name: o for o in l.empties if o.name.startswith('inst:')}
+
+
+def light_up(index):
+    p = l.data['placements'][index]
+    p['lightGroup'] = 'crossing-lit'
+    o = inst.get('inst:' + p['assetId'] + ':' + str(index + 1))
+    if o is not None:
+        o['lightGroup'] = 'crossing-lit'
+
+
+for index, p in enumerate(l.data['placements']):
+    a = p['assetId']
+    chance = 0
+    if a.startswith('bld.house-'):
+        chance = .75
+    elif a == 'bld.shed':
+        chance = .35
+    elif a in ('bld.joes-diner', 'prop.light-tower', 'kit.army-checkpoint'):
+        chance = 1
+    elif a == 'prop.street-lamp':
+        chance = 1 if p['position'][0] > 500 or abs(p['position'][0] - 112.5) < 3 else 0
+    elif a in ('bld.apartment-block-a', 'bld.apartment-block-b', 'bld.storefront-row', 'bld.mainstreet-brick'):
+        chance = .3   # a few windows in the next city, between its fires
+    if chance and NIGHT.random() < chance:
+        light_up(index)
+
+# Radio masts (stretched utility poles, a red aviation blinker in src/render/NightAccents.ts). Placed north-west of a lane so
+# the low moon throws their long shadow across it (shadows fall towards +x+z).
+masts = 0
+for site in [[(-100, -64), (-96, -70), (-106, -66)], [(62, -360), (66, -364), (56, -362)], [(-62, 210), (-70, 206), (-56, 206)]]:
+    masts += any(put('prop.utility-pole', x, z, .6, (1.25, 3.1, 1.25)) for x, z in site)
+stats['masts'] = masts
+print('L9 dress:',dict(sorted(stats.items(), key=lambda kv: -kv[1])[:30]), 'placements', len(l.data['placements']))

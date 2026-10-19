@@ -16247,13 +16247,18 @@
       "tier": 5
     }
   ],
-  "lightGroups": [],
+  "lightGroups": [
+    {
+      "id": "crossing-lit",
+      "offAt": 6
+    }
+  ],
   "placements": [
     {
       "allowRoad": false,
       "assetId": "bld.house-a",
       "id": "bld.house-a:0",
-      "lightGroup": "block-0",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -16315,7 +16320,7 @@
       "allowRoad": false,
       "assetId": "bld.house-a",
       "id": "bld.house-a:2",
-      "lightGroup": "block-2",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -16346,7 +16351,7 @@
       "allowRoad": false,
       "assetId": "bld.house-a",
       "id": "bld.house-a:3",
-      "lightGroup": "block-3",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -16377,7 +16382,7 @@
       "allowRoad": false,
       "assetId": "bld.house-a",
       "id": "bld.house-a:4",
-      "lightGroup": "block-0",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -16408,7 +16413,7 @@
       "allowRoad": false,
       "assetId": "bld.house-a",
       "id": "bld.house-a:5",
-      "lightGroup": "block-1",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -16532,7 +16537,7 @@
       "allowRoad": false,
       "assetId": "bld.shed",
       "id": "bld.shed:9",
-      "lightGroup": "block-1",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -18888,7 +18893,7 @@
       "allowRoad": false,
       "assetId": "bld.apartment-block-a",
       "id": "bld.apartment-block-a:85",
-      "lightGroup": "block-1",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -18919,7 +18924,7 @@
       "allowRoad": false,
       "assetId": "bld.apartment-block-a",
       "id": "bld.apartment-block-a:86",
-      "lightGroup": "block-2",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -89263,7 +89268,7 @@
       "allowRoad": false,
       "assetId": "bld.house-a",
       "id": "bld.house-a:2355",
-      "lightGroup": "block-3",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -89635,7 +89640,7 @@
       "allowRoad": false,
       "assetId": "bld.shed",
       "id": "bld.shed:2367",
-      "lightGroup": "block-3",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -90131,7 +90136,7 @@
       "allowRoad": false,
       "assetId": "bld.house-e",
       "id": "bld.house-e:2383",
-      "lightGroup": "block-3",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -90720,7 +90725,7 @@
       "allowRoad": false,
       "assetId": "bld.house-d",
       "id": "bld.house-d:2402",
-      "lightGroup": "block-2",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -90813,7 +90818,7 @@
       "allowRoad": false,
       "assetId": "bld.shed",
       "id": "bld.shed:2405",
-      "lightGroup": "block-1",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -91061,7 +91066,7 @@
       "allowRoad": false,
       "assetId": "bld.shed",
       "id": "bld.shed:2413",
-      "lightGroup": "block-1",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -91867,7 +91872,7 @@
       "allowRoad": false,
       "assetId": "bld.shed",
       "id": "bld.shed:2439",
-      "lightGroup": "block-3",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -91929,7 +91934,7 @@
       "allowRoad": false,
       "assetId": "bld.shed",
       "id": "bld.shed:2441",
-      "lightGroup": "block-1",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -93707,7 +93712,7 @@
       "allowRoad": false,
       "assetId": "bld.joes-diner",
       "id": "bld.joes-diner:2498",
-      "lightGroup": "block-2",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -93862,7 +93867,7 @@
       "allowRoad": false,
       "assetId": "prop.street-lamp",
       "id": "prop.street-lamp:2503",
-      "lightGroup": "block-3",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -93893,7 +93898,7 @@
       "allowRoad": false,
       "assetId": "prop.street-lamp",
       "id": "prop.street-lamp:2504",
-      "lightGroup": "block-0",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -93924,7 +93929,7 @@
       "allowRoad": false,
       "assetId": "prop.light-tower",
       "id": "prop.light-tower:2505",
-      "lightGroup": "block-1",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -93955,7 +93960,7 @@
       "allowRoad": false,
       "assetId": "kit.army-checkpoint",
       "id": "kit.army-checkpoint:2506",
-      "lightGroup": "block-2",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -98978,7 +98983,7 @@
       "allowRoad": false,
       "assetId": "bld.apartment-block-b",
       "id": "bld.apartment-block-b:2668",
-      "lightGroup": "block-0",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -99164,7 +99169,7 @@
       "allowRoad": false,
       "assetId": "bld.apartment-block-b",
       "id": "bld.apartment-block-b:2674",
-      "lightGroup": "block-2",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -99319,7 +99324,7 @@
       "allowRoad": false,
       "assetId": "bld.apartment-block-a",
       "id": "bld.apartment-block-a:2679",
-      "lightGroup": "block-3",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -99691,7 +99696,7 @@
       "allowRoad": false,
       "assetId": "bld.mainstreet-brick",
       "id": "bld.mainstreet-brick:2691",
-      "lightGroup": "block-3",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -99753,7 +99758,7 @@
       "allowRoad": false,
       "assetId": "bld.apartment-block-a",
       "id": "bld.apartment-block-a:2693",
-      "lightGroup": "block-1",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -99815,7 +99820,7 @@
       "allowRoad": false,
       "assetId": "prop.street-lamp",
       "id": "prop.street-lamp:2695",
-      "lightGroup": "block-3",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -99846,7 +99851,7 @@
       "allowRoad": false,
       "assetId": "prop.street-lamp",
       "id": "prop.street-lamp:2696",
-      "lightGroup": "block-0",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -99877,7 +99882,7 @@
       "allowRoad": false,
       "assetId": "prop.street-lamp",
       "id": "prop.street-lamp:2697",
-      "lightGroup": "block-1",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -99908,7 +99913,7 @@
       "allowRoad": false,
       "assetId": "prop.street-lamp",
       "id": "prop.street-lamp:2698",
-      "lightGroup": "block-2",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -99939,7 +99944,7 @@
       "allowRoad": false,
       "assetId": "prop.street-lamp",
       "id": "prop.street-lamp:2699",
-      "lightGroup": "block-3",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -99970,7 +99975,7 @@
       "allowRoad": false,
       "assetId": "prop.street-lamp",
       "id": "prop.street-lamp:2700",
-      "lightGroup": "block-0",
+      "lightGroup": "crossing-lit",
       "maxTier": 6,
       "minTier": 0,
       "position": [
@@ -99996,6 +100001,99 @@
         ]
       },
       "yaw": 0
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.utility-pole",
+      "id": "prop.utility-pole:2701",
+      "lightGroup": "block-1",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        -100,
+        0,
+        -64
+      ],
+      "scale": [
+        1.25,
+        3.1,
+        1.25
+      ],
+      "visualAabb": {
+        "max": [
+          -98.41108719226044,
+          22.14174976348877,
+          -62.022431729270785
+        ],
+        "min": [
+          -101.58891280773956,
+          0,
+          -65.97756827072921
+        ]
+      },
+      "yaw": 0.6
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.utility-pole",
+      "id": "prop.utility-pole:2702",
+      "lightGroup": "block-2",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        62,
+        0,
+        -360
+      ],
+      "scale": [
+        1.25,
+        3.1,
+        1.25
+      ],
+      "visualAabb": {
+        "max": [
+          63.588912807739554,
+          22.14174976348877,
+          -358.0224317292708
+        ],
+        "min": [
+          60.411087192260446,
+          0,
+          -361.9775682707292
+        ]
+      },
+      "yaw": 0.6
+    },
+    {
+      "allowRoad": false,
+      "assetId": "prop.utility-pole",
+      "id": "prop.utility-pole:2703",
+      "lightGroup": "block-3",
+      "maxTier": 6,
+      "minTier": 0,
+      "position": [
+        -62,
+        0,
+        210
+      ],
+      "scale": [
+        1.25,
+        3.1,
+        1.25
+      ],
+      "visualAabb": {
+        "max": [
+          -60.411087192260446,
+          22.14174976348877,
+          211.97756827072922
+        ],
+        "min": [
+          -63.588912807739554,
+          0,
+          208.02243172927078
+        ]
+      },
+      "yaw": 0.6
     }
   ],
   "roads": {

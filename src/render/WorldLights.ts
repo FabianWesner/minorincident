@@ -3,6 +3,7 @@ import { visibilityPolygon } from './lighting/visibility';
 export { anchorsFor, placeAnchor } from '../data/placedLights';
 import { footprint, type FieldLight } from './LightField';
 import type { DistrictWorld } from '../sim/world/DistrictWorld';
+import { accentLights } from './NightAccents';
 
 /** Every light anchor of the loaded layouts as a light-field footprint, built once at level assembly.
  * A light is on while its placement's power group is lit at this decay tier. Parked vehicles stay dark. */
@@ -16,5 +17,7 @@ export function layoutLights(world: DistrictWorld): FieldLight[] {
   });
   // Decay fires (W3+) flicker in the field; E27 adds its own through LightField.addTransient.
   for (const f of world.fires) lights.push(footprint({ type: 'fire', color: 'light_fire', intensity: 7, range: 4 + f.radius * 2, flicker: 'fire', position: [f.x, 1.2, f.z], direction: [0, -1, 0] }, 0, lights.length * 1.37));
+  // L9 night accents (flares, lanterns, hazard blinkers, warning lamps): always-on render pools.
+  lights.push(...accentLights(world));
   return lights;
 }
