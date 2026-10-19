@@ -1,0 +1,23 @@
+{
+  "name": "mega-alpha-variants-lineup",
+  "note": "PO #23 (10-19): the Mega Alpha looks (shipped dark-red Mega, cold-blue ashen Mega with side horns, burnt-orange ember Mega with jaw tusks) beside a regular Alpha and the courier, static rest pose, game camera. Same height and footprint as the Alpha (PO 10-15); look for different palette and head hardware, glowing eyes, no floating spikes. Run with --matrix to see high/low at zoom 1 and 0.5.",
+  "seed": 10,
+  "ground": "asphalt",
+  "time": "L4",
+  "size": 60,
+  "dof": false,
+  "props": [
+    { "id": "alpha", "asset": "inf.alpha", "at": [-3.2, 3.2], "yaw": 30 },
+    { "id": "mega-base", "asset": "inf.mega-alpha", "at": [-1.1, 1.1], "yaw": 30 },
+    { "id": "mega-ashen", "asset": "inf.mega-alpha-ashen", "at": [1.1, -1.1], "yaw": 30 },
+    { "id": "mega-ember", "asset": "inf.mega-alpha-ember", "at": [3.3, -3.3], "yaw": 30 }
+  ],
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [-5, 5], "yaw": 0, "state": "idle" }
+  ],
+  "camera": { "mode": "game", "target": [0, 1.0, 0], "zoom": 1 },
+  "frames": 2,
+  "shots": [0, 1],
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0 },
+  "sheet": 1
+}
