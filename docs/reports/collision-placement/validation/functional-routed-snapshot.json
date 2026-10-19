@@ -1,0 +1,105 @@
+{
+  "numTotalTests": 3015,
+  "numPassedTests": 2995,
+  "numFailedTests": 11,
+  "numPendingTests": 9,
+  "success": false,
+  "failures": [
+    {
+      "file": "levels/L3.test.ts",
+      "assertions": [
+        {
+          "name": "L3 The Police Collapse T-E21-02 @E21 @E21-AC02 complete bot finishes single seed from L3-default (bat + axe), median time in band",
+          "messages": [
+            "AssertionError: expected 463.3666666666667 to be less than or equal to 405\n    at /srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/tests/levels/L3.test.ts:54:77\n    at file:///srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-03 @E21 @E21-AC03 newbie single seed, median in band, median deaths <= 2",
+          "messages": [
+            "AssertionError: expected 0 to be greater than or equal to 1\n    at /srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/tests/levels/L3.test.ts:59:63\n    at file:///srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-17 @E21 @E21-AC17 army checkpoint: >= 8 soldiers, the rendezvous ends the level straight into progression",
+          "messages": [
+            "AssertionError: expected 'timeout' to be 'complete' // Object.is equality\n    at /srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/tests/levels/L3.test.ts:290:23\n    at file:///srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        },
+        {
+          "name": "L3 The Police Collapse T-E21-bots @E21 evade-only never attacks and still reaches the army zone",
+          "messages": [
+            "AssertionError: expected 0 to be greater than or equal to 2\n    at /srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/tests/levels/L3.test.ts:325:63\n    at file:///srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "levels/L5.test.ts",
+      "assertions": [
+        {
+          "name": "L5 Aftermath T-E23-03 @E23 @E23-AC03 the newbie bot finishes a single seed with at most one death, rescuing at least 3",
+          "messages": [
+            "AssertionError: expected 'timeout' to be 'complete' // Object.is equality\n    at /srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/tests/levels/L5.test.ts:89:23\n    at file:///srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "levels/L6-campaign.test.ts",
+      "assertions": [
+        {
+          "name": "T-E24-08 @E24 @E24-AC08 continuous complete campaign on one seed with real L5 handover",
+          "messages": [
+            "AssertionError: expected [ { level: 'L1', \u2026(17) }, \u2026(2) ] to have a length of 6 but got 3\n    at Proxy.<anonymous> (file:///srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/node_modules/vitest/dist/chunks/index.C4tKZ0yW.js:2147:20)\n    at Proxy.<anonymous> (file:///srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/node_modules/vitest/dist/chunks/index.C4tKZ0yW.js:1944:14)\n    at Proxy.methodWrapper (file:///srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/node_modules/chai/index.js:1737:25)\n    at /srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/tests/levels/L6-campaign.test.ts:8:26\n    at file:///srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        },
+        {
+          "name": "T-E24-08 @E24 @E24-AC08 continuous newbie campaign on one seed with real L5 handover",
+          "messages": [
+            "AssertionError: expected [ { level: 'L1', \u2026(17) }, \u2026(2) ] to have a length of 6 but got 3\n    at Proxy.<anonymous> (file:///srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/node_modules/vitest/dist/chunks/index.C4tKZ0yW.js:2147:20)\n    at Proxy.<anonymous> (file:///srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/node_modules/vitest/dist/chunks/index.C4tKZ0yW.js:1944:14)\n    at Proxy.methodWrapper (file:///srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/node_modules/chai/index.js:1737:25)\n    at /srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/tests/levels/L6-campaign.test.ts:8:26\n    at file:///srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "levels/start-checkpoint-clearance.test.ts",
+      "assertions": [
+        {
+          "name": "L3: every player start and reached checkpoint has no NPC within 0.8 m",
+          "messages": [
+            "AssertionError: {\"objective\":\"checkpoint\",\"detail\":\"{\\\"failures\\\":2,\\\"pending\\\":0,\\\"admitted\\\":7298,\\\"deferred\\\":0,\\\"requests\\\":[],\\\"offenders\\\":[{\\\"tick\\\":64448,\\\"actor\\\":4733,\\\"other\\\":4863,\\\"depth\\\":0.3758324328302921,\\\"inside\\\":false,\\\"writer\\\":\\\"cleanup.separation\\\"},{\\\"tick\\\":64448,\\\"actor\\\":4863,\\\"other\\\":4733,\\\"depth\\\":0.15960178612527776,\\\"inside\\\":false,\\\"writer\\\":\\\"cleanup.separation\\\"}]}\"}: expected false to be true // Object.is equality\n    at /srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/tests/levels/start-checkpoint-clearance.test.ts:34:60\n    at file:///srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "sim/ai/infected-stuck-l2.test.ts",
+      "assertions": [
+        {
+          "name": "L2: infected never stand frozen (single seed, 150 s)",
+          "messages": [
+            "AssertionError: expected 7 to be less than or equal to 5\n    at /srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/tests/sim/ai/infected-stuck-l2.test.ts:33:17\n    at file:///srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        }
+      ]
+    },
+    {
+      "file": "sim/npc/zoo-companion.test.ts",
+      "assertions": [
+        {
+          "name": "@E30 @E31 corgi follows in zoo and survives APC handover/checkpoint: high",
+          "messages": [
+            "AssertionError: expected 4.021562309623623 to be less than 4\n    at /srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/tests/sim/npc/zoo-companion.test.ts:16:88\n    at file:///srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        },
+        {
+          "name": "@E30 @E31 corgi follows in zoo and survives APC handover/checkpoint: low",
+          "messages": [
+            "AssertionError: expected 4.021562309623623 to be less than 4\n    at /srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/tests/sim/npc/zoo-companion.test.ts:16:88\n    at file:///srv/mi/jobs/collision-placement-9aa6d4-46801-1792429868/node_modules/vitest/dist/chunks/run.BTlFXlnv.js:2783:20"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+GPU guard: WindowServer 0.6% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 0.6% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 0.8% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 0.6% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 0.6% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 0.7% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 0.6% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 0.7% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 0.6% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 0.9% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 0.8% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 0.9% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 0.7% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 0.6% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 8.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 15.9% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.4% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.5% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.5% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.7% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.5% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.7% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.5% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.4% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.4% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.4% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.6% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.6% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.8% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.8% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 3.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 6.9% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 6.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 6.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 7.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 4.9% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.0% / 10 s; 2 headless browsers + 1 requested; waiting
+
+Running 35 tests using 1 worker
+
+  ✓   1 [chromium] › tests/e2e/crowd-visible-outbreak.spec.ts:14:3 › T-E07-crowd-visible-outbreak-webgl @E07 every on-screen living infected and pedestrian is drawn through an L1 outbreak fight (webgl) (23.7s)
+  ✓   2 [chromium] › tests/e2e/crowd-visible-outbreak.spec.ts:14:3 › T-E07-crowd-visible-outbreak-webgpu @E07 every on-screen living infected and pedestrian is drawn through an L1 outbreak fight (webgpu) (23.5s)
+  ✓   3 [chromium] › tests/e2e/input-mouse.spec.ts:10:1 › T-E03-01 @E03 @E03-AC01 cursor aims without moving (656ms)
+  ✓   4 [chromium] › tests/e2e/input-mouse.spec.ts:20:1 › T-E03-02 @E03 @E03-AC02 mouse buttons preserve down held up and prevent context menus (556ms)
+  ✓   5 [chromium] › tests/e2e/input-mouse.spec.ts:36:1 › T-E03-03 @E03 @E03-AC03 @E02-AC03 wheel zooms smoothly and never cycles weapons (927ms)
+  ✓   6 [chromium] › tests/e2e/input-mouse.spec.ts:46:1 › T-E03-12 @E03 @E03-AC12 middle-click F and E interact without browser autoscroll (591ms)
+  ✓   7 [chromium] › tests/e2e/input-mouse.spec.ts:70:1 › T-E03-14 @E03 @E03-AC14 click ground walks, retargets, stops and held ground follows cursor (4.6s)
+  ✓   8 [chromium] › tests/e2e/input-mouse.spec.ts:87:1 › T-E03-ground-escape @E03 @E21 clear ground near a melee target stays movement; a near miss at its feet still targets it (4.7s)
+  ✓   9 [chromium] › tests/e2e/input-mouse.spec.ts:102:41 › T-E03-15-left @E03 @E03-AC15 target click approaches then attacks left (4.8s)
+  ✓  10 [chromium] › tests/e2e/input-mouse.spec.ts:117:1 › T-E03-16 @E03 @E03-AC16 Shift LMB distant ground swings stationary and cancels destination (4.5s)
+  ✓  11 [chromium] › tests/e2e/input-mouse.spec.ts:133:1 › T-E03-17 @E03 @E03-AC17 RMB and Q cycle carried actions without attacking (4.6s)
+  ✓  12 [chromium] › tests/e2e/input-mouse.spec.ts:145:1 › T-E03-12-car @E03 @E03-AC12 middle-click near car immediately enters; F exits (5.0s)
+  ✓  13 [chromium] › tests/e2e/input-mouse.spec.ts:153:1 › T-E03-15-held @E03 @E03-AC15 held LMB target repeats and target death stops approach (4.8s)
+  ✓  14 [chromium] › tests/e2e/input-mouse.spec.ts:180:1 › T-E03-17-pending @E03 @E03-AC15 @E03-AC17 Q during target command waits for swap then attacks once (4.8s)
+  ✓  15 [chromium] › tests/e2e/input-mouse.spec.ts:191:1 › T-E03-15-live @E03 @E03-AC15 real LMB follows a moving infected and attacks it (5.0s)
+  ✓  16 [chromium] › tests/e2e/input-mouse.spec.ts:209:1 › T-E03-chord @E03 @E03-AC02 @E03-AC13 releasing LMB before RMB clears both independently (542ms)
+  ✓  17 [chromium] › tests/e2e/input-mouse.spec.ts:223:1 › @E03-AC05 @E03-AC17 M1-05 numbers and HUD clicks select either rack; Shift never attacks (5.0s)
+  ✓  18 [chromium] › tests/e2e/input-mouse.spec.ts:237:1 › PO #14 active numbers, Q, RMB and HUD follow weapon order after unordered pickups (4.9s)
+  ✓  19 [chromium] › tests/e2e/menu-10-levels.spec.ts:7:49 › ten level menu high @menu-10-levels (28.4s)
+  ✓  20 [chromium] › tests/e2e/menu-10-levels.spec.ts:7:49 › ten level menu low @menu-10-levels (21.4s)
+  ✓  21 [chromium] › tests/e2e/menu-10-levels.spec.ts:75:1 › L9 saved crossing row resumes and can restart @menu-10-levels (20.9s)
+  ✓  22 [chromium] › tests/e2e/levels/L1.spec.ts:25:3 › L1 v2 real-input playthrough › T-E19-unlock @E19 result screen, real click on Continue: straight to the next level, no upgrade/rack screens (PO decision 2026-10-07) (21.8s)
+  ✓  23 [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result (38.5s)
+  ✓  24 [chromium] › tests/e2e/levels/L1.spec.ts:43:41 › L1 v2 real-input playthrough › T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review (39.5s)
+  ✓  25 [chromium] › tests/e2e/respawn-bat.spec.ts:15:1 › E19 @E19 respawn after the bat: real-click pickup, die at the house with infected around, respawn on the pickup with the bat equipped (20.4s)
+  ✓  26 [chromium] › tests/e2e/levels/L2.spec.ts:77:3 › L2 The Failed Rescue in the browser › T-E20-18 @E20 @E20-AC18 @E20-AC16 @E20-AC19 real-input playthrough from the station to the closing gate, photo spots for the vision review (1.2m)
+  ✓  27 [chromium] › tests/e2e/levels/L2.spec.ts:143:3 › L2 The Failed Rescue in the browser › T-E20-14b @E20 @E20-AC14 campaign: the gate closes, no reward screen, L3 loads with the carried loadout (24.5s)
+  ✓  28 [chromium] › tests/e2e/webgpu-canvas.spec.ts:12:46 › Scene Lab reload isolates courier gear webgl high (10.8s)
+  ✓  29 [chromium] › tests/e2e/webgpu-canvas.spec.ts:12:46 › Scene Lab reload isolates courier gear webgpu high (9.6s)
+  ✓  30 [chromium] › tests/e2e/webgpu-canvas.spec.ts:25:3 › T-E02-webgpu-canvas @smoke @E02 WebGPU high mega health bars preserve the game frame at both zoom limits (10.0s)
+  ✓  31 [chromium] › tests/e2e/webgpu-canvas.spec.ts:41:3 › T-E02-webgpu-game-canvas @smoke @E02 WebGPU high L1 L4 L8 game cameras render at both zoom limits (35.8s)
+  ✓  32 [chromium] › tests/e2e/webgpu-canvas.spec.ts:12:46 › Scene Lab reload isolates courier gear webgl low (6.6s)
+  ✓  33 [chromium] › tests/e2e/webgpu-canvas.spec.ts:12:46 › Scene Lab reload isolates courier gear webgpu low (5.8s)
+  ✓  34 [chromium] › tests/e2e/webgpu-canvas.spec.ts:25:3 › T-E02-webgpu-canvas @smoke @E02 WebGPU low mega health bars preserve the game frame at both zoom limits (5.8s)
+  ✓  35 [chromium] › tests/e2e/webgpu-canvas.spec.ts:41:3 › T-E02-webgpu-game-canvas @smoke @E02 WebGPU low L1 L4 L8 game cameras render at both zoom limits (10.4s)
+
+  35 passed (8.1m)

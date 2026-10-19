@@ -86,7 +86,7 @@ describe('L5 Aftermath', () => {
     const l = await loadL5(2); world = l.world;
     const r = runL5(l.world, l.mission, 'newbie', { seed: 2, maxSeconds: 600 });
     record('bot-newbie-seed2', r);
-    expect(r.outcome).toBe('complete'); expect(r.deaths).toBeLessThanOrEqual(l5.bots.newbieMaxMedianDeaths);
+    expect(r.outcome, JSON.stringify({ player: world.entities.get(1)!.transform, dog: world.entities.values().filter(e => e.companion).map(e => ({ at: e.transform, brain: e.companion, hidden: e.hidden, pending: e.pendingAdmission })), survivors: l.mission.state.l5!.survivors, gates: l.mission.state.gates })).toBe('complete'); expect(r.deaths).toBeLessThanOrEqual(l5.bots.newbieMaxMedianDeaths);
     expect(r.simSeconds).toBeGreaterThanOrEqual(l5.bots.newbieMedianS[0]); expect(r.simSeconds).toBeLessThanOrEqual(l5.bots.newbieMedianS[1]);
     expect(r.rescued).toBeGreaterThanOrEqual(3);
   }, HEAVY);
@@ -321,7 +321,7 @@ describe('L5 Aftermath', () => {
       w.update(); jumps = Math.max(jumps, dist(previous, stranded.transform)); previous = { ...stranded.transform };
       if (s.shutterAt) for (const e of fol) expect(m.l5!.insideStation(e.transform)).toBe(true);
     }
-    expect(jumps).toBeLessThan(1); expect(m.state.phase).toBe('progression');
+    expect(jumps).toBeLessThan(1); expect(m.state.phase, JSON.stringify({ phase: s.phase, tick: w.tick, shutterAt: s.shutterAt, metroAt: s.metroAt, gates: m.state.gates, player: w.entities.get(1)!.transform, dog: [...w.entities.iterate()].filter(e => e.companion).map(e => ({ at: e.transform, hidden: e.hidden, pending: e.pendingAdmission, following: e.companion!.following, transitionUntil: e.companion!.transitionUntil })), followers: fol.map(e => ({ id: e.id, at: e.transform, inside: m.l5!.insideStation(e.transform) })) })).toBe('progression');
     expect(m.state.gates['l5-metro-shutter']).toBe(false);
     const door = at(w, 'l5-metro-shutter');
     expect(w.infected!.nav.clear(door.x, door.z, .35)).toBe(false);

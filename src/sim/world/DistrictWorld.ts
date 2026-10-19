@@ -1,3 +1,4 @@
+import { closeBarrierJoints } from '../../levels/barrierJoints';
 import { l4BreakableLine } from '../../levels/L4/layout';
 import { isWorldTier } from '../../levels/districts/types';
 import type {
@@ -45,8 +46,9 @@ export class DistrictWorld {
   ) {
     if (!isWorldTier(composition.tier)) throw new RangeError("Tier must be W0…W6");
     this.districts = composition.districts.map((d) => {
-      const layout = layouts.find((l) => l.district === d.id);
-      if (!layout) throw new Error(`Missing layout: ${d.id}`);
+      const source = layouts.find((l) => l.district === d.id);
+      if (!source) throw new Error(`Missing layout: ${d.id}`);
+      const layout = { ...source, placements: closeBarrierJoints(source.placements) };
       const gameplay = { ...(d.gameplay ?? districtGameplay[d.id]), ...d.overrides };
       if (gameplay.decay.some(layer => !isWorldTier(layer.tier))) throw new RangeError(`Invalid gameplay decay tier: ${d.id}`);
       const decay = resolveDecay(layout, composition.tier),

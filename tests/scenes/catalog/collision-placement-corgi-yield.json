@@ -1,0 +1,57 @@
+{
+  "extends": "collision-placement-corgi-courier.json",
+  "name": "collision-placement-corgi-yield",
+  "note": "Ordinary game keyboard walking toward a companion already in front. The pet walks on within half a second, retaining full capsule clearance rather than sealing the courier inside its follow stop. Review both quality tiers and zooms on both backends.",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -136.15,
+        0.61
+      ],
+      "state": {
+        "walk": [
+          [
+            -128.15,
+            0.61
+          ]
+        ]
+      }
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        -134.95,
+        0.61
+      ],
+      "yaw": 0,
+      "state": "follow"
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 180,
+  "sheet": 30,
+  "shots": [
+    0,
+    30,
+    60,
+    120,
+    180
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "collisionFailuresMax": 0,
+    "collisionPendingMax": 0,
+    "bodyOverlapMaxCm": 2,
+    "drawCallsMax": 300,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000
+  }
+}

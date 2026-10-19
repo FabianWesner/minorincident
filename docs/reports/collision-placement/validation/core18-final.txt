@@ -1,0 +1,34 @@
+[pool] all runners full (mi-runner-1:2/2+0q, mi-runner-2:2/2+1q, mi-runner-3:2/2+0q); waiting 0s
+[pool] all runners full (mi-runner-1:2/2+0q, mi-runner-2:2/2+1q, mi-runner-3:2/2+0q); waiting 63s
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 2.31.10.108:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted:none
+[remote] sync 214s, 25513 files; job /srv/mi/jobs/collision-placement-9aa6d4-35946-1792432732; queueing for a slot
+[runner] slot 1 acquired; load 8.34 8.38 7.46
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-35946-1792432732
+
+ ✓  functional  tests/levels/collision-placement.test.ts > L4 perimeter rejects placement and swept passage for every actor kind 14928ms
+ ✓  functional  tests/levels/collision-placement.test.ts > NPC spawn admission leaves 0.8 m around a reserved player start 703ms
+ ✓  functional  tests/levels/collision-placement.test.ts > L1 shutter brings an outside companion inside before sealing, with a short transition 790ms
+ ✓  functional  tests/levels/collision-placement.test.ts > L3 all four ramp rail joints meet visible solid caps within 2 cm 1213ms
+ ✓  functional  tests/levels/collision-placement.test.ts > a wide door uses its normal to bring in a companion when the courier stands off centre 4ms
+ ✓  functional  tests/levels/collision-placement.test.ts > L3 companion occupies its visible footprint and stays outside courier and reported solids 1538ms
+ ✓  functional  tests/levels/collision-placement.test.ts > L5 companion occupies its visible footprint and stays outside courier and reported solids 536ms
+ ✓  functional  tests/levels/collision-placement.test.ts > L7 high start has separate visible survivor bodies at tick 66 1041ms
+ ✓  functional  tests/levels/collision-placement.test.ts > L7 low start has separate visible survivor bodies at tick 66 835ms
+ ✓  functional  tests/levels/collision-placement.test.ts > L1 never creates a closed shutter around the courier or lifts her capsule onto its leaf 434ms
+ ✓  functional  tests/levels/collision-placement.test.ts > companion head and rear clear solids even when the central circle is outside 4ms
+ ✓  functional  tests/levels/collision-placement.test.ts > committed contact cells retain the corgi head clearance from the courier 5ms
+ ✓  functional  tests/levels/collision-placement.test.ts > companion head contact projects onto the solid face while retaining forward progress 3ms
+ ✓  functional  tests/levels/collision-placement.test.ts > the corgi clears its supporting floor while a raised barrier still blocks its body 2ms
+ ✓  functional  tests/levels/collision-placement.test.ts > the Metro lookout leaves an interior right-lane slot for the complete corgi capsule 671ms
+ ✓  functional  tests/levels/collision-placement.test.ts > companion routes reserve the full body around posts and fall back to body width at narrow doors 5ms
+ ✓  functional  tests/levels/collision-placement.test.ts > a companion ahead of a departing courier walks on instead of sealing the route 3ms
+ ✓  functional  tests/levels/collision-placement.test.ts > companion keeps an open approach next to a bench instead of substituting a wider goal 2ms
+
+ Test Files  1 passed (1)
+      Tests  18 passed (18)
+   Start at  18:02:51
+   Duration  29.08s (tests 79%, transform 18%, import 3%)
+
+[remote] done exit=0 (runner 2.31.10.108, sync 214s, remote total 56s)

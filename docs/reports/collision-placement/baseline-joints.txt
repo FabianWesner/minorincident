@@ -1,0 +1,47 @@
+[remote] sync /private/tmp/mi-collision-placement-base -> 2.28.24.66:/srv/mi/ws/mi-collision-placement-base-3893a6
+[remote] cache-gc deleted:none
+[remote] sync 38s, 25156 files; job /srv/mi/jobs/mi-collision-placement-base-3893a6-43537-1792415631; queueing for a slot
+[runner] slot 0 acquired; load 0.37 0.30 0.86
+
+ RUN  v5.0.3 /srv/mi/jobs/mi-collision-placement-base-3893a6-43537-1792415631
+
+ ❯  functional  tests/unit/levels/barrier-joints.test.ts (3 tests | 3 failed) 1746ms
+   × continuous fence chains close their nominal-versus-physical panel seams to at most 2 cm 1518ms
+   × all shipped district privacy-fence chains meet the same 2 cm joint limit 176ms
+   × closing a fence joint preserves the deliberate gate at its opposite end 50ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/unit/levels/barrier-joints.test.ts > continuous fence chains close their nominal-versus-physical panel seams to at most 2 cm
+AssertionError: expected 0.03940446650124141 to be less than or equal to 0.02
+ ❯ tests/unit/levels/barrier-joints.test.ts:16:78
+     14|   for (let i = 1; i < original.length; i++) {
+     15|     const a = drawn.get(original[i - 1].id)!, b = drawn.get(original[i…
+     16|     expect(b.position[0] - a.position[0] - (a.scale[2] + b.scale[2]) *…
+       |                                                                              ^
+     17|   }
+     18|   // Assembly must not accumulate stretching into the authored/cached …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL   functional  tests/unit/levels/barrier-joints.test.ts > all shipped district privacy-fence chains meet the same 2 cm joint limit
+AssertionError: D-GROVE: prop.privacy-fence:0/prop.privacy-fence:1: expected 0.035961538461540155 to be less than or equal to 0.02
+ ❯ tests/unit/levels/barrier-joints.test.ts:41:239
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL   functional  tests/unit/levels/barrier-joints.test.ts > closing a fence joint preserves the deliberate gate at its opposite end
+AssertionError: expected 0.040000000000000036 to be less than or equal to 0.02
+ ❯ tests/unit/levels/barrier-joints.test.ts:54:59
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  3 failed (3)
+   Start at  13:14:32
+   Duration  2.83s (tests 67%, transform 29%, import 4%)
+
+[remote] done exit=1 (runner 2.28.24.66, sync 38s, remote total 6s)

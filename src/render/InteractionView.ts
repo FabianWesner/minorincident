@@ -145,6 +145,10 @@ export class InteractionView extends Group {
           });
           this.occluderMaterials.set(e.id, [...copies.values()]);
         }
+        if (e.pickup && 'kind' in e.pickup) {
+          const marker = new Mesh(this.outlineGeometry, this.teal);
+          marker.name = 'pickup-ring'; marker.rotation.x = -Math.PI / 2; marker.scale.setScalar(.63); marker.position.y = .025; marker.renderOrder = 94; object.add(marker);
+        }
         this.objects.get(e.id)?.removeFromParent(); this.objects.set(e.id, object); this.lods.set(e.id, lod);
         object.position.set(e.transform.x, e.archetype==='l6.service-gate'?e.transform.y:e.pickup&&'kind' in e.pickup?e.transform.y-.3:0, e.transform.z); object.rotation.y = e.transform.yaw;
         if(e.archetype==='l6.service-gate'){const leaf=object.getObjectByName('gate');if(leaf)leaf.rotation.y=e.barricade?.intact?0:-Math.PI/2;} this.add(object);

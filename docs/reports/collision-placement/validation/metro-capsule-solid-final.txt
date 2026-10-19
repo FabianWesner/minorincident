@@ -1,0 +1,30 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 2.31.10.108:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted:none
+[remote] sync 33s, 25487 files; job /srv/mi/jobs/collision-placement-9aa6d4-2534-1792425910; queueing for a slot
+[runner] slot 0 acquired; load 1.66 2.12 2.88
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-2534-1792425910
+
+ ✓  functional  tests/levels/L5-encounters.test.ts (9 tests) 5263ms
+   ✓ @E23 @E23-AC04 @E23-AC15 @E23-AC16 station identities/state survive checkpoint and L6 handover, high 908ms
+   ✓ @E23 @E23-AC04 @E23-AC15 @E23-AC16 station identities/state survive checkpoint and L6 handover, low 577ms
+   ✓ @E23 @E23-AC07 Alphas investigate nearby gunfire and acquire visible civilians without omniscience 419ms
+   ✓ @E23 @E23-AC04 Alphas stay in town away from the Metro and final escort leg, high 313ms
+   ✓ @E23 @E23-AC15 nearby infected do not stall ingress; the descending shutter sweeps intruders out and blocks return 779ms
+   ✓ @E23 @E23-AC15 the five survivors cross the Metro opening from the real-input group photo 828ms
+   ✓ @E23 @E23-AC11 @E23-AC15 a survivor turning during shutter closure cannot corrupt the L6 save 911ms
+ ✓  functional  tests/levels/collision-placement.test.ts (14 tests) 12192ms
+   ✓ L4 perimeter rejects placement and swept passage for every actor kind 8142ms
+   ✓ NPC spawn admission leaves 0.8 m around a reserved player start 309ms
+   ✓ L1 shutter brings an outside companion inside before sealing, with a short transition 383ms
+   ✓ L3 all four ramp rail joints meet visible solid caps within 2 cm 691ms
+   ✓ L3 companion occupies its visible footprint and stays outside courier and reported solids 1121ms
+   ✓ L7 high start has separate visible survivor bodies at tick 66 493ms
+   ✓ L7 low start has separate visible survivor bodies at tick 66 510ms
+
+ Test Files  2 passed (2)
+      Tests  23 passed (23)
+   Start at  16:05:46
+   Duration  14.86s (tests 78%, transform 18%, import 4%)
+
+[remote] done exit=0 (runner 2.31.10.108, sync 33s, remote total 19s)

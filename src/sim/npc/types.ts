@@ -80,7 +80,7 @@ export interface AllyState {
    * where and since when the fighter stands on one spot, and its last call-out. */
   mag?: number; burstN?: number; reloadUntil?: number; flinchUntil?: number; lastHp?: number; still?: { x: number; z: number; tick: number }; calloutAt?: number; blockedAt?: number;
 }
-export interface Companion { following?: boolean; velocity?: Point; state: 'follow' | 'fetch' | 'hide'; courage: number; until: number; barkAt: number; hurtAt: number; pickup: number | null; path: number[]; goal: number; pathIndex: number;
+export interface Companion { transitionUntil?: number; following?: boolean; velocity?: Point; state: 'follow' | 'fetch' | 'hide'; courage: number; until: number; barkAt: number; hurtAt: number; pickup: number | null; path: number[]; goal: number; pathIndex: number;
   /** L1 v2 warning state (spec 5.8): highest stage reached for the current threat, and the nervous-idle end tick. */
   warn?: { stage: CorgiWarnStage; threat: number; nervousUntil: number } }
 export type CorgiWarnStage = 'none' | 'stiffen' | 'growl' | 'bark' | 'nervous';

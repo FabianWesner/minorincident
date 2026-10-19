@@ -82,6 +82,8 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     // that a timed Alpha entrance already killed a soldier. Recoverable bodies keep their slots.
     const armyLostSomeone = `window.__SS__.query({}).filter(e => e.civilian?.ally?.role === 'soldier' && e.health.current > 0 && e.kind !== 'infected').length < ${l4}.soldiersAtTurn`;
     await step(`${l4}.tankPhase === 'hold' && ${l4}.heliPhase === 'orbit' && ${l4}.alphaIds.length >= 3 && ${armyLostSomeone}`, 900);
+    expect(await page.evaluate(() => window.__SS__!.missions.state()?.l4?.phase), 'the native stress fixture must reach its peak before leaving L4').toBe('war');
+    await page.evaluate(() => window.__SS__!.bot.stop());
     // Populate the acceptance peak through the ordinary spawn APIs. The natural route often
     // kills the early waves before tank entry, so it cannot prove the specified 80/40 stress case.
     await page.evaluate(tier => {
@@ -120,7 +122,7 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     // Keep the real clock running through the break itself; stepping past the
     // trigger while paused omitted the fuel-truck chain from the hitch proof.
     const breakFrames = await record(`${beats}.lineBreakAt > 0`, 5_000);
-    await page.evaluate(async () => { const a = window.__SS__!; a.camera.preset('D-FAIR/W0/l4-collapse'); await a.screenshotReady(); });
+    await page.evaluate(async () => { const a = window.__SS__!; a.camera.preset(`D-FAIR/W${a.missions.state()!.tier}/l4-collapse`); await a.screenshotReady(); });
     await page.locator('canvas').screenshot({ path: `${dir}/l4-collapse-${tier}.png`, scale: 'css' });
     // Draw/triangle budgets are measured on the gameplay (follow) camera; the photo preset is a wide overview.
     await page.evaluate(async () => { const a = window.__SS__!; a.camera.follow(); await a.step(2); await a.screenshotReady(); });

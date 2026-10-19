@@ -1,0 +1,15 @@
+Command: MI_RUNNER_IP=2.28.24.66 sh tools/remote/run.sh "$PWD" --pull test-results/collision-placement/unit-goal-final.json -- bash tools/remote/timing-isolated.sh npx vitest run tests/unit --maxWorkers 4 --reporter default --reporter json --outputFile test-results/collision-placement/unit-goal-final.json
+
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 2.28.24.66:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted:none
+[remote] sync 35s, 25575 files; job /srv/mi/jobs/collision-placement-9aa6d4-18197-1792434438; queueing for a slot
+[runner] slot 0 acquired; load 0.99 1.40 1.87
+[runner] waiting for both slots to isolate wall-clock timing
+[runner] both slots held for the timing project
+[runner] functional phase reached; extra slot released
+ Test Files  294 passed | 1 skipped (295)
+      Tests  1657 passed | 9 skipped (1666)
+   Start at  18:27:56
+   Duration  333.54s (tests 91%, import 7%, transform 2%)
+[remote] pulled test-results/collision-placement/unit-goal-final.json
+[remote] done exit=0 (runner 2.28.24.66, sync 35s, remote total 337s)

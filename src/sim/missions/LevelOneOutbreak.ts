@@ -76,12 +76,7 @@ export class LevelOneOutbreak {
     const live = (anchor: string, m = 4) => { const a = this.anchor(anchor), p = world.entities.get(1)?.transform; return !!p && Math.hypot(p.x - a.x, p.z - a.z) <= Math.max(m, a.radius + 1); };
     if (id === 'pickup') { if (world.npcs?.civilians.outbreak && l1.phase === 'morning' && !l1.delivered && live('parcel-counter')) this.story.pickup(); else l1.carrying = !l1.delivered; }
     if (id === 'weapon') { world.combat?.setLoadout(['weapon.bat'], ['weapon.fists']); if (live('garage-bat')) this.story.garage(); }
-    if (id === 'firestation') {
-      // The shutter closes behind the player (the gate action blocks the player collider): infected outside cannot pass either.
-      // The wall spans the aperture across the door -> trigger (inward) axis, whichever way the station faces.
-      const door = this.anchor('fire-bay-door'), inside = this.anchor('fire-bay-trigger'), alongX = Math.abs(inside.z - door.z) > Math.abs(inside.x - door.x);
-      world.events.emit({ type: 'world.blocker.changed', tick: world.tick, id: 900_001, blocked: true, wall: { x: door.x, z: door.z, y: .7, halfX: alongX ? door.radius : .2, halfY: .7, halfZ: alongX ? .2 : door.radius } });
-    }
+
   }
   noteTurned(id: number): void { const l1 = this.mission.state.l1; if (l1 && !l1.turnedIds.includes(id)) l1.turnedIds.push(id); }
   noteEscaped(id: number): void { const l1 = this.mission.state.l1; if (l1 && !l1.escapedIds.includes(id)) l1.escapedIds.push(id); }
