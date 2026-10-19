@@ -360,7 +360,7 @@ export class CharacterView extends Group {
   /** Scene Lab guard (PO 10-19 floating gear): for every visible mesh on the rig that the survivor GLB does not draw itself
    * (gear, accessories), the largest distance in cm from one of its vertices to the nearest posed body vertex. Held weapons
    * (hand sockets) and the separately gated headlamp/cure props are skipped. Debug-only: walks posed vertices on the CPU. */
-  looseAttachments(): { name: string; gapCm: number }[] {
+  looseAttachments(): { name: string; gapCm: number; at: number[] }[] {
     const character = this.characters.get(this.variant); if (!character || !this.visible) return [];
     this.updateMatrixWorld(true);
     const skip = new Set<import('three').Object3D>([character.rig.weaponSocketL, character.rig.weaponSocketR, ...(character.headlamp ? [character.headlamp] : []), ...(character.cure ? [character.cure] : [])]);
@@ -374,13 +374,35 @@ export class CharacterView extends Group {
       }
       return out;
     };
-    const bodyPoints = [...character.body].filter(shown).flatMap(mesh => points(mesh, 1500));
-    const report: { name: string; gapCm: number }[] = [];
+    /** Body surface samples: every posed vertex plus a 1.5 cm grid inside long triangles (decimated flat areas such as the cap have 6 cm
+     * triangles, so nearest-vertex distance overstated the gap there; the guard stays at its limit, only the reference got denser). */
+    const surface = (mesh: Mesh): Vector3[] => {
+      const position = mesh.geometry.getAttribute('position'), index = mesh.geometry.getIndex(), skinned = (mesh as import('three').SkinnedMesh).isSkinnedMesh;
+      const posed: Vector3[] = [];
+      for (let i = 0; i < position.count; i++) {
+        const v = new Vector3();
+        if (skinned) (mesh as import('three').SkinnedMesh).getVertexPosition(i, v); else v.fromBufferAttribute(position, i);
+        posed.push(v.applyMatrix4(mesh.matrixWorld));
+      }
+      const out = posed.slice();
+      if (!index) return out;
+      for (let t = 0; t < index.count; t += 3) {
+        const a = posed[index.getX(t)], b = posed[index.getX(t + 1)], c = posed[index.getX(t + 2)];
+        const edge = Math.max(a.distanceTo(b), b.distanceTo(c), c.distanceTo(a));
+        if (edge < .02) continue;
+        const n = Math.min(8, Math.ceil(edge / .015));
+        for (let i = 1; i < n; i++) for (let j = 1; i + j < n; j++) out.push(new Vector3().addScaledVector(a, 1 - (i + j) / n).addScaledVector(b, i / n).addScaledVector(c, j / n));
+      }
+      return out;
+    };
+    const bodyPoints = [...character.body].filter(shown).flatMap(mesh => surface(mesh));
+    const report: { name: string; gapCm: number; at: number[] }[] = [];
     character.model.traverse(node => {
       if (!(node instanceof Mesh) || character.body.has(node) || !shown(node)) return;
-      let gap = 0;
-      for (const p of points(node, 300)) { let best = Infinity; for (const b of bodyPoints) best = Math.min(best, p.distanceToSquared(b)); gap = Math.max(gap, Math.sqrt(best)); }
-      report.push({ name: node.parent?.name || node.name || 'mesh', gapCm: Math.round(gap * 1000) / 10 });
+      let gap = 0, at = [0, 0, 0], vertex = 0;
+      const step = Math.max(1, Math.floor(node.geometry.getAttribute('position').count / 300));
+      points(node, 300).forEach((p, k) => { let best = Infinity; for (const b of bodyPoints) best = Math.min(best, p.distanceToSquared(b)); if (Math.sqrt(best) > gap) { gap = Math.sqrt(best); vertex = k * step; at = p.toArray().map(v => Math.round(v * 1000) / 1000); } });
+      report.push({ name: node.parent?.name || node.name || 'mesh', gapCm: Math.round(gap * 1000) / 10, at: [...at, vertex] });
     });
     return report;
   }
