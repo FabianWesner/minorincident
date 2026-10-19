@@ -20,10 +20,6 @@ const route = cure.regions.flatMap((r, i) => i ? r.route.slice(1) : r.route);
 const segments: [Point, Point][] = route.slice(1).map((b, i) => [route[i], b]);
 const detours: [Point, Point][] = cure.detours.flatMap(d => d.route.slice(1).map((b, i) => [d.route[i], b] as [Point, Point]));
 const shortcuts: [Point, Point][] = [[cure.regions[5].route[1], cure.anchors['corridor-breach']], [cure.anchors['corridor-breach'], cure.anchors['r6-r7-seam']], [cure.anchors['r6-r7-seam'], cure.regions[6].route[5]]];
-const segPoint = ([a, b]: [Point, Point], p: Point) => {
-  const dx = b[0] - a[0], dz = b[1] - a[1], d2 = dx * dx + dz * dz, t = d2 ? Math.max(0, Math.min(1, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dz) / d2)) : 0;
-  return Math.hypot(a[0] + t * dx - p[0], a[1] + t * dz - p[1]);
-};
 /** Distance between a segment and a ground rectangle, sampled at 0.25 m (dressing boxes are metres apart). */
 const segRect = (s: [Point, Point], min: number[], max: number[]) => {
   const d = Math.hypot(s[1][0] - s[0][0], s[1][1] - s[0][1]), n = Math.max(1, Math.ceil(d / .25));
