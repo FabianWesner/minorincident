@@ -33,6 +33,8 @@ export class QuadrupedAnimator {
     this.head = root.getObjectByName('head');
     this.contacts = new PawContacts(root);
   }
+  /** Scene Lab guard: how far a jointed leg's joint moved off its shoulder/hip (cm). */
+  limbGapCm(): number { return this.contacts.limbGapCm(); }
   update(time: number, speed: number, distance: number, warning?: CorgiWarning | null): void {
     const dt = Math.max(0, time - this.time); this.time = time;
     // Smoothed ground speed: follow-steering noise must not flip gaits (PO #4 flicker).

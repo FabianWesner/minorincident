@@ -1,4 +1,5 @@
 import { BoxGeometry, Color, Group, Mesh, Quaternion, Vector3, type Material } from 'three/webgpu';
+import { positionView } from 'three/tsl';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import manifest from '../../assets/manifest.json' with { type: 'json' };
@@ -18,16 +19,11 @@ import { LimbIK } from './LimbIK';
 import { RiderContacts } from './RiderContacts';
 import { CourierLiving } from './CourierRig';
 
-type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { assetId: string; animator: KeyframeAnimator; living?: CourierLiving; gear: Group[]; headlamp?: Group; cure?: Group; aim: GunAim; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
+type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { assetId: string; animator: KeyframeAnimator; living?: CourierLiving; gear: Group[]; body: Set<Mesh>; headlamp?: Group; cure?: Group; aim: GunAim; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
 /** Hero hierarchy presentation. Cosmetic variants share identical sim state and attachment rules. */
-const gearCache = new Map<string, Promise<Group | undefined>>();
-/** Shared tier-2 gear GLB (shin guards, elbow pads, holster); a missing file leaves the tier without gear instead of failing the character. */
-function loadGear(loader: GLTFLoader, low: boolean): Promise<Group | undefined> {
-  const url = `/assets/models/acc.courier-gear${low ? '.lod1' : ''}.glb`;
-  let pending = gearCache.get(url);
-  if (!pending) { pending = loader.loadAsync(url).then(gltf => gltf.scene, () => undefined); gearCache.set(url, pending); }
-  return pending;
-}
+// Compress depth into a near-camera slice: the courier clears world blockers,
+// while her own face, cap, hair and limbs still occlude one another correctly.
+const foregroundDepth = positionView.z.negate().mul(.001).clamp(.001, .1);
 
 export class CharacterView extends Group {
   private foregroundActive: boolean | undefined;
@@ -38,7 +34,11 @@ export class CharacterView extends Group {
     this.foregroundActive = active;
     this.traverse(node => {
       if (!(node instanceof Mesh)) return;
-      for (const material of Array.isArray(node.material) ? node.material : [node.material]) material.depthTest = !active;
+      for (const material of Array.isArray(node.material) ? node.material : [node.material]) {
+        material.depthTest = true;
+        const nodeMaterial = material as import('three/webgpu').NodeMaterial, depth = active ? foregroundDepth : null;
+        if (nodeMaterial.depthNode !== depth) { nodeMaterial.depthNode = depth; nodeMaterial.needsUpdate = true; }
+      }
       node.renderOrder = active ? 20 : 0;
     });
   }
@@ -106,7 +106,7 @@ export class CharacterView extends Group {
       this.skinned ||= isSkin;
       if (character.source === 'placeholder') console.info(JSON.stringify({ type: 'asset.placeholder', id, reason: character.reason }));
       const vertexMaterial = materials.fromVertexColors(`character:${variant}`);
-      vertexMaterial.movingFigure.value = 1;
+      vertexMaterial.movingFigure.value = 1; vertexMaterial.heroFigure.value = 1;
       vertexMaterial.bloodCoverage.value = 0; vertexMaterial.userData.sharedPalette = true;
       if (bloodFeedback) this.bloodMaterials.push(vertexMaterial);
       const boundaries = [...new Set([...characterNodes, ...(def?.requiredNodes ?? []), ...(def?.animatedNodes ?? []), ...(def?.sockets ?? [])])];
@@ -126,7 +126,7 @@ export class CharacterView extends Group {
           if (['survivorRed', 'backpackTeal', 'picketWhite'].includes(token)) replacement = materials.unique(token);
           else replacement = materials.fromColor(`${variant}:${source.name}`, (source as import('three').MeshStandardMaterial).color);
           replacement.userData.sharedPalette = true;
-          (replacement as PaletteMaterial).movingFigure.value = 1;
+          (replacement as PaletteMaterial).movingFigure.value = 1; (replacement as PaletteMaterial).heroFigure.value = 1;
           if (bloodFeedback) this.bloodMaterials.push(replacement as PaletteMaterial);
           oldMaterials.add(source); replacements.set(source, replacement); return replacement;
         };
@@ -134,30 +134,12 @@ export class CharacterView extends Group {
         object.castShadow = object.receiveShadow = true;
       });
       for (const material of oldMaterials) material.dispose();
+      // PO 10-19 (P1, "The girl now has a bug on front???"): tier 1-4 avatar gear was placeholder boxes (bcf15a667) plus a
+      // rigid tier-2 GLB (c9ca43df7) that floated off the skinned body. No gear is drawn until real gear art fits the skin;
+      // the tier itself still follows progression in the sim and HUD.
       const gear: Group[] = [];
-      const gearScene = await loadGear(loader, low);
-      const attachment = (tier: number, parent: import('three').Object3D, size: [number, number, number], position: [number, number, number], token: PaletteToken): void => {
-        const group = new Group(); group.name = `gear-tier-${tier}`; const mesh = new Mesh(new BoxGeometry(...size), materials.unique(token));
-        mesh.material.movingFigure.value = 1;
-        mesh.material.userData.sharedPalette = true; mesh.castShadow = true; mesh.position.set(...position); group.add(mesh); parent.add(group); gear.push(group); group.userData.tier = tier;
-      };
-      // Cumulative gear: bag straps/pouch; pads/holster; vest/cap; heavier armor and mask.
-      attachment(1, character.rig.backpackSocket, [0.12, 0.15, 0.3], [-0.13, -0.1, 0], 'backpackTeal');
-      // Tier-2 courier gear: modelled shin guards, elbow pads and a thigh holster (assets/acc.courier-gear), authored in each rig node's local frame.
-      if (gearScene) {
-        for (const part of gearScene.children) {
-          const [nodeName, token] = part.name.split('__') as [string, PaletteToken], node = (character.rig as unknown as Record<string, import('three').Object3D | undefined>)[nodeName];
-          if (!node || !(part instanceof Mesh)) continue;
-          const mesh = new Mesh(part.geometry, materials.unique(token));
-          mesh.material.movingFigure.value = 1; mesh.material.userData.sharedPalette = true; mesh.castShadow = true;
-          const group = new Group(); group.name = 'gear-tier-2'; group.userData.tier = 2; group.add(mesh); node.add(group); gear.push(group);
-        }
-      }
-      const chest = character.model.getObjectByName('chest') ?? character.rig.torso, chestLift = chest === character.rig.torso ? 0 : chest.getWorldPosition(this.scratchA).y - character.rig.torso.getWorldPosition(this.scratchB).y;
-      attachment(3, chest, [0.12, 0.19, 0.27], [0.12, 0.1 - chestLift, 0], 'uiDark');
-      attachment(3, character.rig.head, [0.23, 0.055, 0.4], [0, 0.14, 0], 'survivorRed');
-      attachment(4, chest, [0.14, 0.25, 0.37], [0.16, 0.08 - chestLift, 0], 'policeBlue');
-      attachment(4, character.rig.head, [0.08, 0.11, 0.16], [0.18, 0.005, 0], 'uiDark');
+      // Everything the survivor GLB itself draws; any later mesh on the rig is an attachment (see looseAttachments).
+      const body = new Set<Mesh>(); character.model.traverse(node => { if (node instanceof Mesh) body.add(node); });
       const pilot = isSkin;
       if (pilot) {
         const r = character.rig;
@@ -175,7 +157,7 @@ export class CharacterView extends Group {
             const material = node.geometry.hasAttribute('color') && !source.name.startsWith('emi_')
               ? materials.fromVertexColors('cure:carried')
               : materials.fromColor(`cure:${source.name}`, (source as import('three').MeshStandardMaterial).color, source.name.startsWith('emi_') ? .6 : 0);
-            material.movingFigure.value = 1; material.userData.sharedPalette = true;
+            material.movingFigure.value = 1; material.heroFigure.value = 1; material.userData.sharedPalette = true;
             source.dispose(); return material;
           };
           node.material = Array.isArray(node.material) ? node.material.map(remap) : remap(node.material);
@@ -199,13 +181,14 @@ export class CharacterView extends Group {
         headlamp.traverse(node => { if (node instanceof Mesh) {
           const source = node.material as import('three').MeshStandardMaterial;
           node.material = materials.fromColor(`headlamp:${source.name}`, source.color, source.name.startsWith('emi_') ? .8 : 0);
+          node.material.movingFigure.value = 1; node.material.heroFigure.value = 1;
           node.material.userData.sharedPalette = true; source.dispose(); node.castShadow = true;
         } });
         character.rig.head.add(headlamp);
       }
       const animator = new KeyframeAnimator(character.rig, pilot ? skinClips : undefined);
       const living = animator.bones ? new CourierLiving(character.rig, animator.bones, variant === 'female' ? 1 : 2) : undefined;
-      this.characters.set(variant, { ...character, assetId: isSkin ? `${id}.skin` : id, animator, living, gear, headlamp, cure: canister, aim: new GunAim(character.rig.armR, character.rig.foreArmR, character.rig.handR, character.rig.torso, [character.rig.armL, character.rig.foreArmL, character.rig.handL], [character.rig.weaponSocketR, character.rig.weaponSocketL], character.rig.head), sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
+      this.characters.set(variant, { ...character, assetId: isSkin ? `${id}.skin` : id, animator, living, gear, body, headlamp, cure: canister, aim: new GunAim(character.rig.armR, character.rig.foreArmR, character.rig.handR, character.rig.torso, [character.rig.armL, character.rig.foreArmL, character.rig.handL], [character.rig.weaponSocketR, character.rig.weaponSocketL], character.rig.head), sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
     }
     if (!this.parcel) this.makeParcel(materials);
   }
@@ -355,6 +338,33 @@ export class CharacterView extends Group {
     const tape = new Mesh(new BoxGeometry(.31, .045, .08), materials.fromColor('parcel:tape', new Color('#2aa198'))); tape.position.y = .12;
     for (const mesh of [box, tape]) { mesh.castShadow = true; group.add(mesh); }
     this.parcel = group; this.add(group);
+  }
+  /** Scene Lab guard (PO 10-19 floating gear): for every visible mesh on the rig that the survivor GLB does not draw itself
+   * (gear, accessories), the largest distance in cm from one of its vertices to the nearest posed body vertex. Held weapons
+   * (hand sockets) and the separately gated headlamp/cure props are skipped. Debug-only: walks posed vertices on the CPU. */
+  looseAttachments(): { name: string; gapCm: number }[] {
+    const character = this.characters.get(this.variant); if (!character || !this.visible) return [];
+    this.updateMatrixWorld(true);
+    const skip = new Set<import('three').Object3D>([character.rig.weaponSocketL, character.rig.weaponSocketR, ...(character.headlamp ? [character.headlamp] : []), ...(character.cure ? [character.cure] : [])]);
+    const shown = (node: import('three').Object3D): boolean => { for (let n: import('three').Object3D | null = node; n; n = n.parent) { if (!n.visible || skip.has(n)) return false; if (n === this) return true; } return false; };
+    const points = (mesh: Mesh, limit: number): Vector3[] => {
+      const position = mesh.geometry.getAttribute('position'), step = Math.max(1, Math.floor(position.count / limit)), out: Vector3[] = [];
+      for (let i = 0; i < position.count; i += step) {
+        const v = new Vector3();
+        if ((mesh as import('three').SkinnedMesh).isSkinnedMesh) (mesh as import('three').SkinnedMesh).getVertexPosition(i, v); else v.fromBufferAttribute(position, i);
+        out.push(v.applyMatrix4(mesh.matrixWorld));
+      }
+      return out;
+    };
+    const bodyPoints = [...character.body].filter(shown).flatMap(mesh => points(mesh, 1500));
+    const report: { name: string; gapCm: number }[] = [];
+    character.model.traverse(node => {
+      if (!(node instanceof Mesh) || character.body.has(node) || !shown(node)) return;
+      let gap = 0;
+      for (const p of points(node, 300)) { let best = Infinity; for (const b of bodyPoints) best = Math.min(best, p.distanceToSquared(b)); gap = Math.max(gap, Math.sqrt(best)); }
+      report.push({ name: node.parent?.name || node.name || 'mesh', gapCm: Math.round(gap * 1000) / 10 });
+    });
+    return report;
   }
   setBlood(coverage: number): void { for (const material of this.bloodMaterials) material.bloodCoverage.value = coverage; }
   /** Presentation heading eases aim changes while the sim keeps its exact hit direction. */

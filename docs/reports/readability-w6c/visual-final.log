@@ -1,0 +1,57 @@
+GPU guard: WindowServer 1.9% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.8% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.8% / 10 s; 2 headless browsers + 1 requested; waiting
+
+Running 24 tests using 1 worker
+
+[1/24] [chromium] › tests/visual/l6-companion.spec.ts:9:49 › L6 companion outside sodium pool contrast and courier colours high webgl2 z0.5
+[2/24] [chromium] › tests/visual/l6-companion.spec.ts:9:49 › L6 companion outside sodium pool contrast and courier colours low webgl2 z0.5
+[3/24] [chromium] › tests/visual/l6-companion.spec.ts:9:49 › L6 companion outside sodium pool contrast and courier colours high webgl2 z1
+[4/24] [chromium] › tests/visual/l6-companion.spec.ts:9:49 › L6 companion outside sodium pool contrast and courier colours low webgl2 z1
+[5/24] [chromium] › tests/visual/l6-companion.spec.ts:9:49 › L6 companion outside sodium pool contrast and courier colours high webgl2 z1.5
+[6/24] [chromium] › tests/visual/l6-companion.spec.ts:9:49 › L6 companion outside sodium pool contrast and courier colours low webgl2 z1.5
+[7/24] [chromium] › tests/visual/l6-companion.spec.ts:9:49 › L6 companion outside sodium pool contrast and courier colours high webgpu z0.5
+[8/24] [chromium] › tests/visual/l6-companion.spec.ts:9:49 › L6 companion outside sodium pool contrast and courier colours low webgpu z0.5
+[9/24] [chromium] › tests/visual/l6-companion.spec.ts:9:49 › L6 companion outside sodium pool contrast and courier colours high webgpu z1
+[10/24] [chromium] › tests/visual/l6-companion.spec.ts:9:49 › L6 companion outside sodium pool contrast and courier colours low webgpu z1
+[11/24] [chromium] › tests/visual/l6-companion.spec.ts:9:49 › L6 companion outside sodium pool contrast and courier colours high webgpu z1.5
+[12/24] [chromium] › tests/visual/l6-companion.spec.ts:9:49 › L6 companion outside sodium pool contrast and courier colours low webgpu z1.5
+[13/24] [chromium] › tests/visual/l7-night.spec.ts:12:49 › T-E29-14 @E29-AC14 W6 rocket and horde courier contrast high webgl2 z0.5
+[14/24] [chromium] › tests/visual/l7-night.spec.ts:12:49 › T-E29-14 @E29-AC14 W6 rocket and horde courier contrast low webgl2 z0.5
+[15/24] [chromium] › tests/visual/l7-night.spec.ts:12:49 › T-E29-14 @E29-AC14 W6 rocket and horde courier contrast high webgl2 z1
+[16/24] [chromium] › tests/visual/l7-night.spec.ts:12:49 › T-E29-14 @E29-AC14 W6 rocket and horde courier contrast low webgl2 z1
+[17/24] [chromium] › tests/visual/l7-night.spec.ts:12:49 › T-E29-14 @E29-AC14 W6 rocket and horde courier contrast high webgl2 z1.5
+[18/24] [chromium] › tests/visual/l7-night.spec.ts:12:49 › T-E29-14 @E29-AC14 W6 rocket and horde courier contrast low webgl2 z1.5
+[19/24] [chromium] › tests/visual/l7-night.spec.ts:12:49 › T-E29-14 @E29-AC14 W6 rocket and horde courier contrast high webgpu z0.5
+[20/24] [chromium] › tests/visual/l7-night.spec.ts:12:49 › T-E29-14 @E29-AC14 W6 rocket and horde courier contrast low webgpu z0.5
+[21/24] [chromium] › tests/visual/l7-night.spec.ts:12:49 › T-E29-14 @E29-AC14 W6 rocket and horde courier contrast high webgpu z1
+[22/24] [chromium] › tests/visual/l7-night.spec.ts:12:49 › T-E29-14 @E29-AC14 W6 rocket and horde courier contrast low webgpu z1
+[23/24] [chromium] › tests/visual/l7-night.spec.ts:12:49 › T-E29-14 @E29-AC14 W6 rocket and horde courier contrast high webgpu z1.5
+[24/24] [chromium] › tests/visual/l7-night.spec.ts:12:49 › T-E29-14 @E29-AC14 W6 rocket and horde courier contrast low webgpu z1.5
+  24 passed (2.2m)
+[scene] starting vite preview on http://127.0.0.1:3892
+after webgl2 L6 high z0.5: courier clipped 0.00%; corgi 4.124 (9995px), 79 draws/152610 tris
+after webgl2 L6 high z1: courier clipped 0.00%; corgi 4.881 (2726px), 99 draws/171849 tris
+after webgl2 L6 high z1.5: courier clipped 0.00%; corgi 3.833 (1237px), 102 draws/164985 tris
+after webgl2 L7 high z0.5: courier clipped 0.00%; corgi 4.320 (9997px), 111 draws/302030 tris
+after webgl2 L7 high z1: courier clipped 0.00%; corgi 4.947 (2726px), 110 draws/350408 tris
+after webgl2 L7 high z1.5: courier clipped 0.00%; corgi 3.732 (1237px), 114 draws/221625 tris
+after webgl2 L6 low z0.5: courier clipped 0.00%; corgi 4.124 (9995px), 70 draws/106995 tris
+after webgl2 L6 low z1: courier clipped 0.00%; corgi 4.882 (2726px), 88 draws/130831 tris
+after webgl2 L6 low z1.5: courier clipped 0.00%; corgi 3.835 (1237px), 94 draws/119843 tris
+after webgl2 L7 low z0.5: courier clipped 0.00%; corgi 4.448 (9997px), 67 draws/111263 tris
+after webgl2 L7 low z1: courier clipped 0.00%; corgi 4.905 (2726px), 71 draws/115729 tris
+after webgl2 L7 low z1.5: courier clipped 0.00%; corgi 3.770 (1237px), 76 draws/80033 tris
+[scene] starting vite preview on http://127.0.0.1:3893
+after webgpu L6 high z0.5: courier clipped 0.00%; corgi 4.123 (10000px), 79 draws/152610 tris
+after webgpu L6 high z1: courier clipped 0.00%; corgi 4.905 (2734px), 99 draws/171849 tris
+after webgpu L6 high z1.5: courier clipped 0.00%; corgi 3.836 (1235px), 102 draws/164985 tris
+after webgpu L7 high z0.5: courier clipped 0.00%; corgi 4.320 (10001px), 111 draws/302030 tris
+after webgpu L7 high z1: courier clipped 0.00%; corgi 4.969 (2734px), 110 draws/350408 tris
+after webgpu L7 high z1.5: courier clipped 0.00%; corgi 3.737 (1235px), 114 draws/221625 tris
+after webgpu L6 low z0.5: courier clipped 0.00%; corgi 4.124 (10000px), 70 draws/106995 tris
+after webgpu L6 low z1: courier clipped 0.00%; corgi 4.905 (2734px), 88 draws/130831 tris
+after webgpu L6 low z1.5: courier clipped 0.00%; corgi 3.838 (1235px), 94 draws/119843 tris
+after webgpu L7 low z0.5: courier clipped 0.00%; corgi 4.448 (10001px), 67 draws/111263 tris
+after webgpu L7 low z1: courier clipped 0.00%; corgi 4.926 (2734px), 71 draws/115729 tris
+after webgpu L7 low z1.5: courier clipped 0.00%; corgi 3.775 (1235px), 76 draws/80033 tris

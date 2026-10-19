@@ -1,0 +1,1659 @@
+{
+  "spec": "tests/scenes/catalog/qa-w6-readability-l7-horde.json",
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "high",
+  "actualTier": "high",
+  "frames": 15,
+  "timing": {
+    "openMs": 0,
+    "loadMs": 3230,
+    "runMs": 609,
+    "sceneMs": 3839
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "undrawnFramesMax",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "drawCallsMax",
+        "pass": true,
+        "value": 66,
+        "limit": 300
+      },
+      {
+        "name": "trianglesMax",
+        "pass": true,
+        "value": 123403,
+        "limit": 500000
+      },
+      {
+        "name": "canvas.f0.varianceMin",
+        "pass": true,
+        "value": 475.36733637794305,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f0.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f7.varianceMin",
+        "pass": true,
+        "value": 338.06322289112154,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f7.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f14.varianceMin",
+        "pass": true,
+        "value": 338.8144617048033,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f14.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f15.varianceMin",
+        "pass": true,
+        "value": 338.9977696532867,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f15.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "requestedBackend",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      },
+      {
+        "name": "requestedQuality",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      }
+    ]
+  },
+  "seeThroughCut": null,
+  "seeThroughCutSamples": [],
+  "courierShares": [],
+  "vehicleSilhouettes": [],
+  "pixels": [
+    {
+      "frame": 0,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          48.282920524691356,
+          32.545952932098764,
+          58.79171103395062
+        ],
+        "variance": 475.36733637794305,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 7,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          44.12507908950617,
+          28.73964699074074,
+          54.43703125
+        ],
+        "variance": 338.06322289112154,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 14,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          44.14694058641975,
+          28.75702353395062,
+          54.44777199074074
+        ],
+        "variance": 338.8144617048033,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 15,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          44.11755787037037,
+          28.74612075617284,
+          54.44675540123457
+        ],
+        "variance": 338.9977696532867,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    }
+  ],
+  "edgeSamples": [],
+  "ring": null,
+  "contrast": [],
+  "consoleErrors": [],
+  "scene": {
+    "name": "qa-w6-readability-l7-horde",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "bld.supermarket:8",
+        "asset": "bld.supermarket",
+        "at": [
+          4.999999999999999,
+          -17.5
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "bld.pharmacy:9",
+        "asset": "bld.pharmacy",
+        "at": [
+          6.049999999999999,
+          -9
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "bld.pharmacy:10",
+        "asset": "bld.pharmacy",
+        "at": [
+          6.049999999999999,
+          -1.2
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "bld.cafe-corner:11",
+        "asset": "bld.cafe-corner",
+        "at": [
+          5.5009999999999994,
+          18.75
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "prop.bench:13",
+        "asset": "prop.bench",
+        "at": [
+          -8,
+          -19.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.bench:14",
+        "asset": "prop.bench",
+        "at": [
+          -14,
+          -19.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.bench:15",
+        "asset": "prop.bench",
+        "at": [
+          -32.8,
+          18
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.bench:16",
+        "asset": "prop.bench",
+        "at": [
+          -32.8,
+          10
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.trash-bin:19",
+        "asset": "prop.trash-bin",
+        "at": [
+          -24,
+          -19.2
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-military-0",
+        "asset": "veh.military-apc",
+        "at": [
+          -5.25,
+          -20.85
+        ],
+        "yawDeg": 87.1
+      },
+      {
+        "id": "l5-military-1",
+        "asset": "veh.military-truck",
+        "at": [
+          -11,
+          -11.539999999999903
+        ],
+        "yawDeg": 93.4
+      },
+      {
+        "id": "l5-bus-2",
+        "asset": "veh.school-bus",
+        "at": [
+          -11,
+          -0.39499999999988283
+        ],
+        "yawDeg": 87.1
+      },
+      {
+        "id": "l5-military-3",
+        "asset": "veh.military-truck",
+        "at": [
+          -4.400830365484341,
+          5.7
+        ],
+        "yawDeg": -176.6
+      },
+      {
+        "id": "l5-bus-4",
+        "asset": "veh.school-bus",
+        "at": [
+          6.7441696345157025,
+          5.7
+        ],
+        "yawDeg": -182.9
+      },
+      {
+        "id": "l5-military-5",
+        "asset": "veh.tank",
+        "at": [
+          -19.6,
+          23.5
+        ],
+        "yawDeg": 110.1
+      },
+      {
+        "id": "l5-crater-7",
+        "asset": "decay.crater",
+        "at": [
+          -24.5,
+          6.5
+        ],
+        "yawDeg": 17.2
+      },
+      {
+        "id": "l5-crater-8",
+        "asset": "decay.crater",
+        "at": [
+          -27,
+          -5
+        ],
+        "yawDeg": 68.8
+      },
+      {
+        "id": "l5-crater-9",
+        "asset": "decay.crater",
+        "at": [
+          -8,
+          14.5
+        ],
+        "yawDeg": 120.3
+      },
+      {
+        "id": "l5-barricade-25",
+        "asset": "decay.blown-sandbags",
+        "at": [
+          -27,
+          -14.4
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-barricade-26",
+        "asset": "decay.blown-sandbags",
+        "at": [
+          -20.6,
+          -14.6
+        ],
+        "yawDeg": 11.5
+      },
+      {
+        "id": "l5-barricade-27",
+        "asset": "decay.blown-sandbags",
+        "at": [
+          -33.4,
+          -9.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-barricade-28",
+        "asset": "decay.blown-sandbags",
+        "at": [
+          -33.4,
+          5.6
+        ],
+        "yawDeg": 98.6
+      },
+      {
+        "id": "l5-barricade-29",
+        "asset": "decay.blown-sandbags",
+        "at": [
+          -33.2,
+          11.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-barricade-30",
+        "asset": "decay.blown-sandbags",
+        "at": [
+          -29,
+          17.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-barricade-31",
+        "asset": "decay.blown-sandbags",
+        "at": [
+          -22.5,
+          17.6
+        ],
+        "yawDeg": -11.5
+      },
+      {
+        "id": "l5-barricade-32",
+        "asset": "decay.blown-sandbags",
+        "at": [
+          -18,
+          17.9
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-barricade-33",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -28.81818181818182,
+          -14.05
+        ],
+        "yawDeg": 28.6
+      },
+      {
+        "id": "l5-barricade-34",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -24.454545454545453,
+          -14.05
+        ],
+        "yawDeg": 28.6
+      },
+      {
+        "id": "l5-barricade-35",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -17.18181818181818,
+          -14.05
+        ],
+        "yawDeg": 28.6
+      },
+      {
+        "id": "l5-barricade-36",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -33.1,
+          -9.899999999999999
+        ],
+        "yawDeg": 118.6
+      },
+      {
+        "id": "l5-barricade-37",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -33.1,
+          7.025
+        ],
+        "yawDeg": 118.6
+      },
+      {
+        "id": "l5-barricade-38",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -33.1,
+          14.275
+        ],
+        "yawDeg": 118.6
+      },
+      {
+        "id": "l5-barricade-39",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -27.363636363636363,
+          18.150000000000002
+        ],
+        "yawDeg": 28.6
+      },
+      {
+        "id": "l5-barricade-40",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -20.090909090909093,
+          18.150000000000002
+        ],
+        "yawDeg": 28.6
+      },
+      {
+        "id": "l5-barricade-41",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -15.727272727272727,
+          18.150000000000002
+        ],
+        "yawDeg": 28.6
+      },
+      {
+        "id": "l5-rubble-49",
+        "asset": "decay.rubble-pile",
+        "at": [
+          -36,
+          20.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-rubble-50",
+        "asset": "decay.rubble-pile",
+        "at": [
+          -5,
+          8.6
+        ],
+        "yawDeg": 74.5
+      },
+      {
+        "id": "l5-rubble-53",
+        "asset": "decay.rubble-pile",
+        "at": [
+          -14,
+          -17.4
+        ],
+        "yawDeg": 297.9
+      },
+      {
+        "id": "l5-rubble-57",
+        "asset": "decay.rubble-pile",
+        "at": [
+          -17,
+          9
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-rubble-58",
+        "asset": "decay.rubble-pile",
+        "at": [
+          -23,
+          -9
+        ],
+        "yawDeg": 51.6
+      },
+      {
+        "id": "l5-rubble-59",
+        "asset": "decay.rubble-pile",
+        "at": [
+          -28,
+          14
+        ],
+        "yawDeg": 103.1
+      },
+      {
+        "id": "l5-rubble-60",
+        "asset": "decay.rubble-pile",
+        "at": [
+          -9,
+          -8
+        ],
+        "yawDeg": 154.7
+      },
+      {
+        "id": "l5-belongings-106",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          -22,
+          7
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-belongings-107",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          -14.4,
+          -8
+        ],
+        "yawDeg": 108.9
+      },
+      {
+        "id": "l5-belongings-108",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          -30,
+          0.4
+        ],
+        "yawDeg": 217.7
+      },
+      {
+        "id": "l5-belongings-109",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          -8,
+          8.6
+        ],
+        "yawDeg": 326.6
+      },
+      {
+        "id": "l5-belongings-110",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          6,
+          20
+        ],
+        "yawDeg": 435.4
+      },
+      {
+        "id": "l5-weapon-116",
+        "asset": "wpn.assault-rifle",
+        "at": [
+          -26.2,
+          -11.4
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-weapon-117",
+        "asset": "wpn.assault-rifle",
+        "at": [
+          -24.6,
+          16
+        ],
+        "yawDeg": 120.3
+      },
+      {
+        "id": "l5-weapon-118",
+        "asset": "wpn.assault-rifle",
+        "at": [
+          -13.4,
+          -2.6
+        ],
+        "yawDeg": 240.6
+      },
+      {
+        "id": "l5-weapon-119",
+        "asset": "wpn.machine-gun",
+        "at": [
+          -31.6,
+          5.4
+        ],
+        "yawDeg": 361
+      },
+      {
+        "id": "l5-weapon-120",
+        "asset": "wpn.assault-rifle",
+        "at": [
+          -9,
+          12.4
+        ],
+        "yawDeg": 481.3
+      },
+      {
+        "id": "l5-weapon-121",
+        "asset": "wpn.pistol",
+        "at": [
+          7,
+          -8.4
+        ],
+        "yawDeg": 601.6
+      },
+      {
+        "id": "l5-weapon-122",
+        "asset": "wpn.shotgun",
+        "at": [
+          -20,
+          4
+        ],
+        "yawDeg": 721.9
+      },
+      {
+        "id": "l5-collapse-4",
+        "asset": "decay.collapsed-facade",
+        "at": [
+          -38.4,
+          10.2
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-glass-3",
+        "asset": "decay.broken-glass",
+        "at": [
+          -35.6,
+          -2.7
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-glass-5",
+        "asset": "decay.broken-glass",
+        "at": [
+          -30,
+          -22.520000000000003
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-glass-7",
+        "asset": "decay.broken-glass",
+        "at": [
+          -13.73,
+          -24.500000000000004
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-glass-9",
+        "asset": "decay.broken-glass",
+        "at": [
+          1.1999999999999986,
+          -17.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-glass-12",
+        "asset": "decay.broken-glass",
+        "at": [
+          0.8899999999999988,
+          -24.639800000000005
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-glass-13",
+        "asset": "decay.broken-glass",
+        "at": [
+          2.201999999999999,
+          18.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-glass-14",
+        "asset": "decay.broken-glass",
+        "at": [
+          3.299999999999999,
+          -9
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-glass-15",
+        "asset": "decay.broken-glass",
+        "at": [
+          3.299999999999999,
+          -1.2
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l7-collapse-2",
+        "asset": "decay.collapsed-facade",
+        "at": [
+          -38.4,
+          -15.5
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l7-collapse-3",
+        "asset": "decay.collapsed-facade",
+        "at": [
+          -13.7,
+          -23.7
+        ],
+        "yawDeg": -90
+      }
+    ],
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "entity": 1
+      },
+      {
+        "id": "corgi",
+        "kind": "corgi",
+        "entity": 7
+      },
+      {
+        "id": "survivor",
+        "kind": "pedestrian",
+        "entity": 8
+      },
+      {
+        "id": "threat",
+        "kind": "infected",
+        "entity": 9
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 3,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    },
+    "marketDoors": null,
+    "armyBoom": null,
+    "scene": "qa-w6-readability-l7-horde",
+    "frame": 15,
+    "tick": 15,
+    "backend": "webgl",
+    "quality": "high",
+    "convoyOverlapFrames": 0,
+    "propPenetration": {
+      "samples": 60,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "attackOverlap": {
+      "depthCm": 0,
+      "frame": 0,
+      "actor": ""
+    },
+    "wheels": {},
+    "lodPlaceholders": {
+      "frames": 0,
+      "firstFrame": -1,
+      "assets": []
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 66,
+        "p95": 66,
+        "max": 66
+      },
+      "triangles": {
+        "p50": 123403,
+        "p95": 123403,
+        "max": 123403
+      },
+      "shadowDrawCalls": {
+        "p50": 46,
+        "p95": 46,
+        "max": 46
+      },
+      "shadowTriangles": {
+        "p50": 85575,
+        "p95": 85575,
+        "max": 85575
+      },
+      "stepMs": {
+        "p50": 2.5,
+        "p95": 2.9,
+        "max": 3.9
+      },
+      "lastFrame": {
+        "drawCalls": 66,
+        "triangles": 123403,
+        "shadowDrawCalls": 46,
+        "shadowTriangles": 85575,
+        "stepMs": 2.40000057220459,
+        "categories": {
+          "other": 57,
+          "shadows": 46,
+          "props": 6,
+          "crowd": 3
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "grounding": {
+      "corpses": 0,
+      "corpseOffMaxCm": 0,
+      "pickups": 0,
+      "pickupOffMaxCm": 0,
+      "worst": []
+    },
+    "pursuit": {
+      "actors": {
+        "threat": {
+          "stuckRunMax": 0,
+          "stuckFrame": -1,
+          "lostNearFrames": 15,
+          "overshootMaxM": 0
+        }
+      },
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "hullWindups": 0,
+      "hullHits": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "cure": null,
+    "megaAlpha": null,
+    "minigun": null,
+    "specials": [],
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0,
+      "holds": {}
+    },
+    "seeThrough": {
+      "frames": 15,
+      "solidRadiusMax": 0.139,
+      "occluders": [],
+      "cutLowProps": [],
+      "cutPlacements": []
+    },
+    "appearance": [],
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 15,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "variety": {
+      "infected": {
+        "figures": 1,
+        "distinct": 1,
+        "per20": [
+          {
+            "figures": 1,
+            "distinct": 1
+          }
+        ],
+        "largestSameLookShare": 1,
+        "largestModelShare": 1
+      },
+      "pedestrian": {
+        "figures": 1,
+        "distinct": 1,
+        "per20": [
+          {
+            "figures": 1,
+            "distinct": 1
+          }
+        ],
+        "largestSameLookShare": 1,
+        "largestModelShare": 1
+      }
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          -19,
+          0
+        ],
+        "yawDeg": 135,
+        "travelM": 0,
+        "maxX": -19,
+        "state": "idle",
+        "health": 100,
+        "drawnFrames": 15,
+        "inViewFrames": 15,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 15
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -19,
+            0
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 15,
+          "torsoPitchMinDeg": 2.9,
+          "torsoPitchMaxDeg": 3.2,
+          "contacts": 2,
+          "slideMaxCm": 11.5,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 4.5,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "corgi": {
+        "kind": "corgi",
+        "entity": 7,
+        "position": [
+          -21.8,
+          1
+        ],
+        "yawDeg": 0,
+        "travelM": 0,
+        "maxX": -21.80000000000001,
+        "state": "follow",
+        "health": 100,
+        "drawnFrames": 15,
+        "inViewFrames": 15,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 15
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -21.8,
+            1
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 15,
+          "torsoPitchMinDeg": null,
+          "torsoPitchMaxDeg": null,
+          "contacts": 4,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 5,
+          "jitterRunMax": 0,
+          "worstSlideFrame": null
+        }
+      },
+      "survivor": {
+        "kind": "pedestrian",
+        "entity": 8,
+        "position": [
+          -17.5,
+          0
+        ],
+        "yawDeg": -53.1,
+        "travelM": 0,
+        "maxX": -17.5,
+        "state": "alarmed",
+        "health": 100,
+        "drawnFrames": 15,
+        "inViewFrames": 15,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 15
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -17.5,
+            0
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 15,
+          "torsoPitchMinDeg": -4.7,
+          "torsoPitchMaxDeg": 0,
+          "contacts": 2,
+          "slideMaxCm": 44.8,
+          "slideP95Cm": 15.8,
+          "yawDriftMaxDeg": 57.3,
+          "liftMaxCm": 5,
+          "sinkMaxCm": 5.3,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      },
+      "threat": {
+        "kind": "infected",
+        "entity": 9,
+        "position": [
+          -16,
+          2
+        ],
+        "yawDeg": -42.8,
+        "travelM": 0,
+        "maxX": -16,
+        "state": "idle",
+        "health": 60,
+        "drawnFrames": 15,
+        "inViewFrames": 15,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod2": 15
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -16,
+            2
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 15,
+          "torsoPitchMinDeg": 47.2,
+          "torsoPitchMaxDeg": 48.3,
+          "contacts": 2,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 19.3,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 15,
+      "sim": {
+        "corgi": 1,
+        "pedestrian": 1,
+        "infected": 1,
+        "courier": 1,
+        "actors": 4
+      },
+      "drawn": {
+        "vehicle": 0,
+        "pedestrian": 1,
+        "infected": 1,
+        "courier": 1,
+        "corgi": 1
+      }
+    },
+    "lods": {
+      "bld.supermarket:8": "culled",
+      "bld.pharmacy:9": "culled",
+      "bld.pharmacy:10": "culled",
+      "bld.cafe-corner:11": "culled",
+      "prop.bench:13": "culled",
+      "prop.bench:14": "culled",
+      "prop.bench:15": "culled",
+      "prop.bench:16": "culled",
+      "prop.trash-bin:19": "culled",
+      "l5-military-0": "culled",
+      "l5-military-1": "lod1",
+      "l5-bus-2": "lod1",
+      "l5-military-3": "lod1",
+      "l5-bus-4": "culled",
+      "l5-military-5": "culled",
+      "l5-crater-7": "n/a",
+      "l5-crater-8": "n/a",
+      "l5-crater-9": "n/a",
+      "l5-barricade-25": "lod2",
+      "l5-barricade-26": "lod2",
+      "l5-barricade-27": "lod2",
+      "l5-barricade-28": "lod2",
+      "l5-barricade-29": "culled",
+      "l5-barricade-30": "culled",
+      "l5-barricade-31": "culled",
+      "l5-barricade-32": "culled",
+      "l5-barricade-33": "lod2",
+      "l5-barricade-34": "lod2",
+      "l5-barricade-35": "lod2",
+      "l5-barricade-36": "lod2",
+      "l5-barricade-37": "culled",
+      "l5-barricade-38": "culled",
+      "l5-barricade-39": "culled",
+      "l5-barricade-40": "culled",
+      "l5-barricade-41": "culled",
+      "l5-rubble-49": "n/a",
+      "l5-rubble-50": "n/a",
+      "l5-rubble-53": "n/a",
+      "l5-rubble-57": "n/a",
+      "l5-rubble-58": "n/a",
+      "l5-rubble-59": "n/a",
+      "l5-rubble-60": "n/a",
+      "l5-belongings-106": "lod2",
+      "l5-belongings-107": "lod2",
+      "l5-belongings-108": "lod2",
+      "l5-belongings-109": "culled",
+      "l5-belongings-110": "culled",
+      "l5-weapon-116": "n/a",
+      "l5-weapon-117": "n/a",
+      "l5-weapon-118": "n/a",
+      "l5-weapon-119": "n/a",
+      "l5-weapon-120": "n/a",
+      "l5-weapon-121": "n/a",
+      "l5-weapon-122": "n/a",
+      "l5-collapse-4": "n/a",
+      "l5-glass-3": "lod2",
+      "l5-glass-5": "culled",
+      "l5-glass-7": "culled",
+      "l5-glass-9": "culled",
+      "l5-glass-12": "culled",
+      "l5-glass-13": "culled",
+      "l5-glass-14": "culled",
+      "l5-glass-15": "culled",
+      "l7-collapse-2": "n/a",
+      "l7-collapse-3": "n/a"
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 18,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [
+      {
+        "a": "l5-barricade-28",
+        "b": "l5-barricade-37",
+        "assetA": "decay.blown-sandbags",
+        "assetB": "prop.sandbag-pallet",
+        "intersectingTriangles": 2232,
+        "region": {
+          "min": [
+            -33.94865417480469,
+            0.000009114761269302107,
+            6.13892936706543
+          ],
+          "max": [
+            -32.59236526489258,
+            0.8900268077850342,
+            7.625323295593262
+          ]
+        },
+        "regionCm": [
+          136,
+          89,
+          149
+        ]
+      },
+      {
+        "a": "l5-barricade-27",
+        "b": "l5-barricade-36",
+        "assetA": "decay.blown-sandbags",
+        "assetB": "prop.sandbag-pallet",
+        "intersectingTriangles": 1676,
+        "region": {
+          "min": [
+            -33.94865417480469,
+            0.000009114761269302107,
+            -10.786070823669434
+          ],
+          "max": [
+            -32.57034683227539,
+            0.8900268077850342,
+            -9.01392936706543
+          ]
+        },
+        "regionCm": [
+          138,
+          89,
+          177
+        ]
+      },
+      {
+        "a": "l5-barricade-30",
+        "b": "l5-barricade-39",
+        "assetA": "decay.blown-sandbags",
+        "assetB": "prop.sandbag-pallet",
+        "intersectingTriangles": 1669,
+        "region": {
+          "min": [
+            -28.249706268310547,
+            0.000009114761269302107,
+            17.510025024414062
+          ],
+          "max": [
+            -26.97699737548828,
+            0.8900268077850342,
+            18.117231369018555
+          ]
+        },
+        "regionCm": [
+          127,
+          89,
+          61
+        ]
+      },
+      {
+        "a": "l5-barricade-25",
+        "b": "l5-barricade-33",
+        "assetA": "decay.blown-sandbags",
+        "assetB": "prop.sandbag-pallet",
+        "intersectingTriangles": 1486,
+        "region": {
+          "min": [
+            -29.035497665405273,
+            0.000009114761269302107,
+            -14.705086708068848
+          ],
+          "max": [
+            -27.932111740112305,
+            0.8900268077850342,
+            -14.151310920715332
+          ]
+        },
+        "regionCm": [
+          110,
+          89,
+          55
+        ]
+      },
+      {
+        "a": "prop.bench:16",
+        "b": "l5-barricade-29",
+        "assetA": "prop.bench",
+        "assetB": "decay.blown-sandbags",
+        "intersectingTriangles": 1453,
+        "region": {
+          "min": [
+            -33.50508499145508,
+            0.004687870852649212,
+            9.679367065429688
+          ],
+          "max": [
+            -32.95130920410156,
+            0.5686762928962708,
+            10.355015754699707
+          ]
+        },
+        "regionCm": [
+          55,
+          56,
+          68
+        ]
+      },
+      {
+        "a": "l5-barricade-32",
+        "b": "l5-barricade-40",
+        "assetA": "decay.blown-sandbags",
+        "assetB": "prop.sandbag-pallet",
+        "intersectingTriangles": 648,
+        "region": {
+          "min": [
+            -20.035497665405273,
+            0.000009114761269302107,
+            17.681304931640625
+          ],
+          "max": [
+            -19.22403335571289,
+            0.8900268077850342,
+            18.14868927001953
+          ]
+        },
+        "regionCm": [
+          81,
+          89,
+          47
+        ]
+      },
+      {
+        "a": "l5-barricade-32",
+        "b": "l5-barricade-41",
+        "assetA": "decay.blown-sandbags",
+        "assetB": "prop.sandbag-pallet",
+        "intersectingTriangles": 541,
+        "region": {
+          "min": [
+            -16.613344192504883,
+            0.000009114761269302107,
+            17.681304931640625
+          ],
+          "max": [
+            -15.976997375488281,
+            0.8900268077850342,
+            18.14868927001953
+          ]
+        },
+        "regionCm": [
+          64,
+          89,
+          47
+        ]
+      },
+      {
+        "a": "bld.cafe-corner:11",
+        "b": "l5-belongings-110",
+        "assetA": "bld.cafe-corner",
+        "assetB": "decay.dropped-belongings",
+        "intersectingTriangles": 503,
+        "region": {
+          "min": [
+            5.588836193084717,
+            0.2102188766002655,
+            19.3732967376709
+          ],
+          "max": [
+            6.173003673553467,
+            0.34887033700942993,
+            20.722484588623047
+          ]
+        },
+        "regionCm": [
+          58,
+          14,
+          135
+        ]
+      },
+      {
+        "a": "l5-barricade-31",
+        "b": "l5-barricade-40",
+        "assetA": "decay.blown-sandbags",
+        "assetB": "prop.sandbag-pallet",
+        "intersectingTriangles": 377,
+        "region": {
+          "min": [
+            -20.976980209350586,
+            0.000009114761269302107,
+            17.6561222076416
+          ],
+          "max": [
+            -20.512338638305664,
+            0.8900268077850342,
+            18.220935821533203
+          ]
+        },
+        "regionCm": [
+          46,
+          89,
+          56
+        ]
+      },
+      {
+        "a": "l5-barricade-25",
+        "b": "l5-barricade-34",
+        "assetA": "decay.blown-sandbags",
+        "assetB": "prop.sandbag-pallet",
+        "intersectingTriangles": 340,
+        "region": {
+          "min": [
+            -25.34061622619629,
+            0.000009114761269302107,
+            -14.510626792907715
+          ],
+          "max": [
+            -24.97699737548828,
+            0.8900268077850342,
+            -14.151310920715332
+          ]
+        },
+        "regionCm": [
+          36,
+          89,
+          36
+        ]
+      },
+      {
+        "a": "l5-crater-9",
+        "b": "l5-weapon-120",
+        "assetA": "decay.crater",
+        "assetB": "wpn.assault-rifle",
+        "intersectingTriangles": 269,
+        "region": {
+          "min": [
+            -9.065237045288086,
+            0.021227441728115082,
+            12.308161735534668
+          ],
+          "max": [
+            -8.828972816467285,
+            0.29905399680137634,
+            12.666090965270996
+          ]
+        },
+        "regionCm": [
+          24,
+          28,
+          36
+        ]
+      },
+      {
+        "a": "l5-barricade-29",
+        "b": "l5-barricade-38",
+        "assetA": "decay.blown-sandbags",
+        "assetB": "prop.sandbag-pallet",
+        "intersectingTriangles": 233,
+        "region": {
+          "min": [
+            -33.37685012817383,
+            0.000009114761269302107,
+            13.38892936706543
+          ],
+          "max": [
+            -32.95130920410156,
+            0.8900268077850342,
+            13.635498046875
+          ]
+        },
+        "regionCm": [
+          43,
+          89,
+          25
+        ]
+      },
+      {
+        "a": "l5-crater-7",
+        "b": "l5-belongings-106",
+        "assetA": "decay.crater",
+        "assetB": "decay.dropped-belongings",
+        "intersectingTriangles": 175,
+        "region": {
+          "min": [
+            -22.758255004882812,
+            0.0099974125623703,
+            6.719878196716309
+          ],
+          "max": [
+            -22.066240310668945,
+            0.32000869512557983,
+            7.280126571655273
+          ]
+        },
+        "regionCm": [
+          69,
+          31,
+          56
+        ]
+      },
+      {
+        "a": "bld.cafe-corner:11",
+        "b": "l5-glass-13",
+        "assetA": "bld.cafe-corner",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 116,
+        "region": {
+          "min": [
+            2.639896869659424,
+            0.08601163327693939,
+            17.831077575683594
+          ],
+          "max": [
+            2.880131244659424,
+            0.14999274909496307,
+            19.774953842163086
+          ]
+        },
+        "regionCm": [
+          24,
+          6,
+          194
+        ]
+      },
+      {
+        "a": "bld.pharmacy:9",
+        "b": "l5-glass-14",
+        "assetA": "bld.pharmacy",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 36,
+        "region": {
+          "min": [
+            2.924999237060547,
+            0.08998634666204453,
+            -9.612750053405762
+          ],
+          "max": [
+            2.924999237060547,
+            0.14201363921165466,
+            -8.422350883483887
+          ]
+        },
+        "regionCm": [
+          0,
+          5,
+          119
+        ]
+      },
+      {
+        "a": "bld.pharmacy:10",
+        "b": "l5-glass-15",
+        "assetA": "bld.pharmacy",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 36,
+        "region": {
+          "min": [
+            2.924999237060547,
+            0.08998634666204453,
+            -1.812749981880188
+          ],
+          "max": [
+            2.924999237060547,
+            0.14201363921165466,
+            -0.6223512291908264
+          ]
+        },
+        "regionCm": [
+          0,
+          5,
+          119
+        ]
+      },
+      {
+        "a": "l5-glass-7",
+        "b": "l7-collapse-3",
+        "assetA": "decay.broken-glass",
+        "assetB": "decay.collapsed-facade",
+        "intersectingTriangles": 34,
+        "region": {
+          "min": [
+            -14.307648658752441,
+            0.08200725167989731,
+            -24.5999755859375
+          ],
+          "max": [
+            -12.935065269470215,
+            0.15399712324142456,
+            -24.5999755859375
+          ]
+        },
+        "regionCm": [
+          137,
+          7,
+          0
+        ]
+      },
+      {
+        "a": "bld.supermarket:8",
+        "b": "l5-glass-9",
+        "assetA": "bld.supermarket",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 26,
+        "region": {
+          "min": [
+            0.7999722957611084,
+            0.09399072825908661,
+            -17.868305206298828
+          ],
+          "max": [
+            0.7999722957611084,
+            0.14201363921165466,
+            -16.922351837158203
+          ]
+        },
+        "regionCm": [
+          0,
+          5,
+          95
+        ]
+      }
+    ],
+    "actors": [],
+    "gunBodies": [],
+    "heldProps": [],
+    "summary": {
+      "gunBodyHits": 0,
+      "staticPairs": 18,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}

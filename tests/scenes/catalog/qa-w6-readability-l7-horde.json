@@ -1,0 +1,77 @@
+{
+  "name": "qa-w6-readability-l7-horde",
+  "note": "Plaza horde colour/clipping review at the existing horde-high collision-safe courier pose (-19,0). Campaign T-E29-14 retains its original rocket/final-horde positions and >=3 contrast gate.",
+  "seed": 1,
+  "time": "L6",
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -19,
+        0
+      ],
+      "yaw": 135
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        -21.80000000000001,
+        1
+      ]
+    },
+    {
+      "id": "survivor",
+      "kind": "pedestrian",
+      "at": [
+        -17.5,
+        0
+      ],
+      "look": {
+        "model": "npc.civilian-man-a"
+      }
+    },
+    {
+      "id": "threat",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -16,
+        2
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "frames": 15,
+  "sheet": 7,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  },
+  "extends": "qa-w6-readability-l7.json",
+  "script": [],
+  "hud": false,
+  "layout": {
+    "level": "L7",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        -42,
+        -25
+      ],
+      [
+        8,
+        25
+      ]
+    ]
+  }
+}
