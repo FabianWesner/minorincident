@@ -1,0 +1,1092 @@
+{
+  "spec": "tests/scenes/catalog/night-read-l10-r2.json",
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "high",
+  "actualTier": "high",
+  "frames": 240,
+  "timing": {
+    "openMs": 0,
+    "loadMs": 4349,
+    "runMs": 1456,
+    "sceneMs": 5805
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "clipping",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "drawCallsMax",
+        "pass": true,
+        "value": 18,
+        "limit": 300
+      },
+      {
+        "name": "trianglesMax",
+        "pass": true,
+        "value": 61990,
+        "limit": 500000
+      },
+      {
+        "name": "canvas.f0.varianceMin",
+        "pass": true,
+        "value": 1008.7113957728707,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f0.variedTilesMin",
+        "pass": true,
+        "value": 21,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f40.varianceMin",
+        "pass": true,
+        "value": 966.0469066000769,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f40.variedTilesMin",
+        "pass": true,
+        "value": 22,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f80.varianceMin",
+        "pass": true,
+        "value": 1010.1800019333859,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f80.variedTilesMin",
+        "pass": true,
+        "value": 29,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f120.varianceMin",
+        "pass": true,
+        "value": 1215.424685990356,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f120.variedTilesMin",
+        "pass": true,
+        "value": 27,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f160.varianceMin",
+        "pass": true,
+        "value": 1036.2343672354236,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f160.variedTilesMin",
+        "pass": true,
+        "value": 19,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f200.varianceMin",
+        "pass": true,
+        "value": 1122.2208871648018,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f200.variedTilesMin",
+        "pass": true,
+        "value": 34,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f240.varianceMin",
+        "pass": true,
+        "value": 943.9839696671697,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f240.variedTilesMin",
+        "pass": true,
+        "value": 23,
+        "limit": 8
+      },
+      {
+        "name": "requestedBackend",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      },
+      {
+        "name": "requestedQuality",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      }
+    ]
+  },
+  "seeThroughCut": null,
+  "seeThroughCutSamples": [],
+  "courierShares": [],
+  "vehicleSilhouettes": [],
+  "pixels": [
+    {
+      "frame": 0,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          80.83043209876543,
+          63.33894868827161,
+          117.16936149691358
+        ],
+        "variance": 1008.7113957728707,
+        "variedTiles": 21,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 40,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          80.24188078703703,
+          62.711840277777775,
+          116.75370563271605
+        ],
+        "variance": 966.0469066000769,
+        "variedTiles": 22,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 80,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          75.2987538580247,
+          58.5690412808642,
+          110.7303337191358
+        ],
+        "variance": 1010.1800019333859,
+        "variedTiles": 29,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 120,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          82.52532793209876,
+          65.1310725308642,
+          118.42787422839505
+        ],
+        "variance": 1215.424685990356,
+        "variedTiles": 27,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 160,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          80.87484182098765,
+          63.33078125,
+          117.11859375
+        ],
+        "variance": 1036.2343672354236,
+        "variedTiles": 19,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 200,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          76.23810763888889,
+          59.579407793209874,
+          111.50521412037037
+        ],
+        "variance": 1122.2208871648018,
+        "variedTiles": 34,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 240,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          80.14817708333334,
+          62.75488811728395,
+          116.8817148919753
+        ],
+        "variance": 943.9839696671697,
+        "variedTiles": 23,
+        "tiles": 64
+      }
+    }
+  ],
+  "edgeSamples": [],
+  "ring": null,
+  "contrast": [],
+  "consoleErrors": [],
+  "scene": {
+    "name": "night-read-l10-r2",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "bld.cure-duplex:8",
+        "asset": "bld.cure-duplex",
+        "at": [
+          853,
+          89.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.cure-duplex:9",
+        "asset": "bld.cure-duplex",
+        "at": [
+          873,
+          89.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.cure-duplex:10",
+        "asset": "bld.cure-duplex",
+        "at": [
+          893,
+          89.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.cure-duplex:11",
+        "asset": "bld.cure-duplex",
+        "at": [
+          913,
+          89.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.cure-duplex:12",
+        "asset": "bld.cure-duplex",
+        "at": [
+          933,
+          89.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.cure-duplex:13",
+        "asset": "bld.cure-duplex",
+        "at": [
+          953,
+          89.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.cure-duplex:14",
+        "asset": "bld.cure-duplex",
+        "at": [
+          973,
+          89.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.cure-duplex:15",
+        "asset": "bld.cure-duplex",
+        "at": [
+          993,
+          89.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.cure-duplex:16",
+        "asset": "bld.cure-duplex",
+        "at": [
+          1013,
+          89.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.cure-duplex:21",
+        "asset": "bld.cure-duplex",
+        "at": [
+          847,
+          10
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "bld.cure-duplex:22",
+        "asset": "bld.cure-duplex",
+        "at": [
+          887,
+          10
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "bld.cure-duplex:23",
+        "asset": "bld.cure-duplex",
+        "at": [
+          997,
+          10
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:26",
+        "asset": "prop.street-lamp",
+        "at": [
+          943,
+          86
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-garden-wall:29",
+        "asset": "prop.cure-garden-wall",
+        "at": [
+          843,
+          87
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.hedge:30",
+        "asset": "prop.hedge",
+        "at": [
+          843,
+          88
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-garden-wall:31",
+        "asset": "prop.cure-garden-wall",
+        "at": [
+          883,
+          87
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.hedge:32",
+        "asset": "prop.hedge",
+        "at": [
+          883,
+          88
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-garden-wall:33",
+        "asset": "prop.cure-garden-wall",
+        "at": [
+          923,
+          87
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.hedge:34",
+        "asset": "prop.hedge",
+        "at": [
+          923,
+          88
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-garden-wall:35",
+        "asset": "prop.cure-garden-wall",
+        "at": [
+          963,
+          87
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.hedge:36",
+        "asset": "prop.hedge",
+        "at": [
+          963,
+          88
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.cure-garden-wall:37",
+        "asset": "prop.cure-garden-wall",
+        "at": [
+          1003,
+          87
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.hedge:38",
+        "asset": "prop.hedge",
+        "at": [
+          1003,
+          88
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:53",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          11
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:54",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          12.5
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:55",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          14
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:56",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          15.5
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:57",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          17
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:58",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          18.5
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:59",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          20
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:60",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          21.5
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:61",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          23
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:62",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          24.5
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:63",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          26
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:64",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          27.5
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:65",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          29
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:66",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          30.5
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:67",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          32
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:68",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          33.5
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:69",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          35
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:70",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          36.5
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:71",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          38
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:72",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          39.5
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:73",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          41
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:74",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          42.5
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:75",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          44
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:76",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          45.5
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:77",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          47
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:78",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          48.5
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:79",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          50
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:80",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          51.5
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:81",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          53
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:82",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          54.5
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:83",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          56
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:84",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          57.5
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:85",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          59
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "decay.makeshift-barricade:86",
+        "asset": "decay.makeshift-barricade",
+        "at": [
+          937,
+          60.5
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "veh.wreck:87",
+        "asset": "veh.wreck",
+        "at": [
+          930,
+          25
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "veh.wreck:88",
+        "asset": "veh.wreck",
+        "at": [
+          944,
+          32
+        ],
+        "yawDeg": 0
+      }
+    ],
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "entity": 1
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 0,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    },
+    "marketDoors": null,
+    "armyBoom": null,
+    "scene": "night-read-l10-r2",
+    "frame": 240,
+    "tick": 240,
+    "backend": "webgl",
+    "quality": "high",
+    "convoyOverlapFrames": 0,
+    "propPenetration": {
+      "samples": 240,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "attackOverlap": {
+      "depthCm": 0,
+      "frame": 0,
+      "actor": ""
+    },
+    "wheels": {},
+    "lodPlaceholders": {
+      "frames": 0,
+      "firstFrame": -1,
+      "assets": []
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 18,
+        "p95": 18,
+        "max": 18
+      },
+      "triangles": {
+        "p50": 61988,
+        "p95": 61990,
+        "max": 61990
+      },
+      "shadowDrawCalls": {
+        "p50": 17,
+        "p95": 17,
+        "max": 17
+      },
+      "shadowTriangles": {
+        "p50": 52385,
+        "p95": 52385,
+        "max": 52385
+      },
+      "stepMs": {
+        "p50": 0.7,
+        "p95": 1.4,
+        "max": 2.2
+      },
+      "lastFrame": {
+        "drawCalls": 18,
+        "triangles": 61990,
+        "shadowDrawCalls": 17,
+        "shadowTriangles": 52385,
+        "stepMs": 0.8000001907348633,
+        "categories": {
+          "other": 17,
+          "shadows": 17,
+          "buildings": 1
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "grounding": {
+      "corpses": 0,
+      "corpseOffMaxCm": 0,
+      "pickups": 0,
+      "pickupOffMaxCm": 0,
+      "worst": []
+    },
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "hullWindups": 0,
+      "hullHits": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "cure": null,
+    "megaAlpha": null,
+    "minigun": null,
+    "specials": [],
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0,
+      "holds": {}
+    },
+    "seeThrough": {
+      "frames": 240,
+      "solidRadiusMax": 0.44,
+      "occluders": [
+        "bld.cure-duplex@913.0,89.0"
+      ],
+      "cutLowProps": [],
+      "cutPlacements": [
+        "bld.cure-duplex@913.0,89.5"
+      ]
+    },
+    "appearance": [],
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "variety": {
+      "infected": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      },
+      "pedestrian": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      }
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          917.758,
+          80
+        ],
+        "yawDeg": 0,
+        "travelM": 17.74786376953125,
+        "maxX": 917.7578735351562,
+        "state": "run",
+        "health": 100,
+        "drawnFrames": 240,
+        "inViewFrames": 240,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 240
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            900.01,
+            80
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 240,
+          "torsoPitchMinDeg": 2.9,
+          "torsoPitchMaxDeg": 11,
+          "contacts": 25,
+          "slideMaxCm": 0,
+          "slideP95Cm": 0,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 37,
+          "sinkMaxCm": 0,
+          "jitterRunMax": 1,
+          "worstSlideFrame": 217
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 240,
+      "sim": {
+        "courier": 1,
+        "actors": 1
+      },
+      "drawn": {
+        "vehicle": 0,
+        "courier": 1
+      }
+    },
+    "lods": {
+      "bld.cure-duplex:8": "culled",
+      "bld.cure-duplex:9": "culled",
+      "bld.cure-duplex:10": "culled",
+      "bld.cure-duplex:11": "lod1",
+      "bld.cure-duplex:12": "lod1",
+      "bld.cure-duplex:13": "culled",
+      "bld.cure-duplex:14": "culled",
+      "bld.cure-duplex:15": "culled",
+      "bld.cure-duplex:16": "culled",
+      "bld.cure-duplex:21": "culled",
+      "bld.cure-duplex:22": "culled",
+      "bld.cure-duplex:23": "culled",
+      "prop.street-lamp:26": "culled",
+      "prop.cure-garden-wall:29": "culled",
+      "prop.hedge:30": "culled",
+      "prop.cure-garden-wall:31": "culled",
+      "prop.hedge:32": "culled",
+      "prop.cure-garden-wall:33": "culled",
+      "prop.hedge:34": "culled",
+      "prop.cure-garden-wall:35": "culled",
+      "prop.hedge:36": "culled",
+      "prop.cure-garden-wall:37": "culled",
+      "prop.hedge:38": "culled",
+      "decay.makeshift-barricade:53": "culled",
+      "decay.makeshift-barricade:54": "culled",
+      "decay.makeshift-barricade:55": "culled",
+      "decay.makeshift-barricade:56": "culled",
+      "decay.makeshift-barricade:57": "culled",
+      "decay.makeshift-barricade:58": "culled",
+      "decay.makeshift-barricade:59": "culled",
+      "decay.makeshift-barricade:60": "culled",
+      "decay.makeshift-barricade:61": "culled",
+      "decay.makeshift-barricade:62": "culled",
+      "decay.makeshift-barricade:63": "culled",
+      "decay.makeshift-barricade:64": "culled",
+      "decay.makeshift-barricade:65": "culled",
+      "decay.makeshift-barricade:66": "culled",
+      "decay.makeshift-barricade:67": "culled",
+      "decay.makeshift-barricade:68": "culled",
+      "decay.makeshift-barricade:69": "culled",
+      "decay.makeshift-barricade:70": "culled",
+      "decay.makeshift-barricade:71": "culled",
+      "decay.makeshift-barricade:72": "culled",
+      "decay.makeshift-barricade:73": "culled",
+      "decay.makeshift-barricade:74": "culled",
+      "decay.makeshift-barricade:75": "culled",
+      "decay.makeshift-barricade:76": "culled",
+      "decay.makeshift-barricade:77": "culled",
+      "decay.makeshift-barricade:78": "culled",
+      "decay.makeshift-barricade:79": "culled",
+      "decay.makeshift-barricade:80": "culled",
+      "decay.makeshift-barricade:81": "culled",
+      "decay.makeshift-barricade:82": "culled",
+      "decay.makeshift-barricade:83": "culled",
+      "decay.makeshift-barricade:84": "culled",
+      "decay.makeshift-barricade:85": "culled",
+      "decay.makeshift-barricade:86": "culled",
+      "veh.wreck:87": "culled",
+      "veh.wreck:88": "culled"
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [],
+    "actors": [],
+    "gunBodies": [],
+    "heldProps": [],
+    "summary": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}

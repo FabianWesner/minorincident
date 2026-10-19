@@ -1,0 +1,138 @@
+[
+  {
+    "tier": "high",
+    "phase": "before",
+    "p95s": [
+      35.79999999999927,
+      30.599999999998545,
+      32.20000000000073
+    ],
+    "medianP95": 32.20000000000073,
+    "simP95": 4.199999809265137,
+    "updateP95": 1,
+    "renderP95": 29.800000190734863,
+    "triangles": 1812429,
+    "drawCalls": 66,
+    "profile": {
+      "other": {
+        "drawCalls": 29,
+        "triangles": 44578
+      },
+      "shadows": {
+        "drawCalls": 29,
+        "triangles": 312651
+      },
+      "crowd": {
+        "drawCalls": 8,
+        "triangles": 1455200
+      }
+    },
+    "activeCivilians": [
+      40,
+      40,
+      40
+    ]
+  },
+  {
+    "tier": "high",
+    "phase": "after",
+    "p95s": [
+      10.800000000001091,
+      10.899999999999636,
+      9.799999999999272
+    ],
+    "medianP95": 10.800000000001091,
+    "simP95": 1.9000005722045898,
+    "updateP95": 0.6999998092651367,
+    "renderP95": 8.300000190734863,
+    "triangles": 661341,
+    "drawCalls": 60,
+    "profile": {
+      "other": {
+        "drawCalls": 29,
+        "triangles": 44578
+      },
+      "shadows": {
+        "drawCalls": 24,
+        "triangles": 35051
+      },
+      "crowd": {
+        "drawCalls": 7,
+        "triangles": 581712
+      }
+    },
+    "activeCivilians": [
+      40,
+      40,
+      40
+    ]
+  },
+  {
+    "tier": "low",
+    "phase": "before",
+    "p95s": [
+      15.399999999999636,
+      15.399999999999636,
+      15.5
+    ],
+    "medianP95": 15.399999999999636,
+    "simP95": 5.09999942779541,
+    "updateP95": 1.8000001907348633,
+    "renderP95": 9,
+    "triangles": 857605,
+    "drawCalls": 65,
+    "profile": {
+      "other": {
+        "drawCalls": 29,
+        "triangles": 13106
+      },
+      "shadows": {
+        "drawCalls": 29,
+        "triangles": 285779
+      },
+      "crowd": {
+        "drawCalls": 7,
+        "triangles": 558720
+      }
+    },
+    "activeCivilians": [
+      40,
+      40,
+      40
+    ]
+  },
+  {
+    "tier": "low",
+    "phase": "after",
+    "p95s": [
+      11.700000000000728,
+      13.300000000001091,
+      12.600000000000364
+    ],
+    "medianP95": 12.600000000000364,
+    "simP95": 5.100000381469727,
+    "updateP95": 2.1000003814697266,
+    "renderP95": 5.899999618530273,
+    "triangles": 213879,
+    "drawCalls": 59,
+    "profile": {
+      "other": {
+        "drawCalls": 29,
+        "triangles": 13106
+      },
+      "shadows": {
+        "drawCalls": 24,
+        "triangles": 8179
+      },
+      "crowd": {
+        "drawCalls": 6,
+        "triangles": 192594
+      }
+    },
+    "activeCivilians": [
+      40,
+      40,
+      40
+    ]
+  }
+]

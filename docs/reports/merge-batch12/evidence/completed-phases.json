@@ -1,0 +1,33 @@
+{
+  "initialGate": {
+    "exit": 143,
+    "reason": "Stopped during matrix admission after 16/16 smoke to prioritize focused proofs."
+  },
+  "readability": {
+    "exit": 1,
+    "passed": 48,
+    "failed": 2,
+    "knownMainRed": "L7 courier contrast high/low"
+  },
+  "functionalProofsInitial": {
+    "exit": 1,
+    "sceneGatePasses": 36,
+    "sceneGateFailures": 0,
+    "reason": "Legacy performance.memory heap counter included backing stores; corrected to CDP JS heap for final run."
+  },
+  "nativeProofsInitial": {
+    "exit": 1,
+    "sceneGatePasses": 36,
+    "sceneGateFailures": 0,
+    "reason": "Paused Scene Lab did not draw during RAF sampling. Final runner explicitly draws and checks renderedFrames."
+  },
+  "typecheck": {
+    "exit": 0
+  },
+  "lint": {
+    "exit": 0
+  },
+  "campaignL4Captures": {
+    "exit": 0
+  }
+}
