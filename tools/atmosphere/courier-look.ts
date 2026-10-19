@@ -25,6 +25,7 @@ function crop(day: PNG, night: PNG, mask: PNG, file: string) {
     const i = (y * mask.width + x) * 4;
     if (mask.data[i] > 240 && mask.data[i + 1] < 20 && mask.data[i + 2] > 240) { x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); }
   }
+  if (x1 < x0) return;
   const pad = Math.max(12, Math.round((y1 - y0) * .25)), size = Math.max(x1 - x0, y1 - y0) + 2 * pad;
   const cx = Math.round((x0 + x1) / 2), cy = Math.round((y0 + y1) / 2), sx = cx - Math.round(size / 2), sy = cy - Math.round(size / 2);
   const png = new PNG({ width: size * 2, height: size });
