@@ -1,4 +1,4 @@
-import { Color, type BufferGeometry, type InstancedBufferAttribute } from 'three';
+import { Color, type BufferGeometry, type InstancedBufferAttribute, type InterleavedBufferAttribute } from 'three';
 import type { Node } from 'three/webgpu';
 import { attribute, varying, vec3 } from 'three/tsl';
 import { crowdAppearance, infectedWearsAccessory, hairTones, skinTones, infectedSkinTones, trouserTones, shirtTones } from '../../data/crowdAppearance';
@@ -32,7 +32,7 @@ export function packedAppearance(id: number, shirt: Color, accessory = 0, hidesH
   // Keep the remainder strictly below 2, including HDR story tints.
   return [Math.min(1, shirt.r) + 2 * a.hair + 16 * (accessory % 32) + (hidesHair ? 512 : 0), Math.min(1, shirt.g) + 2 * a.skin, Math.min(1, shirt.b) + 2 * a.trousers + 16 * crowdAppearance(id + 503).shirt];
 }
-export function writeCrowdAppearance(target: InstancedBufferAttribute, index: number, id: number, shirt: Color, blend: number, accessory = 0, hidesHair = false): void {
+export function writeCrowdAppearance(target: InstancedBufferAttribute | InterleavedBufferAttribute, index: number, id: number, shirt: Color, blend: number, accessory = 0, hidesHair = false): void {
   target.setXYZW(index, ...packedAppearance(id, shirt, accessory, hidesHair), blend);
 }
 export function crowdShirt(id: number): Color { return colors.shirt[crowdAppearance(id).shirt]; }

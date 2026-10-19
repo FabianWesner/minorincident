@@ -1,4 +1,4 @@
-import { balancedCrowdModel, crowdAppearance, shirtTones } from '../../data/crowdAppearance';
+import { leastCrowdedModel, crowdAppearance, shirtTones } from '../../data/crowdAppearance';
 import { isCorgi, storyProtected } from '../npc/storyProtection';
 import { SimPhase } from '../../core/EventBus';
 import { Rng } from '../../core/Rng';
@@ -118,9 +118,13 @@ export class Outbreak {
     this.rng.next(); // Preserve the former random-shirt sample's place in the gameplay stream.
     return shirtTones[crowdAppearance(id).shirt];
   }
+  private readonly modelCounts = new Map<string, number>(l1Pedestrians.models.map(model => [model, 0]));
   private crowdModel(at: Point, infected = false): string {
-    return balancedCrowdModel(l1Pedestrians.models,
-      [...this.world.entities.iterate()].filter(e => !e.hidden && e.health.current > 0 && Boolean(e.infected) === infected && keepsLook(e)).map(e => ({ model: e.appearance!.asset, x: e.transform.x, z: e.transform.z })), at, Math.floor(this.rng.next() * 0x100000000));
+    const counts = this.modelCounts;
+    for (const model of counts.keys()) counts.set(model, 0);
+    for (const e of this.world.entities.iterate()) if (!e.hidden && e.health.current > 0 && Boolean(e.infected) === infected && keepsLook(e)
+      && Math.hypot(e.transform.x - at.x, e.transform.z - at.z) < 30 && counts.has(e.appearance!.asset)) counts.set(e.appearance!.asset, counts.get(e.appearance!.asset)! + 1);
+    return leastCrowdedModel(l1Pedestrians.models, counts, Math.floor(this.rng.next() * 0x100000000));
   }
 
   /** One L1 pedestrian with a seeded look, speeds and a calm routine. Returns the entity id.
@@ -373,20 +377,29 @@ export class Outbreak {
       if (l1.refuge?.startsWith('edge') && !this.world.missions?.state.l4) this.escape(e); else this.shelter(e);
     }
   }
+  private readonly refugeOccupied: Vec2[] = [];
   /** Spread a group over clear exterior pavement; never target the door leaf or a spot beyond it. */
   private refugeSpot(e: EntitySnapshot, refuge: Refuge): Vec2 {
     const nav = this.world.infected!.nav, angle = Math.atan2(e.transform.z - refuge.z, e.transform.x - refuge.x);
+    // This synchronous search changes no actor. Borrow the same targets once,
+    // rather than rescanning every district entity for each clear candidate.
+    const neighbours = this.refugeOccupied; neighbours.length = 0;
+    let gathered = false;
     for (let radius = 1.4; radius <= 4; radius += .65) for (let k = 0; k < 9; k++) {
       const a = angle + ((k + e.id % 9) % 9 - 4) * Math.PI / 12;
       const p = { x: refuge.x + Math.cos(a) * radius, z: refuge.z + Math.sin(a) * radius };
       if (!nav.clear(p.x, p.z, .5) || !nav.visible(refuge, p, .35)) continue;
+      if (!gathered) {
+        for (const other of this.world.entities.iterate()) if (other.id !== e.id && other.civilian && !other.hidden && other.health.current > 0) neighbours.push(other.civilian.l1?.target ?? other.transform);
+        gathered = true;
+      }
       let occupied = false;
-      for (const other of this.world.entities.iterate()) if (other.id !== e.id && other.civilian && !other.hidden && other.health.current > 0) {
-        const at = other.civilian.l1?.target ?? other.transform;
+      for (const at of neighbours) {
         if (Math.hypot(at.x - p.x, at.z - p.z) < .85) { occupied = true; break; }
       }
-      if (!occupied) return p;
+      if (!occupied) { neighbours.length = 0; return p; }
     }
+    neighbours.length = 0;
     return { x: e.transform.x, z: e.transform.z };
   }
   private shelter(e: EntitySnapshot): void {

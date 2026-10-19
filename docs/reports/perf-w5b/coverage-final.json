@@ -1,0 +1,1577 @@
+{
+  "finalUniqueCases": 192,
+  "rawExecutedCases": 198,
+  "supersededCases": 6,
+  "requiredQualityZoomBackendConditionsVisuallyReviewed": 128,
+  "sampledFramesReviewed": 384,
+  "productionFingerprint": "source-sha256.json",
+  "catalogSourceSha256": {
+    "tests/scenes/catalog/perf-heap-mounted-gun.json": "6cf4c49b9d3733200407a460ed4655aa9f23b365588b610a6ee442100af4f96f",
+    "tests/scenes/catalog/perf-heap-bars-oblique.json": "98b14e0c2b234ea1ba8c8797ccd63cd476130c66a131ad5535c1af08656a74e3",
+    "tests/scenes/health-bars/occlusion.json": "ba22cafd6a24ab4a1d64a8a38014c0b295025235274faf688178eca2b9811b94",
+    "tests/scenes/catalog/perf-heap-light-lab.json": "5a805a8cc5da0589d6fb61db8440eedb5dbb412e9af94c565408a224b7d89e00",
+    "tests/scenes/catalog/spec-audit-b-light-lab.json": "0fbc966a7e094e717dfe0ba4dc5501c38d3259aa88df8b934360003eeb9d6b25",
+    "tests/scenes/catalog/perf-heap-storm.json": "37b3fa2191f0e7c212ec5de96dee5b7e86586e492e41c71a7b778a7cb28e4cc9",
+    "specs/scenes/weather-lab-thunderstorm.json": "cf5c0a338be12ba39d022da790bf73d2fdad69b2ed6666d592e2138399bc44bc",
+    "tests/scenes/catalog/perf-heap-refuge.json": "382a162fab4db3b85cc9dc0bdf717076f2c68ce40e5f51e2830b0d35cb2624f3",
+    "tests/scenes/catalog/l4-refuge-shelter.json": "38523b03694c2da78eff19ecce5c6651fbc5a1f39807b2f51e9ee2a70de68c05",
+    "tests/scenes/catalog/perf-heap-corpse-pools.json": "771eb02b75f3b3efd947bd9c3ee4f921ca49bb50f08b04dd2d8560dc3a6cdf50",
+    "tests/scenes/catalog/appearance-stable-civilian.json": "a6e7c2ef63674e7ef6cee2a2d61adf347e4231eb1a1ecb7bdea02896eb5b17e8",
+    "tests/scenes/catalog/perf-heap-reveal.json": "7b00d568f2b57495a385cefedc9d330081a3d92cb23b65df3b82613e55df2b4d",
+    "tests/scenes/catalog/seethrough-sedan-silhouette.json": "7ec2d0ad2d76c992b53baaedb9251febad59761857959a05e5fe907ddf375ad1",
+    "tests/scenes/catalog/perf-heap-rocket.json": "3b0960ff91d55a29554acd4151dbbc227d78ed5789fbf3a90eeef70ef8983900",
+    "tests/scenes/catalog/qa-blast-prewarm.json": "b7a31aebf302f376f5842a48f79c15340b241532d0f4bc805ea605a2f6d6dcf5",
+    "tests/scenes/catalog/perf-heap-streams.json": "1dcd9db621bf7a02f5934337664c42148c97f231799ff4c5c2cb9db754298799",
+    "tests/scenes/catalog/perf-heap-bars-occluded.json": "0fa1706aa083d0fd73603f19494333a41d1b60a0fa75a4dfce63ba5f6a328204",
+    "tests/scenes/catalog/perf-heap-l5-ash.json": "7393104920870575bec6c87566c09ebf267c99d0892967e8a4ec2cc93c00d1d3",
+    "specs/scenes/qa-l5-pair-plaza-l5.json": "82614466c718d2a37793864007cba9a754802783a03d4c46f39c423f19802548",
+    "tests/scenes/catalog/perf-heap-l4-navigation.json": "8ff1c9b0fe7a38e71b9a65e0018a28bbb6d2e81985ba709a7cfe512322be2739",
+    "tests/scenes/catalog/l4-armory-corner-left.json": "711932dcd780579d4742d317d516d4fdc8f8b6989b017de07ea2e45b18690c2f",
+    "tests/scenes/catalog/perf-heap-l4-setpieces.json": "d55d3885af750cbb0ffac6ecb3d2a58985e072423eab1ffce5f673979b02213b",
+    "tests/scenes/catalog/qa-vehicle-travel-convoy.json": "0a2862dfe23d6695beb7d79b4402366aa657238bd3486da0c44d8402806bc457",
+    "tests/scenes/catalog/perf-heap-held-props.json": "7cfe6e30945effa4a2416e37ba8404fd729995dde6ec26b47e6c16111f882c7b",
+    "tests/scenes/catalog/perf-heap-rifle-cover.json": "997d309ae382831b330ca0f826ddaa85c9ff4f5768a1d4e88cb33ad6eff1d00c",
+    "tests/scenes/catalog/vfx-rifle-cover.json": "e7cd0ce5021078ac6e8158a7c4faaddb833696db6c7adf24e611702857c67b4f",
+    "tests/scenes/catalog/perf-heap-bars-visible.json": "7e07b24c5c5dc18e7c9f38fb8afc5e9b0d619e7a1a0b04f12687208d84eaafdd",
+    "tests/scenes/health-bars/shared.json": "fead38853ee518468fa9249d59053561b85150f7d90f7248f5a6b9753455adac"
+  },
+  "note": "The revised isolated HMG six-row WebGL run replaces the inherited checkpoint fixture from the first full WebGL pass.",
+  "rows": [
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-bars-oblique@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-bars-oblique@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-bars-oblique@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-bars-oblique@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-bars-oblique@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-bars-oblique@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-bars-oblique@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-bars-oblique@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-bars-oblique@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-bars-oblique@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-bars-oblique@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-bars-oblique@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-bars-occluded@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-bars-occluded@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-bars-occluded@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-bars-occluded@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-bars-occluded@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-bars-occluded@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-bars-occluded@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-bars-occluded@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-bars-occluded@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-bars-occluded@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-bars-occluded@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-bars-occluded@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-bars-visible@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-bars-visible@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-bars-visible@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-bars-visible@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-bars-visible@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-bars-visible@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-bars-visible@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-bars-visible@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-bars-visible@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-bars-visible@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-bars-visible@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-bars-visible@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-corpse-pools@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-corpse-pools@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-corpse-pools@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-corpse-pools@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-corpse-pools@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-corpse-pools@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-corpse-pools@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-corpse-pools@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-corpse-pools@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-corpse-pools@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-corpse-pools@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-corpse-pools@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-held-props@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-held-props@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-held-props@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-held-props@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-held-props@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-held-props@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-held-props@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-held-props@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-held-props@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-held-props@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-held-props@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-held-props@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-l4-navigation@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-l4-navigation@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-l4-navigation@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-l4-navigation@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-l4-navigation@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-l4-navigation@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-l4-navigation@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-l4-navigation@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-l4-navigation@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-l4-navigation@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-l4-navigation@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-l4-navigation@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-l4-setpieces@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-l4-setpieces@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-l4-setpieces@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-l4-setpieces@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-l4-setpieces@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-l4-setpieces@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-l4-setpieces@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-l4-setpieces@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-l4-setpieces@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-l4-setpieces@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-l4-setpieces@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-l4-setpieces@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-l5-ash@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-l5-ash@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-l5-ash@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-l5-ash@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-l5-ash@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-l5-ash@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-l5-ash@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-l5-ash@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-l5-ash@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-l5-ash@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-l5-ash@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-l5-ash@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-light-lab@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-light-lab@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-light-lab@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-light-lab@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-light-lab@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-light-lab@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-light-lab@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-light-lab@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-light-lab@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-light-lab@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-light-lab@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-light-lab@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-mounted-gun@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "mounted-final-webgl2/index.json",
+      "sheet": "mounted-final-webgl2/perf-heap-mounted-gun@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-mounted-gun@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "mounted-final-webgl2/index.json",
+      "sheet": "mounted-final-webgl2/perf-heap-mounted-gun@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-mounted-gun@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "mounted-final-webgl2/index.json",
+      "sheet": "mounted-final-webgl2/perf-heap-mounted-gun@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-mounted-gun@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "mounted-final-webgl2/index.json",
+      "sheet": "mounted-final-webgl2/perf-heap-mounted-gun@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-mounted-gun@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "mounted-final-webgl2/index.json",
+      "sheet": "mounted-final-webgl2/perf-heap-mounted-gun@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-mounted-gun@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "mounted-final-webgl2/index.json",
+      "sheet": "mounted-final-webgl2/perf-heap-mounted-gun@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-refuge@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-refuge@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-refuge@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-refuge@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-refuge@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-refuge@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-refuge@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-refuge@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-refuge@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-refuge@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-refuge@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-refuge@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-reveal@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-reveal@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-reveal@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-reveal@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-reveal@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-reveal@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-reveal@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-reveal@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-reveal@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-reveal@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-reveal@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-reveal@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-rifle-cover@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-rifle-cover@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-rifle-cover@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-rifle-cover@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-rifle-cover@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-rifle-cover@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-rifle-cover@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-rifle-cover@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-rifle-cover@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-rifle-cover@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-rifle-cover@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-rifle-cover@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-rocket@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-rocket@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-rocket@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-rocket@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-rocket@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-rocket@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-rocket@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-rocket@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-rocket@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-rocket@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-rocket@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-rocket@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-storm@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-storm@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-storm@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-storm@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-storm@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-storm@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-storm@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-storm@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-storm@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-storm@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-storm@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-storm@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-streams@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-streams@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-streams@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-streams@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-streams@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-streams@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-streams@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-streams@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-streams@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-streams@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgl2",
+      "name": "perf-heap-streams@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgl2/index.json",
+      "sheet": "final-source-webgl2/perf-heap-streams@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-bars-oblique@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-bars-oblique@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-bars-oblique@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-bars-oblique@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-bars-oblique@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-bars-oblique@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-bars-oblique@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-bars-oblique@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-bars-oblique@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-bars-oblique@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-bars-oblique@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-bars-oblique@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-bars-occluded@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-bars-occluded@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-bars-occluded@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-bars-occluded@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-bars-occluded@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-bars-occluded@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-bars-occluded@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-bars-occluded@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-bars-occluded@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-bars-occluded@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-bars-occluded@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-bars-occluded@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-bars-visible@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-bars-visible@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-bars-visible@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-bars-visible@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-bars-visible@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-bars-visible@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-bars-visible@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-bars-visible@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-bars-visible@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-bars-visible@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-bars-visible@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-bars-visible@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-corpse-pools@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-corpse-pools@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-corpse-pools@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-corpse-pools@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-corpse-pools@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-corpse-pools@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-corpse-pools@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-corpse-pools@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-corpse-pools@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-corpse-pools@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-corpse-pools@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-corpse-pools@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-held-props@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-held-props@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-held-props@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-held-props@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-held-props@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-held-props@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-held-props@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-held-props@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-held-props@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-held-props@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-held-props@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-held-props@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-l4-navigation@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-l4-navigation@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-l4-navigation@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-l4-navigation@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-l4-navigation@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-l4-navigation@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-l4-navigation@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-l4-navigation@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-l4-navigation@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-l4-navigation@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-l4-navigation@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-l4-navigation@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-l4-setpieces@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-l4-setpieces@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-l4-setpieces@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-l4-setpieces@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-l4-setpieces@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-l4-setpieces@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-l4-setpieces@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-l4-setpieces@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-l4-setpieces@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-l4-setpieces@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-l4-setpieces@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-l4-setpieces@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-l5-ash@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-l5-ash@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-l5-ash@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-l5-ash@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-l5-ash@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-l5-ash@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-l5-ash@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-l5-ash@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-l5-ash@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-l5-ash@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-l5-ash@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-l5-ash@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-light-lab@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-light-lab@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-light-lab@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-light-lab@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-light-lab@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-light-lab@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-light-lab@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-light-lab@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-light-lab@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-light-lab@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-light-lab@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-light-lab@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-mounted-gun@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-mounted-gun@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-mounted-gun@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-mounted-gun@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-mounted-gun@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-mounted-gun@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-mounted-gun@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-mounted-gun@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-mounted-gun@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-mounted-gun@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-mounted-gun@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-mounted-gun@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-refuge@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-refuge@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-refuge@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-refuge@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-refuge@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-refuge@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-refuge@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-refuge@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-refuge@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-refuge@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-refuge@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-refuge@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-reveal@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-reveal@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-reveal@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-reveal@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-reveal@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-reveal@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-reveal@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-reveal@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-reveal@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-reveal@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-reveal@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-reveal@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-rifle-cover@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-rifle-cover@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-rifle-cover@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-rifle-cover@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-rifle-cover@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-rifle-cover@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-rifle-cover@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-rifle-cover@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-rifle-cover@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-rifle-cover@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-rifle-cover@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-rifle-cover@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-rocket@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-rocket@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-rocket@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-rocket@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-rocket@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-rocket@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-rocket@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-rocket@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-rocket@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-rocket@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-rocket@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-rocket@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-storm@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-storm@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-storm@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-storm@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-storm@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-storm@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-storm@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-storm@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-storm@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-storm@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-storm@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-storm@low-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-streams@high-z0.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-streams@high-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-streams@high-z1",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-streams@high-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-streams@high-z1.5",
+      "pass": true,
+      "tier": "high",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-streams@high-z1.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-streams@low-z0.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-streams@low-z0.5/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-streams@low-z1",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-streams@low-z1/sheet.jpg"
+    },
+    {
+      "backend": "webgpu",
+      "name": "perf-heap-streams@low-z1.5",
+      "pass": true,
+      "tier": "low",
+      "index": "final-source-webgpu/index.json",
+      "sheet": "final-source-webgpu/perf-heap-streams@low-z1.5/sheet.jpg"
+    }
+  ]
+}

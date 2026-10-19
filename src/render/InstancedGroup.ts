@@ -1,6 +1,7 @@
 // Adapted from folio-2025 InstancedGroup.js by Bruno Simon (MIT), commit 41046b5.
 import { Color, DynamicDrawUsage, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, Mesh, Object3D, Vector3, type Raycaster, type Intersection } from 'three/webgpu';
 import { staticInstanceAttributes } from './StaticInstanceAttributes';
+import { prepareOcclusionGeometry, geometryOccludes } from './OcclusionGeometry';
 
 // Shared scratch, like Three's InstancedMesh.raycast; queries are synchronous.
 const raycastMesh = new Mesh();
@@ -9,7 +10,7 @@ const emptyRaycastGeometry = raycastMesh.geometry, emptyRaycastMaterial = raycas
 
 /** One batch per prototype mesh; nested child transforms are preserved. Geometry/material ownership stays with the caller. */
 export class InstancedGroup extends Group {
-  private readonly batches: { mesh: InstancedMesh; local: Matrix4; base?: Matrix4; door?: string; interior?: boolean; indices?: number[] }[] = [];
+  private readonly batches: { mesh: InstancedMesh; local: Matrix4; occlusion?: ReturnType<typeof prepareOcclusionGeometry>; base?: Matrix4; door?: string; interior?: boolean; indices?: number[] }[] = [];
   private readonly scratch = new Matrix4();
   private readonly color = new Color();
   private frozenWorld = false;
@@ -47,7 +48,7 @@ export class InstancedGroup extends Group {
       }
       mesh.name = child.name; mesh.castShadow = child.castShadow; mesh.receiveShadow = child.receiveShadow;
       const local = new Matrix4().multiplyMatrices(inverse, child.matrixWorld), door = child.userData.door as string | undefined;
-      this.batches.push({ mesh, local, interior: child.userData.interior === true, ...(door ? { door, base: local.clone() } : {}) }); this.add(mesh);
+      this.batches.push({ mesh, local, occlusion: prepareOcclusionGeometry(child.geometry), interior: child.userData.interior === true, ...(door ? { door, base: local.clone() } : {}) }); this.add(mesh);
     });
     this.update();
   }
@@ -64,6 +65,10 @@ export class InstancedGroup extends Group {
         mesh.getMatrixAt(index, this.scratch);
         raycastMesh.geometry = mesh.geometry; raycastMesh.material = mesh.material;
         raycastMesh.matrixWorld.multiplyMatrices(mesh.matrixWorld, this.scratch);
+        if (batch.occlusion) {
+          if (geometryOccludes(batch.occlusion, raycastMesh.matrixWorld, mesh.material, ray)) return true;
+          continue;
+        }
         raycastHits.length = 0; raycastMesh.raycast(ray, raycastHits);
         if (raycastHits.length) { raycastHits.length = 0; return true; }
       }

@@ -7,6 +7,32 @@ const marginSteps = [0.002, 0.005, 0.01, 0.02, 0.04, 0.06, 0.08, 0.1];
 // L1's morning population has more than sixteen simultaneous route targets.
 // Retain those exact answers between ticks instead of evicting an entire round.
 const nearestMemoCapacity = 64;
+/** Exact capsule-margin segment test, shared by one-cell and multi-cell queries. */
+function segmentIntersectsWall(wall: Wall, from: { x: number; z: number }, to: { x: number; z: number }, dx: number, dz: number, radius: number): boolean {
+  const minX = wall.x - wall.halfX - radius, maxX = wall.x + wall.halfX + radius;
+  const minZ = wall.z - wall.halfZ - radius, maxZ = wall.z + wall.halfZ + radius;
+  // Rapier's rounded capsule can rest inside a conservative expanded box
+  // corner. Permit an outward escape, never a route through the solid.
+  if (from.x > minX && from.x < maxX && from.z > minZ && from.z < maxZ &&
+    ((from.x <= wall.x && to.x <= minX) || (from.x >= wall.x && to.x >= maxX) ||
+     (from.z <= wall.z && to.z <= minZ) || (from.z >= wall.z && to.z >= maxZ))) return false;
+  let enter = 0, leave = 1;
+  // Keep the exact two slab tests without allocating three arrays per wall.
+  if (dx === 0) {
+    if (from.x <= minX || from.x >= maxX) return false;
+  } else {
+    const a = (minX - from.x) / dx, b = (maxX - from.x) / dx;
+    enter = Math.max(enter, Math.min(a, b)); leave = Math.min(leave, Math.max(a, b));
+  }
+  if (enter >= leave) return false;
+  if (dz === 0) {
+    if (from.z <= minZ || from.z >= maxZ) return false;
+  } else {
+    const a = (minZ - from.z) / dz, b = (maxZ - from.z) / dz;
+    enter = Math.max(enter, Math.min(a, b)); leave = Math.min(leave, Math.max(a, b));
+  }
+  return enter < leave;
+}
 /** Collider-baked district grid (0.5 m by default). Fixed workspaces serve budgeted A* and shared reverse flow fields. */
 export class NavGrid {
   get hasSolids(): boolean { return this.buckets.size > 0 || this.blockers.size > 0; }
@@ -266,21 +292,41 @@ export class NavGrid {
     // The outer ground is convex: endpoint clearance covers the complete ray.
     if (Math.abs(from.x - this.center.x) + radius >= this.ground.width / 2 || Math.abs(from.z - this.center.z) + radius >= this.ground.depth / 2) return false;
     const divisor = Math.max(1, steps);
+    // A segment contained in one bucket needs neither a Set nor query closures.
+    const startX = Math.floor(from.x / 4), startZ = Math.floor(from.z / 4);
+    if (startX === Math.floor(to.x / 4) && startZ === Math.floor(to.z / 4)) {
+      if (this.mask) for (let i = 0; i <= steps; i++) if (!this.mask(from.x + dx * i / divisor, from.z + dz * i / divisor)) return false;
+      const bucket = this.routeBuckets.get(startX)?.get(startZ);
+      if (bucket) for (const wall of bucket) if (segmentIntersectsWall(wall, from, to, dx, dz, radius)) return false;
+      const blockers = this.blockerBuckets.get(startX)?.get(startZ);
+      if (blockers) for (const wall of blockers.values()) if (segmentIntersectsWall(wall, from, to, dx, dz, radius)) return false;
+      return true;
+    }
     const walls = new Set<Wall>();
-    const collect = (x: number, z: number) => {
-      const bucket = this.routeBuckets.get(x)?.get(z); if (bucket) for (const wall of bucket) walls.add(wall);
-      const blockers = this.blockerBuckets.get(x)?.get(z); if (blockers) for (const wall of blockers.values()) walls.add(wall);
+    // Test each new candidate immediately: a blocked segment need not visit
+    // the remaining cells or materialize their walls before returning false.
+
+    const collect = (x: number, z: number): boolean => {
+      const bucket = this.routeBuckets.get(x)?.get(z); if (bucket) for (const wall of bucket) {
+        if (walls.has(wall)) continue; walls.add(wall);
+        if (segmentIntersectsWall(wall, from, to, dx, dz, radius)) return true;
+      }
+      const blockers = this.blockerBuckets.get(x)?.get(z); if (blockers) for (const wall of blockers.values()) {
+        if (walls.has(wall)) continue; walls.add(wall);
+        if (segmentIntersectsWall(wall, from, to, dx, dz, radius)) return true;
+      }
+      return false;
     };
     if (!this.mask) {
-      // Empty streamed terrain needs only the crossed broad-phase cells. The exact slab sweep below
-      // still checks every collected wall; no fixed-distance samples can skip a narrow corner.
+      // Empty streamed terrain needs only the crossed broad-phase cells. Exact slab tests
+      // still cover every candidate; no fixed-distance samples can skip a narrow corner.
       let x = Math.floor(from.x / 4), z = Math.floor(from.z / 4);
       const endX = Math.floor(to.x / 4), endZ = Math.floor(to.z / 4), sx = Math.sign(dx), sz = Math.sign(dz);
       let nextX = dx ? ((x + (sx > 0 ? 1 : 0)) * 4 - from.x) / dx : Infinity;
       let nextZ = dz ? ((z + (sz > 0 ? 1 : 0)) * 4 - from.z) / dz : Infinity;
       const deltaX = dx ? 4 / Math.abs(dx) : Infinity, deltaZ = dz ? 4 / Math.abs(dz) : Infinity;
       for (;;) {
-        collect(x, z); if (x === endX && z === endZ) break;
+        if (collect(x, z)) return false; if (x === endX && z === endZ) break;
         // Rounding at an endpoint boundary must never advance an already completed axis.
         if (x === endX) nextX = Infinity; if (z === endZ) nextZ = Infinity;
         if (nextX < nextZ) { x += sx; nextX += deltaX; }
@@ -293,35 +339,10 @@ export class NavGrid {
         const x = from.x + dx * i / divisor, z = from.z + dz * i / divisor;
         if (!this.mask(x, z)) return false;
         const bucketX = Math.floor(x / 4), bucketZ = Math.floor(z / 4);
-        if (bucketX !== previousX || bucketZ !== previousZ) { collect(bucketX, bucketZ); previousX = bucketX; previousZ = bucketZ; }
+        if (bucketX !== previousX || bucketZ !== previousZ) { if (collect(bucketX, bucketZ)) return false; previousX = bucketX; previousZ = bucketZ; }
       }
     }
-    // Sampled clearance alone can skip a corner between two samples. A pulled
-    // waypoint must clear the entire segment, including narrow foliage boxes.
-    for (const wall of walls) {
-      const minX = wall.x - wall.halfX - radius, maxX = wall.x + wall.halfX + radius;
-      const minZ = wall.z - wall.halfZ - radius, maxZ = wall.z + wall.halfZ + radius;
-      // Rapier's rounded capsule can rest inside a conservative expanded box
-      // corner. Permit an outward escape, never a route through the solid.
-      if (from.x > minX && from.x < maxX && from.z > minZ && from.z < maxZ &&
-        ((from.x <= wall.x && to.x <= minX) || (from.x >= wall.x && to.x >= maxX) ||
-         (from.z <= wall.z && to.z <= minZ) || (from.z >= wall.z && to.z >= maxZ))) continue;
-      let enter = 0, leave = 1;
-      // Keep the exact two slab tests without allocating three arrays per wall.
-      if (dx === 0) {
-        if (from.x <= minX || from.x >= maxX) continue;
-      } else {
-        const a = (minX - from.x) / dx, b = (maxX - from.x) / dx;
-        enter = Math.max(enter, Math.min(a, b)); leave = Math.min(leave, Math.max(a, b));
-      }
-      if (dz === 0) {
-        if (from.z <= minZ || from.z >= maxZ) continue;
-      } else {
-        const a = (minZ - from.z) / dz, b = (maxZ - from.z) / dz;
-        enter = Math.max(enter, Math.min(a, b)); leave = Math.min(leave, Math.max(a, b));
-      }
-      if (enter < leave) return false;
-    }
+
     return true;
   }
   /** Sweeps movement in subcell increments; axis fallback slides around collider corners. */

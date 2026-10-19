@@ -6,6 +6,55 @@ import { loadL3 } from '../../../tools/sim-runner/l3Bots';
 import { npcWorld, teleport } from './helpers';
 
 describe('armed ally close hearing and self-defence @E21', () => {
+  test('T-E22-20-ally-score @E22-AC20 worse candidates skip cover rays while the closest visible target is retained', async () => {
+    const w = await npcWorld();
+    try {
+      teleport(w, 4, 0);
+      const id = w.npcs!.civilians.spawn('officer', { x: 0, z: 0 }), e = w.entities.get(id)!;
+      const closest = w.infected!.spawn('infected.runner', { x: 8, z: 0 });
+      w.infected!.spawn('infected.runner', { x: 9, z: 0 }); w.infected!.spawn('infected.runner', { x: 10, z: 0 });
+      e.civilian!.ally = { ...allyState('soldier', { x: 0, z: 0 }, true), engaged: true, gun: { ...l3.officers.gun } };
+      const sees = vi.fn(() => true);
+      updateAlly(w, e, sees);
+      expect(e.civilian!.ally.targetId).toBe(closest);
+      expect(sees).toHaveBeenCalledTimes(2); // Winning candidate, then the unchanged discharge check.
+    } finally { w.dispose(); }
+  });
+
+  test('T-E22-20-ally-range @E22-AC20 range rejection avoids unused camera queries without acquiring a distant target', async () => {
+    const w = await npcWorld();
+    try {
+      teleport(w, 4, 0);
+      const id = w.npcs!.civilians.spawn('officer', { x: 0, z: 0 }), e = w.entities.get(id)!;
+      w.infected!.spawn('infected.runner', { x: 10, z: 0 });
+      e.civilian!.ally = { ...allyState('soldier', { x: 0, z: 0 }, true), engaged: true, gun: { ...l3.officers.gun, rangeM: 5 } };
+      vi.spyOn(w.infected!.director, 'inFrame').mockReturnValue(true);
+      const camera = vi.spyOn(w.infected!.director, 'inPlayerView');
+      updateAlly(w, e, () => true);
+      expect(camera).not.toHaveBeenCalled();
+      expect(e.civilian!.ally.targetId).toBe(0);
+      expect(w.events.events().some(event => event.type === 'ally.attack')).toBe(false);
+    } finally { w.dispose(); }
+  });
+
+  test('T-E22-20-ally-scan @E22-AC20 engaged soldiers omit unused threat scans but forced work still listens', async () => {
+    const w = await npcWorld();
+    try {
+      teleport(w, 4, 0);
+      const id = w.npcs!.civilians.spawn('officer', { x: 0, z: 0 }), e = w.entities.get(id)!;
+      w.infected!.spawn('infected.runner', { x: 10, z: 0 });
+      const a = e.civilian!.ally = { ...allyState('soldier', { x: 0, z: 0 }, true), engaged: true, gun: { ...l3.officers.gun } };
+      const hears = vi.spyOn(w.infected!.hearing, 'hears');
+      updateAlly(w, e, () => false);
+      expect(hears).not.toHaveBeenCalled();
+      expect(a.targetId).toBe(0);
+      a.forceUntil = w.tick + 60;
+      updateAlly(w, e, () => false);
+      expect(hears).toHaveBeenCalled();
+      expect(e.civilian!.story?.clip).toBe('ff-pry');
+    } finally { w.dispose(); }
+  });
+
   test.each([['officer', false], ['officer', true], ['soldier', false], ['civilian', false]] as const)('%s finishes moving to cover after losing its target (follower=%s)', async (role, follower) => {
     const w = await npcWorld();
     try {
