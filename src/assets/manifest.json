@@ -470,6 +470,322 @@
     }
   },
   {
+    "id": "inf.alpha-worker",
+    "category": "infected",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/inf.alpha/build.py",
+    "glb": "public/assets/models/inf.alpha-worker.glb",
+    "sourceGlb": "assets/inf.alpha-worker/model.glb",
+    "dimensions": {
+      "x": 1.3993,
+      "y": 2.5316,
+      "z": 2.3265,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 8000,
+      "materials": 6,
+      "fileKB": 800,
+      "drawCalls": 48
+    },
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.alpha-worker.lod1.glb",
+      "lod2": "public/assets/models/inf.alpha-worker.lod2.glb"
+    },
+    "sourceScale": 1.08101627,
+    "authoredLodTriangles": {
+      "lod1": 3000,
+      "lod2": 1000
+    }
+  },
+  {
+    "id": "inf.alpha-hoodie",
+    "category": "infected",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/inf.alpha/build.py",
+    "glb": "public/assets/models/inf.alpha-hoodie.glb",
+    "sourceGlb": "assets/inf.alpha-hoodie/model.glb",
+    "dimensions": {
+      "x": 1.5045,
+      "y": 2.5468,
+      "z": 2.3205,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 8000,
+      "materials": 6,
+      "fileKB": 800,
+      "drawCalls": 48
+    },
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.alpha-hoodie.lod1.glb",
+      "lod2": "public/assets/models/inf.alpha-hoodie.lod2.glb"
+    },
+    "sourceScale": 1.08101627,
+    "authoredLodTriangles": {
+      "lod1": 3000,
+      "lod2": 1000
+    }
+  },
+  {
+    "id": "inf.alpha-fire",
+    "category": "infected",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/inf.alpha/build.py",
+    "glb": "public/assets/models/inf.alpha-fire.glb",
+    "sourceGlb": "assets/inf.alpha-fire/model.glb",
+    "dimensions": {
+      "x": 1.3993,
+      "y": 2.5268,
+      "z": 2.321,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 8000,
+      "materials": 6,
+      "fileKB": 800,
+      "drawCalls": 48
+    },
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.alpha-fire.lod1.glb",
+      "lod2": "public/assets/models/inf.alpha-fire.lod2.glb"
+    },
+    "sourceScale": 1.08101627,
+    "authoredLodTriangles": {
+      "lod1": 3000,
+      "lod2": 1000
+    }
+  },
+  {
+    "id": "inf.alpha-suit",
+    "category": "infected",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/inf.alpha/build.py",
+    "glb": "public/assets/models/inf.alpha-suit.glb",
+    "sourceGlb": "assets/inf.alpha-suit/model.glb",
+    "dimensions": {
+      "x": 1.425,
+      "y": 2.5419,
+      "z": 2.3266,
+      "tolerance": 0.1
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 8000,
+      "materials": 6,
+      "fileKB": 800,
+      "drawCalls": 48
+    },
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.alpha-suit.lod1.glb",
+      "lod2": "public/assets/models/inf.alpha-suit.lod2.glb"
+    },
+    "sourceScale": 1.08101627,
+    "authoredLodTriangles": {
+      "lod1": 3000,
+      "lod2": 1000
+    }
+  },
+  {
     "id": "inf.jogger",
     "category": "infected",
     "status": "integrated",
@@ -22070,6 +22386,164 @@
     "lods": {
       "lod1": "public/assets/models/inf.mega-alpha.lod1.glb",
       "lod2": "public/assets/models/inf.mega-alpha.lod2.glb"
+    },
+    "sourceScale": 1.08101627,
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    }
+  },
+  {
+    "id": "inf.mega-alpha-ashen",
+    "category": "infected",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/inf.mega-alpha/build.py",
+    "glb": "public/assets/models/inf.mega-alpha-ashen.glb",
+    "sourceGlb": "assets/inf.mega-alpha-ashen/model.glb",
+    "dimensions": {
+      "x": 1.6933,
+      "y": 2.5849,
+      "z": 2.9588,
+      "tolerance": 0.25
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 16000,
+      "materials": 6,
+      "fileKB": 1600,
+      "drawCalls": 44
+    },
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.mega-alpha-ashen.lod1.glb",
+      "lod2": "public/assets/models/inf.mega-alpha-ashen.lod2.glb"
+    },
+    "sourceScale": 1.08101627,
+    "authoredLodTriangles": {
+      "lod1": 6000,
+      "lod2": 2000
+    }
+  },
+  {
+    "id": "inf.mega-alpha-ember",
+    "category": "infected",
+    "status": "integrated",
+    "tier": "hero",
+    "script": "assets/inf.mega-alpha/build.py",
+    "glb": "public/assets/models/inf.mega-alpha-ember.glb",
+    "sourceGlb": "assets/inf.mega-alpha-ember/model.glb",
+    "dimensions": {
+      "x": 1.6933,
+      "y": 2.585,
+      "z": 2.9595,
+      "tolerance": 0.25
+    },
+    "forward": "+X",
+    "frontNodes": [
+      "front"
+    ],
+    "requiredNodes": [
+      "root",
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR",
+      "stump_head",
+      "stump_armL",
+      "stump_armR",
+      "stump_foreArmL",
+      "stump_foreArmR",
+      "stump_legL",
+      "stump_legR"
+    ],
+    "animatedNodes": [
+      "hip",
+      "torso",
+      "head",
+      "armL",
+      "armR",
+      "foreArmL",
+      "foreArmR",
+      "handL",
+      "handR",
+      "legL",
+      "legR",
+      "shinL",
+      "shinR",
+      "footL",
+      "footR"
+    ],
+    "sockets": [],
+    "budget": {
+      "triangles": 16000,
+      "materials": 6,
+      "fileKB": 1600,
+      "drawCalls": 44
+    },
+    "decayVariants": [],
+    "sourceForward": "+X",
+    "lods": {
+      "lod1": "public/assets/models/inf.mega-alpha-ember.lod1.glb",
+      "lod2": "public/assets/models/inf.mega-alpha-ember.lod2.glb"
     },
     "sourceScale": 1.08101627,
     "authoredLodTriangles": {

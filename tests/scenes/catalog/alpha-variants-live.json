@@ -1,0 +1,29 @@
+{
+  "name": "alpha-variants-live",
+  "note": "PO #23 (10-19): live Fairhaven (L4) Alphas through the real crowd path, production archetype and no model override, so each one takes its look from its entity id (src/data/alphaLooks.ts). Eight idle Alphas in a row beside the courier: expect at least four different looks, every one drawn, eyes visible, trim attached. Natural LOD at the matrix zooms/tiers.",
+  "seed": 4,
+  "ground": "district",
+  "time": "L4",
+  "tier": 4,
+  "layout": {
+    "level": "L4",
+    "district": "D-FAIR",
+    "bbox": [[37, 2], [61, 26]]
+  },
+  "actors": [
+    { "id": "courier", "kind": "courier", "at": [49, 17], "yaw": 0, "god": true },
+    { "id": "alpha-0", "kind": "infected", "archetype": "infected.alpha", "at": [44.1, 17.9], "yaw": 0, "state": "idle" },
+    { "id": "alpha-1", "kind": "infected", "archetype": "infected.alpha", "at": [45.5, 16.5], "yaw": 0, "state": "idle" },
+    { "id": "alpha-2", "kind": "infected", "archetype": "infected.alpha", "at": [46.9, 15.1], "yaw": 0, "state": "idle" },
+    { "id": "alpha-3", "kind": "infected", "archetype": "infected.alpha", "at": [48.3, 13.7], "yaw": 0, "state": "idle" },
+    { "id": "alpha-4", "kind": "infected", "archetype": "infected.alpha", "at": [49.7, 12.3], "yaw": 0, "state": "idle" },
+    { "id": "alpha-5", "kind": "infected", "archetype": "infected.alpha", "at": [51.1, 10.9], "yaw": 0, "state": "idle" },
+    { "id": "alpha-6", "kind": "infected", "archetype": "infected.alpha", "at": [52.5, 9.5], "yaw": 0, "state": "idle" },
+    { "id": "alpha-7", "kind": "infected", "archetype": "infected.alpha", "at": [53.9, 8.1], "yaw": 0, "state": "idle" }
+  ],
+  "camera": { "mode": "game", "target": [49, 1.2, 13], "zoom": 1.1 },
+  "frames": 60,
+  "shots": [30, 59],
+  "sheet": 30,
+  "expect": { "consoleErrors": 0, "undrawnFramesMax": 0, "drawCallsMax": 300, "trianglesMax": 500000 }
+}

@@ -23,7 +23,8 @@ for (const tier of ['high', 'low'] as const) for (const zoom of [1, .5]) test(`T
   expect(bars.draws).toBe(3);
   expect(megaBar.y - megaBar.height / 2 - 2).toBeGreaterThanOrEqual(0);
   const batches = proof.state.render.crowd!.batches;
-  for (const model of ['inf.alpha', 'inf.mega-alpha']) expect(batches.some(b => b.id === model && b.instances > 0 && b.source === 'glb')).toBe(true);
+  // PO #23: each Alpha family draws through one of its look batches (inf.alpha, inf.alpha-worker, ...; inf.mega-alpha, inf.mega-alpha-ashen, ...).
+  for (const family of [/^inf\.alpha(-|$)/, /^inf\.mega-alpha(-|$)/]) expect(batches.some(b => family.test(b.id) && b.instances > 0 && b.source === 'glb')).toBe(true);
   mkdirSync('test-results/epics/E32/l10-alpha-contracts', { recursive: true });
   writeFileSync(`test-results/epics/E32/l10-alpha-contracts/scale-${tier}-${zoom}.json`, JSON.stringify(proof, null, 2));
 });
