@@ -293,7 +293,7 @@ def dress(asset, x, z, yaw=0.0, scale=1.0, decay=None, route_clear=None, run=Fal
     if decay: l.data['placements'][-1]['decay'] = decay
     # Dressing collides as one box (trees: trunk only, fence runs: one box per run) instead of the asset's detailed
     # compound boxes: a garage alone bakes ~100 boxes, and every resident box is a nav wall and a cover wall in the sim.
-    placement = l.data['placements'][-1]; placement['collisionId'] = 'look-l10-box'
+    placement = l.data['placements'][-1]; placement['collisionId'] = 'look-l10-box'; placement['decorLights'] = True
     l.data['colliders'] = [c for c in l.data['colliders'] if c['id'] != pid]
     v = placement['visualAabb']
     if asset in ('prop.tree', 'prop.street-tree'): box = dict(min=[x-.3, 0, z-.3], max=[x+.3, 2.2, z+.3])
