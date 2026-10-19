@@ -361,7 +361,7 @@ for i, (a, b) in enumerate(route_segments):
             ln = rng.uniform(6, 18); w = rng.uniform(1.2, 2.6)
             p0 = (a[0]+ux*s+n[0]*4, a[1]+uz*s+n[1]*4); p1 = (a[0]+ux*(s+ln)+n[0]*4, a[1]+uz*(s+ln)+n[1]*4)
             q1 = (p1[0]+n[0]*w, p1[1]+n[1]*w); q0 = (p0[0]+n[0]*w, p0[1]+n[1]*w)
-            token = 'khakiSeam' if a[0] < 800 or 2917 < a[0] < 3700 else 'oliveSeam'
+            token = 'gloveKhaki' if a[0] < 800 or 2917 < a[0] < 3700 else 'oliveSeam'
             surface('shoulder', ccw([list(p0), list(p1), list(q1), list(q0)]), token, -.001)
             s += ln + rng.uniform(8, 26)
 
@@ -481,7 +481,7 @@ for a_, b_ in route_segments:
             quad = [[cx+ca*w/2*i-sa*h/2*j, cz+sa*w/2*i+ca*h/2*j] for i, j in [(-1, -1), (1, -1), (1, 1), (-1, 1)]]
             if all(seg_rect(p0, p1, (min(q[0] for q in quad), min(q[1] for q in quad)), (max(q[0] for q in quad), max(q[1] for q in quad))) > 5 for p0, p1 in route_segments + detour_segments):
                 dry = a_[0] < 800 or 2917 < a_[0] < 3700
-                surface('verge-patch', ccw(quad), rng.choice(['khakiSeam', 'khaki', 'oliveSeam'] if dry else ['oliveSeam', 'apronOlive', 'olive', 'khakiSeam']), -.003)
+                surface('verge-patch', ccw(quad), rng.choice(['khakiLight', 'gloveKhaki'] if dry else ['oliveSeam', 'apronOlive', 'olive', 'khakiSeam']), -.003)
             t += rng.uniform(11, 22)
 # R7 apron: painted bays, hazard edges and service lines so the console floor reads as a working plant (paint only).
 for x0 in range(3958, 4040, 9):
