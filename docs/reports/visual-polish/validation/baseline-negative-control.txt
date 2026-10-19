@@ -1,0 +1,145 @@
+
+ RUN  v5.0.3 /srv/mi/jobs/visual-polish-c23a7d-98824-1792417521
+
+ ❯  functional  tests/unit/render/visual-polish.test.ts (5 tests | 4 failed) 63ms
+   × PO #40 wpn.fists has no geometry, load request or placeholder warning 37ms
+   × PO #40 wpn.kick has no geometry, load request or placeholder warning 7ms
+   × PO #40 empty streamed hero slots never reach compilation or the warm-up draw 6ms
+   × PO #4 ambient world trajectories depend on camera focus only inside whole-field recycling 8ms
+   ✓ PO #24 neighbours wait with varied quiet gestures and widely spaced phases 3ms
+ ❯  functional  tests/unit/render/alpha-body-fidelity.test.ts (2 tests | 2 failed) 417ms
+   × PO #21 Alpha corpse retains its whole authored body (high) 340ms
+   × PO #21 Alpha corpse retains its whole authored body (low) 75ms
+ ❯  functional  tests/unit/render/civilian-surface-retention.test.ts (2 tests | 2 failed) 1241ms
+   × PO #29 lod1 civilian reduction retains each visible body surface 786ms
+   × PO #29 lod2 civilian reduction retains each visible body surface 452ms
+ ❯  functional  tests/unit/vfx/blood-scale.test.ts (2 tests | 2 failed) 331ms
+   × PO #32 blood is a supported ground splat with tiny transient drops (high) 317ms
+   × PO #32 blood is a supported ground splat with tiny transient drops (low) 12ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 10 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/unit/render/alpha-body-fidelity.test.ts > PO #21 Alpha corpse retains its whole authored body (high)
+ FAIL   functional  tests/unit/render/alpha-body-fidelity.test.ts > PO #21 Alpha corpse retains its whole authored body (low)
+AssertionError: expected undefined to be defined
+ ❯ tests/unit/render/alpha-body-fidelity.test.ts:27:20
+     25|     await view.loadBatch(definition, 'lod0');
+     26|     const source = [...view.batches.values()][0].mesh.geometry, frozen…
+     27|     expect(frozen).toBeDefined(); expect(frozen.index!.count).toBe(sou…
+       |                    ^
+     28|     expect(frozen.hasAttribute('_parts')).toBe(true);
+     29|     expect(prepare).toHaveBeenCalledWith(expect.any(String), frozen, e…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/10]⎯
+
+ FAIL   functional  tests/unit/render/civilian-surface-retention.test.ts > PO #29 lod1 civilian reduction retains each visible body surface
+AssertionError: head: expected 0.9780735959186114 to be greater than or equal to 0.9799
+ ❯ tests/unit/render/civilian-surface-retention.test.ts:30:58
+     28|     for (const name of ['torso', 'head', 'armL', 'armR', 'legL', 'legR…
+     29|       const part = authored.clip.parts.indexOf(name); if (part < 0) co…
+     30|       expect(after.get(part)! / before.get(part)!, name).toBeGreaterTh…
+       |                                                          ^
+     31|     }
+     32|   } finally { authored.geometry.dispose(); prepared.geometry.dispose()…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/10]⎯
+
+ FAIL   functional  tests/unit/render/civilian-surface-retention.test.ts > PO #29 lod2 civilian reduction retains each visible body surface
+AssertionError: torso: expected 0.959924629121714 to be greater than or equal to 0.9799
+ ❯ tests/unit/render/civilian-surface-retention.test.ts:30:58
+     28|     for (const name of ['torso', 'head', 'armL', 'armR', 'legL', 'legR…
+     29|       const part = authored.clip.parts.indexOf(name); if (part < 0) co…
+     30|       expect(after.get(part)! / before.get(part)!, name).toBeGreaterTh…
+       |                                                          ^
+     31|     }
+     32|   } finally { authored.geometry.dispose(); prepared.geometry.dispose()…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/10]⎯
+
+ FAIL   functional  tests/unit/render/visual-polish.test.ts > PO #40 wpn.fists has no geometry, load request or placeholder warning
+ FAIL   functional  tests/unit/render/visual-polish.test.ts > PO #40 wpn.kick has no geometry, load request or placeholder warning
+AssertionError: expected 1 to be +0 // Object.is equality
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ tests/unit/render/visual-polish.test.ts:18:22
+     16|       const model = await registry.loadAsset(id, lod);
+     17|       let meshes = 0; model.traverse(node => { if (node instanceof Mes…
+     18|       expect(meshes).toBe(0); expect(model.userData.placeholder).toBeU…
+       |                      ^
+     19|     }
+     20|     expect(load).not.toHaveBeenCalled(); expect(log).not.toHaveBeenCal…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/10]⎯
+
+ FAIL   functional  tests/unit/render/visual-polish.test.ts > PO #40 empty streamed hero slots never reach compilation or the warm-up draw
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ check tests/unit/render/visual-polish.test.ts:27:46
+     25|   const scene = new Scene(), mesh = new InstancedMesh(new BufferGeomet…
+     26|   mesh.visible = false; mesh.count = 0; scene.add(mesh);
+     27|   const check = () => { expect(mesh.visible).toBe(false); expect(mesh.…
+       |                                              ^
+     28|   const renderer = { selectedBackend: 'webgl', getSize: (v: Vector2) =…
+     29|   await preRender(renderer, scene, new PerspectiveCamera(), check);
+ ❯ Object.compileAsync tests/unit/render/visual-polish.test.ts:28:160
+ ❯ src/render/PreRenderer.ts:14:243
+ ❯ compile src/render/PreRenderer.ts:14:203
+ ❯ preRender src/render/PreRenderer.ts:80:88
+ ❯ tests/unit/render/visual-polish.test.ts:29:9
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/10]⎯
+
+ FAIL   functional  tests/unit/render/visual-polish.test.ts > PO #4 ambient world trajectories depend on camera focus only inside whole-field recycling
+AssertionError: camera must not translate visible leaves: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ walk tests/unit/render/visual-polish.test.ts:42:109
+     40|       const path = new Set(ancestors); path.add(node);
+     41|       const inside = recycled || (node as Node & { method?: string }).…
+     42|       if (node === life.focus) { dependencies++; expect(inside, 'camer…
+       |                                                                                                             ^
+     43|       for (const child of node.getChildren()) walk(child, inside, path…
+     44|     };
+ ❯ walk tests/unit/render/visual-polish.test.ts:43:47
+ ❯ walk tests/unit/render/visual-polish.test.ts:43:47
+ ❯ walk tests/unit/render/visual-polish.test.ts:43:47
+ ❯ walk tests/unit/render/visual-polish.test.ts:43:47
+ ❯ walk tests/unit/render/visual-polish.test.ts:43:47
+ ❯ tests/unit/render/visual-polish.test.ts:45:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/10]⎯
+
+ FAIL   functional  tests/unit/vfx/blood-scale.test.ts > PO #32 blood is a supported ground splat with tiny transient drops (high)
+ FAIL   functional  tests/unit/vfx/blood-scale.test.ts > PO #32 blood is a supported ground splat with tiny transient drops (low)
+AssertionError: expected 0.20093975961208344 to be less than or equal to 0.036
+ ❯ tests/unit/vfx/blood-scale.test.ts:14:51
+     12|     const live = Array.from({ length: motion.count }, (_, i) => i).fil…
+     13|     expect(live.length).toBeGreaterThan(0);
+     14|     for (const i of live) { expect(style.getX(i)).toBeLessThanOrEqual(…
+       |                                                   ^
+     15|     expect(fx.snapshot().lastSpray.chunks).toBe(0);
+     16|     expect(fx.decals.count).toBeGreaterThan(0);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/10]⎯
+
+
+ Test Files  4 failed (4)
+      Tests  10 failed | 1 passed (11)
+   Start at  13:46:03
+   Duration  8.14s (transform 51%, tests 27%, import 22%)
