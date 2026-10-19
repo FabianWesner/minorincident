@@ -131,7 +131,6 @@ export class View {
     // Mission/checkpoint teleports must be framed before their first presented frame.
     if (!this.blendTarget && !this.spot && Math.hypot(player.x - this.focus.x, player.z - this.focus.z) > 20) {
       this.focus.set(player.x, Math.max(0, (player.y ?? feetOffset) - feetOffset), player.z);
-      this.clearanceScale = 1;
       seconds = 0;
     }
     this.previousPosition.copy(this.tickPosition); this.previousQuaternion.copy(this.tickQuaternion);
