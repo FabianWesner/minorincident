@@ -38,7 +38,9 @@ export async function simplifyCrowdLod(geometry: BufferGeometry, maxError = .01,
     // error bound determine their density, with a tighter 1 mm skin margin.
     const gripped = grippedParts.has(owner);
     const targetRatio = gripped ? .01 : ratio;
-    const [reduced, error] = MeshoptSimplifier.simplifyWithAttributes(new Uint32Array(indices), position.array as Float32Array, 3, values, stride,
+    // Error must follow the displayed curled fingers. Measuring the straight
+    // rest hand can collapse triangles across the handle hole in LOD2.
+    const [reduced, error] = MeshoptSimplifier.simplifyWithAttributes(new Uint32Array(indices), (geometry.getAttribute('_gripPosition') ?? position).array as Float32Array, 3, values, stride,
       weights, locks, Math.max(3, Math.floor(indices.length * targetRatio / 3) * 3), gripped ? Math.min(maxError, .001) : maxError,
       ['Permissive', 'Sparse', 'ErrorAbsolute']);
     maximumError = Math.max(maximumError, error);

@@ -14,18 +14,29 @@ test('T-E25-12s @E25 @E25-AC12 real house windows retain power indices and norma
       const file = readFileSync(`public/assets/models/bld.house-a${lod}.glb`);
       const root = (await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(file.buffer.slice(file.byteOffset, file.byteOffset + file.byteLength), '')).scene;
       root.userData.assetId = 'bld.house-a';
-      const batch = staticBatch(root, true, materials), mesh = batch.getObjectByName('window-light') as Mesh;
+      const batch = staticBatch(root, true, materials), windowsMeshes: Mesh[] = [];
+      batch.traverse(child => { if (child instanceof Mesh && child.geometry.hasAttribute('_window')) windowsMeshes.push(child); });
+      expect(windowsMeshes.length, `${lod} window primitives`).toBeGreaterThan(0);
+      const anchors = new Set<number>();
       const body = batch.getObjectByName('static-body') as Mesh;
       for (const attribute of ['_light', '_window', '_windowUV', '_surface']) expect(body.geometry.hasAttribute(attribute), `${lod} matte body ${attribute}`).toBe(false);
-      const buffers = new Set(Object.values(mesh.geometry.attributes).map(input => 'data' in input ? input.data : input));
-      // InstancedGroup replaces _lightBase and adds matrix and identity tint.
-      expect(buffers.size + 2, `${lod} portable WebGPU vertex-buffer limit`).toBeLessThanOrEqual(8);
-      const mask = mesh.geometry.getAttribute('_window'), power = mesh.geometry.getAttribute('_light'), uv = mesh.geometry.getAttribute('_windowUV');
-      const windows = Array.from({ length: mask.count }, (_, i) => i).filter(i => mask.getX(i) === 1);
-      expect(windows.length, lod).toBeGreaterThan(0);
-      expect(windows.every(i => power.getX(i) >= 0)).toBe(true);
-      expect(Math.max(...windows.map(i => uv.getX(i)))).toBeGreaterThanOrEqual(.99);
-      expect(Math.min(...windows.map(i => uv.getX(i)))).toBeLessThanOrEqual(.01);
+      for (const mesh of windowsMeshes) {
+        const buffers = new Set(Object.values(mesh.geometry.attributes).map(input => 'data' in input ? input.data : input));
+        // InstancedGroup replaces _lightBase and adds matrix and identity tint.
+        expect(buffers.size + 2, `${lod} portable WebGPU vertex-buffer limit`).toBeLessThanOrEqual(8);
+        const mask = mesh.geometry.getAttribute('_window'), power = mesh.geometry.getAttribute('_light'), uv = mesh.geometry.getAttribute('_windowUV');
+        const windows = [...new Set(mesh.geometry.index!.array)].filter(i => mask.getX(i) === 1);
+        for (const i of windows) anchors.add(power.getX(i));
+        expect(windows.length, lod).toBeGreaterThan(0);
+        expect(windows.every(i => power.getX(i) >= 0)).toBe(true);
+        for (const anchor of new Set(windows.map(i => power.getX(i)))) {
+          const pane = windows.filter(i => power.getX(i) === anchor);
+          expect(Math.max(...pane.map(i => uv.getX(i))) - Math.min(...pane.map(i => uv.getX(i))), `${lod} window ${anchor} spans its own room`).toBeCloseTo(1, 4);
+        }
+        expect(Math.max(...windows.map(i => uv.getX(i)))).toBeGreaterThanOrEqual(.99);
+        expect(Math.min(...windows.map(i => uv.getX(i)))).toBeLessThanOrEqual(.01);
+      }
+      expect(anchors.has(2), `${lod} front-window anchor covered`).toBe(true);
     }
   } finally { materials.dispose(); lighting.dispose(); }
 });

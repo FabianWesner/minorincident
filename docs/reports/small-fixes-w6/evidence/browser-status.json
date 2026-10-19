@@ -1,0 +1,40 @@
+{
+  "status": "unmeasured",
+  "reason": "quiet-run admission exceeded 30 minutes",
+  "exitCode": 75,
+  "browsersLaunched": 0,
+  "freshSheetsOpened": 0,
+  "requested": {
+    "backends": [
+      "webgl2",
+      "webgpu"
+    ],
+    "tiers": [
+      "high",
+      "low"
+    ],
+    "zooms": [
+      0.5,
+      1
+    ],
+    "zooRegressionZoom": 1.5,
+    "phoneViewport": [
+      390,
+      844
+    ],
+    "windowAzimuths": [
+      45,
+      60
+    ],
+    "windowRadiusM": 19,
+    "minimumParallaxPx": 4
+  },
+  "remaining": [
+    "zoo clipping matrix",
+    "phone prompt/HUD separation",
+    "window parallax and powered/unpowered pixels",
+    "game-camera capture review",
+    "native E18 frame/draw/triangle/heap checks"
+  ],
+  "replay": "npm run build && SCENE_PORT=3496 E2E_PORT=3497 SCENE_SERVER=preview E2E_UNITS=1 sh tools/perf/quiet-run.sh sh tools/e2e-lock.sh npx tsx tools/scenelab/small-fixes-w6.ts"
+}

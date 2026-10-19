@@ -1,0 +1,77 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/small-fixes-w6 -> 2.28.24.66:/srv/mi/ws/small-fixes-w6-968450
+[remote] cache-gc deleted:none
+[remote] sync 17s, 19389 files; job /srv/mi/jobs/small-fixes-w6-968450-36639-1792364616; queueing for a slot
+[runner] slot 1 acquired; load 1.22 0.66 0.37
+[runner] npm ci (lockfile hash 820fd35f70709ef2)
+
+added 247 packages in 6s
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/small-fixes-w6-968450-36639-1792364616[39m
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/e25-windows.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 1146[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E25-12s @E25 @E25-AC12 real house windows retain power indices and normalized room coordinates in every LOD[33m 873[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/static-bakes.test.ts [2m([22m[2m142 tests[22m[2m)[22m[33m 4024[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/civilian-grip.test.ts [2m([22m[2m18 tests[22m[2m)[22m[33m 9595[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native man-a lod=0 fingers clear all routine props[33m 1873[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native man-b lod=0 fingers clear all routine props[33m 1419[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native woman-a lod=0 fingers clear all routine props[33m 1098[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native woman-b lod=0 fingers clear all routine props[33m 951[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native elderly lod=0 fingers clear all routine props[33m 1046[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native man-a lod=1 fingers clear all routine props[33m 411[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native man-b lod=1 fingers clear all routine props[33m 358[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native woman-b lod=1 fingers clear all routine props[33m 309[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native elderly lod=1 fingers clear all routine props[33m 316[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/assets/civilian-bake-build.test.ts [2m([22m[2m72 tests[22m[2m)[22m[33m 34737[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-elderly:lod0: shipped bake exactly matches runtime preparation[33m 2021[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-elderly:lod1: shipped bake exactly matches runtime preparation[33m 753[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-elderly:lod2: shipped bake exactly matches runtime preparation[33m 314[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-man-a:lod0: shipped bake exactly matches runtime preparation[33m 1518[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-man-a:lod1: shipped bake exactly matches runtime preparation[33m 652[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-man-a:lod2: shipped bake exactly matches runtime preparation[33m 402[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-man-a.aftermath:lod0: shipped bake exactly matches runtime preparation[33m 667[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-man-a.aftermath:lod1: shipped bake exactly matches runtime preparation[33m 476[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-man-b:lod0: shipped bake exactly matches runtime preparation[33m 1396[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-man-b:lod1: shipped bake exactly matches runtime preparation[33m 373[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-man-b.aftermath:lod0: shipped bake exactly matches runtime preparation[33m 598[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-man-b.aftermath:lod1: shipped bake exactly matches runtime preparation[33m 438[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-woman-a:lod0: shipped bake exactly matches runtime preparation[33m 884[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-woman-a:lod1: shipped bake exactly matches runtime preparation[33m 396[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-woman-b:lod0: shipped bake exactly matches runtime preparation[33m 1035[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-woman-b:lod1: shipped bake exactly matches runtime preparation[33m 382[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-woman-b.aftermath:lod0: shipped bake exactly matches runtime preparation[33m 457[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.civilian-woman-b.aftermath:lod1: shipped bake exactly matches runtime preparation[33m 411[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.dale.aftermath:lod0: shipped bake exactly matches runtime preparation[33m 492[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.dale.aftermath:lod1: shipped bake exactly matches runtime preparation[33m 410[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.depot-clerk:lod0: shipped bake exactly matches runtime preparation[33m 1174[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.depot-clerk:lod1: shipped bake exactly matches runtime preparation[33m 413[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.firefighter-alive:lod0: shipped bake exactly matches runtime preparation[33m 775[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.lab-guard:lod0: shipped bake exactly matches runtime preparation[33m 1094[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.lab-guard:lod1: shipped bake exactly matches runtime preparation[33m 478[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.lab-tech-a:lod0: shipped bake exactly matches runtime preparation[33m 1140[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.lab-tech-a:lod1: shipped bake exactly matches runtime preparation[33m 312[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.lab-tech-b:lod0: shipped bake exactly matches runtime preparation[33m 765[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.marcus.aftermath:lod0: shipped bake exactly matches runtime preparation[33m 605[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.marcus.aftermath:lod1: shipped bake exactly matches runtime preparation[33m 340[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.mia.aftermath:lod0: shipped bake exactly matches runtime preparation[33m 578[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.mia.aftermath:lod1: shipped bake exactly matches runtime preparation[33m 352[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.mr-okafor.aftermath:lod0: shipped bake exactly matches runtime preparation[33m 677[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.mr-okafor.aftermath:lod1: shipped bake exactly matches runtime preparation[33m 361[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.national-guard:lod0: shipped bake exactly matches runtime preparation[33m 822[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.national-guard:lod1: shipped bake exactly matches runtime preparation[33m 315[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.national-guard:lod2: shipped bake exactly matches runtime preparation[33m 341[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.police-officer:lod0: shipped bake exactly matches runtime preparation[33m 810[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.rosa.aftermath:lod0: shipped bake exactly matches runtime preparation[33m 337[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.sam.aftermath:lod0: shipped bake exactly matches runtime preparation[33m 486[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.shelter-survivor.bandaged:lod0: shipped bake exactly matches runtime preparation[33m 588[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.shelter-survivor.bandaged:lod1: shipped bake exactly matches runtime preparation[33m 456[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.shelter-survivor.lying:lod0: shipped bake exactly matches runtime preparation[33m 584[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.shelter-survivor.lying:lod1: shipped bake exactly matches runtime preparation[33m 383[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.shelter-survivor.sitting:lod0: shipped bake exactly matches runtime preparation[33m 612[2mms[22m[39m
+   [33m[2m✓[22m[39m npc.shelter-survivor.sitting:lod1: shipped bake exactly matches runtime preparation[33m 303[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m4 passed[39m[22m[90m (4)[39m
+[2m      Tests [22m [1m[32m237 passed[39m[22m[90m (237)[39m
+[2m   Start at [22m 23:04:01
+[2m   Duration [22m 35.80s[2m (tests 93%, transform 4%, import 3%)[22m
+
+[remote] done exit=0 (runner 2.28.24.66, sync 17s, remote total 47s)

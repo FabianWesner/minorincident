@@ -1,0 +1,80 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/small-fixes-w6 -> 2.28.24.66:/srv/mi/ws/small-fixes-w6-968450
+[remote] cache-gc deleted:none
+[remote] sync 21s, 19323 files; job /srv/mi/jobs/small-fixes-w6-968450-31454-1792364366; queueing for a slot
+[runner] slot 0 acquired; load 0.67 0.26 0.21
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/small-fixes-w6-968450-31454-1792364366[39m
+
+ [31m❯[39m [30m[43m functional [49m[39m tests/unit/render/civilian-grip.test.ts [2m([22m[2m18 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 8330[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native man-a lod=0 fingers clear all routine props[33m 1355[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native man-b lod=0 fingers clear all routine props[33m 955[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native woman-a lod=0 fingers clear all routine props[33m 930[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native woman-b lod=0 fingers clear all routine props[33m 1061[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native elderly lod=0 fingers clear all routine props[33m 1011[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native man-a lod=1 fingers clear all routine props[33m 388[2mms[22m[39m
+   [33m[2m✓[22m[39m @E08 native man-b lod=1 fingers clear all routine props[33m 341[2mms[22m[39m
+   [32m✓[39m @E08 native woman-a lod=1 fingers clear all routine props[32m 256[2mms[22m[39m
+   [32m✓[39m @E08 native woman-b lod=1 fingers clear all routine props[32m 274[2mms[22m[39m
+   [32m✓[39m @E08 native elderly lod=1 fingers clear all routine props[32m 256[2mms[22m[39m
+[31m   [31m×[31m @E08 native man-a lod=2 fingers clear all routine props[39m[32m 262[2mms[22m[39m
+   [32m✓[39m @E08 native man-b lod=2 fingers clear all routine props[32m 164[2mms[22m[39m
+   [32m✓[39m @E08 native woman-a lod=2 fingers clear all routine props[32m 131[2mms[22m[39m
+   [32m✓[39m @E08 native woman-b lod=2 fingers clear all routine props[32m 211[2mms[22m[39m
+   [32m✓[39m @E08 native elderly lod=2 fingers clear all routine props[32m 219[2mms[22m[39m
+   [32m✓[39m @E08 man-a holds the mug by the handle, upright, elbow bent, at chest/waist height[32m 191[2mms[22m[39m
+   [32m✓[39m @E08 woman-b holds the mug by the handle, upright, elbow bent, at chest/waist height[32m 173[2mms[22m[39m
+   [32m✓[39m @E08 elderly holds the mug by the handle, upright, elbow bent, at chest/waist height[32m 146[2mms[22m[39m
+
+[31m⎯⎯⎯⎯⎯⎯⎯[39m[1m[41m Failed Tests 1 [49m[22m[31m⎯⎯⎯⎯⎯⎯⎯[39m
+
+[41m[1m FAIL [22m[49m [30m[43m functional [49m[39m tests/unit/render/civilian-grip.test.ts[2m > [22m@E08 native man-a lod=2 fingers clear all routine props
+[31m[1mAssertionError[22m: man-a/coffee: expected [ { a: 'hand', b: 'coffee', …(5) } ] to deeply equal [][39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- [][39m
+[31m+ [[39m
+[31m+   {[39m
+[31m+     "a": "hand",[39m
+[31m+     "assetA": "man-a",[39m
+[31m+     "assetB": "coffee",[39m
+[31m+     "b": "coffee",[39m
+[31m+     "intersectingTriangles": 8,[39m
+[31m+     "region": {[39m
+[31m+       "max": [[39m
+[31m+         0.04207106679677963,[39m
+[31m+         -0.052071068435907364,[39m
+[31m+         0.013882537372410297,[39m
+[31m+       ],[39m
+[31m+       "min": [[39m
+[31m+         0.027928931638598442,[39m
+[31m+         -0.054999999701976776,[39m
+[31m+         -0.018482550978660583,[39m
+[31m+       ],[39m
+[31m+     },[39m
+[31m+     "regionCm": [[39m
+[31m+       1,[39m
+[31m+       0,[39m
+[31m+       3,[39m
+[31m+     ],[39m
+[31m+   },[39m
+[31m+ ][39m
+
+[36m [2m❯[22m tests/unit/render/civilian-grip.test.ts:[2m35:54[22m[39m
+    [90m 33|[39m     if (prop === 'phone') expect(boxOf(tris).min[0] - boxOf(hand).max[…
+    [90m 34|[39m     const sets: TriangleSet[] = [{ id: 'hand', assetId: model, tris: h…
+    [90m 35|[39m     expect(staticClipping(sets), `${model}/${prop}`).toEqual([]);
+    [90m   |[39m                                                      [31m^[39m
+    [90m 36|[39m   }
+    [90m 37|[39m   const native = handTriangles(baked.geometry, baked.clip.parts.indexO…
+
+[31m[2m⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯[22m[39m
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m17 passed[39m[22m[90m (18)[39m
+[2m   Start at [22m 22:59:49
+[2m   Duration [22m 9.03s[2m (tests 94%, transform 3%, import 3%)[22m
+
+[remote] done exit=1 (runner 2.28.24.66, sync 21s, remote total 12s)
