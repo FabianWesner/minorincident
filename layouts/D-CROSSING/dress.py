@@ -8,6 +8,8 @@ Detail overlays use only tokens that tools/l9/build-terrain.ts leaves out of the
 import random
 
 R = random.Random(931)
+# look-l9b: blob outline jitter has its own stream, so the irregular rims never move a placement drawn from R.
+RB = random.Random(932)
 M = l.manifest
 ROUTES = [(r['points'], r['width'] / 2) for r in source['routes']]
 DETOURS = [r['detour'] for r in source['routes']]
@@ -258,8 +260,8 @@ def lay_field(kind, cx, cz, hx, hz, ang):
         if math.hypot(cx - f[0], cz - f[1]) < (rad + f[2]) * .78:
             return False
     # Row direction follows the long side; row pitch is uneven enough to read as crops at game zoom.
-    base, stripe = {'wheat': ('mustard', 'mustardLight'), 'plow': ('leatherShadow', 'trouserLight'), 'pasture': ('apronOlive', 'oliveLight'),
-                    'scrub': ('olive', 'oliveLight'), 'dust': ('trouserLight', 'khaki')}[kind]
+    base, stripe = {'wheat': ('khaki', 'capTan'), 'plow': ('leatherShadow', 'trouserLight'), 'pasture': ('apronOlive', 'oliveLight'),
+                    'scrub': ('olive', 'oliveLight'), 'dust': ('khakiSeam', 'khaki')}[kind]
     if kind == 'dust':
         stripe = None
     if not ov('field-' + kind, poly, base, FIELD_BASE, cut=False, cat='field'):
@@ -280,20 +282,31 @@ def lay_field(kind, cx, cz, hx, hz, ang):
         for i in range(R.randint(2, 4)):
             bx, bz = R.uniform(-hx * .6, hx * .6), R.uniform(-hz * .6, hz * .6)
             c, s = math.cos(ang), math.sin(ang)
-            ov('pasture-patch', blob(cx + c * bx - s * bz, cz + s * bx + c * bz, R.uniform(6, 14), R.uniform(4, 10), R.uniform(0, 3), 9), stripe, FIELD_STRIPE, cut=False, cat='field')
+            ov('pasture-patch', blob(cx + c * bx - s * bz, cz + s * bx + c * bz, R.uniform(6, 14), R.uniform(4, 10), R.uniform(0, 3), 9, 14), stripe, FIELD_STRIPE, cut=False, cat='field')
     fields.append((cx, cz, rad, kind, ang, hx, hz))
     return True
 
 
-def blob(cx, cz, rx, rz, ang, n=10):
-    """Convex, slightly irregular ellipse (counter-clockwise like the strips)."""
-    pts = []
-    for i in range(n):
-        t = 2 * math.pi * i / n
-        k = 1 + R.uniform(-.05, .05)
-        x, z = rx * math.cos(t) * k, rz * math.sin(t) * k
-        pts.append([cx + x * math.cos(ang) - z * math.sin(ang), cz + x * math.sin(ang) + z * math.cos(ang)])
-    return pts
+def blob(cx, cz, rx, rz, ang, n=10, fine=None, plain=False):
+    """Slightly irregular ellipse (counter-clockwise like the strips). `n` draws of R as always (the placement stream must not
+    move); `fine` vertices are drawn, with a look-l9b rim wobble from RB (two low harmonics plus jitter, at most +20 %), so
+    the patches read as worn ground, not polygons. Star-shaped around the centre, which the surface tessellation handles.
+    `plain=True` returns (the pre-look-l9b outline, the wobbled one): clearance tests use the first so acceptance never changes."""
+    base = [R.uniform(-.05, .05) for _ in range(n)]
+    m = fine or n
+    a1, a2, p1, p2 = RB.uniform(.05, .1), RB.uniform(.03, .06), RB.uniform(0, 6.283), RB.uniform(0, 6.283)
+    jitter = [RB.uniform(-.04, .04) for _ in range(m)]
+
+    def ring(count, k_of):
+        pts = []
+        for i in range(count):
+            t = 2 * math.pi * i / count
+            k = k_of(i, t)
+            x, z = rx * math.cos(t) * k, rz * math.sin(t) * k
+            pts.append([cx + x * math.cos(ang) - z * math.sin(ang), cz + x * math.sin(ang) + z * math.cos(ang)])
+        return pts
+    pts = ring(m, lambda i, t: 1 + base[i * n // m] + a1 * math.sin(2 * t + p1) + a2 * math.sin(3 * t + p2) + jitter[i])
+    return (ring(n, lambda i, t: 1 + base[i]), pts) if plain else pts
 
 
 def strip_poly(a, b, width, ext=0):
@@ -328,11 +341,15 @@ for kind, count, rr in [('dust', 70, (7, 26)), ('scrub', 90, (4, 14))]:
             break
         cx, cz = R.uniform(-455, 465), R.uniform(-165, 105)
         rx, rz = R.uniform(*rr), R.uniform(*rr) * .7
-        poly = blob(cx, cz, rx, rz, R.uniform(0, math.pi), 11)
-        if not in_dry(cx, cz, -4) or not clear_poly(poly, 7.5):
+        plain, poly = blob(cx, cz, rx, rz, R.uniform(0, math.pi), 11, 16, plain=True)
+        if not in_dry(cx, cz, -4) or not clear_poly(plain, 7.5):
             continue
+        if kind == 'dust':
+            # look-l9b: smaller pans (the 26 m discs read as placeholder polygons); shrunk after the clearance test so the
+            # acceptance, and with it the R stream, stays exactly as before.
+            poly = [[cx + (x - cx) * .72, cz + (z - cz) * .72] for x, z in poly]
         # patches may sit under props but never under the encounter lanes
-        base, stripe = ('trouserLight', None) if kind == 'dust' else ('olive', None)
+        base, stripe = ('khakiSeam', None) if kind == 'dust' else ('olive', None)
         ov('dry-' + kind, poly, base, FIELD_BASE if kind == 'dust' else FIELD_BASE + .0007, cut=False, cat='field')
         made += 1
     stats['dry-' + kind] = made
@@ -355,14 +372,14 @@ for i, (a, b) in enumerate(zip(road_pts, road_pts[1:])):
         ov('shoulder', strip_poly(sa, sb, 2.6, 0), 'leather', SHOULDER, cut=False, cat='road')
         ea = [a[0] + ux * t0 + nx * side * 5.55, a[1] + uz * t0 + nz * side * 5.55]
         eb = [a[0] + ux * t1 + nx * side * 5.55, a[1] + uz * t1 + nz * side * 5.55]
-        ov('edge-line', strip_poly(ea, eb, .16, 0), 'picketWhite', .0085, cut=False, cat='road')
+        ov('edge-line', strip_poly(ea, eb, .14, 0), 'pantsLight', .0085, cut=False, cat='road')   # look-l9b: worn grey paint, not self-lit white
 
 # 4) road continuation past both playable ends (inside the chunk grid here, beyond it as plain base quads below).
 for sx in (-1, 1):
     a, b = [sx * 550, 0], [sx * 600, 0]
     surface('road-extension', strip_poly(a, b, 12, 0), 'asphalt', .002)
     for k in range(0, 50, 20):
-        surface('road-mark', strip_poly([sx * (554 + k), 0], [sx * (558 + k), 0], .16, 0), 'picketWhite', .008)
+        surface('road-mark', strip_poly([sx * (554 + k), 0], [sx * (558 + k), 0], .16, 0), 'silver', .008)
 
 # ---- vegetation -----------------------------------------------------------------------------------------------
 
@@ -469,7 +486,7 @@ def road_decals(pts, hw, gravel, h0):
                 # dust / grit drifting in from the verge, a soft long ellipse across a lane edge
                 side = R.choice([-1, 1])
                 ex, ez = x + nx * side * (hw - R.uniform(.2, 2.2)), z + nz * side * (hw - R.uniform(.2, 2.2))
-                ov('road-dust', blob(ex, ez, R.uniform(2.5, 7), R.uniform(.8, 2.0), ang + R.uniform(-.2, .2), 9), 'canvasTan', h0, cut=False, cat='road')
+                ov('road-dust', blob(ex, ez, R.uniform(2.5, 7), R.uniform(.8, 2.0), ang + R.uniform(-.2, .2), 9, 12), 'capTan', h0, cut=False, cat='road')
                 counts['dust'] += 1
             elif r < .70 and not gravel:
                 # a pair of dark skid / tyre marks
@@ -485,7 +502,7 @@ def road_decals(pts, hw, gravel, h0):
             x, z, ux, uz, nx, nz = frame_at(a, b, t)
             for side in (-1, 1):
                 o = hw + R.uniform(.4, 6)
-                token = R.choice(['oliveLight', 'oliveLight', 'mustardLight', 'canvasTan', 'trouserLight'])
+                token = R.choice(['oliveLight', 'oliveLight', 'khakiSeam', 'capTan', 'trouserLight'])
                 ov('verge-tuft', blob(x + nx * side * o, z + nz * side * o, R.uniform(.7, 2.6), R.uniform(.5, 1.6), math.atan2(uz, ux) + R.uniform(-.3, .3), 8), token, R.choice([.0014, .0018]), cut=False, cat='road')
                 counts['tuft'] += 1
             t += R.uniform(3.6, 6.2)
@@ -630,7 +647,7 @@ for fx, fz in farm_list:
         continue
     ux, uz = (foot[0] - fx) / d, (foot[1] - fz) / d
     tip = [foot[0] - ux * (hw + .5), foot[1] - uz * (hw + .5)]
-    ov('farm-track', strip_poly([fx, fz], tip, 3.4, 0), 'canvasTan', .0012, cut=False, cat='road')
+    ov('farm-track', strip_poly([fx, fz], tip, 3.4, 0), 'capTan', .0012, cut=False, cat='road')
 
 # ---- road furniture -----------------------------------------------------------------------------------------------
 # utility poles along the asphalt (north side) and the dry shortcut (north side), wrecks and signs on the verges.

@@ -16,19 +16,26 @@ stretches = [
     ('dry-flares', (110, -30), (180, -30)),
     ('road-hazard', (-188, -330), (-130, -330)),
     ('crash-approach', (420, 0), (462, 0)),
+    # look-l9b: the burning city edge is a fixed game-camera view (no APC drives there: the road ends at the crash).
+    ('city-edge', (560, 40), None),
 ]
 os.makedirs(out, exist_ok=True)
-for name, (x, z), (tx, tz) in stretches:
-    d = math.hypot(tx - x, tz - z); ux, uz = (tx - x) / d, (tz - z) / d
-    end = [round(x + ux * 40, 2), round(z + uz * 40, 2)]
+for name, (x, z), target in stretches:
+    if target:
+        tx, tz = target
+        d = math.hypot(tx - x, tz - z); ux, uz = (tx - x) / d, (tz - z) / d
+        end = [round(x + ux * 40, 2), round(z + uz * 40, 2)]
+    else:
+        end = [x, z]
     for zoom in zooms:
         spec = {
             'name': f'l9look-{name}-z{zoom}', 'seed': 31, 'ground': 'district', 'time': 'L9-crossing', 'dof': False,
             'layout': {'district': 'D-CROSSING', 'bbox': [[min(x, end[0]) - 90, min(z, end[1]) - 90], [max(x, end[0]) + 90, max(z, end[1]) + 90]]},
-            'vehicles': [{'id': 'apc', 'asset': 'vehicle.military-apc', 'at': [x, z], 'yaw': round(math.degrees(math.atan2(-uz, ux)), 2), 'path': [end], 'health': health, 'floor': True, 'driven': True}],
-            'camera': {'mode': 'game', 'target': 'apc', 'zoom': zoom},
+            'camera': {'mode': 'game', 'target': 'apc' if target else [x, z], 'zoom': zoom},
             'frames': 150, 'shots': [149], 'sheet': 50,
             'expect': {'consoleErrors': 0, 'clippingMax': 0, 'drawCallsMax': 300, 'trianglesMax': 500000},
         }
+        if target:
+            spec['vehicles'] = [{'id': 'apc', 'asset': 'vehicle.military-apc', 'at': [x, z], 'yaw': round(math.degrees(math.atan2(-uz, ux)), 2), 'path': [end], 'health': health, 'floor': True, 'driven': True}]
         json.dump(spec, open(os.path.join(out, f'{name}-z{zoom}.json'), 'w'), indent=1)
 print(len(stretches) * len(zooms), 'specs in', out)

@@ -180,7 +180,7 @@ for route in source['routes']:
 # Ownership at the fork and the merge: the asphalt road is the through route, the gravel tracks branch off its edge.
 order={'countryside':0,'dry-shortcut':1,'road':2}
 for name,poly,token,height in sorted(strips,key=lambda t:order[t[0]]): surface(name,poly,token,height)
-for mark in marks: surface('road-mark',mark,'picketWhite',.008)
+for mark in marks: surface('road-mark',mark,'silver',.008)   # look-l9b: worn grey paint under the moon, not self-lit white
 for poly,height in ruts: surface('track-rut',poly,'canvasTan',height,cut=False)
 
 for name,p in [('crossing-start',source['start']),('player-start',source['start']),('outskirts',source['outskirts']),('exit',source['outskirts']),('road-fork',[-450,0]),('countryside',[0,240]),('dry-shortcut',[0,-30]),('chunk-seam',[0,-330])]: l.anchor(name,[p[0],0,p[1]])

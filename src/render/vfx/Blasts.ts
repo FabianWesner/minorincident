@@ -496,7 +496,8 @@ export class Blasts extends Group {
     for (let i = 0; i < accents.length; i++) {
       const f = accents[i], key = -1_000_000 - i; seen.add(key);
       let c = this.fireColumns.get(key);
-      if (!c) { const landmark = f.radius >= 1.6; c = { born: now, x: f.x, z: f.z, ground: this.world.districts?.groundHeight(f.x, f.z) ?? 0, until: Infinity, rate: (f.car || landmark ? 3 : 1.6) * (low ? .5 : 1), size: landmark ? 2.4 : f.car ? 1.8 : 1.1, heat: 1, acc: this.rng.next(), shade: f.car ? .07 : .12, cloud: 0, ambient: f }; c.light = this.host.light?.(c.x, c.z, '#ff8a3a', f.car ? 5 : 3 + f.radius, f.radius * 4, Infinity, true) ?? null; this.fireColumns.set(key, c); }
+      // look-l9b: columns scale with the authored radius (brush 1.1-1.8 m, city 2.4-3.8 m), so the fires read at the game camera.
+      if (!c) { const landmark = f.radius >= 2; c = { born: now, x: f.x, z: f.z, ground: this.world.districts?.groundHeight(f.x, f.z) ?? 0, until: Infinity, rate: (f.car || landmark ? 3 : 1.8) * (low ? .5 : 1), size: f.car ? 1.8 : Math.max(1.2, f.radius * 1.15), heat: 1, acc: this.rng.next(), shade: f.car ? .07 : .1, cloud: 0, ambient: f }; c.light = this.host.light?.(c.x, c.z, '#ff8a3a', f.car ? 5 : 3 + f.radius, f.radius * 4, Infinity, true) ?? null; this.fireColumns.set(key, c); }
       if (this.sourceVisible(c.x, c.z, c.size + 4) && (!low || Math.floor(now * 4) % 2 === 0)) this.embers(now, c, f.radius, low);
     }
     for (const id of this.vehicleColumns.keys()) if (!vehicles.has(id)) this.vehicleColumns.delete(id);
@@ -550,10 +551,12 @@ export class Blasts extends Group {
       const e = c.ambient ? undefined : this.world.entities.get(id); if (!e && !c.ambient) continue;
       if (!this.sourceVisible(c.x, c.z, (c.ambient?.radius ?? e?.hazard?.radius ?? 1.6) * 3.2 + 3)) continue;
       const big = c.ambient ? c.ambient.car : !!e!.vehicle, radius = c.ambient && !c.ambient.car ? c.ambient.radius : e?.hazard?.radius ?? (big ? 1.6 : .8), n = big ? 6 : Math.max(3, Math.round(radius * 3));
+      // look-l9b: authored (render-only) ground fires grow their tongues with the radius; gameplay fires are unchanged.
+      const grow = c.ambient && !c.ambient.car ? Math.max(1, c.ambient.radius * .85) : 1;
       const life = e?.hazard ? Math.max(0, Math.min(1, (e.hazard.activeUntil - this.world.tick) / 120)) : 1, sid = id < 0 ? -id - 999_990 : id;
       for (let i = 0; i < n; i++) {
         const a = sid * 1.7 + i * 2.39996, d = (i === 0 ? 0 : radius * .55) * Math.sqrt((i + 1) / n);
-        flame(c.x + Math.cos(a) * d, (c.ground ?? 0)+(big ? .55 : .02), c.z + Math.sin(a) * d, sid * .13 + i * .37, (big ? 1.1 : .75) * (.7 + .3 * ((i * 7) % 3)), (big ? 2.4 : 1.5) * (i === 0 ? 1.25 : .8) * (.4 + .6 * life), .8 + .4 * life);
+        flame(c.x + Math.cos(a) * d, (c.ground ?? 0)+(big ? .55 : .02), c.z + Math.sin(a) * d, sid * .13 + i * .37, (big ? 1.1 : .75) * grow * (.7 + .3 * ((i * 7) % 3)), (big ? 2.4 : 1.5) * grow * (i === 0 ? 1.25 : .8) * (.4 + .6 * life), .8 + .4 * life);
       }
       pool(c.x, c.z, radius * 3.2, 0xff7a2a, (.55 + .1 * Math.sin(now * 13 + sid)) * (.3 + .7 * life));
     }
