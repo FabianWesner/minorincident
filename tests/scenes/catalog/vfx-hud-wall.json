@@ -1,0 +1,52 @@
+{
+  "name": "vfx-hud-wall",
+  "note": "PO 10-19 game-camera reproduction; inspect the entire foreground crown/combat space, solid reveal core and courier framing. Regression unit tests cover projected canopy radius, clear wall core and teleport framing.",
+  "seed": 1,
+  "time": "L4",
+  "ground": "district",
+  "layout": {
+    "level": "L1",
+    "district": "D-GROVE",
+    "bbox": [
+      [
+        -111.13,
+        5.719999999999999
+      ],
+      [
+        -41.129999999999995,
+        75.72
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -76.13,
+        40.72
+      ],
+      "state": "idle"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -76.13,
+      40.72
+    ],
+    "zoom": 1
+  },
+  "frames": 30,
+  "shots": [
+    0,
+    1,
+    29
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "name": "vfx-hud-canopy",
+  "note": "PO 10-19 game-camera reproduction; inspect the entire foreground crown/combat space, solid reveal core and courier framing. Regression unit tests cover projected canopy radius, clear wall core and teleport framing.",
+  "seed": 1,
+  "time": "L4",
+  "ground": "district",
+  "layout": {
+    "level": "L2",
+    "district": "D-GROVE",
+    "bbox": [
+      [
+        -37.03,
+        12.82
+      ],
+      [
+        32.97,
+        82.82
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -2.03,
+        47.82
+      ],
+      "state": {
+        "attack": "runner",
+        "seconds": 2,
+        "side": "LEFT",
+        "inPlace": true
+      },
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.fists"
+      ]
+    },
+    {
+      "id": "runner",
+      "kind": "infected",
+      "archetype": "infected.runner",
+      "at": [
+        -0.5299999999999998,
+        47.82
+      ],
+      "state": "chase"
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -2.03,
+      47.82
+    ],
+    "zoom": 1
+  },
+  "frames": 30,
+  "shots": [
+    0,
+    1,
+    29
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}

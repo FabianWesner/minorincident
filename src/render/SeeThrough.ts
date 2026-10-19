@@ -34,16 +34,15 @@ export const lodHeightSlack = 1.1;
 export const seeThroughHole = (scale = 1, radius: Node<'float'> = seeThrough.radius, inner = .55) => positionView.z.greaterThan(seeThrough.depth).select(
   smoothstep(radius.mul(inner * scale), radius.mul(scale), screenUV.sub(seeThrough.center).mul(vec2(screenSize.x.div(screenSize.y), 1)).length()), 1);
 
-/** Solid occluders use a slightly tighter circle than leaf crowns: a lamp post beside the courier stays whole.
+/** Solid occluders use a tighter circle than leaf crowns: a lamp post beside the courier stays whole.
  * They dissolve with an ordered (interleaved gradient noise) dither instead of blending, so
  * they stay opaque, depth-writing and in their batch. Fragments below 0.08 m above the courier's feet (ground, kerbs, lawns, and the deck or stair she stands on) are kept:
  * PO 10-14 (minigun deck): the cut dissolved a jagged hole in the floor under the gunner. */
 export const seeThroughKeep = (eligible?: Node<'float'>) => {
   const hole = positionWorld.y.greaterThan(seeThrough.floor.add(.08)).select(mix(1, seeThroughHole(1, seeThrough.solidRadius, .85), seeThrough.strength), 1);
   const noise = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
-  // Retain a screen-stable 35% of every solid surface, even at the centre.
-  // Shared noise across layers keeps the remaining 65% open to the subject.
-  const keep = hole.mul(.65).add(.35).greaterThan(noise);
+  // Fully clear the centre. A retained opaque core stacked foreground walls into a dark floating blob.
+  const keep = hole.greaterThan(noise);
   return eligible ? eligible.lessThan(.5).or(keep) : keep;
 };
 
