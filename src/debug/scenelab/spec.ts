@@ -260,6 +260,10 @@ export interface Expectations {
   attackBodyOverlapMaxCm?: number;
   /** PO 10-19 floating gear: farthest vertex of any drawn courier attachment (gear, accessory; not held weapons) from the posed body, in cm (`metrics.courierAttachments`). */
   courierAttachmentGapMaxCm?: number;
+  /** PO 10-19 'tongue out all the time': settled-rest frames with the corgi tongue out (`metrics.corgiTongue`; needs rest samples). */
+  corgiTongueIdleOutMax?: number;
+  /** Frames of steady corgi walking/running with the tongue retracted (needs moving samples). */
+  corgiTongueMovingInMax?: number;
   /** Corgi trunk/head against the courier's drawn body, including both legs. */
   corgiCourierOverlapMaxCm?: number;
   /** Greatest trailing distance along the running courier's velocity (speed > 2.5 m/s). */

@@ -20,7 +20,6 @@ import { CourierLiving } from './CourierRig';
 
 type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { assetId: string; animator: KeyframeAnimator; living?: CourierLiving; gear: Group[]; body: Set<Mesh>; headlamp?: Group; cure?: Group; aim: GunAim; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
 /** Hero hierarchy presentation. Cosmetic variants share identical sim state and attachment rules. */
-const gearCache = new Map<string, Promise<Group | undefined>>();
 export class CharacterView extends Group {
   private foregroundActive: boolean | undefined;
   /** The same presentation silhouette used through faded buildings: keep the

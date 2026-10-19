@@ -196,6 +196,8 @@ export function evaluate(spec: SceneSpec, metrics: Awaited<ReturnType<SceneSessi
   add('attackBodyOverlapMaxCm', metrics.attackOverlap?.depthCm ?? Infinity, e.attackBodyOverlapMaxCm);
   add('bodyOverlapMaxCm', Math.max(0, ...(metrics.bodies ?? []).map(b => b.depthCm)), e.bodyOverlapMaxCm);
   add('courierAttachmentGapMaxCm', metrics.courierAttachments?.samples ? metrics.courierAttachments.gapMaxCm : Infinity, e.courierAttachmentGapMaxCm);
+  add('corgiTongueIdleOutMax', metrics.corgiTongue?.idleSamples ? metrics.corgiTongue.idleOutFrames : Infinity, e.corgiTongueIdleOutMax);
+  add('corgiTongueMovingInMax', metrics.corgiTongue?.movingSamples ? metrics.corgiTongue.movingInFrames : Infinity, e.corgiTongueMovingInMax);
   add('corgiCourierOverlapMaxCm', metrics.companion?.samples ? metrics.companion.overlapMaxCm : Infinity, e.corgiCourierOverlapMaxCm);
   add('corgiRunLagMaxM', metrics.companion?.runningSamples ? metrics.companion.runLagMaxM : Infinity, e.corgiRunLagMaxM);
   add('undrawnFramesMax', Math.max(0, ...Object.values(metrics.actors).map(a => a.missedInViewFrames)), e.undrawnFramesMax);
