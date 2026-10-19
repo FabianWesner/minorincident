@@ -35,3 +35,7 @@ Images below were opened with the image viewer after the production build at `14
 ## PO #25 baseline review
 
 Opened every high/low × zoom 1.5/1/0.5 sheet for **both** `seethrough-behind-building-l4` and `seethrough-building-first-frame` (12 total). Wide views show the courier/corgi on the street with the curb, lamp, illuminated facade windows and opposite sidewalk; close views clearly retain full character silhouettes and their shadows. Frame 0 matches the settled readable composition. No roof-filling viewport or missing courier appears. All [reviewed sheets and numerical checks](accepted-facade-baseline.json) are retained.
+
+## Convoy camera control
+
+Opened all eight [old/new camera sheets](convoy-camera-comparison/comparison.json): high/low × zoom 1.5/1 × old/new. Each pair has the same bus/road/convoy composition. The bus roof, body and wheels remain readable across the route; other vehicles keep their full silhouettes. Around f300–540 the foreground facade is a stippled cutaway, which exposes the bus and street beyond the bounded disc. Low simplifies roof detail without losing the vehicle outline. No new vehicle occlusion or broken vehicle draw appears. [Sampled pose comparison](convoy-camera-comparison/summary.json) establishes exact old/new pose equality at 54°, so the numerical outside-cut increase is a reveal-rendering change rather than a steeper-camera effect. Convoy gates remain red.
