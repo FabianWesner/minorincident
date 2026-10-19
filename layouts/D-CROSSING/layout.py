@@ -129,7 +129,7 @@ def emit_surfaces():
 
 surface('countryside', [[-600,-400],[600,-400],[600,400],[-600,400]], 'grass', -.006)
 dry=[[-460,-170],[470,-170],[470,110],[-460,110]]
-surface('dry-ground',dry,'khaki',-.004)
+surface('dry-ground',dry,'leatherEdge',-.004)   # look-l9b: dark dry pan under the moon (the khaki read as an overcast day)
 l.data['surfaces'].append(dict(surface='grass',height=0,polygon=l.data['bounds']))
 l.data['surfaces'].append(dict(surface='gravel',height=0,polygon=dry+[dry[0]]))
 emitted=set()
@@ -146,7 +146,7 @@ for route in source['routes']:
     pts=route['points']; width=route['width']
     l.data['roads']['edges'].append(dict(id=route['id'],start='start',end='outskirts',points=pts,laneWidth=width))
     height=.002 if route['id']=='road' else .004 if route['id']=='countryside' else .006
-    token='asphalt' if route['surface']=='asphalt' else 'woodWarm' if route['id']=='countryside' else 'khakiLight'
+    token='asphalt' if route['surface']=='asphalt' else 'woodWarm' if route['id']=='countryside' else 'trouser'
     for j,(a,b) in enumerate(zip(pts,pts[1:])):
         d=math.dist(a,b); nx=-(b[1]-a[1])/d*width/2; nz=(b[0]-a[0])/d*width/2
         poly=[[a[0]+nx,a[1]+nz],[a[0]-nx,a[1]-nz],[b[0]-nx,b[1]-nz],[b[0]+nx,b[1]+nz]]
@@ -181,7 +181,7 @@ for route in source['routes']:
 order={'countryside':0,'dry-shortcut':1,'road':2}
 for name,poly,token,height in sorted(strips,key=lambda t:order[t[0]]): surface(name,poly,token,height)
 for mark in marks: surface('road-mark',mark,'silver',.008)   # look-l9b: worn grey paint under the moon, not self-lit white
-for poly,height in ruts: surface('track-rut',poly,'canvasTan',height,cut=False)
+for poly,height in ruts: surface('track-rut',poly,'leatherShadow',height,cut=False)   # look-l9b: darker compacted ruts, not white bars in the headlights
 
 for name,p in [('crossing-start',source['start']),('player-start',source['start']),('outskirts',source['outskirts']),('exit',source['outskirts']),('road-fork',[-450,0]),('countryside',[0,240]),('dry-shortcut',[0,-30]),('chunk-seam',[0,-330])]: l.anchor(name,[p[0],0,p[1]])
 for v in source['viewpoints']: l.anchor(v['id'],[v['from'][0],0,v['from'][1]])
