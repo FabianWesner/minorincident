@@ -227,6 +227,249 @@ l.anchor('dispersal-stair-top',[ox-4,3.08,oz-6])
 l.anchor('epilogue-camera',[ox+45,50,oz+45])
 # Low refuge beyond the arena: a future survivor emergence point, clear of every dodge lane.
 l.place('bld.cure-service-building',[ox+32,0,oz+47])
+
+# ---- look-l10 set dressing (E32 art direction addendum) -------------------------------------------------------------
+# Render/collision dressing beside the route only. Every solid stays clear of the walkable route, detours, Mega pursuit
+# shortcuts, anchors, encounter/medkit spots and the R7 assault ring, so routes, nav, triggers and timing are unchanged.
+import random, re
+rng = random.Random(1019)
+full_route = [p for i,r in enumerate(source['regions']) for p in (r['route'] if i == 0 else r['route'][1:])]
+route_segments = list(zip(full_route, full_route[1:]))
+detour_segments = [s for d in source['detours'] for s in zip(d['route'], d['route'][1:])]
+reg = source['regions']; anc = source['anchors']
+shortcut_segments = [(reg[5]['route'][1], anc['corridor-breach']), (anc['corridor-breach'], anc['r6-r7-seam']), (anc['r6-r7-seam'], reg[6]['route'][5])]
+encounter_text = (l.root / 'src/levels/L10/encounters.ts').read_text()
+spots = [(float(x), float(z)) for x, z in re.findall(r"at: \[(-?[\d.]+), (-?[\d.]+)\]", encounter_text)]
+spots += [tuple(p) for p in anc.values()]
+console = anc['cure-console']
+def seg_point(a, b, p):
+    dx, dz = b[0]-a[0], b[1]-a[1]; d2 = dx*dx+dz*dz
+    t = 0 if d2 == 0 else max(0, min(1, ((p[0]-a[0])*dx+(p[1]-a[1])*dz)/d2))
+    return math.hypot(a[0]+t*dx-p[0], a[1]+t*dz-p[1])
+def rect_point(mn, mx, p):
+    return math.hypot(max(mn[0]-p[0], 0, p[0]-mx[0]), max(mn[1]-p[1], 0, p[1]-mx[1]))
+def seg_rect(a, b, mn, mx):
+    # Axis-aligned rectangle versus segment: zero when the segment crosses it, else the closest feature distance.
+    steps = max(1, int(math.dist(a, b) / 1.0))
+    if any(mn[0] <= a[0]+(b[0]-a[0])*k/steps <= mx[0] and mn[1] <= a[1]+(b[1]-a[1])*k/steps <= mx[1] for k in range(steps+1)): return 0
+    corners = [(mn[0], mn[1]), (mx[0], mn[1]), (mx[0], mx[1]), (mn[0], mx[1])]
+    return min([seg_point(a, b, c) for c in corners] + [rect_point(mn, mx, a), rect_point(mn, mx, b)])
+taken = []   # 2D footprints already used (existing placements plus dressing)
+for p in l.data['placements']:
+    v = p['visualAabb']; taken.append(((v['min'][0], v['min'][2]), (v['max'][0], v['max'][2])))
+def footprint(asset, x, z, yaw, scale):
+    m = l.manifest['prop.tree' if asset == 'crown:tree' else asset]['dimensions']; dx, dz = m['x']*scale, m['z']*scale
+    # Trees collide only at the trunk; the crown may overhang the verge like any street tree.
+    if asset in ('prop.tree', 'prop.street-tree'): dx = dz = 1.2
+    sx = abs(math.cos(yaw))*dx+abs(math.sin(yaw))*dz; sz = abs(math.sin(yaw))*dx+abs(math.cos(yaw))*dz
+    return (x-sx/2, z-sz/2), (x+sx/2, z+sz/2)
+def ccw(poly):
+    # emit_surfaces' convex clipping expects the road polygons' winding (positive shoelace area in x/z).
+    return poly if sum(p[0]*q[1]-q[0]*p[1] for p, q in zip(poly, poly[1:]+poly[:1])) > 0 else poly[::-1]
+THIN = ('prop.street-lamp', 'prop.utility-pole', 'prop.emergency-light', 'prop.fire-hydrant', 'prop.mailbox-blue', 'prop.street-sign')
+def dress(asset, x, z, yaw=0.0, scale=1.0, decay=None, route_clear=None):
+    """Place one dressing piece if it keeps every gameplay clearance; returns the placement id or None."""
+    mn, mx = footprint(asset, x, z, yaw, scale)
+    if route_clear is not None: clear = route_clear
+    elif asset in THIN: clear = 5.4
+    elif asset.startswith(('bld.', 'kit.')): clear = 8.5
+    elif asset.startswith('veh.'): clear = 7.0
+    elif asset in ('prop.tree', 'prop.street-tree'): clear = 7.5
+    else: clear = 6.0   # low verge props: fences, hedges, sandbags, barriers, drums
+    b = source['bounds']
+    if mn[0] < 500.2 or mx[0] > 4196 or mn[1] < -296 or mx[1] > 296: return None
+    if any(seg_rect(a, c, mn, mx) < clear for a, c in route_segments): return None
+    if any(seg_rect(a, c, mn, mx) < clear - .5 for a, c in detour_segments): return None
+    if asset in ('prop.tree', 'prop.street-tree'):
+        # The validator tests the crown's visual box against every road lane (half widths 4 m route, 3 m detour).
+        cmn, cmx = footprint('crown:tree', x, z, yaw, scale)
+        if any(seg_rect(a, c, cmn, cmx) < 4.4 for a, c in route_segments + detour_segments): return None
+    if any(seg_rect(a, c, mn, mx) < 6 for a, c in shortcut_segments): return None
+    if any(rect_point(mn, mx, s) < (9 if asset.startswith(('bld.', 'kit.', 'veh.')) else 6.5) for s in spots): return None
+    if rect_point(mn, mx, console) < 60: return None
+    gap = .6
+    if any(mn[0] < t[1][0]+gap and mx[0] > t[0][0]-gap and mn[1] < t[1][1]+gap and mx[1] > t[0][1]-gap for t in taken): return None
+    pid = l.place(asset, [x, 0, z], yaw=yaw, scale=(scale, 1 if asset.startswith(('bld.', 'veh.')) else scale, scale) if scale != 1 else (1, 1, 1))
+    if decay: l.data['placements'][-1]['decay'] = decay
+    taken.append((mn, mx)); return pid
+def face(side_normal):
+    # Asset front is +X; rotation.y = yaw maps +X to (cos, -sin). Face back towards the road.
+    nx, nz = -side_normal[0], -side_normal[1]
+    return math.atan2(-nz, nx)
+def frontage(segments, palette, spacing, offset, sides=(1, -1), jitter=2.0, chance=1.0, align=True):
+    """Walk both verges of axis-aligned route segments, placing palette pieces at a setback, facing the road."""
+    names = [a for a, _ in palette]; weights = [w for _, w in palette]
+    for a, b in segments:
+        d = math.dist(a, b)
+        if d < 4: continue
+        ux, uz = (b[0]-a[0])/d, (b[1]-a[1])/d
+        for side in sides:
+            n = (-uz*side, ux*side)
+            s = rng.uniform(0, spacing)
+            while s < d:
+                if rng.random() <= chance:
+                    entry = rng.choices(names, weights)[0]
+                    asset, decay = (entry.split('@') + [None])[:2]
+                    off = rng.uniform(*offset) if isinstance(offset, tuple) else offset
+                    x = a[0]+ux*s+n[0]*off; z = a[1]+uz*s+n[1]*off
+                    yaw = face(n) if align else rng.uniform(0, math.tau)
+                    if asset.startswith('veh.'): yaw = math.atan2(-uz, ux) + (math.pi if rng.random() < .5 else 0) + rng.uniform(-.25, .25)
+                    if asset.startswith(('prop.tree', 'prop.street-tree')): yaw = rng.uniform(0, math.tau)
+                    dress(asset, x, z, yaw, decay=decay)
+                s += spacing + rng.uniform(-jitter, jitter)
+def region_segments(i):
+    r = source['regions'][i]['route']; return list(zip(r, r[1:]))
+def fence_run(asset, a, b, step=2.6):
+    d = math.dist(a, b); ux, uz = (b[0]-a[0])/d, (b[1]-a[1])/d
+    yaw = math.atan2(-uz, ux) + math.pi/2   # run length is the asset's z extent
+    for k in range(int(d // step)):
+        dress(asset, a[0]+ux*(k+.5)*step, a[1]+uz*(k+.5)*step, yaw)
+
+# Roads do not end in the void: the L9 road continues west past the crash, a service road meets the console apron.
+surface('road-west', [[500, -4], [547, -4], [547, 4], [500, 4]], 'asphalt', .002)
+# Gravel/dirt shoulders break the flat verge; flat surfaces only, no collision.
+for i, (a, b) in enumerate(route_segments):
+    d = math.dist(a, b)
+    if d < 20 or a[0] > 3940: continue
+    ux, uz = (b[0]-a[0])/d, (b[1]-a[1])/d
+    for side in (1, -1):
+        n = (-uz*side, ux*side); s = 6
+        while s < d - 8:
+            ln = rng.uniform(6, 18); w = rng.uniform(1.2, 2.6)
+            p0 = (a[0]+ux*s+n[0]*4, a[1]+uz*s+n[1]*4); p1 = (a[0]+ux*(s+ln)+n[0]*4, a[1]+uz*(s+ln)+n[1]*4)
+            q1 = (p1[0]+n[0]*w, p1[1]+n[1]*w); q0 = (p0[0]+n[0]*w, p0[1]+n[1]*w)
+            token = 'khakiSeam' if a[0] < 800 or 2917 < a[0] < 3700 else 'oliveSeam'
+            surface('shoulder', ccw([list(p0), list(p1), list(q1), list(q0)]), token, -.001)
+            s += ln + rng.uniform(8, 26)
+
+# R1 crash outskirts: dead farmland, a toppled pole line, convoy leftovers and one warm work light.
+crash = region_segments(0)
+# L9's collapsed bridge kit behind the crawl-end: the crash the courier just crawled out of (visual kit, boxed so nobody walks through it).
+pid = dress('kit.crossing-crash', 518.5, 0, 0, route_clear=0)
+if pid: l.data['colliders'].append(dict(id=pid, aabb=dict(min=[500.4, 0, -7.5], max=[536.6, 2.5, 7.5]), minTier=0, maxTier=6))
+for x, z, asset, yaw, decay in [(528, -12, 'veh.military-truck', .5, 'wrecked'), (531, 13, 'veh.sedan-red', -.9, 'burned'), (556, -14, 'veh.wreck', 1.1, None), (566, 13, 'veh.pickup-red', 2.4, 'wrecked'), (590, -16, 'veh.school-bus', .2, 'wrecked'), (612, 15, 'veh.police-sedan', -.3, 'burned')]:
+    dress(asset, x, z, yaw, decay=decay, route_clear=6.5)
+for x, z, asset, yaw in [(585, 40, 'bld.shed', math.pi/2), (598, 46, 'bld.garage-detached', math.pi/2), (612, 42, 'prop.street-lamp', 0), (690, -28, 'kit.army-checkpoint', math.pi/2), (720, -26, 'prop.emergency-light', 0), (560, -32, 'veh.military-truck', .4), (676, 50, 'prop.tree', 0), (705, 56, 'prop.tree', 1)]:
+    dress(asset, x, z, yaw, decay='wrecked' if asset == 'veh.military-truck' else None)
+for x0 in (575, 640): fence_run('prop.picket-fence', (x0, 34), (x0 + 30, 34))
+frontage(crash, [('prop.utility-pole', 1)], 28, 6.5, sides=(-1,), jitter=1)
+frontage(crash, [('prop.tree', 3), ('veh.sedan-white@burned', 1), ('veh.suv-dark@wrecked', 1), ('veh.pickup-red@burned', 1), ('prop.sandbag-pallet', 1), ('decay.blown-sandbags', 2), ('prop.jersey-barrier', 1)], 9, (6.5, 13))
+
+# R2 residential fringe: front yards with lit windows, fences, street trees, sodium lamps and parked cars.
+houses = [('bld.house-a', 3), ('bld.house-b', 2), ('bld.house-c', 3), ('bld.house-d', 2), ('bld.house-e', 3), ('bld.garage-detached', 1), ('bld.house-c@w2', 1), ('bld.house-a@w3', 1)]
+fringe = region_segments(1)
+# The old blocked street keeps its rubble line; its yards behind face the detour.
+# Their fronts (lit windows, porches) face the detour the player walks; sheds and trees fill the back yards.
+for x in range(820, 1050, 16):
+    if abs(x - 937) < 14: continue
+    dress(rng.choice(['bld.house-a', 'bld.house-c', 'bld.house-e', 'bld.house-d']), x, 52, -math.pi/2)
+    dress(rng.choice(['bld.shed', 'prop.street-tree', 'prop.tree']), x + 5, 37, rng.uniform(0, 6))
+for x in range(822, 1050, 32):
+    if abs(x - 937) > 18: fence_run('prop.picket-fence', (x, 70), (x + 26, 70))
+dress('bld.gas-station', 1150, 50, math.pi/2)
+for x, z in [(1146, 40), (1158, 40)]: dress('prop.vending-machine', x, z, -math.pi/2)
+for x0, z0 in [(840, 120), (940, 125), (1100, 120), (1180, 95)]:
+    for k in range(3): dress(rng.choice(['bld.house-b', 'bld.house-d', 'bld.house-e']), x0 + k*16, z0, math.pi/2)
+for x0 in (860, 980, 1100, 1180): dress('bld.house-c', x0, -16, -math.pi/2)
+l.data['lawns'] += [dict(min=[x, 30], max=[x + 10, 33]) for x in range(1065, 1230, 18)] + [dict(min=[x, 15], max=[x + 10, 18]) for x in range(1065, 1230, 18)]
+frontage(fringe, [('prop.street-lamp', 1)], 26, 5.8, jitter=1)
+frontage(fringe, houses, 13, (13, 15))
+frontage(fringe, [('prop.street-tree', 2), ('prop.hedge', 3), ('prop.garden-bush', 2), ('prop.mailbox-blue', 1)], 6, (6.6, 9))
+frontage(fringe, [('veh.sedan-blue', 2), ('veh.sedan-green', 1), ('veh.suv-green', 1), ('veh.pickup-white', 1), ('veh.sedan-red@burned', 1), ('veh.suv-dark@wrecked', 1)], 19, 8.4, chance=.8)
+
+# R3 industrial area: depot rows, trucks, poles and sodium yard lamps.
+industrial = region_segments(2) + [s for s in detour_segments if s[0][0] >= 1297 and s[1][0] <= 1747 and min(s[0][1], s[1][1]) < 0]
+for x, z in [(1430, 160), (1640, 160), (1700, -120), (1420, -110), (1560, -120)]:
+    dress('bld.cure-warehouse', x, z, rng.choice([0, math.pi]))
+for x0, z0, x1, z1 in [(1310, 128, 1500, 128), (1530, 128, 1735, 128), (1310, -72, 1500, -72), (1530, -72, 1735, -72)]:
+    fence_run('prop.cure-mil-fence', (x0, z0), (x1, z1), 3.3)
+frontage(industrial, [('prop.street-lamp', 1)], 24, 5.8, jitter=1)
+frontage(industrial, [('prop.utility-pole', 1)], 30, 6.5, sides=(1,), jitter=1)
+frontage(industrial, [('bld.cure-service-building', 2), ('bld.substation', 2), ('prop.cure-container-stack', 3), ('veh.box-truck', 2), ('veh.fuel-truck', 1), ('veh.military-truck@wrecked', 1)], 14, (10.5, 15))
+frontage(industrial, [('prop.cure-drum-stack', 2), ('prop.jersey-barrier', 2), ('prop.sandbag-pallet', 1), ('prop.emergency-light', 1)], 8, (6.5, 8.5), chance=.8)
+
+# R4 military zone: checkpoints with white floods, guard towers, sandbags, armour wrecks.
+military = region_segments(3) + [s for s in detour_segments if s[0][0] >= 1897 and s[1][0] <= 2397 and max(s[0][1], s[1][1]) > 100]
+for x, z, yaw in [(1960, -40, 0), (2070, -110, math.pi), (2280, -40, 0), (2360, -110, math.pi), (2000, 150, math.pi), (2260, 150, math.pi)]:
+    dress('kit.army-checkpoint', x, z, yaw)
+for x0, z0, x1, z1 in [(1910, -96, 2120, -96), (2160, -96, 2380, -96), (1910, 128, 2120, 128), (2160, 128, 2380, 128)]:
+    fence_run('prop.cure-mil-fence', (x0, z0), (x1, z1), 3.3)
+frontage(military, [('prop.street-lamp', 1)], 32, 5.8, jitter=1, sides=(1,))
+frontage(military, [('veh.tank@wrecked', 2), ('veh.military-truck@wrecked', 2), ('kit.guard-tower', 2), ('bld.cure-motor-shelter', 1), ('prop.sandbag-pallet', 2), ('decay.blown-sandbags', 2), ('veh.evac-bus@burned', 1)], 13, (9, 13))
+frontage(military, [('prop.jersey-barrier', 2), ('prop.emergency-light', 1), ('decay.blown-sandbags', 1), ('prop.sandbag-pallet', 1)], 8, (6.4, 7.5), chance=.8)
+
+# R5 research campus: cold floods, ambulances, tents and generators along the lab lanes.
+campus = region_segments(4)
+for x, z in [(2560, -40), (2650, -40), (2750, -45), (2560, 110), (2650, 110), (2760, 110), (2880, 50)]:
+    dress(rng.choice(['bld.cure-lab-annex', 'bld.clinic-annex', 'bld.cure-service-building']), x, z, rng.choice([0, math.pi]))
+for x0, z0, x1, z1 in [(2540, 92, 2800, 92), (2540, -26, 2790, -26)]:
+    fence_run('prop.cure-quarantine-fence', (x0, z0), (x1, z1), 3.2)
+frontage(campus, [('prop.street-lamp', 1)], 22, 5.8, jitter=1)
+frontage(campus, [('prop.cure-iso-tent', 3), ('prop.cure-generator', 2), ('veh.ambulance', 2), ('veh.ambulance@wrecked', 1), ('bld.cure-lab-annex', 2), ('veh.police-suv', 1), ('prop.tent', 1)], 12, (9, 13))
+frontage(campus, [('prop.street-tree', 1), ('prop.hedge', 3), ('prop.lab-signs', 1), ('prop.cure-quarantine-fence', 2)], 7, (6.4, 8.5), chance=.8)
+
+# R6 destroyed corridor: burned streetscape, collapsed fronts, wrecks and red emergency lights.
+corridor = region_segments(5)
+frontage(corridor, [('prop.utility-pole', 1)], 28, 6.5, sides=(-1,), jitter=1)
+frontage(corridor, [('bld.house-a@w3', 2), ('bld.house-c@w3', 2), ('bld.mainstreet-brick@w3', 2), ('bld.storefront-row@w6', 1), ('bld.house-e@w3', 1), ('bld.clinic-annex@burned', 1)], 13, (12.5, 15))
+frontage(corridor, [('veh.school-bus@burned', 1), ('veh.sedan-white@burned', 2), ('veh.suv-dark@burned', 2), ('veh.police-sedan@burned', 1), ('veh.tank@wrecked', 1), ('veh.wreck', 2)], 15, (8, 10), chance=.85)
+frontage(corridor, [('decay.burned-facade', 1), ('decay.burned-facade.brick', 1), ('decay.blown-sandbags', 2), ('prop.emergency-light', 1), ('decay.makeshift-barricade', 1), ('prop.jersey-barrier', 1)], 8, (6.4, 8), chance=.75)
+
+# R7 approach: plant pipework, tanks, towers and substations beyond the assault ring, lamps on the service road.
+complex_route = region_segments(6)
+for x, z, asset in [(3820, -110, 'kit.dispersal-filtration-tower'), (3880, 70, 'kit.dispersal-filtration-tower'), (4100, -110, 'kit.dispersal-fan-housing'), (4110, 60, 'kit.dispersal-turbine-hall'), (3920, -120, 'kit.dispersal-tank-sphere'), (4080, 90, 'kit.dispersal-tank-bullet'), (4130, -40, 'kit.dispersal-filtration-tower')]:
+    dress(asset, x, z, 0)
+for x0, z0, x1, z1 in [(3710, -70, 3930, -70), (3710, 25, 3930, 25)]:
+    fence_run('prop.cure-mil-fence', (x0, z0), (x1, z1), 3.3)
+frontage(complex_route, [('prop.street-lamp', 1)], 20, 5.8, jitter=1)
+frontage(complex_route, [('kit.dispersal-pipe-straight', 3), ('kit.dispersal-tank-bullet', 1), ('kit.dispersal-tank-sphere', 1), ('bld.substation', 2), ('bld.cure-service-building', 1)], 12, (10, 14))
+frontage(complex_route, [('prop.cure-drum-stack', 2), ('prop.jersey-barrier', 2), ('prop.cure-mil-fence', 3)], 7, (6.4, 8), chance=.85)
+# Road surface: solid edge lines so the asphalt reads as a worn road, not a flat ribbon.
+for a_, b_ in route_segments:
+    d = math.dist(a_, b_)
+    if d < 12 or a_[0] > 3975 or b_[0] > 3975: continue
+    ux, uz = (b_[0]-a_[0])/d, (b_[1]-a_[1])/d; nx, nz = -uz, ux
+    for side in (1, -1):
+        o0, o1 = 3.45*side, 3.6*side
+        surface('edge-line', ccw([[a_[0]+ux*4.5+nx*o0, a_[1]+uz*4.5+nz*o0], [b_[0]-ux*4.5+nx*o0, b_[1]-uz*4.5+nz*o0], [b_[0]-ux*4.5+nx*o1, b_[1]-uz*4.5+nz*o1], [a_[0]+ux*4.5+nx*o1, a_[1]+uz*4.5+nz*o1]]), 'picketWhite', .006)
+# Verge grass: blade strips beside the road through the residential fringe and the campus lawns (high 28 / low 5 blades per m2).
+for i in (1, 4):
+    for a_, b_ in region_segments(i):
+        xs, zs = sorted([a_[0], b_[0]]), sorted([a_[1], b_[1]])
+        if xs[1] - xs[0] > zs[1] - zs[0]:
+            for z0 in (zs[0] + 4.6, zs[0] - 6.0): l.data['lawns'].append(dict(min=[xs[0] + 5, z0], max=[xs[1] - 5, z0 + 1.4]))
+        else:
+            for x0 in (xs[0] + 4.6, xs[0] - 6.0): l.data['lawns'].append(dict(min=[x0, zs[0] + 5], max=[x0 + 1.4, zs[1] - 5]))
+# Ground variety in the visible verge band: worn dirt, moss and gravel patches (flat surfaces, no collision).
+for a_, b_ in route_segments:
+    d = math.dist(a_, b_)
+    if d < 10 or a_[0] > 3930: continue
+    ux, uz = (b_[0]-a_[0])/d, (b_[1]-a_[1])/d
+    for side in (1, -1):
+        n = (-uz*side, ux*side); t = rng.uniform(0, 8)
+        while t < d:
+            off = rng.uniform(7, 26); w = rng.uniform(3, 9); h = rng.uniform(2.5, 7)
+            cx, cz = a_[0]+ux*t+n[0]*off, a_[1]+uz*t+n[1]*off
+            ang = rng.uniform(0, math.pi); ca, sa = math.cos(ang), math.sin(ang)
+            quad = [[cx+ca*w/2*i-sa*h/2*j, cz+sa*w/2*i+ca*h/2*j] for i, j in [(-1, -1), (1, -1), (1, 1), (-1, 1)]]
+            if all(seg_rect(p0, p1, (min(q[0] for q in quad), min(q[1] for q in quad)), (max(q[0] for q in quad), max(q[1] for q in quad))) > 5 for p0, p1 in route_segments + detour_segments):
+                dry = a_[0] < 800 or 2917 < a_[0] < 3700
+                surface('verge-patch', ccw(quad), rng.choice(['khakiSeam', 'khaki', 'oliveSeam'] if dry else ['oliveSeam', 'apronOlive', 'olive', 'khakiSeam']), -.003)
+            t += rng.uniform(11, 22)
+# R7 apron: painted bays, hazard edges and service lines so the console floor reads as a working plant (paint only).
+for x0 in range(3958, 4040, 9):
+    surface('apron-line', [[x0, -66], [x0 + .25, -66], [x0 + .25, -56], [x0, -56]], 'picketWhite', .004)
+    surface('apron-line', [[x0, 1], [x0 + .25, 1], [x0 + .25, 11], [x0, 11]], 'picketWhite', .004)
+for z0 in (-68.5, 11.5):
+    for x0 in range(3954, 4042, 6):
+        surface('apron-hazard', [[x0, z0], [x0 + 1.5, z0], [x0 + 1.5, z0 + .6], [x0, z0 + .6]], 'schoolBusYellow', .004)
+for x0 in (3955.5, 4040.5):
+    for z0 in range(-66, 10, 6):
+        surface('apron-hazard', [[x0, z0], [x0 + .6, z0], [x0 + .6, z0 + 1.5], [x0, z0 + 1.5]], 'schoolBusYellow', .004)
+# Back rows: distant roofs and trees so the verge beyond the frontage is never empty ground.
+for i in range(6):
+    frontage(region_segments(i), [('prop.tree', 3), ('prop.street-tree', 1)], 13, (20, 32), chance=.8)
+print('look-l10 dressing placements', len(l.data['placements']))
 for p in l.data['placements']: p['maxTier']=6
 for c in l.data['colliders']: c['maxTier']=6
 # Semantic pavement shares the renderer's level top, no raised seam at the region/chunk boundary.
