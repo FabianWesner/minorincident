@@ -47,8 +47,8 @@ export class PostFx {
     const blur = hashBlur(source, strength.mul(look.nodes.dofAmount), { repeats: tier === 'high' ? look.nodes.dofRepeats : look.nodes.dofRepeatsLow, premultipliedAlpha: true });
     this.lowBlur = tier === 'low' ? rtt(blur, null, null, { resolutionScale: .5 }) : null;
     const vignette = uv().sub(.5).length().smoothstep(.25, .7).mul(look.nodes.vignette).oneMinus();
-    this.sharpOutput = this.grade(source).add(this.bloomPass.mul(this.bloomEnabled)).mul(vignette);
-    this.blurredOutput = this.grade(mix(source, this.lowBlur ?? blur, strength)).add(this.bloomPass.mul(this.bloomEnabled)).mul(vignette);
+    this.sharpOutput = vec4(this.grade(source).add(this.bloomPass.mul(this.bloomEnabled)).mul(vignette).rgb, 1);
+    this.blurredOutput = vec4(this.grade(mix(source, this.lowBlur ?? blur, strength)).add(this.bloomPass.mul(this.bloomEnabled)).mul(vignette).rgb, 1);
     this.pipeline = new RenderPipeline(renderer, this.sharpOutput);
     for (const target of this.diagnosticTargets()) {
       this.targetDisposals.set(target, 0);
@@ -58,7 +58,8 @@ export class PostFx {
   /** Atmosphere 2 per-level grade in the existing composite (no extra pass, both tiers): luminance-preserving
    * split toning (shadow -> highlight tint), hue-preserving contrast around mid grey and saturation.
    * Strongly saturated or HDR pixels (courier identity colours, infected eyes, practicals) keep most of their colour.
-   * Bloom is added after the grade, so glow stays untouched. gradeAmount 0 is an exact pass-through.
+   * Scene alpha carries courier grade protection (0 on opaque night courier pixels);
+   * the final composite restores opaque canvas alpha. Bloom is added after the grade. gradeAmount 0 is an exact pass-through.
    * About 25 ALU ops per pixel on both tiers; the low tier still skips the heat-haze fetch. */
   private grade(input: Node<'vec4'>): Node<'vec4'> {
     const n = this.look.nodes, c = input.rgb, l = luminance(c).max(1e-4);
@@ -72,7 +73,7 @@ export class PostFx {
     const r = c.dot(vec3(1, 0, 0)), g = c.dot(vec3(0, 1, 0)), b = c.dot(vec3(0, 0, 1));
     const top = max(max(r, g), b), chroma = top.sub(min(min(r, g), b)).div(top.max(1e-4));
     const protect = max(chroma.smoothstep(.62, .9), l.smoothstep(.9, 1.6)).mul(.75);
-    return vec4(mix(c, saturated, n.gradeAmount.mul(protect.oneMinus())), input.a);
+    return vec4(mix(c, saturated, n.gradeAmount.mul(protect.oneMinus()).mul(input.a)), input.a);
   }
   private hazeOffset(): Node<'vec2'> {
     const sources = uniformArray<'vec4'>(this.heat, 'vec4'), p = uv(), t = this.heatTime;
@@ -89,6 +90,8 @@ export class PostFx {
     const sway = sin(local.x.mul(9).add(t.mul(5.1)).add(local.y.mul(4)));
     return vec2(wave.mul(.6), sway.mul(.4).add(wave.mul(.3))).mul(weight.min(1)).mul(radius.mul(.035));
   }
+  /** Resolved scene alpha contains the courier silhouette for the world-bar overlay. */
+  get sceneColor() { return this.scenePass.renderTarget.texture; }
   private diagnosticTargets(): RenderTarget[] {
     const bloom = this.bloomPass as typeof this.bloomPass & { _renderTargetBright: RenderTarget; _renderTargetsHorizontal: RenderTarget[]; _renderTargetsVertical: RenderTarget[] };
     return [this.scenePass.renderTarget, bloom._renderTargetBright, ...bloom._renderTargetsHorizontal, ...bloom._renderTargetsVertical];

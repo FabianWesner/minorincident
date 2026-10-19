@@ -2,6 +2,7 @@ import { qualityBudgets, type QualityTier } from '../core/Quality';
 // Adapted from Bruno Simon folio-2025 Ligthing.js / Fog.js (MIT).
 import { Color, DataTexture, RGBAFormat, UnsignedByteType, type WebGPURenderer, SpotLight, DirectionalLight, Fog, HemisphereLight, Scene, Vector2, Vector3, Plane, Ray, type DepthTexture, type Node } from 'three/webgpu';
 import { renderGroup, uniform, mix, vec2, viewportUV, Fn, texture, reference, float, pmremTexture } from 'three/tsl';
+import { cameraFraming } from '../data/cameraFraming';
 import { timeOfDay, type TimeOfDay } from '../data/timeOfDay';
 import type { View } from './View';
 import { worldLook } from '../data/worldLook';
@@ -89,6 +90,12 @@ export class Lighting {
   readonly rimColor = uniform(new Color('#b9c6ff'));
   /** Survivor-only fill at night (preset `aura`), warm lantern white. */
   readonly heroFill = uniform(0);
+  /** Extra continuous courier fill; authored separately from the world-space aura. */
+  readonly heroSurfaceFill = uniform(0);
+  readonly heroRim = uniform(0);
+  readonly heroRimEdge = uniform(.72);
+  /** Smoke readability belongs to the courier, without lifting surrounding crowds. */
+  readonly heroSmokeRim = uniform(0);
   readonly heroFillColor = uniform(new Color('#ffe9cf'));
   /** Night route read (preset `roadLift`): moon-pale sheen added to asphalt, independent of the moon's shadow term. */
   readonly roadLift = uniform(0);
@@ -126,7 +133,7 @@ export class Lighting {
     this.fallbackEnvironment.needsUpdate = true;
     if (renderer) this.environment = sharedEnvironment ?? new Environment(renderer);
     // These values describe the entire view; they are identical for every world draw.
-    for (const node of [this.direction, this.color, this.intensity, this.worldPaletteEnabled, this.shadow, this.skyAmbient, this.groundAmbient, this.fogColor, this.fogColorA, this.fogCenter, this.fogNear, this.fogFar, this.hero, this.rim, this.rimColor, this.roadLift, this.roadLiftColor, this.roadFocus, this.heroFill, this.heroFillColor, this.fieldShadow, this.shadowHue]) node.setGroup(renderGroup);
+    for (const node of [this.direction, this.color, this.intensity, this.worldPaletteEnabled, this.shadow, this.skyAmbient, this.groundAmbient, this.fogColor, this.fogColorA, this.fogCenter, this.fogNear, this.fogFar, this.hero, this.rim, this.rimColor, this.roadLift, this.roadLiftColor, this.roadFocus, this.heroFill, this.heroSurfaceFill, this.heroRim, this.heroRimEdge, this.heroSmokeRim, this.heroFillColor, this.fieldShadow, this.shadowHue]) node.setGroup(renderGroup);
     this.bounce = look.nodes.bounce;
     this.coreShadowEdgeHigh = look.nodes.coreLightEdge; this.coreShadowEdgeLow = look.nodes.coreShadowEdge;
     this.fogRadialStart = look.nodes.fogRatioA; this.fogRadialEnd = look.nodes.fogRatioB;
@@ -157,6 +164,7 @@ export class Lighting {
     this.look.setPreset(p.look ?? {});
     this.roadLiftColor.value.set(p.roadColor ?? '#86a8c0');
     if (this.environment) this.environmentNode.value = this.environment.get(name).texture;
+    this.heroSurfaceFill.value = p.heroFill ?? 0; this.heroRim.value = p.heroRim ?? 0; this.heroSmokeRim.value = 0;
     this.field.strength.value = p.practical ?? 0; this.rim.value = p.rim ?? 0; this.roadLift.value = p.roadLift ?? 0; this.heroFill.value = (p.aura ?? 0) * 3.2;
     this.direction.value.setFromSphericalCoords(1, p.polar, p.azimuth);
     this.color.value.set(p.sun); this.intensity.value = p.intensity; this.shadow.value.set(p.shadow);
@@ -193,6 +201,10 @@ export class Lighting {
     this.sun.shadow.needsUpdate = true; this.practicalEffects.beamStrength.value = v.beamStrength; this.setWeatherMode(this.weatherFeatures);
   }
   update(view: View): void {
+    // Broaden the coloured rim as the courier occupies fewer screen pixels; keep its energy bounded.
+    const distance = view.radius / cameraFraming.radiusM;
+    this.heroRimEdge.value = Math.min(.9, .72 * Math.sqrt(distance));
+    this.heroRim.value = timeOfDay[this.preset].heroRim ?? 0;
     this.roadFocus.value.copy(view.focus);
     // Portrait framing pulls the camera back to retain the playable circle.
     // Fog must follow that offset so it still starts beyond the nearby action.
@@ -262,7 +274,9 @@ export class Lighting {
   setPlayerSmoke(covered: boolean): void {
     const p = timeOfDay[this.preset];
     this.heroFill.value = (p.aura ?? 0) * 3.2 + (covered ? 1 : 0);
-    this.rim.value = (p.rim ?? 0) + (covered ? .2 : 0);
+    const isolated = (p.heroFill ?? 0) > 0;
+    this.rim.value = (p.rim ?? 0) + (!isolated && covered ? .2 : 0);
+    this.heroSmokeRim.value = isolated && covered ? .2 : 0;
     this.setWeatherMode(this.weatherFeatures);
   }
   /** Includes live fog ranges so viewport changes can be checked without shader inspection. */

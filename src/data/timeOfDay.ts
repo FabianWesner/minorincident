@@ -7,6 +7,10 @@ export interface TimeOfDayPreset {
   practical?: number;
   /** E25 night readability: survivor/infected rim strength and the player's light-field aura (§6 2). */
   rim?: number; aura?: number;
+  /** Survivor surface fill, independent of the ground light-field aura. */
+  heroFill?: number;
+  /** Courier-only rim, widened with camera distance for a legible silhouette. */
+  heroRim?: number;
   /** Night route read (E31-AC16): moon-pale sheen added to asphalt (0 = none). */
   roadLift?: number;
   /** Authored route sheen; comparable luminance keeps navigation contrast stable. */
@@ -17,6 +21,8 @@ export interface TimeOfDayPreset {
   ambient?: { leaf: number; dust: number; bird: number; glow?: number; rise?: boolean };
   /** Sparse insects around powered outdoor lamps, high tier only. */
   lampInsects?: boolean;
+  /** Visible low-beam cones and dust motes in the driven vehicle's headlights (L9 night drive). */
+  headlightBeams?: boolean;
 }
 const golden: TimeOfDayPreset = { sun: '#ffdb9a', intensity: 1.15, polar: 1.15, azimuth: -1.0, shadow: '#66548d', sky: '#eeb888', fog: '#e5b39e', fogNear: 55, fogFar: 140, practical: .25 };
 const presets = {
@@ -37,11 +43,16 @@ const presets = {
   "L6-subway": { sun: "#9fb4ff", intensity: 0, polar: 1.55, azimuth: 2.2, shadow: "#252830", sky: "#0c1016", fog: "#181d25", fogNear: 30, fogFar: 85, practical: 1, rim: .25, aura: 1.3,
     look: { skyAmbient: '#8fabc2', groundAmbient: '#8a8077', vignette: .08, bloomStrength: .16, gradeShadow: '#4e6676', gradeHighlight: '#ffa640', gradeAmount: .85, gradeContrast: 1.1, gradeSaturation: .9, haze: '#26282c', hazeAmount: .28, beamStrength: 2.6, dust: '#dcc79a' }, ambient: { leaf: 0, dust: 30, bird: 0, glow: 1.5 } },
   // Shared Northgate air keeps the L6 exit -> L7 handover continuous; W6 fires/ash supply the ruined-city contrast.
-  L6: { sun: '#9fb4ff', intensity: 0.38, polar: 1.55, azimuth: 2.2, shadow: '#39365f', sky: '#1b263f', fog: '#4b5268', fogNear: 45, fogFar: 120, practical: 1, rim: .4, aura: .45,
+  L6: { sun: '#9fb4ff', intensity: 0.38, polar: 1.55, azimuth: 2.2, shadow: '#39365f', sky: '#1b263f', fog: '#4b5268', fogNear: 45, fogFar: 120, practical: 1, rim: .4, aura: .45, heroFill: .8, heroRim: .22,
     look: { skyAmbient: '#99adc9', groundAmbient: '#8e7c83', vignette: .1, bloomStrength: .2, gradeShadow: '#7a6080', gradeHighlight: '#ffa060', gradeAmount: .75, gradeContrast: 1.12, gradeSaturation: .95, haze: '#a0503a', hazeAmount: .45, hazeHeight: 12, beamStrength: 2, dust: '#ff8638' }, ambient: { leaf: 0, dust: 80, bird: 0, glow: 3, rise: true } },
   /** Open crossing: retain the journey's moonlight, with air clear enough for 150 m sight lines. `roadLift`: E31-AC16 night route read (the asphalt road is a pale moonlit band, 3:1 against the verge). */
-  'L9-crossing': { sun: '#9fb4ff', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#343b48', sky: '#1a3043', fog: '#4d657a', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, roadLift: 2, roadColor: '#92a7b2',
-    look: { skyAmbient: '#a2bad2', groundAmbient: '#8f8a88', vignette: .08, bloomStrength: .18, gradeShadow: '#4a74b0', gradeHighlight: '#d0e4ff', gradeAmount: .75, gradeContrast: 1.15, gradeSaturation: .75, haze: '#56708c', hazeAmount: 0, hazeHeight: 5, leaf: '#7b838d', petal: '#5f6670' }, ambient: { leaf: 50, dust: 0, bird: 0 } },
+  'L9-crossing': { sun: '#c2cff2', intensity: .5, polar: 1.12, azimuth: 3.0, shadow: '#28324c', sky: '#1a3043', fog: '#4d657a', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, roadLift: 1.6, roadColor: '#b4bec6', headlightBeams: true,
+    // E31 art addendum: a low moon (~26 deg) in the north (screen upper right), so trees/poles/fences throw long soft
+    // shadows south across the east-west lanes (screen lower left, clear of the casters' own silhouettes); the ground takes the moon fully (coreLightEdge), only turned-away walls
+    // fall into core shade. The burning city glows warm from the east (glow*), growing as the route nears it.
+    look: { skyAmbient: '#a2bad2', groundAmbient: '#8f8a88', vignette: .1, bloomStrength: .24, gradeShadow: '#4f6a9c', gradeHighlight: '#dfe8f6', gradeAmount: .75, gradeContrast: 1.22, gradeSaturation: .8, haze: '#56708c', hazeAmount: 0, hazeHeight: 5, leaf: '#7b838d', petal: '#5f6670', dust: '#d6ff8c', groundBreakup: .45, roadNeutral: .85,
+      coreLightEdge: .45, shadowRadius: 3, glow: '#ff4a1c', glowAmount: .3, glowStart: -100, glowEnd: 700, glowDirX: 1, glowDirZ: 0, beamStrength: 1.4 },
+    ambient: { leaf: 24, dust: 70, bird: 0, glow: 3.2 } },
   /** L10 night run (E32): the L9 moonlight with a darker shadow tint (dark verges), a brighter horizon haze for building silhouettes and the asphalt `roadLift`, so R1-R6 read at 3:1 (E31-AC16) while the night stays night. */
   'L10-night': { sun: '#9fb4ff', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#30203f', sky: '#302c50', fog: '#5b4f75', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, roadLift: 2.1, roadColor: '#a79ec7',
     look: { skyAmbient: '#b0accf', groundAmbient: '#978a95', vignette: .1, bloomStrength: .2, gradeShadow: '#7c62b0', gradeHighlight: '#b0f6ff', gradeAmount: .62, gradeContrast: 1.15, gradeSaturation: .78, haze: '#584a8c', hazeAmount: 0, beamStrength: 2, dust: '#8cefff' }, ambient: { leaf: 0, dust: 40, bird: 0, glow: 2.4 } },

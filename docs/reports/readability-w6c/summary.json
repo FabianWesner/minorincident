@@ -1,0 +1,50 @@
+{
+  "T-E29-14": {
+    "measurements": 24,
+    "minContrast": 3.1637901854506327,
+    "maxClippedShare": 0
+  },
+  "campaign": {
+    "webgl2": {
+      "frames": 12,
+      "clippedMax": 0,
+      "corgiMin": 3.73151957147701,
+      "draws": {
+        "high": 114,
+        "low": 94
+      },
+      "triangles": {
+        "high": 350408,
+        "low": 130831
+      }
+    },
+    "webgpu": {
+      "frames": 12,
+      "clippedMax": 0,
+      "corgiMin": 3.7369440815504493,
+      "draws": {
+        "high": 114,
+        "low": 94
+      },
+      "triangles": {
+        "high": 350408,
+        "low": 130831
+      }
+    }
+  },
+  "validation": {
+    "remoteFullPassed": 3188,
+    "remoteFullSkipped": 9,
+    "finalUnitFullPassed": 1663,
+    "finalUnitFullFailed": 1,
+    "finalUnitFullSkipped": 7,
+    "assetRetryPassed": 17,
+    "finalUniqueUnitPassesAcrossRetry": 1664,
+    "visualTestsPassed": 24,
+    "matrixRowsPassed": 36,
+    "barPixelTestsPassed": 6,
+    "verifyBrowserPassed": 52,
+    "verifyBrowserFailed": 2,
+    "finalNativeTiming": "unmeasured: quiet-run admission exceeded 30 minutes (exit 75)"
+  }
+}

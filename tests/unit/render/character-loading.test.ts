@@ -11,7 +11,7 @@ for (const low of [false, true]) for (const deferred of [false, true]) test.each
     const bytes = readFileSync(`public${path}`);
     return new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).parseAsync(bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength), '');
   });
-  const material = () => Object.assign(new MeshLambertMaterial({ vertexColors: true }), { bloodCoverage: { value: 0 }, movingFigure: { value: 0 } });
+  const material = () => Object.assign(new MeshLambertMaterial({ vertexColors: true }), { bloodCoverage: { value: 0 }, movingFigure: { value: 0 }, heroFigure: { value: 0 } });
   const materials = { fromVertexColors: material, fromColor: material, get: material, unique: material } as unknown as Materials;
   const character = new CharacterView(), other = selected === 'female' ? 'male' : 'female';
   try {
