@@ -1,0 +1,62 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 2.28.24.66:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted:none
+[remote] sync 45s, 25647 files; job /srv/mi/jobs/collision-placement-9aa6d4-1758-1792417593; queueing for a slot
+[runner] slot 1 acquired; load 2.02 2.05 1.96
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-1758-1792417593
+
+ ✓  functional  tests/levels/L5-encounters.test.ts (9 tests) 11647ms
+   ✓ @E23 @E23-AC04 @E23-AC15 @E23-AC16 station identities/state survive checkpoint and L6 handover, high 2185ms
+   ✓ @E23 @E23-AC04 @E23-AC15 @E23-AC16 station identities/state survive checkpoint and L6 handover, low 1196ms
+   ✓ @E23 @E23-AC01 L5 retains the carried racks instead of replacing them with its fallback arsenal 630ms
+   ✓ @E23 @E23-AC07 Alphas investigate nearby gunfire and acquire visible civilians without omniscience 860ms
+   ✓ @E23 @E23-AC04 Alphas stay in town away from the Metro and final escort leg, high 796ms
+   ✓ @E23 @E23-AC04 Alphas stay in town away from the Metro and final escort leg, low 584ms
+   ✓ @E23 @E23-AC15 nearby infected do not stall ingress; the descending shutter sweeps intruders out and blocks return 1944ms
+   ✓ @E23 @E23-AC15 the five survivors cross the Metro opening from the real-input group photo 1431ms
+   ✓ @E23 @E23-AC11 @E23-AC15 a survivor turning during shutter closure cannot corrupt the L6 save 2005ms
+ ✓  functional  tests/unit/levels/barrier-joints.test.ts (3 tests) 21620ms
+   ✓ continuous fence chains close their nominal-versus-physical panel seams to at most 2 cm 2707ms
+   ✓ all shipped district privacy-fence chains meet the same 2 cm joint limit 18691ms
+ ✓  functional  tests/sim/interact/gate-lockin.test.ts (6 tests) 7038ms
+   ✓ L1: every interactive gate has a reachable walkable point on both faces, including restored closed gates 1040ms
+   ✓ L2: every interactive gate has a reachable walkable point on both faces, including restored closed gates 3053ms
+   ✓ L3: every interactive gate has a reachable walkable point on both faces, including restored closed gates 2519ms
+ ✓  functional  tests/unit/render/pickup-visibility.test.ts (4 tests) 122ms
+ ✓  functional  tests/unit/render/highway-rail-joints.test.ts (1 test) 33ms
+ ✓  functional  tests/sim/missions/l7-encounters.test.ts (15 tests) 26566ms
+   ✓ L7 starts the courier on the authored raised night exit 1993ms
+   ✓ T-E29-08 @E29-AC08 high: all arrivals, five Alphas, safe emergence and strict caps 1294ms
+   ✓ T-E29-08 @E29-AC08 low: all arrivals, five Alphas, safe emergence and strict caps 879ms
+   ✓ T-E29-08-visible @E29-AC08 visible final emergence stays queued with both Alphas 875ms
+   ✓ T-E29-11-roster @E29-AC11 incoming ids, appearance and injury survive; health recovers; 0–35 followers use bounded motion 3723ms
+   ✓ T-E29-11-L6-result @E29-AC11 L6 serializes effective injury speed without mutating the escaped resident 1757ms
+   ✓ T-E29-11-stragglers @E29-AC11 cross-city followers use staggered partial routes and keep walking 1604ms
+   ✓ T-E29-11-loss @E29-AC11 combat losses are logged without deleting the roster 641ms
+   ✓ T-E29-12 @E29-AC12 rocket opening is traversed by a living follower while street infected remain 4037ms
+   ✓ T-E29-16-encounters @E29-AC16 checkpoint seam retains queues, Alpha requests, identities and passage state 987ms
+   ✓ T-E29-11-zero @E29-AC11 zero living survivors can reach passage without a kill-all requirement 670ms
+   ✓ T-E29-19-dying @E29-AC19 high: rocket death animations retain active-pool slots 2451ms
+   ✓ T-E29-19-dying @E29-AC19 low: rocket death animations retain active-pool slots 1353ms
+   ✓ T-E29-08-turning @E29-AC08 pending survivor transformations reserve a slot before queued arrivals 2062ms
+   ✓ T-E31-20-armed-roster @E31-AC20 @E29-AC11 carried armed shelter resident follows the L7 group instead of holding an old post 2232ms
+ ✓  functional  tests/levels/collision-placement.test.ts (11 tests) 26256ms
+   ✓ L4 perimeter rejects placement and swept passage for every actor kind 17512ms
+   ✓ L1 shutter brings an outside companion inside before sealing, with a short transition 1086ms
+   ✓ L3 all four ramp rail joints meet visible solid caps within 2 cm 1454ms
+   ✓ L3 companion occupies its visible footprint and stays outside courier and reported solids 2145ms
+   ✓ L5 companion occupies its visible footprint and stays outside courier and reported solids 882ms
+   ✓ L7 high start has separate visible survivor bodies at tick 66 1616ms
+   ✓ L7 low start has separate visible survivor bodies at tick 66 927ms
+   ✓ L1 never creates a closed shutter around the courier or lifts her capsule onto its leaf 608ms
+ ✓  functional  tests/unit/levels/placement-solids.test.ts (1 test) 37461ms
+   ✓ @E21 no placed prop cuts into a solid, L1-L9, every tier (new offenders only; backlog in the baseline) 37456ms
+ ✓  functional  tests/levels/l7-audit.test.ts (1 test) 197322ms
+   ✓ T-E29-02 @E29-AC02 standalone seed 1 boards at least 60% of the starting group without cheats 197320ms
+
+ Test Files  9 passed (9)
+      Tests  51 passed (51)
+   Start at  13:47:21
+   Duration  224.13s (tests 95%, transform 4%, import 1%)
+
+[remote] done exit=0 (runner 2.28.24.66, sync 45s, remote total 230s)

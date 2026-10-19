@@ -114,9 +114,9 @@ export class LevelFiveAftermath {
       s.survivors.push({ key: def.key, id, status: 'hidden', foundAt: 0, cueAt: 0, lostAt: 0, hold: 0 });
     }
   }
-  /** The lookout behind the half-open metro shutter: appears (waving a flashlight) when the group is called to the station. */
+  /** The lookout stands beyond the arrival queue, leaving the right lane for the companion and courier. */
   private spawnLookout(): void {
-    const o = this.outbreak(), door = this.anchor('l5-metro-shutter'), at = this.snap({ x: door.x + .4, z: door.z - 2.4 }, .4);
+    const o = this.outbreak(), door = this.anchor('l5-metro-shutter'), at = this.snap({ x: door.x + .4, z: door.z - 4.8 }, .4);
     const id = o.spawnPedestrian(at, { role: 'cashier', model: 'npc.marcus.aftermath', schedule: this.hiddenSchedule(at) });
     const e = this.entity(id)!; e.hidden = true; e.civilian!.pauseUntil = NEVER; this.world.spatial.delete(id); this.s.lookoutId = id;
   }
@@ -302,22 +302,31 @@ export class LevelFiveAftermath {
     // followers already standing inside the narrow ingress.
     const ordered = this.following(true).sort((a, b) => a.e.transform.z - b.e.transform.z || a.e.id - b.e.id);
     const slot = Math.max(0, ordered.findIndex(f => f.e.id === e.id));
-    return { x: door.x - .35, z: door.z - 4.4 + slot * .75 };
+    // Leave the right lane wide enough for the corgi's 0.88 m footprint,
+    // including the follower's 0.15 m arrival tolerance.
+    return { x: door.x - .45, z: door.z - 4.4 + slot * .75 };
   }
   private metro(): void {
     const { world } = this.mission, s = this.s, tick = world.tick, player = world.entities.get(1)!;
     if (s.phase !== 'metro' || s.shutterAt) return;
     if (player.health.current <= 0 || !this.insideStation(player.transform)) { s.metroAt = 0; return; }
     if (!s.metroAt) { s.metroAt = tick; this.mission.setState('at-metro', true); }
+    // Keep the long body along the shaft; the final contact transaction validates this turn.
+    for (const e of world.entities.iterate()) if (e.companion && !e.companion.following) e.transform.yaw = Math.PI / 2;
     // Ten seconds is a regroup grace, never permission to abandon living people outside.
     if (tick >= s.metroAt + ticks(l5.metro.waitS)) {
       for (const { e } of this.following()) if (!this.insideStation(e.transform)) e.civilian!.survivor!.mode = 'follow';
     }
-    if (tick >= s.metroAt + ticks(l5.metro.occupantViewS) && this.following().every(({ e }) => this.insideStation(e.transform))) this.shutter();
+    const door = this.anchor('l5-metro-shutter');
+    // Leave room for the final contact pass to settle the crowd behind the closed leaf.
+    if (tick >= s.metroAt + ticks(l5.metro.occupantViewS) && this.following().every(({ e }) => this.insideStation(e.transform) && e.transform.z < door.z - 1)) this.shutter();
   }
   private shutter(): void {
     const { world } = this.mission, s = this.s, tick = world.tick;
+    const door = this.anchor('l5-metro-shutter');
     if (s.shutterAt) return;
+    this.sweepIntruders();
+    if (!world.npcs!.companion.insideBeforeClosing(door, { x: door.x, z: door.z - 2 })) return;
     s.shutterAt = tick; s.phase = 'shelter';
     this.sealEntrance();
     for (const { r } of this.following()) r.status = 'sheltered';
@@ -326,7 +335,7 @@ export class LevelFiveAftermath {
     world.events.emit({ type: 'l5.shutter', tick });
   }
   /** The descending shutter already blocks infected; sweep any intruder back onto the street. */
-  private sealEntrance(): void {
+  private sweepIntruders(): void {
     const door = this.anchor('l5-metro-shutter');
     for (const e of this.world.infected!.active) {
       const radius = e.combat?.radius ?? .4;
@@ -337,8 +346,8 @@ export class LevelFiveAftermath {
       if (e.locomotion) { e.locomotion.vx = e.locomotion.vz = e.locomotion.ax = e.locomotion.az = 0; }
       this.world.spatial.set(e.id, e.transform.x, e.transform.z);
     }
-    this.shutterNavigation(true);
   }
+  private sealEntrance(): void { this.sweepIntruders(); this.shutterNavigation(true); }
   /** Cheat/test completion of the last step: everybody who still follows is carried in, the shutter closes now. */
   private forceShelter(): void {
     const s = this.s; if (s.doneAt) return;
@@ -382,7 +391,7 @@ export class LevelFiveAftermath {
       if (s.shutterAt && tick >= s.shutterAt + 120 && this.mission.state.gates['l5-metro-shutter']) {
         this.mission.setGate('l5-metro-shutter', false); this.shutterNavigation(true);
       }
-      if (s.shutterAt && !s.doneAt && tick >= s.shutterAt + ticks(3)) this.done();
+      if (s.shutterAt && !s.doneAt && !this.mission.state.gates['l5-metro-shutter'] && tick >= s.shutterAt + ticks(3)) this.done();
     }
     this.gloom();
   }

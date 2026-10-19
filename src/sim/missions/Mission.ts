@@ -1,3 +1,4 @@
+import { actorRadius } from '../world/SolidRegistry';
 import { LevelTenFinale } from './LevelTenFinale';
 import { transactArsenal } from '../progression/arsenal';
 import { LevelNineCrash } from './LevelNineCrash';
@@ -106,6 +107,7 @@ export class Mission {
     if (this.state.phase !== 'briefing') return;
     this.state.phase = 'playing'; this.run(this.def.onStart); this.activate(); this.flushCheckpoint();
     this.l8?.begin(); this.l9?.begin();
+    this.world.solids.reservePlayerStart();
     this.checkpoints.set('start', this.capture());
     this.world.events.emit({ type: 'level.started', tick: this.world.tick, id: this.def.id });
   }
@@ -173,7 +175,9 @@ export class Mission {
       case 'any': return t.triggers.some(child => this.satisfied(child, step));
     }
   }
+  private readonly closingGates = new Set<string>();
   private update(): void {
+    for (const id of this.closingGates) this.setGate(id, false);
     if (this.state.phase !== 'playing') return;
     this.l10?.update(); this.l1?.update(); this.l2?.update(); this.l3?.update(); this.l4?.update(); this.l5?.update(); this.l6?.update(); this.l8?.update(); this.l9?.update();
     const alive=this.world.entities.get(1)!.health.current>0;
@@ -323,17 +327,45 @@ export class Mission {
     this.emit({ type: 'mission.spawned', id: group });
   }
   /** Gate collision changes immediately; visual consumers react to gate.changed. */
+  private gateWall(id: string) {
+    const a = this.def.anchors[this.def.gates[id].anchor], inside = id === 'fire-shutter' ? this.def.anchors['fire-bay-trigger'] : undefined;
+    const alongX = !inside || Math.abs(inside.z - a.z) > Math.abs(inside.x - a.x);
+    return { x: a.x, z: a.z, y: 1.2, halfX: alongX ? a.radius : .2, halfY: 1.2, halfZ: alongX ? .2 : a.radius };
+  }
+  private syncGate(id: string): void {
+    const open = this.state.gates[id];
+    this.world.physics.world!.getCollider(this.gateHandles.get(id)!).setEnabled(!open);
+    if (id === 'fire-shutter') this.world.events.emit({ type: 'world.blocker.changed', tick: this.world.tick, id: 900_001, blocked: !open, wall: this.gateWall(id) });
+  }
   rebuildGates(): void {
     this.gateHandles.clear();
-    for(const [id,gate]of Object.entries(this.def.gates)) {
-      const a=this.def.anchors[gate.anchor],handle=this.world.physics.addStatic({min:[a.x-a.radius,0,a.z-.2],max:[a.x+a.radius,2.4,a.z+.2]},[0,0]);
-      this.gateHandles.set(id,handle);this.world.physics.world!.getCollider(handle).setEnabled(!this.state.gates[id]);
+    for (const id of Object.keys(this.def.gates)) {
+      this.gateHandles.set(id, this.world.physics.addBlocker(this.gateWall(id)));
+      this.syncGate(id);
     }
   }
   /** Keep gate state, collision and checkpoint restoration on the existing mission gate path. */
   setGate(id: string, open: boolean): void {
+    const door = this.def.anchors[this.def.gates[id].anchor];
+    const wall = this.gateWall(id), courier = this.world.entities.get(1)!, player = courier.transform;
+    // A closing leaf must never be created around the capsule: Rapier can otherwise lift it up the leaf.
+    if (!open && id === 'fire-shutter') {
+      const axis = wall.halfX >= wall.halfZ ? 'z' : 'x', other = axis === 'x' ? 'z' : 'x';
+      const half = axis === 'x' ? wall.halfX : wall.halfZ, width = axis === 'x' ? wall.halfZ : wall.halfX, radius = actorRadius(courier);
+      if (Math.abs(player[axis] - wall[axis]) < half + radius + .02 && Math.abs(player[other] - wall[other]) < width + radius) {
+        const trigger = this.def.anchors['fire-bay-trigger'];
+        const side = Math.sign(player[axis] - wall[axis]) || Math.sign(trigger[axis] - wall[axis]);
+        const at = { ...player, [axis]: wall[axis] + side * (half + radius + .02) };
+        at.y = .7 + (this.world.districts?.groundHeight(at.x, at.z) ?? 0);
+        if (!this.world.solids.relocate(courier, at, 'shutter.close-clearance', 0, false)) { this.closingGates.add(id); return; }
+        this.world.player!.locomotion.reset();
+      }
+    }
+    const inside = wall.halfX >= wall.halfZ ? { x: door.x, z: player.z } : { x: player.x, z: door.z };
+    if (!open && this.world.npcs && !this.world.npcs.companion.insideBeforeClosing(door, inside, Math.min(wall.halfX, wall.halfZ))) { this.closingGates.add(id); return; }
+    this.closingGates.delete(id);
     this.state.gates[id] = open;
-    this.world.physics.world!.getCollider(this.gateHandles.get(id)!).setEnabled(!open);
+    this.syncGate(id);
     this.emit({ type: 'gate.changed', id, open });
   }
   private run(actions: ScriptAction[]): void {
@@ -429,6 +461,7 @@ export class Mission {
   }
   /** Restore mission/actors/racks, retain run totals and permanently killed scripted bosses. */
   restore(id = this.state.checkpoint ?? 'start', resume = false): void {
+    this.closingGates.clear();
     if (!resume && this.state.cureFront) { this.l10?.cure.apply(); return; }
     this.world.controls.reset();
     const checkpoint = this.checkpoints.get(id); if (!checkpoint) throw new Error(`Unknown checkpoint: ${id}`);
@@ -492,7 +525,7 @@ export class Mission {
     if (this.state.tier !== null) this.world.setTier(this.state.tier);
     this.world.vehicles?.rebuild(false, delta);
     this.world.hazards?.debris.reset(); this.world.interactables?.rebuildBlockers(); this.world.barricades?.rebuild();
-    for(const [gate,handle]of this.gateHandles)this.world.physics.world!.getCollider(handle).setEnabled(!this.state.gates[gate]);
+    for (const gate of this.gateHandles.keys()) this.syncGate(gate);
     this.zones.forEach(zone => { zone.inside=this.state.volumes[zone.index];zone.entered=zone.exited=false; });
     this.l2?.restore(delta); this.l3?.restore(delta); this.l4?.restore(delta); this.l5?.restore(delta); this.l6?.restore(delta); this.l9?.rebuild();
     if (resume) {
@@ -500,6 +533,7 @@ export class Mission {
       this.state.failure = checkpoint.state.failure;
     } else this.emit({ type: 'checkpoint.restored', id });
     this.world.solids.restore();
+    this.world.solids.reservePlayerStart();
   }
   dispose(): void { this.l2?.dispose(); this.stops.forEach(stop => stop()); for(const handle of this.gateHandles.values()) {const collider=this.world.physics.world?.getCollider(handle);if(collider)this.world.physics.world!.removeCollider(collider,true);} this.gateHandles.clear(); }
 }

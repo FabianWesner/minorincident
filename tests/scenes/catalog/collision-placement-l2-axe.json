@@ -1,0 +1,43 @@
+{
+  "seed": 1,
+  "frames": 36,
+  "sheet": 12,
+  "expect": {
+    "consoleErrors": 0,
+    "collisionFailuresMax": 0,
+    "bodyOverlapMaxCm": 2,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000
+  },
+  "name": "collision-placement-l2-axe",
+  "l2Release": "start",
+  "ground": "district",
+  "time": "L2",
+  "tier": 1,
+  "layout": {
+    "level": "L2",
+    "district": "D-GROVE"
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -73.2,
+        45.2
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -74.15,
+      0.4,
+      47.5
+    ],
+    "zoom": 1
+  },
+  "note": "The real L2 axe rack and its objective ring. The ring and warm rack highlight must remain visible from the game camera over the sign, bollards and lamps at both tiers/zooms.",
+  "size": 220
+}

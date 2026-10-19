@@ -1,0 +1,143 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 2.31.10.108:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted:none
+[remote] sync 39s, 25488 files; job /srv/mi/jobs/collision-placement-9aa6d4-53448-1792424703; queueing for a slot
+[runner] slot 0 acquired; load 4.76 5.09 4.46
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-53448-1792424703
+
+ ✓  functional  tests/levels/collision-placement.test.ts (14 tests) 18432ms
+   ✓ L4 perimeter rejects placement and swept passage for every actor kind 12042ms
+   ✓ NPC spawn admission leaves 0.8 m around a reserved player start 579ms
+   ✓ L1 shutter brings an outside companion inside before sealing, with a short transition 704ms
+   ✓ L3 all four ramp rail joints meet visible solid caps within 2 cm 1152ms
+   ✓ L3 companion occupies its visible footprint and stays outside courier and reported solids 1502ms
+   ✓ L5 companion occupies its visible footprint and stays outside courier and reported solids 570ms
+   ✓ L7 high start has separate visible survivor bodies at tick 66 726ms
+   ✓ L7 low start has separate visible survivor bodies at tick 66 786ms
+   ✓ L1 never creates a closed shutter around the courier or lifts her capsule onto its leaf 336ms
+ ❯  functional  tests/levels/L5-encounters.test.ts (9 tests | 1 failed) 19177ms
+   ✓ @E23 @E23-AC04 @E23-AC15 @E23-AC16 station identities/state survive checkpoint and L6 handover, high 1596ms
+   ✓ @E23 @E23-AC04 @E23-AC15 @E23-AC16 station identities/state survive checkpoint and L6 handover, low 829ms
+   ✓ @E23 @E23-AC01 L5 retains the carried racks instead of replacing them with its fallback arsenal 493ms
+   ✓ @E23 @E23-AC07 Alphas investigate nearby gunfire and acquire visible civilians without omniscience 622ms
+   ✓ @E23 @E23-AC04 Alphas stay in town away from the Metro and final escort leg, high 419ms
+   ✓ @E23 @E23-AC04 Alphas stay in town away from the Metro and final escort leg, low 322ms
+   ✓ @E23 @E23-AC15 nearby infected do not stall ingress; the descending shutter sweeps intruders out and blocks return 1335ms
+   × @E23 @E23-AC15 the five survivors cross the Metro opening from the real-input group photo 12447ms
+   ✓ @E23 @E23-AC11 @E23-AC15 a survivor turning during shutter closure cannot corrupt the L6 save 1101ms
+stdout | tests/levels/L2-finale-pressure.test.ts > PO #7 @E20 supermarket to bridge has steady sight-driven action, an open escape and unchanged newbie survival
+L2 finale {
+  tier: 'high',
+  opening: 'direct',
+  seconds: 73.78333333333333,
+  streetEngaged: 16,
+  streetPerMinute: 13.011068443641292,
+  engaged: 53,
+  perMinute: 43.09916421956178,
+  bins15s: [ 16, 27, 34, 25, 29 ],
+  policeTargets: 18,
+  peak: 60,
+  outcome: 'complete',
+  deaths: 1,
+  deathsAt: [ '107s@50,30/escape' ],
+  totalSeconds: 158.3,
+  prefix: [
+    { type: 'l2.alarm', t: 23.016666666666666 },
+    { type: 'l2.truckDeparted', t: 26.616666666666667 },
+    { type: 'l2.truckArrived', t: 50.93333333333333 },
+    { type: 'l2.doorsOpen', t: 61.7 }
+  ]
+}
+
+stdout | tests/levels/L2-finale-pressure.test.ts > PO #7 @E20 supermarket to bridge has steady sight-driven action, an open escape and unchanged newbie survival
+L2 finale {
+  tier: 'low',
+  opening: 'direct',
+  seconds: 35.96666666666667,
+  streetEngaged: 4,
+  streetPerMinute: 6.672845227062094,
+  engaged: 13,
+  perMinute: 21.686746987951807,
+  bins15s: [ 7, 10, 9 ],
+  policeTargets: 7,
+  peak: 30,
+  outcome: 'complete',
+  deaths: 0,
+  deathsAt: [],
+  totalSeconds: 115.55,
+  prefix: [
+    { type: 'l2.alarm', t: 23.016666666666666 },
+    { type: 'l2.truckDeparted', t: 26.616666666666667 },
+    { type: 'l2.truckArrived', t: 50.93333333333333 },
+    { type: 'l2.doorsOpen', t: 61.7 }
+  ]
+}
+
+stdout | tests/levels/L2-finale-pressure.test.ts > PO #7b @E20 the arriving player sees police firing on a horde at the bridge
+L2 finale {
+  tier: 'high',
+  opening: 'side',
+  seconds: 54.55,
+  streetEngaged: 3,
+  streetPerMinute: 3.299725022914757,
+  engaged: 17,
+  perMinute: 18.698441796516956,
+  bins15s: [ 8, 8, 8, 6 ],
+  policeTargets: 12,
+  peak: 60,
+  outcome: 'complete',
+  deaths: 0,
+  deathsAt: [],
+  totalSeconds: 140.51666666666668,
+  prefix: [
+    { type: 'l2.alarm', t: 23.016666666666666 },
+    { type: 'l2.truckDeparted', t: 26.616666666666667 },
+    { type: 'l2.truckArrived', t: 50.93333333333333 },
+    { type: 'l2.doorsOpen', t: 61.7 }
+  ]
+}
+
+stdout | tests/levels/L2-finale-pressure.test.ts > PO #7b @E20 the arriving player sees police firing on a horde at the bridge
+L2 finale {
+  tier: 'low',
+  opening: 'side',
+  seconds: 54.55,
+  streetEngaged: 2,
+  streetPerMinute: 2.1998166819431715,
+  engaged: 8,
+  perMinute: 8.799266727772686,
+  bins15s: [ 6, 7, 2, 0 ],
+  policeTargets: 4,
+  peak: 30,
+  outcome: 'complete',
+  deaths: 0,
+  deathsAt: [],
+  totalSeconds: 140.51666666666668,
+  prefix: [
+    { type: 'l2.alarm', t: 23.016666666666666 },
+    { type: 'l2.truckDeparted', t: 26.616666666666667 },
+    { type: 'l2.truckArrived', t: 50.93333333333333 },
+    { type: 'l2.doorsOpen', t: 61.7 }
+  ]
+}
+
+ ✓  functional  tests/levels/L2-finale-pressure.test.ts (2 tests) 95673ms
+   ✓ PO #7 @E20 supermarket to bridge has steady sight-driven action, an open escape and unchanged newbie survival 52275ms
+   ✓ PO #7b @E20 the arriving player sees police firing on a horde at the bridge 43396ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/levels/L5-encounters.test.ts > @E23 @E23-AC15 the five survivors cross the Metro opening from the real-input group photo
+AssertionError: {"phase":"metro","metroAt":1,"tick":1200,"playerHp":{"current":100,"max":100},"dogHidden":false,"player":{"x":37.78496170043945,"y":1.1325000524520874,"z":-50.62974166870117,"yaw":-1.5707963267948966},"dog":{"x":37.90880045698519,"z":-49.69713787912108,"y":0.84375,"yaw":0.2595761397952054},"following":false,"followers":[{"id":20,"at":{"x":37.86783740237712,"z":-48.129248312544895,"y":1.7687499999999998,"yaw":2.0127517534884887}},{"id":21,"at":{"x":37.18870050381829,"z":-48.850846054815726,"y":1.5062499999999999,"yaw":5.993437576423184}},{"id":22,"at":{"x":38.38285220535427,"z":-48.59312300916296,"y":1.6375,"yaw":2.017673059348202}},{"id":23,"at":{"x":37.186018722816954,"z":-48.14985118461291,"y":1.7687499999999998,"yaw":7.722487249274717}},{"id":24,"at":{"x":37.498315694621525,"z":-47.52243210489239,"y":1.9,"yaw":1.7356011080377525}}]}: expected 0 to be greater than 0
+ ❯ tests/levels/L5-encounters.test.ts:232:450
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 24 passed (25)
+   Start at  15:50:44
+   Duration  98.62s (tests 94%, transform 5%, import 1%)
+
+[remote] done exit=1 (runner 2.31.10.108, sync 39s, remote total 403s)

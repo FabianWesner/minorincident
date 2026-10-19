@@ -333,3 +333,7 @@ Bugs go in the project's issue tracker (the `issue-tracker` skill board) with th
 | A bot that is too smart hides difficulty problems | The `newbie` profile, calibrated against human playtests (§12 of the test concept) |
 | Vision review leniency | Strict [must] items, mandatory justification, comparison sheets saved; a human spot-checks 10% of reviews per milestone |
 | The test API leaks into production | Dynamic import behind `?test`; a bundle check verifies that the `__SS__` string is absent in the prod build (static test) |
+
+## PO 2026-10-19 collision and placement regressions
+
+`tests/levels/collision-placement.test.ts`: L4 all-actor placement and swept barrier contact, 0.8 m spawn clearance, L1 companion admission before shutter closure (12-tick transition), all four L3 ramp/span corner caps and repeated fence seams. `tests/levels/start-checkpoint-clearance.test.ts`: every campaign player start and checkpoint. `tests/unit/render/pickup-visibility.test.ts`: actual loose-weapon and mission-pickup marker meshes use foreground depth/render state. `tests/levels/L4-perimeter.test.ts` retains the complete one-metre plaza walk check and requires ground actors to respect the closed wire perimeter and infected vaults to clear the wire without collision exemptions. Matrix catalog: `collision-placement-*`, high/low × zoom 1.0/0.5 (catalog also checks 1.5) × WebGL2/WebGPU. Links: E08-AC04, E11-AC09, E21-AC11, E22-AC05/18, E18 budgets.

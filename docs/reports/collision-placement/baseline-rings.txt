@@ -1,0 +1,80 @@
+Unchanged base revision: 2d5e0fb84
+
+Failed Tests 4 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/unit/render/pickup-visibility.test.ts > weapon pickup ring draws above occluders without writing depth or changing colour in fog
+AssertionError: expected 0.5 to be 1 // Object.is equality
+
+- Expected
++ Received
+
+- 1
++ 0.5
+
+ ❯ tests/unit/render/pickup-visibility.test.ts:21:27
+     19|     view.traverse(node => { if (node instanceof Mesh && node.geometry.…
+     20|     expect(ring).toBeDefined();
+     21|     expect(ring!.scale.x).toBe(1);
+       |                           ^
+     22|     expect(ring!.renderOrder).toBeGreaterThan(90);
+     23|     expect(ring!.material).toMatchObject({ depthTest: false, depthWrit…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/4]⎯
+
+ FAIL   functional  tests/unit/render/pickup-visibility.test.ts > mission pickup rings including the L2 axe stay visible over street props
+AssertionError: expected 0 to be greater than 90
+ ❯ tests/unit/render/pickup-visibility.test.ts:32:33
+     30|     expect(marker.children).toHaveLength(2);
+     31|     for (const child of marker.children as Mesh[]) {
+     32|       expect(child.renderOrder).toBeGreaterThan(90);
+       |                                 ^
+     33|       expect(child.material).toMatchObject({ depthTest: false, depthWr…
+     34|     }
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/4]⎯
+
+ FAIL   functional  tests/unit/render/pickup-visibility.test.ts > ground pickup keeps its full ring while its weapon model is still loading
+AssertionError: expected [] to have a length of 1 but got +0
+
+- Expected
++ Received
+
+- 1
++ 0
+
+ ❯ tests/unit/render/pickup-visibility.test.ts:48:19
+     46|     const rings: Mesh[] = [];
+     47|     view.traverse(node => { if (node instanceof Mesh && node.geometry.…
+     48|     expect(rings).toHaveLength(1);
+       |                   ^
+     49|     expect(rings[0].visible).toBe(true);
+     50|     expect(rings[0].scale.x).toBe(1);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/4]⎯
+
+ FAIL   functional  tests/unit/render/pickup-visibility.test.ts > L2 axe highlight pulses as a border without painting over the axe
+AssertionError: expected [ Mesh{ isObject3D: true, …(36) } ] to have a length of 4 but got 1
+
+- Expected
++ Received
+
+- 4
++ 1
+
+ ❯ tests/unit/render/pickup-visibility.test.ts:60:28
+     58|   const frame = (view as unknown as { glint: Group }).glint;
+     59|   try {
+     60|     expect(frame.children).toHaveLength(4);
+       |                            ^
+     61|     for (const tick of [0, 16, 36, 60]) {
+     62|       world.tick = tick; view.update();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/4]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  4 failed (4)
+   Start at  12:53:58
+   Duration  2.35s (transform 72%, import 25%, tests 2%)
+
+[remote] done exit=1 (runner 2.28.24.66, sync 58s, remote total 7s)

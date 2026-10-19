@@ -1,0 +1,45 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 94.130.181.173:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted:none
+[remote] sync 85s, 25489 files; job /srv/mi/jobs/collision-placement-9aa6d4-91424-1792428225; queueing for a slot
+[runner] slot 0 acquired; load 1.10 1.92 3.75
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-91424-1792428225
+
+ ❯  functional  tests/levels/collision-placement.test.ts (15 tests | 1 failed | 14 skipped) 701ms
+   ↓ L4 perimeter rejects placement and swept passage for every actor kind
+   ↓ NPC spawn admission leaves 0.8 m around a reserved player start
+   ↓ L1 shutter brings an outside companion inside before sealing, with a short transition
+   ↓ L3 all four ramp rail joints meet visible solid caps within 2 cm
+   ↓ a wide door uses its normal to bring in a companion when the courier stands off centre
+   ↓ L3 companion occupies its visible footprint and stays outside courier and reported solids
+   ↓ L5 companion occupies its visible footprint and stays outside courier and reported solids
+   ↓ L7 high start has separate visible survivor bodies at tick 66
+   ↓ L7 low start has separate visible survivor bodies at tick 66
+   ↓ L1 never creates a closed shutter around the courier or lifts her capsule onto its leaf
+   ↓ companion head and rear clear solids even when the central circle is outside
+   ↓ committed contact cells retain the corgi head clearance from the courier
+   ↓ companion head contact projects onto the solid face while retaining forward progress
+   ↓ the corgi clears its supporting floor while a raised barrier still blocks its body
+   × the Metro lookout leaves an interior right-lane slot for the complete corgi capsule 697ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/levels/collision-placement.test.ts > the Metro lookout leaves an interior right-lane slot for the complete corgi capsule
+AssertionError: lookout must not occupy the standing dog’s head/rear: expected 0.10000000000000142 to be greater than or equal to 0.79
+ ❯ tests/levels/collision-placement.test.ts:216:96
+    214|     const dx = lookout.transform.x - at.x, dz = lookout.transform.z - …
+    215|     const along = Math.max(-.4, Math.min(.4, -dz));
+    216|     expect(Math.hypot(dx, dz + along), 'lookout must not occupy the st…
+       |                                                                                                ^
+    217|   } finally { w.dispose(); }
+    218| }, 120_000);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 14 skipped (15)
+   Start at  16:45:13
+   Duration  4.41s (transform 70%, tests 17%, import 13%)
+
+[remote] done exit=1 (runner 94.130.181.173, sync 85s, remote total 10s)

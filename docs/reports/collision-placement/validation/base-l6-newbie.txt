@@ -1,0 +1,17 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/collision-placement -> 94.130.181.173:/srv/mi/ws/collision-placement-9aa6d4
+[remote] cache-gc deleted:none
+[remote] sync 78s, 25489 files; job /srv/mi/jobs/collision-placement-9aa6d4-93135-1792428270; queueing for a slot
+[runner] slot 0 acquired; load 1.67 1.98 3.70
+
+ RUN  v5.0.3 /srv/mi/jobs/collision-placement-9aa6d4-93135-1792428270
+
+ ✓  functional  tests/levels/L6.test.ts (11 tests | 10 skipped) 19830ms
+   ✓ T-E24-03 @E24 @E24-AC03 single-seed newbie protects injured survivors within the original band 19827ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 10 skipped (11)
+   Start at  16:45:52
+   Duration  23.98s (tests 84%, transform 14%, import 3%)
+
+[remote] pulled test-results/epics/E24/newbie-seed-1.json
+[remote] done exit=0 (runner 94.130.181.173, sync 78s, remote total 29s)

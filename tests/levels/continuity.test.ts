@@ -18,7 +18,7 @@ describe('L1 -> L2 world-state continuity', () => {
     const events: string[] = [];
     for (const type of ['l1.blast', 'l1.smoke'] as const) w1.events.on(type, e => { events.push(e.type); });
     const run = runL1(w1, m1, 'complete', { seed: 1 });
-    expect(run.outcome).toBe('complete');
+    expect(run.outcome, JSON.stringify({ phase: m1.state.phase, checkpoint: m1.state.checkpoint, gates: m1.state.gates, player: w1.entities.get(1)!.transform, dog: w1.entities.values().filter(e => e.companion).map(e => ({ at: e.transform, hidden: e.hidden, pending: e.pendingAdmission })), run })).toBe('complete');
     // The scripted L1 destructions happened: the pressure blast and its smoke, the outbreak house broke open.
     expect(events).toEqual(['l1.blast', 'l1.smoke']);
     expect(m1.state.l1!.house?.door).toBe(l1Canon.outbreakHouse.door);

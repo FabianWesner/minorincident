@@ -35,9 +35,9 @@ export class L2Props extends Group {
   private readonly axe = new Group();
   private readonly brickMat = new MeshBasicNodeMaterial({ color: '#d9a17f' });
   private readonly shopGlass = new MeshBasicNodeMaterial({ color: '#a9d4e6', transparent: true, opacity: .22, depthWrite: false });
-  /** PO 10-13: the required axe gets one marker on the item itself, a pulsing warm backplate; the objective arrow and the single stand ring come from ObjectiveMarker. */
+  /** PO 10-13: the required axe gets one marker on the item itself, a pulsing warm frame; the objective arrow and the single stand ring come from ObjectiveMarker. */
   private readonly glint = new Group();
-  private readonly gold = new MeshBasicNodeMaterial({ color: '#ffe02b', transparent: true, opacity: .55, depthWrite: false });
+  private readonly gold = new MeshBasicNodeMaterial({ color: '#ffe02b', transparent: true, opacity: .55, depthTest: false, depthWrite: false, toneMapped: false, fog: false });
   private readonly board = new MeshBasicNodeMaterial({ color: '#aebbd0' });
   private readonly frame = new MeshBasicNodeMaterial({ color: '#e9dfc4' });
   private readonly haft = new MeshBasicNodeMaterial({ color: '#c98a4b' });
@@ -75,7 +75,11 @@ export class L2Props extends Group {
     part(this.board, [.12, 1.3, 1.5], [wx + .05, 1.55, 0]);
     part(this.haft, [.14, 1.3, .14], [wx + .16, 1.5, -.55]);
     part(this.red, [.14, .55, .75], [wx + .17, 2.05, -.35]);
-    const glow = new Mesh(this.box, this.gold); glow.scale.set(.05, 1.75, 1.95); glow.position.set(wx - .02, 1.55, 0); this.glint.add(glow);
+    // Only the border draws through foreground props, keeping the axe itself legible inside it.
+    for (const [y, z, height, width] of [[.675, 0, .08, 1.95], [2.425, 0, .08, 1.95], [1.55, -.975, 1.75, .08], [1.55, .975, 1.75, .08]]) {
+      const glow = new Mesh(this.box, this.gold); glow.renderOrder = 94;
+      glow.scale.set(.05, height, width); glow.position.set(wx - .02, y, z); this.glint.add(glow);
+    }
     this.add(this.glint);
     this.add(this.axe);
     // Grove Market outer walls on the two sides the model leaves open: brick bulkhead, glass above, lintel, a doorway with glass doors.
@@ -149,7 +153,7 @@ export class L2Props extends Group {
     this.axe.children[2].visible = this.axe.children[3].visible = !s.axe;
     const hint = this.world.missions?.state.steps.axe?.status === 'active' && !s.axe;
     this.glint.visible = hint;
-    if (hint) { const pulse = Math.sin(tick * .1); this.glint.children[0].scale.set(.05, 1.75 + .1 * pulse, 1.95 + .1 * pulse); }
+    if (hint) this.gold.opacity = .55 + .15 * Math.sin(tick * .1);
     const closing = s.crossedAt > 0 ? Math.min(1, (tick - s.crossedAt) / 36) : 0;
     for (const { mesh, boxes } of this.stripes) this.place(mesh, boxes, b => { const g = this.gates[b.gate!]; return [g.open[0] + (g.closed[0] - g.open[0]) * closing, g.open[1] + (g.closed[1] - g.open[1]) * closing]; });
   }

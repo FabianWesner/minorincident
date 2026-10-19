@@ -1,0 +1,165 @@
+{
+  "spec": "tests/scenes/catalog/collision-placement-l7-start.json",
+  "backend": "webgl",
+  "requestedBackend": "webgl2",
+  "tier": "low",
+  "actualTier": "low",
+  "frames": 66,
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "collisionFailures",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "bodyOverlapMaxCm",
+        "pass": true,
+        "value": 0,
+        "limit": 2
+      },
+      {
+        "name": "drawCallsMax",
+        "pass": true,
+        "value": 30,
+        "limit": 600
+      },
+      {
+        "name": "trianglesMax",
+        "pass": true,
+        "value": 94481,
+        "limit": 500000
+      },
+      {
+        "name": "canvas.f0.varianceMin",
+        "pass": true,
+        "value": 2017.0799695898909,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f0.variedTilesMin",
+        "pass": true,
+        "value": 52,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f22.varianceMin",
+        "pass": true,
+        "value": 2107.105219464505,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f22.variedTilesMin",
+        "pass": true,
+        "value": 53,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f44.varianceMin",
+        "pass": true,
+        "value": 2029.4352214981132,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f44.variedTilesMin",
+        "pass": true,
+        "value": 53,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f66.varianceMin",
+        "pass": true,
+        "value": 2022.795399677333,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f66.variedTilesMin",
+        "pass": true,
+        "value": 53,
+        "limit": 8
+      },
+      {
+        "name": "requestedBackend",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      },
+      {
+        "name": "requestedQuality",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      }
+    ]
+  },
+  "metrics": {
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 31,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    },
+    "propPenetration": {
+      "samples": 1056,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "attackOverlap": {
+      "depthCm": 0,
+      "frame": 0,
+      "actor": ""
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 30,
+        "p95": 30,
+        "max": 30
+      },
+      "triangles": {
+        "p50": 94481,
+        "p95": 94481,
+        "max": 94481
+      },
+      "shadowDrawCalls": {
+        "p50": 8,
+        "p95": 8,
+        "max": 8
+      },
+      "shadowTriangles": {
+        "p50": 8,
+        "p95": 8,
+        "max": 8
+      },
+      "stepMs": {
+        "p50": 1.2,
+        "p95": 1.9,
+        "max": 2.6
+      },
+      "lastFrame": {
+        "drawCalls": 30,
+        "triangles": 94475,
+        "shadowDrawCalls": 8,
+        "shadowTriangles": 8,
+        "stepMs": 1.3999996185302734,
+        "categories": {
+          "other": 26,
+          "buildings": 1,
+          "props": 1,
+          "crowd": 2,
+          "shadows": 8
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    }
+  }
+}
