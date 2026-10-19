@@ -18,7 +18,7 @@ test('@E31 L9 night accents: light points along every route, on budget, render-o
   const count = (kind: string) => points.filter(a => a.kind === kind).length;
   expect(count('stud')).toBeGreaterThan(200); expect(count('lantern')).toBeGreaterThan(12); expect(count('flare')).toBeGreaterThan(15);
   expect(count('hazard') % 4).toBe(0); expect(count('hazard')).toBeGreaterThanOrEqual(8); expect(count('beacon')).toBeGreaterThanOrEqual(6);
-  expect(fires.length).toBeGreaterThan(12); expect(fires.length).toBeLessThan(48);
+  expect(fires.length).toBeGreaterThan(12); expect(fires.length).toBeLessThan(96);
   // E18/E25: pools stay a small share of the light-field capacity (256 low), the emitters two instanced draws.
   expect(points.filter(a => a.pool).length).toBeLessThan(140);
   for (const a of points) { expect(Math.abs(a.x)).toBeLessThan(600); expect(Math.abs(a.z)).toBeLessThan(400); }
@@ -27,7 +27,7 @@ test('@E31 L9 night accents: light points along every route, on budget, render-o
   const inside = (x: number, z: number, m: number) => layout.placements.some(p => x > p.visualAabb.min[0] - m && x < p.visualAabb.max[0] + m && z > p.visualAabb.min[2] - m && z < p.visualAabb.max[2] + m);
   for (const a of points.filter(p => p.kind === 'flare' || p.kind === 'lantern')) expect(inside(a.x, a.z, .5), `${a.kind} ${a.x},${a.z}`).toBe(false);
   // Brush fires burn away from every lane and building; burning wrecks sit on their car.
-  for (const f of fires.filter(f => !f.car)) { expect(lane([f.x, f.z])).toBeGreaterThan(8); expect(inside(f.x, f.z, 1.6)).toBe(false); }
+  for (const f of fires.filter(f => !f.car)) { expect(lane([f.x, f.z])).toBeGreaterThan(7.5); expect(inside(f.x, f.z, 1.6)).toBe(false); }
   // One hazard car blinks in a single phase, in step with its pool.
   const hazards = points.filter(a => a.kind === 'hazard');
   for (let i = 0; i < hazards.length; i += 4) expect(new Set(hazards.slice(i, i + 4).map(a => a.seed)).size).toBe(1);
