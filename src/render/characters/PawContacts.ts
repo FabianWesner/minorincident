@@ -1,4 +1,4 @@
-import { Box3, Mesh, Vector3, type Object3D } from 'three';
+import { Box3, Mesh, Quaternion, Vector3, type Object3D } from 'three';
 
 /** Swinging paw clearance above the floor (m). */
 const swingLift = .04;
@@ -29,14 +29,82 @@ export class PawContacts {
         const positions = node.geometry.attributes.position, indices = node.geometry.index;
         for (let i = 0; i < (indices?.count ?? positions.count); i++) vertices.push(original.worldToLocal(new Vector3().fromBufferAttribute(positions, indices ? indices.getX(i) : i).applyMatrix4(node.matrixWorld)));
       });
-      return [{ leg, vertices, paw: original.worldToLocal(paw), reach: bounds.max.y - bounds.min.y, sole: bounds.min.y - this.origin.y, planted: new Vector3(), correction: new Vector3(), release: new Vector3(), phase: -1,
+      // Jointed legs (amb.dog/inf.dog: shoulder/hip -> fore-arm/shin -> paw) hang from a shoulder or hip joint: moving the leg
+      // joint itself detaches the whole limb from the body (PO 10-19 "detached leg of dog"), so their pin is a swing about it.
+      // Only a drawn hierarchy (NpcView pets) can bend the knee; the instanced crowd bakes each leg as one rigid part.
+      let knee: Object3D | null = null; if (root === template) leg.traverse(node => { if (!knee && node !== leg && /^(foreArm|shin)/.test(node.name)) knee = node; });
+      const originalKnee = knee ? original.getObjectByName((knee as Object3D).name) : undefined, pawKnee = originalKnee ? originalKnee.worldToLocal(paw.clone()) : null;
+      // The lower limb's vertices on the knee (sampled): its drawn sole once the knee bends.
+      const kneeVertices: Vector3[] = [];
+      originalKnee?.traverse(node => {
+        if (!(node instanceof Mesh)) return;
+        const positions = node.geometry.attributes.position, indices = node.geometry.index, count = indices?.count ?? positions.count;
+        for (let i = 0; i < count; i += Math.max(1, Math.floor(count / 120))) kneeVertices.push(originalKnee.worldToLocal(new Vector3().fromBufferAttribute(positions, indices ? indices.getX(i) : i).applyMatrix4(node.matrixWorld)));
+      });
+      return [{ leg, vertices, jointed: knee !== null && pawKnee !== null, knee: knee as Object3D | null, pawKnee, kneeVertices, rest: leg.position.clone(), turned: new Quaternion(), kneeTurned: new Quaternion(), turning: false, paw: original.worldToLocal(paw), reach: bounds.max.y - bounds.min.y, sole: bounds.min.y - this.origin.y, planted: new Vector3(), correction: new Vector3(), release: new Vector3(), phase: -1,
         /** Last drawn paw point (world), standing-hold state and the current settle step (-1: none). */
         last: null as Vector3 | null, held: false, step: -1, from: new Vector3(), fadeStart: 0 }];
     });
   }
-  restore(): void { for (const foot of this.feet) { foot.leg.position.sub(foot.correction); foot.correction.set(0, 0, 0); } }
+  restore(): void { for (const foot of this.feet) { foot.leg.position.sub(foot.correction); foot.correction.set(0, 0, 0); if (foot.turning) { foot.leg.quaternion.copy(foot.turned); foot.knee?.quaternion.copy(foot.kneeTurned); foot.turning = false; } } }
+  /** Scene Lab guard: the largest distance (cm) of a jointed leg's joint from its bind position on the parent. */
+  limbGapCm(): number {
+    let gap = 0;
+    for (const foot of this.feet) if (foot.jointed) {
+      const parent = foot.leg.parent!; parent.updateWorldMatrix(true, false);
+      gap = Math.max(gap, foot.leg.getWorldPosition(this.offset).distanceTo(parent.localToWorld(this.point.copy(foot.rest))) * 100);
+    }
+    return gap;
+  }
+  /** Jointed legs: replace the positional pin with a two-joint solve (shoulder/hip and elbow/knee, bend plane kept)
+   * that puts the paw on the same point, so the limb stays on the body. */
+  private swing(foot: (typeof this.feet)[number], floor: number): void {
+    if (!foot.jointed || !foot.knee || foot.correction.lengthSq() < 1e-12) return;
+    const leg = foot.leg, knee = foot.knee, target = this.target.copy(foot.paw).applyMatrix4(leg.matrixWorld);
+    leg.position.sub(foot.correction); foot.correction.set(0, 0, 0); leg.updateWorldMatrix(false, true);
+    if (!foot.turning) { foot.turned.copy(leg.quaternion); foot.kneeTurned.copy(knee.quaternion); foot.turning = true; }
+    this.solve(foot, target);
+    // The bent lower limb's own lowest vertex must stay on the floor (the rigid-leg dip check cannot see the knee bend).
+    let bottom = Infinity; for (const v of foot.kneeVertices) bottom = Math.min(bottom, this.offset.copy(v).applyMatrix4(knee.matrixWorld).y);
+    if (bottom < floor) { target.y += floor - bottom; this.solve(foot, target); }
+    // One re-solve can leave the bent toe a few mm low (the knee re-aims); a second settles it.
+    bottom = Infinity; for (const v of foot.kneeVertices) bottom = Math.min(bottom, this.offset.copy(v).applyMatrix4(knee.matrixWorld).y);
+    if (bottom < floor) { target.y += floor - bottom; this.solve(foot, target); }
+  }
+  private solve(foot: (typeof this.feet)[number], target: Vector3): void {
+    const leg = foot.leg, knee = foot.knee!;
+    const hip = leg.getWorldPosition(this.hip), joint = knee.getWorldPosition(this.joint), paw = this.pawWorld(foot, this.paw);
+    const a = joint.distanceTo(hip), b = paw.distanceTo(joint), toTarget = this.axis.subVectors(target, hip), reach = toTarget.length();
+    if (a < 1e-4 || b < 1e-4 || reach < 1e-4) return;
+    const d = Math.max(Math.abs(a - b) + 1e-4, Math.min(a + b - 1e-4, reach)), u = toTarget.divideScalar(reach);
+    // Bend direction: the current knee offset off the hip->target line (falls back to the current hip->paw bend).
+    const bend = this.bend.subVectors(joint, hip); bend.addScaledVector(u, -bend.dot(u));
+    if (bend.lengthSq() < 1e-10) bend.subVectors(joint, paw).addScaledVector(u, -this.offset.subVectors(joint, paw).dot(u));
+    if (bend.lengthSq() < 1e-10) return;
+    bend.normalize();
+    const along = (a * a + d * d - b * b) / (2 * d), knee2 = this.offset.copy(hip).addScaledVector(u, along).addScaledVector(bend, Math.sqrt(Math.max(0, a * a - along * along)));
+    this.rotateWorld(leg, this.from.subVectors(joint, hip), this.to.subVectors(knee2, hip));
+    const joint2 = knee.getWorldPosition(this.joint), paw2 = this.pawWorld(foot, this.paw);
+    this.rotateWorld(knee, this.from.subVectors(paw2, joint2), this.to.subVectors(target, joint2));
+  }
+  /** The drawn paw point: jointed legs carry it on the knee, which the swing may bend. */
+  private pawWorld(foot: (typeof this.feet)[number], out: Vector3): Vector3 {
+    return foot.jointed && foot.turning && foot.knee && foot.pawKnee ? foot.knee.localToWorld(out.copy(foot.pawKnee)) : out.copy(foot.paw).applyMatrix4(foot.leg.matrixWorld);
+  }
+  /** Turn a node so its world-space direction `from` points along `to` (about its own origin). */
+  private rotateWorld(node: Object3D, from: Vector3, to: Vector3): void {
+    if (from.lengthSq() < 1e-12 || to.lengthSq() < 1e-12) return;
+    const world = this.turn.setFromUnitVectors(from.normalize(), to.normalize()), parent = node.parent!.getWorldQuaternion(this.parentTurn);
+    node.quaternion.premultiply(world.premultiply(parent.clone().invert()).multiply(parent)); node.updateWorldMatrix(false, true);
+  }
+  private readonly target = new Vector3(); private readonly hip = new Vector3(); private readonly joint = new Vector3(); private readonly paw = new Vector3();
+  private readonly axis = new Vector3(); private readonly bend = new Vector3(); private readonly from = new Vector3(); private readonly to = new Vector3();
+  private readonly parentTurn = new Quaternion();
+  private readonly turn = new Quaternion();
   reset(): void { for (const foot of this.feet) { foot.phase = -1; foot.release.set(0, 0, 0); foot.held = false; foot.last = null; } }
-  stance(stride: number): number { return Math.min(.45, Math.min(...this.feet.map(f => f.reach)) * .75 / Math.max(.001, stride)); }
+  /** Jointed (straight-legged) dogs hold a paw for a shorter part of the stride: their hip stands a full leg high, so a
+   * paw planted further away than the attached leg reaches would drag. */
+  stance(stride: number): number { return Math.min(.45, Math.min(...this.feet.map(f => f.reach)) * (this.feet.some(f => f.jointed) ? .5 : .75) / Math.max(.001, stride)); }
   update(phase: number, stride: number, clip: string, dt = 1 / 60): void {
     const offsets = clip === 'corgi-walk' ? [0, .5, .75, .25] : clip === 'corgi-gallop' ? [0, .1, .5, .6] : [0, .5, .5, 0];
     const stance = this.stance(stride); this.root.updateWorldMatrix(true, true); this.root.getWorldPosition(this.origin);
@@ -88,7 +156,8 @@ export class PawContacts {
         const parent = foot.leg.parent!, low = parent.worldToLocal(this.point.clone()), high = parent.worldToLocal(this.point.clone().setY(this.point.y + dip));
         high.sub(low); foot.leg.position.add(high); foot.correction.add(high); foot.leg.updateWorldMatrix(false, true);
       }
-      (foot.last ??= new Vector3()).copy(foot.paw).applyMatrix4(foot.leg.matrixWorld);
+      this.swing(foot, sole);
+      this.pawWorld(foot, foot.last ??= new Vector3());
     }
   }
   /** Standing clips (idle, sit, warnings) after the mixer: a paw stays where it stands on the floor while the body
@@ -134,8 +203,9 @@ export class PawContacts {
           foot.leg.position.add(high); foot.correction.add(high); foot.leg.updateWorldMatrix(false, true);
         }
       }
-      (foot.last ??= new Vector3()).copy(foot.paw).applyMatrix4(foot.leg.matrixWorld);
+      this.swing(foot, sole);
+      this.pawWorld(foot, foot.last ??= new Vector3());
     }
   }
-  points(): number[][] { this.root.updateWorldMatrix(true, true); return this.feet.map(f => this.point.copy(f.paw).applyMatrix4(f.leg.matrixWorld).toArray()); }
+  points(): number[][] { this.root.updateWorldMatrix(true, true); return this.feet.map(f => this.pawWorld(f, this.point).toArray()); }
 }

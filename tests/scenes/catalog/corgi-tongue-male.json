@@ -1,0 +1,81 @@
+{
+  "name": "corgi-tongue-male",
+  "note": "PO 10-19 'Tongue of the dog is out all the time': the corgi rests beside the courier (tongue retracted), follows her walk and run (tongue out, panting), pants a few seconds after the run, then rests again (retracted).",
+  "ground": "asphalt",
+  "size": 40,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -6,
+        0
+      ],
+      "yaw": 0,
+      "look": {
+        "model": "male"
+      }
+    },
+    {
+      "id": "corgi",
+      "kind": "corgi",
+      "at": [
+        -7.5,
+        1.2
+      ]
+    }
+  ],
+  "script": [
+    {
+      "frame": 420,
+      "actor": "courier",
+      "do": {
+        "walk": [
+          [
+            4,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 760,
+      "actor": "courier",
+      "do": {
+        "run": [
+          [
+            -6,
+            0
+          ]
+        ]
+      }
+    },
+    {
+      "frame": 1000,
+      "actor": "courier",
+      "do": {
+        "idle": true
+      }
+    }
+  ],
+  "camera": {
+    "mode": "follow",
+    "actor": "corgi",
+    "zoom": 1
+  },
+  "frames": 1560,
+  "shots": [
+    300,
+    600,
+    880,
+    1080,
+    1540
+  ],
+  "sheet": 5,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "corgiTongueIdleOutMax": 0,
+    "corgiTongueMovingInMax": 0
+  }
+}
