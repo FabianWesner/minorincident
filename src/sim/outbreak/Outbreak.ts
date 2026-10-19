@@ -123,8 +123,9 @@ export class Outbreak {
       [...this.world.entities.iterate()].filter(e => !e.hidden && e.health.current > 0 && Boolean(e.infected) === infected && keepsLook(e)).map(e => ({ model: e.appearance!.asset, x: e.transform.x, z: e.transform.z })), at, Math.floor(this.rng.next() * 0x100000000));
   }
 
-  /** One L1 pedestrian with a seeded look, speeds and a calm routine. Returns the entity id. */
-  spawnPedestrian(position: Point, options: PedestrianOptions = {}): number {
+  /** One L1 pedestrian with a seeded look, speeds and a calm routine. Returns the entity id.
+   * `admit = false` hands placement to the alarm caller in this same synchronous transaction. */
+  spawnPedestrian(position: Point, options: PedestrianOptions = {}, admit = true): number {
     const civilians = this.world.npcs!.civilians;
     const role = options.role ?? civilianRoles[Math.floor(this.rng.next() * civilianRoles.length)].role;
     const model = options.child ? 'npc.civilian-kid' : options.model ?? this.crowdModel(position);
@@ -133,7 +134,7 @@ export class Outbreak {
     const schedule: CivilianActivity[] = options.schedule ?? waypoints.map((target, i) => options.faces?.[i]
       ? { activity: 'look', anchor: 'l1/look', target, facing: options.faces[i]!, ticks: ticks(2 + this.rng.next() * 6), prop: options.handProp as CivilianProp ?? undefined }
       : { activity: 'walk', anchor: 'l1/walk', target, ticks: 1, prop: options.handProp as CivilianProp ?? undefined });
-    const id = civilians.spawn(role, position, { waypoints: schedule.map(s => s.target), model, schedule, child: options.child });
+    const id = civilians.spawn(role, position, { waypoints: schedule.map(s => s.target), model, schedule, child: options.child }, admit);
     const e = this.world.entities.get(id)!, c = e.civilian!;
     e.transform.yaw = options.yaw ?? this.rng.next() * Math.PI * 2;
     const tier: SpeedTier = options.tier ?? (model === 'npc.civilian-elderly' || role === 'bathrobe-neighbor' ? 'frail' : role === 'jogger' || this.rng.next() < l1Pedestrians.athleticShare ? 'athletic' : 'average');
@@ -526,13 +527,15 @@ export class Outbreak {
     if (phase === 'infected') this.rise(e);
   }
   /** The same entity becomes an infected: same id, asset, tint, accessories; speed from its tier (section 5.4). */
-  private rise(e: EntitySnapshot, bitten = true): void {
+  private rise(e: EntitySnapshot, bitten = true, admit = true): void {
     const ai = this.world.infected!, tick = this.world.tick, c = e.civilian!, inf = e.infection!;
     // A conversion keeps the admitted actor's pose. The coarse route margin is
     // not another spawn owner; the shared admission query checks the new body below.
     const at = { x: e.transform.x, z: e.transform.z };
     let id: number;
-    try { id = ai.spawn(c.zooAnimal ? `infected.${c.zooAnimal}` : 'infected.runner', at, { variant: c.variant, yaw: e.transform.yaw, state: 'idle', perched: false, tier: inf.tier }); }
+    // This pooled record supplies the brain/combat data only. Admit the real
+    // actor below, after its original ID and pose have been retained.
+    try { id = ai.spawn(c.zooAnimal ? `infected.${c.zooAnimal}` : 'infected.runner', at, { variant: c.variant, yaw: e.transform.yaw, state: 'idle', perched: false, tier: inf.tier }, true); }
     catch { delete e.infection; this.kill(e); return; }
     const pooled = this.world.entities.get(id)!;
     this.world.entities.delete(id); this.world.spatial.delete(id);
@@ -545,7 +548,7 @@ export class Outbreak {
     // Lane C's L1 brain already gave it the tier run speed; without it (tests, old levels) use the tier base +/- jitter.
     if (!c.zooAnimal && !e.infected!.l1) e.infected!.speed = l1v2.speedTiers[inf.tier].baseMs * (1 + (this.rng.next() * 2 - 1) * l1v2.speedTiers.jitter);
     delete e.civilian; delete e.infection; delete e.motion; if (c.zooAnimal) delete e.locomotion;
-    this.world.solids.admit(e, 'outbreak.rise');
+    if (admit) this.world.solids.admit(e, 'outbreak.rise');
     this.humans.invalidate();
     for (const pet of this.world.entities.iterate()) if (pet.civilian?.owner === e.id) pet.civilian.owner = null;
     this.world.spatial.set(e.id, e.transform.x, e.transform.z);
@@ -558,12 +561,13 @@ export class Outbreak {
   /**
    * Turn a pedestrian immediately (no on-screen transformation), keeping id and look. For scripted beats that happen out
    * of sight, e.g. the lab technician inside the facility or the off-screen horde. Not counted as a bite.
+   * The alarm caller can own final placement by passing `admit = false`; ordinary conversions admit here.
    */
-  turnNow(e: EntitySnapshot, tier?: SpeedTier): void {
+  turnNow(e: EntitySnapshot, tier?: SpeedTier, admit = true): void {
     if (isCorgi(e) || storyProtected(this.world, e)) return;
     if (tier && e.appearance) e.appearance.tier = tier;
     e.infection = { entityId: e.id, progress: 1, phase: 'infected', tier: e.appearance?.tier ?? 'average', startedTick: this.world.tick, endsTick: this.world.tick, biteSourceId: 0 };
-    e.hidden = false; this.rise(e, false);
+    e.hidden = false; this.rise(e, false, admit);
   }
   /** Live pedestrians (not escaped, not turning, not dead). */
   liveCivilians(): number {

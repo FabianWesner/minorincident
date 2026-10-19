@@ -1,6 +1,11 @@
 // Adapted from folio-2025 InstancedGroup.js by Bruno Simon (MIT), commit 41046b5.
-import { Color, DynamicDrawUsage, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, Mesh, Object3D, Vector3 } from 'three/webgpu';
+import { Color, DynamicDrawUsage, Group, InstancedBufferAttribute, InstancedInterleavedBuffer, InterleavedBufferAttribute, InstancedMesh, Matrix4, Mesh, Object3D, Vector3, type Raycaster, type Intersection } from 'three/webgpu';
 import { staticInstanceAttributes } from './StaticInstanceAttributes';
+
+// Shared scratch, like Three's InstancedMesh.raycast; queries are synchronous.
+const raycastMesh = new Mesh();
+const raycastHits: Intersection[] = [];
+const emptyRaycastGeometry = raycastMesh.geometry, emptyRaycastMaterial = raycastMesh.material;
 
 /** One batch per prototype mesh; nested child transforms are preserved. Geometry/material ownership stays with the caller. */
 export class InstancedGroup extends Group {
@@ -24,6 +29,8 @@ export class InstancedGroup extends Group {
         geometry.setAttribute('_lightBase', new InterleavedBufferAttribute(state, 1, 0));
         geometry.setAttribute('_occluder', new InterleavedBufferAttribute(state, 1, 1));
       } else if (powered) geometry.setAttribute('_lightBase', new InstancedBufferAttribute(new Float32Array(capacity), 1));
+      // Bar occlusion uses exact mesh boxes; prepare them with the asset, before play.
+      if (!geometry.boundingBox) geometry.computeBoundingBox();
       const mesh = new InstancedMesh(geometry, child.material, capacity);
       // Warm-up and LOD repartition both rewrite these transforms. Three's
       // generated interleaved matrix buffer must upload after either change.
@@ -43,6 +50,25 @@ export class InstancedGroup extends Group {
       this.batches.push({ mesh, local, interior: child.userData.interior === true, ...(door ? { door, base: local.clone() } : {}) }); this.add(mesh);
     });
     this.update();
+  }
+  /** Exact drawn-geometry occlusion for one placement selected by the district broad phase.
+   * Respect compact interior indices and animated door/roof matrices without testing sibling placements. */
+  occludesReference(ray: Raycaster, reference: Object3D): boolean {
+    const referenceIndex = this.references.indexOf(reference);
+    if (referenceIndex < 0) return false;
+    try {
+      for (const batch of this.batches) {
+        const mesh = batch.mesh;
+        const index = batch.indices ? batch.indices.indexOf(referenceIndex) : referenceIndex;
+        if (index < 0 || index >= mesh.count) continue;
+        mesh.getMatrixAt(index, this.scratch);
+        raycastMesh.geometry = mesh.geometry; raycastMesh.material = mesh.material;
+        raycastMesh.matrixWorld.multiplyMatrices(mesh.matrixWorld, this.scratch);
+        raycastHits.length = 0; raycastMesh.raycast(ray, raycastHits);
+        if (raycastHits.length) { raycastHits.length = 0; return true; }
+      }
+      return false;
+    } finally { raycastMesh.geometry = emptyRaycastGeometry; raycastMesh.material = emptyRaycastMaterial; raycastHits.length = 0; }
   }
   private points?: Vector3[];
   /** District origins and batch-local transforms stay fixed; animated placements

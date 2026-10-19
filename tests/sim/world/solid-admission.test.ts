@@ -1,4 +1,4 @@
-import { expect, test } from 'vitest';
+import { expect, test, vi } from 'vitest';
 import { SimWorld } from '../../../src/sim/world/SimWorld';
 import { spawnSetPiece } from '../../../src/sim/missions/L4Spectacle';
 import { missionControls } from '../../../src/sim/missions/controls';
@@ -398,7 +398,7 @@ test('a queued house resident can leave a body-blocked doorstep without crossing
   } finally { w.dispose(); }
 });
 
-test('same-id conversion keeps a legal circular pose beside a conservative route corner', async () => {
+test('T-E22-20-admission @E22-AC20 same-id conversion admits only the real actor beside a conservative route corner', async () => {
   const w = await arena();
   try {
     const o = w.npcs!.civilians.outbreak = new Outbreak(w, { refuges: [] });
@@ -406,12 +406,16 @@ test('same-id conversion keeps a legal circular pose beside a conservative route
     const at = { x: 10.7518, z: 1.2482 }, id = o.spawnPedestrian(at), e = w.entities.get(id)!;
     expect(w.infected!.nav.clear(at.x, at.z, .4)).toBe(false);
     expect(w.solids.clear(e.transform, .35, id)).toBe(true);
+    const admit = vi.spyOn(w.solids, 'admit');
     o.turnNow(e);
+    expect(admit).toHaveBeenCalledTimes(1); expect(admit.mock.calls[0][0]).toBe(e); expect(admit.mock.calls[0][1]).toBe('outbreak.rise');
     expect(w.entities.get(id)).toBe(e);
     expect(e.transform.x).toBe(at.x); expect(e.transform.z).toBe(at.z);
     expect(e.infected).toBeDefined(); expect(w.infected!.director.count).toBe(1);
     w.tick++; w.solids.commit();
     expect(w.solids.snapshot()).toMatchObject({ failures: 0, pending: 0 });
+    w.infected!.spawn('infected.runner', { x: 20, z: 0 });
+    expect(admit.mock.calls.at(-1)![1]).toBe('infected.spawn');
   } finally { w.dispose(); }
 });
 

@@ -1,0 +1,43 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5 -> 2.31.10.108:/srv/mi/ws/perf-heap-w5-eac263
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the ED25519 key sent by the remote host is
+SHA256:CKh+eHyG0i9k/QrCEWOtIDIOG9In/zAqNxzZYkHJJB8.
+Please contact your system administrator.
+Add correct host key in /Users/wesner/.ssh/known_hosts_mi-runner to get rid of this message.
+Offending ED25519 key in /Users/wesner/.ssh/known_hosts_mi-runner:6
+Password authentication is disabled to avoid man-in-the-middle attacks.
+Keyboard-interactive authentication is disabled to avoid man-in-the-middle attacks.
+[remote] cache-gc deleted:none
+[remote] sync 20s, 22355 files; job /srv/mi/jobs/perf-heap-w5-eac263-71997-1792377872; queueing for a slot
+[runner] slot 0 acquired; load 0.23 0.07 0.31
+
+ RUN  v5.0.3 /srv/mi/jobs/perf-heap-w5-eac263-71997-1792377872
+
+ ✓  functional  tests/sim/world/solid-admission.test.ts (41 tests) 4838ms
+   ✓ checkpoint restore discards a deferred player mask from the discarded timeline 1819ms
+   ✓ a checkpoint containing a deferred player restores the inactive collider until admission 1855ms
+   ✓ the legacy L4 seated courier exempts only its explicit convoy bus 385ms
+ ✓  functional  tests/levels/L4-alarm-admission.test.ts (2 tests) 13837ms
+   ✓ T-E22-20-alarm @E22-AC20 high alarm actors have one final admission with their original IDs and full population 8954ms
+   ✓ T-E22-20-alarm @E22-AC20 low alarm actors have one final admission with their original IDs and full population 4882ms
+stdout | tests/sim/npc/l1-civilians.test.ts > L1 v2 civilians and infection > T-E19-06 @E19 @E19-AC06 every new infected is caused by a bite event (idle player, systemic spread, lane C AI)
+AC06 infected at +120 s: 57; at +240 s: 57
+
+ ✓  functional  tests/sim/npc/l1-civilians.test.ts (7 tests) 38012ms
+   ✓ L1 v2 civilians and infection (7)
+     ✓ T-E19-05 @E19 @E19-AC05 50-60 civilians, no idling, startle 0.3-0.8 s, flee slower than infected 6653ms
+     ✓ T-E19-06 @E19 @E19-AC06 every new infected is caused by a bite event (idle player, systemic spread, lane C AI) 22030ms
+     ✓ T-E19-18 @E19 @E19-AC18 infection continuity: id, asset, tint, accessories, 2.5-3.5 s, phases, speed tier 8144ms
+     ✓ @E19 @E19-AC06 at the infected cap a bite kills instead of turning (60 high / 30 low) 726ms
+
+ Test Files  3 passed (3)
+      Tests  50 passed (50)
+   Start at  02:44:53
+   Duration  39.83s (tests 91%, transform 7%, import 2%)
+
+[remote] done exit=0 (runner 2.31.10.108, sync 20s, remote total 43s)

@@ -55,6 +55,18 @@ export class HealthBars extends Group {
       const size = barSize(width, height, !!e.infected?.pursuit);
       // Use the actual displayed bounds, including pose blending and interpolated movement.
       this.bounds.getCenter(this.center);
+      this.point.copy(this.center).project(camera);
+      if (this.point.z < -1 || this.point.z > 1 || Math.abs(this.point.x) > 1 || Math.abs(this.point.y) > 1) continue;
+      this.projection.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
+      pickBodies.bounds(e.id, this.screenBounds, this.projection);
+      const top = (1 - this.screenBounds.max.y) * height / 2;
+      let x = (this.point.x + 1) * width / 2, y = top - 2 - (size.height + 4) / 2;
+      // A close Mega can extend above the frame while its body is visible. Keep its shared billboard readable.
+      if (e.infected?.pursuit) {
+        x = Math.max(size.width / 2 + 2, Math.min(width - size.width / 2 - 2, x));
+        y = Math.max(size.height / 2 + 2, Math.min(height - size.height / 2 - 2, y));
+      }
+      if (x - size.width / 2 - 2 < 0 || x + size.width / 2 + 2 > width || y - size.height / 2 - 2 < 0 || y + size.height / 2 + 2 > height) continue;
       this.direction.subVectors(this.center, camera.position);
       const distance = this.direction.length(); this.direction.normalize();
       Object.assign(this.ray.origin, camera.position); Object.assign(this.ray.dir, this.direction);
@@ -62,18 +74,7 @@ export class HealthBars extends Group {
       // Cuboids include solid buildings, doors, vehicles and displaced props; ignore actor capsules and sensors.
       if (physics?.castRay(this.ray, Math.max(0, distance - .01), true, undefined, undefined, undefined, undefined, this.solidCollider)) continue;
       if (occluded?.(this.center)) continue;
-      this.center.project(camera);
-      if (this.center.z < -1 || this.center.z > 1 || Math.abs(this.center.x) > 1 || Math.abs(this.center.y) > 1) continue;
-      this.projection.multiplyMatrices(camera.projectionMatrix, camera.matrixWorldInverse);
-      pickBodies.bounds(e.id, this.screenBounds, this.projection);
-      const top = (1 - this.screenBounds.max.y) * height / 2;
-      let x = (this.center.x + 1) * width / 2, y = top - 2 - (size.height + 4) / 2;
-      // A close Mega can extend above the frame while its body is visible. Keep its shared billboard readable.
-      if (e.infected?.pursuit) {
-        x = Math.max(size.width / 2 + 2, Math.min(width - size.width / 2 - 2, x));
-        y = Math.max(size.height / 2 + 2, Math.min(height - size.height / 2 - 2, y));
-      }
-      if (x - size.width / 2 - 2 < 0 || x + size.width / 2 + 2 > width || y - size.height / 2 - 2 < 0 || y + size.height / 2 + 2 > height) continue;
+      this.center.copy(this.point);
       this.center.y = 1 - y / height * 2;
       this.center.unproject(camera);
       const depth = -this.point.copy(this.center).applyMatrix4(camera.matrixWorldInverse).z;

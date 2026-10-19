@@ -1,0 +1,28 @@
+{
+  "name": "perf-heap-light-lab",
+  "extends": "spec-audit-b-light-lab.json",
+  "note": "E25-AC14 memory proof fixture: trailer beams and pooled infected at the game camera, both tiers and zooms. Native timing and collected heap are measured by T-E25-14c.",
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        2,
+        0
+      ]
+    },
+    {
+      "kind": "infected",
+      "count": 40,
+      "spread": 6,
+      "at": [
+        0,
+        0
+      ],
+      "state": "idle"
+    }
+  ],
+  "frames": 60,
+  "sheet": 30,
+  "infectedCap": 80
+}

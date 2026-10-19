@@ -1,0 +1,1333 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/node_modules/.bin/playwright",
+      "test",
+      "tests/perf/l7-encounters.spec.ts",
+      "tests/perf/l7-rocket.spec.ts",
+      "tests/perf/l4-budgets.spec.ts",
+      "tests/perf/l5-budgets.spec.ts",
+      "tests/perf/weather.spec.ts",
+      "tests/perf/e25-lighting.spec.ts",
+      "tests/perf/l7-lifecycle.spec.ts",
+      "tests/perf/l7-district.spec.ts",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34853",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34853",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34853",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34853",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34853",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34853",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 34853 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:34853",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "perf/e25-lighting.spec.ts",
+      "file": "perf/e25-lighting.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E25-14 @E25 @E25-AC14 @perf desktop high: L1 morning and night street (41 lamps in the field window, 60 infected) within E18 budgets",
+          "ok": true,
+          "tags": [
+            "E25",
+            "E25-AC14",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 240000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 29153,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T01:01:32.661Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "712beb7dffd3281a6fe3-8f8c08b8a0216b9ededf",
+          "file": "perf/e25-lighting.spec.ts",
+          "line": 30,
+          "column": 1
+        }
+      ],
+      "suites": [
+        {
+          "title": "Pixel 7 emulated low",
+          "file": "perf/e25-lighting.spec.ts",
+          "line": 47,
+          "column": 6,
+          "specs": [
+            {
+              "title": "T-E25-14b @E25 @E25-AC14 @perf phone low (4x CPU throttle): L1 morning and night street within the low budget",
+              "ok": true,
+              "tags": [
+                "E25",
+                "E25-AC14",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [
+                    {
+                      "type": "low-budget",
+                      "description": "p50 morning 17.4 ms, night 17.4 ms (budget 33.3 ms)"
+                    }
+                  ],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 53864,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-19T01:02:02.447Z",
+                      "annotations": [
+                        {
+                          "type": "low-budget",
+                          "description": "p50 morning 17.4 ms, night 17.4 ms (budget 33.3 ms)"
+                        }
+                      ],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "712beb7dffd3281a6fe3-7d754616893008b7887a",
+              "file": "perf/e25-lighting.spec.ts",
+              "line": 49,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "perf/l4-budgets.spec.ts",
+      "file": "perf/l4-budgets.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "high",
+          "file": "perf/l4-budgets.spec.ts",
+          "line": 14,
+          "column": 51,
+          "specs": [
+            {
+              "title": "T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break high",
+              "ok": true,
+              "tags": [
+                "E22",
+                "E22-AC20",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 1200000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 58540,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "{\"renderer\":\"webgl\",\"tier\":\"high\",\"seed\":2,\"counts\":{\"infected\":96,\"alphas\":2,\"alphasArrived\":3,\"turnS\":84,\"soldiersAtTurn\":20,\"soldiers\":19,\"civilians\":40},\"firingSoldiers\":16,\"warAwakeProps\":0,\"collapseAwakeProps\":0,\"warDrawCalls\":370,\"warTriangles\":589717,\"collapseDrawCalls\":389,\"collapseTriangles\":707519,\"warP50\":7,\"warP95\":10,\"warMax\":17.900000000001455,\"turnMaxMs\":18.700000000000728,\"tankMaxMs\":17.80000000000291,\"breakMaxMs\":30.69999999999709,\"collapseP50\":8.400000000001455,\"collapseP95\":12.30000000000291,\"simP95\":2.6999998092651367,\"simFrameP95\":2.40000057220459,\"updateP95\":3.6999998092651367,\"renderP95\":4.199999809265137,\"lineBroke\":true}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-19T01:02:56.648Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d28036ff337e68a7d230-42c898189b52048cc908",
+              "file": "perf/l4-budgets.spec.ts",
+              "line": 16,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "low",
+          "file": "perf/l4-budgets.spec.ts",
+          "line": 14,
+          "column": 51,
+          "specs": [
+            {
+              "title": "T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break low",
+              "ok": false,
+              "tags": [
+                "E22",
+                "E22-AC20",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 1200000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 95376,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m6\u001b[39m\nReceived:    \u001b[31m6.699999809265137\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m6\u001b[39m\nReceived:    \u001b[31m6.699999809265137\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l4-budgets.spec.ts:111:26",
+                        "location": {
+                          "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l4-budgets.spec.ts",
+                          "column": 26,
+                          "line": 111
+                        },
+                        "snippet": "  109 |     // E18's sim budget measures one fixed step; low rAFs can advance several ticks.\n  110 |     // Retain the total per-frame CPU cost separately, while frame/hitch bounds stay unchanged.\n> 111 |     expect(proof.simP95).toBeLessThanOrEqual(tier === 'high' ? 4 : 6);\n      |                          ^\n  112 |     for (const [draws, tris] of [[proof.warDrawCalls, proof.warTriangles], [proof.collapseDrawCalls, proof.collapseTriangles]]) { expect(draws).toBeLessThanOrEqual(tier === 'high' ? 600 : 300); expect(tris).toBeLessThanOrEqual(tier === 'high' ? 1_500_000 : 500_000); }\n  113 |     for (const awake of [proof.warAwakeProps, proof.collapseAwakeProps]) expect(awake).toBeLessThanOrEqual(tier === 'high' ? 150 : 60);\n  114 |     // E18 frame targets: desktop high p95 within the 60 fps budget (14 ms incl. headroom); phone low >= 30 fps p50 at 4x CPU throttle."
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l4-budgets.spec.ts",
+                            "column": 26,
+                            "line": 111
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m6\u001b[39m\nReceived:    \u001b[31m6.699999809265137\u001b[39m\n\n  109 |     // E18's sim budget measures one fixed step; low rAFs can advance several ticks.\n  110 |     // Retain the total per-frame CPU cost separately, while frame/hitch bounds stay unchanged.\n> 111 |     expect(proof.simP95).toBeLessThanOrEqual(tier === 'high' ? 4 : 6);\n      |                          ^\n  112 |     for (const [draws, tris] of [[proof.warDrawCalls, proof.warTriangles], [proof.collapseDrawCalls, proof.collapseTriangles]]) { expect(draws).toBeLessThanOrEqual(tier === 'high' ? 600 : 300); expect(tris).toBeLessThanOrEqual(tier === 'high' ? 1_500_000 : 500_000); }\n  113 |     for (const awake of [proof.warAwakeProps, proof.collapseAwakeProps]) expect(awake).toBeLessThanOrEqual(tier === 'high' ? 150 : 60);\n  114 |     // E18 frame targets: desktop high p95 within the 60 fps budget (14 ms incl. headroom); phone low >= 30 fps p50 at 4x CPU throttle.\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l4-budgets.spec.ts:111:26"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "{\"renderer\":\"webgl\",\"tier\":\"low\",\"seed\":2,\"counts\":{\"infected\":48,\"alphas\":2,\"alphasArrived\":3,\"turnS\":111.76666666666667,\"soldiersAtTurn\":10,\"soldiers\":9,\"civilians\":20},\"firingSoldiers\":6,\"warAwakeProps\":0,\"collapseAwakeProps\":1,\"warDrawCalls\":209,\"warTriangles\":248674,\"collapseDrawCalls\":247,\"collapseTriangles\":258167,\"warP50\":27.30000000000291,\"warP95\":34.19999999999709,\"warMax\":100.79999999999563,\"turnMaxMs\":108.69999999999709,\"tankMaxMs\":47,\"breakMaxMs\":52,\"collapseP50\":25.39999999999418,\"collapseP95\":46.40000000000873,\"simP95\":6.699999809265137,\"simFrameP95\":11.5,\"updateP95\":9,\"renderP95\":13.199999809265137,\"lineBroke\":true}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-19T01:03:55.457Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34853/perf-l4-budgets-low-T-E22--92ab6-ck-chain-and-line-break-low-chromium/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34853/perf-l4-budgets-low-T-E22--92ab6-ck-chain-and-line-break-low-chromium/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l4-budgets.spec.ts",
+                        "column": 26,
+                        "line": 111
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d28036ff337e68a7d230-81e59d30aafd40784017",
+              "file": "perf/l4-budgets.spec.ts",
+              "line": 16,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "perf/l5-budgets.spec.ts",
+      "file": "perf/l5-budgets.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "high",
+          "file": "perf/l5-budgets.spec.ts",
+          "line": 11,
+          "column": 51,
+          "specs": [
+            {
+              "title": "T-E23-19 @E23 @E23-AC19 @E28-AC10 @perf L5 pair-plaza with fires, smoke and five followers, and a walk with the group, high",
+              "ok": true,
+              "tags": [
+                "E23",
+                "E23-AC19",
+                "E28-AC10",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 1200000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 44985,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "{\"tier\":\"high\",\"counts\":{\"followers\":5,\"infected\":18,\"fires\":13,\"corpses\":37},\"weather\":{\"sim\":{\"kind\":\"ash\",\"flakes\":0.35,\"fog\":0.12},\"render\":{\"particles\":1750,\"flash\":0,\"rayDitherRadius\":6,\"wetness\":0,\"accumulation\":0.15263888888888713,\"tracks\":399,\"trackPixels\":5709}},\"heapMB\":102.63002,\"heapAudit\":{\"usedSize\":102630020,\"totalSize\":104022016,\"embedderHeapUsedSize\":2796696,\"backingStorageSize\":862660733},\"baselineDrawCalls\":447,\"baselineTriangles\":710315,\"pairDrawCalls\":324,\"pairTriangles\":641741,\"followDrawCalls\":324,\"followTriangles\":641237,\"p50\":6.5,\"p95\":8.700000000000728,\"max\":12.599999999998545}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-19T01:05:33.666Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "52469fd7d74b2e7bab1b-11e0a322cbd69057cae2",
+              "file": "perf/l5-budgets.spec.ts",
+              "line": 13,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "low",
+          "file": "perf/l5-budgets.spec.ts",
+          "line": 11,
+          "column": 51,
+          "specs": [
+            {
+              "title": "T-E23-19 @E23 @E23-AC19 @E28-AC10 @perf L5 pair-plaza with fires, smoke and five followers, and a walk with the group, low",
+              "ok": true,
+              "tags": [
+                "E23",
+                "E23-AC19",
+                "E28-AC10",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 1200000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 46971,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "{\"tier\":\"low\",\"counts\":{\"followers\":5,\"infected\":12,\"fires\":13,\"corpses\":37},\"weather\":{\"sim\":{\"kind\":\"ash\",\"flakes\":0.35,\"fog\":0.12},\"render\":{\"particles\":525,\"flash\":0,\"rayDitherRadius\":6,\"wetness\":0,\"accumulation\":0.15263888888888713,\"tracks\":262,\"trackPixels\":5713}},\"heapMB\":79.010416,\"heapAudit\":{\"usedSize\":79010416,\"totalSize\":80166912,\"embedderHeapUsedSize\":2621512,\"backingStorageSize\":349951691},\"baselineDrawCalls\":297,\"baselineTriangles\":280261,\"pairDrawCalls\":237,\"pairTriangles\":265078,\"followDrawCalls\":237,\"followTriangles\":265078,\"p50\":16.799999999999272,\"p95\":34.29999999999927,\"max\":37.80000000000109}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-19T01:06:18.918Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "52469fd7d74b2e7bab1b-e319eb9e677e1c025fb2",
+              "file": "perf/l5-budgets.spec.ts",
+              "line": 13,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "perf/l7-district.spec.ts",
+      "file": "perf/l7-district.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "high",
+          "file": "perf/l7-district.spec.ts",
+          "line": 11,
+          "column": 51,
+          "specs": [
+            {
+              "title": "T-E29-19-district @E29-AC19 @E29-AC20 @perf W6 district high fire and rocket stress",
+              "ok": false,
+              "tags": [
+                "E29-AC19",
+                "E29-AC20",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 16754,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m50\u001b[39m\nReceived:    \u001b[31m54.70000000000073\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m50\u001b[39m\nReceived:    \u001b[31m54.70000000000073\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-district.spec.ts:118:45",
+                        "location": {
+                          "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-district.spec.ts",
+                          "column": 45,
+                          "line": 118
+                        },
+                        "snippet": "  116 |   expect(result.peakParticles).toBeLessThanOrEqual(tier === 'high' ? 6000 : 2000); expect(result.heroLights).toBeLessThanOrEqual(tier === 'high' ? 8 : 3); expect(result.awakeProps).toBeLessThanOrEqual(tier === 'high' ? 150 : 60);\n  117 |   expect(result.frameP95).toBeLessThanOrEqual(tier === 'high' ? 16.7 : 33.3);\n> 118 |   if (tier === 'high') expect(result.hitch).toBeLessThanOrEqual(50);\n      |                                             ^\n  119 |   if (tier === 'low' && process.env.L7_PHONE_MARGIN === '1') expect(result.frameP95, 'Phone stress needs at least 10% frame headroom').toBeLessThanOrEqual(33.3 * .9);\n  120 | });\n  121 | });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-district.spec.ts",
+                            "column": 45,
+                            "line": 118
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m50\u001b[39m\nReceived:    \u001b[31m54.70000000000073\u001b[39m\n\n  116 |   expect(result.peakParticles).toBeLessThanOrEqual(tier === 'high' ? 6000 : 2000); expect(result.heroLights).toBeLessThanOrEqual(tier === 'high' ? 8 : 3); expect(result.awakeProps).toBeLessThanOrEqual(tier === 'high' ? 150 : 60);\n  117 |   expect(result.frameP95).toBeLessThanOrEqual(tier === 'high' ? 16.7 : 33.3);\n> 118 |   if (tier === 'high') expect(result.hitch).toBeLessThanOrEqual(50);\n      |                                             ^\n  119 |   if (tier === 'low' && process.env.L7_PHONE_MARGIN === '1') expect(result.frameP95, 'Phone stress needs at least 10% frame headroom').toBeLessThanOrEqual(33.3 * .9);\n  120 | });\n  121 | });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-district.spec.ts:118:45"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "{\"motion\":{\"bakedFigures\":0,\"live\":191,\"barelyMoving\":42,\"states\":{\"wander\":163,\"attack\":12,\"chase\":10,\"attracted\":6}},\"gpu\":\"ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)\",\"touchPoints\":0,\"firesStart\":28,\"firesEnd\":28,\"tier\":\"high\",\"backend\":\"webgl\",\"blasts\":7,\"peakInfected\":200,\"frameP50\":7.399999999999636,\"frameP95\":11.699999999999818,\"frameP99\":13.100000000000364,\"hitch\":54.70000000000073,\"simP95\":1.9000005722045898,\"simFrameP95\":1.8999996185302734,\"draws\":239,\"triangles\":851033,\"heapMB\":83.651056,\"peakPuffs\":400,\"peakParts\":0,\"peakParticles\":2235,\"heroLights\":0,\"awakeProps\":0,\"hitches\":[{\"frame\":250,\"ms\":54.70000000000073,\"elapsed\":2087.7999998092655,\"sim\":5.5,\"update\":0,\"render\":0,\"nodeBuilds\":350}],\"samples\":[],\"pipelines\":[],\"newPrograms\":{},\"costs\":null}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-19T01:07:06.225Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34853/perf-l7-district-high-T-E2-6c05d-high-fire-and-rocket-stress-chromium/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34853/perf-l7-district-high-T-E2-6c05d-high-fire-and-rocket-stress-chromium/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-district.spec.ts",
+                        "column": 45,
+                        "line": 118
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "65f9588bcf7ff645d731-73ff9a0179e97c4da9dc",
+              "file": "perf/l7-district.spec.ts",
+              "line": 13,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "low",
+          "file": "perf/l7-district.spec.ts",
+          "line": 11,
+          "column": 51,
+          "specs": [
+            {
+              "title": "T-E29-19-district @E29-AC19 @E29-AC20 @perf W6 district low fire and rocket stress",
+              "ok": false,
+              "tags": [
+                "E29-AC19",
+                "E29-AC20",
+                "perf"
+              ],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 4,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 23311,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.3\u001b[39m\nReceived:    \u001b[31m34.29999999999927\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.3\u001b[39m\nReceived:    \u001b[31m34.29999999999927\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-district.spec.ts:117:27",
+                        "location": {
+                          "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-district.spec.ts",
+                          "column": 27,
+                          "line": 117
+                        },
+                        "snippet": "  115 |   expect(result.peakPuffs).toBeLessThanOrEqual(tier === 'high' ? 400 : 120); expect(result.peakParts).toBeLessThanOrEqual(tier === 'high' ? 120 : 40);\n  116 |   expect(result.peakParticles).toBeLessThanOrEqual(tier === 'high' ? 6000 : 2000); expect(result.heroLights).toBeLessThanOrEqual(tier === 'high' ? 8 : 3); expect(result.awakeProps).toBeLessThanOrEqual(tier === 'high' ? 150 : 60);\n> 117 |   expect(result.frameP95).toBeLessThanOrEqual(tier === 'high' ? 16.7 : 33.3);\n      |                           ^\n  118 |   if (tier === 'high') expect(result.hitch).toBeLessThanOrEqual(50);\n  119 |   if (tier === 'low' && process.env.L7_PHONE_MARGIN === '1') expect(result.frameP95, 'Phone stress needs at least 10% frame headroom').toBeLessThanOrEqual(33.3 * .9);\n  120 | });"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-district.spec.ts",
+                            "column": 27,
+                            "line": 117
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.3\u001b[39m\nReceived:    \u001b[31m34.29999999999927\u001b[39m\n\n  115 |   expect(result.peakPuffs).toBeLessThanOrEqual(tier === 'high' ? 400 : 120); expect(result.peakParts).toBeLessThanOrEqual(tier === 'high' ? 120 : 40);\n  116 |   expect(result.peakParticles).toBeLessThanOrEqual(tier === 'high' ? 6000 : 2000); expect(result.heroLights).toBeLessThanOrEqual(tier === 'high' ? 8 : 3); expect(result.awakeProps).toBeLessThanOrEqual(tier === 'high' ? 150 : 60);\n> 117 |   expect(result.frameP95).toBeLessThanOrEqual(tier === 'high' ? 16.7 : 33.3);\n      |                           ^\n  118 |   if (tier === 'high') expect(result.hitch).toBeLessThanOrEqual(50);\n  119 |   if (tier === 'low' && process.env.L7_PHONE_MARGIN === '1') expect(result.frameP95, 'Phone stress needs at least 10% frame headroom').toBeLessThanOrEqual(33.3 * .9);\n  120 | });\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-district.spec.ts:117:27"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "{\"motion\":{\"bakedFigures\":0,\"live\":95,\"barelyMoving\":40,\"states\":{\"wander\":77,\"attack\":5,\"chase\":11,\"attracted\":2}},\"gpu\":\"ANGLE (Apple, ANGLE Metal Renderer: Apple M4, Unspecified Version)\",\"touchPoints\":1,\"firesStart\":28,\"firesEnd\":28,\"tier\":\"low\",\"backend\":\"webgl\",\"blasts\":7,\"peakInfected\":100,\"frameP50\":17.299999999999272,\"frameP95\":34.29999999999927,\"frameP99\":36.30000000000109,\"hitch\":125.59999999999854,\"simP95\":4.100000381469727,\"simFrameP95\":6.40000057220459,\"draws\":129,\"triangles\":210675,\"heapMB\":74.638596,\"peakPuffs\":120,\"peakParts\":0,\"peakParticles\":411,\"heroLights\":0,\"awakeProps\":0,\"hitches\":[{\"frame\":2,\"ms\":105.69999999999891,\"elapsed\":138.2000001907345,\"sim\":18.600000381469727,\"update\":0,\"render\":0,\"nodeBuilds\":438},{\"frame\":112,\"ms\":125.59999999999854,\"elapsed\":2168.100000190734,\"sim\":21.399999618530273,\"update\":0,\"render\":0,\"nodeBuilds\":443}],\"samples\":[],\"pipelines\":[],\"newPrograms\":{},\"costs\":null}\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-19T01:07:24.487Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34853/perf-l7-district-low-T-E29-4a467--low-fire-and-rocket-stress-chromium/error-context.md"
+                        },
+                        {
+                          "name": "trace",
+                          "contentType": "application/zip",
+                          "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34853/perf-l7-district-low-T-E29-4a467--low-fire-and-rocket-stress-chromium/trace.zip"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-district.spec.ts",
+                        "column": 27,
+                        "line": 117
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "65f9588bcf7ff645d731-fea436874e9a216cf4f0",
+              "file": "perf/l7-district.spec.ts",
+              "line": 13,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "perf/l7-encounters.spec.ts",
+      "file": "perf/l7-encounters.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E29-19-encounters @E29-AC19 @perf high: final horde, followers and queued arrivals",
+          "ok": false,
+          "tags": [
+            "E29-AC19",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 21078,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m16.7\u001b[39m\nReceived:    \u001b[31m17.100000000002183\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m16.7\u001b[39m\nReceived:    \u001b[31m17.100000000002183\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-encounters.spec.ts:54:27",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-encounters.spec.ts",
+                      "column": 27,
+                      "line": 54
+                    },
+                    "snippet": "  52 |   expect(result.initialRegulars).toBe(low ? 60 : 120); expect(result.initialAlphas).toBe(2); expect(result.followers).toBe(low ? 15 : 24);\n  53 |   expect(result.peakInfected).toBe(low ? 100 : 200); expect(result.blasts).toBeGreaterThanOrEqual(6);\n> 54 |   expect(result.frameP95).toBeLessThanOrEqual(low ? 33.3 : 16.7); expect(result.simP95).toBeLessThanOrEqual(low ? 6 : 4);\n     |                           ^\n  55 |   expect(result.draws).toBeLessThanOrEqual(low ? 300 : 600); expect(result.triangles).toBeLessThanOrEqual(low ? 500000 : 1500000); expect(result.heapMB).toBeLessThanOrEqual(low ? 250 : 400);\n  56 |   expect(result.puffs).toBeLessThanOrEqual(low ? 120 : 400); expect(result.debris).toBeLessThanOrEqual(low ? 40 : 120); expect(result.particles).toBeLessThanOrEqual(low ? 2000 : 6000);\n  57 |   expect(result.lights).toBeLessThanOrEqual(low ? 3 : 8); expect(result.props).toBeLessThanOrEqual(low ? 60 : 150);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-encounters.spec.ts",
+                        "column": 27,
+                        "line": 54
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m16.7\u001b[39m\nReceived:    \u001b[31m17.100000000002183\u001b[39m\n\n  52 |   expect(result.initialRegulars).toBe(low ? 60 : 120); expect(result.initialAlphas).toBe(2); expect(result.followers).toBe(low ? 15 : 24);\n  53 |   expect(result.peakInfected).toBe(low ? 100 : 200); expect(result.blasts).toBeGreaterThanOrEqual(6);\n> 54 |   expect(result.frameP95).toBeLessThanOrEqual(low ? 33.3 : 16.7); expect(result.simP95).toBeLessThanOrEqual(low ? 6 : 4);\n     |                           ^\n  55 |   expect(result.draws).toBeLessThanOrEqual(low ? 300 : 600); expect(result.triangles).toBeLessThanOrEqual(low ? 500000 : 1500000); expect(result.heapMB).toBeLessThanOrEqual(low ? 250 : 400);\n  56 |   expect(result.puffs).toBeLessThanOrEqual(low ? 120 : 400); expect(result.debris).toBeLessThanOrEqual(low ? 40 : 120); expect(result.particles).toBeLessThanOrEqual(low ? 2000 : 6000);\n  57 |   expect(result.lights).toBeLessThanOrEqual(low ? 3 : 8); expect(result.props).toBeLessThanOrEqual(low ? 60 : 150);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-encounters.spec.ts:54:27"
+                    }
+                  ],
+                  "stdout": [
+                    {
+                      "text": "{\"tier\":\"high\",\"costs\":{\"simTick\":2.3000001907348633,\"simTickMax\":2.200000762939453,\"sim\":2.200000762939453,\"physics\":0.19999980926513672,\"simNpcs\":0.3000001907348633,\"ai\":0.6000003814697266,\"trapRescue\":0,\"audio\":0,\"input\":0,\"camera\":0.19999980926513672,\"view\":14.699999809265137,\"weather\":1.9000005722045898,\"render\":3.1000003814697266,\"crowd\":0.40000057220458984,\"npcs\":3,\"accessories\":0,\"occlusion\":0.10000038146972656,\"doors\":0,\"lod\":0.19999980926513672,\"lightField\":0.19999980926513672,\"lighting\":0.20000076293945312,\"ui\":0},\"frameMax\":65.79999999999927,\"simFrameP95\":2.3000001907348633,\"updateP95\":0,\"renderP95\":0,\"frameP95\":17.100000000002183,\"simP95\":2.200000762939453,\"draws\":258,\"triangles\":838513,\"peakInfected\":200,\"puffs\":400,\"debris\":0,\"particles\":2180,\"lights\":0,\"props\":0,\"blasts\":7,\"initialRegulars\":120,\"initialAlphas\":2,\"followers\":24,\"heapMB\":87.806204,\"heapAudit\":{\"usedSize\":87806204,\"totalSize\":89161728,\"embedderHeapUsedSize\":2694296,\"backingStorageSize\":410449378}}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T01:07:49.147Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34853/perf-l7-encounters-T-E29-1-85135-llowers-and-queued-arrivals-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34853/perf-l7-encounters-T-E29-1-85135-llowers-and-queued-arrivals-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-encounters.spec.ts",
+                    "column": 27,
+                    "line": 54
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "3c28d105f62fdc1f786d-4cfefb3d6f83d3ae0416",
+          "file": "perf/l7-encounters.spec.ts",
+          "line": 4,
+          "column": 46
+        },
+        {
+          "title": "T-E29-19-encounters @E29-AC19 @perf low: final horde, followers and queued arrivals",
+          "ok": false,
+          "tags": [
+            "E29-AC19",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 23163,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.3\u001b[39m\nReceived:    \u001b[31m42.19999999999891\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.3\u001b[39m\nReceived:    \u001b[31m42.19999999999891\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-encounters.spec.ts:54:27",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-encounters.spec.ts",
+                      "column": 27,
+                      "line": 54
+                    },
+                    "snippet": "  52 |   expect(result.initialRegulars).toBe(low ? 60 : 120); expect(result.initialAlphas).toBe(2); expect(result.followers).toBe(low ? 15 : 24);\n  53 |   expect(result.peakInfected).toBe(low ? 100 : 200); expect(result.blasts).toBeGreaterThanOrEqual(6);\n> 54 |   expect(result.frameP95).toBeLessThanOrEqual(low ? 33.3 : 16.7); expect(result.simP95).toBeLessThanOrEqual(low ? 6 : 4);\n     |                           ^\n  55 |   expect(result.draws).toBeLessThanOrEqual(low ? 300 : 600); expect(result.triangles).toBeLessThanOrEqual(low ? 500000 : 1500000); expect(result.heapMB).toBeLessThanOrEqual(low ? 250 : 400);\n  56 |   expect(result.puffs).toBeLessThanOrEqual(low ? 120 : 400); expect(result.debris).toBeLessThanOrEqual(low ? 40 : 120); expect(result.particles).toBeLessThanOrEqual(low ? 2000 : 6000);\n  57 |   expect(result.lights).toBeLessThanOrEqual(low ? 3 : 8); expect(result.props).toBeLessThanOrEqual(low ? 60 : 150);"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-encounters.spec.ts",
+                        "column": 27,
+                        "line": 54
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m33.3\u001b[39m\nReceived:    \u001b[31m42.19999999999891\u001b[39m\n\n  52 |   expect(result.initialRegulars).toBe(low ? 60 : 120); expect(result.initialAlphas).toBe(2); expect(result.followers).toBe(low ? 15 : 24);\n  53 |   expect(result.peakInfected).toBe(low ? 100 : 200); expect(result.blasts).toBeGreaterThanOrEqual(6);\n> 54 |   expect(result.frameP95).toBeLessThanOrEqual(low ? 33.3 : 16.7); expect(result.simP95).toBeLessThanOrEqual(low ? 6 : 4);\n     |                           ^\n  55 |   expect(result.draws).toBeLessThanOrEqual(low ? 300 : 600); expect(result.triangles).toBeLessThanOrEqual(low ? 500000 : 1500000); expect(result.heapMB).toBeLessThanOrEqual(low ? 250 : 400);\n  56 |   expect(result.puffs).toBeLessThanOrEqual(low ? 120 : 400); expect(result.debris).toBeLessThanOrEqual(low ? 40 : 120); expect(result.particles).toBeLessThanOrEqual(low ? 2000 : 6000);\n  57 |   expect(result.lights).toBeLessThanOrEqual(low ? 3 : 8); expect(result.props).toBeLessThanOrEqual(low ? 60 : 150);\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-encounters.spec.ts:54:27"
+                    }
+                  ],
+                  "stdout": [
+                    {
+                      "text": "{\"tier\":\"low\",\"costs\":{\"simTick\":8.90000057220459,\"simTickMax\":5.199999809265137,\"sim\":8.699999809265137,\"physics\":0.6999998092651367,\"simNpcs\":1.2999992370605469,\"ai\":2.500001907348633,\"trapRescue\":0,\"audio\":0,\"input\":0.19999980926513672,\"camera\":0.8000001907348633,\"view\":26.300000190734863,\"weather\":1.5,\"render\":7.700000762939453,\"crowd\":1.1000003814697266,\"npcs\":4.300000190734863,\"accessories\":0.09999942779541016,\"occlusion\":0.8000001907348633,\"doors\":0,\"lod\":0.9000005722045898,\"lightField\":1,\"lighting\":1,\"ui\":0},\"frameMax\":177.5,\"simFrameP95\":8.90000057220459,\"updateP95\":0,\"renderP95\":0,\"frameP95\":42.19999999999891,\"simP95\":5.100000381469727,\"draws\":109,\"triangles\":160944,\"peakInfected\":100,\"puffs\":120,\"debris\":0,\"particles\":570,\"lights\":0,\"props\":0,\"blasts\":7,\"initialRegulars\":60,\"initialAlphas\":2,\"followers\":15,\"heapMB\":75.656384,\"heapAudit\":{\"usedSize\":75656384,\"totalSize\":76431360,\"embedderHeapUsedSize\":2522472,\"backingStorageSize\":167691843}}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T01:08:11.750Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34853/perf-l7-encounters-T-E29-1-56b45-llowers-and-queued-arrivals-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34853/perf-l7-encounters-T-E29-1-56b45-llowers-and-queued-arrivals-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-encounters.spec.ts",
+                    "column": 27,
+                    "line": 54
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "3c28d105f62fdc1f786d-abdda92568f931f50fc3",
+          "file": "perf/l7-encounters.spec.ts",
+          "line": 4,
+          "column": 46
+        }
+      ]
+    },
+    {
+      "title": "perf/l7-lifecycle.spec.ts",
+      "file": "perf/l7-lifecycle.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E23-19-lifecycle @E23-AC19 @perf high L5 disposal retains accessibility and releases resources",
+          "ok": true,
+          "tags": [
+            "E23-AC19",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10960,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T01:08:36.171Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "fb1fafa9b87b2bd61916-b39383e4c042484eb628",
+          "file": "perf/l7-lifecycle.spec.ts",
+          "line": 5,
+          "column": 93
+        },
+        {
+          "title": "T-E23-19-lifecycle @E23-AC19 @perf low L5 disposal retains accessibility and releases resources",
+          "ok": true,
+          "tags": [
+            "E23-AC19",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8117,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T01:08:47.329Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "fb1fafa9b87b2bd61916-28caaeaa369b18bd2a17",
+          "file": "perf/l7-lifecycle.spec.ts",
+          "line": 5,
+          "column": 93
+        },
+        {
+          "title": "T-E29-20-lifecycle @E29-AC20 @perf high L7 disposal retains accessibility and releases resources",
+          "ok": true,
+          "tags": [
+            "E29-AC20",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9351,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T01:08:55.452Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "fb1fafa9b87b2bd61916-146424e2af5f2fa84868",
+          "file": "perf/l7-lifecycle.spec.ts",
+          "line": 5,
+          "column": 93
+        },
+        {
+          "title": "T-E29-20-lifecycle @E29-AC20 @perf low L7 disposal retains accessibility and releases resources",
+          "ok": true,
+          "tags": [
+            "E29-AC20",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7369,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T01:09:04.809Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "fb1fafa9b87b2bd61916-552766298947a1ae0e8f",
+          "file": "perf/l7-lifecycle.spec.ts",
+          "line": 5,
+          "column": 93
+        }
+      ]
+    },
+    {
+      "title": "perf/l7-rocket.spec.ts",
+      "file": "perf/l7-rocket.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E29-19-rocket @E29-AC19 @perf high repeated rocket hits at the 200/100 infected cap",
+          "ok": true,
+          "tags": [
+            "E29-AC19",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 14327,
+                  "errors": [],
+                  "stdout": [
+                    {
+                      "text": "{\"tier\":\"high\",\"counterAgreement\":true,\"blasts\":7,\"peakInfected\":200,\"frameMax\":24.100000000000364,\"frameP95\":8,\"simP95\":1.3000001907348633,\"draws\":215,\"triangles\":953684,\"heapMB\":69.161356,\"peakRawHeapMB\":647.415971,\"particles\":2048,\"puffs\":271,\"debris\":0,\"gibs\":80,\"perf\":{\"chunkResidency\":null,\"terrain\":null,\"infected\":{\"count\":333,\"liveCount\":200,\"available\":17},\"effects\":{\"obstruction\":{\"remainingTicks\":0,\"opacity\":0},\"shots\":[],\"enabled\":true,\"colorblind\":false,\"gore\":\"Full\",\"quality\":\"high\",\"flashReduction\":false,\"time\":11.009000000000027,\"lastSpray\":{\"actionId\":\"explosion.rocket\",\"direction\":{\"x\":-0.6831428509969021,\"z\":-0.7302847698889965},\"droplets\":44,\"chunks\":4,\"gravity\":9.81},\"surfaceSplats\":0,\"pendingSplats\":384,\"particles\":2048,\"particleCap\":2048,\"decals\":600,\"decalCap\":600,\"gibs\":80,\"gibCap\":80,\"telegraphs\":[{\"attackId\":109,\"slot\":108,\"kind\":\"lunge\",\"spawned\":10.820800000000025,\"sourceId\":560},{\"attackId\":110,\"slot\":109,\"kind\":\"lunge\",\"spawned\":10.855300000000025,\"sourceId\":511}],\"hitStop\":{\"active\":false,\"until\":0,\"started\":0,\"suppressed\":0},\"flash\":0,\"blasts\":{\"wind\":{\"x\":0.55,\"z\":0.25},\"blasts\":7,\"puffs\":272,\"puffCap\":400,\"fireballs\":44,\"fireballCap\":96,\"chunks\":63,\"chunkCap\":64,\"flames\":0,\"glows\":1,\"vehicleSmokeColumns\":0,\"columns\":7,\"transientColumns\":7,\"fireColumns\":0,\"columnShadows\":7,\"clouds\":0,\"scorch\":7,\"parts\":0,\"flash\":0,\"bulletTime\":{\"scale\":1,\"remaining\":0,\"progress\":0},\"slowMotion\":false},\"coverage\":0,\"detached\":3055,\"dismemberedKills\":611,\"kills\":611,\"explosionRadius\":6},\"nodeBuildMaterials\":{},\"crowdPreparation\":{\"workers\":8,\"submitted\":24,\"completed\":24,\"prebuilt\":24,\"failed\":0},\"nodeBuilds\":193,\"profile\":{\"other\":{\"drawCalls\":53,\"triangles\":177994},\"shadows\":{\"drawCalls\":20,\"triangles\":31147},\"crowd\":{\"drawCalls\":142,\"triangles\":660263}},\"profileAssets\":{\"view:other/Background.mesh/Background.mesh\":{\"drawCalls\":1,\"triangles\":1984},\"shadow:other/Group/rigid-part\":{\"drawCalls\":14,\"triangles\":27786},\"shadow:other/Group/mesh_1\":{\"drawCalls\":2,\"triangles\":1708},\"shadow:other/Group/mesh_1_1\":{\"drawCalls\":1,\"triangles\":280},\"shadow:other/Group/mesh_0\":{\"drawCalls\":2,\"triangles\":1372},\"shadow:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"shadow:other/Group/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"view:other/Group/mesh_0\":{\"drawCalls\":2,\"triangles\":1372},\"view:other/Group/mesh_1\":{\"drawCalls\":2,\"triangles\":1708},\"view:other/Group/mesh_1_1\":{\"drawCalls\":1,\"triangles\":280},\"view:other/Group/rigid-part\":{\"drawCalls\":14,\"triangles\":27786},\"view:other/crowd-accessories/acc.hat-hard-hat:lod1\":{\"drawCalls\":1,\"triangles\":258},\"view:other/crowd-accessories/acc.hat-baseball-cap:lod1\":{\"drawCalls\":1,\"triangles\":260},\"view:other/crowd-accessories/acc.hair-bun:lod1\":{\"drawCalls\":1,\"triangles\":176},\"view:other/crowd-accessories/acc.hat-flat-cap:lod1\":{\"drawCalls\":1,\"triangles\":112},\"view:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"view:other/crowd-accessories/acc.hat-sun-hat:lod1\":{\"drawCalls\":1,\"triangles\":270},\"view:other/crowd-accessories/acc.hat-beanie:lod1\":{\"drawCalls\":1,\"triangles\":192},\"view:other/crowd-accessories/acc.hair-afro:lod1\":{\"drawCalls\":1,\"triangles\":200},\"view:other/crowd-accessories/acc.hat-bucket-hat:lod1\":{\"drawCalls\":1,\"triangles\":324},\"view:other/crowd-accessories/acc.hair-side-part:lod1\":{\"drawCalls\":1,\"triangles\":216},\"view:other/crowd-accessories/acc.hair-short-crop:lod1\":{\"drawCalls\":1,\"triangles\":168},\"view:other/crowd-accessories/acc.hair-long-straight:lod1\":{\"drawCalls\":1,\"triangles\":40},\"view:other/crowd-accessories/acc.hair-ponytail:lod1\":{\"drawCalls\":1,\"triangles\":132},\"view:other/Group/Mesh\":{\"drawCalls\":19,\"triangles\":142512},\"view:other/Mesh/Mesh\":{\"drawCalls\":1,\"triangles\":2},\"view:other/figure-contact-shadows/figure-contact-shadows\":{\"drawCalls\":1,\"triangles\":2},\"shadow:other/Output Color Transform/Output Color Transform\":{\"drawCalls\":1,\"triangles\":1}},\"updateCpuMs\":4.100000381469727,\"renderCpuMs\":2,\"propUploads\":0,\"awakeProps\":0,\"fps\":156.2500000000089,\"frameMs\":6.399999999999636,\"simMs\":0,\"simTicks\":0,\"simWorldMs\":0,\"simTickMs\":0,\"uiMs\":0,\"drawCalls\":215,\"triangles\":869404,\"geometries\":367,\"textures\":62,\"entities\":812,\"backend\":\"webgl\",\"loadTiming\":null,\"quality\":{\"setting\":\"high\",\"tier\":\"high\",\"p90Ms\":7.1,\"slowSeconds\":0,\"budgets\":{\"frameMs\":16.7,\"infected\":200,\"drawCalls\":600,\"triangles\":1500000,\"simMs\":4,\"heapMB\":400,\"pixelRatio\":2,\"shadowSize\":2048,\"bloomMips\":5,\"cullDistance\":60}},\"renderedFrames\":2098,\"contextLost\":false,\"paused\":true,\"heapBytes\":381986583,\"lighting\":{\"lightFieldMs\":0.09999942779541016,\"lightPools\":1,\"lightCandidates\":1,\"shadowMaps\":1,\"heroLights\":0,\"heroShadow\":0,\"preset\":\"golden\"}}}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T01:09:12.451Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "5d9e154d11bc4eeffef1-b5e7a779ee0bac033783",
+          "file": "perf/l7-rocket.spec.ts",
+          "line": 5,
+          "column": 46
+        },
+        {
+          "title": "T-E29-19-rocket @E29-AC19 @perf low repeated rocket hits at the 200/100 infected cap",
+          "ok": false,
+          "tags": [
+            "E29-AC19",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 17423,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m50\u001b[39m\nReceived:    \u001b[31m62.600000000000364\u001b[39m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m50\u001b[39m\nReceived:    \u001b[31m62.600000000000364\u001b[39m\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-rocket.spec.ts:60:27",
+                    "location": {
+                      "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-rocket.spec.ts",
+                      "column": 27,
+                      "line": 60
+                    },
+                    "snippet": "  58 |   expect(result.debris).toBeLessThanOrEqual(tier === 'high' ? 120 : 40); expect(result.gibs).toBeLessThanOrEqual(tier === 'high' ? 80 : 30);\n  59 |   expect(result.perf.lighting!.heroLights).toBeLessThanOrEqual(tier === 'high' ? 8 : 3); expect(result.perf.awakeProps).toBeLessThanOrEqual(tier === 'high' ? 150 : 60);\n> 60 |   expect(result.frameMax).toBeLessThanOrEqual(50);\n     |                           ^\n  61 |   expect(result.frameP95).toBeLessThanOrEqual(tier === 'high' ? 16.7 : 33.3);\n  62 | });\n  63 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-rocket.spec.ts",
+                        "column": 27,
+                        "line": 60
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBeLessThanOrEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\nExpected: <= \u001b[32m50\u001b[39m\nReceived:    \u001b[31m62.600000000000364\u001b[39m\n\n  58 |   expect(result.debris).toBeLessThanOrEqual(tier === 'high' ? 120 : 40); expect(result.gibs).toBeLessThanOrEqual(tier === 'high' ? 80 : 30);\n  59 |   expect(result.perf.lighting!.heroLights).toBeLessThanOrEqual(tier === 'high' ? 8 : 3); expect(result.perf.awakeProps).toBeLessThanOrEqual(tier === 'high' ? 150 : 60);\n> 60 |   expect(result.frameMax).toBeLessThanOrEqual(50);\n     |                           ^\n  61 |   expect(result.frameP95).toBeLessThanOrEqual(tier === 'high' ? 16.7 : 33.3);\n  62 | });\n  63 |\n    at /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-rocket.spec.ts:60:27"
+                    }
+                  ],
+                  "stdout": [
+                    {
+                      "text": "{\"tier\":\"low\",\"counterAgreement\":true,\"blasts\":7,\"peakInfected\":100,\"frameMax\":62.600000000000364,\"frameP95\":18.399999999999636,\"simP95\":2.3999996185302734,\"draws\":155,\"triangles\":347309,\"heapMB\":52.16324,\"peakRawHeapMB\":313.969555,\"particles\":512,\"puffs\":120,\"debris\":0,\"gibs\":30,\"perf\":{\"chunkResidency\":null,\"terrain\":null,\"infected\":{\"count\":262,\"liveCount\":100,\"available\":88},\"effects\":{\"obstruction\":{\"remainingTicks\":0,\"opacity\":0},\"shots\":[],\"enabled\":true,\"colorblind\":false,\"gore\":\"Full\",\"quality\":\"low\",\"flashReduction\":false,\"time\":11.065499999999988,\"lastSpray\":{\"actionId\":\"explosion.rocket\",\"direction\":{\"x\":0.9674671197969675,\"z\":-0.2529967828091102},\"droplets\":8,\"chunks\":4,\"gravity\":9.81},\"surfaceSplats\":0,\"pendingSplats\":384,\"particles\":512,\"particleCap\":512,\"decals\":600,\"decalCap\":600,\"gibs\":30,\"gibCap\":30,\"telegraphs\":[],\"hitStop\":{\"active\":false,\"until\":0,\"started\":0,\"suppressed\":0},\"flash\":0,\"blasts\":{\"wind\":{\"x\":0.55,\"z\":0.25},\"blasts\":7,\"puffs\":120,\"puffCap\":120,\"fireballs\":16,\"fireballCap\":96,\"chunks\":21,\"chunkCap\":64,\"flames\":0,\"glows\":1,\"vehicleSmokeColumns\":0,\"columns\":7,\"transientColumns\":7,\"fireColumns\":0,\"columnShadows\":7,\"clouds\":0,\"scorch\":7,\"parts\":0,\"flash\":0,\"bulletTime\":{\"scale\":1,\"remaining\":0,\"progress\":0},\"slowMotion\":false},\"coverage\":0,\"detached\":2585,\"dismemberedKills\":517,\"kills\":517,\"explosionRadius\":6},\"nodeBuildMaterials\":{},\"crowdPreparation\":{\"workers\":8,\"submitted\":24,\"completed\":24,\"prebuilt\":24,\"failed\":0},\"nodeBuilds\":179,\"profile\":{\"other\":{\"drawCalls\":49,\"triangles\":66792},\"shadows\":{\"drawCalls\":20,\"triangles\":4275},\"crowd\":{\"drawCalls\":85,\"triangles\":262120}},\"profileAssets\":{\"view:other/Background.mesh/Background.mesh\":{\"drawCalls\":1,\"triangles\":1984},\"shadow:other/Group/rigid-part\":{\"drawCalls\":14,\"triangles\":2510},\"shadow:other/Group/mesh_1\":{\"drawCalls\":2,\"triangles\":910},\"shadow:other/Group/mesh_1_1\":{\"drawCalls\":1,\"triangles\":280},\"shadow:other/Group/mesh_0\":{\"drawCalls\":2,\"triangles\":574},\"shadow:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"shadow:other/Group/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"view:other/Group/mesh_0\":{\"drawCalls\":2,\"triangles\":574},\"view:other/Group/mesh_1\":{\"drawCalls\":2,\"triangles\":910},\"view:other/Group/mesh_1_1\":{\"drawCalls\":1,\"triangles\":280},\"view:other/Group/rigid-part\":{\"drawCalls\":14,\"triangles\":2510},\"view:other/crowd-accessories/acc.hat-hard-hat:lod1\":{\"drawCalls\":1,\"triangles\":86},\"view:other/crowd-accessories/acc.hat-baseball-cap:lod1\":{\"drawCalls\":1,\"triangles\":156},\"view:other/crowd-accessories/acc.hair-bun:lod1\":{\"drawCalls\":1,\"triangles\":44},\"view:other/crowd-accessories/acc.hat-flat-cap:lod1\":{\"drawCalls\":1,\"triangles\":112},\"view:other/npcs/Mesh\":{\"drawCalls\":0,\"triangles\":0},\"view:other/crowd-accessories/acc.hat-sun-hat:lod1\":{\"drawCalls\":1,\"triangles\":162},\"view:other/crowd-accessories/acc.hat-bucket-hat:lod1\":{\"drawCalls\":1,\"triangles\":162},\"view:other/crowd-accessories/acc.hair-side-part:lod1\":{\"drawCalls\":1,\"triangles\":108},\"view:other/crowd-accessories/acc.hair-short-crop:lod1\":{\"drawCalls\":1,\"triangles\":72},\"view:other/crowd-accessories/acc.hair-long-straight:lod1\":{\"drawCalls\":1,\"triangles\":40},\"view:other/crowd-accessories/acc.hair-ponytail:lod1\":{\"drawCalls\":1,\"triangles\":44},\"view:other/Group/Mesh\":{\"drawCalls\":17,\"triangles\":59544},\"view:other/Mesh/Mesh\":{\"drawCalls\":1,\"triangles\":2},\"view:other/figure-contact-shadows/figure-contact-shadows\":{\"drawCalls\":1,\"triangles\":2},\"shadow:other/Output Color Transform/Output Color Transform\":{\"drawCalls\":1,\"triangles\":1}},\"updateCpuMs\":5.5,\"renderCpuMs\":5.399999618530273,\"propUploads\":0,\"awakeProps\":0,\"fps\":68.96551724137932,\"frameMs\":14.5,\"simMs\":1.4000005722045898,\"simTicks\":1,\"simWorldMs\":1.4000005722045898,\"simTickMs\":1.4000005722045898,\"uiMs\":0,\"drawCalls\":154,\"triangles\":333187,\"geometries\":296,\"textures\":48,\"entities\":618,\"backend\":\"webgl\",\"loadTiming\":null,\"quality\":{\"setting\":\"low\",\"tier\":\"low\",\"p90Ms\":16.6,\"slowSeconds\":0,\"budgets\":{\"frameMs\":33.333333333333336,\"infected\":100,\"drawCalls\":300,\"triangles\":500000,\"simMs\":6,\"heapMB\":250,\"pixelRatio\":1.5,\"shadowSize\":1024,\"bloomMips\":2,\"cullDistance\":45}},\"renderedFrames\":991,\"contextLost\":false,\"paused\":true,\"heapBytes\":296361383,\"lighting\":{\"lightFieldMs\":0.10000038146972656,\"lightPools\":1,\"lightCandidates\":1,\"shadowMaps\":1,\"heroLights\":0,\"heroShadow\":0,\"preset\":\"golden\"}}}\n"
+                    }
+                  ],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T01:09:27.042Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34853/perf-l7-rocket-T-E29-19-ro-eaa5c-at-the-200-100-infected-cap-chromium/error-context.md"
+                    },
+                    {
+                      "name": "trace",
+                      "contentType": "application/zip",
+                      "path": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/test-results/playwright/run-34853/perf-l7-rocket-T-E29-19-ro-eaa5c-at-the-200-100-infected-cap-chromium/trace.zip"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5/tests/perf/l7-rocket.spec.ts",
+                    "column": 27,
+                    "line": 60
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "5d9e154d11bc4eeffef1-a807c3e78e4e28a6678f",
+          "file": "perf/l7-rocket.spec.ts",
+          "line": 5,
+          "column": 46
+        }
+      ]
+    },
+    {
+      "title": "perf/weather.spec.ts",
+      "file": "perf/weather.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E28-10 @E28 @E28-AC10 @perf storm-street precipitation high",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC10",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4778,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T01:09:45.657Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b0f20e21d5e1a556709c-cbd86cf103554145df86",
+          "file": "perf/weather.spec.ts",
+          "line": 7,
+          "column": 46
+        },
+        {
+          "title": "T-E28-10 @E28 @E28-AC10 @perf storm-street precipitation low",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC10",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3220,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T01:09:50.706Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b0f20e21d5e1a556709c-5bc2fd448e596fbd506c",
+          "file": "perf/weather.spec.ts",
+          "line": 7,
+          "column": 46
+        },
+        {
+          "title": "T-E28-10-frame @E28 @E28-AC10 @perf storm-street high native E18 frame, sim and heap budgets",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC10",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17195,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T01:09:53.940Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b0f20e21d5e1a556709c-14fa32cf2e8e02404a69",
+          "file": "perf/weather.spec.ts",
+          "line": 16,
+          "column": 46
+        },
+        {
+          "title": "T-E28-10-frame @E28 @E28-AC10 @perf storm-street low native E18 frame, sim and heap budgets",
+          "ok": true,
+          "tags": [
+            "E28",
+            "E28-AC10",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 23787,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T01:10:11.142Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "b0f20e21d5e1a556709c-9b71042e0eb7d4c12a92",
+          "file": "perf/weather.spec.ts",
+          "line": 16,
+          "column": 46
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-19T01:01:31.759Z",
+    "duration": 543242.174,
+    "expected": 14,
+    "skipped": 0,
+    "unexpected": 6,
+    "flaky": 0
+  }
+}

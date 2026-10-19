@@ -404,6 +404,10 @@ export class GameView implements Lifecycle {
     const warm = async (): Promise<void> => {
       await loadGate.foreground(); // node builds cannot be sliced: never during the menus
       this.lighting?.update(this.view);
+      // Compile against the gameplay light list. In particular W6 low disables
+      // its city-wide moon pass here; warming with that sun still visible left
+      // hidden blast pools cold until the first rocket.
+      this.updateLights();
       // Include hidden infected/LOD/VFX/decay variants, and warm their actual HDR/MSAA pass.
       const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
       const unwarm = this.labWindows?.prewarmWindows();
