@@ -1,0 +1,2615 @@
+{
+  "spec": "tests/scenes/catalog/apc-sedan-contact.json",
+  "backend": "webgpu",
+  "requestedBackend": "webgpu",
+  "tier": "low",
+  "actualTier": "low",
+  "frames": 180,
+  "timing": {
+    "openMs": 0,
+    "loadMs": 1991,
+    "runMs": 45483,
+    "sceneMs": 47474
+  },
+  "checks": {
+    "pass": false,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "drawCallsMax",
+        "pass": true,
+        "value": 54,
+        "limit": 300
+      },
+      {
+        "name": "trianglesMax",
+        "pass": true,
+        "value": 56864,
+        "limit": 500000
+      },
+      {
+        "name": "vehicleTiltMaxDeg",
+        "pass": true,
+        "value": 8.4,
+        "limit": 45
+      },
+      {
+        "name": "vehicleHealthMax",
+        "pass": true,
+        "value": 990,
+        "limit": 990
+      },
+      {
+        "name": "vehicleSilhouette:parked:clear",
+        "pass": true,
+        "value": 1,
+        "limit": 0.6
+      },
+      {
+        "name": "vehicleSilhouette:parked:blocking",
+        "pass": false,
+        "value": 0.2857142857142857,
+        "limit": 0.3
+      },
+      {
+        "name": "canvas.f0.varianceMin",
+        "pass": true,
+        "value": 1619.890426710259,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f0.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f6.varianceMin",
+        "pass": true,
+        "value": 1616.5260060173114,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f6.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f18.varianceMin",
+        "pass": true,
+        "value": 1619.5702777756342,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f18.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f24.varianceMin",
+        "pass": true,
+        "value": 1632.9092815714703,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f24.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f30.varianceMin",
+        "pass": true,
+        "value": 1660.359359095637,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f30.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f42.varianceMin",
+        "pass": true,
+        "value": 1696.2578001427064,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f42.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f48.varianceMin",
+        "pass": true,
+        "value": 1713.87900054893,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f48.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f54.varianceMin",
+        "pass": true,
+        "value": 1755.101222282321,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f54.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f60.varianceMin",
+        "pass": true,
+        "value": 1881.6988607302937,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f60.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f72.varianceMin",
+        "pass": true,
+        "value": 1478.7399487501898,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f72.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f78.varianceMin",
+        "pass": true,
+        "value": 1430.0815881665803,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f78.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f84.varianceMin",
+        "pass": true,
+        "value": 1432.558173233163,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f84.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f96.varianceMin",
+        "pass": true,
+        "value": 1813.5449253214856,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f96.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f102.varianceMin",
+        "pass": true,
+        "value": 1988.8058629883099,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f102.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f108.varianceMin",
+        "pass": true,
+        "value": 2015.3316200530935,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f108.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f120.varianceMin",
+        "pass": true,
+        "value": 1456.6564392974933,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f120.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f126.varianceMin",
+        "pass": true,
+        "value": 1263.2166549384456,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f126.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f132.varianceMin",
+        "pass": true,
+        "value": 1054.278241383373,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f132.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f138.varianceMin",
+        "pass": true,
+        "value": 920.7709662422512,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f138.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f150.varianceMin",
+        "pass": true,
+        "value": 907.7320639652107,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f150.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f156.varianceMin",
+        "pass": true,
+        "value": 640.3421498603093,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f156.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f162.varianceMin",
+        "pass": true,
+        "value": 527.1924191175785,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f162.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f174.varianceMin",
+        "pass": true,
+        "value": 301.9756106328441,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f174.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f180.varianceMin",
+        "pass": true,
+        "value": 259.4693935125306,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f180.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "requestedBackend",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      },
+      {
+        "name": "requestedQuality",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      }
+    ]
+  },
+  "seeThroughCut": null,
+  "seeThroughCutSamples": [],
+  "courierShares": [],
+  "vehicleSilhouettes": [
+    {
+      "frame": 0,
+      "id": "parked",
+      "blocking": false,
+      "reference": 148997,
+      "retained": 148997,
+      "share": 1
+    },
+    {
+      "frame": 1,
+      "id": "parked",
+      "blocking": false,
+      "reference": 148961,
+      "retained": 148961,
+      "share": 1
+    },
+    {
+      "frame": 2,
+      "id": "parked",
+      "blocking": false,
+      "reference": 148871,
+      "retained": 148871,
+      "share": 1
+    },
+    {
+      "frame": 3,
+      "id": "parked",
+      "blocking": false,
+      "reference": 148723,
+      "retained": 148723,
+      "share": 1
+    },
+    {
+      "frame": 4,
+      "id": "parked",
+      "blocking": false,
+      "reference": 148598,
+      "retained": 148598,
+      "share": 1
+    },
+    {
+      "frame": 5,
+      "id": "parked",
+      "blocking": false,
+      "reference": 148415,
+      "retained": 148415,
+      "share": 1
+    },
+    {
+      "frame": 6,
+      "id": "parked",
+      "blocking": false,
+      "reference": 148280,
+      "retained": 148280,
+      "share": 1
+    },
+    {
+      "frame": 7,
+      "id": "parked",
+      "blocking": false,
+      "reference": 148134,
+      "retained": 148134,
+      "share": 1
+    },
+    {
+      "frame": 8,
+      "id": "parked",
+      "blocking": false,
+      "reference": 148011,
+      "retained": 148011,
+      "share": 1
+    },
+    {
+      "frame": 9,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147902,
+      "retained": 147902,
+      "share": 1
+    },
+    {
+      "frame": 10,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147806,
+      "retained": 147806,
+      "share": 1
+    },
+    {
+      "frame": 11,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147710,
+      "retained": 147710,
+      "share": 1
+    },
+    {
+      "frame": 12,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147534,
+      "retained": 147534,
+      "share": 1
+    },
+    {
+      "frame": 13,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147532,
+      "retained": 147532,
+      "share": 1
+    },
+    {
+      "frame": 14,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147539,
+      "retained": 147539,
+      "share": 1
+    },
+    {
+      "frame": 15,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147514,
+      "retained": 147514,
+      "share": 1
+    },
+    {
+      "frame": 16,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147486,
+      "retained": 147486,
+      "share": 1
+    },
+    {
+      "frame": 17,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147475,
+      "retained": 147475,
+      "share": 1
+    },
+    {
+      "frame": 18,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147465,
+      "retained": 147465,
+      "share": 1
+    },
+    {
+      "frame": 19,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147463,
+      "retained": 147463,
+      "share": 1
+    },
+    {
+      "frame": 20,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147447,
+      "retained": 147447,
+      "share": 1
+    },
+    {
+      "frame": 21,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147443,
+      "retained": 147443,
+      "share": 1
+    },
+    {
+      "frame": 22,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147447,
+      "retained": 147447,
+      "share": 1
+    },
+    {
+      "frame": 23,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147452,
+      "retained": 147452,
+      "share": 1
+    },
+    {
+      "frame": 24,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147454,
+      "retained": 147454,
+      "share": 1
+    },
+    {
+      "frame": 25,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147458,
+      "retained": 147458,
+      "share": 1
+    },
+    {
+      "frame": 26,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147469,
+      "retained": 147469,
+      "share": 1
+    },
+    {
+      "frame": 27,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147475,
+      "retained": 147475,
+      "share": 1
+    },
+    {
+      "frame": 28,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147478,
+      "retained": 147478,
+      "share": 1
+    },
+    {
+      "frame": 29,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147475,
+      "retained": 147475,
+      "share": 1
+    },
+    {
+      "frame": 30,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147482,
+      "retained": 147482,
+      "share": 1
+    },
+    {
+      "frame": 31,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147481,
+      "retained": 147481,
+      "share": 1
+    },
+    {
+      "frame": 32,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147487,
+      "retained": 147487,
+      "share": 1
+    },
+    {
+      "frame": 33,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147485,
+      "retained": 147485,
+      "share": 1
+    },
+    {
+      "frame": 34,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147492,
+      "retained": 147492,
+      "share": 1
+    },
+    {
+      "frame": 35,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147494,
+      "retained": 147494,
+      "share": 1
+    },
+    {
+      "frame": 36,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147498,
+      "retained": 147498,
+      "share": 1
+    },
+    {
+      "frame": 37,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147496,
+      "retained": 147496,
+      "share": 1
+    },
+    {
+      "frame": 38,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147498,
+      "retained": 147498,
+      "share": 1
+    },
+    {
+      "frame": 39,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147497,
+      "retained": 147497,
+      "share": 1
+    },
+    {
+      "frame": 40,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147498,
+      "retained": 147498,
+      "share": 1
+    },
+    {
+      "frame": 41,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147499,
+      "retained": 147499,
+      "share": 1
+    },
+    {
+      "frame": 42,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147497,
+      "retained": 147497,
+      "share": 1
+    },
+    {
+      "frame": 43,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147499,
+      "retained": 147499,
+      "share": 1
+    },
+    {
+      "frame": 44,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147496,
+      "retained": 147496,
+      "share": 1
+    },
+    {
+      "frame": 45,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147497,
+      "retained": 147497,
+      "share": 1
+    },
+    {
+      "frame": 46,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147495,
+      "retained": 147495,
+      "share": 1
+    },
+    {
+      "frame": 47,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147500,
+      "retained": 147500,
+      "share": 1
+    },
+    {
+      "frame": 48,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147499,
+      "retained": 147499,
+      "share": 1
+    },
+    {
+      "frame": 49,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147498,
+      "retained": 147498,
+      "share": 1
+    },
+    {
+      "frame": 50,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147500,
+      "retained": 147500,
+      "share": 1
+    },
+    {
+      "frame": 51,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147499,
+      "retained": 147499,
+      "share": 1
+    },
+    {
+      "frame": 52,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147499,
+      "retained": 147499,
+      "share": 1
+    },
+    {
+      "frame": 53,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147495,
+      "retained": 147495,
+      "share": 1
+    },
+    {
+      "frame": 54,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147491,
+      "retained": 147491,
+      "share": 1
+    },
+    {
+      "frame": 55,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147491,
+      "retained": 147491,
+      "share": 1
+    },
+    {
+      "frame": 56,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147493,
+      "retained": 147493,
+      "share": 1
+    },
+    {
+      "frame": 57,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147494,
+      "retained": 147494,
+      "share": 1
+    },
+    {
+      "frame": 58,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147490,
+      "retained": 147490,
+      "share": 1
+    },
+    {
+      "frame": 59,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147500,
+      "retained": 147500,
+      "share": 1
+    },
+    {
+      "frame": 60,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147511,
+      "retained": 147511,
+      "share": 1
+    },
+    {
+      "frame": 61,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147521,
+      "retained": 147521,
+      "share": 1
+    },
+    {
+      "frame": 62,
+      "id": "parked",
+      "blocking": false,
+      "reference": 147517,
+      "retained": 147517,
+      "share": 1
+    },
+    {
+      "frame": 63,
+      "id": "parked",
+      "blocking": true,
+      "reference": 147512,
+      "retained": 127816,
+      "share": 0.866478659363306
+    },
+    {
+      "frame": 64,
+      "id": "parked",
+      "blocking": true,
+      "reference": 147510,
+      "retained": 125669,
+      "share": 0.8519354620025761
+    },
+    {
+      "frame": 65,
+      "id": "parked",
+      "blocking": true,
+      "reference": 147514,
+      "retained": 123441,
+      "share": 0.8368087096817929
+    },
+    {
+      "frame": 66,
+      "id": "parked",
+      "blocking": true,
+      "reference": 147528,
+      "retained": 121119,
+      "share": 0.8209899137790793
+    },
+    {
+      "frame": 67,
+      "id": "parked",
+      "blocking": true,
+      "reference": 147532,
+      "retained": 118641,
+      "share": 0.8041712984301711
+    },
+    {
+      "frame": 68,
+      "id": "parked",
+      "blocking": true,
+      "reference": 147535,
+      "retained": 116119,
+      "share": 0.7870606974616193
+    },
+    {
+      "frame": 69,
+      "id": "parked",
+      "blocking": true,
+      "reference": 147518,
+      "retained": 113458,
+      "share": 0.7691129218129313
+    },
+    {
+      "frame": 70,
+      "id": "parked",
+      "blocking": true,
+      "reference": 147488,
+      "retained": 110722,
+      "share": 0.7507187025385116
+    },
+    {
+      "frame": 71,
+      "id": "parked",
+      "blocking": true,
+      "reference": 147443,
+      "retained": 107911,
+      "share": 0.7318828292967452
+    },
+    {
+      "frame": 72,
+      "id": "parked",
+      "blocking": true,
+      "reference": 147288,
+      "retained": 104934,
+      "share": 0.712440932051491
+    },
+    {
+      "frame": 73,
+      "id": "parked",
+      "blocking": true,
+      "reference": 147056,
+      "retained": 101786,
+      "share": 0.6921580894353172
+    },
+    {
+      "frame": 74,
+      "id": "parked",
+      "blocking": true,
+      "reference": 146791,
+      "retained": 98424,
+      "share": 0.6705043224720861
+    },
+    {
+      "frame": 75,
+      "id": "parked",
+      "blocking": true,
+      "reference": 146493,
+      "retained": 95000,
+      "share": 0.6484951499389049
+    },
+    {
+      "frame": 76,
+      "id": "parked",
+      "blocking": true,
+      "reference": 146391,
+      "retained": 91555,
+      "share": 0.6254141306501083
+    },
+    {
+      "frame": 77,
+      "id": "parked",
+      "blocking": true,
+      "reference": 146476,
+      "retained": 88256,
+      "share": 0.6025287419099374
+    },
+    {
+      "frame": 78,
+      "id": "parked",
+      "blocking": true,
+      "reference": 146685,
+      "retained": 85039,
+      "share": 0.5797388962743294
+    },
+    {
+      "frame": 79,
+      "id": "parked",
+      "blocking": true,
+      "reference": 146922,
+      "retained": 81858,
+      "share": 0.5571527749418058
+    },
+    {
+      "frame": 80,
+      "id": "parked",
+      "blocking": true,
+      "reference": 147037,
+      "retained": 78542,
+      "share": 0.5341648700667179
+    },
+    {
+      "frame": 81,
+      "id": "parked",
+      "blocking": true,
+      "reference": 147073,
+      "retained": 75051,
+      "share": 0.5102976073106552
+    },
+    {
+      "frame": 82,
+      "id": "parked",
+      "blocking": true,
+      "reference": 146963,
+      "retained": 71181,
+      "share": 0.4843464001143145
+    },
+    {
+      "frame": 83,
+      "id": "parked",
+      "blocking": true,
+      "reference": 146925,
+      "retained": 67829,
+      "share": 0.4616573081504169
+    },
+    {
+      "frame": 84,
+      "id": "parked",
+      "blocking": true,
+      "reference": 148758,
+      "retained": 65140,
+      "share": 0.43789241587007083
+    },
+    {
+      "frame": 85,
+      "id": "parked",
+      "blocking": true,
+      "reference": 148592,
+      "retained": 63186,
+      "share": 0.42523150640680524
+    },
+    {
+      "frame": 86,
+      "id": "parked",
+      "blocking": true,
+      "reference": 147245,
+      "retained": 60926,
+      "share": 0.4137729634282998
+    },
+    {
+      "frame": 87,
+      "id": "parked",
+      "blocking": true,
+      "reference": 150316,
+      "retained": 61738,
+      "share": 0.4107214135554432
+    },
+    {
+      "frame": 88,
+      "id": "parked",
+      "blocking": true,
+      "reference": 153273,
+      "retained": 62677,
+      "share": 0.4089239461614244
+    },
+    {
+      "frame": 89,
+      "id": "parked",
+      "blocking": true,
+      "reference": 156027,
+      "retained": 63409,
+      "share": 0.4063976106699482
+    },
+    {
+      "frame": 90,
+      "id": "parked",
+      "blocking": true,
+      "reference": 158643,
+      "retained": 64096,
+      "share": 0.4040266510340828
+    },
+    {
+      "frame": 91,
+      "id": "parked",
+      "blocking": true,
+      "reference": 161310,
+      "retained": 65102,
+      "share": 0.4035831628541318
+    },
+    {
+      "frame": 92,
+      "id": "parked",
+      "blocking": true,
+      "reference": 163748,
+      "retained": 65851,
+      "share": 0.40214842318684807
+    },
+    {
+      "frame": 93,
+      "id": "parked",
+      "blocking": true,
+      "reference": 166300,
+      "retained": 66617,
+      "share": 0.4005832832230908
+    },
+    {
+      "frame": 94,
+      "id": "parked",
+      "blocking": true,
+      "reference": 168256,
+      "retained": 67072,
+      "share": 0.398630658044884
+    },
+    {
+      "frame": 95,
+      "id": "parked",
+      "blocking": true,
+      "reference": 170029,
+      "retained": 67739,
+      "share": 0.3983967440848326
+    },
+    {
+      "frame": 96,
+      "id": "parked",
+      "blocking": true,
+      "reference": 171475,
+      "retained": 68273,
+      "share": 0.3981513340137046
+    },
+    {
+      "frame": 97,
+      "id": "parked",
+      "blocking": true,
+      "reference": 172597,
+      "retained": 68819,
+      "share": 0.39872651320706615
+    },
+    {
+      "frame": 98,
+      "id": "parked",
+      "blocking": true,
+      "reference": 173579,
+      "retained": 69292,
+      "share": 0.39919575524689044
+    },
+    {
+      "frame": 99,
+      "id": "parked",
+      "blocking": true,
+      "reference": 174541,
+      "retained": 69668,
+      "share": 0.3991497699680877
+    },
+    {
+      "frame": 100,
+      "id": "parked",
+      "blocking": true,
+      "reference": 174967,
+      "retained": 69688,
+      "share": 0.3982922493956003
+    },
+    {
+      "frame": 101,
+      "id": "parked",
+      "blocking": true,
+      "reference": 175138,
+      "retained": 69632,
+      "share": 0.397583619774121
+    },
+    {
+      "frame": 102,
+      "id": "parked",
+      "blocking": true,
+      "reference": 174764,
+      "retained": 69078,
+      "share": 0.3952644709436726
+    },
+    {
+      "frame": 103,
+      "id": "parked",
+      "blocking": true,
+      "reference": 173464,
+      "retained": 67866,
+      "share": 0.3912396808559701
+    },
+    {
+      "frame": 104,
+      "id": "parked",
+      "blocking": true,
+      "reference": 171585,
+      "retained": 66456,
+      "share": 0.3873065827432468
+    },
+    {
+      "frame": 105,
+      "id": "parked",
+      "blocking": true,
+      "reference": 168893,
+      "retained": 64532,
+      "share": 0.3820880675930915
+    },
+    {
+      "frame": 106,
+      "id": "parked",
+      "blocking": true,
+      "reference": 165631,
+      "retained": 62573,
+      "share": 0.377785559466525
+    },
+    {
+      "frame": 107,
+      "id": "parked",
+      "blocking": true,
+      "reference": 161637,
+      "retained": 61000,
+      "share": 0.37738884042638754
+    },
+    {
+      "frame": 108,
+      "id": "parked",
+      "blocking": true,
+      "reference": 157143,
+      "retained": 59334,
+      "share": 0.3775796567457666
+    },
+    {
+      "frame": 109,
+      "id": "parked",
+      "blocking": true,
+      "reference": 152305,
+      "retained": 57654,
+      "share": 0.3785430550540035
+    },
+    {
+      "frame": 110,
+      "id": "parked",
+      "blocking": true,
+      "reference": 146295,
+      "retained": 55556,
+      "share": 0.3797532383198332
+    },
+    {
+      "frame": 111,
+      "id": "parked",
+      "blocking": true,
+      "reference": 139441,
+      "retained": 53249,
+      "share": 0.38187477140869613
+    },
+    {
+      "frame": 112,
+      "id": "parked",
+      "blocking": true,
+      "reference": 131848,
+      "retained": 50653,
+      "share": 0.38417723439111706
+    },
+    {
+      "frame": 113,
+      "id": "parked",
+      "blocking": true,
+      "reference": 123498,
+      "retained": 47508,
+      "share": 0.3846863916824564
+    },
+    {
+      "frame": 114,
+      "id": "parked",
+      "blocking": true,
+      "reference": 114494,
+      "retained": 43838,
+      "share": 0.3828846926476497
+    },
+    {
+      "frame": 115,
+      "id": "parked",
+      "blocking": true,
+      "reference": 105279,
+      "retained": 39863,
+      "share": 0.37864151445207495
+    },
+    {
+      "frame": 116,
+      "id": "parked",
+      "blocking": true,
+      "reference": 95930,
+      "retained": 35599,
+      "share": 0.3710935056812259
+    },
+    {
+      "frame": 117,
+      "id": "parked",
+      "blocking": true,
+      "reference": 86701,
+      "retained": 31106,
+      "share": 0.35877325521043585
+    },
+    {
+      "frame": 118,
+      "id": "parked",
+      "blocking": true,
+      "reference": 77573,
+      "retained": 27171,
+      "share": 0.35026362265221145
+    },
+    {
+      "frame": 119,
+      "id": "parked",
+      "blocking": true,
+      "reference": 68704,
+      "retained": 24049,
+      "share": 0.35003784350256173
+    },
+    {
+      "frame": 120,
+      "id": "parked",
+      "blocking": true,
+      "reference": 60091,
+      "retained": 21026,
+      "share": 0.34990264765106255
+    },
+    {
+      "frame": 121,
+      "id": "parked",
+      "blocking": true,
+      "reference": 51678,
+      "retained": 18072,
+      "share": 0.3497039359108325
+    },
+    {
+      "frame": 122,
+      "id": "parked",
+      "blocking": true,
+      "reference": 43708,
+      "retained": 15305,
+      "share": 0.3501647295689576
+    },
+    {
+      "frame": 123,
+      "id": "parked",
+      "blocking": true,
+      "reference": 35930,
+      "retained": 12573,
+      "share": 0.3499304202616198
+    },
+    {
+      "frame": 124,
+      "id": "parked",
+      "blocking": true,
+      "reference": 28823,
+      "retained": 10088,
+      "share": 0.34999826527426015
+    },
+    {
+      "frame": 125,
+      "id": "parked",
+      "blocking": true,
+      "reference": 22681,
+      "retained": 7941,
+      "share": 0.3501168378819276
+    },
+    {
+      "frame": 126,
+      "id": "parked",
+      "blocking": true,
+      "reference": 17203,
+      "retained": 6029,
+      "share": 0.3504621286984828
+    },
+    {
+      "frame": 127,
+      "id": "parked",
+      "blocking": true,
+      "reference": 12456,
+      "retained": 4349,
+      "share": 0.3491490044958253
+    },
+    {
+      "frame": 128,
+      "id": "parked",
+      "blocking": true,
+      "reference": 8349,
+      "retained": 2919,
+      "share": 0.3496227093065038
+    },
+    {
+      "frame": 129,
+      "id": "parked",
+      "blocking": true,
+      "reference": 4911,
+      "retained": 1710,
+      "share": 0.3481979230299328
+    },
+    {
+      "frame": 130,
+      "id": "parked",
+      "blocking": true,
+      "reference": 2334,
+      "retained": 812,
+      "share": 0.34790059982862037
+    },
+    {
+      "frame": 131,
+      "id": "parked",
+      "blocking": true,
+      "reference": 647,
+      "retained": 227,
+      "share": 0.3508500772797527
+    },
+    {
+      "frame": 132,
+      "id": "parked",
+      "blocking": true,
+      "reference": 7,
+      "retained": 2,
+      "share": 0.2857142857142857
+    },
+    {
+      "frame": 133,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 134,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 135,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 136,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 137,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 138,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 139,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 140,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 141,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 142,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 143,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 144,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 145,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 146,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 147,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 148,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 149,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 150,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 151,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 152,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 153,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 154,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 155,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 156,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 157,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 158,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 159,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 160,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 161,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 162,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 163,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 164,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 165,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 166,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 167,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 168,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 169,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 170,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 171,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 172,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 173,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 174,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 175,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 176,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 177,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 178,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 179,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    },
+    {
+      "frame": 180,
+      "id": "parked",
+      "blocking": true,
+      "reference": 0,
+      "retained": 0,
+      "share": 1
+    }
+  ],
+  "pixels": [
+    {
+      "frame": 0,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          109.15758101851851,
+          66.44127314814814,
+          73.69232831790123
+        ],
+        "variance": 1619.890426710259,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 6,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          109.3867013888889,
+          66.65141396604939,
+          73.91276427469136
+        ],
+        "variance": 1616.5260060173114,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 18,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          109.63421296296296,
+          66.87141396604939,
+          74.1659837962963
+        ],
+        "variance": 1619.5702777756342,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 24,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          109.53222800925926,
+          66.79687692901234,
+          74.18125578703703
+        ],
+        "variance": 1632.9092815714703,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 30,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          109.32552854938271,
+          66.63446952160494,
+          74.13434606481482
+        ],
+        "variance": 1660.359359095637,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 42,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          109.11035686728395,
+          66.46606481481481,
+          74.09682291666667
+        ],
+        "variance": 1696.2578001427064,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 48,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          108.97747106481482,
+          66.3841512345679,
+          74.00966242283951
+        ],
+        "variance": 1713.87900054893,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 54,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          108.36188850308642,
+          65.92516010802468,
+          73.43586226851852
+        ],
+        "variance": 1755.101222282321,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 60,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          107.11738040123457,
+          65.07882908950617,
+          72.47462962962963
+        ],
+        "variance": 1881.6988607302937,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 72,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          99.05987654320988,
+          65.98560185185185,
+          73.09846450617285
+        ],
+        "variance": 1478.7399487501898,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 78,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          96.0113425925926,
+          66.65306712962963,
+          72.87758487654321
+        ],
+        "variance": 1430.0815881665803,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 84,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          94.0957426697531,
+          67.68106288580248,
+          72.61069251543209
+        ],
+        "variance": 1432.558173233163,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 96,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          89.36166280864198,
+          64.14103395061728,
+          66.91803047839507
+        ],
+        "variance": 1813.5449253214856,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 102,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          87.64977237654321,
+          62.88089699074074,
+          64.01883101851851
+        ],
+        "variance": 1988.8058629883099,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 108,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          84.78068672839507,
+          61.96230324074074,
+          61.676626157407405
+        ],
+        "variance": 2015.3316200530935,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 120,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          75.45661265432099,
+          61.85799575617284,
+          58.0315162037037
+        ],
+        "variance": 1456.6564392974933,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 126,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          72.35174575617285,
+          62.33990162037037,
+          56.31854552469136
+        ],
+        "variance": 1263.2166549384456,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 132,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          73.93022762345679,
+          64.76386766975308,
+          57.49116319444445
+        ],
+        "variance": 1054.278241383373,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 138,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          77.3907349537037,
+          67.48733410493827,
+          60.026819058641976
+        ],
+        "variance": 920.7709662422512,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 150,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          83.57336226851852,
+          71.21574459876543,
+          64.3314023919753
+        ],
+        "variance": 907.7320639652107,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 156,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          89.53550540123457,
+          74.81794560185185,
+          68.37394675925925
+        ],
+        "variance": 640.3421498603093,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 162,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          91.84472415123457,
+          75.73344328703703,
+          70.99061921296297
+        ],
+        "variance": 527.1924191175785,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 174,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          92.27575810185185,
+          74.96697916666666,
+          73.55929591049383
+        ],
+        "variance": 301.9756106328441,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 180,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          92.85525270061729,
+          75.10829282407407,
+          74.57047067901235
+        ],
+        "variance": 259.4693935125306,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    }
+  ],
+  "edgeSamples": [],
+  "ring": null,
+  "contrast": [],
+  "consoleErrors": [],
+  "scene": {
+    "name": "apc-sedan-contact",
+    "frame": 0,
+    "placements": [],
+    "actors": [],
+    "vehicles": {
+      "apc": 3,
+      "parked": 4
+    }
+  },
+  "metrics": {
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 1,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    },
+    "marketDoors": null,
+    "armyBoom": null,
+    "scene": "apc-sedan-contact",
+    "frame": 180,
+    "tick": 180,
+    "backend": "webgpu",
+    "quality": "low",
+    "convoyOverlapFrames": 0,
+    "propPenetration": {
+      "samples": 0,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "attackOverlap": {
+      "depthCm": 0,
+      "frame": 0,
+      "actor": ""
+    },
+    "wheels": {
+      "apc": [
+        {
+          "vehicle": "apc",
+          "wheel": 0,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            -8.21,
+            1.01
+          ],
+          "samples": 178,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 1.9,
+          "hubSpikeFrame": 80,
+          "hubStepCm": 1.9,
+          "hubStepFrame": 80
+        },
+        {
+          "vehicle": "apc",
+          "wheel": 1,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            -8.21,
+            -1.47
+          ],
+          "samples": 178,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 1.9,
+          "hubSpikeFrame": 80,
+          "hubStepCm": 1.9,
+          "hubStepFrame": 80
+        },
+        {
+          "vehicle": "apc",
+          "wheel": 2,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            -11.9,
+            1.01
+          ],
+          "samples": 178,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 1.9,
+          "hubSpikeFrame": 80,
+          "hubStepCm": 1.9,
+          "hubStepFrame": 80
+        },
+        {
+          "vehicle": "apc",
+          "wheel": 3,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            -11.9,
+            -1.47
+          ],
+          "samples": 178,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 1.9,
+          "hubSpikeFrame": 80,
+          "hubStepCm": 1.9,
+          "hubStepFrame": 80
+        },
+        {
+          "vehicle": "apc",
+          "wheel": 4,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            -10.31,
+            1.01
+          ],
+          "samples": 178,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 1.9,
+          "hubSpikeFrame": 80,
+          "hubStepCm": 1.9,
+          "hubStepFrame": 80
+        },
+        {
+          "vehicle": "apc",
+          "wheel": 5,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            -10.31,
+            -1.47
+          ],
+          "samples": 178,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 1.9,
+          "hubSpikeFrame": 80,
+          "hubStepCm": 1.9,
+          "hubStepFrame": 80
+        }
+      ],
+      "parked": [
+        {
+          "vehicle": "parked",
+          "wheel": 0,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            0.91,
+            -1.33
+          ],
+          "samples": 178,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 0,
+          "hubSpikeFrame": 99,
+          "hubStepCm": 0.1,
+          "hubStepFrame": 88
+        },
+        {
+          "vehicle": "parked",
+          "wheel": 1,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            -0.91,
+            -1.33
+          ],
+          "samples": 178,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 0,
+          "hubSpikeFrame": 99,
+          "hubStepCm": 0.1,
+          "hubStepFrame": 88
+        },
+        {
+          "vehicle": "parked",
+          "wheel": 2,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            0.91,
+            1.33
+          ],
+          "samples": 178,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 0,
+          "hubSpikeFrame": 99,
+          "hubStepCm": 0.1,
+          "hubStepFrame": 88
+        },
+        {
+          "vehicle": "parked",
+          "wheel": 3,
+          "gapMinCm": 0.1,
+          "gapMaxCm": 0.1,
+          "minFrame": 3,
+          "maxFrame": 3,
+          "at": [
+            -0.91,
+            1.33
+          ],
+          "samples": 178,
+          "surface": "asphalt",
+          "rayCheckCm": 0,
+          "hubSpikeCm": 0,
+          "hubSpikeFrame": 99,
+          "hubStepCm": 0.1,
+          "hubStepFrame": 88
+        }
+      ]
+    },
+    "lodPlaceholders": {
+      "frames": 0,
+      "firstFrame": -1,
+      "assets": []
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 42,
+        "p95": 54,
+        "max": 54
+      },
+      "triangles": {
+        "p50": 53984,
+        "p95": 56864,
+        "max": 56864
+      },
+      "shadowDrawCalls": {
+        "p50": 12,
+        "p95": 12,
+        "max": 12
+      },
+      "shadowTriangles": {
+        "p50": 44683,
+        "p95": 44683,
+        "max": 44683
+      },
+      "stepMs": {
+        "p50": 2.7,
+        "p95": 3.3,
+        "max": 22.2
+      },
+      "lastFrame": {
+        "drawCalls": 16,
+        "triangles": 50992,
+        "shadowDrawCalls": 12,
+        "shadowTriangles": 44683,
+        "stepMs": 2.1000003814697266,
+        "categories": {
+          "other": 16,
+          "shadows": 12,
+          "crowd": 0
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {
+      "apc": {
+        "entity": 3,
+        "position": [
+          5.113,
+          -0.001
+        ],
+        "yawDeg": 0,
+        "yawRateMaxDegS": 0.05200328737820713,
+        "bodyOverlaps": 97,
+        "tiltMaxDeg": 1.1,
+        "tiltFrame": 95,
+        "slipMaxDeg": 0,
+        "slipFrame": 168,
+        "driven": true,
+        "headlightsDarkFrames": 0,
+        "firstDarkFrame": -1,
+        "rideRemainingM": null,
+        "health": 990,
+        "decay": null,
+        "speed": 1.33
+      },
+      "parked": {
+        "entity": 4,
+        "position": [
+          8.857,
+          0.001
+        ],
+        "yawDeg": 90,
+        "yawRateMaxDegS": 0.8047980883345793,
+        "bodyOverlaps": 50,
+        "tiltMaxDeg": 8.4,
+        "tiltFrame": 100,
+        "slipMaxDeg": 90,
+        "slipFrame": 87,
+        "driven": false,
+        "headlightsDarkFrames": 0,
+        "firstDarkFrame": -1,
+        "rideRemainingM": null,
+        "health": 300,
+        "decay": null,
+        "speed": 1.37
+      }
+    },
+    "grounding": {
+      "corpses": 0,
+      "corpseOffMaxCm": 0,
+      "pickups": 0,
+      "pickupOffMaxCm": 0,
+      "worst": []
+    },
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "hullWindups": 0,
+      "hullHits": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "cure": null,
+    "megaAlpha": null,
+    "minigun": null,
+    "specials": [],
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0,
+      "holds": {}
+    },
+    "seeThrough": {
+      "frames": 180,
+      "solidRadiusMax": 3.208,
+      "occluders": [],
+      "cutLowProps": [],
+      "cutPlacements": []
+    },
+    "appearance": [],
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "variety": {
+      "infected": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      },
+      "pedestrian": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      }
+    },
+    "actors": {},
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 180,
+      "sim": {
+        "vehicle": 2,
+        "actors": 0
+      },
+      "drawn": {
+        "vehicle": 2
+      }
+    },
+    "lods": {},
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [],
+    "actors": [],
+    "gunBodies": [],
+    "heldProps": [],
+    "summary": {
+      "gunBodyHits": 0,
+      "staticPairs": 0,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}

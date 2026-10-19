@@ -1,0 +1,336 @@
+{
+  "frameMs": [],
+  "frameP95": null,
+  "perf": {
+    "chunkResidency": null,
+    "terrain": null,
+    "infected": {
+      "count": 10,
+      "available": 340
+    },
+    "effects": {
+      "obstruction": {
+        "remainingTicks": 0,
+        "opacity": 0
+      },
+      "shots": [],
+      "enabled": true,
+      "colorblind": false,
+      "gore": "Full",
+      "quality": "high",
+      "flashReduction": false,
+      "time": 0.49999999999999994,
+      "lastSpray": {
+        "actionId": "",
+        "direction": {
+          "x": 1,
+          "z": 0
+        },
+        "droplets": 0,
+        "chunks": 0,
+        "gravity": 9.81
+      },
+      "surfaceSplats": 0,
+      "pendingSplats": 0,
+      "particles": 0,
+      "particleCap": 2048,
+      "decals": 0,
+      "decalCap": 600,
+      "gibs": 0,
+      "gibCap": 80,
+      "telegraphs": [],
+      "hitStop": {
+        "active": false,
+        "until": 0,
+        "started": 0,
+        "suppressed": 0
+      },
+      "flash": 0,
+      "blasts": {
+        "wind": {
+          "x": 0.55,
+          "z": 0.25
+        },
+        "blasts": 0,
+        "puffs": 0,
+        "puffCap": 400,
+        "fireballs": 0,
+        "fireballCap": 96,
+        "chunks": 0,
+        "chunkCap": 64,
+        "flames": 0,
+        "glows": 0,
+        "vehicleSmokeColumns": 0,
+        "columns": 2,
+        "transientColumns": 0,
+        "fireColumns": 2,
+        "columnShadows": 0,
+        "clouds": 0,
+        "scorch": 0,
+        "parts": 0,
+        "flash": 0,
+        "bulletTime": {
+          "scale": 1,
+          "remaining": 0,
+          "progress": 0
+        },
+        "slowMotion": true
+      },
+      "coverage": 0,
+      "detached": 0,
+      "dismemberedKills": 0,
+      "kills": 0,
+      "explosionRadius": 0
+    },
+    "nodeBuildMaterials": {},
+    "crowdPreparation": {
+      "workers": 8,
+      "submitted": 51,
+      "completed": 51,
+      "prebuilt": 51,
+      "failed": 0
+    },
+    "nodeBuilds": 607,
+    "profile": {
+      "other": {
+        "drawCalls": 52,
+        "triangles": 63229
+      },
+      "shadows": {
+        "drawCalls": 23,
+        "triangles": 57032
+      },
+      "buildings": {
+        "drawCalls": 5,
+        "triangles": 10686
+      },
+      "props": {
+        "drawCalls": 3,
+        "triangles": 800
+      },
+      "crowd": {
+        "drawCalls": 1,
+        "triangles": 20
+      }
+    },
+    "profileAssets": {
+      "view:other/Background.mesh/Background.mesh": {
+        "drawCalls": 1,
+        "triangles": 1984
+      },
+      "view:other/interactions/mesh_1": {
+        "drawCalls": 1,
+        "triangles": 264
+      },
+      "view:other/interactions/mesh_1_1": {
+        "drawCalls": 1,
+        "triangles": 44
+      },
+      "view:other/interactions/mesh_1_2": {
+        "drawCalls": 1,
+        "triangles": 260
+      },
+      "view:other/interactions/mesh_1_3": {
+        "drawCalls": 1,
+        "triangles": 160
+      },
+      "view:other/interactions/mesh_0": {
+        "drawCalls": 1,
+        "triangles": 132
+      },
+      "view:other/interactions/mesh_0_1": {
+        "drawCalls": 1,
+        "triangles": 176
+      },
+      "shadow:kit.metro-tunnel": {
+        "drawCalls": 1,
+        "triangles": 6764
+      },
+      "shadow:other/npcs/Mesh": {
+        "drawCalls": 0,
+        "triangles": 0
+      },
+      "shadow:other/Group/Mesh": {
+        "drawCalls": 0,
+        "triangles": 0
+      },
+      "shadow:other/Group/courierSkin": {
+        "drawCalls": 1,
+        "triangles": 44620
+      },
+      "shadow:other/Group/mesh_1": {
+        "drawCalls": 2,
+        "triangles": 3009
+      },
+      "shadow:other/Group/mesh_1_1": {
+        "drawCalls": 1,
+        "triangles": 572
+      },
+      "shadow:other/Group/mesh_1_2": {
+        "drawCalls": 1,
+        "triangles": 270
+      },
+      "shadow:other/Group/mesh_1_3": {
+        "drawCalls": 1,
+        "triangles": 448
+      },
+      "shadow:other/Group/mesh_1_4": {
+        "drawCalls": 1,
+        "triangles": 1060
+      },
+      "shadow:other/Group/mesh_1_5": {
+        "drawCalls": 1,
+        "triangles": 36
+      },
+      "shadow:other/Group/mesh_0": {
+        "drawCalls": 1,
+        "triangles": 240
+      },
+      "view:int.metro-station": {
+        "drawCalls": 2,
+        "triangles": 2380
+      },
+      "view:kit.metro-tunnel": {
+        "drawCalls": 3,
+        "triangles": 8306
+      },
+      "view:prop.jersey-barrier": {
+        "drawCalls": 2,
+        "triangles": 224
+      },
+      "view:other/npcs/Mesh": {
+        "drawCalls": 0,
+        "triangles": 0
+      },
+      "view:prop.crates": {
+        "drawCalls": 1,
+        "triangles": 576
+      },
+      "view:other/sunset-grove/Mesh": {
+        "drawCalls": 2,
+        "triangles": 32
+      },
+      "view:other/Group/Mesh": {
+        "drawCalls": 24,
+        "triangles": 9462
+      },
+      "view:other/Group/mesh_4": {
+        "drawCalls": 1,
+        "triangles": 12
+      },
+      "view:other/Group/mesh_3": {
+        "drawCalls": 1,
+        "triangles": 12
+      },
+      "view:other/Group/mesh_1": {
+        "drawCalls": 2,
+        "triangles": 3009
+      },
+      "view:other/Group/mesh_2": {
+        "drawCalls": 1,
+        "triangles": 96
+      },
+      "view:other/Group/mesh_0": {
+        "drawCalls": 2,
+        "triangles": 252
+      },
+      "view:other/Group/mesh_1_1": {
+        "drawCalls": 1,
+        "triangles": 572
+      },
+      "view:other/Group/mesh_1_2": {
+        "drawCalls": 1,
+        "triangles": 270
+      },
+      "view:other/Group/mesh_1_3": {
+        "drawCalls": 1,
+        "triangles": 448
+      },
+      "view:other/Group/mesh_1_4": {
+        "drawCalls": 1,
+        "triangles": 1060
+      },
+      "view:other/Group/mesh_1_5": {
+        "drawCalls": 1,
+        "triangles": 36
+      },
+      "view:other/Group/courierSkin": {
+        "drawCalls": 1,
+        "triangles": 44620
+      },
+      "view:other/figure-contact-shadows/figure-contact-shadows": {
+        "drawCalls": 1,
+        "triangles": 60
+      },
+      "view:other/interactions/Mesh": {
+        "drawCalls": 3,
+        "triangles": 268
+      },
+      "view:other/interactions/LineSegments": {
+        "drawCalls": 2,
+        "triangles": 0
+      },
+      "shadow:other/Bloom [ High Pass ]/Bloom [ High Pass ]": {
+        "drawCalls": 12,
+        "triangles": 12
+      },
+      "shadow:other/Render Pipeline/Render Pipeline": {
+        "drawCalls": 1,
+        "triangles": 1
+      }
+    },
+    "updateCpuMs": 0.6999998092651367,
+    "renderCpuMs": 1.5,
+    "propUploads": 0,
+    "awakeProps": 0,
+    "fps": 60.24096385542037,
+    "frameMs": 16.600000000000364,
+    "simMs": 0,
+    "simTicks": 0,
+    "simWorldMs": 0,
+    "simTickMs": 0,
+    "uiMs": 0.10000038146972656,
+    "drawCalls": 84,
+    "triangles": 131767,
+    "geometries": 322,
+    "textures": 95,
+    "entities": 174,
+    "backend": "webgpu",
+    "loadTiming": {
+      "dataMs": 0,
+      "simMs": 117.60000038146973,
+      "viewMs": 5307.199999809265
+    },
+    "quality": {
+      "setting": "high",
+      "tier": "high",
+      "p90Ms": 0,
+      "slowSeconds": 0,
+      "budgets": {
+        "frameMs": 16.7,
+        "infected": 200,
+        "drawCalls": 600,
+        "triangles": 1500000,
+        "simMs": 4,
+        "heapMB": 400,
+        "pixelRatio": 2,
+        "shadowSize": 2048,
+        "bloomMips": 5,
+        "cullDistance": 60
+      }
+    },
+    "renderedFrames": 120,
+    "contextLost": false,
+    "paused": true,
+    "heapBytes": 662000000,
+    "lighting": {
+      "lightFieldMs": 0.10000038146972656,
+      "lightPools": 23,
+      "lightCandidates": 23,
+      "shadowMaps": 1,
+      "heroLights": 1,
+      "heroShadow": 1,
+      "preset": "L6-subway"
+    }
+  }
+}

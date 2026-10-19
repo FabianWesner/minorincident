@@ -1,0 +1,6 @@
+- Merged atmosphere `d41f8c0a3` and small fixes `3998df90b` onto `lane/merge-batch12` from `a658575f1`.
+- Fixed the new L5 low budget regression in `cf7e830f1`: female/male triangles 487,461 / 492,117, under 500,000.
+- Phone portrait/landscape overlap 0; parallax 113.87/22.21 px; zoo z1.5 clipping 0; both backends/tiers proved and captures reviewed.
+- Full matrix 1,407/1,410; required functional 108/108; readability 48/50; final focused geometry 119/119; remote fast sweep 3,175 passed / 2 timing reds.
+- Gate RED: three matrix reds and L7/L8 reds reproduce on main; Zoo S2 fast-host timing discrepancy remains (main passes there).
+- [QA and red comparisons](qa.md), [opened captures](visual-review.md); no deployment or merge into main.

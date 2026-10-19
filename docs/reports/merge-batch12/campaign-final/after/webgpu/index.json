@@ -1,0 +1,278 @@
+[
+  {
+    "level": "L4",
+    "tier": "high",
+    "zoom": 0.5,
+    "file": "docs/reports/merge-batch12/campaign-final/after/webgpu/L4-high-z0.5.jpg",
+    "render": {
+      "backend": "webgpu",
+      "quality": "high",
+      "camera": {
+        "zoom": 0.5,
+        "targetZoom": 0.5,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 10.924999999999999,
+        "focus": [
+          -57.51318469372172,
+          0,
+          43.895870222922596
+        ],
+        "target": [
+          -57.51318469372172,
+          0,
+          43.895870222922596
+        ],
+        "position": [
+          -51.26341386793852,
+          6.421553881295268,
+          50.1456410487058
+        ],
+        "spot": null
+      },
+      "postFx": {
+        "bloomMips": 5,
+        "dof": false,
+        "dofRepeats": 18,
+        "dofResolution": 1,
+        "bloomStrength": 0.2,
+        "haze": true,
+        "heatSources": 0
+      },
+      "lighting": {
+        "preset": "L4",
+        "intensity": 1.3,
+        "sky": "#b4d1df",
+        "fogColors": [
+          "#b4d1df",
+          "#dbd1c1"
+        ],
+        "fogNear": 62,
+        "fogFar": 165,
+        "shadowColor": "636081"
+      }
+    },
+    "perf": {
+      "backend": "webgpu",
+      "drawCalls": 104,
+      "triangles": 144001,
+      "geometries": 598,
+      "textures": 88,
+      "heapBytes": 588000000,
+      "paused": true,
+      "contextLost": false
+    }
+  },
+  {
+    "level": "L4",
+    "tier": "high",
+    "zoom": 1,
+    "file": "docs/reports/merge-batch12/campaign-final/after/webgpu/L4-high-z1.jpg",
+    "render": {
+      "backend": "webgpu",
+      "quality": "high",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 21.849999999999998,
+        "focus": [
+          -57.51318469372172,
+          0,
+          43.895870222922596
+        ],
+        "target": [
+          -57.51318469372172,
+          0,
+          43.895870222922596
+        ],
+        "position": [
+          -45.01364304215532,
+          12.843107762590536,
+          56.395411874489
+        ],
+        "spot": null
+      },
+      "postFx": {
+        "bloomMips": 5,
+        "dof": false,
+        "dofRepeats": 18,
+        "dofResolution": 1,
+        "bloomStrength": 0.2,
+        "haze": true,
+        "heatSources": 0
+      },
+      "lighting": {
+        "preset": "L4",
+        "intensity": 1.3,
+        "sky": "#b4d1df",
+        "fogColors": [
+          "#b4d1df",
+          "#dbd1c1"
+        ],
+        "fogNear": 64.85,
+        "fogFar": 167.85,
+        "shadowColor": "636081"
+      }
+    },
+    "perf": {
+      "backend": "webgpu",
+      "drawCalls": 171,
+      "triangles": 226121,
+      "geometries": 598,
+      "textures": 88,
+      "heapBytes": 588000000,
+      "paused": true,
+      "contextLost": false
+    }
+  },
+  {
+    "level": "L4",
+    "tier": "low",
+    "zoom": 0.5,
+    "file": "docs/reports/merge-batch12/campaign-final/after/webgpu/L4-low-z0.5.jpg",
+    "render": {
+      "backend": "webgpu",
+      "quality": "low",
+      "camera": {
+        "zoom": 0.5,
+        "targetZoom": 0.5,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 10.924999999999999,
+        "focus": [
+          -57.51318469372172,
+          0,
+          43.895870222922596
+        ],
+        "target": [
+          -57.51318469372172,
+          0,
+          43.895870222922596
+        ],
+        "position": [
+          -51.26341386793852,
+          6.421553881295268,
+          50.1456410487058
+        ],
+        "spot": null
+      },
+      "postFx": {
+        "bloomMips": 2,
+        "dof": false,
+        "dofRepeats": 6,
+        "dofResolution": 0.5,
+        "bloomStrength": 0.2,
+        "haze": false,
+        "heatSources": 8
+      },
+      "lighting": {
+        "preset": "L4",
+        "intensity": 1.3,
+        "sky": "#b4d1df",
+        "fogColors": [
+          "#b4d1df",
+          "#dbd1c1"
+        ],
+        "fogNear": 62,
+        "fogFar": 165,
+        "shadowColor": "636081"
+      }
+    },
+    "perf": {
+      "backend": "webgpu",
+      "drawCalls": 71,
+      "triangles": 74258,
+      "geometries": 570,
+      "textures": 60,
+      "heapBytes": 435000000,
+      "paused": true,
+      "contextLost": false
+    }
+  },
+  {
+    "level": "L4",
+    "tier": "low",
+    "zoom": 1,
+    "file": "docs/reports/merge-batch12/campaign-final/after/webgpu/L4-low-z1.jpg",
+    "render": {
+      "backend": "webgpu",
+      "quality": "low",
+      "camera": {
+        "zoom": 1,
+        "targetZoom": 1,
+        "zoomLimits": [
+          0.5,
+          1.5
+        ],
+        "fov": 25,
+        "azimuth": 0.7853981633974483,
+        "polar": 0.9424777960769379,
+        "radius": 21.849999999999998,
+        "focus": [
+          -57.51318469372172,
+          0,
+          43.895870222922596
+        ],
+        "target": [
+          -57.51318469372172,
+          0,
+          43.895870222922596
+        ],
+        "position": [
+          -45.01364304215532,
+          12.843107762590536,
+          56.395411874489
+        ],
+        "spot": null
+      },
+      "postFx": {
+        "bloomMips": 2,
+        "dof": false,
+        "dofRepeats": 6,
+        "dofResolution": 0.5,
+        "bloomStrength": 0.2,
+        "haze": false,
+        "heatSources": 8
+      },
+      "lighting": {
+        "preset": "L4",
+        "intensity": 1.3,
+        "sky": "#b4d1df",
+        "fogColors": [
+          "#b4d1df",
+          "#dbd1c1"
+        ],
+        "fogNear": 64.85,
+        "fogFar": 167.85,
+        "shadowColor": "636081"
+      }
+    },
+    "perf": {
+      "backend": "webgpu",
+      "drawCalls": 106,
+      "triangles": 113081,
+      "geometries": 570,
+      "textures": 60,
+      "heapBytes": 435000000,
+      "paused": true,
+      "contextLost": false
+    }
+  }
+]

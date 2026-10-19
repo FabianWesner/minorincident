@@ -1,0 +1,759 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch12/node_modules/.bin/playwright",
+      "test",
+      "tests/perf/e18-counters.spec.ts",
+      "tests/perf/e18-download.spec.ts",
+      "--project=chromium",
+      "--workers=1"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch12/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch12/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch12/test-results/playwright/run-3655",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch12/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch12/test-results/playwright/run-3655",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch12/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch12/test-results/playwright/run-3655",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch12/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch12/test-results/playwright/run-3655",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch12/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch12/test-results/playwright/run-3655",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch12/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch12/test-results/playwright/run-3655",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch12/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3655 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3655",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "perf/e18-counters.spec.ts",
+      "file": "perf/e18-counters.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E18-01-high-perf-horde-200 @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets",
+          "ok": true,
+          "tags": [
+            "E18-AC01",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3475,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T02:05:03.671Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e59cb90cf0e163e84967-63409aac8aa173fe46c4",
+          "file": "perf/e18-counters.spec.ts",
+          "line": 6,
+          "column": 3
+        },
+        {
+          "title": "T-E18-01-high-perf-l6-mainstreet @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets",
+          "ok": true,
+          "tags": [
+            "E18-AC01",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6808,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T02:05:07.241Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e59cb90cf0e163e84967-76f30396dcd1efd744b7",
+          "file": "perf/e18-counters.spec.ts",
+          "line": 6,
+          "column": 3
+        },
+        {
+          "title": "T-E18-01-high-perf-l5-aftermath @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets",
+          "ok": true,
+          "tags": [
+            "E18-AC01",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13688,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T02:05:14.058Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e59cb90cf0e163e84967-4d1873f76e6a15905403",
+          "file": "perf/e18-counters.spec.ts",
+          "line": 6,
+          "column": 3
+        },
+        {
+          "title": "T-E18-01-low-perf-horde-200 @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets",
+          "ok": true,
+          "tags": [
+            "E18-AC01",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 2026,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T02:05:27.753Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e59cb90cf0e163e84967-800d0451eb77a05f4bd2",
+          "file": "perf/e18-counters.spec.ts",
+          "line": 6,
+          "column": 3
+        },
+        {
+          "title": "T-E18-01-low-perf-l6-mainstreet @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets",
+          "ok": true,
+          "tags": [
+            "E18-AC01",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4424,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T02:05:29.785Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e59cb90cf0e163e84967-910b099e204389976385",
+          "file": "perf/e18-counters.spec.ts",
+          "line": 6,
+          "column": 3
+        },
+        {
+          "title": "T-E18-01-low-perf-l5-aftermath @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets",
+          "ok": true,
+          "tags": [
+            "E18-AC01",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3602,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T02:05:34.214Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e59cb90cf0e163e84967-1416ef01ee95442c4d22",
+          "file": "perf/e18-counters.spec.ts",
+          "line": 6,
+          "column": 3
+        },
+        {
+          "title": "T-E18-01-low-male @E18-AC01 @perf L5 stress retains its budget with the larger male courier skin",
+          "ok": true,
+          "tags": [
+            "E18-AC01",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3673,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T02:05:37.822Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "e59cb90cf0e163e84967-c1f429c50a2bcde122ed",
+          "file": "perf/e18-counters.spec.ts",
+          "line": 23,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "perf/e18-download.spec.ts",
+      "file": "perf/e18-download.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E18-03 @E18-AC03 @perf production initial network payload <=15MB through Begin (female, high, webgl)",
+          "ok": true,
+          "tags": [
+            "E18-AC03",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4385,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T02:05:41.809Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f5f20f0473d41ff1573d-1e397272feb3049ea15b",
+          "file": "perf/e18-download.spec.ts",
+          "line": 8,
+          "column": 1
+        },
+        {
+          "title": "T-E18-03 @E18-AC03 @perf production initial network payload <=15MB through Begin (female, high, webgpu)",
+          "ok": true,
+          "tags": [
+            "E18-AC03",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3801,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T02:05:46.288Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f5f20f0473d41ff1573d-ba5fc25dc1ddbf95090f",
+          "file": "perf/e18-download.spec.ts",
+          "line": 8,
+          "column": 1
+        },
+        {
+          "title": "T-E18-03 @E18-AC03 @perf production initial network payload <=15MB through Begin (female, low, webgl)",
+          "ok": true,
+          "tags": [
+            "E18-AC03",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4262,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T02:05:50.094Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f5f20f0473d41ff1573d-391a8c3360826d66f9e5",
+          "file": "perf/e18-download.spec.ts",
+          "line": 8,
+          "column": 1
+        },
+        {
+          "title": "T-E18-03 @E18-AC03 @perf production initial network payload <=15MB through Begin (female, low, webgpu)",
+          "ok": true,
+          "tags": [
+            "E18-AC03",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3733,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T02:05:54.364Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f5f20f0473d41ff1573d-3cd86e3de30308e71ed6",
+          "file": "perf/e18-download.spec.ts",
+          "line": 8,
+          "column": 1
+        },
+        {
+          "title": "T-E18-03 @E18-AC03 @perf production initial network payload <=15MB through Begin (male, high, webgl)",
+          "ok": true,
+          "tags": [
+            "E18-AC03",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4158,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T02:05:58.103Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f5f20f0473d41ff1573d-ec4b18cc26aa88af89ae",
+          "file": "perf/e18-download.spec.ts",
+          "line": 8,
+          "column": 1
+        },
+        {
+          "title": "T-E18-03 @E18-AC03 @perf production initial network payload <=15MB through Begin (male, high, webgpu)",
+          "ok": true,
+          "tags": [
+            "E18-AC03",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3900,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T02:06:02.269Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f5f20f0473d41ff1573d-9a7bc28807fc29f31fae",
+          "file": "perf/e18-download.spec.ts",
+          "line": 8,
+          "column": 1
+        },
+        {
+          "title": "T-E18-03 @E18-AC03 @perf production initial network payload <=15MB through Begin (male, low, webgl)",
+          "ok": true,
+          "tags": [
+            "E18-AC03",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4132,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T02:06:06.177Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f5f20f0473d41ff1573d-85da42c0870c699aa608",
+          "file": "perf/e18-download.spec.ts",
+          "line": 8,
+          "column": 1
+        },
+        {
+          "title": "T-E18-03 @E18-AC03 @perf production initial network payload <=15MB through Begin (male, low, webgpu)",
+          "ok": true,
+          "tags": [
+            "E18-AC03",
+            "perf"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 3862,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-19T02:06:10.326Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f5f20f0473d41ff1573d-7c94cca3208c26e4f7c4",
+          "file": "perf/e18-download.spec.ts",
+          "line": 8,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-19T02:05:03.050Z",
+    "duration": 71196.01999999999,
+    "expected": 15,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
