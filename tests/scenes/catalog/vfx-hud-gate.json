@@ -12,5 +12,27 @@
     "undrawnFramesMax": 0,
     "drawCallsMax": 300,
     "trianglesMax": 500000
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        149.37,
+        15
+      ],
+      "loadout": [
+        "weapon.fire-axe",
+        "weapon.army-mg"
+      ]
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      149.37,
+      15
+    ],
+    "zoom": 1
   }
 }

@@ -71,3 +71,20 @@ test('horde warnings retain lifetimes while only three distinct nearest/imminent
     expect(fx.snapshot().telegraphs).toHaveLength(39);
   } finally { fx.dispose(); world.dispose(); }
 });
+
+test('warning visibility and palette share a WebGPU vertex buffer without overwriting each other', async () => {
+  const world = new SimWorld(); await world.init(); world.loadScenario('vfx-showcase');
+  const fx = new Vfx(world, { flash() {}, detach() {}, blood() {}, clearGore() {}, shake() {} });
+  try {
+    const color = fx.telegraphs.mesh.geometry.getAttribute('fxColor'), visibility = fx.telegraphs.mesh.geometry.getAttribute('fxVisibility');
+    expect('data' in color && 'data' in visibility && color.data === visibility.data, 'interleaved attributes must share one buffer to stay within WebGPU limits').toBe(true);
+    world.events.emit({ tick: 0, type: 'telegraph', attackId: 900, kind: 'charge', position: { x: 2, z: 1 }, radius: 3, angle: 0 });
+    const slot = fx.snapshot().telegraphs[0].slot, before = [color.getX(slot), color.getY(slot), color.getZ(slot)];
+    fx.telegraphs.opacity(slot, .125);
+    expect(visibility.getX(slot)).toBe(.125);
+    expect([color.getX(slot), color.getY(slot), color.getZ(slot)]).toEqual(before);
+    fx.telegraphs.recolor(slot, 0xffffff);
+    expect([color.getX(slot), color.getY(slot), color.getZ(slot)]).toEqual([1, 1, 1]);
+    expect(visibility.getX(slot)).toBe(.125);
+  } finally { fx.dispose(); world.dispose(); }
+});
