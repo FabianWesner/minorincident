@@ -1,0 +1,14 @@
+{
+ "name": "dress-l8-zoo-west-wall",
+ "note": "Opus visual QA #34 (verbatim): \"L8 drive-out ... flat dark plane\". L8 west wall: the town beyond the wall at the top-left of the frame. Look for: lit road, lamps and building rows beyond the wall, no bare dark plane.",
+ "seed": 8,
+ "ground": "district",
+ "time": "L8-zoo",
+ "layout": { "district": "D-ZOO", "bbox": [[-150, -40], [-90, 60]] },
+ "clipping": { "ignoreFoliage": true },
+ "actors": [ { "id": "courier", "kind": "courier", "at": [-108, 10], "yaw": 0, "state": "idle" } ],
+ "camera": { "mode": "game", "target": [-108, 10] },
+ "frames": 40,
+ "shots": [39],
+ "expect": { "consoleErrors": 0 }
+}
