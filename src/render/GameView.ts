@@ -1053,7 +1053,7 @@ export class GameView implements Lifecycle {
       if (sam?.status === 'hidden' && bus && this.world.tick % 90 < 45) {
         field.push(footprint({ type: 'point', color: 'light_led_white', intensity: 8, range: 5, flicker: 'none', shadow: 'none', position: [bus.x, 1.2, bus.z], direction: [0, -1, 0] }));
       }
-      this.vehicles?.pushLights(field, aura, (position, direction, length, angle, colour) => lighting.practicalEffects.pushBeam(position, direction, length, angle, colour));
+      this.vehicles?.pushLights(field, aura, timeOfDayPresets[lighting.preset].headlightBeams ? (position, direction, length, angle, colour) => lighting.practicalEffects.pushBeam(position, direction, length, angle, colour) : undefined);
       // Pickups keep a small cool glint pool so loot stays findable in the dark.
       for (const entity of this.world.entities.iterate()) if (entity.pickup && !entity.hidden && !('collected' in entity.pickup && entity.pickup.collected)) field.push(pickupLight(entity.transform.x, entity.transform.z));
     }

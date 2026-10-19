@@ -21,6 +21,8 @@ export interface TimeOfDayPreset {
   ambient?: { leaf: number; dust: number; bird: number; glow?: number; rise?: boolean };
   /** Sparse insects around powered outdoor lamps, high tier only. */
   lampInsects?: boolean;
+  /** Visible low-beam cones and dust motes in the driven vehicle's headlights (L9 night drive). */
+  headlightBeams?: boolean;
 }
 const golden: TimeOfDayPreset = { sun: '#ffdb9a', intensity: 1.15, polar: 1.15, azimuth: -1.0, shadow: '#66548d', sky: '#eeb888', fog: '#e5b39e', fogNear: 55, fogFar: 140, practical: .25 };
 const presets = {
@@ -44,7 +46,7 @@ const presets = {
   L6: { sun: '#9fb4ff', intensity: 0.38, polar: 1.55, azimuth: 2.2, shadow: '#39365f', sky: '#1b263f', fog: '#4b5268', fogNear: 45, fogFar: 120, practical: 1, rim: .4, aura: .45, heroFill: .8, heroRim: .22,
     look: { skyAmbient: '#99adc9', groundAmbient: '#8e7c83', vignette: .1, bloomStrength: .2, gradeShadow: '#7a6080', gradeHighlight: '#ffa060', gradeAmount: .75, gradeContrast: 1.12, gradeSaturation: .95, haze: '#a0503a', hazeAmount: .45, hazeHeight: 12, beamStrength: 2, dust: '#ff8638' }, ambient: { leaf: 0, dust: 80, bird: 0, glow: 3, rise: true } },
   /** Open crossing: retain the journey's moonlight, with air clear enough for 150 m sight lines. `roadLift`: E31-AC16 night route read (the asphalt road is a pale moonlit band, 3:1 against the verge). */
-  'L9-crossing': { sun: '#b4c7ff', intensity: .52, polar: 1.12, azimuth: -2.25, shadow: '#28324c', sky: '#1a3043', fog: '#4d657a', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, roadLift: 2, roadColor: '#92a7b2',
+  'L9-crossing': { sun: '#b4c7ff', intensity: .52, polar: 1.12, azimuth: -2.25, shadow: '#28324c', sky: '#1a3043', fog: '#4d657a', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, roadLift: 2, roadColor: '#92a7b2', headlightBeams: true,
     // E31 art addendum: a low moon (~26 deg) behind the scene from the camera's view, so trees/poles/fences throw long soft
     // shadows towards the camera across the lanes; the ground takes the moon fully (coreLightEdge), only turned-away walls
     // fall into core shade. The burning city glows warm from the east (glow*), growing as the route nears it.
