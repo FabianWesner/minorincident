@@ -1505,12 +1505,17 @@ export class SceneLab {
     for (const d of this.world.districts?.districts ?? []) for (const s of d.layout.surfaces) if (inside([x - d.origin[0], z - d.origin[1]], s.polygon)) found = s.surface + (s.height !== undefined ? `@${s.height}` : '');
     return found;
   }
-  private readonly paws = new WeakMap<Object3D, Vector3>();
-  /** Fixed contact anchor used by the existing slide rule. Mesh depth is measured separately. */
+  private readonly paws = new WeakMap<Object3D, { node: Object3D; local: Vector3 }>();
+  /** Fixed contact anchor used by the existing slide rule. Mesh depth is measured separately. A jointed leg's own paw
+   * node (amb.dog pawFL...) carries the anchor: PawContacts may bend its knee. */
   private paw(leg: Object3D): number[] {
-    let local = this.paws.get(leg);
-    if (!local) { const bounds = new Box3(); leg.traverse(n => { if (n instanceof Mesh) bounds.expandByObject(n); }); const p = bounds.getCenter(new Vector3()); p.y = bounds.min.y; local = leg.worldToLocal(p); this.paws.set(leg, local); }
-    return leg.localToWorld(local.clone()).toArray();
+    let paw = this.paws.get(leg);
+    if (!paw) {
+      let node: Object3D = leg; leg.traverse(n => { if (node === leg && n !== leg && /^paw/.test(n.name)) node = n; });
+      const bounds = new Box3(); node.traverse(n => { if (n instanceof Mesh) bounds.expandByObject(n); }); const p = bounds.getCenter(new Vector3()); p.y = bounds.min.y;
+      paw = { node, local: node.worldToLocal(p) }; this.paws.set(leg, paw);
+    }
+    return paw.node.localToWorld(paw.local.clone()).toArray();
   }
   /** The lowest drawn vertex can differ from the contact anchor as the rigid leg rotates. */
   private pawSole(leg: Object3D): number {
