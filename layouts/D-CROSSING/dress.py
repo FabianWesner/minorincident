@@ -349,7 +349,7 @@ for kind, count, rr in [('dust', 70, (7, 26)), ('scrub', 90, (4, 14))]:
             # acceptance, and with it the R stream, stays exactly as before.
             poly = [[cx + (x - cx) * .72, cz + (z - cz) * .72] for x, z in poly]
         # patches may sit under props but never under the encounter lanes
-        base, stripe = ('khakiSeam', None) if kind == 'dust' else ('olive', None)
+        base, stripe = ('leather', None) if kind == 'dust' else ('oliveSeam', None)
         ov('dry-' + kind, poly, base, FIELD_BASE if kind == 'dust' else FIELD_BASE + .0007, cut=False, cat='field')
         made += 1
     stats['dry-' + kind] = made
@@ -472,7 +472,7 @@ def road_decals(pts, hw, gravel, h0):
             if r < .22 and not gravel:
                 # resurfaced patch: a different-toned slab
                 w, h = R.uniform(1.4, 3.2), R.uniform(2.0, 5.5)
-                ov('road-patch', rot_rect(cx, cz, h / 2, w / 2, ang + R.uniform(-.08, .08)), 'pantsLight', h0, cut=False, cat='road')
+                ov('road-patch', rot_rect(cx, cz, h / 2, w / 2, ang + R.uniform(-.08, .08)), 'pantsCargo', h0, cut=False, cat='road')
                 counts['patch'] += 1
             elif r < .5:
                 # tar crack: thin dark line across or along the lane
@@ -486,7 +486,7 @@ def road_decals(pts, hw, gravel, h0):
                 # dust / grit drifting in from the verge, a soft long ellipse across a lane edge
                 side = R.choice([-1, 1])
                 ex, ez = x + nx * side * (hw - R.uniform(.2, 2.2)), z + nz * side * (hw - R.uniform(.2, 2.2))
-                ov('road-dust', blob(ex, ez, R.uniform(2.5, 7), R.uniform(.8, 2.0), ang + R.uniform(-.2, .2), 9, 12), 'capTan', h0, cut=False, cat='road')
+                ov('road-dust', blob(ex, ez, R.uniform(2.5, 7), R.uniform(.8, 2.0), ang + R.uniform(-.2, .2), 9, 12), 'khakiSeam', h0, cut=False, cat='road')
                 counts['dust'] += 1
             elif r < .70 and not gravel:
                 # a pair of dark skid / tyre marks
