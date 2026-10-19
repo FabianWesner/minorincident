@@ -34,6 +34,14 @@ test('@E31 L9 night accents: light points along every route, on budget, render-o
   expect(accentPulse({ flicker: 0, strobe: true, seed: 0 }, .1)).toBe(1); expect(accentPulse({ flicker: 0, strobe: true, seed: 0 }, .6)).toBeLessThan(.1);
 });
 
+test('@E31 L9 night accents do not move with a Scene Lab crop (keyed random streams)', () => {
+  const box = [[-200, -120], [200, 120]], within = (x: number, z: number, m = 0) => x > box[0][0] + m && x < box[1][0] - m && z > box[0][1] + m && z < box[1][1] - m;
+  const cropped = crossingAccents(layout.placements.filter(p => within(p.position[0], p.position[2])));
+  const full = crossingAccents(layout.placements), key = (a: { x: number; z: number }) => `${a.x.toFixed(2)},${a.z.toFixed(2)}`;
+  const inner = (list: { x: number; z: number }[]) => list.filter(a => within(a.x, a.z, 30)).map(key).sort();
+  expect(inner(cropped.points)).toEqual(inner(full.points)); expect(inner(cropped.fires)).toEqual(inner(full.fires));
+});
+
 test('@E31 L9 night accents are part of the crossing light field only, and the farms/diner have power', () => {
   const world = new DistrictWorld(compositions['D-CROSSING'], [layout], 31);
   expect(nightAccents(world)).toBe(nightAccents(world));

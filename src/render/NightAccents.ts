@@ -47,13 +47,15 @@ export function nightAccents(world: DistrictWorld | null | undefined): AccentSet
 /** E31 addendum light points: edge studs on the asphalt, refugee lanterns/flares along the gravel tracks, accident flares and
  * hazard blinkers at the verge wrecks, farm fires, burning wrecks, the burning city edge and red warning lamps at the crash. */
 export function crossingAccents(placements: readonly Placement[], origin: P2 = [0, 0]): AccentSet {
-  const rng = new Rng(931, 'l9-night-accents'), points: Accent[] = [], fires: AccentFire[] = [];
+  // Keyed streams: a candidate's draws never depend on how many others were accepted, so a Scene Lab crop (fewer
+  // placements) keeps the same accents in its window as the full game layout.
+  const keyed = (key: string) => new Rng(931, `l9-night:${key}`), points: Accent[] = [], fires: AccentFire[] = [];
   const boxes = placements.map(p => [p.visualAabb.min[0], p.visualAabb.min[2], p.visualAabb.max[0], p.visualAabb.max[2]] as const);
   /** Clear of every placement footprint (visual AABB) by `margin` metres. */
   const free = (x: number, z: number, margin: number) => boxes.every(b => x < b[0] - margin || x > b[2] + margin || z < b[1] - margin || z > b[3] + margin);
   const forks: P2[] = [[-450, 0], [450, 0]];
   const nearFork = (x: number, z: number, r: number) => forks.some(f => Math.hypot(x - f[0], z - f[1]) < r);
-  const put = (a: Omit<Accent, 'seed'> & { seed?: number }) => points.push({ ...a, x: a.x + origin[0], z: a.z + origin[1], seed: a.seed ?? points.length * 1.37 });
+  const put = (a: Omit<Accent, 'seed'> & { seed?: number }) => points.push({ ...a, x: a.x + origin[0], z: a.z + origin[1], seed: a.seed ?? Math.abs(a.x * 12.9898 + a.z * 78.233) % 6.283 });
   const fire = (x: number, z: number, radius: number, car = false) => fires.push({ x: x + origin[0], z: z + origin[1], radius, car });
   const road = crossing.routes.find(r => r.id === 'road')!;
   // 1) Raised edge studs on the asphalt edge lines (dress.py: ±5.55 m): faint by themselves, they glint in the headlights.
@@ -73,12 +75,13 @@ export function crossingAccents(placements: readonly Placement[], origin: P2 = [
       if (road.points.some(q => q[0] === a[0] && q[1] === a[1]) && road.points.some(q => q[0] === b[0] && q[1] === b[1])) continue; // shared asphalt
       const d = Math.hypot(b[0] - a[0], b[1] - a[1]), ux = (b[0] - a[0]) / d, uz = (b[1] - a[1]) / d;
       let side = 1;
+      const rng = keyed(`track:${route.id}:${i}`);
       for (let s = 12 + rng.next() * 8; s < d - 12; s += 20 + rng.next() * 10) {
         side = -side;
-        const o = hw + 1.1 + rng.next() * .9, x = a[0] + ux * s - uz * side * o, z = a[1] + uz * s + ux * side * o;
+        const o = hw + 1.1 + rng.next() * .9, x = a[0] + ux * s - uz * side * o, z = a[1] + uz * s + ux * side * o, yaw = rng.next() * 6.28;
         if (nearFork(x, z, 20) || !free(x, z, .8)) continue;
-        if (lantern) put({ kind: 'lantern', x, y: .14, z, yaw: rng.next() * 6.28, color: '#ffb35c', glow: 5, flicker: 1, strobe: false, pool: { color: 'light_window_warm', intensity: 3.2, range: 3.4 } });
-        else put({ kind: 'flare', x, y: .03, z, yaw: rng.next() * 6.28, color: '#ff3a2a', glow: 7, flicker: 1, strobe: false, pool: { color: '#ff4a32', intensity: 3.6, range: 3.6 } });
+        if (lantern) put({ kind: 'lantern', x, y: .14, z, yaw, color: '#ffb35c', glow: 5, flicker: 1, strobe: false, pool: { color: 'light_window_warm', intensity: 3.2, range: 3.4 } });
+        else put({ kind: 'flare', x, y: .03, z, yaw, color: '#ff3a2a', glow: 7, flicker: 1, strobe: false, pool: { color: '#ff4a32', intensity: 3.6, range: 3.6 } });
       }
     }
   }
@@ -87,13 +90,13 @@ export function crossingAccents(placements: readonly Placement[], origin: P2 = [
   for (const p of wrecks) {
     const [x, , z] = p.position, lane = laneDistance([x, z]);
     if (lane > 16 || x > 528) continue;
-    const roll = rng.next();
+    const rng = keyed(`wreck:${p.id}`), roll = rng.next();
     if (p.decay === 'burned') { if (roll < .7) fire(x, z, 1.3, true); continue; }
     const size = dims.get(p.assetId); if (!size) continue;
     if (roll < .55 && x < 455) {
       // Four corner blinkers in one phase; the first carries the amber pool over the car.
       const c = Math.cos(p.yaw), s = Math.sin(p.yaw), hx = size.x * p.scale[0] / 2 + .03, hz = size.z * p.scale[2] / 2 * .82, y = size.y * p.scale[1] * .36, phase = rng.next() * 2;
-      for (const [k, [lx, lz]] of [[hx, hz], [hx, -hz], [-hx, hz], [-hx, -hz]].entries()) put({ kind: 'hazard', x: x + lx * c + lz * s, y, z: z - lx * s + lz * c, yaw: p.yaw, color: '#ffa21f', glow: 6, flicker: 0, strobe: true, seed: phase, ...(k ? {} : { pool: { color: '#ffa21f', intensity: 3.6, range: 4.8 } }) });
+      for (const [k, [lx, lz]] of [[hx, hz], [hx, -hz], [-hx, hz], [-hx, -hz]].entries()) put({ kind: 'hazard', x: x + lx * c + lz * s, y, z: z - lx * s + lz * c, yaw: p.yaw, color: '#ffa21f', glow: 10, flicker: 0, strobe: true, seed: phase, ...(k ? {} : { pool: { color: '#ffa21f', intensity: 3.6, range: 4.8 } }) });
     } else if (x > 455 && roll < .6) fire(x, z, 1.2, true);
     // A flare between the wreck and the lane (drive-over safe, flat on the verge).
     for (let k = 0; k < 6; k++) {
@@ -104,6 +107,7 @@ export function crossingAccents(placements: readonly Placement[], origin: P2 = [
   // 4) Farm fires (burning brush/bonfires) beside the farmsteads, well off the lanes.
   const houses = placements.filter(p => p.assetId.startsWith('bld.house-'));
   for (const h of houses) {
+    const rng = keyed(`farm:${h.id}`);
     if (rng.next() > .6) continue;
     for (let k = 0; k < 12; k++) {
       const ang = rng.next() * Math.PI * 2, r = 11 + rng.next() * 8, x = h.position[0] + Math.cos(ang) * r, z = h.position[2] + Math.sin(ang) * r;
@@ -117,8 +121,9 @@ export function crossingAccents(placements: readonly Placement[], origin: P2 = [
     for (const [i, b] of route.points.slice(1).entries()) {
       const a = route.points[i], d = Math.hypot(b[0] - a[0], b[1] - a[1]), ux = (b[0] - a[0]) / d, uz = (b[1] - a[1]) / d;
       if (route.id !== 'road' && road.points.some(q => q[0] === a[0] && q[1] === a[1]) && road.points.some(q => q[0] === b[0] && q[1] === b[1])) continue;
-      for (let s = 30 + rng.next() * 40; s < d - 20; s += 75 + rng.next() * 35) {
-        const side = rng.next() < .5 ? -1 : 1;
+      const stations = keyed(`brush:${route.id}:${i}`);
+      for (let s = 30 + stations.next() * 40, n = 0; s < d - 20; s += 75 + stations.next() * 35, n++) {
+        const rng = keyed(`brush:${route.id}:${i}:${n}`), side = rng.next() < .5 ? -1 : 1;
         for (let k = 0; k < 6; k++) {
           const o = hw + 8 + rng.next() * 6, t = s + (rng.next() - .5) * 10, x = a[0] + ux * t - uz * side * o, z = a[1] + uz * t + ux * side * o;
           if (!nearFork(x, z, 30) && x < 440 && laneDistance([x, z]) > 7.5 && free(x, z, 2.2)) { fire(x, z, .8 + rng.next() * .6); break; }
@@ -127,11 +132,9 @@ export function crossingAccents(placements: readonly Placement[], origin: P2 = [
     }
   }
   // 5) The next city burns: ground fires between the east-edge blocks, behind the gully.
-  let city = 0;
-  for (let k = 0; k < 200 && city < 9; k++) {
-    const x = 556 + rng.next() * 38, z = (rng.next() - .5) * 360;
-    if (Math.abs(z) < 14 || !free(x, z, 1.8)) continue;
-    fire(x, z, 1.6 + rng.next() * 1.1); city++;
+  for (let k = 0; k < 40; k++) {
+    const rng = keyed(`city:${k}`), x = 556 + rng.next() * 38, z = (rng.next() - .5) * 360, radius = 1.6 + rng.next() * 1.1;
+    if (Math.abs(z) >= 14 && free(x, z, 1.8)) fire(x, z, radius);
   }
   // 6) Red warning lamps on the crash approach barricades (the road ends ahead).
   for (const p of placements.filter(q => q.assetId === 'prop.barricade')) put({ kind: 'beacon', x: p.position[0], y: 1.86, z: p.position[2], yaw: p.yaw, color: '#ff2a1a', glow: 8, flicker: 0, strobe: true, pool: { color: 'light_siren_red', intensity: 3, range: 3 } });
@@ -162,7 +165,7 @@ export function accentPulse(a: Pick<Accent, 'flicker' | 'strobe' | 'seed'>, time
   return k;
 }
 
-const sizes: Record<Accent['kind'], [number, number, number]> = { stud: [.3, .05, .16], flare: [.34, .06, .06], lantern: [.16, .24, .16], hazard: [.13, .1, .13], beacon: [.22, .22, .22] };
+const sizes: Record<Accent['kind'], [number, number, number]> = { stud: [.3, .05, .16], flare: [.34, .06, .06], lantern: [.16, .24, .16], hazard: [.2, .14, .2], beacon: [.22, .22, .22] };
 
 /** All accent emitters in two instanced draws: studs (glint with the local light field, so headlights wake them) and the
  * self-lit flares, lanterns, hazard and beacon lamps (HDR for the bloom; colours pulse with their pools). */
