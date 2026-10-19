@@ -73,7 +73,7 @@ export function crossingAccents(placements: readonly Placement[], origin: P2 = [
       if (road.points.some(q => q[0] === a[0] && q[1] === a[1]) && road.points.some(q => q[0] === b[0] && q[1] === b[1])) continue; // shared asphalt
       const d = Math.hypot(b[0] - a[0], b[1] - a[1]), ux = (b[0] - a[0]) / d, uz = (b[1] - a[1]) / d;
       let side = 1;
-      for (let s = 18 + rng.next() * 10; s < d - 12; s += 34 + rng.next() * 16) {
+      for (let s = 12 + rng.next() * 8; s < d - 12; s += 20 + rng.next() * 10) {
         side = -side;
         const o = hw + 1.1 + rng.next() * .9, x = a[0] + ux * s - uz * side * o, z = a[1] + uz * s + ux * side * o;
         if (nearFork(x, z, 20) || !free(x, z, .8)) continue;
@@ -146,7 +146,7 @@ export function accentPulse(a: Pick<Accent, 'flicker' | 'strobe' | 'seed'>, time
   return k;
 }
 
-const sizes: Record<Accent['kind'], [number, number, number]> = { stud: [.2, .04, .11], flare: [.34, .06, .06], lantern: [.16, .24, .16], hazard: [.13, .1, .13], beacon: [.22, .22, .22] };
+const sizes: Record<Accent['kind'], [number, number, number]> = { stud: [.3, .05, .16], flare: [.34, .06, .06], lantern: [.16, .24, .16], hazard: [.13, .1, .13], beacon: [.22, .22, .22] };
 
 /** All accent emitters in two instanced draws: studs (glint with the local light field, so headlights wake them) and the
  * self-lit flares, lanterns, hazard and beacon lamps (HDR for the bloom; colours pulse with their pools). */
@@ -170,7 +170,7 @@ export class NightAccents extends Group {
     if (studs.length) {
       const material = new MeshBasicNodeMaterial({ fog: false }); material.name = 'keep_accentStud';
       // A retroreflector: dim on its own, bright where a pool (headlights above all) reaches it.
-      material.colorNode = vec3(float(.22).add(luminance(field.sample()).mul(9).min(4)));
+      material.colorNode = vec3(float(.7).add(luminance(field.sample()).mul(14).min(6)));
       this.studs = build(studs, material);
     }
     if (lamps.length) {

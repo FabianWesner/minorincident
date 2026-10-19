@@ -319,7 +319,7 @@ export class VehicleView extends Group {
         if (/brake/i.test(a.name) && !car.entity.vehicle!.braking) { light.r *= .3; light.g *= .3; light.b *= .3; }
         field.push(light);
         // E31 addendum: the driven hull's low beams also draw a soft visible cone (and its dust motes) in the night air.
-        if (level && driven && beam) beam(lampPosition, lampDirection, Math.min(14, a.range * .6), Math.min(36, a.angle ?? 36), beamColor.set(lightPalette.light_led_white).multiplyScalar(a.intensity * .9));
+        if (level && driven && beam) beam(lampPosition, lampDirection, Math.min(14, a.range * .6), Math.min(36, a.angle ?? 36), beamColor.set(lightPalette.light_led_white).multiplyScalar(a.intensity * .35));
       }
     }
   }

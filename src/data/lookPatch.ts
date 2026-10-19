@@ -15,7 +15,7 @@ export const lookRanges = {
   gradeAmount: [0, 1, .01], gradeContrast: [.5, 2, .01], gradeSaturation: [0, 2, .01],
   hazeAmount: [0, 1, .01], hazeStart: [.5, 4, .01], hazeEnd: [.6, 8, .01], hazeHeight: [.5, 40, .1],
   cloudShadow: [0, 1, .01], cloudScale: [4, 80, .5], cloudSpeed: [0, 5, .01], beamStrength: [0, 10, .1],
-  glowAmount: [0, 2, .01], glowStart: [-3000, 3000, 1], glowEnd: [-3000, 3000, 1], glowDirX: [-1, 1, .01], glowDirZ: [-1, 1, .01],
+  glowAmount: [0, 2, .01], glowStart: [-3000, 3000, 1], glowEnd: [-3000, 3000, 1], glowDirX: [-1, 1, .01], glowDirZ: [-1, 1, .01], groundBreakup: [0, 1, .01], roadNeutral: [0, 1, .01],
 } satisfies Record<NumericKey, readonly [number, number, number]>;
 export interface LookPatch { version: 1; worldLook: Partial<WorldLook>; palette: Partial<Record<PaletteToken, string>> }
 const hex = /^#[0-9a-f]{6}$/i;
