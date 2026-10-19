@@ -1,13 +1,37 @@
 {
  "name": "l9-look-city-edge",
- "note": "look-l9b: the burning next city at the east edge (fixed game camera at 560, 40): ground fires between the blocks with 2.4-3.8 m radius, tall flame tongues, dark smoke columns lit from below, lit windows between the fires. Look for fires that read at zoom 1 (not tiny dots), smoke that is a dark column (not flat grey blobs), warm glow on the facades, E18 budgets held.",
+ "note": "look-l9b: the burning next city at the east edge (fixed game camera at the road end 550, -12: the town hall and brick fronts of the next city at the top of the frame): ground fires between the blocks with 2.4-3.8 m radius, tall flame tongues, dark smoke columns lit from below, lit windows between the fires. Look for fires that read at zoom 1 (not tiny dots), smoke that is a dark column (not flat grey blobs), warm glow on the facades, E18 budgets held.",
  "seed": 31,
  "ground": "district",
  "time": "L9-crossing",
  "dof": false,
- "layout": { "district": "D-CROSSING", "bbox": [[470, -50], [600, 130]] },
- "camera": { "mode": "game", "target": [560, 40], "zoom": 1 },
+ "layout": {
+  "district": "D-CROSSING",
+  "bbox": [
+   [
+    460,
+    -110
+   ],
+   [
+    600,
+    80
+   ]
+  ]
+ },
+ "camera": {
+  "mode": "game",
+  "target": [
+   550,
+   -12
+  ],
+  "zoom": 1
+ },
  "frames": 150,
  "sheet": 50,
- "expect": { "consoleErrors": 0, "clippingMax": 0, "drawCallsMax": 300, "trianglesMax": 500000 }
+ "expect": {
+  "consoleErrors": 0,
+  "clippingMax": 0,
+  "drawCallsMax": 300,
+  "trianglesMax": 500000
+ }
 }
