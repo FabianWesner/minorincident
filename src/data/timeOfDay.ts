@@ -51,7 +51,7 @@ const presets = {
     // shadows south across the east-west lanes (screen lower left, clear of the casters' own silhouettes); the ground takes the moon fully (coreLightEdge), only turned-away walls
     // fall into core shade. The burning city glows warm from the east (glow*), growing as the route nears it.
     look: { skyAmbient: '#a2bad2', groundAmbient: '#8f8a88', vignette: .1, bloomStrength: .24, gradeShadow: '#4f6a9c', gradeHighlight: '#dfe8f6', gradeAmount: .75, gradeContrast: 1.22, gradeSaturation: .8, haze: '#56708c', hazeAmount: 0, hazeHeight: 5, leaf: '#7b838d', petal: '#5f6670', dust: '#d6ff8c', groundBreakup: .45, roadNeutral: .85,
-      coreLightEdge: .45, shadowRadius: 3, glow: '#ff5a26', glowAmount: .3, glowStart: -100, glowEnd: 700, glowDirX: 1, glowDirZ: 0, beamStrength: 1.4 },
+      coreLightEdge: .45, shadowRadius: 3, glow: '#ff4a1c', glowAmount: .3, glowStart: -100, glowEnd: 700, glowDirX: 1, glowDirZ: 0, beamStrength: 1.4 },
     ambient: { leaf: 24, dust: 70, bird: 0, glow: 3.2 } },
   /** L10 night run (E32): the L9 moonlight with a darker shadow tint (dark verges), a brighter horizon haze for building silhouettes and the asphalt `roadLift`, so R1-R6 read at 3:1 (E31-AC16) while the night stays night. */
   'L10-night': { sun: '#9fb4ff', intensity: .38, polar: 1.55, azimuth: 2.2, shadow: '#30203f', sky: '#302c50', fog: '#5b4f75', fogNear: 200, fogFar: 1400, practical: 1, rim: .4, aura: .45, roadLift: 2.1, roadColor: '#a79ec7',

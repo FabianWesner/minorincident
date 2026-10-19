@@ -14,7 +14,7 @@ stretches = [
     ('countryside-farm', (-60, 240), (40, 240)),
     ('dry-mast', (-110, -30), (-40, -30)),
     ('dry-flares', (110, -30), (180, -30)),
-    ('road-hazard', (-200, -330), (-130, -330)),
+    ('road-hazard', (-188, -330), (-130, -330)),
     ('crash-approach', (420, 0), (462, 0)),
 ]
 os.makedirs(out, exist_ok=True)

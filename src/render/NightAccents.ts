@@ -110,6 +110,22 @@ export function crossingAccents(placements: readonly Placement[], origin: P2 = [
       if (laneDistance([x, z]) > 9 && free(x, z, 2.4)) { fire(x, z, .9 + rng.next() * .7); break; }
     }
   }
+  // 4b) Brush and debris fires along every route, 8-14 m off the lane: the countryside burns too, and their smoke columns
+  // drift across the frame (one every ~90 m of lane, alternating sides).
+  for (const route of crossing.routes) {
+    const hw = route.width / 2;
+    for (const [i, b] of route.points.slice(1).entries()) {
+      const a = route.points[i], d = Math.hypot(b[0] - a[0], b[1] - a[1]), ux = (b[0] - a[0]) / d, uz = (b[1] - a[1]) / d;
+      if (route.id !== 'road' && road.points.some(q => q[0] === a[0] && q[1] === a[1]) && road.points.some(q => q[0] === b[0] && q[1] === b[1])) continue;
+      for (let s = 30 + rng.next() * 40; s < d - 20; s += 75 + rng.next() * 35) {
+        const side = rng.next() < .5 ? -1 : 1;
+        for (let k = 0; k < 6; k++) {
+          const o = hw + 8 + rng.next() * 6, t = s + (rng.next() - .5) * 10, x = a[0] + ux * t - uz * side * o, z = a[1] + uz * t + ux * side * o;
+          if (!nearFork(x, z, 30) && x < 440 && laneDistance([x, z]) > 7.5 && free(x, z, 2.2)) { fire(x, z, .8 + rng.next() * .6); break; }
+        }
+      }
+    }
+  }
   // 5) The next city burns: ground fires between the east-edge blocks, behind the gully.
   let city = 0;
   for (let k = 0; k < 200 && city < 9; k++) {

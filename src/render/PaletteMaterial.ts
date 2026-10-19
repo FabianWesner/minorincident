@@ -138,7 +138,7 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       // Distant fire glow (look.glowAmount; 0 except L9's burning city ahead): a warm fill that grows along the authored world
       // direction, strongest on surfaces turned towards it, with a slow breathing flicker. Uniform ALU only, no pass.
       const glowDir = vec2(look.glowDirX, look.glowDirZ), glowAlong = positionWorld.xz.dot(glowDir).smoothstep(look.glowStart, look.glowEnd);
-      const glowFacing = normalWorld.xz.dot(glowDir).mul(.5).add(.5).max(normalWorld.y.mul(.45));
+      const glowFacing = normalWorld.xz.dot(glowDir).mul(.5).add(.5).max(normalWorld.y.mul(.25));
       shaded.addAssign(surface.mul(look.glow).mul(glowAlong.mul(glowFacing).mul(look.glowAmount).mul(lighting.clock.mul(.7).sin().mul(.06).add(lighting.clock.mul(2.3).sin().mul(.03)).add(.91))));
       // Night route read (E31-AC16): asphalt keeps a moon-pale sheen that no shadow removes, so the road is a pale band between dark verges.
       const road = nodes?.road ?? (token === 'asphalt' && !emissive ? float(1) : undefined);
