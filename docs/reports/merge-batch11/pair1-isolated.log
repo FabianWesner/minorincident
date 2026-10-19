@@ -1,0 +1,28 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11 -> 94.130.181.173:/srv/mi/ws/merge-batch11-39daf0
+[remote] cache-gc deleted: agent-a2c839d651aaec4b5-350afa seethrough-silhouette-58aa6c
+[remote] sync 62s, 19537 files; job /srv/mi/jobs/merge-batch11-39daf0-6883-1792357734; queueing for a slot
+[runner] slot 0 acquired; load 0.70 0.23 0.41
+[runner] waiting for both slots to isolate wall-clock timing
+[runner] both slots held for the timing project
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/merge-batch11-39daf0-6883-1792357734[39m
+
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/world/chunk-residency.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 37955[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-13-S4-high @E31-AC12 @E31-AC13 @E31-AC14 revisit preserves HP, corpse/pickup IDs and remaining timers[33m 3063[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-12-S4-high @E31-AC12 @E31-AC13 predictive support remains loaded on forward/reverse seams[33m 3269[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-13-S4-low @E31-AC12 @E31-AC13 @E31-AC14 revisit preserves HP, corpse/pickup IDs and remaining timers[33m 3704[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-12-S4-low @E31-AC12 @E31-AC13 predictive support remains loaded on forward/reverse seams[33m 3682[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-28-S4 @E31-AC13 @E32-AC10 @E32-AC28 Mega crosses coarse/detailed residency without >0.5 m tick jumps[33m 3212[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95[33m 4566[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-19-S4-100 @E31-AC19 @E18-AC02 resident crossing horde sim p95[33m 4388[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-12-colliders-S4 @E31-AC12 @E31-AC13 seam-spanning collider is shared, unloaded and restored with nav[33m 1580[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-19-quality-S4 @E31-AC12 @E31-AC13 @E31-AC19 low cap serializes excess brains and high restores the same IDs/HP[33m 1815[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-14-clock-S4 @E31-AC13 @E31-AC14 inactive recovery survives loading into a fresh tick-zero world[33m 6063[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-13-prop-S4 @E31-AC12 @E31-AC13 inactive movable prop releases its body and restores pose, HP and ID[33m 2606[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m11 passed[39m[22m[90m (11)[39m
+[2m   Start at [22m 21:10:00
+[2m   Duration [22m 42.04s[2m (tests 91%, transform 8%, import 1%)[22m
+
+[remote] done exit=0 (runner 94.130.181.173, sync 62s, remote total 47s)

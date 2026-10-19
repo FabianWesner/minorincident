@@ -1,0 +1,101 @@
+{
+  "seconds": 137.337,
+  "rows": [
+    {
+      "name": "seethrough-scripted-convoy@high-z0.5",
+      "file": "tests/scenes/catalog/seethrough-scripted-convoy.json",
+      "pass": true,
+      "seconds": 22.618,
+      "frames": 660,
+      "errors": 0,
+      "requestedTier": "high",
+      "actualTier": "high",
+      "gates": "ok consoleErrors 0/0; ok drawCallsMax 64/300; ok trianglesMax 145919/1500000; ok courierVisibleShare 1.0/0.6; ok courierShareSampled 12/1; ok seeThroughCutPixelsOutside 0/0; ok canvas.f0.varianceMin 2297.7/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f60.varianceMin 2002.8/1; ok canvas.f60.variedTilesMin 51/8; ok canvas.f120.varianceMin 3076.1/1; ok canvas.f120.variedTilesMin 57/8; ok canvas.f180.varianceMin 3375.2/1; ok canvas.f180.variedTilesMin 50/8; ok canvas.f240.varianceMin 3355.4/1; ok canvas.f240.variedTilesMin 58/8; ok canvas.f300.varianceMin 2409.5/1; ok canvas.f300.variedTilesMin 49/8; ok canvas.f360.varianceMin 2595.9/1; ok canvas.f360.variedTilesMin 51/8; ok canvas.f420.varianceMin 3169.1/1; ok canvas.f420.variedTilesMin 56/8; ok canvas.f480.varianceMin 2068.8/1; ok canvas.f480.variedTilesMin 47/8; ok canvas.f540.varianceMin 3080.2/1; ok canvas.f540.variedTilesMin 50/8; ok canvas.f600.varianceMin 1777.6/1; ok canvas.f600.variedTilesMin 45/8; ok canvas.f660.varianceMin 4873.7/1; ok canvas.f660.variedTilesMin 55/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+      "failed": [],
+      "sheet": "seethrough-scripted-convoy@high-z0.5/sheet.jpg",
+      "sheetKb": 100,
+      "note": "Production scripted bus and convoy actors use camera-to-subject eligibility. The complete player bus stays visible behind the Fairhaven facades while nearby scripted vehicles remain whole. Follow-camera sheets cover the facade crossing at both tiers and all game zooms."
+    },
+    {
+      "name": "seethrough-scripted-convoy@high-z1",
+      "file": "tests/scenes/catalog/seethrough-scripted-convoy.json",
+      "pass": false,
+      "seconds": 23.398,
+      "frames": 660,
+      "errors": 0,
+      "requestedTier": "high",
+      "actualTier": "high",
+      "gates": "ok consoleErrors 0/0; ok drawCallsMax 75/300; ok trianglesMax 162082/1500000; ok courierVisibleShare 1.0/0.6; ok courierShareSampled 12/1; FAIL seeThroughCutPixelsOutside 991/0; ok canvas.f0.varianceMin 2297.7/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f60.varianceMin 2559.3/1; ok canvas.f60.variedTilesMin 64/8; ok canvas.f120.varianceMin 2552.1/1; ok canvas.f120.variedTilesMin 64/8; ok canvas.f180.varianceMin 2657.2/1; ok canvas.f180.variedTilesMin 62/8; ok canvas.f240.varianceMin 3759.2/1; ok canvas.f240.variedTilesMin 63/8; ok canvas.f300.varianceMin 3753.3/1; ok canvas.f300.variedTilesMin 63/8; ok canvas.f360.varianceMin 1371.0/1; ok canvas.f360.variedTilesMin 50/8; ok canvas.f420.varianceMin 2831.9/1; ok canvas.f420.variedTilesMin 64/8; ok canvas.f480.varianceMin 2397.8/1; ok canvas.f480.variedTilesMin 60/8; ok canvas.f540.varianceMin 1029.3/1; ok canvas.f540.variedTilesMin 53/8; ok canvas.f600.varianceMin 1639.8/1; ok canvas.f600.variedTilesMin 58/8; ok canvas.f660.varianceMin 1847.0/1; ok canvas.f660.variedTilesMin 57/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+      "failed": [
+        "seeThroughCutPixelsOutside 991 > 0"
+      ],
+      "sheet": "seethrough-scripted-convoy@high-z1/sheet.jpg",
+      "sheetKb": 115,
+      "note": "Production scripted bus and convoy actors use camera-to-subject eligibility. The complete player bus stays visible behind the Fairhaven facades while nearby scripted vehicles remain whole. Follow-camera sheets cover the facade crossing at both tiers and all game zooms."
+    },
+    {
+      "name": "seethrough-scripted-convoy@high-z1.5",
+      "file": "tests/scenes/catalog/seethrough-scripted-convoy.json",
+      "pass": false,
+      "seconds": 27.577,
+      "frames": 660,
+      "errors": 0,
+      "requestedTier": "high",
+      "actualTier": "high",
+      "gates": "ok consoleErrors 0/0; ok drawCallsMax 82/300; ok trianglesMax 173666/1500000; ok courierVisibleShare 1.0/0.6; ok courierShareSampled 12/1; FAIL seeThroughCutPixelsOutside 7807/0; ok canvas.f0.varianceMin 2293.4/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f60.varianceMin 2672.6/1; ok canvas.f60.variedTilesMin 64/8; ok canvas.f120.varianceMin 2454.7/1; ok canvas.f120.variedTilesMin 64/8; ok canvas.f180.varianceMin 2478.9/1; ok canvas.f180.variedTilesMin 64/8; ok canvas.f240.varianceMin 4123.6/1; ok canvas.f240.variedTilesMin 63/8; ok canvas.f300.varianceMin 4131.6/1; ok canvas.f300.variedTilesMin 64/8; ok canvas.f360.varianceMin 3073.1/1; ok canvas.f360.variedTilesMin 64/8; ok canvas.f420.varianceMin 2830.9/1; ok canvas.f420.variedTilesMin 64/8; ok canvas.f480.varianceMin 2519.3/1; ok canvas.f480.variedTilesMin 63/8; ok canvas.f540.varianceMin 975.5/1; ok canvas.f540.variedTilesMin 54/8; ok canvas.f600.varianceMin 2106.1/1; ok canvas.f600.variedTilesMin 55/8; ok canvas.f660.varianceMin 3013.5/1; ok canvas.f660.variedTilesMin 63/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+      "failed": [
+        "seeThroughCutPixelsOutside 7807 > 0"
+      ],
+      "sheet": "seethrough-scripted-convoy@high-z1.5/sheet.jpg",
+      "sheetKb": 141,
+      "note": "Production scripted bus and convoy actors use camera-to-subject eligibility. The complete player bus stays visible behind the Fairhaven facades while nearby scripted vehicles remain whole. Follow-camera sheets cover the facade crossing at both tiers and all game zooms."
+    },
+    {
+      "name": "seethrough-scripted-convoy@low-z0.5",
+      "file": "tests/scenes/catalog/seethrough-scripted-convoy.json",
+      "pass": true,
+      "seconds": 19.285,
+      "frames": 660,
+      "errors": 0,
+      "requestedTier": "low",
+      "actualTier": "low",
+      "gates": "ok consoleErrors 0/0; ok drawCallsMax 64/300; ok trianglesMax 66252/500000; ok courierVisibleShare 1.0/0.6; ok courierShareSampled 12/1; ok seeThroughCutPixelsOutside 0/0; ok canvas.f0.varianceMin 2348.1/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f60.varianceMin 1977.3/1; ok canvas.f60.variedTilesMin 51/8; ok canvas.f120.varianceMin 2925.8/1; ok canvas.f120.variedTilesMin 56/8; ok canvas.f180.varianceMin 3150.3/1; ok canvas.f180.variedTilesMin 52/8; ok canvas.f240.varianceMin 3194.1/1; ok canvas.f240.variedTilesMin 57/8; ok canvas.f300.varianceMin 2155.8/1; ok canvas.f300.variedTilesMin 48/8; ok canvas.f360.varianceMin 2398.3/1; ok canvas.f360.variedTilesMin 58/8; ok canvas.f420.varianceMin 3035.1/1; ok canvas.f420.variedTilesMin 51/8; ok canvas.f480.varianceMin 1945.1/1; ok canvas.f480.variedTilesMin 47/8; ok canvas.f540.varianceMin 2922.1/1; ok canvas.f540.variedTilesMin 59/8; ok canvas.f600.varianceMin 1738.6/1; ok canvas.f600.variedTilesMin 61/8; ok canvas.f660.varianceMin 4695.5/1; ok canvas.f660.variedTilesMin 52/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+      "failed": [],
+      "sheet": "seethrough-scripted-convoy@low-z0.5/sheet.jpg",
+      "sheetKb": 100,
+      "note": "Production scripted bus and convoy actors use camera-to-subject eligibility. The complete player bus stays visible behind the Fairhaven facades while nearby scripted vehicles remain whole. Follow-camera sheets cover the facade crossing at both tiers and all game zooms."
+    },
+    {
+      "name": "seethrough-scripted-convoy@low-z1",
+      "file": "tests/scenes/catalog/seethrough-scripted-convoy.json",
+      "pass": true,
+      "seconds": 20.189,
+      "frames": 660,
+      "errors": 0,
+      "requestedTier": "low",
+      "actualTier": "low",
+      "gates": "ok consoleErrors 0/0; ok drawCallsMax 74/300; ok trianglesMax 83759/500000; ok courierVisibleShare 1.0/0.6; ok courierShareSampled 12/1; ok seeThroughCutPixelsOutside 0/0; ok canvas.f0.varianceMin 2348.1/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f60.varianceMin 2634.4/1; ok canvas.f60.variedTilesMin 64/8; ok canvas.f120.varianceMin 2561.0/1; ok canvas.f120.variedTilesMin 64/8; ok canvas.f180.varianceMin 2643.5/1; ok canvas.f180.variedTilesMin 62/8; ok canvas.f240.varianceMin 3811.3/1; ok canvas.f240.variedTilesMin 64/8; ok canvas.f300.varianceMin 3974.7/1; ok canvas.f300.variedTilesMin 64/8; ok canvas.f360.varianceMin 3961.1/1; ok canvas.f360.variedTilesMin 58/8; ok canvas.f420.varianceMin 3338.3/1; ok canvas.f420.variedTilesMin 63/8; ok canvas.f480.varianceMin 2433.9/1; ok canvas.f480.variedTilesMin 59/8; ok canvas.f540.varianceMin 1432.5/1; ok canvas.f540.variedTilesMin 57/8; ok canvas.f600.varianceMin 2115.7/1; ok canvas.f600.variedTilesMin 64/8; ok canvas.f660.varianceMin 3983.1/1; ok canvas.f660.variedTilesMin 55/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+      "failed": [],
+      "sheet": "seethrough-scripted-convoy@low-z1/sheet.jpg",
+      "sheetKb": 121,
+      "note": "Production scripted bus and convoy actors use camera-to-subject eligibility. The complete player bus stays visible behind the Fairhaven facades while nearby scripted vehicles remain whole. Follow-camera sheets cover the facade crossing at both tiers and all game zooms."
+    },
+    {
+      "name": "seethrough-scripted-convoy@low-z1.5",
+      "file": "tests/scenes/catalog/seethrough-scripted-convoy.json",
+      "pass": false,
+      "seconds": 22.571,
+      "frames": 660,
+      "errors": 0,
+      "requestedTier": "low",
+      "actualTier": "low",
+      "gates": "ok consoleErrors 0/0; ok drawCallsMax 83/300; ok trianglesMax 103295/500000; ok courierVisibleShare 1.0/0.6; ok courierShareSampled 12/1; FAIL seeThroughCutPixelsOutside 14/0; ok canvas.f0.varianceMin 2345.7/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f60.varianceMin 2718.9/1; ok canvas.f60.variedTilesMin 64/8; ok canvas.f120.varianceMin 2453.3/1; ok canvas.f120.variedTilesMin 64/8; ok canvas.f180.varianceMin 2559.9/1; ok canvas.f180.variedTilesMin 64/8; ok canvas.f240.varianceMin 4300.9/1; ok canvas.f240.variedTilesMin 63/8; ok canvas.f300.varianceMin 4940.6/1; ok canvas.f300.variedTilesMin 64/8; ok canvas.f360.varianceMin 4129.9/1; ok canvas.f360.variedTilesMin 61/8; ok canvas.f420.varianceMin 3339.0/1; ok canvas.f420.variedTilesMin 64/8; ok canvas.f480.varianceMin 2555.6/1; ok canvas.f480.variedTilesMin 63/8; ok canvas.f540.varianceMin 1416.3/1; ok canvas.f540.variedTilesMin 54/8; ok canvas.f600.varianceMin 2446.6/1; ok canvas.f600.variedTilesMin 57/8; ok canvas.f660.varianceMin 4680.4/1; ok canvas.f660.variedTilesMin 62/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+      "failed": [
+        "seeThroughCutPixelsOutside 14 > 0"
+      ],
+      "sheet": "seethrough-scripted-convoy@low-z1.5/sheet.jpg",
+      "sheetKb": 146,
+      "note": "Production scripted bus and convoy actors use camera-to-subject eligibility. The complete player bus stays visible behind the Fairhaven facades while nearby scripted vehicles remain whole. Follow-camera sheets cover the facade crossing at both tiers and all game zooms."
+    }
+  ]
+}

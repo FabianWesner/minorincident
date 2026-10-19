@@ -1,0 +1,17 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/seethrough-silhouette -> 2.31.10.108:/srv/mi/ws/seethrough-silhouette-58aa6c
+[remote] cache-gc deleted:none
+[remote] sync 20s, 19363 files; job /srv/mi/jobs/seethrough-silhouette-58aa6c-53049-1792353702; queueing for a slot
+[runner] slot 0 acquired; load 0.53 0.99 0.84
+
+ RUN  v5.0.3 /srv/mi/jobs/seethrough-silhouette-58aa6c-53049-1792353702
+
+ ✓  functional  tests/unit/tooling/seethrough-probe.test.ts (3 tests) 25ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  20:02:03
+   Duration  693ms (import 64%, transform 31%, tests 4%, worker 1%)
+
+JSON report written to /srv/mi/jobs/seethrough-silhouette-58aa6c-53049-1792353702/docs/reports/seethrough-silhouette/final-tooling-unit.json
+[remote] pulled docs/reports/seethrough-silhouette/final-tooling-unit.json
+[remote] done exit=0 (runner 2.31.10.108, sync 20s, remote total 3s)

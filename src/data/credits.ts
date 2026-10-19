@@ -214,6 +214,14 @@ export const technologyCredits: readonly Credit[] = [
         "detail": "Browser API: the fallback renderer backend."
     },
     {
+        "title": "Web Audio API",
+        "author": "W3C Audio Working Group",
+        "url": "https://www.w3.org/TR/webaudio/",
+        "license": "W3C Software and Document License",
+        "licenseUrl": "https://www.w3.org/copyright/software-license/",
+        "detail": "Browser API for spatial audio, music and sound playback."
+    },
+    {
         "title": "three.js WebGPURenderer and TSL (Three Shading Language)",
         "author": "three.js authors",
         "url": "https://threejs.org/docs/#api/en/renderers/WebGPURenderer",
@@ -268,6 +276,14 @@ export const technologyCredits: readonly Credit[] = [
         "license": "Hetzner Terms and Conditions (hosted service)",
         "licenseUrl": "https://www.hetzner.com/legal/terms-and-conditions/",
         "detail": "Remote test runners for unit, simulation and end-to-end suites."
+    },
+    {
+        "title": "GitHub",
+        "author": "GitHub, Inc.",
+        "url": "https://github.com/",
+        "license": "GitHub Terms of Service",
+        "licenseUrl": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+        "detail": "Source hosting and CI."
     }
 ];
 export const audioCredits: readonly Credit[] = [

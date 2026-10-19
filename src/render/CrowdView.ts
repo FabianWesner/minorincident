@@ -7,6 +7,7 @@ import { infectedContactDistance } from '../sim/ai/CharacterSeparation';
 import { deinterleaveGeometry, mergeVertices } from 'three/addons/utils/BufferGeometryUtils.js';
 import { CrowdVisibility } from './CrowdVisibility';
 import { crowdModelKey, registerCrowdModel } from './crowdModels';
+import { markInfectedEyeCores } from './characters/infectedEyes';
 import { simplifyCrowdLod } from './characters/crowdLodGeometry';
 import { crowdLod, canHoldCrowdPose } from './lodPolicy';
 import { StaticCorpses } from './characters/StaticCorpses';
@@ -174,11 +175,12 @@ export class CrowdView extends Group {
       // instanced attributes are attached: same surfaces, fewer animated vertices.
       deinterleaveGeometry(baked.geometry);
       const indexed = mergeVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = indexed;
+      if (!healthy) markInfectedEyeCores(baked.geometry);
       if (lod === 'lod2' && !fallback) {
-        // Phone crowd silhouettes tolerate a 2.5 cm surface bound; preserve colors, eyes and rigid-part ownership.
-        await simplifyCrowdLod(baked.geometry, this.low ? .025 : .01, this.low ? .2 : .35);
+        // Preserve colors, eyes, rigid-part ownership and each part's surface.
+        await simplifyCrowdLod(baked.geometry, this.low ? .025 : .01, this.low ? (healthy ? .2 : .1) : .35, !healthy);
         // Settled bodies retain identity and color but need no living figure detail.
-        const corpse = baked.geometry.clone(); await simplifyCrowdLod(corpse, .04, .1);
+        const corpse = baked.geometry.clone(); await simplifyCrowdLod(corpse, .04, .1, !healthy);
         if (this.disposed) { corpse.dispose(); baked.geometry.dispose(); return; }
         packCrowdParts(corpse); if (human) markCrowdAppearance(corpse, regularInfectedModels.some(id => id === asset));
         this.corpseGeometry.set(key, corpse);
@@ -193,8 +195,12 @@ export class CrowdView extends Group {
       const feedbackState = attribute('_state', 'vec4'), parts = attribute('_parts', 'vec4'), variant = attribute('_variant', 'vec4');
       const opacity = feedbackState.w.div(2).floor().div(255).oneMinus();
       const sourceColor = human ? crowdAppearanceColor(true) : attribute('color', 'vec3');
-      const base = healthy ? mix(sourceColor, vec3(.26, .3, .22), feedbackState.z.mul(.4)) : sourceColor, glow = attribute('color', 'vec3').div(luminance(attribute('color', 'vec3')).max(.25)).mul(parts.z).mul(1.2).add(feedbackState.w.mod(2));
-      const material = this.shading?.shaded(base, glow) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
+      // Keep the infected eye swatch out of the lit albedo. A bounded red
+      // emitter avoids the pink centres from luminance-normalized swatches.
+      const base = healthy ? mix(sourceColor, vec3(.26, .3, .22), feedbackState.z.mul(.4)) : mix(sourceColor, vec3(0), parts.z);
+      const emission = healthy ? attribute('color', 'vec3').div(luminance(attribute('color', 'vec3')).max(.25)).mul(1.2) : vec3(3, .25, .22);
+      const glow = emission.mul(parts.z).add(feedbackState.w.mod(2));
+      const material = this.shading?.shaded(base, glow, undefined, undefined, undefined, healthy ? undefined : parts.z) ?? Object.assign(new MeshLambertNodeMaterial({ vertexColors: false }), { colorNode: base, emissiveNode: glow });
       // E25 night readability: crowd silhouettes take the preset's moonlit rim.
       if ('figureRim' in material) { material.figureRim.value = .25; material.figureFill.value = 1; }
       // The Alpha-sized Mega retains its silhouette at contact, like a regular Alpha.

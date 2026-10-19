@@ -1,0 +1,92 @@
+23:55  up 70 days, 22:48, 3 users, load averages: 2.59 3.28 3.25
+Quiet-run preflight: load < 3; no local Vitest or headless Chrome processes; all configured browser slots held.
+
+Running 26 tests using 1 worker
+
+  ✓   1 [chromium] › tests/perf/e18-counters.spec.ts:6:3 › T-E18-01-high-perf-horde-200 @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets (3.1s)
+  ✓   2 [chromium] › tests/perf/e18-counters.spec.ts:6:3 › T-E18-01-high-perf-l6-mainstreet @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets (8.8s)
+  ✓   3 [chromium] › tests/perf/e18-counters.spec.ts:6:3 › T-E18-01-high-perf-l5-aftermath @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets (18.0s)
+  ✓   4 [chromium] › tests/perf/e18-counters.spec.ts:6:3 › T-E18-01-low-perf-horde-200 @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets (1.9s)
+  ✓   5 [chromium] › tests/perf/e18-counters.spec.ts:6:3 › T-E18-01-low-perf-l6-mainstreet @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets (4.8s)
+  ✘   6 [chromium] › tests/perf/e18-counters.spec.ts:6:3 › T-E18-01-low-perf-l5-aftermath @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets (4.8s)
+  ✘   7 [chromium] › tests/perf/e18-counters.spec.ts:23:1 › T-E18-01-low-male @E18-AC01 @perf L5 stress retains its budget with the larger male courier skin (4.8s)
+  ✓   8 [chromium] › tests/perf/e18-memory.spec.ts:4:46 › T-E18-05-high @E18-AC05 @perf five L1/L6 loads release heap and GPU resources (1.4m)
+  ✓   9 [chromium] › tests/perf/e18-memory.spec.ts:4:46 › T-E18-05-low @E18-AC05 @perf five L1/L6 loads release heap and GPU resources (13.5s)
+  ✓  10 [chromium] › tests/perf/e18-desktop.spec.ts:6:1 › T-E18-09 @E18-AC09 @perf local headless native-GPU Chrome high horde p95 frame <=16.7ms (15.8s)
+  -  11 [chromium] › tests/perf/e18-desktop.spec.ts:31:1 › E18 @E18 WebGPU low tier parity compiles two-mip bloom and capped crowds
+  ✓  12 [chromium] › tests/perf/e18-devices.spec.ts:11:57 › Pixel 7 › T-E18-08-android-webgl @E18-AC08 @perf emulated mobile L6 at 4x CPU p50 >=30fps (48.3s)
+  -  13 [chromium] › tests/perf/e18-devices.spec.ts:11:57 › Pixel 7 › T-E18-08-android-webgpu @E18-AC08 @perf emulated mobile L6 at 4x CPU p50 >=30fps
+  ✓  14 [chromium] › tests/perf/e18-devices.spec.ts:11:57 › iPhone 14 › T-E18-08-ios-webgl @E18-AC08 @perf emulated mobile L6 at 2x CPU p50 >=30fps (31.7s)
+  -  15 [chromium] › tests/perf/e18-devices.spec.ts:11:57 › iPhone 14 › T-E18-08-ios-webgpu @E18-AC08 @perf emulated mobile L6 at 2x CPU p50 >=30fps
+  -  16 [chromium] › tests/perf/e18-devices.spec.ts:44:1 › T-E18-08-physical @E18-AC08 @manual physical iOS and Android recordings at final verification
+  ✓  17 [chromium] › tests/perf/e18-download.spec.ts:8:1 › T-E18-03 @E18-AC03 @perf production initial network payload <=15MB through Begin (female, high, webgl) (4.1s)
+  ✓  18 [chromium] › tests/perf/e18-download.spec.ts:8:1 › T-E18-03 @E18-AC03 @perf production initial network payload <=15MB through Begin (female, high, webgpu) (5.9s)
+  ✓  19 [chromium] › tests/perf/e18-download.spec.ts:8:1 › T-E18-03 @E18-AC03 @perf production initial network payload <=15MB through Begin (female, low, webgl) (3.9s)
+  ✓  20 [chromium] › tests/perf/e18-download.spec.ts:8:1 › T-E18-03 @E18-AC03 @perf production initial network payload <=15MB through Begin (female, low, webgpu) (3.5s)
+  ✓  21 [chromium] › tests/perf/e18-download.spec.ts:8:1 › T-E18-03 @E18-AC03 @perf production initial network payload <=15MB through Begin (male, high, webgl) (3.9s)
+  ✓  22 [chromium] › tests/perf/e18-download.spec.ts:8:1 › T-E18-03 @E18-AC03 @perf production initial network payload <=15MB through Begin (male, high, webgpu) (3.4s)
+  ✓  23 [chromium] › tests/perf/e18-download.spec.ts:8:1 › T-E18-03 @E18-AC03 @perf production initial network payload <=15MB through Begin (male, low, webgl) (3.9s)
+  ✓  24 [chromium] › tests/perf/e18-download.spec.ts:8:1 › T-E18-03 @E18-AC03 @perf production initial network payload <=15MB through Begin (male, low, webgpu) (3.4s)
+{"phase":"after","run":1,"tier":"high","p95":6.200000000000728,"sim":0.8999996185302734,"update":3.3999996185302734,"render":2.1999998092651367,"triangles":640297,"draws":71,"profile":{"other":{"drawCalls":38,"triangles":44945},"shadows":{"drawCalls":20,"triangles":31147},"crowd":{"drawCalls":13,"triangles":564205}}}
+  ✓  25 [chromium] › tests/perf/horde-budget.spec.ts:11:41 › high › horde budget high run 1 @E18-AC01 @E18-AC09 @perf (15.7s)
+{"phase":"after","run":1,"tier":"low","p95":11.800000000000182,"sim":2.5,"update":5.299999237060547,"render":4.300000190734863,"triangles":266796,"draws":69,"profile":{"other":{"drawCalls":37,"triangles":10508},"shadows":{"drawCalls":20,"triangles":4275},"crowd":{"drawCalls":12,"triangles":252013}}}
+  ✓  26 [chromium] › tests/perf/horde-budget.spec.ts:11:41 › low › horde budget low run 1 @E18-AC01 @E18-AC09 @perf (17.3s)
+
+
+  1) [chromium] › tests/perf/e18-counters.spec.ts:6:3 › T-E18-01-low-perf-l5-aftermath @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 500000
+    Received:    606976
+
+      16 |     expect(proof.first.drawCalls).toBe(proof.second.drawCalls); expect(proof.first.triangles).toBe(proof.second.triangles);
+      17 |     expect(proof.second.quality.tier).toBe(tier); expect(proof.state.render.lighting!.shadowSize).toBe(qualityBudgets[tier].shadowSize); if (proof.state.render.postFx) expect(proof.state.render.postFx.bloomMips).toBe(qualityBudgets[tier].bloomMips); expect(proof.second.drawCalls).toBeGreaterThan(0);
+    > 18 |     expect(proof.second.drawCalls).toBeLessThanOrEqual(qualityBudgets[tier].drawCalls); expect(proof.second.triangles).toBeLessThanOrEqual(qualityBudgets[tier].triangles);
+         |                                                                                                                        ^
+      19 |     expect(proof.state.ai!.count).toBe(qualityBudgets[tier].infected); expect(proof.state.ai!.cap).toBe(qualityBudgets[tier].infected);
+      20 |     await page.locator('canvas').screenshot({ path: `${output}/${name}-${tier}.png` });
+      21 |   });
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11/tests/perf/e18-counters.spec.ts:18:120
+
+    Error Context: test-results/playwright/run-3621/perf-e18-counters-T-E18-01-35d48-unters-stay-in-tier-budgets-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3621/perf-e18-counters-T-E18-01-35d48-unters-stay-in-tier-budgets-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3621/perf-e18-counters-T-E18-01-35d48-unters-stay-in-tier-budgets-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/perf/e18-counters.spec.ts:23:1 › T-E18-01-low-male @E18-AC01 @perf L5 stress retains its budget with the larger male courier skin 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 500000
+    Received:    611632
+
+      32 |   expect(proof.state.ai!.count).toBe(100);
+      33 |   expect(proof.perf.drawCalls).toBeLessThanOrEqual(qualityBudgets.low.drawCalls);
+    > 34 |   expect(proof.perf.triangles).toBeLessThanOrEqual(qualityBudgets.low.triangles);
+         |                                ^
+      35 |   await page.locator('canvas').screenshot({ path: `${output}/perf-l5-aftermath-low-male.png` });
+      36 | });
+      37 |
+        at /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11/tests/perf/e18-counters.spec.ts:34:32
+
+    Error Context: test-results/playwright/run-3621/perf-e18-counters-T-E18-01-f0029-he-larger-male-courier-skin-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3621/perf-e18-counters-T-E18-01-f0029-he-larger-male-courier-skin-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3621/perf-e18-counters-T-E18-01-f0029-he-larger-male-courier-skin-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2 failed
+    [chromium] › tests/perf/e18-counters.spec.ts:6:3 › T-E18-01-low-perf-l5-aftermath @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets 
+    [chromium] › tests/perf/e18-counters.spec.ts:23:1 › T-E18-01-low-male @E18-AC01 @perf L5 stress retains its budget with the larger male courier skin 
+  4 skipped
+  20 passed (5.2m)

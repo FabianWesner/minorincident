@@ -1,0 +1,107 @@
+{
+  "seconds": 329.209,
+  "rows": [
+    {
+      "name": "apc-sedan-contact@high-z0.5",
+      "file": "tests/scenes/catalog/apc-sedan-contact.json",
+      "pass": false,
+      "seconds": 53.53,
+      "frames": 180,
+      "errors": 0,
+      "requestedTier": "high",
+      "actualTier": "high",
+      "gates": "ok consoleErrors 0/0; ok drawCallsMax 59/300; ok trianglesMax 129046/1500000; ok vehicleTiltMaxDeg 8.4/45; ok vehicleHealthMax 990/990; ok vehicleSilhouette:parked:clear 1/0.6; FAIL vehicleSilhouette:parked:blocking 0/0.3; ok canvas.f0.varianceMin 1478.6/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f6.varianceMin 1476.3/1; ok canvas.f6.variedTilesMin 64/8; ok canvas.f18.varianceMin 1488.3/1; ok canvas.f18.variedTilesMin 64/8; ok canvas.f24.varianceMin 1504.6/1; ok canvas.f24.variedTilesMin 64/8; ok canvas.f30.varianceMin 1531.1/1; ok canvas.f30.variedTilesMin 64/8; ok canvas.f42.varianceMin 1571.2/1; ok canvas.f42.variedTilesMin 64/8; ok canvas.f48.varianceMin 1589.1/1; ok canvas.f48.variedTilesMin 64/8; ok canvas.f54.varianceMin 1643.5/1; ok canvas.f54.variedTilesMin 64/8; ok canvas.f60.varianceMin 1725.1/1; ok canvas.f60.variedTilesMin 64/8; ok canvas.f72.varianceMin 997.1/1; ok canvas.f72.variedTilesMin 64/8; ok canvas.f78.varianceMin 867.1/1; ok canvas.f78.variedTilesMin 64/8; ok canvas.f84.varianceMin 855.6/1; ok canvas.f84.variedTilesMin 64/8; ok canvas.f96.varianceMin 1156.8/1; ok canvas.f96.variedTilesMin 64/8; ok canvas.f102.varianceMin 1241.9/1; ok canvas.f102.variedTilesMin 64/8; ok canvas.f108.varianceMin 1253.4/1; ok canvas.f108.variedTilesMin 64/8; ok canvas.f120.varianceMin 1192.0/1; ok canvas.f120.variedTilesMin 64/8; ok canvas.f126.varianceMin 1244.7/1; ok canvas.f126.variedTilesMin 64/8; ok canvas.f132.varianceMin 1128.0/1; ok canvas.f132.variedTilesMin 64/8; ok canvas.f138.varianceMin 1034.4/1; ok canvas.f138.variedTilesMin 64/8; ok canvas.f150.varianceMin 962.9/1; ok canvas.f150.variedTilesMin 64/8; ok canvas.f156.varianceMin 656.8/1; ok canvas.f156.variedTilesMin 64/8; ok canvas.f162.varianceMin 524.8/1; ok canvas.f162.variedTilesMin 64/8; ok canvas.f174.varianceMin 321.0/1; ok canvas.f174.variedTilesMin 64/8; ok canvas.f180.varianceMin 280.2/1; ok canvas.f180.variedTilesMin 64/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+      "failed": [
+        "vehicleSilhouette:parked:blocking 0 > 0.3"
+      ],
+      "sheet": "apc-sedan-contact@high-z0.5/sheet.jpg",
+      "sheetKb": 147,
+      "note": "Dynamic APC side ram of a parked dynamic sedan. Both chassis stay upright; sedan slides ahead of the heavy APC. Sim regression covers head-on, oblique and side impacts at 10/20/30 km/h."
+    },
+    {
+      "name": "apc-sedan-contact@high-z1",
+      "file": "tests/scenes/catalog/apc-sedan-contact.json",
+      "pass": false,
+      "seconds": 57.897,
+      "frames": 180,
+      "errors": 0,
+      "requestedTier": "high",
+      "actualTier": "high",
+      "gates": "ok consoleErrors 0/0; ok drawCallsMax 59/300; ok trianglesMax 129046/1500000; ok vehicleTiltMaxDeg 8.4/45; ok vehicleHealthMax 990/990; ok vehicleSilhouette:parked:clear 1/0.6; FAIL vehicleSilhouette:parked:blocking 0/0.3; ok canvas.f0.varianceMin 570.9/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f6.varianceMin 576.0/1; ok canvas.f6.variedTilesMin 64/8; ok canvas.f18.varianceMin 587.0/1; ok canvas.f18.variedTilesMin 64/8; ok canvas.f24.varianceMin 596.1/1; ok canvas.f24.variedTilesMin 64/8; ok canvas.f30.varianceMin 607.8/1; ok canvas.f30.variedTilesMin 64/8; ok canvas.f42.varianceMin 635.5/1; ok canvas.f42.variedTilesMin 64/8; ok canvas.f48.varianceMin 648.8/1; ok canvas.f48.variedTilesMin 64/8; ok canvas.f54.varianceMin 660.1/1; ok canvas.f54.variedTilesMin 64/8; ok canvas.f60.varianceMin 666.9/1; ok canvas.f60.variedTilesMin 64/8; ok canvas.f72.varianceMin 462.2/1; ok canvas.f72.variedTilesMin 64/8; ok canvas.f78.varianceMin 398.9/1; ok canvas.f78.variedTilesMin 64/8; ok canvas.f84.varianceMin 377.0/1; ok canvas.f84.variedTilesMin 64/8; ok canvas.f96.varianceMin 407.7/1; ok canvas.f96.variedTilesMin 64/8; ok canvas.f102.varianceMin 412.9/1; ok canvas.f102.variedTilesMin 64/8; ok canvas.f108.varianceMin 421.1/1; ok canvas.f108.variedTilesMin 64/8; ok canvas.f120.varianceMin 455.9/1; ok canvas.f120.variedTilesMin 64/8; ok canvas.f126.varianceMin 474.7/1; ok canvas.f126.variedTilesMin 64/8; ok canvas.f132.varianceMin 483.8/1; ok canvas.f132.variedTilesMin 64/8; ok canvas.f138.varianceMin 479.8/1; ok canvas.f138.variedTilesMin 64/8; ok canvas.f150.varianceMin 458.1/1; ok canvas.f150.variedTilesMin 64/8; ok canvas.f156.varianceMin 423.1/1; ok canvas.f156.variedTilesMin 64/8; ok canvas.f162.varianceMin 438.4/1; ok canvas.f162.variedTilesMin 64/8; ok canvas.f174.varianceMin 434.1/1; ok canvas.f174.variedTilesMin 64/8; ok canvas.f180.varianceMin 415.9/1; ok canvas.f180.variedTilesMin 64/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+      "failed": [
+        "vehicleSilhouette:parked:blocking 0 > 0.3"
+      ],
+      "sheet": "apc-sedan-contact@high-z1/sheet.jpg",
+      "sheetKb": 111,
+      "note": "Dynamic APC side ram of a parked dynamic sedan. Both chassis stay upright; sedan slides ahead of the heavy APC. Sim regression covers head-on, oblique and side impacts at 10/20/30 km/h."
+    },
+    {
+      "name": "apc-sedan-contact@high-z1.5",
+      "file": "tests/scenes/catalog/apc-sedan-contact.json",
+      "pass": false,
+      "seconds": 59.46,
+      "frames": 180,
+      "errors": 0,
+      "requestedTier": "high",
+      "actualTier": "high",
+      "gates": "ok consoleErrors 0/0; ok drawCallsMax 59/300; ok trianglesMax 129046/1500000; ok vehicleTiltMaxDeg 8.4/45; ok vehicleHealthMax 990/990; ok vehicleSilhouette:parked:clear 1/0.6; FAIL vehicleSilhouette:parked:blocking 0.1/0.3; ok canvas.f0.varianceMin 294.8/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f6.varianceMin 296.9/1; ok canvas.f6.variedTilesMin 64/8; ok canvas.f18.varianceMin 296.7/1; ok canvas.f18.variedTilesMin 64/8; ok canvas.f24.varianceMin 299.0/1; ok canvas.f24.variedTilesMin 64/8; ok canvas.f30.varianceMin 300.7/1; ok canvas.f30.variedTilesMin 64/8; ok canvas.f42.varianceMin 304.6/1; ok canvas.f42.variedTilesMin 64/8; ok canvas.f48.varianceMin 307.5/1; ok canvas.f48.variedTilesMin 64/8; ok canvas.f54.varianceMin 309.4/1; ok canvas.f54.variedTilesMin 64/8; ok canvas.f60.varianceMin 311.1/1; ok canvas.f60.variedTilesMin 64/8; ok canvas.f72.varianceMin 218.1/1; ok canvas.f72.variedTilesMin 64/8; ok canvas.f78.varianceMin 188.3/1; ok canvas.f78.variedTilesMin 64/8; ok canvas.f84.varianceMin 178.7/1; ok canvas.f84.variedTilesMin 64/8; ok canvas.f96.varianceMin 190.9/1; ok canvas.f96.variedTilesMin 64/8; ok canvas.f102.varianceMin 193.1/1; ok canvas.f102.variedTilesMin 64/8; ok canvas.f108.varianceMin 193.6/1; ok canvas.f108.variedTilesMin 64/8; ok canvas.f120.varianceMin 204.8/1; ok canvas.f120.variedTilesMin 64/8; ok canvas.f126.varianceMin 208.3/1; ok canvas.f126.variedTilesMin 64/8; ok canvas.f132.varianceMin 213.1/1; ok canvas.f132.variedTilesMin 64/8; ok canvas.f138.varianceMin 214.7/1; ok canvas.f138.variedTilesMin 64/8; ok canvas.f150.varianceMin 222.9/1; ok canvas.f150.variedTilesMin 64/8; ok canvas.f156.varianceMin 228.8/1; ok canvas.f156.variedTilesMin 64/8; ok canvas.f162.varianceMin 236.7/1; ok canvas.f162.variedTilesMin 64/8; ok canvas.f174.varianceMin 243.8/1; ok canvas.f174.variedTilesMin 64/8; ok canvas.f180.varianceMin 244.2/1; ok canvas.f180.variedTilesMin 64/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+      "failed": [
+        "vehicleSilhouette:parked:blocking 0.1 > 0.3"
+      ],
+      "sheet": "apc-sedan-contact@high-z1.5/sheet.jpg",
+      "sheetKb": 92,
+      "note": "Dynamic APC side ram of a parked dynamic sedan. Both chassis stay upright; sedan slides ahead of the heavy APC. Sim regression covers head-on, oblique and side impacts at 10/20/30 km/h."
+    },
+    {
+      "name": "apc-sedan-contact@low-z0.5",
+      "file": "tests/scenes/catalog/apc-sedan-contact.json",
+      "pass": false,
+      "seconds": 48.686,
+      "frames": 180,
+      "errors": 0,
+      "requestedTier": "low",
+      "actualTier": "low",
+      "gates": "ok consoleErrors 0/0; ok drawCallsMax 54/300; ok trianglesMax 56860/500000; ok vehicleTiltMaxDeg 8.4/45; ok vehicleHealthMax 990/990; ok vehicleSilhouette:parked:clear 1/0.6; FAIL vehicleSilhouette:parked:blocking 0/0.3; ok canvas.f0.varianceMin 1573.9/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f6.varianceMin 1571.6/1; ok canvas.f6.variedTilesMin 64/8; ok canvas.f18.varianceMin 1581.0/1; ok canvas.f18.variedTilesMin 64/8; ok canvas.f24.varianceMin 1597.3/1; ok canvas.f24.variedTilesMin 64/8; ok canvas.f30.varianceMin 1625.5/1; ok canvas.f30.variedTilesMin 64/8; ok canvas.f42.varianceMin 1660.6/1; ok canvas.f42.variedTilesMin 64/8; ok canvas.f48.varianceMin 1676.7/1; ok canvas.f48.variedTilesMin 64/8; ok canvas.f54.varianceMin 1732.8/1; ok canvas.f54.variedTilesMin 64/8; ok canvas.f60.varianceMin 1873.4/1; ok canvas.f60.variedTilesMin 64/8; ok canvas.f72.varianceMin 1142.4/1; ok canvas.f72.variedTilesMin 64/8; ok canvas.f78.varianceMin 1021.9/1; ok canvas.f78.variedTilesMin 64/8; ok canvas.f84.varianceMin 996.3/1; ok canvas.f84.variedTilesMin 64/8; ok canvas.f96.varianceMin 1294.5/1; ok canvas.f96.variedTilesMin 64/8; ok canvas.f102.varianceMin 1369.8/1; ok canvas.f102.variedTilesMin 64/8; ok canvas.f108.varianceMin 1363.6/1; ok canvas.f108.variedTilesMin 64/8; ok canvas.f120.varianceMin 1267.3/1; ok canvas.f120.variedTilesMin 64/8; ok canvas.f126.varianceMin 1284.7/1; ok canvas.f126.variedTilesMin 64/8; ok canvas.f132.varianceMin 1151.2/1; ok canvas.f132.variedTilesMin 64/8; ok canvas.f138.varianceMin 1011.2/1; ok canvas.f138.variedTilesMin 64/8; ok canvas.f150.varianceMin 937.2/1; ok canvas.f150.variedTilesMin 64/8; ok canvas.f156.varianceMin 625.4/1; ok canvas.f156.variedTilesMin 64/8; ok canvas.f162.varianceMin 492.8/1; ok canvas.f162.variedTilesMin 64/8; ok canvas.f174.varianceMin 294.5/1; ok canvas.f174.variedTilesMin 64/8; ok canvas.f180.varianceMin 248.9/1; ok canvas.f180.variedTilesMin 64/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+      "failed": [
+        "vehicleSilhouette:parked:blocking 0 > 0.3"
+      ],
+      "sheet": "apc-sedan-contact@low-z0.5/sheet.jpg",
+      "sheetKb": 146,
+      "note": "Dynamic APC side ram of a parked dynamic sedan. Both chassis stay upright; sedan slides ahead of the heavy APC. Sim regression covers head-on, oblique and side impacts at 10/20/30 km/h."
+    },
+    {
+      "name": "apc-sedan-contact@low-z1",
+      "file": "tests/scenes/catalog/apc-sedan-contact.json",
+      "pass": false,
+      "seconds": 53.11,
+      "frames": 180,
+      "errors": 0,
+      "requestedTier": "low",
+      "actualTier": "low",
+      "gates": "ok consoleErrors 0/0; ok drawCallsMax 54/300; ok trianglesMax 56860/500000; ok vehicleTiltMaxDeg 8.4/45; ok vehicleHealthMax 990/990; ok vehicleSilhouette:parked:clear 1/0.6; FAIL vehicleSilhouette:parked:blocking 0/0.3; ok canvas.f0.varianceMin 603.0/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f6.varianceMin 611.9/1; ok canvas.f6.variedTilesMin 64/8; ok canvas.f18.varianceMin 624.1/1; ok canvas.f18.variedTilesMin 64/8; ok canvas.f24.varianceMin 633.7/1; ok canvas.f24.variedTilesMin 64/8; ok canvas.f30.varianceMin 644.1/1; ok canvas.f30.variedTilesMin 64/8; ok canvas.f42.varianceMin 672.6/1; ok canvas.f42.variedTilesMin 64/8; ok canvas.f48.varianceMin 686.9/1; ok canvas.f48.variedTilesMin 64/8; ok canvas.f54.varianceMin 698.9/1; ok canvas.f54.variedTilesMin 64/8; ok canvas.f60.varianceMin 706.4/1; ok canvas.f60.variedTilesMin 64/8; ok canvas.f72.varianceMin 491.3/1; ok canvas.f72.variedTilesMin 64/8; ok canvas.f78.varianceMin 427.7/1; ok canvas.f78.variedTilesMin 64/8; ok canvas.f84.varianceMin 403.1/1; ok canvas.f84.variedTilesMin 64/8; ok canvas.f96.varianceMin 425.8/1; ok canvas.f96.variedTilesMin 64/8; ok canvas.f102.varianceMin 434.7/1; ok canvas.f102.variedTilesMin 64/8; ok canvas.f108.varianceMin 446.3/1; ok canvas.f108.variedTilesMin 64/8; ok canvas.f120.varianceMin 485.4/1; ok canvas.f120.variedTilesMin 64/8; ok canvas.f126.varianceMin 504.2/1; ok canvas.f126.variedTilesMin 64/8; ok canvas.f132.varianceMin 517.3/1; ok canvas.f132.variedTilesMin 64/8; ok canvas.f138.varianceMin 513.4/1; ok canvas.f138.variedTilesMin 64/8; ok canvas.f150.varianceMin 486.8/1; ok canvas.f150.variedTilesMin 64/8; ok canvas.f156.varianceMin 448.9/1; ok canvas.f156.variedTilesMin 64/8; ok canvas.f162.varianceMin 452.8/1; ok canvas.f162.variedTilesMin 64/8; ok canvas.f174.varianceMin 445.5/1; ok canvas.f174.variedTilesMin 64/8; ok canvas.f180.varianceMin 426.2/1; ok canvas.f180.variedTilesMin 64/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+      "failed": [
+        "vehicleSilhouette:parked:blocking 0 > 0.3"
+      ],
+      "sheet": "apc-sedan-contact@low-z1/sheet.jpg",
+      "sheetKb": 111,
+      "note": "Dynamic APC side ram of a parked dynamic sedan. Both chassis stay upright; sedan slides ahead of the heavy APC. Sim regression covers head-on, oblique and side impacts at 10/20/30 km/h."
+    },
+    {
+      "name": "apc-sedan-contact@low-z1.5",
+      "file": "tests/scenes/catalog/apc-sedan-contact.json",
+      "pass": false,
+      "seconds": 54.962,
+      "frames": 180,
+      "errors": 0,
+      "requestedTier": "low",
+      "actualTier": "low",
+      "gates": "ok consoleErrors 0/0; ok drawCallsMax 54/300; ok trianglesMax 56860/500000; ok vehicleTiltMaxDeg 8.4/45; ok vehicleHealthMax 990/990; ok vehicleSilhouette:parked:clear 1/0.6; FAIL vehicleSilhouette:parked:blocking 0.1/0.3; ok canvas.f0.varianceMin 305.9/1; ok canvas.f0.variedTilesMin 64/8; ok canvas.f6.varianceMin 308.9/1; ok canvas.f6.variedTilesMin 64/8; ok canvas.f18.varianceMin 310.0/1; ok canvas.f18.variedTilesMin 64/8; ok canvas.f24.varianceMin 311.5/1; ok canvas.f24.variedTilesMin 64/8; ok canvas.f30.varianceMin 312.5/1; ok canvas.f30.variedTilesMin 64/8; ok canvas.f42.varianceMin 316.8/1; ok canvas.f42.variedTilesMin 64/8; ok canvas.f48.varianceMin 320.2/1; ok canvas.f48.variedTilesMin 64/8; ok canvas.f54.varianceMin 322.3/1; ok canvas.f54.variedTilesMin 64/8; ok canvas.f60.varianceMin 324.7/1; ok canvas.f60.variedTilesMin 64/8; ok canvas.f72.varianceMin 227.1/1; ok canvas.f72.variedTilesMin 64/8; ok canvas.f78.varianceMin 197.4/1; ok canvas.f78.variedTilesMin 64/8; ok canvas.f84.varianceMin 185.4/1; ok canvas.f84.variedTilesMin 64/8; ok canvas.f96.varianceMin 195.2/1; ok canvas.f96.variedTilesMin 64/8; ok canvas.f102.varianceMin 197.6/1; ok canvas.f102.variedTilesMin 64/8; ok canvas.f108.varianceMin 201.0/1; ok canvas.f108.variedTilesMin 64/8; ok canvas.f120.varianceMin 211.6/1; ok canvas.f120.variedTilesMin 64/8; ok canvas.f126.varianceMin 217.6/1; ok canvas.f126.variedTilesMin 64/8; ok canvas.f132.varianceMin 221.0/1; ok canvas.f132.variedTilesMin 64/8; ok canvas.f138.varianceMin 222.7/1; ok canvas.f138.variedTilesMin 64/8; ok canvas.f150.varianceMin 232.1/1; ok canvas.f150.variedTilesMin 64/8; ok canvas.f156.varianceMin 239.1/1; ok canvas.f156.variedTilesMin 64/8; ok canvas.f162.varianceMin 247.4/1; ok canvas.f162.variedTilesMin 64/8; ok canvas.f174.varianceMin 256.3/1; ok canvas.f174.variedTilesMin 64/8; ok canvas.f180.varianceMin 257.6/1; ok canvas.f180.variedTilesMin 64/8; ok requestedBackend 1/1; ok requestedQuality 1/1",
+      "failed": [
+        "vehicleSilhouette:parked:blocking 0.1 > 0.3"
+      ],
+      "sheet": "apc-sedan-contact@low-z1.5/sheet.jpg",
+      "sheetKb": 92,
+      "note": "Dynamic APC side ram of a parked dynamic sedan. Both chassis stay upright; sedan slides ahead of the heavy APC. Sim regression covers head-on, oblique and side impacts at 10/20/30 km/h."
+    }
+  ]
+}

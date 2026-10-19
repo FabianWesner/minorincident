@@ -1,0 +1,187 @@
+diff --git a/src/debug/scenelab/SceneLab.ts b/src/debug/scenelab/SceneLab.ts
+index f8c42c1eb..320f33596 100644
+--- a/src/debug/scenelab/SceneLab.ts
++++ b/src/debug/scenelab/SceneLab.ts
+@@ -1611,6 +1611,13 @@ export class SceneLab {
+     this.game.view.settings({ seeThroughOff: off });
+     return audit && { center: audit.center, solidRadius: audit.solidRadius, strength: audit.strength, cover: audit.cover, occluder: audit.occluder };
+   }
++  /** Isolate a named vehicle's body coverage without advancing simulation. */
++  vehicleSilhouetteProbe(name: string, mode: 'normal' | 'full' | 'hidden' | 'restore'): boolean {
++    const id = this.vehicles.get(name);
++    const vehicles = this.game.view.labProbes().vehicles;
++    if (id === undefined || !vehicles) throw new Error(`Vehicle silhouette probe: unknown vehicle ${name}`);
++    return vehicles.silhouetteProbe(id, mode);
++  }
+   /** Courier-visible-share probe: redraw with the courier and/or the crowd (Mega included) hidden; returns the courier-to-Mega distance in metres (Infinity when none). */
+   hideProbe(courier: boolean, crowd: boolean, environment = false, bars = false): number { return this.game.view.probeVisibility({ courier, crowd, environment, bars }); }
+   /** Exact screen disc used by the boss shader, for comparing body pixels outside the intended courier reveal. */
+diff --git a/src/debug/scenelab/spec.ts b/src/debug/scenelab/spec.ts
+index bdd0d6c19..fac65789f 100644
+--- a/src/debug/scenelab/spec.ts
++++ b/src/debug/scenelab/spec.ts
+@@ -10,6 +10,8 @@ import type { AssetDef } from '../../assets/types';
+  * the same convention as layout placements (a yaw-0 prop faces its authored forward, an actor at yaw 0 faces +X).
+  */
+ export interface SceneSpec {
++  /** Measure each named vehicle's retained body pixels against the identical unfaded frame. */
++  vehicleSilhouettes?: string[];
+   /** Production L2 market release, or its bridge arrival after 20 s of rescue simulation. */
+   l2Release?: boolean | 'bridge' | 'checkpoint';
+   /** Native campaign menu over the game camera; run with --query ui=1. */
+diff --git a/src/render/VehicleView.ts b/src/render/VehicleView.ts
+index 551c21b5e..df2fc4c94 100644
+--- a/src/render/VehicleView.ts
++++ b/src/render/VehicleView.ts
+@@ -347,6 +347,25 @@ export class VehicleView extends Group {
+     for (const [id, record] of this.records) record.parent.visible = !(this.playerVehicle() === id ? courier : environment);
+   }
+   private readonly occlusion = new SubjectOcclusion();
++  private silhouette: { id: number; mode: 'normal' | 'full' | 'hidden'; shadows: Map<Mesh, boolean> } | undefined;
++  /** Same-frame vehicle coverage probe. Disable its shadows in every pass so only body pixels differ. */
++  silhouetteProbe(id: number, mode: 'normal' | 'full' | 'hidden' | 'restore'): boolean {
++    const record = this.records.get(id);
++    if (!record) throw new Error(`Vehicle silhouette probe: missing record ${id}`);
++    const blocking = record.paint.some(material => material.userData.seeThrough === true);
++    if (mode === 'restore') {
++      for (const [mesh, cast] of this.silhouette?.shadows ?? []) mesh.castShadow = cast;
++      record.parent.visible = true; this.silhouette = undefined;
++    } else {
++      if (!this.silhouette) {
++        const shadows = new Map<Mesh, boolean>();
++        record.model.traverse(node => { if (node instanceof Mesh) { shadows.set(node, node.castShadow); node.castShadow = false; } });
++        this.silhouette = { id, mode, shadows };
++      }
++      this.silhouette.mode = mode;
++    }
++    return blocking;
++  }
+   /** Select cars after the camera and the complete reveal subject have their current frame poses. */
+   updateReveal(subject?: Box3): void {
+     if (subject) this.occlusion.setSubject(this.view.camera.position, subject);
+@@ -354,7 +373,8 @@ export class VehicleView extends Group {
+     for (const [id, record] of this.records) {
+       record.parent.updateWorldMatrix(true, false);
+       const enabled = !!subject && id !== ridden && this.occlusion.blockedBy(record.bounds, record.parent.matrixWorld);
+-      for (const material of record.paint) if (material instanceof PaletteMaterial) material.seeThrough(enabled);
++      for (const material of record.paint) if (material instanceof PaletteMaterial) material.seeThrough(enabled && !(this.silhouette?.id === id && this.silhouette.mode === 'full'));
++      if (this.silhouette?.id === id) record.parent.visible = this.silhouette.mode !== 'hidden';
+     }
+   }
+   /** Complete drawn chassis, including wheels, for the player's bounded reveal. */
+diff --git a/tests/scenes/catalog/apc-sedan-contact.json b/tests/scenes/catalog/apc-sedan-contact.json
+index 46bf28f59..9b3147fe6 100644
+--- a/tests/scenes/catalog/apc-sedan-contact.json
++++ b/tests/scenes/catalog/apc-sedan-contact.json
+@@ -9,5 +9,8 @@
+     "trianglesMaxLow": 500000,
+     "vehicleHealthMax": 990,
+     "vehicleTiltMaxDeg": 45
+-  }
++  },
++  "vehicleSilhouettes": [
++    "parked"
++  ]
+ }
+diff --git a/tools/scenelab/catalog.ts b/tools/scenelab/catalog.ts
+index 0fdcc8943..bba15b1ae 100644
+--- a/tools/scenelab/catalog.ts
++++ b/tools/scenelab/catalog.ts
+@@ -13,13 +13,14 @@ import { zoomLimits } from '../../src/render/View';
+  * (`bld-grove-*`, `fight-*,ped-*`). Exit 1 when any gate fails or a scene throws. Docs: docs/tools/scene-lab.md.
+  * `--matrix` (PO 10-13 low tier / close zoom): every scene runs at the high and the low quality tier, and scenes with a
+  * game/follow camera also at zoom 1 and the closest player zoom (`zoomLimits[0]`), as `<scene>@<tier>-z<zoom>` rows. */
++// With --matrix, --tier limits the quality pass while retaining every zoom (bounded browser batches).
+ const args = process.argv.slice(2), flag = (name: string) => catalogFlag(args, name);
+ const dirs = (flag('dir') ? [resolve(flag('dir')!)] : [resolve('specs/scenes/catalog'), resolve('tests/scenes/catalog')]).filter(existsSync);
+ const out = resolve(flag('out') ?? 'test-results/scene-catalog');
+ const query = Object.fromEntries(args.flatMap((a, i) => a === '--query' ? [args[i + 1].split('=') as [string, string]] : []));
+ const throttle = Number(flag('throttle') ?? 1); // CPU slow-down factor: reproduces load-dependent races (async LOD loads) on an idle machine
+ const backend = (flag('backend') ?? 'webgl2') as Backend, matrix = args.includes('--matrix');
+-const tiers = (matrix ? ['high', 'low'] : [flag('tier') ?? 'high']) as ('high' | 'low')[];
++const tiers = (matrix && !flag('tier') ? ['high', 'low'] : [flag('tier') ?? 'high']) as ('high' | 'low')[];
+ const [width, height] = (flag('size') ?? '960x540').split('x').map(Number);
+ const jobs = Math.max(1, Math.min(2, Number(flag('jobs') ?? 2)));
+ const globs = (flag('filter') ?? '*').split(',').map(g => new RegExp(`^${g.trim().replace(/[.+^${}()|[\]\\]/g, '\\$&').replace(/\*/g, '.*').replace(/\?/g, '.')}$`));
+diff --git a/tools/scenelab/run.ts b/tools/scenelab/run.ts
+index 9a6506e65..e013b362d 100644
+--- a/tools/scenelab/run.ts
++++ b/tools/scenelab/run.ts
+@@ -101,6 +101,31 @@ export async function measureCourierShare(session: SceneSession, compareAlpha =
+   return { alphaPixels, alphaBodyPixels, bossReveal: hole, megaAlphaRatio: alphaPixels > 0 ? mega / alphaPixels : alphaBodyPixels > 0 ? 1 : 0, megaM: all.d, visible, reference, share: reference > 0 ? Math.min(1, visible / reference) : 0, megaPixels: mega, megaShare: mega / (all.png.width * all.png.height) };
+ }
+ 
++/** Coverage uses the unfaded body's own pixel mask, with the selected vehicle's shadows disabled in all passes. */
++export async function measureVehicleSilhouette(session: SceneSession, id: string) {
++  // Settle pending vehicle/LOD loads before changing the selected model's shadow flags.
++  await session.ready();
++  const shot = async (mode: 'normal' | 'full' | 'hidden') => {
++    const blocking = await session.page.evaluate(([id, mode]) => window.__SCENE__!.vehicleSilhouetteProbe(id, mode), [id, mode] as const);
++    const png = await session.page.evaluate(async () => { await window.__SCENE__!.ready(); return document.querySelector('canvas')!.toDataURL('image/png'); });
++    const frame = PNG.sync.read(Buffer.from(png.slice(png.indexOf(',') + 1), 'base64'));
++    if (!frame.data.some(value => value !== 0)) throw new Error('Vehicle silhouette probe: empty drawing buffer');
++    return { blocking, png: frame };
++  };
++  try {
++    const normal = await shot('normal'), full = await shot('full'), hidden = await shot('hidden');
++    let reference = 0, retained = 0;
++    for (let i = 0; i < full.png.data.length; i += 4) {
++      if (!changedPixel(full.png, hidden.png, i)) continue;
++      reference++; if (changedPixel(normal.png, hidden.png, i)) retained++;
++    }
++    return { id, blocking: normal.blocking, reference, retained, share: reference ? retained / reference : 1 };
++  } finally {
++    await session.page.evaluate(id => window.__SCENE__!.vehicleSilhouetteProbe(id, 'restore'), id);
++    await session.ready();
++  }
++}
++
+ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOptions) {
+   const name = spec.name ?? (o.file ? basename(o.file, '.json') : 'scene'), out = o.out;
+   const video = o.video ?? spec.video ?? 0, sheet = o.sheet ?? spec.sheet ?? 0;
+@@ -117,10 +142,13 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
+   // Step in batches inside the page; stop only where a capture happens.
+   const stops = new Set([...shots, ...sheetAt]);
+   if (video) for (let f = 0; f <= video * 60; f += 3) stops.add(f);
++  const captureStops = new Set(stops);
++  if (spec.vehicleSilhouettes?.length) for (let f = 0; f <= frames; f++) stops.add(f);
+   let frame = 0;
+   const shares: ({ frame: number } & Awaited<ReturnType<typeof measureCourierShare>>)[] = [];
+   const cutExpected = spec.expect?.seeThroughCutPixelsMax !== undefined || spec.expect?.seeThroughCutInsideMin !== undefined || spec.expect?.seeThroughCutInsideMax !== undefined;
+   const cuts: ({ frame: number } & Awaited<ReturnType<typeof measureCut>>)[] = [];
++  const silhouettes: ({ frame: number } & Awaited<ReturnType<typeof measureVehicleSilhouette>>)[] = [];
+   const contrast: { frame: number; result: ContrastResult }[] = [], measure = async (f: number) => {
+     if (spec.expect?.courierVisibleShareMin !== undefined || spec.expect?.megaAlphaVisibleRatioMin !== undefined) shares.push({ frame: f, ...await measureCourierShare(session, spec.expect?.megaAlphaVisibleRatioMin !== undefined) });
+     if (cutExpected) cuts.push({ frame: f, ...await measureCut(session) });
+@@ -131,7 +159,8 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
+   for (const stop of [...stops].sort((a, b) => a - b)) {
+     if (stop > frames) break;
+     if (stop > frame) frame = await session.step(stop - frame);
+-    pixels.push({ frame: stop, pixels: await canvasFrame(session.page) });
++    if (captureStops.has(stop)) pixels.push({ frame: stop, pixels: await canvasFrame(session.page) });
++    for (const id of spec.vehicleSilhouettes ?? []) silhouettes.push({ frame: stop, ...await measureVehicleSilhouette(session, id) });
+     if (spec.edgeNoise) edgeSamples.push({ frame: stop, ...await canvasEdgeNoise(session.page, spec.edgeNoise.rect) });
+     if (shots.includes(stop)) { const path = `${out}/shot-${String(stop).padStart(4, '0')}.png`; await session.screenshot(path); written.push(path); }
+     if (sheetAt.has(stop)) { cells.push({ frame: stop, jpeg: await session.snapshot() }); await measure(stop); }
+@@ -189,6 +218,12 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
+     if (spec.expect?.megaAlphaVisibleRatioMin !== undefined) result.checks.push({ name: 'megaAlphaVisibleRatio', pass: contact.length > 0 && contact.every(s => s.alphaBodyPixels > 0 && s.megaPixels >= spec.expect!.megaAlphaVisibleRatioMin! * s.alphaPixels), value: contact.length ? Math.min(...contact.map(s => +s.megaAlphaRatio.toFixed(4))) : 0, limit: spec.expect.megaAlphaVisibleRatioMin });
+     result.checks.push({ name: spec.megaAlpha ? 'courierShareSampledNearMega' : 'courierShareSampled', pass: near.length > 0, value: near.length, limit: 1 });
+   }
++  for (const id of spec.vehicleSilhouettes ?? []) for (const blocking of [false, true]) {
++    const samples = silhouettes.filter(sample => sample.id === id && sample.blocking === blocking);
++    if (!samples.length) continue;
++    const limit = blocking ? .3 : .6, value = Math.min(...samples.map(sample => sample.share));
++    result.checks.push({ name: `vehicleSilhouette:${id}:${blocking ? 'blocking' : 'clear'}`, pass: value >= limit, value, limit });
++  }
+   if (cutPixels) {
+     if (spec.expect?.seeThroughCutInsideMax !== undefined) result.checks.push({ name: 'seeThroughCutPixelsInsideMax', pass: cutPixels.insideMax <= spec.expect.seeThroughCutInsideMax, value: cutPixels.insideMax, limit: spec.expect.seeThroughCutInsideMax });
+     if (spec.expect?.seeThroughCutPixelsMax !== undefined) result.checks.push({ name: 'seeThroughCutPixelsOutside', pass: cutPixels.outside <= spec.expect.seeThroughCutPixelsMax, value: cutPixels.outside, limit: spec.expect.seeThroughCutPixelsMax });
+@@ -201,7 +236,7 @@ export async function runSpec(session: SceneSession, spec: SceneSpec, o: RunOpti
+   result.checks.push({ name: 'requestedQuality', pass: actualTier === session.options.tier && metrics.quality === actualTier, value: Number(actualTier === session.options.tier && metrics.quality === actualTier), limit: 1 });
+   result.pass = result.checks.every(c => c.pass);
+   const timing = { openMs: o.openMs ?? 0, loadMs, runMs: Date.now() - t0 - loadMs, sceneMs: Date.now() - t0 };
+-  writeJson(`${out}/metrics.json`, { spec: o.file, backend: metrics.backend, requestedBackend: session.options.backend, tier: session.options.tier, actualTier, frames: metrics.frame, timing, checks: result, seeThroughCut: cutPixels, seeThroughCutSamples: cuts, courierShares: shares, pixels, edgeSamples, ring, contrast: contrast.map(c => ({ frame: c.frame, candidates: c.result.candidates, pairs: c.result.pairs, median: +c.result.median.toFixed(2), wcag05: +c.result.wcag.toFixed(2), min: +c.result.min.toFixed(2), routeL: +c.result.routeL.toFixed(4), vergeL: +c.result.vergeL.toFixed(4), player: c.result.player && +c.result.player.toFixed(2), landmarks: c.result.landmarks && +c.result.landmarks.toFixed(2) })), consoleErrors: errors, scene, metrics, clipping });
++  writeJson(`${out}/metrics.json`, { spec: o.file, backend: metrics.backend, requestedBackend: session.options.backend, tier: session.options.tier, actualTier, frames: metrics.frame, timing, checks: result, seeThroughCut: cutPixels, seeThroughCutSamples: cuts, courierShares: shares, vehicleSilhouettes: silhouettes, pixels, edgeSamples, ring, contrast: contrast.map(c => ({ frame: c.frame, candidates: c.result.candidates, pairs: c.result.pairs, median: +c.result.median.toFixed(2), wcag05: +c.result.wcag.toFixed(2), min: +c.result.min.toFixed(2), routeL: +c.result.routeL.toFixed(4), vergeL: +c.result.vergeL.toFixed(4), player: c.result.player && +c.result.player.toFixed(2), landmarks: c.result.landmarks && +c.result.landmarks.toFixed(2) })), consoleErrors: errors, scene, metrics, clipping });
+   written.push(`${out}/metrics.json`);
+   return { name, pass: result.pass, checks: result.checks, backend: metrics.backend, actualTier, frames: metrics.frame, seconds: timing.sceneMs / 1000, failed: result.checks.filter(c => !c.pass), clipping: clipping.summary, sheet: sheetInfo?.path, sheetKb: sheetInfo?.kb, files: written, consoleErrors: errors };
+ }

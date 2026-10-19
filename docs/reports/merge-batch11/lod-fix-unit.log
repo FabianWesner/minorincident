@@ -1,0 +1,24 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11 -> 94.130.181.173:/srv/mi/ws/merge-batch11-39daf0
+[remote] cache-gc deleted: credits-complete-4a50df
+[remote] sync 39s, 20286 files; job /srv/mi/jobs/merge-batch11-39daf0-98823-1792361460; queueing for a slot
+[runner] slot 0 acquired; load 0.39 1.34 2.93
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/merge-batch11-39daf0-98823-1792361460[39m
+
+[90mstdout[2m | tests/unit/render/crowd-lod-geometry.test.ts[2m > [22m[2m@E18-AC01 @perf far worker reduces geometry while retaining every vertex channel and rigid-part ownership
+[22m[39m{ before: [33m3782[39m, after: [33m2946[39m }
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/infected-bake.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 707[2mms[22m[39m
+   [33m[2m✓[22m[39m @transition crowd bake cache evicts old CPU templates at its fixed limit[33m 405[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/crowd-lod-geometry.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 843[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18-AC01 @perf far worker reduces geometry while retaining every vertex channel and rigid-part ownership[33m 407[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E25-14g @E25 @E25-AC14 gripped far civilian remains within its authored triangle count and retains vertex channels[33m 433[2mms[22m[39m
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/infected-eyes.test.ts [2m([22m[2m14 tests[22m[2m)[22m[33m 1860[2mms[22m[39m
+   [33m[2m✓[22m[39m @E25 @E25-AC13 inf.common-worker lod1: body surfaces and red eye cores survive the low bake[33m 382[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m3 passed[39m[22m[90m (3)[39m
+[2m      Tests [22m [1m[32m21 passed[39m[22m[90m (21)[39m
+[2m   Start at [22m 22:11:41
+[2m   Duration [22m 2.42s[2m (tests 74%, transform 16%, import 10%)[22m
+
+[remote] done exit=0 (runner 94.130.181.173, sync 39s, remote total 6s)
