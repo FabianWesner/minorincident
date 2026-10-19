@@ -1,6 +1,6 @@
 {
   "name": "courier-gear-tier2-female",
-  "note": "PO 10-15 #9c: courier tier-2 gear (female) walk, run, 180 turn; no cubes, floating or clipping pieces.",
+  "note": "PO 10-15 #9c + PO 10-19 ('The girl now has a bug on front???'): courier gear tier 2 (female) walk, run, 180 turn; no cubes, floating or clipping pieces. The matrix runs it at zoom 1.5/1/0.5, high and low.",
   "ground": "asphalt",
   "size": 30,
   "actors": [
@@ -60,6 +60,7 @@
   "sheet": 5,
   "expect": {
     "consoleErrors": 0,
-    "undrawnFramesMax": 0
+    "undrawnFramesMax": 0,
+    "courierAttachmentGapMaxCm": 2
   }
 }

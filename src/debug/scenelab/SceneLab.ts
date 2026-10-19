@@ -91,6 +91,7 @@ const toPoint = (p: Point | number[]) => Array.isArray(p) ? { x: p[0], z: p[1] }
  */
 export class SceneLab {
   private convoyOverlapFrames = 0;
+  private courierAttachments = { samples: 0, gapMaxCm: 0, frame: -1, worst: null as string | null, attachments: 0 };
   spec: SceneSpec | null = null;
   built: BuiltScene | null = null;
   frame = 0;
@@ -150,7 +151,7 @@ export class SceneLab {
   async load(spec: SceneSpec) {
     this.specials = [];
     this.attackOverlap = { depthCm: 0, frame: 0, actor: '' };
-    this.convoyOverlapFrames = 0;
+    this.convoyOverlapFrames = 0; this.courierAttachments = { samples: 0, gapMaxCm: 0, frame: -1, worst: null, attachments: 0 };
     // A scene that set a campaign must not leak it into the next scene: a later pickup save would write it against another world.
     this.game.campaign = null;
     if (spec.cureEncounter) {
@@ -1212,6 +1213,10 @@ export class SceneLab {
     this.sampleMega(); this.sampleGun(); this.sampleCure();
     this.recordPropPenetration();
     const probes = this.game.view.labProbes(), figures = new Map(this.game.view.crowdFigures().map(f => [f.id, f]));
+    if (this.frame % 10 === 0 && this.spec?.actors?.some(a => a.kind === 'courier') && probes.character) {
+      const loose = probes.character.looseAttachments(), c = this.courierAttachments; c.samples++; c.attachments = Math.max(c.attachments, loose.length);
+      for (const a of loose) if (a.gapCm > c.gapMaxCm) Object.assign(c, { gapMaxCm: a.gapCm, frame: this.frame, worst: a.name });
+    }
     const audit = probes.districts?.seeThroughAudit();
     if (audit) {
       if (audit.strength > .5) { this.seeThroughOpen.frames++; if (audit.occluder && !this.seeThroughOpen.occluders.includes(audit.occluder)) this.seeThroughOpen.occluders.push(audit.occluder); this.seeThroughOpen.solidRadiusMax = Math.max(this.seeThroughOpen.solidRadiusMax, +audit.solidRadius.toFixed(3)); }
@@ -1573,7 +1578,7 @@ export class SceneLab {
     const clipping = this.staticSets ? await this.clipping() : null;
     const bodies = [...this.bodies.values()].sort((x, y) => y.depthCm - x.depthCm);
     return { collision: this.world.solids.snapshot(), marketDoors: this.spec?.marketDoors ? { openness: this.game.view.labProbes().districts?.marketDoorOpenness() ?? null, posed: this.game.view.labProbes().districts?.marketDoorPlacements() ?? [] } : null, armyBoom: this.boom ? { closedAt: this.boomClosedAt, closed: !!this.spec?.armyBoom?.closed || !!this.boomClosedAt } : null, scene: this.spec?.name ?? null, frame: this.frame, tick: this.world.tick, backend: this.game.view.renderer.selectedBackend, quality: this.game.quality.tier,
-      convoyOverlapFrames: this.convoyOverlapFrames,
+      convoyOverlapFrames: this.convoyOverlapFrames, courierAttachments: { ...this.courierAttachments },
       propPenetration: { samples: this.propPenetrationSamples, framesMax: Math.max(0, ...[...this.propPenetration.values()].map(m => m.max)), pairs: [...this.propPenetration.values()] },
       props: { sinkMaxCm: this.propSinkMaxCm, samples: this.propGroundSamples, gaps: this.game.view.labProbes().districts?.propGroundGaps() ?? [] },
       bodies, attackOverlap: { ...this.attackOverlap }, wheels: Object.fromEntries([...new Set([...this.wheels.values()].map(w => w.vehicle))].map(id => [id, [...this.wheels.values()].filter(w => w.vehicle === id).map(w => { const h = this.hubs.get(`${w.vehicle}|${w.wheel}`); return { ...w, hubSpikeCm: h?.spikeCm ?? 0, hubSpikeFrame: h?.spikeFrame ?? 0, hubStepCm: h?.stepCm ?? 0, hubStepFrame: h?.stepFrame ?? 0 }; })])), ...(this.spec?.trace ? { vehicleTrack: Object.fromEntries(this.vehicleTrack), wheelTrack: Object.fromEntries(this.wheelTrack) } : {}),
