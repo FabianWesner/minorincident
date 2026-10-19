@@ -76,7 +76,7 @@ export async function prepareCivilianGeometry(model: Group, modelId: string, dis
     deinterleaveGeometry(baked.geometry);
     const indexed = mergeVertices(baked.geometry); baked.geometry.dispose(); baked.geometry = indexed;
     // Index-only reduction retains parts, swatches and infection marks; close figures allow at most 5 mm error.
-    if (!placeholder) await simplifyCrowdLod(baked.geometry, distant ? .01 : .005, distant ? .35 : .5);
+    if (!placeholder) await simplifyCrowdLod(baked.geometry, distant ? .01 : .005, distant ? .3 : .5);
   const grip = handTriangles(baked.geometry, baked.clip.parts.indexOf('handR'));
   packCrowdParts(baked.geometry);
   const names = ['position', 'normal', 'color', '_parts', '_gripPosition'], stride = 16;
