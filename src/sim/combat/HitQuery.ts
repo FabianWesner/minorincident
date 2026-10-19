@@ -92,11 +92,13 @@ export class HitQuery {
         if (Math.abs(d) < 1e-12) { if (start < wall.x - extent || start > wall.x + extent) return closest; }
         else { const a = (wall.x - extent - start) / d, b = (wall.x + extent - start) / d; near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b)); }
       }
+      if (near > far || near >= closest) return closest;
       {
         const d = direction.y ?? 0, extent = wall.halfY, start = origin.y ?? .7;
         if (Math.abs(d) < 1e-12) { if (start < wall.y - extent || start > wall.y + extent) return closest; }
         else { const a = (wall.y - extent - start) / d, b = (wall.y + extent - start) / d; near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b)); }
       }
+      if (near > far || near >= closest) return closest;
       {
         const d = direction.z, extent = wall.halfZ + padding, start = origin.z;
         if (Math.abs(d) < 1e-12) { if (start < wall.z - extent || start > wall.z + extent) return closest; }

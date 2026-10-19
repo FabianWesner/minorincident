@@ -1,0 +1,29 @@
+from pathlib import Path
+from PIL import Image,ImageDraw,ImageFont
+import json,sys
+base=Path('docs/reports/perf-w5b');out=base/'review';out.mkdir(exist_ok=True)
+names=[p.stem.removeprefix('perf-heap-') for p in sorted(Path('tests/scenes/catalog').glob('perf-heap-*.json'))]
+font=ImageFont.load_default(size=16);records=[]
+for short in names:
+ if short=='mounted-gun' and '--skip-mounted' in sys.argv:continue
+ name='perf-heap-'+short;rows=[];inputs=[]
+ for backend in ['webgl2','webgpu']:
+  folder='mounted-final-webgl2' if short=='mounted-gun' and backend=='webgl2' else 'final-source-'+backend
+  for tier,zoom in [('high','1'),('high','0.5'),('low','1'),('low','0.5')]:
+   file=base/folder/f'{name}@{tier}-z{zoom}'/'sheet.jpg';src=Image.open(file).convert('RGB')
+   cols=(src.width+2)//322;nr=(src.height+2)//182;tiles=[]
+   for r in range(nr):
+    for c in range(cols):
+     tile=src.crop((c*322,r*182,c*322+320,r*182+180))
+     if sum(1 for r,g,b in tile.crop((0,0,70,20)).getdata() if r>170 and g>140 and b<120)>=10:tiles.append(tile)
+   middle=min(1,len(tiles)-1) if short=='mounted-gun' else min(4,len(tiles)-1) if short=='rifle-cover' else len(tiles)//2
+   selected=[0,middle,len(tiles)-1];row=Image.new('RGB',(960,210),'#181818');draw=ImageDraw.Draw(row)
+   draw.text((5,5),f'{backend} / {tier} / zoom {zoom} | captured frame labels retained',font=font,fill='white')
+   for i,index in enumerate(selected):row.paste(tiles[index],(i*320,30))
+   rows.append(row);inputs.append({'sheet':str(file.relative_to(base)),'tileIndices':selected})
+ contact=Image.new('RGB',(960,len(rows)*210))
+ for i,row in enumerate(rows):contact.paste(row,(0,i*210))
+ target=out/f'{short}-conditions.jpg';contact.save(target,quality=92)
+ records.append({'name':name,'contact':str(target.relative_to(base)),'inputs':inputs})
+(out/'conditions.json').write_text(json.dumps(records,indent=2)+'\n')
+print(f'Built {len(records)} comparison sheets, eight conditions each; selected frames retain original capture labels.')

@@ -152,6 +152,7 @@ FFmpeg is a local asset/test tool, not bundled or redistributed with the game.
 
 - @dimforge/rapier3d-compat 0.21.0 — @dimforge/rapier3d-compat. Source: https://www.npmjs.com/package/@dimforge/rapier3d-compat. License: Apache-2.0 (https://spdx.org/licenses/Apache-2.0.html).
 - three 0.186.0 — three. Source: https://www.npmjs.com/package/three. License: MIT (https://spdx.org/licenses/MIT.html).
+- three-mesh-bvh 0.9.16 — three-mesh-bvh. Source: https://www.npmjs.com/package/three-mesh-bvh. License: MIT (https://spdx.org/licenses/MIT.html).
 - tweakpane 4.0.5 — tweakpane. Source: https://www.npmjs.com/package/tweakpane. License: MIT (https://spdx.org/licenses/MIT.html).
 - folio-2025 (source patterns adapted at commit 41046b5) — Bruno Simon. Source: https://github.com/brunosimon/folio-2025. License: MIT (https://spdx.org/licenses/MIT.html). Engine, input, UI, rendering, vehicle, explosion (impulse, fireball, roll kick, bullet time) and audio patterns; no art, meshes, textures or audio reused.
 - Mesh2Motion human rig and animation clips — Mesh2Motion (Scott Petrovic and contributors). Source: https://github.com/Mesh2Motion/mesh2motion-app. License: CC0 1.0 (https://creativecommons.org/publicdomain/zero/1.0/). Rig and animations retargeted to our original characters (pinned commit 79f3f61).

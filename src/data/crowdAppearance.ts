@@ -23,6 +23,10 @@ export function crowdAppearance(id: number) {
 export function balancedCrowdModel(models: readonly string[], neighbours: Iterable<{ model: string; x: number; z: number }>, at: { x: number; z: number }, seed: number): string {
   const counts = new Map(models.map(model => [model, 0]));
   for (const n of neighbours) if (Math.hypot(n.x - at.x, n.z - at.z) < 30 && counts.has(n.model)) counts.set(n.model, counts.get(n.model)! + 1);
+  return leastCrowdedModel(models, counts, seed);
+}
+/** Shared tie-breaking for callers that count directly from live components. */
+export function leastCrowdedModel(models: readonly string[], counts: ReadonlyMap<string, number>, seed: number): string {
   const minimum = Math.min(...counts.values()), choices = models.filter(model => counts.get(model) === minimum);
   return choices[appearanceSample(seed, 5) % choices.length];
 }

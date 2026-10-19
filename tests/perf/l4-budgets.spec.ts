@@ -9,7 +9,7 @@ import type { Game } from '../../src/Game';
  * Preconditions follow the l4-collapse design the PO approved ("ok let's try that!", 2026-10-12): the war peak is measured once the first
  * Alphas have arrived (84 s after the turn; the third at 150 s), and the army loses men on the beats (line 1 falls at about 60 s), so the
  * peak holds the surviving soldiers, not the 15+ of the old static line. Frame, hitch, sim, draw and triangle budgets are unchanged. */
-const dir = 'test-results/epics/E22/perf';
+const dir = process.env.L4_PERF_OUTPUT ?? 'test-results/epics/E22/perf';
 const renderer = process.env.E2E_RENDERER === 'webgpu' ? 'webgpu' : 'webgl';
 test.use({ channel: 'chrome', headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist', '--disable-frame-rate-limit', '--disable-gpu-vsync'] } });
 for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
@@ -31,8 +31,8 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
       const onBuild = game.view.renderer.debug.onNodeBuilderCreated;
       game.view.renderer.debug.onNodeBuilderCreated = (builder, object) => {
         onBuild?.(builder, object);
-        const draw = object as unknown as { getMaterialCacheKey(): number; getDynamicCacheKey(): number; material: { name: string; type: string }; object: { name: string; parent?: { name: string }; geometry?: { attributes: Record<string, { itemSize: number }> } } };
-        builds.push({ tick: world.tick, material: draw.material.name || draw.material.type, name: draw.object.name, parent: draw.object.parent?.name, materialKey: draw.getMaterialCacheKey(), dynamicKey: draw.getDynamicCacheKey(), attributes: Object.fromEntries(Object.entries(draw.object.geometry?.attributes ?? {}).map(([name, a]) => [name, a.itemSize])) });
+        const draw = object as unknown as { getMaterialCacheKey(): number; getDynamicCacheKey(): number; material: { uuid: string; name: string; type: string; outputNode?: { id: number } }; object: { name: string; parent?: { name: string }; geometry?: { attributes: Record<string, { itemSize: number }> } } };
+        builds.push({ tick: world.tick, material: draw.material.name || draw.material.type, uuid: draw.material.uuid, outputNode: draw.material.outputNode?.id, name: draw.object.name, parent: draw.object.parent?.name, materialKey: draw.getMaterialCacheKey(), dynamicKey: draw.getDynamicCacheKey(), attributes: Object.fromEntries(Object.entries(draw.object.geometry?.attributes ?? {}).map(([name, a]) => [name, a.itemSize])) });
       };
       const watch = (owner: object | null | undefined, names: string[]) => {
         if (!owner) return;

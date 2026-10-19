@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest';
-import { BoxGeometry, DoubleSide, Group, Mesh, MeshBasicMaterial, Object3D, Raycaster, Vector3 } from 'three/webgpu';
+import { BoxGeometry, DoubleSide, FrontSide, BackSide, Group, Mesh, MeshBasicMaterial, Object3D, Raycaster, Vector3 } from 'three/webgpu';
 import { InstancedGroup } from '../../../src/render/InstancedGroup';
 
 test('T-E29-20-occlusion @E29-AC20 @E18-AC01 placement occlusion matches full batch raycasting for drawn doors, roofs and compact interiors', () => {
@@ -27,4 +27,24 @@ test('T-E29-20-occlusion @E29-AC20 @E18-AC01 placement occlusion matches full ba
   expect(batch.occludesReference(siblingRay, references[0])).toBe(true);
   expect(batch.occludesReference(siblingRay, references[2])).toBe(false);
   batch.dispose(); shell.geometry.dispose(); door.geometry.dispose(); interior.geometry.dispose(); roof.geometry.dispose(); material.dispose();
+});
+
+test('T-E29-20-occlusion-bvh @E29-AC20 @E18-AC01 accelerated triangles preserve sides, groups, finite ranges and source indices', () => {
+  for (const indexed of [true, false]) for (const side of [FrontSide, BackSide, DoubleSide]) {
+    const box = new BoxGeometry(2, 3, 2, 8, 8, 8), geometry = indexed ? box : box.toNonIndexed();
+    const index = geometry.index?.array.slice(), positions = geometry.getAttribute('position').array.slice();
+    const materials = Array.from({ length: 6 }, () => new MeshBasicMaterial({ side }));
+    const prototype = new Mesh(geometry, materials), ref = new Object3D();
+    ref.position.set(2, 1, -3); ref.rotation.set(.1, .7, -.2); ref.scale.set(1.3, .8, 1.7); ref.updateMatrixWorld(true);
+    const batch = new InstancedGroup(prototype, [ref]); batch.updateMatrixWorld(true);
+    for (const origin of [new Vector3(2, 1, 8), new Vector3(2, 1, -3), new Vector3(12, 4, 0)]) {
+      for (const x of [-2, 0, 1, 2, 3, 4, 6]) for (const [near, far] of [[0, 30], [0, 1], [4, 12], [12, 20]]) {
+        const direction = new Vector3(x, 1.4, -3).sub(origin).normalize();
+        const ray = new Raycaster(origin, direction, near, far);
+        expect(batch.occludesReference(ray, ref)).toBe(ray.intersectObject(batch, true).length > 0);
+      }
+    }
+    expect(geometry.index?.array).toEqual(index); expect(geometry.getAttribute('position').array).toEqual(positions);
+    batch.dispose(); geometry.dispose(); if (!indexed) box.dispose(); materials.forEach(material => material.dispose());
+  }
 });

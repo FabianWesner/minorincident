@@ -21,7 +21,7 @@ function reference(walls: readonly CoverWall[], origin: Point, direction: Point,
   return closest;
 }
 
-test('ray-cell traversal and unrolled slabs exactly match full scans, including corners, padding and moving walls', () => {
+test('T-E22-20-cover-slabs @E22-AC20 ray-cell traversal and unrolled slabs exactly match full scans, including corners, padding and moving walls', () => {
   let seed = 173;
   const random = () => { seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0; return seed / 4294967296; };
   const walls: CoverWall[] = Array.from({ length: 150 }, (_, i) => ({ x: random() * 256 - 128, z: random() * 256 - 128, y: random() * 4, halfX: random() * 8, halfZ: random() * 8, halfY: random() * 3, entityId: i }));

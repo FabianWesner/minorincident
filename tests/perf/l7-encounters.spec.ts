@@ -1,14 +1,16 @@
 import { collectedHeap } from './collected-heap';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { boot, expect, test } from '../e2e/fixtures';
-test.use({ channel: 'chrome', headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist', '--disable-frame-rate-limit', '--disable-gpu-vsync', '--js-flags=--expose-gc', '--enable-precise-memory-info'] } });
+const backend = process.env.L7_PERF_BACKEND === 'webgpu' ? 'webgpu' : 'webgl';
+test.use({ channel: 'chrome', headless: true, launchOptions: { args: ['--use-angle=metal', '--enable-gpu', '--enable-unsafe-webgpu', '--ignore-gpu-blocklist', '--disable-frame-rate-limit', '--disable-gpu-vsync', '--js-flags=--expose-gc', '--enable-precise-memory-info'] } });
 for (const tier of ['high', 'low'] as const) test(`T-E29-19-encounters @E29-AC19 @perf ${tier}: final horde, followers and queued arrivals`, async ({ page, context }) => {
   test.setTimeout(180_000);
   if (tier === 'low') {
     await page.setViewportSize({ width: 390, height: 844 });
     const session = await context.newCDPSession(page); await session.send('Emulation.setCPUThrottlingRate', { rate: 4 });
   }
-  await boot(page, `/?test=1&renderer=webgl&quality=${tier}&audio=muted&dpr=1${process.env.L7_PERF_DIAG === '1' || process.env.L7_PERF_KEYS === '1' ? '&loadProfile=1' : ''}`);
+  await boot(page, `/?test=1&renderer=${backend}&quality=${tier}&audio=muted&dpr=1${process.env.L7_PERF_DIAG === '1' || process.env.L7_PERF_KEYS === '1' ? '&loadProfile=1' : ''}`);
+  expect(await page.evaluate(() => window.__SS__!.perf().backend)).toBe(backend);
   const profiler = process.env.L7_CPU_PROFILE === '1' ? await context.newCDPSession(page) : null;
   if (profiler) { await profiler.send('Profiler.enable'); await profiler.send('Profiler.start'); }
   const result = await page.evaluate(async ({ tier, diagnose }) => {
@@ -45,7 +47,8 @@ for (const tier of ['high', 'low'] as const) test(`T-E29-19-encounters @E29-AC19
   if (profiler) { mkdirSync('test-results/epics/E29', { recursive: true }); writeFileSync(`test-results/epics/E29/encounters-${tier}.cpuprofile`, JSON.stringify((await profiler.send('Profiler.stop')).profile)); await profiler.detach(); }
   const heap = await collectedHeap(page, context);
   result.heapMB = heap.heapMB;
-  mkdirSync('test-results/epics/E29', { recursive: true }); writeFileSync(`test-results/epics/E29/encounters-perf-${tier}.json`, JSON.stringify({ ...result, ...heap }, null, 2)); console.log(JSON.stringify({ ...result, ...heap }));
+  mkdirSync('test-results/epics/E29', { recursive: true }); writeFileSync(`test-results/epics/E29/encounters-perf-${tier}${backend === 'webgpu' ? '-webgpu' : ''}.json`, JSON.stringify({ backend, ...result, ...heap }, null, 2)); console.log(JSON.stringify({ backend, ...result, ...heap }));
+  await page.locator('canvas').screenshot({ path: `test-results/epics/E29/encounters-${tier}-${backend}.png` });
   const low = tier === 'low';
   expect(result.initialRegulars).toBe(low ? 60 : 120); expect(result.initialAlphas).toBe(2); expect(result.followers).toBe(low ? 15 : 24);
   expect(result.peakInfected).toBe(low ? 100 : 200); expect(result.blasts).toBeGreaterThanOrEqual(6);

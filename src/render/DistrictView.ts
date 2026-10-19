@@ -73,16 +73,23 @@ export class DistrictView extends Group {
   private readonly dressingEntries: DressingEntry[] = [];
   readonly windows: Mesh[] = [];
   private readonly machineGuns: { root: Object3D; gun: Object3D; muzzle: Object3D }[] = [];
+  private readonly machineGunPoint = new Vector3();
+  private readonly machineGunHeading = new Vector3();
+  private readonly machineGunInverse = new Matrix4();
   /** HMG nests retain their authored gun/muzzle hierarchy so shots rotate the
    * actual barrel and originate at its socket, including every nested transform. */
   machineGunState() { return this.machineGuns.map(n => ({ muzzle: n.muzzle.getWorldPosition(new Vector3()).toArray(), gun: n.gun.getWorldPosition(new Vector3()).toArray() })); }
   aimMachineGun(at: { x: number; z: number }, direction: { x: number; z: number }): Vector3 | null {
-    const nest = this.machineGuns.map(n => ({ n, p: n.root.getWorldPosition(new Vector3()) })).sort((a,b) => Math.hypot(a.p.x-at.x,a.p.z-at.z)-Math.hypot(b.p.x-at.x,b.p.z-at.z))[0];
-    if (!nest || Math.hypot(nest.p.x-at.x,nest.p.z-at.z)>3) return null;
-    nest.n.root.updateWorldMatrix(true,true);
-    const heading = new Vector3(direction.x,0,direction.z).transformDirection(nest.n.gun.parent!.matrixWorld.clone().invert());
-    nest.n.gun.rotation.y = -Math.atan2(heading.z,heading.x);
-    nest.n.root.updateWorldMatrix(true,true);return nest.n.muzzle.getWorldPosition(new Vector3());
+    let nest: typeof this.machineGuns[number] | undefined, distance = Infinity;
+    for (const candidate of this.machineGuns) {
+      const p = candidate.root.getWorldPosition(this.machineGunPoint), d = Math.hypot(p.x - at.x, p.z - at.z);
+      if (d < distance) { nest = candidate; distance = d; }
+    }
+    if (!nest || distance > 3) return null;
+    nest.root.updateWorldMatrix(true, true);
+    const heading = this.machineGunHeading.set(direction.x, 0, direction.z).transformDirection(this.machineGunInverse.copy(nest.gun.parent!.matrixWorld).invert());
+    nest.gun.rotation.y = -Math.atan2(heading.z, heading.x);
+    nest.root.updateWorldMatrix(true, true); return nest.muzzle.getWorldPosition(new Vector3());
   }
   private readonly lodBatches: LodBatch[] = [];
   /** Scene Lab A/B baseline: submit interiors of closed buildings too. */
