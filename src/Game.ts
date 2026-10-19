@@ -28,7 +28,7 @@ import { missionIds, resolveCampaignMission, type MissionId } from './levels/mis
 import { Combat } from './sim/combat/Combat';
 import type { TelemetrySink } from './telemetry/sink';
 import { InputSystem } from './input/InputSystem';
-import { Clock } from './core/Clock';
+import { Clock, SIM_FRAME_BUDGET_MS } from './core/Clock';
 import { Services } from './core/Services';
 import { Ticker } from './core/Ticker';
 import { GameView } from './render/GameView';
@@ -91,7 +91,7 @@ export class Game {
     const requested = params.get('quality') ?? 'auto';
     if (!['auto', 'high', 'low'].includes(requested)) throw new RangeError('Invalid quality setting');
     this.quality = new Quality(requested as QualitySetting, { userAgent: navigator.userAgent, touchPoints: navigator.maxTouchPoints, coarsePointer: matchMedia('(pointer: coarse)').matches, memoryGB: (navigator as Navigator & { deviceMemory?: number }).deviceMemory });
-    this.clock = new Clock(params.get('test') === '1' ? 20 : 5);
+    this.clock = new Clock(params.get('test') === '1' ? 20 : 5, SIM_FRAME_BUDGET_MS);
     this.view = this.services.add(new GameView(this.world, params, this.quality.tier));
     this.view.onMissionChange = () => {
       // Begin/retry is a UI handoff. Its synchronous work is not elapsed play
