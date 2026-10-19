@@ -86,8 +86,8 @@ export class Foliage extends Group {
     const leaf = texture(this.sdf, rotateUV(uv(), gust.mul(.12), vec2(.5))).r;
     const aspect = vec2(screenSize.x.div(screenSize.y), 1);
     const hole = (center: typeof this.player, depth: typeof this.playerDepth, radius = this.holeRadius, inner = .55) => positionView.z.greaterThan(depth).select(smoothstep(radius.mul(inner), radius, screenUV.sub(center).mul(aspect).length()), 1);
-    // The player and ridden vehicle use the same bounded clear region through leaves and solid geometry.
-    material.opacityNode = leaf.mul(min(hole(this.player, this.playerDepth, seeThrough.solidRadius, .85), hole(this.target, this.targetDepth)));
+    // Clear combat space through foreground crowns; solid walls keep their tighter body-sized cut.
+    material.opacityNode = leaf.mul(min(hole(this.player, this.playerDepth, this.holeRadius, .85), hole(this.target, this.targetDepth)));
     material.maskShadowNode = leaf.greaterThan(.5);
     material.alphaTest = .5; material.alphaToCoverage = !this.low; material.side = DoubleSide; material.transparent = false;
     material.positionNode = positionLocal.add(vec3(wind.mul(.035), 0, wind.mul(.02)).mul(attribute('leafWeight', 'float')));
@@ -129,7 +129,9 @@ export class Foliage extends Group {
       this.point.set(entity.x, entity.y - .7, entity.z).applyMatrix4(view.camera.matrixWorldInverse); depth.value = this.point.z - .65;
       this.point.set(entity.x, entity.y - .7 + 1.15 * actorScale, entity.z).project(view.camera); center.value.set(this.point.x * .5 + .5, .5 - this.point.y * .5);
     }
-    this.holeRadius.value = Math.min(.22, 3.25 * actorScale / view.radius);
+    // Six metres of combat space, projected at the subject: close zoom must clear the
+    // whole foreground crown rather than cap the opening at 22% of the screen.
+    this.holeRadius.value = player ? Math.max(seeThrough.solidRadius.value, 6 / (2 * Math.tan(view.camera.fov * Math.PI / 360) * view.camera.position.distanceTo(this.point.set(player.x, player.y, player.z)))) : 0;
     this.frustum.setFromProjectionMatrix(this.projection.multiplyMatrices(view.camera.projectionMatrix, view.camera.matrixWorldInverse));
     for (const { mesh, references } of this.batches) {
       let count = 0;

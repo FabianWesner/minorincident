@@ -152,6 +152,12 @@ export class View {
   /** Advances the rig by `seconds` (one fixed sim tick in play) and leaves the camera at the new tick pose.
    * `seconds === 0` re-poses without motion (reset, resize, presets) and snaps the interpolation history. */
   update(player: { x: number; z: number; y?: number }, seconds: number): void {
+    // Mission/checkpoint teleports must be framed before their first presented frame.
+    if (!this.blendTarget && !this.spot && Math.hypot(player.x - this.focus.x, player.z - this.focus.z) > 20) {
+      this.focus.set(player.x, Math.max(0, (player.y ?? feetOffset) - feetOffset), player.z);
+      this.clearanceScale = 1;
+      seconds = 0;
+    }
     this.previousPosition.copy(this.tickPosition); this.previousQuaternion.copy(this.tickQuaternion);
     this.zoomRatio += (this.targetZoom - this.zoomRatio) * (1 - Math.exp(-12 * seconds));
     this.radius = this.defaultRadius * this.scriptedAdjusted(this.zoomRatio) * this.encounterScale * this.epilogueScale;

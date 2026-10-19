@@ -1,0 +1,258 @@
+{
+  "name": "vfx-hud-telegraphs",
+  "note": "PO 10-19 carpet: twelve simultaneous charge warnings. Three spatially distinct nearest/imminent dangers remain readable; redundant lanes share at most 1.5% total opacity. Unit gate checks slots, merging and attack lifetimes.",
+  "seed": 7,
+  "ground": "asphalt",
+  "size": 32,
+  "time": "L4",
+  "dof": false,
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        0,
+        0
+      ],
+      "god": true
+    },
+    {
+      "id": "alpha0",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        -5.0,
+        -2.4000000000000004
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha1",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        -5.0,
+        -0.8
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha2",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        -5.0,
+        0.8
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha3",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        -5.0,
+        2.4000000000000004
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha4",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        -6.2,
+        -2.4000000000000004
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha5",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        -6.2,
+        -0.8
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha6",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        -6.2,
+        0.8
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha7",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        -6.2,
+        2.4000000000000004
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha8",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        -7.4,
+        -2.4000000000000004
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha9",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        -7.4,
+        -0.8
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha10",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        -7.4,
+        0.8
+      ],
+      "state": "idle"
+    },
+    {
+      "id": "alpha11",
+      "kind": "infected",
+      "archetype": "infected.alpha",
+      "at": [
+        -7.4,
+        2.4000000000000004
+      ],
+      "state": "idle"
+    }
+  ],
+  "script": [
+    {
+      "frame": 1,
+      "actor": "alpha0",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "alpha1",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "alpha2",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "alpha3",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "alpha4",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "alpha5",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "alpha6",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "alpha7",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "alpha8",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "alpha9",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "alpha10",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    },
+    {
+      "frame": 1,
+      "actor": "alpha11",
+      "do": {
+        "special": "alpha.charge",
+        "target": "courier"
+      }
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      0,
+      0
+    ],
+    "zoom": 1
+  },
+  "frames": 45,
+  "shots": [
+    1,
+    15,
+    40
+  ],
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}
