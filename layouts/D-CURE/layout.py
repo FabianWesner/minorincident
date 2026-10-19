@@ -112,7 +112,7 @@ def emit_surfaces():
 
 
 surface('soil',source['bounds'][:-1],'grass',-.006)
-surface('crash-dry',[[500,-125],[740,-125],[740,125],[500,125]],'khaki',-.004)
+surface('crash-dry',[[500,-125],[740,-125],[740,125],[500,125]],'gloveKhaki',-.004)  # look-l10: dimmer than khaki so the moonlit scar keeps the route read
 l.data['surfaces'].append(dict(surface='grass',height=0,polygon=source['bounds']))
 # Graph shares the exact boundary vertex; no duplicate slab or invisible region gate.
 route = [p for i,r in enumerate(source['regions']) for p in (r['route'] if i == 0 else r['route'][1:])]
@@ -289,8 +289,10 @@ def dress(asset, x, z, yaw=0.0, scale=1.0, decay=None, route_clear=None, run=Fal
     if rect_point(mn, mx, console) < 60: return None
     # R7: the approach band (route z -41..-21 plus the walk to the console) stays open ground, so nobody cuts a corner into a box.
     if mx[0] > 3690 and mn[1] < 5 and mx[1] > -57 and asset != 'prop.emergency-light': return None
-    gap = -.1 if run else .6   # run pieces butt against each other
-    if any(mn[0] < t[1][0]+gap and mx[0] > t[0][0]-gap and mn[1] < t[1][1]+gap and mx[1] > t[0][1]-gap for t in taken): return None
+    gap = -.1 if run else 1.0   # run pieces butt against each other; manifest boxes can be a little smaller than the mesh
+    # Crowns must not grow into roofs, fences or poles (Scene Lab static clipping), so trees reserve their whole crown.
+    omn, omx = footprint('crown:tree', x, z, yaw, scale) if asset in ('prop.tree', 'prop.street-tree') else (mn, mx)
+    if any(omn[0] < t[1][0]+gap and omx[0] > t[0][0]-gap and omn[1] < t[1][1]+gap and omx[1] > t[0][1]-gap for t in taken): return None
     pid = l.place(asset, [x, 0, z], yaw=yaw, scale=(scale, 1 if asset.startswith(('bld.', 'veh.')) else scale, scale) if scale != 1 else (1, 1, 1))
     if decay: l.data['placements'][-1]['decay'] = decay
     # Dressing collides as one box (trees: trunk only, fence runs: one box per run) instead of the asset's detailed
@@ -304,7 +306,7 @@ def dress(asset, x, z, yaw=0.0, scale=1.0, decay=None, route_clear=None, run=Fal
     # there changes that run, so their dressing is a physics-only static that stops the player but not the AI.
     if x >= 2900: box['physicsOnly'] = True
     if not run and asset not in ('prop.emergency-light', 'prop.lab-signs'): l.data['colliders'].append(dict(id=pid, aabb=box, minTier=0, maxTier=6))
-    taken.append((mn, mx)); return pid
+    taken.append((omn, omx)); return pid
 def face(side_normal):
     # Asset front is +X; rotation.y = yaw maps +X to (cos, -sin). Face back towards the road.
     nx, nz = -side_normal[0], -side_normal[1]
@@ -361,7 +363,7 @@ for i, (a, b) in enumerate(route_segments):
             ln = rng.uniform(6, 18); w = rng.uniform(1.2, 2.6)
             p0 = (a[0]+ux*s+n[0]*4, a[1]+uz*s+n[1]*4); p1 = (a[0]+ux*(s+ln)+n[0]*4, a[1]+uz*(s+ln)+n[1]*4)
             q1 = (p1[0]+n[0]*w, p1[1]+n[1]*w); q0 = (p0[0]+n[0]*w, p0[1]+n[1]*w)
-            token = 'gloveKhaki' if a[0] < 800 or 2917 < a[0] < 3700 else 'oliveSeam'
+            token = 'khakiSeam' if a[0] < 800 else 'oliveSeam'
             surface('shoulder', ccw([list(p0), list(p1), list(q1), list(q0)]), token, -.001)
             s += ln + rng.uniform(8, 26)
 
@@ -464,9 +466,9 @@ for i in (1, 4):
     for a_, b_ in region_segments(i):
         xs, zs = sorted([a_[0], b_[0]]), sorted([a_[1], b_[1]])
         if xs[1] - xs[0] > zs[1] - zs[0]:
-            for z0 in (zs[0] + 4.6, zs[0] - 6.0): l.data['lawns'].append(dict(min=[xs[0] + 5, z0], max=[xs[1] - 5, z0 + 1.4]))
+            for z0 in (zs[0] + 5.4, zs[0] - 6.8): l.data['lawns'].append(dict(min=[xs[0] + 5, z0], max=[xs[1] - 5, z0 + 1.4]))
         else:
-            for x0 in (xs[0] + 4.6, xs[0] - 6.0): l.data['lawns'].append(dict(min=[x0, zs[0] + 5], max=[x0 + 1.4, zs[1] - 5]))
+            for x0 in (xs[0] + 5.4, xs[0] - 6.8): l.data['lawns'].append(dict(min=[x0, zs[0] + 5], max=[x0 + 1.4, zs[1] - 5]))
 # Ground variety in the visible verge band: worn dirt, moss and gravel patches (flat surfaces, no collision).
 for a_, b_ in route_segments:
     d = math.dist(a_, b_)
@@ -480,8 +482,8 @@ for a_, b_ in route_segments:
             ang = rng.uniform(0, math.pi); ca, sa = math.cos(ang), math.sin(ang)
             quad = [[cx+ca*w/2*i-sa*h/2*j, cz+sa*w/2*i+ca*h/2*j] for i, j in [(-1, -1), (1, -1), (1, 1), (-1, 1)]]
             if all(seg_rect(p0, p1, (min(q[0] for q in quad), min(q[1] for q in quad)), (max(q[0] for q in quad), max(q[1] for q in quad))) > 5 for p0, p1 in route_segments + detour_segments):
-                dry = a_[0] < 800 or 2917 < a_[0] < 3700
-                surface('verge-patch', ccw(quad), rng.choice(['khakiLight', 'gloveKhaki'] if dry else ['oliveSeam', 'apronOlive', 'olive', 'khakiSeam']), -.003)
+                dry = a_[0] < 800
+                surface('verge-patch', ccw(quad), rng.choice(['gloveKhaki', 'oliveSeam'] if dry else ['oliveSeam', 'apronOlive', 'olive', 'khakiSeam']), -.003)
             t += rng.uniform(11, 22)
 # R7 apron: painted bays, hazard edges and service lines so the console floor reads as a working plant (paint only).
 for x0 in range(3958, 4040, 9):
