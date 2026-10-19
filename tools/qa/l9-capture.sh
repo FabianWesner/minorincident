@@ -3,9 +3,9 @@
 # Step 40 m along all three routes, zoom 0.5/1/1.5, high and low, WebGPU. Uses npm run scene (tools/e2e-lock.sh inside).
 tag=$1
 mkdir -p test-results/l9
-for zoom in 0.5 1 1.5; do
+for zoom in ${ZOOMS:-0.5 1 1.5}; do
   SHOTS=1 python3 tools/qa/l9-survey-gen.py all 40 $zoom test-results/l9/s-$zoom.json 8 >/dev/null
-  for tier in high low; do
+  for tier in ${TIERS:-high low}; do
     SCENE_PORT=3361 npm run scene -- test-results/l9/s-$zoom.json --backend webgpu --tier $tier --out test-results/l9cap/$tag-$tier-z$zoom 2>&1 | grep -E '"pass"|"failed"|Error'
   done
 done
