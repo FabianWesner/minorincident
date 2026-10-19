@@ -93,7 +93,7 @@ export function crossingAccents(placements: readonly Placement[], origin: P2 = [
     const [x, , z] = p.position, lane = laneDistance([x, z]);
     if (lane > 16 || x > 528) continue;
     const rng = keyed(`wreck:${p.id}`), roll = rng.next();
-    if (p.decay === 'burned') { if (roll < .7) fire(x, z, 1.3, true); continue; }
+    if (p.decay === 'burned') { if (roll < .7) fire(x, z, 1.4, true); continue; }
     const size = dims.get(p.assetId); if (!size) continue;
     if (roll < .55 && x < 455) {
       // Four corner blinkers in one phase; the first carries the amber pool over the car.
@@ -113,7 +113,7 @@ export function crossingAccents(placements: readonly Placement[], origin: P2 = [
     if (rng.next() > .6) continue;
     for (let k = 0; k < 12; k++) {
       const ang = rng.next() * Math.PI * 2, r = 11 + rng.next() * 8, x = h.position[0] + Math.cos(ang) * r, z = h.position[2] + Math.sin(ang) * r;
-      if (laneDistance([x, z]) > 9 && free(x, z, 2.4)) { fire(x, z, .9 + rng.next() * .7); break; }
+      if (laneDistance([x, z]) > 9 && free(x, z, 2.4)) { fire(x, z, 1.3 + rng.next() * .8); break; }
     }
   }
   // 4b) Brush and debris fires along every route, 8-14 m off the lane: the countryside burns too, and their smoke columns
@@ -128,14 +128,14 @@ export function crossingAccents(placements: readonly Placement[], origin: P2 = [
         const rng = keyed(`brush:${route.id}:${i}:${n}`), side = rng.next() < .5 ? -1 : 1;
         for (let k = 0; k < 6; k++) {
           const o = hw + 8 + rng.next() * 6, t = s + (rng.next() - .5) * 10, x = a[0] + ux * t - uz * side * o, z = a[1] + uz * t + ux * side * o;
-          if (!nearFork(x, z, 30) && x < 440 && laneDistance([x, z]) > 7.5 && free(x, z, 2.2)) { fire(x, z, .8 + rng.next() * .6); break; }
+          if (!nearFork(x, z, 30) && x < 440 && laneDistance([x, z]) > 7.5 && free(x, z, 2.2)) { fire(x, z, 1.1 + rng.next() * .7); break; }
         }
       }
     }
   }
   // 5) The next city burns: ground fires between the east-edge blocks, behind the gully.
   for (let k = 0; k < 40; k++) {
-    const rng = keyed(`city:${k}`), x = 556 + rng.next() * 38, z = (rng.next() - .5) * 360, radius = 1.6 + rng.next() * 1.1;
+    const rng = keyed(`city:${k}`), x = 556 + rng.next() * 38, z = (rng.next() - .5) * 360, radius = 2.4 + rng.next() * 1.4;
     if (Math.abs(z) >= 14 && free(x, z, 1.8)) fire(x, z, radius);
   }
   // 6) Red warning lamps on the crash approach barricades (the road ends ahead).

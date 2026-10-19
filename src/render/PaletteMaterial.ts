@@ -132,7 +132,9 @@ export class PaletteMaterial extends MeshLambertNodeMaterial {
       // Night ground breakup (look.groundBreakup; 0 except L9): broad dry/damp patches and grit on upward faces, so open
       // moonlit fields and long lanes are not flat planes. Two world-space value-noise octaves, no texture.
       If(look.groundBreakup.greaterThan(0), () => {
-        const breakup = noise(positionWorld.xz.mul(.11)).mul(.6).add(noise(positionWorld.xz.mul(.8)).mul(.4)).sub(.5).mul(2);
+        // look-l9b: biased towards darkening (damp/burnt patches); pale highlights are capped so the breakup never reads as
+        // bright polygons on a night ground.
+        const breakup = noise(positionWorld.xz.mul(.11)).mul(.6).add(noise(positionWorld.xz.mul(.8)).mul(.4)).sub(.5).mul(2).clamp(-1, .35);
         shaded.mulAssign(float(1).add(breakup.mul(look.groundBreakup).mul(normalWorld.y.smoothstep(.7, .95))));
       });
       // Distant fire glow (look.glowAmount; 0 except L9's burning city ahead): a warm fill that grows along the authored world
