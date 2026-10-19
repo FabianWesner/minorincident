@@ -1,0 +1,7 @@
+14c0e973f Merge commit '70c8bd255' into lane/merge-batch13a
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+src/levels/L10/district.ts(1,22): error TS2307: Cannot find module '../../../layouts/D-CURE/routes.json' or its corresponding type declarations.
+src/levels/L9/district.ts(1,22): error TS2307: Cannot find module '../../../layouts/D-CROSSING/routes.json' or its corresponding type declarations.
