@@ -352,7 +352,7 @@ for i, (a, b) in enumerate(zip(road_pts, road_pts[1:])):
     for side in (-1, 1):
         sa = [a[0] + ux * t0 + nx * side * 7.0, a[1] + uz * t0 + nz * side * 7.0]
         sb = [a[0] + ux * t1 + nx * side * 7.0, a[1] + uz * t1 + nz * side * 7.0]
-        ov('shoulder', strip_poly(sa, sb, 2.6, 0), 'canvasTan', SHOULDER, cut=False, cat='road')
+        ov('shoulder', strip_poly(sa, sb, 2.6, 0), 'leather', SHOULDER, cut=False, cat='road')
         ea = [a[0] + ux * t0 + nx * side * 5.55, a[1] + uz * t0 + nz * side * 5.55]
         eb = [a[0] + ux * t1 + nx * side * 5.55, a[1] + uz * t1 + nz * side * 5.55]
         ov('edge-line', strip_poly(ea, eb, .16, 0), 'picketWhite', .0085, cut=False, cat='road')
