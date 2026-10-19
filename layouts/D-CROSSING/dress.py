@@ -208,7 +208,15 @@ CHUNK_CAP = {'road': 330, 'field': 200}
 chunk_est = {}
 
 
-def ov(name, poly, token, height, cut=False, cat='road'):
+# look-l9b (orchestrator 10-20): flat ground discs/slabs (dust pans, scrub mats, pasture patches, road patches, road dust,
+# verge tufts, dry-zone field bases) read as placeholder polygons at the game camera and cannot get soft edges as flat
+# polygons: they are not emitted. Their callers still run (every R draw is kept), so the placement stream is unchanged.
+FLAT_DISCS = False
+
+
+def ov(name, poly, token, height, cut=False, cat='road', flat=False):
+    if flat and not FLAT_DISCS:
+        return True
     xs, zs = [p[0] for p in poly], [p[1] for p in poly]
     cells = [(cx, cz) for cx in range(int((min(xs) + 600) // 100), int((max(xs) + 600) // 100) + 1)
              for cz in range(int((min(zs) + 400) // 100), int((max(zs) + 400) // 100) + 1) if 0 <= cx < 12 and 0 <= cz < 8]
@@ -264,7 +272,7 @@ def lay_field(kind, cx, cz, hx, hz, ang):
                     'scrub': ('olive', 'oliveLight'), 'dust': ('khakiSeam', 'khaki')}[kind]
     if kind == 'dust':
         stripe = None
-    if not ov('field-' + kind, poly, base, FIELD_BASE, cut=False, cat='field'):
+    if not ov('field-' + kind, poly, base, FIELD_BASE, cut=False, cat='field', flat=kind in ('dust', 'scrub')):
         return False
     if stripe and kind != 'pasture':
         pitch = 3.0 if kind == 'wheat' else 2.4
@@ -276,13 +284,13 @@ def lay_field(kind, cx, cz, hx, hz, ang):
             x0, x1 = -hx + 1.0, hx - 1.0
             rpoly = [[cx + c * x0 - s * (lz - width / 2), cz + s * x0 + c * (lz - width / 2)], [cx + c * x1 - s * (lz - width / 2), cz + s * x1 + c * (lz - width / 2)],
                      [cx + c * x1 - s * (lz + width / 2), cz + s * x1 + c * (lz + width / 2)], [cx + c * x0 - s * (lz + width / 2), cz + s * x0 + c * (lz + width / 2)]]
-            ov('crop-row', rpoly, stripe, FIELD_STRIPE, cut=False, cat='field')
+            ov('crop-row', rpoly, stripe, FIELD_STRIPE, cut=False, cat='field', flat=kind == 'scrub')
     elif kind == 'pasture':
         # Mowed bands and a couple of lighter patches break the pasture up without a stripe grid.
         for i in range(R.randint(2, 4)):
             bx, bz = R.uniform(-hx * .6, hx * .6), R.uniform(-hz * .6, hz * .6)
             c, s = math.cos(ang), math.sin(ang)
-            ov('pasture-patch', blob(cx + c * bx - s * bz, cz + s * bx + c * bz, R.uniform(6, 14), R.uniform(4, 10), R.uniform(0, 3), 9, 14), stripe, FIELD_STRIPE, cut=False, cat='field')
+            ov('pasture-patch', blob(cx + c * bx - s * bz, cz + s * bx + c * bz, R.uniform(6, 14), R.uniform(4, 10), R.uniform(0, 3), 9, 14), stripe, FIELD_STRIPE, cut=False, cat='field', flat=True)
     fields.append((cx, cz, rad, kind, ang, hx, hz))
     return True
 
@@ -350,7 +358,7 @@ for kind, count, rr in [('dust', 70, (7, 26)), ('scrub', 90, (4, 14))]:
             poly = [[cx + (x - cx) * .72, cz + (z - cz) * .72] for x, z in poly]
         # patches may sit under props but never under the encounter lanes
         base, stripe = ('leather', None) if kind == 'dust' else ('leather', None)   # look-l9b: scrub mats as dark patches (oliveSeam still read as pale discs)
-        ov('dry-' + kind, poly, base, FIELD_BASE if kind == 'dust' else FIELD_BASE + .0007, cut=False, cat='field')
+        ov('dry-' + kind, poly, base, FIELD_BASE if kind == 'dust' else FIELD_BASE + .0007, cut=False, cat='field', flat=True)
         made += 1
     stats['dry-' + kind] = made
 
@@ -472,7 +480,7 @@ def road_decals(pts, hw, gravel, h0):
             if r < .22 and not gravel:
                 # resurfaced patch: a different-toned slab
                 w, h = R.uniform(1.4, 3.2), R.uniform(2.0, 5.5)
-                ov('road-patch', rot_rect(cx, cz, h / 2, w / 2, ang + R.uniform(-.08, .08)), 'pantsCargo', h0, cut=False, cat='road')
+                ov('road-patch', rot_rect(cx, cz, h / 2, w / 2, ang + R.uniform(-.08, .08)), 'pantsCargo', h0, cut=False, cat='road', flat=True)
                 counts['patch'] += 1
             elif r < .5:
                 # tar crack: thin dark line across or along the lane
@@ -486,7 +494,7 @@ def road_decals(pts, hw, gravel, h0):
                 # dust / grit drifting in from the verge, a soft long ellipse across a lane edge
                 side = R.choice([-1, 1])
                 ex, ez = x + nx * side * (hw - R.uniform(.2, 2.2)), z + nz * side * (hw - R.uniform(.2, 2.2))
-                ov('road-dust', blob(ex, ez, R.uniform(2.5, 7), R.uniform(.8, 2.0), ang + R.uniform(-.2, .2), 9, 12), 'khakiSeam', h0, cut=False, cat='road')
+                ov('road-dust', blob(ex, ez, R.uniform(2.5, 7), R.uniform(.8, 2.0), ang + R.uniform(-.2, .2), 9, 12), 'khakiSeam', h0, cut=False, cat='road', flat=True)
                 counts['dust'] += 1
             elif r < .70 and not gravel:
                 # a pair of dark skid / tyre marks
@@ -503,7 +511,7 @@ def road_decals(pts, hw, gravel, h0):
             for side in (-1, 1):
                 o = hw + R.uniform(.4, 6)
                 token = R.choice(['oliveLight', 'oliveLight', 'khakiSeam', 'capTan', 'trouserLight'])
-                ov('verge-tuft', blob(x + nx * side * o, z + nz * side * o, R.uniform(.7, 2.6), R.uniform(.5, 1.6), math.atan2(uz, ux) + R.uniform(-.3, .3), 8), token, R.choice([.0014, .0018]), cut=False, cat='road')
+                ov('verge-tuft', blob(x + nx * side * o, z + nz * side * o, R.uniform(.7, 2.6), R.uniform(.5, 1.6), math.atan2(uz, ux) + R.uniform(-.3, .3), 8), token, R.choice([.0014, .0018]), cut=False, cat='road', flat=True)
                 counts['tuft'] += 1
             t += R.uniform(3.6, 6.2)
 

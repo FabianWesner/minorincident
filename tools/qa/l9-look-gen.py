@@ -17,7 +17,7 @@ stretches = [
     ('road-hazard', (-188, -330), (-130, -330)),
     ('crash-approach', (420, 0), (462, 0)),
     # look-l9b: the burning city edge is a fixed game-camera view (no APC drives there: the road ends at the crash).
-    ('city-edge', (560, 40), None),
+    ('city-edge', (550, -12), None),   # road end at the gully lip; town hall and brick fronts at the top, fires between them
 ]
 os.makedirs(out, exist_ok=True)
 for name, (x, z), target in stretches:
