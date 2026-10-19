@@ -258,6 +258,8 @@ export interface Expectations {
   bodyOverlapMaxCm?: number;
   /** Attacker forearms against the courier's torso/backpack envelope; hands may make contact. */
   attackBodyOverlapMaxCm?: number;
+  /** PO 10-19 floating gear: farthest vertex of any drawn courier attachment (gear, accessory; not held weapons) from the posed body, in cm (`metrics.courierAttachments`). */
+  courierAttachmentGapMaxCm?: number;
   /** Corgi trunk/head against the courier's drawn body, including both legs. */
   corgiCourierOverlapMaxCm?: number;
   /** Greatest trailing distance along the running courier's velocity (speed > 2.5 m/s). */
