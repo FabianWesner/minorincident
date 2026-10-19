@@ -1,4 +1,4 @@
-import { BoxGeometry, Color, Group, Mesh, Quaternion, Vector3, type Material } from 'three/webgpu';
+import { BoxGeometry, Color, Group, Mesh, Quaternion, SkinnedMesh, Uint16BufferAttribute, Vector3, type Material } from 'three/webgpu';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import manifest from '../../assets/manifest.json' with { type: 'json' };
@@ -18,7 +18,7 @@ import { LimbIK } from './LimbIK';
 import { RiderContacts } from './RiderContacts';
 import { CourierLiving } from './CourierRig';
 
-type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { assetId: string; animator: KeyframeAnimator; living?: CourierLiving; gear: Group[]; body: Set<Mesh>; headlamp?: Group; cure?: Group; aim: GunAim; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
+type LoadedCharacter = Awaited<ReturnType<typeof loadCharacter>> & { assetId: string; animator: KeyframeAnimator; living?: CourierLiving; gear: Group[]; tierGear?: { mesh: SkinnedMesh; tierTris: number[] }; body: Set<Mesh>; headlamp?: Group; cure?: Group; aim: GunAim; sockets: Record<'LEFT' | 'RIGHT', { socket: import('three').Object3D; hand: import('three').Object3D }> };
 /** Hero hierarchy presentation. Cosmetic variants share identical sim state and attachment rules. */
 export class CharacterView extends Group {
   private foregroundActive: boolean | undefined;
@@ -125,12 +125,14 @@ export class CharacterView extends Group {
         object.castShadow = object.receiveShadow = true;
       });
       for (const material of oldMaterials) material.dispose();
-      // PO 10-19 (P1, "The girl now has a bug on front???"): tier 1-4 avatar gear was placeholder boxes (bcf15a667) plus a
-      // rigid tier-2 GLB (c9ca43df7) that floated off the skinned body. No gear is drawn until real gear art fits the skin;
-      // the tier itself still follows progression in the sim and HUD.
+      // PO 10-19 (P1, "The girl now has a bug on front???"): the old tier 1-4 boxes and the rigid tier-2 GLB floated off the skinned body.
+      // Tier gear is now one skinned mesh (assets/acc.courier-gear) bound to the body's own skeleton with the body's skin weights,
+      // so it deforms with the figure; the tier only moves its draw range (1 extra draw call, the body's vertex-colour material).
       const gear: Group[] = [];
       // Everything the survivor GLB itself draws; any later mesh on the rig is an attachment (see looseAttachments).
       const body = new Set<Mesh>(); character.model.traverse(node => { if (node instanceof Mesh) body.add(node); });
+      let tierGear: LoadedCharacter['tierGear'];
+      if (isSkin) tierGear = await this.loadTierGear(loader, variant, low, body, vertexMaterial);
       const pilot = isSkin;
       if (pilot) {
         const r = character.rig;
@@ -178,7 +180,7 @@ export class CharacterView extends Group {
       }
       const animator = new KeyframeAnimator(character.rig, pilot ? skinClips : undefined);
       const living = animator.bones ? new CourierLiving(character.rig, animator.bones, variant === 'female' ? 1 : 2) : undefined;
-      this.characters.set(variant, { ...character, assetId: isSkin ? `${id}.skin` : id, animator, living, gear, body, headlamp, cure: canister, aim: new GunAim(character.rig.armR, character.rig.foreArmR, character.rig.handR, character.rig.torso, [character.rig.armL, character.rig.foreArmL, character.rig.handL], [character.rig.weaponSocketR, character.rig.weaponSocketL], character.rig.head), sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
+      this.characters.set(variant, { ...character, assetId: isSkin ? `${id}.skin` : id, animator, living, gear, tierGear, body, headlamp, cure: canister, aim: new GunAim(character.rig.armR, character.rig.foreArmR, character.rig.handR, character.rig.torso, [character.rig.armL, character.rig.foreArmL, character.rig.handL], [character.rig.weaponSocketR, character.rig.weaponSocketL], character.rig.head), sockets: { LEFT: { socket: character.rig.weaponSocketL, hand: character.rig.handL }, RIGHT: { socket: character.rig.weaponSocketR, hand: character.rig.handR } } }); this.add(character.model);
     }
     if (!this.parcel) this.makeParcel(materials);
   }
@@ -193,6 +195,10 @@ export class CharacterView extends Group {
     for (const [variant, character] of this.characters) {
       character.model.visible = variant === pose.variant;
       for (const gear of character.gear) gear.visible = gear.userData.tier <= pose.gearTier;
+      if (character.tierGear) {
+        const { mesh, tierTris } = character.tierGear, count = pose.gearTier > 0 ? tierTris[Math.min(pose.gearTier, tierTris.length) - 1] ?? 0 : 0;
+        mesh.visible = count > 0; mesh.geometry.setDrawRange(0, count * 3);
+      }
       if (character.model.visible) character.animator.update(pose, tick, alpha, this.turn, ride);
     }
     // E19 story: the courier parcel sits between her hands while she carries it.
@@ -322,6 +328,28 @@ export class CharacterView extends Group {
   private readonly scratchA = new Vector3();
   private readonly scratchB = new Vector3();
   /** Cardboard parcel with the teal depot tape (matches the clerk's hand prop). */
+  /** Skinned tier gear: re-binds the gear GLB's vertices to the body's skeleton by bone name. Missing file = no gear, not a failed load. */
+  private async loadTierGear(loader: GLTFLoader, variant: SurvivorVariant, low: boolean, body: Set<Mesh>, material: Material): Promise<LoadedCharacter['tierGear']> {
+    let bodyMesh: SkinnedMesh | undefined;
+    for (const mesh of body) if ((mesh as SkinnedMesh).isSkinnedMesh && (!bodyMesh || mesh.geometry.getAttribute('position').count > bodyMesh.geometry.getAttribute('position').count)) bodyMesh = mesh as SkinnedMesh;
+    if (!bodyMesh) return undefined;
+    try {
+      const scene = (await loader.loadAsync(`/assets/models/acc.courier-gear.${variant}.tiers${low ? '.low' : ''}.glb`)).scene;
+      let source: SkinnedMesh | undefined; scene.traverse(node => { if ((node as SkinnedMesh).isSkinnedMesh) source = node as SkinnedMesh; });
+      if (!source) return undefined;
+      const tierTris = JSON.parse(String(source.userData.tierTris)) as number[];
+      const index = new Map(bodyMesh.skeleton.bones.map((bone, i) => [bone.name, i]));
+      const map = source.skeleton.bones.map(bone => index.get(bone.name) ?? 0);
+      const joints = source.geometry.getAttribute('skinIndex'), remapped = new Uint16Array(joints.count * 4);
+      for (let i = 0; i < remapped.length; i++) remapped[i] = map[joints.array[i]];
+      const geometry = source.geometry; geometry.setAttribute('skinIndex', new Uint16BufferAttribute(remapped, 4));
+      const mesh = new SkinnedMesh(geometry, material);
+      mesh.name = 'courier-tier-gear'; mesh.position.copy(bodyMesh.position); mesh.quaternion.copy(bodyMesh.quaternion); mesh.scale.copy(bodyMesh.scale);
+      mesh.frustumCulled = false; mesh.castShadow = true; mesh.visible = false;
+      bodyMesh.parent!.add(mesh); mesh.updateMatrixWorld(true); mesh.bind(bodyMesh.skeleton, bodyMesh.bindMatrix);
+      return { mesh, tierTris };
+    } catch { return undefined; }
+  }
   private makeParcel(materials: Materials): void {
     const group = new Group(); group.name = 'carried-parcel'; group.visible = false;
     const box = new Mesh(new BoxGeometry(.3, .24, .26), materials.fromColor('parcel:card', new Color('#b98a55')));
