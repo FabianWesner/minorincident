@@ -1,0 +1,10 @@
+// perf-w5d diagnostic: heap and load time of a second sim-only L4 world (warm-up feasibility).
+import { loadL4 } from '../../sim-runner/l4Bots';
+const gc = (globalThis as { gc?: () => void }).gc!;
+gc(); const before = process.memoryUsage().heapUsed, t = performance.now();
+const a = await loadL4(2, 'low'); const loadMs = performance.now() - t;
+gc(); const one = process.memoryUsage().heapUsed;
+const t2 = performance.now(); const b = await loadL4(2, 'low'); const load2 = performance.now() - t2;
+gc(); const two = process.memoryUsage().heapUsed;
+console.log(JSON.stringify({ firstMB: (one - before) / 2 ** 20, secondMB: (two - one) / 2 ** 20, loadMs, load2 }));
+a.world.dispose(); b.world.dispose();

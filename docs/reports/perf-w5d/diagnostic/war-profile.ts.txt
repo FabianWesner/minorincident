@@ -1,0 +1,45 @@
+// perf-w5d diagnostic: the T-E22-20 low war window in Node (same stress fill as tests/perf/l4-budgets.spec.ts), per-tick and per-function cost.
+import { Session } from 'node:inspector/promises';
+import { mkdirSync, writeFileSync } from 'node:fs';
+import { loadL4, runL4 } from '../../sim-runner/l4Bots';
+
+const tier = (process.argv[2] ?? 'low') as 'high' | 'low', out = process.argv[3] ?? 'test-results/w5d-war', span = Number(process.argv[4] ?? 480);
+const { world, mission } = await loadL4(2, tier);
+const soldiers = () => [...world.entities.iterate()].filter(e => e.civilian?.ally?.role === 'soldier' && e.health.current > 0 && e.kind !== 'infected');
+runL4(world, mission, 'complete', { seed: 2, god: true, maxSeconds: 400, stopWhen: m => { const s = m.state.l4!; return s.tankPhase === 'hold' && s.heliPhase === 'orbit' && s.alphaIds.length >= 3 && soldiers().length < s.soldiersAtTurn; } });
+const targetCivilians = tier === 'high' ? 40 : 20, targetInfected = tier === 'high' ? 80 : 48;
+let civilians = [...world.entities.iterate()].filter(e => e.civilian && !e.civilian.ally && e.health.current > 0 && !e.hidden && e.kind !== 'infected').length;
+for (let i = 0; civilians < targetCivilians && i < 600; i++) { const p = { x: -35 + i % 12 * 3, z: -18 + Math.floor(i / 12) * 2 }; try { world.npcs!.civilians.spawn('cashier', p, { waypoints: [p] }); civilians++; } catch { /* next */ } }
+const posts = soldiers().map(e => ({ at: e.transform, yaw: e.transform.yaw }));
+let infected = world.infected!.snapshot().count;
+for (let i = 0; infected < targetInfected && i < 800; i++) {
+  const post = posts[i % posts.length], angle = -post.yaw + Math.floor(i / posts.length) * Math.PI / 8, radius = 3 + Math.floor(i / (posts.length * 16)) % 4;
+  try { world.infected!.spawn('infected.runner', { x: post.at.x + Math.cos(angle) * radius, z: post.at.z + Math.sin(angle) * radius }, { state: 'chase' }); infected++; } catch { /* next */ }
+}
+console.log('fill at', world.tick, 'civilians', civilians, 'infected', infected);
+const pathSites = new Map<string, { calls: number; ms: number; ok: number }>();
+if (process.argv[5] === 'paths') {
+  const nav = world.infected!.nav as unknown as { path: (...args: unknown[]) => boolean };
+  const path = nav.path.bind(nav);
+  nav.path = (...args: unknown[]) => {
+    const t = performance.now(), ok = path(...args), ms = performance.now() - t;
+    const site = (new Error().stack ?? '').split('\n').slice(2, 6).map(l => l.trim().replace(/^at /, '').replace(/\(.*\/src\//, '(')).join(' < ');
+    const s = pathSites.get(site) ?? { calls: 0, ms: 0, ok: 0 }; s.calls++; s.ms += ms; if (ok) s.ok++; pathSites.set(site, s);
+    const n = nav as unknown as { expansions: number; searching: boolean; blocked: Uint8Array };
+    if (ms > 1) console.log('slow path', world.tick, 'from', args[0], 'to', args[1], 'budget', args[3], 'ok', ok, 'expansions', n.expansions, 'searching', n.searching, 'ms', ms.toFixed(2), 'cells', n.blocked.length);
+    return ok;
+  };
+}
+const session = new Session(); session.connect();
+await session.post('Profiler.enable'); await session.post('Profiler.setSamplingInterval', { interval: 200 }); await session.post('Profiler.start');
+const rows: { tick: number; ms: number; t0: number; t1: number; top: [string, number][] }[] = [];
+const update = world.update.bind(world);
+world.update = () => { const t0 = Number(process.hrtime.bigint() / 1000n), t = performance.now(); update(); rows.push({ tick: world.tick, ms: performance.now() - t, t0, t1: Number(process.hrtime.bigint() / 1000n), top: [] }); };
+const start = world.tick;
+runL4(world, mission, 'complete', { seed: 2, god: true, maxSeconds: 400, stopWhen: () => world.tick >= start + span });
+const { profile } = await session.post('Profiler.stop');
+mkdirSync(out, { recursive: true }); writeFileSync(`${out}/war-${tier}.cpuprofile`, JSON.stringify(profile)); writeFileSync(`${out}/war-${tier}.json`, JSON.stringify({ rows }));
+const ms = rows.map(r => r.ms).sort((a, b) => a - b);
+console.log('ticks', rows.length, 'median', ms[ms.length >> 1].toFixed(2), 'p95', ms[Math.floor(ms.length * .95)].toFixed(2), 'max', ms.at(-1)!.toFixed(2));
+for (const [site, s] of [...pathSites].sort((a, b) => b[1].ms - a[1].ms).slice(0, 8)) console.log(`${s.ms.toFixed(1)}ms ${s.calls} calls ${s.ok} ok  ${site}`);
+world.dispose();
