@@ -32,7 +32,7 @@ test('@E18 sampled lens and courier rays match the original transformed footprin
     ref.rotation.y = i * .37; ref.scale.set(.7 + i * .03, .8 + i * .04, 1.1 - i * .02); return ref;
   });
   const entry = { id: 'bld.house-a', origin: [0, 0] as [number, number], foot: { cx: .4, cz: -.3, hx: 2, hz: 3 }, height: 6, half: 4, refs };
-  const context = Object.assign(Object.create(DistrictView.prototype), { lodBatches: [entry], lensRay: new Vector3(), lensPoint: new Vector3(), occluderId: '', cutPlacements: new Set<Object3D>(), subjectPoints: Array.from({ length: 9 }, () => new Vector3()) });
+  const context = Object.assign(Object.create(DistrictView.prototype), { lodBatches: [entry], lensRay: new Vector3(), lensPoint: new Vector3(), occluderId: '', lensPlacements: new Set<Object3D>(), cutPlacements: new Set<Object3D>(), subjectPoints: Array.from({ length: 9 }, () => new Vector3()) });
   const methods = DistrictView.prototype as unknown as {
     huggedOccluder(view: import('../../../src/render/View').View): boolean;
     occluded(view: import('../../../src/render/View').View, player: { x: number; y: number; z: number }): boolean;

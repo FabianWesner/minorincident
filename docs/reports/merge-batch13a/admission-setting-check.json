@@ -1,0 +1,27 @@
+[
+  {
+    "seconds": "0",
+    "code": 2,
+    "stderr": "E2E_ADMISSION_TIMEOUT_SECONDS must be a positive integer"
+  },
+  {
+    "seconds": "bad",
+    "code": 2,
+    "stderr": "E2E_ADMISSION_TIMEOUT_SECONDS must be a positive integer"
+  },
+  {
+    "seconds": "-1",
+    "code": 2,
+    "stderr": "E2E_ADMISSION_TIMEOUT_SECONDS must be a positive integer"
+  },
+  {
+    "seconds": "1800",
+    "code": 0,
+    "stderr": ""
+  },
+  {
+    "seconds": "7200",
+    "code": 0,
+    "stderr": ""
+  }
+]

@@ -1,0 +1,17 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/controls-content -> 2.28.24.66:/srv/mi/ws/controls-content-5f907b
+[remote] cache-gc deleted:none
+[remote] sync 37s, 25348 files; job /srv/mi/jobs/controls-content-5f907b-79152-1792413405; queueing for a slot
+[runner] slot 1 acquired; load 2.06 2.37 2.85
+
+ RUN  v5.0.3 /srv/mi/jobs/controls-content-5f907b-79152-1792413405
+
+ ✓  functional  tests/levels/L4-collapse.test.ts (4 tests | 3 skipped) 81886ms
+   ✓ L4 collapse director (4)
+     ✓ T-E22-13-collapse @E22 @E22-AC13 idle courier: 15-25 new infected enter inside the perimeter, the three lines fall on their beats, Alphas break a slot and knock crews down 81883ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 3 skipped (4)
+   Start at  12:37:33
+   Duration  86.20s (tests 95%, transform 4%, import 1%)
+
+[remote] done exit=0 (runner 2.28.24.66, sync 37s, remote total 101s)

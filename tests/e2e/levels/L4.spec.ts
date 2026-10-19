@@ -112,7 +112,8 @@ test.describe('L4 The Safe City Falls in the browser', () => {
     await h.go(at('l4-quartermaster'), .7); await h.interact();
     for (let i = 0; i < 10 && !(await h.mission()).l4!.gunAt; i++) { await h.interact(); await h.step(10); }
     expect((await h.mission()).l4!.gunAt).toBeGreaterThan(0);
-    await h.go({ x: -21.5, z: 3 }, 1.4);
+    // The pickup now starts war immediately; sample from the pickup position without spending the alarm window walking.
+    expect((await h.mission()).l4!.warAt).toBe((await h.mission()).l4!.gunAt);
     for (let i = 0; i < 1000 && !(await h.mission()).l4!.warAt; i++) await h.step(3);
     const alarm = (await h.mission()).l4!.warAt;
     expect(alarm).toBeGreaterThan(0);

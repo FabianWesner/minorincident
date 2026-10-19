@@ -92,7 +92,8 @@ export class InputSystem implements Lifecycle {
     this.keyboard.init(); this.pointer.init(); this.wheel.init(); this.touch.init();
     window.addEventListener('blur', this.release); window.addEventListener('pagehide', this.release);
     document.addEventListener('visibilitychange', this.visibility);
-    this.hint.dataset.inputHint = ''; this.hint.setAttribute('role', 'note'); this.hint.style.cssText = 'position:fixed;top:12px;left:12px;color:white;background:#182333;padding:8px;font:14px sans-serif;pointer-events:none';
+    this.hint.dataset.inputHint = ''; this.hint.setAttribute('role', 'note'); this.hint.style.cssText = 'position:fixed;bottom:12px;left:50%;transform:translateX(-50%);max-width:calc(100vw - 32px);box-sizing:border-box;color:white;background:#182333;padding:8px;font:14px sans-serif;pointer-events:none;z-index:21';
+    this.controls.dataset.inputControls = '';
     this.controls.style.cssText = 'position:fixed;top:54px;left:12px;background:#182333;color:white;padding:8px;font:14px sans-serif;max-width:260px';
     this.controls.hidden = !new URLSearchParams(location.search).has('debug');
     this.controls.innerHTML = '<summary>Controls</summary><form><label>Action <select name="action"></select></label><label>Key code <input name="code" placeholder="KeyZ" required></label><button>Bind</button></form>';
@@ -194,7 +195,7 @@ export class InputSystem implements Lifecycle {
     const x = this.axis('moveRight', 'moveLeft'), y = this.axis('moveDown', 'moveUp');
     const driveX = this.drivingContext && this.aiming() ? this.axis('aimRight', 'aimLeft') : x;
     const driveY = this.drivingContext && this.aiming() ? this.axis('aimDown', 'aimUp') : y;
-    this.driving.throttle = driveY ? -driveY : 0; this.driving.steer = driveX; frame.drive = this.driving; frame.brake = false;
+    this.driving.throttle = driveY ? -driveY : 0; this.driving.steer = driveX; if (this.scheme === 'keyboard' || this.scheme === 'mouse-keyboard') frame.drive = this.driving; else delete frame.drive; frame.brake = false;
     if (this.scheme === 'keyboard' || this.scheme === 'mouse-keyboard') {
       this.screenVector(x, y, frame.move); const length = Math.hypot(frame.move.x, frame.move.z);
       if (length > 1) { frame.move.x /= length; frame.move.z /= length; }

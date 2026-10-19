@@ -1,0 +1,79 @@
+{
+  "scene": "seethrough-scripted-convoy",
+  "method": "Exact starting-main View.update plus legacy seated-convoy flag and district cameraSolids registration, versus merged View.update; merged renderer/assets fixed in both cases. One headless browser, one targeted batch, two tiers and two zooms.",
+  "result": "Not a steeper-polar effect: all sampled old/new camera positions and targets identical; all polar samples 54 degrees. Broad facade clearing is a renderer change from 625d5aa6e. No convoy baseline accepted.",
+  "pairs": [
+    {
+      "tier": "high",
+      "zoom": 1.5,
+      "outsideOld": 195856,
+      "outsideNew": 195856,
+      "poseMaxDeltaM": 0.0,
+      "polarOldRange": [
+        54,
+        54
+      ],
+      "polarNewRange": [
+        54,
+        54
+      ],
+      "allSamplesSeated": true,
+      "visibleShareOld": 0.65,
+      "visibleShareNew": 0.65
+    },
+    {
+      "tier": "high",
+      "zoom": 1,
+      "outsideOld": 122917,
+      "outsideNew": 122917,
+      "poseMaxDeltaM": 0.0,
+      "polarOldRange": [
+        54,
+        54
+      ],
+      "polarNewRange": [
+        54,
+        54
+      ],
+      "allSamplesSeated": true,
+      "visibleShareOld": 0.815,
+      "visibleShareNew": 0.815
+    },
+    {
+      "tier": "low",
+      "zoom": 1.5,
+      "outsideOld": 205216,
+      "outsideNew": 205216,
+      "poseMaxDeltaM": 0.0,
+      "polarOldRange": [
+        54,
+        54
+      ],
+      "polarNewRange": [
+        54,
+        54
+      ],
+      "allSamplesSeated": true,
+      "visibleShareOld": 0.649,
+      "visibleShareNew": 0.649
+    },
+    {
+      "tier": "low",
+      "zoom": 1,
+      "outsideOld": 122571,
+      "outsideNew": 122571,
+      "poseMaxDeltaM": 0.0,
+      "polarOldRange": [
+        54,
+        54
+      ],
+      "polarNewRange": [
+        54,
+        54
+      ],
+      "allSamplesSeated": true,
+      "visibleShareOld": 0.836,
+      "visibleShareNew": 0.836
+    }
+  ]
+}

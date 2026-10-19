@@ -1,0 +1,96 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/controls-content -> 94.130.181.173:/srv/mi/ws/controls-content-5f907b
+[remote] cache-gc deleted:none
+[remote] sync 66s, 25160 files; job /srv/mi/jobs/controls-content-5f907b-30798-1792408849; queueing for a slot
+[runner] slot 0 acquired; load 1.16 1.47 2.29
+
+ RUN  v5.0.3 /srv/mi/jobs/controls-content-5f907b-30798-1792408849
+
+ ❯  functional  tests/sim/controls-content.test.ts (3 tests | 3 failed) 231ms
+   × @E03 @E19 bicycle WASD uses local throttle, brakes then reverses, and steers at every heading 220ms
+   × @E05 auto-aim picks the nearest on-screen target in ±35 degrees and otherwise keeps straight 5ms
+   × @E05 walking north aims north immediately even when previously facing south 4ms
+ ❯  functional  tests/levels/controls-content.test.ts (2 tests | 2 failed) 1168ms
+   × @E22 machine gun pickup starts alarm and attack on the same tick (high) 774ms
+   × @E22 machine gun pickup starts alarm and attack on the same tick (low) 392ms
+ ❯  functional  tests/sim/missions/l3-base-gates.test.ts (2 tests | 1 failed | 1 skipped) 1898ms
+   × PO-10b @E21 @E21-AC17 ring acknowledges arrival immediately and evacuates after exactly 15 seconds 1897ms
+   ↓ PO-11 @E21 @E21-AC17 full horde attacks the base for 120 s without entering the perimeter
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 6 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/levels/controls-content.test.ts > @E22 machine gun pickup starts alarm and attack on the same tick (high)
+ FAIL   functional  tests/levels/controls-content.test.ts > @E22 machine gun pickup starts alarm and attack on the same tick (low)
+AssertionError: expected 'war' to be 'plaza' // Object.is equality
+
+Expected: "plaza"
+Received: "war"
+
+ ❯ tests/levels/controls-content.test.ts:12:19
+     10|   // Waiting never starts an attack before the pickup.
+     11|   world.tick += 101 * 60; world.update();
+     12|   expect(s.phase).toBe('plaza'); expect(s.turnAt).toBe(0);
+       |                   ^
+     13|   const events: { type: string; tick: number }[] = [];
+     14|   world.events.on('pickup.collected', e => { if ('actionId' in e && e.…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/6]⎯
+
+ FAIL   functional  tests/sim/controls-content.test.ts > @E03 @E19 bicycle WASD uses local throttle, brakes then reverses, and steers at every heading
+AssertionError: expected -0.0011111111111111111 to be close to +0, received difference is 0.0011111111111111111, but expected 5e-9
+ ❯ tests/sim/controls-content.test.ts:21:23
+     19|     const frame = emptyInput(); frame.move = { x: -.7, z: -.7 }; frame…
+     20|     const out = bike.filter(frame);
+     21|     expect(b.heading).toBeCloseTo(heading, 8);
+       |                       ^
+     22|     expect(out.move.x * Math.cos(heading) + out.move.z * Math.sin(head…
+     23|     b.speed = 2; w.player!.locomotion.displacement.x = 2 / 60;
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/6]⎯
+
+ FAIL   functional  tests/sim/controls-content.test.ts > @E05 auto-aim picks the nearest on-screen target in ±35 degrees and otherwise keeps straight
+AssertionError: expected 0.4472135954999579 to be close to 0.9701425001453319, received difference is 0.522928904645374, but expected 0.005
+ ❯ tests/sim/controls-content.test.ts:39:17
+     37|   const near = spawn(4, 1), far = spawn(6, 0);
+     38|   const aim = { x: 1, z: 0 }; assist.facing({ x: 0, z: 0 }, aim, 22);
+     39|   expect(aim.x).toBeCloseTo(4 / Math.sqrt(17)); expect(aim.z).toBeClos…
+       |                 ^
+     40|   // Exclude the nearer target using the actual sim-camera viewport ru…
+     41|   w.infected!.director.setFrustum(new Matrix4().makeOrthographic(-10, …
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/6]⎯
+
+ FAIL   functional  tests/sim/controls-content.test.ts > @E05 walking north aims north immediately even when previously facing south
+AssertionError: expected 1 to be less than -0.99
+ ❯ tests/sim/controls-content.test.ts:56:27
+     54|   const raw = emptyInput(); raw.move = { x: 0, z: -1 }; raw.aimSource …
+     55|   const resolved = w.controls.resolve(raw);
+     56|   expect(resolved.aim!.z).toBeLessThan(-.99);
+       |                           ^
+     57| });
+     58|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/6]⎯
+
+ FAIL   functional  tests/sim/missions/l3-base-gates.test.ts > PO-10b @E21 @E21-AC17 ring acknowledges arrival immediately and evacuates after exactly 15 seconds
+AssertionError: expected 'Checkpoint reached · Evacuation in 60…' to contain 'Evacuation in 15 s'
+
+Expected: "Evacuation in 15 s"
+Received: "Checkpoint reached · Evacuation in 60 s"
+
+ ❯ tests/sim/missions/l3-base-gates.test.ts:20:31
+     18|   w.update();
+     19|   expect(s.crossedAt).toBe(w.tick);
+     20|   expect(l3EvacuationText(m)).toContain('Evacuation in 15 s');
+       |                               ^
+     21|   expect(eventCues['l3.crossed']).toBe('stinger.objective');
+     22|   expect(w.events.events().filter(e => e.type === 'l3.crossed')).toHav…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/6]⎯
+
+
+ Test Files  3 failed (3)
+      Tests  6 failed | 1 skipped (7)
+   Start at  11:21:57
+   Duration  4.90s (transform 58%, tests 28%, import 14%)
+
+[remote] done exit=1 (runner 94.130.181.173, sync 66s, remote total 11s)

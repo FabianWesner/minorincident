@@ -1,0 +1,33 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/controls-content -> 2.28.24.66:/srv/mi/ws/controls-content-5f907b
+[remote] cache-gc deleted:none
+[remote] sync 46s, 25275 files; job /srv/mi/jobs/controls-content-5f907b-2098-1792410889; queueing for a slot
+[runner] slot 1 acquired; load 1.70 1.32 1.41
+
+ RUN  v5.0.3 /srv/mi/jobs/controls-content-5f907b-2098-1792410889
+
+ ❯  functional  tests/levels/controls-content.test.ts (3 tests | 1 failed | 2 skipped) 954ms
+   ↓ @E22 machine gun pickup starts alarm and attack on the same tick (high)
+   ↓ @E22 machine gun pickup starts alarm and attack on the same tick (low)
+   × @E22 tank aims at a safe fallback during cooldown and fires on schedule after the immediate alarm 951ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   functional  tests/levels/controls-content.test.ts > @E22 tank aims at a safe fallback during cooldown and fires on schedule after the immediate alarm
+AssertionError: expected +0 not to be +0 // Object.is equality
+ ❯ tests/levels/controls-content.test.ts:31:34
+     29|   const yaw = tank.transform.yaw;
+     30|   for (let i = 0; i < 10; i++) { spectacle.updateTank(); world.tick++;…
+     31|   expect(tank.transform.yaw).not.toBe(yaw);
+       |                                  ^
+     32|   expect(world.events.events().some(e => e.type === 'l4.tankFire')).to…
+     33|   for (; world.tick <= 600; world.tick++) spectacle.updateTank();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 2 skipped (3)
+   Start at  11:55:37
+   Duration  4.98s (transform 68%, tests 20%, import 12%)
+
+[remote] done exit=1 (runner 2.28.24.66, sync 46s, remote total 10s)

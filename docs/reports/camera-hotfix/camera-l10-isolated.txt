@@ -1,0 +1,19 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/camera-hotfix -> 2.28.24.66:/srv/mi/ws/camera-hotfix-6b94ee
+[remote] cache-gc deleted:none
+[remote] sync 80s, 25262 files; job /srv/mi/jobs/camera-hotfix-6b94ee-6163-1792411004; queueing for a slot
+[runner] slot 1 acquired; load 6.98 3.07 2.02
+[runner] waiting for both slots to isolate wall-clock timing
+[runner] both slots held for the timing project
+
+ RUN  v5.0.3 /srv/mi/jobs/camera-hotfix-6b94ee-6163-1792411004
+
+ ✓  functional  tests/sim/levels/l10-campus-corridor.test.ts (2 tests | 1 skipped) 41465ms
+[runner] functional phase reached; extra slot released
+   ✓ T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex 41462ms
+
+ Test Files  1 passed (1)
+      Tests  1 passed | 1 skipped (2)
+   Start at  12:19:05
+   Duration  45.26s (tests 92%, transform 7%, import 1%)
+
+[remote] done exit=0 (runner 2.28.24.66, sync 80s, remote total 1307s)

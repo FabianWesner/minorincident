@@ -1,0 +1,74 @@
+
+> scene:catalog
+> sh tools/e2e-lock.sh tsx tools/scenelab/catalog.ts --matrix --jobs 1 --backend webgpu --filter camera-hotfix-*,courier-gear-*,corgi-tongue-*,dog-limbs-attached,controls-* --out /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch13a/docs/reports/merge-batch13a/touched-webgpu
+
+GPU guard: WindowServer 1.8% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.7% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.7% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.8% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.4% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.6% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.4% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.4% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.6% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.9% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.7% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.7% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.8% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.8% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.9% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.8% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 8.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 7.9% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 7.9% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 7.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 3.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 3.9% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 4.5% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 8.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 3.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.4% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 4.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 3.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 3.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 3.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 3.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 3.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 3.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 3.2% / 10 s; 2 headless browsers + 1 requested; waiting
+node:fs:436
+    return binding.readFileUtf8(path, stringToFlags(options.flag));
+                   ^
+
+Error: ENOENT: no such file or directory, open '/private/tmp/mi-merge-batch13a-gate/docs/scenes/gate-lockin.json'
+    at readFileSync (node:fs:436:20)
+    at readSpec (/private/tmp/mi-merge-batch13a-gate/tools/scenelab/session.ts:36:27)
+    at readSpec (/private/tmp/mi-merge-batch13a-gate/tools/scenelab/session.ts:37:36)
+    at <anonymous> (/private/tmp/mi-merge-batch13a-gate/tools/scenelab/catalog.ts:31:38)
+    at Array.map (<anonymous>)
+    at <anonymous> (/private/tmp/mi-merge-batch13a-gate/tools/scenelab/catalog.ts:30:125)
+    at Array.flatMap (<anonymous>)
+    at <anonymous> (/private/tmp/mi-merge-batch13a-gate/tools/scenelab/catalog.ts:30:31)
+    at ModuleJob.run (node:internal/modules/esm/module_job:437:25)
+    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:642:26) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/private/tmp/mi-merge-batch13a-gate/docs/scenes/gate-lockin.json'
+}
+
+Node.js v26.0.0

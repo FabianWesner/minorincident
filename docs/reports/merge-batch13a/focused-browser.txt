@@ -1,0 +1,54 @@
+GPU guard: WindowServer 1.7% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.8% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.7% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.6% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.8% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.7% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.9% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.9% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.2% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 4.4% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 3.5% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.7% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.8% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.9% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 3.3% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.7% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.8% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.8% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 1.7% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 2.1% / 10 s; 2 headless browsers + 1 requested; waiting
+
+Running 20 tests using 1 worker
+
+  ✓   1 [chromium] › tests/e2e/controls-content.spec.ts:7:3 › @E03 @E05 @E03-AC05 @E05-AC11 walking north shoots north with zombies north and south (webgl/high/z1) (6.0s)
+  ✓   2 [chromium] › tests/e2e/controls-content.spec.ts:7:3 › @E03 @E05 @E03-AC05 @E05-AC11 walking north shoots north with zombies north and south (webgl/high/z0.5) (5.1s)
+  ✓   3 [chromium] › tests/e2e/controls-content.spec.ts:7:3 › @E03 @E05 @E03-AC05 @E05-AC11 walking north shoots north with zombies north and south (webgl/low/z1) (3.8s)
+  ✓   4 [chromium] › tests/e2e/controls-content.spec.ts:7:3 › @E03 @E05 @E03-AC05 @E05-AC11 walking north shoots north with zombies north and south (webgl/low/z0.5) (3.7s)
+  ✓   5 [chromium] › tests/e2e/controls-content.spec.ts:7:3 › @E03 @E05 @E03-AC05 @E05-AC11 walking north shoots north with zombies north and south (webgpu/high/z1) (5.4s)
+  ✓   6 [chromium] › tests/e2e/controls-content.spec.ts:7:3 › @E03 @E05 @E03-AC05 @E05-AC11 walking north shoots north with zombies north and south (webgpu/high/z0.5) (5.6s)
+  ✓   7 [chromium] › tests/e2e/controls-content.spec.ts:7:3 › @E03 @E05 @E03-AC05 @E05-AC11 walking north shoots north with zombies north and south (webgpu/low/z1) (3.6s)
+  ✓   8 [chromium] › tests/e2e/controls-content.spec.ts:7:3 › @E03 @E05 @E03-AC05 @E05-AC11 walking north shoots north with zombies north and south (webgpu/low/z0.5) (3.6s)
+  ✓   9 [chromium] › tests/e2e/levels/camera-hotfix.spec.ts:7:3 › @E22 @camera-hotfix L4 refuge framing and debug HUD webgl high (14.7s)
+  ✓  10 [chromium] › tests/e2e/levels/camera-hotfix.spec.ts:7:3 › @E22 @camera-hotfix L4 refuge framing and debug HUD webgl low (5.8s)
+  ✓  11 [chromium] › tests/e2e/levels/camera-hotfix.spec.ts:7:3 › @E22 @camera-hotfix L4 refuge framing and debug HUD webgpu high (14.5s)
+  ✓  12 [chromium] › tests/e2e/levels/camera-hotfix.spec.ts:7:3 › @E22 @camera-hotfix L4 refuge framing and debug HUD webgpu low (5.7s)
+  ✓  13 [chromium] › tests/e2e/levels/l3-base-gates.spec.ts:6:1 › PO-10b/11 @E21 @E21-AC17 seed 1 base arrival shows countdown, closes the boom and keeps the horde outside (32.4s)
+  ✓  14 [chromium] › tests/perf/e18-counters.spec.ts:6:3 › T-E18-01-high-perf-horde-200 @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets (3.4s)
+  ✓  15 [chromium] › tests/perf/e18-counters.spec.ts:6:3 › T-E18-01-high-perf-l6-mainstreet @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets (7.0s)
+  ✓  16 [chromium] › tests/perf/e18-counters.spec.ts:6:3 › T-E18-01-high-perf-l5-aftermath @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets (13.8s)
+  ✓  17 [chromium] › tests/perf/e18-counters.spec.ts:6:3 › T-E18-01-low-perf-horde-200 @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets (2.1s)
+  ✓  18 [chromium] › tests/perf/e18-counters.spec.ts:6:3 › T-E18-01-low-perf-l6-mainstreet @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets (4.8s)
+  ✓  19 [chromium] › tests/perf/e18-counters.spec.ts:6:3 › T-E18-01-low-perf-l5-aftermath @E18-AC01 @perf fixed camera deterministic counters stay in tier budgets (3.8s)
+  ✓  20 [chromium] › tests/perf/e18-counters.spec.ts:23:1 › T-E18-01-low-male @E18-AC01 @perf L5 stress retains its budget with the larger male courier skin (3.7s)
+
+  20 passed (2.5m)

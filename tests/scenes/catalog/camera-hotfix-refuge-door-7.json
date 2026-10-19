@@ -1,0 +1,48 @@
+{
+  "name": "camera-hotfix-refuge-door-7",
+  "note": "PO tick 19845, L4 hide/line-break at (-56.23,32.11). Follow camera must preserve player zoom and isometric pitch behind refuge facades; silhouettes reveal the courier.",
+  "ground": "district",
+  "time": "L4",
+  "tier": 3,
+  "layout": {
+    "level": "L4",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        -80,
+        10
+      ],
+      [
+        -25,
+        65
+      ]
+    ]
+  },
+  "camera": {
+    "mode": "follow",
+    "actor": "courier",
+    "zoom": 1
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -56.23,
+        32.11
+      ],
+      "loadout": [
+        "weapon.army-mg",
+        "weapon.fists"
+      ]
+    }
+  ],
+  "frames": 60,
+  "sheet": 60,
+  "expect": {
+    "consoleErrors": 0,
+    "undrawnFramesMax": 0,
+    "drawCallsMax": 300,
+    "trianglesMax": 500000
+  }
+}

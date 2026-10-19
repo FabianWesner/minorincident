@@ -1,0 +1,20 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/controls-content -> 2.28.24.66:/srv/mi/ws/controls-content-5f907b
+[remote] cache-gc deleted:none
+[remote] sync 52s, 25277 files; job /srv/mi/jobs/controls-content-5f907b-11165-1792411155; queueing for a slot
+[runner] slot 1 acquired; load 9.02 6.43 3.64
+
+ RUN  v5.0.3 /srv/mi/jobs/controls-content-5f907b-11165-1792411155
+
+ ✓  functional  tests/sim/controls-content.test.ts (3 tests | 1 skipped) 319ms
+   ✓ @E05 auto-aim picks the nearest on-screen target in ±35 degrees and otherwise keeps straight 310ms
+ ✓  functional  tests/levels/L3.test.ts (21 tests | 20 skipped) 187706ms
+   ✓ L3 The Police Collapse (21)
+     ✓ T-E21-09 @E21 @E21-AC09 squad feels strong first: officers >= 60 % of S1 knockdowns, S1 damage below one life (PO 10-12 police -50 %), near the courier, never teleports 187702ms
+
+ Test Files  2 passed (2)
+      Tests  3 passed | 21 skipped (24)
+   Start at  12:02:12
+   Duration  194.07s (tests 94%, transform 5%, import 1%)
+
+[remote] pulled test-results/epics/E21/s1.json
+[remote] done exit=0 (runner 2.28.24.66, sync 52s, remote total 322s)

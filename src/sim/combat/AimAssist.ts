@@ -2,18 +2,19 @@ import type { Vec2 } from '../../input/InputFrame';
 import type { EntityStore } from '../world/EntityStore';
 import type { HitQuery } from './HitQuery';
 export type AimAssistSetting = 'Off' | 'Low' | 'Default' | 'High';
+const facingCosine = Math.cos(35 * Math.PI / 180);
 const degrees: Record<AimAssistSetting, number> = { Off: 0, Low: 6, Default: 12, High: 18 };
 export class AimAssist {
   setting: AimAssistSetting = 'Default';
-  constructor(private readonly entities: EntityStore, private readonly query: HitQuery) {}
-  /** Keyboard/touch taps pick the nearest visible infected in the facing half-plane. */
+  constructor(private readonly entities: EntityStore, private readonly query: HitQuery, private readonly onScreen: (point: Vec2) => boolean = () => true) {}
+  /** Keyboard/touch taps pick the nearest visible infected in the facing cone (±35 degrees), on screen. */
   facing(origin: Vec2, aim: Vec2, range: number): void {
     if (this.setting === 'Off') return;
     let best = Infinity, x = aim.x, z = aim.z;
     for (const target of this.entities.iterate()) {
-      if (target.faction !== 'infected' || target.health.current <= 0 || target.hidden || target.infected?.hidden) continue;
+      if (target.faction !== 'infected' || target.health.current <= 0 || target.hidden || target.infected?.hidden || !this.onScreen(target.transform)) continue;
       const dx = target.transform.x - origin.x, dz = target.transform.z - origin.z, distance = Math.hypot(dx, dz);
-      if (distance > 0 && distance <= range && distance < best && dx * aim.x + dz * aim.z > 0 && this.query.visible(origin, target.transform)) { best = distance; x = dx / distance; z = dz / distance; }
+      if (distance > 0 && distance <= range && distance < best && (dx * aim.x + dz * aim.z) / distance >= facingCosine - 1e-6 && this.query.visible(origin, target.transform)) { best = distance; x = dx / distance; z = dz / distance; }
     }
     aim.x = x; aim.z = z;
   }

@@ -118,14 +118,15 @@ export class InstancedGroup extends Group {
   private readonly axisZ = new Vector3(0, 0, 1);
   private readonly hiddenRoofScale = new Vector3(0, 0, 0);
   /** Only placements intersecting the camera-to-courier view may dissolve; siblings keep their opaque surfaces. */
-  seeThrough(enabled: boolean, reference: Object3D): void {
-    reference.userData.occluder = enabled;
+  seeThrough(enabled: boolean, reference: Object3D, lens = false): void {
+    reference.userData.occluder = enabled; reference.userData.lensOccluder = enabled && lens;
+    const mode = enabled ? lens ? 2 : 1 : 0;
     const index = this.references.indexOf(reference);
     if (index < 0) return;
     for (const batch of this.batches) {
       if (batch.interior) { this.updateInterior(batch); continue; }
       const attr = batch.mesh.geometry.getAttribute('_occluder');
-      if (attr && attr.getX(index) !== +enabled) { attr.setX(index, +enabled); attr.needsUpdate = true; }
+      if (attr && attr.getX(index) !== mode) { attr.setX(index, mode); attr.needsUpdate = true; }
     }
   }
   /** Hide only this placement's roof; reference state survives streaming and LOD repartition. */
@@ -140,7 +141,7 @@ export class InstancedGroup extends Group {
   private write(batch: { mesh: InstancedMesh; local: Matrix4; base?: Matrix4; door?: string; indices?: number[] }, i: number): void {
     const reference = this.references[batch.indices?.[i] ?? i];
     const occluder = batch.mesh.geometry.getAttribute('_occluder');
-    if (occluder) { occluder.setX(i, +(reference.userData.occluder === true)); occluder.needsUpdate = true; }
+    if (occluder) { occluder.setX(i, reference.userData.occluder === true ? reference.userData.lensOccluder ? 2 : 1 : 0); occluder.needsUpdate = true; }
     const lightBase = batch.mesh.geometry.getAttribute('_lightBase');
     if (batch.mesh.userData.ownedPowerGeometry) { lightBase.setX(i, reference.userData.lightBase ?? 0); lightBase.needsUpdate = true; }
     reference.updateWorldMatrix(true, false);

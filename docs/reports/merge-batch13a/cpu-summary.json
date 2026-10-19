@@ -1,0 +1,74 @@
+{
+  "after2": {
+    "passed": 3176,
+    "failed": 11,
+    "skipped": 11,
+    "files": 509,
+    "durationSeconds": 3312.63,
+    "runner": "2.31.10.108",
+    "failures": [
+      {
+        "test": "tests/sim/ai/director.test.ts > T-E07-11 @E07 @E07-AC11 @perf 200 chasing infected stay inside the 4 ms simulation p95 budget",
+        "error": "expected 6.108656000025803 to be less than or equal to 4"
+      },
+      {
+        "test": "tests/sim/levels/l10-assault.test.ts > T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets",
+        "error": "expected 7.5200780000013765 to be less than or equal to 4"
+      },
+      {
+        "test": "tests/sim/performance/alpha-physical.test.ts > T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms",
+        "error": "expected 5.146735000016633 to be less than or equal to 4"
+      },
+      {
+        "test": "tests/sim/performance/alpha-support.test.ts > T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms",
+        "error": "expected 5.209712999989279 to be less than or equal to 4"
+      },
+      {
+        "test": "tests/sim/performance/alpha.test.ts > T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms",
+        "error": "expected 5.141064000024926 to be less than or equal to 4"
+      },
+      {
+        "test": "tests/sim/performance/horde.test.ts > T-E18-02-200 @E18-AC02 @perf Node sim p95 200 living infected <= 4ms",
+        "error": "expected 4.304689000011422 to be less than or equal to 4"
+      },
+      {
+        "test": "tests/sim/performance/mega-moves.test.ts > T-E32-11-perf-200 @E32-AC11 @E18-AC02 Mega specials in a full mixed horde stay inside E18",
+        "error": "expected 4.925652000005357 to be less than or equal to 4"
+      },
+      {
+        "test": "tests/sim/performance/zoo-s1.test.ts > T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms",
+        "error": "expected 5.76355999999214 to be less than or equal to 4"
+      },
+      {
+        "test": "tests/sim/performance/zoo-s2.test.ts > T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+        "error": "expected 5.854560000007041 to be less than or equal to 4"
+      },
+      {
+        "test": "tests/sim/performance/zoo-s3.test.ts > T-E07-11-zoo-s3-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+        "error": "expected 4.641108000010718 to be less than or equal to 4"
+      },
+      {
+        "test": "tests/sim/world/chunk-residency.test.ts > T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95",
+        "error": "expected 8.133807000005618 to be less than or equal to 4"
+      }
+    ]
+  },
+  "after3": {
+    "failures": [
+      {
+        "test": "tests/sim/performance/zoo-s2.test.ts > T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms",
+        "error": "expected 4.04113700002199 to be less than or equal to 4"
+      },
+      {
+        "test": "tests/sim/levels/l10-campus-corridor.test.ts > T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex",
+        "error": "expected 5.464806000236422 to be less than or equal to 4"
+      }
+    ],
+    "runner": "94.130.181.173",
+    "durationSeconds": 3936.33,
+    "passed": 3194,
+    "failed": 2,
+    "skipped": 9,
+    "files": 511
+  }
+}
