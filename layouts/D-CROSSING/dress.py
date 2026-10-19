@@ -349,7 +349,7 @@ for kind, count, rr in [('dust', 70, (7, 26)), ('scrub', 90, (4, 14))]:
             # acceptance, and with it the R stream, stays exactly as before.
             poly = [[cx + (x - cx) * .72, cz + (z - cz) * .72] for x, z in poly]
         # patches may sit under props but never under the encounter lanes
-        base, stripe = ('leather', None) if kind == 'dust' else ('oliveSeam', None)
+        base, stripe = ('leather', None) if kind == 'dust' else ('leather', None)   # look-l9b: scrub mats as dark patches (oliveSeam still read as pale discs)
         ov('dry-' + kind, poly, base, FIELD_BASE if kind == 'dust' else FIELD_BASE + .0007, cut=False, cat='field')
         made += 1
     stats['dry-' + kind] = made
