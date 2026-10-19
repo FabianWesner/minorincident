@@ -597,12 +597,32 @@ export class NavGrid {
     }
     return offsets;
   }
+  private searchRevision = -1;
+  private failRevision = -1;
+  private failSize = 0;
+  private failStamp = 0;
+  private failSeen: Uint32Array | null = null;
+  /** A large search that closed its whole start pocket without the goal (an unreachable run target retried every second). */
+  private rememberPocket(): void {
+    if (this.searchSize < 2000 || this.searchRevision !== this.revision) return;
+    (this.failSeen ??= new Uint32Array(this.pathSeen.length)).set(this.pathSeen);
+    this.failRevision = this.revision; this.failSize = this.searchSize; this.failStamp = this.pathStamp;
+  }
   /** Budgeted A*; caller retries later if the tick budget is exhausted. Writes into a reused path array. */
   path(from: number, to: number, result: number[], budget: number): boolean {
     result.length = 0; this.expansions = 0;
     if (from < 0 || to < 0 || this.blocked[from] || this.blocked[to]) return false;
-    if (!this.searching || this.searchFrom !== from || this.searchTo !== to) {
-      this.searchFrom = from; this.searchTo = to; this.searching = true; this.searchSize = 0;
+    const resuming = this.searching && this.searchFrom === from && this.searchTo === to, fail = this.failSeen;
+    if (!resuming && fail && this.failRevision === this.revision && this.failSize < budget && fail[from] === this.failStamp && fail[to] !== this.failStamp) {
+      // perf-w5d: the grid is unchanged and the start lies in the pocket the last exhaustive search
+      // closed without the goal. A fresh search would expand exactly that pocket again and fail; leave
+      // the same visible state (visited cells for escapeCell, sizes) without repeating it.
+      this.searchFrom = from; this.searchTo = to; this.searching = false; this.heap.length = 0;
+      this.pathSeen.set(fail); this.pathStamp = this.failStamp; this.searchSize = this.expansions = this.failSize;
+      return false;
+    }
+    if (!resuming) {
+      this.searchFrom = from; this.searchTo = to; this.searching = true; this.searchSize = 0; this.searchRevision = this.revision;
       this.heap.length = 0; this.push(from, 0);
       // As with reachPath, stamp visited cells instead of clearing the entire district for each agent.
       this.pathStamp = (this.pathStamp + 1) >>> 0;
@@ -613,7 +633,7 @@ export class NavGrid {
     while (this.expansions < budget) {
       let best = -1;
       while (this.heap.length) { const candidate = this.pop(); if (this.open[candidate] === 1) { best = candidate; break; } }
-      if (best < 0) { this.searching = false; return false; }
+      if (best < 0) { this.searching = false; this.rememberPocket(); return false; }
       this.expansions++; this.searchSize++; this.open[best] = 2;
       if (best === to) { this.searching = false; for (let cell = to; cell !== from; cell = this.parent[cell]) result.push(cell); result.reverse(); return true; }
       for (let d = 0; d < 4; d++) { const n = this.neighbor(best, d); if (n >= 0 && !this.blocked[n] && (this.pathSeen[n] !== this.pathStamp || this.open[n] !== 2 && this.cost[best] + 1 < this.cost[n])) { this.pathSeen[n] = this.pathStamp; this.cost[n] = this.cost[best] + 1; this.parent[n] = best; this.open[n] = 1; this.push(n, this.cost[n] + (Math.abs(n % this.width - tx) + Math.abs(Math.floor(n / this.width) - tz)) * 1.00001); } }
