@@ -258,7 +258,7 @@ def lay_field(kind, cx, cz, hx, hz, ang):
         if math.hypot(cx - f[0], cz - f[1]) < (rad + f[2]) * .78:
             return False
     # Row direction follows the long side; row pitch is uneven enough to read as crops at game zoom.
-    base, stripe = {'wheat': ('mustard', 'mustardLight'), 'plow': ('leather', 'trouserLight'), 'pasture': ('apronOlive', 'oliveLight'),
+    base, stripe = {'wheat': ('mustard', 'mustardLight'), 'plow': ('leatherShadow', 'trouserLight'), 'pasture': ('apronOlive', 'oliveLight'),
                     'scrub': ('olive', 'oliveLight'), 'dust': ('trouserLight', 'khaki')}[kind]
     if kind == 'dust':
         stripe = None
@@ -352,7 +352,7 @@ for i, (a, b) in enumerate(zip(road_pts, road_pts[1:])):
     for side in (-1, 1):
         sa = [a[0] + ux * t0 + nx * side * 7.0, a[1] + uz * t0 + nz * side * 7.0]
         sb = [a[0] + ux * t1 + nx * side * 7.0, a[1] + uz * t1 + nz * side * 7.0]
-        ov('shoulder', strip_poly(sa, sb, 2.6, 0), 'trouserLight', SHOULDER, cut=False, cat='road')
+        ov('shoulder', strip_poly(sa, sb, 2.6, 0), 'canvasTan', SHOULDER, cut=False, cat='road')
         ea = [a[0] + ux * t0 + nx * side * 5.55, a[1] + uz * t0 + nz * side * 5.55]
         eb = [a[0] + ux * t1 + nx * side * 5.55, a[1] + uz * t1 + nz * side * 5.55]
         ov('edge-line', strip_poly(ea, eb, .16, 0), 'picketWhite', .0085, cut=False, cat='road')
@@ -455,7 +455,7 @@ def road_decals(pts, hw, gravel, h0):
             if r < .22 and not gravel:
                 # resurfaced patch: a different-toned slab
                 w, h = R.uniform(1.4, 3.2), R.uniform(2.0, 5.5)
-                ov('road-patch', rot_rect(cx, cz, h / 2, w / 2, ang + R.uniform(-.08, .08)), 'pantsDark', h0, cut=False, cat='road')
+                ov('road-patch', rot_rect(cx, cz, h / 2, w / 2, ang + R.uniform(-.08, .08)), 'pantsLight', h0, cut=False, cat='road')
                 counts['patch'] += 1
             elif r < .5:
                 # tar crack: thin dark line across or along the lane
@@ -469,7 +469,7 @@ def road_decals(pts, hw, gravel, h0):
                 # dust / grit drifting in from the verge, a soft long ellipse across a lane edge
                 side = R.choice([-1, 1])
                 ex, ez = x + nx * side * (hw - R.uniform(.2, 2.2)), z + nz * side * (hw - R.uniform(.2, 2.2))
-                ov('road-dust', blob(ex, ez, R.uniform(2.5, 7), R.uniform(.8, 2.0), ang + R.uniform(-.2, .2), 9), 'trouserLight', h0, cut=False, cat='road')
+                ov('road-dust', blob(ex, ez, R.uniform(2.5, 7), R.uniform(.8, 2.0), ang + R.uniform(-.2, .2), 9), 'canvasTan', h0, cut=False, cat='road')
                 counts['dust'] += 1
             elif r < .70 and not gravel:
                 # a pair of dark skid / tyre marks
@@ -485,7 +485,7 @@ def road_decals(pts, hw, gravel, h0):
             x, z, ux, uz, nx, nz = frame_at(a, b, t)
             for side in (-1, 1):
                 o = hw + R.uniform(.4, 6)
-                token = R.choice(['apronOlive', 'apronOlive', 'leather', 'trouserLight', 'oliveLight'])
+                token = R.choice(['oliveLight', 'oliveLight', 'mustardLight', 'canvasTan', 'trouserLight'])
                 ov('verge-tuft', blob(x + nx * side * o, z + nz * side * o, R.uniform(.7, 2.6), R.uniform(.5, 1.6), math.atan2(uz, ux) + R.uniform(-.3, .3), 8), token, R.choice([.0014, .0018]), cut=False, cat='road')
                 counts['tuft'] += 1
             t += R.uniform(3.6, 6.2)
@@ -510,7 +510,7 @@ for (pts, hw), gravel, h0 in zip(ROUTES, (False, True, True), (.0033, .0055, .00
                 pa = [x + nx * side * o, z + nz * side * o]
                 pb = [pa[0] + ux * length, pa[1] + uz * length]
                 if all(math.hypot(q[0] - n[0], q[1] - n[1]) > 24 for q in (pa, pb) for n in ((-450, 0), (450, 0))):
-                    ov('ditch', strip_poly(pa, pb, R.uniform(1.1, 2.0), 0), 'leather', .0012, cut=False, cat='road')
+                    ov('ditch', strip_poly(pa, pb, R.uniform(1.1, 2.0), 0), 'leatherShadow', .0012, cut=False, cat='road')
                     counts['ditch'] += 1
                 t += length + R.uniform(10, 40)
 
@@ -541,7 +541,7 @@ for _ in range(60000):
         continue
     if tree(x, z):
         n_trees += 1
-    if n_trees >= 1500:
+    if n_trees >= 800:
         break
 stats['trees-scattered'] = n_trees
 
@@ -630,7 +630,7 @@ for fx, fz in farm_list:
         continue
     ux, uz = (foot[0] - fx) / d, (foot[1] - fz) / d
     tip = [foot[0] - ux * (hw + .5), foot[1] - uz * (hw + .5)]
-    ov('farm-track', strip_poly([fx, fz], tip, 3.4, 0), 'trouserLight', .0012, cut=False, cat='road')
+    ov('farm-track', strip_poly([fx, fz], tip, 3.4, 0), 'canvasTan', .0012, cut=False, cat='road')
 
 # ---- road furniture -----------------------------------------------------------------------------------------------
 # utility poles along the asphalt (north side) and the dry shortcut (north side), wrecks and signs on the verges.
