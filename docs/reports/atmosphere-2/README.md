@@ -41,7 +41,7 @@ What I see in them:
 - **L1** (opened): the café corner turns golden. The sidewalk is bright amber, shadows are lilac, a large soft cloud shadow crosses the road and golden motes are visible at zoom 1. The courier's red/teal and the corgi are clear at zoom 0.5 low.
 - **L2** (WebGPU opened): cooler and crisper than L1. Whites stay white, and two soft cloud patches lie on the lawn and the road; firefighters inside a patch stay readable.
 - **L3** (opened): salmon-amber sidewalks, a hazier top of frame, darker contrasty road, rising ash. The courier and the axe read well. It is the warmest and smokiest day level; the sidewalk salmon is strong.
-- **L4** (WebGPU opened): warm sun on the bus roof and orange-tinted zebra stripes, cool-blue shadow side. At low zoom 0.5 the bus side reads blue-violet, so I softened the L4 shadow tint afterwards (`b14aa44fe`). **The sheets show the version before that softening** (see Unmeasured).
+- **L4** (WebGPU opened): warm sun on the bus roof and orange-tinted zebra stripes, cool-blue shadow side. At low zoom 0.5 the first version turned the bus side blue-violet, so I softened the L4 shadow tint (`b14aa44fe`). The recaptured sheet shows a lilac-grey bus side with white paint intact.
 - **L5** (opened): clearly greyer than before; ash flakes over the ruins, with the courier and corgi in the warm pool.
 - **L6** (opened): orange sodium pool on the supply crate, teal-grey tunnel, embers of light. The corgi is still dark outside the pool, as before (known, unchanged).
 - **L7** (opened): the deep-violet night becomes ember-red haze at the top of the frame, with orange embers drifting over the crowd. Health bars, survivors and the courier read as before.
@@ -57,25 +57,32 @@ What I see in them:
 | --- | --- |
 | Scene Lab matrix `atmosphere*,night-read-*`, high+low × zoom 0.5/1/1.5 | **WebGL2 126/126, WebGPU 126/126** ([GL](matrix/webgl2/index.md), [GPU](matrix/webgpu/index.md)). Includes the two new scenes `atmosphere2-clouds-l2` and `atmosphere2-embers-l7`. Night-read gates: typical ≥ 2.5, floor ≥ 2.0. L9 road 2.7/2.7. |
 | Playwright (Mac, 1 worker): `e25-lighting`, `weather` (E28-AC12 moods, all kinds × both backends × both tiers), `l3-contrast`, `l7-night`, `smoke` | **41 passed, 2 failed**. The two failures are T-E29-14 L7 courier contrast high/low (2.087 / 2.162 vs ≥ 3). They are **pre-existing**: the identical values (2.077 / 2.160) appear with the unchanged `d80f5ef0d` build, and with the L6 grade disabled. |
-| E25-AC13 night-street | Courier contrast 3.159 (high) / 3.346–3.348 (low) on WebGL and WebGPU; brightest-eye red margins 106–110 (≥ 60). |
+| E25-AC13 night-street | Courier contrast 3.159 (high) / 3.346–3.348 (low) on WebGL and WebGPU; brightest-eye red margins 106–110 (≥ 60). [JSON](validation/) |
 | WebGPU shader | The first grade used chained channel swizzles of the sampled colour, which failed WebGPU/Metal pipeline creation (Tint: "swizzle view instruction still has usages after lowering", 16 WebGPU spec failures). Channels now come from dot products. Bisected and confirmed: the original fails, the fix passes. |
 | Unit | `tests/unit/render/atmosphere.test.ts` 7/7 locally (neutral defaults, validation, per-level distinct grades, clouds by day only, haze beyond the focus, beam weight). Typecheck and lint pass. |
-| Hetzner unit+levels+sim, first run (before the WebGPU/haze fixes) | 3145 passed / 4 failed / 11 skipped. All 4 are `timing` sim p95 cases (director 200 chasers, L10 assault, campaign NPC high, crossing horde). The sim is not touched by this lane. Final-tree rerun: see Unmeasured. |
+| Hetzner unit+levels+sim | Final tree `193bb220a`: **3151 passed / 0 failed / 9 skipped**. First run (before the fixes): 3145 / 4 sim-timing failures / 11 skipped; those did not repeat. |
 
 ## Cost (E18)
 
 - Campaign counters ([counters.json](counters.json), 50 paired stills, both backends): +0–2 draws, ≤ +94 triangles. Maximum high 217 draws / 709k triangles; low 201 / 293k. All within the 600/1.5M and 300/500k caps.
-- Native timing, `tools/perf/quiet-run.sh` (one reservation, ~3 min, real Chrome/Metal):
-  - T-E18-09 horde 200, WebGL2 high: p50 4.6 ms / **p95 6.0 ms** (≤ 16.7).
-  - L8 mixed outbreak frame p95: high **12.0 ms** (≤ 16.7), low **7.6 ms** (≤ 33.3), phone (390×844, 4× CPU throttle) **31.0 ms** (≤ 33.3).
-  - Phone **simP95 7.4 ms > 6** fails; the sim is untouched by this lane. The baseline-build rerun for comparison is not yet done (see Unmeasured).
+- Native timing, `tools/perf/quiet-run.sh`. Two separate reservations of ~3 min each (branch, then later the `d80f5ef0d` baseline build), real Chrome/Metal ([summary](perf/summary.txt), raw JSON in `perf/before`, `perf/after`):
+
+| Spec | Baseline | Branch | Budget |
+| --- | --- | --- | --- |
+| T-E18-09 horde 200, WebGL2 high, p50 / p95 | 3.9 / 6.4 ms | 4.6 / 6.0 ms | p95 ≤ 16.7 |
+| L8 mixed outbreak high, frame p95 | 10.8 ms | 12.0 ms | ≤ 16.7 |
+| L8 low, frame p95 | 7.4 ms | 7.6 ms | ≤ 33.3 |
+| L8 phone (390×844, 4× CPU throttle), frame p95 | 31.3 ms | 31.0 ms | ≤ 33.3 |
+| L8 phone sim p95 | **7.3 ms (fail)** | **7.4 ms (fail)** | ≤ 6 |
+
+  The phone sim p95 failure is pre-existing: it fails on the baseline too, and this lane changes no sim code. The largest frame cost is L8 high, +1.2 ms p95 (one run each on a shared Mac), still 4.7 ms under budget.
 - Low tier: no heat-haze fetch (vfx-stunning-3), capped ambient fields, no lamp insects. Grade, haze and clouds are a handful of ALU on both tiers. I tried a separate low-tier grade variant and dropped it: it was not cheaper than one `pow`.
 
 ## Unmeasured / left
 
-- **L4 after the softer shadow tint (`b14aa44fe`)**: not yet recaptured, and not yet rerun on `atmosphere-l4` in the matrix. Browser runs were paused because merge-batch11 needed both slots for the deploy gate. Data-only change (two values).
-- **Baseline perf comparison** (same two specs on the `d80f5ef0d` build): not run yet, same reason. This includes the phone sim 7.4 ms question.
-- **Hetzner suite on the final tree**: queued/running at the time of writing.
+- L4 after the softer shadow tint (`b14aa44fe`) was recaptured on both backends (high zoom 1, low zoom 0.5), and `atmosphere-l4` passes 6/6 on WebGL2 and on WebGPU. The L4 sheets show this final version; the bus side now reads lilac-grey, not blue-violet. The full 126-scene matrix and the Playwright set ran before this two-value data change.
+- The Hetzner suite on `193bb220a` (all code; only the L4 values came later) is **3151 passed / 0 failed / 9 skipped** (507 files). The 4 sim timing failures of the first run did not repeat.
+- Native timing is one run per build on a shared Mac. It is not a quiet-window certification.
 - Cloud drift and ember motion were judged from Scene Lab frame sequences and single stills; there is no video.
 - Pre-existing and unchanged: L7 T-E29-14 courier contrast below 3, and the dark L6 corgi outside the lamp pool.
 
