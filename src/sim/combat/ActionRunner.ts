@@ -4,6 +4,8 @@ import { Loadout } from './Loadout';
 import { comboDefinition, meleeChains } from '../../data/meleeCombos';
 import { catalog } from '../../data/actions/catalog';
 export interface Attack {
+  /** Facing-cone aim was already resolved; do not apply a second snap outside that cone. */
+  autoAim?: boolean;
   id: number; sourceId: number; side: Side; def: ActionDef; aim: Vec2; aimPoint: Vec2 | null;
   started: number; activeAt: number; recoveryAt: number; endsAt: number; resolved: boolean; hit: Set<number>;
   combo: number; inPlace: boolean;
@@ -72,7 +74,7 @@ export class ActionRunner {
         // A roundhouse is its own beat: the chain restarts at the first swing afterwards.
         if (sweep) delete this.chains[side]; else this.chains[side] = { actionId: def.id, combo, until: tick + ticks(def.cooldown) + 48 };
         const raise = this.sourceId === 1 && def.category === 'ranged' && tick > this.gunReady.until ? Math.max(0, 6 - this.gunReady.ticks) : 0;
-        attack = { id: ++this.sequence, sourceId: this.sourceId, side, def, combo, inPlace: buffered?.inPlace ?? !!frame.attackInPlace, aim: { ...state.aim }, aimPoint: state.aimPoint ? { ...state.aimPoint } : null, started: tick, activeAt: tick + raise + ticks(def.windup), recoveryAt: tick + raise + ticks(def.windup + def.active), endsAt: tick + raise + ticks(def.windup + def.active + def.recovery), resolved: false, hit: new Set(), ...(sweep ? { style: 'roundhouse' as const } : {}) };
+        attack = { autoAim: frame.aimSource === 'assist', id: ++this.sequence, sourceId: this.sourceId, side, def, combo, inPlace: buffered?.inPlace ?? !!frame.attackInPlace, aim: { ...state.aim }, aimPoint: state.aimPoint ? { ...state.aimPoint } : null, started: tick, activeAt: tick + raise + ticks(def.windup), recoveryAt: tick + raise + ticks(def.windup + def.active), endsAt: tick + raise + ticks(def.windup + def.active + def.recovery), resolved: false, hit: new Set(), ...(sweep ? { style: 'roundhouse' as const } : {}) };
         delete this.buffered[side]; this.running[side] = attack;
         if (def.category === 'ranged') this.loadout.current(side).readyAt = attack.activeAt;
         else this.loadout.spend(side, tick, def, this.infiniteCharges);

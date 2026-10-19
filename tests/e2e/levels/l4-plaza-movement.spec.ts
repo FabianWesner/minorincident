@@ -3,14 +3,7 @@ import type { CDPSession, Page } from '@playwright/test';
 import { boot, expect, test } from '../fixtures';
 
 type Point = { x: number; z: number };
-// Same start as tests/levels/L4-movement.test.ts (a14716df): the parked convoy nav margin covers the old east tile from (-17.5, 4).
-const center = { x: -18.2, z: 4 }, d = 6 / Math.SQRT2;
-const targets = [
-  { name: 'left', key: 'a', x: center.x - d, z: center.z + d },
-  { name: 'right', key: 'd', x: center.x + d, z: center.z - d },
-  { name: 'up', key: 'w', x: center.x - d, z: center.z - d },
-  { name: 'down', key: 's', x: center.x + d, z: center.z + d },
-];
+const d = 6 / Math.SQRT2;
 const position = (page: Page) => page.evaluate(() => window.__SS__!.getState().player!.transform);
 const step = (page: Page, n: number) => page.evaluate(n => window.__SS__!.step(n), n);
 const distance = (p: Point, q: Point) => Math.hypot(p.x - q.x, p.z - q.z);
@@ -61,14 +54,23 @@ test.use({ viewport: { width: 1280, height: 720 }, hasTouch: true, launchOptions
 for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['high', 'low'] as const) for (const zoom of [1, .5]) for (const phase of ['plaza', 'war', 'respawn'] as const) {
   test(`@E22 L4 ${phase}: mouse WASD stick ${renderer} ${quality} zoom ${zoom}`, async ({ page, context }) => {
     test.setTimeout(600_000); page.setDefaultTimeout(120_000);
+    // Calm routes also clear the pending quartermaster's click area along intermediate close-zoom clicks.
+    const center = phase === 'plaza' ? { x: -21.5, z: 6.5 } : { x: -18.2, z: 4 };
+    const targets = [
+      { name: 'left', key: 'a', x: center.x - d, z: center.z + d },
+      { name: 'right', key: 'd', x: center.x + d, z: center.z - d },
+      { name: 'up', key: 'w', x: center.x - d, z: center.z - d },
+      { name: 'down', key: 's', x: center.x + d, z: center.z + d },
+    ];
+
     await boot(page, `/?test=1&renderer=${renderer}&quality=${quality}&audio=muted&dpr=1&ui=1`);
     await page.evaluate(async quality => { const a = window.__SS__!; a.settings.set({ quality }); await a.loadLevel('L4', { seed: 2, progression: 'L4-default' }); a.pause(); }, quality);
     await page.getByRole('button', { name: 'Begin mission' }).click();
     await page.evaluate(() => { window.__SS__!.pause(); window.__SS__!.cheats.god(true); });
     for (let i = 0; i < 80 && await page.evaluate(() => window.__SS__!.missions.state()!.l4!.phase === 'convoy'); i++) await step(page, 30);
     expect(await page.evaluate(() => window.__SS__!.missions.state()!.l4!.phase)).toBe('plaza');
-    // The PO's rifle loadout; finish the interaction so it cannot snap a ground goal to the quartermaster.
-    await page.evaluate(() => window.__SS__!.cheats.completeObjective('quartermaster'));
+    // Pickup now starts war on the same tick; calm movement must run before that interaction.
+    if (phase !== 'plaza') await page.evaluate(() => window.__SS__!.cheats.completeObjective('quartermaster'));
     if (phase !== 'plaza') {
       for (let i = 0; i < 60 && !await page.evaluate(() => window.__SS__!.missions.state()!.l4!.turnAt); i++) await step(page, 60);
       await step(page, 180);
@@ -94,6 +96,7 @@ for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['hig
     const corner = { x: -25.855, z: 1.855 }, away = { x: corner.x - 2 / Math.SQRT2, z: corner.z + 2 / Math.SQRT2 };
     await reset(page, corner, 0); await clickTo(page, away, `${out}/corner-left-walking.png`); await page.evaluate(() => window.__SS__!.camera.follow()); await step(page, 65);
     const cdp = await context.newCDPSession(page);
+    expect(await page.evaluate(() => window.__SS__!.missions.state()!.l4!.phase)).toBe(phase === 'plaza' ? 'plaza' : 'war');
     for (const input of ['mouse', 'keyboard', 'stick']) for (const target of targets) {
       await reset(page, center);
       if (input === 'mouse') await clickTo(page, target, target.name === 'left' ? `${out}/left-walking.png` : undefined);

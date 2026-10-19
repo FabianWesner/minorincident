@@ -89,12 +89,10 @@ export class L4Spectacle {
     // authored 8–12 s firing interval when a separated cluster changes bearing.
     if (tick < s.tankFireAt - Math.ceil(Math.PI / l4.tank.turnRate * 60)) return;
     const clear = (p: Point) => this.clearOfAllies(p, l4.tank.minDistM);
-    let target = this.cluster(3, clear) ?? this.cluster(1, clear);
-    if (!target && tick < s.tankFireAt) return;
-    // l4 merge fix: once the horde is locked in melee with the lines (every infected within minDistM of an ally) no cluster is safe to shell.
-    // After one missed second the tank shells the busiest street mouth outside the safety radius instead of idling for 10+ s.
-    if (!target && this.dueMisses++ >= 1) target = this.streetBarrage(clear);
-    if (!target) { s.tankFireAt = tick + ticks(1); return; }
+    // An empty or ally-locked cluster still has a safe street target. Choose it during
+    // cooldown too, so turning toward that fallback cannot extend the firing interval.
+    const target = this.cluster(3, clear) ?? this.cluster(1, clear) ?? this.streetBarrage(clear);
+    if (!target) { if (tick >= s.tankFireAt) s.tankFireAt = tick + ticks(1); return; }
     const want = -Math.atan2(target.at.z - tank.transform.z, target.at.x - tank.transform.x);
     const delta = Math.atan2(Math.sin(want - tank.transform.yaw), Math.cos(want - tank.transform.yaw));
     const step = l4.tank.turnRate / 60;
@@ -115,9 +113,7 @@ export class L4Spectacle {
     }
     return best && { at: best.at, count: best.count };
   }
-  private dueMisses = 0;
   fireTank(tank: EntitySnapshot, at: Point): void {
-    this.dueMisses = 0;
     const s = this.s(), tick = this.world.tick, rng = this.rng;
     s.tankShots++;
     const muzzle = { x: tank.transform.x + Math.cos(-tank.transform.yaw) * 4.2, z: tank.transform.z + Math.sin(-tank.transform.yaw) * 4.2 };

@@ -1,0 +1,104 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/controls-content -> 94.130.181.173:/srv/mi/ws/controls-content-5f907b
+[remote] cache-gc deleted:none
+[remote] sync 64s, 25340 files; job /srv/mi/jobs/controls-content-5f907b-64502-1792412934; queueing for a slot
+[runner] slot 0 acquired; load 0.51 0.81 2.42
+[runner] npm ci (lockfile hash b5c9f77fe4679429)
+
+added 247 packages in 5s
+
+ RUN  v5.0.3 /srv/mi/jobs/controls-content-5f907b-64502-1792412934
+
+ ✓  functional  tests/sim/missions/campaign.test.ts (19 tests) 31148ms
+   ✓ T-E12-07-L1 @E12 @E12-AC07 every cheat advances exactly one L1 step to level.completed 1066ms
+   ✓ T-E12-07-L2 @E12 @E12-AC07 every cheat advances exactly one L2 step to level.completed 2213ms
+   ✓ T-E12-07-L3 @E12 @E12-AC07 every cheat advances exactly one L3 step to level.completed 1606ms
+   ✓ T-E12-07-L4 @E12 @E12-AC07 every cheat advances exactly one L4 step to level.completed 3905ms
+   ✓ T-E12-07-L5 @E12 @E12-AC07 every cheat advances exactly one L5 step to level.completed 685ms
+   ✓ T-E12-07-L7 @E29-AC01 @E12 @E12-AC07 every cheat advances exactly one L7 step to level.completed 830ms
+   ✓ T-E12-07-L8 @E12 @E12-AC07 every cheat advances exactly one L8 step to level.completed 399ms
+   ✓ T-E12-07-L9 @E12 @E12-AC07 every cheat advances exactly one L9 step to level.completed 4245ms
+   ✓ T-E12-07-L10 @E12 @E12-AC07 every cheat advances exactly one L10 step to level.completed 10577ms
+   ✓ @E12 @E12-AC07 @E22-AC01 L4 ride -> quartermaster -> hold -> hide -> bar -> wait completes straight into progression (no cinematic, no reward screen) 3378ms
+   ✓ @E12 @E12-AC07 L3 armory -> defend -> fallback -> army checkpoint completes straight into progression 1456ms
+   ✓ @E12 @E12-AC05 authored source checkpoint can be loaded fresh and retains its reached snapshot 454ms
+ ✓  functional  tests/levels/L4-movement.test.ts (4 tests) 48424ms
+   ✓ @E22 L4 plaza permits mouse and direct movement on open plaza tiles 10689ms
+   ✓ @E22 L4 war permits mouse and direct movement on open plaza tiles 15933ms
+   ✓ @E22 L4 respawn permits mouse and direct movement on open plaza tiles 15266ms
+   ✓ @E22 a real L4 armory-table corner cannot trap an outward click 6535ms
+ ✓  functional  tests/levels/L3-follow.test.ts (28 tests) 88929ms
+   ✓ L3 squad and checkpoint (28)
+     ✓ @E21 retry relief also covers a street segment first populated after the respawn 4472ms
+     ✓ @E21 a distant failed encounter keeps retry pursuit relief until the courier approaches, retaining every actor 1465ms
+     ✓ @E21 a returning body keeps its timer and the L3 pursuit delay when it gets up after respawn 2977ms
+     ✓ @E21 second-retry relief thins the living crowd while retaining each downed body and recovery slot 1990ms
+     ✓ @E21 @E21-AC17 fatal bites at the infected cap retain a dead officer without blocking rescue or allied fire 1564ms
+     ✓ @E21 @E21-AC17 HMG post can fire down the approach and into the resting compound 1822ms
+     ✓ @E21 @E21-AC17 rescued officers at the compound edge stay inside after boom closure 4774ms
+     ✓ @E21 army compound is walkable before the rendezvous and does not finish while the courier rests 3339ms
+     ✓ @E21 @E21-AC17 arrival finishes with stalled officer 24217ms
+     ✓ @E21 @E21-AC17 arrival finishes with dead officer 3021ms
+     ✓ @E21 @E21-AC17 arrival finishes with turning officer 3160ms
+     ✓ @E21 @E21-AC17 arrival finishes with occupied boom 3710ms
+     ✓ closed checkpoint boom stops a walking courier and shared NPC navigation; opening restores the lane 2574ms
+     ✓ fallback recruits every living human officer, including the yard posts 1390ms
+     ✓ @E21 the Boulevard wreck passing line collects its existing sidewalk medkits 1996ms
+     ✓ @E21 the first Boulevard turn medkit is collected on the walking line 1270ms
+     ✓ @E21 the Boulevard corner medkit is collected on the walking line 1584ms
+     ✓ @E21 the last street turn medkit is collected on the walking line 1595ms
+     ✓ @E21 the bus passing-line end medkit is collected on the walking line 1885ms
+     ✓ @E21 the entry ramp medkit is collected on the walking line 1758ms
+     ✓ @E21 the upper ramp medkit is collected on the walking line 1455ms
+     ✓ @E21 the exit ramp medkit is collected on the walking line 1708ms
+     ✓ all three routes have sidewalk med packs within 40 m and reachable from the street 1498ms
+     ✓ boom waits for the last living officer; a dead officer cannot prevent closure 1463ms
+     ✓ living officers regroup on commerce instead of being marked separated 3900ms
+     ✓ living officers regroup on blvd instead of being marked separated 5539ms
+     ✓ living officers regroup on oak instead of being marked separated 2787ms
+ ✓  functional  tests/sim/controls-content.test.ts (3 tests) 145ms
+ ✓  functional  tests/levels/controls-content.test.ts (3 tests) 2064ms
+   ✓ @E22 @E22-AC07 machine gun pickup starts alarm and attack on the same tick (high) 1058ms
+   ✓ @E22 @E22-AC07 machine gun pickup starts alarm and attack on the same tick (low) 503ms
+   ✓ @E22 @E22-AC11 tank aims at a safe fallback during cooldown and fires on schedule after the immediate alarm 500ms
+ ✓  functional  tests/sim/missions/l3-base-gates.test.ts (2 tests) 42828ms
+   ✓ PO-10b @E21 @E21-AC17 ring acknowledges arrival immediately and evacuates after exactly 15 seconds 5067ms
+   ✓ PO-11 @E21 @E21-AC17 full horde attacks the base for 120 s without entering the perimeter 37759ms
+ ✓  functional  tests/levels/L4-po-round.test.ts (5 tests) 201720ms
+   ✓ L4 PO round 10-13 (5)
+     ✓ T-E22-po-1 @E22 @E22-AC04 the courier gets off the first bus inside the military area and cannot walk out before the line breaks 25382ms
+     ✓ T-E22-po-2 @E22 @E22-AC05 @E22-AC07 soldiers relaxed before the alarm and at their posts within 10 s of it; people in routines, then fleeing and hiding 16809ms
+     ✓ T-E22-civilians-stay-high @E22 @E22-AC07 pre-alarm camp civilians remain human and panic/hide; incoming infected are new entities 76938ms
+     ✓ T-E22-civilians-stay-low @E22 @E22-AC07 pre-alarm camp civilians remain human and panic/hide; incoming infected are new entities 30837ms
+     ✓ T-E22-po-3 @E22 @E22-AC10 @E22-AC12 infected come spread from all sides (and from inside the camp); six to eight Alphas reach the lines and nests; the beats hold 51752ms
+ ✓  functional  tests/levels/L4.test.ts (23 tests) 873311ms
+   ✓ L4 The Safe City Falls (23)
+     ✓ T-E22-01 @E22 @E22-AC01 mission graph ride -> quartermaster -> hold -> hide -> bar is completable, no fail timer 7480ms
+     ✓ T-E22-02 @E22 @E22-AC02 the complete bot finishes a single seed from L4-default (bat, axe, handgun) with few deaths, in the time band 105258ms
+     ✓ T-E22-04 @E22 @E22-AC04 convoy: five vehicles, the courier a seated passenger of a bus, 20-35 s ride, control back <= 0.5 s after the stop 6411ms
+     ✓ T-E22-05 @E22 @E22-AC05 false safety until the first turn: zero infected, zero combat events, >= 40 civilians in routines, >= 16 soldiers on posts 10799ms
+     ✓ T-E22-06 @E22 @E22-AC06 machine gun: 14 per round, 10/s, 4 degrees, 26 m, pierce 1, no ammunition; 5 infected at 10 m fall in <= 3 s (handgun >= 2x slower) 65039ms
+     ✓ T-E22-07 @E22 @E22-AC07 the alarm: exactly on the gun pickup tick, 15-25 new infected enter from camp buildings or street mouths with >= 10 humans near the alarm 64873ms
+     ✓ T-E22-08 @E22 @E22-AC08 scale: 18-22 soldiers and 60-70 civilians (24 evacuees from the buses), >= 40 % armed with pistols, hunting rifles and melee (>= 3 each); the low tier halves; caps hold 587ms
+     ✓ T-E22-09 @E22 @E22-AC09 allied fighters: shots from soldiers, armed civilians fight, everyone can turn (same id, look kept, weapon dropped), nobody is immune 17971ms
+     ✓ T-E22-10 @E22 @E22-AC10 from all sides: six street and alley mouths (>= 3 mutually >= 60 degrees apart around the plaza), emergence out of view 25538ms
+     ✓ T-E22-11 @E22 @E22-AC11 military spectacle: two HMG positions fire, trucks and an armoured vehicle stand in the plaza, the tank fires every 8-12 s away from the player and allies, the helicopter orbits and withdraws without landing 28923ms
+     ✓ T-E22-13 @E22 @E22-AC13 the line breaks after the third lost line ("Fall back!", also with the idle bot): fuel-truck mega chain, objective "Run to the cellar", the helicopter withdraws 65529ms
+     ✓ T-E22-14 @E22 @E22-AC14 live damage at the cellar: >= 4 fires, >= 2 burning vehicles, >= 10 broken windows, >= 6 blast scorches, all traceable to explosion/fire events of the run 71962ms
+     ✓ T-E22-15 @E22 @E22-AC15 cellar: only the courier (and the corgi) go down, nobody can path in, the door bars, battle events go on >= 6 s, then level.completed 6866ms
+     ✓ T-E22-16 @E22 @E22-AC16 light: L4 polar 1.15-1.30 rad, fog far >= L3 + 20 m; no smoke column before the first turn, >= 3 at the line break 5377ms
+     ✓ T-E22-17 @E22 @E22-AC17 checkpoints preserve the live battlefield across deaths, with only live infection losses 54296ms
+     ✓ T-E22-bots @E22 evade-only never attacks and still reaches the cellar; the low tier finishes too 118719ms
+     ✓ T-E22-03 @E22 @E22-AC03 the newbie bot finishes (single seed; the 20-seed battery is dropped as a gate, PO 10-09) with few deaths 54922ms
+     ✓ T-E22-12 @E22 @E22-AC12 still not enough: soldiers thin out and the infected outgrow the kills by the line break (single seed) 84844ms
+     ✓ T-E22-12-alphas-high @E22 @E22-AC12 first Alphas use the district mouths after the internal turn, inside both caps 51087ms
+     ✓ T-E22-12-alphas-low @E22 @E22-AC12 first Alphas use the district mouths after the internal turn, inside both caps 21952ms
+     ✓ T-E22-13-authored-gap @E22 @E22-AC12 @E22-AC13 the authored line replaces static pallets and breaks through logged Alpha HP damage 580ms
+     ✓ T-E22-15-carry @E22 @E22-AC15 solitary basement completion carries the actual arsenal to L5 without pending rewards 3894ms
+     ✓ T-E22-anchors @E22 every authored L4 anchor resolves in the layout copy 397ms
+
+ Test Files  8 passed (8)
+      Tests  87 passed (87)
+   Start at  12:30:05
+   Duration  876.97s (tests 99%, transform 1%)
+
+[remote] done exit=0 (runner 94.130.181.173, sync 64s, remote total 886s)

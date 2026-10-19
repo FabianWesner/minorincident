@@ -37,7 +37,7 @@ export class Combat {
     this.rng = new Rng(world.seed, 'combat');
     this.query = new HitQuery(world.entities, world.spatial, definition.walls ?? [], world.interactables?.walls);
     this.effects = new ActionEffects(world); this.pickups = new Pickups(world);
-    this.damage = new Damage(world); this.status = new Status(world); this.assist = new AimAssist(world.entities, this.query);
+    this.damage = new Damage(world); this.status = new Status(world); this.assist = new AimAssist(world.entities, this.query, point => world.infected?.director.inPlayerView(point, Infinity, 1) ?? true);
     this.runner = new ActionRunner(1, new Loadout(['weapon.bat', 'weapon.pistol'], ['weapon.grenade', 'ability.ground-slam']));
     this.attach();
   }
@@ -88,7 +88,7 @@ export class Combat {
     this.world.controls.attacked(attack.side);
     const source = this.world.entities.get(attack.sourceId)!;
     if (attack.def.category === 'ranged') {
-      this.assist.apply(source.id, source.transform, attack.aim, attack.def.range);
+      if (!attack.autoAim) this.assist.apply(source.id, source.transform, attack.aim, attack.def.range);
       if (attack.def.spread && (attack.def.pellets ?? 1) === 1) {
         const angle = Math.atan2(attack.aim.z, attack.aim.x) + (this.rng.next() - 0.5) * attack.def.spread * Math.PI / 180;
         attack.aim.x = Math.cos(angle); attack.aim.z = Math.sin(angle);
@@ -227,7 +227,7 @@ export class Combat {
     }
   }
   snapshot() {
-    const attack = (a: Attack) => ({ id: a.id, sourceId: a.sourceId, side: a.side, actionId: a.def.id, combo: a.combo, inPlace: a.inPlace, aim: a.aim, aimPoint: a.aimPoint, started: a.started, activeAt: a.activeAt, recoveryAt: a.recoveryAt, endsAt: a.endsAt, resolved: a.resolved, hit: [...a.hit] });
+    const attack = (a: Attack) => ({ id: a.id, sourceId: a.sourceId, side: a.side, actionId: a.def.id, autoAim: a.autoAim, combo: a.combo, inPlace: a.inPlace, aim: a.aim, aimPoint: a.aimPoint, started: a.started, activeAt: a.activeAt, recoveryAt: a.recoveryAt, endsAt: a.endsAt, resolved: a.resolved, hit: [...a.hit] });
     const buffered = this.runner.snapshotBuffer();
     return { ...(this.effects.zones.length ? { zones: this.effects.snapshot() } : {}), ...(Object.keys(buffered).length ? { buffered } : {}), sequence: this.runner.lastAttackId, gunReady: { ...this.runner.gunReady }, chains: this.runner.snapshotChains(), rng: this.rng.snapshot(), god: this.damage.god, infiniteCharges: this.runner.infiniteCharges, aimAssist: this.assist.setting, water: this.status.water, running: Object.values(this.runner.running).map(attack), projectiles: this.projectiles.map((p) => ({ ...p, attack: attack(p.attack) })) };
   }

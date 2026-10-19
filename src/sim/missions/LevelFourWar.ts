@@ -333,7 +333,7 @@ export class LevelFourWar {
   private arrive(): void {
     const { world } = this.mission, tick = world.tick, s = this.s;
     if (s.phase !== 'convoy') return;
-    s.phase = 'plaza'; s.arrivedAt = tick; s.convoyV = 0; s.turnDueAt = tick + ticks(l4.turn.latestAfterArrivalS);
+    s.phase = 'plaza'; s.arrivedAt = tick; s.convoyV = 0; s.turnDueAt = 0;
     this.parkNav(true);
     // PO 10-13 ("Let the user exit the 1st bus which is ON the military area"): she steps off the side of the bus that faces the plaza.
     const bus = world.entities.get(s.convoyIds[this.playerBus()])!, player = world.entities.get(1)!, side = this.plazaSide(bus.transform);
@@ -457,9 +457,10 @@ export class LevelFourWar {
     this.world.events.emit({ type: 'l4.gun', tick: this.world.tick });
     this.mission.radio('L4.gun');
     this.armCivilians();
-    // The first turn fires 40-50 s after the issue (seeded), at the latest 100 s after the arrival.
-    const [a, b] = l4.turn.afterGunS, rng = new Rng(this.world.seed, 'l4-turn');
-    s.turnDueAt = Math.min(s.turnDueAt || Infinity, s.gunAt + ticks(a + rng.next() * (b - a)));
+    // PO 10-19: alarm and attack start on the pickup's simulation tick.
+    s.turnDueAt = this.world.tick;
+    this.turn();
+    this.waves(); // Objective completion follows this tick's controller update: dispatch the attack now.
   }
   /**
    * PO 2026-10-12 ("the army arms the peds"): when the quartermaster issues the courier's gun, the civilians at the table are armed in view:
@@ -484,7 +485,7 @@ export class LevelFourWar {
     const first = { x: -25, z: -9 };
     const near = [...world.entities.iterate()].filter(e => this.human(e) && dist(e.transform, first) <= 10).length;
     this.perimeter(true);
-    s.turnAt = s.warAt = tick; s.phase = 'war'; s.waveAt = tick + ticks(l4.war.fromS);
+    s.turnAt = s.warAt = Math.max(1, tick); s.phase = 'war'; s.waveAt = tick + ticks(l4.war.fromS);
     s.soldiersAtTurn = this.liveSoldiers().length; s.civiliansAtTurn = [...world.entities.iterate()].filter(e => this.human(e)).length;
     const ids: number[] = [];
     const courier = world.entities.get(1)!.transform, ai = world.infected!;
@@ -907,7 +908,7 @@ export class LevelFourWar {
     if (s.phase === 'war' && tick % 10 === 0) { if (!this.fence.length) this.perimeter(true); this.perimeterBark(); }
     if (s.phase === 'plaza') {
       if (tick === s.arrivedAt + ticks(l4.calm.welcomeAtS)) this.mission.radio('L4.welcome');
-      if (tick >= s.turnDueAt) this.turn();
+      if (s.gunAt && tick >= s.turnDueAt) this.turn();
     }
     if (s.phase === 'war' || s.phase === 'collapse' || s.phase === 'cellar' || s.phase === 'done') {
       this.alphas(); this.waves();

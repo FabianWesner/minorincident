@@ -66,6 +66,7 @@ type Plan =
   | { type: 'path'; points: Point[]; index: number; run: boolean; loop: boolean }
   | { type: 'moveTo'; point: Point; run: boolean }
   | { type: 'turn'; yaw: number }
+  | { type: 'autoAim'; move: Point; until: number; side: 'LEFT' | 'RIGHT' }
   | { type: 'attack'; target: string; until: number; side: 'LEFT' | 'RIGHT'; move?: Point; aiming?: boolean; inPlace?: boolean }
   | { type: 'mount'; bike: string; at: number }
   | { type: 'click'; entity: number; at: number }
@@ -354,7 +355,9 @@ export class SceneLab {
       const state = mission.state.l3!, api = missionControls(world);
       state.pending = []; state.waves = []; state.populated = [true, true, true];
       state.finalePacks = l3.finale.packs.map(p => p[1]);
-      for (const id of state.officerIds) api.teleport(id, { x: l3.map.zoneX + 3, z: 3 });
+      // Distinct clear road positions: stacking ten capsules at one point can reject a teleport
+      // and strand an officer back at the station, correctly preventing the boom from closing.
+      for (const [i, id] of state.officerIds.entries()) api.teleport(id, { x: l3.map.zoneX + 5 + Math.floor(i / 3) * 1.4, z: (i % 3 - 1) * 1.4 });
       for (const e of world.entities.iterate()) if (e.companion) api.teleport(e.id, { x: l3.map.zoneX + 3, z: 2 });
       api.teleport('player', { x: l3Anchors['l3-zone'][0], z: 0 });
       const ai = world.infected!, cap = ai.director.cap;
@@ -371,13 +374,21 @@ export class SceneLab {
       world.infected!.director.setTier(this.game.quality.tier);
       const mission = world.loadMission(resolveCampaignMission('L4', world.districts!));
       mission.begin();
-      if (spec.l4Convoy === 'parked' || spec.l4Convoy === 'hold') {
+      if (spec.l4Convoy === 'parked' || spec.l4Convoy === 'hold' || spec.l4Convoy === 'pickup' || spec.l4Convoy === 'tank' || spec.l4Convoy === 'first-line') {
         for (let t = 0; t < 60 * 60 && mission.state.l4!.phase === 'convoy'; t++) world.update();
         if (mission.state.l4!.phase === 'convoy') throw new Error('L4 convoy did not arrive for parked fixture');
       }
-      if (spec.l4Convoy === 'hold') {
+      if (spec.l4Convoy === 'hold' || spec.l4Convoy === 'pickup' || spec.l4Convoy === 'tank' || spec.l4Convoy === 'first-line') {
+        if (spec.l4Convoy === 'pickup' || spec.l4Convoy === 'first-line') { const q = mission.def.anchors['l4-quartermaster']; this.teleport(world.entities.get(1)!, { x: q.x, z: q.z + 1 }); }
         mission.completeObjective('quartermaster');
         while (!mission.state.l4!.turnAt) world.update();
+      }
+      if (spec.l4Convoy === 'tank') {
+        for (let t = 0; t < 120 * 60 && mission.state.l4!.tankPhase !== 'hold'; t++) world.update();
+        if (mission.state.l4!.tankPhase !== 'hold') throw new Error('L4 tank did not reach its firing post');
+      }
+      if (spec.l4Convoy === 'first-line') {
+        while (world.tick < mission.state.l4!.turnAt + 33 * 60) world.update();
       }
       for (const [i, id] of mission.state.l4!.convoyIds.entries()) this.vehicles.set(`convoy-${i}`, id);
     }
@@ -678,6 +689,7 @@ export class SceneLab {
       else if ('walk' in a || 'run' in a) actor.plan = { type: 'path', points: 'walk' in a ? a.walk : a.run, index: 0, run: 'run' in a, loop: !!a.loop };
       else if ('moveTo' in a) actor.plan = { type: 'moveTo', point: a.moveTo, run: a.pace !== 'walk' };
       else if ('turn' in a) actor.plan = { type: 'turn', yaw: rad(a.turn) };
+      else if ('autoAim' in a) actor.plan = { type: 'autoAim', move: a.autoAim.move, until: this.frame + ticks(a.autoAim.seconds ?? 1), side: a.autoAim.side ?? 'RIGHT' };
       else if ('aim' in a) actor.plan = { type: 'attack', target: a.aim, until: this.frame + ticks(a.seconds ?? 2), side: world.combat!.runner.loadout.state.selectedSide, move: a.move ?? [0, 0], aiming: true };
       else if ('attack' in a) actor.plan = { type: 'attack', target: a.attack, until: this.frame + ticks(a.seconds ?? 2), side: a.side ?? 'LEFT', move: a.move, inPlace: a.inPlace };
       else if ('select' in a) { const l = world.combat!.runner.loadout.state; l.selectedSide = a.select; if (a.index !== undefined) l[a.select].index = a.index; }
@@ -988,6 +1000,9 @@ export class SceneLab {
       // A released LMB on the picked body, as InputSystem resolves a real click (one swing, the feet stay put).
       if (this.frame === plan.at) { frame.attackTarget = { id: plan.entity, side: 'LEFT' }; frame.mouseAttack = true; frame.cancelMove = true; frame.pointerTarget = true; frame.aimSource = 'pointer'; frame.left = { down: true, held: false, up: true }; }
       else { frame.pointerTarget = true; frame.aimSource = 'pointer'; if (this.frame > plan.at + 40) courier.plan = null; }
+    } else if (plan?.type === 'autoAim') {
+      if (this.frame >= plan.until) courier.plan = null;
+      else { frame.move = toPoint(plan.move); frame.aimSource = 'assist'; frame[plan.side === 'LEFT' ? 'left' : 'right'] = { down: false, held: true, up: false }; }
     } else if (plan?.type === 'drive') {
       if (this.frame >= plan.until) { courier.plan = null; frame.brake = true; }
       else frame.drive = { throttle: plan.throttle, steer: plan.steer };

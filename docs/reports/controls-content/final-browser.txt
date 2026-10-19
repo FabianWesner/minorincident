@@ -1,0 +1,27 @@
+GPU guard: WindowServer 3.0% / 10 s; 2 headless browsers + 1 requested; waiting
+GPU guard: WindowServer 3.7% / 10 s; 2 headless browsers + 1 requested; waiting
+
+Running 20 tests using 1 worker
+
+  ✓   1 [chromium] › tests/e2e/controls-content.spec.ts:7:3 › @E03 @E05 walking north shoots north with zombies north and south (webgl/high/z1) (5.5s)
+  ✓   2 [chromium] › tests/e2e/controls-content.spec.ts:7:3 › @E03 @E05 walking north shoots north with zombies north and south (webgl/high/z0.5) (5.3s)
+  ✓   3 [chromium] › tests/e2e/controls-content.spec.ts:7:3 › @E03 @E05 walking north shoots north with zombies north and south (webgl/low/z1) (3.6s)
+  ✓   4 [chromium] › tests/e2e/controls-content.spec.ts:7:3 › @E03 @E05 walking north shoots north with zombies north and south (webgl/low/z0.5) (3.7s)
+  ✓   5 [chromium] › tests/e2e/controls-content.spec.ts:7:3 › @E03 @E05 walking north shoots north with zombies north and south (webgpu/high/z1) (5.2s)
+  ✓   6 [chromium] › tests/e2e/controls-content.spec.ts:7:3 › @E03 @E05 walking north shoots north with zombies north and south (webgpu/high/z0.5) (5.2s)
+  ✓   7 [chromium] › tests/e2e/controls-content.spec.ts:7:3 › @E03 @E05 walking north shoots north with zombies north and south (webgpu/low/z1) (3.5s)
+  ✓   8 [chromium] › tests/e2e/controls-content.spec.ts:7:3 › @E03 @E05 walking north shoots north with zombies north and south (webgpu/low/z0.5) (3.7s)
+  ✓   9 [chromium] › tests/e2e/levels/l3-base-gates.spec.ts:6:1 › PO-10b/11 @E21 @E21-AC17 seed 1 base arrival shows countdown, closes the boom and keeps the horde outside (32.3s)
+  ✓  10 [chromium] › tests/e2e/smoke.spec.ts:4:1 › S-01 @smoke foundation boots, ready resolves and a screenshot is available (668ms)
+  ✓  11 [chromium] › tests/e2e/smoke.spec.ts:14:1 › S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies (612ms)
+  ✓  12 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 plaza: mouse WASD stick webgl high zoom 1 (16.0s)
+  ✓  13 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 plaza: mouse WASD stick webgl high zoom 0.5 (15.9s)
+  ✓  14 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 plaza: mouse WASD stick webgl low zoom 1 (8.4s)
+  ✓  15 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 plaza: mouse WASD stick webgl low zoom 0.5 (9.2s)
+  ✓  16 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 plaza: mouse WASD stick webgpu high zoom 1 (16.1s)
+  ✓  17 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 plaza: mouse WASD stick webgpu high zoom 0.5 (16.0s)
+  ✓  18 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 plaza: mouse WASD stick webgpu low zoom 1 (8.2s)
+  ✓  19 [chromium] › tests/e2e/levels/l4-plaza-movement.spec.ts:55:3 › @E22 L4 plaza: mouse WASD stick webgpu low zoom 0.5 (8.7s)
+  ✓  20 [chromium] › tests/e2e/levels/L4.spec.ts:107:3 › L4 The Safe City Falls in the browser › T-E22-alarm @E22 @E22-AC07 real-input alarm has living visible infected within 10 seconds (11.6s)
+
+  20 passed (3.0m)
