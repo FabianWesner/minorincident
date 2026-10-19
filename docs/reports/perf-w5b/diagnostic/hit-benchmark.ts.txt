@@ -1,0 +1,27 @@
+import { readFileSync, writeFileSync } from 'node:fs';
+import ts from 'typescript';
+import { loadL4, runL4 } from '../sim-runner/l4Bots';
+const baselineSource = readFileSync('docs/reports/perf-w5b/diagnostic/hit-before.ts.txt', 'utf8').replace("import { downed } from './Damage';", 'const downed = () => false;');
+const javascript = ts.transpileModule(baselineSource, { compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022 } }).outputText;
+const baseline = await import(`data:text/javascript;base64,${Buffer.from(javascript).toString('base64')}`) as { HitQuery: { prototype: object } };
+const { world, mission } = await loadL4(2, 'low');
+try {
+  runL4(world, mission, 'complete', { seed: 2, god: true, maxSeconds: 160, stopWhen: () => mission.state.l4!.turnAt > 0 && world.tick >= mission.state.l4!.turnAt + 10 });
+  const nav = world.combat!.query, current = Object.getPrototypeOf(nav);
+  const targets = [...world.entities.iterate()].filter(e => e.civilian?.l1?.target).map(e => ({ from: { x: e.transform.x, z: e.transform.z }, to: e.civilian!.l1!.target!, radius: .35 }));
+  for (let i = 0; i < 120; i++) targets.push({ from: { x: i % 12 * 8 - 44, z: Math.floor(i / 12) * 8 - 36 }, to: { x: 40 - i % 9 * 9, z: 32 - i % 8 * 8 }, radius: .35 });
+  const answers = (prototype: object) => { Object.setPrototypeOf(nav, prototype); return targets.map(q => nav.clearDistance({ ...q.from, y: .7 }, { x: (q.to.x-q.from.x)/Math.hypot(q.to.x-q.from.x,q.to.z-q.from.z), y: .1, z: (q.to.z-q.from.z)/Math.hypot(q.to.x-q.from.x,q.to.z-q.from.z) }, Math.hypot(q.to.x-q.from.x,q.to.z-q.from.z))); };
+  const before = answers(baseline.HitQuery.prototype), after = answers(current);
+  if (before.some((answer, i) => answer !== after[i])) throw new Error('Visibility answers differ');
+  const run = (prototype: object, repeats: number) => {
+    Object.setPrototypeOf(nav, prototype); let hits = 0; const start = performance.now();
+    for (let i = 0; i < repeats; i++) for (const q of targets) if (nav.clearDistance({ ...q.from, y: .7 }, { x: (q.to.x-q.from.x)/Math.hypot(q.to.x-q.from.x,q.to.z-q.from.z), y: .1, z: (q.to.z-q.from.z)/Math.hypot(q.to.x-q.from.x,q.to.z-q.from.z) }, Math.hypot(q.to.x-q.from.x,q.to.z-q.from.z))) hits++;
+    return { ms: performance.now() - start, hits };
+  };
+  run(current, 40); run(baseline.HitQuery.prototype, 40);
+  const samples: { name: string; ms: number; hits: number }[] = [];
+  for (const order of [['before', 'after'], ['after', 'before'], ['before', 'after'], ['after', 'before']]) for (const name of order) samples.push({ name, ...run(name === 'before' ? baseline.HitQuery.prototype : current, 400) });
+  const median = (name: string) => { const values = samples.filter(s => s.name === name).map(s => s.ms).sort((a, b) => a - b); return (values[1] + values[2]) / 2; };
+  const proof = { rays: targets.length, callsPerSample: targets.length * 400, equivalent: true, clear: after.filter(Boolean).length, beforeMedianMs: median('before'), afterMedianMs: median('after'), samples };
+  writeFileSync('docs/reports/perf-w5b/diagnostic/hit-benchmark.json', JSON.stringify(proof, null, 2)); console.log(JSON.stringify(proof));
+} finally { world.dispose(); }

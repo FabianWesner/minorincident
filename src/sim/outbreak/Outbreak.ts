@@ -1,4 +1,4 @@
-import { balancedCrowdModel, crowdAppearance, shirtTones } from '../../data/crowdAppearance';
+import { leastCrowdedModel, crowdAppearance, shirtTones } from '../../data/crowdAppearance';
 import { isCorgi, storyProtected } from '../npc/storyProtection';
 import { SimPhase } from '../../core/EventBus';
 import { Rng } from '../../core/Rng';
@@ -118,13 +118,18 @@ export class Outbreak {
     this.rng.next(); // Preserve the former random-shirt sample's place in the gameplay stream.
     return shirtTones[crowdAppearance(id).shirt];
   }
+  private readonly modelCounts = new Map<string, number>(l1Pedestrians.models.map(model => [model, 0]));
   private crowdModel(at: Point, infected = false): string {
-    return balancedCrowdModel(l1Pedestrians.models,
-      [...this.world.entities.iterate()].filter(e => !e.hidden && e.health.current > 0 && Boolean(e.infected) === infected && keepsLook(e)).map(e => ({ model: e.appearance!.asset, x: e.transform.x, z: e.transform.z })), at, Math.floor(this.rng.next() * 0x100000000));
+    const counts = this.modelCounts;
+    for (const model of counts.keys()) counts.set(model, 0);
+    for (const e of this.world.entities.iterate()) if (!e.hidden && e.health.current > 0 && Boolean(e.infected) === infected && keepsLook(e)
+      && Math.hypot(e.transform.x - at.x, e.transform.z - at.z) < 30 && counts.has(e.appearance!.asset)) counts.set(e.appearance!.asset, counts.get(e.appearance!.asset)! + 1);
+    return leastCrowdedModel(l1Pedestrians.models, counts, Math.floor(this.rng.next() * 0x100000000));
   }
 
-  /** One L1 pedestrian with a seeded look, speeds and a calm routine. Returns the entity id. */
-  spawnPedestrian(position: Point, options: PedestrianOptions = {}): number {
+  /** One L1 pedestrian with a seeded look, speeds and a calm routine. Returns the entity id.
+   * `admit = false` hands placement to the alarm caller in this same synchronous transaction. */
+  spawnPedestrian(position: Point, options: PedestrianOptions = {}, admit = true): number {
     const civilians = this.world.npcs!.civilians;
     const role = options.role ?? civilianRoles[Math.floor(this.rng.next() * civilianRoles.length)].role;
     const model = options.child ? 'npc.civilian-kid' : options.model ?? this.crowdModel(position);
@@ -133,7 +138,7 @@ export class Outbreak {
     const schedule: CivilianActivity[] = options.schedule ?? waypoints.map((target, i) => options.faces?.[i]
       ? { activity: 'look', anchor: 'l1/look', target, facing: options.faces[i]!, ticks: ticks(2 + this.rng.next() * 6), prop: options.handProp as CivilianProp ?? undefined }
       : { activity: 'walk', anchor: 'l1/walk', target, ticks: 1, prop: options.handProp as CivilianProp ?? undefined });
-    const id = civilians.spawn(role, position, { waypoints: schedule.map(s => s.target), model, schedule, child: options.child });
+    const id = civilians.spawn(role, position, { waypoints: schedule.map(s => s.target), model, schedule, child: options.child }, admit);
     const e = this.world.entities.get(id)!, c = e.civilian!;
     e.transform.yaw = options.yaw ?? this.rng.next() * Math.PI * 2;
     const tier: SpeedTier = options.tier ?? (model === 'npc.civilian-elderly' || role === 'bathrobe-neighbor' ? 'frail' : role === 'jogger' || this.rng.next() < l1Pedestrians.athleticShare ? 'athletic' : 'average');
@@ -372,20 +377,29 @@ export class Outbreak {
       if (l1.refuge?.startsWith('edge') && !this.world.missions?.state.l4) this.escape(e); else this.shelter(e);
     }
   }
+  private readonly refugeOccupied: Vec2[] = [];
   /** Spread a group over clear exterior pavement; never target the door leaf or a spot beyond it. */
   private refugeSpot(e: EntitySnapshot, refuge: Refuge): Vec2 {
     const nav = this.world.infected!.nav, angle = Math.atan2(e.transform.z - refuge.z, e.transform.x - refuge.x);
+    // This synchronous search changes no actor. Borrow the same targets once,
+    // rather than rescanning every district entity for each clear candidate.
+    const neighbours = this.refugeOccupied; neighbours.length = 0;
+    let gathered = false;
     for (let radius = 1.4; radius <= 4; radius += .65) for (let k = 0; k < 9; k++) {
       const a = angle + ((k + e.id % 9) % 9 - 4) * Math.PI / 12;
       const p = { x: refuge.x + Math.cos(a) * radius, z: refuge.z + Math.sin(a) * radius };
       if (!nav.clear(p.x, p.z, .5) || !nav.visible(refuge, p, .35)) continue;
+      if (!gathered) {
+        for (const other of this.world.entities.iterate()) if (other.id !== e.id && other.civilian && !other.hidden && other.health.current > 0) neighbours.push(other.civilian.l1?.target ?? other.transform);
+        gathered = true;
+      }
       let occupied = false;
-      for (const other of this.world.entities.iterate()) if (other.id !== e.id && other.civilian && !other.hidden && other.health.current > 0) {
-        const at = other.civilian.l1?.target ?? other.transform;
+      for (const at of neighbours) {
         if (Math.hypot(at.x - p.x, at.z - p.z) < .85) { occupied = true; break; }
       }
-      if (!occupied) return p;
+      if (!occupied) { neighbours.length = 0; return p; }
     }
+    neighbours.length = 0;
     return { x: e.transform.x, z: e.transform.z };
   }
   private shelter(e: EntitySnapshot): void {
@@ -526,13 +540,15 @@ export class Outbreak {
     if (phase === 'infected') this.rise(e);
   }
   /** The same entity becomes an infected: same id, asset, tint, accessories; speed from its tier (section 5.4). */
-  private rise(e: EntitySnapshot, bitten = true): void {
+  private rise(e: EntitySnapshot, bitten = true, admit = true): void {
     const ai = this.world.infected!, tick = this.world.tick, c = e.civilian!, inf = e.infection!;
     // A conversion keeps the admitted actor's pose. The coarse route margin is
     // not another spawn owner; the shared admission query checks the new body below.
     const at = { x: e.transform.x, z: e.transform.z };
     let id: number;
-    try { id = ai.spawn(c.zooAnimal ? `infected.${c.zooAnimal}` : 'infected.runner', at, { variant: c.variant, yaw: e.transform.yaw, state: 'idle', perched: false, tier: inf.tier }); }
+    // This pooled record supplies the brain/combat data only. Admit the real
+    // actor below, after its original ID and pose have been retained.
+    try { id = ai.spawn(c.zooAnimal ? `infected.${c.zooAnimal}` : 'infected.runner', at, { variant: c.variant, yaw: e.transform.yaw, state: 'idle', perched: false, tier: inf.tier }, true); }
     catch { delete e.infection; this.kill(e); return; }
     const pooled = this.world.entities.get(id)!;
     this.world.entities.delete(id); this.world.spatial.delete(id);
@@ -545,7 +561,7 @@ export class Outbreak {
     // Lane C's L1 brain already gave it the tier run speed; without it (tests, old levels) use the tier base +/- jitter.
     if (!c.zooAnimal && !e.infected!.l1) e.infected!.speed = l1v2.speedTiers[inf.tier].baseMs * (1 + (this.rng.next() * 2 - 1) * l1v2.speedTiers.jitter);
     delete e.civilian; delete e.infection; delete e.motion; if (c.zooAnimal) delete e.locomotion;
-    this.world.solids.admit(e, 'outbreak.rise');
+    if (admit) this.world.solids.admit(e, 'outbreak.rise');
     this.humans.invalidate();
     for (const pet of this.world.entities.iterate()) if (pet.civilian?.owner === e.id) pet.civilian.owner = null;
     this.world.spatial.set(e.id, e.transform.x, e.transform.z);
@@ -558,12 +574,13 @@ export class Outbreak {
   /**
    * Turn a pedestrian immediately (no on-screen transformation), keeping id and look. For scripted beats that happen out
    * of sight, e.g. the lab technician inside the facility or the off-screen horde. Not counted as a bite.
+   * The alarm caller can own final placement by passing `admit = false`; ordinary conversions admit here.
    */
-  turnNow(e: EntitySnapshot, tier?: SpeedTier): void {
+  turnNow(e: EntitySnapshot, tier?: SpeedTier, admit = true): void {
     if (isCorgi(e) || storyProtected(this.world, e)) return;
     if (tier && e.appearance) e.appearance.tier = tier;
     e.infection = { entityId: e.id, progress: 1, phase: 'infected', tier: e.appearance?.tier ?? 'average', startedTick: this.world.tick, endsTick: this.world.tick, biteSourceId: 0 };
-    e.hidden = false; this.rise(e, false);
+    e.hidden = false; this.rise(e, false, admit);
   }
   /** Live pedestrians (not escaped, not turning, not dead). */
   liveCivilians(): number {

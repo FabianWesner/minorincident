@@ -136,7 +136,9 @@ export class InfectedSystem {
     for (const point of this.perches) { const d = Math.hypot(point.x - position.x, point.z - position.z); if (d < distance) { distance = d; closest = point; } }
     return closest;
   }
-  spawn(id: string, position: { x: number; z: number }, opts: InfectedSpawn = {}): number {
+  /** A conversion borrows the initialized record, then admits its existing
+   * actor ID in Outbreak.rise; the temporary ID never needs a second position. */
+  spawn(id: string, position: { x: number; z: number }, opts: InfectedSpawn = {}, conversion = false): number {
     const l3Human = this.world.scenario === 'L3' && (id === 'infected.runner' || id === 'infected.sprinter');
     // Count successful emergences, including turned officers and civilians. Clothes do not determine chase speed.
     if (l3Human) id = (this.l3HumanSpawns + 1) % l3.infected.sprinterEvery === 0 ? 'infected.sprinter' : 'infected.runner';
@@ -176,7 +178,7 @@ export class InfectedSystem {
     }
     this.active.push(entity); this.world.spatial.set(entity.id, position.x, position.z); this.counters.reused++;
     const requestedX = entity.transform.x, requestedZ = entity.transform.z;
-    this.world.solids.admit(entity, 'infected.spawn', 4, !opts.offNav);
+    if (!conversion) this.world.solids.admit(entity, 'infected.spawn', 4, !opts.offNav);
     // A displaced chasing spawn reacquires from its admitted pose before its
     // idle look-around turns it away. Unshifted spawns retain normal perception
     // timing, allowing their caller to finish setting their facing/intent.

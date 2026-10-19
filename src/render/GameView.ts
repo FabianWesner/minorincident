@@ -340,8 +340,11 @@ export class GameView implements Lifecycle {
             return this.actions.muzzle(new Vector3());
           }
           if (e?.civilian && this.npcs) {
-            const muzzle = this.npcs.shotMuzzle(id, direction);
-            return e.civilian.ally?.weapon === 'hmg' ? this.districts?.aimMachineGun(e.transform, direction) ?? muzzle : muzzle;
+            if (e.civilian.ally?.weapon === 'hmg') {
+              const mounted = this.districts?.aimMachineGun(e.transform, direction);
+              if (mounted) { this.npcs.aimGun(id, direction); return mounted; }
+            }
+            return this.npcs.shotMuzzle(id, direction);
           }
           return null; // Vehicle weapons carry their own authored event origin.
         },
@@ -397,11 +400,25 @@ export class GameView implements Lifecycle {
     const warm = async (): Promise<void> => {
       await loadGate.foreground(); // node builds cannot be sliced: never during the menus
       this.lighting?.update(this.view);
+      // Compile against the gameplay light list. In particular W6 low disables
+      // its city-wide moon pass here; warming with that sun still visible left
+      // hidden blast pools cold until the first rocket.
+      this.updateLights();
       // Include hidden infected/LOD/VFX/decay variants, and warm their actual HDR/MSAA pass.
       const focus = this.camera.getWorldDirection(new Vector3()).multiplyScalar(20).add(this.camera.position);
       const unwarm = this.labWindows?.prewarmWindows();
       const restore = this.vfx?.prewarm(focus.x, focus.z); this.labAccident?.prewarm();
-      const prepare = () => preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress, this.background, this.world.scenario === 'L3' || this.world.scenario === 'L6');
+      const prepareVariant = () => preRender(this.renderer, this.scene, this.camera, () => this.postFx ? this.postFx.render() : this.renderer.render(this.scene, this.camera), partitions => this.postFx ? this.postFx.compile(partitions) : Promise.all(partitions.map(apply => { apply(); return this.renderer.compileAsync(this.scene, this.camera); })), this.background ? () => loadGate.wait() : () => new Promise(resolve => requestAnimationFrame(() => setTimeout(resolve, 0))), this.loadProgress, this.background, this.world.scenario === 'L3' || this.world.scenario === 'L6');
+      const prepare = async (): Promise<void> => {
+        // L4's moving set pieces reveal the courier during combat. Warm both
+        // graphs against every loading light/weather variant, before LOD swaps.
+        if (this.world.scenario === 'L4' && this.entityAssets) {
+          for (const enabled of [false, true]) {
+            const restoreReveal = this.entityAssets.prewarmReveal(focus, enabled);
+            try { await prepareVariant(); } finally { restoreReveal(); }
+          }
+        } else await prepareVariant();
+      };
       try {
         // Execute the shared shader's fire branch and its HDR field pass while
         // loading. The final full-size draw also executes the daylight branch.

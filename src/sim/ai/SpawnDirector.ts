@@ -4,9 +4,12 @@ import { moveAgent } from '../locomotion/AgentMotion';
 import { infectedDef } from '../../data/infected';
 import type { InfectedSystem, InfectedSpawn } from './InfectedSystem';
 import type { EntitySnapshot } from '../world/types';
+import type { CoverWall } from '../combat/HitQuery';
 /** Conservative ground camera footprint, authored with the gameplay camera. Expanded 10% at query time. */
 export interface CameraEnvelope { x: number; z: number; halfWidth: number; halfDepth: number; yaw: number }
 interface Request { archetype: string; position: { x: number; z: number }; options: InfectedSpawn; turning?: boolean; migration?: { group: Migration; index: number } }
+const silhouetteOffsets = [-.5, .5], silhouetteHeights = [.1, 1.9];
+const silhouetteAxes = ['x', 'y', 'z'] as const;
 export interface Migration {
   points: readonly { x: number; z: number }[]; offsets: readonly { x: number; z: number }[]; samples: Float64Array; lengths: Float64Array;
   requested: number; length: number; speed: number; expectedSeconds: number; started: number; arrived: number; members: number[];
@@ -30,6 +33,7 @@ export class SpawnDirector {
   private cameraPosition: { x: number; y: number; z: number } | null = null;
   private hasFrustum = false;
   private readonly frustum = new Float64Array(16);
+  private readonly occlusionWalls: CoverWall[] = [];
   constructor(readonly ai: InfectedSystem) {
     for (let i = 0; i < 16; i++) this.spawnPoints.push({ x: Math.cos(i * Math.PI / 8) * 52, z: Math.sin(i * Math.PI / 8) * 52 });
   }
@@ -54,13 +58,16 @@ export class SpawnDirector {
     this.frustum.set(matrix); this.hasFrustum = true;
   }
   visible(position: { x: number; z: number; y?: number }): boolean {
+    return this.visiblePoint(position.x, position.y ?? .7, position.z);
+  }
+  private visiblePoint(x: number, y: number, z: number): boolean {
     if (this.hasFrustum) {
-      const m = this.frustum, x = position.x, y = position.y ?? 0.7, z = position.z;
+      const m = this.frustum;
       const cx = m[0] * x + m[4] * y + m[8] * z + m[12], cy = m[1] * x + m[5] * y + m[9] * z + m[13];
       const cz = m[2] * x + m[6] * y + m[10] * z + m[14], w = m[3] * x + m[7] * y + m[11] * z + m[15];
       return w > 0 && Math.abs(cx) <= w * 1.1 && Math.abs(cy) <= w * 1.1 && Math.abs(cz) <= w;
     }
-    const c = this.camera, dx = position.x - c.x, dz = position.z - c.z;
+    const c = this.camera, dx = x - c.x, dz = z - c.z;
     return Math.abs(dx * Math.cos(c.yaw) + dz * Math.sin(c.yaw)) <= c.halfWidth * 1.1 && Math.abs(-dx * Math.sin(c.yaw) + dz * Math.cos(c.yaw)) <= c.halfDepth * 1.1;
   }
   /**
@@ -85,22 +92,48 @@ export class SpawnDirector {
   }
   /** Test the whole human silhouette against the expanded viewport. */
   offscreen(position: { x: number; z: number }, floorY = 0): boolean {
-    return [-.5, .5].every(dx => [-.5, .5].every(dz => [.1, 1.9].every(y => !this.visible({ x: position.x + dx, z: position.z + dz, y: y + floorY }))));
+    for (const dx of silhouetteOffsets) for (const dz of silhouetteOffsets) for (const y of silhouetteHeights) {
+      if (this.visiblePoint(position.x + dx, y + floorY, position.z + dz)) return false;
+    }
+    return true;
   }
   /** A solid building must hide the entire rising silhouette, not just its feet. */
   occluded(position: { x: number; z: number }): boolean {
     const origin = this.cameraPosition;
     if (!origin) return false;
-    return [-.5, .5].every(dx => [-.5, .5].every(dz => [.1, 1.9].every(y => (this.ai.world.combat?.definition.walls ?? []).some(wall => {
-      if (wall.halfY * 2 < 2.2) return false;
-      let near = 0, far = 1;
-      for (const [axis, half] of [['x', wall.halfX], ['y', wall.halfY], ['z', wall.halfZ]] as const) {
-        const end = axis === 'y' ? y : position[axis] + (axis === 'x' ? dx : dz), delta = end - origin[axis];
-        if (Math.abs(delta) < 1e-8) { if (origin[axis] < wall[axis] - half || origin[axis] > wall[axis] + half) return false; }
-        else { const a = (wall[axis] - half - origin[axis]) / delta, b = (wall[axis] + half - origin[axis]) / delta; near = Math.max(near, Math.min(a,b)); far = Math.min(far, Math.max(a,b)); }
+    // All eight rays lie inside this box. Select once, retaining authored wall
+    // order, instead of scanning the whole district separately for every corner.
+    const walls = this.occlusionWalls; walls.length = 0;
+    const x0 = Math.min(origin.x, position.x - .5), x1 = Math.max(origin.x, position.x + .5);
+    const z0 = Math.min(origin.z, position.z - .5), z1 = Math.max(origin.z, position.z + .5);
+    const y0 = Math.min(origin.y, .1), y1 = Math.max(origin.y, 1.9);
+    for (const wall of this.ai.world.combat?.definition.walls ?? []) {
+      if (wall.halfY * 2 < 2.2 || wall.x + wall.halfX < x0 || wall.x - wall.halfX > x1 ||
+        wall.z + wall.halfZ < z0 || wall.z - wall.halfZ > z1 || wall.y + wall.halfY < y0 || wall.y - wall.halfY > y1) continue;
+      walls.push(wall);
+    }
+    for (const dx of silhouetteOffsets) for (const dz of silhouetteOffsets) for (const y of silhouetteHeights) {
+      let blocked = false;
+      for (const wall of walls) {
+        let near = 0, far = 1;
+        // Reject disjoint slabs immediately. The alarm checks many exits against
+        // the same district walls; allocating axis tuples for every wall dominated it.
+        for (const axis of silhouetteAxes) {
+          const half = axis === 'x' ? wall.halfX : axis === 'y' ? wall.halfY : wall.halfZ;
+          const end = axis === 'y' ? y : position[axis] + (axis === 'x' ? dx : dz), delta = end - origin[axis];
+          if (Math.abs(delta) < 1e-8) {
+            if (origin[axis] < wall[axis] - half || origin[axis] > wall[axis] + half) { far = -1; break; }
+          } else {
+            const a = (wall[axis] - half - origin[axis]) / delta, b = (wall[axis] + half - origin[axis]) / delta;
+            near = Math.max(near, Math.min(a, b)); far = Math.min(far, Math.max(a, b));
+            if (near >= far) break;
+          }
+        }
+        if (near < far && far > 0 && near < .98) { blocked = true; break; }
       }
-      return near < far && far > 0 && near < .98;
-    }))));
+      if (!blocked) return false;
+    }
+    return true;
   }
   safe(id: string, position: { x: number; z: number }, perched?: boolean): boolean {
     const target = this.ai.perchFor(id, position, perched) ?? position;

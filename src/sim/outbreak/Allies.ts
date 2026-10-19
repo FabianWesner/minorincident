@@ -66,7 +66,10 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   const inView = (target: EntitySnapshot) => !onScreen || playerSees(world, target.transform)
     || allyOffscreenDefenceM > 0 && a.role !== 'officer' && dist(target.transform, e.transform) <= allyOffscreenDefenceM;
   const policeCanEngage = (target: EntitySnapshot) => policeRule(target) && (!shooter || dist(target.transform, e.transform) <= pt.batonReachM * 1.15 || inView(target));
-  const audibleThreat = ai.active.some(o => o.health.current > 0 && !o.hidden && !o.infected?.hidden && !o.infectionRise && heard(o));
+  // Hearing only controls civilian panic and forced work. An ordinary soldier
+  // already fighting has no use for this extra line-of-sight scan.
+  const audibleThreat = (a.role === 'civilian' || a.forceUntil > tick)
+    && ai.active.some(o => o.health.current > 0 && !o.hidden && !o.infected?.hidden && !o.infectionRise && heard(o));
   // E22 §5.4: an armed civilian fights, but flees (the ordinary pedestrian flight) when 3 infected are within 4 m.
   if (a.role === 'civilian' && c.state === 'flee' && tick < (a.panicUntil ?? 0) && !audibleThreat) return false;
   if (a.role === 'civilian' && a.engaged && !audibleThreat && (tick + e.id) % 6 === 0) {
@@ -94,7 +97,10 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
   // Breakout (the first seconds after the fallback call): the squad gets out with the player instead of holding the yard.
   // Moving beyond the follow leash ends even an existing fight: the squad catches up through shared E08 navigation.
   const breakout = follower && (a.follow!.breakoutUntil ?? 0) > tick;
-  const closeThreat = ai.active.some(o => o.health.current > 0 && !o.hidden && !o.infected?.hidden && !o.infectionRise && (defence(o) || heard(o)) && visible(e.transform, o.transform, o.id));
+  // Engaged fighters already scan their targets below; only idle fighters and
+  // followers considering regrouping consume the separate close-threat result.
+  const closeThreat = (!a.engaged || follower)
+    && ai.active.some(o => o.health.current > 0 && !o.hidden && !o.infected?.hidden && !o.infectionRise && (defence(o) || heard(o)) && visible(e.transform, o.transform, o.id));
   if (!a.engaged && !closeThreat) { a.targetId = 0; a.strikeAt = 0; a.baton = false; }
   if (follower && a.engaged && !closeThreat && !a.strikeAt && (breakout || dist(e.transform, leader!.transform) > a.follow!.leashM)) {
     forced = dist(e.transform, leader!.transform) <= a.follow!.leashM ? ai.active.find(o => o.health.current > 0 && !o.hidden && !o.infectionRise && policeCanEngage(o) && dist(o.transform, e.transform) < 3.5 && visible(e.transform, o.transform, o.id)) : undefined;
@@ -115,23 +121,27 @@ export function updateAlly(world: SimWorld, e: EntitySnapshot, sees: (a: { x: nu
       const fx = Math.cos(e.transform.yaw), fz = -Math.sin(e.transform.yaw);
       const compound = world.missions?.def.l3 && a.role === 'soldier';
       for (const o of ai.active) {
-        if (o.health.current <= 0 || o.hidden || o.infected?.hidden || o.infectionRise || !policeCanEngage(o)) continue;
+        if (o.health.current <= 0 || o.hidden || o.infected?.hidden || o.infectionRise) continue;
         const dx = o.transform.x - e.transform.x, dz = o.transform.z - e.transform.z, d = Math.hypot(dx, dz);
+        const defending = a.role === 'officer' && d <= pt.defendM;
         // Half a metre of hysteresis: a fighter stepping between firing positions keeps a target at the edge of its range.
-        if (d > reachM + (o.id === a.targetId ? .5 : 0) && !defence(o)) continue;
-        if (!defence(o) && a.cover && dist(o.transform, a.cover) > (a.range ?? reachM)) continue;
-        else if (!defence(o) && !a.cover && shooter && !gun && Math.hypot(o.transform.x - post.x, o.transform.z - post.z) > (a.range ?? l2.allies.officer.rangeM)) continue;
-        else if (!defence(o) && !a.cover && gun && a.hold && a.range !== undefined && Math.hypot(o.transform.x - post.x, o.transform.z - post.z) > a.range) continue;
+        if (d > reachM + (o.id === a.targetId ? .5 : 0) && !defending) continue;
+        if (!defending && a.cover && dist(o.transform, a.cover) > (a.range ?? reachM)) continue;
+        else if (!defending && !a.cover && shooter && !gun && Math.hypot(o.transform.x - post.x, o.transform.z - post.z) > (a.range ?? l2.allies.officer.rangeM)) continue;
+        else if (!defending && !a.cover && gun && a.hold && a.range !== undefined && Math.hypot(o.transform.x - post.x, o.transform.z - post.z) > a.range) continue;
+        // Out-of-range candidates cannot be acquired, regardless of camera policy.
+        if (!policeCanEngage(o)) continue;
         const current = o.id === a.targetId;
         if (!current && d > 1.2 && (dx * fx + dz * fz) / d < half && !shooter && !heard(o)) continue;
-        if (!visible(e.transform, o.transform, o.id)) continue;
         // The L3 line protects the resting compound: a breach or a body getting up inside takes precedence over the
         // next outside pursuer. Visibility, cover, range and friendly-fire clearance still apply.
         const breach = compound && o.transform.x >= l3.map.zoneX;
         const s = d - (o.infected?.l1?.mode === 'bite' ? 8 : 0) - (current ? 1.5 : 0) - (breach ? l3.soldiers.coverM : 0);
         const alpha = a.role === 'soldier' && o.archetype === 'infected.alpha';
         const bestAlpha = a.role === 'soldier' && best?.archetype === 'infected.alpha';
-        if ((alpha && !bestAlpha) || (alpha === bestAlpha && s < score)) { score = s; best = o; }
+        // A candidate that cannot outrank the current visible choice needs no
+        // cover rays. Keep the exact Alpha/rescue/current-target score and ties.
+        if (((alpha && !bestAlpha) || (alpha === bestAlpha && s < score)) && visible(e.transform, o.transform, o.id)) { score = s; best = o; }
       }
       if (best && best.id !== a.targetId && (defence(best) || heard(best))) a.nextAttack = Math.min(a.nextAttack, tick + 15);
       if (best && best.id !== a.targetId && a.role === 'soldier' && dist(best.transform, e.transform) < 5) callout(world, e, "They're inside!");

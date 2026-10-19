@@ -1,3 +1,4 @@
+import { collectedHeap } from './collected-heap';
 import { devices } from '@playwright/test';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { test, expect } from '../e2e/fixtures';
@@ -22,8 +23,10 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
       frames.sort((a, b) => a - b); sim.sort((a, b) => a - b);
       return { p50: frames[299], p95: frames[569], simP95: sim[569], perf: window.__SS__!.perf(), lighting: window.__SS__!.getState().render.lighting };
     }, scene);
-    mkdirSync('test-results/epics/E25/closure', { recursive: true }); writeFileSync(`test-results/epics/E25/closure/perf-light-lab-${tier}.json`, JSON.stringify(result, null, 2));
+    const heap = await collectedHeap(page, context);
+    mkdirSync('test-results/epics/E25/closure', { recursive: true }); writeFileSync(`test-results/epics/E25/closure/perf-light-lab-${tier}.json`, JSON.stringify({ ...result, ...heap }, null, 2));
     await page.locator('canvas').screenshot({ path: `test-results/epics/E25/closure/perf-light-lab-${tier}.png` });
+    expect(heap.heapMB).toBeLessThanOrEqual(qualityBudgets[tier].heapMB);
     expect(tier === 'high' ? result.p95 : result.p50).toBeLessThanOrEqual(qualityBudgets[tier].frameMs);
     expect(result.simP95).toBeLessThanOrEqual(qualityBudgets[tier].simMs); expect(result.perf.drawCalls).toBeLessThanOrEqual(qualityBudgets[tier].drawCalls); expect(result.perf.triangles).toBeLessThanOrEqual(qualityBudgets[tier].triangles);
     expect(result.perf.lighting!.heroLights).toBeLessThanOrEqual(tier === 'high' ? 8 : 3); expect(result.perf.lighting!.shadowMaps).toBeLessThanOrEqual(tier === 'high' ? 3 : 1); expect(result.lighting!.practicalEffects.beams).toBe(4);

@@ -23,6 +23,30 @@ test('T-E01-02a @E01 @E01-AC02 fixed 60 Hz, interpolation and capped catch-up', 
   expect(() => clock.setTimeScale(NaN)).toThrow(RangeError);
 });
 
+test('T-E22-20-catchup @E22-AC20 @E01-AC02 a budgeted frame defers owed ticks instead of a catch-up spiral, and loses none', () => {
+  // Fake CPU clock: each tick costs `cost[tick]` ms.
+  let now = 0, ticks = 0;
+  const cost = (tick: number) => tick === 3 ? 21 : tick === 4 ? 24 : 6;
+  const clock = new Clock(20, 25, () => now), step = () => { now += cost(ticks); ticks++; };
+  const frames: number[] = [], spent: number[] = [];
+  // 33 ms frames: two ticks owed most frames; the expensive ticks 3 and 4 never share a frame.
+  for (let frame = 0; frame < 30; frame++) { const t = now; frames.push(clock.advance(1 / 30, step)); spent.push(now - t); }
+  expect(frames.slice(0, 3)).toEqual([2, 2, 1]);
+  expect(Math.max(...spent)).toBeLessThanOrEqual(27);
+  // Unbudgeted, the frame after tick 3 pays for ticks 4 and 5 together.
+  const old = new Clock(20); let oldTicks = 0, oldNow = 0; const oldSpent: number[] = [];
+  for (let frame = 0; frame < 4; frame++) { const t = oldNow; old.advance(1 / 30, () => { oldNow += cost(oldTicks); oldTicks++; }); oldSpent.push(oldNow - t); }
+  expect(Math.max(...oldSpent)).toBe(30);
+  // Every owed tick runs: 30 frames of 1/30 s are 60 ticks, the remainder is still owed, not dropped.
+  expect(ticks + clock.deferred).toBe(60);
+  expect(clock.alpha).toBeLessThanOrEqual(1);
+  // An unbudgeted clock (and a fast-forward time scale) keep the full catch-up.
+  const free = new Clock(20); let n = 0; free.advance(.2, () => n++); expect(n).toBe(12);
+  const fast = new Clock(20, 25, () => now); fast.setTimeScale(4); let m = 0; fast.advance(1 / 30, () => { now += 10; m++; }); expect(m).toBe(8);
+  // A slow renderer (150 ms frames) may spend half its frame on ticks: 9 cheap ticks still fit.
+  const slow = new Clock(20, 25, () => now); let k = 0; slow.advance(.15, () => { now += 6; k++; }); expect(k).toBe(9);
+});
+
 test('T-E01-09 @E01 @E01-AC09 ordered typed events and a 10k ring', () => {
   const bus = new EventBus<{ tick: number; type: 'test'; value: number }>();
   const order: number[] = [];

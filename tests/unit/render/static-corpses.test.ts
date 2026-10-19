@@ -36,6 +36,9 @@ test('static corpse pages grow beyond the old population cap and survive camera 
   pool.begin(id => records.get(id)); expect(pool.snapshot().instances).toBe(260);
   for (const child of pool.children) {
     const mesh = child as InstancedMesh; expect(mesh.frustumCulled).toBe(true);
+    const incremental = mesh.boundingSphere!.clone(); mesh.computeBoundingSphere();
+    expect(incremental.center.distanceTo(mesh.boundingSphere!.center)).toBeLessThan(1e-10);
+    expect(incremental.radius).toBeCloseTo(mesh.boundingSphere!.radius, 10);
     const local = mesh.geometry.boundingSphere!, matrix = new Matrix4();
     for (let index = 0; index < mesh.count; index++) {
       mesh.getMatrixAt(index, matrix);
@@ -223,4 +226,34 @@ test('@E18 frozen corpses retain xyz normals after backend vec4 padding', () => 
     expect(normal.itemSize).toBe(3); expect(normal.count).toBe(geometry.getAttribute('position').count);
     expect(normal.array).toEqual(expected);
   } finally { pool.dispose(); baked.geometry.dispose(); material.dispose(); }
+});
+
+test('T-E29-19-frozen @E29-AC19 @E18 model pools share one frozen graph and release it after the last owner', () => {
+  const lighting = new Lighting(new Scene()), materials = new Materials(lighting), source = materials.shaded(vec3(1));
+  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const pools = [new StaticCorpses(), new StaticCorpses()];
+  const frame = infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1;
+  pools[0].prepare('first', baked.geometry, source, baked.clip, frame);
+  pools[1].prepare('second', baked.geometry, source, baked.clip, frame);
+  const [a, b] = pools.map(pool => pool.children[0] as InstancedMesh);
+  expect(a.material).toBe(b.material); expect(a.geometry).not.toBe(b.geometry);
+  expect(a.geometry.getAttribute('_variant')).not.toBe(b.geometry.getAttribute('_variant'));
+  const disposed = vi.fn(); (a.material as MeshLambertNodeMaterial).addEventListener('dispose', disposed);
+  pools[0].dispose(); expect(disposed).not.toHaveBeenCalled();
+  const e = { id: 33, corpse: true } as EntitySnapshot;
+  pools[1].place(e, 'second', baked.geometry, source, baked.clip, frame, new Matrix4().makeTranslation(4, 0, 0), new Color('white'), [0, 0, 0]);
+  expect(pools[1].snapshot().instances).toBe(1);
+  pools[1].dispose(); expect(disposed).toHaveBeenCalledTimes(1);
+  baked.geometry.dispose(); source.dispose(); materials.dispose(); lighting.dispose();
+});
+
+test('plain fallback corpse materials keep independent value snapshots across pools', () => {
+  const baked = bakeInfected(createInfectedPlaceholder('runner')); packCrowdParts(baked.geometry);
+  const source = new MeshLambertNodeMaterial({ color: '#a03020' }), pools = [new StaticCorpses(), new StaticCorpses()];
+  const frame = infectedClips.indexOf('death-back') * framesPerClip + framesPerClip - 1;
+  pools[0].prepare('first', baked.geometry, source, baked.clip, frame);
+  source.color.set('#2050b0'); pools[1].prepare('second', baked.geometry, source, baked.clip, frame);
+  const [a, b] = pools.map(pool => (pool.children[0] as InstancedMesh).material as MeshLambertNodeMaterial);
+  expect(a).not.toBe(b); expect(a.color.getHexString()).toBe('a03020'); expect(b.color.getHexString()).toBe('2050b0');
+  pools.forEach(pool => pool.dispose()); baked.geometry.dispose(); source.dispose();
 });

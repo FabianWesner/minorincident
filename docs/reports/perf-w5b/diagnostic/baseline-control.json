@@ -1,0 +1,54 @@
+{
+  "base": "8db67f235",
+  "method": "Earlier production build: load-hook replaces then-modified tracked runtime modules with git-show base text; other runtime files were still unchanged at build time. Later control checks reuse this immutable build, not a rebuild of current sources.",
+  "overrides": [
+    {
+      "path": "src/data/credits.ts",
+      "sourceSha256": "397ca20ebaa698594f27772393920c5186eafde208cfc2e967d540992703255e",
+      "matchesBase": true
+    },
+    {
+      "path": "src/render/EntityAssets.ts",
+      "sourceSha256": "f0061dccc2d5dc9281e2e4cb84b7a4ca0241b12c7ad4a678a51ce1cacb2d30c4",
+      "matchesBase": true
+    },
+    {
+      "path": "src/render/GameView.ts",
+      "sourceSha256": "57e362dc4069d69a8790e2f31effd0f39777d7c6cc2ce3737cda520e1e0ca60b",
+      "matchesBase": true
+    },
+    {
+      "path": "src/render/InstancedGroup.ts",
+      "sourceSha256": "cfeeecb254e68efa01336b23fe184a4addf8d94c1748f5633fb7a918cc8c36e2",
+      "matchesBase": true
+    },
+    {
+      "path": "src/render/PaletteMaterial.ts",
+      "sourceSha256": "131dd490cfceb632a8e8b7740315610c895eda5bd3b22cc469412acebbd82972",
+      "matchesBase": true
+    },
+    {
+      "path": "src/sim/ai/NavGrid.ts",
+      "sourceSha256": "5dc0634566c673038973af1a2a864d971a563512aed3cdc523b315022884a69f",
+      "matchesBase": true
+    },
+    {
+      "path": "src/sim/ai/SpawnDirector.ts",
+      "sourceSha256": "2b756bc555afa453749ca66b4ebe313cf07871e5292e2d16754fa0f2764e8942",
+      "matchesBase": true
+    },
+    {
+      "path": "src/sim/missions/LevelFourWar.ts",
+      "sourceSha256": "57834f73918ebfd1744000a2e6e53aa290e704f3ea4f71ba61e258719f01e8bc",
+      "matchesBase": true
+    },
+    {
+      "path": "src/sim/outbreak/Allies.ts",
+      "sourceSha256": "f4f55e529cd86ab5ec3bf4c2da58b745eb1e0df237630ad67ec0c7cd05368a64",
+      "matchesBase": true
+    }
+  ],
+  "configSha256": "6b6158a49ab0ae32ec6f248923a2c50da6bcfa27a97e27a38ed007c3aa7191b0",
+  "mainBundle": "index-DlSljrUk.js",
+  "mainBundleSha256": "079a67caefc8f6b0b09b8a93365e09d72700e494841dc0cc4f09ac1d894cbe45"
+}
