@@ -35,8 +35,6 @@ export interface PlacementTransform {
 export interface Aabb {
   /** Obstacle on an elevated route, retained by planar navigation despite its height. */
   navBlocker?: boolean;
-  /** Streamed set dressing (L10): a physics static that blocks the player, but no AI nav/cover wall (keeps the crowd sim cost and routes unchanged). */
-  physicsOnly?: boolean;
   min: [number, number, number];
   max: [number, number, number];
 }
