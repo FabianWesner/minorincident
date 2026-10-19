@@ -1,0 +1,66 @@
+{
+  "baselineCommit": "2d5e0fb84",
+  "note": "Previously tracked native evidence; not a contemporaneous main rerun. The old low-tier evidence already misses sim, war median and turn hitch limits.",
+  "tiers": {
+    "high": {
+      "trackedBaseline": {
+        "simP95": 2.40000057220459,
+        "warP50": 8.89999999999418,
+        "warP95": 11.599999999998545,
+        "collapseP50": 9.400000000001455,
+        "collapseP95": 11.799999999995634,
+        "turnMaxMs": 28.5,
+        "tankMaxMs": 12.80000000000291,
+        "breakMaxMs": 29.30000000000291,
+        "warDrawCalls": 258,
+        "warTriangles": 1199539,
+        "collapseDrawCalls": 331,
+        "collapseTriangles": 1382128
+      },
+      "current": {
+        "simP95": 2.6999998092651367,
+        "warP50": 6.80000000000291,
+        "warP95": 9.799999999999272,
+        "collapseP50": 7.899999999994179,
+        "collapseP95": 11.5,
+        "turnMaxMs": 18.30000000000109,
+        "tankMaxMs": 15.400000000001455,
+        "breakMaxMs": 28.599999999998545,
+        "warDrawCalls": 370,
+        "warTriangles": 585833,
+        "collapseDrawCalls": 389,
+        "collapseTriangles": 711515
+      }
+    },
+    "low": {
+      "trackedBaseline": {
+        "simP95": 6.25,
+        "warP50": 35.80000000000291,
+        "warP95": 56.10000000000582,
+        "collapseP50": 31.90000000000873,
+        "collapseP95": 50.09999999999127,
+        "turnMaxMs": 86.40000000000146,
+        "tankMaxMs": 51.10000000000582,
+        "breakMaxMs": 64.39999999999418,
+        "warDrawCalls": 234,
+        "warTriangles": 597278,
+        "collapseDrawCalls": 213,
+        "collapseTriangles": 336660
+      },
+      "current": {
+        "simP95": 6.100000381469727,
+        "warP50": 26.599999999998545,
+        "warP95": 32,
+        "collapseP50": 35.30000000000291,
+        "collapseP95": 53.19999999999709,
+        "turnMaxMs": 84.40000000000146,
+        "tankMaxMs": 35,
+        "breakMaxMs": 109.70000000001164,
+        "warDrawCalls": 209,
+        "warTriangles": 248662,
+        "collapseDrawCalls": 213,
+        "collapseTriangles": 242071
+      }
+    }
+  }
+}

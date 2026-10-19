@@ -1,0 +1,237 @@
+{
+  "stats": {
+    "startTime": "2026-10-19T15:37:55.744Z",
+    "duration": 95055.519,
+    "expected": 16,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "errors": [],
+  "tests": [
+    {
+      "file": "e2e/audio/smoke.spec.ts",
+      "title": "S-11 T-E16-21 @smoke @E16 @E16-AC21 away suspends audio/music/sim, preserves mute and discards queued cues",
+      "ok": true,
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 6337,
+          "retry": 0,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/controls-playtest.spec.ts",
+      "title": "S-02 @smoke @E03 @E03-AC14 @E03-AC16 real L1 mouse play: click to move, stop, RMB cycle and stationary Shift LMB",
+      "ok": true,
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 19922,
+          "retry": 0,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/crowd-drawn.spec.ts",
+      "title": "T-E07-crowd-drawn-webgl @smoke @E07 L1 start pedestrians are drawn on screen (webgl), not only their props",
+      "ok": true,
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 20048,
+          "retry": 0,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/crowd-drawn.spec.ts",
+      "title": "T-E07-crowd-drawn-webgpu @smoke @E07 L1 start pedestrians are drawn on screen (webgpu), not only their props",
+      "ok": true,
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 19486,
+          "retry": 0,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/crowd-feel.spec.ts",
+      "title": "20 infected corpses remain drawn after walking 60 m away and returning @smoke @E07",
+      "ok": true,
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5339,
+          "retry": 0,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/driving.spec.ts",
+      "title": "S-07 @smoke @E09 vehicle enter, driver travels 50m, real middle-click exit",
+      "ok": true,
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5503,
+          "retry": 0,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/levels/l4-boot.spec.ts",
+      "title": "T-E22-boot @E22 @E22-AC18 @smoke L4 boots, the convoy rolls and the plaza is reachable without console errors",
+      "ok": true,
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 12464,
+          "retry": 0,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/menus-mouse.spec.ts",
+      "title": "T-E14-03-mouse @E14 @E14-AC03 @smoke title to gameplay, pause, settings and Resume with mouse only",
+      "ok": true,
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 4249,
+          "retry": 0,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/save.spec.ts",
+      "title": "T-E13-05 @E13 @E13-AC05 @smoke save reload continue restores character, progress, upgrades, racks and settings exactly",
+      "ok": true,
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 9877,
+          "retry": 0,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "title": "S-01 @smoke foundation boots, ready resolves and a screenshot is available",
+      "ok": true,
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 627,
+          "retry": 0,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/smoke.spec.ts",
+      "title": "S-10-foundation @smoke empty scenario reload x3 leaves no entities or bodies",
+      "ok": true,
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 712,
+          "retry": 0,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/webgpu-canvas.spec.ts",
+      "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU high mega health bars preserve the game frame at both zoom limits",
+      "ok": true,
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 10234,
+          "retry": 0,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/webgpu-canvas.spec.ts",
+      "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU high L1 L4 L8 game cameras render at both zoom limits",
+      "ok": true,
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 36184,
+          "retry": 0,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/webgpu-canvas.spec.ts",
+      "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU low mega health bars preserve the game frame at both zoom limits",
+      "ok": true,
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 5622,
+          "retry": 0,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/webgpu-canvas.spec.ts",
+      "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU low L1 L4 L8 game cameras render at both zoom limits",
+      "ok": true,
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 10092,
+          "retry": 0,
+          "errors": []
+        }
+      ]
+    },
+    {
+      "file": "e2e/webgpu-level-transitions.spec.ts",
+      "title": "T-E02-webgpu-level-transitions @smoke @E02 title, L1, L2 and L3 in one WebGPU renderer log no GPU validation errors",
+      "ok": true,
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "duration": 10776,
+          "retry": 0,
+          "errors": []
+        }
+      ]
+    }
+  ]
+}

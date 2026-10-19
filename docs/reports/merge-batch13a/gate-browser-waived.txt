@@ -1,0 +1,31 @@
+14c0e973f Merge commit '70c8bd255' into lane/merge-batch13a
+
+> typecheck
+> tsc --noEmit && tsc --noEmit -p tsconfig.sim.json
+
+src/levels/L10/district.ts(1,22): error TS2307: Cannot find module '../../../layouts/D-CURE/routes.json' or its corresponding type declarations.
+src/levels/L9/district.ts(1,22): error TS2307: Cannot find module '../../../layouts/D-CROSSING/routes.json' or its corresponding type declarations.
+tests/e2e/audio/runtime.spec.ts(6,21): error TS2307: Cannot find module '../../../assets/audio/imports.json' or its corresponding type declarations.
+tests/unit/audio/assets.test.ts(6,21): error TS2307: Cannot find module '../../../assets/audio/imports.json' or its corresponding type declarations.
+tests/unit/audio/assets.test.ts(73,65): error TS18046: 'source' is of type 'unknown'.
+tests/unit/audio/assets.test.ts(74,16): error TS18046: 'source' is of type 'unknown'.
+tests/unit/audio/assets.test.ts(75,16): error TS18046: 'source' is of type 'unknown'.
+tests/unit/audio/assets.test.ts(76,16): error TS18046: 'source' is of type 'unknown'.
+tests/unit/audio/assets.test.ts(77,13): error TS18046: 'source' is of type 'unknown'.
+tests/unit/audio/assets.test.ts(78,56): error TS18046: 'source' is of type 'unknown'.
+tests/unit/audio/assets.test.ts(78,83): error TS18046: 'source' is of type 'unknown'.
+tests/unit/audio/assets.test.ts(79,78): error TS18046: 'source' is of type 'unknown'.
+tests/unit/audio/assets.test.ts(84,32): error TS18046: 'recipe' is of type 'unknown'.
+tests/unit/audio/credits.test.ts(6,21): error TS2307: Cannot find module '../../../assets/audio/imports.json' or its corresponding type declarations.
+tests/unit/audio/credits.test.ts(19,62): error TS18046: 's' is of type 'unknown'.
+tests/unit/audio/credits.test.ts(63,73): error TS18046: 's' is of type 'unknown'.
+tests/unit/audio/credits.test.ts(63,124): error TS18046: 'c' is of type 'unknown'.
+tests/unit/audio/levelSoundtracks.test.ts(4,21): error TS2307: Cannot find module '../../../assets/audio/imports.json' or its corresponding type declarations.
+tests/unit/audio/pickup-fanfare.test.ts(7,21): error TS2307: Cannot find module '../../../assets/audio/imports.json' or its corresponding type declarations.
+tests/unit/audio/weapon-audio.test.ts(8,21): error TS2307: Cannot find module '../../../assets/audio/imports.json' or its corresponding type declarations.
+tools/audio/build.ts(8,21): error TS2307: Cannot find module '../../assets/audio/imports.json' or its corresponding type declarations.
+tools/audio/build.ts(169,44): error TS18046: 'recipe' is of type 'unknown'.
+tools/audio/build.ts(169,65): error TS18046: 'recipe' is of type 'unknown'.
+tools/credits/generate.ts(6,21): error TS2307: Cannot find module '../../assets/audio/imports.json' or its corresponding type declarations.
+tools/credits/generate.ts(51,62): error TS18046: 's' is of type 'unknown'.
+tools/credits/generate.ts(51,113): error TS18046: 'c' is of type 'unknown'.

@@ -1,0 +1,33 @@
+{
+  "extends": "camera-hotfix-refuge-door-7.json",
+  "name": "camera-hotfix-lakeshore-facade",
+  "note": "The normal follow lens is enclosed by an apartment. Only that placement clears its foreground; the courier keeps her angle and zoom. Original blank-viewport browser thresholds remain binding.",
+  "layout": {
+    "level": "L4",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        38,
+        10
+      ],
+      [
+        85,
+        56
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        59.1,
+        27.5
+      ],
+      "loadout": [
+        "weapon.army-mg",
+        "weapon.fists"
+      ]
+    }
+  ]
+}

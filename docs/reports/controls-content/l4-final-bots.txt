@@ -1,0 +1,19 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/controls-content -> 2.28.24.66:/srv/mi/ws/controls-content-5f907b
+[remote] cache-gc deleted:none
+[remote] sync 56s, 25282 files; job /srv/mi/jobs/controls-content-5f907b-1976-1792414074; queueing for a slot
+[runner] slot 1 acquired; load 1.66 1.98 2.51
+
+ RUN  v5.0.3 /srv/mi/jobs/controls-content-5f907b-1976-1792414074
+
+ ✓  functional  tests/levels/L4.test.ts (23 tests | 20 skipped) 369827ms
+   ✓ L4 The Safe City Falls (23)
+     ✓ T-E22-02 @E22 @E22-AC02 the complete bot finishes a single seed from L4-default (bat, axe, handgun) with few deaths, in the time band 105863ms
+     ✓ T-E22-bots @E22 evade-only never attacks and still reaches the cellar; the low tier finishes too 159211ms
+     ✓ T-E22-03 @E22 @E22-AC03 the newbie bot finishes (single seed; the 20-seed battery is dropped as a gate, PO 10-09) with few deaths 104751ms
+
+ Test Files  1 passed (1)
+      Tests  3 passed | 20 skipped (23)
+   Start at  12:48:53
+   Duration  373.79s (tests 99%, transform 1%)
+
+[remote] done exit=0 (runner 2.28.24.66, sync 56s, remote total 380s)

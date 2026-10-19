@@ -1,4 +1,5 @@
 import { afterEach, expect, test } from 'vitest';
+import { debugEntityCounts } from '../../../src/ui/debugEntityCounts';
 import { infectedRecovery } from '../../../src/data/infected';
 import type { DamageEvent } from '../../../src/sim/combat/Damage';
 import type { CoverWall } from '../../../src/sim/combat/HitQuery';
@@ -100,4 +101,25 @@ test('T-recover-03 @E19 a recovered infected forgets its chase and re-acquires o
   expect(perception!.sees(e, player.transform)).toBe(true);
   for (let i = 0; i < 120 && brain.mode !== 'chase'; i++) step(w, 1);
   expect(brain.mode).toBe('chase'); expect(alerts.map(a => a.cause)).toEqual(['sight']);
+});
+
+test('@E22 @camera-hotfix debug counts separate recoverable bodies from permanent corpses through recovery and pool reuse', async () => {
+  const { w, ai } = await arena(3);
+  const dead = zombie(w, 6, 0), downed = zombie(w, -6, 0);
+  const deadId = dead.id, downId = downed.id;
+  hit(w, dead, 'explosive'); hit(w, downed);
+  const counts = () => debugEntityCounts([...w.entities.iterate()]);
+  expect(counts()).toMatchObject({ corpses: 1, downed: 1 });
+  step(w, 150);
+  expect(w.entities.get(deadId)?.corpse).toBe(true);
+  const frozen = structuredClone(w.entities.get(deadId));
+  const next = ai.spawn('infected.runner', { x: 10, z: 0 });
+  expect(next).not.toBe(deadId);
+  expect(counts()).toMatchObject({ corpses: 1, downed: 1 });
+  step(w, w.entities.get(downId)!.infected!.recoverAt - w.tick + 1);
+  expect(counts()).toMatchObject({ corpses: 1, downed: 0 });
+  expect(w.entities.get(downId)!.health.current).toBeGreaterThan(0);
+  w.tick += 60 * 600; step(w, 1);
+  expect(w.entities.get(deadId)).toEqual(frozen);
+  expect(counts().corpses).toBe(1);
 });

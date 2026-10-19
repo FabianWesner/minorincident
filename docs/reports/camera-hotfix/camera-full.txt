@@ -1,0 +1,51 @@
+ Failed Tests 3 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL   timing  tests/sim/performance/zoo-s2.test.ts > T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms
+AssertionError: expected 4.031962000008207 to be less than or equal to 4
+ ❯ tests/sim/performance/zoo-s2.test.ts:26:68
+     24|     const proof = { count, zoo: ids.length, activations, simMsP95: tim…
+     25|     mkdirSync('docs/reports/zoo-s2', { recursive: true }); writeFileSy…
+     26|     expect(activations).toBeGreaterThan(0); expect(proof.simMsP95).toB…
+       |                                                                    ^
+     27|   } finally { w.dispose(); }
+     28| });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/3]⎯
+
+ FAIL   functional  tests/sim/ai/infected-recover.test.ts > @camera-hotfix debug counts separate recoverable bodies from permanent corpses through recovery and pool reuse
+AssertionError: expected { pedestrians: +0, alive: +0, …(2) } to match object { corpses: 1, downed: 1 }
+(2 matching properties omitted from actual)
+
+- Expected
++ Received
+
+  {
+-   "corpses": 1,
++   "corpses": 0,
+    "downed": 1,
+  }
+
+ ❯ tests/sim/ai/infected-recover.test.ts:113:20
+    111|   hit(w, dead, 'explosive'); hit(w, downed);
+    112|   const counts = () => debugEntityCounts([...w.entities.iterate()]);
+    113|   expect(counts()).toMatchObject({ corpses: 1, downed: 1 });
+       |                    ^
+    114|   step(w, 150);
+    115|   expect(w.entities.get(deadId)?.corpse).toBe(true);
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/3]⎯
+
+ FAIL   functional  tests/sim/levels/l10-campus-corridor.test.ts > T-E32-03-D3-high @E32-AC03 @E32-AC05 @E32-AC27 @E32-AC28 route from R4 through R5/R6 reaches complex
+AssertionError: expected 7.152026999974623 to be less than or equal to 4
+ ❯ tests/sim/levels/l10-campus-corridor.test.ts:59:89
+
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/3]⎯
+
+
+ Test Files  3 failed | 503 passed | 3 skipped (509)
+      Tests  3 failed | 3183 passed | 11 skipped (3197)
+   Start at  11:20:07
+   Duration  3336.30s (tests 98%, import 1%)
+
+[remote] done exit=1 (runner 2.31.10.108, sync 85s, remote total 3340s)

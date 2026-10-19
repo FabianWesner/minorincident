@@ -620,7 +620,7 @@ export class LevelThreeCollapse {
     // After minFightS with the group inside, the staged column holds outside reach so the line clears and the boom can close.
     if (!(inside && w.tick - s.finaleAt! >= ticks(f.minFightS))) this.surge();
     if (s.barrierClosedAt && !inside) { s.barrierClosedAt = 0; this.barrier(false); w.events.emit({ type: 'gate.changed', tick: w.tick, id: 'l3-army-boom', open: true }); }
-    // PO 10-15: acknowledge the ring and close behind the group immediately; hold the evacuation minute inside.
+    // PO 10-15: acknowledge the ring and close behind the group immediately; hold the 15-second evacuation inside.
     const arrived = !!s.crossedAt || this.inZone(p) || w.tick - s.finaleAt! >= ticks(f.minFightS) || f.packs.every(([, count], i) => (s.finalePacks![i] ?? 0) >= Math.ceil(count * (1 - this.mercyFraction())));
     if (!s.barrierClosedAt && inside && arrived && (this.boom.ready(group) || (this.boom.clearBystanders(group), this.boom.ready(group)))) {
       s.barrierClosedAt = w.tick; this.barrier(true);
@@ -647,7 +647,7 @@ export class LevelThreeCollapse {
       this.world.events.emit({ type: 'l3.crossed', tick }); this.mission.radio('L3.army');
     }
     // The countdown begins at arrival, independently of the horde and group stragglers.
-    if (s.crossedAt && !s.doneAt && s.barrierClosedAt && tick - s.crossedAt >= ticks(l3.finale.minFightS)) { s.doneAt = tick; s.phase = 'done'; if (!this.mission.state.states.crossed) this.mission.setState('crossed', true); }
+    if (s.crossedAt && !s.doneAt && s.barrierClosedAt && tick - s.crossedAt >= ticks(l3.finale.evacuationS)) { s.doneAt = tick; s.phase = 'done'; if (!this.mission.state.states.crossed) this.mission.setState('crossed', true); }
     // Arrival is already achieved; closing the boom must not leave a waypoint under the courier.
     if (s.crossedAt && (this.mission.state.marker === 'l3-zone' || this.mission.state.marker === 'l3-route')) this.mission.state.marker = null;
   }
@@ -740,6 +740,6 @@ export class LevelThreeCollapse {
 export function l3EvacuationText(mission: Mission | null | undefined): string | null {
   const s = mission?.state.l3;
   if (!s?.crossedAt || s.doneAt) return null;
-  const seconds = Math.max(0, Math.ceil(l3.finale.minFightS - (mission!.world.tick - s.crossedAt) / TICKS));
+  const seconds = Math.max(0, Math.ceil(l3.finale.evacuationS - (mission!.world.tick - s.crossedAt) / TICKS));
   return seconds > 0 ? `Checkpoint reached · Evacuation in ${seconds} s` : 'Checkpoint reached · Waiting for the rescued group';
 }

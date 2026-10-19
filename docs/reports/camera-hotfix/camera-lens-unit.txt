@@ -1,0 +1,22 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/camera-hotfix -> 2.31.10.108:/srv/mi/ws/camera-hotfix-6b94ee
+[remote] cache-gc deleted:none
+[remote] sync 28s, 25264 files; job /srv/mi/jobs/camera-hotfix-6b94ee-50029-1792412356; queueing for a slot
+[runner] slot 0 acquired; load 0.31 1.22 3.50
+
+ RUN  v5.0.3 /srv/mi/jobs/camera-hotfix-6b94ee-50029-1792412356
+
+ ✓  functional  tests/unit/render/view.test.ts (11 tests) 109ms
+stdout | tests/unit/render/interior-cull.test.ts > @E18 footprints tag enclosed placements and reveal/inside transitions update before rendering
+interior visibility steady cost ms/building 0.001816890699999999
+
+ ✓  functional  tests/unit/render/interior-cull.test.ts (2 tests) 45ms
+ ✓  functional  tests/unit/render/forecourt-seethrough.test.ts (2 tests) 51ms
+ ✓  functional  tests/unit/render/occluder-footprint.test.ts (2 tests) 56ms
+ ✓  functional  tests/unit/render/seethrough.test.ts (4 tests) 12ms
+
+ Test Files  5 passed (5)
+      Tests  21 passed (21)
+   Start at  12:19:45
+   Duration  1.30s (transform 60%, import 32%, tests 7%, worker 1%)
+
+[remote] done exit=0 (runner 2.31.10.108, sync 28s, remote total 3s)

@@ -17,7 +17,7 @@ export interface SceneSpec {
   /** Native campaign menu over the game camera; run with --query ui=1. */
   menuScreen?: 'title' | 'levels' | 'credits';
   /** Production L4 convoy, population, braking and unload controller on an uncropped Fairhaven layout. */
-  l4Convoy?: boolean | 'parked' | 'hold';
+  l4Convoy?: boolean | 'parked' | 'hold' | 'pickup' | 'tank' | 'first-line';
   /** Production L3 rendezvous, rescued group and full authored finale crowd. */
   l3Rendezvous?: boolean;
   /** Production L6 shelter and gate with the collected equipment. */
@@ -139,6 +139,8 @@ export type Action =
   | { run: Point[]; loop?: boolean }
   | { moveTo: Point; pace?: 'walk' | 'run' }
   | { turn: number }
+  /** Courier: ordinary keyboard movement and automatic facing-cone fire. */
+  | { autoAim: { move: Point; seconds?: number; side?: 'LEFT' | 'RIGHT' } }
   | { sit: string; seconds?: number }
   /** Water a flower placement (id, or nearest asset id): stand within 0.5 m of its footprint, face it, pour (MorningRoutines/Population rule). */
   | { water: string; seconds?: number }
@@ -258,6 +260,14 @@ export interface Expectations {
   bodyOverlapMaxCm?: number;
   /** Attacker forearms against the courier's torso/backpack envelope; hands may make contact. */
   attackBodyOverlapMaxCm?: number;
+  /** PO 10-19 floating gear: farthest vertex of any drawn courier attachment (gear, accessory; not held weapons) from the posed body, in cm (`metrics.courierAttachments`). */
+  courierAttachmentGapMaxCm?: number;
+  /** PO 10-19 'tongue out all the time': settled-rest frames with the corgi tongue out (`metrics.corgiTongue`; needs rest samples). */
+  corgiTongueIdleOutMax?: number;
+  /** PO 10-19 'detached leg of dog': largest move of a jointed animal leg (amb.dog) off its shoulder/hip, cm (`metrics.animalLimbs`). */
+  animalLimbGapMaxCm?: number;
+  /** Frames of steady corgi walking/running with the tongue retracted (needs moving samples). */
+  corgiTongueMovingInMax?: number;
   /** Corgi trunk/head against the courier's drawn body, including both legs. */
   corgiCourierOverlapMaxCm?: number;
   /** Greatest trailing distance along the running courier's velocity (speed > 2.5 m/s). */

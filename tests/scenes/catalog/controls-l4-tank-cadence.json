@@ -1,0 +1,48 @@
+{
+  "name": "controls-l4-tank-cadence",
+  "note": "Production L4 war after the immediate pickup alarm. The tank has reached its post and aims during cooldown before the first scheduled shell; cadence and ally safety are asserted in the sim regression.",
+  "l4Convoy": "tank",
+  "time": "L4",
+  "ground": "district",
+  "layout": {
+    "level": "L4",
+    "district": "D-FAIR",
+    "bbox": [
+      [
+        -90,
+        -85
+      ],
+      [
+        90,
+        70
+      ]
+    ]
+  },
+  "actors": [
+    {
+      "id": "courier",
+      "kind": "courier",
+      "at": [
+        -23.2,
+        1.6
+      ],
+      "god": true
+    }
+  ],
+  "camera": {
+    "mode": "game",
+    "target": [
+      -20,
+      0,
+      22
+    ]
+  },
+  "frames": 180,
+  "sheet": 30,
+  "expect": {
+    "consoleErrors": 0,
+    "drawCallsMax": 600,
+    "trianglesMax": 1500000,
+    "trianglesMaxLow": 500000
+  }
+}

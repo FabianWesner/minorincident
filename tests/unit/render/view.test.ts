@@ -1,5 +1,6 @@
 import { expect, test } from 'vitest';
 import { Box3, Plane, Ray, Vector3 } from 'three';
+import { cameraFraming } from '../../../src/data/cameraFraming';
 import { View, zoomLimits } from '../../../src/render/View';
 
 test('T-E02-12 @E02 @E02-AC12 shake is bounded and respects the setting immediately', () => {
@@ -111,27 +112,27 @@ test('T-E32-26-camera-S9 @E32-AC26 epilogue pull widens the follow rig while whe
   }
 });
 
-// The relocated Harbor cellar puts the zoom-1 lens inside the opposite apartment.
-test('@E22 @E23 the Fairhaven follow lens stays outside the opposite building at the cellar exit', () => {
+// See-through replaces lens contraction: a blocked lens must retain player framing.
+test('@E22 @E23 the Fairhaven follow lens preserves zoom through the opposite building at the cellar exit', () => {
   const view = new View(), player = { x: -79.3, y: .85, z: -44.2801 };
   const building = new Box3(new Vector3(-73.1002, 0, -34.3001), new Vector3(-62.8, 12.85, -21.6999));
-  view.cameraSolids.push(building); view.reset(player);
-  expect(building.containsPoint(view.camera.position)).toBe(false);
-  expect(view.camera.position.distanceTo(view.focus)).toBeLessThan(view.radius);
+  Object.assign(view, { cameraSolids: [building] }); view.reset(player);
+  expect(building.containsPoint(view.camera.position)).toBe(true);
+  expect(view.camera.position.distanceTo(view.focus)).toBeCloseTo(view.radius, 8);
   expect(view.playerZoom).toBe(1);
   expect(view.camera.position.toArray()).toEqual(view.simCamera.position.toArray());
   view.zoom(Math.log(.5), true);
   for (let i = 0; i < 120; i++) view.update(player, 1 / 60);
   expect(building.containsPoint(view.camera.position)).toBe(false);
   expect(view.camera.position.distanceTo(view.focus)).toBeCloseTo(view.radius, 3);
-  view.cameraSolids.length = 0; view.reset(player);
+  view.reset(player);
   expect(view.camera.position.distanceTo(view.focus)).toBeCloseTo(view.radius, 6);
 });
 
 test('@E22 vehicle follow framing stays fixed across facade bounds at both zooms', () => {
   for (const zoom of [.5, 1]) {
     const view = new View();
-    view.cameraSolids.push(new Box3(new Vector3(-54, 0, -34), new Vector3(-43, 18, -20)));
+    Object.assign(view, { cameraSolids: [new Box3(new Vector3(-54, 0, -34), new Vector3(-43, 18, -20))] });
     view.reset({ x: -56.75, y: .705, z: -18 });
     view.driving = true; view.zoom(Math.log(zoom), true);
     view.update({ x: -56.75, y: .705, z: -18 }, 0);
@@ -144,23 +145,25 @@ test('@E22 vehicle follow framing stays fixed across facade bounds at both zooms
   }
 });
 
-test('@E22 camera clearance beside the moved Lakeshore apartment preserves framing throughout the lane', () => {
+test('@E22 see-through beside the moved Lakeshore apartment preserves framing throughout the lane', () => {
   const building = new Box3(new Vector3(61.28, 0, 30.2599), new Vector3(73.88, 17.76, 40.2201));
   for (const x of [57, 59.1, 61, 64, 67]) {
     const view = new View(), player = { x, y: .85, z: 27.5 };
-    view.cameraSolids.push(building); view.reset(player);
-    expect(building.containsPoint(view.camera.position)).toBe(false);
-    expect(view.camera.position.distanceTo(view.focus)).toBeGreaterThanOrEqual(19 * zoomLimits[0] - 1e-9);
+    Object.assign(view, { cameraSolids: [building] }); view.reset(player);
+    expect(view.camera.position.distanceTo(view.focus)).toBeCloseTo(view.radius, 8);
+    const offset = view.camera.position.clone().sub(view.focus);
+    expect(Math.acos(offset.y / offset.length())).toBeCloseTo(cameraFraming.polar, 8);
     const ray = new Ray(view.focus.clone(), view.camera.position.clone().sub(view.focus).normalize());
     const hit = ray.intersectBox(building, new Vector3());
-    expect(hit === null || hit.distanceTo(view.focus) > view.camera.position.distanceTo(view.focus)).toBe(true);
+    expect(hit, `facade at x=${x} really occludes the follow lens`).not.toBeNull();
+    expect(hit!.distanceTo(view.focus)).toBeLessThan(view.radius);
     expect(view.camera.position.toArray()).toEqual(view.simCamera.position.toArray());
   }
 });
 
 test('@E22 seated convoy keeps a constant lens offset while passing Fairhaven facades', () => {
-  const view = new View(); view.resize(1600, 900); view.convoy = true; view.driving = true;
-  view.cameraSolids.push(new Box3(new Vector3(-5, 0, 4), new Vector3(20, 18, 18)));
+  const view = new View(); view.resize(1600, 900);
+  Object.assign(view, { cameraSolids: [new Box3(new Vector3(-5, 0, 4), new Vector3(20, 18, 18))] });
   view.reset({ x: -20, z: 0 });
   const distance = view.camera.position.distanceTo(view.focus);
   for (let tick = 0; tick < 300; tick++) {

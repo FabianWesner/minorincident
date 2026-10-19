@@ -1,0 +1,21 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/controls-content -> 94.130.181.173:/srv/mi/ws/controls-content-5f907b
+[remote] cache-gc deleted:none
+[remote] sync 72s, 25154 files; job /srv/mi/jobs/controls-content-5f907b-27469-1792408734; queueing for a slot
+[runner] slot 0 acquired; load 0.72 1.49 2.40
+
+ RUN  v5.0.3 /srv/mi/jobs/controls-content-5f907b-27469-1792408734
+
+ ✓  functional  tests/sim/controls-content.test.ts (3 tests) 179ms
+ ✓  functional  tests/levels/controls-content.test.ts (2 tests) 1197ms
+   ✓ @E22 machine gun pickup starts alarm and attack on the same tick (high) 802ms
+   ✓ @E22 machine gun pickup starts alarm and attack on the same tick (low) 393ms
+ ✓  functional  tests/sim/missions/l3-base-gates.test.ts (2 tests) 36121ms
+   ✓ PO-10b @E21 @E21-AC17 ring acknowledges arrival immediately and evacuates after exactly 15 seconds 3931ms
+   ✓ PO-11 @E21 @E21-AC17 full horde attacks the base for 120 s without entering the perimeter 32188ms
+
+ Test Files  3 passed (3)
+      Tests  7 passed (7)
+   Start at  11:20:09
+   Duration  39.40s (tests 80%, transform 16%, import 4%)
+
+[remote] done exit=0 (runner 94.130.181.173, sync 72s, remote total 44s)

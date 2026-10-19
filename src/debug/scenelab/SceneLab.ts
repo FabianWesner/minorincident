@@ -66,6 +66,7 @@ type Plan =
   | { type: 'path'; points: Point[]; index: number; run: boolean; loop: boolean }
   | { type: 'moveTo'; point: Point; run: boolean }
   | { type: 'turn'; yaw: number }
+  | { type: 'autoAim'; move: Point; until: number; side: 'LEFT' | 'RIGHT' }
   | { type: 'attack'; target: string; until: number; side: 'LEFT' | 'RIGHT'; move?: Point; aiming?: boolean; inPlace?: boolean }
   | { type: 'mount'; bike: string; at: number }
   | { type: 'click'; entity: number; at: number }
@@ -91,6 +92,9 @@ const toPoint = (p: Point | number[]) => Array.isArray(p) ? { x: p[0], z: p[1] }
  */
 export class SceneLab {
   private convoyOverlapFrames = 0;
+  private animalLimbs = { samples: 0, gapMaxCm: 0, frame: -1, actor: null as string | null };
+  private corgiTongue = { idleSamples: 0, idleOutFrames: 0, firstIdleOut: -1, movingSamples: 0, movingInFrames: 0, firstMovingIn: -1, rest: 0, moving: 0, lastRun: -Infinity };
+  private courierAttachments = { samples: 0, gapMaxCm: 0, frame: -1, worst: null as string | null, attachments: 0 };
   spec: SceneSpec | null = null;
   built: BuiltScene | null = null;
   frame = 0;
@@ -150,7 +154,7 @@ export class SceneLab {
   async load(spec: SceneSpec) {
     this.specials = [];
     this.attackOverlap = { depthCm: 0, frame: 0, actor: '' };
-    this.convoyOverlapFrames = 0;
+    this.convoyOverlapFrames = 0; this.animalLimbs = { samples: 0, gapMaxCm: 0, frame: -1, actor: null }; this.corgiTongue = { idleSamples: 0, idleOutFrames: 0, firstIdleOut: -1, movingSamples: 0, movingInFrames: 0, firstMovingIn: -1, rest: 0, moving: 0, lastRun: -Infinity }; this.courierAttachments = { samples: 0, gapMaxCm: 0, frame: -1, worst: null, attachments: 0 };
     // A scene that set a campaign must not leak it into the next scene: a later pickup save would write it against another world.
     this.game.campaign = null;
     if (spec.cureEncounter) {
@@ -354,7 +358,9 @@ export class SceneLab {
       const state = mission.state.l3!, api = missionControls(world);
       state.pending = []; state.waves = []; state.populated = [true, true, true];
       state.finalePacks = l3.finale.packs.map(p => p[1]);
-      for (const id of state.officerIds) api.teleport(id, { x: l3.map.zoneX + 3, z: 3 });
+      // Distinct clear road positions: stacking ten capsules at one point can reject a teleport
+      // and strand an officer back at the station, correctly preventing the boom from closing.
+      for (const [i, id] of state.officerIds.entries()) api.teleport(id, { x: l3.map.zoneX + 5 + Math.floor(i / 3) * 1.4, z: (i % 3 - 1) * 1.4 });
       for (const e of world.entities.iterate()) if (e.companion) api.teleport(e.id, { x: l3.map.zoneX + 3, z: 2 });
       api.teleport('player', { x: l3Anchors['l3-zone'][0], z: 0 });
       const ai = world.infected!, cap = ai.director.cap;
@@ -371,13 +377,21 @@ export class SceneLab {
       world.infected!.director.setTier(this.game.quality.tier);
       const mission = world.loadMission(resolveCampaignMission('L4', world.districts!));
       mission.begin();
-      if (spec.l4Convoy === 'parked' || spec.l4Convoy === 'hold') {
+      if (spec.l4Convoy === 'parked' || spec.l4Convoy === 'hold' || spec.l4Convoy === 'pickup' || spec.l4Convoy === 'tank' || spec.l4Convoy === 'first-line') {
         for (let t = 0; t < 60 * 60 && mission.state.l4!.phase === 'convoy'; t++) world.update();
         if (mission.state.l4!.phase === 'convoy') throw new Error('L4 convoy did not arrive for parked fixture');
       }
-      if (spec.l4Convoy === 'hold') {
+      if (spec.l4Convoy === 'hold' || spec.l4Convoy === 'pickup' || spec.l4Convoy === 'tank' || spec.l4Convoy === 'first-line') {
+        if (spec.l4Convoy === 'pickup' || spec.l4Convoy === 'first-line') { const q = mission.def.anchors['l4-quartermaster']; this.teleport(world.entities.get(1)!, { x: q.x, z: q.z + 1 }); }
         mission.completeObjective('quartermaster');
         while (!mission.state.l4!.turnAt) world.update();
+      }
+      if (spec.l4Convoy === 'tank') {
+        for (let t = 0; t < 120 * 60 && mission.state.l4!.tankPhase !== 'hold'; t++) world.update();
+        if (mission.state.l4!.tankPhase !== 'hold') throw new Error('L4 tank did not reach its firing post');
+      }
+      if (spec.l4Convoy === 'first-line') {
+        while (world.tick < mission.state.l4!.turnAt + 33 * 60) world.update();
       }
       for (const [i, id] of mission.state.l4!.convoyIds.entries()) this.vehicles.set(`convoy-${i}`, id);
     }
@@ -678,6 +692,7 @@ export class SceneLab {
       else if ('walk' in a || 'run' in a) actor.plan = { type: 'path', points: 'walk' in a ? a.walk : a.run, index: 0, run: 'run' in a, loop: !!a.loop };
       else if ('moveTo' in a) actor.plan = { type: 'moveTo', point: a.moveTo, run: a.pace !== 'walk' };
       else if ('turn' in a) actor.plan = { type: 'turn', yaw: rad(a.turn) };
+      else if ('autoAim' in a) actor.plan = { type: 'autoAim', move: a.autoAim.move, until: this.frame + ticks(a.autoAim.seconds ?? 1), side: a.autoAim.side ?? 'RIGHT' };
       else if ('aim' in a) actor.plan = { type: 'attack', target: a.aim, until: this.frame + ticks(a.seconds ?? 2), side: world.combat!.runner.loadout.state.selectedSide, move: a.move ?? [0, 0], aiming: true };
       else if ('attack' in a) actor.plan = { type: 'attack', target: a.attack, until: this.frame + ticks(a.seconds ?? 2), side: a.side ?? 'LEFT', move: a.move, inPlace: a.inPlace };
       else if ('select' in a) { const l = world.combat!.runner.loadout.state; l.selectedSide = a.select; if (a.index !== undefined) l[a.select].index = a.index; }
@@ -874,8 +889,8 @@ export class SceneLab {
       view.follow(); view.zoom(Math.log((c.zoom ?? 1) / view.getState().targetZoom), true);
       return;
     }
-    // Courier follow scenes use the production rig, including narrow-street lens
-    // clearance. A fixed preset can put the catalog camera inside a building.
+    // Courier follow scenes use the production rig and player zoom; the shared
+    // see-through pass handles facades without changing the camera framing.
     if (c.mode === 'follow' && this.actors.get(c.actor)?.entity === 1) {
       const rig = this.game.view.view;
       rig.follow();
@@ -988,6 +1003,9 @@ export class SceneLab {
       // A released LMB on the picked body, as InputSystem resolves a real click (one swing, the feet stay put).
       if (this.frame === plan.at) { frame.attackTarget = { id: plan.entity, side: 'LEFT' }; frame.mouseAttack = true; frame.cancelMove = true; frame.pointerTarget = true; frame.aimSource = 'pointer'; frame.left = { down: true, held: false, up: true }; }
       else { frame.pointerTarget = true; frame.aimSource = 'pointer'; if (this.frame > plan.at + 40) courier.plan = null; }
+    } else if (plan?.type === 'autoAim') {
+      if (this.frame >= plan.until) courier.plan = null;
+      else { frame.move = toPoint(plan.move); frame.aimSource = 'assist'; frame[plan.side === 'LEFT' ? 'left' : 'right'] = { down: false, held: true, up: false }; }
     } else if (plan?.type === 'drive') {
       if (this.frame >= plan.until) { courier.plan = null; frame.brake = true; }
       else frame.drive = { throttle: plan.throttle, steer: plan.steer };
@@ -1212,6 +1230,10 @@ export class SceneLab {
     this.sampleMega(); this.sampleGun(); this.sampleCure();
     this.recordPropPenetration();
     const probes = this.game.view.labProbes(), figures = new Map(this.game.view.crowdFigures().map(f => [f.id, f]));
+    if (this.frame % 10 === 0 && this.spec?.actors?.some(a => a.kind === 'courier') && probes.character) {
+      const loose = probes.character.looseAttachments(), c = this.courierAttachments; c.samples++; c.attachments = Math.max(c.attachments, loose.length);
+      for (const a of loose) if (a.gapCm > c.gapMaxCm) Object.assign(c, { gapMaxCm: a.gapCm, frame: this.frame, worst: a.name });
+    }
     const audit = probes.districts?.seeThroughAudit();
     if (audit) {
       if (audit.strength > .5) { this.seeThroughOpen.frames++; if (audit.occluder && !this.seeThroughOpen.occluders.includes(audit.occluder)) this.seeThroughOpen.occluders.push(audit.occluder); this.seeThroughOpen.solidRadiusMax = Math.max(this.seeThroughOpen.solidRadiusMax, +audit.solidRadius.toFixed(3)); }
@@ -1280,6 +1302,17 @@ export class SceneLab {
           if (visible && body && head) {
             const at = (node: Object3D, x: number, y = 0) => node.localToWorld(new Vector3(x, y, 0)).toArray() as Vec3;
             dogBodies.push([{ name: 'body', a: at(body, -.3), b: at(body, .25), radius: .25 }, { name: 'head', a: at(head, .1, .06), b: at(head, .3, -.01), radius: .24 }]);
+          }
+          const limbGap = visible ? probes.npcs?.heroLimbGap(actor.entity) ?? null : null;
+          if (limbGap !== null) { const l = this.animalLimbs; l.samples++; if (limbGap > l.gapMaxCm) Object.assign(l, { gapMaxCm: +limbGap.toFixed(2), frame: this.frame, actor: actor.id }); }
+          const tongue = actor.kind === 'corgi' ? probes.npcs?.heroTongue(actor.entity) ?? null : null;
+          if (tongue !== null && e && visible) {
+            // PO 10-19 tongue: retracted after 1.5 s of rest (once the after-run pant is over), out after 0.5 s of walking or running.
+            const t = this.corgiTongue, dogSpeed = e.motion?.speed ?? 0;
+            if (dogSpeed > 2.5) t.lastRun = this.frame;
+            t.rest = dogSpeed < .2 ? t.rest + 1 : 0; t.moving = dogSpeed > 1 ? t.moving + 1 : 0;
+            if (t.rest >= 90 && this.frame - t.lastRun > 330) { t.idleSamples++; if (tongue > .3) { t.idleOutFrames++; if (t.firstIdleOut < 0) t.firstIdleOut = this.frame; } }
+            if (t.moving >= 30) { t.movingSamples++; if (tongue < .3) { t.movingInFrames++; if (t.firstMovingIn < 0) t.firstMovingIn = this.frame; } }
           }
           const player = this.world.entities.get(1), v = player?.survivor?.velocity, speed = Math.hypot(v?.x ?? 0, v?.z ?? 0);
           if (actor.kind === 'corgi' && e && player && speed > 2.5) {
@@ -1487,12 +1520,17 @@ export class SceneLab {
     for (const d of this.world.districts?.districts ?? []) for (const s of d.layout.surfaces) if (inside([x - d.origin[0], z - d.origin[1]], s.polygon)) found = s.surface + (s.height !== undefined ? `@${s.height}` : '');
     return found;
   }
-  private readonly paws = new WeakMap<Object3D, Vector3>();
-  /** Fixed contact anchor used by the existing slide rule. Mesh depth is measured separately. */
+  private readonly paws = new WeakMap<Object3D, { node: Object3D; local: Vector3 }>();
+  /** Fixed contact anchor used by the existing slide rule. Mesh depth is measured separately. A jointed leg's own paw
+   * node (amb.dog pawFL...) carries the anchor: PawContacts may bend its knee. */
   private paw(leg: Object3D): number[] {
-    let local = this.paws.get(leg);
-    if (!local) { const bounds = new Box3(); leg.traverse(n => { if (n instanceof Mesh) bounds.expandByObject(n); }); const p = bounds.getCenter(new Vector3()); p.y = bounds.min.y; local = leg.worldToLocal(p); this.paws.set(leg, local); }
-    return leg.localToWorld(local.clone()).toArray();
+    let paw = this.paws.get(leg);
+    if (!paw) {
+      let node: Object3D = leg; leg.traverse(n => { if (node === leg && n !== leg && /^paw/.test(n.name)) node = n; });
+      const bounds = new Box3(); node.traverse(n => { if (n instanceof Mesh) bounds.expandByObject(n); }); const p = bounds.getCenter(new Vector3()); p.y = bounds.min.y;
+      paw = { node, local: node.worldToLocal(p) }; this.paws.set(leg, paw);
+    }
+    return paw.node.localToWorld(paw.local.clone()).toArray();
   }
   /** The lowest drawn vertex can differ from the contact anchor as the rigid leg rotates. */
   private pawSole(leg: Object3D): number {
@@ -1573,7 +1611,7 @@ export class SceneLab {
     const clipping = this.staticSets ? await this.clipping() : null;
     const bodies = [...this.bodies.values()].sort((x, y) => y.depthCm - x.depthCm);
     return { collision: this.world.solids.snapshot(), marketDoors: this.spec?.marketDoors ? { openness: this.game.view.labProbes().districts?.marketDoorOpenness() ?? null, posed: this.game.view.labProbes().districts?.marketDoorPlacements() ?? [] } : null, armyBoom: this.boom ? { closedAt: this.boomClosedAt, closed: !!this.spec?.armyBoom?.closed || !!this.boomClosedAt } : null, scene: this.spec?.name ?? null, frame: this.frame, tick: this.world.tick, backend: this.game.view.renderer.selectedBackend, quality: this.game.quality.tier,
-      convoyOverlapFrames: this.convoyOverlapFrames,
+      convoyOverlapFrames: this.convoyOverlapFrames, courierAttachments: { ...this.courierAttachments }, animalLimbs: { ...this.animalLimbs }, corgiTongue: { idleSamples: this.corgiTongue.idleSamples, idleOutFrames: this.corgiTongue.idleOutFrames, firstIdleOut: this.corgiTongue.firstIdleOut, movingSamples: this.corgiTongue.movingSamples, movingInFrames: this.corgiTongue.movingInFrames, firstMovingIn: this.corgiTongue.firstMovingIn },
       propPenetration: { samples: this.propPenetrationSamples, framesMax: Math.max(0, ...[...this.propPenetration.values()].map(m => m.max)), pairs: [...this.propPenetration.values()] },
       props: { sinkMaxCm: this.propSinkMaxCm, samples: this.propGroundSamples, gaps: this.game.view.labProbes().districts?.propGroundGaps() ?? [] },
       bodies, attackOverlap: { ...this.attackOverlap }, wheels: Object.fromEntries([...new Set([...this.wheels.values()].map(w => w.vehicle))].map(id => [id, [...this.wheels.values()].filter(w => w.vehicle === id).map(w => { const h = this.hubs.get(`${w.vehicle}|${w.wheel}`); return { ...w, hubSpikeCm: h?.spikeCm ?? 0, hubSpikeFrame: h?.spikeFrame ?? 0, hubStepCm: h?.stepCm ?? 0, hubStepFrame: h?.stepFrame ?? 0 }; })])), ...(this.spec?.trace ? { vehicleTrack: Object.fromEntries(this.vehicleTrack), wheelTrack: Object.fromEntries(this.wheelTrack) } : {}),
