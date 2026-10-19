@@ -1,0 +1,20 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/small-fixes-w6 -> 2.28.24.66:/srv/mi/ws/small-fixes-w6-968450
+[remote] cache-gc deleted:none
+[remote] sync 17s, 19389 files; job /srv/mi/jobs/small-fixes-w6-968450-38488-1792364697; queueing for a slot
+[runner] slot 1 acquired; load 2.06 1.10 0.56
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/small-fixes-w6-968450-38488-1792364697[39m
+
+[90mstdout[2m | tests/unit/render/crowd-lod-geometry.test.ts[2m > [22m[2m@E18-AC01 @perf far worker reduces geometry while retaining every vertex channel and rigid-part ownership
+[22m[39m{ before: [33m3782[39m, after: [33m2946[39m }
+
+ [32m✓[39m [30m[43m functional [49m[39m tests/unit/render/crowd-lod-geometry.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 795[2mms[22m[39m
+   [33m[2m✓[22m[39m @E18-AC01 @perf far worker reduces geometry while retaining every vertex channel and rigid-part ownership[33m 394[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E25-14g @E25 @E25-AC14 gripped far civilian remains within its authored triangle count and retains vertex channels[33m 399[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m   Start at [22m 23:05:16
+[2m   Duration [22m 1.36s[2m (tests 66%, transform 22%, import 11%, worker 1%)[22m
+
+[remote] done exit=0 (runner 2.28.24.66, sync 17s, remote total 3s)

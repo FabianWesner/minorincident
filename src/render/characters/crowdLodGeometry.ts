@@ -54,7 +54,7 @@ export async function simplifyCrowdLod(geometry: BufferGeometry, maxError = .01,
     const sourceIndices = new Uint32Array(indices), target = Math.max(3, Math.floor(indices.length * targetRatio / 3) * 3);
     const surface = preserveSurface ? area(indices) * .85 : 0;
     const tolerance = gripped ? Math.min(maxError, .001) : maxError;
-    let [reduced, error] = MeshoptSimplifier.simplifyWithAttributes(sourceIndices, position.array as Float32Array, 3, values, stride,
+    let [reduced, error] = MeshoptSimplifier.simplifyWithAttributes(sourceIndices, (geometry.getAttribute('_gripPosition') ?? position).array as Float32Array, 3, values, stride,
       weights, locks, target, tolerance, flags);
     // Position error alone permits thin clothing/limb shells to collapse into
     // disconnected patches. Search for the smallest retained part before restoring
@@ -65,7 +65,7 @@ export async function simplifyCrowdLod(geometry: BufferGeometry, maxError = .01,
       let best: Uint32Array = sourceIndices, bestError = 0;
       for (let retry = 0; retry < 7 && high - low > 3; retry++) {
         const middle = Math.floor((low + high) / 6) * 3;
-        const [candidate, candidateError] = MeshoptSimplifier.simplifyWithAttributes(sourceIndices, position.array as Float32Array, 3, values, stride,
+        const [candidate, candidateError] = MeshoptSimplifier.simplifyWithAttributes(sourceIndices, (geometry.getAttribute('_gripPosition') ?? position).array as Float32Array, 3, values, stride,
           weights, locks, middle, tolerance, flags);
         if (area(candidate) >= surface) { best = candidate; bestError = candidateError; high = middle; } else low = middle + 3;
       }
