@@ -362,7 +362,21 @@ export class InteractionView extends Group {
       const right = left + (viewport?.width ?? innerWidth), bottom = top + (viewport?.height ?? innerHeight);
       const x = (this.projection.x + 1) * innerWidth / 2, y = (1 - this.projection.y) * innerHeight / 2;
       this.panel.style.left = `${Math.max(left + 8 + width / 2, Math.min(right - 8 - width / 2, x))}px`;
-      this.panel.style.top = `${Math.max(top + 8 + height, Math.min(bottom - 8, y))}px`;
+      let panelBottom = Math.max(top + 8 + height, Math.min(bottom - 8, y));
+      // Projected interactions can land on the phone's objective/roster. Move
+      // below visible story panels, keeping the same world-space anchor in X.
+      if (innerWidth <= 600 || document.body.classList.contains('touch-ui')) {
+        const panelLeft = parseFloat(this.panel.style.left) - width / 2;
+        const obstacles = document.querySelectorAll<HTMLElement>('.hud-tracker,.hud-survivor-vitals,.mission-subtitle,.story-bubble');
+        for (const obstacle of obstacles) {
+          if (obstacle.hidden || getComputedStyle(obstacle).visibility === 'hidden') continue;
+          const rect = obstacle.getBoundingClientRect();
+          if (rect.width && rect.height && panelLeft < rect.right + 8 && panelLeft + width > rect.left - 8 && panelBottom > rect.top - 8 && panelBottom - height < rect.bottom + 8) {
+            panelBottom = Math.min(bottom - 8, rect.bottom + 8 + height);
+          }
+        }
+      }
+      this.panel.style.top = `${panelBottom}px`;
     }
     const pieces = this.world.hazards?.debris.pieces ?? [];
     for (let i = 0; i < pieces.length; i++) {
