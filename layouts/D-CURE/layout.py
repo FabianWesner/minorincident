@@ -298,8 +298,6 @@ def dress(asset, x, z, yaw=0.0, scale=1.0, decay=None, route_clear=None, run=Fal
     v = placement['visualAabb']
     if asset in ('prop.tree', 'prop.street-tree'): box = dict(min=[x-.3, 0, z-.3], max=[x+.3, 2.2, z+.3])
     else: box = dict(min=list(v['min']), max=list(v['max']))
-    # Small verge pieces block the player only (physics); buildings, vehicles and plant kits stay AI walls too.
-    if not asset.startswith(('bld.', 'veh.', 'kit.')): box['physicsOnly'] = True
     if not run and asset not in ('prop.emergency-light', 'prop.lab-signs'): l.data['colliders'].append(dict(id=pid, aabb=box, minTier=0, maxTier=6))
     taken.append((mn, mx)); return pid
 def face(side_normal):
@@ -341,7 +339,7 @@ def fence_run(asset, a, b, step=2.6):
     group = []
     for v in boxes + [None]:
         if group and (v is None or v['min'][0] > group[-1]['max'][0] + .3 or v['min'][2] > group[-1]['max'][2] + .3):
-            l.data['colliders'].append(dict(id=f'look-l10-run:{len(l.data["colliders"])}', aabb=dict(min=[min(g['min'][i] for g in group) for i in range(3)], max=[max(g['max'][i] for g in group) for i in range(3)], physicsOnly=True), minTier=0, maxTier=6))
+            l.data['colliders'].append(dict(id=f'look-l10-run:{len(l.data["colliders"])}', aabb=dict(min=[min(g['min'][i] for g in group) for i in range(3)], max=[max(g['max'][i] for g in group) for i in range(3)]), minTier=0, maxTier=6))
             group = []
         if v is not None: group.append(v)
 
