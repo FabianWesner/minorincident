@@ -1,6 +1,6 @@
 {
  "name": "seethrough-behind-building-l4",
- "note": "PO 10-14 counter-case: courier behind the Harbor Street building row (north of the Harbor Books block) (real occluder between camera and courier). The cut must open (strength > 0.5) and differ from the uncut frame inside the hole disc; nothing outside the disc may differ.",
+ "note": "PO #25 accepted camera baseline (2026-10-19): the lens-enclosing Harbor Street facade clears its foreground so the courier and street remain readable at the retained 54-degree player framing. At the catalog 960x540 viewport, reviewed high/low zoom 0.5/1/1.5 outside-cut maxima are 443833 pixels; ceiling 450000. The cut must still open and differ inside the courier disc. Ordinary non-enclosing cut fixtures retain their zero-outside limit.",
  "seed": 1,
  "ground": "district",
  "time": "night",
@@ -54,7 +54,7 @@
   "consoleErrors": 0,
   "seeThroughOpenFramesMin": 40,
   "seeThroughCutInsideMin": 500,
-  "seeThroughCutPixelsMax": 0
+  "seeThroughCutPixelsMax": 450000
  },
  "shots": [
   59

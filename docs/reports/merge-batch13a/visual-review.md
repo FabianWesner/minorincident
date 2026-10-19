@@ -22,3 +22,16 @@ Images below were opened with the image viewer after the production build at `14
 | [Tier 4 male, WebGPU low zoom 0.5](touched-webgpu/courier-gear-tier4-male@low-z0.5/sheet.jpg) | Matches the WebGL2 close sheet. Cap, torso, arms, shorts, boots and bag stay joined through the reversal; no detached chest box appears. |
 | [Dog limbs, WebGPU low zoom 1](touched-webgpu/dog-limbs-attached@low-z1/sheet.jpg) | The same standing/walk/run sequence retains the continuous body/leg silhouette and ground shadow. The cells are too small for knee-detail judgment; the attachment metric is zero throughout. |
 | [L3 evacuation, WebGPU low zoom 0.5](touched-webgpu/controls-l3-evacuation@low-z0.5/sheet.jpg) | Matches WebGL2 low: the courier is centred inside the green ring. Foreground figures and bus edges are cropped, while the countdown and mission panels remain readable. |
+
+| [Quiet native WebGL high war](native-webgl-window/l4-war-line-high.png) | Wide authored war overview: soldiers fire across the plaza among the bus, tents, quartermaster tables, civilians, infected and fallen bodies. The objective says “Hold the plaza with the army.” This is the test's photo preset, not the follow-camera counter view. |
+| [Quiet native WebGL low war](native-webgl-window/l4-war-line-low.png) | Portrait view shows a soldier firing beside the tables and aid tent, bodies on the plaza and intact touch controls. The hold-the-plaza objective remains visible. |
+| [Quiet native WebGL low collapse](native-webgl-window/l4-collapse-low.png) | The courier and weapon remain visible beside the storefronts with pursuing infected below, smoke/fire toward the upper right, and the cellar route objective. The guidance panel and touch controls are legible. |
+
+| [New cut red: L4 high z1](full-matrix-reviewed/seethrough-behind-building-l4@high-z1.jpg) | Opened beside the batch-12 high-z1 baseline: merged keeps an oblique street view with courier/corgi, curb, lamp and illuminated foreground windows. Baseline shows a broad dark foreground building with only the courier reveal disc opened; the lens-clear mode now removes far more of that foreground, explaining the outside-disc failure. |
+| [New cut red: L4 high z0.5](full-matrix-reviewed/seethrough-behind-building-l4@high-z0.5.jpg) | Close view retains the courier and companion on the sidewalk, lamp and nearby storefront edge. The framing is readable, but the numerical cut comparison exceeds the unchanged outside-disc limit. |
+
+| [New cut red: L4 low z1](full-matrix-reviewed/seethrough-behind-building-l4@low-z1.jpg) | Matches the high-tier street framing with intact courier/corgi, facade windows, curb/lamp and road. Foreground clearing extends beyond the intended disc; the same numerical contract fails on low quality. |
+
+## PO #25 baseline review
+
+Opened every high/low × zoom 1.5/1/0.5 sheet for **both** `seethrough-behind-building-l4` and `seethrough-building-first-frame` (12 total). Wide views show the courier/corgi on the street with the curb, lamp, illuminated facade windows and opposite sidewalk; close views clearly retain full character silhouettes and their shadows. Frame 0 matches the settled readable composition. No roof-filling viewport or missing courier appears. All [reviewed sheets and numerical checks](accepted-facade-baseline.json) are retained.

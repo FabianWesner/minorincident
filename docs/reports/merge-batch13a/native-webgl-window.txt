@@ -1,0 +1,40 @@
+17:35  up 71 days, 16:28, 3 users, load averages: 2.92 3.36 4.04
+Quiet-run preflight: load < 3; no local Vitest or headless Chrome processes; all configured browser slots held.
+
+Running 2 tests using 1 worker
+
+{"renderer":"webgl","tier":"high","seed":2,"counts":{"infected":99,"alphas":2,"alphasArrived":3,"turnS":84,"soldiersAtTurn":20,"soldiers":18,"civilians":40},"firingSoldiers":12,"warAwakeProps":0,"collapseAwakeProps":0,"warDrawCalls":335,"warTriangles":621388,"collapseDrawCalls":351,"collapseTriangles":662852,"warP50":6.599999999998545,"warP95":9.400000000001455,"warMax":18.299999999999272,"turnMaxMs":31.399999999999636,"tankMaxMs":13.700000000000728,"breakMaxMs":28.19999999999709,"collapseP50":7.700000000004366,"collapseP95":11.19999999999709,"simP95":2.3000001907348633,"simFrameP95":2.09999942779541,"updateP95":3.5,"renderP95":3.90000057220459,"lineBroke":true}
+  ✓  1 [chromium] › tests/perf/l4-budgets.spec.ts:16:3 › high › T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break high (53.9s)
+{"renderer":"webgl","tier":"low","seed":2,"counts":{"infected":48,"alphas":2,"alphasArrived":3,"turnS":92.01666666666667,"soldiersAtTurn":10,"soldiers":9,"civilians":20},"firingSoldiers":6,"warAwakeProps":0,"collapseAwakeProps":0,"warDrawCalls":191,"warTriangles":263124,"collapseDrawCalls":198,"collapseTriangles":247935,"warP50":25.69999999999709,"warP95":32.700000000004366,"warMax":51.30000000000291,"turnMaxMs":110.90000000000146,"tankMaxMs":43.200000000004366,"breakMaxMs":83.60000000000582,"collapseP50":34.19999999999709,"collapseP95":50.89999999999418,"simP95":5.899999618530273,"simFrameP95":10.09999942779541,"updateP95":8.799999237060547,"renderP95":12.5,"lineBroke":true}
+  ✘  2 [chromium] › tests/perf/l4-budgets.spec.ts:16:3 › low › T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break low (1.5m)
+
+
+  1) [chromium] › tests/perf/l4-budgets.spec.ts:16:3 › low › T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break low 
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 33.333333333333336
+    Received:    34.19999999999709
+
+      115 |     if (process.env.PHONE_PERF === '1' && tier === 'low') for (const p95 of [proof.warP95, proof.collapseP95]) expect(p95).toBeLessThanOrEqual(33.3);
+      116 |     if (tier === 'high') { expect(proof.warP95).toBeLessThanOrEqual(14); expect(proof.collapseP95).toBeLessThanOrEqual(14); }
+    > 117 |     else { expect(proof.warP50).toBeLessThanOrEqual(1000 / 30); expect(proof.collapseP50).toBeLessThanOrEqual(1000 / 30); }
+          |                                                                                           ^
+      118 |     // Hitch bound: 50 ms on desktop; the phone profile runs under a 4x CPU throttle, so the same bound is 80 ms there (20 ms unthrottled).
+      119 |     for (const max of [proof.turnMaxMs, proof.tankMaxMs, proof.breakMaxMs]) expect(max).toBeLessThanOrEqual(tier === 'high' ? 50 : 80);
+      120 |   });
+        at /private/tmp/mi-merge-batch13a-gate/tests/perf/l4-budgets.spec.ts:117:91
+
+    Error Context: test-results/playwright/run-3670/perf-l4-budgets-low-T-E22--92ab6-ck-chain-and-line-break-low-chromium/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/playwright/run-3670/perf-l4-budgets-low-T-E22--92ab6-ck-chain-and-line-break-low-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/playwright/run-3670/perf-l4-budgets-low-T-E22--92ab6-ck-chain-and-line-break-low-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    [chromium] › tests/perf/l4-budgets.spec.ts:16:3 › low › T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break low 
+  1 passed (2.5m)

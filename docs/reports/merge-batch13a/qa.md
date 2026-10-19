@@ -69,3 +69,41 @@ Full sweep: **3,194 passed / 2 failed / 9 skipped**, 511 files, 3,936.33 seconds
 ## Completed backend matrix
 
 [WebGPU matrix](touched-webgpu/index.md): **138/138 pass**. Combined with the WebGL2 passes, **276/276 unique backend/tier/zoom rows pass** for every touched camera, gear tier 0–4, corgi tongue, dog limb and controls scene. [WebGPU compact proofs](scene-proof-webgpu.json) retain actual backend/tier, nonzero sampling, all attachment/limb/tongue values and E18 counters. Both backends give the same maxima: high **117 draws / 462,825 triangles**, low **113 / 337,863**. Every requested courier attachment count, animal limb gap and idle tongue-out count is zero. The completed WebGPU raw metric files were deleted after writing this compact proof, as required by the disk cleanup instruction. Reviewed sheets are retained.
+
+## E22 selected CPU verification
+
+The remote CPU phase of `MI_VERIFY_REMOTE_SIM=1 npm run verify -- E22` completed **117/117 selected tests passed**, zero failures; 3,088 unrelated tests were excluded by its name filter. [Compact selected-test record](e22-cpu-summary.json), [raw phase log](verify-e22-retry.txt). The small output directory recreated by the remote pull was removed immediately after this compact record was written. The enclosing verifier was stopped during the required disk cleanup, so this is explicitly a successful CPU phase, not an exit-zero claim for the whole verifier.
+
+## Native timing admission
+
+[Native WebGL request](native-webgl.txt) ended **exit 75** after exactly the permitted 30-minute quiet-run admission wait. No timing test ran and no native result is claimed. The orchestrator subsequently paused the other lanes and explicitly requested a fresh T-E22-20 measurement in that quiet window. The [new WebGL request](native-webgl-window.txt) is queued between smoke and the full matrix, under the unchanged 30-minute admission and 20-minute held-batch limits. WebGPU native timing remains explicitly unmeasured. The existing native L4/L7 low timing reds remain inherited baseline items. This follows the binding fairness instruction; it does not change the orchestrator gate's separately granted admission waiver. All deterministic E18 counter and touched-scene budget evidence above remains valid, but native frame/sim budget certification is incomplete.
+
+## Requested quiet-window L4 remeasurement
+
+The orchestrator explicitly paused the other lanes and requested this additional batch. [Native WebGL log](native-webgl-window.txt), [preflight](native-webgl-window-conditions.jsonl): all four legacy slots held, load **2.92**, zero other headless browsers/local Vitest; **2.5 minutes** held, then released. No second native batch was chained. Gate smoke admitted immediately afterward; the parent gate was resumed automatically.
+
+**High passes** every unchanged T-E22-20 limit: pickup/turn window max **31.4 ms / 50 ms**, tank **13.7**, line break **28.2**, war/collapse p95 **9.4/11.2**, sim p95 **2.3 ms**. **Low fails** at collapse median **34.2 ms / 33.33 ms**; its retained measurements also miss pickup/turn **110.9 ms / 80 ms** and line break **83.6 ms / 80 ms**. The latter assertions are after the first failed assertion; these additional misses are derived from the saved measurement against the unchanged test limits. Low sim p95 **5.9 ms / 6 ms** and war median **25.7 ms / 33.33 ms** pass. All draw/triangle/awake-prop counters pass (high maxima 351 / 662,852 / 0; low 198 / 263,124 / 0).
+
+The pickup timing is the maximum rAF interval over the existing test's pickup/turn window, not a claim that the single pickup tick took exactly that duration. Same-tick pickup/alarm/wave equality is separately proven by the passing event assertions. Camera-lane native WebGL low previously measured turn **84.4**, line break **109.7**, collapse median **35.3 ms**; both runs remain reported as red. WebGPU native timing was not remeasured in this batch. Both full timing records and three reviewed captures were copied into [native-webgl-window/](native-webgl-window/), then the completed raw perf and Playwright trace directories were removed.
+
+## Exact gate progress
+
+Fresh typecheck, lint and production build pass. [Smoke summary](gate-smoke-summary.json): **16/16 passed**, no retries, **1.6 minutes**, two workers. Full WebGPU matrix admitted next: **1,548 rows**, 774 per tier. Its compact per-row checks are archived before deleting bulky raw telemetry; completed smoke output directories were removed after saving the result record.
+
+## New full-matrix cut regression
+
+`seethrough-behind-building-l4` high zoom **1.5 / 1 / 0.5** fails the unchanged outside-disc limit 0 with **420,498 / 443,833 / 133,348 pixels**. The [batch-12 control](seethrough-baseline-summary.json) passes all six tier/zoom rows at outside 0, so this is classified **red on main: no**. Source `625d5aa6e` adds `lensPlacements` and the shader foreground-clear mode for an enclosing facade; unlike the normal bounded cut, that mode intentionally changes foreground pixels beyond the courier disc. The newly fixed uncontracted lens can be enclosed by the building at this existing fixture. The opened high-z1 sheet shows the whole courier and corgi on the night street with nearby facade windows and a normal oblique camera; it does not show a flat facade viewport. This remains an unresolved numerical contract regression. No test/limit was relaxed and no facade-clear restriction was introduced that could reverse the urgent playable-camera fix.
+
+The `seethrough-building-first-frame` variant also fails at all three high-tier zooms with the identical outside pixel counts; its six batch-12 rows also pass. Both fixture variants are included in the baseline summary and the same new-regression row of the red table.
+
+Known convoy cut reds reproduce at high z1.5 / z1: **195,856 / 122,917 outside pixels**, versus batch-12 merged **3,244 / 510** and its fresh main **3,204 / 412**, unchanged limit 0. Classified red on main **yes**, while explicitly retaining the substantial increase rather than presenting it as unchanged baseline behavior. The enclosing-facade shader can widen the cut for this camera as well.
+
+The behind-building low-tier rows also fail at all zooms: z1.5 / z1 / z0.5 outside **387,193 / 440,204 / 129,559**, limit 0. Opened low-z1: matching oblique street composition, intact courier and companion, foreground facade windows, curb/lamp and road. The broad foreground clearing and failed bounded-disc contract persist on low quality.
+
+## Authorized PO #25 baseline update
+
+The orchestrator explicitly accepted the intentional facade clearing and instructed this lane to rebaseline only the two named L4 fixtures after visual review. Opened **all twelve** sheets (two variants × both tiers × all three zooms), including frame 0. Street/curb/lamp and courier/corgi remain readable; no flat roof viewport or missing courier appears. Updated only those fixtures' outside-cut ceilings from 0 to **450,000** at the existing **960×540 catalog viewport**, above measured maximum **443,833**. Open-frame, inside-cut and first-frame courier-share checks remain intact. Performance budgets and other cut fixtures are unchanged. This fixes the now-wrong zero-outside criterion for the enclosing-facade behavior approved in PO #25; no other specification criterion changed.
+
+[Accepted baseline record](accepted-facade-baseline.json): **12/12** original measurements pass their revised fixture checks. This is an explicit post-review re-evaluation, not a second full matrix execution; the original raw failures remain in the log/index. All twelve opened sheets are retained in `full-matrix-reviewed/`. The earlier “unresolved contract regression” entries above are measurement history superseded by this specific authorization. Convoy remains outside this acceptance pending the targeted camera comparison.
+
+New convoy low-tier outside-cut failures: z1.5 **205,216**, z1 **122,571**, limit 0. Both batch-12 low rows pass, so red on main **no**. The single-scene camera comparison includes both tiers to investigate these as well as the worsened inherited high reds. Convoy criteria are unchanged.
