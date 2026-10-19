@@ -305,7 +305,7 @@ for z in (71.4, 74.6):
     put('prop.jersey-barrier', 144.2, z + .8, math.pi / 2, 1.0)
 put('veh.military-truck', 145.6, 72.2, math.pi / 2 + .12); put('veh.pickup-red', 144.8, 76.4, 1.2); put('veh.sedan-white', 139.4, 71.8, -math.pi / 2 + .1)
 for z in (70.2, 77.8): put('prop.sandbag-pallet', 143.4, z, 0.0)
-put('prop.light-tower-trailer', 141.6, 69.4, math.pi / 2); put('prop.barricade', 140.0, 75.8, math.pi / 2); put('prop.emergency-light', 140.6, 72.4, 0.0)
+put('prop.light-tower-trailer', 141.6, 69.4, math.pi / 2); put('prop.emergency-light', 140.6, 72.4, 0.0)
 put('prop.emergency-light', 143.0, 77.8, 0.0); put('prop.street-sign', 138.4, 78.6, math.pi)
 for z in (69.8, 78.0, 66.6, 81.4): put('prop.street-tree', 147.6, z, 0, .75, margin=0, shrink=2.4)
 
