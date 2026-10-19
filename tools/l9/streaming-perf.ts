@@ -71,7 +71,9 @@ try {
           let heroLights = 0, awakeProps = 0, particles = 0, puffs = 0, parts = 0;
           const start = performance.now(); api.resume();
           while (performance.now() - start < 240_000) {
-            const now = await new Promise<number>(r => requestAnimationFrame(r)), e = api.getEntity(car.id)!;
+            const now = await new Promise<number>(r => requestAnimationFrame(r)), e = api.getEntity(car.id);
+            // S7 handover removes the wrecked APC entity once the crawl begins: the route is complete.
+            if (!e) break;
             const p = api.perf();
             // Keep the authored game-camera offset via the public camera pose API.
             // Scene Lab's setCamera also renders: calling it every RAF doubled
@@ -114,10 +116,10 @@ try {
           }
           api.pause(); api.setTimeScale(1); await api.screenshotReady();
           if (diagnose) backend.createRenderPipeline = createPipeline;
-          const final = api.getEntity(car.id)!, p95 = (v: number[]) => v.sort((a, b) => a - b)[Math.ceil(v.length * .95) - 1];
+          const final = api.getEntity(car.id) ?? last, p95 = (v: number[]) => v.sort((a, b) => a - b)[Math.ceil(v.length * .95) - 1];
           return { completed: !!world.missions?.l9?.state.finished, crash: world.missions?.l9?.snapshot(),
             seconds: (performance.now() - start) / 1000, distance, frameP50: [...frames].sort((a,b) => a-b)[Math.ceil(frames.length * .5) - 1], frameP95: p95(frames), frameP99: frames[Math.ceil(frames.length * .99) - 1], simP95: p95(sims), hitch, draws, triangles, resident, loading, geometries, heapPeakMB,
-            final: final.transform, hp: final.health.current, samples, hitches, coldPipelines, shadowTriangles, submittedTriangles, heroLights, awakeProps, particles, puffs, parts, gpu, touchPoints: navigator.maxTouchPoints, terrain: api.perf().terrain, backend: api.perf().backend, infected: api.perf().infected?.count, nodeBuilds: api.perf().nodeBuilds };
+            final: 'transform' in final ? final.transform : final, hp: 'health' in final ? final.health.current : 0, samples, hitches, coldPipelines, shadowTriangles, submittedTriangles, heroLights, awakeProps, particles, puffs, parts, gpu, touchPoints: navigator.maxTouchPoints, terrain: api.perf().terrain, backend: api.perf().backend, infected: api.perf().infected?.count, nodeBuilds: api.perf().nodeBuilds };
         }, { cap, diagnose: cpuProfile });
         if (cpuProfile) writeFileSync('/tmp/l9-stream-cpu.json', JSON.stringify((await cdp.send('Profiler.stop')).profile));
         await cdp.send('HeapProfiler.collectGarbage');
