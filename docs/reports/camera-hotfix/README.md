@@ -32,12 +32,12 @@ The real hide/line-break game captures were also opened: the close view shows bo
 | --- | --- |
 | [Before WebGL matrix](before-webgl/index.md) / [before WebGPU](before-webgpu/index.md) | 6/6 each; defect visible at every zoom |
 | [After WebGL matrix](after-webgl/index.md) / [after WebGPU](after-webgpu/index.md) | 12/12 each; all sheets opened |
-| [Main camera negative control](camera-final-red.log) | L4 reported spot, L5 and L7 fail; seven other levels pass |
-| [Focused final regression](camera-final-focused.log) / [expanded street sweep](camera-final-route.log) | 25/25 pass; expanded final L1–L10 sweep also 10/10 on Hetzner |
+| [Main camera negative control](camera-final-red.txt) | L4 reported spot, L5 and L7 fail; seven other levels pass |
+| [Focused final regression](camera-final-focused.txt) / [expanded street sweep](camera-final-route.txt) | 25/25 pass; expanded final L1–L10 sweep also 10/10 on Hetzner |
 | Real L4 browser regression | 4/4 pass; three zooms and all requested HUD sizes per case |
 | [L4 WebGL/high proof](game-webgl-high/framing.json), [WebGL/low](game-webgl-low/framing.json), [WebGPU/high](game-webgpu-high/framing.json), [WebGPU/low](game-webgpu-low/framing.json) | Exact PO position; polar 54°; radii 9.5/19/28.5 m |
 | [1280×720 HUD](game-webgl-high/hud-1280x720.png), [1920×1080](game-webgl-high/hud-1920x1080.png), [2000×990](game-webgpu-low/hud-2000x990.png) | Hint strip clear of vitals, companion, Sound and Controls |
-| [Isolated zoo timing](camera-zoo-isolated.log) | Unchanged 200-actor simulation benchmark fails: 5.58 ms p95 vs 4 ms; low tier passes. No budget or simulation change made. |
+| [E18 deterministic counters](e18-counters.txt) | 7/7 pass: high/low horde, L6, L5 and low male courier |
+| [Isolated zoo timing](camera-zoo-isolated.txt) | Unchanged 200-actor simulation benchmark fails: 5.58 ms p95 vs 4 ms; low tier passes. No budget or simulation change made. |
 
 Typecheck, lint and production build pass. Full CPU and epic/performance gate results follow below.
-

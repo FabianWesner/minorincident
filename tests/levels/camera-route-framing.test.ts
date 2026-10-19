@@ -7,7 +7,7 @@ import { l4 } from '../../src/data/l4';
 import { crossing } from '../../src/levels/L9/district';
 import { cure } from '../../src/levels/L10/district';
 
-for (const level of runnerLevels) test(`${level} authored waypoint sweep preserves player framing @camera-hotfix`, async () => {
+for (const level of runnerLevels) test(`${level} authored waypoint sweep preserves player framing @camera-hotfix @E02${level === 'L4' ? ' @E22' : ''}`, async () => {
   const world = await loadLevel(level, 1);
   try {
     const solids = world.districts!.districts.filter(d => d.id === 'D-FAIR').flatMap(d => d.decay.placements.filter(p => p.assetId.startsWith('bld.')).map(p => {

@@ -4,7 +4,7 @@ import { boot, expect, test } from '../fixtures';
 
 test.use({ viewport: { width: 1280, height: 720 }, launchOptions: { args: ['--use-angle=metal', '--ignore-gpu-blocklist', '--enable-gpu', '--enable-unsafe-webgpu'] } });
 for (const renderer of ['webgl', 'webgpu'] as const) for (const quality of ['high', 'low'] as const) {
-  test(`@camera-hotfix L4 refuge framing and debug HUD ${renderer} ${quality}`, async ({ page }) => {
+  test(`@E22 @camera-hotfix L4 refuge framing and debug HUD ${renderer} ${quality}`, async ({ page }) => {
     test.setTimeout(300_000);
     await boot(page, `/?test=1&ui=1&debug=true&renderer=${renderer}&quality=${quality}&audio=muted&dpr=1`);
     await page.evaluate(async quality => {
