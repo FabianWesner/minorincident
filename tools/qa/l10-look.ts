@@ -56,7 +56,7 @@ try {
       const jpeg = await session.snapshot();
       writeFileSync(`${out}/${s.id}-z${zoom}.jpg`, jpeg);
       const perf = await p.evaluate(() => { const a = window.__SS__!, f = a.perf(), cam = (a.getState().render as unknown as { camera?: { zoom?: number } }).camera; return { draws: f.drawCalls, triangles: f.triangles, zoom: cam?.zoom, lighting: f.lighting }; });
-      metrics.push({ station: s.id, zoom, ...perf });
+      metrics.push({ station: s.id, ...perf, zoom });
       const key = s.region; if (!cells.has(key)) cells.set(key, []); cells.get(key)!.push({ frame: Number(`${picked.indexOf(s)}${zooms.indexOf(zoom)}`), jpeg });
     }
   }

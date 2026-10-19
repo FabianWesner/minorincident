@@ -396,7 +396,7 @@ for x0, z0, x1, z1 in [(1910, -96, 2120, -96), (2160, -96, 2380, -96), (1910, 12
     fence_run('prop.cure-mil-fence', (x0, z0), (x1, z1), 3.3)
 frontage(military, [('prop.street-lamp', 1)], 32, 5.8, jitter=1, sides=(1,))
 frontage(military, [('veh.tank@wrecked', 2), ('veh.military-truck@wrecked', 2), ('kit.guard-tower', 2), ('bld.cure-motor-shelter', 1), ('prop.sandbag-pallet', 2), ('decay.blown-sandbags', 2), ('veh.evac-bus@burned', 1)], 13, (9, 13))
-frontage(military, [('prop.jersey-barrier', 2), ('prop.emergency-light', 1), ('decay.blown-sandbags', 1), ('prop.sandbag-pallet', 1)], 8, (6.4, 7.5), chance=.8)
+frontage(military, [('prop.jersey-barrier', 3), ('prop.emergency-light', 1), ('decay.blown-sandbags', 2), ('prop.sandbag-pallet', 2), ('prop.cure-mil-fence', 2)], 6, (6.4, 7.5), chance=1)
 
 # R5 research campus: cold floods, ambulances, tents and generators along the lab lanes.
 campus = region_segments(4)
@@ -423,7 +423,7 @@ for x0, z0, x1, z1 in [(3710, -70, 3930, -70), (3710, 25, 3930, 25)]:
     fence_run('prop.cure-mil-fence', (x0, z0), (x1, z1), 3.3)
 frontage(complex_route, [('prop.street-lamp', 1)], 20, 5.8, jitter=1)
 frontage(complex_route, [('kit.dispersal-pipe-straight', 3), ('kit.dispersal-tank-bullet', 1), ('kit.dispersal-tank-sphere', 1), ('bld.substation', 2), ('bld.cure-service-building', 1)], 12, (10, 14))
-frontage(complex_route, [('prop.cure-drum-stack', 2), ('prop.jersey-barrier', 2), ('prop.cure-mil-fence', 3)], 7, (6.4, 8), chance=.85)
+frontage(complex_route, [('prop.cure-drum-stack', 2), ('prop.jersey-barrier', 2), ('prop.cure-mil-fence', 3), ('prop.cure-generator', 1), ('prop.emergency-light', 1)], 6, (6.4, 8), chance=1)
 # Road surface: solid edge lines so the asphalt reads as a worn road, not a flat ribbon.
 for a_, b_ in route_segments:
     d = math.dist(a_, b_)
@@ -431,7 +431,7 @@ for a_, b_ in route_segments:
     ux, uz = (b_[0]-a_[0])/d, (b_[1]-a_[1])/d; nx, nz = -uz, ux
     for side in (1, -1):
         o0, o1 = 3.45*side, 3.6*side
-        surface('edge-line', ccw([[a_[0]+ux*4.5+nx*o0, a_[1]+uz*4.5+nz*o0], [b_[0]-ux*4.5+nx*o0, b_[1]-uz*4.5+nz*o0], [b_[0]-ux*4.5+nx*o1, b_[1]-uz*4.5+nz*o1], [a_[0]+ux*4.5+nx*o1, a_[1]+uz*4.5+nz*o1]]), 'picketWhite', .006)
+        surface('edge-line', ccw([[a_[0]+ux*4.5+nx*o0, a_[1]+uz*4.5+nz*o0], [b_[0]-ux*4.5+nx*o0, b_[1]-uz*4.5+nz*o0], [b_[0]-ux*4.5+nx*o1, b_[1]-uz*4.5+nz*o1], [a_[0]+ux*4.5+nx*o1, a_[1]+uz*4.5+nz*o1]]), 'silver', .006)
 # Verge grass: blade strips beside the road through the residential fringe and the campus lawns (high 28 / low 5 blades per m2).
 for i in (1, 4):
     for a_, b_ in region_segments(i):
