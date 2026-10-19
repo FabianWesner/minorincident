@@ -141,7 +141,8 @@ async function windowLine(page: import('@playwright/test').Page): Promise<number
     let line: number[][] = [];
     game.view.labProbes().districts?.traverse(object => {
       const mesh = object as import('three').InstancedMesh;
-      if (!mesh.isInstancedMesh || !mesh.count || !mesh.geometry.hasAttribute('_window')) return;
+      // Explicit instance attributes keep the InstancedMesh API but disable Three's built-in instancing flag.
+      if ((!mesh.isInstancedMesh && !mesh.userData.staticInstanceAttributes) || !mesh.count || !mesh.geometry.hasAttribute('_window')) return;
       const g = mesh.geometry, mask = g.getAttribute('_window'), light = g.getAttribute('_light'), normal = g.getAttribute('normal'), positions = g.getAttribute('position');
       const vertices: number[][] = [];
       const instance = mesh.matrixWorld.clone(); mesh.getMatrixAt(0, instance);

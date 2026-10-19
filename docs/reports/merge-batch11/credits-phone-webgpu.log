@@ -1,0 +1,14 @@
+
+> scene:catalog
+> sh tools/e2e-lock.sh tsx tools/scenelab/catalog.ts --matrix --backend webgpu --jobs 1 --filter ui-menu-credits --size 390x844 --out docs/reports/merge-batch11/credits-phone-webgpu
+
+GPU guard: WindowServer 1.8% / 10 s; 2 headless browsers + 1 requested; waiting
+[catalog] 3 scenes, 1 browser(s), 390x844, webgpu, high
+[catalog] 1/6 pass ui-menu-credits@high-z1.5 (4.5 s)
+[catalog] 2/6 pass ui-menu-credits@high-z1 (4.3 s)
+[catalog] 3/6 pass ui-menu-credits@high-z0.5 (4.2 s)
+[catalog] 3 scenes, 1 browser(s), 390x844, webgpu, low
+[catalog] 4/6 pass ui-menu-credits@low-z1.5 (2.9 s)
+[catalog] 5/6 pass ui-menu-credits@low-z1 (2.0 s)
+[catalog] 6/6 pass ui-menu-credits@low-z0.5 (2.0 s)
+6/6 pass in 22 s -> docs/reports/merge-batch11/credits-phone-webgpu/index.md

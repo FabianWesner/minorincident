@@ -15,7 +15,7 @@ import { FxPool, groundShape, particleShape } from './FxPool';
 import type { LightField } from '../LightField';
 
 type Blast = Extract<GameEvent, { type: 'explosion' }>;
-interface Column { /** Moving source (L9 floor APC): extra puffs per metre driven, short-lived low trail puffs. */ trail?: number; ground?: number; born: number; x: number; z: number; until: number; rate: number; size: number; heat: number; acc: number; shade: number; cloud: number; light?: { remove(): void } | null }
+interface Column { /** Moving source (L9 floor APC): extra puffs per metre driven, short-lived low trail puffs. */ trail?: number; /** Blast plume: buoyant, front-loaded, dense dark column. */ plume?: boolean; ground?: number; born: number; x: number; z: number; until: number; rate: number; size: number; heat: number; acc: number; shade: number; cloud: number; light?: { remove(): void } | null }
 interface Glow { ground?: number; x: number; z: number; radius: number; color: number; intensity: number; born: number; life: number }
 /** E25 light-field pool (LightField.addTransient): intensity on the §6 0..10 scale; ttl seconds (Infinity until removed). */
 export type BlastLight = (x: number, z: number, hex: string, intensity: number, radius: number, ttl: number, flicker: boolean) => { remove(): void } | null;
@@ -108,13 +108,14 @@ export class Blasts extends Group {
         // Readability: soot billows dither away in the player's see-through hole like every other occluder.
         const dither = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
         soot.greaterThan(.5).and(dither.greaterThan(seeThroughHole(1.15).mul(.7).add(.3))).discard();
-        const h = n.mul(float(1).sub(progress).pow(1.25)).mul(1.45);
+        // Round 3: hot lobes read orange/yellow with white only in small pockets, so a close camera sees fire, not a white wipe.
+        const h = n.mul(float(1).sub(progress).pow(1.25)).mul(1.3);
         const sootTone = vec3(.07, .055, .05), red = vec3(.85, .16, .04), orange = vec3(1, .45, .08), yellow = vec3(1, .82, .32), white = vec3(1, .97, .85);
         let c = mix(sootTone, red, smoothstep(.05, .2, h));
-        c = mix(c, orange, smoothstep(.2, .42, h)); c = mix(c, yellow, smoothstep(.42, .7, h)); c = mix(c, white, smoothstep(.7, 1, h));
+        c = mix(c, orange, smoothstep(.2, .42, h)); c = mix(c, yellow, smoothstep(.45, .78, h)); c = mix(c, white, smoothstep(.86, 1.15, h));
         // Self-occlusion: darker at the silhouette, glowing core facing the camera.
         const facing = normalView.z.abs().smoothstep(0, .8).mul(.5).add(.5);
-        const fire = c.mul(facing).mul(mix(1, 2.6, smoothstep(.25, .8, h))).mul(heat);
+        const fire = c.mul(facing).mul(mix(1, 2.2, smoothstep(.3, .9, h))).mul(heat);
         // Soot: sun-shaded dark volume, lit orange from below while the fire is young, with hot pockets in the first moments.
         const sun = normalWorld.dot(this.sunNode).mul(.5).add(.5);
         const ambient = host.ambient ? host.ambient.clamp(.18, 1) : float(1);
@@ -138,7 +139,7 @@ export class Blasts extends Group {
         const size = mix(st.x, st.y, progress.pow(.6)).mul(alive);
         const bump = mx_noise_float(positionGeometry.mul(1.4).add(seed)).mul(.3).add(1);
         // Rise decelerates; wind bends the column more the higher (older) a puff is.
-        const drift = m.xyz.mul(age.mul(float(1).sub(progress.mul(.35)))).add(this.windNode.mul(age.mul(progress.add(.25))));
+        const drift = m.xyz.mul(age.mul(float(1).sub(progress.mul(.35)))).add(this.windNode.mul(age.mul(progress.mul(1.5).add(.2))));
         return o.xyz.add(drift).add(positionGeometry.mul(size).mul(bump));
       })();
       puffMaterial.outputNode = Fn(() => {
@@ -149,14 +150,18 @@ export class Blasts extends Group {
         const ambient = host.ambient ? host.ambient.clamp(.12, 1) : float(1);
         const base = vec3(st.w).mul(mix(.62, 1.12, sun)).mul(ambient);
         // Lit from below by the fire: low, young puffs glow orange on their undersides (spec 07 §6).
-        const ember = st.z.mul(float(1).sub(progress).pow(2.5)).mul(smoothstep(4.5, .6, positionWorld.y)).mul(normalWorld.y.negate().mul(.35).add(.75));
+        // Round 3: the glow hugs the flames (below 3 m) so the column above them stays dark instead of peach.
+        const ember = st.z.mul(float(1).sub(progress).pow(2.5)).mul(smoothstep(3, .5, positionWorld.y)).mul(normalWorld.y.negate().mul(.35).add(.75));
         const smokeColor = st.z.lessThan(-1.5).select(vec3(.55, .82, .8).mul(mix(.75, 1.12, sun)).mul(ambient.max(.6)), st.z.lessThan(0).select(vec3(.2, .48, .09).mul(mix(.62, 1.12, sun)).mul(ambient), base));
         // Practical radiance lights the cloud; damp the player-ray contribution so
         // the readability aura does not turn the foreground smoke into a bright veil.
-        const color = mix(smokeColor, vec3(1, .42, .12).mul(1.2), ember.clamp(0, .6)).add(host.field ? host.field.sample().mul(positionWorld.y.smoothstep(3.5, 1.5)).mul(nearRay.select(.25, 3)).mul(st.w.mul(2.5).min(1)) : vec3(0));
+        // Practical light scales with the smoke's albedo: dark soot reflects little of the fire's light.
+        const color = mix(smokeColor, vec3(1, .42, .12).mul(1.2), ember.clamp(0, .45)).add(host.field ? host.field.sample().mul(positionWorld.y.smoothstep(3.5, 1.5)).mul(nearRay.select(.25, 3)).mul(st.w.mul(1.4).min(1)) : vec3(0));
         const edge = normalView.z.abs().smoothstep(.05, .7);
         const grain = mx_noise_float(positionWorld.mul(.9).add(seed)).mul(.25).add(.85);
-        const fade = age.div(.45).min(1).mul(float(1).sub(progress).pow(1.3));
+        // Dark (soot) puffs stay dense for most of their life and fade late, so a blast column reads as a solid dark plume.
+        const dark = smoothstep(.16, .07, st.w).mul(st.z.greaterThanEqual(0).select(1, 0));
+        const fade = age.div(.45).min(1).mul(mix(float(1).sub(progress).pow(1.3), float(1).sub(smoothstep(.35, 1, progress)), dark));
         // Retain 30% in the 6 m player-ray tube, leaving headroom for antialiasing
         // and bloom while keeping the final measured coverage below the 40% cap.
         const dither = fract(fract(dot(screenCoordinate.xy.floor(), vec2(.06711056, .00583715))).mul(52.9829189));
@@ -278,7 +283,7 @@ export class Blasts extends Group {
     // The white-out belongs to blasts close to the player; a distant tank round or fuel chain only gets a weak flash.
     const focus0 = this.host.focus?.(), flashNear = focus0 ? Math.max(.15, Math.min(1, 1.4 - Math.hypot(focus0.x - x, focus0.z - z) / 18)) : 1;
     this.flashPeak = Math.max(this.flash, (this.flashReduction ? Math.min(.12, fx.flash) : fx.flash) * flashNear); this.flashAt = now;
-    this.glow(x, z, r * 2.2, fx.light.color, (this.flashReduction ? .45 : 1) * Math.min(2.2, fx.light.intensity / 100), fx.light.seconds, ground || undefined);
+    this.glow(x, z, r * 1.4, fx.light.color, (this.flashReduction ? .45 : 1) * Math.min(1.3, fx.light.intensity / 100), fx.light.seconds, ground || undefined);
     const hex = `#${fx.light.color.toString(16).padStart(6, '0')}`;
     this.host.light?.(x, z, hex, Math.min(10, fx.light.intensity / 20) * (this.flashReduction ? .5 : 1), fx.light.range, fx.light.seconds, true);
     // White-hot onset: a shattering core sphere plus a short, wide light pulse on the ground and nearby walls (light field).
@@ -286,10 +291,11 @@ export class Blasts extends Group {
     // Scaled by the preset flash: a barrel/propane gets a hot white core, a Molotov only a small one.
     const punch = Math.min(1, fx.flash * 1.6);
     if (!this.flashReduction && fx.fireball.count > 0) {
-      this.fireball(x, ground + .5 + fx.fireball.size * .3, z, fx.fireball.size * (.2 + .3 * punch), .12, 0, 0, 0, 0, 2);
-      this.host.light?.(x, z, '#fff0d2', 7 * punch, fx.light.range * .7, .12, false);
+      // Round 3: a compact, very hot core (punchy flash, not a screen wipe at zoom 0.5).
+      this.fireball(x, ground + .5 + fx.fireball.size * .25, z, fx.fireball.size * (.13 + .17 * punch), .09, 0, 0, 0, 0, 2);
+      this.host.light?.(x, z, '#fff0d2', 6 * punch, fx.light.range * .5, .1, false);
     }
-    this.glow(x, z, Math.min(r * 1.8, 9), 0xffe6b8, (this.flashReduction ? .3 : 1.3) * punch, .22, ground || undefined);
+    this.glow(x, z, Math.min(r * .8, 4), 0xffe6b8, (this.flashReduction ? .3 : 1.1) * punch, .16, ground || undefined);
     // Mega blasts tint the whole town's light field orange for 5 s (spec 07 §5).
     if (event.cls === 'mega') this.host.light?.(x, z, '#ff7a30', 4, 90, 5, false);
     // Beat 3 fireball: overlapping noise spheres around the centre, staggered by up to 0.12 s.
@@ -321,7 +327,7 @@ export class Blasts extends Group {
       this.host.particles.spawn(now, burning ? 1.6 + this.rng.next() : .5 + this.rng.next() * .6, x, ground + .8, z, Math.cos(a) * out, 4 + this.rng.next() * (burning ? 6 : 9), Math.sin(a) * out, burning ? .09 : .045, particleShape.spark, burning ? 0xff7a26 : 0xffe9a8, 9.81, burning ? .3 : .65);
     }
     // Beat 6 smoke column, beat 7 scorch decal (persists to the end of the level; independent of the gore setting).
-    if (fx.smoke.seconds > 0) this.columns.push({ ground: ground || undefined, born: now, x, z, until: now + fx.smoke.seconds, rate: fx.smoke.rate * (low ? .5 : 1), size: fx.smoke.size, heat: fx.smoke.heat, acc: 2, shade: .085, cloud: 0 });
+    if (fx.smoke.seconds > 0) this.columns.push({ ground: ground || undefined, born: now, x, z, until: now + fx.smoke.seconds, rate: fx.smoke.rate * (low ? .5 : 1), size: fx.smoke.size, heat: fx.smoke.heat, acc: 2, shade: .05, cloud: 0, plume: true });
     if (fx.scorch > 0) this.scorch.spawn(now, 900, x, ground + .014, z, this.rng.next() * Math.PI, 0, 0, r * fx.scorch * 2, groundShape.scorch, 0x16110f);
     // Camera: shake by size, Bruno's roll kick by distance from the focus.
     const focus = this.host.focus?.(), distance = focus ? Math.hypot(focus.x - x, focus.z - z) : 0;
@@ -332,6 +338,8 @@ export class Blasts extends Group {
   /** Base (E15) blast core for every explosion, including those without an E27 preset (bloated infected): two to four lobes and soot. */
   core(x: number, ground: number, z: number, radius: number): void {
     const low = this.quality === 'low', size = Math.min(2.2, .5 + radius * .25);
+    if (this.heatBlasts.length >= 8) this.heatBlasts.shift();
+    this.heatBlasts.push({ x, y: ground + 1.2, z, radius: Math.min(6, .8 + radius * .6), born: this.time });
     for (let i = 0; i < (low ? 2 : 4); i++) {
       const a = this.rng.next() * Math.PI * 2, out = size * (.3 + this.rng.next() * .5);
       this.fireball(x, ground + .5 + this.rng.next() * size * .4, z, size * (.45 + this.rng.next() * .35), .5 + this.rng.next() * .25, i ? this.rng.next() * .08 : 0, size * .8, Math.cos(a) * out, Math.sin(a) * out);
@@ -426,6 +434,13 @@ export class Blasts extends Group {
       } else if (c.trail) {
         // Exhaust trail: overlapping soft puffs that start large, rise slowly and thin out within ~3 s behind the hull.
         this.puff(c.x + j() * .4 * c.size, ground + 1 + this.rng.next() * .5, c.z + j() * .4 * c.size, j() * .25, .7 + this.rng.next() * .5, j() * .25, 2.6 + this.rng.next(), c.size * .6, c.size * (1.15 + this.rng.next() * .35), c.heat, c.shade + j() * .06, born);
+      } else if (c.plume) {
+        // Blast plume: hot buoyant soot that climbs fast, swells with height and bends downwind (wind drift grows with age in TSL).
+        // Thickest in its first seconds: up to 2.5 puffs per emission, easing to one by 4 s (same birth time, so the cohort spacing holds).
+        for (let k = 1 + 1.5 * Math.max(0, 1 - (born - c.born) / 4); k > 0; k--) {
+          if (k < 1 && this.rng.next() > k) break;
+          this.puff(c.x + j() * .5 * c.size, ground + .6 + this.rng.next() * .7, c.z + j() * .5 * c.size, j() * .35, 2.6 + this.rng.next() * 1.4, j() * .35, 8 + this.rng.next() * 3, c.size * .4, c.size * (1.2 + this.rng.next() * .5), c.heat, c.shade + j() * .04, born);
+        }
       } else this.puff(c.x + j() * .5 * c.size, ground + .5 + this.rng.next() * .4, c.z + j() * .5 * c.size, j() * .3, (c.size >= 2 ? 3 : 1.5) + this.rng.next() * .9, j() * .3, 7 + this.rng.next() * 2.5, c.size * .3, c.size * (.85 + this.rng.next() * .45), c.heat, c.shade + j() * .08, born);
     }
   }
@@ -467,7 +482,7 @@ export class Blasts extends Group {
       if (!burningFire && !burningProp && !car) continue;
       seen.add(e.id);
       let c = this.fireColumns.get(e.id);
-      if (!c) { const landmark = (e.hazard?.radius ?? 0) >= 1.6; c = { born: now, x: e.transform.x, z: e.transform.z, until: Infinity, rate: (car || landmark ? 3 : 1.6) * (low ? .5 : 1), size: landmark ? 2.4 : car ? 1.8 : 1.1, heat: 1, acc: this.rng.next(), shade: car ? .14 : .2, cloud: 0 }; c.light = this.host.light?.(c.x, c.z, '#ff8a3a', car ? 5 : 3, (e.hazard?.radius ?? 1.4) * 4, Infinity, true) ?? null; this.fireColumns.set(e.id, c); }
+      if (!c) { const landmark = (e.hazard?.radius ?? 0) >= 1.6; c = { born: now, x: e.transform.x, z: e.transform.z, until: Infinity, rate: (car || landmark ? 3 : 1.6) * (low ? .5 : 1), size: landmark ? 2.4 : car ? 1.8 : 1.1, heat: 1, acc: this.rng.next(), shade: car ? .07 : .12, cloud: 0 }; c.light = this.host.light?.(c.x, c.z, '#ff8a3a', car ? 5 : 3, (e.hazard?.radius ?? 1.4) * 4, Infinity, true) ?? null; this.fireColumns.set(e.id, c); }
       if (c.ground === undefined || c.x !== e.transform.x || c.z !== e.transform.z) c.ground = this.world.districts?.groundHeight(e.transform.x, e.transform.z) ?? 0;
       c.x = e.transform.x; c.z = e.transform.z;
       // Persistent fire needs embers even without a preceding blast. Reuse the
@@ -554,6 +569,20 @@ export class Blasts extends Group {
     }
     this.parts.count = n; if (n) this.parts.instanceMatrix.needsUpdate = true;
   }
+  private readonly heatBlasts: { x: number; y: number; z: number; radius: number; born: number }[] = [];
+  private readonly heatOut = Array.from({ length: 8 }, () => ({ x: 0, y: 0, z: 0, radius: 0, strength: 0 }));
+  /** Heat haze sources (PostFx, high tier): fresh blasts first (2.2 s fade), then visible fires. World centre above the heat, radius in metres. */
+  heatSources(): readonly { x: number; y: number; z: number; radius: number; strength: number }[] {
+    let n = 0;
+    const add = (x: number, y: number, z: number, radius: number, strength: number) => { if (n < this.heatOut.length && strength > .01) Object.assign(this.heatOut[n++], { x, y, z, radius, strength }); };
+    for (let i = this.heatBlasts.length - 1; i >= 0; i--) {
+      const b = this.heatBlasts[i], k = (this.time - b.born) / 2.2;
+      if (k >= 1 || k < 0) { this.heatBlasts.splice(i, 1); continue; }
+      if (this.sourceVisible(b.x, b.z, b.radius + 4)) add(b.x, b.y + 1.4 * k, b.z, b.radius * (1 + .3 * k), (1 - k) ** 1.5);
+    }
+    for (const c of this.fireColumns.values()) if (this.sourceVisible(c.x, c.z, c.size + 4)) add(c.x, (c.ground ?? 0) + 1.3 + c.size * .4, c.z, c.size * 1.1 + .7, .55);
+    return this.heatOut.slice(0, n);
+  }
   /** Light sources for the E25 light field (fire pools and blast flashes): x, z, radius, color, intensity. */
   lights(): { x: number; z: number; radius: number; color: number; intensity: number }[] {
     const out = [];
@@ -574,7 +603,7 @@ export class Blasts extends Group {
   }
   reset(): void {
     for (const c of this.fireColumns.values()) c.light?.remove();
-    this.fbExpiry.fill(0); this.puffExpiry.fill(0); this.debrisExpiry.fill(0); this.db.dVelocity.array.fill(0); this.db.dVelocity.needsUpdate = true; this.debris.visible = false; this.columns.length = 0; this.fireColumns.clear(); this.cloudColumns.clear(); this.vehicleColumns.clear(); this.glowList.length = 0;
+    this.fbExpiry.fill(0); this.puffExpiry.fill(0); this.debrisExpiry.fill(0); this.db.dVelocity.array.fill(0); this.db.dVelocity.needsUpdate = true; this.debris.visible = false; this.columns.length = 0; this.fireColumns.clear(); this.cloudColumns.clear(); this.vehicleColumns.clear(); this.glowList.length = 0; this.heatBlasts.length = 0;
     for (const attr of [this.fb.fbParams, this.pf.pMotion]) { attr.array.fill(0); attr.needsUpdate = true; }
     this.scorch.reset(this.time); this.fireballs.visible = this.puffs.visible = this.flames.visible = this.glows.visible = false; this.parts.count = 0;
     this.columnShadows.count = 0;

@@ -237,6 +237,7 @@ All camera modes use the game's 25° lens. A `target` is `[x, z]`, `[x, y, z]` o
 - `heldPropArmStraightMax` (mug/phone: shoulder-wrist distance over arm length; 1 is a hanging straight arm). Use 0.95.
 - `seeThroughLowPropsMax` (placements lower than an occluder, 1.1 m, drawn with the courier-hole cut material; `metrics.seeThrough.cutLowProps`). Use 0.
 - `seeThroughCutPixelsMax` / `seeThroughCutInsideMin` (PO 10-14 "buildings that are not in the way get transparent"): the end frame against the same frame with the solid-occluder cut forced off. Pixels that differ outside the hole disc around the courier (radius `solidRadius`, whole screen while a roof hugs the lens) are buildings or vehicles cut with nothing in the way: use 0. Inside the disc a real occluder must differ (`...InsideMin`). Result in `metrics.json` `seeThroughCut`; `metrics.seeThrough.occluders` names the placement that opened the hole. Scenes: `seethrough-open-sidewalk-l4`, `seethrough-behind-building-l4`.
+- Top-level `vehicleSilhouettes: ["<vehicle id>"]` measures every frame from 0 through `frames`, independently of sheet thinning. It compares the selected vehicle with its own unfaded body mask at the identical pose/camera, with its shadows disabled in all passes. Retained body coverage must be >= 60% when the camera segments do not hit the vehicle, or >= 30% when it blocks the player. Empty canvas reads fail; individual samples are saved in `metrics.json.vehicleSilhouettes`. Scenes: `apc-sedan-contact`, `seethrough-sedan-silhouette`, `seethrough-apc-*`.
 - `seeThroughOpenFramesMin` (frames the solid-occluder hole was open; a cutaway fixture must actually open it). `metrics.seeThrough` also reports `solidRadiusMax`.
 - `footSlideMaxCm`
 - `footSinkMaxCm` (deepest sole below the floor, spawn frames 0-2 excluded)
@@ -595,3 +596,5 @@ and credits gates require their actual UI to be visible.
 Trailing `--backend` / `--filter` options override the matrix script defaults.
 
 Evidence and remaining acceptance work: `docs/reports/l10-q2/README.md`.
+
+For bounded browser batches, `--matrix --tier high` and `--matrix --tier low` retain every matrix zoom while selecting one quality tier. Omitting `--tier` keeps the full high/low matrix. Release the browser slot between batches.

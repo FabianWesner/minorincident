@@ -1,0 +1,4293 @@
+{
+  "config": {
+    "argv": [
+      "/opt/homebrew/Cellar/node/26.0.0/bin/node",
+      "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11/node_modules/.bin/playwright",
+      "test",
+      "--project=chromium",
+      "--workers=1",
+      "--retries=1",
+      "--grep-invert",
+      "@perf",
+      "levels/L1.spec",
+      "levels/L2.spec",
+      "levels/L4.spec",
+      "l4-po-round",
+      "l4-cellar-guidance",
+      "l4-plaza-movement",
+      "l4-barricade-prompts",
+      "cellar-position",
+      "l4-blank-viewport",
+      "webgpu-canvas",
+      "respawn-bat",
+      "input-mouse",
+      "crowd-visible-outbreak",
+      "menu-10-levels",
+      "l10-finale",
+      "l10-cure"
+    ],
+    "configFile": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11/playwright.config.ts",
+    "rootDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11/test-results/playwright/run-3623",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11/tests",
+        "testIgnore": [
+          "**/webgpu.spec.ts"
+        ],
+        "testMatch": [
+          "**/*.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11/test-results/playwright/run-3623",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7",
+        "name": "pixel-7",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11/test-results/playwright/run-3623",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "pixel-7-landscape",
+        "name": "pixel-7-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts",
+          "**/home-button.spec.ts",
+          "**/menu-10-levels.spec.ts",
+          "**/apc-floor.spec.ts",
+          "**/l9-browser-input.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11/test-results/playwright/run-3623",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14",
+        "name": "iphone-14",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11/test-results/playwright/run-3623",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "iphone-14-landscape",
+        "name": "iphone-14-landscape",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts",
+          "**/input-touch.spec.ts",
+          "**/hud-touch.spec.ts",
+          "**/mobile-hud-layout.spec.ts"
+        ],
+        "timeout": 60000
+      },
+      {
+        "outputDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11/test-results/playwright/run-3623",
+        "repeatEach": 1,
+        "retries": 1,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/smoke.spec.ts"
+        ],
+        "timeout": 60000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/playwright/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "npx vite preview --host 127.0.0.1 --port 3623 --strictPort --configLoader runner",
+      "url": "http://127.0.0.1:3623",
+      "reuseExistingServer": false,
+      "timeout": 30000
+    }
+  },
+  "suites": [
+    {
+      "title": "e2e/crowd-visible-outbreak.spec.ts",
+      "file": "e2e/crowd-visible-outbreak.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E07-crowd-visible-outbreak-webgl @E07 every on-screen living infected and pedestrian is drawn through an L1 outbreak fight (webgl)",
+          "ok": true,
+          "tags": [
+            "E07"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 24115,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:35:57.515Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "31871b85c161b74820f3-2af8e62012ade194d24b",
+          "file": "e2e/crowd-visible-outbreak.spec.ts",
+          "line": 14,
+          "column": 3
+        },
+        {
+          "title": "T-E07-crowd-visible-outbreak-webgpu @E07 every on-screen living infected and pedestrian is drawn through an L1 outbreak fight (webgpu)",
+          "ok": true,
+          "tags": [
+            "E07"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 23294,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:36:21.708Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "31871b85c161b74820f3-b45ad8364af026dabd29",
+          "file": "e2e/crowd-visible-outbreak.spec.ts",
+          "line": 14,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "e2e/input-mouse.spec.ts",
+      "file": "e2e/input-mouse.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E03-01 @E03 @E03-AC01 cursor aims without moving",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC01"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 621,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:36:45.346Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881a05ab37f0d127b10a-ad8350aed779d95c75ed",
+          "file": "e2e/input-mouse.spec.ts",
+          "line": 10,
+          "column": 1
+        },
+        {
+          "title": "T-E03-02 @E03 @E03-AC02 mouse buttons preserve down held up and prevent context menus",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC02"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 507,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:36:46.043Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881a05ab37f0d127b10a-be346390abfda177b519",
+          "file": "e2e/input-mouse.spec.ts",
+          "line": 20,
+          "column": 1
+        },
+        {
+          "title": "T-E03-03 @E03 @E03-AC03 @E02-AC03 wheel zooms smoothly and never cycles weapons",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC03",
+            "E02-AC03"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 902,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:36:46.554Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881a05ab37f0d127b10a-70b1f1721897b81dc1db",
+          "file": "e2e/input-mouse.spec.ts",
+          "line": 36,
+          "column": 1
+        },
+        {
+          "title": "T-E03-12 @E03 @E03-AC12 middle-click F and E interact without browser autoscroll",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC12"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 610,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:36:47.461Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881a05ab37f0d127b10a-8c75a2eaf8f0db4d6046",
+          "file": "e2e/input-mouse.spec.ts",
+          "line": 46,
+          "column": 1
+        },
+        {
+          "title": "T-E03-14 @E03 @E03-AC14 click ground walks, retargets, stops and held ground follows cursor",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC14"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4494,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:36:48.076Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881a05ab37f0d127b10a-d988592ef508c54eb00e",
+          "file": "e2e/input-mouse.spec.ts",
+          "line": 70,
+          "column": 1
+        },
+        {
+          "title": "T-E03-ground-escape @E03 @E21 clear ground near a melee target stays movement; a near miss at its feet still targets it",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E21"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4487,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:36:52.576Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881a05ab37f0d127b10a-4a19eff90061942a682c",
+          "file": "e2e/input-mouse.spec.ts",
+          "line": 87,
+          "column": 1
+        },
+        {
+          "title": "T-E03-15-left @E03 @E03-AC15 target click approaches then attacks left",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC15"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4496,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:36:57.075Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881a05ab37f0d127b10a-61e1043851665a19a34a",
+          "file": "e2e/input-mouse.spec.ts",
+          "line": 102,
+          "column": 41
+        },
+        {
+          "title": "T-E03-16 @E03 @E03-AC16 Shift LMB distant ground swings stationary and cancels destination",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC16"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4482,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:37:01.580Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881a05ab37f0d127b10a-d60804f93774edc93981",
+          "file": "e2e/input-mouse.spec.ts",
+          "line": 117,
+          "column": 1
+        },
+        {
+          "title": "T-E03-17 @E03 @E03-AC17 RMB and Q cycle carried actions without attacking",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC17"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4419,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:37:06.068Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881a05ab37f0d127b10a-ee6768a4178d4b847beb",
+          "file": "e2e/input-mouse.spec.ts",
+          "line": 133,
+          "column": 1
+        },
+        {
+          "title": "T-E03-12-car @E03 @E03-AC12 middle-click near car immediately enters; F exits",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC12"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4832,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:37:10.493Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881a05ab37f0d127b10a-4d3bed2623e5bc5060e3",
+          "file": "e2e/input-mouse.spec.ts",
+          "line": 145,
+          "column": 1
+        },
+        {
+          "title": "T-E03-15-held @E03 @E03-AC15 held LMB target repeats and target death stops approach",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC15"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4642,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:37:15.332Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881a05ab37f0d127b10a-4e92fc5a840e76e93652",
+          "file": "e2e/input-mouse.spec.ts",
+          "line": 153,
+          "column": 1
+        },
+        {
+          "title": "T-E03-17-pending @E03 @E03-AC15 @E03-AC17 Q during target command waits for swap then attacks once",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC15",
+            "E03-AC17"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4557,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:37:19.981Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881a05ab37f0d127b10a-ff6da80f64e88a48f5cb",
+          "file": "e2e/input-mouse.spec.ts",
+          "line": 180,
+          "column": 1
+        },
+        {
+          "title": "T-E03-15-live @E03 @E03-AC15 real LMB follows a moving infected and attacks it",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC15"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4843,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:37:24.543Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881a05ab37f0d127b10a-8e75131909cf4468de6f",
+          "file": "e2e/input-mouse.spec.ts",
+          "line": 191,
+          "column": 1
+        },
+        {
+          "title": "T-E03-chord @E03 @E03-AC02 @E03-AC13 releasing LMB before RMB clears both independently",
+          "ok": true,
+          "tags": [
+            "E03",
+            "E03-AC02",
+            "E03-AC13"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 485,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:37:29.393Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881a05ab37f0d127b10a-3bc05f6dc9a54c666d0d",
+          "file": "e2e/input-mouse.spec.ts",
+          "line": 209,
+          "column": 1
+        },
+        {
+          "title": "@E03-AC05 @E03-AC17 M1-05 numbers and HUD clicks select either rack; Shift never attacks",
+          "ok": true,
+          "tags": [
+            "E03-AC05",
+            "E03-AC17"
+          ],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4753,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:37:29.883Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881a05ab37f0d127b10a-88c3795dd48d129558fb",
+          "file": "e2e/input-mouse.spec.ts",
+          "line": 223,
+          "column": 1
+        },
+        {
+          "title": "PO #14 active numbers, Q, RMB and HUD follow weapon order after unordered pickups",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 60000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4724,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:37:34.641Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "881a05ab37f0d127b10a-55d0f839cad174865eed",
+          "file": "e2e/input-mouse.spec.ts",
+          "line": 237,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/cellar-position.spec.ts",
+      "file": "e2e/levels/cellar-position.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Kessler cellar position",
+          "file": "e2e/levels/cellar-position.spec.ts",
+          "line": 45,
+          "column": 6,
+          "specs": [
+            {
+              "title": "T-E22-cellar-pos @E22 L4 end: Harbor pavement, door, descent, brace; L5 start in the same yard (game camera captures)",
+              "ok": true,
+              "tags": [
+                "E22"
+              ],
+              "tests": [
+                {
+                  "timeout": 420000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 29021,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T22:41:26.626Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "61e1fb00e8adcb8e9b2c-358b88f9c33a1dd2feb3",
+              "file": "e2e/levels/cellar-position.spec.ts",
+              "line": 46,
+              "column": 3
+            },
+            {
+              "title": "T-E23-cellar-pos @E23 L5 start: the courier stands in the cellar yard under the game camera, the brace is reachable by keyboard and unbarring steps out on Kessler Lane",
+              "ok": true,
+              "tags": [
+                "E23"
+              ],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 14455,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T22:41:55.731Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "61e1fb00e8adcb8e9b2c-1672ab9623af6c0581d8",
+              "file": "e2e/levels/cellar-position.spec.ts",
+              "line": 79,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/L1.spec.ts",
+      "file": "e2e/levels/L1.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "L1 v2 real-input playthrough",
+          "file": "e2e/levels/L1.spec.ts",
+          "line": 23,
+          "column": 6,
+          "specs": [
+            {
+              "title": "T-E19-unlock @E19 result screen, real click on Continue: straight to the next level, no upgrade/rack screens (PO decision 2026-10-07)",
+              "ok": true,
+              "tags": [
+                "E19"
+              ],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 21810,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T22:46:51.068Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "957c661e7cf1b73ccbc9-aadf7800cb23eb71a315",
+              "file": "e2e/levels/L1.spec.ts",
+              "line": 25,
+              "column": 3
+            },
+            {
+              "title": "T-E19-22 @E19 @E19-AC22 @E19-AC15 unassisted real-input bicycle playthrough from title to result",
+              "ok": true,
+              "tags": [
+                "E19",
+                "E19-AC22",
+                "E19-AC15"
+              ],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 37064,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T22:47:12.952Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "957c661e7cf1b73ccbc9-7fa6530376bdfd10f8c9",
+              "file": "e2e/levels/L1.spec.ts",
+              "line": 43,
+              "column": 41
+            },
+            {
+              "title": "T-E19-23 @E19 @E19-AC23 assisted visual capture: 9 photo spots for vision review",
+              "ok": true,
+              "tags": [
+                "E19",
+                "E19-AC23"
+              ],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 39133,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T22:47:50.028Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "957c661e7cf1b73ccbc9-b5e26ec2edcca053a2dc",
+              "file": "e2e/levels/L1.spec.ts",
+              "line": 43,
+              "column": 41
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/l10-cure.spec.ts",
+      "file": "e2e/levels/l10-cure.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E32-16-E2 @E32-AC15 @E32-AC16 @E32-AC29 @E32-AC27 high real terminal input and unique backpack retry",
+          "ok": true,
+          "tags": [
+            "E32-AC15",
+            "E32-AC16",
+            "E32-AC29",
+            "E32-AC27"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16965,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:37:39.374Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c8c2c3cf6f5dd1fbabc8-d5d52aff0e628aa092a2",
+          "file": "e2e/levels/l10-cure.spec.ts",
+          "line": 3,
+          "column": 40
+        },
+        {
+          "title": "T-E32-16-E2 @E32-AC15 @E32-AC16 @E32-AC29 @E32-AC27 low real terminal input and unique backpack retry",
+          "ok": true,
+          "tags": [
+            "E32-AC15",
+            "E32-AC16",
+            "E32-AC29",
+            "E32-AC27"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13831,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:37:56.345Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c8c2c3cf6f5dd1fbabc8-b652f9890a89053af64d",
+          "file": "e2e/levels/l10-cure.spec.ts",
+          "line": 3,
+          "column": 40
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/l10-finale.spec.ts",
+      "file": "e2e/levels/l10-finale.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E32-20/22-S7 @E32-AC20 @E32-AC29 @E32-AC22 install and defend real E webgl high z1",
+          "ok": true,
+          "tags": [
+            "E32-AC20",
+            "E32-AC29",
+            "E32-AC22"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12434,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:48:49.168Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "438a7bbad6654a05076f-f01c7bf401ba770d4fc9",
+          "file": "e2e/levels/l10-finale.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "T-E32-20/22-S7 @E32-AC20 @E32-AC29 @E32-AC22 install and defend real E webgl high z0.5",
+          "ok": true,
+          "tags": [
+            "E32-AC20",
+            "E32-AC29",
+            "E32-AC22"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11370,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:49:02.299Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "438a7bbad6654a05076f-5baad494e889d3b518a1",
+          "file": "e2e/levels/l10-finale.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "T-E32-20/22-S7 @E32-AC20 @E32-AC29 @E32-AC22 install and defend real E webgl low z1",
+          "ok": true,
+          "tags": [
+            "E32-AC20",
+            "E32-AC29",
+            "E32-AC22"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11309,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:49:13.680Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "438a7bbad6654a05076f-3d490aa80bb715f67a34",
+          "file": "e2e/levels/l10-finale.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "T-E32-20/22-S7 @E32-AC20 @E32-AC29 @E32-AC22 install and defend real E webgl low z0.5",
+          "ok": true,
+          "tags": [
+            "E32-AC20",
+            "E32-AC29",
+            "E32-AC22"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11703,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:49:24.998Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "438a7bbad6654a05076f-4c58d9601ad9dcc08d20",
+          "file": "e2e/levels/l10-finale.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "T-E32-20/22-S7 @E32-AC20 @E32-AC29 @E32-AC22 install and defend real E webgpu high z1",
+          "ok": true,
+          "tags": [
+            "E32-AC20",
+            "E32-AC29",
+            "E32-AC22"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13312,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:49:36.718Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "438a7bbad6654a05076f-6237ca795165530a73e8",
+          "file": "e2e/levels/l10-finale.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "T-E32-20/22-S7 @E32-AC20 @E32-AC29 @E32-AC22 install and defend real E webgpu high z0.5",
+          "ok": true,
+          "tags": [
+            "E32-AC20",
+            "E32-AC29",
+            "E32-AC22"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11464,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:49:50.045Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "438a7bbad6654a05076f-4df5ac2c8cce7d0edca7",
+          "file": "e2e/levels/l10-finale.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "T-E32-20/22-S7 @E32-AC20 @E32-AC29 @E32-AC22 install and defend real E webgpu low z1",
+          "ok": true,
+          "tags": [
+            "E32-AC20",
+            "E32-AC29",
+            "E32-AC22"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11255,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:50:01.521Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "438a7bbad6654a05076f-d3f22af42205186e26d9",
+          "file": "e2e/levels/l10-finale.spec.ts",
+          "line": 7,
+          "column": 3
+        },
+        {
+          "title": "T-E32-20/22-S7 @E32-AC20 @E32-AC29 @E32-AC22 install and defend real E webgpu low z0.5",
+          "ok": true,
+          "tags": [
+            "E32-AC20",
+            "E32-AC29",
+            "E32-AC22"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11339,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:50:12.790Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "438a7bbad6654a05076f-5c2d7c87c3324fca2213",
+          "file": "e2e/levels/l10-finale.spec.ts",
+          "line": 7,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/L2.spec.ts",
+      "file": "e2e/levels/L2.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "L2 The Failed Rescue in the browser",
+          "file": "e2e/levels/L2.spec.ts",
+          "line": 76,
+          "column": 6,
+          "specs": [
+            {
+              "title": "T-E20-18 @E20 @E20-AC18 @E20-AC16 @E20-AC19 real-input playthrough from the station to the closing gate, photo spots for the vision review",
+              "ok": true,
+              "tags": [
+                "E20",
+                "E20-AC18",
+                "E20-AC16",
+                "E20-AC19"
+              ],
+              "tests": [
+                {
+                  "timeout": 1500000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 51344,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T22:50:24.564Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "20fba22d13ed7119e36b-9e9b82a62ab50e7ae1da",
+              "file": "e2e/levels/L2.spec.ts",
+              "line": 77,
+              "column": 3
+            },
+            {
+              "title": "T-E20-14b @E20 @E20-AC14 campaign: the gate closes, no reward screen, L3 loads with the carried loadout",
+              "ok": true,
+              "tags": [
+                "E20",
+                "E20-AC14"
+              ],
+              "tests": [
+                {
+                  "timeout": 600000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 5,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 24044,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T22:51:15.993Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "20fba22d13ed7119e36b-b9e8dea0715195493f78",
+              "file": "e2e/levels/L2.spec.ts",
+              "line": 143,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/l4-barricade-prompts.spec.ts",
+      "file": "e2e/levels/l4-barricade-prompts.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "@E22 no army-line rebuild prompts webgl high zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13614,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:51:40.343Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1da6c858f2d69a9fdb44-c20b973ff4ba2d408f8e",
+          "file": "e2e/levels/l4-barricade-prompts.spec.ts",
+          "line": 6,
+          "column": 3
+        },
+        {
+          "title": "@E22 no army-line rebuild prompts webgl high zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13326,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:51:54.038Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1da6c858f2d69a9fdb44-84a8c6a2493bf32b6b96",
+          "file": "e2e/levels/l4-barricade-prompts.spec.ts",
+          "line": 6,
+          "column": 3
+        },
+        {
+          "title": "@E22 no army-line rebuild prompts webgl low zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5747,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:52:07.374Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1da6c858f2d69a9fdb44-55d90db3b680794a74db",
+          "file": "e2e/levels/l4-barricade-prompts.spec.ts",
+          "line": 6,
+          "column": 3
+        },
+        {
+          "title": "@E22 no army-line rebuild prompts webgl low zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6027,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:52:13.129Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1da6c858f2d69a9fdb44-7183d74e517747e26e14",
+          "file": "e2e/levels/l4-barricade-prompts.spec.ts",
+          "line": 6,
+          "column": 3
+        },
+        {
+          "title": "@E22 no army-line rebuild prompts webgpu high zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13178,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:52:19.163Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1da6c858f2d69a9fdb44-b2924a705e2e5bc33267",
+          "file": "e2e/levels/l4-barricade-prompts.spec.ts",
+          "line": 6,
+          "column": 3
+        },
+        {
+          "title": "@E22 no army-line rebuild prompts webgpu high zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 13077,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:52:32.350Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1da6c858f2d69a9fdb44-72788fc04a7963815715",
+          "file": "e2e/levels/l4-barricade-prompts.spec.ts",
+          "line": 6,
+          "column": 3
+        },
+        {
+          "title": "@E22 no army-line rebuild prompts webgpu low zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5358,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:52:45.433Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1da6c858f2d69a9fdb44-c453486aac046aafd06c",
+          "file": "e2e/levels/l4-barricade-prompts.spec.ts",
+          "line": 6,
+          "column": 3
+        },
+        {
+          "title": "@E22 no army-line rebuild prompts webgpu low zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 6,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5562,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:52:50.796Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "1da6c858f2d69a9fdb44-b8a17f731bc1a4c20201",
+          "file": "e2e/levels/l4-barricade-prompts.spec.ts",
+          "line": 6,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/l4-blank-viewport.spec.ts",
+      "file": "e2e/levels/l4-blank-viewport.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "T-E22-blank @E22 L4 the walk along Lakeshore Avenue past the former cellar never leaves the viewport one flat colour (webgl)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 20467,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:38:10.196Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c90b3b41d5f4ff71404a-e519d63a2b0318878a1a",
+          "file": "e2e/levels/l4-blank-viewport.spec.ts",
+          "line": 24,
+          "column": 80
+        },
+        {
+          "title": "T-E22-blank @E22 L4 the walk along Lakeshore Avenue past the former cellar never leaves the viewport one flat colour (webgpu)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 20339,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:38:30.668Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c90b3b41d5f4ff71404a-603bf3be67e6c5d46597",
+          "file": "e2e/levels/l4-blank-viewport.spec.ts",
+          "line": 24,
+          "column": 80
+        },
+        {
+          "title": "T-E22-blank @E22 L4 the walk along Kessler Lane north of the store never leaves the viewport one flat colour (webgl)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 19963,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:38:51.013Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c90b3b41d5f4ff71404a-9ce4a9f7cd3df76244de",
+          "file": "e2e/levels/l4-blank-viewport.spec.ts",
+          "line": 24,
+          "column": 80
+        },
+        {
+          "title": "T-E22-blank @E22 L4 the walk along Kessler Lane north of the store never leaves the viewport one flat colour (webgpu)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 20175,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:39:10.986Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c90b3b41d5f4ff71404a-1189988ff30ca1437802",
+          "file": "e2e/levels/l4-blank-viewport.spec.ts",
+          "line": 24,
+          "column": 80
+        },
+        {
+          "title": "T-E22-blank @E22 L4 the walk along Harbor Street to the relocated cellar never leaves the viewport one flat colour (webgl)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 20684,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:39:31.169Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c90b3b41d5f4ff71404a-459dc5e24c545b06aa40",
+          "file": "e2e/levels/l4-blank-viewport.spec.ts",
+          "line": 24,
+          "column": 80
+        },
+        {
+          "title": "T-E22-blank @E22 L4 the walk along Harbor Street to the relocated cellar never leaves the viewport one flat colour (webgpu)",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 20819,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:39:51.864Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "c90b3b41d5f4ff71404a-e2bdbcb75f375ba21414",
+          "file": "e2e/levels/l4-blank-viewport.spec.ts",
+          "line": 24,
+          "column": 80
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/l4-cellar-guidance.spec.ts",
+      "file": "e2e/levels/l4-cellar-guidance.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "@E22 line-broken cellar guidance webgl high zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 12400,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:52:56.717Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "551b00c4962d9b8887a0-db019ae46a8f07f6f867",
+          "file": "e2e/levels/l4-cellar-guidance.spec.ts",
+          "line": 11,
+          "column": 3
+        },
+        {
+          "title": "@E22 line-broken cellar guidance webgl high zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11891,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:53:09.191Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "551b00c4962d9b8887a0-43903697937cf6d44756",
+          "file": "e2e/levels/l4-cellar-guidance.spec.ts",
+          "line": 11,
+          "column": 3
+        },
+        {
+          "title": "@E22 line-broken cellar guidance webgl low zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4711,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:53:21.090Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "551b00c4962d9b8887a0-46461272b3e5e4c7acb5",
+          "file": "e2e/levels/l4-cellar-guidance.spec.ts",
+          "line": 11,
+          "column": 3
+        },
+        {
+          "title": "@E22 line-broken cellar guidance webgl low zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4937,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:53:25.807Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "551b00c4962d9b8887a0-44f043032df6617debac",
+          "file": "e2e/levels/l4-cellar-guidance.spec.ts",
+          "line": 11,
+          "column": 3
+        },
+        {
+          "title": "@E22 line-broken cellar guidance webgpu high zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11974,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:53:30.755Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "551b00c4962d9b8887a0-f7ad39781ab23bb13410",
+          "file": "e2e/levels/l4-cellar-guidance.spec.ts",
+          "line": 11,
+          "column": 3
+        },
+        {
+          "title": "@E22 line-broken cellar guidance webgpu high zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11915,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:53:42.740Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "551b00c4962d9b8887a0-fa9c4ddb3f4607063a09",
+          "file": "e2e/levels/l4-cellar-guidance.spec.ts",
+          "line": 11,
+          "column": 3
+        },
+        {
+          "title": "@E22 line-broken cellar guidance webgpu low zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4412,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:53:54.662Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "551b00c4962d9b8887a0-4dff67c43e99d7e5c153",
+          "file": "e2e/levels/l4-cellar-guidance.spec.ts",
+          "line": 11,
+          "column": 3
+        },
+        {
+          "title": "@E22 line-broken cellar guidance webgpu low zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 7,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4692,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:53:59.081Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "551b00c4962d9b8887a0-941645184bcff7043d72",
+          "file": "e2e/levels/l4-cellar-guidance.spec.ts",
+          "line": 11,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/l4-plaza-movement.spec.ts",
+      "file": "e2e/levels/l4-plaza-movement.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "@E22 L4 plaza: mouse WASD stick webgl high zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15998,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:54:04.103Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-14dd18597e3e3bfe2d71",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 war: mouse WASD stick webgl high zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17022,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:54:20.184Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-e33ab80947a35365a973",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 respawn: mouse WASD stick webgl high zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17212,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:54:37.212Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-03309d9940f4d6a89a1a",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 plaza: mouse WASD stick webgl high zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 15876,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:54:54.429Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-6604fe0a0d3860de6b80",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 war: mouse WASD stick webgl high zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16988,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:55:10.310Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-bfd7359afc21b83a0908",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 respawn: mouse WASD stick webgl high zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 18828,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:55:27.305Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-c25a0d32e9117eb879bc",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 plaza: mouse WASD stick webgl low zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7901,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:55:46.138Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-7fe0b553acf3ee90f252",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 war: mouse WASD stick webgl low zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9347,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:55:54.045Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-1c46d25ad70c86d6e460",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 respawn: mouse WASD stick webgl low zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10064,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:56:03.398Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-89112f77eaa24cdcf211",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 plaza: mouse WASD stick webgl low zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 8679,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:56:13.467Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-5f3960857760048aeea8",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 war: mouse WASD stick webgl low zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10213,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:56:22.152Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-0590a5986effb13037a9",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 respawn: mouse WASD stick webgl low zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10161,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:56:32.370Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-bb1c5603f7150d25ea7c",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 plaza: mouse WASD stick webgpu high zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 18301,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:56:42.536Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-4622dabedbb5ea291793",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 war: mouse WASD stick webgpu high zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 18016,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:57:00.844Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-338226589d5282a3a07e",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 respawn: mouse WASD stick webgpu high zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16814,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:57:18.870Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-11a553bc95e251cd5e6a",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 plaza: mouse WASD stick webgpu high zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 17569,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:57:35.690Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-f1d9ff0a0a160b9e4269",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 war: mouse WASD stick webgpu high zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16707,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:57:53.265Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-05c5f36965cab31fec8f",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 respawn: mouse WASD stick webgpu high zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 16941,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:58:09.978Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-b6900cff7cc881d7f086",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 plaza: mouse WASD stick webgpu low zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7858,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:58:26.925Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-d769ebc4877243018705",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 war: mouse WASD stick webgpu low zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9071,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:58:34.788Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-8e786d7aab98a56e0f1b",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 respawn: mouse WASD stick webgpu low zoom 1",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9163,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:58:43.865Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-b1c998155b6528ca1c7e",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 plaza: mouse WASD stick webgpu low zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 7957,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:58:53.034Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-236b59a724258562b80a",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 war: mouse WASD stick webgpu low zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9681,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:59:00.996Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-da6acae3330565af54a5",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 62,
+          "column": 3
+        },
+        {
+          "title": "@E22 L4 respawn: mouse WASD stick webgpu low zoom 0.5",
+          "ok": true,
+          "tags": [
+            "E22"
+          ],
+          "tests": [
+            {
+              "timeout": 600000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 8,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9678,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:59:10.683Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "d41145e9463ea987afde-1c062692f20d1d6a4152",
+          "file": "e2e/levels/l4-plaza-movement.spec.ts",
+          "line": 62,
+          "column": 3
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/l4-po-round.spec.ts",
+      "file": "e2e/levels/l4-po-round.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "l4-po-round captures",
+          "file": "e2e/levels/l4-po-round.spec.ts",
+          "line": 91,
+          "column": 6,
+          "specs": [
+            {
+              "title": "webgl high zoom 1",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 19818,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T22:42:10.196Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b3d4bdbc117e384b417c-ee80ae686608c2e84b40",
+              "file": "e2e/levels/l4-po-round.spec.ts",
+              "line": 93,
+              "column": 5
+            },
+            {
+              "title": "webgl high zoom 0.5",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 19467,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T22:42:30.022Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b3d4bdbc117e384b417c-f31a605c05e68448587c",
+              "file": "e2e/levels/l4-po-round.spec.ts",
+              "line": 93,
+              "column": 5
+            },
+            {
+              "title": "webgl high zoom 1.5",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 19559,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T22:42:49.496Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b3d4bdbc117e384b417c-b83946462cff8182d1c9",
+              "file": "e2e/levels/l4-po-round.spec.ts",
+              "line": 93,
+              "column": 5
+            },
+            {
+              "title": "webgl low zoom 1",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9607,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T22:43:09.066Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b3d4bdbc117e384b417c-97ab0f3228f9b10d83e6",
+              "file": "e2e/levels/l4-po-round.spec.ts",
+              "line": 93,
+              "column": 5
+            },
+            {
+              "title": "webgl low zoom 0.5",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9790,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T22:43:18.683Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b3d4bdbc117e384b417c-92641432181356544b4a",
+              "file": "e2e/levels/l4-po-round.spec.ts",
+              "line": 93,
+              "column": 5
+            },
+            {
+              "title": "webgl low zoom 1.5",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9928,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T22:43:28.479Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b3d4bdbc117e384b417c-a10a0dc1d3045bc318d4",
+              "file": "e2e/levels/l4-po-round.spec.ts",
+              "line": 93,
+              "column": 5
+            },
+            {
+              "title": "webgpu high zoom 1",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 19128,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T22:43:38.419Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b3d4bdbc117e384b417c-888acbff873786865a13",
+              "file": "e2e/levels/l4-po-round.spec.ts",
+              "line": 93,
+              "column": 5
+            },
+            {
+              "title": "webgpu high zoom 1.5",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 19450,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T22:43:57.553Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b3d4bdbc117e384b417c-2e94423acd6b8c40f3a1",
+              "file": "e2e/levels/l4-po-round.spec.ts",
+              "line": 93,
+              "column": 5
+            },
+            {
+              "title": "webgpu low zoom 1",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9435,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T22:44:17.008Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b3d4bdbc117e384b417c-f607aa9c61820a5e5a46",
+              "file": "e2e/levels/l4-po-round.spec.ts",
+              "line": 93,
+              "column": 5
+            },
+            {
+              "title": "webgpu low zoom 1.5",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9769,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T22:44:26.451Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "b3d4bdbc117e384b417c-94c4ab353c84de506ef2",
+              "file": "e2e/levels/l4-po-round.spec.ts",
+              "line": 93,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e/levels/L4.spec.ts",
+      "file": "e2e/levels/L4.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "L4 The Safe City Falls in the browser",
+          "file": "e2e/levels/L4.spec.ts",
+          "line": 106,
+          "column": 6,
+          "specs": [
+            {
+              "title": "T-E22-alarm @E22 @E22-AC07 real-input alarm has living visible infected within 10 seconds",
+              "ok": true,
+              "tags": [
+                "E22",
+                "E22-AC07"
+              ],
+              "tests": [
+                {
+                  "timeout": 300000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 15623,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T22:44:36.271Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "11636df655d4ad9939dc-1cf3dc570c3dd876b401",
+              "file": "e2e/levels/L4.spec.ts",
+              "line": 107,
+              "column": 3
+            },
+            {
+              "title": "T-E22-18 @E22 @E22-AC18 @E22-AC19 real-input playthrough: convoy, quartermaster, the turn, the war, the line break, Kessler Lane, the barred cellar door; photo spots and pair cameras",
+              "ok": true,
+              "tags": [
+                "E22",
+                "E22-AC18",
+                "E22-AC19"
+              ],
+              "tests": [
+                {
+                  "timeout": 2400000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 83523,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T22:44:51.900Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "11636df655d4ad9939dc-a772483a81f93398a9a0",
+              "file": "e2e/levels/L4.spec.ts",
+              "line": 132,
+              "column": 3
+            },
+            {
+              "title": "T-E22-15b @E22 @E22-AC15 campaign: the barred cellar door loads L5 with the carried loadout and no reward screen",
+              "ok": true,
+              "tags": [
+                "E22",
+                "E22-AC15"
+              ],
+              "tests": [
+                {
+                  "timeout": 600000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8285,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T22:46:15.430Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "11636df655d4ad9939dc-413e3c4541c29250ea33",
+              "file": "e2e/levels/L4.spec.ts",
+              "line": 202,
+              "column": 3
+            },
+            {
+              "title": "T-E22-19 @E22 @E22-AC20 pedestrians, soldiers and infected are drawn on screen in L4 (webgl), not only their props",
+              "ok": true,
+              "tags": [
+                "E22",
+                "E22-AC20"
+              ],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 13498,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T22:46:23.726Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "11636df655d4ad9939dc-7a66144ca41943cbda57",
+              "file": "e2e/levels/L4.spec.ts",
+              "line": 222,
+              "column": 56
+            },
+            {
+              "title": "T-E22-19 @E22 @E22-AC20 pedestrians, soldiers and infected are drawn on screen in L4 (webgpu), not only their props",
+              "ok": true,
+              "tags": [
+                "E22",
+                "E22-AC20"
+              ],
+              "tests": [
+                {
+                  "timeout": 900000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 13537,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-18T22:46:37.232Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "11636df655d4ad9939dc-2f2ef2b5ed1e41a2e9bc",
+              "file": "e2e/levels/L4.spec.ts",
+              "line": 222,
+              "column": 56
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "e2e/menu-10-levels.spec.ts",
+      "file": "e2e/menu-10-levels.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "ten level menu high @menu-10-levels",
+          "ok": true,
+          "tags": [
+            "menu-10-levels"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 28112,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:40:12.706Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "622bbf96c0833f7b5b54-01c03dbab61ef6304d1d",
+          "file": "e2e/menu-10-levels.spec.ts",
+          "line": 7,
+          "column": 49
+        },
+        {
+          "title": "ten level menu low @menu-10-levels",
+          "ok": true,
+          "tags": [
+            "menu-10-levels"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21516,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:40:40.826Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "622bbf96c0833f7b5b54-bc8c3d8a11e91ffd278a",
+          "file": "e2e/menu-10-levels.spec.ts",
+          "line": 7,
+          "column": 49
+        },
+        {
+          "title": "L9 saved crossing row resumes and can restart @menu-10-levels",
+          "ok": true,
+          "tags": [
+            "menu-10-levels"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 23676,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:41:02.355Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "622bbf96c0833f7b5b54-d21673c190f5a11168f7",
+          "file": "e2e/menu-10-levels.spec.ts",
+          "line": 75,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/respawn-bat.spec.ts",
+      "file": "e2e/respawn-bat.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "E19 @E19 respawn after the bat: real-click pickup, die at the house with infected around, respawn on the pickup with the bat equipped",
+          "ok": true,
+          "tags": [
+            "E19"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 19546,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:48:29.180Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f8bfc2f95194a04bbc15-60fe2b6de726f6686a12",
+          "file": "e2e/respawn-bat.spec.ts",
+          "line": 15,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "title": "e2e/webgpu-canvas.spec.ts",
+      "file": "e2e/webgpu-canvas.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "Scene Lab reload isolates courier gear webgl high",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10503,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:59:20.874Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f74914b231a8740df10b-0bcfa023f0900c9dc96a",
+          "file": "e2e/webgpu-canvas.spec.ts",
+          "line": 12,
+          "column": 46
+        },
+        {
+          "title": "Scene Lab reload isolates courier gear webgpu high",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9146,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:59:31.454Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f74914b231a8740df10b-48a28e3b13779f3f4730",
+          "file": "e2e/webgpu-canvas.spec.ts",
+          "line": 12,
+          "column": 46
+        },
+        {
+          "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU high mega health bars preserve the game frame at both zoom limits",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 9322,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:59:40.608Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f74914b231a8740df10b-baa1ba2a41384d7d1b97",
+          "file": "e2e/webgpu-canvas.spec.ts",
+          "line": 25,
+          "column": 3
+        },
+        {
+          "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU high L1 L4 L8 game cameras render at both zoom limits",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 38250,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T22:59:49.936Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f74914b231a8740df10b-e4ef32c76084759b386b",
+          "file": "e2e/webgpu-canvas.spec.ts",
+          "line": 41,
+          "column": 3
+        },
+        {
+          "title": "Scene Lab reload isolates courier gear webgl low",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 6134,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T23:00:28.191Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f74914b231a8740df10b-c055d80847d652f148f3",
+          "file": "e2e/webgpu-canvas.spec.ts",
+          "line": 12,
+          "column": 46
+        },
+        {
+          "title": "Scene Lab reload isolates courier gear webgpu low",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5428,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T23:00:34.333Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f74914b231a8740df10b-3706aed13c8ed867702f",
+          "file": "e2e/webgpu-canvas.spec.ts",
+          "line": 12,
+          "column": 46
+        },
+        {
+          "title": "T-E02-webgpu-canvas @smoke @E02 WebGPU low mega health bars preserve the game frame at both zoom limits",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 180000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5727,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T23:00:39.775Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f74914b231a8740df10b-41b5266e0775c8ebbc36",
+          "file": "e2e/webgpu-canvas.spec.ts",
+          "line": 25,
+          "column": 3
+        },
+        {
+          "title": "T-E02-webgpu-game-canvas @smoke @E02 WebGPU low L1 L4 L8 game cameras render at both zoom limits",
+          "ok": true,
+          "tags": [
+            "smoke",
+            "E02"
+          ],
+          "tests": [
+            {
+              "timeout": 300000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "chromium",
+              "projectName": "chromium",
+              "results": [
+                {
+                  "workerIndex": 9,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10151,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-18T23:00:45.514Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "f74914b231a8740df10b-8eac85643e3dcd3f500e",
+          "file": "e2e/webgpu-canvas.spec.ts",
+          "line": 41,
+          "column": 3
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-18T22:35:56.614Z",
+    "duration": 1499129.161,
+    "expected": 108,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

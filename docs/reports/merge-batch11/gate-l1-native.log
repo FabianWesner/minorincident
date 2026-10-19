@@ -1,0 +1,13 @@
+ 2:24  up 71 days,  1:18, 3 users, load averages: 2.58 3.27 3.53
+Quiet-run preflight: load < 3; no local Vitest or headless Chrome processes; all configured browser slots held.
+
+Running 6 tests using 1 worker
+
+  -  1 [chromium] › tests/e2e/l1-grade.spec.ts:10:3 › desktop high › @gpu @E19 grade uses one lit material model and HDR diner emitters in WebGL2
+  -  2 [chromium] › tests/e2e/l1-grade.spec.ts:28:3 › desktop high › @E19 @perf grade holds frame/draw/triangle budgets with 200 infected
+  -  3 [chromium] › tests/e2e/l1-grade.spec.ts:10:3 › portrait low › @gpu @E19 grade uses one lit material model and HDR diner emitters in WebGL2
+  -  4 [chromium] › tests/e2e/l1-grade.spec.ts:28:3 › portrait low › @E19 @perf grade holds frame/draw/triangle budgets with 100 infected
+  -  5 [chromium] › tests/e2e/l1-look.spec.ts:20:3 › desktop › @gpu @E19 @M1-14 L1 close-camera surfaces, dressing, ambient motion and GPU budget
+  -  6 [chromium] › tests/e2e/l1-look.spec.ts:20:3 › iPhone portrait › @gpu @E19 @M1-14 L1 close-camera surfaces, dressing, ambient motion and GPU budget
+
+  6 skipped

@@ -1,0 +1,34 @@
+[remote] sync /private/tmp/minorincident-merge-batch11-main -> 94.130.181.173:/srv/mi/ws/minorincident-merge-batch11-main-bf55e1
+[remote] cache-gc deleted:none
+[remote] sync 47s, 19242 files; job /srv/mi/jobs/minorincident-merge-batch11-main-bf55e1-11405-1792357970; queueing for a slot
+[runner] slot 0 acquired; load 1.23 0.63 0.53
+[runner] waiting for both slots to isolate wall-clock timing
+[runner] both slots held for the timing project
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/minorincident-merge-batch11-main-bf55e1-11405-1792357970[39m
+
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/world/chunk-residency.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 36711[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-13-S4-high @E31-AC12 @E31-AC13 @E31-AC14 revisit preserves HP, corpse/pickup IDs and remaining timers[33m 3109[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-12-S4-high @E31-AC12 @E31-AC13 predictive support remains loaded on forward/reverse seams[33m 2927[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-13-S4-low @E31-AC12 @E31-AC13 @E31-AC14 revisit preserves HP, corpse/pickup IDs and remaining timers[33m 3520[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-12-S4-low @E31-AC12 @E31-AC13 predictive support remains loaded on forward/reverse seams[33m 3446[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-28-S4 @E31-AC13 @E32-AC10 @E32-AC28 Mega crosses coarse/detailed residency without >0.5 m tick jumps[33m 2943[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-19-S4-200 @E31-AC19 @E18-AC02 resident crossing horde sim p95[33m 4496[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-19-S4-100 @E31-AC19 @E18-AC02 resident crossing horde sim p95[33m 4244[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-12-colliders-S4 @E31-AC12 @E31-AC13 seam-spanning collider is shared, unloaded and restored with nav[33m 1486[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-19-quality-S4 @E31-AC12 @E31-AC13 @E31-AC19 low cap serializes excess brains and high restores the same IDs/HP[33m 1762[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-14-clock-S4 @E31-AC13 @E31-AC14 inactive recovery survives loading into a fresh tick-zero world[33m 6136[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E31-13-prop-S4 @E31-AC12 @E31-AC13 inactive movable prop releases its body and restores pose, HP and ID[33m 2638[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/levels/l10-assault.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 52515[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets[33m 13626[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-21-E3-low @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets[33m 12599[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-21-E3-overlap-high @E32-AC06 @E32-AC21 full cap defers assault, dead bodies survive replenishment and revisit[33m 9911[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-21-E3-overlap-low @E32-AC06 @E32-AC21 full cap defers assault, dead bodies survive replenishment and revisit[33m 9047[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-10-E3 @E32-AC10 production composition introduces one reserved pursuer behind R1[33m 7329[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m2 passed[39m[22m[90m (2)[39m
+[2m      Tests [22m [1m[32m16 passed[39m[22m[90m (16)[39m
+[2m   Start at [22m 21:13:39
+[2m   Duration [22m 93.95s[2m (tests 95%, transform 4%, import 1%)[22m
+
+[remote] done exit=0 (runner 94.130.181.173, sync 47s, remote total 97s)

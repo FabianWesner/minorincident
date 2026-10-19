@@ -1,0 +1,22 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/merge-batch11 -> 94.130.181.173:/srv/mi/ws/merge-batch11-39daf0
+[remote] cache-gc deleted:none
+[remote] sync 17s, 19537 files; job /srv/mi/jobs/merge-batch11-39daf0-10119-1792357911; queueing for a slot
+[runner] slot 0 acquired; load 0.39 0.31 0.42
+[runner] waiting for both slots to isolate wall-clock timing
+[runner] both slots held for the timing project
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/merge-batch11-39daf0-10119-1792357911[39m
+
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/levels/l10-assault.test.ts [2m([22m[2m5 tests[22m[2m)[22m[33m 52889[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-21-E3-high @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets[33m 13853[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-21-E3-low @E32-AC06 @E32-AC12 @E32-AC21 @E32-AC31 capped mixed assault, persistent arrival and ten rockets[33m 12224[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-21-E3-overlap-high @E32-AC06 @E32-AC21 full cap defers assault, dead bodies survive replenishment and revisit[33m 10411[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-21-E3-overlap-low @E32-AC06 @E32-AC21 full cap defers assault, dead bodies survive replenishment and revisit[33m 8890[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E32-10-E3 @E32-AC10 production composition introduces one reserved pursuer behind R1[33m 7509[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m1 passed[39m[22m[90m (1)[39m
+[2m      Tests [22m [1m[32m5 passed[39m[22m[90m (5)[39m
+[2m   Start at [22m 21:12:09
+[2m   Duration [22m 57.05s[2m (tests 93%, transform 6%, import 1%)[22m
+
+[remote] done exit=0 (runner 94.130.181.173, sync 17s, remote total 60s)

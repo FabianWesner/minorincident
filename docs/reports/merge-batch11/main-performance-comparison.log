@@ -1,0 +1,31 @@
+[remote] sync /private/tmp/minorincident-merge-batch11-main -> 94.130.181.173:/srv/mi/ws/minorincident-merge-batch11-main-bf55e1
+[remote] cache-gc deleted:none
+[remote] sync 34s, 19242 files; job /srv/mi/jobs/minorincident-merge-batch11-main-bf55e1-26896-1792358702; queueing for a slot
+[runner] slot 1 acquired; load 2.11 1.35 0.90
+[runner] waiting for both slots to isolate wall-clock timing
+[runner] both slots held for the timing project
+
+[1m[30m[46m RUN [49m[39m[22m [36mv5.0.3 [39m[90m/srv/mi/jobs/minorincident-merge-batch11-main-bf55e1-26896-1792358702[39m
+
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/alpha-support.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 2348[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-06-support-perf-200 @E18-AC02 @perf live Alpha support moves stay within 4ms[33m 1651[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-06-support-perf-100 @E18-AC02 @perf live Alpha support moves stay within 6ms[33m 694[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/zoo-s1.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 2863[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11-zoo-s1-200 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 4ms[33m 2093[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11-zoo-s1-100 @E07-AC11 @E18-AC02 mixed horde and actual zoo moves stay within 6ms[33m 768[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/alpha.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 2197[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11-alpha-200 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 4ms[33m 1597[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11-alpha-100 @E07-AC11 @E18-AC02 mixed horde and special scheduler stay within 6ms[33m 598[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/alpha-physical.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 2214[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11-alpha-physical-200 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 4ms[33m 1547[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11-alpha-physical-100 @E07-AC11 @E18-AC02 mixed horde and actual physical moves stay within 6ms[33m 665[2mms[22m[39m
+ [32m✓[39m [30m[45m timing [49m[39m tests/sim/performance/zoo-s2.test.ts [2m([22m[2m2 tests[22m[2m)[22m[33m 3123[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11-zoo-s2-200 @E07-AC11 @E18-AC02 mixed zoo specials stay within 4ms[33m 2196[2mms[22m[39m
+   [33m[2m✓[22m[39m T-E07-11-zoo-s2-100 @E07-AC11 @E18-AC02 mixed zoo specials stay within 6ms[33m 925[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m5 passed[39m[22m[90m (5)[39m
+[2m      Tests [22m [1m[32m10 passed[39m[22m[90m (10)[39m
+[2m   Start at [22m 22:08:28
+[2m   Duration [22m 18.61s[2m (tests 71%, transform 19%, import 10%)[22m
+
+[remote] done exit=0 (runner 94.130.181.173, sync 34s, remote total 2591s)
