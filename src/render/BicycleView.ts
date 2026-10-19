@@ -1,3 +1,4 @@
+import { devicePrompt } from '../ui/devicePrompt';
 import { Box3, BoxGeometry, Camera, Group, Mesh, MeshBasicNodeMaterial, OctahedronGeometry, Quaternion, TorusGeometry, Vector3, type Object3D } from 'three/webgpu';
 import '../render/interaction.css';
 import { AssetRegistry } from '../assets/registry';
@@ -259,7 +260,7 @@ export class BicycleView extends Group {
     const player = this.world.entities.get(1)?.transform, dist = player ? Math.hypot(player.x - t.x, player.z - t.z) : Infinity;
     rig.glint.visible = !riding && dist < 30; rig.glint.position.set(0, 1.5 + Math.sin(this.world.tick / 20) * .08, 0); rig.glint.rotation.y = this.world.tick / 25;
     const near = !riding && dist <= 1.6 && !!camera; if (this.prompt.hidden === near) this.prompt.hidden = !near;
-    if (near && camera) { this.projection.set(t.x, 1.9, t.z).project(camera); this.prompt.style.left = `${(this.projection.x + 1) * innerWidth / 2}px`; this.prompt.style.top = `${(1 - this.projection.y) * innerHeight / 2}px`; }
+    if (near && camera) { this.prompt.querySelector('span')!.textContent = devicePrompt('Stand here or press E to ride', document.body.classList.contains('touch-ui')); this.projection.set(t.x, 1.9, t.z).project(camera); this.prompt.style.left = `${(this.projection.x + 1) * innerWidth / 2}px`; this.prompt.style.top = `${(1 - this.projection.y) * innerHeight / 2}px`; }
   }
   private readonly fallBox = new Box3();
   /** Lying frame: no pitch, the lowest drawn point (bar end, pedal, tyre side) rests on the highest drawn ground under it.

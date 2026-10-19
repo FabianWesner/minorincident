@@ -18,7 +18,7 @@ const DEG = Math.PI / 180;
 afterEach(() => vi.restoreAllMocks());
 async function courier(variant: 'female' | 'male') {
   vi.spyOn(GLTFLoader.prototype, 'loadAsync').mockImplementation(async path => ({ scene: await model(`public${path}`) }) as never);
-  const material = () => Object.assign(new MeshLambertMaterial({ vertexColors: true }), { bloodCoverage: { value: 0 }, movingFigure: { value: 0 } });
+  const material = () => Object.assign(new MeshLambertMaterial({ vertexColors: true }), { bloodCoverage: { value: 0 }, movingFigure: { value: 0 }, heroFigure: { value: 0 } });
   const materials = { fromVertexColors: material, fromColor: material, get: material, unique: material } as unknown as Materials;
   const character = new CharacterView(); await character.init(materials, false, false, 'courier', true);
   const loaded = (character as unknown as { characters: Map<string, { model: Object3D; living?: CourierLiving }> }).characters.get(variant)!;

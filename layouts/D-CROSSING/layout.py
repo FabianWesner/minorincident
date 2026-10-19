@@ -293,6 +293,8 @@ l.anchor('crash-wreck',[GULLY_X+1.7,-GULLY_DEPTH,0.0])  # final APC wreck on the
 l.anchor('crawl-start',[GULLY_X+GULLY_HALF+3.5,0,2.6])   # player thrown clear on the far lip, beside the wreck
 l.anchor('crawl-fallback',[GULLY_X+GULLY_HALF+3.5,0,-3.2])
 l.anchor('crawl-end',[547,0,0])               # safe L10 on-foot start, in sight of the city
+# L9 dress-l9: fields, vegetation, farms, road furniture, the next city and the ground beyond the edge (shares this module's globals).
+exec(compile((l.root/'layouts/D-CROSSING/dress.py').read_text(),'dress.py','exec'))
 for p in l.data['placements']: p['maxTier']=6
 for c in l.data['colliders']: c['maxTier']=6
 emit_surfaces()

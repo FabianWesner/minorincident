@@ -16,7 +16,6 @@ import {
   Matrix4,
   Sphere,
   Raycaster,
-  type Intersection,
   type PerspectiveCamera,
   Vector2,
   Vector3,
@@ -55,6 +54,7 @@ import type { PaletteToken } from '../data/palette';
 import { layoutTerrainChunks, terrainPrefetchSeconds } from '../sim/world/TerrainChunks';
 import { TerrainView } from './TerrainView';
 import { batchPerimeterPosts } from './PerimeterPosts';
+import { NightAccents, nightAccents } from './NightAccents';
 
 const crownTokens = new Map<string, [PaletteToken, PaletteToken]>(Object.values(worldAssets).flatMap(asset => asset.foliage ? [[asset.foliage.colors.join(':'), asset.foliage.tokens ?? ['foliageDark', 'foliageLight']]] : []));
 // Repeated fence panels dominated V1 (109k faces in each view/shadow pass).
@@ -109,6 +109,8 @@ export class DistrictView extends Group {
   private readonly grass: Grass[] = [];
   private readonly foliage: Foliage;
   private ambient?: AmbientLife;
+  /** L9 night accents (studs, flares, lanterns, blinkers); render-only. */
+  accents?: NightAccents;
   private readonly districtRoots: { root: Group; bounds: Box3 }[] = [];
   /** The drawn ground (baked roads, paving, lawns) for tyre contacts: see GroundField. */
   readonly ground = new GroundField();
@@ -146,6 +148,8 @@ export class DistrictView extends Group {
     this.phase.value = 0;
     const ambient = timeOfDay[this.world.composition.timeOfDay].ambient;
     if (ambient) { this.ambient = new AmbientLife(this.materials, ambient); this.ambient.setQuality(this.low); this.add(this.ambient); }
+    const accents = nightAccents(this.world);
+    if (accents.points.length) { this.accents = new NightAccents(accents, this.materials.field); this.add(this.accents); }
     // Backdrop reaches beyond the camera far plane; it is scenery outside the bounded town.
     // D-CROSSING (L9-A2): the collapsed-road gully (x 508..524, z -90..90, floor 5.5 m down) must not be covered by it.
     const gully = this.world.composition.districts.find(d => d.id === 'D-CROSSING');
@@ -703,10 +707,9 @@ export class DistrictView extends Group {
     }
     return Math.max(0, Math.min(1, right) - Math.max(-1, left)) * Math.max(0, Math.min(1, upper) - Math.max(-1, bottom)) / 4 >= 2 / 3;
   }
-  private readonly barRay = new Raycaster();
+  private readonly barRay = Object.assign(new Raycaster(), { firstHitOnly: true });
   private readonly barBox = new Box3();
   private readonly barHit = new Vector3();
-  private readonly barHits: Intersection[] = [];
   private readonly barChecked = new Set<InstancedGroup>();
   /** Enemy bars test drawn solid geometry: navigation boxes intentionally omit roofs and upper walls. */
   occludesBar(camera: PerspectiveCamera, target: Vector3): boolean {
@@ -725,9 +728,8 @@ export class DistrictView extends Group {
         if (!this.barRay.ray.intersectBox(this.barBox, this.barHit) || this.barHit.distanceTo(camera.position) > this.barRay.far) continue;
         const batch = band === 'lod0' ? entry.hero : band === 'lod1' ? entry.near : entry.far;
         if (this.barChecked.has(batch)) continue;
-        this.barChecked.add(batch); this.barHits.length = 0;
-        this.barRay.intersectObject(batch, true, this.barHits);
-        if (this.barHits.length) return true;
+        this.barChecked.add(batch);
+        if (batch.intersectsRay(this.barRay)) return true;
       }
     }
     return false;
@@ -1235,7 +1237,7 @@ export class DistrictView extends Group {
     this.disposed = true;
     this.terrain?.dispose();
     for (const { material } of this.metroMaterials.values()) material.dispose(); this.metroMaterials.clear();
-    this.ambient?.dispose();
+    this.ambient?.dispose(); this.accents?.dispose();
     this.foliage.dispose();
     for (const b of this.batches) b.dispose();
     for (const b of this.dressingBatches) b.dispose(); this.dressingBatches.length = 0;

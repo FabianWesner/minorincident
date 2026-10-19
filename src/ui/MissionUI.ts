@@ -1,3 +1,4 @@
+import { devicePrompt } from './devicePrompt';
 import { l3EvacuationText } from '../sim/missions/LevelThreeCollapse';
 import { cureFinaleText } from '../sim/missions/LevelTenFinale';
 import { l4CellarDistance } from '../data/l4';
@@ -56,7 +57,7 @@ export class MissionUI {
     if(mission.state.phase==='briefing')mission.begin();else if(mission.state.phase==='retry')mission.restore();else if(mission.state.phase==='result') { mission.continue(); }
     this.onChange();
   };
-  private text(element: HTMLElement, value: string): void { if(element.textContent!==value)element.textContent=value; }
+  private text(element: HTMLElement, value: string): void { value=devicePrompt(value,document.body.classList.contains('touch-ui')); if(element.textContent!==value)element.textContent=value; }
   /** Native font fallback for the objective arrow must finish before Begin. */
   prepare(): void {
     const rootHidden = this.root.hidden, markerHidden = this.marker.hidden, value = this.marker.textContent;
