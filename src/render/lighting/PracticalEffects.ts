@@ -1,5 +1,5 @@
 import { AdditiveBlending, Color, ConeGeometry, DoubleSide, Group, InstancedMesh, Matrix4, MeshBasicNodeMaterial, PlaneGeometry, Quaternion, Vector3 } from 'three/webgpu';
-import { normalView, positionViewDirection, positionWorld, uv, vec3 } from 'three/tsl';
+import { normalView, positionViewDirection, positionWorld, uniform, uv, vec3 } from 'three/tsl';
 import { placedLights, type PlacedLight } from '../../data/placedLights';
 import { lightPalette } from '../../data/lights';
 import type { DistrictWorld } from '../../sim/world/DistrictWorld';
@@ -21,12 +21,14 @@ export class PracticalEffects extends Group {
   private readonly direction = new Vector3();
   private readonly color = new Color();
   private readonly insects = new LampInsects();
+  /** Per-level lamp beam weight (look.beamStrength): night levels read their cones without extra draws. */
+  readonly beamStrength = uniform(1);
   constructor() {
     super();
     const beam = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false, side: DoubleSide, blending: AdditiveBlending });
     const edge = normalView.dot(positionViewDirection).abs().smoothstep(.03, .35);
     const groundFade = positionWorld.y.smoothstep(.02, .8);
-    beam.colorNode = vec3(1); beam.opacityNode = edge.mul(uv().y.smoothstep(0, .2)).mul(groundFade).mul(.015);
+    beam.colorNode = vec3(1); beam.opacityNode = edge.mul(uv().y.smoothstep(0, .2)).mul(groundFade).mul(this.beamStrength).mul(.015);
     this.beams = new InstancedMesh(new ConeGeometry(1, 1, 20, 1, true), beam, 128); this.beams.count = 0; this.beams.frustumCulled = false;
     const streak = new MeshBasicNodeMaterial({ transparent: true, depthWrite: false, blending: AdditiveBlending });
     const local = uv().sub(.5).mul(2);

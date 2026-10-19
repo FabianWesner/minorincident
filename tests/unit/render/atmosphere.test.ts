@@ -1,5 +1,7 @@
 import { expect, test } from 'vitest';
-import { Scene } from 'three/webgpu';
+import { PerspectiveCamera, Scene, Vector3 } from 'three/webgpu';
+import type { View } from '../../../src/render/View';
+import { validateLookPatch } from '../../../src/data/lookPatch';
 import { LookUniforms } from '../../../src/render/LookUniforms';
 import { Lighting } from '../../../src/render/Lighting';
 import { LampInsects } from '../../../src/render/AmbientLife';
@@ -56,4 +58,45 @@ test('@E25 lamp insects stay bounded, follow powered anchors and disappear on lo
     insects.update([], 3, true); expect(insects.visible).toBe(false);
     insects.update([{ ...lamp, assetId: 'veh.fire-engine' }], 3, true); expect(insects.visible).toBe(false);
   } finally { insects.dispose(); }
+});
+
+const campaign = ['L1', 'L2', 'L3', 'L4', 'L5', 'L6-subway', 'L6', 'L8-zoo', 'L9-crossing', 'L10-night'] as const;
+
+test('@E25 atmosphere 2: neutral defaults, so non-campaign presets and lookdev keep the old image', () => {
+  expect(worldLook.gradeAmount).toBe(0); expect(worldLook.hazeAmount).toBe(0); expect(worldLook.cloudShadow).toBe(0); expect(worldLook.beamStrength).toBe(1);
+  for (const preset of ['golden', 'night'] as const) expect(timeOfDay[preset].look).toBeUndefined();
+  expect(() => validateLookPatch({ version: 1, worldLook: { hazeStart: 2, hazeEnd: 1.5 }, palette: {} })).toThrow(/ordered/);
+  expect(() => validateLookPatch({ version: 1, worldLook: { gradeAmount: 1.5 }, palette: {} })).toThrow(/gradeAmount/);
+});
+
+test('@E25 atmosphere 2: every campaign level has its own grade, haze and visible ambient life; clouds only by day', () => {
+  const signatures = new Set<string>();
+  for (const preset of campaign) {
+    const look = { ...worldLook, ...timeOfDay[preset].look };
+    expect(look.gradeAmount, preset).toBeGreaterThanOrEqual(.5);
+    // L9/L10 navigation routes: any haze over the verge cut the night-read road contrast from 2.7 to 2.0-2.4
+    // (Scene Lab night-read-* matrix), so those two carry their mood with grade and motes only.
+    if (preset === 'L9-crossing' || preset === 'L10-night') expect(look.hazeAmount, preset).toBe(0);
+    else expect(look.hazeAmount, preset).toBeGreaterThan(0);
+    signatures.add(`${look.gradeShadow}/${look.gradeHighlight}`);
+    const day = timeOfDay[preset].intensity >= 1;
+    if (day) expect(look.cloudShadow, preset).toBeGreaterThan(0); else expect(look.cloudShadow, preset).toBe(0);
+    const ambient = timeOfDay[preset].ambient!;
+    expect(ambient.leaf + ambient.dust + ambient.bird, preset).toBeGreaterThan(0);
+    // Haze must begin beyond the camera focus (the courier sits at exactly one camera distance).
+    expect(look.hazeStart, preset).toBeGreaterThan(1);
+  }
+  expect(signatures.size).toBe(campaign.length);
+});
+
+test('@E25 atmosphere 2: haze range follows the camera distance and beam weight reaches the practical cones', () => {
+  const lighting = new Lighting(new Scene());
+  try {
+    lighting.set('L8-zoo');
+    expect(lighting.practicalEffects.beamStrength.value).toBe(timeOfDay['L8-zoo'].look!.beamStrength);
+    const camera = new PerspectiveCamera(30, 16 / 9, .1, 500); camera.position.set(0, 14, 13); camera.lookAt(0, 0, 0); camera.updateMatrixWorld();
+    lighting.update({ focus: new Vector3(), radius: 19, driving: false, camera } as unknown as View);
+    expect(lighting.hazeNear.value).toBeCloseTo(19 * worldLook.hazeStart); expect(lighting.hazeFar.value).toBeCloseTo(19 * worldLook.hazeEnd);
+    lighting.set('night'); expect(lighting.practicalEffects.beamStrength.value).toBe(1);
+  } finally { lighting.dispose(); }
 });

@@ -13,6 +13,11 @@ export const worldLook = {
   fogA: '#f2c7a5', fogB: '#c7a2c9', fogRatioA: .05, fogRatioB: .8, fogCenterX: .5, fogCenterY: .35, fogNear: 65, fogFar: 170,
   grassDensity: 28, grassDensityLow: 5, grassHeight: .41,
   foliageDensity: 1, foliageHeight: 1, windStrength: 1,
+  // Atmosphere 2 (render only, neutral defaults): analytic split-tone grade in the existing PostFx composite,
+  // camera-relative low haze (start/end in multiples of the camera distance), drifting cloud shadows, lamp beam weight.
+  gradeShadow: '#ffffff', gradeHighlight: '#ffffff', gradeAmount: 0, gradeContrast: 1, gradeSaturation: 1,
+  haze: '#ffffff', hazeAmount: 0, hazeStart: 1.25, hazeEnd: 2, hazeHeight: 6,
+  cloudShadow: 0, cloudScale: 22, cloudSpeed: 1, beamStrength: 1,
   worldSurvivorRed: '#cf6565', worldBlood: '#994d55', worldRedDark: '#994854', worldSirenRed: '#dc6974',
 } as const;
 

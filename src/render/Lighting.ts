@@ -54,6 +54,11 @@ export class Lighting {
   private readonly ground = new Plane(new Vector3(0, 1, 0), 0);
   private readonly ray = new Ray();
   private readonly corner = new Vector3();
+  /** Render clock in seconds (the district wind phase): drifts cloud shadows and ambient life. */
+  readonly clock = uniform(0).setGroup(renderGroup);
+  /** Atmosphere haze range in metres, following the camera distance (look.hazeStart/End are multiples of it). */
+  readonly hazeNear = uniform(30).setGroup(renderGroup);
+  readonly hazeFar = uniform(60).setGroup(renderGroup);
   readonly fogNear = uniform(55);
   readonly fogFar = uniform(140);
   readonly bounce;
@@ -185,7 +190,7 @@ export class Lighting {
     this.fogCenter.value.set(v.fogCenterX, v.fogCenterY); this.scene.backgroundNode = this.radialFog;
     if (this.scene.fog instanceof Fog) this.scene.fog.color.copy(this.fogColor.value);
     this.sun.shadow.bias = v.shadowBias; this.sun.shadow.normalBias = v.shadowNormalBias; this.sun.shadow.radius = v.shadowRadius;
-    this.sun.shadow.needsUpdate = true; this.setWeatherMode(this.weatherFeatures);
+    this.sun.shadow.needsUpdate = true; this.practicalEffects.beamStrength.value = v.beamStrength; this.setWeatherMode(this.weatherFeatures);
   }
   update(view: View): void {
     this.roadFocus.value.copy(view.focus);
@@ -195,6 +200,8 @@ export class Lighting {
     // Use the follow framing radius: authored cinematic positions must retain distance fog.
     const fogOffset = Math.max(0, view.radius * (view.driving ? 1.15 : 1) - 19);
     this.fogNear.value = p.fogNear + fogOffset; this.fogFar.value = p.fogFar + fogOffset;
+    const lens = view.radius * (view.driving ? 1.15 : 1), haze = this.look.values;
+    this.hazeNear.value = lens * haze.hazeStart; this.hazeFar.value = lens * haze.hazeEnd;
     if (this.scene.fog instanceof Fog) { this.scene.fog.near = this.fogNear.value; this.scene.fog.far = this.fogFar.value; }
     // Bound the view's ground-plane corners, then enclose that area in the light's orthographic frustum.
     let visibleRadius = 0;

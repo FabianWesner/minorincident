@@ -12,6 +12,9 @@ export const lookRanges = {
   fogCenterX: [0, 1, .01], fogCenterY: [0, 1, .01], fogRatioA: [0, 1, .01], fogRatioB: [.01, 2, .01], fogNear: [0, 300, 1], fogFar: [1, 600, 1],
   grassDensity: [0, 28, .1], grassDensityLow: [0, 5, .1], grassHeight: [.05, .6, .01],
   foliageDensity: [0, 1, .01], foliageHeight: [.25, 2, .01], windStrength: [0, 3, .01],
+  gradeAmount: [0, 1, .01], gradeContrast: [.5, 2, .01], gradeSaturation: [0, 2, .01],
+  hazeAmount: [0, 1, .01], hazeStart: [.5, 4, .01], hazeEnd: [.6, 8, .01], hazeHeight: [.5, 40, .1],
+  cloudShadow: [0, 1, .01], cloudScale: [4, 80, .5], cloudSpeed: [0, 5, .01], beamStrength: [0, 10, .1],
 } satisfies Record<NumericKey, readonly [number, number, number]>;
 export interface LookPatch { version: 1; worldLook: Partial<WorldLook>; palette: Partial<Record<PaletteToken, string>> }
 const hex = /^#[0-9a-f]{6}$/i;
@@ -37,7 +40,7 @@ export function validateLookPatch(input: unknown, baseline: WorldLook = worldLoo
     }
   }
   const look = { ...baseline, ...result.worldLook };
-  if (look.dofStart >= look.dofEnd || look.fogRatioA >= look.fogRatioB || look.fogNear >= look.fogFar || look.coreShadowEdge >= look.coreLightEdge) throw new Error('Look ranges must have ordered edges');
+  if (look.dofStart >= look.dofEnd || look.fogRatioA >= look.fogRatioB || look.fogNear >= look.fogFar || look.hazeStart >= look.hazeEnd || look.coreShadowEdge >= look.coreLightEdge) throw new Error('Look ranges must have ordered edges');
   return result;
 }
 /** Minimal JSON patch relative to checked-in values; contains no renderer state, timestamp or secrets. */
