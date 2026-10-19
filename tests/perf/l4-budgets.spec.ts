@@ -1,6 +1,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { devices } from '@playwright/test';
 import { test, expect } from '../e2e/fixtures';
+import type { Game } from '../../src/Game';
 
 /** E22-AC20: the L4 war (soldiers firing, the HMG nests, the tank, the helicopter, 40+ civilians, the infected waves) and the collapse
  * within the E18 budgets (desktop high, phone low), and no frame > 50 ms at the first turn, a tank shot, the fuel-truck chain or the line
@@ -16,21 +17,51 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
   test(`T-E22-20 @E22 @E22-AC20 @perf L4 turn, war peak, tank shot, fuel-truck chain and line break ${tier}`, async ({ page, context }) => {
     test.setTimeout(1_200_000); mkdirSync(dir, { recursive: true });
     if (tier === 'low') { const cdp = await context.newCDPSession(page); await cdp.send('Emulation.setCPUThrottlingRate', { rate: 4 }); }
-    await page.goto(`/?test=1&renderer=${renderer}&quality=${tier}&audio=muted&dpr=${tier === 'high' ? 1 : 1.5}&profile`);
+    await page.goto(`/?test=1&renderer=${renderer}&quality=${tier}&audio=muted&dpr=${tier === 'high' ? 1 : 1.5}${process.env.L4_PERF_PROFILE === '1' || process.env.L4_TIMING_KEYS === '1' || process.env.L4_CPU_PROFILE === '1' ? '&profile' : ''}${process.env.L4_TIMING_KEYS === '1' ? '&scenelab=1&loadProfile=1' : ''}`);
     await page.waitForFunction(() => Boolean(window.__SS__));
     await page.evaluate(async () => { const a = window.__SS__!; await a.ready; await a.loadLevel('L4', { seed: 2, progression: 'L4-default' }); a.pause(); a.missions.begin(); a.cheats.god(true); a.bot.start('complete'); });
     expect(await page.evaluate(() => window.__SS__!.perf().backend)).toBe(renderer);
+    if (process.env.L4_TIMING_KEYS === '1') await page.evaluate(() => {
+      const game = (window.__SCENE__ as unknown as { game: Game }).game, world = game.world;
+      window.__SS__!.debug.figureJoints(false);
+      const timings: { tick: number; name: string; ms: number }[] = [];
+      (window as unknown as { l4Timing: typeof timings }).l4Timing = timings;
+      const builds: unknown[] = [];
+      (window as unknown as { l4Builds: unknown[] }).l4Builds = builds;
+      const onBuild = game.view.renderer.debug.onNodeBuilderCreated;
+      game.view.renderer.debug.onNodeBuilderCreated = (builder, object) => {
+        onBuild?.(builder, object);
+        const draw = object as unknown as { getMaterialCacheKey(): number; getDynamicCacheKey(): number; material: { name: string; type: string }; object: { name: string; parent?: { name: string }; geometry?: { attributes: Record<string, { itemSize: number }> } } };
+        builds.push({ tick: world.tick, material: draw.material.name || draw.material.type, name: draw.object.name, parent: draw.object.parent?.name, materialKey: draw.getMaterialCacheKey(), dynamicKey: draw.getDynamicCacheKey(), attributes: Object.fromEntries(Object.entries(draw.object.geometry?.attributes ?? {}).map(([name, a]) => [name, a.itemSize])) });
+      };
+      const watch = (owner: object | null | undefined, names: string[]) => {
+        if (!owner) return;
+        const target = owner as Record<string, unknown>;
+        for (const name of names) {
+          const fn = target[name]; if (typeof fn !== 'function') continue;
+          target[name] = (...args: unknown[]) => {
+            const start = performance.now();
+            try { return fn.apply(owner, args); }
+            finally { const ms = performance.now() - start; if (ms > 3) timings.push({ tick: world.tick, name: `${owner.constructor.name}.${name}`, ms }); }
+          };
+        }
+      };
+      watch(world.missions?.l4, ['turn', 'emerge', 'panic', 'campCheckpoint', 'perimeter', 'toPosts']);
+      watch(world.missions, ['capture', 'flushCheckpoint', 'update']);
+      watch(world.npcs?.civilians.outbreak, ['update', 'flee', 'refugeSpot']);
+      watch(world.npcs, ['update']); watch(world.infected, ['update']);
+    });
     const profiler = process.env.L4_CPU_PROFILE === '1' ? await context.newCDPSession(page) : null;
     if (profiler) { await profiler.send('Profiler.enable'); await profiler.send('Profiler.setSamplingInterval', { interval: 500 }); await profiler.send('Profiler.start'); }
     const profileStartedAt = profiler ? await page.evaluate(() => performance.now()) : 0;
     const step = async (until: string, max = 600) => { for (let i = 0; i < max && !await page.evaluate(until); i++) await page.evaluate(() => window.__SS__!.step(15)); };
     /** rAF frame times while the real clock runs, until `until` holds (plus `tail` ms). */
     const record = (until: string, tail: number) => page.evaluate(async ({ until, tail, diagnostic }) => {
-      const a = window.__SS__!, frames: number[] = [], cpu: { at: number; sim: number; simFrame: number; ticks: number; update: number; render: number }[] = []; let previous = 0, previousTick = a.tick(), end = 0; a.resume();
-      for (let i = 0; i < 6000; i++) {
+      const a = window.__SS__!, frames: number[] = [], cpu: { at: number; tick: number; sim: number; simFrame: number; ticks: number; update: number; render: number; builds: number }[] = []; let previous = 0, previousTick = a.tick(), end = 0; const deadline = performance.now() + 180_000; a.resume();
+      for (let i = 0; previous < deadline; i++) {
         const now = await new Promise<number>(resolve => requestAnimationFrame(resolve));
         const tick = a.tick(), steps = tick - previousTick; previousTick = tick;
-        if (previous && i > 2) { frames.push(now - previous); const p = a.perf(); cpu.push({ at: performance.now(), sim: steps ? p.simMs / steps : 0, simFrame: p.simMs, ticks: steps, update: p.updateCpuMs, render: p.renderCpuMs }); } previous = now;
+        if (previous && i > 2) { frames.push(now - previous); const p = a.perf(); cpu.push({ at: performance.now(), tick, sim: p.simTickMs, simFrame: p.simMs, ticks: steps, update: p.updateCpuMs, render: p.renderCpuMs, builds: p.nodeBuilds }); } previous = now;
         if (!end && (0, eval)(until)) end = now + tail;
         if (end && now >= end) break;
       }
@@ -40,12 +71,12 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
         (state.l4Phases ??= []).push({ frames, cpu });
       }
       return frames;
-    }, { until, tail, diagnostic: process.env.L4_CPU_PROFILE === '1' });
+    }, { until, tail, diagnostic: process.env.L4_CPU_PROFILE === '1' || process.env.L4_TIMING_KEYS === '1' });
     const percentile = (values: number[], fraction: number) => [...values].sort((a, b) => a - b)[Math.ceil(values.length * fraction) - 1];
-    const l4 = 'window.__SS__.missions.state().l4';
+    const l4 = 'window.__SS__.missions.state().l4', beats = 'window.__SS__.perf().l4';
     // The ride and the calm plaza (the bot goes to the quartermaster), then the first turn.
-    await step(`${l4}.phase === 'plaza'`, 800); await step(`${l4}.turnDueAt > 0 && ${l4}.turnDueAt - window.__SS__.getState().tick < 120`, 900);
-    const turn = await record(`${l4}.turnAt > 0`, 2_000);
+    await step(`${l4}.phase === 'plaza'`, 800); await step(`${l4}.turnDueAt > 0 && ${l4}.turnDueAt - window.__SS__.tick() < 120`, 900);
+    const turn = await record(`${beats}.turnAt > 0`, 2_000);
     // The war: from the tank's entry; the peak: HMG and rifles firing, the tank in place, the helicopter orbiting, the waves arriving.
     // Capture the requested surviving-army state after an actual loss, rather than assuming
     // that a timed Alpha entrance already killed a soldier. Recoverable bodies keep their slots.
@@ -85,19 +116,20 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     const warCpu = await page.evaluate(() => (window as unknown as { l4Cpu: { sim: number; simFrame: number; ticks: number; update: number; render: number }[] }).l4Cpu);
     // A tank shot, then the line break (the fuel-truck mega chain, the helicopter pulling out).
     const shots = await page.evaluate(`${l4}.tankShots`) as number;
-    const tank = await record(`${l4}.tankShots > ${shots}`, 2_000);
-    await step(`${l4}.lineBreakAt > 0 || ${l4}.phase === 'collapse'`, 900);
-    const breakFrames = await record(`${l4}.lineBreakAt > 0`, 5_000);
+    const tank = await record(`${beats}.tankShots > ${shots}`, 2_000);
+    // Keep the real clock running through the break itself; stepping past the
+    // trigger while paused omitted the fuel-truck chain from the hitch proof.
+    const breakFrames = await record(`${beats}.lineBreakAt > 0`, 5_000);
     await page.evaluate(async () => { const a = window.__SS__!; a.camera.preset('D-FAIR/W0/l4-collapse'); await a.screenshotReady(); });
     await page.locator('canvas').screenshot({ path: `${dir}/l4-collapse-${tier}.png`, scale: 'css' });
     // Draw/triangle budgets are measured on the gameplay (follow) camera; the photo preset is a wide overview.
     await page.evaluate(async () => { const a = window.__SS__!; a.camera.follow(); await a.step(2); await a.screenshotReady(); });
     const collapseStatic = await page.evaluate(() => window.__SS__!.perf());
     const collapse = await record('true', 6_000);
-    const proof = { renderer, tier, seed: 2, counts, firingSoldiers, warAwakeProps: warStatic.awakeProps, collapseAwakeProps: collapseStatic.awakeProps, warDrawCalls: warStatic.drawCalls, warTriangles: warStatic.triangles, collapseDrawCalls: collapseStatic.drawCalls, collapseTriangles: collapseStatic.triangles,
+    const proof = { renderer, tier, seed: 2, beatTicks: await page.evaluate(() => window.__SS__!.perf().l4), counts, firingSoldiers, warAwakeProps: warStatic.awakeProps, collapseAwakeProps: collapseStatic.awakeProps, warDrawCalls: warStatic.drawCalls, warTriangles: warStatic.triangles, collapseDrawCalls: collapseStatic.drawCalls, collapseTriangles: collapseStatic.triangles,
       warP50: percentile(war, .5), warP95: percentile(war, .95), warMax: Math.max(...war), turnMaxMs: Math.max(...turn), tankMaxMs: Math.max(...tank), breakMaxMs: Math.max(...breakFrames), collapseP50: percentile(collapse, .5), collapseP95: percentile(collapse, .95),
       simP95: percentile(warCpu.filter(c => c.ticks > 0).map(c => c.sim), .95), simFrameP95: percentile(warCpu.map(c => c.simFrame), .95), updateP95: percentile(warCpu.map(c => c.update), .95), renderP95: percentile(warCpu.map(c => c.render), .95), lineBroke: await page.evaluate(() => window.__SS__!.missions.state()!.l4!.lineBreakAt > 0) };
-    writeFileSync(`${dir}/l4-${tier}.json`, JSON.stringify({ ...proof, warProfile: warStatic.profile, collapseProfile: collapseStatic.profile, collapseAssets: collapseStatic.profileAssets, war, turn, tank, breakFrames, collapse }, null, 2));
+    writeFileSync(`${dir}/l4-${tier}.json`, JSON.stringify({ ...proof, coldBuilds: process.env.L4_TIMING_KEYS === '1' ? await page.evaluate(() => (window as unknown as { l4Builds: unknown[] }).l4Builds) : [], phaseCpu: process.env.L4_TIMING_KEYS === '1' ? await page.evaluate(() => (window as unknown as { l4Phases: unknown[] }).l4Phases) : [], slowCalls: process.env.L4_TIMING_KEYS === '1' ? await page.evaluate(() => (window as unknown as { l4Timing: unknown[] }).l4Timing) : [], warProfile: warStatic.profile, collapseProfile: collapseStatic.profile, collapseAssets: collapseStatic.profileAssets, war, turn, tank, breakFrames, collapse }, null, 2));
     console.log(JSON.stringify(proof));
     if (profiler) writeFileSync(`${dir}/l4-${tier}-profile.json`, JSON.stringify({ ...await profiler.send('Profiler.stop'), profileStartedAt, phases: await page.evaluate(() => (window as unknown as { l4Phases: unknown[] }).l4Phases) }));
     // The approved collapse: the first nest Alpha is in (84 s; l4-po-round: three Alphas in, from 84 s high, 92 s low), soldiers have died but the survivors still fight (at least half firing within the 8 s window; fallen-back posts can be out of range).
@@ -115,7 +147,7 @@ for (const tier of ['high', 'low'] as const) test.describe(tier, () => {
     if (process.env.PHONE_PERF === '1' && tier === 'low') for (const p95 of [proof.warP95, proof.collapseP95]) expect(p95).toBeLessThanOrEqual(33.3);
     if (tier === 'high') { expect(proof.warP95).toBeLessThanOrEqual(14); expect(proof.collapseP95).toBeLessThanOrEqual(14); }
     else { expect(proof.warP50).toBeLessThanOrEqual(1000 / 30); expect(proof.collapseP50).toBeLessThanOrEqual(1000 / 30); }
-    // Hitch bound: 50 ms on desktop; the phone profile runs under a 4x CPU throttle, so the same bound is 80 ms there (20 ms unthrottled).
-    for (const max of [proof.turnMaxMs, proof.tankMaxMs, proof.breakMaxMs]) expect(max).toBeLessThanOrEqual(tier === 'high' ? 50 : 80);
+    // E22-AC20 requires a literal 50 ms at every transition on both tiers.
+    for (const max of [proof.turnMaxMs, proof.tankMaxMs, proof.breakMaxMs]) expect(max).toBeLessThanOrEqual(50);
   });
 });

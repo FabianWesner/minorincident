@@ -1,0 +1,33 @@
+import { writeFileSync } from 'node:fs';
+import { loadL4, runL4 } from '../sim-runner/l4Bots';
+const { world, mission } = await loadL4(2, 'low');
+const state = mission.state.l4!;
+const calls: { tick: number; owner: string; name: string; ms: number }[] = [];
+const watch = (owner: object | null | undefined, names: string[]) => {
+  if (!owner) return;
+  const object = owner as Record<string, unknown>;
+  for (const name of names) {
+    const fn = object[name]; if (typeof fn !== 'function') continue;
+    object[name] = (...args: unknown[]) => {
+      if (!state.turnDueAt || world.tick < state.turnDueAt - 5 || world.tick > state.turnDueAt + 15) return fn.apply(owner, args);
+      const start = performance.now();
+      try { return fn.apply(owner, args); }
+      finally { calls.push({ tick: world.tick, owner: owner.constructor.name, name, ms: performance.now() - start }); }
+    };
+  }
+};
+watch(mission.l4, ['turn', 'emerge', 'panic', 'campCheckpoint', 'perimeter', 'toPosts', 'liveSoldiers', 'spawnRoom', 'update']);
+watch(mission, ['capture', 'flushCheckpoint', 'update']);
+watch(world, ['query', 'update']);
+watch(world.npcs?.civilians.outbreak, ['update', 'flee', 'refugeSpot', 'spawnPedestrian', 'turnNow', 'freeTint', 'crowdModel']);
+watch(world.npcs, ['update']); watch(world.infected, ['update', 'spawn', 'rush']);
+watch(world.infected?.director, ['offscreen', 'occluded']);
+watch(world.infected?.nav, ['visible', 'nearestCell', 'path', 'route']);
+watch(world.npcs, ['move', 'moveStep']);
+watch(world.solids, ['admit']); watch(world.physics, ['step', 'update']);
+try {
+  const result = runL4(world, mission, 'complete', { seed: 2, god: true, maxSeconds: 240, stopWhen: () => state.turnAt > 0 && world.tick >= state.turnAt + 15 });
+  const report = { turnAt: state.turnAt, turnDueAt: state.turnDueAt, result, calls };
+  writeFileSync('docs/reports/perf-heap-w5/l4-node-turn.json', JSON.stringify(report, null, 2));
+  console.log(JSON.stringify({ turnAt: state.turnAt, calls: calls.filter(c => c.ms > 1) }));
+} finally { world.dispose(); }

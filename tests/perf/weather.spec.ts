@@ -1,3 +1,4 @@
+import { collectedHeap } from './collected-heap';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { test, expect, boot } from '../e2e/fixtures';
 import { qualityBudgets } from '../../src/core/Quality';
@@ -35,13 +36,14 @@ for (const tier of ['high', 'low'] as const) test(`T-E28-10-frame @E28 @E28-AC10
     return { frames, sim, frameP95: p95(frames), frameMax: Math.max(...frames), simP95: p95(sim), perf: a.perf(), weather: a.getState().render.weather, wetness: a.getState().weather!.wetness,
       gpu: extension ? gl.getParameter(extension.UNMASKED_RENDERER_WEBGL) as string : null, durationMs: performance.now() - started };
   });
-  const dir = 'test-results/epics/E28/perf'; mkdirSync(dir, { recursive: true }); writeFileSync(`${dir}/storm-native-${tier}.json`, JSON.stringify(result, null, 2));
+  const heap = await collectedHeap(page, context);
+  const dir = 'test-results/epics/E28/perf'; mkdirSync(dir, { recursive: true }); writeFileSync(`${dir}/storm-native-${tier}.json`, JSON.stringify({ ...result, ...heap }, null, 2));
   expect(result.perf.backend).toBe('webgl'); expect(result.perf.quality.tier).toBe(tier);
   expect(result.gpu).not.toBeNull(); expect(result.gpu!).not.toMatch(/swiftshader|llvmpipe|software/i);
   expect(result.wetness).toBeGreaterThanOrEqual(.8);
   expect(result.frameP95).toBeLessThanOrEqual(qualityBudgets[tier].frameMs);
   expect(result.simP95).toBeLessThanOrEqual(qualityBudgets[tier].simMs);
-  expect(result.perf.heapBytes).not.toBeNull(); expect(result.perf.heapBytes! / 1024 ** 2).toBeLessThanOrEqual(qualityBudgets[tier].heapMB);
+  expect(heap.heapMB).toBeLessThanOrEqual(qualityBudgets[tier].heapMB);
   expect(result.weather!.particles).toBe(tier === 'high' ? 20_000 : 6000);
   expect(result.perf.drawCalls).toBeLessThanOrEqual(qualityBudgets[tier].drawCalls); expect(result.perf.triangles).toBeLessThanOrEqual(qualityBudgets[tier].triangles);
 });

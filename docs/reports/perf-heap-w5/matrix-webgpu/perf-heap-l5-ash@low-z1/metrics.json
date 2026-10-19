@@ -1,0 +1,5162 @@
+{
+  "spec": "tests/scenes/catalog/perf-heap-l5-ash.json",
+  "backend": "webgpu",
+  "requestedBackend": "webgpu",
+  "tier": "low",
+  "actualTier": "low",
+  "frames": 60,
+  "timing": {
+    "openMs": 0,
+    "loadMs": 2941,
+    "runMs": 804,
+    "sceneMs": 3745
+  },
+  "checks": {
+    "pass": true,
+    "checks": [
+      {
+        "name": "consoleErrors",
+        "pass": true,
+        "value": 0,
+        "limit": 0
+      },
+      {
+        "name": "canvas.f0.varianceMin",
+        "pass": true,
+        "value": 541.1881715743039,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f0.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f30.varianceMin",
+        "pass": true,
+        "value": 538.5825636733462,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f30.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "canvas.f60.varianceMin",
+        "pass": true,
+        "value": 535.1191849919833,
+        "limit": 1
+      },
+      {
+        "name": "canvas.f60.variedTilesMin",
+        "pass": true,
+        "value": 64,
+        "limit": 8
+      },
+      {
+        "name": "requestedBackend",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      },
+      {
+        "name": "requestedQuality",
+        "pass": true,
+        "value": 1,
+        "limit": 1
+      }
+    ]
+  },
+  "seeThroughCut": null,
+  "seeThroughCutSamples": [],
+  "courierShares": [],
+  "vehicleSilhouettes": [],
+  "pixels": [
+    {
+      "frame": 0,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          103.25446952160493,
+          55.63740547839506,
+          57.9010050154321
+        ],
+        "variance": 541.1881715743039,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 30,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          103.2284837962963,
+          55.67685956790123,
+          57.99006558641975
+        ],
+        "variance": 538.5825636733462,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    },
+    {
+      "frame": 60,
+      "pixels": {
+        "width": 960,
+        "height": 540,
+        "mean": [
+          103.23001736111111,
+          55.715252700617285,
+          58.07031442901235
+        ],
+        "variance": 535.1191849919833,
+        "variedTiles": 64,
+        "tiles": 64
+      }
+    }
+  ],
+  "edgeSamples": [],
+  "ring": null,
+  "contrast": [],
+  "consoleErrors": [],
+  "scene": {
+    "name": "perf-heap-l5-ash",
+    "frame": 0,
+    "placements": [
+      {
+        "id": "bld.apartment-block-a:0",
+        "asset": "bld.apartment-block-a",
+        "at": [
+          -46.9,
+          -29.0499
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "bld.town-hall:1",
+        "asset": "bld.town-hall",
+        "at": [
+          -30,
+          -28.160000000000004
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "bld.storefront-row:2",
+        "asset": "bld.storefront-row",
+        "at": [
+          -13.73,
+          -29.150000000000002
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "bld.apartment-block-b:3",
+        "asset": "bld.apartment-block-b",
+        "at": [
+          0.8899999999999988,
+          -29.219900000000003
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "bld.apartment-block-a:4",
+        "asset": "bld.apartment-block-a",
+        "at": [
+          -48.0499,
+          -15.5
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "bld.church:5",
+        "asset": "bld.church",
+        "at": [
+          -44.2,
+          -2.7
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "bld.apartment-block-b:6",
+        "asset": "bld.apartment-block-b",
+        "at": [
+          -48.2199,
+          10.2
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "bld.cafe-corner:7",
+        "asset": "bld.cafe-corner",
+        "at": [
+          -49.501000000000005,
+          27.05
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "bld.supermarket:8",
+        "asset": "bld.supermarket",
+        "at": [
+          4.999999999999999,
+          -17.5
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "bld.pharmacy:9",
+        "asset": "bld.pharmacy",
+        "at": [
+          6.049999999999999,
+          -9
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "bld.pharmacy:10",
+        "asset": "bld.pharmacy",
+        "at": [
+          6.049999999999999,
+          -1.2
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "bld.cafe-corner:11",
+        "asset": "bld.cafe-corner",
+        "at": [
+          5.5009999999999994,
+          18.75
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "bld.supermarket:12",
+        "asset": "bld.supermarket",
+        "at": [
+          4.999999999999999,
+          33.5
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "prop.bench:13",
+        "asset": "prop.bench",
+        "at": [
+          -8,
+          -19.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.bench:14",
+        "asset": "prop.bench",
+        "at": [
+          -14,
+          -19.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.bench:15",
+        "asset": "prop.bench",
+        "at": [
+          -32.8,
+          18
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.bench:16",
+        "asset": "prop.bench",
+        "at": [
+          -32.8,
+          10
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.bench:17",
+        "asset": "prop.bench",
+        "at": [
+          -4,
+          33.8
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.bench:18",
+        "asset": "prop.bench",
+        "at": [
+          -26,
+          33.8
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.trash-bin:19",
+        "asset": "prop.trash-bin",
+        "at": [
+          -24,
+          -19.2
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.trash-bin:20",
+        "asset": "prop.trash-bin",
+        "at": [
+          -35.3,
+          26
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.street-tree-blossom:21",
+        "asset": "prop.street-tree-blossom",
+        "at": [
+          -31,
+          36.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-tree-blossom:22",
+        "asset": "prop.street-tree-blossom",
+        "at": [
+          -23,
+          36.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-tree-blossom:23",
+        "asset": "prop.street-tree-blossom",
+        "at": [
+          -15,
+          36.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-tree-blossom:24",
+        "asset": "prop.street-tree-blossom",
+        "at": [
+          -7,
+          36.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-tree:25",
+        "asset": "prop.street-tree",
+        "at": [
+          0,
+          36.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.hedge:26",
+        "asset": "prop.hedge",
+        "at": [
+          -34.625,
+          38.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.hedge:27",
+        "asset": "prop.hedge",
+        "at": [
+          -31.875,
+          38.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.hedge:28",
+        "asset": "prop.hedge",
+        "at": [
+          -29.125,
+          38.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.hedge:29",
+        "asset": "prop.hedge",
+        "at": [
+          -26.375,
+          38.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.hedge:30",
+        "asset": "prop.hedge",
+        "at": [
+          -12,
+          38.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.hedge:31",
+        "asset": "prop.hedge",
+        "at": [
+          -1.625,
+          38.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.hedge:32",
+        "asset": "prop.hedge",
+        "at": [
+          1.125,
+          38.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.hedge:33",
+        "asset": "prop.hedge",
+        "at": [
+          3.875,
+          38.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.hedge:34",
+        "asset": "prop.hedge",
+        "at": [
+          6.625,
+          38.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:35",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -51.72727272727273,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:36",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -49.18181818181818,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:37",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -46.63636363636364,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:38",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -44.09090909090909,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:39",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -41.54545454545455,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:40",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -39,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:41",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -36.45454545454545,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:42",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -33.90909090909091,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:43",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -31.363636363636363,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:44",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -28.81818181818182,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:45",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -26.272727272727273,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:46",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -13.75,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:47",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -11.25,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:48",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -1.8,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:49",
+        "asset": "prop.privacy-fence",
+        "at": [
+          0.5999999999999996,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:50",
+        "asset": "prop.privacy-fence",
+        "at": [
+          3,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:51",
+        "asset": "prop.privacy-fence",
+        "at": [
+          5.4,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:52",
+        "asset": "prop.privacy-fence",
+        "at": [
+          7.799999999999999,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.storefront-row:53",
+        "asset": "bld.storefront-row",
+        "at": [
+          23.85,
+          -25.9
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "bld.storefront-row:54",
+        "asset": "bld.storefront-row",
+        "at": [
+          23.85,
+          -8.5
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "bld.storefront-row:55",
+        "asset": "bld.storefront-row",
+        "at": [
+          23.85,
+          8.6
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "bld.storefront-row:56",
+        "asset": "bld.storefront-row",
+        "at": [
+          23.85,
+          25.9
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "bld.apartment-block-a:57",
+        "asset": "bld.apartment-block-a",
+        "at": [
+          40.0499,
+          -28
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "bld.apartment-block-b:58",
+        "asset": "bld.apartment-block-b",
+        "at": [
+          40.2199,
+          -14.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "bld.apartment-block-a:59",
+        "asset": "bld.apartment-block-a",
+        "at": [
+          40.0499,
+          -1.2
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "bld.apartment-block-b:60",
+        "asset": "bld.apartment-block-b",
+        "at": [
+          40.2199,
+          12.2
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "bld.apartment-block-a:61",
+        "asset": "bld.apartment-block-a",
+        "at": [
+          40.0499,
+          25.4
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "bld.pharmacy:62",
+        "asset": "bld.pharmacy",
+        "at": [
+          42.050000000000004,
+          36.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:63",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          -33.110344827586204
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:64",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          -30.53103448275862
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:65",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          -27.951724137931034
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:66",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          -25.372413793103448
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:67",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          -22.79310344827586
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:68",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          -20.213793103448275
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:69",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          -17.63448275862069
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:70",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          -15.055172413793102
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:71",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          -12.475862068965519
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:72",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          -9.896551724137932
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:73",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          -7.317241379310346
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:74",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          -4.737931034482759
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:75",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          -2.158620689655173
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:76",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          0.42068965517240997
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:77",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          3
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:78",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          5.579310344827583
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:79",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          8.158620689655173
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:80",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          10.737931034482756
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:81",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          13.317241379310346
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:82",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          15.896551724137929
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:83",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          18.47586206896551
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:84",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          21.055172413793102
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:85",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          23.634482758620685
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:86",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          26.213793103448275
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:87",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          28.793103448275858
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:88",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          31.37241379310344
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:89",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          33.95172413793103
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:90",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          36.53103448275862
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:91",
+        "asset": "prop.privacy-fence",
+        "at": [
+          29.4,
+          39.1103448275862
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:92",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          -33.110344827586204
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:93",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          -30.53103448275862
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:94",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          -27.951724137931034
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:95",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          -25.372413793103448
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:96",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          -22.79310344827586
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:97",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          -20.213793103448275
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:98",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          -17.63448275862069
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:99",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          -15.055172413793102
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:100",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          -12.475862068965519
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:101",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          -9.896551724137932
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:102",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          -7.317241379310346
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:103",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          -4.737931034482759
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:104",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          -2.158620689655173
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:105",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          0.42068965517240997
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:106",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          3
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:107",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          5.579310344827583
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:108",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          8.158620689655173
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:109",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          10.737931034482756
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:110",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          13.317241379310346
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:111",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          15.896551724137929
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:112",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          18.47586206896551
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:113",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          21.055172413793102
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:114",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          23.634482758620685
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:115",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          26.213793103448275
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:116",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          28.793103448275858
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:117",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          31.37241379310344
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:118",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          33.95172413793103
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:119",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          36.53103448275862
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:120",
+        "asset": "prop.privacy-fence",
+        "at": [
+          34.2,
+          39.1103448275862
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:121",
+        "asset": "prop.privacy-fence",
+        "at": [
+          20.3,
+          40.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:122",
+        "asset": "prop.privacy-fence",
+        "at": [
+          22.9,
+          40.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:123",
+        "asset": "prop.privacy-fence",
+        "at": [
+          25.5,
+          40.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:124",
+        "asset": "prop.privacy-fence",
+        "at": [
+          28.1,
+          40.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:125",
+        "asset": "prop.privacy-fence",
+        "at": [
+          30.700000000000003,
+          40.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:126",
+        "asset": "prop.privacy-fence",
+        "at": [
+          33.3,
+          40.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:127",
+        "asset": "prop.privacy-fence",
+        "at": [
+          35.900000000000006,
+          40.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:128",
+        "asset": "prop.privacy-fence",
+        "at": [
+          38.5,
+          40.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:129",
+        "asset": "prop.privacy-fence",
+        "at": [
+          41.1,
+          40.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:131",
+        "asset": "prop.privacy-fence",
+        "at": [
+          20.3,
+          -34.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:132",
+        "asset": "prop.privacy-fence",
+        "at": [
+          22.9,
+          -34.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:133",
+        "asset": "prop.privacy-fence",
+        "at": [
+          25.5,
+          -34.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:134",
+        "asset": "prop.privacy-fence",
+        "at": [
+          28.1,
+          -34.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:135",
+        "asset": "prop.privacy-fence",
+        "at": [
+          30.700000000000003,
+          -34.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:136",
+        "asset": "prop.privacy-fence",
+        "at": [
+          33.3,
+          -34.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:137",
+        "asset": "prop.privacy-fence",
+        "at": [
+          35.900000000000006,
+          -34.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:138",
+        "asset": "prop.privacy-fence",
+        "at": [
+          38.5,
+          -34.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:139",
+        "asset": "prop.privacy-fence",
+        "at": [
+          41.1,
+          -34.4
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.apartment-block-a:141",
+        "asset": "bld.apartment-block-a",
+        "at": [
+          -67.95009999999999,
+          -28
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "bld.apartment-block-b:142",
+        "asset": "bld.apartment-block-b",
+        "at": [
+          -67.7801,
+          -14.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "bld.apartment-block-a:143",
+        "asset": "bld.apartment-block-a",
+        "at": [
+          -67.95009999999999,
+          -1.2
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "bld.apartment-block-b:144",
+        "asset": "bld.apartment-block-b",
+        "at": [
+          -67.7801,
+          12.2
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "bld.cafe-corner:145",
+        "asset": "bld.cafe-corner",
+        "at": [
+          -66.499,
+          30.3
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:149",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -74.60000000000001,
+          -34.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:153",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -74.60000000000001,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:183",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          -33.30344827586207
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:184",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          -30.71034482758621
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:185",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          -28.117241379310347
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:186",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          -25.52413793103448
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:187",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          -22.93103448275862
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:188",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          -20.337931034482757
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:189",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          -17.744827586206895
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:190",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          -15.151724137931033
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:191",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          -12.558620689655172
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:192",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          -9.96551724137931
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:193",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          -7.372413793103448
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:194",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          -4.779310344827586
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:195",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          -2.186206896551724
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:196",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          0.4068965517241381
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:197",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          3
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:198",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          5.593103448275862
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:199",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          8.186206896551731
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:200",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          10.779310344827593
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:201",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          13.372413793103455
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:202",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          15.965517241379317
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:203",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          18.55862068965518
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:204",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          21.15172413793104
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:205",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          23.744827586206902
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:206",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          26.337931034482764
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:207",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          28.931034482758626
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:208",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          31.524137931034495
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:209",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          34.11724137931035
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:210",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          36.71034482758622
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:211",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -73.2,
+          39.303448275862074
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.privacy-fence:212",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -72.075,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:213",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -69.425,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:214",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -66.775,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.privacy-fence:215",
+        "asset": "prop.privacy-fence",
+        "at": [
+          -64.125,
+          40.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "bld.storefront-row:218",
+        "asset": "bld.storefront-row",
+        "at": [
+          -63.08,
+          -50.849999999999994
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "bld.storefront-row:219",
+        "asset": "bld.storefront-row",
+        "at": [
+          -46.489999999999995,
+          -50.849999999999994
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "bld.apartment-block-a:220",
+        "asset": "bld.apartment-block-a",
+        "at": [
+          -31.869899999999987,
+          -50.9501
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "bld.storefront-row:221",
+        "asset": "bld.storefront-row",
+        "at": [
+          -17.24979999999999,
+          -50.849999999999994
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "bld.apartment-block-b:222",
+        "asset": "bld.apartment-block-b",
+        "at": [
+          -2.6297999999999897,
+          -50.7801
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "bld.storefront-row:223",
+        "asset": "bld.storefront-row",
+        "at": [
+          11.99020000000001,
+          -50.849999999999994
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "bld.apartment-block-a:224",
+        "asset": "bld.apartment-block-a",
+        "at": [
+          26.61030000000001,
+          -50.9501
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "bld.metro-entrance:225",
+        "asset": "bld.metro-entrance",
+        "at": [
+          37.7854,
+          -49.559999999999995
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "prop.street-lamp:386",
+        "asset": "prop.street-lamp",
+        "at": [
+          -76,
+          52.4
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:387",
+        "asset": "prop.street-lamp",
+        "at": [
+          -60,
+          52.4
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:388",
+        "asset": "prop.street-lamp",
+        "at": [
+          -44,
+          52.4
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:389",
+        "asset": "prop.street-lamp",
+        "at": [
+          -28,
+          52.4
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:390",
+        "asset": "prop.street-lamp",
+        "at": [
+          -12,
+          52.4
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:391",
+        "asset": "prop.street-lamp",
+        "at": [
+          4,
+          52.4
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:392",
+        "asset": "prop.street-lamp",
+        "at": [
+          20,
+          52.4
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:393",
+        "asset": "prop.street-lamp",
+        "at": [
+          36,
+          52.4
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.bench:396",
+        "asset": "prop.bench",
+        "at": [
+          -70,
+          54.3
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.bench:397",
+        "asset": "prop.bench",
+        "at": [
+          -50,
+          54.3
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.bench:398",
+        "asset": "prop.bench",
+        "at": [
+          -30,
+          54.3
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.bench:399",
+        "asset": "prop.bench",
+        "at": [
+          -2,
+          54.3
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.bench:400",
+        "asset": "prop.bench",
+        "at": [
+          22,
+          54.3
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.bench:401",
+        "asset": "prop.bench",
+        "at": [
+          40,
+          54.3
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "prop.street-tree:404",
+        "asset": "prop.street-tree",
+        "at": [
+          -64,
+          52.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-tree-blossom:405",
+        "asset": "prop.street-tree-blossom",
+        "at": [
+          -42,
+          52.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-tree:406",
+        "asset": "prop.street-tree",
+        "at": [
+          10,
+          52.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-tree-blossom:407",
+        "asset": "prop.street-tree-blossom",
+        "at": [
+          30,
+          52.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:412",
+        "asset": "prop.street-lamp",
+        "at": [
+          -48,
+          42
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:413",
+        "asset": "prop.street-lamp",
+        "at": [
+          -32,
+          42
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:414",
+        "asset": "prop.street-lamp",
+        "at": [
+          -16,
+          42
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:415",
+        "asset": "prop.street-lamp",
+        "at": [
+          0,
+          42
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:416",
+        "asset": "prop.street-lamp",
+        "at": [
+          32,
+          42
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:419",
+        "asset": "prop.street-lamp",
+        "at": [
+          -48,
+          -44
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:420",
+        "asset": "prop.street-lamp",
+        "at": [
+          -40,
+          -36
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:421",
+        "asset": "prop.street-lamp",
+        "at": [
+          -32,
+          -44
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:422",
+        "asset": "prop.street-lamp",
+        "at": [
+          -24,
+          -36
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:423",
+        "asset": "prop.street-lamp",
+        "at": [
+          -16,
+          -44
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:424",
+        "asset": "prop.street-lamp",
+        "at": [
+          -8,
+          -36
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:425",
+        "asset": "prop.street-lamp",
+        "at": [
+          0,
+          -44
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:426",
+        "asset": "prop.street-lamp",
+        "at": [
+          24,
+          -36
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:427",
+        "asset": "prop.street-lamp",
+        "at": [
+          32,
+          -44
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-lamp:428",
+        "asset": "prop.street-lamp",
+        "at": [
+          40,
+          -36
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-sign:432",
+        "asset": "prop.street-sign",
+        "at": [
+          -54.3,
+          -44.7
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.fire-hydrant:433",
+        "asset": "prop.fire-hydrant",
+        "at": [
+          -61.7,
+          -44.7
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-sign:434",
+        "asset": "prop.street-sign",
+        "at": [
+          -54.3,
+          50.7
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.fire-hydrant:435",
+        "asset": "prop.fire-hydrant",
+        "at": [
+          -61.7,
+          50.7
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-sign:436",
+        "asset": "prop.street-sign",
+        "at": [
+          17.7,
+          -44.7
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.fire-hydrant:437",
+        "asset": "prop.fire-hydrant",
+        "at": [
+          10.3,
+          -44.7
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.street-sign:438",
+        "asset": "prop.street-sign",
+        "at": [
+          17.7,
+          50.7
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "prop.fire-hydrant:439",
+        "asset": "prop.fire-hydrant",
+        "at": [
+          10.3,
+          50.7
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-military-0",
+        "asset": "veh.military-apc",
+        "at": [
+          -5.25,
+          -20.85
+        ],
+        "yawDeg": 87.1
+      },
+      {
+        "id": "l5-military-1",
+        "asset": "veh.military-truck",
+        "at": [
+          -11,
+          -11.539999999999903
+        ],
+        "yawDeg": 93.4
+      },
+      {
+        "id": "l5-bus-2",
+        "asset": "veh.school-bus",
+        "at": [
+          -11,
+          -0.39499999999988283
+        ],
+        "yawDeg": 87.1
+      },
+      {
+        "id": "l5-military-3",
+        "asset": "veh.military-truck",
+        "at": [
+          -4.400830365484341,
+          5.7
+        ],
+        "yawDeg": -176.6
+      },
+      {
+        "id": "l5-bus-4",
+        "asset": "veh.school-bus",
+        "at": [
+          6.7441696345157025,
+          5.7
+        ],
+        "yawDeg": -182.9
+      },
+      {
+        "id": "l5-military-5",
+        "asset": "veh.tank",
+        "at": [
+          -19.6,
+          23.5
+        ],
+        "yawDeg": 110.1
+      },
+      {
+        "id": "l5-crater-6",
+        "asset": "decay.fuel-truck-crater",
+        "at": [
+          15.5,
+          -9.5
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "l5-crater-7",
+        "asset": "decay.crater",
+        "at": [
+          -24.5,
+          6.5
+        ],
+        "yawDeg": 17.2
+      },
+      {
+        "id": "l5-crater-8",
+        "asset": "decay.crater",
+        "at": [
+          -27,
+          -5
+        ],
+        "yawDeg": 68.8
+      },
+      {
+        "id": "l5-crater-9",
+        "asset": "decay.crater",
+        "at": [
+          -8,
+          14.5
+        ],
+        "yawDeg": 120.3
+      },
+      {
+        "id": "l5-burned-car-10",
+        "asset": "veh.sedan-red",
+        "at": [
+          -40,
+          43.3
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-burned-car-11",
+        "asset": "veh.sedan-blue",
+        "at": [
+          24,
+          43.3
+        ],
+        "yawDeg": 1.1
+      },
+      {
+        "id": "l5-burned-car-13",
+        "asset": "veh.sedan-red",
+        "at": [
+          -45.3,
+          -42.6
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "l5-burned-car-14",
+        "asset": "veh.suv-dark",
+        "at": [
+          -8,
+          -42.6
+        ],
+        "yawDeg": 180
+      },
+      {
+        "id": "l5-burned-car-15",
+        "asset": "veh.sedan-white",
+        "at": [
+          -59.7,
+          -8
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-burned-car-16",
+        "asset": "veh.suv-dark",
+        "at": [
+          15.8,
+          30
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-burned-car-19",
+        "asset": "veh.sedan-blue",
+        "at": [
+          -29.406737353238373,
+          43.389662879484156
+        ],
+        "yawDeg": -8.6
+      },
+      {
+        "id": "l5-burned-car-20",
+        "asset": "veh.suv-dark",
+        "at": [
+          -6,
+          43.3
+        ],
+        "yawDeg": 11.5
+      },
+      {
+        "id": "l5-burned-car-21",
+        "asset": "veh.pickup-red",
+        "at": [
+          -38,
+          -42.6
+        ],
+        "yawDeg": 171.4
+      },
+      {
+        "id": "l5-burned-car-22",
+        "asset": "veh.sedan-blue",
+        "at": [
+          26.47176031977153,
+          -41.884790409137786
+        ],
+        "yawDeg": 191.5
+      },
+      {
+        "id": "l5-burned-car-23",
+        "asset": "veh.suv-dark",
+        "at": [
+          15.8,
+          14
+        ],
+        "yawDeg": -98.6
+      },
+      {
+        "id": "l5-burned-car-24",
+        "asset": "veh.pickup-red",
+        "at": [
+          -59.7,
+          20
+        ],
+        "yawDeg": -78.5
+      },
+      {
+        "id": "l5-barricade-25",
+        "asset": "decay.blown-sandbags",
+        "at": [
+          -27,
+          -14.4
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-barricade-26",
+        "asset": "decay.blown-sandbags",
+        "at": [
+          -20.6,
+          -14.6
+        ],
+        "yawDeg": 11.5
+      },
+      {
+        "id": "l5-barricade-27",
+        "asset": "decay.blown-sandbags",
+        "at": [
+          -33.4,
+          -9.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-barricade-28",
+        "asset": "decay.blown-sandbags",
+        "at": [
+          -33.4,
+          5.6
+        ],
+        "yawDeg": 98.6
+      },
+      {
+        "id": "l5-barricade-29",
+        "asset": "decay.blown-sandbags",
+        "at": [
+          -33.2,
+          11.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-barricade-30",
+        "asset": "decay.blown-sandbags",
+        "at": [
+          -29,
+          17.8
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-barricade-31",
+        "asset": "decay.blown-sandbags",
+        "at": [
+          -22.5,
+          17.6
+        ],
+        "yawDeg": -11.5
+      },
+      {
+        "id": "l5-barricade-32",
+        "asset": "decay.blown-sandbags",
+        "at": [
+          -18,
+          17.9
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-barricade-33",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -28.81818181818182,
+          -14.05
+        ],
+        "yawDeg": 28.6
+      },
+      {
+        "id": "l5-barricade-34",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -24.454545454545453,
+          -14.05
+        ],
+        "yawDeg": 28.6
+      },
+      {
+        "id": "l5-barricade-35",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -17.18181818181818,
+          -14.05
+        ],
+        "yawDeg": 28.6
+      },
+      {
+        "id": "l5-barricade-36",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -33.1,
+          -9.899999999999999
+        ],
+        "yawDeg": 118.6
+      },
+      {
+        "id": "l5-barricade-37",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -33.1,
+          7.025
+        ],
+        "yawDeg": 118.6
+      },
+      {
+        "id": "l5-barricade-38",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -33.1,
+          14.275
+        ],
+        "yawDeg": 118.6
+      },
+      {
+        "id": "l5-barricade-39",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -27.363636363636363,
+          18.150000000000002
+        ],
+        "yawDeg": 28.6
+      },
+      {
+        "id": "l5-barricade-40",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -20.090909090909093,
+          18.150000000000002
+        ],
+        "yawDeg": 28.6
+      },
+      {
+        "id": "l5-barricade-41",
+        "asset": "prop.sandbag-pallet",
+        "at": [
+          -15.727272727272727,
+          18.150000000000002
+        ],
+        "yawDeg": 28.6
+      },
+      {
+        "id": "l5-nest-42",
+        "asset": "prop.hmg-nest",
+        "at": [
+          -32.4,
+          -14.1
+        ],
+        "yawDeg": 248.8
+      },
+      {
+        "id": "l5-nest-43",
+        "asset": "prop.hmg-nest",
+        "at": [
+          -14.6,
+          17.3
+        ],
+        "yawDeg": -63
+      },
+      {
+        "id": "l5-barrier-45",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          -75.5,
+          49.9
+        ],
+        "yawDeg": -22.9
+      },
+      {
+        "id": "l5-barrier-46",
+        "asset": "prop.jersey-barrier",
+        "at": [
+          -72.5,
+          42.3
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-rubble-49",
+        "asset": "decay.rubble-pile",
+        "at": [
+          -36,
+          20.6
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-rubble-50",
+        "asset": "decay.rubble-pile",
+        "at": [
+          -5,
+          8.6
+        ],
+        "yawDeg": 74.5
+      },
+      {
+        "id": "l5-rubble-51",
+        "asset": "decay.rubble-pile",
+        "at": [
+          -30,
+          28
+        ],
+        "yawDeg": 149
+      },
+      {
+        "id": "l5-rubble-52",
+        "asset": "decay.rubble-pile",
+        "at": [
+          8.4,
+          3.4
+        ],
+        "yawDeg": 223.5
+      },
+      {
+        "id": "l5-rubble-53",
+        "asset": "decay.rubble-pile",
+        "at": [
+          -14,
+          -17.4
+        ],
+        "yawDeg": 297.9
+      },
+      {
+        "id": "l5-rubble-54",
+        "asset": "decay.rubble-pile",
+        "at": [
+          40,
+          -37.4
+        ],
+        "yawDeg": 372.4
+      },
+      {
+        "id": "l5-rubble-55",
+        "asset": "decay.rubble-pile",
+        "at": [
+          -48,
+          38.6
+        ],
+        "yawDeg": 446.9
+      },
+      {
+        "id": "l5-rubble-57",
+        "asset": "decay.rubble-pile",
+        "at": [
+          -17,
+          9
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-rubble-58",
+        "asset": "decay.rubble-pile",
+        "at": [
+          -23,
+          -9
+        ],
+        "yawDeg": 51.6
+      },
+      {
+        "id": "l5-rubble-59",
+        "asset": "decay.rubble-pile",
+        "at": [
+          -28,
+          14
+        ],
+        "yawDeg": 103.1
+      },
+      {
+        "id": "l5-rubble-60",
+        "asset": "decay.rubble-pile",
+        "at": [
+          -9,
+          -8
+        ],
+        "yawDeg": 154.7
+      },
+      {
+        "id": "l5-rubble-61",
+        "asset": "decay.rubble-pile",
+        "at": [
+          12,
+          4
+        ],
+        "yawDeg": 206.3
+      },
+      {
+        "id": "l5-rubble-62",
+        "asset": "decay.rubble-pile",
+        "at": [
+          30,
+          35
+        ],
+        "yawDeg": 257.8
+      },
+      {
+        "id": "l5-rubble-63",
+        "asset": "decay.rubble-pile",
+        "at": [
+          -40,
+          40
+        ],
+        "yawDeg": 309.4
+      },
+      {
+        "id": "l5-rubble-64",
+        "asset": "decay.rubble-pile",
+        "at": [
+          20,
+          -37
+        ],
+        "yawDeg": 361
+      },
+      {
+        "id": "l5-block-65",
+        "asset": "veh.military-truck",
+        "at": [
+          31.275338076764516,
+          -39.91654013753611
+        ],
+        "yawDeg": 96.9
+      },
+      {
+        "id": "l5-block-66",
+        "asset": "veh.sedan-red",
+        "at": [
+          12.6,
+          24.6
+        ],
+        "yawDeg": 5.7
+      },
+      {
+        "id": "l5-block-67",
+        "asset": "veh.pickup-red",
+        "at": [
+          -18.059600799238517,
+          44.69401997335237
+        ],
+        "yawDeg": 78.5
+      },
+      {
+        "id": "l5-bus-68",
+        "asset": "veh.school-bus",
+        "at": [
+          -45,
+          46.3
+        ],
+        "yawDeg": 2.3
+      },
+      {
+        "id": "l5-belongings-106",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          -22,
+          7
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-belongings-107",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          -14.4,
+          -8
+        ],
+        "yawDeg": 108.9
+      },
+      {
+        "id": "l5-belongings-108",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          -30,
+          0.4
+        ],
+        "yawDeg": 217.7
+      },
+      {
+        "id": "l5-belongings-109",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          -8,
+          8.6
+        ],
+        "yawDeg": 326.6
+      },
+      {
+        "id": "l5-belongings-110",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          6,
+          20
+        ],
+        "yawDeg": 435.4
+      },
+      {
+        "id": "l5-belongings-111",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          16,
+          -20
+        ],
+        "yawDeg": 544.3
+      },
+      {
+        "id": "l5-belongings-112",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          -47,
+          2.4
+        ],
+        "yawDeg": 653.2
+      },
+      {
+        "id": "l5-belongings-113",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          -16,
+          38
+        ],
+        "yawDeg": 762
+      },
+      {
+        "id": "l5-belongings-114",
+        "asset": "decay.dropped-belongings",
+        "at": [
+          34,
+          -42
+        ],
+        "yawDeg": 870.9
+      },
+      {
+        "id": "l5-weapon-116",
+        "asset": "wpn.assault-rifle",
+        "at": [
+          -26.2,
+          -11.4
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-weapon-117",
+        "asset": "wpn.assault-rifle",
+        "at": [
+          -24.6,
+          16
+        ],
+        "yawDeg": 120.3
+      },
+      {
+        "id": "l5-weapon-118",
+        "asset": "wpn.assault-rifle",
+        "at": [
+          -13.4,
+          -2.6
+        ],
+        "yawDeg": 240.6
+      },
+      {
+        "id": "l5-weapon-119",
+        "asset": "wpn.machine-gun",
+        "at": [
+          -31.6,
+          5.4
+        ],
+        "yawDeg": 361
+      },
+      {
+        "id": "l5-weapon-120",
+        "asset": "wpn.assault-rifle",
+        "at": [
+          -9,
+          12.4
+        ],
+        "yawDeg": 481.3
+      },
+      {
+        "id": "l5-weapon-121",
+        "asset": "wpn.pistol",
+        "at": [
+          7,
+          -8.4
+        ],
+        "yawDeg": 601.6
+      },
+      {
+        "id": "l5-weapon-122",
+        "asset": "wpn.shotgun",
+        "at": [
+          -20,
+          4
+        ],
+        "yawDeg": 721.9
+      },
+      {
+        "id": "l5-weapon-123",
+        "asset": "wpn.assault-rifle",
+        "at": [
+          -72,
+          44.8
+        ],
+        "yawDeg": 842.2
+      },
+      {
+        "id": "l5-cue-124",
+        "asset": "decay.damaged-sign",
+        "at": [
+          -74.6,
+          -45.6
+        ],
+        "yawDeg": 171.9
+      },
+      {
+        "id": "l5-cue-125",
+        "asset": "util.flashlight",
+        "at": [
+          -47.4,
+          43.3
+        ],
+        "yawDeg": 74.5
+      },
+      {
+        "id": "l5-collapse-0",
+        "asset": "decay.collapsed-facade",
+        "at": [
+          18.4,
+          -25.9
+        ],
+        "yawDeg": 179.9
+      },
+      {
+        "id": "l5-collapse-1",
+        "asset": "decay.collapsed-facade",
+        "at": [
+          18.4,
+          25.9
+        ],
+        "yawDeg": 179.9
+      },
+      {
+        "id": "l5-collapse-3",
+        "asset": "decay.collapsed-facade",
+        "at": [
+          -53.4,
+          -15.5
+        ],
+        "yawDeg": -90
+      },
+      {
+        "id": "l5-collapse-4",
+        "asset": "decay.collapsed-facade",
+        "at": [
+          -38.4,
+          10.2
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-glass-0",
+        "asset": "decay.broken-glass",
+        "at": [
+          -46.202,
+          27.05
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-glass-1",
+        "asset": "decay.broken-glass",
+        "at": [
+          -43.6398,
+          10.2
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-glass-2",
+        "asset": "decay.broken-glass",
+        "at": [
+          -43.2998,
+          -15.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-glass-3",
+        "asset": "decay.broken-glass",
+        "at": [
+          -35.6,
+          -2.7
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-glass-4",
+        "asset": "decay.broken-glass",
+        "at": [
+          -31.869899999999987,
+          -46.199999999999996
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-glass-5",
+        "asset": "decay.broken-glass",
+        "at": [
+          -30,
+          -22.520000000000003
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-glass-6",
+        "asset": "decay.broken-glass",
+        "at": [
+          -17.24979999999999,
+          -46.19999999999999
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-glass-7",
+        "asset": "decay.broken-glass",
+        "at": [
+          -13.73,
+          -24.500000000000004
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-glass-8",
+        "asset": "decay.broken-glass",
+        "at": [
+          -2.6297999999999897,
+          -46.199999999999996
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-glass-9",
+        "asset": "decay.broken-glass",
+        "at": [
+          1.1999999999999986,
+          -17.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-glass-10",
+        "asset": "decay.broken-glass",
+        "at": [
+          -63.08,
+          -46.19999999999999
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-glass-11",
+        "asset": "decay.broken-glass",
+        "at": [
+          1.1999999999999986,
+          33.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-glass-12",
+        "asset": "decay.broken-glass",
+        "at": [
+          0.8899999999999988,
+          -24.639800000000005
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-glass-13",
+        "asset": "decay.broken-glass",
+        "at": [
+          2.201999999999999,
+          18.75
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-glass-14",
+        "asset": "decay.broken-glass",
+        "at": [
+          3.299999999999999,
+          -9
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-glass-15",
+        "asset": "decay.broken-glass",
+        "at": [
+          3.299999999999999,
+          -1.2
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-glass-16",
+        "asset": "decay.broken-glass",
+        "at": [
+          11.99020000000001,
+          -46.19999999999999
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-glass-17",
+        "asset": "decay.broken-glass",
+        "at": [
+          19.200000000000003,
+          -25.9
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-glass-18",
+        "asset": "decay.broken-glass",
+        "at": [
+          19.200000000000003,
+          -8.5
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-glass-19",
+        "asset": "decay.broken-glass",
+        "at": [
+          19.200000000000003,
+          8.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-glass-20",
+        "asset": "decay.broken-glass",
+        "at": [
+          19.200000000000003,
+          25.9
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-glass-21",
+        "asset": "decay.broken-glass",
+        "at": [
+          -63.2,
+          -14.6
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-glass-22",
+        "asset": "decay.broken-glass",
+        "at": [
+          26.61030000000001,
+          -46.199999999999996
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-glass-32",
+        "asset": "decay.broken-glass",
+        "at": [
+          -63.2,
+          12.2
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-glass-39",
+        "asset": "decay.broken-glass",
+        "at": [
+          -63.19999999999999,
+          -28
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-glass-40",
+        "asset": "decay.broken-glass",
+        "at": [
+          -63.19999999999999,
+          -1.2
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-glass-41",
+        "asset": "decay.broken-glass",
+        "at": [
+          -63.19999999999999,
+          30.3
+        ],
+        "yawDeg": 90
+      },
+      {
+        "id": "l5-glass-42",
+        "asset": "decay.broken-glass",
+        "at": [
+          -46.9,
+          -24.2998
+        ],
+        "yawDeg": 0
+      },
+      {
+        "id": "l5-glass-43",
+        "asset": "decay.broken-glass",
+        "at": [
+          -46.489999999999995,
+          -46.19999999999999
+        ],
+        "yawDeg": 0
+      }
+    ],
+    "actors": [
+      {
+        "id": "courier",
+        "kind": "courier",
+        "entity": 1
+      }
+    ],
+    "vehicles": {}
+  },
+  "metrics": {
+    "collision": {
+      "failures": 0,
+      "pending": 0,
+      "admitted": 1,
+      "deferred": 0,
+      "requests": [],
+      "offenders": []
+    },
+    "marketDoors": null,
+    "armyBoom": null,
+    "scene": "perf-heap-l5-ash",
+    "frame": 60,
+    "tick": 60,
+    "backend": "webgpu",
+    "quality": "low",
+    "convoyOverlapFrames": 0,
+    "propPenetration": {
+      "samples": 60,
+      "framesMax": 0,
+      "pairs": []
+    },
+    "props": {
+      "sinkMaxCm": 0,
+      "samples": 0,
+      "gaps": []
+    },
+    "bodies": [],
+    "attackOverlap": {
+      "depthCm": 0,
+      "frame": 0,
+      "actor": ""
+    },
+    "wheels": {},
+    "lodPlaceholders": {
+      "frames": 0,
+      "firstFrame": -1,
+      "assets": []
+    },
+    "perf": {
+      "drawCalls": {
+        "p50": 47,
+        "p95": 47,
+        "max": 47
+      },
+      "triangles": {
+        "p50": 72891,
+        "p95": 72891,
+        "max": 72891
+      },
+      "shadowDrawCalls": {
+        "p50": 30,
+        "p95": 30,
+        "max": 30
+      },
+      "shadowTriangles": {
+        "p50": 51115,
+        "p95": 51115,
+        "max": 51115
+      },
+      "stepMs": {
+        "p50": 1.5,
+        "p95": 2,
+        "max": 2.6
+      },
+      "lastFrame": {
+        "drawCalls": 47,
+        "triangles": 72891,
+        "shadowDrawCalls": 30,
+        "shadowTriangles": 51115,
+        "stepMs": 1.5,
+        "categories": {
+          "other": 42,
+          "shadows": 30,
+          "buildings": 1,
+          "props": 4
+        }
+      },
+      "note": "view draws/triangles exclude the shadow pass (reported separately); stepMs = CPU ms of one sim tick + render submission, not GPU time"
+    },
+    "vehicles": {},
+    "grounding": {
+      "corpses": 0,
+      "corpseOffMaxCm": 0,
+      "pickups": 0,
+      "pickupOffMaxCm": 0,
+      "worst": []
+    },
+    "pursuit": {
+      "actors": {},
+      "courierSwings": 0,
+      "courierAttacks": 0,
+      "hullWindups": 0,
+      "hullHits": 0,
+      "firstAttackFrame": -1,
+      "bites": 0,
+      "firstBiteFrame": -1
+    },
+    "cure": null,
+    "megaAlpha": null,
+    "minigun": null,
+    "specials": [],
+    "heldProps": {
+      "samples": 0,
+      "intersections": 0,
+      "holds": {}
+    },
+    "seeThrough": {
+      "frames": 60,
+      "solidRadiusMax": 0.21,
+      "occluders": [],
+      "cutLowProps": [],
+      "cutPlacements": []
+    },
+    "appearance": [],
+    "companion": {
+      "overlapMaxCm": 0,
+      "overlapFrame": 0,
+      "runLagMaxM": 0,
+      "runLagFrame": 0,
+      "samples": 0,
+      "runningSamples": 0
+    },
+    "bike": {
+      "inViewFrames": 0,
+      "missedFrames": 0,
+      "offFrames": 0,
+      "maxOffsetCm": 0,
+      "firstMissedFrame": -1
+    },
+    "variety": {
+      "infected": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      },
+      "pedestrian": {
+        "figures": 0,
+        "distinct": 0,
+        "per20": [],
+        "largestSameLookShare": 0,
+        "largestModelShare": 0
+      }
+    },
+    "actors": {
+      "courier": {
+        "kind": "courier",
+        "entity": 1,
+        "position": [
+          -14,
+          6
+        ],
+        "yawDeg": 0,
+        "travelM": 0,
+        "maxX": -14,
+        "state": "idle",
+        "health": 100,
+        "drawnFrames": 60,
+        "inViewFrames": 60,
+        "missedInViewFrames": 0,
+        "lod": {
+          "lod0": 60
+        },
+        "firstDrawn": {
+          "frame": 1,
+          "at": [
+            -14,
+            6
+          ]
+        },
+        "farLodCloseFrames": 0,
+        "motion": {
+          "frames": 60,
+          "torsoPitchMinDeg": 2.9,
+          "torsoPitchMaxDeg": 3.5,
+          "contacts": 2,
+          "slideMaxCm": 11.5,
+          "slideP95Cm": 9.3,
+          "yawDriftMaxDeg": 0,
+          "liftMaxCm": 0,
+          "sinkMaxCm": 4.5,
+          "jitterRunMax": 0,
+          "worstSlideFrame": 1
+        }
+      }
+    },
+    "clicks": {
+      "total": 0,
+      "misses": 0,
+      "rows": [],
+      "swings": []
+    },
+    "visibility": {
+      "frame": 60,
+      "sim": {
+        "courier": 1,
+        "actors": 1
+      },
+      "drawn": {
+        "vehicle": 0,
+        "courier": 1
+      }
+    },
+    "lods": {
+      "bld.apartment-block-a:0": "culled",
+      "bld.town-hall:1": "culled",
+      "bld.storefront-row:2": "lod2",
+      "bld.apartment-block-b:3": "culled",
+      "bld.apartment-block-a:4": "culled",
+      "bld.church:5": "lod2",
+      "bld.apartment-block-b:6": "culled",
+      "bld.cafe-corner:7": "culled",
+      "bld.supermarket:8": "culled",
+      "bld.pharmacy:9": "culled",
+      "bld.pharmacy:10": "culled",
+      "bld.cafe-corner:11": "culled",
+      "bld.supermarket:12": "culled",
+      "prop.bench:13": "culled",
+      "prop.bench:14": "culled",
+      "prop.bench:15": "culled",
+      "prop.bench:16": "culled",
+      "prop.bench:17": "culled",
+      "prop.bench:18": "culled",
+      "prop.trash-bin:19": "culled",
+      "prop.trash-bin:20": "culled",
+      "prop.street-tree-blossom:21": "culled",
+      "prop.street-tree-blossom:22": "culled",
+      "prop.street-tree-blossom:23": "culled",
+      "prop.street-tree-blossom:24": "culled",
+      "prop.street-tree:25": "culled",
+      "prop.hedge:26": "culled",
+      "prop.hedge:27": "culled",
+      "prop.hedge:28": "culled",
+      "prop.hedge:29": "culled",
+      "prop.hedge:30": "culled",
+      "prop.hedge:31": "culled",
+      "prop.hedge:32": "culled",
+      "prop.hedge:33": "culled",
+      "prop.hedge:34": "culled",
+      "prop.privacy-fence:35": "culled",
+      "prop.privacy-fence:36": "culled",
+      "prop.privacy-fence:37": "culled",
+      "prop.privacy-fence:38": "culled",
+      "prop.privacy-fence:39": "culled",
+      "prop.privacy-fence:40": "culled",
+      "prop.privacy-fence:41": "culled",
+      "prop.privacy-fence:42": "culled",
+      "prop.privacy-fence:43": "culled",
+      "prop.privacy-fence:44": "culled",
+      "prop.privacy-fence:45": "culled",
+      "prop.privacy-fence:46": "culled",
+      "prop.privacy-fence:47": "culled",
+      "prop.privacy-fence:48": "culled",
+      "prop.privacy-fence:49": "culled",
+      "prop.privacy-fence:50": "culled",
+      "prop.privacy-fence:51": "culled",
+      "prop.privacy-fence:52": "culled",
+      "bld.storefront-row:53": "culled",
+      "bld.storefront-row:54": "culled",
+      "bld.storefront-row:55": "culled",
+      "bld.storefront-row:56": "culled",
+      "bld.apartment-block-a:57": "culled",
+      "bld.apartment-block-b:58": "culled",
+      "bld.apartment-block-a:59": "culled",
+      "bld.apartment-block-b:60": "culled",
+      "bld.apartment-block-a:61": "culled",
+      "bld.pharmacy:62": "culled",
+      "prop.privacy-fence:63": "culled",
+      "prop.privacy-fence:64": "culled",
+      "prop.privacy-fence:65": "culled",
+      "prop.privacy-fence:66": "culled",
+      "prop.privacy-fence:67": "culled",
+      "prop.privacy-fence:68": "culled",
+      "prop.privacy-fence:69": "culled",
+      "prop.privacy-fence:70": "culled",
+      "prop.privacy-fence:71": "culled",
+      "prop.privacy-fence:72": "culled",
+      "prop.privacy-fence:73": "culled",
+      "prop.privacy-fence:74": "culled",
+      "prop.privacy-fence:75": "culled",
+      "prop.privacy-fence:76": "culled",
+      "prop.privacy-fence:77": "culled",
+      "prop.privacy-fence:78": "culled",
+      "prop.privacy-fence:79": "culled",
+      "prop.privacy-fence:80": "culled",
+      "prop.privacy-fence:81": "culled",
+      "prop.privacy-fence:82": "culled",
+      "prop.privacy-fence:83": "culled",
+      "prop.privacy-fence:84": "culled",
+      "prop.privacy-fence:85": "culled",
+      "prop.privacy-fence:86": "culled",
+      "prop.privacy-fence:87": "culled",
+      "prop.privacy-fence:88": "culled",
+      "prop.privacy-fence:89": "culled",
+      "prop.privacy-fence:90": "culled",
+      "prop.privacy-fence:91": "culled",
+      "prop.privacy-fence:92": "culled",
+      "prop.privacy-fence:93": "culled",
+      "prop.privacy-fence:94": "culled",
+      "prop.privacy-fence:95": "culled",
+      "prop.privacy-fence:96": "culled",
+      "prop.privacy-fence:97": "culled",
+      "prop.privacy-fence:98": "culled",
+      "prop.privacy-fence:99": "culled",
+      "prop.privacy-fence:100": "culled",
+      "prop.privacy-fence:101": "culled",
+      "prop.privacy-fence:102": "culled",
+      "prop.privacy-fence:103": "culled",
+      "prop.privacy-fence:104": "culled",
+      "prop.privacy-fence:105": "culled",
+      "prop.privacy-fence:106": "culled",
+      "prop.privacy-fence:107": "culled",
+      "prop.privacy-fence:108": "culled",
+      "prop.privacy-fence:109": "culled",
+      "prop.privacy-fence:110": "culled",
+      "prop.privacy-fence:111": "culled",
+      "prop.privacy-fence:112": "culled",
+      "prop.privacy-fence:113": "culled",
+      "prop.privacy-fence:114": "culled",
+      "prop.privacy-fence:115": "culled",
+      "prop.privacy-fence:116": "culled",
+      "prop.privacy-fence:117": "culled",
+      "prop.privacy-fence:118": "culled",
+      "prop.privacy-fence:119": "culled",
+      "prop.privacy-fence:120": "culled",
+      "prop.privacy-fence:121": "culled",
+      "prop.privacy-fence:122": "culled",
+      "prop.privacy-fence:123": "culled",
+      "prop.privacy-fence:124": "culled",
+      "prop.privacy-fence:125": "culled",
+      "prop.privacy-fence:126": "culled",
+      "prop.privacy-fence:127": "culled",
+      "prop.privacy-fence:128": "culled",
+      "prop.privacy-fence:129": "culled",
+      "prop.privacy-fence:131": "culled",
+      "prop.privacy-fence:132": "culled",
+      "prop.privacy-fence:133": "culled",
+      "prop.privacy-fence:134": "culled",
+      "prop.privacy-fence:135": "culled",
+      "prop.privacy-fence:136": "culled",
+      "prop.privacy-fence:137": "culled",
+      "prop.privacy-fence:138": "culled",
+      "prop.privacy-fence:139": "culled",
+      "bld.apartment-block-a:141": "culled",
+      "bld.apartment-block-b:142": "culled",
+      "bld.apartment-block-a:143": "culled",
+      "bld.apartment-block-b:144": "culled",
+      "bld.cafe-corner:145": "culled",
+      "prop.privacy-fence:149": "culled",
+      "prop.privacy-fence:153": "culled",
+      "prop.privacy-fence:183": "culled",
+      "prop.privacy-fence:184": "culled",
+      "prop.privacy-fence:185": "culled",
+      "prop.privacy-fence:186": "culled",
+      "prop.privacy-fence:187": "culled",
+      "prop.privacy-fence:188": "culled",
+      "prop.privacy-fence:189": "culled",
+      "prop.privacy-fence:190": "culled",
+      "prop.privacy-fence:191": "culled",
+      "prop.privacy-fence:192": "culled",
+      "prop.privacy-fence:193": "culled",
+      "prop.privacy-fence:194": "culled",
+      "prop.privacy-fence:195": "culled",
+      "prop.privacy-fence:196": "culled",
+      "prop.privacy-fence:197": "culled",
+      "prop.privacy-fence:198": "culled",
+      "prop.privacy-fence:199": "culled",
+      "prop.privacy-fence:200": "culled",
+      "prop.privacy-fence:201": "culled",
+      "prop.privacy-fence:202": "culled",
+      "prop.privacy-fence:203": "culled",
+      "prop.privacy-fence:204": "culled",
+      "prop.privacy-fence:205": "culled",
+      "prop.privacy-fence:206": "culled",
+      "prop.privacy-fence:207": "culled",
+      "prop.privacy-fence:208": "culled",
+      "prop.privacy-fence:209": "culled",
+      "prop.privacy-fence:210": "culled",
+      "prop.privacy-fence:211": "culled",
+      "prop.privacy-fence:212": "culled",
+      "prop.privacy-fence:213": "culled",
+      "prop.privacy-fence:214": "culled",
+      "prop.privacy-fence:215": "culled",
+      "bld.storefront-row:218": "culled",
+      "bld.storefront-row:219": "culled",
+      "bld.apartment-block-a:220": "culled",
+      "bld.storefront-row:221": "culled",
+      "bld.apartment-block-b:222": "culled",
+      "bld.storefront-row:223": "culled",
+      "bld.apartment-block-a:224": "culled",
+      "bld.metro-entrance:225": "culled",
+      "prop.street-lamp:386": "culled",
+      "prop.street-lamp:387": "culled",
+      "prop.street-lamp:388": "culled",
+      "prop.street-lamp:389": "culled",
+      "prop.street-lamp:390": "culled",
+      "prop.street-lamp:391": "culled",
+      "prop.street-lamp:392": "culled",
+      "prop.street-lamp:393": "culled",
+      "prop.bench:396": "culled",
+      "prop.bench:397": "culled",
+      "prop.bench:398": "culled",
+      "prop.bench:399": "culled",
+      "prop.bench:400": "culled",
+      "prop.bench:401": "culled",
+      "prop.street-tree:404": "culled",
+      "prop.street-tree-blossom:405": "culled",
+      "prop.street-tree:406": "culled",
+      "prop.street-tree-blossom:407": "culled",
+      "prop.street-lamp:412": "culled",
+      "prop.street-lamp:413": "culled",
+      "prop.street-lamp:414": "culled",
+      "prop.street-lamp:415": "culled",
+      "prop.street-lamp:416": "culled",
+      "prop.street-lamp:419": "culled",
+      "prop.street-lamp:420": "culled",
+      "prop.street-lamp:421": "culled",
+      "prop.street-lamp:422": "culled",
+      "prop.street-lamp:423": "culled",
+      "prop.street-lamp:424": "culled",
+      "prop.street-lamp:425": "culled",
+      "prop.street-lamp:426": "culled",
+      "prop.street-lamp:427": "culled",
+      "prop.street-lamp:428": "culled",
+      "prop.street-sign:432": "culled",
+      "prop.fire-hydrant:433": "culled",
+      "prop.street-sign:434": "culled",
+      "prop.fire-hydrant:435": "culled",
+      "prop.street-sign:436": "culled",
+      "prop.fire-hydrant:437": "culled",
+      "prop.street-sign:438": "culled",
+      "prop.fire-hydrant:439": "culled",
+      "l5-military-0": "culled",
+      "l5-military-1": "lod2",
+      "l5-bus-2": "lod1",
+      "l5-military-3": "lod1",
+      "l5-bus-4": "culled",
+      "l5-military-5": "culled",
+      "l5-crater-6": "culled",
+      "l5-crater-7": "n/a",
+      "l5-crater-8": "n/a",
+      "l5-crater-9": "n/a",
+      "l5-burned-car-10": "culled",
+      "l5-burned-car-11": "culled",
+      "l5-burned-car-13": "culled",
+      "l5-burned-car-14": "culled",
+      "l5-burned-car-15": "culled",
+      "l5-burned-car-16": "culled",
+      "l5-burned-car-19": "culled",
+      "l5-burned-car-20": "culled",
+      "l5-burned-car-21": "culled",
+      "l5-burned-car-22": "culled",
+      "l5-burned-car-23": "culled",
+      "l5-burned-car-24": "culled",
+      "l5-barricade-25": "culled",
+      "l5-barricade-26": "culled",
+      "l5-barricade-27": "culled",
+      "l5-barricade-28": "lod2",
+      "l5-barricade-29": "culled",
+      "l5-barricade-30": "culled",
+      "l5-barricade-31": "culled",
+      "l5-barricade-32": "culled",
+      "l5-barricade-33": "culled",
+      "l5-barricade-34": "culled",
+      "l5-barricade-35": "culled",
+      "l5-barricade-36": "culled",
+      "l5-barricade-37": "culled",
+      "l5-barricade-38": "culled",
+      "l5-barricade-39": "culled",
+      "l5-barricade-40": "culled",
+      "l5-barricade-41": "culled",
+      "l5-nest-42": "n/a",
+      "l5-nest-43": "n/a",
+      "l5-barrier-45": "culled",
+      "l5-barrier-46": "culled",
+      "l5-rubble-49": "n/a",
+      "l5-rubble-50": "n/a",
+      "l5-rubble-51": "n/a",
+      "l5-rubble-52": "n/a",
+      "l5-rubble-53": "n/a",
+      "l5-rubble-54": "n/a",
+      "l5-rubble-55": "n/a",
+      "l5-rubble-57": "n/a",
+      "l5-rubble-58": "n/a",
+      "l5-rubble-59": "n/a",
+      "l5-rubble-60": "n/a",
+      "l5-rubble-61": "n/a",
+      "l5-rubble-62": "n/a",
+      "l5-rubble-63": "n/a",
+      "l5-rubble-64": "n/a",
+      "l5-block-65": "culled",
+      "l5-block-66": "culled",
+      "l5-block-67": "culled",
+      "l5-bus-68": "culled",
+      "l5-belongings-106": "lod2",
+      "l5-belongings-107": "lod2",
+      "l5-belongings-108": "culled",
+      "l5-belongings-109": "lod2",
+      "l5-belongings-110": "culled",
+      "l5-belongings-111": "culled",
+      "l5-belongings-112": "culled",
+      "l5-belongings-113": "culled",
+      "l5-belongings-114": "culled",
+      "l5-weapon-116": "n/a",
+      "l5-weapon-117": "n/a",
+      "l5-weapon-118": "n/a",
+      "l5-weapon-119": "n/a",
+      "l5-weapon-120": "n/a",
+      "l5-weapon-121": "n/a",
+      "l5-weapon-122": "n/a",
+      "l5-weapon-123": "n/a",
+      "l5-cue-124": "culled",
+      "l5-cue-125": "n/a",
+      "l5-collapse-0": "n/a",
+      "l5-collapse-1": "n/a",
+      "l5-collapse-3": "n/a",
+      "l5-collapse-4": "n/a",
+      "l5-glass-0": "culled",
+      "l5-glass-1": "culled",
+      "l5-glass-2": "culled",
+      "l5-glass-3": "culled",
+      "l5-glass-4": "culled",
+      "l5-glass-5": "culled",
+      "l5-glass-6": "culled",
+      "l5-glass-7": "culled",
+      "l5-glass-8": "culled",
+      "l5-glass-9": "culled",
+      "l5-glass-10": "culled",
+      "l5-glass-11": "culled",
+      "l5-glass-12": "culled",
+      "l5-glass-13": "culled",
+      "l5-glass-14": "culled",
+      "l5-glass-15": "culled",
+      "l5-glass-16": "culled",
+      "l5-glass-17": "culled",
+      "l5-glass-18": "culled",
+      "l5-glass-19": "culled",
+      "l5-glass-20": "culled",
+      "l5-glass-21": "culled",
+      "l5-glass-22": "culled",
+      "l5-glass-32": "culled",
+      "l5-glass-39": "culled",
+      "l5-glass-40": "culled",
+      "l5-glass-41": "culled",
+      "l5-glass-42": "culled",
+      "l5-glass-43": "culled"
+    },
+    "clipping": {
+      "gunBodyHits": 0,
+      "staticPairs": 57,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    },
+    "emergence": null,
+    "doors": {},
+    "log": []
+  },
+  "clipping": {
+    "static": [
+      {
+        "a": "l5-barricade-28",
+        "b": "l5-barricade-37",
+        "assetA": "decay.blown-sandbags",
+        "assetB": "prop.sandbag-pallet",
+        "intersectingTriangles": 2232,
+        "region": {
+          "min": [
+            -33.94865417480469,
+            0.000009114761269302107,
+            6.13892936706543
+          ],
+          "max": [
+            -32.59236526489258,
+            0.8900268077850342,
+            7.625323295593262
+          ]
+        },
+        "regionCm": [
+          136,
+          89,
+          149
+        ]
+      },
+      {
+        "a": "l5-barricade-27",
+        "b": "l5-barricade-36",
+        "assetA": "decay.blown-sandbags",
+        "assetB": "prop.sandbag-pallet",
+        "intersectingTriangles": 1676,
+        "region": {
+          "min": [
+            -33.94865417480469,
+            0.000009114761269302107,
+            -10.786070823669434
+          ],
+          "max": [
+            -32.57034683227539,
+            0.8900268077850342,
+            -9.01392936706543
+          ]
+        },
+        "regionCm": [
+          138,
+          89,
+          177
+        ]
+      },
+      {
+        "a": "l5-barricade-30",
+        "b": "l5-barricade-39",
+        "assetA": "decay.blown-sandbags",
+        "assetB": "prop.sandbag-pallet",
+        "intersectingTriangles": 1669,
+        "region": {
+          "min": [
+            -28.249706268310547,
+            0.000009114761269302107,
+            17.510025024414062
+          ],
+          "max": [
+            -26.97699737548828,
+            0.8900268077850342,
+            18.117231369018555
+          ]
+        },
+        "regionCm": [
+          127,
+          89,
+          61
+        ]
+      },
+      {
+        "a": "l5-barricade-25",
+        "b": "l5-barricade-33",
+        "assetA": "decay.blown-sandbags",
+        "assetB": "prop.sandbag-pallet",
+        "intersectingTriangles": 1486,
+        "region": {
+          "min": [
+            -29.035497665405273,
+            0.000009114761269302107,
+            -14.705086708068848
+          ],
+          "max": [
+            -27.932111740112305,
+            0.8900268077850342,
+            -14.151310920715332
+          ]
+        },
+        "regionCm": [
+          110,
+          89,
+          55
+        ]
+      },
+      {
+        "a": "prop.bench:16",
+        "b": "l5-barricade-29",
+        "assetA": "prop.bench",
+        "assetB": "decay.blown-sandbags",
+        "intersectingTriangles": 1453,
+        "region": {
+          "min": [
+            -33.50508499145508,
+            0.004687870852649212,
+            9.679367065429688
+          ],
+          "max": [
+            -32.95130920410156,
+            0.5686762928962708,
+            10.355015754699707
+          ]
+        },
+        "regionCm": [
+          55,
+          56,
+          68
+        ]
+      },
+      {
+        "a": "l5-barricade-41",
+        "b": "l5-nest-43",
+        "assetA": "prop.sandbag-pallet",
+        "assetB": "prop.hmg-nest",
+        "intersectingTriangles": 1211,
+        "region": {
+          "min": [
+            -15.884082794189453,
+            0.000009114761269302107,
+            17.30134391784668
+          ],
+          "max": [
+            -14.84352970123291,
+            0.7949808835983276,
+            18.58390235900879
+          ]
+        },
+        "regionCm": [
+          104,
+          79,
+          128
+        ]
+      },
+      {
+        "a": "bld.apartment-block-a:4",
+        "b": "l5-collapse-3",
+        "assetA": "bld.apartment-block-a",
+        "assetB": "decay.collapsed-facade",
+        "intersectingTriangles": 1056,
+        "region": {
+          "min": [
+            -52.849979400634766,
+            0,
+            -16.399974822998047
+          ],
+          "max": [
+            -50.400001525878906,
+            3.4499707221984863,
+            -13.748343467712402
+          ]
+        },
+        "regionCm": [
+          245,
+          345,
+          265
+        ]
+      },
+      {
+        "a": "l5-barricade-32",
+        "b": "l5-barricade-40",
+        "assetA": "decay.blown-sandbags",
+        "assetB": "prop.sandbag-pallet",
+        "intersectingTriangles": 648,
+        "region": {
+          "min": [
+            -20.035497665405273,
+            0.000009114761269302107,
+            17.681304931640625
+          ],
+          "max": [
+            -19.22403335571289,
+            0.8900268077850342,
+            18.14868927001953
+          ]
+        },
+        "regionCm": [
+          81,
+          89,
+          47
+        ]
+      },
+      {
+        "a": "bld.storefront-row:53",
+        "b": "l5-collapse-0",
+        "assetA": "bld.storefront-row",
+        "assetB": "decay.collapsed-facade",
+        "intersectingTriangles": 587,
+        "region": {
+          "min": [
+            18.449966430664062,
+            -0.000024725681214476936,
+            -28.901071548461914
+          ],
+          "max": [
+            19.304712295532227,
+            1.1099013090133667,
+            -22.898611068725586
+          ]
+        },
+        "regionCm": [
+          85,
+          111,
+          600
+        ]
+      },
+      {
+        "a": "bld.storefront-row:56",
+        "b": "l5-collapse-1",
+        "assetA": "bld.storefront-row",
+        "assetB": "decay.collapsed-facade",
+        "intersectingTriangles": 587,
+        "region": {
+          "min": [
+            18.449966430664062,
+            -0.000024725681214476936,
+            22.898929595947266
+          ],
+          "max": [
+            19.304712295532227,
+            1.1099013090133667,
+            28.901390075683594
+          ]
+        },
+        "regionCm": [
+          85,
+          111,
+          600
+        ]
+      },
+      {
+        "a": "l5-burned-car-16",
+        "b": "l5-collapse-1",
+        "assetA": "veh.suv-dark",
+        "assetB": "decay.collapsed-facade",
+        "intersectingTriangles": 567,
+        "region": {
+          "min": [
+            16.84566307067871,
+            0.0019459291361272335,
+            28.24748420715332
+          ],
+          "max": [
+            17.114503860473633,
+            0.8185099959373474,
+            28.65059471130371
+          ]
+        },
+        "regionCm": [
+          27,
+          82,
+          40
+        ]
+      },
+      {
+        "a": "l5-barricade-32",
+        "b": "l5-barricade-41",
+        "assetA": "decay.blown-sandbags",
+        "assetB": "prop.sandbag-pallet",
+        "intersectingTriangles": 541,
+        "region": {
+          "min": [
+            -16.613344192504883,
+            0.000009114761269302107,
+            17.681304931640625
+          ],
+          "max": [
+            -15.976997375488281,
+            0.8900268077850342,
+            18.14868927001953
+          ]
+        },
+        "regionCm": [
+          64,
+          89,
+          47
+        ]
+      },
+      {
+        "a": "bld.cafe-corner:11",
+        "b": "l5-belongings-110",
+        "assetA": "bld.cafe-corner",
+        "assetB": "decay.dropped-belongings",
+        "intersectingTriangles": 503,
+        "region": {
+          "min": [
+            5.588836193084717,
+            0.2102188766002655,
+            19.3732967376709
+          ],
+          "max": [
+            6.173003673553467,
+            0.34887033700942993,
+            20.722484588623047
+          ]
+        },
+        "regionCm": [
+          58,
+          14,
+          135
+        ]
+      },
+      {
+        "a": "l5-barricade-31",
+        "b": "l5-barricade-40",
+        "assetA": "decay.blown-sandbags",
+        "assetB": "prop.sandbag-pallet",
+        "intersectingTriangles": 377,
+        "region": {
+          "min": [
+            -20.976980209350586,
+            0.000009114761269302107,
+            17.6561222076416
+          ],
+          "max": [
+            -20.512338638305664,
+            0.8900268077850342,
+            18.220935821533203
+          ]
+        },
+        "regionCm": [
+          46,
+          89,
+          56
+        ]
+      },
+      {
+        "a": "l5-barricade-25",
+        "b": "l5-barricade-34",
+        "assetA": "decay.blown-sandbags",
+        "assetB": "prop.sandbag-pallet",
+        "intersectingTriangles": 340,
+        "region": {
+          "min": [
+            -25.34061622619629,
+            0.000009114761269302107,
+            -14.510626792907715
+          ],
+          "max": [
+            -24.97699737548828,
+            0.8900268077850342,
+            -14.151310920715332
+          ]
+        },
+        "regionCm": [
+          36,
+          89,
+          36
+        ]
+      },
+      {
+        "a": "bld.church:5",
+        "b": "l5-belongings-112",
+        "assetA": "bld.church",
+        "assetB": "decay.dropped-belongings",
+        "intersectingTriangles": 282,
+        "region": {
+          "min": [
+            -47.616355895996094,
+            0.0000070955998126009945,
+            1.651193618774414
+          ],
+          "max": [
+            -46.54597091674805,
+            0.39992600679397583,
+            2.599885940551758
+          ]
+        },
+        "regionCm": [
+          107,
+          40,
+          95
+        ]
+      },
+      {
+        "a": "l5-crater-9",
+        "b": "l5-weapon-120",
+        "assetA": "decay.crater",
+        "assetB": "wpn.assault-rifle",
+        "intersectingTriangles": 269,
+        "region": {
+          "min": [
+            -9.065237045288086,
+            0.021227441728115082,
+            12.308161735534668
+          ],
+          "max": [
+            -8.828972816467285,
+            0.29905399680137634,
+            12.666090965270996
+          ]
+        },
+        "regionCm": [
+          24,
+          28,
+          36
+        ]
+      },
+      {
+        "a": "l5-barricade-29",
+        "b": "l5-barricade-38",
+        "assetA": "decay.blown-sandbags",
+        "assetB": "prop.sandbag-pallet",
+        "intersectingTriangles": 233,
+        "region": {
+          "min": [
+            -33.37685012817383,
+            0.000009114761269302107,
+            13.38892936706543
+          ],
+          "max": [
+            -32.95130920410156,
+            0.8900268077850342,
+            13.635498046875
+          ]
+        },
+        "regionCm": [
+          43,
+          89,
+          25
+        ]
+      },
+      {
+        "a": "bld.church:5",
+        "b": "l5-glass-3",
+        "assetA": "bld.church",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 218,
+        "region": {
+          "min": [
+            -36.400001525878906,
+            0.08200725167989731,
+            -3.6049511432647705
+          ],
+          "max": [
+            -35.200008392333984,
+            0.15399712324142456,
+            -1.6750470399856567
+          ]
+        },
+        "regionCm": [
+          120,
+          7,
+          193
+        ]
+      },
+      {
+        "a": "l5-crater-7",
+        "b": "l5-belongings-106",
+        "assetA": "decay.crater",
+        "assetB": "decay.dropped-belongings",
+        "intersectingTriangles": 175,
+        "region": {
+          "min": [
+            -22.758255004882812,
+            0.0099974125623703,
+            6.719878196716309
+          ],
+          "max": [
+            -22.066240310668945,
+            0.32000869512557983,
+            7.280126571655273
+          ]
+        },
+        "regionCm": [
+          69,
+          31,
+          56
+        ]
+      },
+      {
+        "a": "bld.cafe-corner:7",
+        "b": "l5-glass-0",
+        "assetA": "bld.cafe-corner",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 128,
+        "region": {
+          "min": [
+            -46.87698745727539,
+            0.07800287008285522,
+            26.68169593811035
+          ],
+          "max": [
+            -46.639896392822266,
+            0.14201363921165466,
+            27.627649307250977
+          ]
+        },
+        "regionCm": [
+          24,
+          6,
+          95
+        ]
+      },
+      {
+        "a": "bld.cafe-corner:145",
+        "b": "l5-glass-41",
+        "assetA": "bld.cafe-corner",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 128,
+        "region": {
+          "min": [
+            -63.8749885559082,
+            0.07800287008285522,
+            29.93169593811035
+          ],
+          "max": [
+            -63.63789749145508,
+            0.14201363921165466,
+            30.877649307250977
+          ]
+        },
+        "regionCm": [
+          24,
+          6,
+          95
+        ]
+      },
+      {
+        "a": "bld.cafe-corner:11",
+        "b": "l5-glass-13",
+        "assetA": "bld.cafe-corner",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 116,
+        "region": {
+          "min": [
+            2.639896869659424,
+            0.08601163327693939,
+            17.831077575683594
+          ],
+          "max": [
+            2.880131244659424,
+            0.14999274909496307,
+            19.774953842163086
+          ]
+        },
+        "regionCm": [
+          24,
+          6,
+          194
+        ]
+      },
+      {
+        "a": "prop.privacy-fence:89",
+        "b": "l5-rubble-62",
+        "assetA": "prop.privacy-fence",
+        "assetB": "decay.rubble-pile",
+        "intersectingTriangles": 110,
+        "region": {
+          "min": [
+            29.313289642333984,
+            0.000016319618225679733,
+            34.55297088623047
+          ],
+          "max": [
+            29.521005630493164,
+            0.30840277671813965,
+            35.22154235839844
+          ]
+        },
+        "regionCm": [
+          21,
+          31,
+          67
+        ]
+      },
+      {
+        "a": "bld.apartment-block-a:57",
+        "b": "prop.privacy-fence:139",
+        "assetA": "bld.apartment-block-a",
+        "assetB": "prop.privacy-fence",
+        "intersectingTriangles": 101,
+        "region": {
+          "min": [
+            39.81999588012695,
+            0.013981588184833527,
+            -34.30009460449219
+          ],
+          "max": [
+            42.3800048828125,
+            0.2600039839744568,
+            -34.274986267089844
+          ]
+        },
+        "regionCm": [
+          256,
+          25,
+          3
+        ]
+      },
+      {
+        "a": "bld.apartment-block-a:57",
+        "b": "prop.privacy-fence:138",
+        "assetA": "bld.apartment-block-a",
+        "assetB": "prop.privacy-fence",
+        "intersectingTriangles": 99,
+        "region": {
+          "min": [
+            37.21999740600586,
+            0.013981588184833527,
+            -34.30009460449219
+          ],
+          "max": [
+            39.78000259399414,
+            0.2600039839744568,
+            -34.274986267089844
+          ]
+        },
+        "regionCm": [
+          256,
+          25,
+          3
+        ]
+      },
+      {
+        "a": "bld.storefront-row:2",
+        "b": "l5-glass-7",
+        "assetA": "bld.storefront-row",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 96,
+        "region": {
+          "min": [
+            -14.754953384399414,
+            0.08601163327693939,
+            -24.524913787841797
+          ],
+          "max": [
+            -12.811078071594238,
+            0.14999274909496307,
+            -23.74996566772461
+          ]
+        },
+        "regionCm": [
+          194,
+          6,
+          77
+        ]
+      },
+      {
+        "a": "bld.storefront-row:218",
+        "b": "l5-glass-10",
+        "assetA": "bld.storefront-row",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 96,
+        "region": {
+          "min": [
+            -64.10494995117188,
+            0.08601163327693939,
+            -46.22491455078125
+          ],
+          "max": [
+            -62.16107940673828,
+            0.14999274909496307,
+            -45.44996643066406
+          ]
+        },
+        "regionCm": [
+          194,
+          6,
+          77
+        ]
+      },
+      {
+        "a": "bld.storefront-row:219",
+        "b": "l5-glass-43",
+        "assetA": "bld.storefront-row",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 96,
+        "region": {
+          "min": [
+            -47.51495361328125,
+            0.08601163327693939,
+            -46.22491455078125
+          ],
+          "max": [
+            -45.57107925415039,
+            0.14999274909496307,
+            -45.44996643066406
+          ]
+        },
+        "regionCm": [
+          194,
+          6,
+          77
+        ]
+      },
+      {
+        "a": "bld.storefront-row:221",
+        "b": "l5-glass-6",
+        "assetA": "bld.storefront-row",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 96,
+        "region": {
+          "min": [
+            -18.27475357055664,
+            0.08601163327693939,
+            -46.22491455078125
+          ],
+          "max": [
+            -16.33087730407715,
+            0.14999274909496307,
+            -45.44996643066406
+          ]
+        },
+        "regionCm": [
+          194,
+          6,
+          77
+        ]
+      },
+      {
+        "a": "bld.storefront-row:223",
+        "b": "l5-glass-16",
+        "assetA": "bld.storefront-row",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 96,
+        "region": {
+          "min": [
+            10.96524715423584,
+            0.08601163327693939,
+            -46.22491455078125
+          ],
+          "max": [
+            12.909122467041016,
+            0.14999274909496307,
+            -45.44996643066406
+          ]
+        },
+        "regionCm": [
+          194,
+          6,
+          77
+        ]
+      },
+      {
+        "a": "bld.town-hall:1",
+        "b": "l5-glass-5",
+        "assetA": "bld.town-hall",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 86,
+        "region": {
+          "min": [
+            -31.024953842163086,
+            0.07800287008285522,
+            -23.15990447998047
+          ],
+          "max": [
+            -29.081077575683594,
+            0.14999274909496307,
+            -21.959917068481445
+          ]
+        },
+        "regionCm": [
+          194,
+          7,
+          120
+        ]
+      },
+      {
+        "a": "bld.storefront-row:53",
+        "b": "l5-glass-17",
+        "assetA": "bld.storefront-row",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 82,
+        "region": {
+          "min": [
+            18.449966430664062,
+            0.08200725167989731,
+            -26.650096893310547
+          ],
+          "max": [
+            19.288515090942383,
+            0.15399712324142456,
+            -25.322351455688477
+          ]
+        },
+        "regionCm": [
+          84,
+          7,
+          133
+        ]
+      },
+      {
+        "a": "bld.storefront-row:54",
+        "b": "l5-glass-18",
+        "assetA": "bld.storefront-row",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 82,
+        "region": {
+          "min": [
+            18.449966430664062,
+            0.08200725167989731,
+            -9.250097274780273
+          ],
+          "max": [
+            19.288515090942383,
+            0.15399712324142456,
+            -7.922351360321045
+          ]
+        },
+        "regionCm": [
+          84,
+          7,
+          133
+        ]
+      },
+      {
+        "a": "bld.storefront-row:55",
+        "b": "l5-glass-19",
+        "assetA": "bld.storefront-row",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 82,
+        "region": {
+          "min": [
+            18.449966430664062,
+            0.08200725167989731,
+            7.849902629852295
+          ],
+          "max": [
+            19.288515090942383,
+            0.15399712324142456,
+            9.177648544311523
+          ]
+        },
+        "regionCm": [
+          84,
+          7,
+          133
+        ]
+      },
+      {
+        "a": "bld.storefront-row:56",
+        "b": "l5-glass-20",
+        "assetA": "bld.storefront-row",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 82,
+        "region": {
+          "min": [
+            18.449966430664062,
+            0.08200725167989731,
+            25.14990234375
+          ],
+          "max": [
+            19.288515090942383,
+            0.15399712324142456,
+            26.477649688720703
+          ]
+        },
+        "regionCm": [
+          84,
+          7,
+          133
+        ]
+      },
+      {
+        "a": "prop.privacy-fence:90",
+        "b": "l5-rubble-62",
+        "assetA": "prop.privacy-fence",
+        "assetB": "decay.rubble-pile",
+        "intersectingTriangles": 71,
+        "region": {
+          "min": [
+            29.453004837036133,
+            0.013981588184833527,
+            35.26121520996094
+          ],
+          "max": [
+            29.521005630493164,
+            0.2882820665836334,
+            35.5474739074707
+          ]
+        },
+        "regionCm": [
+          7,
+          27,
+          29
+        ]
+      },
+      {
+        "a": "bld.apartment-block-a:0",
+        "b": "l5-glass-42",
+        "assetA": "bld.apartment-block-a",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 66,
+        "region": {
+          "min": [
+            -47.766971588134766,
+            0.08200725167989731,
+            -24.654935836791992
+          ],
+          "max": [
+            -46.105064392089844,
+            0.15399712324142456,
+            -24.249832153320312
+          ]
+        },
+        "regionCm": [
+          166,
+          7,
+          41
+        ]
+      },
+      {
+        "a": "bld.apartment-block-a:4",
+        "b": "l5-glass-2",
+        "assetA": "bld.apartment-block-a",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 66,
+        "region": {
+          "min": [
+            -43.654937744140625,
+            0.08200725167989731,
+            -16.29493522644043
+          ],
+          "max": [
+            -43.24983215332031,
+            0.15399712324142456,
+            -14.633027076721191
+          ]
+        },
+        "regionCm": [
+          41,
+          7,
+          166
+        ]
+      },
+      {
+        "a": "bld.apartment-block-a:57",
+        "b": "prop.privacy-fence:137",
+        "assetA": "bld.apartment-block-a",
+        "assetB": "prop.privacy-fence",
+        "intersectingTriangles": 66,
+        "region": {
+          "min": [
+            35.249820709228516,
+            0.013981588184833527,
+            -34.30009460449219
+          ],
+          "max": [
+            37.18000411987305,
+            0.2600039839744568,
+            -34.274986267089844
+          ]
+        },
+        "regionCm": [
+          193,
+          25,
+          3
+        ]
+      },
+      {
+        "a": "bld.apartment-block-a:141",
+        "b": "l5-glass-39",
+        "assetA": "bld.apartment-block-a",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 66,
+        "region": {
+          "min": [
+            -63.555137634277344,
+            0.08200725167989731,
+            -28.79493522644043
+          ],
+          "max": [
+            -63.15003204345703,
+            0.15399712324142456,
+            -27.133028030395508
+          ]
+        },
+        "regionCm": [
+          41,
+          7,
+          166
+        ]
+      },
+      {
+        "a": "bld.apartment-block-a:143",
+        "b": "l5-glass-40",
+        "assetA": "bld.apartment-block-a",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 66,
+        "region": {
+          "min": [
+            -63.555137634277344,
+            0.08200725167989731,
+            -1.9949344396591187
+          ],
+          "max": [
+            -63.15003204345703,
+            0.15399712324142456,
+            -0.3330272436141968
+          ]
+        },
+        "regionCm": [
+          41,
+          7,
+          166
+        ]
+      },
+      {
+        "a": "bld.apartment-block-a:220",
+        "b": "l5-glass-4",
+        "assetA": "bld.apartment-block-a",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 66,
+        "region": {
+          "min": [
+            -32.736873626708984,
+            0.08200725167989731,
+            -46.555137634277344
+          ],
+          "max": [
+            -31.074966430664062,
+            0.15399712324142456,
+            -46.15003204345703
+          ]
+        },
+        "regionCm": [
+          166,
+          7,
+          41
+        ]
+      },
+      {
+        "a": "bld.apartment-block-a:224",
+        "b": "l5-glass-22",
+        "assetA": "bld.apartment-block-a",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 66,
+        "region": {
+          "min": [
+            25.743328094482422,
+            0.08200725167989731,
+            -46.555137634277344
+          ],
+          "max": [
+            27.405235290527344,
+            0.15399712324142456,
+            -46.15003204345703
+          ]
+        },
+        "regionCm": [
+          166,
+          7,
+          41
+        ]
+      },
+      {
+        "a": "bld.storefront-row:54",
+        "b": "l5-crater-6",
+        "assetA": "bld.storefront-row",
+        "assetB": "decay.fuel-truck-crater",
+        "intersectingTriangles": 64,
+        "region": {
+          "min": [
+            18.449966430664062,
+            -0.00003187687980243936,
+            -10.730788230895996
+          ],
+          "max": [
+            18.63976287841797,
+            0.2999879717826843,
+            -7.144063949584961
+          ]
+        },
+        "regionCm": [
+          19,
+          30,
+          359
+        ]
+      },
+      {
+        "a": "l5-collapse-0",
+        "b": "l5-glass-17",
+        "assetA": "decay.collapsed-facade",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 62,
+        "region": {
+          "min": [
+            18.3767032623291,
+            0.08200725167989731,
+            -26.686569213867188
+          ],
+          "max": [
+            19.304712295532227,
+            0.1459883600473404,
+            -25.03302764892578
+          ]
+        },
+        "regionCm": [
+          93,
+          6,
+          165
+        ]
+      },
+      {
+        "a": "l5-collapse-1",
+        "b": "l5-glass-20",
+        "assetA": "decay.collapsed-facade",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 62,
+        "region": {
+          "min": [
+            18.3767032623291,
+            0.08200725167989731,
+            25.11343002319336
+          ],
+          "max": [
+            19.304712295532227,
+            0.1459883600473404,
+            26.7669734954834
+          ]
+        },
+        "regionCm": [
+          93,
+          6,
+          165
+        ]
+      },
+      {
+        "a": "bld.apartment-block-b:3",
+        "b": "l5-glass-12",
+        "assetA": "bld.apartment-block-b",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 44,
+        "region": {
+          "min": [
+            -0.040360622107982635,
+            0.08200725167989731,
+            -24.82501220703125
+          ],
+          "max": [
+            1.6849344968795776,
+            0.15399712324142456,
+            -24.419994354248047
+          ]
+        },
+        "regionCm": [
+          173,
+          7,
+          41
+        ]
+      },
+      {
+        "a": "bld.apartment-block-b:6",
+        "b": "l5-glass-1",
+        "assetA": "bld.apartment-block-b",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 44,
+        "region": {
+          "min": [
+            -43.82501220703125,
+            0.08200725167989731,
+            9.405065536499023
+          ],
+          "max": [
+            -43.41999435424805,
+            0.15399712324142456,
+            11.13036060333252
+          ]
+        },
+        "regionCm": [
+          41,
+          7,
+          173
+        ]
+      },
+      {
+        "a": "bld.apartment-block-b:142",
+        "b": "l5-glass-21",
+        "assetA": "bld.apartment-block-b",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 44,
+        "region": {
+          "min": [
+            -63.38521194458008,
+            0.08200725167989731,
+            -15.39493465423584
+          ],
+          "max": [
+            -62.980194091796875,
+            0.15399712324142456,
+            -13.669639587402344
+          ]
+        },
+        "regionCm": [
+          41,
+          7,
+          173
+        ]
+      },
+      {
+        "a": "bld.apartment-block-b:144",
+        "b": "l5-glass-32",
+        "assetA": "bld.apartment-block-b",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 44,
+        "region": {
+          "min": [
+            -63.38521194458008,
+            0.08200725167989731,
+            11.405065536499023
+          ],
+          "max": [
+            -62.980194091796875,
+            0.15399712324142456,
+            13.13036060333252
+          ]
+        },
+        "regionCm": [
+          41,
+          7,
+          173
+        ]
+      },
+      {
+        "a": "bld.apartment-block-b:222",
+        "b": "l5-glass-8",
+        "assetA": "bld.apartment-block-b",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 44,
+        "region": {
+          "min": [
+            -3.5601606369018555,
+            0.08200725167989731,
+            -46.38521194458008
+          ],
+          "max": [
+            -1.8348654508590698,
+            0.15399712324142456,
+            -45.980194091796875
+          ]
+        },
+        "regionCm": [
+          173,
+          7,
+          41
+        ]
+      },
+      {
+        "a": "bld.pharmacy:9",
+        "b": "l5-glass-14",
+        "assetA": "bld.pharmacy",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 36,
+        "region": {
+          "min": [
+            2.924999237060547,
+            0.08998634666204453,
+            -9.612750053405762
+          ],
+          "max": [
+            2.924999237060547,
+            0.14201363921165466,
+            -8.422350883483887
+          ]
+        },
+        "regionCm": [
+          0,
+          5,
+          119
+        ]
+      },
+      {
+        "a": "bld.pharmacy:10",
+        "b": "l5-glass-15",
+        "assetA": "bld.pharmacy",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 36,
+        "region": {
+          "min": [
+            2.924999237060547,
+            0.08998634666204453,
+            -1.812749981880188
+          ],
+          "max": [
+            2.924999237060547,
+            0.14201363921165466,
+            -0.6223512291908264
+          ]
+        },
+        "regionCm": [
+          0,
+          5,
+          119
+        ]
+      },
+      {
+        "a": "bld.supermarket:8",
+        "b": "l5-glass-9",
+        "assetA": "bld.supermarket",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 26,
+        "region": {
+          "min": [
+            0.7999722957611084,
+            0.09399072825908661,
+            -17.868305206298828
+          ],
+          "max": [
+            0.7999722957611084,
+            0.14201363921165466,
+            -16.922351837158203
+          ]
+        },
+        "regionCm": [
+          0,
+          5,
+          95
+        ]
+      },
+      {
+        "a": "bld.supermarket:12",
+        "b": "l5-glass-11",
+        "assetA": "bld.supermarket",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 26,
+        "region": {
+          "min": [
+            0.7999722957611084,
+            0.09399072825908661,
+            33.13169479370117
+          ],
+          "max": [
+            0.7999722957611084,
+            0.14201363921165466,
+            34.0776481628418
+          ]
+        },
+        "regionCm": [
+          0,
+          5,
+          95
+        ]
+      },
+      {
+        "a": "l5-crater-6",
+        "b": "l5-glass-18",
+        "assetA": "decay.fuel-truck-crater",
+        "assetB": "decay.broken-glass",
+        "intersectingTriangles": 10,
+        "region": {
+          "min": [
+            18.3767032623291,
+            0.07800287008285522,
+            -8.863173484802246
+          ],
+          "max": [
+            18.71697425842285,
+            0.14201363921165466,
+            -8.349989891052246
+          ]
+        },
+        "regionCm": [
+          34,
+          6,
+          51
+        ]
+      }
+    ],
+    "actors": [],
+    "gunBodies": [],
+    "heldProps": [],
+    "summary": {
+      "gunBodyHits": 0,
+      "staticPairs": 57,
+      "heldPropHits": 0,
+      "actorHits": 0,
+      "piercing": 0
+    }
+  }
+}

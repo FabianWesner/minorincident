@@ -181,7 +181,7 @@ class CivilianBatch extends Group {
     // Warm the band actually used for settled bodies: L4/L7 phones freeze LOD2,
     // while desktop and L6 freeze LOD1. Warming a different band left the first
     // phone corpse baking geometry and compiling its shader during combat.
-    if (['L4', 'L6', 'L7'].includes(this.world.scenario ?? '') && this.lod === this.corpseLod) this.corpses.prepare(this.model, baked.geometry, material, baked.clip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1, this.world.scenario === 'L6');
+    if (['L4', 'L6', 'L7'].includes(this.world.scenario ?? '') && this.lod === this.corpseLod) this.corpses.prepare(this.model, baked.geometry, material, baked.clip, civilianClips.indexOf('death-back') * framesPerClip + framesPerClip - 1, true);
     this.add(this.mesh); if (placeholder) disposeCharacter(model); this.update();
   }
   update(alpha = 1, low = false, shotId?: number, figures?: readonly EntitySnapshot[]): void {

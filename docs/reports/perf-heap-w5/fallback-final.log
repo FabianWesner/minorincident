@@ -1,0 +1,15 @@
+[remote] sync /Users/wesner/Workspace/minorincident/.claude/worktrees/perf-heap-w5 -> 2.28.24.66:/srv/mi/ws/perf-heap-w5-eac263
+[remote] cache-gc deleted: mi-merge-batch12-main-9602e4
+[remote] sync 24s, 22355 files; job /srv/mi/jobs/perf-heap-w5-eac263-90139-1792379182; queueing for a slot
+[runner] slot 0 acquired; load 0.23 0.23 0.59
+
+ RUN  v5.0.3 /srv/mi/jobs/perf-heap-w5-eac263-90139-1792379182
+
+ ✓  functional  tests/unit/render/static-corpses.test.ts (14 tests) 764ms
+
+ Test Files  1 passed (1)
+      Tests  14 passed (14)
+   Start at  03:06:48
+   Duration  1.93s (tests 43%, transform 38%, import 19%)
+
+[remote] done exit=0 (runner 2.28.24.66, sync 24s, remote total 7s)
