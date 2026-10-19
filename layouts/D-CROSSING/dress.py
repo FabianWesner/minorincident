@@ -804,7 +804,7 @@ def gone(i):
     l.data['buildings'] = [b for b in l.data['buildings'] if b['id'] != p['id']]
 
 
-solids = [q['visualAabb'] for q in l.data['placements'] if q['assetId'] != 'prop.tree' and kind_of(q['assetId']) == 'solid' and q['visualAabb']['max'][1] > 1.2]
+solids = [q['visualAabb'] for q in l.data['placements'] if not q['assetId'].startswith(('prop.tree', 'prop.hedge', 'prop.garden-bush', 'kit.crossing-crash')) and q['visualAabb']['max'][1] > 1.2]
 drop = []
 for i, p in enumerate(l.data['placements']):
     x, z = p['position'][0], p['position'][2]
@@ -813,7 +813,7 @@ for i, p in enumerate(l.data['placements']):
         continue
     if p['assetId'] == 'prop.tree':
         b = p['visualAabb']
-        mx, mz = (b['max'][0] - b['min'][0]) * .3, (b['max'][2] - b['min'][2]) * .3
+        mx, mz = (b['max'][0] - b['min'][0]) * .18, (b['max'][2] - b['min'][2]) * .18
         crown = (b['min'][0] + mx, b['min'][2] + mz, b['max'][0] - mx, b['max'][2] - mz)
         if any(box_gap(crown, (a['min'][0], a['min'][2], a['max'][0], a['max'][2])) < 0 for a in solids):
             drop.append(i)
